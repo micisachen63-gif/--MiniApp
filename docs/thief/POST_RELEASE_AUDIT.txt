@@ -34,6 +34,7 @@ BOT：1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd
 Node 24.19.0，在倉庫根目錄執行 npm test（或 node scripts/run-tests.mjs all）。
 修正前完整套件：971 遊戲 + 77 BOT，全部通過。
 先加三個回歸案例，確認未修改程式時三項皆失敗；修正後完整套件：974 遊戲 + 77 BOT，全部通過。
+接著合併人物視窗的 e5e133e 成長樹更新與 4f6bc53 發布收據，重新驗證：979 遊戲 + 77 BOT，全部通過。
 沒有跳過、todo 或放寬既有條件；交易保管、5% 費率、禁止綁定物上架等規則沿用原規則。
 相關測試：background-workshop.test.js、market-exchange-review.test.js、market-exchange-frontend.test.js。
 其餘完整套件涵蓋盜賊轉職、裝備／82 張圖示與492張卡圖、各模式戰鬥、動畫數字同步及 BOT。
@@ -55,7 +56,8 @@ Node 24.19.0，在倉庫根目錄執行 npm test（或 node scripts/run-tests.mj
 
 六、接手與協作
 先讀根目錄 AGENTS.md、AI_HANDOVER.md，fetch origin/main。
-人物視窗仍在製作成長樹頁面；本次不動其 worktree、人物圖、動畫、成長樹或未提交檔案。
+檢查期間人物視窗完成成長樹並發布 62cd28ba-784c-4b0d-95fa-77da47b07a79；本次已合併該更新後重驗。
+保留其完整成長樹內容，不動其 worktree、人物圖、動畫或未提交檔案。
 修正必須先正常提交／同步 GitHub，再從乾淨且等於 main 的提交執行根目錄 npm run deploy:worker。
 只變更遊戲服務，無需重發 BOT。用共用發布鎖及最新正式收據防止覆蓋其他視窗的合法新版。
 發布不明時先唯讀核對，不可重試覆蓋。驗證工具如遇換行差異，先比對原始收據與 LF／CRLF，勿判定為遊戲功能損毀。
