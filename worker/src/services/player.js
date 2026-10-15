@@ -229,15 +229,24 @@ export function buyGear(work, { now }, { code, requestId }, rng = rngDefault()) 
   return { ledger: [{ event_id: eventId('gear', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '購買裝備', gold_delta: -offer.price, item: `equip:${item.id}`, item_delta: 1, note: item.name }], result: { item } };
 }
 
-/** Draw one class-compatible, current-tier weapon or armor. Persisted atomically by withPlayer. */
-export function buyGacha(work,{now},{type,requestId},rng=rngDefault()){
+/** Purchase a sealed capsule; opening is a separate inventory transaction. */
+export function buyGacha(work,{now},{type,requestId}){
   if(type!=='weapon'&&type!=='armor')throw new GameError('gacha_type','轉蛋類型無效');
-  const {offer,rarity,price}=drawGacha(work.char,type,rng);
+  const price=type==='weapon'?10000:5000,key='gacha_'+type;
   if(work.char.gold<price)throw new GameError('gold',`金幣不足（需要 ${price.toLocaleString()}）`);
+  work.char.gold-=price;work.inv[key]=(work.inv[key]||0)+1;
+  return {ledger:[{event_id:eventId('gacha',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'購買轉蛋',gold_delta:-price,item:key,item_delta:1}],result:{itemKey:key,price,type,quantity:1}};
+}
+/** Consume one capsule and use the opening character's current level and class. */
+export function openGacha(work,{now},{type,requestId},rng=rngDefault()){
+  if(type!=='weapon'&&type!=='armor')throw new GameError('gacha_type','轉蛋類型無效');
+  const key='gacha_'+type;
+  if((work.inv[key]||0)<1)throw new GameError('no_gacha','背包沒有這種轉蛋');
+  const {offer,rarity}=drawGacha(work.char,type,rng);
   const item=makeGear({id:shortId(),tgId:work.char.tg_id,cls:work.char.base_class,slot:offer.slot,kind:offer.kind,tier:offer.tier,rng,now,source:'gacha',forceRarity:rarity});
   if(canEquip(work.char,item))throw new GameError('gacha_equip','轉蛋裝備不符合職業或等級');
-  work.char.gold-=price;work.equipment.push(item);
-  return {ledger:[{event_id:eventId('gacha',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'裝備轉蛋',gold_delta:-price,item:`equip:${item.id}`,item_delta:1,note:`${type==='weapon'?'武器':'防具'}轉蛋 T${item.tier} ${rarity} ${item.name}`}],result:{item,rarity,price,type}};
+  work.inv[key]-=1;work.equipment.push(item);
+  return {ledger:[{event_id:eventId('gacha-open',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'開啟轉蛋',item:key,item_delta:-1,note:JSON.stringify({itemId:item.id,name:item.name,tier:item.tier,rarity})}],result:{item,rarity,type}};
 }
 
 /** Sell unequipped gear, including relics, for one third of its base shop price. */

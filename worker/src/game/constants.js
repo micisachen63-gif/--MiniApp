@@ -160,6 +160,8 @@ export const ITEMS = Object.freeze({
   trial_3: {kind:'bound',tier:3,name:'三人試煉之證',emoji:'🏅',desc:'三轉組隊試煉綁定獎勵，不能交易'},
   trial_4: {kind:'bound',tier:4,name:'星穹覺醒之證',emoji:'🏅',desc:'120 級組隊試煉綁定獎勵，不能交易'},
   ...Object.fromEntries(Object.entries(POTIONS).map(([k, p]) => [k, { ...p, emoji: p.kind === 'red' ? '🧪' : '💙' }])),
+  gacha_weapon: {kind:'gacha',name:'武器轉蛋',emoji:'⚔️',desc:'在背包開啟，依開啟角色當下等級與職業獲得一件武器。紫色傳說 85%、紅色霸主 15%。'},
+  gacha_armor: {kind:'gacha',name:'防具轉蛋',emoji:'🛡️',desc:'在背包開啟，依開啟角色當下等級與職業獲得一件六部位隨機防具。紫色傳說 85%、紅色霸主 15%。'},
   scroll_w: { kind: 'scroll', name: '武器強化捲', emoji: '📜', price: 75, desc: '武器強化 1 次（每次消耗張數＝裝備階 T）' },
   scroll_a: { kind: 'scroll', name: '防具強化捲', emoji: '📜', price: 50, desc: '防具（盔甲／頭盔／手套／長靴／腰帶／內衣）與耳環、戒指強化 1 次（每次消耗張數＝T）' },
   blessed_scroll_w: { kind: 'scroll', name: '受祝福的武器強化卷軸', emoji: '✨', desc: '武器強化成功率增加 10 個百分點；每次消耗 1 張，不改變爆裝率。菁英怪／群組首領掉落，可交易，不在商店出售。' },

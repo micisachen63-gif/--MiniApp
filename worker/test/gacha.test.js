@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { gachaOffers, drawGacha, GACHA_RATES } from '../src/game/shop.js';
-import { buyGacha } from '../src/services/player.js';
+import { buyGacha, openGacha } from '../src/services/player.js';
 import { canEquip } from '../src/game/gear.js';
 import { mapForLevel } from '../src/game/formulas.js';
 import { MAX_OPEN_MAP } from '../src/game/constants.js';
@@ -12,9 +12,9 @@ test('轉蛋品質機率合計 100%，最高可得霸主但不含遺物',()=>{as
 for(const cls of ['sword','archer','mage'])for(const [path,level] of [['',1],['A',30],['B',60],['A1',120]])for(const type of ['weapon','armor'])test(`${cls} ${path||'未轉職'} Lv${level} ${type} 可用且正確扣款`,()=>{
  const c=char(cls,path,level),w=makeWork(c),offers=gachaOffers(c),o=offers.find(x=>x.type===type);
  assert.equal(o.price,type==='weapon'?10000:5000);assert.equal(o.tier,Math.min(mapForLevel(level),MAX_OPEN_MAP));
- const before=w.char.gold;const result=buyGacha(w,{now:Date.now()},{type,requestId:'gacha_test_'+cls+path+level+type},randomSequence(.99,.98,.5,.6,.7,.8));
- assert.equal(w.equipment.length,1);assert.equal(w.char.gold,before-o.price);assert.equal(result.result.price,o.price);
- assert.equal(result.ledger.length,1);assert.equal(result.ledger[0].gold_delta,-o.price);
+ const before=w.char.gold;buyGacha(w,{now:Date.now()},{type,requestId:'buy'});assert.equal(w.equipment.length,0);assert.equal(w.inv['gacha_'+type],1);const result=openGacha(w,{now:Date.now()},{type,requestId:'gacha_test_'+cls+path+level+type},randomSequence(.99,.98,.5,.6,.7,.8));
+ assert.equal(w.equipment.length,1);assert.equal(w.char.gold,before-o.price);assert.equal(w.inv['gacha_'+type],0);
+ assert.equal(result.ledger.length,1);assert.equal(result.ledger[0].item_delta,-1);assert.equal(result.ledger[0].gold_delta,undefined);
  assert.equal(result.result.item.tier,o.tier);assert.equal(result.result.item.element_tier,'supreme');
  assert.equal(canEquip(w.char,result.result.item),null);assert.notEqual(result.result.item.grade,'relic');
  if(type==='weapon')assert.equal(result.result.item.slot,'weapon');else assert.ok(['armor','helmet','gloves','boots','belt','undershirt'].includes(result.result.item.slot));

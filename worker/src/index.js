@@ -123,6 +123,7 @@ const routes = {
   'POST /rpg/buy': act((w, c, b) => P.buyItem(w, c, { item: String(b.item), qty: Number(b.qty), requestId: b.requestId })),
   'POST /rpg/refill': act((w, c, b) => P.refill(w, c, { hours: 24, requestId: b.requestId })),
   'POST /rpg/buy-gear': act((w, c, b) => P.buyGear(w, c, { code: String(b.code), requestId: b.requestId })),
+  'POST /rpg/gacha/open': act((w,c,b)=>P.openGacha(w,c,{type:String(b.type),requestId:b.requestId})),
   'POST /rpg/gacha': act((w, c, b) => P.buyGacha(w, c, { type: String(b.type), requestId: b.requestId })),
   'POST /rpg/sell-gear': act((w, c, b) => P.sellGear(w, c, { itemId: String(b.itemId), requestId: b.requestId })),
   'POST /rpg/sell-gear-batch': act((w, c, b) => P.sellGearBatch(w, c, { itemIds: b.itemIds, requestId: b.requestId })),
