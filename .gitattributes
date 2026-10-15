@@ -1,0 +1,2 @@
+# Keep schema fixtures identical across Windows and cloud checkouts.
+worker/migrations/*.sql text eol=lf
