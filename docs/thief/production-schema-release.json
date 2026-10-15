@@ -1,0 +1,39 @@
+{
+  "status": "VERIFIED",
+  "sourceCommit": "d8ca3274d4ec609ff9864b4c47c988546d970b67",
+  "authorization": "User approved after backup, restore and hosted D1 rehearsal",
+  "databaseId": "bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4",
+  "startedAt": "2026-10-15T19:10:58.971Z",
+  "verifiedAt": "2026-10-15T19:10:59.877Z",
+  "statements": 165,
+  "writeAttempts": 1,
+  "responseUncertain": false,
+  "durationMs": 467,
+  "before": {
+    "ok": true,
+    "schemaSHA256": "1dae0300e2858fb19c67233cb322672ab225e616bd65c98d36d60749076abb34",
+    "objects": 135,
+    "tables": 41,
+    "foreignKeyErrors": 0,
+    "quickCheck": [
+      "ok"
+    ],
+    "initializerRecorded": false
+  },
+  "after": {
+    "ok": true,
+    "schemaSHA256": "28c205992fe424cf431fd5cb5e4b9217e21032f83c66d4c777a67545a3cf4551",
+    "objects": 135,
+    "tables": 41,
+    "foreignKeyErrors": 0,
+    "quickCheck": [
+      "ok"
+    ],
+    "initializerRecorded": false
+  },
+  "backupSHA256": "53894ee5c080f7557c1f43b787961c9f532fd25b135e8a9c9c2085a4f2f9428a",
+  "hostedProof": "hosted-d1-rehearsal.json",
+  "migrationTracking": "0025_thief_empty_database.sql recorded",
+  "gameRelease": "pending",
+  "migrationTrackingAttempts": 1
+}

@@ -1,6 +1,6 @@
-// Candidate thief rules. Keep this false until art, database and all combat modes pass release review.
-// A config flag deliberately cannot bypass the missing production database CHECK constraints.
-export const THIEF_RELEASE_READY = false;
+// Thief release accepted after all 62 visuals, combat modes and the preserving-data production CHECK expansion.
+// Build-time class eligibility follows the verified database and art acceptance receipts.
+export const THIEF_RELEASE_READY = true;
 
 const freeze = value => {
   if (value && typeof value === 'object') {
