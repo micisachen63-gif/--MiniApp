@@ -1,21 +1,29 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "ead15a0a3b6dd53c39cf7742083ad8e4dd8ff9bd",
+  "sourceCommit": "c5e08a2cb11f1734120b808d6cd6c206c2253764",
   "service": "elf-rpg-api",
-  "productionVersion": "2eddefdf-8f09-42b7-90da-602d3e350704",
+  "productionVersion": "eebc36c9-1471-490c-a760-9b54cf26a51c",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T20:25:41.068Z",
+  "verifiedAt": "2026-10-15T20:36:11.665Z",
   "runtimeSHA256": {
     "index.js": "726ec3605e44c1b5eef402c28092a45f07d117e8d42e5d02ea079923f0d94a53"
   },
   "source": {
-    "fileCount": 8541,
-    "sha256": "a9647cc30447dc679b5c1c511751cba39b03071df575f419f49bd421bb2bd320",
+    "fileCount": 8736,
+    "sha256": "d9df2344e7d64d70111d1390ed414fe85078d0e24c8b5a5897a4c76b9e2590cd",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
         "sha256": "6df9deee2ea4ff0a27f042733b0e661d107d18352355659929af6532c6ee3dbd"
+      },
+      {
+        "file": "worker/art-production/armory-specializations.mjs",
+        "sha256": "37ad4bf735bc566f86e280e6bd2214ef9358ac05b0e7fa118d93e0d8eb284854"
+      },
+      {
+        "file": "worker/art-production/build-armory-specializations.mjs",
+        "sha256": "a3aa5bd67f816dc10131f7bc9dc52f50e952eeb5a10d1397c9271b623957d438"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5-rejected-gutter.png",
@@ -159,15 +167,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/first-prompt.json",
-        "sha256": "404659594ef1b2b058fcc45094801e3448745e68ca48b9859f6df03da722447f"
+        "sha256": "23e03561097eaaf1e65947d55de8e853e8ca67b2d16d6d0a5e06fc6d1309172e"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/first-v2-prompt.json",
-        "sha256": "4d92535d6c82436ccad0e6e91b886822afceb20f329b09e5afcc00f9bcbe09e1"
+        "sha256": "50c13fc8a8bbaa5bb2edb6ff9e7658a4ff4e77772a4e220c10dff5b37123ba89"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/hero-rejected-v1-prompt.json",
-        "sha256": "7ebea771438b8daa19099897b95ba392b584bf4ac511d49f3abbd3f0b9c6befc"
+        "sha256": "042283751d5824db95d7f1102d3ea122adc0d0e5ce3421fd2bd1d457ee0e75f9"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/hero-rejected-v1.png",
@@ -175,7 +183,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/hero-selected-v2-prompt.json",
-        "sha256": "6c52b359b79452a8dd5bca50273ec90abaabe3eec98e53c5b642a71aa79f7b3d"
+        "sha256": "69ccdc3114000a51af518c933963d395af13352707f22ee0acd37a85d9370dc5"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/hero.png",
@@ -183,7 +191,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/last-prompt.json",
-        "sha256": "8ab40af481a06f8925c5100eb090f78d0a545f8ea6d0034dae951b2ca38b5111"
+        "sha256": "1955d78b72197f0155a34e9b2167b1211a0ad0a135936a72e1cfe9bc3a7a5c0b"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/layout.json",
@@ -207,11 +215,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/first-prompt.json",
-        "sha256": "fe11b8f5846605cd590c2d155154aad5637e3493746b25ce3744953c269d7cab"
+        "sha256": "e6a388d7c9ad98d127abdd57514b2ccb124fbc5b5dcd29be0810d7273c628319"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/hero-rejected-v1-prompt.json",
-        "sha256": "5a5f7430f1745cc92e11c0f0ad3ad2267b1dde2ed229a863435da7bec2e8eef3"
+        "sha256": "40d4a8f9a19becd02eeb5068ddc15edf0a192ef34669852844158610d3fb97e1"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/hero-rejected-v1.png",
@@ -219,7 +227,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/hero-selected-v2-prompt.json",
-        "sha256": "5734f47f9b27082f7223bfaa4944356c39f03db7866e4b9e80555e2eba5f2118"
+        "sha256": "6d124f5ab26c2ffbce9ee3f4ec6ffb2d256a8e70ba0840201167c4b9ed5028fb"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/hero.png",
@@ -227,15 +235,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/last-prompt.json",
-        "sha256": "e6a0b03cf9283583b4b760ebb0272b4e6bad34620875c7cc0497966adf3ffb0a"
+        "sha256": "0f9f9c701e38da1c6023992bb9c103481f285d711093ba73d14db1d3a6e2c7e7"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/last-selected-v3-prompt.json",
-        "sha256": "ce8e8670ce1f411c97b85a7482cf576e98381e562dcab7fd38c13a5425affb55"
+        "sha256": "c5af3a2a4c0476a5cc56e4e0a4f48e6a9bc322740af876e0f45656bc1b4ca331"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/last-v2-prompt.json",
-        "sha256": "4e8e6c00ff26a8470feb50335c6f2c38a2757bed69948ceda86ab4855a7dd632"
+        "sha256": "f0d39c5d00d1180275afe5518ac9154cc0a008d9d684f6d616652d4ba36e21ee"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/layout.json",
@@ -251,11 +259,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/first-prompt.json",
-        "sha256": "1e3d4ec419ee56a253a7375251b0d9e3a4d5a3f3e17ccee1fcdae13ea4de539e"
+        "sha256": "9df71f18d7b22b995291daa5a252b58688ecab92f90ce09a58eb979ca4895ca8"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/hero-rejected-v1-prompt.json",
-        "sha256": "feff9e6213fc036472e05083b090041c525527582fc51e2c0370c0ef4619da2a"
+        "sha256": "b678dadfb16e52e12810dd6d5acca31179c1b0e2fa8ad52ec9feba813af9a5c6"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/hero-rejected-v1.png",
@@ -263,7 +271,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/hero-selected-v2-prompt.json",
-        "sha256": "3b77f31681ac0b67cae8e1457f9291455defc1bdf59969186f35f56b93a1827c"
+        "sha256": "8a183658753d6d2cb60d70ce7cda34b327a29fa32e0ac3c194c32ef27f3cc209"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/hero.png",
@@ -271,7 +279,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/last-prompt.json",
-        "sha256": "7682c2e1c2d848f0a52f1715e814fc9f0c9f85b00ee5ca318352abfc662ed932"
+        "sha256": "89afcab93d200c54a8aea12bd85de33031015359b321d2465add01b129c487bf"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/layout.json",
@@ -287,11 +295,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/first-prompt.json",
-        "sha256": "7687c7a6938c57b17030622427aed95ba8fffc4ee52493e9201744547f31b8af"
+        "sha256": "5519a7b252c153ec145440c0d46823378025277b7269541e0bf13f1ed96d87b8"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/hero-rejected-v1-prompt.json",
-        "sha256": "5c9c59cea81fb0f154b8bd398d5c66da16b952351088c7182fad1ab518f4604f"
+        "sha256": "4d8bbb29c3c27db20aecf291de90221e7b2bd66914fb6cdfacbc6804baf26fc5"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/hero-rejected-v1.png",
@@ -299,7 +307,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/hero-selected-v2-prompt.json",
-        "sha256": "9a24700d0e74e7ed41e4f49a7b24f88924e493160e0c8edbb2a27baa9b94a4b0"
+        "sha256": "bd944494ab3407b1490dc60aa347d94ee7340ca34cfc1e20bf81947b09030dc7"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/hero.png",
@@ -307,7 +315,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/last-prompt.json",
-        "sha256": "d40c530b8247be0a798d0f0b27b720d6922f731ab9e7821e253f96da99243c9a"
+        "sha256": "b61a2944ecec2224abca9e4d1312906d1ea185b47bf5c2053cf861dc284fbe72"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/layout.json",
@@ -331,15 +339,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/first-prompt.json",
-        "sha256": "1c8d928ef01e4330616de0667022e4d36859fabcb2ad91b96f9b268053912557"
+        "sha256": "8e05974c947334d00f8fd0ffd822ca504233fc37447ba7e8c65bb0afe0efd488"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/first-selected-v2-prompt.json",
-        "sha256": "cff4e113fa0d0bff1d8737fc2390951e6e0bfea9440de5babace949aa28ef35e"
+        "sha256": "befc2e9d93cd9618e20c9790021207600a010b9aae35549104084844c088dadd"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/hero-prompt.json",
-        "sha256": "9a8426542bbab8e7cc0a152b8dc58818c77a227ed8e2b51fc7f4f3635717e33b"
+        "sha256": "615db2d98ccf21ad2e022cd4addaf3bf787254f4fc24f31d9cddb41951aa6d54"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/hero.png",
@@ -347,11 +355,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/last-prompt.json",
-        "sha256": "72d033db8ed97180bcfcc6a3e45891dc726c06c58e04a71a72dd474fa09914d9"
+        "sha256": "69f0b0a430436f5c4ae69cf53740c3cd998e9ed37062439ccdb6cd32c59fb2a4"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/last-selected-v2-prompt.json",
-        "sha256": "c5eae397794329d8b1c668a5a182c7ca32e26b450100ecf0c9de7586456bbec4"
+        "sha256": "9d8c1a17573abf8f7ec5682decc82a9823e0864e06fc02104f79a4b2efc740b1"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/layout.json",
@@ -371,11 +379,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/first-prompt.json",
-        "sha256": "bbf81aa4f0fde62a007aaadc3bfe90ad706564a9b8876becb186daa5113b2dd4"
+        "sha256": "28cb6478b7a6b719df282ce67cb4544fd5514530e2186db13ba127f18ab7f04f"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/hero-prompt.json",
-        "sha256": "e69b16ce158ea5a9bd6e3bfd0178be2ccf704b627be91548574281b5414b4844"
+        "sha256": "441dd2f1a78f14961cc1d909d50f3681a0d0448f840742fea48aea6130800768"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/hero.png",
@@ -383,11 +391,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/last-prompt.json",
-        "sha256": "e39bb8466d0914ddec30b9a0e3d437fb9a102048d05179654caaa9cf73b5d0e5"
+        "sha256": "7944fb50eb6892160a0c7353edec7346f7e1a3cea240294506ada8c752220dd8"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/last-selected-v2-prompt.json",
-        "sha256": "3d06fd7a3a8b514a6d40431a73fb49c47c31ea1a90e8f68aa4f33f721a512580"
+        "sha256": "5be94f30e1c47fe43883ddba62b70271159f2017c8d320fe2eec26d3e821bcaa"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/layout.json",
@@ -403,11 +411,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/first-prompt.json",
-        "sha256": "b5d6d67bf4c76ddb4ab813cc4d1fa81aa298a7395ebc8d9eb9dbbd0637899f38"
+        "sha256": "74656bdfde3165e5254db62e730083438a26cd6fe4dfbd207508a8892458ffc7"
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/hero-prompt.json",
-        "sha256": "8a2c12b0660d887c0f4174886fb7fc5bf8942a8d0d9a01e5af555887423ee1d8"
+        "sha256": "f93388bedba7a957c24691c17a3ecd236b7bf7efd6710d596c16cb79247ba030"
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/hero.png",
@@ -415,7 +423,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/last-prompt.json",
-        "sha256": "8e1bb6336f4b21074c3deb3e8a1328bd3995f9ff951d1516bc2b49d1d8f242aa"
+        "sha256": "e412a079b32a297215821b4b14d47a9de6422ee0f8eb1a92ee0fd519229f35d9"
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/attack-0-5.png",
@@ -427,11 +435,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/first-prompt.json",
-        "sha256": "98ea139bd5e61ca93048ef4e48b09d018e69676f58bc0df7debff1997bbf0b71"
+        "sha256": "30dcfe62ab40b6b09f5e42696e88c1547e2994eeb9313b05ed78721c7e03dd59"
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/hero-prompt.json",
-        "sha256": "0a35749e1b4825a96ab23767976af5039d6704e2b74290b4282eb07f110a01d1"
+        "sha256": "99fa328598075ab573f79f287ca0ef33540c2d7eab114de6c46fd2554427ea31"
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/hero.png",
@@ -439,7 +447,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/last-prompt.json",
-        "sha256": "524201b47a43dc64840c55c835008ccc59f48641320ee4ac667db9cd500a8914"
+        "sha256": "ba8b47dd63b96581325af30902543edc4bb5fd3ff2f9c2f0e279085c5b60a5dc"
       },
       {
         "file": "worker/art-production/thief-20261015/A2/adv2_thief_A2_f/attack-0-5-rejected-gutter.png",
@@ -631,11 +639,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/attack-prompts.json",
-        "sha256": "c2763690c78f42b3dc2e8fb86a1e25571dae0b3eaf153dcb3227a12b6e125a6c"
+        "sha256": "6783455e930b45fd5a5d0abcc13599cf500013e92fe1fbbee35494b651e17baf"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/first-selected-prompt.json",
-        "sha256": "d6667c2c14c67c86d7d7b3799bf8858fb8e558cfb3b50a7d05db020f6c349c7c"
+        "sha256": "1b5df89e271b75d4057c328cc963ebac26968fdc04d82310ba34293e6580c6da"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/hero.png",
@@ -643,7 +651,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/last-selected-prompt.json",
-        "sha256": "f04f403a5fab62b1b31acdefaa09a0abe18543c710ee927a31c044bb1ede2235"
+        "sha256": "0976569d80721f35754b62493ce72efeb244786f98d153073ad68bfdfde5b852"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/layout.json",
@@ -651,7 +659,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/prompts.json",
-        "sha256": "af660e0c36b5d339efccf763f3e724ffec0f2ac65c3b94bfd91701b74eb9ee9e"
+        "sha256": "0c072746a2a98349e8dc5416f74beb6e61a5298269e74556a81f8ea9ae84c32b"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_m/attack-0-5.png",
@@ -671,7 +679,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv2_thief_B1_m/prompts.json",
-        "sha256": "9afcabce700907f24f7ffb49fd56d2463728dc7b1ec4f5171c8e15a7ed76ecf1"
+        "sha256": "d568ef57f56b19b890e35e6d0b79ab8c24c2303969dae17a43facb76629b87f0"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/attack-0-5-rejected-overlap-v1.png",
@@ -691,7 +699,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/first-prompt.json",
-        "sha256": "30d6225ee84df6ca11f94faba766da34933e1482309705eb0ec60dec7fc04d52"
+        "sha256": "ae38326246e10f317d199c408b7900cd6200818c9a12eb883f8b24c27b766701"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/first-rejected-portrait-v2.png",
@@ -699,11 +707,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/first-rejected-v2-prompt.json",
-        "sha256": "b383205a2f70cd861ee61be5b5b4374ad2166f3faa0bc4e38120ee76bb6b00e0"
+        "sha256": "9f4fa279ddd716005862e0343695096023e38e9aa6813a019d3d4f298fdb05e1"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/first-v3-prompt.json",
-        "sha256": "7ce2aa36e18e713f4098c0255549401e75401608344361740fb04604faf5d47d"
+        "sha256": "da70a2135067afcd9aa5ec2efc41c1fd2bb6596cd35d9c8bee81fc698f586465"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/first-v3.png",
@@ -711,7 +719,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/hero-v1-prompt.json",
-        "sha256": "fb8271e4abd1e4d77629387d69d465cfce67ffcb4db7c710b100b695a46334d0"
+        "sha256": "95116327c354cdf33275fac723727d0bd5057c3972797e2997ff13e35a6b172f"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/hero-v1.png",
@@ -723,7 +731,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/last-prompt.json",
-        "sha256": "280ccf6140efcc7c4c941faae3f92ab23bae43627c528ce017a778d831bfd67a"
+        "sha256": "02622de15ebc85c51aa0b0b53403da89de2fc9263142db88ecf241c8d79718f7"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/last-rejected-portrait-v2.png",
@@ -731,11 +739,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/last-rejected-v2-prompt.json",
-        "sha256": "9bb996a7726a27c5d258126c85f3f40e7b165485ba276d472be6881a30bb3a93"
+        "sha256": "5c8bc101cd9a823390614b2c0fa33f93ae3490caa4fc12691f0edbae2707fe2f"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/last-v3-prompt.json",
-        "sha256": "755fce0c0268fdba29ef359da9ea853d3e2a3ee6e732552ba6ed0bb3624c8bfe"
+        "sha256": "63fa9f07da56cbe0f04a5307f04e4b19413d88dd74c28be53d24d957f83cc2bd"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/last-v3.png",
@@ -747,7 +755,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/prompts.json",
-        "sha256": "15cc813f2de0730fc6474db9a76f2a9320fcee818435086a9cc2afba589ddcb2"
+        "sha256": "74819acaf5c9c9ce4b0be30f283d9b43233c759b3adb478455a32b9356a93af7"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/attack-0-5.png",
@@ -759,7 +767,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/hero-v1-prompt.json",
-        "sha256": "02506163536b430f629f0ff61bcdfeff9ba18c1a038e6500682e06be5e4b3d9e"
+        "sha256": "1c7865060e17d55cec5a532a3e86acf494fd7263cfc60ca8c39526b9aa6eea9e"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/hero-v1.png",
@@ -771,11 +779,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/layout.json",
-        "sha256": "9024f522c27660c01545d1a888d2cb2e7550b2ad995ac626275fb1269454c333"
+        "sha256": "91829eb68d1b9cecbab57328e941e0b083da471f718d0b4039618408bf680ff0"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/prompts.json",
-        "sha256": "cb23aa155c5335b2e783d11a46bbf9b558d55b1f8e5f2d5022af9ca908ff9f1f"
+        "sha256": "cc13b507fdf204b2468eed4dc36a76a3ed7aa487cf449a91214834adc05bd27f"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/attack-0-5.png",
@@ -787,11 +795,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/first-prompt.json",
-        "sha256": "4dcaf24bf2f451311869a8c4c16c5258ee5762e9520fe87faf7ba755b0b22d9e"
+        "sha256": "81078020de62e0ae6e95537541e1693fb41e921a75574ff5d8a374e4aa0991d9"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/hero-prompt.json",
-        "sha256": "6afbc87d53352d47b5e1b37f6ff521b70d3b6cad7a450e20e996a93f0357866e"
+        "sha256": "ff1e2e4ea2b5987565ecd395dc70a58546ccb231ea1126ec2d61b14995954280"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/hero.png",
@@ -799,7 +807,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/last-prompt.json",
-        "sha256": "093b2007762156045ccf6c2fb27f3777c590da994f4cde4fee074ff9797c2ccb"
+        "sha256": "27852f84480b0905f58ff43fec3a3a15e865d1af903798301627669f2e5871bb"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/layout.json",
@@ -815,11 +823,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/first-prompt.json",
-        "sha256": "3077e5c9586c3fea7d4dba2b3814ae5bac891b12d34ff729ecfabd9461009248"
+        "sha256": "f4500c8910bb795dbcd9b6a6a56fd592c85eb4b88263df4fd89fa1a43ae0d62e"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/hero-prompt.json",
-        "sha256": "65f3d884396b7f69fc58c302716e53c09ba557ee98858f58dfa75be1dae1a07c"
+        "sha256": "97edbe5464264bb8a0b46ddd8cba614b3497341e31547a1b915ae7c94ffa3858"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/hero.png",
@@ -827,7 +835,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/last-prompt.json",
-        "sha256": "51721576246bd61c60b8646f8e6a668fd56c7edb4a21d6cccc41fe9a776cf021"
+        "sha256": "e5b2f4efda8821188e13ea6d654e28a884f2cfe941a2263f067a77b91b0eb670"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/layout.json",
@@ -847,15 +855,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/first-prompt.json",
-        "sha256": "2c5415d4abe4a3fafc2f03ac755925cb9dbf672d8d3c7050fe553e7b2181810e"
+        "sha256": "78a3c2088ab1fda1a03673f275e65a95a9e8572c4b5ac01fb61989cce696d4c3"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/first-selected-v2-prompt.json",
-        "sha256": "e5f55ed32a5a58c4a4e7fc369baa79ee25013aa34b0b33839a922c40e0c916c0"
+        "sha256": "72df6b07464c9eacc97b3642eb44289b7bc3db7bb43c9b0aea84b7fdea7d833c"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/hero-prompt.json",
-        "sha256": "44c97750442a7c1f545dced7e2e040a660e20fc13a55f3e3815df8d27e5595b3"
+        "sha256": "c75ee89287f15ce527bdc07cacb7629e240ba2b0061c6c915e99b5098afcc17f"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/hero.png",
@@ -863,7 +871,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/last-prompt.json",
-        "sha256": "05999cf0c03b6ea311a5626b988a06324aa6cdf3b9bc0befc5b64eb0d45346b7"
+        "sha256": "a125a4e97e074820e2cce1f63dadcc3c90bb8cafdeaf236380ecb0643e185117"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/layout.json",
@@ -879,11 +887,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/first-prompt.json",
-        "sha256": "2df5cdba91adda15dd8b029d10b276575ef2c1a0dee605230bbf395a0a4bea4e"
+        "sha256": "c0bca4ae4977807df5f0e482eb186538d976445c2fbcee5f540ae0c8830c1a9a"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/hero-prompt.json",
-        "sha256": "f82f1107d7c2bce5584e2b42045008bfcb50a0db9d5721cb5438466fab7da724"
+        "sha256": "c5b1ada889e21df57a6813bfb8a63055bdd25fa7d597bd38e9a03f7aed4132e6"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/hero.png",
@@ -891,7 +899,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/last-prompt.json",
-        "sha256": "77fbde2f30387e8c5036a2b8e6465de972ffc4f29a973784dc4710c0de088af9"
+        "sha256": "a271d93d2048b1de232cdc296c691d113bc7b56f00487db7865ce8dbb7d0c065"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/layout.json",
@@ -915,15 +923,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/first-prompt.json",
-        "sha256": "df3c7739f8791aea0ce035470b20194cea87d52a31cda94715a54006409dfaab"
+        "sha256": "63c6f6e2246e1356322e2acab076e2ccb1fa18b708945c74dc7d09f6498d7a56"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/first-selected-v2-prompt.json",
-        "sha256": "3311f4d69ea45779e669490fb0daaa86aedb741ea5eb72efa078bab7e6e297ae"
+        "sha256": "7c025bafc46a08c856e2348ff7c3fa1a12388466ec349781e5d30d506466b7a2"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/hero-prompt.json",
-        "sha256": "033d6616b48dc41570fd5eeea5e08278c6bd6111f0c3e69b0a65aa20921b3c7e"
+        "sha256": "7143879444a07233f52c6b4dab0d6143c75994603a99eb99d7f0c7d66a614648"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/hero.png",
@@ -931,11 +939,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/last-prompt.json",
-        "sha256": "6a8f690a6dd3086fbbf8338612f8d435a1dc39f4a3b2a90d07d72ee586fcebfb"
+        "sha256": "ebae657db1659ccd46c2f7420145a85be9098d75c69397d7a3ec6b265738023f"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/last-selected-v2-prompt.json",
-        "sha256": "1d1585d468335173d3fc2b03b087e15d8f9a014f275623052e086e1f853dc473"
+        "sha256": "057fb94cc6b06b4d0ee8c9c6f0f870c0889be17fb002a5534e77d85e325646db"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/layout.json",
@@ -959,15 +967,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/first-prompt.json",
-        "sha256": "aec0fc288597ddb297d62c2176f1a2b1f4fb691434ae752560bcc45acddd794a"
+        "sha256": "1af404ebd57c6aa35edc9c263fdd7d85a4d3376336b66b72536bfc835c8c4420"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/first-selected-v2-prompt.json",
-        "sha256": "83e83d4bdcbbdd9c6277b640b17535de3735081e00eab14fcc540f7288f6c06f"
+        "sha256": "1ee51423902ea8020682ceb7671da8cb25205ac7ea3055a4a2e331593c841f6e"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/hero-prompt.json",
-        "sha256": "23221235eb885b99220dc16c920fc04e00ac1a750ae785c25f4c5c7fae8520f5"
+        "sha256": "e527f2dfa8e95512ebcc32f94ded3ec7e7c9dc448ef0230dfe1ba1848ab4d5f5"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/hero.png",
@@ -975,11 +983,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/last-prompt.json",
-        "sha256": "3ae5059c06fe65fe2b7e650b428a17a21dd0fb356f7de5787f2c3dafb9b4aac6"
+        "sha256": "64bc485af2dc7ec61602b7faeb178bd833ac6ac251837714b3041a979d553e22"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/last-selected-v2-prompt.json",
-        "sha256": "378cef21692aeb96322498927149299409b452562cf9f3ee53cb10af7f111a91"
+        "sha256": "e0ca94a02bf2496cccb54e998a4ffed34f6ee3b1162530cc2034387f8e34feee"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/layout.json",
@@ -995,11 +1003,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/first-prompt.json",
-        "sha256": "00a11ebeb7cf5abcfee8beca1e949e2d0a0e5f7124a8b494f51a152ced977f10"
+        "sha256": "4db7d5fdd8d550ef124a611fb76a511d6184a398e4ccd9d3da06a4150ca94ca8"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/hero-prompt.json",
-        "sha256": "9d6e0f7e67296d5b4aa6c3a1028e2fa2314cca555f7d9849d4c0d24d63023652"
+        "sha256": "01c39f3f19150b6d7fd59b537b5c6af39afddc1ebf4c63d507f0690ab86935c7"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/hero.png",
@@ -1007,7 +1015,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/last-prompt.json",
-        "sha256": "3519cdd9afe089ccae2be8f250b16a34b639bd7757c2ee98686726bfded1278b"
+        "sha256": "52f405d88422910686d8c14e3c8a793ce15fc342a3816cbbcf734f5ec562e2b4"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/layout.json",
@@ -1023,11 +1031,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/first-prompt.json",
-        "sha256": "cf2708d7424c7f362fc9251f5a36153f7d993567bb232bbb8458c3a1551f9ab7"
+        "sha256": "d74e23f07b663598bd17aaa507b5f27c8d6bd28b45ee7cd7beb28baa71a490ec"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/hero-prompt.json",
-        "sha256": "f26f051c4f812961b137a1c1402675d0dce8f84dda8aa2581a10b9da57e8dbe2"
+        "sha256": "41985bff802661e13bd916b3c205cb214ab33abe11d206cf5c99731cab73add8"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/hero.png",
@@ -1035,7 +1043,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/last-prompt.json",
-        "sha256": "c2ad79f2077ef5e833870cb5c3178728f4b0ba03d1ced2d95f95ba06c461ecb9"
+        "sha256": "10470b12a4176087a8675f6ed0acc26210b8f9c9100bf776e3c6a2fcc2106b9e"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/layout.json",
@@ -1055,15 +1063,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/first-prompt.json",
-        "sha256": "6a87fb6cb26bc2c0f564098c4ec79dbef2f465b8bd424681867b8f4a1bd72ea2"
+        "sha256": "574e3697a0c3545cd96e1ffd847fe26961abd7c384ce99f50f804b447ddce83d"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/first-selected-v2-prompt.json",
-        "sha256": "aad9b87cadbd7f93f20c162402ad6990c90962505c3601446c4aedef5d2783eb"
+        "sha256": "6a10234718968cf1b6dde1069e3c955fe5638c35b4e3be11a52f391cab8d1cb9"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/hero-prompt.json",
-        "sha256": "4251f73a0f3185ecc11bbea66580a24dcb4e83e5240cd3d6ef9db1ad4a7b0167"
+        "sha256": "14e9dcaa75bd68f654bb68ec79e0dd2d6f7883204f19d1624984d8dbf5a9e553"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/hero.png",
@@ -1071,7 +1079,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/last-prompt.json",
-        "sha256": "616e9981c87f84e98d1420c6feb9b349ab361985db133097e3a4b06e0b6f16a8"
+        "sha256": "eff10620bf0fc8d1fdb7da2191a827482aa591b7d78aaa2683f9cd9ffcb637fe"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/layout.json",
@@ -1087,11 +1095,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/first-prompt.json",
-        "sha256": "1a2a7a182d3bc65556e9b5077ad8742728bcfcdff048856a6eda8ebe7ae7c848"
+        "sha256": "a0cbf320b01d2ed54a5363773550f8a841c3731e7d3502d55f42e3ede69b05b4"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/hero-prompt.json",
-        "sha256": "e37fbccfeb04cca2a7ceaef785da99d26ec80db322b566ac35414d3ecd8ba6ee"
+        "sha256": "6c91758114d0f32341822c9ef62b2df1a8be2db235eb79e564bacedaac11085d"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/hero.png",
@@ -1099,7 +1107,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/last-prompt.json",
-        "sha256": "e694090f0fe74083672d6a1fd9412c7186242108ab4a89b98b59bb980e11795a"
+        "sha256": "48d58a6d0f60d44977989a46fa80326af6cc3e2547d7f6766e190812cd6d3d00"
       },
       {
         "file": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/layout.json",
@@ -1391,11 +1399,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/first-prompt.json",
-        "sha256": "52f9e072111fe97c0fe8eb9770752e4f58ae38df1d87309aa08cef0ddfa5ff68"
+        "sha256": "2950f7ae9fcf715034545b2d55d0f6d5babb23b5dc73a0eea650a02d60bcd27b"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/hero-prompt.json",
-        "sha256": "6defed0164760a6c746a2567f4ee156ab136dbb94499c4fd2f304361046620b4"
+        "sha256": "dff47a3c31265853f72d7de6518f717bc76d72ed9a9744165a2215ad60434d20"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/hero.png",
@@ -1403,7 +1411,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/last-prompt.json",
-        "sha256": "37954ddd6e0757c2be0864ed1fb3535afa7b17d4551cf3bb2cc7229152137dc8"
+        "sha256": "d08909c31a81e81d50034d032ec54dbc98c258c66b7423fdf152db0f44319704"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/attack-0-5-rejected-edge-bloom.png",
@@ -1419,15 +1427,15 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/first-prompt.json",
-        "sha256": "95c0945df1f5f2f2551d39e29cba02d55fa29c0fdd8e02761633a6005d9e1813"
+        "sha256": "e1303b3377928090c3d2a30a8c6f8213cfdebd470f9e9193e18758d9c5413628"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/first-v2-prompt.json",
-        "sha256": "4d02416c6870427d4833c06118089b2a89b48f84c3e253df159a7a4656d5cf56"
+        "sha256": "0718e1976ac1e3eb442323f158a0439d40c66a519965f5065d6f09d032f85336"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/hero-prompt.json",
-        "sha256": "e9770f72a0557c888599022c92595a68c48a2fa8a52b39b07759d1881917fcc6"
+        "sha256": "e1c3409c5e3b55ada1f60f75fd97b5b0e63f86e0ae37f8905a6a2e8a6d282c8f"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/hero.png",
@@ -1435,7 +1443,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/last-prompt.json",
-        "sha256": "809dd190cf5b654de42c70ba7dce4afad9220edf1c04abbae331bced6a139e3e"
+        "sha256": "f796d0d9e4d7d087b3745d8b268d645a1c691707ec7b13238ae1c86677412ea6"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/attack-0-5.png",
@@ -1447,11 +1455,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/first-prompt.json",
-        "sha256": "cee69a3be7feb88b7567f2a2d5c2c18129f42c9c9f6e9affcbbfa2027561e0c3"
+        "sha256": "8b7e93895ce6e1c8ee7031213454b4e6c55747884216e7311613c4c04f9c7fd5"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/hero-prompt.json",
-        "sha256": "3e09591fc0aecc31c8d132b4f632510dd414b2c79b9fe6e861dab645887652f0"
+        "sha256": "a6c4ca4ced8a0a9efd4be4866f37a28889175b923b063296ea3514699baeea11"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/hero.png",
@@ -1459,7 +1467,7 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/last-prompt.json",
-        "sha256": "69791d9927973816ab277ac323f0418a7348f7d22b5647173f5d8f6f176e2ca7"
+        "sha256": "3ecf6f002e842d52f5894ae57133e9f545982b1f146d261c409a385374c0cb50"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/attack-0-5.png",
@@ -1475,11 +1483,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/first-prompt.json",
-        "sha256": "da6d09cb74398d0777cac4e52523811d6117cbcb726eb4a5e39e45ba628d83d5"
+        "sha256": "23b38996ca543d82ed69fa18d20a46a61e1c84742e67288b804e2b8e19012673"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/hero-prompt.json",
-        "sha256": "2f70b99b4f70220057692c016c772dc3baf0704370a8dee26fd4e56a348fd81e"
+        "sha256": "39f6cc313715cca33efedf92fcae8e89911bd521f61585b5de56fc2307d9e48f"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/hero.png",
@@ -1487,11 +1495,11 @@
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/last-prompt.json",
-        "sha256": "70389d358f1c2e12fe11c55ed261ed98f76def0961550fa9e71e06ace6664e6f"
+        "sha256": "b997d419cc997084f4725f310dc6b00c292735b6cd94800677c5912f456348c3"
       },
       {
         "file": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/last-v2-prompt.json",
-        "sha256": "0e98483a1ab0aa8e68745ff6f2ec9448dfb99bbc3f27ffd5d47a7ea8aa2166a4"
+        "sha256": "71cadc4c1e633a953344420a54104b4c4169637314d0d24cf664ed6278e027bb"
       },
       {
         "file": "worker/art-production/thief-20261015/thief_f/attack-0-5.png",
@@ -1519,7 +1527,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/armor/first-prompt.json",
-        "sha256": "0c51cac310e6872f926b52ba3db171f8c562b13392cd8409ee37425287be115f"
+        "sha256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/armor/first.png",
@@ -1527,7 +1535,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/armor/last-prompt.json",
-        "sha256": "39b237a8cd1ee88987dd9e50f16345e1e084dd281503ef8c3cad55222203127e"
+        "sha256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/armor/last.png",
@@ -1583,7 +1591,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/boots/first-prompt.json",
-        "sha256": "5517e0e9883811e715aecf1b20b742575c2cee7be94e55c44928e8c585c6c347"
+        "sha256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/boots/first.png",
@@ -1591,7 +1599,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/boots/last-prompt.json",
-        "sha256": "c5a88544504c7271fa3385783fc61a56b23255ffc00bf51a4137c320e612c7ba"
+        "sha256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/boots/last.png",
@@ -1647,7 +1655,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dagger/first-prompt.json",
-        "sha256": "122886392b3ef24a618fe7b7ba8e468c956ec465d2fd51b98c58c93b2385a248"
+        "sha256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dagger/first.png",
@@ -1655,7 +1663,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dagger/last-prompt.json",
-        "sha256": "0a32668d4ac81b886d519b8ee5ee10a1f4382f6696f4d2c8c7149c6508a84517"
+        "sha256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dagger/last.png",
@@ -1711,7 +1719,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dual_daggers/first-prompt.json",
-        "sha256": "69e997a158bb83445b7db0e10efe53b0306cfc35026f26223c6314a18f6e7043"
+        "sha256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
@@ -1719,7 +1727,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dual_daggers/last-prompt.json",
-        "sha256": "5531b94978880882fb07389a027a114b1abdd8de833897fdd58e6d1bda70b9d9"
+        "sha256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
@@ -1771,7 +1779,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/gloves/first-prompt.json",
-        "sha256": "9882c6e920f5311bacf6bbe08e59f6af0d04cf9a17367713575a7e5e23456abf"
+        "sha256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/gloves/first.png",
@@ -1779,7 +1787,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/gloves/last-prompt.json",
-        "sha256": "cb4e3f699e0676de933e1e036fbebedd3fe7573ee5ba88baf2a28b0d1d316bac"
+        "sha256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/gloves/last.png",
@@ -1835,7 +1843,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/helmet/first-prompt.json",
-        "sha256": "065cd6681d5bc67edec922df97f26c6f7ef6d57d90982035e0a79ffe5cab9b9d"
+        "sha256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/helmet/first.png",
@@ -1843,7 +1851,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/helmet/last-prompt.json",
-        "sha256": "3675e32c78e650117c00b997ed95c3996a7ea615b74aa918e4e9327060fa4f42"
+        "sha256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/helmet/last.png",
@@ -1899,7 +1907,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/throwing_blades/first-prompt.json",
-        "sha256": "af5287cd6eee4a84725825bd3be4435c66c96d1e1579cfba96c6985eebe53fad"
+        "sha256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
@@ -1907,7 +1915,7 @@
       },
       {
         "file": "worker/art-production/thief-gear-20261015/throwing_blades/last-prompt.json",
-        "sha256": "6784f2ae4a11f56bb3394f5fc3608b798c8968aa207b0b79518e3ba2160a5567"
+        "sha256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
       },
       {
         "file": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
@@ -1959,7 +1967,7 @@
       },
       {
         "file": "worker/art-production/thief-skills-20261015/source-prompt.json",
-        "sha256": "8481c42d90f1428efddfa0415a94c87b7b92399f4ca0f5e6e9d223fa40e708c3"
+        "sha256": "dc5e49305b43eedbdb59bb1fc736ed18e89c851d53a8b68421bc5017789d965d"
       },
       {
         "file": "worker/art-production/thief-skills-20261015/source.png",
@@ -2067,7 +2075,7 @@
       },
       {
         "file": "worker/migrations/0025_thief_empty_database.sql",
-        "sha256": "4b4283a5559e9324fac234c8d044f59070fb64d573f1ed02da4353b48f3dabc2"
+        "sha256": "6bd8a720148aaeb77f200be26f4bfa15dd09d163b257b6ca0347f1f8d03571b8"
       },
       {
         "file": "worker/package.json",
@@ -2075,7 +2083,7 @@
       },
       {
         "file": "worker/public/.assetsignore",
-        "sha256": "9e01a245912b85c909cfb01758311df8939009f01d044145bdd061463fea4fe2"
+        "sha256": "dbec3afce58dc29966e4226dde856cfab426e9c24364d82024ab5b9849d89550"
       },
       {
         "file": "worker/public/advanced-specializations.css",
@@ -2083,7 +2091,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "bc2eacfeb5726b751ba88d992187f2b02c5b685c4b4c34d329c0e2b458553bda"
+        "sha256": "98eb9f8538063536d1a2a14d8eb12c990ab7ed5adc415c66dac9f49cb03eb0b9"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -2152,6 +2160,10 @@
       {
         "file": "worker/public/app.js.uiux-backup-20261010-222829",
         "sha256": "b782ba0525ea44ae5b0c5c4964031ae1567f6d8ad4bcd47a243e9af0a1f16073"
+      },
+      {
+        "file": "worker/public/armory-specializations.js",
+        "sha256": "ae95d5a254dc0bc35d515520075fefb928691062e109217d342f6bd11347ddd5"
       },
       {
         "file": "worker/public/art.js",
@@ -30150,6 +30162,774 @@
         "sha256": "16c6071d85e674b068143e2e5383ef5bd36318ee3e31abed9bc23635033e224f"
       },
       {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A11-particle.svg",
+        "sha256": "dba1a2622cdb2d4efa815114fbf78909c24a11fb5b1e091ecc1286d92e0662d2"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A11.svg",
+        "sha256": "e8c2cc1bb985a6a280701a047bfcc04574f74330d9e47fe62cb1b9063b04cc34"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A111-particle.svg",
+        "sha256": "3028c4a2803277f085bd425e61bc9ce0449d9f2decc5fb9f5446f3e9b0ffaaa7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A111.svg",
+        "sha256": "7c4521c27acf72dce5151a9bba3d334051c3a9a4c35ad1b80fccc1f2b731ce23"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A112-particle.svg",
+        "sha256": "db1466b4b31c3fce626b2bfb93539ed728d82de3ad75f5093ff936f953013415"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A112.svg",
+        "sha256": "8ab9684ed1fa59fe68bdcfd3c2d686d2f8d7fb1535b1f813ef03af1b8391fe59"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A12-particle.svg",
+        "sha256": "dba1a2622cdb2d4efa815114fbf78909c24a11fb5b1e091ecc1286d92e0662d2"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A12.svg",
+        "sha256": "2d6124fdecba3a5bbcfa8742bc129798e755de4ffb6317db515333ba4eb60931"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A121-particle.svg",
+        "sha256": "6dc58c03ee10ffb1c09d713aedd1ca8d4598340829b44b81dd8e08ca5205019d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A121.svg",
+        "sha256": "d50aa6b4653d3238b86ba791601ff595333b77a511e63dd137099928b36d3356"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A122-particle.svg",
+        "sha256": "55f42f2ba4c01287d735218ec437f9d8c24c2cab21f8e8ad09eed0ec49b72b63"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A122.svg",
+        "sha256": "f711f6b9749fa9d01dbe7336952bed8fc193f7fba0a26ff7ce96a9be1c21e2e6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A21-particle.svg",
+        "sha256": "3381d798109783862f6dd52f87e0404deb40ab5f14115615ec5b96eabca8c160"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A21.svg",
+        "sha256": "b1ac4b6839dbb607fb1629fbe8ad0ceea4614bc3591e15bb858f87369e519fdc"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A211-particle.svg",
+        "sha256": "3381d798109783862f6dd52f87e0404deb40ab5f14115615ec5b96eabca8c160"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A211.svg",
+        "sha256": "bf89bf3d1d6fd75b0525e92f8b3714b67b79cb7f607c46cf4fcc94cdf4a878cd"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A212-particle.svg",
+        "sha256": "93b8fc2a80b48c7d8483da62ddbb9d2c4e97cbb427dec9eb1417db30d01c8936"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A212.svg",
+        "sha256": "919ec78721ac235bb7655e929b8b652cfedcaa80cf2b201ba993c1008f0b6e0f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A22-particle.svg",
+        "sha256": "93b8fc2a80b48c7d8483da62ddbb9d2c4e97cbb427dec9eb1417db30d01c8936"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A22.svg",
+        "sha256": "4d5158d932fad50896d8f45c29593ee705ad6c08162925906b8fff199b31db00"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A221-particle.svg",
+        "sha256": "93b8fc2a80b48c7d8483da62ddbb9d2c4e97cbb427dec9eb1417db30d01c8936"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A221.svg",
+        "sha256": "b242fed19ae8fc5f17031ab52c29c588d09e4b7855b5ebd3397ed3d4cbcf591f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A222-particle.svg",
+        "sha256": "1dc2a520aa97fcc754bc8e85b5b5331998fbc131e271335f8e36cbc8eed6a66f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-A222.svg",
+        "sha256": "236776fa95e92c8566b3ce1951c19b629838364e073937311fa3ee8ed877e78e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B11-particle.svg",
+        "sha256": "dfd9847841a192d9fc553a322758bb5b34d7d8c306b325136246cf5d04778318"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B11.svg",
+        "sha256": "b9eed152c363db6820570be147ede169a09c29ee56a70ee88382cb1acb12720b"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B111-particle.svg",
+        "sha256": "b9e8b310ae482a74f07e3d798ff341d22cd4fe92174feeec8fdef9d3c66acdb9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B111.svg",
+        "sha256": "ef7f07be03299d07df533ca527169d1d9d1399466f171119f3049f6172a75ebf"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B112-particle.svg",
+        "sha256": "dfd9847841a192d9fc553a322758bb5b34d7d8c306b325136246cf5d04778318"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B112.svg",
+        "sha256": "a9d3cd4ec7df07d77d229e6efce805ed5c29fb81c458d325a1ce26f093f4ea97"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B12-particle.svg",
+        "sha256": "b9e8b310ae482a74f07e3d798ff341d22cd4fe92174feeec8fdef9d3c66acdb9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B12.svg",
+        "sha256": "b4745a3ff30faf440142ad9484f2d4060096a146052e654287401db82633166a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B121-particle.svg",
+        "sha256": "b9e8b310ae482a74f07e3d798ff341d22cd4fe92174feeec8fdef9d3c66acdb9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B121.svg",
+        "sha256": "8a9134914052063881dc4a8e3d5294d906e3e3042e94865075cd3391f2c1f8c5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B122-particle.svg",
+        "sha256": "1dc2a520aa97fcc754bc8e85b5b5331998fbc131e271335f8e36cbc8eed6a66f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B122.svg",
+        "sha256": "26afc30692bb892a99f44de1bd5919ec62ba3439acedad82c994033ed71caa7a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B21-particle.svg",
+        "sha256": "4f79a0ad1d499017f27792ffff0e0e0d8b18c6ff3f0e7da56c23d005309495d5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B21.svg",
+        "sha256": "b57205e08b5cf80c0df20c44cdd5b5d2cdd7526248d6e62a6cb028f0668561c6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B211-particle.svg",
+        "sha256": "4f79a0ad1d499017f27792ffff0e0e0d8b18c6ff3f0e7da56c23d005309495d5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B211.svg",
+        "sha256": "9d0da12e37baf919ccff9a398081a94b2cfc5521ff784c652d50485ff98ca522"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B212-particle.svg",
+        "sha256": "4f79a0ad1d499017f27792ffff0e0e0d8b18c6ff3f0e7da56c23d005309495d5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B212.svg",
+        "sha256": "35077a532e11165d888bf7f14b4de99af45a3b2f3c45529b64dd3b67368d4641"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B22-particle.svg",
+        "sha256": "c4deb37b4029e911620f57d58579ad434074480033eb10cd5e0a39dfb7cdf061"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B22.svg",
+        "sha256": "0629346745d9afc327d19fa1a73974dfe04894d5ca8a2a7f2cd8b11da06e63ab"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B221-particle.svg",
+        "sha256": "c4deb37b4029e911620f57d58579ad434074480033eb10cd5e0a39dfb7cdf061"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B221.svg",
+        "sha256": "8774349f3195e31b09b67d14e22efb76107aa8f4021aacd1937fb06c7ee8d361"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B222-particle.svg",
+        "sha256": "2cfeaa5ca0787dad6689e04f59b0abb7c61a0195e8c292d223d31b9edae5714a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/archer-B222.svg",
+        "sha256": "21ba0ff2bb0e3a4c365619f894bb872e389ce2a0daa140a3e99843217c90545e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A11-particle.svg",
+        "sha256": "798fe6d10b637291f60ef016ce9e4429aec66f2a32d7a35bb187d01164034f38"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A11.svg",
+        "sha256": "a2fa17ccc13051e467f8a0e8d69065b41481f7054f186bc0fa95417defffb990"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A111-particle.svg",
+        "sha256": "55f42f2ba4c01287d735218ec437f9d8c24c2cab21f8e8ad09eed0ec49b72b63"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A111.svg",
+        "sha256": "86a8427710f25857e60a21d66be562e6ed3b736008d7533b005baa5466386ffc"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A112-particle.svg",
+        "sha256": "93b8fc2a80b48c7d8483da62ddbb9d2c4e97cbb427dec9eb1417db30d01c8936"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A112.svg",
+        "sha256": "e0154895dcbd3222a1f86a32775f71b1436915fd2b994bf4510b8b8f1a685de9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A12-particle.svg",
+        "sha256": "894235594a844555e76103f28bc1a44f51e0320a39643dd25a0d7613bdbf93ff"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A12.svg",
+        "sha256": "c942188b64d6312496bba1a0c6843121b383074de8e39c8c3bbb47597e0ae9a8"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A121-particle.svg",
+        "sha256": "894235594a844555e76103f28bc1a44f51e0320a39643dd25a0d7613bdbf93ff"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A121.svg",
+        "sha256": "3256938591ac73796cdad05a3cbf253849d658ab62a2af2510406d99ef61d8ad"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A122-particle.svg",
+        "sha256": "55f42f2ba4c01287d735218ec437f9d8c24c2cab21f8e8ad09eed0ec49b72b63"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A122.svg",
+        "sha256": "fbe0032239fc6ff468538967743cf6bd00fb322d391146ae72645e0d565b3c7c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A21-particle.svg",
+        "sha256": "50e804807fbef03296ff3a6aee5c2e264b7579b6ed10f34a2d5aad439cc4867c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A21.svg",
+        "sha256": "f8ef7eb0b12b28780a2801acb76ad4819c06fd42d45496aaa6ecbdf16a1c0a60"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A211-particle.svg",
+        "sha256": "50e804807fbef03296ff3a6aee5c2e264b7579b6ed10f34a2d5aad439cc4867c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A211.svg",
+        "sha256": "7acbb52c7eb72d5ba7108c7ec741feedef5728bd995f6879fad4e5bc5f225b0a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A212-particle.svg",
+        "sha256": "ae6504a5296b706f9eb0ebe4590cafc877d5884c9e63b9b88e34aae281f39ad9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A212.svg",
+        "sha256": "f9164fea43f1933bd0796914019f1a0165b2c11a5871ce0fedf66a4fea816648"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A22-particle.svg",
+        "sha256": "7323a1a6fd92e8173da5215c48e9c2a247c8c2ac0e4ed256d923e81e39de723a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A22.svg",
+        "sha256": "db407c2a5b8a68806810d7c017be5aa6844d60d5a4acd7613dad06725a4504a3"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A221-particle.svg",
+        "sha256": "7323a1a6fd92e8173da5215c48e9c2a247c8c2ac0e4ed256d923e81e39de723a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A221.svg",
+        "sha256": "a1dbaf45dd815f80387b3e87144959ad9c18c9ea30c35928476e2bb4d53b61d0"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A222-particle.svg",
+        "sha256": "50e804807fbef03296ff3a6aee5c2e264b7579b6ed10f34a2d5aad439cc4867c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-A222.svg",
+        "sha256": "237f731e265807037ab09b69ee300c5d5eddb55fdf177f5cc834e6e440e674a4"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B11-particle.svg",
+        "sha256": "fef5a65b0a018a966e1a3b33e09745bead1f043722be45e222d93c56ffd90208"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B11.svg",
+        "sha256": "5627efcf2106b32338e39f36120598c797f8c7c8f9ba71f2e74faad83dff276b"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B111-particle.svg",
+        "sha256": "fef5a65b0a018a966e1a3b33e09745bead1f043722be45e222d93c56ffd90208"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B111.svg",
+        "sha256": "68710fec168134cd22bef88431d86a625f90f5e4beb5123878d49d01aaef76b1"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B112-particle.svg",
+        "sha256": "3d63f4735723cf99b2c985f81710201584761ec9d21f2b975433acf9044052fc"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B112.svg",
+        "sha256": "e857e08220f6e3e785892dc6be97b81a646aa3e8eb1fefd964a7faf7e70e4ffc"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B12-particle.svg",
+        "sha256": "8814f6697658bdb0f96ae30f9d2a40f46219a5cd9f57047e427d88bea7087072"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B12.svg",
+        "sha256": "e19286d5dbc271bcb7a02df80a1618c625fa4c04f29d31846163f5caa86fcaa3"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B121-particle.svg",
+        "sha256": "8814f6697658bdb0f96ae30f9d2a40f46219a5cd9f57047e427d88bea7087072"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B121.svg",
+        "sha256": "5ac7731e5c4f1ff6d3a31a3ff3668cdb1608321c200f079d0a7a3f47cfbf163e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B122-particle.svg",
+        "sha256": "77f922733c5752edc3b1941adb9f8b6e0add71d8b573df1f20f5fc091c5149f7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B122.svg",
+        "sha256": "17ad6d5291840f33f14ad1d423553d37defb50d9f363d0e33a84c4390b8773fb"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B21-particle.svg",
+        "sha256": "1dc2a520aa97fcc754bc8e85b5b5331998fbc131e271335f8e36cbc8eed6a66f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B21.svg",
+        "sha256": "60f9e76b043bf95a21550a0bc95c24fd311a25be5aa3e34dae861258fbee8238"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B211-particle.svg",
+        "sha256": "1dc2a520aa97fcc754bc8e85b5b5331998fbc131e271335f8e36cbc8eed6a66f"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B211.svg",
+        "sha256": "124f409791ac6f117148c2ee23830e5978fea7b44eaa51093f29da34c041a877"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B212-particle.svg",
+        "sha256": "db1466b4b31c3fce626b2bfb93539ed728d82de3ad75f5093ff936f953013415"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B212.svg",
+        "sha256": "f164b72e59ea77771337ccb0d92f3eebae1093a927b0ebac5611a0d6d5c57349"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B22-particle.svg",
+        "sha256": "97545c3efadbc2b5cb4b1d5816cc977f4b3c19274a6f555579dc758ebb6ff46a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B22.svg",
+        "sha256": "f44bf497ac72be4bef96ac79fd34331b996b3876704057ab3b69df2408e19b51"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B221-particle.svg",
+        "sha256": "97545c3efadbc2b5cb4b1d5816cc977f4b3c19274a6f555579dc758ebb6ff46a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B221.svg",
+        "sha256": "f2f9473221ee5144ab61998b64eb22696b850dc7270b30c94b2b39bafec4d2f4"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B222-particle.svg",
+        "sha256": "97545c3efadbc2b5cb4b1d5816cc977f4b3c19274a6f555579dc758ebb6ff46a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/mage-B222.svg",
+        "sha256": "67c5643376c0d79541e5ee14d220b27cb28af2a4f743049529f8dfa3c8088736"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A11-particle.svg",
+        "sha256": "be1d7db5d83b47b88301a92326b2fa63557ce590e2990b8683dcf053db73dc5e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A11.svg",
+        "sha256": "e73ad3808c1db1eb8929b18f3c3a9198a01c9ff5c95f8763229a1e72b1d7fa5c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A111-particle.svg",
+        "sha256": "be1d7db5d83b47b88301a92326b2fa63557ce590e2990b8683dcf053db73dc5e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A111.svg",
+        "sha256": "73be43219ab287d43efad7b1ad354561d096c16af9ae0857095c9fb87b9ff8f6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A112-particle.svg",
+        "sha256": "ceea320aae9b8add595be4c362220bbfed65602d10a63d9791dd3afc53ea68c1"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A112.svg",
+        "sha256": "895227b57081f577f789d15fd426f737d64f29b017f477c30e553e4bd86f7da6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A12-particle.svg",
+        "sha256": "4d0d7f2fc3a25bb657bd8a147d037b989d84e796af59049542c1bc8146b40048"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A12.svg",
+        "sha256": "f269fa6374586ecec8f11ae3dcef9663cbb41081a1d8c6b0db5cc88ba25bef7d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A121-particle.svg",
+        "sha256": "4d0d7f2fc3a25bb657bd8a147d037b989d84e796af59049542c1bc8146b40048"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A121.svg",
+        "sha256": "e59fa45e60793430496d9065a7f5a5f0f57981331e8dadbfcde510390546e465"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A122-particle.svg",
+        "sha256": "4d0d7f2fc3a25bb657bd8a147d037b989d84e796af59049542c1bc8146b40048"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A122.svg",
+        "sha256": "00279b954548281ab7c46f81094a7f40892f888dde8682c73e7e64313bdf68bc"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A21-particle.svg",
+        "sha256": "e4e9176969c362a18436ba88f5a576111e8f37775e1911616588e3f781ae259e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A21.svg",
+        "sha256": "3f42d34d505d1ac096c36d0ae710990a4838d39b1c9651853d8e00699f2c2837"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A211-particle.svg",
+        "sha256": "e4e9176969c362a18436ba88f5a576111e8f37775e1911616588e3f781ae259e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A211.svg",
+        "sha256": "f07e81868d49f6086956bf3322c74be750b8a050335472732ba19e74952d7c15"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A212-particle.svg",
+        "sha256": "db1466b4b31c3fce626b2bfb93539ed728d82de3ad75f5093ff936f953013415"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A212.svg",
+        "sha256": "d1a6cee1069655ef2155290a3f855fdfbf32adce31f004a76bea576abdf7c48a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A22-particle.svg",
+        "sha256": "ec1a0beb7d0ffed3629de6be49d67688a61c9c3c2b992d9e2ffe4b8132d6dd8a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A22.svg",
+        "sha256": "32096ac781feaddaaeb8484479951e0a38222a6f0cbd441f9b4c53d29dfc58d8"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A221-particle.svg",
+        "sha256": "ec1a0beb7d0ffed3629de6be49d67688a61c9c3c2b992d9e2ffe4b8132d6dd8a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A221.svg",
+        "sha256": "8621d524e40fef125501621a68511477d50dfcc07738e7d328025e677f776ff3"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A222-particle.svg",
+        "sha256": "ec1a0beb7d0ffed3629de6be49d67688a61c9c3c2b992d9e2ffe4b8132d6dd8a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-A222.svg",
+        "sha256": "95d2cb4467064227faf17d73b7b9deb1b13e888a97345a7883ca61ec6fc8f816"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B11-particle.svg",
+        "sha256": "e4db93f1b9c427c65af86bc5b2700b23e3aacfb3a97ba6139e7e198c4a9e0755"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B11.svg",
+        "sha256": "1101c9d902b24bfa1721c58ef9e6f7f4a31dd97a4e38445fd5a419df43237a00"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B111-particle.svg",
+        "sha256": "e4db93f1b9c427c65af86bc5b2700b23e3aacfb3a97ba6139e7e198c4a9e0755"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B111.svg",
+        "sha256": "9957ea24828f54b1663ff4b961f9c36a84c7e6cbfb80335b94275da51680c1b7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B112-particle.svg",
+        "sha256": "93b8fc2a80b48c7d8483da62ddbb9d2c4e97cbb427dec9eb1417db30d01c8936"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B112.svg",
+        "sha256": "aacd7ce69e33d8dc5ca314a9a4ea7ba05b8ad3862a1c35f3ef632a5b3b757f08"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B12-particle.svg",
+        "sha256": "6173a45b45a9c2e224c72067d904edba43aa94076ae41d9732bf1995dd481c5d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B12.svg",
+        "sha256": "5646afd5b4cae6f9894843be26c153a097c73c981c32fed7775779638f052142"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B121-particle.svg",
+        "sha256": "6173a45b45a9c2e224c72067d904edba43aa94076ae41d9732bf1995dd481c5d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B121.svg",
+        "sha256": "c9b08349974c0a98b6f7083530e51d072e8a27f8bf4eb4305ca035f5a2003d42"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B122-particle.svg",
+        "sha256": "2cfeaa5ca0787dad6689e04f59b0abb7c61a0195e8c292d223d31b9edae5714a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B122.svg",
+        "sha256": "0e2b0dbe1690b3a52c6c79fc4c2a22a0a621ff67fbe5d5316fd923d2609565d3"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B21-particle.svg",
+        "sha256": "c3b59c4ddbe9b9117b2890f4c7200a1005d0b38ed0932812021294bbe2da1f74"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B21.svg",
+        "sha256": "43f91cf2f925230dc35a741d10f43c2ecdf89a6e9f332eecbe7ea09960f0d4ed"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B211-particle.svg",
+        "sha256": "c3b59c4ddbe9b9117b2890f4c7200a1005d0b38ed0932812021294bbe2da1f74"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B211.svg",
+        "sha256": "d1e2012d7f0368567e5b1d0fdee633aa0d68848750039db4c96bcdb090912b56"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B212-particle.svg",
+        "sha256": "c3b59c4ddbe9b9117b2890f4c7200a1005d0b38ed0932812021294bbe2da1f74"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B212.svg",
+        "sha256": "6bdb5e9559b0a056485b154201dc048b3d727d997e3b6ae927a3fdfb5c2cc58e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B22-particle.svg",
+        "sha256": "6173a45b45a9c2e224c72067d904edba43aa94076ae41d9732bf1995dd481c5d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B22.svg",
+        "sha256": "c7d47b14cf686d3c101595ca7838c2391025572332d23024f63dec98f593a3c7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B221-particle.svg",
+        "sha256": "6dc58c03ee10ffb1c09d713aedd1ca8d4598340829b44b81dd8e08ca5205019d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B221.svg",
+        "sha256": "edd8e811941f7dff410af7e76c3d0ff66b640adb221ed7f1de22a747bb366cd5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B222-particle.svg",
+        "sha256": "6173a45b45a9c2e224c72067d904edba43aa94076ae41d9732bf1995dd481c5d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/sword-B222.svg",
+        "sha256": "4cdd9f5a58b9a26ef32d8ece2990547aa3f5163dbc678783f2b157aca28ffcd6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A11-particle.svg",
+        "sha256": "827907a83735a25992df7b9e059b5ac5aa213480dc38503605ad25affff1d42c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A11.svg",
+        "sha256": "03572051f03b9fcf0acca58bbe0802fc05b61768d84bd1988b23efd1f1cd4179"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A111-particle.svg",
+        "sha256": "e4e9176969c362a18436ba88f5a576111e8f37775e1911616588e3f781ae259e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A111.svg",
+        "sha256": "e4eeeb3f30932f302ac5264ad2372bd11bedaf4069cee1a3d5ae5bd36181f508"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A112-particle.svg",
+        "sha256": "827907a83735a25992df7b9e059b5ac5aa213480dc38503605ad25affff1d42c"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A112.svg",
+        "sha256": "006b0de564e48f60e7828813039f61a479ea1870328066284035f57b4e676697"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A12-particle.svg",
+        "sha256": "e140b89ecadc712a946bf7e0721f36fa4c21c1bb5a83e8cfc53622fbac037998"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A12.svg",
+        "sha256": "dc232df10f8887033ebaef1d3f07e674c2311e0aa7518c5c691414ec21353552"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A121-particle.svg",
+        "sha256": "77f922733c5752edc3b1941adb9f8b6e0add71d8b573df1f20f5fc091c5149f7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A121.svg",
+        "sha256": "84adc3d67f028a866439931cc4d0aedfc513f3d5da678460792caa557089cd6b"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A122-particle.svg",
+        "sha256": "e140b89ecadc712a946bf7e0721f36fa4c21c1bb5a83e8cfc53622fbac037998"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A122.svg",
+        "sha256": "71c9a202c9f7341cdfe724dffda2717b26c71383631172515c0d326e7f57109e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A21-particle.svg",
+        "sha256": "8751d857b8d756d95b023fb3e4ab7dbf0a49eb85c0ed6078b49c2a46985ec60e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A21.svg",
+        "sha256": "6f2db182a7ef6d34645edd2babf9495f1aea92a2c4c54f5f08084faae48ac662"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A211-particle.svg",
+        "sha256": "ddc2756ea4c65965a73fa9a09226a5d2303f2e6082abc461690c2a933c083ee1"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A211.svg",
+        "sha256": "3727043972c956206986f3b9d86c092c5e0df1585a1d458d2f3af6da566b002d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A212-particle.svg",
+        "sha256": "ddc2756ea4c65965a73fa9a09226a5d2303f2e6082abc461690c2a933c083ee1"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A212.svg",
+        "sha256": "6197370e357fae5a60c1bedd94ae4e6f175012903eddfd95891ad2d0a88a1c26"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A22-particle.svg",
+        "sha256": "c4deb37b4029e911620f57d58579ad434074480033eb10cd5e0a39dfb7cdf061"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A22.svg",
+        "sha256": "015f4841275e12ae18b9fa6dcfb76745ce72d4293938996900069741a9e738b8"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A221-particle.svg",
+        "sha256": "c4deb37b4029e911620f57d58579ad434074480033eb10cd5e0a39dfb7cdf061"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A221.svg",
+        "sha256": "dc05c456c281cc4b7fc57e8b22486afceb96f33c9fba97dc541bcfee1a4adc2d"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A222-particle.svg",
+        "sha256": "116833c1224a97a9a58adb9a0700b710f1ee03c5a92dc8bbd3d4264556f32874"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-A222.svg",
+        "sha256": "2b541624c0166c9fef0e479f762afaf44ba554da567b8752dbd9504b574e93ce"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B11-particle.svg",
+        "sha256": "2868770237acb9043a1cef6002bea776a65268831d3df43440933b36ce58cf63"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B11.svg",
+        "sha256": "ed6d8e3c2840dc15fe31aac4aef4262ea6bbea1eb2696b02e0a6f45809ae5fc3"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B111-particle.svg",
+        "sha256": "2868770237acb9043a1cef6002bea776a65268831d3df43440933b36ce58cf63"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B111.svg",
+        "sha256": "a206e7dc1d214a5bd10b5654a71ef033b975da801fdd32230b168637ac52fe2e"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B112-particle.svg",
+        "sha256": "ec1a0beb7d0ffed3629de6be49d67688a61c9c3c2b992d9e2ffe4b8132d6dd8a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B112.svg",
+        "sha256": "6b4de84561cced27dff5ec8837632864c881f7e3263d4ba8fcdb9bb548c395bf"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B12-particle.svg",
+        "sha256": "db1466b4b31c3fce626b2bfb93539ed728d82de3ad75f5093ff936f953013415"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B12.svg",
+        "sha256": "4c80ea8250c1742d7bcebed2ef32a86f522531657f913e1e5448b77fa4f365da"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B121-particle.svg",
+        "sha256": "93b6ca3f17a1a18c9c1e3813983a62ccbbb50650710651679219636eb9cac4a7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B121.svg",
+        "sha256": "9732fc342ba7f9bddab0ac18e451fe159d4b637ff2e90d3e6b51ca3066f2b099"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B122-particle.svg",
+        "sha256": "51d29ae33d97a82f11a90c789fd2f6c96458c54cd17a6b4a839eb2cfa8dc860a"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B122.svg",
+        "sha256": "ff831b02c298685e8d33085cd67b00180cfe29538693d540500563ca78c168da"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B21-particle.svg",
+        "sha256": "2d839626d32808789e7bcec648b62474be46dd798bc101a846a6f6531cbc0250"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B21.svg",
+        "sha256": "a84957fc85bc2947caefd8cc63e581a39e33ec84fb4048ba0123779773b66a0b"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B211-particle.svg",
+        "sha256": "2d839626d32808789e7bcec648b62474be46dd798bc101a846a6f6531cbc0250"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B211.svg",
+        "sha256": "418b3c2fd5afa440df502bfdf6463dd735e31c6810bc6e289db3af7f55e003e6"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B212-particle.svg",
+        "sha256": "77f922733c5752edc3b1941adb9f8b6e0add71d8b573df1f20f5fc091c5149f7"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B212.svg",
+        "sha256": "d516642067ba6444cfd444c2a846cb684bdaac8f1275575dbfd22ad72d9ccfbb"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B22-particle.svg",
+        "sha256": "cb197671a11bf8ed6f166bb11ecc1ab4d30a0d803a024eab1aa87b7e20c259e9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B22.svg",
+        "sha256": "e85100f94acaef9b75f1d6337ddc5e51a22718c23aedbe0fd86992ccaba0dc32"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B221-particle.svg",
+        "sha256": "cb197671a11bf8ed6f166bb11ecc1ab4d30a0d803a024eab1aa87b7e20c259e9"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B221.svg",
+        "sha256": "c75c4ebf413fc1cbe38f08069e9d8c05cbfa5367a7318de2d5a7e4167c1cfdfd"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B222-particle.svg",
+        "sha256": "4f79a0ad1d499017f27792ffff0e0e0d8b18c6ff3f0e7da56c23d005309495d5"
+      },
+      {
+        "file": "worker/public/art/ui/armory-specializations-20261016/thief-B222.svg",
+        "sha256": "f701fb97b50219c49ca08a393875ce2361272893235ec6795d07468eafbfe4e3"
+      },
+      {
         "file": "worker/public/art/ui/command-boss_time-20261012.webp",
         "sha256": "b195e3ef04513ea79d1893bec563202a1541d3a08429dfb25ef8f8a87e3b436e"
       },
@@ -30319,19 +31099,19 @@
       },
       {
         "file": "worker/public/art/ui/thief-armory-fx-20261016/thief-flying.svg",
-        "sha256": "9a8bd80b03b0c1216c8a87f8c1afa87cb32e3b9a9b1f61d5680cd246a0356bfa"
+        "sha256": "c08936146d21ee355ec1e2d71167421ac3a51125dcda733591f1b9592324e3c9"
       },
       {
         "file": "worker/public/art/ui/thief-armory-fx-20261016/thief-mirror.svg",
-        "sha256": "6031feb49528d109735d88f3f9f1b8f37e74944f2c52b8a7ed03035ac2f0cfc5"
+        "sha256": "36006e19407c9e5bfc5f5cfc72efe301acf49cf7cef43b28bf7b817a82ac7517"
       },
       {
         "file": "worker/public/art/ui/thief-armory-fx-20261016/thief-shadow.svg",
-        "sha256": "b1c35291919b805d587d366ac2ef4b4201c936ae6fc7af8ccd0bbf53d70e221b"
+        "sha256": "66192dbad3bdbce1aed87f9d993f96974656f632c6e52d70508cf56ff0993616"
       },
       {
         "file": "worker/public/art/ui/thief-armory-fx-20261016/thief-venom.svg",
-        "sha256": "19a5ff97d9745db32fc7c9650dc785be0bd7a1f3cfbdd12171a8be1c7589db8b"
+        "sha256": "8567cceb5ecbea88126c3f18c04d94ce4aa206ac1e03ba9621ba39cde75602cd"
       },
       {
         "file": "worker/public/art/ui/titan-gate-v1.png",
@@ -32507,7 +33287,7 @@
       },
       {
         "file": "worker/public/battle.css",
-        "sha256": "76112844409f6f3d6a877a78b58e88a7c7e3909ebef20a020126711b6bdd90cc"
+        "sha256": "18ea882862a4dd1f4ef86100cae07364c2832f3cc17277708f899df1720b3049"
       },
       {
         "file": "worker/public/battle.css.backup-20261010-elf-motion-2",
@@ -32527,7 +33307,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "661ccca78fbd6088c3d46af68787ca4244fa984e3a38bfb5c3a372e65f4f54a2"
+        "sha256": "9ddbcc149b55f6696bd8c20f78a38eb37084d055320675f1075ff696e8989ed9"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -32575,7 +33355,7 @@
       },
       {
         "file": "worker/public/cinematic-fx.js",
-        "sha256": "dde0cfc59bc354670843cef49e9eb8d31b1f615481fed4a47c8679b129c2e9a8"
+        "sha256": "2090afa92dfb05315c3c37d6a9ba98c3ac01ca57890b7feb990796468728b709"
       },
       {
         "file": "worker/public/coin-ui.js",
@@ -33191,7 +33971,7 @@
       },
       {
         "file": "worker/public/expedition/combat-playback.js",
-        "sha256": "6e3360968d51d60dd2a19b4ba163a552f5ca43bf4e1d50685fd7a1e784d96251"
+        "sha256": "c338094c3023776273306a433dcecd9d125f3295137249d4958df4d487fa8ee9"
       },
       {
         "file": "worker/public/expedition/demo.html",
@@ -33207,7 +33987,7 @@
       },
       {
         "file": "worker/public/expedition/hero-art-playback.js",
-        "sha256": "51100c82a5d46afd6960825fd8593fb4b5f289704cfb1d85601e7b8c98d351da"
+        "sha256": "3ab5d88906971defccdebcdde38c9fc0605f060a1270affca2a02e51c6c66408"
       },
       {
         "file": "worker/public/expedition/hero-art.js",
@@ -33219,7 +33999,7 @@
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "25f43f4f3056afa88a24c8d45fd492591a3f0864cbe791194113ea092783bdc9"
+        "sha256": "db5c7b7ff135ff20c024df4b1970aa753de0cba370a3ce84951fd7ce72e96040"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -33255,11 +34035,11 @@
       },
       {
         "file": "worker/public/guardian-assist-widget.js",
-        "sha256": "cc84490d1bd7c05482d5b123b014c1e9c29aa84ae53c32aed6084e3ab871080c"
+        "sha256": "1548c5986b87225b73b35f559e82e7c2d60af447a5c2ce44684ede18b71c2dc5"
       },
       {
         "file": "worker/public/guardian-auto-ui.js",
-        "sha256": "f9e7302cf7bdc271b9b2e8d338516614276e2d1d7029beda3e445dbf7e0cb141"
+        "sha256": "f45a966af6ef39854cbd91ec73f2580a6db20a5adce028eebaf041db56713a51"
       },
       {
         "file": "worker/public/guardian-fusion-batch.js",
@@ -33351,11 +34131,11 @@
       },
       {
         "file": "worker/public/hero-art-registry.js",
-        "sha256": "c3965c97ce0bd93849911b5f88e1fe4ad176a1387b0d219a9b60fbaf4940bd81"
+        "sha256": "997be6f15c5d6dd36450d7bbae92eb21fc17b702ea35227450d8841bba11581f"
       },
       {
         "file": "worker/public/hero-art-registry.json",
-        "sha256": "a21d828fe6b872b9480018545a183c3bbde04f2b9b4f6ec4523c2201cec298d9"
+        "sha256": "1be4ada2dd9643e3703bc2d851c7e83ec0bcd7496cf9ff8059fdde58bc1645c1"
       },
       {
         "file": "worker/public/hero-display.css",
@@ -33363,11 +34143,11 @@
       },
       {
         "file": "worker/public/hero-fx.css",
-        "sha256": "3c30882d0b524e4f2776b3ab362ada42479dc02b35b8a9cc94945356d1b9d3a9"
+        "sha256": "a81352523e5455ab0cf8c94e45634e4d440d25765de527d607965967a171eac5"
       },
       {
         "file": "worker/public/hero-fx.js",
-        "sha256": "78c7d21bf4b8c1fd5f1bb72547d7b031dfee7e326ee50867c74998f27738926b"
+        "sha256": "35c2a31eeec34b56ebdd4aa9401e20ecdbe956734860ba5e315075944b434ee9"
       },
       {
         "file": "worker/public/hero-hall-ui.css",
@@ -33379,7 +34159,7 @@
       },
       {
         "file": "worker/public/hero-lavish-fx.js",
-        "sha256": "61c40446e1a1519ac6334ff67e55c843697f1d4f81d6b048dfc9cce06501cd4c"
+        "sha256": "2413813a5ed37e8e4c4083906fe6b115eae6e2f77b7218352f71b11c3cde22a9"
       },
       {
         "file": "worker/public/hero-size.css",
@@ -33391,7 +34171,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "1f8283bb9ba28b458b1a136ba5be72650b113883204e896ea3669bd48b847c26"
+        "sha256": "66260c8c0877f07358cf93cc7824e7e76ce4b5364f9e8655d09dfe8cc02bd3f2"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -33631,11 +34411,11 @@
       },
       {
         "file": "worker/public/skill-fx.js",
-        "sha256": "f419f5a8696b9c46862ca280813389c5141b3ff9340b0c777a133488973e16f5"
+        "sha256": "1a2dc78dd4dcbfca209c03a4352a8eddbf0b7e9d043482bdc1fadcf5d9988d6a"
       },
       {
         "file": "worker/public/special-skill-widgets.js",
-        "sha256": "d8a2f10cd0bcacdef8220e43d818508c449e8fc7d3069538572ca3fd6229d46c"
+        "sha256": "548ab7b86cca6baf27aace7d42f1dd614a747bd97cd765085f6318588e2933c2"
       },
       {
         "file": "worker/public/status-banner.css",
@@ -33643,7 +34423,7 @@
       },
       {
         "file": "worker/public/styles.css",
-        "sha256": "849f30e0068eb80a96bc272370b2eacb11ed1c8cb66e0d824fcdb797bf0747c8"
+        "sha256": "64480e692afec4cf5afc6d315a012e131188cf49ef865fddaf0fe28bd2d25fbe"
       },
       {
         "file": "worker/public/styles.css.20261010-bag-slot-tabs.bak",
@@ -33727,15 +34507,15 @@
       },
       {
         "file": "worker/public/thief-class.js",
-        "sha256": "44477efa340dbe968703f297784e2fecf50c72e6e70142f0bbae03927407005e"
+        "sha256": "238137f52802c942832eb7358cd5ca4c50364c1cc46f31a98044943911b47363"
       },
       {
         "file": "worker/public/thief-fx.js",
-        "sha256": "91bb9d3011cfea0c002b98018ee4adb16768ac2cff537c52337492e352888444"
+        "sha256": "215ddfa52b42edb99a5f8a5109b9b85b3aabcf74f650138eef680b529d6a468b"
       },
       {
         "file": "worker/public/thief-gear-art.js",
-        "sha256": "4df3881a274677f570e73d3deb2b6a033bdf95e9c97dd28e79b760dfaa5dbc61"
+        "sha256": "8b7d6c9b7a5d4707083a90ebc5d262147e98c7dd3c2d0dd1a4c4570fbfdc9a30"
       },
       {
         "file": "worker/public/ui-refined.css",
@@ -33747,7 +34527,7 @@
       },
       {
         "file": "worker/scripts/assemble-thief-assets.mjs",
-        "sha256": "eac04ce22edd2d85ad80a8823ac4f048546f5dbcf7f18a366ea15bffee03def3"
+        "sha256": "b351329e8bf70f7ea1cef51e469a9299b2b8fdcb65a411fc89393e0028547efd"
       },
       {
         "file": "worker/scripts/audit-thief-gear-art.mjs",
@@ -33755,107 +34535,107 @@
       },
       {
         "file": "worker/scripts/audit-thief-schema.mjs",
-        "sha256": "b909604db228a33583dc9411f136b15be0e4194b87695685c8a81d613eec374c"
+        "sha256": "ff217bc057fa1c292011faac838cda6d0fabb0c90023083dc017b3b27624532e"
       },
       {
         "file": "worker/scripts/compare-thief-balance.mjs",
-        "sha256": "0408b451c2be58356cd808141b1f108a0e790c0e0b92e88f46cdd65cf19c15b0"
+        "sha256": "0b6f485c216d5ec31f35f5a2e273b24a4a256b00b11b6389bbc78fdbec9d71ac"
       },
       {
         "file": "worker/scripts/compare-thief-live-schema.mjs",
-        "sha256": "9f3b9b0b4a27e9e2ed7c3d7c7b209afa47c5a2418fedc6e856b343695438170c"
+        "sha256": "3733635919470c768ae8abcadf1533bf10de225d67518867bf5f8d5fd2436fe2"
       },
       {
         "file": "worker/scripts/finalize-thief-art-review.mjs",
-        "sha256": "d31f6c02f39e7ce198176ca6389bc36e26acabfd5b78e07cd655b5ebc4968aea"
+        "sha256": "abc28131382dba56f32cf18d8830d9ac21af298f0aa51d2ba6e80054f5585d06"
       },
       {
         "file": "worker/scripts/finalize-thief-gear-audit.mjs",
-        "sha256": "af14eaf38d847df3619da55cdf02e8ac2ca13a80c3058d2d4569cd743a494ad8"
+        "sha256": "37aa603d08b299ebc44baa8469fd110fb1c19dc68491a5ed97f147775bdfe41e"
       },
       {
         "file": "worker/scripts/inspect-thief-gutters.py",
-        "sha256": "8f43f802693ab8ab4c56c25250654eaaea9603ad168f4904ad3f1e35ec7679ea"
+        "sha256": "1d0f1cd6212e27cee416fbd9d57005a4cfb2b5d98fbcfb79a25baa50a063b15b"
       },
       {
         "file": "worker/scripts/inspect-thief-source.py",
-        "sha256": "e1237031ddd95c521b5e7ca06970177a588611158a1adede0b54d59c187a2966"
+        "sha256": "fcd973bafeb9345ba1100a64ade968caa1d0a96d2390bfc48b2f415c8e6bcc2c"
       },
       {
         "file": "worker/scripts/pack-thief-assets.py",
-        "sha256": "9349f02c17cab512bf2758912ac1f25f723bebf419c8369d9157564d5b7b7dd0"
+        "sha256": "e6f0b723111c8b76ad31851b3eb1210158f9757a46e5d64a1344f0da6a3f9ede"
       },
       {
         "file": "worker/scripts/pack-thief-gear-assets.py",
-        "sha256": "d390d1c6cb0a9d27aeaa4d42cfcf46fb9b61f05c03e9fa971b15f4de32102fff"
+        "sha256": "4947d966299681c7c58681906add3d0f4df8d225ee28396372ae7f2714066141"
       },
       {
         "file": "worker/scripts/pack-thief-pilot.py",
-        "sha256": "2cfb7c61f02d513c6fee7d80b251b091c892993181d8de10670ea8208528c202"
+        "sha256": "1bc5693248fd73db5fa01253f71ac62d3771aa493f763d72b6895c6631ab4e61"
       },
       {
         "file": "worker/scripts/pack-thief-skill-icons.py",
-        "sha256": "4945e6e573b41aabff3b31e640a246a534b1391408d0ebfeeac499c0fd2e356a"
+        "sha256": "a7aeb19cdd884dac6c4c49b39eee3c092222bf28739f17f92aafda0e1fbabcc3"
       },
       {
         "file": "worker/scripts/prepare-thief-live-candidate.mjs",
-        "sha256": "e6c74da671bc644b17898ab43ae1f78f838c99b5518e6846195222b8e289ad73"
+        "sha256": "3ef8cdfd95dd413c0b52f1cbc9e03be02d498d4122b47cb93e38fffee80eb98f"
       },
       {
         "file": "worker/scripts/prepare-thief-private-restore.mjs",
-        "sha256": "f0524156b73afb2d859573bc7c2c7fb5dae6496e8ae4b583c37568ed52448df3"
+        "sha256": "1b3b387fe852c951db6411e26484784d4ae1b37c67943ae69354e8f76c0a1a5a"
       },
       {
         "file": "worker/scripts/prepare-thief-schema-candidate.mjs",
-        "sha256": "58b8460d724bab7411c66dc1adb1e52e0e8f6918c08a8e3a198877f617dd8b92"
+        "sha256": "e331bbf565664963a65b3487a2740c5df9453f06965bcbc2fd85a1ae04982bfd"
       },
       {
         "file": "worker/scripts/register-thief-pilot.mjs",
-        "sha256": "2a15070ff7837bc1cc862ed124c364b41feb9c5f35cd145e75da0c2726cf0607"
+        "sha256": "28b2c876d85fd88218ac65cfded6b1283097de6d4d05e0b4dbf8d1798884bb0c"
       },
       {
         "file": "worker/scripts/rehearse-thief-schema.mjs",
-        "sha256": "a36a56c1d44276f7dd719e4164342a3890b9bf2205c6d910945c9ad174616ed3"
+        "sha256": "88a4091e33afb7f12ca2a68b1fd107766142217fd2e0d4b06fa1f24bea45e4ff"
       },
       {
         "file": "worker/scripts/render-thief-gear-cards.py",
-        "sha256": "377897946d08a4996877257dfea7069e699d44eb0aea45d76d1687161ef05431"
+        "sha256": "bcf2c8b09ea8054ac86028788463bee95ed102e338cdad08397ab20b87a4ab39"
       },
       {
         "file": "worker/scripts/resume-thief-isolated-import.mjs",
-        "sha256": "c09be11037af7aa9fd5e2ec70ddecb094bbb3e0e87999b83a29f8394b4a73b9d"
+        "sha256": "eb1348c1710f9ddcfd878cac8f6f2918b12afabb73452205ca11a65b566c76e1"
       },
       {
         "file": "worker/scripts/run-thief-d1-rehearsal.mjs",
-        "sha256": "c0d38fca0a3f4a941b6d13d0326ae82f887378c8060a9ff1c9ce38a4540166a2"
+        "sha256": "b5157a98bb325712cbe7a105924e30a2432cc0a5844bec21fd12eef64936bd1c"
       },
       {
         "file": "worker/scripts/run-thief-production-expansion.mjs",
-        "sha256": "406df381d9f6b02b40e5606e32ac9c7504da110a2db2ed57f2b0027d3e5696f8"
+        "sha256": "b8f060b3e6183009d2d232806fc32ac6780cd75320b12570244ca74a6842ba25"
       },
       {
         "file": "worker/scripts/thief-browser-matrix.mjs",
-        "sha256": "3c6e15effd677918f06d66ca6455d0aa50efc90d397a09cce40622ea3d3cc55d"
+        "sha256": "c9890704397c49739bd94d9c1e5b959f574b2b23cc06a18d35bcd4f1970423c3"
       },
       {
         "file": "worker/scripts/thief-browser-summarize.mjs",
-        "sha256": "b23aabd3ca5d4c009795dd138771fcc6cc7e1992faa429bbe15c7710dc2d9f62"
+        "sha256": "81467c090f77786d2a1281711d5aa4462fb224de49a369ba3eb932c7ea79866d"
       },
       {
         "file": "worker/scripts/thief-gear-browser.mjs",
-        "sha256": "2b1671c1735d41de99d674238ebd34b4d374848dff50b94a3449d55693e6541a"
+        "sha256": "95fd4dfeb36ea1dcd6237e95d8dc3e8a872328dcc5d38f1ce43dde0412c0c421"
       },
       {
         "file": "worker/scripts/thief-preview.mjs",
-        "sha256": "9e3319d172bc6e88dfb91af9bef8074828945ffa7df4a55836d628999eb18a0e"
+        "sha256": "a6931d8363542fc150825e650da7d47beb3e0b7b7c83adaedebc37f151760c17"
       },
       {
         "file": "worker/scripts/verify-thief-backup.mjs",
-        "sha256": "26f81a4ababff80aba336c7e45dae61cef0e4da3a945f0a7a3c1c380c35c76a0"
+        "sha256": "11b0b43df51182e93edff94c3c907fd409d7d7de90807b18efcedcb863915836"
       },
       {
         "file": "worker/scripts/verify-thief-gear-assets.py",
-        "sha256": "e497f353ae97fbb05baa838801ad4c3928753f9b79c935ac4a92682bccd7a08c"
+        "sha256": "ff8919f4271d912d5786dc966a7e76c59da8ca0d187544c80e389023ae920723"
       },
       {
         "file": "worker/src/accounts.js",
@@ -33883,7 +34663,7 @@
       },
       {
         "file": "worker/src/game/advanced-specializations.js",
-        "sha256": "d541f127f0ece64de12902020a19ab2df546b124291bcbf94a87e886e096abba"
+        "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
       },
       {
         "file": "worker/src/game/affixes.js",
@@ -33899,7 +34679,7 @@
       },
       {
         "file": "worker/src/game/boss.js",
-        "sha256": "5af9a95f79d8c3268dd019b18d0d38627227e58d409f8e7cf2a8bc8712994adb"
+        "sha256": "3fd3a472ab2801582e73e2c57a09c097366fe330a77dca3f10fff1b2d3fc1a8f"
       },
       {
         "file": "worker/src/game/classes.js",
@@ -33947,7 +34727,7 @@
       },
       {
         "file": "worker/src/game/gear-art.js",
-        "sha256": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c"
+        "sha256": "31191fccaea8e7bfbeae170f9591f3b671c32a8f3f88156a5abb49cecab3ae08"
       },
       {
         "file": "worker/src/game/gear.js",
@@ -33959,7 +34739,7 @@
       },
       {
         "file": "worker/src/game/guardian-effects.js",
-        "sha256": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7"
+        "sha256": "048ccbd58015af5aa9699820034e218c9aed5fdeb91a1fc380270a358949b96f"
       },
       {
         "file": "worker/src/game/guardian-sigil-config.js",
@@ -33971,11 +34751,11 @@
       },
       {
         "file": "worker/src/game/idle-combat.js",
-        "sha256": "fb6f0598a68808bb2a07b7453d1165e26fc2123451b9f72e3085a8aa3249716f"
+        "sha256": "3f3452bb61f7aee4ebbfb7f2ef95cf48c622e21abf6f57cfca4c7fe173eb79a2"
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "2b9c1ca1449340e6f94b9c8f400b22292420b7445279243e32d358e3c92356e8"
+        "sha256": "67ac251ca3843c8874906977dd627dc764ec8f7bc811932b3ecf1ac391765869"
       },
       {
         "file": "worker/src/game/lineage.js",
@@ -34007,7 +34787,7 @@
       },
       {
         "file": "worker/src/game/pk.js",
-        "sha256": "f707a8f49cc43dc4b8dd1b4cb53691a7a74aa706fe7f5764de8ce0cbd3f8edd9"
+        "sha256": "f057216e5c6a3763efca0c8cd1b326285614ad6734653f63bfa13e6d6d9413de"
       },
       {
         "file": "worker/src/game/rng.js",
@@ -34031,11 +34811,11 @@
       },
       {
         "file": "worker/src/game/special-idle.js",
-        "sha256": "23397b5ae15a7929d27aebc92cfd3127e16d07888e0fdd616c949dc4b07f40f0"
+        "sha256": "053f48bc28f0bd2f60537f05a15084ef34f0ce764244408bb6bc85db2c9b3178"
       },
       {
         "file": "worker/src/game/special.js",
-        "sha256": "2e2cd790bc7de9441a2c93bec2b1aaa935ed7a003bea4ff99e91b10033b8711b"
+        "sha256": "5afd7ef3dc43a3b6630aa3653522360888fcd64098d567c11f6f9d310ac30473"
       },
       {
         "file": "worker/src/game/stats.js",
@@ -34043,7 +34823,7 @@
       },
       {
         "file": "worker/src/game/thief-advancement.js",
-        "sha256": "852347e30babe256b7e980dba90404e1ceaa56ebefe2632caefbd74e0b835c2d"
+        "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
       },
       {
         "file": "worker/src/game/thief-data.js",
@@ -34051,7 +34831,7 @@
       },
       {
         "file": "worker/src/game/thief-skill-catalog.js",
-        "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+        "sha256": "3e02da1995afdd48bd41d6e59d47276fc85ef78026d3c280bebc5095482f291c"
       },
       {
         "file": "worker/src/game/thief-skills.js",
@@ -34135,7 +34915,7 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "45af6db0f1ae8598e7f8992aad985cd8fade04eb5313426e6a1e574263e78cdc"
+        "sha256": "1cbee91ff949887d677504f4f32d8793c5eee614d7285cb8cfd4672f5e3e351e"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -34163,7 +34943,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "a1b5b52c429cb0292f8bad29b4e04b68a851fcc7a128f2098165425b5bba6695"
+        "sha256": "43aec4abc7a229e6980181837dbd76a6590e72f4efc2d5542f124eae30c2620b"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -34181,15 +34961,208 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 131,
+    "verifiedCount": 324,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
+      "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_arm_poseidon_robe_common.jpg",
-      "worker/public/art/cards/thief-gear-20261015/gear_wpn_cloudgate_throwing_blades_relic.jpg",
-      "worker/public/art/sword-adv4-hd-20261012/hero_adv4_sword_A112_f_attack.png",
+      "worker/public/art/cards/equipment-20261011/gear_arm_titan_plate_common.jpg",
+      "worker/public/art/cards/thief-gear-20261015/gear_wpn_oracle_throwing_blades_relic.jpg",
+      "worker/public/art/sword-adv4-magic-20261013/fx/fx_sword_adv4_B211.webp",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-A222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/archer-B222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-A222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/mage-B222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-A222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/sword-B222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-A222.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B11-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B11.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B111-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B111.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B112-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B112.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B12-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B12.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B121-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B121.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B122-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B122.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B21-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B21.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B211-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B211.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B212-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B212.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B22-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B22.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B221-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B221.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B222-particle.svg",
+      "worker/public/art/ui/armory-specializations-20261016/thief-B222.svg",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -34319,7 +35292,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "2eddefdf-8f09-42b7-90da-602d3e350704",
+        "version_id": "eebc36c9-1471-490c-a760-9b54cf26a51c",
         "percentage": 100
       }
     ],
@@ -34360,5 +35333,10 @@
       "*/30 * * * *"
     ]
   },
-  "noPlayerMutations": true
+  "noPlayerMutations": true,
+  "receiptRecovery": {
+    "initialCheck": "app.js bytes differed immediately after publication",
+    "completion": "Subsequent strict runtime, asset-byte and health verification passed",
+    "deploymentRetries": 0
+  }
 }
