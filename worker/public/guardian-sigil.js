@@ -16,7 +16,7 @@
   }
   function resourcePanel(config, state) {
     const balances = state?.balances || {}, daily = state?.daily || {};
-    return `<section class="guardian-resources" aria-label="召喚資源">${balance('持有金幣', balances.gold)}<div class="guardian-free-resource">${balance('免費普通抽次',balances.freeNormalDraws,state?.welcome.claimed?(state.welcome.recipientCharId&&state.welcome.recipientCharId!==state.charId?'贈禮在其他角色':`贈禮 ${fmt(state.welcome.granted)} 抽`):'僅供普通召喚')}</div>${balance('招喚憑證', balances.voucherCount)}${balance('剩餘零散抽次', balances.remainder)}${balance('精選可用抽次', balances.availableDraws)}</section>
+    return `<section class="guardian-resources" aria-label="召喚資源">${balance('持有金幣', balances.gold)}<div class="guardian-free-resource">${balance('免費普通抽次',balances.freeNormalDraws,state?.welcome.claimed?(state.welcome.recipientCharId&&state.welcome.recipientCharId!==state.charId?'贈禮在其他角色':`贈禮 ${fmt(state.welcome.granted)} 抽`):'僅供普通召喚')}</div>${balance('<img src="/art/ui/item-guardian_voucher-20261015.webp" alt="" style="width:18px;height:18px;object-fit:contain;vertical-align:-4px;margin-right:3px">招喚憑證', balances.voucherCount)}${balance('剩餘零散抽次', balances.remainder)}${balance('精選可用抽次', balances.availableDraws)}</section>
       <p class="guardian-daily">今日取得憑證 ${fmt(daily.granted)}${config.limits.dailyVouchers === null ? '' : `／${fmt(config.limits.dailyVouchers)}`} · 今日尚可取得 ${fmt(daily.remaining)}${daily.day ? ` <span>${esc(daily.day)}</span>` : ''}</p>`;
   }
   function summonPanel(config, state, selected, resultMarkup = '') {

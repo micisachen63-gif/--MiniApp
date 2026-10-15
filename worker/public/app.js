@@ -369,6 +369,7 @@
   const SINGLE_ELF4 = /^adv4_archer_(A11[12]|A12[12]|A21[12])_[fm]$/;
   function artFile(kind, key) {
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
+    if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
     if(kind==='item'&&key==='gold')return 'art/ui/hud-coin-v2.webp';
     if(kind === 'item' && ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a','unbind'].includes(key)) return `art/items-scrolls-cutout-20261011/${key}.webp`;
@@ -884,11 +885,12 @@
     <div class="card"><h3>📊 能力</h3><div class="stats"><div><b>${fmt(st.atk)}</b><span>攻擊</span></div><div><b>${fmt(st.def)}</b><span>防禦</span></div><div><b>${fmt(st.power)}</b><span>戰力</span></div><div><b>${fmt(st.standard)}</b><span>地圖推薦</span></div></div>
       <div class="mt muted">技能「${esc(st.skill.name)}」MP ${st.skill.cost} · ×${st.skill.mult}${st.skill.targets > 1 ? ` · ${st.skill.targets} 目標` : ''}　被動：${esc(st.passive)}</div></div>`;
   }
+  const ledgerIcon = (k) => { const h = iconHtml(k, itemEmoji(k)); return String(h).startsWith('<img') ? h.replace('<img ', '<img style="width:18px;height:18px;object-fit:contain;vertical-align:-4px;margin-right:2px" ') + ' ' : h; };
   function ledgerHtml() {
     if (!S.ledger) return '<div class="muted">載入中…</div>';
     if (!S.ledger.length) return '<div class="muted">還沒有紀錄</div>';
     return S.ledger.map((l) => { const d = new Date(l.created_at + 8 * 3600e3).toISOString().slice(5, 16).replace('T', ' ');
-      const parts = [l.gold_delta ? `💰${l.gold_delta > 0 ? '+' : ''}${fmt(l.gold_delta)}` : '', l.item && String(l.item).startsWith('sigil:') ? `🪶 守護羽毛 ${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : l.item && !String(l.item).startsWith('equip:') ? `${itemEmoji(l.item)}${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : ''].filter(Boolean).join(' ');
+      const parts = [l.gold_delta ? `💰${l.gold_delta > 0 ? '+' : ''}${fmt(l.gold_delta)}` : '', l.item && String(l.item).startsWith('sigil:') ? `🪶 守護羽毛 ${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : l.item && !String(l.item).startsWith('equip:') ? `${ledgerIcon(l.item)}${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : ''].filter(Boolean).join(' ');
       let note = l.note || ''; if (note.startsWith('{') || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(note)) note = '';
       return `<div><span class="muted">${d}</span> ${esc(l.type)} ${parts} <span class="muted">${esc(note)}</span></div>`; }).join('');
   }
