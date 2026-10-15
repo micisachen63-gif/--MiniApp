@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "a8411e54e2febe364915390cd1aaf02e31f1f90a",
+  "sourceCommit": "69b072541731f423587b7045cf92c64e05474f44",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd",
+  "productionVersion": "19cc0c28-2751-4174-8b96-d75c744dbfe5",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T19:33:14.307Z",
+  "verifiedAt": "2026-10-15T21:07:36.828Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "ed1236f4fca3e1923e0d6a23caed03d99310a28f4cdfa521851a1722ebd1d69f"
+    "index.js": "24c870411d1034b7527e63a47086b00d38eb81c349b87d7f0c002c55f117fe77"
   },
   "source": {
     "fileCount": 248,
-    "sha256": "be408d015d1b63b2692b22df26ba423b0e7cb8dcc78ea23f9a77af68c7bfe2a4",
+    "sha256": "f621e093473eb6729fd56fec535d30b04c32d001479ca325677f0a15df259944",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -892,7 +892,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/operation-api.js",
-        "sha256": "f32bc7dca8e302fd0e9c1e1c933af88255699ae9a47d913030797289bc9aa633"
+        "sha256": "db136ba5fa332422376679fa2be15bfd94ba9aebf2814f367ba4957ac1dfca71"
       },
       {
         "file": "cloud-bot/src/adapter/package.json",
@@ -900,7 +900,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/party-caption.js",
-        "sha256": "1e88799df07b0d57e62080f93fe7d32ce5ffa1700371bbc92e716d2ea5357ceb"
+        "sha256": "9b5ff3c4ec3dd874e615b65d242a69f02f61c528afc79e0bb79b6053a21e1bc6"
       },
       {
         "file": "cloud-bot/src/adapter/persistent-map.js",
@@ -916,7 +916,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
-        "sha256": "207157b11689a97433cf7c1e0a96b3a9040313831fa96c8dd903356cd8a5ed51"
+        "sha256": "bab9239a3afb24e7e52756a9c06fb156b892320210bde96646d5b797db3b3d31"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-pk-animation-flow.js",
@@ -936,7 +936,7 @@
       },
       {
         "file": "cloud-bot/src/inbox.mjs",
-        "sha256": "1ea779c2025121caa417eb8e40c58344a745c1db9fa2031bd9df031e478a2983"
+        "sha256": "4f2da048aeb2b086d1db9a92806b4bfd9dcb38fb43323cab6085fa100c7c9b40"
       },
       {
         "file": "cloud-bot/src/index.mjs",
@@ -948,7 +948,7 @@
       },
       {
         "file": "cloud-bot/src/renderer/assets.mjs",
-        "sha256": "5435bbc1c35e1d8e9bb72fc91b1c331bfe33981329c7a7a5ac5f55c8491b8c6d"
+        "sha256": "b846143e408e7279847cc05b429f0e840202cedde54366f9170a668624f8b2c2"
       },
       {
         "file": "cloud-bot/src/renderer/battle-core.mjs",
@@ -1021,7 +1021,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd",
+        "version_id": "19cc0c28-2751-4174-8b96-d75c744dbfe5",
         "percentage": 100
       }
     ],
