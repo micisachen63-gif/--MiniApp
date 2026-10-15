@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "db117b802e270458edb1e89c7188c6d2b12e6b2f",
+  "sourceCommit": "941f2d2362f4050e8517fa0b0a28633c1e6f2ebe",
   "service": "elf-rpg-api",
-  "productionVersion": "05066119-3653-4d91-b7fd-e4064f8c7bc3",
+  "productionVersion": "25d47210-39f1-415e-bfb6-b9ce76c18075",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T08:52:12.914Z",
+  "verifiedAt": "2026-10-15T09:11:39.154Z",
   "runtimeSHA256": {
-    "index.js": "58bbc076556cea1316ccd1be165e15430771cbd4f23da398343e538ae3ac1a28"
+    "index.js": "2a6d349cadd042a8696ced32da72d501899cac3d1f706dc6bda10f5ad5446432"
   },
   "source": {
     "fileCount": 7170,
-    "sha256": "5c038d6fa3a1c92f7b93c09b23546b6c73a1e7197fe63ecd6672b875ee242c70",
+    "sha256": "dca42cdfc840539b50bfbe2532fd2b890f3923ba196c4b1e44512cdf24e05737",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -123,7 +123,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "829b852fb02bfb0714c10241fafc098f2cab6f293c9551d4c3bc241fbe712ee5"
+        "sha256": "e5416c52aa5a257735f15791bef8ec3112493012a0984170a46b80c699c54434"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -28063,7 +28063,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "87874ddec6e36eabec8fcd153ef3ab3adee83bd0983d2a5a727cd62ff2594a8b"
+        "sha256": "b754d6529938a5b947935e693e17b55c1c776a199ca3624d48a7eb52ad012ba7"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28551,7 +28551,7 @@
       },
       {
         "file": "worker/src/game/shop.js",
-        "sha256": "d0842feb60ae171d6082588a2eadf1f202587a1805455dc62271bb46f1e97460"
+        "sha256": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b"
       },
       {
         "file": "worker/src/game/shop.js.20261010-gacha-v1.bak",
@@ -28829,7 +28829,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "05066119-3653-4d91-b7fd-e4064f8c7bc3",
+        "version_id": "25d47210-39f1-415e-bfb6-b9ce76c18075",
         "percentage": 100
       }
     ],
