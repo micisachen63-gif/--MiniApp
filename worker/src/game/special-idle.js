@@ -1,15 +1,18 @@
-import { SKILL_MAP,eligible,specialState,saveSpecial,performSkill,receiveDamage,periodic,valueOf } from './special.js';
+import { SKILL_MAP,eligible,specialState,saveSpecial,castSpecial,combatActor,periodic,valueOf } from './special.js';
+import {specialCost} from './combat-passives.js';
+import {mapElement} from './elements.js';
 // One action per minute. A special skill replaces the normal attack and is off by default.
-export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day}){
+export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5}){
  const x=specialState(c);if(!x.pending&&!Object.keys(x.auto).length&&!x.idleActor)return null;
- const a={id:c.tg_id,atk:s.atk,def:s.def,maxHp:s.maxHp,maxMp:s.maxMp,hp:c.hp,mp:c.mp,crit:.05+(s.pct.critPct||0),affixPct:s.pct,special:x,buffs:x.idleActor?.buffs||[],summon:x.idleActor?.summon};
- const enemy={hp:s.atk*100,maxHp:s.atk*100,def:s.std*.05,buffs:x.idleEnemy?.buffs||[],dots:x.idleEnemy?.dots||[],interruptible:true,windup:true};
- periodic([a],enemy,now);
+ // The actual idle damage budget applies the guardian multiplier once in idle.js.
+ const a={...combatActor(c,s),guardian:null,special:x,buffs:x.idleActor?.buffs||[],summon:x.idleActor?.summon};
+ const enemy={hp:s.atk*100,maxHp:s.atk*100,def:s.std*.05,element:mapElement(c.map_id),level:c.level,buffs:x.idleEnemy?.buffs||[],dots:x.idleEnemy?.dots||[],interruptible:true,windup:true};
+ periodic([a],enemy,now,{sustain:false});
  const periodicDamage=enemy.maxHp-enemy.hp;
  if(x.costDay!==day){x.costDay=day;x.extraCost=0;}
  const manual=x.pending;let selected;
  for(const id of manual?[manual]:x.loadout){
-  const base=SKILL_MAP[id],skill=base?{...base,mp:Math.max(1,Math.round(base.mp*(1-(s.pct.mpEfficiencyPct||0)))),cooldownSeconds:Math.max(1,Math.round(base.cooldownSeconds*(1-(s.pct.skillHastePct||0))))}:base,mode=x.auto[id];if(!eligible(c,skill)||!x.learned.includes(id)||(x.cooldowns[id]||0)>now)continue;
+  const base=SKILL_MAP[id],skill=base?specialCost(base,s.pct):base,mode=x.auto[id];if(!eligible(c,skill)||!x.learned.includes(id)||(x.cooldowns[id]||0)>now)continue;
   if(!manual&&(!mode||mode==='lowHp'&&a.hp/a.maxHp>=.5||mode==='elite'&&Math.floor(now/60000)%33!==0))continue;
   if(['skill_17_2','skill_24_2'].includes(id))continue;
   // Safe mode spends current MP only. Strong mode consumes owned blue potions up to the daily replacement-cost limit.
@@ -17,7 +20,7 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day}){
   if(a.mp<skill.mp)continue;selected=skill;break;
  }
  let damage=periodicDamage;
- if(selected){const result=performSkill(a,[a],enemy,selected,a.id,now);damage+=result.damage;a.mp-=selected.mp;x.cooldowns[selected.id]=now+selected.cooldownSeconds*1000;if(manual)delete x.pending;}
+ if(selected){const result=castSpecial(a,[a],enemy,selected,a.id,now,rng,{applySustain:false});damage+=result.damage;if(manual)delete x.pending;}
  const normalBonus=Math.min(1.5,(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now))+periodicDamage/Math.max(1,s.atk*s.skill.mult));
  const ratio=selected?Math.min(1.5,Math.max(.15,damage/Math.max(1,s.atk*s.skill.mult))):null;
  // The existing idle pressure is already reduced by DEF; apply only active skill protection here.

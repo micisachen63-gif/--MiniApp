@@ -4,9 +4,10 @@ import {mapElement,bossResistance} from '../game/elements.js';
 import {dungeonTheme} from '../game/dungeon-art.js';
 import * as P from './player.js';
 import { loadPlayer,guardStmt,invDeltaStmt,ledgerStmt,outboxStmt,classifyDbError } from '../db.js';
-import { computeStats } from '../game/stats.js';
+import { computeStats,nodeFor } from '../game/stats.js';
 import { GameError } from '../game/classes.js';
-import { specialState,saveSpecial,SKILL_MAP,eligible,validateCast,performSkill,periodic,receiveDamage,damageEnemy,valueOf,autoPartyAction } from '../game/special.js';
+import { specialState,saveSpecial,SKILL_MAP,eligible,validateCast,castSpecial,combatActor,periodic,receiveDamage,damageEnemy,valueOf,autoPartyAction } from '../game/special.js';
+import {spendMana,restoreOnAction} from '../game/combat-passives.js';
 import { SPECIAL_SKILLS } from '../game/special-data.js';
 import { taipeiDay } from '../game/time.js';
 export const DUNGEONS=[
@@ -51,7 +52,7 @@ export async function create(env,tg,b,now){
  return {ok:true,party:await view(env,id,tg,now)};
 }
 async function beginParty(env,p,stmts,now){const s=p.state;s.actors=[];
-   for(const m of p.members){await P.withPlayer(env,m.char_id,now);const player=await loadPlayer(env.DB,m.char_id,env),c=player.char;admit(c,p);if(await env.DB.prepare('SELECT 1 FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NOT NULL LIMIT 1').bind(c.tg_id).first())throw new GameError('guardian_trade','請先完成守護天使交易再出發');if(c.party_id||c.hp<=0||c.idle_state==='reviving')throw new GameError('down','有隊員倒地或仍在其他戰鬥');const active=await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(m.account_id).first();if(active?.active_char_id!==m.char_id)throw new GameError('changed','隊員已切換角色，請重新準備');const st=computeStats(c,player.equipment.filter(e=>e.is_equipped));s.actors.push({id:c.tg_id,name:c.name,base:c.base_class,guardian:c.guardian,collectionBlessing:st.collectionBlessing,path:c.class_path,level:c.level,maxHp:st.maxHp,maxMp:st.maxMp,hp:c.hp,mp:c.mp,atk:st.atk,def:st.def,element:st.element,weaponElem:st.weaponElem,elementResist:st.elementResist,crit:.05+(st.pct.critPct||0),affixPct:st.pct,special:specialState(c),buffs:[],actions:0});stmts.push(env.DB.prepare('UPDATE rpg_characters SET party_id=?,last_settle_at=?,rev=rev+1 WHERE tg_id=? AND rev=? AND party_id IS NULL AND EXISTS(SELECT 1 FROM rpg_accounts WHERE account_tg_id=? AND active_char_id=?)').bind(p.id,now,c.tg_id,c.rev,m.account_id,m.char_id),guardStmt(env.DB));}
+   for(const m of p.members){await P.withPlayer(env,m.char_id,now);const player=await loadPlayer(env.DB,m.char_id,env),c=player.char;admit(c,p);if(await env.DB.prepare('SELECT 1 FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NOT NULL LIMIT 1').bind(c.tg_id).first())throw new GameError('guardian_trade','請先完成守護天使交易再出發');if(c.party_id||c.hp<=0||c.idle_state==='reviving')throw new GameError('down','有隊員倒地或仍在其他戰鬥');const active=await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(m.account_id).first();if(active?.active_char_id!==m.char_id)throw new GameError('changed','隊員已切換角色，請重新準備');const st=computeStats(c,player.equipment.filter(e=>e.is_equipped));s.actors.push(combatActor(c,st));stmts.push(env.DB.prepare('UPDATE rpg_characters SET party_id=?,last_settle_at=?,rev=rev+1 WHERE tg_id=? AND rev=? AND party_id IS NULL AND EXISTS(SELECT 1 FROM rpg_accounts WHERE account_tg_id=? AND active_char_id=?)').bind(p.id,now,c.tg_id,c.rev,m.account_id,m.char_id),guardStmt(env.DB));}
    p.status='combat';s.deadline=now+5000;s.roundStarted=now;s.enemy=enemyFor(p);s.log.unshift('三位英雄出發，戰鬥由伺服器結算。');stmts.push(env.DB.prepare('UPDATE rpg_parties SET expires_at=? WHERE id=?').bind(now+1800000,p.id));
 }
 export async function action(env,tg,b,now){const id=String(b.partyId||'');
@@ -97,10 +98,13 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
  s.log=[];periodic(s.actors,enemy,now);if(enemy.hp<turn.before.enemyHp)turn.events.push({actorId:null,label:'召喚／持續傷害',damage:turn.before.enemyHp-enemy.hp,effect:'magic',after:snapshot()});
  for(const a of s.actors){if(a.hp<=0)continue;const action=s.actions[a.id]||autoPartyAction(a,s.actors,enemy,now,s);
   try{let result;if(action.skillId==='defend'){a.buffs.push({type:'nextReduce',value:.35,until:now+60000,uses:1});result={damage:0};}
-   else if(action.skillId==='attack'){let raw=a.atk*1.5*(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));const crit=crypto.getRandomValues(new Uint32Array(1))[0]/2**32<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;result={damage:damageEnemy(enemy,raw,{},now,a),crit};a.hp=Math.min(a.maxHp,a.hp+Math.round(result.damage*(a.affixPct?.lifestealPct||0)));for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;}
-   else{const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,now);result=performSkill(a,s.actors,enemy,skill,action.targetId,now,()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32,s);a.mp-=skill.mp;a.special.cooldowns[skill.id]=now+skill.cooldownSeconds*1000;}
-   turn.events.push({actorId:a.id,base:a.base,skillId:action.skillId,targetId:action.targetId,label:action.skillId==='defend'?'防禦':action.skillId==='attack'?'普通攻擊':SKILL_MAP[action.skillId].name,...result,after:snapshot()});
-   a.actions++;if(action.manual)a.manualActions=(a.manualActions||0)+1;s.log.push(`${a.name}：${action.skillId==='defend'?'防禦':action.skillId==='attack'?'普攻':SKILL_MAP[action.skillId].name}${result.damage?`，傷害 ${result.damage}`:''}${result.healed?`，治療 ${result.healed}`:''}`);
+   else if(action.skillId==='attack'){const rng=()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32;
+    const skill=a.skill||{...nodeFor(a.base,a.path).skill,cost:Math.max(1,Math.round(nodeFor(a.base,a.path).skill.cost*(1+(a.affixPct?.mpCostPct||0))*(1-(a.affixPct?.mpEfficiencyPct||0))))};const cast=a.mp>=skill.cost;
+    let raw=a.atk*(cast?skill.mult:1.5)*(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;
+    result={damage:damageEnemy(enemy,raw,{},now,a),crit,nativeSkill:cast?skill.name:null,spentMp:cast?spendMana(a,skill.cost,rng):0};result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;}
+   else{const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,now);result=castSpecial(a,s.actors,enemy,skill,action.targetId,now,()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32,s);}
+   turn.events.push({actorId:a.id,base:a.base,skillId:action.skillId,targetId:action.targetId,label:action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普通攻擊'):SKILL_MAP[action.skillId].name,...result,after:snapshot()});
+   a.actions++;if(action.manual)a.manualActions=(a.manualActions||0)+1;s.log.push(`${a.name}：${action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普攻'):SKILL_MAP[action.skillId].name}${result.damage?`，傷害 ${result.damage}`:''}${result.healed?`，治療 ${result.healed}`:''}`);
   }catch(e){s.log.push(`${a.name}技能未生效：${e.message}`);}
  }
  if(enemy.hp>0&&!enemy.interrupted){

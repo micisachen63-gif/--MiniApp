@@ -100,7 +100,7 @@ export async function accept(env, { tgId, pkId }, now, rngSeed = null) {
     const eqA = A.equipment.filter((e) => e.is_equipped), eqB = B.equipment.filter((e) => e.is_equipped);
     const sa = computeStats(A.char, eqA), sb = computeStats(B.char, eqB);
     const seed = rngSeed ?? (crypto.getRandomValues(new Uint32Array(1))[0] >>> 0); const rng = mulberry32(seed);
-    const sim = simulateDuel(sa, sb, rng);
+    const sim = simulateDuel(sa, sb, rng, {a:A.char,b:B.char});
     const W = sim.winner === 'a' ? A : B, L = sim.winner === 'a' ? B : A; const wTg = String(W.char.tg_id), lTg = String(L.char.tg_id);
     const lEq = (sim.winner === 'a' ? eqB : eqA).filter((e) => !e.trade_id);
     const d = rollDrop(rng, lEq, L.inv.ward || 0);

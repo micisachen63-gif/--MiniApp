@@ -1,0 +1,939 @@
+{
+  "status": "DESIGN_ONLY_NOT_ENABLED",
+  "version": "2026-10-15",
+  "phase1": "Unify existing combat rules first. This file does not enable advanced mechanics.",
+  "terminology": {
+    "A": "角色當前攻擊力",
+    "回合": "該模式一次有效行動；持續效果用伺服器時間",
+    "有效": "實際減少HP、回復HP或吸收傷害；不含超量、演出與重播"
+  },
+  "globalRules": {
+    "tier3Level": 90,
+    "tier4Level": 120,
+    "partyTrialRequired": true,
+    "maxStacks": 3,
+    "maxGainPerAction": 1,
+    "extraProcsGenerateStacks": false,
+    "freeCastsCountAsPaidMP": false,
+    "exclusiveRoute": true,
+    "damageScales": "PK仍乘PK.dmgScale；BOSS既有每次攻擊25%傷害上限包含所有追擊與脈衝",
+    "soloFallback": "隊友效果以自己為目標；復活與僅隊伍加速不得無效扣費；單體首領替代條件依路線定義",
+    "scope": "戰鬥資源只在同一角色、同一場遭遇有效；換地圖、重選路線、結束戰鬥清除；不跨PK與PvE",
+    "cost": "新增選擇只使用既有行動與裝備欄，不新增收費抽取、獨立DB寫入或輪詢",
+    "limits": "同名增益取最高；減傷與穿透保留既有總上限；追擊不觸發追擊，禁止無限循環"
+  },
+  "routes": [
+    {
+      "baseClass": "sword",
+      "path": "A11",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "血怒戰神",
+      "role": "血契",
+      "resource": {
+        "name": "血契",
+        "gain": "有效直擊累積一層，最多每個行動一層；滿三層可釋放",
+        "maximum": 3,
+        "release": "以目前生命5%換取下一擊傷害+20%，命中後按實際傷害回復；生命低於30%不可獻血"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A111",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "血祭斬",
+      "type": "自身專精",
+      "effect": "消耗三層，追加一次1.2A斬擊；生命成本不觸發受傷類被動",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A112",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "血誓庇護",
+      "type": "團隊轉化",
+      "effect": "消耗三層，把本次有效吸血的50%轉為隊友護盾，上限自身生命8%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A12",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "血怒戰神",
+      "role": "怒潮",
+      "resource": {
+        "name": "怒潮",
+        "gain": "有效吸血達最大生命3%累積一層，單次最多一層",
+        "maximum": 3,
+        "release": "滿三層後，將下一次超量吸血轉為自身護盾，上限生命12%"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A121",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "赤潮反攻",
+      "type": "自身專精",
+      "effect": "護盾被敵人擊破時反擊0.8A，每60秒一次",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A122",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "共血之潮",
+      "type": "團隊轉化",
+      "effect": "消耗三層使生命最低隊友回復自身最大生命6%，不可觸發吸血",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A21",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "劍聖",
+      "role": "劍意",
+      "resource": {
+        "name": "劍意",
+        "gain": "每次原生技能命中累積一層",
+        "maximum": 3,
+        "release": "第三層後可用下一招單體技能消耗，獲得20%穿透"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A211",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "極意一閃",
+      "type": "自身專精",
+      "effect": "消耗三層追加1.0A斬擊，本次未爆擊則保留一層",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A212",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "劍陣共鳴",
+      "type": "團隊轉化",
+      "effect": "消耗三層為隊友下一次直擊提供10%穿透，最多一擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A22",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "劍聖",
+      "role": "架勢",
+      "resource": {
+        "name": "架勢",
+        "gain": "連續使用兩種不同的攻擊行動累積一層",
+        "maximum": 3,
+        "release": "三層後下一次受擊減傷20%，反擊0.6A；避免固定招式連點"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A221",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "無雙返刃",
+      "type": "自身專精",
+      "effect": "架勢反擊延後到下一次主動攻擊，合併為1.0A追擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "A222",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "劍心護隊",
+      "type": "團隊轉化",
+      "effect": "架勢觸發時，生命最低隊友獲得自身生命6%的護盾",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B11",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "聖騎士",
+      "role": "聖印",
+      "resource": {
+        "name": "聖印",
+        "gain": "單次有效治療或護盾實際吸收達自身生命2%累積一層",
+        "maximum": 3,
+        "release": "三層轉為選擇：0.9A聖擊或全隊回復自身生命3%，不計超量治療"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B111",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "黎明裁決",
+      "type": "自身專精",
+      "effect": "聖擊對帶破甲首領附加0.5A，最多每60秒一次",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B112",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "晨光聖域",
+      "type": "團隊轉化",
+      "effect": "治療改為每位存活隊友回復自身最大生命5%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B12",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "聖騎士",
+      "role": "守誓",
+      "resource": {
+        "name": "守誓",
+        "gain": "替隊友實際分攤傷害一次累積一層",
+        "maximum": 3,
+        "release": "滿三層後獲得一次免費護盾施法，仍占用回合與正常冷卻"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B121",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "誓約之刃",
+      "type": "自身專精",
+      "effect": "分攤後下一擊追加已分攤傷害25%，上限0.8A",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B122",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "永續誓約",
+      "type": "團隊轉化",
+      "effect": "消耗三層為被守護者清除一項減益並治療生命6%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B21",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "鐵壁守衛",
+      "role": "堡壘",
+      "resource": {
+        "name": "堡壘",
+        "gain": "敵方有效命中且職業減傷有實際減免時累積一層",
+        "maximum": 3,
+        "release": "三層使下一次守護分攤延續兩次受擊，分攤率35%"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B211",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "不動戰壘",
+      "type": "自身專精",
+      "effect": "消耗三層，反擊已減免傷害20%，上限0.8A",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B212",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "群星壁壘",
+      "type": "團隊轉化",
+      "effect": "消耗三層，全隊下一次受擊減傷12%，同類取最高不疊加",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B22",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "鐵壁守衛",
+      "role": "盾震",
+      "resource": {
+        "name": "盾震",
+        "gain": "自身護盾實際吸收傷害時累積一層",
+        "maximum": 3,
+        "release": "滿三層可盾擊0.8A，命中後目標下次傷害降低10%"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B221",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "泰坦盾擊",
+      "type": "自身專精",
+      "effect": "盾擊可打斷一次可中斷蓄力；不可打斷者追加0.4A",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "sword",
+      "path": "B222",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "鐵壁輪值",
+      "type": "團隊轉化",
+      "effect": "消耗三層把下一次守護轉給生命最低隊友，附生命6%護盾",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A11",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "逐風神射",
+      "role": "瞄準",
+      "resource": {
+        "name": "瞄準",
+        "gain": "原生攻擊命中累積一層",
+        "maximum": 3,
+        "release": "三層後下一次單體技能消耗，爆擊率+20百分點；總上限80%"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A111",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "群星狙擊",
+      "type": "自身專精",
+      "effect": "瞄準釋放時追加一次0.9A，不能再次累積瞄準",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A112",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "獵星號令",
+      "type": "團隊轉化",
+      "effect": "消耗三層為隊友下一擊加10%爆擊率，最多一擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A12",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "逐風神射",
+      "role": "穿甲",
+      "resource": {
+        "name": "穿甲",
+        "gain": "直接命中同一敵人累積一層；換目標清除",
+        "maximum": 3,
+        "release": "每層降低目標防禦3%，三層後可消耗追加0.6A"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A121",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "貫界神箭",
+      "type": "自身專精",
+      "effect": "三層釋放改為本擊穿透25%，不與其他穿透加總超過40%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A122",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "鷹眼共狩",
+      "type": "團隊轉化",
+      "effect": "三層釋放使目標受到全隊直擊傷害+6%，持續一回合",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A21",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "蒼穹風舞",
+      "role": "風勢",
+      "resource": {
+        "name": "風勢",
+        "gain": "同一行動確實傷及至少兩名不同敵人累積一層；單體首領每兩次命中給一層",
+        "maximum": 3,
+        "release": "三層後下一次範圍技能提升一個目標；單體情境改追加0.7A"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A211",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "九霄風暴",
+      "type": "自身專精",
+      "effect": "範圍技能對已受傷目標追加0.3A，合計上限1.2A",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A212",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "風翼接力",
+      "type": "團隊轉化",
+      "effect": "消耗三層，全隊下一次受擊減傷10%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A22",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "蒼穹風舞",
+      "role": "風幕",
+      "resource": {
+        "name": "風幕",
+        "gain": "成功使用保護技能後，隊友實際受到較少傷害時累積一層",
+        "maximum": 3,
+        "release": "三層可施加全隊下一次受擊減傷12%，單人轉為自身"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A221",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "蒼穹反風",
+      "type": "自身專精",
+      "effect": "風幕吸收有效傷害後對敵反擊0.6A，每次釋放最多一次",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "A222",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "天羽行軍",
+      "type": "團隊轉化",
+      "effect": "風幕另附全隊下次原生技能耗魔減少15%，不可低於1MP",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B11",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "森靈馭獸",
+      "role": "契約",
+      "resource": {
+        "name": "契約",
+        "gain": "召喚物每次實際造成傷害累積一層",
+        "maximum": 3,
+        "release": "三層後下一次召喚技能多一個脈衝，不能自行累積契約"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B111",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "萬獸奔襲",
+      "type": "自身專精",
+      "effect": "額外脈衝提升至1.0A，不再觸發其他追擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B112",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "森靈分工",
+      "type": "團隊轉化",
+      "effect": "額外脈衝改為治療生命最低隊友0.8A，上限其生命8%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B12",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "森靈馭獸",
+      "role": "共生",
+      "resource": {
+        "name": "共生",
+        "gain": "自己或召喚物造成有效治療時累積一層，每個主動行動最多一次",
+        "maximum": 3,
+        "release": "三層使下次召喚同時提供生命最低隊友0.8A護盾"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B121",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "古森回聲",
+      "type": "自身專精",
+      "effect": "共生護盾被擊破時，召喚物追加0.7A攻擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B122",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "世界樹息",
+      "type": "團隊轉化",
+      "effect": "消耗三層使全隊回復自身最大生命4%，禁止治療觸發共生",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B21",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "月影獵使",
+      "role": "獵印",
+      "resource": {
+        "name": "獵印",
+        "gain": "持續傷害脈衝對同一目標生效時累積一層",
+        "maximum": 3,
+        "release": "三層後下一次直擊引爆印記0.9A，清除印記"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B211",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "永夜追獵",
+      "type": "自身專精",
+      "effect": "引爆後延長既有DOT一次，延長脈衝不能再延長自身",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B212",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "銀月指引",
+      "type": "團隊轉化",
+      "effect": "引爆後全隊下一次對該目標命中傷害+8%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B22",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "月影獵使",
+      "role": "月陷",
+      "resource": {
+        "name": "月陷",
+        "gain": "成功打斷蓄力或對不可中斷首領施放打斷技累積一層；普通直擊每兩次補一層",
+        "maximum": 3,
+        "release": "三層可設置一次陷阱，使敵方下一次攻擊傷害降低15%"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B221",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "荊棘伏擊",
+      "type": "自身專精",
+      "effect": "陷阱觸發時追加0.8A，不觸發印記",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "archer",
+      "path": "B222",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "幽林庇護",
+      "type": "團隊轉化",
+      "effect": "陷阱另給生命最低隊友自身生命6%的護盾",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A11",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "大魔導士",
+      "role": "焚星",
+      "resource": {
+        "name": "焚星",
+        "gain": "有效DOT脈衝累積一層，單次結算最多一次",
+        "maximum": 3,
+        "release": "三層後下一次火系主動技能引爆0.9A；武器屬性仍由裝備決定"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A111",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "日冕焚界",
+      "type": "自身專精",
+      "effect": "引爆改為1.2A，且本次DOT脈衝不再累積資源",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A112",
+      "tier": 4,
+      "parent": "A11",
+      "mechanicName": "熾羽聖護",
+      "type": "團隊轉化",
+      "effect": "引爆後為自身和最低生命隊友各提供自身生命5%護盾",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A12",
+      "tier": 3,
+      "parent": "A1",
+      "parentName": "大魔導士",
+      "role": "星隕",
+      "resource": {
+        "name": "星隕",
+        "gain": "每次非免費主動施法累積一層",
+        "maximum": 3,
+        "release": "三層可消耗額外目前魔力8%，使下一次範圍技能傷害+20%；MP低於20%不可超載"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A121",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "星核崩滅",
+      "type": "自身專精",
+      "effect": "超載後追加0.8A，禁用連鎖回魔觸發",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A122",
+      "tier": 4,
+      "parent": "A12",
+      "mechanicName": "隕日結界",
+      "type": "團隊轉化",
+      "effect": "超載後把額外耗魔轉為全隊護盾，每人上限自身生命5%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A21",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "冰霜術士",
+      "role": "霜痕",
+      "resource": {
+        "name": "霜痕",
+        "gain": "原生技能或冰系特殊技能直擊累積一層",
+        "maximum": 3,
+        "release": "三層消耗使敵人下次攻擊傷害降低15%；首領不會永久凍結"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A211",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "永霜王域",
+      "type": "自身專精",
+      "effect": "霜痕消耗時追加0.7A並施加一回合破甲8%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A212",
+      "tier": 4,
+      "parent": "A21",
+      "mechanicName": "零界封絕",
+      "type": "團隊轉化",
+      "effect": "霜痕消耗時全隊下一次受擊減傷12%，同類取最高",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A22",
+      "tier": 3,
+      "parent": "A2",
+      "parentName": "冰霜術士",
+      "role": "冰鏡",
+      "resource": {
+        "name": "冰鏡",
+        "gain": "自己施放的護盾實際吸收傷害累積一層",
+        "maximum": 3,
+        "release": "三層使下次護盾返還實付MP的30%，不返還免費施法"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A221",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "極光聖降",
+      "type": "自身專精",
+      "effect": "冰鏡盾破時反擊0.8A，每60秒最多一次",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "A222",
+      "tier": 4,
+      "parent": "A22",
+      "mechanicName": "蒼穹冰葬",
+      "type": "團隊轉化",
+      "effect": "消耗三層，使本次護盾同時保護最低生命隊友，副盾為主盾50%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B11",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "時空術士",
+      "role": "時序",
+      "resource": {
+        "name": "時序",
+        "gain": "施放兩種不同非終極技能後累積一層",
+        "maximum": 3,
+        "release": "三層可縮短一名隊友冷卻中的非終極技能15秒；加速保護180秒"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B111",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "時序崩解",
+      "type": "自身專精",
+      "effect": "自己獲得加速後，下次原生技能多一次0.7A回響",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B112",
+      "tier": 4,
+      "parent": "B11",
+      "mechanicName": "命運斷章",
+      "type": "團隊轉化",
+      "effect": "對隊友加速同時回復其最大MP5%，不觸發其他施法回流",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B12",
+      "tier": 3,
+      "parent": "B1",
+      "parentName": "時空術士",
+      "role": "虛空",
+      "resource": {
+        "name": "虛空",
+        "gain": "連續兩次不重複技能累積一層；連續同技能清除一層",
+        "maximum": 3,
+        "release": "三層後下次非終極傷害技能回響一次原傷害20%，只回響直接傷害"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B121",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "虛空湮滅",
+      "type": "自身專精",
+      "effect": "回響提升為30%，不能爆擊或觸發任何追擊",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B122",
+      "tier": 4,
+      "parent": "B12",
+      "mechanicName": "次元裂隙",
+      "type": "團隊轉化",
+      "effect": "回響改為護盾：原傷害15%給最低生命隊友，上限其生命10%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B21",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "召喚師",
+      "role": "群靈",
+      "resource": {
+        "name": "群靈",
+        "gain": "有效召喚脈衝累積一層",
+        "maximum": 3,
+        "release": "三層後可讓下次召喚多一個0.8A脈衝，不計資源增益"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B211",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "萬靈降臨",
+      "type": "自身專精",
+      "effect": "額外脈衝對帶標記目標提升至1.1A",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B212",
+      "tier": 4,
+      "parent": "B21",
+      "mechanicName": "星界御令",
+      "type": "團隊轉化",
+      "effect": "額外脈衝改為全隊下一次受擊減傷12%",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B22",
+      "tier": 3,
+      "parent": "B2",
+      "parentName": "召喚師",
+      "role": "魂契",
+      "resource": {
+        "name": "魂契",
+        "gain": "自己施放的護盾被擊破或召喚效果正常結束累積一層",
+        "maximum": 3,
+        "release": "三層可在下一次召喚時把召喚生命連結轉為自身生命10%護盾"
+      },
+      "manual": "三層時顯示可釋放按鈕；可留待敵方蓄力或隊友低血",
+      "auto": "使用原有自動技能設定；預設關閉新戰技；勾選後依預設安全條件釋放，不增加新輪詢"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B221",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "深淵魔召",
+      "type": "自身專精",
+      "effect": "護盾被擊破時使召喚物追加0.9A，最多一次",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    },
+    {
+      "baseClass": "mage",
+      "path": "B222",
+      "tier": 4,
+      "parent": "B22",
+      "mechanicName": "冥界開門",
+      "type": "團隊轉化",
+      "effect": "消耗三層改為給最低生命隊友自身生命10%的護盾，倒地者無效",
+      "trigger": "消耗既有三轉資源時依此規則增強；每次資源釋放只生效一次",
+      "tradeoff": "同層另一條路線互斥，不可同時獲取；每場不額外增加技能裝備格"
+    }
+  ]
+}

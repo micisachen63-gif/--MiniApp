@@ -6,6 +6,8 @@ import * as P from '../src/services/player.js';
 import * as G from '../src/services/party.js';
 import {loadPlayer} from '../src/db.js';
 import {computeStats} from '../src/game/stats.js';
+import {specialCost} from '../src/game/combat-passives.js';
+import {SKILL_MAP} from '../src/game/special.js';
 
 async function team(kind='dungeon'){
  const env={DB:freshDb()};
@@ -38,10 +40,10 @@ test('party replay retains only five turns and a completed cursor returns only n
 });
 test('snapshots include exact HP and MP before skill cost and after recovery',async()=>{
  const {env,id}=await team();
- await edit(env,id,s=>{s.enemy.hp=s.enemy.maxHp=1000000;for(const a of s.actors){a.mp=a.maxMp=1000;a.special.learned=['skill_02_1'];a.special.loadout=['skill_02_1'];a.special.cooldowns={};}});
+ let cost;await edit(env,id,s=>{s.enemy.hp=s.enemy.maxHp=1000000;for(const a of s.actors){a.mp=a.maxMp=1000;a.special.learned=['skill_02_1'];a.special.loadout=['skill_02_1'];a.special.cooldowns={};}cost=specialCost(SKILL_MAP.skill_02_1,s.actors[0].affixPct).mp;});
  const p=await G.view(env,id,'111',T0+5001),turn=p.battleTurn;
  assert.equal(turn.before.members[0].mp,1000);
- const cast=turn.events.find(e=>e.actorId==='111');assert.equal(cast.after.members[0].mp,986);
+ const cast=turn.events.find(e=>e.actorId==='111');assert.equal(cast.after.members[0].mp,1000-cost);assert.equal(cast.spentMp,cost);
  assert.equal(turn.after.members[0].mp,1000);assert.equal(turn.final.members[0].mp,p.members[0].mp);
  for(const snap of [turn.before,...turn.events.map(e=>e.after),turn.after,turn.final])for(const a of snap.members){assert(Number.isFinite(a.hp));assert(Number.isFinite(a.maxHp));assert(Number.isFinite(a.mp));assert(Number.isFinite(a.maxMp));}
 });

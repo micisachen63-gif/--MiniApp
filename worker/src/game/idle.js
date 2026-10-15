@@ -2,7 +2,9 @@ import {chooseMonster,monsterMaterialPlan} from './monsters.js';
 import {guardianDamageMultiplier,guardianChance} from './guardian-effects.js';
 import {idleSpecial} from './special-idle.js';
 import {beginAssistBattle,idleGuardianActor} from './guardian-assist.js';
-import {idleCombatState,resolveIdleCombat} from './idle-combat.js';
+import {idleCombatState,idleMonsterHp,resolveIdleCombat} from './idle-combat.js';
+import {spendMana,restoreOnAction} from './combat-passives.js';
+import {elementalDamage,mapElement} from './elements.js';
 // Background idle combat: lazy, deterministic settlement (pure).
 // 1 tick = 60 s = one battle. Called before every action and by the cron; result is persisted by the caller.
 import { TICK_MS, MAX_SETTLE_TICKS, IDLE, DEATH, POTIONS, NEWBIE_EXP_LEVEL, NEWBIE_EXP_MULT, MAX_LEVEL, MAX_OPEN_MAP, MAX_OPEN_CLASS_TIER, DROPS, DROP_KEYS, RELIC, MONSTER_GOLD, BLESSED_DROPS } from './constants.js';
@@ -109,13 +111,22 @@ export function settleIdle(char, inventory, equipped, now) {
     beginAssistBattle(c,inv,use,price=>{report.guardianStonesBought=(report.guardianStonesBought||0)+1;report.guardianStoneGoldSpent=(report.guardianStoneGoldSpent||0)+price;});
     const guardianActor=idleGuardianActor(c);
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
-    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map),use,potions:POTIONS,day});
+    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map),use,potions:POTIONS,day,rng});
     let cast = !!special?.selected;
     if (!special?.selected && c.mp < s.skill.cost && c.auto_blue) { let k; while (c.mp < s.skill.cost && (k = choosePotion(inv, 'blue', mapTier))) { use(k); c.mp = Math.min(s.maxMp, c.mp + POTIONS[k].heal); } }
-    if (!special?.selected && c.mp >= s.skill.cost) { cast = true; if (!(s.pct.freeCastPct && rng() < s.pct.freeCastPct)) c.mp -= s.skill.cost; }
+    if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
     c.mp = Math.min(s.maxMp, c.mp + s.mpRegen);
     setState(cast ? 'fighting' : 'no_mp', t);
-    const eff = special?.selected ? special.ratio : (cast ? 1 : IDLE.basicEff)*(special?.normalBonus??1);
+    const crit=!special?.selected&&rng()<Math.min(.8,.05+(s.pct.critPct||0));
+    const nativeElement=elementalDamage(s.atk*s.skill.mult,s,{element:mapElement(mapTier)})/Math.max(1,s.atk*s.skill.mult);
+    const eff = special?.selected ? special.ratio : (cast ? 1 : IDLE.basicEff)*(special?.normalBonus??1)*(crit?1.5:1)*nativeElement;
+
+    const combat=combatState?.mapId===mapTier?combatState:idleCombatState({...c,idle_combat_json:combatState?null:c.idle_combat_json});combatState=combat;
+    const kills=s.killsPerTick*eff*s.g*guardianDamageMultiplier(guardianActor);
+    // This is exactly the integer damage budget resolveIdleCombat will distribute, including its carried fraction.
+    const damage=Math.floor(Math.max(0,kills)*idleMonsterHp(mapTier)+(combat.remainder||0));
+    const recovery={hp:c.hp,maxHp:s.maxHp,affixPct:s.pct};
+    const sustain=restoreOnAction(recovery,damage,{cast});c.hp=recovery.hp;
 
     // HP: monster pressure, auto red
     const autoRed = () => { let k; while (c.hp < (c.auto_red_pct / 100) * s.maxHp && (k = choosePotion(inv, 'red', mapTier))) { use(k); c.hp = Math.min(s.maxHp, c.hp + POTIONS[k].heal); } };
@@ -174,9 +185,9 @@ export function settleIdle(char, inventory, equipped, now) {
     const gain = Math.round(expPerTick(c.level) * eff * s.g * s.expFactor * mult);
     c.exp += gain; report.exp_gained += gain;
     goldAcc += dailyGold(c.level) * IDLE.goldPerDayPct / MAX_SETTLE_TICKS * eff;
-    const kills = s.killsPerTick * eff * s.g * guardianDamageMultiplier(guardianActor); killAcc += kills;
-    const combat=combatState?.mapId===mapTier?combatState:idleCombatState({...c,idle_combat_json:combatState?null:c.idle_combat_json});combatState=combat;
-    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,elite:eliteDefeated,eliteMonster,record:i===ticks});
+    killAcc += kills;
+    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,record:i===ticks});
+    if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;}
     for(const [key,qty]of Object.entries(monsterMaterialPlan(round,materialRng,dropsToday,inv))){inv[key]=(inv[key]||0)+qty;report.drops[key]=(report.drops[key]||0)+qty;}
     realKills+=round.kills+(round.eliteKills||0);report.combat=combat.round;
     killGold += kills * goldPerKill(c.level) * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());

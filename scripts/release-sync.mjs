@@ -1,7 +1,6 @@
 // GitHub-first publication. Checks use only GETs and local dry-run builds.
 import fs from 'node:fs/promises';
 import path from 'node:path';
-import os from 'node:os';
 import https from 'node:https';
 import {createHash,randomUUID} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
@@ -22,7 +21,16 @@ const sorted=a=>[...a].sort((x,y)=>JSON.stringify(x).localeCompare(JSON.stringif
 async function save(file,value){await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,JSON.stringify(value,null,2)+'\n')}
 async function digest(file){const h=createHash('sha256'),handle=await fs.open(file);try{for await(const chunk of handle.createReadStream())h.update(chunk)}finally{await handle.close()}return h.digest('hex')}
 async function request(url,token){const target=new URL(url);assert.equal(target.protocol,'https:');if(token)assert.equal(target.hostname,'api.cloudflare.com');return new Promise((resolve,reject)=>{const req=https.get(target,{agent,family:4,headers:{accept:'*/*','accept-encoding':'identity',...(token?{Authorization:'Bearer '+token}:{})}},res=>{const chunks=[];res.on('data',b=>chunks.push(b));res.on('error',reject);res.on('end',()=>{clearTimeout(timer);resolve(new Response(Buffer.concat(chunks),{status:res.statusCode,headers:res.headers}))})});const timer=setTimeout(()=>req.destroy(new Error('Read-only request timed out')),90000);req.on('error',e=>{clearTimeout(timer);reject(e)})})}
-async function credentials(){if(process.env.CLOUDFLARE_API_TOKEN)return process.env.CLOUDFLARE_API_TOKEN;const base=process.env.APPDATA?path.join(process.env.APPDATA,'xdg.config'):process.env.XDG_CONFIG_HOME||path.join(os.homedir(),'.config');const text=await fs.readFile(path.join(base,'.wrangler/config/default.toml'),'utf8');const token=text.match(/^oauth_token\s*=\s*"([^"\r\n]+)"/m)?.[1];assert(token,'Run wrangler login or configure CLOUDFLARE_API_TOKEN');return token}
+async function credentials(){
+ if(process.env.CLOUDFLARE_API_TOKEN)return process.env.CLOUDFLARE_API_TOKEN;
+ // Wrangler owns credential storage/refresh, including OS keyrings and named profiles.
+ // Never print or persist its credential response, including on CLI errors.
+ const result=spawnSync(process.execPath,[cli,'auth','token','--json'],{cwd:ROOT,windowsHide:true,encoding:'utf8',maxBuffer:1e6});
+ assert.equal(result.status,0,'Wrangler authentication unavailable; run wrangler login');
+ const output=(result.stdout||'').split(/\r?\n/).filter(line=>!line.startsWith('[CF transport]')).join('\n');
+ let auth;try{auth=JSON.parse(output)}catch{throw Error('Wrangler authentication response was not valid JSON')}
+ assert(['oauth','api_token'].includes(auth.type)&&auth.token,'Use wrangler login or CLOUDFLARE_API_TOKEN');return auth.token;
+}
 async function api(service,suffix,token){const r=await request(`https://api.cloudflare.com/client/v4/accounts/${ACCOUNT}/workers/scripts/${service.name}/${suffix}`,token);assert(r.ok,`Cloudflare GET ${suffix}: HTTP ${r.status}`);return r}
 async function state(service,token){
  const [settings,deployment,schedules]=await Promise.all(['settings','deployments','schedules'].map(async p=>(await api(service,p,token)).json()));for(const r of [settings,deployment,schedules])assert(r.success,'Cloudflare control read failed');

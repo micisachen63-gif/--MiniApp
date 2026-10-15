@@ -1,0 +1,80 @@
+星穹旅誌：職業戰鬥套用與高階轉職交接（2026-10-15）
+
+實作與設計的界線
+本次實作是現有職業／54 招特殊技能的跨模式套用修正。
+advancement-mechanics-design.json 是三、四轉的下一階段設計：24 條三轉與 48 條四轉。
+該 JSON 未被戰鬥程式 import，status=DESIGN_ONLY_NOT_ENABLED；不得宣稱高階專屬機制已上線。
+目前同一二轉出身的三、四轉子分支仍繼承二轉原生技能與被動。
+成長樹內部分高階技能是舊規劃數值，與 runtime 不符；正式實作高階機制時應改由伺服器定義產生說明。
+
+本版共用規則
+1. combat-passives.js 是減傷、技能耗魔調整、免費施法與吸血／施法回血的唯一共用入口。
+2. computeStats.taken 已包含基礎職業倍率、takenPct 及 mitigationPct。收到此值時不可再乘一次詞條減傷。
+   舊版正在進行的隊伍沒有 taken／skill；減傷依 base + affixPct 回復，原生技能依 path 回復，不能讓舊局 NaN。
+3. 特殊技能 MP 同時套用職業 mpCostPct 與裝備 mpEfficiencyPct；冷卻套用 skillHastePct。
+   免費施法仍要求施法前足夠 MP，成功後不扣 MP，正常開始冷卻；技能面板使用同一 specialCost。
+4. 吸血依實際扣除敵方的 HP 計算。回血有 maxHp 上限，倒地者不可被吸血自行復活。
+   PK／副本／群王沿用致死一擊不再觸發原生續航的規則；掛機以整個已結算傷害預算處理。
+5. 護盾先吸收，再扣 HP；破盾技能有額外護盾消耗效果。反射先消耗一次性 buff，避免互相反射遞迴。
+   守護分攤傳遞的是已減免傷害，不可再次計算守護者的 DEF／職業減傷；守護者自己的護盾仍能吸收。
+
+各模式入口
+掛機：idle.js／special-idle.js。
+  一分鐘仍只結算一次，不增加網路輪詢或 D1 每擊寫入。
+  移除把吸血、施法回血近似為減傷的舊算法，改依即將提交的整數傷害預算與本次是否施法回血。
+  原生爆擊與武器元素對應當前地圖會影響實際預算；round.sustain／round.crit 保留結算資訊。
+  特殊技能保留原本手動排隊／自動條件、三技能欄、安全／強攻與補水預算規則。
+  輔助型技能的單人目標是自己；隊伍加速與復活仍不能在掛機無效扣費。
+  天使倍率只在最後實際預算套用一次，不能在特殊技能比例內再重複乘一次。
+
+組隊副本與爬塔：services/party.js。
+  建隊出發 snapshot 保存 taken、skill、affixPct；預設攻擊在足夠 MP 時施放原生職業技能。
+  不足 MP 才使用基礎攻擊。原生／特殊技能共用耗魔、續航與冷卻規則；每回合原本回魔保留。
+  手動選擇仍優先；未提交時沿用自動戰術（復活、治療、打斷、輸出等）。
+  before／after／final snapshots 均由實際動作產生，出發、戰鬥、結算仍在既有原子交易內。
+
+群組 BOSS：game/boss.js（由 services/boss.js 在 withPlayer 交易內呼叫）。
+  每次最多五個行動，已學且裝備的特殊技能由既有戰術選擇器使用；其餘使用原生技能。
+  本次反擊可以被有效打斷，護盾與主動減傷生效；不可中斷首領不會被強行中斷。
+  special_json.bossCombat 依 bossId 保存護盾／DOT／召喚脈衝；換首領不帶入舊場效果。
+  cooldowns 仍是角色自己的真實時間冷卻。DOT 與召喚也併入每次最大 25% 首領 HP 的傷害上限。
+  原本協助者傷害倍率、參戰視窗、獎勵與資料庫競爭保護保留。
+  回應 actions 包含技能名稱、實際傷害、MP、回血與 before／after，供既有或後續播放介面使用。
+
+PK：game/pk.js 與 services/pk.js。
+  決鬥使用雙方角色真實已學／裝備技能 snapshot，戰術自動選招；沒有新增即時手動 PK 操作。
+  效果支援護盾、吸血、回血、破甲、穿透、破盾、持續傷害、召喚與可中斷行動。
+  雙方各自使用決鬥內 HP／MP／冷卻，時間每回合 30 秒、最多原本 30 回合。
+  不消耗背包藥水、不改掛機技能冷卻、不帶入天使 PvE 傷害加成。
+  仍套用 PK.dmgScale 與原本防禦尺度；同源規則不代表不同模式強制使用相同傷害倍率。
+  全部步驟有 before／after，既有重播可直接使用；新紀錄額外帶 skillId、label 與 spentMp。
+
+驗證方式（不需要連正式 DB）
+根目錄 npm ci，再 npm run test:worker。
+測試包含 class-combat-parity、expedition、party-event-sync、pk-event-sync、boss、elements、idle、
+idle-event-sync、idle-report-accounting、collection-blessings、v05、rules、api。
+新增案例確認 54 招均可實際執行、各職業路線與舊 snapshot 減傷、分攤不重複減傷、
+免費施法／冷卻／耗魔與 UI 一致、真實傷害吸血、PK 技能與 replay、群王 DOT 跨請求、掛機整數回血。
+所有測試使用合成角色與記憶體 SQLite，不發 TG 訊息、不給真實帳號物品、不執行遠端 migration。
+
+完整測試庫的既有問題
+基線全量為 789 項／704 通過／85 失敗。該基線含另一視窗的未提交介面，前端錯誤僅供參考。
+本版全量為 803 項／725 通過／78 失敗；新增失敗名稱為 0。詳見 regression-summary.json。
+多數舊失敗涉及舊測試未帶 X-Monster-Art-Revision、遺失美術測試依賴、前端舊 harness 與歷史經濟假設。
+不可把剩餘 78 項標成通過；本次只更新發布必跑及直接相關的過時案例，不以降低驗證門檻通過發布。
+
+後續高階機制的實作順序
+1. 先使用 JSON 規格做 feature-flag 測試，只挑三個基礎職業各一條路線驗證狀態機。
+2. 共用資源狀態與 effect emitter，再擴展 24／48 分支；禁止每模式複製一份觸發邏輯。
+3. 將成長樹與技能說明改由相同伺服器定義提供，修正既有高階預覽與實際技能不符。
+4. 模式 fixture 覆蓋單人替代、組隊護盾、PK 控制、首領免疫、免費施法、不重入觸發及舊資料。
+5. 資源僅依原本戰鬥交易持久化，不新增付費服務、額外每擊 DB 寫入或高頻輪詢。
+6. 同裝備／等級檢查輸出、存活、耗材與團隊貢獻後，才擴展正式啟用範圍。
+
+發布與接手
+唯一來源仍為 micisachen63-gif/--MiniApp；此分支 codex/class-combat-parity。
+先整合 origin/main 合法新功能，再從乾淨且等於 origin/main 的提交執行 npm run deploy:worker。
+BOT 無程式異動，這次只發布遊戲 Worker，不重啟或部署舊本機長輪詢。
+scripts/release-sync.mjs 改由官方 wrangler auth token --json 提供認證，憑證只留在記憶體。
+禁止輸出 auth 回應、讀取／提交玩家執行期狀態、覆蓋遠端 Secrets 或重新 seed。
+正式發布證據以 docs/deployment/elf-rpg-api.json 的 commit、版本、runtime 與 public 核對為準。

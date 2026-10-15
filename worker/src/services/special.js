@@ -9,9 +9,10 @@ import { outboxStmt, classifyDbError,guardStmt } from '../db.js';
 import { taipeiDay } from '../game/time.js';
 import {activeSettings} from '../game/guardian-sigil-config.js';
 import {guardianEffect} from '../game/guardian-effects.js';
+import {specialCost} from '../game/combat-passives.js';
 async function fullState(env,p,now){const rows=(await env.DB.prepare('SELECT * FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NULL AND exchange_id IS NULL ORDER BY quality DESC,created_at DESC LIMIT 200').bind(String(p.char.tg_id)).all()).results||[];return {...stateView(p,now),guardian:p.char.guardian||null,guardianAssist:activeSettings(env).assist,guardianChoices:rows.map(row=>guardianEffect(row,env))};}
 export async function view(env,tg,now){const r=await P.withPlayer(env,tg,now);return fullState(env,r.player,now);}
-export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>({...s,mp:Math.max(1,Math.round(s.mp*(1-(pct.mpEfficiencyPct||0)))),cooldownSeconds:Math.max(1,Math.round(s.cooldownSeconds*(1-(pct.skillHastePct||0))))})),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
+export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>specialCost(s,pct)),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
 export async function action(env,tg,b,now){
  const r=await P.withPlayer(env,tg,now,async(w,{db})=>{
   if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整或學習技能');

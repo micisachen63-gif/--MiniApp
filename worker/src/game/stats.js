@@ -118,9 +118,8 @@ export function idleStats(char, equipped, level = char.level) {
   const s = computeStats(char, equipped, level); const std = standardStats(char.base_class, char.class_path, level);
   const r = s.power / std.power; const g = gearSpeed(r);
   const dr = s.def / (s.def + 6 * level + 40);
-  // v0.5 二轉 sustain passives in idle math: 吸血 x% ≈ −1.5x% damage taken, 施法回 y% HP ≈ −10y (capped 30%)
-  const sustain = Math.min(0.3, (s.pct.lifestealPct || 0) * 1.5 + (s.pct.healPerCastPct || 0) * 10);
-  const hpLoss = monsterPressure(level) * (1 - dr) * s.taken * (1 - sustain) - IDLE.hpRegenPct * s.maxHp;
+  // Sustain is restored by the committed damage/cast in idle.js, not a second damage-reduction approximation.
+  const hpLoss = monsterPressure(level) * (1 - dr) * s.taken - IDLE.hpRegenPct * s.maxHp;
   const mpRegen = IDLE.mpRegenPct * s.maxMp + 1;
   const burst = IDLE.eliteBurstPct * s.maxHp * (1 / clamp(r, 0.3, 2)) ** 1.5;
   // Diminishing returns keep multi-target classes attractive without letting

@@ -21,7 +21,7 @@ export function idleCombatState(char) {
   state.enemies=state.enemies.map(e=>({...monsterIdentity(mapId,e.name),...e}));
   return state;
 }
-export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillName='',elite=false,eliteMonster=null,record=true}) {
+export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillName='',crit=false,elite=false,eliteMonster=null,record=true}) {
   const round={id:`idle-round:${char.tg_id}:${at}`,at,mapId:state.mapId,before:record?copy(state.enemies):null,events:[],defeated:[],kills:0};
   // Presentation only: replay one authored spell from the committed starting wave.
   // This is not another damage event and must never change character HP/MP or rewards.
@@ -36,7 +36,7 @@ export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillNam
     while(amount>0){
       const enemy=state.enemies[target],damage=Math.min(enemy.hp,amount),before=enemy.hp;
       enemy.hp-=damage;amount-=damage;
-      if(record)round.events.push({type:'hit',targetId:enemy.id,enemy:copy(enemy),beforeHp:before,afterHp:enemy.hp,damage,skill:cast&&strike===0,skillName:cast&&strike===0?skillName:'普通攻擊',strike});
+      if(record)round.events.push({type:'hit',targetId:enemy.id,enemy:copy(enemy),beforeHp:before,afterHp:enemy.hp,damage,crit,skill:cast&&strike===0,skillName:cast&&strike===0?skillName:'普通攻擊',strike});
       if(enemy.hp===0){round.defeated.push(copy(enemy));round.kills++;state.enemies[target]=spawn(state,char);if(record)round.events.push({type:'spawn',slot:target,enemy:copy(state.enemies[target])});target=1-target;}
     }
   }

@@ -2,6 +2,7 @@ import {elementalDamage} from './elements.js';
 import {guardianDamageMultiplier} from './guardian-effects.js';
 import { SPECIAL_SKILLS } from './special-data.js';
 import { GameError } from './classes.js';
+import {combatPct,takenMultiplier,specialCost,spendMana,restoreOnAction} from './combat-passives.js';
 export { SPECIAL_SKILLS };
 export const SKILL_MAP = Object.fromEntries(SPECIAL_SKILLS.map(s => [s.id,s]));
 const first = ['狂戰士','騎士','遊俠','德魯伊','元素法師','秘術師'];
@@ -17,7 +18,7 @@ export function eligible(c,s) {
 export function specialState(c){let x;try{x=JSON.parse(c.special_json||'{}')}catch{x={}}return {learned:[],loadout:[],auto:{},cooldowns:{},mode:'safe',budget:0,towerBest:0,...x};}
 export const saveSpecial=(c,x)=>{c.special_json=JSON.stringify(x);};
 export function validateCast(c,x,id,now,{equipped=true}={}){
- const base=SKILL_MAP[id];const s=base?{...base,mp:Math.max(1,Math.round(base.mp*(1-Math.min(.3,c.affixPct?.mpEfficiencyPct||0)))),cooldownSeconds:Math.max(1,Math.round(base.cooldownSeconds*(1-Math.min(.25,c.affixPct?.skillHastePct||0))))}:base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
+ const base=SKILL_MAP[id];const s=base?specialCost(base,combatPct(c)):base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
  if((x.cooldowns[id]||0)>now)throw new GameError('cooldown','技能仍在冷卻中');
  if(c.mp<s.mp)throw new GameError('mp','魔力不足');return s;
 }
@@ -51,10 +52,11 @@ const consume=(a,type)=>{for(const b of a.buffs||[])if(b.type===type&&b.uses!=nu
 const lowest=team=>team.filter(a=>a.hp>0).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];
 export function damageEnemy(enemy,raw,m,now,actor=null){
  raw=actor?elementalDamage(raw*guardianDamageMultiplier(actor),actor,enemy):raw;
+ if(enemy.combatant){return receiveDamage(enemy,raw*(enemy.damageScale??1)*(1+valueOf(enemy,'mark',now)),[enemy],actor||{},now,{elementApplied:true,defMultiplier:(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0)),shieldBonus:m.shieldBonus||0});}
  const def=enemy.def*(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0));
  let amount=Math.max(1,Math.round(raw*100/(100+Math.max(0,def))*(1+valueOf(enemy,'mark',now))));
  let shield=enemy.shield||0;if(shield){const absorbed=Math.min(shield,amount*(1+(m.shieldBonus||0)));enemy.shield-=absorbed;amount=Math.max(0,amount-absorbed/(1+(m.shieldBonus||0)));}
- const dealt=Math.min(enemy.hp,Math.round(amount));enemy.hp-=dealt;return dealt;
+ const dealt=Math.min(enemy.hp,Math.round(amount),enemy.damageBudget??Infinity);enemy.hp-=dealt;if(enemy.damageBudget!=null)enemy.damageBudget-=dealt;return dealt;
 }
 export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={}){
  const m=mechanics[s.id];if(!m)throw new GameError('skill','技能未定義');
@@ -62,13 +64,13 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.revive){if(context.revived)throw new GameError('revive','每隊每場只能復活一次');if(!target||target.hp>0)throw new GameError('target','請選擇倒地的隊友');target.hp=Math.ceil(target.maxHp*.25);context.revived=true;return {damage:0,healed:target.hp,revived:true,targets:[target.id]};}
  if(m.accelerate){if((target.acceleratedUntil||0)>now)throw new GameError('accelerate','此隊友的加速保護尚未結束');const ids=Object.keys(target.special.cooldowns).filter(id=>(target.special.cooldowns[id]||0)>now&&SKILL_MAP[id]?.advancementTier<4);if(!ids.length)throw new GameError('target','隊友沒有冷卻中的非終極技能');const id=ids.sort((a,b)=>target.special.cooldowns[b]-target.special.cooldowns[a])[0];target.special.cooldowns[id]=Math.max(now,target.special.cooldowns[id]-30000);target.acceleratedUntil=now+180000;return {damage:0,accelerated:id};}
  if(!target||target.hp<=0)throw new GameError('target','隊友已倒地，請選擇其他目標');
- let coef=m.singleCoefficient??skillCoefficient(s);let raw=actor.atk*coef*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now));
+ let coef=m.singleCoefficient??skillCoefficient(s);let raw=actor.atk*coef*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now))*(1-valueOf(actor,'enemyNextReduce',now));
  if(s.advancementTier<4)raw*=1+valueOf(actor,'echo',now);
  if(m.execute&&enemy.hp/enemy.maxHp<=m.execute)raw*=1+m.executeBonus;
  if(m.uninterruptBonus&&!enemy.interruptible)raw*=1+m.uninterruptBonus;
  const crit=rng()<Math.min(.8,(actor.crit||.05)+valueOf(actor,'critUp',now));if(crit)raw*=1.5;
  const damage=coef>0?damageEnemy(enemy,raw,m,now,actor):0;
- if(damage){consume(actor,'nextDamage');consume(actor,'critUp');if(s.advancementTier<4)consume(actor,'echo');}
+ if(damage){consume(actor,'nextDamage');consume(actor,'critUp');consume(actor,'enemyNextReduce');if(s.advancementTier<4)consume(actor,'echo');}
  if(m.breakDef)buff(enemy,'breakDef',m.breakDef,now);if(m.mark)buff(enemy,'mark',m.mark,now);
  if(m.interrupt&&enemy.windup&&enemy.interruptible)enemy.interrupted=true;
  if(m.enemyNextReduce&&!m.addsOnly)buff(enemy,'enemyNextReduce',m.enemyNextReduce,now,60,1);
@@ -90,16 +92,33 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.summon)actor.summon={source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.summon*(1+(actor.affixPct?.summonPct||0)),left:m.summonCount,next:now+30000};
  return {damage,healed,shielded,targets:targets.map(a=>a.id),crit:damage>0&&crit};
 }
-export function receiveDamage(a,raw,team,enemy,now,{guarded=false}={}){
+export function receiveDamage(a,raw,team,enemy,now,{guarded=false,elementApplied=false,defMultiplier=1,defApplied=false,shieldBonus=0}={}){
  if(a.hp<=0)return 0;
- if(!guarded)raw=elementalDamage(raw,enemy,a,{bonus:false});
- let amount=raw*(1-(a.affixPct?.mitigationPct||0))*100/(100+a.def)*(1-valueOf(a,'reduce',now))*(1-valueOf(a,'nextReduce',now))*(1+valueOf(a,'takenUp',now));consume(a,'nextReduce');
- if(!guarded){const guard=team.find(x=>x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
- const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount);shield.value-=absorbed;amount-=absorbed;if(absorbed&&valueOf(a,'reflect',now)){damageEnemy(enemy,valueOf(a,'reflect',now),{},now,{...a,weaponElem:0});consume(a,'reflect');}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
+ if(!guarded&&!elementApplied)raw=elementalDamage(raw,enemy,a,{bonus:false});
+ const defense=defApplied?1:(a.defenseScale??100)/((a.defenseScale??100)+Math.max(0,a.def*defMultiplier));
+ let amount=guarded?raw:raw*takenMultiplier(a)*defense*(1-valueOf(a,'reduce',now))*(1-valueOf(a,'nextReduce',now))*(1+valueOf(a,'takenUp',now));if(!guarded)consume(a,'nextReduce');
+ if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
+ const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now);consume(a,'reflect');damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
  const taken=Math.min(a.hp,Math.round(Math.max(0,amount)));a.hp-=taken;
  if(a.hp<=0&&valueOf(a,'lastStand',now)){a.hp=1;consume(a,'lastStand');}return taken;
 }
-export function periodic(team,enemy,now){for(const d of enemy.dots||[])while(d.left>0&&d.next<=now){damageEnemy(enemy,d.damage,{},now,d.source);d.left--;d.next+=30000;}for(const a of team){if(a.hp<=0)continue;const s=a.summon;while(s?.left>0&&s.next<=now){damageEnemy(enemy,s.damage,{},now,s.source);s.left--;s.next+=30000;}}}
+// Executing a cast is atomic in the caller's player/party transaction.
+export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,context={}){
+ const result=performSkill(actor,team,enemy,skill,targetId,now,rng,context);
+ const sustain=restoreOnAction(actor,result.damage,{cast:true,enabled:enemy.hp>0&&context.applySustain!==false});
+ const spentMp=spendMana(actor,skill.mp,rng);actor.special.cooldowns[skill.id]=now+skill.cooldownSeconds*1000;
+ return {...result,healed:(result.healed||0)+sustain.healed,selfHealed:sustain.healed,spentMp};
+}
+export function combatActor(c,s,{id=c.tg_id,hp=c.hp??s.maxHp,mp=c.mp??s.maxMp}={}){
+ return {id,name:c.name,base:c.base_class,path:c.class_path||'',level:c.level??s.level,guardian:c.guardian,
+  collectionBlessing:s.collectionBlessing,maxHp:s.maxHp,maxMp:s.maxMp,hp:Math.min(s.maxHp,hp),mp:Math.min(s.maxMp,mp),
+  atk:s.atk,def:s.def,taken:s.taken,skill:{...s.skill},element:s.element,weaponElem:s.weaponElem,elementResist:s.elementResist,
+  crit:.05+(s.pct.critPct||0),affixPct:{...s.pct},special:structuredClone(specialState(c)),buffs:[],actions:0};
+}
+export function periodic(team,enemy,now,{sustain=true}={}){
+ for(const d of enemy.dots||[])while(d.left>0&&d.next<=now){const damage=damageEnemy(enemy,d.damage,{},now,d.source),owner=team.find(a=>a.id===d.owner);if(sustain&&owner)restoreOnAction(owner,damage,{enabled:enemy.hp>0});d.left--;d.next+=30000;}
+ for(const a of team){if(a.hp<=0)continue;const s=a.summon;while(s?.left>0&&s.next<=now){const damage=damageEnemy(enemy,s.damage,{},now,s.source);if(sustain)restoreOnAction(a,damage,{enabled:enemy.hp>0});s.left--;s.next+=30000;}}
+}
 
 
 // Party automation selects only legal equipped skills, without mutating combat state.

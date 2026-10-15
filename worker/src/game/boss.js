@@ -1,3 +1,5 @@
+import {combatActor,autoPartyAction,validateCast,castSpecial,saveSpecial,periodic,damageEnemy,receiveDamage,valueOf} from './special.js';
+import {spendMana,restoreOnAction} from './combat-passives.js';
 import {monsterPool} from './monsters.js';
 import {guardianDamageMultiplier,guardianLootMultiplier} from './guardian-effects.js';
 import {elementMultiplier,elementalDamage,bossResistance} from './elements.js';
@@ -78,32 +80,47 @@ export const attackWindow = (boss, now) => Math.floor((now - boss.started_at) / 
 
 /** one attack = 5 skill casts (MP from inventory), then the boss counter-attacks (red potions). mutates c / inv */
 export function performAttack({ c, inv, stats, boss, rng, now }) {
-  const s = stats; const mapTier = mapForLevel(c.level); const used = {}; const drink = (k) => { inv[k] -= 1; used[k] = (used[k] || 0) + 1; };
-  const helper = c.level > MAPS[boss.map_id].max; let damage = 0, crits = 0, basics = 0;
-  let em = elementMultiplier(s.element, boss.element); if (em > 1) em += s.pct.elemPct || 0;
-  for (let i = 0; i < BOSS.castsPerAttack; i++) {
-    if (c.mp < s.skill.cost && c.auto_blue) { let k; while (c.mp < s.skill.cost && (k = choosePotion(inv, 'blue', mapTier))) { drink(k); c.mp = Math.min(s.maxMp, c.mp + POTIONS[k].heal); } }
-    let base;
-    if (c.mp >= s.skill.cost) { if (!(s.pct.freeCastPct && rng() < s.pct.freeCastPct)) c.mp -= s.skill.cost; base = s.atk * s.skill.mult * (1 + 0.1 * (s.skill.targets - 1)); }
-    else { basics += 1; base = s.atk * s.skill.mult * 0.35; }
-    let d = elementalDamage(base,s,{element:boss.element,level:(boss.map_id||mapTier)*10,elementResist:bossResistance((boss.map_id||mapTier)*10,boss.element)});
-    if (rng() < 0.05 + (s.pct.critPct || 0)) { d *= 1.5; crits += 1; }
-    d *= 0.9 + rng() * 0.2;
-    damage += d;
+  const s=stats,mapTier=mapForLevel(c.level),used={};
+  const drink=k=>{inv[k]-=1;used[k]=(used[k]||0)+1;};
+  const a=combatActor(c,s),x=a.special,old=x.bossCombat;
+  const encounterId=String(boss.id||`map:${boss.map_id}`);
+  if(old?.id===encounterId){a.buffs=old.buffs||[];a.summon=old.summon;}
+  const enemy={hp:boss.hp??boss.max_hp,maxHp:boss.max_hp,def:0,element:boss.element,level:boss.map_id*10,
+    elementResist:bossResistance(boss.map_id*10,boss.element),buffs:old?.id===encounterId?old.enemy?.buffs||[]:[],
+    dots:old?.id===encounterId?old.enemy?.dots||[]:[],windup:true,interruptible:!boss.uninterruptible,
+    damageBudget:Math.max(1,Math.floor(boss.max_hp*BOSS.maxDamagePctPerAttack))};
+  const helper=c.level>MAPS[boss.map_id].max;
+  // The helper modifier applies equally to native, special and periodic attacks.
+  const originalAtk=a.atk;if(helper)a.atk*=BOSS.helperDamageMult;
+  let crits=0,basics=0;const actions=[],beforeHp=enemy.hp;
+  const beforePeriodic={hp:a.hp,mp:a.mp,enemyHp:beforeHp};periodic([a],enemy,now);
+  if(enemy.hp<beforeHp)actions.push({skillId:'periodic',label:'召喚／持續傷害',damage:beforeHp-enemy.hp,before:beforePeriodic,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
+  for(let i=0;i<BOSS.castsPerAttack&&enemy.hp>0;i++){
+    const before={hp:a.hp,mp:a.mp,enemyHp:enemy.hp};
+    const action=autoPartyAction(a,[a],enemy,now,{});let outcome,label;
+    if(action.skillId!=='attack'){
+      const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},x,action.skillId,now);
+      outcome=castSpecial(a,[a],enemy,skill,a.id,now,rng,{});label=skill.name;
+    }else{
+      if(a.mp<s.skill.cost&&c.auto_blue){let key;while(a.mp<s.skill.cost&&(key=choosePotion(inv,'blue',mapTier))){drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}}
+      const cast=a.mp>=s.skill.cost,spentMp=cast?spendMana(a,s.skill.cost,rng):0;
+      if(!cast)basics++;
+      let raw=a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35);
+      raw*=(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));
+      const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;raw*=.9+rng()*.2;
+      const damage=damageEnemy(enemy,raw,{},now,a),sustain=restoreOnAction(a,damage,{cast,enabled:enemy.hp>0});
+      outcome={damage,crit,spentMp,healed:sustain.healed};label=cast?s.skill.name:'普通攻擊';
+      for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
+    }
+    if(outcome.crit)crits++;actions.push({skillId:action.skillId,label,...outcome,before,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   }
-  if (helper) damage *= BOSS.helperDamageMult;
-  damage *= guardianDamageMultiplier(c);
-  damage = Math.max(1, Math.round(damage));
-  // Strong enhancement can multiply first-advancement burst beyond an early boss's full HP.
-  // Keep one attack to at most a quarter of the boss pool; the final blow can still finish a weakened boss.
-  damage = Math.min(damage, Math.max(1, Math.floor(boss.max_hp * BOSS.maxDamagePctPerAttack)));
-  const r = Math.min(2, Math.max(0.3, s.r ?? 1));
-  const counter = Math.max(1,Math.round(elementalDamage(BOSS.counterHpPct * s.maxHp * s.taken / r,{element:boss.element},s,{bonus:false})));
-  c.hp -= counter;
-  { let k; while (c.hp < (c.auto_red_pct / 100) * s.maxHp && (k = choosePotion(inv, 'red', mapTier))) { drink(k); c.hp = Math.min(s.maxHp, c.hp + POTIONS[k].heal); } }
-  let downed = false;
-  if (c.hp <= 0) { downed = true; c.hp = 1; c.boss_down_until = now + BOSS.downMs; }
-  return { damage, crits, basics, counter, used, downed, helper, elementMult: em };
+  const r=Math.min(2,Math.max(.3,s.r??1));
+  const counter=enemy.hp>0&&!enemy.interrupted?receiveDamage(a,BOSS.counterHpPct*s.maxHp/r*(1-valueOf(enemy,'enemyNextReduce',now)),[a],enemy,now,{defApplied:true}):0;
+  {let key;while(a.hp<(c.auto_red_pct/100)*s.maxHp&&(key=choosePotion(inv,'red',mapTier))){drink(key);a.hp=Math.min(s.maxHp,a.hp+POTIONS[key].heal);}}
+  const downed=a.hp<=0;if(downed){a.hp=1;c.boss_down_until=now+BOSS.downMs;}
+  a.atk=originalAtk;c.hp=a.hp;c.mp=a.mp;
+  x.bossCombat={id:encounterId,buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon,enemy:{buffs:enemy.buffs,dots:enemy.dots}};saveSpecial(c,x);
+  return {damage:beforeHp-enemy.hp,crits,basics,counter,used,downed,helper,elementMult:elementMultiplier(s.element,boss.element),actions,interrupted:!!enemy.interrupted};
 }
 
 /** integer allocation that conserves `total` (pet system's largest-remainder method) */

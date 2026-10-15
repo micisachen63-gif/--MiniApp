@@ -1,4 +1,5 @@
-import {elementalDamage} from './elements.js';
+import {combatActor,autoPartyAction,validateCast,castSpecial,damageEnemy,periodic,valueOf} from './special.js';
+import {spendMana,restoreOnAction} from './combat-passives.js';
 // v0.5 群組決鬥 (1v1 PK) rules + duel simulation (pure). Persistence lives in services/pk.js.
 import { PK } from './constants.js';
 import { GameError } from './classes.js';
@@ -21,36 +22,52 @@ export function checkPk(a, b) { const x = pkBlock(a, b); if (x) throw new GameEr
  * ±10% variance, damage × (1 − def/(def + 6·L + 40)) × taken × PK.dmgScale. First actor: coin flip.
  * ≤ PK.maxRounds rounds (one round = both act), then the higher HP% wins (ties → defender b).
  */
-export function simulateDuel(sa, sb, rng) {
-  const f = (s) => ({ hp: s.maxHp, max: s.maxHp, mp: s.maxMp, maxMp: s.maxMp, s });
-  const F = { a: f(sa), b: f(sb) }; const log = []; let turn = rng() < 0.5 ? 'a' : 'b'; let rounds = 0;
-  const snapshot = () => ({ hp: { a: F.a.hp, b: F.b.hp }, mp: { a: F.a.mp, b: F.b.mp } });
-  const initial = snapshot(), maxMp = { a: F.a.maxMp, b: F.b.maxMp };
-  const result = (winner, ko) => ({ winner, loser: winner === 'a' ? 'b' : 'a', rounds: ko ? rounds + 1 : rounds, log,
-    hp: snapshot().hp, mp: snapshot().mp, max: { a: F.a.max, b: F.b.max }, maxMp, initial, ko });
-  const hit = (x, y) => {
-    const useSkill = x.mp >= x.s.skill.cost; if (useSkill) x.mp -= x.s.skill.cost; else x.mp = Math.min(x.maxMp, x.mp + Math.ceil(x.maxMp * 0.08) + 1);
-    const crit = rng() < 0.05 + (x.s.pct?.critPct || 0); const variance = 0.9 + rng() * 0.2;
-    const dr = y.s.def / (y.s.def + 6 * y.s.level + 40);
-    const raw = elementalDamage(x.s.atk * (useSkill ? x.s.skill.mult : 0.6),x.s,y.s) * (crit ? PK.critMult : 1) * variance;
-    return { dmg: Math.max(1, Math.round(raw * (1 - dr) * y.s.taken * PK.dmgScale)), crit, skill: useSkill };
+export function simulateDuel(sa, sb, rng, characters={}) {
+  const fighter=(s,id)=>{
+    const c=characters[id]||{base_class:s.baseClass,class_path:s.node?.path||'',level:s.level};
+    const a=combatActor(c,s,{id,hp:s.maxHp,mp:s.maxMp});
+    // PK has its own HP/MP and encounter cooldowns; PvE guardian bonuses stay out.
+    a.guardian=null;a.combatant=true;a.damageScale=PK.dmgScale;a.defenseScale=6*s.level+40;
+    a.special.cooldowns={};return a;
   };
-  while (rounds < PK.maxRounds) {
-    for (let k = 0; k < 2; k++) {
-      const x = F[turn]; const o = turn === 'a' ? 'b' : 'a'; const y = F[o];
-      const before = snapshot();
-      const h = hit(x, y); y.hp = Math.max(0, y.hp - h.dmg);
-      // v0.5 二轉 sustain: 吸血 % of damage dealt, 施法回 % max HP on a skill cast
-      const heal = Math.round(h.dmg * (x.s.pct?.lifestealPct || 0) + (h.skill ? x.max * (x.s.pct?.healPerCastPct || 0) : 0));
-      if (heal > 0 && y.hp > 0) x.hp = Math.min(x.max, x.hp + heal);
-      log.push({ by: turn, dmg: h.dmg, crit: h.crit, skill: h.skill, hp: y.hp, before, after: snapshot(), healed: x.hp - before.hp[turn], ...(heal > 0 ? { heal, self: x.hp } : {}) });
-      if (y.hp <= 0) return result(turn, true);
-      turn = o;
+  const F={a:fighter(sa,'a'),b:fighter(sb,'b')},log=[];
+  let turn=rng()<.5?'a':'b',rounds=0;
+  const max={a:sa.maxHp,b:sb.maxHp},maxMp={a:sa.maxMp,b:sb.maxMp};
+  const snapshot=()=>({hp:{a:F.a.hp,b:F.b.hp},mp:{a:F.a.mp,b:F.b.mp}});
+  const initial=snapshot();
+  const result=(winner,ko)=>({winner,loser:winner==='a'?'b':'a',rounds:ko?rounds+1:rounds,log,hp:snapshot().hp,mp:snapshot().mp,max,maxMp,initial,ko});
+  while(rounds<PK.maxRounds){
+    for(let k=0;k<2;k++){
+      const x=F[turn],o=turn==='a'?'b':'a',y=F[o],before=snapshot(),now=rounds*30000;
+      y.windup=(rounds+1)%3===0;y.interruptible=true;
+      periodic([x],y,now);
+      let crit=false,useSkill=false,skillId=null,label='普通攻擊',heal=0,spentMp=0;
+      if(y.hp>0&&!x.interrupted){
+        const action=autoPartyAction(x,[x],y,now,{});
+        if(action.skillId!=='attack'){
+          const skill=validateCast({base_class:x.base,class_path:x.path,level:x.level,mp:x.mp,affixPct:x.affixPct},x.special,action.skillId,now);
+          const r=castSpecial(x,[x],y,skill,x.id,now,rng,{});
+          crit=r.crit;useSkill=true;skillId=skill.id;label=skill.name;spentMp=r.spentMp;heal=r.selfHealed||0;
+        }else{
+          useSkill=x.mp>=x.skill.cost;
+          if(useSkill)spentMp=spendMana(x,x.skill.cost,rng);else x.mp=Math.min(x.maxMp,x.mp+Math.ceil(x.maxMp*.08)+1);
+          crit=rng()<Math.min(.8,x.crit+valueOf(x,'critUp',now));
+          let raw=x.atk*(useSkill?x.skill.mult:.6)*(crit?PK.critMult:1)*(.9+rng()*.2);
+          raw*=(1+valueOf(x,'atkUp',now))*(1+valueOf(x,'damageUp',now))*(1+valueOf(x,'nextDamage',now))*(1-valueOf(x,'enemyNextReduce',now));
+          const damage=damageEnemy(y,raw,{},now,x);
+          const restored=restoreOnAction(x,damage,{cast:useSkill,enabled:y.hp>0});heal=restored.heal;
+          for(const b of x.buffs)if(['nextDamage','critUp','enemyNextReduce'].includes(b.type)&&b.uses>0)b.uses--;
+          if(useSkill)label=x.skill.name||'職業技能';
+        }
+      }else if(x.interrupted){label='蓄力遭打斷';x.interrupted=false;}
+      const after=snapshot(),dmg=Math.max(0,before.hp[o]-after.hp[o]);
+      log.push({by:turn,dmg,crit,skill:useSkill,skillId,label,spentMp,hp:y.hp,before,after,healed:Math.max(0,x.hp-before.hp[turn]),...(heal>0?{heal,self:x.hp}:{})});
+      if(y.hp<=0||x.hp<=0)return result(y.hp<=0?turn:o,true);
+      turn=o;
     }
-    rounds += 1;
+    rounds++;
   }
-  const pa = F.a.hp / F.a.max, pb = F.b.hp / F.b.max; const winner = pa > pb ? 'a' : 'b';
-  return result(winner, false);
+  return result(F.a.hp/F.a.maxHp>F.b.hp/F.b.maxHp?'a':'b',false);
 }
 
 /** loser gear drop: 20% → a ward in the bag absorbs it (consumed), else ONE random equipped piece (weapons included) */
