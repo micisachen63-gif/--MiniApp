@@ -4,7 +4,7 @@
   "private": true,
   "description": "Star Journal RPG (星穹旅誌) - Unified Monorepo (Worker + Cloud Bot + Local Bot)",
   "scripts": {
-    "test:worker": "node --test worker/test/rules.test.js worker/test/api.test.js worker/test/class-combat-parity.test.js worker/test/expedition.test.js worker/test/party-event-sync.test.js worker/test/pk-event-sync.test.js worker/test/boss.test.js worker/test/elements.test.js worker/test/idle.test.js worker/test/idle-event-sync.test.js worker/test/idle-report-accounting.test.js worker/test/collection-blessings.test.js worker/test/v05.test.js worker/test/gacha.test.js worker/test/gacha-api.test.js worker/test/gacha-announcements.test.js worker/test/gacha-miniapp.test.js",
+    "test:worker": "node --test worker/test/rules.test.js worker/test/api.test.js worker/test/class-combat-parity.test.js worker/test/expedition.test.js worker/test/party-event-sync.test.js worker/test/pk-event-sync.test.js worker/test/boss.test.js worker/test/elements.test.js worker/test/idle.test.js worker/test/idle-event-sync.test.js worker/test/idle-report-accounting.test.js worker/test/collection-blessings.test.js worker/test/v05.test.js worker/test/gacha.test.js worker/test/gacha-api.test.js worker/test/gacha-announcements.test.js worker/test/gacha-miniapp.test.js worker/test/hero-hall.test.js",
     "test:bot": "node --test cloud-bot/src/adapter/test/*.test.js",
     "test": "npm run test:worker && npm run test:bot",
     "sync:check": "node scripts/release-sync.mjs check all",
