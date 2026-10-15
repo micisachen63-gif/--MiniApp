@@ -1,0 +1,40 @@
+{
+  "status": "VERIFIED",
+  "at": "2026-10-15T23:49:14.830Z",
+  "featureSource": "81562f16a87a81e429bf208c0b329c56338be113",
+  "services": {
+    "elf-rpg-api": {
+      "sourceCommit": "81562f16a87a81e429bf208c0b329c56338be113",
+      "productionVersion": "a3f1f279-ff4f-45c4-a9fc-9277542ada87",
+      "verifiedAt": "2026-10-15T23:47:39.824Z"
+    },
+    "star-journal-rpg-bot": {
+      "sourceCommit": "f66d55d0eeb113dc75c1301632565b34ed96fc5a",
+      "productionVersion": "599669c7-374d-4404-a6e2-ebb47563db03",
+      "verifiedAt": "2026-10-15T23:49:01.754Z"
+    }
+  },
+  "tests": {
+    "worker": 1085,
+    "bot": 89,
+    "failed": 0,
+    "skipped": 0
+  },
+  "schema": {
+    "migration": "0026_fate_chapter.sql",
+    "method": "targeted remote file only",
+    "tables": 6,
+    "indexes": 4,
+    "schemaOnly": true,
+    "existingPlayerRowsModified": false
+  },
+  "smoke": {
+    "workerHealth": 200,
+    "botHealth": 200,
+    "publicStory": 200,
+    "unauthenticatedApp": 401,
+    "unauthenticatedInternal": 401
+  },
+  "noLivePlayerMutationsInSmoke": true,
+  "noLoadTest": true
+}

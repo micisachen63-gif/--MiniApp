@@ -1,15 +1,17 @@
-2026-10-16 命運旅章正式功能整合檢查點
+2026-10-16 命運旅章正式版已完成
 
-使用者已認可初版，授權正式補齊、測試與部署；並明確允許分支協作。
-frontend / narrative / validation三分工完成；主線已接API、每分鐘排程、任務及出生資料。
-正式規則、程式入口與後續驗證以 FORMAL_HANDOVER.txt、NARRATIVE_V4.txt 為準。
+功能來源：81562f16a87a81e429bf208c0b329c56338be113，GitHub main已同步。
+Worker a3f1f279-ff4f-45c4-a9fc-9277542ada87 @100；BOT 599669c7-374d-4404-a6e2-ebb47563db03 @100。
+正式對應以docs/deployment/*.json及即時Cloudflare為準，勿盲目重部署。
 
-整合後完整本機測試：Worker1084/1084、BOT89/89，0失敗、0跳過。
-隨後新增刪檔競態回歸測試，發布工具會重新跑受影響服務全部測試，最終數量見發布/驗證記錄。
-Wrangler dry-run build成功：runtime gzip571.67KiB；當次掃描8354份靜態檔，既有素材完整保留。
-390×844與桌面本機實際HMAC假帳號驗收：啟程/續讀、年鑑、鎖定每日旅箋、出生資料保存、
-手繪六段終章、1080×1350/1920圖卡生成。無前端console errors。
-前版示意內容沒有拿來充正式成就，未發真實TG測試訊息、未做已取消的流量壓測。
+完整測試Worker1085/1085、BOT89/89，共1174，0失敗0跳過。
+公開故事與雙服務health 200，未登入App及內部通知API 401。
+只執行0026新增六表四索引，不改既有玩家資料，不跑0025或全部migrations。
+Worker初次驗證遇一份既有連線檢查頁暫時雜湊不符；未重發，根sync:check:worker只讀重驗成功，
+runtime與163 public檔全部通過，並比對保護bindings/crons與發布前一致，再補存收據推送。
+BOT走根deploy:bot正常完成，runtime/4 public檔/health/收據push通過。
 
-此檢查點未代表已發布。接續：提交/推送main，僅新增0026 migration，根目錄deploy:worker與deploy:bot，
-線上runtime/public/health與GitHub收據驗證。若中斷先查docs/deployment與.release-sync，切勿盲重發。
+詳細規則與接手步驟：FORMAL_HANDOVER.txt；內容及有限池量測：NARRATIVE_V4.txt。
+測試/實際UI驗收：VALIDATION_20261016.txt；正式最終檢查：RELEASE_20261016.json。
+原FATE_PREVIEW_HANDOVER.txt為歷史階段記錄，不代表仍有待實作或仍禁止正式部署。
+未新增付費API、訂閱、Cloudflare服務或cron；未做已取消的流量壓測或發送真實TG測試訊息。
