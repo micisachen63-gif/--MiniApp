@@ -1,6 +1,8 @@
 星穹旅誌：審查修正與現有職業專精交接（2026-10-15）
 
 發布狀態
+本次 Worker 與 Bot 已正式發布並完成 runtime／素材／健康檢查，收據已推送 GitHub。
+具體版本與來源見 review-validation.json 及 docs/deployment/*.json；勿還原本文歷史版本。
 本文件描述 codex/review-remediation 的實作。是否已發布，必須核對 docs/deployment/*.json
 及即時 Cloudflare；不能因分支已推送或本機測試通過，就當成正式機已更新。
 人物視窗正在製作／準備發布盜賊；本分支不啟用盜賊、不執行 D1 migrations。
@@ -38,7 +40,7 @@
    原生技能的倍率、MP 及目標數也實際不同；沿用既有屬性上限、PK 倍率與群王 25% 上限。
    stats.nodeFor 與 classes.branchChoices 使用同一解析器；掛機、PK、群王與新建組隊
    經由既有 computeStats／combatActor 套用，不另加網路輪詢或逐擊 DB 寫入。
-   現存隊伍繼續使用出發時 snapshot，避免戰鬥中途換規則。
+   已有 skill／taken 快照的隊伍維持出發數值；更舊的缺欄位紀錄沿用安全回退。
    血契等資源累積、手動釋放新戰技及後期副本分工，仍是另一期，並未藉此冒稱完成。
    advancement-mechanics-design.json 的完整資源玩法仍是 DESIGN_ONLY_NOT_ENABLED。
    護盾／治療／DOT／召喚的效果加成須有對應技能或原生效果，不能憑加成自行產生技能。
@@ -47,7 +49,7 @@
    被伺服器結果覆寫。舊 metadata 缺失時顯示更新提示，不繼續顯示過時倍率。
    窄螢幕改單欄；已驗收手機 390×844 與桌面，無橫向溢出。保留既有畫風及素材。
 
-6. 公開備份與文件：public/.assetsignore 排除 .bak、.backup-*、.before-*，不刪合法素材。
+6. 公開備份與文件：public/.assetsignore 排除 .bak、.backup-*、.before-*，不刪合法素材。32 個歷史檔案已逐一唯讀檢查，均回傳 HTTP 401，未作為公開靜態檔提供。
    README 修正共享密鑰用詞，舊 watchdog 明確標為停用。
 
 7. 避免並行發布：根目錄 deploy 指令先使用共享 Git common dir 內的 rpg-release.lock，
