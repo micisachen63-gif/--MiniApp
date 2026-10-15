@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "6e661df87b6b336ca208e4acc2a55d52970f9bcf",
+  "sourceCommit": "14ac23d7409af949df8060f93049260c858a7961",
   "service": "elf-rpg-api",
-  "productionVersion": "faf07e9f-4902-4704-ad8b-2a90d94c4619",
+  "productionVersion": "3ec8d650-0296-4f14-af1f-e7a9e09f954e",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T10:15:52.983Z",
+  "verifiedAt": "2026-10-15T11:25:09.700Z",
   "runtimeSHA256": {
-    "index.js": "2e0f9f74bb628c256b6d0d2ac578ba1884563a36fcdd91d569b24db468ef698f"
+    "index.js": "eb8254fcbbd4524e7923efe4d0589e73e3e98acec61ac7f51eae2f19e415cb98"
   },
   "source": {
-    "fileCount": 7173,
-    "sha256": "a8eb4e7d6010cddb4db1b4248ee56c0012dff340789f0d215cc36ccd9d5470ea",
+    "fileCount": 7180,
+    "sha256": "c5d3975d6e8a40f3b9e2a7f251092fc761e6e6104bda446ae35d468cf38b2d95",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -123,7 +123,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "dedb78dfb1739791305b2e5ead81af4d93577a4945d0de7a3c98d114615659fa"
+        "sha256": "1e3756ac93bb4364b553e73e56ad35e4bbab1be797f386faaddd5279f15a58c7"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -17906,20 +17906,40 @@
         "sha256": "a7fa681198b21db4e8068773bc110ef71f2b69250b260079b220ed0f3947513f"
       },
       {
+        "file": "worker/public/art/guardian-cards-20261014/empty.mp4",
+        "sha256": "af2436336c4af6812219098c4bfd10ea6da213ff99e5d34b4d4c3d3c76ea0c55"
+      },
+      {
         "file": "worker/public/art/guardian-cards-20261014/empty.webp",
         "sha256": "27d8859d9340d846e7c34730506bcab53c43732a25b628e8dbd3dfd67696876a"
+      },
+      {
+        "file": "worker/public/art/guardian-cards-20261014/loot.mp4",
+        "sha256": "67eb49b42607fa0dc7d519b55662a39371420a3aac75ac0cf9fad0935fc9dc63"
       },
       {
         "file": "worker/public/art/guardian-cards-20261014/loot.webp",
         "sha256": "9a3fbdfd391c35cf773b2c6217da8496c0f61b82d0d778e59f942e55cafafe28"
       },
       {
+        "file": "worker/public/art/guardian-cards-20261014/magic.mp4",
+        "sha256": "b6019d1b7364db494c585370f7f3ec0db3a8cae82a5815e1a70f5478ea680b08"
+      },
+      {
         "file": "worker/public/art/guardian-cards-20261014/magic.webp",
         "sha256": "cb2e3dc965558c22f1c806e9142c8e5dfbec146ab21242d2251f474883d26f02"
       },
       {
+        "file": "worker/public/art/guardian-cards-20261014/melee.mp4",
+        "sha256": "72139d8c074e4506bffbf14457443d2d41bab648164b1b2944f3b98405e9afc1"
+      },
+      {
         "file": "worker/public/art/guardian-cards-20261014/melee.webp",
         "sha256": "f229594f7d2019991948194b24812332d5932f9ae7d7d3723a70f3617a659cd8"
+      },
+      {
+        "file": "worker/public/art/guardian-cards-20261014/ranged.mp4",
+        "sha256": "86ca5615dc42bdace1a6d60d5d87f7bd879fdcb6709889d2e2813078c68c2e7d"
       },
       {
         "file": "worker/public/art/guardian-cards-20261014/ranged.webp",
@@ -27907,7 +27927,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "5895fd527e393621cb2b95ed9a48fac9769f1ba31e01abe7a78135114df418e4"
+        "sha256": "0dd44064dc3e90489837758b58360615e110367c654fc6f7242b4c362403b495"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -27979,7 +27999,7 @@
       },
       {
         "file": "worker/public/guardian-party.js",
-        "sha256": "ef903da52de61d7577b44bb6193b23017c9ceecb5d8c1d614391404b88ddc5cb"
+        "sha256": "a12b39bc15ffcc36f08bb6b01f108e759eb0d833a90631f402a2ab167ad60182"
       },
       {
         "file": "worker/public/guardian-presentation.js",
@@ -28015,11 +28035,11 @@
       },
       {
         "file": "worker/public/guardian-sigil.css",
-        "sha256": "299849ff594a9065cd9b077f87c74b319ed753ceb569feee4aa985e693f15da0"
+        "sha256": "3e26c4441d54b9c691a2c14060954573096ff507e8f8a8bbb04fde7a857d35c5"
       },
       {
         "file": "worker/public/guardian-sigil.js",
-        "sha256": "8bcfb34cf9dd5f6504910c1fb921c261e6fae002cfbd4668942bfce37062710b"
+        "sha256": "a3317871bdd39e21bd9b94171ea91763565a9ee50ebd920180a4feb999affda2"
       },
       {
         "file": "worker/public/guardian-summon-gesture.js",
@@ -28062,6 +28082,14 @@
         "sha256": "c2bc9e5f2a9cb9655e69366b2fa13c78e033657b4bb7601f4a74c0464eca98fe"
       },
       {
+        "file": "worker/public/hero-hall-ui.css",
+        "sha256": "5f3591ae499294ac978bc9867acb69ceaa548c1161333e56be438b2d1212b437"
+      },
+      {
+        "file": "worker/public/hero-hall-ui.js",
+        "sha256": "fc89c0251422ac48319081c75e14771cb4af2718b95f1cc1fa950c274e42e20b"
+      },
+      {
         "file": "worker/public/hero-lavish-fx.js",
         "sha256": "0e0e49794e792fbab3b669c5a381b3040cf2afd0044a850dc911dcc7b68cd3d1"
       },
@@ -28075,7 +28103,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "8b322d750d1d203a29ad8d93a926c979cd4293fbb1fb0ccc1d22f8a7bd9ee6ad"
+        "sha256": "69d5d1254481d85dc12fe2ad7605ac2782760978476e2acc303dc8c0e2aee37a"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28639,7 +28667,7 @@
       },
       {
         "file": "worker/src/services/hero-hall.js",
-        "sha256": "754dd222d6a71f83671e454c1d10f597adb3177d7d7c9989df1036ed6ded0b02"
+        "sha256": "007930680bd5ff60876e8f7a442a70c2e9f7e5be0ffd352c5b47aca15fd61dfb"
       },
       {
         "file": "worker/src/services/journal.js",
@@ -28709,14 +28737,19 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 125,
+    "verifiedCount": 133,
     "files": [
       "worker/public/app.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011-r2/gear_wpn_titan_crossbow_epic.jpg",
-      "worker/public/art/cards/equipment-20261011/gear_wpn_titan_elem_staff_advanced.jpg",
-      "worker/public/art/skill-fx-cinematic-20261011/tile-12.png",
+      "worker/public/art/cards/equipment-20261011-r2/gear_wpn_titan_crossbow_relic.jpg",
+      "worker/public/art/cards/equipment-20261011/gear_wpn_titan_elem_staff_relic.jpg",
+      "worker/public/art/guardian-cards-20261014/empty.mp4",
+      "worker/public/art/guardian-cards-20261014/loot.mp4",
+      "worker/public/art/guardian-cards-20261014/magic.mp4",
+      "worker/public/art/guardian-cards-20261014/melee.mp4",
+      "worker/public/art/guardian-cards-20261014/ranged.mp4",
+      "worker/public/art/sword-adv1-clean-20261011/hero_adv1_sword_A_m.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -28736,6 +28769,7 @@
       "worker/public/elf-low-tier-weapon-fx.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -28770,6 +28804,8 @@
       "worker/public/hero-display.css",
       "worker/public/hero-fx.css",
       "worker/public/hero-fx.js",
+      "worker/public/hero-hall-ui.css",
+      "worker/public/hero-hall-ui.js",
       "worker/public/hero-lavish-fx.js",
       "worker/public/hero-size.css",
       "worker/public/hero-size.js",
@@ -28841,7 +28877,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "faf07e9f-4902-4704-ad8b-2a90d94c4619",
+        "version_id": "3ec8d650-0296-4f14-af1f-e7a9e09f954e",
         "percentage": 100
       }
     ],
