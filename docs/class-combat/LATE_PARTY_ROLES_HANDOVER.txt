@@ -3,6 +3,11 @@
 先讀根目錄 AGENTS.md、AI_HANDOVER.md、最新 docs/deployment/*.json。
 發布狀態只以最新收據與 Cloudflare 即時版本為準。本文件不是發布收據。
 
+本次已發布並核對：Worker 86f2c5d9-2432-4fb9-81c0-d0552b04e53c（程式 eae6668）；
+Bot 19cc0c28-2751-4174-8b96-d75c744dbfe5（來源 69b0725）。後續版本仍以最新收據為準。
+機器可讀驗證記錄：docs/class-combat/late-party-roles-20261016/verification.json。
+Worker 首次驗證遇到 art.js 舊 LF 邊緣版本，唯讀複查136個入口／變更素材與相同 runtime 成功後補收據，未重複發布。
+
 本版範圍
 - Lv90 泰坦寶庫、三轉試煉：泰坦重甲，需守護＋破陣。
 - Lv105 神諭星庫：神諭咒印，需支援＋壓制。

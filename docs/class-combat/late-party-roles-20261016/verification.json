@@ -1,0 +1,65 @@
+{
+  "verifiedAt": "2026-10-15T21:08:03.864Z",
+  "implementationCommit": "eae66689718cec2c59a435d6efad6eac82101f3a",
+  "tests": {
+    "command": "node scripts/run-tests.mjs all",
+    "worker": 1018,
+    "bot": 79,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "roleCoverage": {
+    "orderedCompositions": 4096,
+    "accepted": 1698,
+    "rejected": 2398,
+    "acceptedWithThief": 900,
+    "includesEveryBaseClass": true,
+    "note": "Coverage checks, not measured win rates. Four complementary compositions cleared real service integration tests."
+  },
+  "ui": {
+    "isolatedRealRouter": true,
+    "productionHmacValidation": true,
+    "inMemoryD1": true,
+    "requestedViewport": {
+      "width": 390,
+      "height": 844
+    },
+    "contentWidth": 375,
+    "scrollWidth": 375,
+    "missingImages": 0,
+    "consoleErrors": 0,
+    "manualRoleSubmitVerified": true,
+    "gateSuccessVerified": true,
+    "screenshots": [
+      "mobile-tactics.png",
+      "mobile-phase-progress.png"
+    ]
+  },
+  "production": {
+    "worker": {
+      "version": "86f2c5d9-2432-4fb9-81c0-d0552b04e53c",
+      "sourceCommit": "eae66689718cec2c59a435d6efad6eac82101f3a",
+      "verifiedPublicFiles": 136
+    },
+    "bot": {
+      "version": "19cc0c28-2751-4174-8b96-d75c744dbfe5",
+      "sourceCommit": "69b072541731f423587b7045cf92c64e05474f44",
+      "verifiedPublicFiles": 4
+    }
+  },
+  "preserved": {
+    "databaseMigrations": false,
+    "newPaidServices": false,
+    "changedBindings": false,
+    "changedCrons": false,
+    "liveTestPlayerMutations": false,
+    "liveTestTelegramMessages": false
+  },
+  "workerFirstCheckRecovery": {
+    "initialVerification": "Asset edge temporarily served the preceding LF variant of art.js; read-only verification after convergence passed.",
+    "command": "npm run sync:check:worker",
+    "republished": false,
+    "preservedBindingsAndCrons": true
+  }
+}
