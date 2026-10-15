@@ -372,7 +372,7 @@
     if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
     if(kind==='item'&&key==='gacha_weapon')return 'art/ui/gacha-weapon-20261015.webp';
-    if(kind==='item'&&key==='gacha_armor')return 'art/ui/gacha-armor-20261015.webp';
+    if(kind==='item'&&key==='gacha_armor')return 'art/ui/gacha-armor-blue-20261015.webp';
     if(kind==='item'&&key==='gold')return 'art/ui/hud-coin-v2.webp';
     if(kind === 'item' && ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a','unbind'].includes(key)) return `art/items-scrolls-cutout-20261011/${key}.webp`;
     if (MODE === 'svg') return null;
