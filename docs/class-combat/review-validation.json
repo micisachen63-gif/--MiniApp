@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_VERIFIED_NOT_DEPLOYED",
+  "status": "PRODUCTION_VERIFIED",
   "sourceBase": "4f49917",
   "branch": "codex/review-remediation",
   "node": "24.19.0",
@@ -30,11 +30,43 @@
       "review-ui/desktop.png"
     ]
   },
-  "productionMutations": false,
+  "productionMutations": "Two authorized code publications; no player grants, real test messages, D1 migration or manual player edits",
   "limitations": [
     "No live load test or real Telegram test messages",
     "Resource meters and manual advanced combat actions remain design-only",
     "Late-party role mechanics remain a separate unmerged draft",
     "Historical missing trade assets are not automatically credited"
-  ]
+  ],
+  "verifiedAt": "2026-10-15T15:00:49.173Z",
+  "implementationCommit": "cd42f13d33a22c791c6976fe1dc31db4130c392f",
+  "production": {
+    "worker": {
+      "version": "39701f9d-c6dd-456c-8a31-fdde4cf6d0b9",
+      "sourceCommit": "5622f9bfaec6b54445cb2221deb96f67591e2a72",
+      "assets": 128,
+      "runtimeSHA256": {
+        "index.js": "77cbe6f718c55b77ad458a25f6c91b62e3ed3bf74a9f24c8a64ac7f9e6469fff"
+      }
+    },
+    "bot": {
+      "version": "dc2b6009-ac29-4d3f-9aed-f5facabeff32",
+      "sourceCommit": "cf3528b04d051e8ba6fe33cde679ec1e03613020",
+      "assets": 4,
+      "runtimeSHA256": {
+        "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
+        "index.js": "84df5e4ad8204b8fa84be971c2e8f3aa0f0deb48d45ef5d40481cf2cfd789186"
+      }
+    }
+  },
+  "health": {
+    "verifiedBy": "Successful release-sync verification, which asserts GET /health ok for each service",
+    "workerVerifiedAt": "2026-10-15T14:50:17.685Z",
+    "botVerifiedAt": "2026-10-15T14:53:22.016Z",
+    "optionalLaterLocalRepeat": "ECONNRESET; no additional current-health claim or republication"
+  },
+  "publicHistoryCheck": {
+    "files": 32,
+    "blocked": 32,
+    "status": 401
+  }
 }
