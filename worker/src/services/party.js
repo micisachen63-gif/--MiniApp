@@ -6,7 +6,7 @@ import * as P from './player.js';
 import { loadPlayer,guardStmt,invDeltaStmt,ledgerStmt,outboxStmt,classifyDbError } from '../db.js';
 import { computeStats,nodeFor } from '../game/stats.js';
 import { GameError } from '../game/classes.js';
-import { specialState,saveSpecial,SKILL_MAP,eligible,validateCast,castSpecial,combatActor,periodic,receiveDamage,damageEnemy,valueOf,autoPartyAction } from '../game/special.js';
+import { specialState,saveSpecial,SKILL_MAP,eligible,validateCast,castSpecial,combatActor,performThiefNativeStrikes,periodic,receiveDamage,damageEnemy,valueOf,autoPartyAction } from '../game/special.js';
 import {spendMana,restoreOnAction} from '../game/combat-passives.js';
 import { SPECIAL_SKILLS } from '../game/special-data.js';
 import { taipeiDay } from '../game/time.js';
@@ -100,8 +100,13 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
   try{let result;if(action.skillId==='defend'){a.buffs.push({type:'nextReduce',value:.35,until:now+60000,uses:1});result={damage:0};}
    else if(action.skillId==='attack'){const rng=()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32;
     const skill=a.skill||{...nodeFor(a.base,a.path).skill,cost:Math.max(1,Math.round(nodeFor(a.base,a.path).skill.cost*(1+(a.affixPct?.mpCostPct||0))*(1-(a.affixPct?.mpEfficiencyPct||0))))};const cast=a.mp>=skill.cost;
-    let raw=a.atk*(cast?skill.mult:1.5)*(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;
-    result={damage:damageEnemy(enemy,raw,{},now,a),crit,nativeSkill:cast?skill.name:null,spentMp:cast?spendMana(a,skill.cost,rng):0};result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;}
+    if(a.base==='thief'){
+     result=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*(cast?skill.mult:1.5),rng,actionId:`${turn.id}:${a.id}`});
+     result.nativeSkill=cast?skill.name:null;result.spentMp=cast?spendMana(a,skill.cost,rng):0;result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;
+    }else{
+     let raw=a.atk*(cast?skill.mult:1.5)*(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;
+     result={damage:damageEnemy(enemy,raw,{},now,a),crit,nativeSkill:cast?skill.name:null,spentMp:cast?spendMana(a,skill.cost,rng):0};result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
+    }}
    else{const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,now);result=castSpecial(a,s.actors,enemy,skill,action.targetId,now,()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32,s);}
    turn.events.push({actorId:a.id,base:a.base,skillId:action.skillId,targetId:action.targetId,label:action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普通攻擊'):SKILL_MAP[action.skillId].name,...result,after:snapshot()});
    a.actions++;if(action.manual)a.manualActions=(a.manualActions||0)+1;s.log.push(`${a.name}：${action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普攻'):SKILL_MAP[action.skillId].name}${result.damage?`，傷害 ${result.damage}`:''}${result.healed?`，治療 ${result.healed}`:''}`);

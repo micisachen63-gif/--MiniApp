@@ -1,0 +1,145 @@
+{
+  "reviewDateTaipei": "2026-10-15",
+  "status": "candidate-tested-release-gated",
+  "productionPublished": false,
+  "realPlayerDataChanged": false,
+  "databaseSchemaChanged": false,
+  "releaseGate": {
+    "THIEF_RELEASE_READY": false,
+    "thiefBooksInGlobalCatalogue": false,
+    "explicitCatalogueForInternalTests": true
+  },
+  "tests": {
+    "command": "node --test worker/test/thief-combat.test.js worker/test/thief-playback.test.js worker/test/class-combat-parity.test.js worker/test/idle-event-sync.test.js worker/test/pk-event-sync.test.js worker/test/party-event-sync.test.js",
+    "passed": 46,
+    "failed": 0,
+    "newThiefTests": 17,
+    "existingParityTests": 15,
+    "scope": [
+      "31 class paths and 6 eligible books",
+      "owner-bound finite poison; status hook replay guard",
+      "native A1 mark burst, A2 poison, B1 penetrate and B2 enemy-next-hit reduction",
+      "mirror counter needs actual damage; no extra damage event",
+      "idle/boss/party actual melee guardian damage; ranged/magic excluded",
+      "summoned idle doubles the existing melee bonus once",
+      "PK guardian exclusion and immutable replay deltas",
+      "idle integer damage budget and actual-target/encounter cleanup",
+      "party in-memory D1 snapshot fixture with idempotent repeated view",
+      "Canvas geometry and full main-page legacy wrapper chain with zero unwanted atlas downloads",
+      "deterministic 1.8x fixed-point native cadence: nine real strikes per five actions; independent criticals; fatal reflection halts remaining strikes",
+      "five committed idle minutes produce 27 real strikes (5/5/6/5/6), conservation and replay idempotence",
+      "strict client validation of native strike HP continuity, damage sum and final HP; malformed/stale data falls back to one authoritative snapshot",
+      "reduced-motion thief server replay and old-character cancellation"
+    ],
+    "existingReplayTests": 14
+  },
+  "nativeMechanics": {
+    "A1": {
+      "mark": 0.04,
+      "markSeconds": 90,
+      "damageMultiplierWhenMarked": 1.1,
+      "sameTypeMarks": "maximum, never additive"
+    },
+    "A2": {
+      "perOwnerStackCap": 3,
+      "damagePerLayer": "0.12 * ATK * (1 + bounded dotPct)",
+      "pulses": 3,
+      "intervalMs": 30000,
+      "refresh": "keeps existing next pulse time; refreshes remaining pulses and expiry",
+      "idleTargetBinding": "actual starting combat target ID; kill/change/map/death clears native statuses"
+    },
+    "B1": {
+      "penetrate": 0.1
+    },
+    "B2": {
+      "enemyNextReduce": 0.1,
+      "uses": 1
+    }
+  },
+  "guardian": {
+    "allThiefPaths": "melee even if a stale actor damageType says ranged/magic",
+    "pvp": "existing rule: PvE guardian effects excluded",
+    "idle": "once at committed whole damage budget; poison source has guardian=null",
+    "bossAndParty": "once in damageEnemy, including bounded periodic poison sources"
+  },
+  "fx": {
+    "api": "window.RpgThiefFX.profile(name,path,{basic}); window.RpgThiefFX.draw(ctx,phase,from,to,profile)",
+    "authoredAs": "repo-native Canvas weapon geometry; no synthetic character art",
+    "normalKind": "dagger",
+    "skillKinds": [
+      "cross",
+      "execute",
+      "poison",
+      "flying",
+      "mirror",
+      "mark",
+      "smoke",
+      "pierce"
+    ],
+    "mainBattle": "12 native cells 0..11 and recovery preserved; 1000ms source time-scaled to 555.556ms at 1.8x; HP applied exactly once on authored release frame 6; effect lifetime bounded to this strike Exact release pose is painted synchronously before server HP impact to prevent a timer resolving before the next RAF.",
+    "party": "two legal strikes replay as two complete 260ms native cycles inside the existing 520ms action window; exact 900->800 HP stages, MP/heal only on final authoritative event snapshot; 0 replay starts, canvas cleanup and cancellation pass",
+    "browserAcceptance": "PASS for isolated mock turn and actual production native atlas/registry/Canvas/main battle in headless Edge. Root agent owns full-app surface and angel acceptance.",
+    "browserEvidence": "docs/thief/playback-browser.json",
+    "framePressure": "Browser sample saw all 12 cells in each cycle; RAF may skip samples under device frame pressure, no source cells/recovery removed.",
+    "fullApplicationAcceptance": "Pending frontend full-bootstrap repeat after thief hero height feedback and timer/RAF release race fixes. Isolated scene/main fixture PASS must not be described as full-app PASS."
+  },
+  "widerSuite": {
+    "command": "node --test worker/test/*.test.js",
+    "result": "failed; tool output truncated; total failure count not claimed",
+    "cleanHeadComparisonPerformed": false,
+    "observedFailures": [
+      "Mini App auth fixtures and trade-app-flow return assets_update_required HTTP 409 where fixture expects 200",
+      "v051.test.js later tier economy: L70 archer weapon 1.2 / 10 min",
+      "visual-loading.test.js hidden skill widget readiness fixture: undefined !== 1"
+    ],
+    "handling": "No old class values, monster compatibility gate, or old fixtures weakened; root owns final standard suite and necessary clean-HEAD comparison"
+  },
+  "sourceSHA256": {
+    "worker/src/game/thief-skills.js": "1c7691baf01b7a7d1726faa4d903384085638f72574005f3c319a9205cce4b4d",
+    "worker/src/game/special.js": "5afd7ef3dc43a3b6630aa3653522360888fcd64098d567c11f6f9d310ac30473",
+    "worker/src/game/special-idle.js": "053f48bc28f0bd2f60537f05a15084ef34f0ce764244408bb6bc85db2c9b3178",
+    "worker/src/game/guardian-effects.js": "048ccbd58015af5aa9699820034e218c9aed5fdeb91a1fc380270a358949b96f",
+    "worker/src/game/boss.js": "3fd3a472ab2801582e73e2c57a09c097366fe330a77dca3f10fff1b2d3fc1a8f",
+    "worker/src/game/pk.js": "f057216e5c6a3763efca0c8cd1b326285614ad6734653f63bfa13e6d6d9413de",
+    "worker/src/game/idle.js": "67ac251ca3843c8874906977dd627dc764ec8f7bc811932b3ecf1ac391765869",
+    "worker/src/services/party.js": "ae57069ca413bcea349091eb46205a6d2f999b333cd85387b7b8270e2e3b8496",
+    "worker/public/thief-fx.js": "80bc52ff811d3dd257e6792dff61c7dc649c9c1c1967f20d680283656a2d2bd0",
+    "worker/public/skill-fx.js": "1a2dc78dd4dcbfca209c03a4352a8eddbf0b7e9d043482bdc1fadcf5d9988d6a",
+    "worker/public/cinematic-fx.js": "2090afa92dfb05315c3c37d6a9ba98c3ac01ca57890b7feb990796468728b709",
+    "worker/public/hero-lavish-fx.js": "2413813a5ed37e8e4c4083906fe6b115eae6e2f77b7218352f71b11c3cde22a9",
+    "worker/public/battle.js": "c8b84460597c84dd8efa2c88744364b9b41854d35c410ce1733388160e319047",
+    "worker/public/expedition/hero-art-playback.js": "3ab5d88906971defccdebcdde38c9fc0605f060a1270affca2a02e51c6c66408",
+    "worker/public/expedition/index.html": "9d09197eb832447d3e452be6ddc473ab9d653f5c60e19d36b001dc92b58686e6",
+    "worker/public/expedition/live.js": "2d46de9edd60d671e67f38fe1838df49482da49a61984c04ba55346a5b9aa73e",
+    "worker/test/thief-combat.test.js": "c28ed5ee369574912262aaaa39099406c27fb5e4af22c5081883cfcd1f24d868",
+    "worker/src/game/idle-combat.js": "3f3452bb61f7aee4ebbfb7f2ef95cf48c622e21abf6f57cfca4c7fe173eb79a2",
+    "worker/src/views.js": "43aec4abc7a229e6980181837dbd76a6590e72f4efc2d5542f124eae30c2620b",
+    "worker/public/expedition/combat-playback.js": "4aa0e4bba5134039e054680c4999b2836c026bd1dd2d321c584924cf4bbb100b",
+    "worker/test/thief-playback.test.js": "e1d9706a8a3b3f6c2c6504ff7f4ce64b7d1535c84d66fb8a7078f1ad3d17c499",
+    "worker/test/thief-playback-browser.mjs": "8a3d853dc7530846941a4e12aa66ea279284b92cd3a0e19c7d3d5e1be1909dcc",
+    "worker/public/battle.css": "18ea882862a4dd1f4ef86100cae07364c2832f3cc17277708f899df1720b3049"
+  },
+  "attackSpeed": {
+    "model": "high-frequency genuine strikes inside each existing native action; player-request cooldowns, minute settlement cadence and SQL frequency unchanged",
+    "attackSpeedMultiplier": 1.8,
+    "hitAttackMultiplier": 0.6,
+    "cadence": "fixed-point thousandths; 5 native actions => 1,2,2,2,2 strikes; carry belongs to encounter snapshot",
+    "boss": "five existing native casts => nine genuine independent strikes, mana once per cast",
+    "partyAndPK": "one/two strikes inside each existing turn; per-strike crit, real clipped damage, independent one-use buff consumption; state once per action",
+    "idle": "3 baseline damage allocation units * 1.8 => 5,5,6,5,6 real strike groups; independent crit weights; integer budget conserved",
+    "idleBudget": "stats uses speed * hitAttackMultiplier = 1.08 once because g/std normalizes same-class ATK; no additional speed multiplication in the adapter",
+    "specialBooks": "not accelerated; one cast and one cooldown/mana payment",
+    "statusLimit": "native poison, mark or weakening is applied at most once per native action, never once per animated blade",
+    "death": "enemy death/damage cap or lethal reflection stops remaining strikes"
+  },
+  "regressionFixes": {
+    "battleCSS": "thief height76%, max-height170px matches sword; prevents monster layout / percentage hero height feedback in two-monster scenes",
+    "releaseClock": "after authored release wait, check epoch and paint legal native releaseFrameIndex synchronously before the one authoritative HP impact",
+    "postFixTargetedTests": {
+      "command": "node --test worker/test/thief-playback.test.js worker/test/idle-event-sync.test.js",
+      "passed": 8,
+      "failed": 0
+    },
+    "postFixBrowser": "worker/test/thief-playback-browser.mjs PASS: actual battle.css, two enemies, bounded stage height, complete 12 cells, release frame6, one HP commit, Canvas cleanup; full app separately pending"
+  }
+}

@@ -172,13 +172,18 @@
       const weights=raw?.length===sequence.length?raw:raw?.length===s.total?sequence.map(i=>raw[i]):null;
       return {sequence,weights};
     }
+    function heroSheetTop(s, frameH, portraitH) {
+      if (s.nativePortraitPlacement) return -s.portraitCrop.top * frameH / s.cellPixelHeight;
+      if (S.cls === 'thief') return portraitH * (S.fig?.[3] ?? 1) - frameH * (s.frameFig?.[3] ?? 1);
+      return portraitH - frameH;
+    }
     function heroSheetAttack(duration = 680) {
       const s = S.heroSheet; if (!s || S.rm || !s.ready) return;
       const run = ++S.heroSheetRun,{sequence,weights}=heroFrameProgram(s),count=sequence.length;
       fitNativePortraitScale(); const bounds = { width: E.hImg.offsetWidth, height: E.hImg.offsetHeight };
       const frameH = bounds.height * s.heightScale, frameW = frameH * s.cellRatio;
       E.hSheet.style.width = `${frameW}px`; E.hSheet.style.height = `${frameH}px`;
-      E.hSheet.style.top = `${s.nativePortraitPlacement ? -s.portraitCrop.top*frameH/s.cellPixelHeight : bounds.height-frameH}px`; E.hSheet.style.maxHeight = 'none';
+      E.hSheet.style.top = `${heroSheetTop(s, frameH, bounds.height)}px`; E.hSheet.style.maxHeight = 'none';
       E.hSheet.style.left = `${s.nativePortraitPlacement ? -s.portraitCrop.left*frameH/s.cellPixelHeight : S.cls === "sword" && s.total === 16 ? 8-frameW/16 : (bounds.width-frameW)/2}px`;
       fitAuthoredHero();
       E.hero.classList.add('hero-sheet-active');
@@ -202,7 +207,7 @@
       fitNativePortraitScale(); const bounds = { width: E.hImg.offsetWidth, height: E.hImg.offsetHeight };
       const frameH = bounds.height * s.heightScale, frameW = frameH * s.cellRatio;
       E.hSheet.style.width = `${frameW}px`; E.hSheet.style.height = `${frameH}px`;
-      E.hSheet.style.top = `${s.nativePortraitPlacement ? -s.portraitCrop.top*frameH/s.cellPixelHeight : bounds.height-frameH}px`; E.hSheet.style.maxHeight = 'none';
+      E.hSheet.style.top = `${heroSheetTop(s, frameH, bounds.height)}px`; E.hSheet.style.maxHeight = 'none';
       E.hSheet.style.left = `${s.nativePortraitPlacement ? -s.portraitCrop.left*frameH/s.cellPixelHeight : S.cls === "sword" && s.total === 16 ? 8-frameW/16 : (bounds.width-frameW)/2}px`;
       fitAuthoredHero();
       setHeroSheetFrame(0);
@@ -513,16 +518,17 @@
       if (S.rm || !window.RpgSkillFX) return;
       const profile = { artKey:S.heroSheetKey, ...window.RpgSkillFX.profile(skill ? (S.playSkillName || S.me.battle.skill.name) : "", S.cls, S.path), basic: !skill };
       const theme=window.RpgMonsterExpansion?.themeColor(S.me);if(theme)profile.color=theme;
-      const duration = Math.max(160, remaining) / .65;
+      const duration = S.cls==='thief'?Math.max(1,remaining):Math.max(160, remaining) / .65;
       const bodyHeight=S.heroSheet?.nativePortraitPlacement?(S.heroSheet.frameFig[3]-S.heroSheet.frameFig[1])*E.hSheet.getBoundingClientRect().height:E.hImg.getBoundingClientRect().height;
       const scale = Math.max(.4, Math.min(1.3, bodyHeight / 350));
       fx(duration, (g, k) => { g.save(); g.translate(from.x, from.y); g.scale(scale, scale);
         profile.poseFrame=S.heroSheet?.frameIndex;
         window.RpgSkillFX.draw(g, k, { x: 0, y: 0 }, { x: (to.x-from.x)/scale, y: (to.y-from.y)/scale }, profile); g.restore(); });
-      await wait(duration * .65);
+      await wait(duration * (S.cls==='thief'?1:.65));
     }
     async function heroAttack(hit, skill) {
-      const epoch=S.playEpoch,c = S.me.character; const b = S.me.battle; const L = pfx(); jit(E.hAct);
+      const epoch=S.playEpoch,c = S.me.character; const b = S.me.battle; const L = pfx();let impactCommitted=false;
+      const commitImpact=()=>{if(impactCommitted)return;checkScene(epoch);hit.impact?.();impactCommitted=true;};jit(E.hAct);
       if(!S.rm){
         // Sync already starts these loads. Await the same jobs before the first
         // visual action, so slow decoding cannot silently skip authored phases.
@@ -566,6 +572,22 @@
         else if (skill && L.rain) { projectile({ x: from.x, y: from.y - 4 }, { x: target.x, y: target.y - 60 }, 260, 'arrow', arrowMagic); arrowRain(target, S.path.length > 1 ? 7 : 5, arrowMagic); await wait(460); }
         else { if (skill) { projectile({ x: from.x, y: from.y - 6 }, { x: target.x, y: target.y - 8 }, 260, S.path[0] === 'B' ? 'bolt' : 'arrow', arrowMagic); await wait(90); } await projectile(from, target, S.path[0] === 'B' ? 210 : 300, S.path[0] === 'B' ? 'bolt' : 'arrow', arrowMagic); }
         await draw;
+      } else if (S.cls === 'thief') {
+        const nativeDuration=S.heroSheet?.durationMs||1000,speed=Math.max(1,Math.min(3,Number(hit.attackSpeedMultiplier||b.attackSpeedMultiplier)||1));
+        const duration=S.rm?80:nativeDuration/speed;
+        heroSheetAttack(duration);
+        const action=classAction('thief',duration,()=>play(E.hAct,'slash',{'--lx':'24px'}));
+        const program=S.heroSheet&&heroFrameProgram(S.heroSheet),releaseIndex=S.heroSheet?.releaseFrameIndex,
+          releasePosition=program?.sequence.indexOf(releaseIndex),sum=program?.weights.reduce((n,v)=>n+v,0)||1;
+        const releaseMs=Number.isFinite(S.heroSheet?.releaseAtMs)?S.heroSheet.releaseAtMs*duration/nativeDuration:(releasePosition>=0?duration*program.weights.slice(0,releasePosition).reduce((n,v)=>n+v,0)/sum:duration*.42);
+        await wait(S.rm?0:releaseMs);checkScene(epoch);
+        // Timers can resolve just before the RAF that paints this authored pose.
+        // Paint the exact release cell synchronously before the one server HP impact.
+        if(!S.rm&&S.heroSheet?.ready&&Number.isInteger(releaseIndex)&&program?.sequence.includes(releaseIndex))setHeroSheetFrame(releaseIndex);
+        commitImpact();
+        if(window.RpgSkillFX)await skillEffect(heroCastPt(),target,Math.max(1,duration-releaseMs),skill);
+        else smear(target,skill,col);
+        await action;
       } else {
         const twoSecondMageSheet = S.cls === 'mage' && S.heroSheet && ((!S.path && S.heroSheet.total === 8) || (S.path.length === 1 && S.heroSheet.total === 12));
         const duration = S.rm ? 80 : (S.heroSheet?.durationMs || (twoSecondMageSheet ? 2000 : (S.path[0] === 'B' ? 900 : 940)));
@@ -590,7 +612,7 @@
       }
       // impact → hit-stop → knockback
       const at = monPt(0.42, 0.42);
-      checkScene(epoch); if(hit.impact)hit.impact(); animateMonsterSheet('hurt'); flash(E.mAct, 'w'); play(E.mAct, 'knock'); await hitStop(skill ? 70 : 45);
+      checkScene(epoch);commitImpact(); animateMonsterSheet('hurt'); flash(E.mAct, 'w'); play(E.mAct, 'knock'); await hitStop(skill ? 70 : 45);
       burst(at.x, at.y, 12, col, { speed: 2.6 });
       if (S.cls === 'mage') burst(at.x, at.y, 10, [col[0], '#ffffff'], { speed: 1.8, life: 0.5, size: 3, grav: 0, kind: 'dot' });
       if(swordRecovery)await swordRecovery;
@@ -834,7 +856,7 @@
         const index=S.group.findIndex(e=>e.mon?.id===event.targetId);if(index<0)continue;focusEnemy(index);
         // This is a committed server hit; its actual target owns the name highlight during playback.
         S.pendingTarget=null;renderTargets();
-        await heroAttack({skillName:event.skillName,impact:()=>{
+        await heroAttack({skillName:event.skillName,attackSpeedMultiplier:event.attackSpeedMultiplier||round.attackSpeedMultiplier,impact:()=>{
           S.mon.hp=event.afterHp;monsterHealth();saveEnemy();
           const point=monPt(.5,.4);float(point.x,point.y,`−${o.fmt(event.damage)}`,'damage');
           root.dataset.lastHit=JSON.stringify({id:event.targetId,hp:event.afterHp,maxHp:S.mon.max,damage:event.damage});

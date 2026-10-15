@@ -32,6 +32,7 @@
  function motes(g,at,t,color,count=28,extent=100,seed=0){g.save();g.globalCompositeOperation='screen';g.lineCap='round';for(let i=0;i<count;i++){const a=rnd(i+seed)*TAU,d=(.15+rnd(i+seed+90))*extent*smooth(t),alpha=Math.pow(1-clamp(t),1.2);g.globalAlpha*=1;g.globalAlpha=alpha*.8;g.strokeStyle=i%5?color:'#ffffff';g.lineWidth=.6+rnd(i+seed+30)*1.8;const x=at.x+Math.cos(a)*d,y=at.y+Math.sin(a)*d+t*t*22;g.beginPath();g.moveTo(x,y);g.lineTo(x-Math.cos(a)*(3+8*(1-t)),y-Math.sin(a)*(3+8*(1-t)));g.stroke();}g.restore();}
  function strands(g,a,b,t,color,n=3){g.save();g.globalCompositeOperation='screen';g.lineCap='round';for(let i=0;i<n;i++){const offset=(i-(n-1)/2)*15*Math.sin(t*Math.PI);const grad=g.createLinearGradient(a.x,a.y,b.x,b.y);grad.addColorStop(0,color+'00');grad.addColorStop(.65,color+'99');grad.addColorStop(1,'#ffffffee');g.strokeStyle=grad;g.lineWidth=i===1?8:3;g.beginPath();g.moveTo(a.x,a.y);g.bezierCurveTo(a.x+(b.x-a.x)*.4,a.y+offset,b.x-35,b.y-offset,b.x,b.y);g.stroke();}g.restore();}
  api.draw=(g,k,from,to,p)=>{
+  if(p.thief&&window.RpgThiefFX)return window.RpgThiefFX.draw(g,k,from,to,p);
   if(k<0||k>=1)return;
   const cls=p.cls||(['slash','whirlwind','rage','flash','shield','guard','holy'].includes(p.kind)?'sword':['double','rain','volley','snipe','falcon','beasts','trap'].includes(p.kind)?'archer':'mage'),image=loadClass(cls);
   if(!image.complete||!image.naturalWidth){previous(g,k,from,to,{...p,deferCinematic:!image.failed});return;}

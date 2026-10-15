@@ -30,7 +30,14 @@ const CLASS_INFO = {
   sword: { e: '⚔️', n: '劍士', d: '血厚耐打、近戰穩定。30 級可轉 狂戰士（範圍輸出）或 騎士（減傷坦克）' },
   archer: { e: '🧝', n: '妖精', d: '森林精靈族，擅長自然與遠程弓術。30 級可轉 風語妖精（範圍清怪）或 靈獸妖精（獵鷹省魔）' },
   mage: { e: '🔥', n: '法師', d: '單發傷害最高、吃藍水。30 級可轉 元素術士（連鎖範圍）或 秘法師（省魔單體）' },
+  thief: { e: '🗡️', n: '盜賊', d: '極高攻速的近戰物理職業；生命與防禦較低，屬於脆皮。全路線套用近戰守護。30 級可轉 刺客（雙匕近戰）或 夜行者（飛刃與幻影）' },
 };
+export function creationClasses(meta) {
+  return Object.fromEntries(Object.entries(CLASS_INFO).filter(([key]) => {
+    const info=meta?.classes?.[key];
+    return key==='thief' ? info?.releaseReady===true : info?.releaseReady!==false;
+  }).map(([key,info])=>[key,{e:meta?.classes?.[key]?.emoji||info.e,n:meta?.classes?.[key]?.name||info.n,d:meta?.classes?.[key]?.blurb||info.d}]));
+}
 const STATE_TEXT = { fighting: '🗡️ 掛機打怪中', no_mp: '💤 沒藍水：只能普攻（效率 35%）', town_no_red: '🏙️ 沒紅水，回城休息（EXP 停止）', reviving: '💀 復活中', gate: '🚪 經驗已滿，等待轉職' };
 const ELEM = { earth: '🌍地', water: '🌊水', fire: '🔥火', wind: '🌪️風', light: '☀️光', dark: '🌑暗' };
 const ITEM_NAME = { red_1: '紅色藥水', red_2: '橙色藥水', red_3: '白色藥水', red_4: '濃縮藥水', blue_1: '藍色藥水', blue_2: '精神藥水', blue_3: '高級精神藥水', blue_4: '濃縮精神藥水', mat_3: '巨像之核', mat_4: '冰晶之心', ward: '守護符', scroll_w: '武器強化捲', scroll_a: '防具強化捲', scroll_r: '洗屬性捲', reselect_1: '命運轉職書 I', mat_1: '酋長之證', mat_2: '樹王之心' };
@@ -60,7 +67,7 @@ export function shareCaption(sh) {
   const it = sh.item || {}; const extras = [...Object.entries(it.extras || {}).filter(([, v]) => v).map(([k, v]) => fmtBonus(k, v)), ...Object.entries(it.pct || {}).filter(([, v]) => v).map(([k, v]) => fmtBonus(k, v))];
   const aff = it.affix ? Object.entries(it.affix).map(([k, v]) => fmtBonus(k, v)) : [];
   const grade = it.grade === 'relic' ? `👑 神話・${it.rarityName}` : it.rarity === 'supreme' ? `🔥 遠古・${it.rarityName}` : it.rarityName;
-  const clsName = it.classReq === 'any' ? '💎 全職業通用' : it.classReq === 'sword' ? '⚔️ 劍士專用' : it.classReq === 'archer' ? '🧝 妖精專用' : it.classReq === 'mage' ? '🔮 法師專用' : `${it.className}專用`;
+  const clsName = it.classReq === 'any' ? '💎 全職業通用' : it.classReq === 'sword' ? '⚔️ 劍士專用' : it.classReq === 'archer' ? '🧝 妖精專用' : it.classReq === 'mage' ? '🔮 法師專用' : it.classReq === 'thief' ? '🗡️ 盜賊專用' : `${it.className}專用`;
   const lines = [shareHead(sh), `【${itemTitle(it)}】`,
     `品階 ${grade}｜${it.slotName}${it.type && it.type !== it.slotName ? `・${it.type}` : ''}｜${clsName}${it.branchReq ? `（${it.branchReq} 線）` : ''}｜T${it.tier}・Lv${it.levelReq}${it.enhance ? `｜強化 +${it.enhance}` : ''}`,
     `${SLOT_ICON[it.slot] || '⚔️'} ${it.statName} ${fmt(it.stat)}${it.classReq === 'any' && ['belt', 'undershirt'].includes(it.slot) ? `（${CLASS_INFO[it.statClass]?.n || '持有者職業'} DEF；跨職業數值不同）` : ''}${it.element ? `　${ELEM[it.element] || ''} +${fmt(it.elemStat)}` : ''}`,
@@ -368,8 +375,13 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     const d = st().drafts; const prompt = await send('⚔️ 歡迎來到星穹旅誌！\n先幫你的角色取個名字（2–12 個字，中文／英文／數字／底線）：', { reply_markup: { force_reply: true, input_field_placeholder: '角色名' } }, cid);
     d[String(user.id)] = { step: 'name', promptId: prompt?.message_id ?? null, at: now() }; save(); return { rpg: 'create-name' };
   }
-  const classText = (name) => [`角色名：${name}`, '選擇職業：', ...Object.values(CLASS_INFO).map((c) => `${c.e} ${c.n}：${c.d}`)].join('\n');
-  const classKeyboard = () => [Object.entries(CLASS_INFO).map(([k, c]) => btn(`${c.e} ${c.n}`, `cc:${k}`)), [btn('✏️ 重新取名', 'cn')]];
+  // A fresh read at each create step also rejects buttons issued before a class gate closed.
+  async function loadCreationClasses() {
+    try { const response=await client.call('/rpg/meta',{}); return creationClasses(response.meta); }
+    catch(error) { warn('creation metadata',error); return creationClasses(null); }
+  }
+  const classText = (name, classes) => [`角色名：${name}`, '選擇職業：', ...Object.values(classes).map((c) => `${c.e} ${c.n}：${c.d}`)].join('\n');
+  const classKeyboard = (classes) => [Object.entries(classes).map(([k, c]) => btn(`${c.e} ${c.n}`, `cc:${k}`)), [btn('✏️ 重新取名', 'cn')]];
 
   // ---------- messages ----------
   async function onMessage(msg, text) {
@@ -389,7 +401,8 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     if (d?.step === 'name' && d.promptId != null && msg.reply_to_message?.message_id === d.promptId) {   // only replies to our force-reply prompt
       if (!NAME_RE.test(text)) { const p = await send('名字要 2–12 個字，只能用中文、英文、數字或底線，請再輸入一次：', { reply_markup: { force_reply: true, input_field_placeholder: '角色名' } }, msg.chat.id); d.promptId = p?.message_id ?? d.promptId; save(); return { rpg: 'bad-name' }; }
       Object.assign(d, { step: 'class', name: text, at: now() }); save();
-      await send(classText(text), { reply_markup: { inline_keyboard: classKeyboard() } }, msg.chat.id); return { rpg: 'create-class' };
+      const classes=await loadCreationClasses();
+      await send(classText(text,classes), { reply_markup: { inline_keyboard: classKeyboard(classes) } }, msg.chat.id); return { rpg: 'create-class' };
     }
     if (TRADE_RE.test(text)) { await send(TRADE_HINT, {}, msg.chat.id); return { rpg: 'trade-hint' }; }
     const ts = TRADE_START_RE.exec(text);
@@ -449,19 +462,22 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     switch (action) {
       case 'cn': await answer(cq); await startCreate(chat.id, user); return { rpg: 'rename' };
       case 'cc': {
-        if (!d?.name || !CLASS_INFO[arg]) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
+        const classes=await loadCreationClasses();
+        if (!d?.name || !classes[arg]) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
         Object.assign(d, { step: 'gender', baseClass: arg }); save(); await answer(cq);
-        await editMsg(chat.id, mid, `角色名：${d.name}\n職業：${CLASS_INFO[arg].e} ${CLASS_INFO[arg].n}\n選擇性別：`, [[btn('♂️ 男', 'cg:m'), btn('♀️ 女', 'cg:f')], [btn('↩️ 重選職業', 'cb')]]); return { rpg: 'create-gender' };
+        await editMsg(chat.id, mid, `角色名：${d.name}\n職業：${classes[arg].e} ${classes[arg].n}\n選擇性別：`, [[btn('♂️ 男', 'cg:m'), btn('♀️ 女', 'cg:f')], [btn('↩️ 重選職業', 'cb')]]); return { rpg: 'create-gender' };
       }
-      case 'cb': if (!d?.name) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; } await answer(cq); await editMsg(chat.id, mid, classText(d.name), classKeyboard()); return { rpg: 'create-class' };
+      case 'cb': { const classes=await loadCreationClasses(); if (!d?.name) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; } await answer(cq); await editMsg(chat.id, mid, classText(d.name,classes), classKeyboard(classes)); return { rpg: 'create-class' }; }
       case 'cg': {
-        if (!d?.baseClass || !['m', 'f'].includes(arg)) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
+        const classes=await loadCreationClasses();
+        if (!d?.baseClass || !classes[d.baseClass] || !['m', 'f'].includes(arg)) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
         Object.assign(d, { step: 'confirm', gender: arg }); save(); await answer(cq);
-        await editMsg(chat.id, mid, `確認建立角色？\n名字：${d.name}\n職業：${CLASS_INFO[d.baseClass].e} ${CLASS_INFO[d.baseClass].n}\n性別：${arg === 'm' ? '♂️ 男' : '♀️ 女'}\n\n新手禮包：金幣 1,000、紅水 150、藍水 150、新手武器與盔甲。建立後馬上開始自動掛機！`, [[btn('✅ 建立角色', 'ck')], [btn('↩️ 重選職業', 'cb')]]);
+        await editMsg(chat.id, mid, `確認建立角色？\n名字：${d.name}\n職業：${classes[d.baseClass].e} ${classes[d.baseClass].n}\n性別：${arg === 'm' ? '♂️ 男' : '♀️ 女'}\n\n新手禮包：金幣 1,000、紅水 150、藍水 150、新手武器與盔甲。建立後馬上開始自動掛機！`, [[btn('✅ 建立角色', 'ck')], [btn('↩️ 重選職業', 'cb')]]);
         return { rpg: 'create-confirm' };
       }
       case 'ck': {
-        if (d?.step !== 'confirm') { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
+        const classes=await loadCreationClasses();
+        if (d?.step !== 'confirm' || !classes[d.baseClass]) { await popup(cq, '請重新輸入 /rpg'); return { rpg: 'stale' }; }
         const r = await rpg(cq, '/rpg/create', { tgId: tg, tgName: [user.first_name, user.last_name].filter(Boolean).join(' ').slice(0, 64) || null, name: d.name, gender: d.gender, baseClass: d.baseClass });
         if (!r) { if (d) { d.step = 'name'; save(); } return { rpg: 'create-failed' }; }
         delete drafts[tg]; save(); await answer(cq, '角色建立完成！');

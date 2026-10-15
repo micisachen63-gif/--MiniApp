@@ -1,6 +1,6 @@
 import {chooseMonster,monsterMaterialPlan} from './monsters.js';
 import {guardianDamageMultiplier,guardianChance} from './guardian-effects.js';
-import {idleSpecial} from './special-idle.js';
+import {idleSpecial,idleThiefNative,prepareThiefIdleEncounter,clearThiefIdleNative,idleThiefStrikePlan} from './special-idle.js';
 import {beginAssistBattle,idleGuardianActor} from './guardian-assist.js';
 import {idleCombatState,idleMonsterHp,resolveIdleCombat} from './idle-combat.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
@@ -108,6 +108,8 @@ export function settleIdle(char, inventory, equipped, now) {
     if (c.idle_state === 'reviving') { if (t < c.state_until) { townRegen(); continue; } c.state_until = null; c.idle_state = 'fighting'; }
     if (c.idle_state === 'town_no_red') { if (countKind(inv, 'red') === 0) { townRegen(); continue; } c.idle_state = 'fighting'; }
 
+    const combat=combatState?.mapId===mapTier?combatState:idleCombatState({...c,idle_combat_json:combatState?null:c.idle_combat_json});combatState=combat;
+    const thiefTarget=prepareThiefIdleEncounter(c,combat);
     beginAssistBattle(c,inv,use,price=>{report.guardianStonesBought=(report.guardianStonesBought||0)+1;report.guardianStoneGoldSpent=(report.guardianStoneGoldSpent||0)+price;});
     const guardianActor=idleGuardianActor(c);
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
@@ -117,11 +119,13 @@ export function settleIdle(char, inventory, equipped, now) {
     if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
     c.mp = Math.min(s.maxMp, c.mp + s.mpRegen);
     setState(cast ? 'fighting' : 'no_mp', t);
-    const crit=!special?.selected&&rng()<Math.min(.8,.05+(s.pct.critPct||0));
+    const thiefPlan=c.base_class==='thief'&&!special?.selected?idleThiefStrikePlan(c,s,combat,t,rng):null;
+    const strikePlan=thiefPlan?.strikes||(c.base_class==='thief'?[{index:0,crit:false,weight:1}]:null);
+    const crit=thiefPlan?thiefPlan.strikes.some(s=>s.crit):!special?.selected&&rng()<Math.min(.8,.05+(s.pct.critPct||0));
     const nativeElement=elementalDamage(s.atk*s.skill.mult,s,{element:mapElement(mapTier)})/Math.max(1,s.atk*s.skill.mult);
-    const eff = special?.selected ? special.ratio : (cast ? 1 : IDLE.basicEff)*(special?.normalBonus??1)*(crit?1.5:1)*nativeElement;
+    const thiefNative=idleThiefNative(c,s,t,{cast:cast&&!special?.selected});
+    const eff = special?.selected ? special.ratio : thiefPlan ? (cast?1:IDLE.basicEff)*(special?.nativeSteadyBonus??1)*thiefPlan.factor*nativeElement*thiefNative.multiplier+(special?.periodicBonus??0) : (cast ? 1 : IDLE.basicEff)*(special?.normalBonus??1)*(crit?1.5:1)*nativeElement*thiefNative.multiplier;
 
-    const combat=combatState?.mapId===mapTier?combatState:idleCombatState({...c,idle_combat_json:combatState?null:c.idle_combat_json});combatState=combat;
     const kills=s.killsPerTick*eff*s.g*guardianDamageMultiplier(guardianActor);
     // This is exactly the integer damage budget resolveIdleCombat will distribute, including its carried fraction.
     const damage=Math.floor(Math.max(0,kills)*idleMonsterHp(mapTier)+(combat.remainder||0));
@@ -130,7 +134,7 @@ export function settleIdle(char, inventory, equipped, now) {
 
     // HP: monster pressure, auto red
     const autoRed = () => { let k; while (c.hp < (c.auto_red_pct / 100) * s.maxHp && (k = choosePotion(inv, 'red', mapTier))) { use(k); c.hp = Math.min(s.maxHp, c.hp + POTIONS[k].heal); } };
-    c.hp = Math.min(s.maxHp, c.hp - (special?.hpLoss ?? s.hpLoss)); autoRed();
+    c.hp = Math.min(s.maxHp, c.hp - (special?.hpLoss ?? s.hpLoss)*(thiefNative.lossMultiplier??1)); autoRed();
 
     const eliteMonster=chooseMonster(mapTier,'elite',Math.floor(t/TICK_MS));
     // elite ambush → possible death
@@ -168,6 +172,7 @@ export function settleIdle(char, inventory, equipped, now) {
       }
     }
     if (died) {
+      clearThiefIdleNative(c);
       report.deaths += 1; c.deaths_total = (c.deaths_total || 0) + 1;
       let penalty = 0, reason;
       if (c.level <= NEWBIE_EXP_LEVEL) reason = 'newbie';
@@ -186,8 +191,9 @@ export function settleIdle(char, inventory, equipped, now) {
     c.exp += gain; report.exp_gained += gain;
     goldAcc += dailyGold(c.level) * IDLE.goldPerDayPct / MAX_SETTLE_TICKS * eff;
     killAcc += kills;
-    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,record:i===ticks});
-    if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;}
+    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,strikePlan,attackSpeedMultiplier:s.attackSpeedMultiplier,record:i===ticks});
+    if(thiefTarget&&!combat.enemies.some(e=>e.id===thiefTarget))clearThiefIdleNative(c);
+    if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;if(thiefNative.statuses.length)round.statuses=thiefNative.statuses;}
     for(const [key,qty]of Object.entries(monsterMaterialPlan(round,materialRng,dropsToday,inv))){inv[key]=(inv[key]||0)+qty;report.drops[key]=(report.drops[key]||0)+qty;}
     realKills+=round.kills+(round.eliteKills||0);report.combat=combat.round;
     killGold += kills * goldPerKill(c.level) * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());

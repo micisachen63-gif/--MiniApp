@@ -26,7 +26,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -113,6 +113,7 @@ const routes = {
   'POST /rpg/party/message': (env,b)=>PARTY.setMessage(env,b),
   'POST /rpg/party/tick': async(env,b,now)=>({ok:true,advanced:await PARTY.sweep(env,now)}),
 
+  'POST /rpg/meta': () => ({ok:true,meta:metaView()}),
   'POST /rpg/me': (env, b, now) => me(env, tgOf(b), now, {summary:b.summary===true}),
   'POST /rpg/create': async (env, b, now) => { const tg = tgOf(b); await P.createCharacter(env, { ...b, tgId: tg }, now); return me(env, tg, now); },
   'POST /rpg/monster-exchange': act((w,c,b)=>monsterExchange(w,c,b)),

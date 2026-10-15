@@ -1,0 +1,78 @@
+盜賊資料庫擴充：審查候選，禁止直接上正式機
+
+目前狀態
+  productionReady=false、releaseReady=false。零正式資料庫讀寫。
+  SQLite 記憶體驗證通過；Cloudflare 本機 D1 模擬器未能啟動，故不能宣稱 D1 實測通過。
+  已安裝 Miniflare 5.20261006.0-alpha / Wrangler 4.148.0 的 workerd 在 Windows 啟動時出現
+  0xc0000005 access violation / stack overflow。失敗發生在取得測試 D1 binding 前，沒有執行候選 SQL。
+  完整實測與剩餘關卡記於 schema-candidate-rehearsal.json。
+
+候選範圍與必要性
+  三處 CHECK 必須增加 thief，保留全部原值：
+    rpg_characters.base_class
+    rpg_equipment.class_req
+    rpg_exchange_listings.class_req（否則盜賊裝備上架會失敗）
+  SQLite 既有 CHECK 無 ADD COLUMN 即可擴充的安全語法。新增 sidecar 職業欄位仍使 base_class 不是真實職業，
+  或迫使全部查詢改為另一套角色表，因此未採用；不冒充 archer，不修改 writable_schema，不忽略 CHECK。
+  本候選只在 docs/thief/schema-candidate.sql 和 .json，不位於 worker/migrations，不會自動套用。
+
+保留方式
+  1. 固定完整 sqlite_master schema，比對每個物件名稱、類型、原 SQL；任何未知漂移先中止。
+  2. 計算全部入站外鍵的遞迴閉包。本倉庫為三個根表及 guardian_operations、guardian_sigils、
+     guardian_voucher_grants、guardian_welcome 共七表。循環外鍵、無主鍵、隱藏／生成欄位等未審查形狀直接拒絕。
+  3. 在同一交易內把七表全部具名欄位及原 rowid 複製到不帶 FK 的暫存資料表；另保存 sqlite_sequence。
+     暫存表是交易內完整副本，不能取代正式執行前的外部可回復備份。
+  4. 暫停全部相關 trigger 和 view，依葉子到父表的順序重建。父表被移除前，其所有 FK 子表已經完整備份並移除，
+     所以不會向仍裝著資料的子表執行 CASCADE／SET NULL／RESTRICT。不是僅開 defer_foreign_keys 後丟棄父表。
+  5. 先建立父表再建立子表，沿用原始 CREATE SQL，僅三個 CHECK 增加 thief；仍全程開啟 FK 與 CHECK。
+     依父子順序還原所有欄位與原 rowid；全部資料還原後才恢復索引、view、trigger。
+     這個順序避免 welcome/grant/guardian revision trigger 重複發獎、增加每日次數、寫帳或改角色 rev。
+  6. 恢復 AUTOINCREMENT 的原高水位，即使最大 seq 曾刪除也不重用舊編號。
+  7. 以資料筆數及雙向全欄位 typeof/hex/rowid 比對驗證副本，驗證 FK、完整 schema 與 sequence。
+     任何 guard 失敗都應讓整個交易回滾；只在比對通過後移除無 FK 暫存表。
+  8. 跨表 trigger、部分唯一索引、COLLATE NOCASE、帳號四欄位、所有後加欄位、現存 guardian FK 行為均保留原定義。
+
+可重現的本機資料與測試
+  schema-candidate-seed.sql 是全人工種子，沒有玩家資料；須先在空白本機測試庫載入倉庫既有 migrations。
+  四十一張業務表全部非空；角色 41 欄、裝備 24 欄、11 穿戴位、同帳號多角色、已啟用圖鑑祝福、
+  active/bound、locked、交易中、交易所託管天使、交易與裝備託管、強化／洗鍊／召喚背景作業、
+  組隊、每日次數、帳本、outbox、憑證與歡迎獎勵均有樣本。
+  刻意將 exchange AUTOINCREMENT 高水位設為 5000，而實際最大 seq 為 20。
+  node --test worker/test/thief-schema.test.js
+  九項測試通過，包括每張表每筆資料的 bytes/type/rowid、所有 schema 物件及高水位不變；
+  十一個重建階段故障回滾、還原後資料 guard 故障回滾、schema 漂移、NUL/BLOB/REAL 值、
+  遞迴 CASCADE／SET NULL／RESTRICT FK 與巢狀 view 保留、原保護 trigger 仍能擋操作。
+  另有反例證實：只 defer 後 DROP 父表確實會刪除 CASCADE 子資料。
+  node worker/scripts/rehearse-thief-schema.mjs              僅 SQLite memory，再產人工種子與收據
+  node worker/scripts/rehearse-thief-schema.mjs --local-d1   額外嘗試隔離的本機 Miniflare；不連正式機
+
+D1 執行契約與尚未證明部分
+  Cloudflare 官方文件明載 D1 batch 是 SQL transaction；其中一個 statement 失敗會 abort／rollback 整個序列。
+  候選必須保留完整的 165 個 statement 結構，不能用分號直接切 SQL（trigger 內也有分號），不能逐行／逐段提交。
+  候選沒有 SQL BEGIN/COMMIT，不假設能用 PRAGMA foreign_keys=OFF，也不以 defer 防 CASCADE。
+  官方通用契約加 SQLite PASS，仍不等於這一份候選已在 hosted D1 執行過。
+  本次 local workerd 啟動故障，Hosted D1 完整副本排練、資料量／耗時／儲存空間／查詢限制仍是阻擋關卡。
+  不可因產出了 SQL 或官方有 batch 契約，就把 productionReady 改為 true。
+
+正式執行前必要要求
+  取得並核對即時正式 schema、全部入站 FK／索引／trigger／view；以它重新生成固定候選，不能用本倉庫快照猜測正式庫。
+  先建立可核實的 D1 recovery bookmark 與外部完整匯出，在隔離環境演練還原並核對所有表資料／schema。
+  保留 Git commit、正式 Worker/BOT 版本、備份識別、候選與驗證腳本 SHA、全表筆數／型別位元組雜湊。
+  在相同 hosted D1 執行方式排練完整資料副本，注入 guard 故障確認全批回滾；量測資料量、耗時及暫存空間。
+  明確協調 Mini App、BOT、cron、DO 的寫入暫停與解除；不要啟動歷史本機長輪詢。
+  完成後由使用者針對具體候選授權正式破壞性 migration；AGENTS.md 原則：
+  「嚴禁執行破壞性 D1 migration（如 DROP TABLE、TRUNCATE），除非使用者有明確指令。」
+
+回滾與失敗處置
+  交易尚未提交：任一 SQL／guard 失敗須原子回滾，保留日誌，先查明正式實況；禁止自動重跑。
+  已提交但仍未開放盜賊：優先保留向後相容的擴充 schema 並維持 gate=false；不為回到舊 CHECK 再次重建玩家資料。
+  已有新 thief 資料：不得直接縮回舊 CHECK，因為這會拒絕新資料；不得刪除 thief 玩家解決回滾。
+  若確須整庫還原：須獨立確認維護時段、恢復點與之後所有玩家交易／帳本／outbox 的差異處理，
+  不能只還原角色表而丟失天使或重複發獎，也不能以舊 SQL seed 覆寫正式機。
+
+官方依據（只採 primary 文件）
+  https://developers.cloudflare.com/d1/sql-api/foreign-keys/
+  https://developers.cloudflare.com/d1/sql-api/sql-statements/
+  https://developers.cloudflare.com/d1/worker-api/d1-database/
+  https://developers.cloudflare.com/workers/wrangler/commands/d1/
+  https://www.sqlite.org/foreignkeys.html

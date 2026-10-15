@@ -1,0 +1,327 @@
+{
+  "error": "TimeoutError: locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.expedition-hero-portrait img').first() to be visible\u001b[22m\n",
+  "stack": "locator.waitFor: Timeout 12000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('.expedition-hero-portrait img').first() to be visible\u001b[22m\n\n    at measure (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-thief\\worker\\test\\thief-browser-pilot.mjs:26:62)\n    at C:\\Users\\User\\Documents\\ChatGPT\\star-journal-thief\\worker\\test\\thief-browser-pilot.mjs:73:9",
+  "cases": [
+    {
+      "surface": "home",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-home.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 56,
+        "height": 86
+      },
+      "visible": {
+        "left": 2.56256103515625,
+        "top": 2.7894694010416856,
+        "right": 53.445281982421875,
+        "bottom": 83.42415364583331
+      },
+      "absolute": {
+        "left": 32.56256103515625,
+        "top": 333.5550944010417,
+        "right": 83.44528198242188,
+        "bottom": 414.1897786458333
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-current",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-lineage-current.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 84,
+        "height": 110
+      },
+      "visible": {
+        "left": 9.72100830078125,
+        "top": 3.8477071126301894,
+        "right": 74.28793334960938,
+        "bottom": 106.15067545572913
+      },
+      "absolute": {
+        "left": 34.72100830078125,
+        "top": 437.0508321126302,
+        "right": 99.28793334960938,
+        "bottom": 539.3538004557291
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-tree",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-lineage-tree.png",
+      "src": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 38,
+        "height": 55
+      },
+      "visible": {
+        "left": 2.739990234375,
+        "top": 1.74041748046875,
+        "right": 35.2471923828125,
+        "bottom": 53.250244140625
+      },
+      "absolute": {
+        "left": 55.739990234375,
+        "top": 444.31854248046875,
+        "right": 88.2471923828125,
+        "bottom": 495.828369140625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "own-armory",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-own-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 248,
+        "height": 280
+      },
+      "visible": {
+        "left": 44.606201171875,
+        "top": 14.16693115234375,
+        "right": 203.4468994140625,
+        "bottom": 265.860595703125
+      },
+      "absolute": {
+        "left": 80.606201171875,
+        "top": 794.9950561523438,
+        "right": 239.4468994140625,
+        "bottom": 1046.688720703125
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false,
+      "angel": {
+        "guardianSrc": "/art/guardian-sigil-20261013/melee.webp",
+        "summoned": true,
+        "guardianOutsideFigure": true,
+        "headGap": 6,
+        "inside": true,
+        "stage": {
+          "left": 25,
+          "top": 215.828125,
+          "right": 295,
+          "bottom": 655.828125,
+          "width": 270,
+          "height": 440
+        },
+        "figure": {
+          "left": 36,
+          "top": 356.828125,
+          "right": 284,
+          "bottom": 636.828125,
+          "width": 248,
+          "height": 280
+        },
+        "guardian": {
+          "left": 102,
+          "top": 230.828125,
+          "right": 218,
+          "bottom": 350.828125,
+          "width": 116,
+          "height": 120
+        }
+      }
+    },
+    {
+      "surface": "hero-hall",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-hero-hall.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 66,
+        "height": 96
+      },
+      "visible": {
+        "left": 4.619873046875,
+        "top": 3.0201314290364394,
+        "right": 61.3775634765625,
+        "bottom": 92.97172037760419
+      },
+      "absolute": {
+        "left": 42.619873046875,
+        "top": 403.61388142903644,
+        "right": 99.3775634765625,
+        "bottom": 493.5654703776042
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "other-armory",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-other-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 250,
+        "height": 396
+      },
+      "visible": {
+        "left": 7.20556640625,
+        "top": 15.3135986328125,
+        "right": 242.897216796875,
+        "bottom": 388.78271484375
+      },
+      "absolute": {
+        "left": 42.20556640625,
+        "top": 434.3135986328125,
+        "right": 277.897216796875,
+        "bottom": 807.78271484375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    }
+  ],
+  "errors": [],
+  "badResponses": [
+    {
+      "url": "/null",
+      "status": 404,
+      "body": "{\"ok\":false,\"file\":\"/null\"}"
+    }
+  ],
+  "body": "🗡️\n盜賊女試驗\n盜賊 · Lv.20 · 近戰・極速・脆皮\n300,000\n選角 ▾\nI\n星穹旅誌 · EXPEDITION\n英雄遠征\n\n穿越諸神的領域，書寫你的史詩。\n\n遠征戰場\n補給與策略\n戰報與能力\n守護天使\n盜賊女試驗\nLv.20\n盜賊\nHP 148 / 240\nMP 33 / 124\nEXP 0%\n攻擊\n44\n防禦\n15\n爆擊\n5%\n戰力\n187\n地\n0 · 0%\n水\n0 · 0%\n火\n0 · 0%\n風\n0 · 0%\n光\n0 · 0%\n暗\n0 · 0%\n武器屬攻：無 +0 · 屬抗減傷上限 40%\n受傷倍率 ×1\n⚔ 狩獵戰場\n⚔️ 自動戰鬥中\nLEVEL UP\n⚔️ 自動戰鬥中\n🏛️ 雅典娜百柱神殿\n真實戰況・血量每分鐘結算\n百柱石像\n395／395\n智慧夜梟\n395／395\n百柱石像\n智慧夜梟\n✦\n紫\n近傷 +7%\n參戰中\n掛機輔助\n特殊技能\n召喚守護天使\n特殊技能\n配置技能\n\nMP 33／124 · 手動技能排入下一次有效掛機戰鬥\n\n＋\n選擇技能\n＋\n選擇技能\n＋\n選擇技能\n自動施放會增加魔力與藍水消耗。\n補水與每日預算設定\nHERMES · 遠征指引\n現在可以做\n300,000\n每日補給金 3,000\n首週 +50%\n領取\n買得起：雅典絲織內衣（T2）\n680 · 共 18 件升級\n商店\n下一隻首領 10:00\n0:00 後出現\n看看\n✦\n旅團日誌\n今日已領 0／3 · 與夥伴寫下新一頁\n›\nBLESSING · 每日祝福\n每日補給金\n首週加成 +50%\n諸神賜予的遠征祝福\n3,000 金幣\n包含首週額外 1,000 金幣\n領取每日祝福\n→\nGame Producer\n·\nミカサ\n遠征\n英雄\n市集\n神戰\n集會\n傳承\n‹ 返回冒險\n技能與組隊冒險",
+  "apiRequests": [
+    {
+      "action": "meta",
+      "id": "811"
+    },
+    {
+      "action": "characters",
+      "id": "811"
+    },
+    {
+      "action": "select",
+      "id": "811"
+    },
+    {
+      "action": "shop",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "trade/list",
+      "id": "811"
+    },
+    {
+      "action": "trade/requests",
+      "id": "811"
+    },
+    {
+      "action": "hall/list",
+      "id": "811"
+    },
+    {
+      "action": "hall/get",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    }
+  ],
+  "status": "SUPERSEDED",
+  "supersededBy": "verified.json",
+  "resolution": "Local fixture headers and Telegram sentinel corrected; product authentication unchanged."
+}

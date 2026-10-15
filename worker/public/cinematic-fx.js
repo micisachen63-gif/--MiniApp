@@ -20,6 +20,7 @@
  function bolt(g,a,b,k,alpha=1){const angle=Math.atan2(b.y-a.y,b.x-a.x),len=Math.hypot(b.x-a.x,b.y-a.y);sprite(g,3,(a.x+b.x)/2,(a.y+b.y)/2,len+70,85+Math.sin(k*83)*14,angle,alpha,'screen')}
  function blast(g,at,k,color,fire=false,power=1){const swell=1-Math.pow(1-k,3),fade=Math.pow(1-k,1.5);bloom(g,at.x,at.y,135*power,color,fade*.65);if(fire)sprite(g,1,at.x,at.y,90+swell*185,90+swell*185,k*.12,fade);sprite(g,15,at.x,at.y+12,55+swell*235,28+swell*105,0,fade*.85);sparks(g,at,k,color,48,120*power)}
  function draw(g,k,from,to,p){
+  if(p.thief&&window.RpgThiefFX)return window.RpgThiefFX.draw(g,k,from,to,p);
   if(!p.deferCinematic)loadAtlas();
   if(!atlas.complete||!atlas.naturalWidth){fallback(g,k,from,to,p);return}
   if(k<0||k>=1)return;phase=k;const C=p.color,power=p.power||1,t=clamp((k-.22)/.43),hit=clamp((k-.65)/.35),active=k>=.22&&k<.72,tail=1-clamp((k-.67)/.33),pos={x:from.x+(to.x-from.x)*t,y:from.y+(to.y-from.y)*t},angle=Math.atan2(to.y-from.y,to.x-from.x);

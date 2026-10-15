@@ -1,0 +1,42 @@
+{
+  "passed": true,
+  "actualAppBootstrap": true,
+  "productionWrites": false,
+  "fixture": true,
+  "sourceSHA256": "6f35c55c81f3496591f07bd2ebc3682f1e318b81bb52b68da338002499aa8563",
+  "cases": [
+    {
+      "kind": "normal",
+      "hp": [
+        "HP 100 / 100",
+        "HP 70 / 100"
+      ],
+      "damage": [
+        "−10",
+        "−15"
+      ],
+      "motions": [
+        1132.5,
+        1515.0999999940395
+      ],
+      "result": "第 1 回合 · 盜賊女試驗施展技能 · 2 擊（10＋15） · 持續傷害 5",
+      "mp": "MP 46 / 50"
+    },
+    {
+      "kind": "reduced",
+      "hp": [
+        "HP 100 / 100",
+        "HP 70 / 100"
+      ],
+      "damage": [
+        "2擊"
+      ],
+      "motions": [
+        2319.4000000059605
+      ],
+      "result": "第 1 回合 · 盜賊女試驗施展技能 · 2 擊（10＋15） · 持續傷害 5",
+      "mp": "MP 46 / 50"
+    }
+  ],
+  "errors": []
+}

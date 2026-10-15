@@ -1,0 +1,190 @@
+{
+  "status": "PASS",
+  "scope": "One thief_f zero-transfer native pilot, not all 62 thief identities",
+  "actualAppBootstrap": true,
+  "productionWrites": false,
+  "productReleaseReady": false,
+  "mockServer": true,
+  "fixtureMetadataOverride": true,
+  "widths": [
+    320,
+    390,
+    768,
+    1280
+  ],
+  "fields": 28,
+  "mainBattleActions": 8,
+  "resizeCases": [
+    {
+      "kind": "resize-stability",
+      "width": 320,
+      "height": 591.875
+    },
+    {
+      "kind": "resize-stability",
+      "width": 768,
+      "height": 460
+    },
+    {
+      "kind": "resize-stability",
+      "width": 390,
+      "height": 591.875
+    },
+    {
+      "kind": "resize-stability",
+      "width": 1280,
+      "height": 460
+    },
+    {
+      "kind": "resize-stability",
+      "width": 320,
+      "height": 591.875
+    }
+  ],
+  "reducedMotionCases": 1,
+  "cleanupCases": [
+    {
+      "kind": "page-switch",
+      "active": false,
+      "connected": false,
+      "selected": "811",
+      "fxCanvas": 1
+    },
+    {
+      "kind": "character-switch",
+      "active": false,
+      "connected": true,
+      "selected": "813",
+      "fxCanvas": 1
+    }
+  ],
+  "pkCases": 2,
+  "guardianGaps": [
+    {
+      "width": 320,
+      "gap": 6
+    },
+    {
+      "width": 390,
+      "gap": 6
+    },
+    {
+      "width": 768,
+      "gap": 7
+    },
+    {
+      "width": 1280,
+      "gap": 7
+    }
+  ],
+  "errors": [],
+  "sourceDrift": [],
+  "reportSHA256": {
+    "verified.json": "28602410b22171a71f57706db6ebfe7e352e2f9fce8c9f8a582ad0a0d7a1c109",
+    "actions.json": "855e87de5d04542a22a7b06877d8d8f0df9d55d07adc4fa3ea2b4a29f61c5814",
+    "pk-actions.json": "10c3779ed95b69e424d4aa15b78b60194f53e0da4436452c4bf46ab5a00c57f7"
+  },
+  "sourceSHA256": {
+    "worker/public/app.js": "6f35c55c81f3496591f07bd2ebc3682f1e318b81bb52b68da338002499aa8563",
+    "worker/public/battle.js": "c8b84460597c84dd8efa2c88744364b9b41854d35c410ce1733388160e319047",
+    "worker/public/battle.css": "18ea882862a4dd1f4ef86100cae07364c2832f3cc17277708f899df1720b3049",
+    "worker/public/thief-fx.js": "80bc52ff811d3dd257e6792dff61c7dc649c9c1c1967f20d680283656a2d2bd0",
+    "worker/public/hero-art-registry.js": "b41df047b8d32b567cef9d379d29d2b93c0084773e2c4668dc9c21cab4c2afc9",
+    "worker/public/hero-art-registry.json": "af337a165f9c73b1ceb5f91b176c8886026115839266a61c1036bc90563226a6",
+    "worker/public/thief-class.js": "238137f52802c942832eb7358cd5ca4c50364c1cc46f31a98044943911b47363",
+    "worker/public/expedition/combat-playback.js": "4aa0e4bba5134039e054680c4999b2836c026bd1dd2d321c584924cf4bbb100b",
+    "worker/public/expedition/hero-art-playback.js": "3ab5d88906971defccdebcdde38c9fc0605f060a1270affca2a02e51c6c66408"
+  },
+  "screenshots": [
+    "docs/thief/pilot-ui/320-home.png",
+    "docs/thief/pilot-ui/320-lineage-current.png",
+    "docs/thief/pilot-ui/320-lineage-tree.png",
+    "docs/thief/pilot-ui/320-own-armory.png",
+    "docs/thief/pilot-ui/320-hero-hall.png",
+    "docs/thief/pilot-ui/320-other-armory.png",
+    "docs/thief/pilot-ui/320-expedition-card.png",
+    "docs/thief/pilot-ui/390-home.png",
+    "docs/thief/pilot-ui/390-lineage-current.png",
+    "docs/thief/pilot-ui/390-lineage-tree.png",
+    "docs/thief/pilot-ui/390-own-armory.png",
+    "docs/thief/pilot-ui/390-hero-hall.png",
+    "docs/thief/pilot-ui/390-other-armory.png",
+    "docs/thief/pilot-ui/390-expedition-card.png",
+    "docs/thief/pilot-ui/768-home.png",
+    "docs/thief/pilot-ui/768-lineage-current.png",
+    "docs/thief/pilot-ui/768-lineage-tree.png",
+    "docs/thief/pilot-ui/768-own-armory.png",
+    "docs/thief/pilot-ui/768-hero-hall.png",
+    "docs/thief/pilot-ui/768-other-armory.png",
+    "docs/thief/pilot-ui/768-expedition-card.png",
+    "docs/thief/pilot-ui/1280-home.png",
+    "docs/thief/pilot-ui/1280-lineage-current.png",
+    "docs/thief/pilot-ui/1280-lineage-tree.png",
+    "docs/thief/pilot-ui/1280-own-armory.png",
+    "docs/thief/pilot-ui/1280-hero-hall.png",
+    "docs/thief/pilot-ui/1280-other-armory.png",
+    "docs/thief/pilot-ui/1280-expedition-card.png"
+  ],
+  "retainedFailuresAreSuperseded": true,
+  "pkNativePokeIntervalMs": 360,
+  "pkCssPokeDurationMs": 350,
+  "observedTwoMonsterMainStage": [
+    {
+      "viewportWidth": 320,
+      "kind": "normal",
+      "stageWidth": 266,
+      "stageHeight": 590,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 320,
+      "kind": "skill",
+      "stageWidth": 266,
+      "stageHeight": 590,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 390,
+      "kind": "normal",
+      "stageWidth": 336,
+      "stageHeight": 590,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 390,
+      "kind": "skill",
+      "stageWidth": 336,
+      "stageHeight": 590,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 768,
+      "kind": "normal",
+      "stageWidth": 708,
+      "stageHeight": 458,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 768,
+      "kind": "skill",
+      "stageWidth": 708,
+      "stageHeight": 458,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 1280,
+      "kind": "normal",
+      "stageWidth": 920,
+      "stageHeight": 458,
+      "enemyCount": 2
+    },
+    {
+      "viewportWidth": 1280,
+      "kind": "skill",
+      "stageWidth": 920,
+      "stageHeight": 458,
+      "enemyCount": 2
+    }
+  ],
+  "guardianScope": "Summoned companion gap is measured in own hero armory; other hero armory uses its existing read-only portrait layout."
+}

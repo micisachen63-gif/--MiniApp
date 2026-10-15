@@ -1,0 +1,255 @@
+{
+  "status": "blocked-pending-live-schema-backup-explicit-authorization-and-hosted-D1-rehearsal",
+  "productionReady": false,
+  "releaseReady": false,
+  "remoteReads": 0,
+  "remoteWrites": 0,
+  "hostedD1Rehearsed": false,
+  "roots": {
+    "rpg_characters": "base_class",
+    "rpg_equipment": "class_req",
+    "rpg_exchange_listings": "class_req"
+  },
+  "tablesRebuilt": [
+    "rpg_characters",
+    "rpg_equipment",
+    "rpg_exchange_listings",
+    "rpg_guardian_operations",
+    "rpg_guardian_sigils",
+    "rpg_guardian_voucher_grants",
+    "rpg_guardian_welcome"
+  ],
+  "statements": 165,
+  "maximumStatementBytes": 42365,
+  "syntheticSeed": {
+    "businessTables": 41,
+    "statements": 66,
+    "completeCharacterColumns": 41,
+    "completeEquipmentColumns": 24,
+    "equippedPositions": 11,
+    "guardianStates": [
+      "active/bound",
+      "locked",
+      "trade escrow",
+      "exchange escrow"
+    ],
+    "deletedAutoincrementHighWater": 5000
+  },
+  "beforeData": {
+    "rpg_accounts": {
+      "rows": 2,
+      "sha256": "a15676aaf1234694d8473b5ce3b35aef6d93f62e5541c9cc3d049da45b71837a"
+    },
+    "rpg_admin_audit": {
+      "rows": 1,
+      "sha256": "9cbb1eb2897df910fb4e9106c3e3c2079d5c3cd483815080d8dfda106d377f72"
+    },
+    "rpg_app_access": {
+      "rows": 1,
+      "sha256": "08a25c4b3d1b6c759d15e5ea837ceda758087ce02127572ec739c962ac60e081"
+    },
+    "rpg_auto_enhance": {
+      "rows": 1,
+      "sha256": "b843425254bf276cdd8be479d1fc8d9d40938dfb852bc155b99a8c5d6f68fdf3"
+    },
+    "rpg_auto_reroll": {
+      "rows": 1,
+      "sha256": "8904d83ed38cf03891e44f7e9c8c9669c05c81cbd4841d64d60a6ab2da80c0e8"
+    },
+    "rpg_background_operations": {
+      "rows": 3,
+      "sha256": "2878c37f53fcdc4ecabd38cd48f0c1c09292899d8c3833ca71ad00889a291c4a"
+    },
+    "rpg_book_trade_operations": {
+      "rows": 1,
+      "sha256": "21e1e2893cd5378c8054badb1734e046021d149466dd5cbb83dd387c1d391b89"
+    },
+    "rpg_boss_attacks": {
+      "rows": 1,
+      "sha256": "80fbd79ba206d8ab32e372cdd779fd3bdbd7b9f5402f85f39445984a919b0fce"
+    },
+    "rpg_boss_instances": {
+      "rows": 1,
+      "sha256": "31d502d7c265370349dc0e12632fce8135a817ca07ef3af7a2a3040ae8048a49"
+    },
+    "rpg_characters": {
+      "rows": 3,
+      "sha256": "938101f2a702d489203ec9187ee7d640473fef0bea39cb0e28b736449339ac4d"
+    },
+    "rpg_class_changes": {
+      "rows": 1,
+      "sha256": "c016c55cd72f551956ebe613cb690c92bcedaf44488c5c5259b9ea12188aed7a"
+    },
+    "rpg_daily_counters": {
+      "rows": 1,
+      "sha256": "ccd66fe88846374d44aa01895d86446cc21ef4fdb37af28333a13779be3f25a1"
+    },
+    "rpg_equipment": {
+      "rows": 15,
+      "sha256": "bea3f072407cfe60068d0beb8e027dd7275a2b2660b73247d05a6fab464ca237"
+    },
+    "rpg_exchange_listings": {
+      "rows": 2,
+      "sha256": "2f029ae245509c19016473963c23d596df8227fecb9a42a5d02ca6276dcca198"
+    },
+    "rpg_exchange_operations": {
+      "rows": 1,
+      "sha256": "df1639702a23c235adcb4d249cf695ef14a5e4db383022250f9b71e3cd70680a"
+    },
+    "rpg_guard": {
+      "rows": 1,
+      "sha256": "7146be1e4c4873e9ea1e0d6f6bc8fe53b28546e55a421673e9caa882366efff0"
+    },
+    "rpg_guardian_auto": {
+      "rows": 1,
+      "sha256": "2d7983aae3b1b22d4fff5795bffffbd3cc0df78d0db5fe202f3b68c2f0666d41"
+    },
+    "rpg_guardian_operations": {
+      "rows": 1,
+      "sha256": "724d87844b127dbcc6c8f999ca75cebd98b77ee6d172d76a733a633693ceb516"
+    },
+    "rpg_guardian_sigils": {
+      "rows": 4,
+      "sha256": "f6188c1e1a1bb21a6fc6a1bf5602e03484c7d74184ffadee1ece25aba5569c8e"
+    },
+    "rpg_guardian_voucher_grants": {
+      "rows": 1,
+      "sha256": "bc7d1e244516b00f9e378abc0268a362171e1b419033475c9bb88e01279b2b3a"
+    },
+    "rpg_guardian_welcome": {
+      "rows": 1,
+      "sha256": "f8e52b5e7d38c69239a31be18d6a17340e115c3fbd28b033ae03d16373ca0341"
+    },
+    "rpg_idle_reports": {
+      "rows": 1,
+      "sha256": "b9e956dd82bdb8c82cf83ca2b6016f29e576ba7e3866214cf0aa313617a6df68"
+    },
+    "rpg_inventory": {
+      "rows": 8,
+      "sha256": "e6d3f74902c8697dbadbe3d27fd43b82c1e4977f11cf934b4b4bbd3da1a7a0d6"
+    },
+    "rpg_journal_cards": {
+      "rows": 1,
+      "sha256": "9cdeb72378e9f6200e6d2453e1375050bd249259874ea2ae39cba147eb2f0dcf"
+    },
+    "rpg_journals": {
+      "rows": 1,
+      "sha256": "c208a632b47b80f2a5dbef457265137eb4a36a9b527edf109c99e6b7a9ec9727"
+    },
+    "rpg_ledger": {
+      "rows": 2,
+      "sha256": "aec180910467e75a4f4b906e21bc313a935dae489df44a5476ab37a8a86d8895"
+    },
+    "rpg_notice_dismissals": {
+      "rows": 1,
+      "sha256": "10329d7b60c8a251fbbec5a1772dde0590b609901901feeaef497adafdeec749"
+    },
+    "rpg_outbox": {
+      "rows": 1,
+      "sha256": "00d9434c1f7cdce5e1d35fb6da098bef81cffea2d3a5acc2932e1c52af6f348c"
+    },
+    "rpg_parties": {
+      "rows": 1,
+      "sha256": "a43018d9fe19a0717a21e5c8edadbd131fb3009317992b9a9b992575e2c18fcd"
+    },
+    "rpg_party_members": {
+      "rows": 1,
+      "sha256": "70891c93fa6d577adb08a26b44799ba9a52ed3edf6298f29a6ae9847a0c0c1bc"
+    },
+    "rpg_party_operations": {
+      "rows": 1,
+      "sha256": "5806dfde6e4411c246b708b004d2a40e51b68db987aaad2ed088e608534a5dbc"
+    },
+    "rpg_party_presence": {
+      "rows": 1,
+      "sha256": "6ee56241623d1678120718a22c255ddec07b9c363c0159cc7e73aae7baab54ae"
+    },
+    "rpg_party_rewards": {
+      "rows": 1,
+      "sha256": "33fdad55f56bfeac9e4c038ddfbbf3c0171b669d6dc9f92520212bb3ef634232"
+    },
+    "rpg_pk": {
+      "rows": 1,
+      "sha256": "79e9973e3ff5738c78f537a3530551a79c8d5754f245f4fea961841d7b4a97d6"
+    },
+    "rpg_share_likes": {
+      "rows": 1,
+      "sha256": "a457decc6c7e70fae6aab924b60703548e12ea9060b896fdf42d7067fd436740"
+    },
+    "rpg_shares": {
+      "rows": 1,
+      "sha256": "0dbbe755763809dad0488bf171fd9b01081057e0372bb32fe8156beeacd1ccca"
+    },
+    "rpg_trade_items": {
+      "rows": 1,
+      "sha256": "78653e0e63da1e3b2d517746b4b6416be4f8b3da67f82da4946967a089f8eff8"
+    },
+    "rpg_trade_log": {
+      "rows": 1,
+      "sha256": "021b30f77bf9e66dfb3529c7412a5ce67747c953d74b1883f8f29d9960481aeb"
+    },
+    "rpg_trade_operations": {
+      "rows": 1,
+      "sha256": "c909d4ff8582c8338dc39ec22c2fca45c29d2e334ba04bb0c027f9c112b9e45d"
+    },
+    "rpg_trade_requests": {
+      "rows": 1,
+      "sha256": "e220347c8dd537a593f369b4aedf757a587c34c2b5fc4b0675355a353f06b63b"
+    },
+    "rpg_trades": {
+      "rows": 1,
+      "sha256": "08d918e4ea56d8e21a823364c18661d1ca2093624bc514fa31907f1d20e1bb8f"
+    },
+    "sqlite_sequence": {
+      "rows": 7,
+      "sha256": "822317c5ad6857b2d83b16e9f826b1463e0a38a281dfe770958810b66a9b6794"
+    }
+  },
+  "officialSources": [
+    {
+      "url": "https://developers.cloudflare.com/d1/sql-api/foreign-keys/",
+      "supports": "Foreign keys remain enabled; temporary deferral is not disabling and does not solve cascade deletion."
+    },
+    {
+      "url": "https://developers.cloudflare.com/d1/sql-api/sql-statements/",
+      "supports": "defer_foreign_keys does not prevent ON DELETE CASCADE; sqlite_master and integrity/FK inspection pragmas."
+    },
+    {
+      "url": "https://developers.cloudflare.com/d1/worker-api/d1-database/",
+      "supports": "D1 batch statements are transactional; failure aborts or rolls back the sequence."
+    },
+    {
+      "url": "https://developers.cloudflare.com/workers/wrangler/commands/d1/",
+      "supports": "Failed individual migration rollback; do not infer that arbitrary split --file ingestion is equivalent."
+    },
+    {
+      "url": "https://www.sqlite.org/foreignkeys.html",
+      "supports": "DROP has implicit DELETE and can execute FK actions; renaming a parent rewrites children."
+    }
+  ],
+  "remainingGates": [
+    "Explicit authorization for the final reviewed destructive production migration",
+    "Fresh live sqlite_master/FK/column/index/trigger comparison and generation from that exact schema",
+    "Verified D1 recovery bookmark and external export; restore rehearsal",
+    "Quiesce all game/BOT/cron/DO writes without starting the historical long-poll BOT",
+    "Hosted disposable D1 full-copy rehearsal with data size, duration and storage headroom verification",
+    "One atomic execution method proved on hosted D1; no split/line-by-line application",
+    "Release remains closed until 62 character-art acceptance and all feature acceptance complete"
+  ],
+  "sqliteMemory": {
+    "passed": true,
+    "businessTables": 41,
+    "allRowBytesTypesRowidsAndSequencePreserved": true,
+    "foreignKeyCheck": [],
+    "integrityCheck": "ok"
+  },
+  "localRuntime": {
+    "miniflareVersion": "5.20261006.0-alpha",
+    "wranglerVersion": "4.148.0",
+    "type": "local Cloudflare simulator, not hosted D1"
+  },
+  "localD1": {
+    "error": "MiniflareCoreError [ERR_RUNTIME_FAILURE]: The Workers runtime failed to start. There was likely a problem with the workerd binary or your configuration.\nRuntime stderr:\n*** Received structured exception #0xc0000005: access violation; stack: 7ffd962c307f 7ff71d613e5d 7ff71d613f23 7ff71d5f675c 7ff71d5f6710 7ff71c8ecc05 7ff71c8ed397 7ff71b26398a 7ff71ca98783 7ff71ca9835b 7ff71b261845 7ff71ca46091 7ff71c7cab40 7ff71c7ce63c 7ff71b261005 7ff71caa281f 7ff71b26105b 7ff71eb94d4e 7ffdc01bdda6 7ffdc0f5ee4b\n\nthread 'main' (38380) has overflowed its stack\n    at StartupLogBuffer.handleStartupFailure (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:107378:13)\n    at Runtime.updateConfig (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:107458:24)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async #assembleAndUpdateConfig (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:124958:30)\n    at async C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:123670:7\n    at async Mutex.runWith (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:70213:16)\n    at async #waitForReady (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:125086:5)\n    at async _Miniflare._getProxyClient (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:125424:5)\n    at async #getProxy (C:\\Users\\User\\Documents\\ChatGPT\\star-journal-rpg\\node_modules\\miniflare\\dist\\src\\index.js:125486:25)\n    at async file:///C:/Users/User/Documents/ChatGPT/star-journal-thief/worker/scripts/rehearse-thief-schema.mjs:75:14",
+    "disposeError": "The Workers runtime failed to start. There was likely a problem with the workerd binary or your configuration.\nRuntime stderr:\n*** Received structured exception #0xc0000005: access violation; stack: 7ffd962c307f 7ff71d613e5d 7ff71d613f23 7ff71d5f675c 7ff71d5f6710 7ff71c8ecc05 7ff71c8ed397 7ff71b26398a 7ff71ca98783 7ff71ca9835b 7ff71b261845 7ff71ca46091 7ff71c7cab40 7ff71c7ce63c 7ff71b261005 7ff71caa281f 7ff71b26105b 7ff71eb94d4e 7ffdc01bdda6 7ffdc0f5ee4b\n\nthread 'main' (38380) has overflowed its stack"
+  }
+}

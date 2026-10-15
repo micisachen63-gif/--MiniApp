@@ -1,7 +1,7 @@
 // Equipment affixes are independent of item rarity and legacy relic bonuses.
 import { GameError } from './classes.js';
 export const AFFIXES = Object.freeze({
- meleePct:{name:'近戰傷害',classes:['sword'],range:[.008,.035]},
+ meleePct:{name:'近戰傷害',classes:['sword','thief'],range:[.008,.035]},
  rangedPct:{name:'遠程傷害',classes:['archer'],range:[.008,.035]},
  magicPct:{name:'魔法傷害',classes:['mage'],range:[.008,.035]},
  critPct:{name:'爆擊機率',range:[.004,.018]},
@@ -12,13 +12,14 @@ export const AFFIXES = Object.freeze({
  skillHastePct:{name:'特殊技能冷卻縮減',range:[.004,.018]},
  healingPct:{name:'治療強度',range:[.008,.035]},
  shieldPct:{name:'護盾強度',range:[.008,.035]},
- dotPct:{name:'持續／陷阱傷害',classes:['archer','mage'],range:[.008,.035]},
+ dotPct:{name:'持續／陷阱傷害',classes:['archer','mage','thief'],range:[.008,.035]},
  summonPct:{name:'召喚傷害',classes:['archer','mage'],range:[.008,.035]},
- lifestealPct:{name:'攻擊吸血',classes:['sword','archer'],range:[.002,.01]},
+ lifestealPct:{name:'攻擊吸血',classes:['sword','archer','thief'],range:[.002,.01]},
  elemPct:{name:'元素威力',classes:['mage'],range:[.005,.022]},
  expPct:{name:'討伐經驗',range:[.005,.022]},
 });
 export const BRANCH_AFFIXES=Object.freeze({
+ thief:{A1:['meleePct','critPct','skillHastePct'],A2:['meleePct','dotPct','mpEfficiencyPct'],B1:['meleePct','critPct','mpEfficiencyPct'],B2:['meleePct','mitigationPct','skillHastePct']},
  sword:{A1:['meleePct','lifestealPct','maxHpPct'],A2:['meleePct','critPct','skillHastePct'],B1:['healingPct','shieldPct','maxMpPct'],B2:['mitigationPct','maxHpPct','shieldPct']},
  archer:{A1:['rangedPct','critPct','skillHastePct'],A2:['rangedPct','mpEfficiencyPct','mitigationPct'],B1:['summonPct','rangedPct','maxMpPct'],B2:['dotPct','rangedPct','mpEfficiencyPct']},
  mage:{A1:['magicPct','elemPct','maxMpPct'],A2:['magicPct','mitigationPct','skillHastePct'],B1:['skillHastePct','mpEfficiencyPct','magicPct'],B2:['summonPct','shieldPct','maxMpPct']},

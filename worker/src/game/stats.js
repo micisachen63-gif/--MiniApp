@@ -1,6 +1,7 @@
 import {collectionBlessing} from './collection-blessings.js';
 import {resistanceRate} from './elements.js';
 import {MAGE_FOURTH,renamedPassive} from './mage-fourth.js';
+import { THIEF_NODES } from './thief-data.js';
 import {affixTotals} from './affixes.js';
 // Derived character stats (pure). Equipment rows use the D1 rpg_equipment shape.
 import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
@@ -11,11 +12,16 @@ export const classTier = (path) => String(path || '').length;
 export function nodeFor(baseClass, path) {
   const cls = CLASSES[baseClass]; if (!cls) throw new Error(`unknown class ${baseClass}`);
   const p = String(path || '');
+  if (baseClass === 'thief' && !Object.hasOwn(THIEF_NODES, p)) throw new Error(`unknown branch ${p}`);
   if (!p) return { tier: 0, path: '', name: cls.node.name, skill: cls.node.skill, passive: {}, passiveText: cls.node.passive.text };
   const b = cls.branches[p[0]]; if (!b) throw new Error(`unknown branch ${p}`);
   if (p.length === 1) return { tier: 1, path: p[0], name: b.name, skill: b.skill, passive: b.passive, passiveText: b.passive.text, weapon: b.weapon };
   const n = BRANCHES2[baseClass]?.[p[0]]?.[p[1]]; if (!n) throw new Error(`unknown branch ${p}`);
   const passive = { ...b.passive }; for (const [k, v] of Object.entries(n.passive)) if (k !== 'text') passive[k] = (passive[k] || 0) + v;   // tier-2 stacks on tier-1
+  if (baseClass === 'thief') {
+    const thief = THIEF_NODES[p];
+    return { tier: p.length, path: p, name: thief.name, skill: thief.skill, passive, passiveText: `${thief.passive.text}；${b.passive.text}`, weapon: b.weapon, parent: b.name };
+  }
   const fourth=baseClass==='mage'?MAGE_FOURTH[p]:null;
   return { tier: p.length, path: p, name: fourth?.name || n.name + (p.length>=3?' · 英雄傳承':'') + (p.length>=4?' · 神域覺醒':''), skill: fourth?{...n.skill,name:fourth.skillName}:n.skill, passive, passiveText: `${fourth?renamedPassive(n.passive.text,fourth.passiveName):n.passive.text}；${b.passive.text}`, weapon: b.weapon, parent: b.name };
 }
@@ -73,16 +79,21 @@ export function computeStats(char, equipped = [], level = char.level) {
   for(const k of ['meleePct','rangedPct','magicPct','healingPct','shieldPct','dotPct','summonPct'])pct[k]=Math.min(.45,pct[k]);
   pct.mitigationPct=Math.min(.25,pct.mitigationPct);pct.mpEfficiencyPct=Math.min(.3,pct.mpEfficiencyPct);pct.skillHastePct=Math.min(.25,pct.skillHastePct);pct.lifestealPct=Math.min(.2,pct.lifestealPct);pct.critPct=Math.min(.75,pct.critPct);
   pct.maxHpPct=Math.min(1,pct.maxHpPct);pct.maxMpPct=Math.min(1,pct.maxMpPct);pct.expPct=Math.min(.5,pct.expPct);pct.healPerCastPct*=1+pct.healingPct;
-  pct.atkPct+=pct[{sword:'meleePct',archer:'rangedPct',mage:'magicPct'}[char.base_class]]||0;
-  const atk = Math.round((cls.atk[0] + cls.atk[1] * L + weaponAtk + flat.atk) * (1 + pct.atkPct));
+  const attackPctKey = {sword:'meleePct',thief:'meleePct',archer:'rangedPct',mage:'magicPct'}[char.base_class];
+  pct.atkPct+=pct[attackPctKey]||0;
+  const attackSpeedMultiplier = cls.attackSpeedMultiplier ?? 1;
+  const hitAttackMultiplier = cls.hitAttackMultiplier ?? 1;
+  // Scale the whole per-strike attack, including upgraded gear, rather than only the starting class ATK.
+  const atk = Math.round((cls.atk[0] + cls.atk[1] * L + weaponAtk + flat.atk) * (1 + pct.atkPct) * hitAttackMultiplier);
+  weaponElem = Math.round(weaponElem * hitAttackMultiplier);
   const def = Math.round((cls.def[0] + cls.def[1] * L + armorDef + flat.def + weaponAtk * defFromWeapon)*(1+pct.defPct));
   const maxHp = Math.round((cls.hp[0] + cls.hp[1] * L + flat.hp) * (1 + pct.maxHpPct));
   const maxMp = Math.round((cls.mp[0] + cls.mp[1] * L + flat.mp) * (1 + pct.maxMpPct));
   const taken = Math.max(0.2, cls.taken * (1 + pct.takenPct)*(1-pct.mitigationPct));
   const skill = { ...node.skill, cost: Math.max(1, Math.round(node.skill.cost * (1 + pct.mpCostPct)*(1-pct.mpEfficiencyPct))), targets: node.skill.targets + (node.skill.targets > 1 ? pct.extraTargets : 0) };
   const path=String(char.class_path||'').slice(0,2);if(char.base_class==='archer'&&path==='B1'||char.base_class==='mage'&&path==='B2')skill.mult*=1+pct.summonPct;if(char.base_class==='archer'&&path==='B2')skill.mult*=1+pct.dotPct;
-  const power = Math.round(atk * skill.mult + def * 1.5 + maxHp / 10 + maxMp / 20);
-  return { level: L, atk, def, maxHp, maxMp, taken, skill, power, element, weaponElem, elementResist, elementResistance:Object.fromEntries(Object.keys(elementResist).map(k=>[k,resistanceRate({level:L,elementResist},k)])), node, pct, collectionBlessing:blessing };
+  const power = Math.round(atk * skill.mult * attackSpeedMultiplier + def * 1.5 + maxHp / 10 + maxMp / 20);
+  return { level: L, atk, def, maxHp, maxMp, taken, attackSpeedMultiplier, hitAttackMultiplier, skill, power, element, weaponElem, elementResist, elementResistance:Object.fromEntries(Object.keys(elementResist).map(k=>[k,resistanceRate({level:L,elementResist},k)])), node, pct, collectionBlessing:blessing };
 }
 
 /** a "standard" character of the same class/path: map-tier general weapon + the full v0.4 set (6 armor slots, 2 earrings,
@@ -126,7 +137,10 @@ export function idleStats(char, equipped, level = char.level) {
   // target count double both their gold and experience versus single-target paths.
   const targets = clamp(s.skill.targets, 1, 5);
   const expFactor = (1 + 0.03 * (targets - 1)) * (1 + s.pct.expPct);
-  const killsPerTick = 2 * (1 + 0.15 * (targets - 1));
+  // Idle uses a normalized damage budget, not absolute ATK. Count the extra actual strikes while
+  // preserving their reduced per-strike potency; multiplying only speed would inflate drops by 80%.
+  const idleNativeDamageMultiplier = s.attackSpeedMultiplier * s.hitAttackMultiplier;
+  const killsPerTick = 2 * (1 + 0.15 * (targets - 1)) * idleNativeDamageMultiplier;
   const map = MAPS[mapForLevel(level)];
-  return { ...s, std: std.power, r, g, dr, hpLoss, mpRegen, burst, expFactor, killsPerTick, map };
+  return { ...s, std: std.power, r, g, dr, hpLoss, mpRegen, burst, expFactor, killsPerTick, idleNativeDamageMultiplier, map };
 }

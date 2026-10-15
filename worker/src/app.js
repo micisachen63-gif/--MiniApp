@@ -5,7 +5,8 @@ import {MONSTER_ART_REVISION,monsterArtCompatibility} from './game/monster-art-c
 // The player id ALWAYS comes from the verified initData, never from the request body.
 import { verifyInitData } from './auth.js';
 import { GameError } from './game/classes.js';
-import { CLASSES, MAPS, ITEMS, BOSS, SLOT_NAMES, WEAPON_KINDS, SLOT_CAPACITY, TRADE, PK, SHARE, UNBIND } from './game/constants.js';
+import { CLASSES, CLASS_KEYS, MAPS, ITEMS, BOSS, SLOT_NAMES, WEAPON_KINDS, SLOT_CAPACITY, TRADE, PK, SHARE, UNBIND } from './game/constants.js';
+import {THIEF_NODES,THIEF_RELEASE_READY,THIEF_CLASS} from './game/thief-data.js';
 import { attackWindow } from './game/boss.js';
 import { outboxStmt } from './db.js';
 import * as B from './services/boss.js';
@@ -64,14 +65,19 @@ export async function appAuth(request, env, realNow = Date.now()) {
 }
 
 export function metaView() {
-  const classes = Object.fromEntries(Object.entries(CLASSES).map(([k, c]) => [k, {
+  const thief = {releaseReady:THIEF_RELEASE_READY,guardianCategory:'melee',lineageNodes:Object.values(THIEF_NODES),
+    attackSpeedMultiplier:THIEF_CLASS.attackSpeedMultiplier,hitAttackMultiplier:THIEF_CLASS.hitAttackMultiplier,
+    traits:['極高攻速','脆皮'],speedModel:'deterministic-strikes-per-original-action'};
+  const classes = Object.fromEntries(Object.entries(CLASSES).filter(([key])=>CLASS_KEYS.includes(key)).map(([k, c]) => [k, {
     key: k, name: c.name, emoji: c.emoji, blurb: c.blurb, skill: c.node.skill, passive: c.node.passive.text,
-    growth: { hp: c.hp, mp: c.mp, atk: c.atk, def: c.def },
+    growth: { hp: c.hp, mp: c.mp, atk: c.atk, def: c.def }, releaseReady:c.releaseReady!==false,
+    attackSpeedMultiplier:c.attackSpeedMultiplier??1,hitAttackMultiplier:c.hitAttackMultiplier??1,
+    ...(k==='thief'?thief:{}),
     branches: Object.fromEntries(Object.entries(c.branches).map(([b, x]) => [b, { name: x.name, line: x.line, skill: x.skill, passive: x.passive.text, blurb: x.blurb, weapon: WEAPON_KINDS[x.weapon]?.type }])),
   }]));
   const maps = Object.fromEntries(Object.entries(MAPS).map(([k, m]) => [k, { id: m.id, name: m.name, emoji: m.emoji, min: m.min, max: m.max, monsters: monsterPool(m.id).map(x=>x.name), elite: m.elite, boss: m.boss.name }]));
   const items = Object.fromEntries(Object.entries(ITEMS).map(([k, i]) => [k, { name: i.name, emoji: i.emoji, kind: i.kind, desc: i.desc || null, tier: i.tier ?? null, heal: i.heal ?? null, price: i.price ?? null }]));
-  return { classes, maps, items, monsterArtRevision:MONSTER_ART_REVISION, monsterExpansion:{...monsterMeta(),revision:MONSTER_ART_REVISION}, slots: SLOT_NAMES, slotCapacity: SLOT_CAPACITY, bossSlots: BOSS.slotsTaipei, attackWindowMinutes: BOSS.attackWindowMs / 60000,
+  return { classes, thief, maps, items, monsterArtRevision:MONSTER_ART_REVISION, monsterExpansion:{...monsterMeta(),revision:MONSTER_ART_REVISION}, slots: SLOT_NAMES, slotCapacity: SLOT_CAPACITY, bossSlots: BOSS.slotsTaipei, attackWindowMinutes: BOSS.attackWindowMs / 60000,
     trade: { taxPct: TRADE.taxPct, maxGold: TRADE.maxGold, maxOpen: TRADE.maxOpenPerPlayer, idleMinutes: TRADE.idleMs / 60e3, requestHours: TRADE.requestTtlMs / 3600e3, tradeableItems: TRADE.tradeableItems },
     share: { dailyCap: SHARE.dailyCap, cooldownSec: SHARE.cooldownMs / 1000 }, unbind: UNBIND,
     pk: { minLevel: PK.minLevel, maxLevelGap: PK.maxLevelGap, dailyCap: PK.dailyCap, pairCooldownHours: PK.pairCooldownMs / 3600e3, challengeMinutes: PK.challengeTtlMs / 60e3, dropPct: PK.dropChance } };

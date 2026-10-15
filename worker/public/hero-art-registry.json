@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "version": "20261014-art-8dbd6a05d7a3",
+  "version": "20261015-thief-pilot-f70c5f51aa3f",
   "heroes": {
     "sword_f": {
       "key": "sword_f",
@@ -52850,6 +52850,237 @@
         "source:hero-art-system/branches/mage/generated/fx/B222-skill-v2.png": "aae98f8c12e1ca10aac5a09a54660b3487d77efc7cf149579bb15a557e9ba13e"
       },
       "qa": "assets/adv4_mage_B222_m/qa.json"
+    },
+    "thief_f": {
+      "key": "thief_f",
+      "name": "盜賊・女",
+      "baseClass": "thief",
+      "classPath": "",
+      "gender": "f",
+      "hero": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "portrait": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "heroBounds": [
+        0.05078125,
+        0.01171875,
+        0.974609375,
+        0.9869791666666666
+      ],
+      "heroMeta": {
+        "fig": [
+          0.05078125,
+          0.01171875,
+          0.974609375,
+          0.9869791666666666
+        ]
+      },
+      "animation": {
+        "src": "art/thief-20261015/thief_f/character.webp?v=78c3f23d8dfb",
+        "png": "art/thief-20261015/thief_f/character.png?v=79a557cb7558",
+        "cols": 4,
+        "rows": 3,
+        "firstFrame": 0,
+        "totalFrames": 12,
+        "frames": 12,
+        "cellWidth": 640,
+        "cellHeight": 640,
+        "durationMs": 1000,
+        "durationsMs": [
+          100,
+          70,
+          70,
+          65,
+          65,
+          70,
+          90,
+          80,
+          80,
+          90,
+          110,
+          110
+        ],
+        "frameBounds": [
+          0.159375,
+          0.1890625,
+          0.8796875,
+          0.9375
+        ],
+        "frameBoundsPerFrame": [
+          [
+            0.253125,
+            0.225,
+            0.7484375,
+            0.9375
+          ],
+          [
+            0.234375,
+            0.2765625,
+            0.7921875,
+            0.9375
+          ],
+          [
+            0.2921875,
+            0.25625,
+            0.75,
+            0.9375
+          ],
+          [
+            0.234375,
+            0.29375,
+            0.7890625,
+            0.9375
+          ],
+          [
+            0.18125,
+            0.2890625,
+            0.8796875,
+            0.9375
+          ],
+          [
+            0.2265625,
+            0.3015625,
+            0.7625,
+            0.9375
+          ],
+          [
+            0.16875,
+            0.19375,
+            0.79375,
+            0.9375
+          ],
+          [
+            0.159375,
+            0.1890625,
+            0.840625,
+            0.9375
+          ],
+          [
+            0.3265625,
+            0.215625,
+            0.7359375,
+            0.9375
+          ],
+          [
+            0.23125,
+            0.1890625,
+            0.7515625,
+            0.9375
+          ],
+          [
+            0.234375,
+            0.209375,
+            0.7625,
+            0.9375
+          ],
+          [
+            0.190625,
+            0.1921875,
+            0.775,
+            0.9375
+          ]
+        ],
+        "frameFig": [
+          0.253125,
+          0.225,
+          0.7484375,
+          0.9375
+        ],
+        "bodyBounds": [
+          0.253125,
+          0.225,
+          0.7484375,
+          0.9375
+        ],
+        "footBaseline": 600,
+        "neutralBodyBoundsPx": [
+          162,
+          144,
+          479,
+          600
+        ],
+        "heightScale": 1.3687865497076022,
+        "useAsIdle": false,
+        "releaseFrameIndex": 6,
+        "releaseAtMs": 440,
+        "castAnchorsPx": [
+          [
+            438,
+            396
+          ],
+          [
+            454,
+            412
+          ],
+          [
+            432,
+            359
+          ],
+          [
+            423,
+            268
+          ],
+          [
+            468,
+            277
+          ],
+          [
+            404,
+            318
+          ],
+          [
+            286,
+            248
+          ],
+          [
+            180,
+            269
+          ],
+          [
+            357,
+            285
+          ],
+          [
+            378,
+            244
+          ],
+          [
+            367,
+            268
+          ],
+          [
+            448,
+            391
+          ]
+        ],
+        "castAnchorRole": "active-dagger-hand",
+        "castAnchorMethod": "Manual native hand coordinates, translated without resampling; verify impact in runtime pilot.",
+        "nativePixelsPreserved": true,
+        "authoredEffects": true,
+        "preservePlacement": true
+      },
+      "normalFx": {
+        "renderer": "thief-native-canvas",
+        "kind": "dagger",
+        "durationMs": 360
+      },
+      "skillFx": {
+        "renderer": "thief-native-canvas",
+        "kind": "cross",
+        "durationMs": 560
+      },
+      "guardianCategory": "melee",
+      "status": "pilot-native-packed",
+      "visualAccepted": false,
+      "actualEventVerified": false,
+      "provenance": {
+        "generator": "built-in image_gen",
+        "nativePacking": "worker/scripts/pack-thief-pilot.py",
+        "sourceSHA256": {
+          "hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+          "attack-0-5.png": "1294e91a343fd75bd82be978f2ce1599a9b72cfe69c70ce5831b1c3e0d47c8ec",
+          "attack-6-11.png": "4d4533288a9fdb1729666e37de63823e07f04b79018f329bc3d8c8f69a4c6e11"
+        },
+        "packingEvidence": "docs/thief/pilot-native-pack.json"
+      }
     }
   }
 }

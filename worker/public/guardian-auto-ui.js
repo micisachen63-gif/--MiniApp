@@ -1,6 +1,6 @@
 (() => {
  const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
- const types={any:'能力不限',attack:'任一攻擊（含其他職業）',melee:'近攻（劍士專用）',ranged:'遠攻（妖精專用）',magic:'魔攻（法師專用）',loot:'掉寶（全職業通用）'};
+ const types={any:'能力不限',attack:'任一攻擊（含其他職業）',melee:'近攻（劍士／盜賊）',ranged:'遠攻（妖精專用）',magic:'魔攻（法師專用）',loot:'掉寶（全職業通用）'};
  const qualities=['品質不限','白以上','綠以上','藍以上','紫以上','紅以上','金'];
  const reasons={target:'祈願成真 · 已召喚到目標',budget:'達到金幣預算，已停止',resources:'資源不足，已停止',stopped:'已停止',missing:'角色資料改變，已停止',rules:'規則更新，已停止'};
  const counts=j=>(j?.counts||[]).slice(0,6).map((n,i)=>`${n}${['白','綠','藍','紫','紅','金'][i]}`).join(' · ');

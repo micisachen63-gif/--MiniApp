@@ -236,3 +236,7 @@ body .sheet-card h2.mh.tc-common,body.greek .sheet-card h2.mh.tc-common,body .sh
 .affix-list{display:grid;gap:10px;margin:14px 0}.affix-row{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--line,#8d7646);border-radius:10px;cursor:pointer}.affix-row input{width:20px;height:20px;flex:0 0 20px;accent-color:#d6b562}.affix-row span{min-width:0;overflow-wrap:anywhere}.affix-row small{display:block;opacity:.75;margin-top:5px;font-size:12px}
 .monster-recipes{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px;margin-top:12px}.monster-recipe{display:grid;grid-template-columns:1fr auto;gap:10px;padding:14px;border:1px solid #9f81574a;border-radius:12px;background:linear-gradient(145deg,#172332,#25232b)}.monster-recipe strong{color:#ffe2aa}.monster-ingredients{grid-column:1/-1;display:flex;flex-wrap:wrap;gap:6px}.monster-ingredients span{font-size:12px;color:#e2b4a5;padding:4px 7px;border-radius:6px;background:#0d131c}.monster-ingredients .enough{color:#a5e2b4}.monster-collection button[aria-pressed="true"]{outline:2px solid #efd49b;outline-offset:2px}.monster-collection p{line-height:1.7}.monster-collection button{min-height:38px}
 @media(max-width:420px){.monster-recipes{grid-template-columns:1fr}.monster-recipe{padding:12px}.monster-ingredients span{font-size:11px}}
+
+/* Four available classes retain readable cards on narrow phones. */
+.pick3.pick4{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media(min-width:560px){.pick3.pick4{grid-template-columns:repeat(4,minmax(0,1fr))}}

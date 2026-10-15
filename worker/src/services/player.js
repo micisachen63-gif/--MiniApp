@@ -1,6 +1,6 @@
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
-import { CLASSES, CLASS_KEYS, ITEMS, POTIONS, MAX_OPEN_MAP } from '../game/constants.js';
+import { CLASSES, CLASS_KEYS, GENERAL_WEAPON, ITEMS, POTIONS, MAX_OPEN_MAP } from '../game/constants.js';
 import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours } from '../game/idle.js';
 import { idleStats, computeStats } from '../game/stats.js';
 import { advance, reselect, GameError } from '../game/classes.js';
@@ -163,7 +163,7 @@ export async function createCharacter(env, { tgId, tgName = null, name, gender, 
   const char = { tg_id: tg, base_class: baseClass, class_path: '', level: 1 };
   const st = computeStats(char, []);
   const day = taipeiDay(now);
-  const weapon = makeGear({ id: shortId(), tgId: tg, cls: baseClass, slot: 'weapon', kind: { sword: 'sword', mage: 'staff', archer: 'longbow' }[baseClass], tier: 1, rng, now, source: 'starter', forceRarity: 'common' });
+  const weapon = makeGear({ id: shortId(), tgId: tg, cls: baseClass, slot: 'weapon', kind: GENERAL_WEAPON[baseClass], tier: 1, rng, now, source: 'starter', forceRarity: 'common' });
   const armor = makeGear({ id: shortId(), tgId: tg, cls: baseClass, slot: 'armor', kind: null, tier: 1, rng, now, source: 'starter', forceRarity: 'common' });
   weapon.is_equipped = 1; armor.is_equipped = 1;
   const full = computeStats(char, [weapon, armor]);

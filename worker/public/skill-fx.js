@@ -10,7 +10,7 @@
   '隕石術':['meteor','#ff8a4a'],'暴風雪':['blizzard','#abeaff'],'時間扭曲':['time','#b5a4ff'],'召喚火精靈':['summon','#ffae59']
  };
  const mageFourthAliases={"日冕焚界":"隕石術","熾天裁決":"隕石術","星核崩滅":"隕石術","隕日終審":"隕石術","永霜王域":"暴風雪","零界封絕":"暴風雪","極光聖降":"暴風雪","蒼穹冰葬":"暴風雪","時序崩解":"時間扭曲","命運斷章":"時間扭曲","虛空湮滅":"時間扭曲","次元裂隙":"時間扭曲","萬靈降臨":"召喚火精靈","星界御令":"召喚火精靈","深淵魔召":"召喚火精靈","冥界開門":"召喚火精靈"};
- function profile(name,cls='sword',path=''){const p=profiles[mageFourthAliases[name]||name]||profiles[cls==='mage'?'火球術':cls==='archer'?'二連射':'強力斬'];return {name,kind:p[0],color:p[1],power:Math.min(1.4,1+path.length*.1)}}
+ function profile(name,cls='sword',path=''){if(cls==='thief'&&window.RpgThiefFX)return window.RpgThiefFX.profile(name,path,{basic:!name});const p=profiles[mageFourthAliases[name]||name]||profiles[cls==='mage'?'火球術':cls==='archer'?'二連射':'強力斬'];return {name,kind:p[0],color:p[1],power:Math.min(1.4,1+path.length*.1)}}
  const TAU=Math.PI*2;
  function line(g,pts,color,width=2){g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke()}
  function ring(g,p,r,color,alpha=1){g.globalAlpha=alpha;g.strokeStyle=color;g.lineWidth=2;g.beginPath();g.arc(p.x,p.y,r,0,TAU);g.stroke()}
@@ -19,6 +19,7 @@
  function arrow(g,a,b,t,color){const p={x:a.x+(b.x-a.x)*t,y:a.y+(b.y-a.y)*t};g.save();g.translate(p.x,p.y);g.rotate(Math.atan2(b.y-a.y,b.x-a.x));line(g,[{x:-56,y:0},{x:12,y:0}],color,5);line(g,[{x:-32,y:0},{x:12,y:0}],'#fff',1.5);line(g,[{x:5,y:-5},{x:14,y:0},{x:5,y:5}],color,2);g.restore()}
  function bird(g,p,color,t){g.save();g.translate(p.x,p.y);g.scale(1.7,1.7);g.strokeStyle=color;g.fillStyle=color+'77';g.lineWidth=1.5;const wing=25+Math.sin(t*24)*9;g.beginPath();g.moveTo(18,0);g.lineTo(10,-4);g.quadraticCurveTo(-2,-15,-24,-wing);for(let i=0;i<5;i++){g.lineTo(-24+i*4,-wing+6+i*2);g.lineTo(-19+i*4,-wing+13+i*2)}g.lineTo(-9,-4);g.lineTo(-23,0);g.lineTo(-9,4);for(let i=4;i>=0;i--){g.lineTo(-19+i*4,wing-13-i*2);g.lineTo(-24+i*4,wing-6-i*2)}g.lineTo(-24,wing);g.quadraticCurveTo(-2,15,10,4);g.closePath();g.fill();g.stroke();glow(g,{x:6,y:0},5,color);g.restore()}
  function draw(g,k,from,to,p){
+  if(p.thief&&window.RpgThiefFX)return window.RpgThiefFX.draw(g,k,from,to,p);
   const C=p.color,pow=p.power||1,charge=Math.min(1,k/.22),travel=Math.max(0,Math.min(1,(k-.22)/.43)),impact=Math.max(0,(k-.65)/.35),alpha=k>.82?(1-k)/.18:1;
   g.save();g.globalCompositeOperation='lighter';g.globalAlpha=alpha;g.shadowColor=C;g.shadowBlur=9;
   if(k<.28){rune(g,from,12+charge*19,C,k*2);glow(g,from,12+charge*15,C)}

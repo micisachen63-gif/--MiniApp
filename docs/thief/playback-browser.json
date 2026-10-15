@@ -1,0 +1,158 @@
+{
+  "elapsed": 1352.5,
+  "receipts": [
+    {
+      "key": "thief_f",
+      "kind": "skill",
+      "duration": 260,
+      "completed": true,
+      "sourceFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "strikeIndex": 0,
+      "strikeCount": 2
+    },
+    {
+      "key": "thief_f",
+      "kind": "skill",
+      "duration": 260,
+      "completed": true,
+      "sourceFrames": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "strikeIndex": 1,
+      "strikeCount": 2
+    }
+  ],
+  "canvasCount": 0,
+  "replayStarts": 0,
+  "fallback": 1,
+  "cursor": "thief-fixture:1",
+  "cancelledCanvasCount": 0,
+  "actorVisibility": "",
+  "hpLabel": "假回合目標 · HP 800／1000（80%）",
+  "finalHp": 800,
+  "frames": {
+    "normal": [],
+    "skill": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11
+    ]
+  },
+  "fixture": "isolated mock server turn; actual production registry, native atlas, Canvas playback modules; no player/API writes",
+  "mainBattle": {
+    "trace": [
+      {
+        "frame": 0,
+        "at": 3113.699999988079
+      },
+      {
+        "frame": 1,
+        "at": 3180.699999988079
+      },
+      {
+        "frame": 2,
+        "at": 3213.7999999970198
+      },
+      {
+        "frame": 3,
+        "at": 3247.0999999940395
+      },
+      {
+        "frame": 4,
+        "at": 3297.0999999940395
+      },
+      {
+        "frame": 5,
+        "at": 3330.3999999910593
+      },
+      {
+        "frame": 6,
+        "at": 3364.0999999940395
+      },
+      {
+        "frame": 7,
+        "at": 3413.7999999970198
+      },
+      {
+        "frame": 8,
+        "at": 3463.5999999940395
+      },
+      {
+        "frame": 9,
+        "at": 3497
+      },
+      {
+        "frame": 10,
+        "at": 3547.0999999940395
+      },
+      {
+        "frame": 11,
+        "at": 3613.7999999970198
+      },
+      {
+        "frame": 0,
+        "at": 3680.5
+      }
+    ],
+    "impacts": [
+      {
+        "at": 3378.7999999970198,
+        "frame": 6,
+        "hit": {
+          "id": "native-target",
+          "hp": 800,
+          "maxHp": 1000,
+          "damage": 200
+        }
+      }
+    ],
+    "geometry": {
+      "stageHeight": 591.875,
+      "maxSampledStageHeight": 591.875,
+      "heroHeight": 170,
+      "monsterCount": 2
+    },
+    "actionDuration": 555.5555555555555,
+    "expectedDuration": 555.5555555555555,
+    "sourceDuration": 1000,
+    "releaseAtMs": 440,
+    "finalHp": 800,
+    "completedRound": "idle-thief-fixture"
+  },
+  "pageErrors": [],
+  "status": "PASS",
+  "cycleScope": "complete time-scaled native 0..11 sequences; requestAnimationFrame samples may skip poses under frame pressure, no source cells or recovery removed"
+}

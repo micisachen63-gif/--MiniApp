@@ -1,4 +1,4 @@
-import {combatActor,autoPartyAction,validateCast,castSpecial,saveSpecial,periodic,damageEnemy,receiveDamage,valueOf} from './special.js';
+import {combatActor,performThiefNativeStrikes,autoPartyAction,validateCast,castSpecial,saveSpecial,periodic,damageEnemy,receiveDamage,valueOf} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 import {monsterPool} from './monsters.js';
 import {guardianDamageMultiplier,guardianLootMultiplier} from './guardian-effects.js';
@@ -84,7 +84,7 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
   const drink=k=>{inv[k]-=1;used[k]=(used[k]||0)+1;};
   const a=combatActor(c,s),x=a.special,old=x.bossCombat;
   const encounterId=String(boss.id||`map:${boss.map_id}`);
-  if(old?.id===encounterId){a.buffs=old.buffs||[];a.summon=old.summon;}
+  if(old?.id===encounterId){a.buffs=old.buffs||[];a.summon=old.summon;a.thiefAttackCarry=old.thiefAttackCarry||0;}
   const enemy={hp:boss.hp??boss.max_hp,maxHp:boss.max_hp,def:0,element:boss.element,level:boss.map_id*10,
     elementResist:bossResistance(boss.map_id*10,boss.element),buffs:old?.id===encounterId?old.enemy?.buffs||[]:[],
     dots:old?.id===encounterId?old.enemy?.dots||[]:[],windup:true,interruptible:!boss.uninterruptible,
@@ -104,22 +104,29 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
     }else{
       if(a.mp<s.skill.cost&&c.auto_blue){let key;while(a.mp<s.skill.cost&&(key=choosePotion(inv,'blue',mapTier))){drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}}
       const cast=a.mp>=s.skill.cost,spentMp=cast?spendMana(a,s.skill.cost,rng):0;
+      if(a.base==='thief'){
+        outcome=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35),rng,variance:true,actionId:`${now}:${i}`});
+        if(!cast)basics+=outcome.strikes.length;outcome.spentMp=spentMp;outcome.healed=restoreOnAction(a,outcome.damage,{cast,enabled:enemy.hp>0}).healed;
+      }else{
       if(!cast)basics++;
       let raw=a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35);
       raw*=(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));
       const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;raw*=.9+rng()*.2;
       const damage=damageEnemy(enemy,raw,{},now,a),sustain=restoreOnAction(a,damage,{cast,enabled:enemy.hp>0});
-      outcome={damage,crit,spentMp,healed:sustain.healed};label=cast?s.skill.name:'普通攻擊';
+      outcome={damage,crit,spentMp,healed:sustain.healed};
       for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
+      }
+      label=cast?s.skill.name:'普通攻擊';
     }
-    if(outcome.crit)crits++;actions.push({skillId:action.skillId,label,...outcome,before,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
+    if(outcome.strikes)crits+=outcome.strikes.filter(s=>s.crit).length;else if(outcome.crit)crits++;actions.push({skillId:action.skillId,label,...outcome,before,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   }
   const r=Math.min(2,Math.max(.3,s.r??1));
   const counter=enemy.hp>0&&!enemy.interrupted?receiveDamage(a,BOSS.counterHpPct*s.maxHp/r*(1-valueOf(enemy,'enemyNextReduce',now)),[a],enemy,now,{defApplied:true}):0;
+  if(a.base==='thief')for(const b of enemy.buffs)if(b.type==='enemyNextReduce'&&b.uses>0)b.uses--;
   {let key;while(a.hp<(c.auto_red_pct/100)*s.maxHp&&(key=choosePotion(inv,'red',mapTier))){drink(key);a.hp=Math.min(s.maxHp,a.hp+POTIONS[key].heal);}}
   const downed=a.hp<=0;if(downed){a.hp=1;c.boss_down_until=now+BOSS.downMs;}
   a.atk=originalAtk;c.hp=a.hp;c.mp=a.mp;
-  x.bossCombat={id:encounterId,buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon,enemy:{buffs:enemy.buffs,dots:enemy.dots}};saveSpecial(c,x);
+  x.bossCombat={id:encounterId,...(a.base==='thief'?{thiefAttackCarry:a.thiefAttackCarry||0}:{}),buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon,enemy:{buffs:enemy.buffs,dots:enemy.dots}};saveSpecial(c,x);
   return {damage:beforeHp-enemy.hp,crits,basics,counter,used,downed,helper,elementMult:elementMultiplier(s.element,boss.element),actions,interrupted:!!enemy.interrupted};
 }
 

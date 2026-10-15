@@ -5,7 +5,7 @@ import {dungeonTheme} from './dungeon-art.js?v=20261012-tower-roster1';
 import {catalogue as data} from './catalogue.js';
 import '../request-client.js?v=20261012-client-audit1';
 const skills=data.skills,$=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-const byId=id=>state?.skills?.find(s=>s.id===id)||skills.find(s=>s.id===id),icon=s=>`assets/skills-painted-20261011/${s.id}.webp`,base=s=>({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
+const byId=id=>state?.skills?.find(s=>s.id===id)||skills.find(s=>s.id===id),icon=s=>`assets/skills-painted-20261011/${s.id}.webp`,base=s=>s.eligibleBase||({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
 const hero=heroArt;
 let guardianPartyCleanup=null;let state=null,party=null,groupActive=null,drops=[],listing=[],dungeons=[],history=[],tab='skills',busy=false,filter='all',scope='own',search='',pinned=null,clockSkew=0;
 const initial=location.hash.slice(1);if(['skills','dungeons','tower','bag','rewards'].includes(initial))tab=initial;

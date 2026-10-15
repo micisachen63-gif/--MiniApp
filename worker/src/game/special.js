@@ -1,3 +1,4 @@
+import {THIEF_MECHANICS,addThiefPoison,armThiefCounter,triggerThiefCounter,nextThiefStrikeCount,thiefPrimaryMechanics,applyThiefPrimary} from './thief-skills.js';
 import {elementalDamage} from './elements.js';
 import {guardianDamageMultiplier} from './guardian-effects.js';
 import { SPECIAL_SKILLS } from './special-data.js';
@@ -7,23 +8,25 @@ export { SPECIAL_SKILLS };
 export const SKILL_MAP = Object.fromEntries(SPECIAL_SKILLS.map(s => [s.id,s]));
 const first = ['狂戰士','騎士','遊俠','德魯伊','元素法師','秘術師'];
 const second = ['血怒戰神','劍聖','聖騎士','鐵壁守衛','逐風神射','蒼穹風舞','森靈馭獸','月影獵使','大魔導士','冰霜術士','時空術士','召喚師'];
-export const baseOf = s => ({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
+export const baseOf = s => s.eligibleBase||({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
 export function eligible(c,s) {
  if(!s || c.base_class!==baseOf(s) || c.level<s.level || String(c.class_path||'').length<s.advancementTier)return false;
  const p=String(c.class_path||'');
+ if(s.eligiblePaths)return s.eligiblePaths.some(path=>p.startsWith(path));
  if(s.advancementTier===1)return (Number(s.id.split("_")[1])-1)%2===(p[0]==='A'?0:1);
  if(s.advancementTier===2)return (Number(s.id.split("_")[1])-7)%4===(['A1','A2','B1','B2'].indexOf(p.slice(0,2)));
  return true;
 }
 export function specialState(c){let x;try{x=JSON.parse(c.special_json||'{}')}catch{x={}}return {learned:[],loadout:[],auto:{},cooldowns:{},mode:'safe',budget:0,towerBest:0,...x};}
 export const saveSpecial=(c,x)=>{c.special_json=JSON.stringify(x);};
-export function validateCast(c,x,id,now,{equipped=true}={}){
- const base=SKILL_MAP[id];const s=base?specialCost(base,combatPct(c)):base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
+export function validateCast(c,x,id,now,{equipped=true,catalog=SKILL_MAP}={}){
+ const base=catalog[id];const s=base?specialCost(base,combatPct(c)):base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
  if((x.cooldowns[id]||0)>now)throw new GameError('cooldown','技能仍在冷卻中');
  if(c.mp<s.mp)throw new GameError('mp','魔力不足');return s;
 }
 // Numerical definitions are explicit; combat never interprets translated prose.
 const mechanics = {
+ ...THIEF_MECHANICS,
  skill_01_1:{breakDef:.15},skill_01_2:{atkUp:.2,takenUp:.1},skill_01_3:{execute:.3,executeBonus:.25},
  skill_02_1:{interrupt:true},skill_02_2:{guard:.4,reduce:.15},skill_02_3:{shield:1.6,reflect:1.4},
  skill_03_1:{penetrate:.2},skill_03_2:{enemyNextReduce:.1,addsOnly:true},skill_03_3:{nextDamage:.2,nextReduce:.15,target:true},
@@ -58,6 +61,21 @@ export function damageEnemy(enemy,raw,m,now,actor=null){
  let shield=enemy.shield||0;if(shield){const absorbed=Math.min(shield,amount*(1+(m.shieldBonus||0)));enemy.shield-=absorbed;amount=Math.max(0,amount-absorbed/(1+(m.shieldBonus||0)));}
  const dealt=Math.min(enemy.hp,Math.round(amount),enemy.damageBudget??Infinity);enemy.hp-=dealt;if(enemy.damageBudget!=null)enemy.damageBudget-=dealt;return dealt;
 }
+// A native action pays mana once in its adapter, then resolves genuinely independent strikes.
+// Special books do not call this scheduler. No extra polling, SQL, rewards or player requests.
+export function performThiefNativeStrikes(actor,enemy,now,{cast=true,baseRaw,rng=()=>.5,critMultiplier=1.5,variance=false,actionId=null}={}){
+ const count=nextThiefStrikeCount(actor),strikes=[];let damage=0;
+ for(let index=0;index<count&&actor.hp>0&&enemy.hp>0&&(enemy.damageBudget??Infinity)>0;index++){
+  const crit=rng()<Math.min(.8,(actor.crit||.05)+valueOf(actor,'critUp',now)),m=thiefPrimaryMechanics(actor,enemy,now,{cast});
+  let raw=baseRaw*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now))*(1-valueOf(actor,'enemyNextReduce',now));
+  if(crit)raw*=critMultiplier;if(variance)raw*=.9+rng()*.2;
+  const beforeHp=enemy.hp,dealt=damageEnemy(enemy,raw*m.damageMultiplier,m,now,actor);
+  damage+=dealt;strikes.push({index,crit,damage:dealt,beforeHp,afterHp:enemy.hp});
+  if(dealt)for(const type of ['nextDamage','critUp','enemyNextReduce'])consume(actor,type);
+ }
+ const statuses=applyThiefPrimary(actor,enemy,now,{cast,damage,actionId});
+ return {damage,crit:strikes.some(s=>s.crit),strikes,attackSpeedMultiplier:actor.attackSpeedMultiplier||1.8,...(statuses.length?{statuses}:{})};
+}
 export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={}){
  const m=mechanics[s.id];if(!m)throw new GameError('skill','技能未定義');
  let target=m.lowest?lowest(team):team.find(a=>a.id===targetId)||actor;
@@ -88,6 +106,8 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.shieldSlow)buff(target,'shieldSlow',m.shieldSlow,now);
  if(m.lastStand)buff(actor,'lastStand',1,now,60,1);
  if(m.leech)actor.hp=Math.min(actor.maxHp,actor.hp+Math.round(Math.min(damage*m.leech,actor.maxHp*m.leechCap)));
+ if(m.thiefPoison)addThiefPoison(actor,enemy,now);
+ if(m.thiefCounter)armThiefCounter(actor,now,m.thiefCounter);
  if(m.dot)enemy.dots=(enemy.dots||[]).concat({owner:actor.id,source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.dot*(1+(actor.affixPct?.dotPct||0)),left:m.dotCount,next:now+30000});
  if(m.summon)actor.summon={source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.summon*(1+(actor.affixPct?.summonPct||0)),left:m.summonCount,next:now+30000};
  return {damage,healed,shielded,targets:targets.map(a=>a.id),crit:damage>0&&crit};
@@ -100,7 +120,7 @@ export function receiveDamage(a,raw,team,enemy,now,{guarded=false,elementApplied
  if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
  const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now);consume(a,'reflect');damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
  const taken=Math.min(a.hp,Math.round(Math.max(0,amount)));a.hp-=taken;
- if(a.hp<=0&&valueOf(a,'lastStand',now)){a.hp=1;consume(a,'lastStand');}return taken;
+ if(a.hp<=0&&valueOf(a,'lastStand',now)){a.hp=1;consume(a,'lastStand');}triggerThiefCounter(a,taken,now);return taken;
 }
 // Executing a cast is atomic in the caller's player/party transaction.
 export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,context={}){
@@ -112,11 +132,12 @@ export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,conte
 export function combatActor(c,s,{id=c.tg_id,hp=c.hp??s.maxHp,mp=c.mp??s.maxMp}={}){
  return {id,name:c.name,base:c.base_class,path:c.class_path||'',level:c.level??s.level,guardian:c.guardian,
   collectionBlessing:s.collectionBlessing,maxHp:s.maxHp,maxMp:s.maxMp,hp:Math.min(s.maxHp,hp),mp:Math.min(s.maxMp,mp),
-  atk:s.atk,def:s.def,taken:s.taken,skill:{...s.skill},element:s.element,weaponElem:s.weaponElem,elementResist:s.elementResist,
+  atk:s.atk,def:s.def,taken:s.taken,attackSpeedMultiplier:s.attackSpeedMultiplier||1,skill:{...s.skill},element:s.element,weaponElem:s.weaponElem,elementResist:s.elementResist,
   crit:.05+(s.pct.critPct||0),affixPct:{...s.pct},special:structuredClone(specialState(c)),buffs:[],actions:0};
 }
 export function periodic(team,enemy,now,{sustain=true}={}){
- for(const d of enemy.dots||[])while(d.left>0&&d.next<=now){const damage=damageEnemy(enemy,d.damage,{},now,d.source),owner=team.find(a=>a.id===d.owner);if(sustain&&owner)restoreOnAction(owner,damage,{enabled:enemy.hp>0});d.left--;d.next+=30000;}
+ for(const d of enemy.dots||[])while(d.left>0&&d.next<=now&&(!d.until||d.next<=d.until)){const damage=damageEnemy(enemy,d.damage,{},now,d.source),owner=team.find(a=>a.id===d.owner);if(sustain&&owner)restoreOnAction(owner,damage,{enabled:enemy.hp>0});d.left--;d.next+=30000;}
+ enemy.dots=(enemy.dots||[]).filter(d=>d.kind!=='thiefPoison'||d.left>0&&d.until>now&&enemy.hp>0);
  for(const a of team){if(a.hp<=0)continue;const s=a.summon;while(s?.left>0&&s.next<=now){const damage=damageEnemy(enemy,s.damage,{},now,s.source);if(sustain)restoreOnAction(a,damage,{enabled:enemy.hp>0});s.left--;s.next+=30000;}}
 }
 

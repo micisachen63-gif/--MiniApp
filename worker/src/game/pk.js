@@ -1,4 +1,4 @@
-import {combatActor,autoPartyAction,validateCast,castSpecial,damageEnemy,periodic,valueOf} from './special.js';
+import {combatActor,performThiefNativeStrikes,autoPartyAction,validateCast,castSpecial,damageEnemy,periodic,valueOf} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 // v0.5 群組決鬥 (1v1 PK) rules + duel simulation (pure). Persistence lives in services/pk.js.
 import { PK } from './constants.js';
@@ -40,8 +40,8 @@ export function simulateDuel(sa, sb, rng, characters={}) {
     for(let k=0;k<2;k++){
       const x=F[turn],o=turn==='a'?'b':'a',y=F[o],before=snapshot(),now=rounds*30000;
       y.windup=(rounds+1)%3===0;y.interruptible=true;
-      periodic([x],y,now);
-      let crit=false,useSkill=false,skillId=null,label='普通攻擊',heal=0,spentMp=0;
+      periodic([x],y,now);const periodicDamage=before.hp[o]-y.hp;
+      let crit=false,useSkill=false,skillId=null,label='普通攻擊',heal=0,spentMp=0,statuses=[],strikes=[];
       if(y.hp>0&&!x.interrupted){
         const action=autoPartyAction(x,[x],y,now,{});
         if(action.skillId!=='attack'){
@@ -51,17 +51,22 @@ export function simulateDuel(sa, sb, rng, characters={}) {
         }else{
           useSkill=x.mp>=x.skill.cost;
           if(useSkill)spentMp=spendMana(x,x.skill.cost,rng);else x.mp=Math.min(x.maxMp,x.mp+Math.ceil(x.maxMp*.08)+1);
+          if(x.base==='thief'){
+            const native=performThiefNativeStrikes(x,y,now,{cast:useSkill,baseRaw:x.atk*(useSkill?x.skill.mult:.6),rng,critMultiplier:PK.critMult,variance:true,actionId:`${rounds}:${k}:${turn}`});
+            crit=native.crit;strikes=native.strikes;statuses=native.statuses||[];heal=restoreOnAction(x,native.damage,{cast:useSkill,enabled:y.hp>0}).heal;
+          }else{
           crit=rng()<Math.min(.8,x.crit+valueOf(x,'critUp',now));
           let raw=x.atk*(useSkill?x.skill.mult:.6)*(crit?PK.critMult:1)*(.9+rng()*.2);
           raw*=(1+valueOf(x,'atkUp',now))*(1+valueOf(x,'damageUp',now))*(1+valueOf(x,'nextDamage',now))*(1-valueOf(x,'enemyNextReduce',now));
           const damage=damageEnemy(y,raw,{},now,x);
           const restored=restoreOnAction(x,damage,{cast:useSkill,enabled:y.hp>0});heal=restored.heal;
           for(const b of x.buffs)if(['nextDamage','critUp','enemyNextReduce'].includes(b.type)&&b.uses>0)b.uses--;
+          }
           if(useSkill)label=x.skill.name||'職業技能';
         }
       }else if(x.interrupted){label='蓄力遭打斷';x.interrupted=false;}
       const after=snapshot(),dmg=Math.max(0,before.hp[o]-after.hp[o]);
-      log.push({by:turn,dmg,crit,skill:useSkill,skillId,label,spentMp,hp:y.hp,before,after,healed:Math.max(0,x.hp-before.hp[turn]),...(heal>0?{heal,self:x.hp}:{})});
+      log.push({by:turn,...(statuses.length?{statuses}:{}),...(x.base==='thief'?{periodicDamage,directDamage:Math.max(0,dmg-periodicDamage),strikes,attackSpeedMultiplier:x.attackSpeedMultiplier}:{}),dmg,crit,skill:useSkill,skillId,label,spentMp,hp:y.hp,before,after,healed:Math.max(0,x.hp-before.hp[turn]),...(heal>0?{heal,self:x.hp}:{})});
       if(y.hp<=0||x.hp<=0)return result(y.hp<=0?turn:o,true);
       turn=o;
     }

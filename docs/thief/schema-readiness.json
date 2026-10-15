@@ -1,0 +1,1854 @@
+{
+  "status": "design-only-not-applied",
+  "scope": "repository-migrations-in-memory-sqlite",
+  "liveDatabaseInspected": false,
+  "remoteQueries": 0,
+  "remoteWrites": 0,
+  "productionMigrationCreated": false,
+  "reviewSQLCandidateCreated": true,
+  "releaseReady": false,
+  "migrations": [
+    {
+      "file": "0001_init.sql",
+      "sha256": "5675ca6541e16db7a2ce9cae58b831e05d848bcbed1fa6b79f7413ebedcdcd36"
+    },
+    {
+      "file": "0002_app_access.sql",
+      "sha256": "ecce725390d9ce2f00220c0443e9e411925157a5f47dbaadf3e240e7d4ddfbe2"
+    },
+    {
+      "file": "0003_gear_v04_trade.sql",
+      "sha256": "2fd8d7eeb5876b49bd8e2de39649799f8cd4138bc62f4efe6d6a2438cd0d2c6f"
+    },
+    {
+      "file": "0004_v05_share_pk.sql",
+      "sha256": "c9302f03e93714e84e762ecfb05eba6c8905d60424d62deaaa004985f31dc365"
+    },
+    {
+      "file": "0005_allow_equipment_retrade.sql",
+      "sha256": "10d4ad813605e6a18f2d58ef77e0017d9fe252f6dea13c1c05a726c230c6018e"
+    },
+    {
+      "file": "0006_enhancement_share_kind.sql",
+      "sha256": "ad8b58bac46bdca8cac5ab281f0362d4ec99084de8da2554fd2e265cac9cbf0a"
+    },
+    {
+      "file": "0007_outbox_leases_and_trade_idempotency.sql",
+      "sha256": "d6d72549ff623f67af953a89c23066698606f210a3c89f52b587f4b0ead9f5a8"
+    },
+    {
+      "file": "0008_expand_gear_tiers_12.sql",
+      "sha256": "33dc27aeda301dd5a58461e8efc772ea8d522195eb699a26eb5376fdffb5d0a3"
+    },
+    {
+      "file": "0009_multi_character_accounts.sql",
+      "sha256": "fe9206ecc6a8edaab2f80d9fb8238576d9e0bf923ccfcf168c70b75fc7e5f63c"
+    },
+    {
+      "file": "0010_special_skills_parties.sql",
+      "sha256": "51cc6213921f0803ac2b4cecd8b4711b3642a2b206c9e960533f629cb0946243"
+    },
+    {
+      "file": "0011_equipment_affixes.sql",
+      "sha256": "c1c32b18bf30d4caeac228711e3ed612705e2461696b6792242069cf29cf1dd5"
+    },
+    {
+      "file": "0012_auto_enhance.sql",
+      "sha256": "0c5d31ed3f221564ccec386bcc3a59f48f328e921c35fdf061d0c37ac7a5b3f8"
+    },
+    {
+      "file": "0013_outbox_backoff.sql",
+      "sha256": "4afb8df41f304725d2f01da9145211740aae8ffd8e5e6cbb871919eb1ec64f69"
+    },
+    {
+      "file": "0014_idle_combat.sql",
+      "sha256": "3888ceaabbe30ca13779d762c4ae82c28e80473ff237580f05094dce66200f85"
+    },
+    {
+      "file": "0015_daily_journal.sql",
+      "sha256": "710379b880984d99f4610db821faa2a965df6f848c018540774e442e9192ed61"
+    },
+    {
+      "file": "0016_guardian_sigils.sql",
+      "sha256": "22d3327beda24a5eb075592b18c635a2e73e55cf74010da215367ac64a456634"
+    },
+    {
+      "file": "0017_guardian_trade_share.sql",
+      "sha256": "1f937db0883f87e02dcb69fb69f798f5c02bab5571238f9beec2aa72de0ea357"
+    },
+    {
+      "file": "0018_collection_blessings.sql",
+      "sha256": "44560507296e4a5841e6149b3be64106b55cc84c2ff5885c510b3f1549c75088"
+    },
+    {
+      "file": "0019_guardian_auto.sql",
+      "sha256": "9f0ee32f78d5dec7bbb536ac02e013169018a4775748dc8002533f8895e50d93"
+    },
+    {
+      "file": "0020_operation_notice_dismissals.sql",
+      "sha256": "149c114f8de808d9dcabcf23ba97dce65c35a98041a6b4e1ba100eb9b1aaf53a"
+    },
+    {
+      "file": "0021_guardian_single_draw.sql",
+      "sha256": "4c36978797924e7d82c81ca3aacfd60c0cd386a7254bf24c5bd7e3f33ff00e5a"
+    },
+    {
+      "file": "0022_auto_reroll.sql",
+      "sha256": "f1087c512da5ce8eaab8d8e9dd5946a28fb13aa0ee5a5da1c5a7a192c7aa106f"
+    },
+    {
+      "file": "0023_background_operations.sql",
+      "sha256": "eaa29e95144b45792707987228bdaf641a9da4ef73565debbd6ea6c58fd601af"
+    },
+    {
+      "file": "0024_market_exchange.sql",
+      "sha256": "80f87b24ab9cc0e311c3cbde7412a24482ec2592f8d42a4b408c1db1efea542b"
+    }
+  ],
+  "schemaSha256": "981eae39333c8cfba2cc4f17afbc3e89e449587dfc66f27dbcf8063bc0a35328",
+  "tables": {
+    "rpg_characters": {
+      "schemaSQL": "CREATE TABLE rpg_characters (\r\n  tg_id TEXT PRIMARY KEY,\r\n  name TEXT NOT NULL UNIQUE COLLATE NOCASE,\r\n  tg_name TEXT,\r\n  gender TEXT NOT NULL CHECK (gender IN ('m','f')),\r\n  base_class TEXT NOT NULL CHECK (base_class IN ('mage','sword','archer')),\r\n  class_path TEXT NOT NULL DEFAULT '',\r\n  pending_tier INTEGER,\r\n  level INTEGER NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 120),\r\n  exp INTEGER NOT NULL DEFAULT 0 CHECK (exp >= 0),\r\n  hp INTEGER NOT NULL,\r\n  mp INTEGER NOT NULL,\r\n  map_id INTEGER NOT NULL DEFAULT 1,\r\n  idle_state TEXT NOT NULL DEFAULT 'fighting' CHECK (idle_state IN ('fighting','no_mp','town_no_red','reviving','gate')),\r\n  state_until INTEGER,\r\n  auto_red_pct INTEGER NOT NULL DEFAULT 50 CHECK (auto_red_pct BETWEEN 20 AND 80),\r\n  auto_blue INTEGER NOT NULL DEFAULT 1,\r\n  gold INTEGER NOT NULL DEFAULT 0 CHECK (gold >= 0),\r\n  last_settle_at INTEGER NOT NULL,\r\n  last_daily_gold_day TEXT,\r\n  penalty_day TEXT,\r\n  penalties_today INTEGER NOT NULL DEFAULT 0,\r\n  drop_day TEXT,                       -- Taipei day of drops_today (idle scroll daily caps)\r\n  drops_today TEXT,                    -- JSON {scroll_w,scroll_a,scroll_r}\r\n  deaths_total INTEGER NOT NULL DEFAULT 0,\r\n  last_reselect_at INTEGER,\r\n  boss_down_until INTEGER,\r\n  ladder_points INTEGER NOT NULL DEFAULT 100,\r\n  pvp_wins INTEGER NOT NULL DEFAULT 0,\r\n  pvp_losses INTEGER NOT NULL DEFAULT 0,\r\n  created_day TEXT NOT NULL,\r\n  created_at INTEGER NOT NULL,\r\n  updated_at INTEGER NOT NULL,\r\n  rev INTEGER NOT NULL DEFAULT 0\r\n, tg_username TEXT, account_tg_id TEXT, char_slot INTEGER NOT NULL DEFAULT 1 CHECK (char_slot BETWEEN 1 AND 4), special_json TEXT NOT NULL DEFAULT '{}', party_id TEXT, idle_combat_json TEXT, guardian_draw_remainder INTEGER NOT NULL DEFAULT 0\r\n CHECK(guardian_draw_remainder BETWEEN 0 AND 4), collection_active_map INTEGER NOT NULL DEFAULT 0\r\n CHECK(typeof(collection_active_map)='integer' AND collection_active_map BETWEEN 0 AND 12))",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "tg_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "tg_name",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "gender",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "base_class",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "class_path",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "''",
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "pending_tier",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "level",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "exp",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "hp",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "mp",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "map_id",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "idle_state",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'fighting'",
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "state_until",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "auto_red_pct",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "50",
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "auto_blue",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "gold",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "last_settle_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "last_daily_gold_day",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "penalty_day",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "penalties_today",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 21,
+          "name": "drop_day",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 22,
+          "name": "drops_today",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 23,
+          "name": "deaths_total",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 24,
+          "name": "last_reselect_at",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 25,
+          "name": "boss_down_until",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 26,
+          "name": "ladder_points",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "100",
+          "pk": 0
+        },
+        {
+          "cid": 27,
+          "name": "pvp_wins",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 28,
+          "name": "pvp_losses",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 29,
+          "name": "created_day",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 30,
+          "name": "created_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 31,
+          "name": "updated_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 32,
+          "name": "rev",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 33,
+          "name": "tg_username",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 34,
+          "name": "account_tg_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 35,
+          "name": "char_slot",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "1",
+          "pk": 0
+        },
+        {
+          "cid": 36,
+          "name": "special_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'{}'",
+          "pk": 0
+        },
+        {
+          "cid": 37,
+          "name": "party_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 38,
+          "name": "idle_combat_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 39,
+          "name": "guardian_draw_remainder",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 40,
+          "name": "collection_active_map",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        }
+      ],
+      "indexes": [
+        {
+          "seq": 0,
+          "name": "idx_rpg_characters_account_slot",
+          "unique": 1,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 34,
+              "name": "account_tg_id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 35,
+              "name": "char_slot",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE UNIQUE INDEX idx_rpg_characters_account_slot ON rpg_characters(account_tg_id, char_slot)"
+        },
+        {
+          "seq": 1,
+          "name": "idx_rpg_characters_account",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 34,
+              "name": "account_tg_id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 35,
+              "name": "char_slot",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX idx_rpg_characters_account ON rpg_characters(account_tg_id, char_slot)"
+        },
+        {
+          "seq": 2,
+          "name": "idx_rpg_characters_username",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 33,
+              "name": "tg_username",
+              "desc": 0,
+              "coll": "NOCASE",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX idx_rpg_characters_username ON rpg_characters(tg_username COLLATE NOCASE)"
+        },
+        {
+          "seq": 3,
+          "name": "sqlite_autoindex_rpg_characters_2",
+          "unique": 1,
+          "origin": "u",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 1,
+              "name": "name",
+              "desc": 0,
+              "coll": "NOCASE",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": null
+        },
+        {
+          "seq": 4,
+          "name": "sqlite_autoindex_rpg_characters_1",
+          "unique": 1,
+          "origin": "pk",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 0,
+              "name": "tg_id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": null
+        }
+      ],
+      "outgoingForeignKeys": [],
+      "incomingForeignKeys": [
+        {
+          "ownerTable": "rpg_guardian_operations",
+          "id": 0,
+          "seq": 0,
+          "table": "rpg_characters",
+          "from": "char_id",
+          "to": "tg_id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "ownerTable": "rpg_guardian_sigils",
+          "id": 3,
+          "seq": 0,
+          "table": "rpg_characters",
+          "from": "char_id",
+          "to": "tg_id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "ownerTable": "rpg_guardian_voucher_grants",
+          "id": 0,
+          "seq": 0,
+          "table": "rpg_characters",
+          "from": "recipient_char_id",
+          "to": "tg_id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        },
+        {
+          "ownerTable": "rpg_guardian_welcome",
+          "id": 0,
+          "seq": 0,
+          "table": "rpg_characters",
+          "from": "recipient_char_id",
+          "to": "tg_id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ],
+      "attachedTriggers": [
+        {
+          "type": "trigger",
+          "name": "collection_blessing_owner",
+          "tbl_name": "rpg_characters",
+          "sql": "CREATE TRIGGER collection_blessing_owner BEFORE UPDATE OF collection_active_map ON rpg_characters\r\nWHEN NEW.collection_active_map<>OLD.collection_active_map AND NEW.collection_active_map>0 BEGIN\r\n SELECT RAISE(ABORT,'collection_not_owned') WHERE NOT EXISTS(\r\n  SELECT 1 FROM rpg_inventory WHERE tg_id=NEW.tg_id AND item='collection_'||NEW.collection_active_map AND quantity>0);\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "collection_blessing_party",
+          "tbl_name": "rpg_characters",
+          "sql": "CREATE TRIGGER collection_blessing_party BEFORE UPDATE OF collection_active_map ON rpg_characters\r\nWHEN NEW.collection_active_map<>OLD.collection_active_map AND OLD.party_id IS NOT NULL BEGIN\r\n SELECT RAISE(ABORT,'collection_party_locked');\r\nEND"
+        }
+      ],
+      "referencingTriggers": [
+        {
+          "type": "trigger",
+          "name": "collection_blessing_keep_delete",
+          "tbl_name": "rpg_inventory",
+          "sql": "CREATE TRIGGER collection_blessing_keep_delete BEFORE DELETE ON rpg_inventory\r\nWHEN OLD.item LIKE 'collection_%' BEGIN\r\n SELECT RAISE(ABORT,'collection_active_owned') WHERE EXISTS(\r\n  SELECT 1 FROM rpg_characters WHERE tg_id=OLD.tg_id AND collection_active_map>0 AND OLD.item='collection_'||collection_active_map);\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "collection_blessing_keep_update",
+          "tbl_name": "rpg_inventory",
+          "sql": "CREATE TRIGGER collection_blessing_keep_update BEFORE UPDATE OF quantity,item,tg_id ON rpg_inventory\r\nWHEN OLD.item LIKE 'collection_%' AND (NEW.quantity<1 OR NEW.item<>OLD.item OR NEW.tg_id<>OLD.tg_id) BEGIN\r\n SELECT RAISE(ABORT,'collection_active_owned') WHERE EXISTS(\r\n  SELECT 1 FROM rpg_characters WHERE tg_id=OLD.tg_id AND collection_active_map>0 AND OLD.item='collection_'||collection_active_map);\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_grant_guard",
+          "tbl_name": "rpg_guardian_voucher_grants",
+          "sql": "CREATE TRIGGER guardian_grant_guard BEFORE INSERT ON rpg_guardian_voucher_grants BEGIN\r\n SELECT RAISE(ABORT,'guardian_invalid_participant') WHERE NOT EXISTS(\r\n  SELECT 1 FROM rpg_characters c JOIN rpg_boss_attacks a ON a.tg_id=c.tg_id\r\n  WHERE c.tg_id=NEW.recipient_char_id AND c.account_tg_id=NEW.account_id\r\n   AND a.boss_id=NEW.boss_id AND a.damage>0\r\n );\r\n SELECT RAISE(ABORT,'guardian_voucher_daily_cap') WHERE COALESCE((SELECT n FROM rpg_daily_counters\r\n  WHERE tg_id=NEW.account_id AND day=NEW.day AND key='guardian_voucher'),0)>=4\r\n ;\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_grant_resources",
+          "tbl_name": "rpg_guardian_voucher_grants",
+          "sql": "CREATE TRIGGER guardian_grant_resources AFTER INSERT ON rpg_guardian_voucher_grants BEGIN\r\n INSERT INTO rpg_daily_counters(tg_id,day,key,n) VALUES(NEW.account_id,NEW.day,'guardian_voucher',1)\r\n ON CONFLICT(tg_id,day,key) DO UPDATE SET n=n+1;\r\n INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(NEW.recipient_char_id,'guardian_voucher',1)\r\n ON CONFLICT(tg_id,item) DO UPDATE SET quantity=quantity+1;\r\n INSERT INTO rpg_ledger(event_id,tg_id,type,item,item_delta,note,created_at)\r\n VALUES('guardian-voucher:'||NEW.boss_id||':'||NEW.account_id,NEW.recipient_char_id,\r\n  '守護神召喚憑證','guardian_voucher',1,NEW.boss_id,NEW.created_at);\r\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.created_at WHERE tg_id=NEW.recipient_char_id;\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_sigil_delete_revision",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER guardian_sigil_delete_revision AFTER DELETE ON rpg_guardian_sigils BEGIN\r\n UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=OLD.char_id;\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_sigil_insert_revision",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER guardian_sigil_insert_revision AFTER INSERT ON rpg_guardian_sigils BEGIN\r\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.updated_at WHERE tg_id=NEW.char_id;\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_sigil_party_delete",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER guardian_sigil_party_delete BEFORE DELETE ON rpg_guardian_sigils\r\n WHEN EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=OLD.char_id AND party_id IS NOT NULL)\r\n BEGIN SELECT RAISE(ABORT,'guardian_party_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_sigil_party_update",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER guardian_sigil_party_update BEFORE UPDATE ON rpg_guardian_sigils\r\n WHEN EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=OLD.char_id AND party_id IS NOT NULL)\r\n BEGIN SELECT RAISE(ABORT,'guardian_party_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_sigil_update_revision",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER guardian_sigil_update_revision AFTER UPDATE ON rpg_guardian_sigils BEGIN\r\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.updated_at WHERE tg_id=OLD.char_id OR tg_id=NEW.char_id;\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_welcome_guard",
+          "tbl_name": "rpg_guardian_welcome",
+          "sql": "CREATE TRIGGER guardian_welcome_guard BEFORE INSERT ON rpg_guardian_welcome BEGIN\r\n SELECT RAISE(ABORT,'guardian_welcome_locked') WHERE NOT EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=NEW.recipient_char_id\r\n  AND account_tg_id=NEW.account_id AND level>=15);\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "guardian_welcome_resources",
+          "tbl_name": "rpg_guardian_welcome",
+          "sql": "CREATE TRIGGER guardian_welcome_resources AFTER INSERT ON rpg_guardian_welcome BEGIN\r\n INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(NEW.recipient_char_id,'guardian_free_normal',NEW.draws)\r\n ON CONFLICT(tg_id,item) DO UPDATE SET quantity=quantity+excluded.quantity;\r\n INSERT INTO rpg_ledger(event_id,tg_id,type,item,item_delta,note,created_at)\r\n VALUES('guardian-welcome:'||NEW.account_id,NEW.recipient_char_id,'守護神初見贈禮','guardian_free_normal',NEW.draws,'首次進入；免費普通召喚',NEW.created_at);\r\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.created_at WHERE tg_id=NEW.recipient_char_id;\r\nEND"
+        }
+      ],
+      "referencingViews": [],
+      "laterAddedColumns": [
+        {
+          "migration": "0003_gear_v04_trade.sql",
+          "column": "tg_username",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN tg_username TEXT;"
+        },
+        {
+          "migration": "0009_multi_character_accounts.sql",
+          "column": "account_tg_id",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN account_tg_id TEXT;"
+        },
+        {
+          "migration": "0009_multi_character_accounts.sql",
+          "column": "char_slot",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN char_slot INTEGER NOT NULL DEFAULT 1 CHECK (char_slot BETWEEN 1 AND 4);"
+        },
+        {
+          "migration": "0010_special_skills_parties.sql",
+          "column": "special_json",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN special_json TEXT NOT NULL DEFAULT '{}';"
+        },
+        {
+          "migration": "0010_special_skills_parties.sql",
+          "column": "party_id",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN party_id TEXT;"
+        },
+        {
+          "migration": "0014_idle_combat.sql",
+          "column": "idle_combat_json",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN idle_combat_json TEXT;"
+        },
+        {
+          "migration": "0016_guardian_sigils.sql",
+          "column": "guardian_draw_remainder",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN guardian_draw_remainder INTEGER NOT NULL DEFAULT 0\r\n CHECK(guardian_draw_remainder BETWEEN 0 AND 4);"
+        },
+        {
+          "migration": "0018_collection_blessings.sql",
+          "column": "collection_active_map",
+          "statement": "ALTER TABLE rpg_characters ADD COLUMN collection_active_map INTEGER NOT NULL DEFAULT 0\r\n CHECK(typeof(collection_active_map)='integer' AND collection_active_map BETWEEN 0 AND 12);"
+        }
+      ]
+    },
+    "rpg_equipment": {
+      "schemaSQL": "CREATE TABLE \"rpg_equipment\" (\r\n  id TEXT PRIMARY KEY,\r\n  tg_id TEXT NOT NULL,\r\n  slot TEXT NOT NULL CHECK (slot IN ('weapon','helmet','armor','gloves','boots','belt','undershirt','earring','ring')),\r\n  kind TEXT NOT NULL,\r\n  class_req TEXT NOT NULL CHECK (class_req IN ('mage','sword','archer','any')),\r\n  branch_req TEXT CHECK (branch_req IS NULL OR branch_req IN ('A','B')),\r\n  tier INTEGER NOT NULL CHECK (tier BETWEEN 1 AND 12),\r\n  level_req INTEGER NOT NULL,\r\n  name TEXT NOT NULL,\r\n  source TEXT NOT NULL DEFAULT 'shop',\r\n  base_stat INTEGER NOT NULL,\r\n  bonus_json TEXT,\r\n  element TEXT,\r\n  element_stat INTEGER NOT NULL DEFAULT 0,\r\n  element_tier TEXT NOT NULL DEFAULT 'common',\r\n  enhance_level INTEGER NOT NULL DEFAULT 0,\r\n  is_equipped INTEGER NOT NULL DEFAULT 0 CHECK (is_equipped BETWEEN 0 AND 2),\r\n  convert_token INTEGER NOT NULL DEFAULT 0,\r\n  created_at INTEGER NOT NULL,\r\n  grade TEXT NOT NULL DEFAULT 'normal' CHECK (grade IN ('normal','relic')),\r\n  affix_json TEXT,\r\n  bound INTEGER NOT NULL DEFAULT 0,\r\n  trade_id TEXT, affixes_json TEXT NOT NULL DEFAULT '[]',\r\n  CHECK (trade_id IS NULL OR is_equipped = 0)\r\n)",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "tg_id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "slot",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "kind",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "class_req",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "branch_req",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "tier",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "level_req",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "name",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "source",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'shop'",
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "base_stat",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "bonus_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "element",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "element_stat",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "element_tier",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'common'",
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "enhance_level",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "is_equipped",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "convert_token",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "created_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "grade",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'normal'",
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "affix_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 21,
+          "name": "bound",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 22,
+          "name": "trade_id",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 23,
+          "name": "affixes_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": "'[]'",
+          "pk": 0
+        }
+      ],
+      "indexes": [
+        {
+          "seq": 0,
+          "name": "idx_rpg_equipment_trade",
+          "unique": 0,
+          "origin": "c",
+          "partial": 1,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 22,
+              "name": "trade_id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX idx_rpg_equipment_trade ON rpg_equipment(trade_id) WHERE trade_id IS NOT NULL"
+        },
+        {
+          "seq": 1,
+          "name": "idx_rpg_equipment_owner",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 1,
+              "name": "tg_id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 16,
+              "name": "is_equipped",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX idx_rpg_equipment_owner ON rpg_equipment(tg_id, is_equipped)"
+        },
+        {
+          "seq": 2,
+          "name": "sqlite_autoindex_rpg_equipment_1",
+          "unique": 1,
+          "origin": "pk",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 0,
+              "name": "id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": null
+        }
+      ],
+      "outgoingForeignKeys": [],
+      "incomingForeignKeys": [],
+      "attachedTriggers": [
+        {
+          "type": "trigger",
+          "name": "rpg_auto_enhance_equipment_delete",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_auto_enhance_equipment_delete BEFORE DELETE ON rpg_equipment\r\nWHEN EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=OLD.id AND status='running')\r\nBEGIN SELECT RAISE(ABORT,'auto_enhance_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_auto_enhance_equipment_update",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_auto_enhance_equipment_update BEFORE UPDATE ON rpg_equipment\r\nWHEN EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=OLD.id AND status='running')\r\nBEGIN SELECT RAISE(ABORT,'auto_enhance_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_auto_reroll_equipment_delete",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_auto_reroll_equipment_delete BEFORE DELETE ON rpg_equipment\r\nWHEN EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=OLD.id AND status='running')\r\nBEGIN SELECT RAISE(ABORT,'auto_reroll_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_auto_reroll_equipment_update",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_auto_reroll_equipment_update BEFORE UPDATE ON rpg_equipment\r\nWHEN EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=OLD.id AND status='running')\r\nBEGIN SELECT RAISE(ABORT,'auto_reroll_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_equipment_delete",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_exchange_equipment_delete BEFORE DELETE ON rpg_equipment\r\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\r\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\r\n)\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_equipment_update",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_exchange_equipment_update BEFORE UPDATE ON rpg_equipment\r\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\r\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\r\n)\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        }
+      ],
+      "referencingTriggers": [
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_enhance_resume",
+          "tbl_name": "rpg_auto_enhance",
+          "sql": "CREATE TRIGGER rpg_exchange_enhance_resume BEFORE UPDATE OF status,item_id ON rpg_auto_enhance\r\nWHEN NEW.status IN ('running','processing') AND EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_enhance_start",
+          "tbl_name": "rpg_auto_enhance",
+          "sql": "CREATE TRIGGER rpg_exchange_enhance_start BEFORE INSERT ON rpg_auto_enhance\r\nWHEN EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_reroll_resume",
+          "tbl_name": "rpg_auto_reroll",
+          "sql": "CREATE TRIGGER rpg_exchange_reroll_resume BEFORE UPDATE OF status,item_id ON rpg_auto_reroll\r\nWHEN NEW.status IN ('running','processing') AND EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_reroll_start",
+          "tbl_name": "rpg_auto_reroll",
+          "sql": "CREATE TRIGGER rpg_exchange_reroll_start BEFORE INSERT ON rpg_auto_reroll\r\nWHEN EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        }
+      ],
+      "referencingViews": [],
+      "laterAddedColumns": [
+        {
+          "migration": "0011_equipment_affixes.sql",
+          "column": "affixes_json",
+          "statement": "ALTER TABLE rpg_equipment ADD COLUMN affixes_json TEXT NOT NULL DEFAULT '[]';"
+        }
+      ]
+    },
+    "rpg_exchange_listings": {
+      "schemaSQL": "CREATE TABLE rpg_exchange_listings (\r\n seq INTEGER PRIMARY KEY AUTOINCREMENT, id TEXT NOT NULL UNIQUE,\r\n seller_account TEXT NOT NULL, seller_char TEXT NOT NULL, buyer_char TEXT,\r\n kind TEXT NOT NULL CHECK(kind IN ('equip','item','guardian')), ref TEXT NOT NULL,\r\n qty INTEGER NOT NULL CHECK(qty BETWEEN 1 AND 99999),\r\n price INTEGER NOT NULL CHECK(price BETWEEN 1 AND 1000000),\r\n fee INTEGER NOT NULL CHECK(fee=(price+19)/20),\r\n category TEXT NOT NULL CHECK(category IN ('equipment','scroll','collection','skillbook','other','guardian')),\r\n class_req TEXT NOT NULL CHECK(class_req IN ('any','sword','archer','mage')), tier INTEGER CHECK(tier BETWEEN 1 AND 12),\r\n quality TEXT, enhance INTEGER, snapshot_json TEXT NOT NULL,\r\n status TEXT NOT NULL CHECK(status IN ('active','sold','cancelled')),\r\n rev INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL,\r\n closed_at INTEGER, CHECK(kind='item' OR qty=1)\r\n)",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "seq",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "id",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "seller_account",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "seller_char",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "buyer_char",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "kind",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "ref",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "qty",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "price",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 9,
+          "name": "fee",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 10,
+          "name": "category",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 11,
+          "name": "class_req",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 12,
+          "name": "tier",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 13,
+          "name": "quality",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 14,
+          "name": "enhance",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 15,
+          "name": "snapshot_json",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 16,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 17,
+          "name": "rev",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 18,
+          "name": "created_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 19,
+          "name": "updated_at",
+          "type": "INTEGER",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 20,
+          "name": "closed_at",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "indexes": [
+        {
+          "seq": 0,
+          "name": "rpg_exchange_guardian",
+          "unique": 1,
+          "origin": "c",
+          "partial": 1,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 6,
+              "name": "ref",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE UNIQUE INDEX rpg_exchange_guardian ON rpg_exchange_listings(ref) WHERE status='active' AND kind='guardian'"
+        },
+        {
+          "seq": 1,
+          "name": "rpg_exchange_equipment",
+          "unique": 1,
+          "origin": "c",
+          "partial": 1,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 6,
+              "name": "ref",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE UNIQUE INDEX rpg_exchange_equipment ON rpg_exchange_listings(ref) WHERE status='active' AND kind='equip'"
+        },
+        {
+          "seq": 2,
+          "name": "rpg_exchange_history",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 2,
+              "name": "seller_account",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_history ON rpg_exchange_listings(seller_account,seq DESC)"
+        },
+        {
+          "seq": 3,
+          "name": "rpg_exchange_seller",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 2,
+              "name": "seller_account",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 3,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_seller ON rpg_exchange_listings(seller_account,status,seq DESC)"
+        },
+        {
+          "seq": 4,
+          "name": "rpg_exchange_quality",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 13,
+              "name": "quality",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 3,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_quality ON rpg_exchange_listings(status,quality,seq DESC)"
+        },
+        {
+          "seq": 5,
+          "name": "rpg_exchange_tier",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 12,
+              "name": "tier",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 3,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_tier ON rpg_exchange_listings(status,tier,seq DESC)"
+        },
+        {
+          "seq": 6,
+          "name": "rpg_exchange_class",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 11,
+              "name": "class_req",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 3,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_class ON rpg_exchange_listings(status,class_req,seq DESC)"
+        },
+        {
+          "seq": 7,
+          "name": "rpg_exchange_category",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 10,
+              "name": "category",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 3,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_category ON rpg_exchange_listings(status,category,seq DESC)"
+        },
+        {
+          "seq": 8,
+          "name": "rpg_exchange_active",
+          "unique": 0,
+          "origin": "c",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 16,
+              "name": "status",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": 0,
+              "name": "seq",
+              "desc": 1,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 2,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": "CREATE INDEX rpg_exchange_active ON rpg_exchange_listings(status,seq DESC)"
+        },
+        {
+          "seq": 9,
+          "name": "sqlite_autoindex_rpg_exchange_listings_1",
+          "unique": 1,
+          "origin": "u",
+          "partial": 0,
+          "columns": [
+            {
+              "seqno": 0,
+              "cid": 1,
+              "name": "id",
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 1
+            },
+            {
+              "seqno": 1,
+              "cid": -1,
+              "name": null,
+              "desc": 0,
+              "coll": "BINARY",
+              "key": 0
+            }
+          ],
+          "sql": null
+        }
+      ],
+      "outgoingForeignKeys": [],
+      "incomingForeignKeys": [
+        {
+          "ownerTable": "rpg_guardian_sigils",
+          "id": 0,
+          "seq": 0,
+          "table": "rpg_exchange_listings",
+          "from": "exchange_id",
+          "to": "id",
+          "on_update": "NO ACTION",
+          "on_delete": "NO ACTION",
+          "match": "NONE"
+        }
+      ],
+      "attachedTriggers": [],
+      "referencingTriggers": [
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_equipment_delete",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_exchange_equipment_delete BEFORE DELETE ON rpg_equipment\r\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\r\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\r\n)\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_equipment_update",
+          "tbl_name": "rpg_equipment",
+          "sql": "CREATE TRIGGER rpg_exchange_equipment_update BEFORE UPDATE ON rpg_equipment\r\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\r\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\r\n)\r\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_guardian_claim",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER rpg_exchange_guardian_claim BEFORE UPDATE OF exchange_id ON rpg_guardian_sigils\r\nWHEN NEW.exchange_id IS NOT NULL\r\nBEGIN\r\n SELECT RAISE(ABORT,'exchange_guardian_locked') WHERE NEW.bound<>0 OR NEW.active<>0 OR NEW.locked<>0 OR NEW.trade_id IS NOT NULL\r\n  OR NOT EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=NEW.exchange_id AND status='active' AND kind='guardian' AND ref=NEW.id AND seller_char=NEW.char_id);\r\nEND"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_guardian_delete",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER rpg_exchange_guardian_delete BEFORE DELETE ON rpg_guardian_sigils\r\nWHEN OLD.exchange_id IS NOT NULL AND EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=OLD.exchange_id AND status='active' AND kind='guardian' AND ref=OLD.id)\r\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+        },
+        {
+          "type": "trigger",
+          "name": "rpg_exchange_guardian_update",
+          "tbl_name": "rpg_guardian_sigils",
+          "sql": "CREATE TRIGGER rpg_exchange_guardian_update BEFORE UPDATE ON rpg_guardian_sigils\r\nWHEN OLD.exchange_id IS NOT NULL AND EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=OLD.exchange_id AND status='active' AND kind='guardian' AND ref=OLD.id)\r\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+        }
+      ],
+      "referencingViews": [],
+      "laterAddedColumns": []
+    }
+  },
+  "requiredChange": {
+    "rpg_characters": {
+      "column": "base_class",
+      "addAllowedValue": "thief",
+      "preserveAllowedValues": [
+        "mage",
+        "sword",
+        "archer"
+      ]
+    },
+    "rpg_equipment": {
+      "column": "class_req",
+      "addAllowedValue": "thief",
+      "preserveAllowedValues": [
+        "mage",
+        "sword",
+        "archer",
+        "any"
+      ]
+    },
+    "rpg_exchange_listings": {
+      "column": "class_req",
+      "addAllowedValue": "thief",
+      "preserveAllowedValues": [
+        "any",
+        "sword",
+        "archer",
+        "mage"
+      ]
+    },
+    "newColumnsRequired": [],
+    "newEquipmentSlotsRequired": []
+  },
+  "reviewPlan": [
+    "Keep THIEF_RELEASE_READY false, reject creation server-side, exclude from public class lists and global relic pools.",
+    "Before drafting migration, read live sqlite_schema and PRAGMA table_info/index_list/index_xinfo/foreign_key_list for all tables; compare to this repository snapshot and stop on unexplained drift.",
+    "SQLite cannot widen these CHECK constraints with ADD COLUMN. A candidate rebuild remains under docs/thief for review and local synthetic tests only; promotion into worker/migrations or execution on production requires separate review and explicit authorization.",
+    "Take a verified recoverable D1 backup and rehearse the full plan on an isolated copy with all existing schema, indexes, triggers and relationships.",
+    "Preserve every current column and constraint, especially all laterAddedColumns; use explicit named copy columns with no conversions, defaults substituted for existing values, or reset counters.",
+    "Preserve primary and unique keys, COLLATE NOCASE, partial indexes, guardian foreign keys, all attached and referencing trigger definitions, and all old class checks plus thief only.",
+    "Coordinate writes during the eventual change: equipment exchange/background locks and guardian welcome/grant triggers must not be bypassed by normal player requests.",
+    "Record D1 foreign-key and transaction semantics during rehearsal; do not assume PRAGMA foreign_keys=OFF works on production D1 or permit cascades while rebuilding a referenced parent.",
+    "Compare row counts and per-row hashes for both tables and all dependent tables before/after; require foreign_key_check and integrity_check success and exact index/trigger schema preservation.",
+    "Verify legacy players, all 11 equipped positions, bound/traded/relic/affixed gear, account active selection, collection blessings, guardian ownership/counters, background operations and exchange escrow remain unchanged.",
+    "Only after migration, 62-art acceptance, all combat modes and GitHub/live deployment verification pass, separately consider setting releaseReady true."
+  ],
+  "preservation": {
+    "characterColumns": [
+      "tg_id",
+      "name",
+      "tg_name",
+      "gender",
+      "base_class",
+      "class_path",
+      "pending_tier",
+      "level",
+      "exp",
+      "hp",
+      "mp",
+      "map_id",
+      "idle_state",
+      "state_until",
+      "auto_red_pct",
+      "auto_blue",
+      "gold",
+      "last_settle_at",
+      "last_daily_gold_day",
+      "penalty_day",
+      "penalties_today",
+      "drop_day",
+      "drops_today",
+      "deaths_total",
+      "last_reselect_at",
+      "boss_down_until",
+      "ladder_points",
+      "pvp_wins",
+      "pvp_losses",
+      "created_day",
+      "created_at",
+      "updated_at",
+      "rev",
+      "tg_username",
+      "account_tg_id",
+      "char_slot",
+      "special_json",
+      "party_id",
+      "idle_combat_json",
+      "guardian_draw_remainder",
+      "collection_active_map"
+    ],
+    "equipmentColumns": [
+      "id",
+      "tg_id",
+      "slot",
+      "kind",
+      "class_req",
+      "branch_req",
+      "tier",
+      "level_req",
+      "name",
+      "source",
+      "base_stat",
+      "bonus_json",
+      "element",
+      "element_stat",
+      "element_tier",
+      "enhance_level",
+      "is_equipped",
+      "convert_token",
+      "created_at",
+      "grade",
+      "affix_json",
+      "bound",
+      "trade_id",
+      "affixes_json"
+    ],
+    "exchangeListingColumns": [
+      "seq",
+      "id",
+      "seller_account",
+      "seller_char",
+      "buyer_char",
+      "kind",
+      "ref",
+      "qty",
+      "price",
+      "fee",
+      "category",
+      "class_req",
+      "tier",
+      "quality",
+      "enhance",
+      "snapshot_json",
+      "status",
+      "rev",
+      "created_at",
+      "updated_at",
+      "closed_at"
+    ],
+    "preserveAutoincrementHighWater": "rpg_exchange_listings.sqlite_sequence",
+    "preserveExistingIdentifiers": [
+      "tg_id",
+      "account_tg_id",
+      "char_slot",
+      "id",
+      "trade_id",
+      "party_id"
+    ],
+    "preserveBalancesProgressAndLocks": true,
+    "reseedPlayersOrBotState": false
+  }
+}

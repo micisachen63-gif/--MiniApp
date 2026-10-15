@@ -1,0 +1,501 @@
+{
+  "releaseReady": false,
+  "plannedIdentities": 62,
+  "registeredPilot": "thief_f",
+  "completedIdentities": 0,
+  "nativePackedIdentities": 1,
+  "visualAndRuntimeReviewPending": true,
+  "missing": [
+    {
+      "key": "thief:base:m",
+      "baseClass": "thief",
+      "classPath": "",
+      "gender": "m",
+      "name": "盜賊",
+      "tier": 0
+    },
+    {
+      "key": "thief:A:m",
+      "baseClass": "thief",
+      "classPath": "A",
+      "gender": "m",
+      "name": "刺客",
+      "tier": 1
+    },
+    {
+      "key": "thief:A:f",
+      "baseClass": "thief",
+      "classPath": "A",
+      "gender": "f",
+      "name": "刺客",
+      "tier": 1
+    },
+    {
+      "key": "thief:B:m",
+      "baseClass": "thief",
+      "classPath": "B",
+      "gender": "m",
+      "name": "夜行者",
+      "tier": 1
+    },
+    {
+      "key": "thief:B:f",
+      "baseClass": "thief",
+      "classPath": "B",
+      "gender": "f",
+      "name": "夜行者",
+      "tier": 1
+    },
+    {
+      "key": "thief:A1:m",
+      "baseClass": "thief",
+      "classPath": "A1",
+      "gender": "m",
+      "name": "影襲刺客",
+      "tier": 2
+    },
+    {
+      "key": "thief:A1:f",
+      "baseClass": "thief",
+      "classPath": "A1",
+      "gender": "f",
+      "name": "影襲刺客",
+      "tier": 2
+    },
+    {
+      "key": "thief:A2:m",
+      "baseClass": "thief",
+      "classPath": "A2",
+      "gender": "m",
+      "name": "毒刃刺客",
+      "tier": 2
+    },
+    {
+      "key": "thief:A2:f",
+      "baseClass": "thief",
+      "classPath": "A2",
+      "gender": "f",
+      "name": "毒刃刺客",
+      "tier": 2
+    },
+    {
+      "key": "thief:B1:m",
+      "baseClass": "thief",
+      "classPath": "B1",
+      "gender": "m",
+      "name": "飛刃遊俠",
+      "tier": 2
+    },
+    {
+      "key": "thief:B1:f",
+      "baseClass": "thief",
+      "classPath": "B1",
+      "gender": "f",
+      "name": "飛刃遊俠",
+      "tier": 2
+    },
+    {
+      "key": "thief:B2:m",
+      "baseClass": "thief",
+      "classPath": "B2",
+      "gender": "m",
+      "name": "幻刃使",
+      "tier": 2
+    },
+    {
+      "key": "thief:B2:f",
+      "baseClass": "thief",
+      "classPath": "B2",
+      "gender": "f",
+      "name": "幻刃使",
+      "tier": 2
+    },
+    {
+      "key": "thief:A11:m",
+      "baseClass": "thief",
+      "classPath": "A11",
+      "gender": "m",
+      "name": "夜幕處刑者",
+      "tier": 3
+    },
+    {
+      "key": "thief:A11:f",
+      "baseClass": "thief",
+      "classPath": "A11",
+      "gender": "f",
+      "name": "夜幕處刑者",
+      "tier": 3
+    },
+    {
+      "key": "thief:A12:m",
+      "baseClass": "thief",
+      "classPath": "A12",
+      "gender": "m",
+      "name": "幽影追獵者",
+      "tier": 3
+    },
+    {
+      "key": "thief:A12:f",
+      "baseClass": "thief",
+      "classPath": "A12",
+      "gender": "f",
+      "name": "幽影追獵者",
+      "tier": 3
+    },
+    {
+      "key": "thief:A21:m",
+      "baseClass": "thief",
+      "classPath": "A21",
+      "gender": "m",
+      "name": "蝕毒煉師",
+      "tier": 3
+    },
+    {
+      "key": "thief:A21:f",
+      "baseClass": "thief",
+      "classPath": "A21",
+      "gender": "f",
+      "name": "蝕毒煉師",
+      "tier": 3
+    },
+    {
+      "key": "thief:A22:m",
+      "baseClass": "thief",
+      "classPath": "A22",
+      "gender": "m",
+      "name": "血棘獵手",
+      "tier": 3
+    },
+    {
+      "key": "thief:A22:f",
+      "baseClass": "thief",
+      "classPath": "A22",
+      "gender": "f",
+      "name": "血棘獵手",
+      "tier": 3
+    },
+    {
+      "key": "thief:B11:m",
+      "baseClass": "thief",
+      "classPath": "B11",
+      "gender": "m",
+      "name": "疾風刃使",
+      "tier": 3
+    },
+    {
+      "key": "thief:B11:f",
+      "baseClass": "thief",
+      "classPath": "B11",
+      "gender": "f",
+      "name": "疾風刃使",
+      "tier": 3
+    },
+    {
+      "key": "thief:B12:m",
+      "baseClass": "thief",
+      "classPath": "B12",
+      "gender": "m",
+      "name": "星刃獵手",
+      "tier": 3
+    },
+    {
+      "key": "thief:B12:f",
+      "baseClass": "thief",
+      "classPath": "B12",
+      "gender": "f",
+      "name": "星刃獵手",
+      "tier": 3
+    },
+    {
+      "key": "thief:B21:m",
+      "baseClass": "thief",
+      "classPath": "B21",
+      "gender": "m",
+      "name": "鏡影舞者",
+      "tier": 3
+    },
+    {
+      "key": "thief:B21:f",
+      "baseClass": "thief",
+      "classPath": "B21",
+      "gender": "f",
+      "name": "鏡影舞者",
+      "tier": 3
+    },
+    {
+      "key": "thief:B22:m",
+      "baseClass": "thief",
+      "classPath": "B22",
+      "gender": "m",
+      "name": "暮光詭術師",
+      "tier": 3
+    },
+    {
+      "key": "thief:B22:f",
+      "baseClass": "thief",
+      "classPath": "B22",
+      "gender": "f",
+      "name": "暮光詭術師",
+      "tier": 3
+    },
+    {
+      "key": "thief:A111:m",
+      "baseClass": "thief",
+      "classPath": "A111",
+      "gender": "m",
+      "name": "冥夜裁決者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A111:f",
+      "baseClass": "thief",
+      "classPath": "A111",
+      "gender": "f",
+      "name": "冥夜裁決者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A112:m",
+      "baseClass": "thief",
+      "classPath": "A112",
+      "gender": "m",
+      "name": "終焉斷刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:A112:f",
+      "baseClass": "thief",
+      "classPath": "A112",
+      "gender": "f",
+      "name": "終焉斷刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:A121:m",
+      "baseClass": "thief",
+      "classPath": "A121",
+      "gender": "m",
+      "name": "虛影行者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A121:f",
+      "baseClass": "thief",
+      "classPath": "A121",
+      "gender": "f",
+      "name": "虛影行者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A122:m",
+      "baseClass": "thief",
+      "classPath": "A122",
+      "gender": "m",
+      "name": "無聲獵魂者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A122:f",
+      "baseClass": "thief",
+      "classPath": "A122",
+      "gender": "f",
+      "name": "無聲獵魂者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A211:m",
+      "baseClass": "thief",
+      "classPath": "A211",
+      "gender": "m",
+      "name": "九首毒刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:A211:f",
+      "baseClass": "thief",
+      "classPath": "A211",
+      "gender": "f",
+      "name": "九首毒刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:A212:m",
+      "baseClass": "thief",
+      "classPath": "A212",
+      "gender": "m",
+      "name": "冥蛇使徒",
+      "tier": 4
+    },
+    {
+      "key": "thief:A212:f",
+      "baseClass": "thief",
+      "classPath": "A212",
+      "gender": "f",
+      "name": "冥蛇使徒",
+      "tier": 4
+    },
+    {
+      "key": "thief:A221:m",
+      "baseClass": "thief",
+      "classPath": "A221",
+      "gender": "m",
+      "name": "血棘君主",
+      "tier": 4
+    },
+    {
+      "key": "thief:A221:f",
+      "baseClass": "thief",
+      "classPath": "A221",
+      "gender": "f",
+      "name": "血棘君主",
+      "tier": 4
+    },
+    {
+      "key": "thief:A222:m",
+      "baseClass": "thief",
+      "classPath": "A222",
+      "gender": "m",
+      "name": "蝕魂收割者",
+      "tier": 4
+    },
+    {
+      "key": "thief:A222:f",
+      "baseClass": "thief",
+      "classPath": "A222",
+      "gender": "f",
+      "name": "蝕魂收割者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B111:m",
+      "baseClass": "thief",
+      "classPath": "B111",
+      "gender": "m",
+      "name": "風暴千刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:B111:f",
+      "baseClass": "thief",
+      "classPath": "B111",
+      "gender": "f",
+      "name": "風暴千刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:B112:m",
+      "baseClass": "thief",
+      "classPath": "B112",
+      "gender": "m",
+      "name": "疾影穿梭者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B112:f",
+      "baseClass": "thief",
+      "classPath": "B112",
+      "gender": "f",
+      "name": "疾影穿梭者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B121:m",
+      "baseClass": "thief",
+      "classPath": "B121",
+      "gender": "m",
+      "name": "星隕刃使",
+      "tier": 4
+    },
+    {
+      "key": "thief:B121:f",
+      "baseClass": "thief",
+      "classPath": "B121",
+      "gender": "f",
+      "name": "星隕刃使",
+      "tier": 4
+    },
+    {
+      "key": "thief:B122:m",
+      "baseClass": "thief",
+      "classPath": "B122",
+      "gender": "m",
+      "name": "星軌追獵者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B122:f",
+      "baseClass": "thief",
+      "classPath": "B122",
+      "gender": "f",
+      "name": "星軌追獵者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B211:m",
+      "baseClass": "thief",
+      "classPath": "B211",
+      "gender": "m",
+      "name": "千面幻刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:B211:f",
+      "baseClass": "thief",
+      "classPath": "B211",
+      "gender": "f",
+      "name": "千面幻刃",
+      "tier": 4
+    },
+    {
+      "key": "thief:B212:m",
+      "baseClass": "thief",
+      "classPath": "B212",
+      "gender": "m",
+      "name": "鏡界行者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B212:f",
+      "baseClass": "thief",
+      "classPath": "B212",
+      "gender": "f",
+      "name": "鏡界行者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B221:m",
+      "baseClass": "thief",
+      "classPath": "B221",
+      "gender": "m",
+      "name": "暮光織影者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B221:f",
+      "baseClass": "thief",
+      "classPath": "B221",
+      "gender": "f",
+      "name": "暮光織影者",
+      "tier": 4
+    },
+    {
+      "key": "thief:B222:m",
+      "baseClass": "thief",
+      "classPath": "B222",
+      "gender": "m",
+      "name": "黑月詭術師",
+      "tier": 4
+    },
+    {
+      "key": "thief:B222:f",
+      "baseClass": "thief",
+      "classPath": "B222",
+      "gender": "f",
+      "name": "黑月詭術師",
+      "tier": 4
+    }
+  ],
+  "existingHeroesUnchanged": 186,
+  "registryVersion": "20261015-thief-pilot-f70c5f51aa3f",
+  "realPlayerEventsVerified": false
+}

@@ -5,7 +5,7 @@ let warmSources=new Set();
 const activeActions=new Set();
 const hudLayers=new WeakMap();
 const closedDisplayBitmaps=new WeakSet();
-export const playbackStats={started:0,frames:0,normal:0,skill:0,cleanup:0,fallback:0,clippingViolations:0,keys:[],lastGeometry:null,seenFrames:{},seenFxFrames:{},seenFxAnchors:{},peakBitmapPixels:0,closedBitmaps:0,releasedSourceImages:0,atlasFailures:0,downsampledDisplayFrames:0,resizeFallbacks:0,resizeFallbackRecent:[]};
+export const playbackStats={started:0,frames:0,normal:0,skill:0,cleanup:0,fallback:0,clippingViolations:0,keys:[],lastGeometry:null,seenFrames:{},seenFxFrames:{},seenFxAnchors:{},peakBitmapPixels:0,closedBitmaps:0,releasedSourceImages:0,atlasFailures:0,downsampledDisplayFrames:0,resizeFallbacks:0,resizeFallbackRecent:[],cycleReceipts:[]};
 function image(src){if(!src)return null;if(!cache.has(src)){const im=new Image();im.decoding='async';im.src=src;cache.set(src,im);if(cache.size>16)cache.delete(cache.keys().next().value);}const im=cache.get(src);return im.complete&&im.naturalWidth?im:null;}
 function registry(){try{return window.RpgHeroArtRegistry||window.parent?.RpgHeroArtRegistry||null;}catch{return null;}}
 const norm=(b,w,h)=>!b?[0,0,1,1]:b.some(v=>v>1)?[b[0]/w,b[1]/h,b[2]/w,b[3]/h]:b;
@@ -63,7 +63,7 @@ function fit(box,cw,ch,width,height,anchorX,footY,targetHeight){const b=norm(box
 function geometry(p,c,w,h){const b=p.b,rect={left:p.x+b[0]*c.w*p.s,top:p.y+b[1]*c.h*p.s,right:p.x+b[2]*c.w*p.s,bottom:p.y+b[3]*c.h*p.s},finite=Object.values(rect).every(Number.isFinite);const clipped=!finite||rect.left<-.1||rect.top<-.1||rect.right>w+.1||rect.bottom>h+.1;if(clipped)playbackStats.clippingViolations++;return{rect,finite,clipped};}
 function protectHud(scene){let state=hudLayers.get(scene);if(!state){state={users:0,slots:[...scene.querySelectorAll('.scene-floor,.boss-meter')].map(el=>({el,value:el.style.getPropertyValue('z-index'),priority:el.style.getPropertyPriority('z-index')}))};hudLayers.set(scene,state);for(const slot of state.slots)slot.el.style.setProperty('z-index','12','important');}state.users++;return()=>{if(--state.users)return;for(const slot of state.slots)slot.el.style.setProperty('z-index',slot.value,slot.priority);hudLayers.delete(scene);};}
 export function startRegistryAction(scene,actor,target,member,event,{duration=520,impactAt=240,isCancelled=()=>false,reduced=false}={}){
- const kind=event.skillId&&event.skillId!=='attack'?'skill':'normal',entry=lookup(member,kind,event),spec=entry?.animation,actorAtlas=spec?.src&&atlasBitmaps.get(spec.src),im=actorAtlas?.ready?actorAtlas.size:spec?.src&&image(spec.src);
+ const kind=event.skillId&&event.skillId!=='attack'||(member?.baseClass||member?.base)==='thief'&&event.nativeSkill?'skill':'normal',entry=lookup(member,kind,event),spec=entry?.animation,actorAtlas=spec?.src&&atlasBitmaps.get(spec.src),im=actorAtlas?.ready?actorAtlas.size:spec?.src&&image(spec.src);
  if(reduced||!spec||!im||event.skillId==='defend'){playbackStats.fallback++;return null;}
  // While a large atlas is being cut into native bitmaps, keep the correct still/fallback.
  if(typeof createImageBitmap==='function'&&actorAtlas&&!actorAtlas.ready){playbackStats.fallback++;return null;}
@@ -71,13 +71,14 @@ export function startRegistryAction(scene,actor,target,member,event,{duration=52
  if(actorAtlas)actorAtlas.users++;if(effectAtlas)effectAtlas.users++;
  const companions=(fx?.companions||[]).map(spec=>{const atlas=atlasBitmaps.get(spec.src),im=atlas?.ready?atlas.size:image(spec.src);if(atlas)atlas.users++;return{spec,atlas,im};});
  const restoreHud=protectHud(scene);
- const priorVisibility=actor.style.visibility;actor.style.visibility='hidden';let raf=0,started=performance.now(),done=false;
- const stop=()=>{if(done)return;done=true;activeActions.delete(stop);cancelAnimationFrame(raf);canvas.remove();actor.style.visibility=priorVisibility;restoreHud();if(actorAtlas)actorAtlas.users--;if(effectAtlas)effectAtlas.users--;for(const c of companions)if(c.atlas)c.atlas.users--;evictBitmaps();playbackStats.cleanup++;};activeActions.add(stop);
+ const priorVisibility=actor.style.visibility;actor.style.visibility='hidden';let raf=0,started=performance.now(),done=false,lastPhase=0;const sourceFrames=[];
+ const stop=()=>{if(done)return;done=true;activeActions.delete(stop);cancelAnimationFrame(raf);canvas.remove();actor.style.visibility=priorVisibility;restoreHud();if(actorAtlas)actorAtlas.users--;if(effectAtlas)effectAtlas.users--;for(const c of companions)if(c.atlas)c.atlas.users--;evictBitmaps();playbackStats.cleanup++;if((member.baseClass||member.base)==='thief'){playbackStats.cycleReceipts.push({key:entry.key,kind,duration,completed:lastPhase>=.999,sourceFrames:sourceFrames.slice(),strikeIndex:event.strikeIndex??0,strikeCount:event.strikeCount??1});if(playbackStats.cycleReceipts.length>32)playbackStats.cycleReceipts.shift();}};activeActions.add(stop);
  playbackStats.started++;playbackStats[kind]++;playbackStats.keys.push(entry.key);
  const draw=phase=>{
+  lastPhase=phase;
   const r=scene.getBoundingClientRect(),a=actor.getBoundingClientRect(),t=target.getBoundingClientRect(),w=scene.clientWidth,h=scene.clientHeight,dpr=Math.min(devicePixelRatio||1,2);canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);const g=canvas.getContext('2d');g.scale(dpr,dpr);g.imageSmoothingQuality='high';g.clearRect(0,0,w,h);
   const impactFraction=Math.max(.1,Math.min(.9,impactAt/duration)),nativeImpact=actorImpactPhase(spec),nativePhase=phase<impactFraction?phase/impactFraction*nativeImpact:nativeImpact+(phase-impactFraction)/(1-impactFraction)*(1-nativeImpact);
-  const index=frameAt(spec,nativePhase),c=cell(im,spec,index),bounds=union(spec.unionFrameBounds||spec.frameBounds||spec.bodyBounds||spec.fig),mirror=actorFlipped(actor),b=norm(bounds,c.w,c.h),paintedBounds=mirror?[1-b[2],b[1],1-b[0],b[3]]:b,placement=fit(paintedBounds,c.w,c.h,w,h,a.x+a.width*.5-r.x,a.bottom-r.y,a.height),dw=c.w*placement.s,dh=c.h*placement.s;
+  const index=frameAt(spec,nativePhase);if(sourceFrames.at(-1)!==index)sourceFrames.push(index);const c=cell(im,spec,index),bounds=union(spec.unionFrameBounds||spec.frameBounds||spec.bodyBounds||spec.fig),mirror=actorFlipped(actor),b=norm(bounds,c.w,c.h),paintedBounds=mirror?[1-b[2],b[1],1-b[0],b[3]]:b,placement=fit(paintedBounds,c.w,c.h,w,h,a.x+a.width*.5-r.x,a.bottom-r.y,a.height),dw=c.w*placement.s,dh=c.h*placement.s;
   g.save();if(mirror){g.translate(placement.x+dw,placement.y);g.scale(-1,1);}const dx=mirror?0:placement.x,dy=mirror?0:placement.y;
   if(actorAtlas?.ready){const bitmap=actorAtlas.frames[index];g.drawImage(bitmap,0,0,bitmap.width,bitmap.height,dx,dy,dw,dh);}else g.drawImage(im,c.x,c.y,c.w,c.h,dx,dy,dw,dh);g.restore();
   const seen=playbackStats.seenFrames[entry.key]||(playbackStats.seenFrames[entry.key]={normal:[],skill:[]});if(!seen[kind].includes(index))seen[kind].push(index);
@@ -93,7 +94,7 @@ export function startRegistryAction(scene,actor,target,member,event,{duration=52
   else if(typeof fx?.draw==='function')fx.draw(g,nativePhase,from,to,{...event,basic:kind==='normal',characterKey:entry.key});
   playbackStats.frames++;
  };
- const tick=now=>{if(done)return;if(document.hidden||!scene.isConnected||isCancelled()){stop();return;}if(started===null)started=now;const phase=Math.min(1,(now-started)/duration);draw(phase);if(phase<1)raf=requestAnimationFrame(tick);else stop();};raf=requestAnimationFrame(tick);
+ const tick=now=>{if(done)return;if(document.hidden||!scene.isConnected||isCancelled()){stop();return;}if(started===null)started=now;const phase=Math.min(1,(now-started)/duration);draw(phase);if(phase<1)raf=requestAnimationFrame(tick);else stop();};if((member.baseClass||member.base)==='thief')draw(0);raf=requestAnimationFrame(tick);
  return{stop,key:entry.key,kind,draw,hasFx:!!effect||typeof fx?.draw==='function'};
 }
 export function disposeArt(){for(const stop of [...activeActions])stop();for(const entry of atlasBitmaps.values())closeFrames(entry.frames);atlasBitmaps.clear();for(const[src,im]of cache)releaseImage(src,im);cache.clear();warmSources=new Set();}

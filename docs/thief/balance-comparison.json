@@ -1,0 +1,988 @@
+{
+  "status": "candidate-stat-proof-not-a-production-combat-claim",
+  "releaseReady": false,
+  "equipment": {
+    "tier": "current map tier",
+    "rarity": "common",
+    "enhancement": 0,
+    "rolls": "midpoint",
+    "positions": 11,
+    "classArmor": "same progression/quality; existing class armor-family scaling and passives retained",
+    "affixes": false,
+    "guardian": false,
+    "blessing": false
+  },
+  "formulas": {
+    "nativeDamagePerBaselineUnit": "ATK per strike * skill.mult * attackSpeedMultiplier * (1 + 0.5 * min(0.8, 0.05 + critPct))",
+    "ehpDef100": "MaxHP * (1 + DEF / 100) / taken",
+    "exclusions": [
+      "native estimate excludes enemy defense, elements, marks, poison, penetration, special skills, mana shortage and finite-fight rounding",
+      "EHP estimate excludes temporary smoke/counter protection, healing and enemy mechanics",
+      "actual strike scheduling is validated by separate combat-adapter tests"
+    ]
+  },
+  "rows": [
+    {
+      "level": 1,
+      "baseClass": "thief",
+      "path": "",
+      "maxHp": 112,
+      "def": 11,
+      "taken": 0.95,
+      "atkPerStrike": 20,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "nativeDamagePerBaselineUnit": 63.342,
+      "ehpDef100": 130.8632
+    },
+    {
+      "level": 1,
+      "baseClass": "archer",
+      "path": "",
+      "maxHp": 156,
+      "def": 20,
+      "taken": 0.728,
+      "atkPerStrike": 35,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 61.5825,
+      "ehpDef100": 257.1429
+    },
+    {
+      "level": 1,
+      "baseClass": "sword",
+      "path": "",
+      "maxHp": 209,
+      "def": 28,
+      "taken": 0.8415,
+      "atkPerStrike": 34,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 56.304,
+      "ehpDef100": 317.9085
+    },
+    {
+      "level": 1,
+      "baseClass": "mage",
+      "path": "",
+      "maxHp": 137,
+      "def": 15,
+      "taken": 0.693,
+      "atkPerStrike": 36,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 67.068,
+      "ehpDef100": 227.3449
+    },
+    {
+      "level": 30,
+      "baseClass": "thief",
+      "path": "A",
+      "maxHp": 458,
+      "def": 40,
+      "taken": 0.95,
+      "atkPerStrike": 85,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "nativeDamagePerBaselineUnit": 340.3102,
+      "ehpDef100": 674.9474
+    },
+    {
+      "level": 30,
+      "baseClass": "archer",
+      "path": "A",
+      "maxHp": 763,
+      "def": 71,
+      "taken": 0.648,
+      "atkPerStrike": 148,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 321.678,
+      "ehpDef100": 2013.4722
+    },
+    {
+      "level": 30,
+      "baseClass": "sword",
+      "path": "A",
+      "maxHp": 1084,
+      "def": 97,
+      "taken": 0.9265,
+      "atkPerStrike": 155,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 336.8925,
+      "ehpDef100": 2304.8894
+    },
+    {
+      "level": 30,
+      "baseClass": "mage",
+      "path": "A",
+      "maxHp": 628,
+      "def": 52,
+      "taken": 0.693,
+      "atkPerStrike": 161,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 383.2605,
+      "ehpDef100": 1377.4315
+    },
+    {
+      "level": 60,
+      "baseClass": "thief",
+      "path": "A1",
+      "maxHp": 929,
+      "def": 76,
+      "taken": 0.95,
+      "atkPerStrike": 169,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "nativeDamagePerBaselineUnit": 1111.5468,
+      "ehpDef100": 1721.0947
+    },
+    {
+      "level": 60,
+      "baseClass": "archer",
+      "path": "A1",
+      "maxHp": 1504,
+      "def": 142,
+      "taken": 0.648,
+      "atkPerStrike": 294,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 1101.177,
+      "ehpDef100": 5616.7901
+    },
+    {
+      "level": 60,
+      "baseClass": "sword",
+      "path": "A1",
+      "maxHp": 2116,
+      "def": 190,
+      "taken": 0.9265,
+      "atkPerStrike": 309,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 927.4635,
+      "ehpDef100": 6623.2056
+    },
+    {
+      "level": 60,
+      "baseClass": "mage",
+      "path": "A1",
+      "maxHp": 1249,
+      "def": 101,
+      "taken": 0.693,
+      "atkPerStrike": 351,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 1235.169,
+      "ehpDef100": 3622.6407
+    },
+    {
+      "level": 90,
+      "baseClass": "thief",
+      "path": "A11",
+      "maxHp": 1506,
+      "def": 125,
+      "taken": 0.95,
+      "atkPerStrike": 264,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "nativeDamagePerBaselineUnit": 1736.3808,
+      "ehpDef100": 3566.8421
+    },
+    {
+      "level": 90,
+      "baseClass": "archer",
+      "path": "A11",
+      "maxHp": 2351,
+      "def": 231,
+      "taken": 0.648,
+      "atkPerStrike": 459,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 1719.1845,
+      "ehpDef100": 12008.966
+    },
+    {
+      "level": 90,
+      "baseClass": "sword",
+      "path": "A11",
+      "maxHp": 3266,
+      "def": 308,
+      "taken": 0.9265,
+      "atkPerStrike": 485,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 1455.7275,
+      "ehpDef100": 14382.3853
+    },
+    {
+      "level": 90,
+      "baseClass": "mage",
+      "path": "A11",
+      "maxHp": 1976,
+      "def": 164,
+      "taken": 0.693,
+      "atkPerStrike": 546,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 1921.374,
+      "ehpDef100": 7527.619
+    },
+    {
+      "level": 120,
+      "baseClass": "thief",
+      "path": "A111",
+      "maxHp": 2240,
+      "def": 181,
+      "taken": 0.95,
+      "atkPerStrike": 380,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "nativeDamagePerBaselineUnit": 2499.336,
+      "ehpDef100": 6625.6842
+    },
+    {
+      "level": 120,
+      "baseClass": "archer",
+      "path": "A111",
+      "maxHp": 3355,
+      "def": 337,
+      "taken": 0.648,
+      "atkPerStrike": 658,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 2464.539,
+      "ehpDef100": 22625.5401
+    },
+    {
+      "level": 120,
+      "baseClass": "sword",
+      "path": "A111",
+      "maxHp": 4592,
+      "def": 451,
+      "taken": 0.9265,
+      "atkPerStrike": 700,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 2101.05,
+      "ehpDef100": 27309.1419
+    },
+    {
+      "level": 120,
+      "baseClass": "mage",
+      "path": "A111",
+      "maxHp": 2860,
+      "def": 239,
+      "taken": 0.693,
+      "atkPerStrike": 778,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "nativeDamagePerBaselineUnit": 2737.782,
+      "ehpDef100": 13990.4762
+    }
+  ],
+  "fragility": [
+    {
+      "path": "",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.329
+    },
+    {
+      "path": "",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2204
+    },
+    {
+      "path": "",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "B",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3435
+    },
+    {
+      "path": "B",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "A1",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A1",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A1",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A2",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A2",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A2",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "B1",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B1",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B1",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B2",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B2",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B2",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "A11",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A11",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A11",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A12",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A12",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A12",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A21",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A21",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A21",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "A22",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A22",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A22",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "B11",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B11",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B11",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B12",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B12",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B12",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B21",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B21",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B21",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "B22",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B22",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B22",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "A111",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A111",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A111",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A112",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A112",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A112",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A121",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A121",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A121",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A122",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2928
+    },
+    {
+      "path": "A122",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A122",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4736
+    },
+    {
+      "path": "A211",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A211",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A211",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "A212",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A212",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A212",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "A221",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A221",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A221",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "A222",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2386
+    },
+    {
+      "path": "A222",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.2426
+    },
+    {
+      "path": "A222",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.3779
+    },
+    {
+      "path": "B111",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B111",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B111",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B112",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B112",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B112",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B121",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B121",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B121",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B122",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.2491
+    },
+    {
+      "path": "B122",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1836
+    },
+    {
+      "path": "B122",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.4944
+    },
+    {
+      "path": "B211",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B211",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B211",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "B212",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B212",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B212",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "B221",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B221",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B221",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    },
+    {
+      "path": "B222",
+      "comparedWith": "archer",
+      "hpRatio": 0.6677,
+      "defRatio": 0.5371,
+      "ehpRatio": 0.3634
+    },
+    {
+      "path": "B222",
+      "comparedWith": "sword",
+      "hpRatio": 0.4878,
+      "defRatio": 0.4013,
+      "ehpRatio": 0.1082
+    },
+    {
+      "path": "B222",
+      "comparedWith": "mage",
+      "hpRatio": 0.7832,
+      "defRatio": 0.7573,
+      "ehpRatio": 0.391
+    }
+  ],
+  "maximumThiefEhpRatioAtLevel120": 0.4944,
+  "idle": [
+    {
+      "level": 1,
+      "path": "",
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "idleNativeDamageMultiplier": 1.08,
+      "killsPerTick": 2.16,
+      "normalizedGearRatio": 1
+    },
+    {
+      "level": 30,
+      "path": "A",
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "idleNativeDamageMultiplier": 1.08,
+      "killsPerTick": 2.16,
+      "normalizedGearRatio": 1
+    },
+    {
+      "level": 60,
+      "path": "A1",
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "idleNativeDamageMultiplier": 1.08,
+      "killsPerTick": 2.16,
+      "normalizedGearRatio": 1
+    },
+    {
+      "level": 90,
+      "path": "A11",
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "idleNativeDamageMultiplier": 1.08,
+      "killsPerTick": 2.16,
+      "normalizedGearRatio": 1
+    },
+    {
+      "level": 120,
+      "path": "A111",
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "idleNativeDamageMultiplier": 1.08,
+      "killsPerTick": 2.16,
+      "normalizedGearRatio": 1
+    }
+  ],
+  "idleBudgetExplanation": "Idle rewards use a class-normalized budget, so apply frequency*per-strike potency = 1.08 once. The greater strike count divides this existing integer budget; it does not create a second reward or damage budget."
+}

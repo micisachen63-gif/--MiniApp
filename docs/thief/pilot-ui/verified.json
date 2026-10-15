@@ -1,0 +1,1600 @@
+{
+  "passed": true,
+  "actualAppBootstrap": true,
+  "isolatedInMemoryFixture": true,
+  "productionWrites": false,
+  "productReleaseReady": false,
+  "mockMetaOverride": true,
+  "identity": "thief_f",
+  "widths": [
+    320,
+    390,
+    768,
+    1280
+  ],
+  "cases": [
+    {
+      "surface": "home",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-home.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 56,
+        "height": 86
+      },
+      "visible": {
+        "left": 2.56256103515625,
+        "top": 2.7894694010416856,
+        "right": 53.445281982421875,
+        "bottom": 83.42415364583331
+      },
+      "absolute": {
+        "left": 32.56256103515625,
+        "top": 333.5550944010417,
+        "right": 83.44528198242188,
+        "bottom": 414.1897786458333
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-current",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-lineage-current.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 84,
+        "height": 110
+      },
+      "visible": {
+        "left": 9.72100830078125,
+        "top": 3.8477071126301894,
+        "right": 74.28793334960938,
+        "bottom": 106.15067545572913
+      },
+      "absolute": {
+        "left": 34.72100830078125,
+        "top": 437.0508321126302,
+        "right": 99.28793334960938,
+        "bottom": 539.3538004557291
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-tree",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-lineage-tree.png",
+      "src": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 38,
+        "height": 55
+      },
+      "visible": {
+        "left": 2.739990234375,
+        "top": 1.74041748046875,
+        "right": 35.2471923828125,
+        "bottom": 53.250244140625
+      },
+      "absolute": {
+        "left": 55.739990234375,
+        "top": 444.31854248046875,
+        "right": 88.2471923828125,
+        "bottom": 495.828369140625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "own-armory",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-own-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 248,
+        "height": 280
+      },
+      "visible": {
+        "left": 44.606201171875,
+        "top": 14.16693115234375,
+        "right": 203.4468994140625,
+        "bottom": 265.860595703125
+      },
+      "absolute": {
+        "left": 80.606201171875,
+        "top": 794.9950561523438,
+        "right": 239.4468994140625,
+        "bottom": 1046.688720703125
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false,
+      "angel": {
+        "guardianSrc": "/art/guardian-sigil-20261013/melee.webp",
+        "summoned": true,
+        "guardianOutsideFigure": true,
+        "headGap": 6,
+        "inside": true,
+        "stage": {
+          "left": 25,
+          "top": 215.828125,
+          "right": 295,
+          "bottom": 655.828125,
+          "width": 270,
+          "height": 440
+        },
+        "figure": {
+          "left": 36,
+          "top": 356.828125,
+          "right": 284,
+          "bottom": 636.828125,
+          "width": 248,
+          "height": 280
+        },
+        "guardian": {
+          "left": 102,
+          "top": 230.828125,
+          "right": 218,
+          "bottom": 350.828125,
+          "width": 116,
+          "height": 120
+        }
+      }
+    },
+    {
+      "surface": "hero-hall",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-hero-hall.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 66,
+        "height": 96
+      },
+      "visible": {
+        "left": 4.619873046875,
+        "top": 3.0201314290364962,
+        "right": 61.3775634765625,
+        "bottom": 92.97172037760413
+      },
+      "absolute": {
+        "left": 42.619873046875,
+        "top": 535.6138814290365,
+        "right": 99.3775634765625,
+        "bottom": 625.5654703776041
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "other-armory",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-other-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 250,
+        "height": 396
+      },
+      "visible": {
+        "left": 7.20556640625,
+        "top": 15.3135986328125,
+        "right": 242.897216796875,
+        "bottom": 388.78271484375
+      },
+      "absolute": {
+        "left": 42.20556640625,
+        "top": 434.3135986328125,
+        "right": 277.897216796875,
+        "bottom": 807.78271484375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "expedition-card",
+      "width": 320,
+      "screenshot": "docs/thief/pilot-ui/320-expedition-card.png",
+      "src": "/art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 152,
+        "height": 220
+      },
+      "visible": {
+        "left": 9.8385009765625,
+        "top": 5.128692626953125,
+        "right": 142.20574951171875,
+        "bottom": 214.8734130859375
+      },
+      "absolute": {
+        "left": 157.8385009765625,
+        "top": 112.70681762695312,
+        "right": 290.20574951171875,
+        "bottom": 322.4515380859375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "home",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-home.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 72,
+        "height": 99
+      },
+      "visible": {
+        "left": 6.84619140625,
+        "top": 3.2979736328125,
+        "right": 65.162841796875,
+        "bottom": 95.70458984375
+      },
+      "absolute": {
+        "left": 36.84619140625,
+        "top": 325.5635986328125,
+        "right": 95.162841796875,
+        "bottom": 417.97021484375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-current",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-lineage-current.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 84,
+        "height": 110
+      },
+      "visible": {
+        "left": 9.72100830078125,
+        "top": 3.8477071126301894,
+        "right": 74.28793334960938,
+        "bottom": 106.15067545572913
+      },
+      "absolute": {
+        "left": 34.72100830078125,
+        "top": 414.8945821126302,
+        "right": 99.28793334960938,
+        "bottom": 517.1975504557291
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-tree",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-lineage-tree.png",
+      "src": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 38,
+        "height": 55
+      },
+      "visible": {
+        "left": 2.739990234375,
+        "top": 1.74041748046875,
+        "right": 35.2471923828125,
+        "bottom": 53.250244140625
+      },
+      "absolute": {
+        "left": 55.739990234375,
+        "top": 439.31854248046875,
+        "right": 88.2471923828125,
+        "bottom": 490.828369140625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "own-armory",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-own-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 318,
+        "height": 350
+      },
+      "visible": {
+        "left": 59.75775146484375,
+        "top": 17.70857747395837,
+        "right": 258.3086242675781,
+        "bottom": 332.31803385416674
+      },
+      "absolute": {
+        "left": 95.75775146484375,
+        "top": 731.4429524739584,
+        "right": 294.3086242675781,
+        "bottom": 1046.0524088541667
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false,
+      "angel": {
+        "guardianSrc": "/art/guardian-sigil-20261013/melee.webp",
+        "summoned": true,
+        "guardianOutsideFigure": true,
+        "headGap": 6,
+        "inside": true,
+        "stage": {
+          "left": 25,
+          "top": 151.734375,
+          "right": 365,
+          "bottom": 661.734375,
+          "width": 340,
+          "height": 510
+        },
+        "figure": {
+          "left": 36,
+          "top": 292.734375,
+          "right": 354,
+          "bottom": 642.734375,
+          "width": 318,
+          "height": 350
+        },
+        "guardian": {
+          "left": 137,
+          "top": 166.734375,
+          "right": 253,
+          "bottom": 286.734375,
+          "width": 116,
+          "height": 120
+        }
+      }
+    },
+    {
+      "surface": "hero-hall",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-hero-hall.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 66,
+        "height": 96
+      },
+      "visible": {
+        "left": 4.619873046875,
+        "top": 3.0201314290364394,
+        "right": 61.3775634765625,
+        "bottom": 92.97172037760419
+      },
+      "absolute": {
+        "left": 217.619873046875,
+        "top": 413.61388142903644,
+        "right": 274.3775634765625,
+        "bottom": 503.5654703776042
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "other-armory",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-other-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 320,
+        "height": 396
+      },
+      "visible": {
+        "left": 39.65673828125,
+        "top": 7.248830159505189,
+        "right": 280.429443359375,
+        "bottom": 388.78446451822924
+      },
+      "absolute": {
+        "left": 74.65673828125,
+        "top": 447.9988301595052,
+        "right": 315.429443359375,
+        "bottom": 829.5344645182292
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "expedition-card",
+      "width": 390,
+      "screenshot": "docs/thief/pilot-ui/390-expedition-card.png",
+      "src": "/art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 152,
+        "height": 220
+      },
+      "visible": {
+        "left": 9.8385009765625,
+        "top": 5.128692626953125,
+        "right": 142.20574951171875,
+        "bottom": 214.8734130859375
+      },
+      "absolute": {
+        "left": 223.8385009765625,
+        "top": 127.33181762695312,
+        "right": 356.20574951171875,
+        "bottom": 337.0765380859375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "home",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-home.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 72,
+        "height": 99
+      },
+      "visible": {
+        "left": 6.84619140625,
+        "top": 3.2979736328125,
+        "right": 65.162841796875,
+        "bottom": 95.70458984375
+      },
+      "absolute": {
+        "left": 39.84619140625,
+        "top": 353.5635986328125,
+        "right": 98.162841796875,
+        "bottom": 445.97021484375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-current",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-lineage-current.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 84,
+        "height": 110
+      },
+      "visible": {
+        "left": 9.72100830078125,
+        "top": 3.8477071126301894,
+        "right": 74.28793334960938,
+        "bottom": 106.15067545572913
+      },
+      "absolute": {
+        "left": 34.72100830078125,
+        "top": 410.7383321126302,
+        "right": 99.28793334960938,
+        "bottom": 513.0413004557291
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-tree",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-lineage-tree.png",
+      "src": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 38,
+        "height": 55
+      },
+      "visible": {
+        "left": 2.739990234375,
+        "top": 1.74041748046875,
+        "right": 35.2471923828125,
+        "bottom": 53.250244140625
+      },
+      "absolute": {
+        "left": 55.739990234375,
+        "top": 261.31854248046875,
+        "right": 88.2471923828125,
+        "bottom": 312.828369140625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "own-armory",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-own-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 482,
+        "height": 446
+      },
+      "visible": {
+        "left": 114.53271484375,
+        "top": 22.5623779296875,
+        "right": 367.546142578125,
+        "bottom": 423.47900390625
+      },
+      "absolute": {
+        "left": 257.53271484375,
+        "top": 643.4842529296875,
+        "right": 510.546142578125,
+        "bottom": 1044.40087890625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false,
+      "angel": {
+        "guardianSrc": "/art/guardian-sigil-20261013/melee.webp",
+        "summoned": true,
+        "guardianOutsideFigure": true,
+        "headGap": 7,
+        "inside": true,
+        "stage": {
+          "left": 132,
+          "top": 196.921875,
+          "right": 636,
+          "bottom": 826.921875,
+          "width": 504,
+          "height": 630
+        },
+        "figure": {
+          "left": 143,
+          "top": 361.921875,
+          "right": 625,
+          "bottom": 807.921875,
+          "width": 482,
+          "height": 446
+        },
+        "guardian": {
+          "left": 310,
+          "top": 211.921875,
+          "right": 458,
+          "bottom": 354.921875,
+          "width": 148,
+          "height": 143
+        }
+      }
+    },
+    {
+      "surface": "hero-hall",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-hero-hall.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 66,
+        "height": 96
+      },
+      "visible": {
+        "left": 4.619873046875,
+        "top": 3.0201314290364394,
+        "right": 61.3775634765625,
+        "bottom": 92.97172037760413
+      },
+      "absolute": {
+        "left": 406.619873046875,
+        "top": 441.61388142903644,
+        "right": 463.3775634765625,
+        "bottom": 531.5654703776041
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "other-armory",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-other-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 450,
+        "height": 396
+      },
+      "visible": {
+        "left": 104.65673828125,
+        "top": 7.248830159505189,
+        "right": 345.429443359375,
+        "bottom": 388.78446451822924
+      },
+      "absolute": {
+        "left": 263.65673828125,
+        "top": 447.9988301595052,
+        "right": 504.429443359375,
+        "bottom": 829.5344645182292
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "expedition-card",
+      "width": 768,
+      "screenshot": "docs/thief/pilot-ui/768-expedition-card.png",
+      "src": "/art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 250,
+        "height": 284.75
+      },
+      "visible": {
+        "left": 38.35595703125,
+        "top": 5.1773681640625,
+        "right": 211.689208984375,
+        "bottom": 279.83544921875
+      },
+      "absolute": {
+        "left": 498.35595703125,
+        "top": 120.1148681640625,
+        "right": 671.689208984375,
+        "bottom": 394.77294921875
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "home",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-home.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 72,
+        "height": 99
+      },
+      "visible": {
+        "left": 6.84619140625,
+        "top": 3.2979736328125,
+        "right": 65.162841796875,
+        "bottom": 95.70458984375
+      },
+      "absolute": {
+        "left": 189.84619140625,
+        "top": 353.5635986328125,
+        "right": 248.162841796875,
+        "bottom": 445.97021484375
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-current",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-lineage-current.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 84,
+        "height": 110
+      },
+      "visible": {
+        "left": 9.72100830078125,
+        "top": 3.8477071126301894,
+        "right": 74.28793334960938,
+        "bottom": 106.15067545572919
+      },
+      "absolute": {
+        "left": 184.72100830078125,
+        "top": 400.0195821126302,
+        "right": 249.28793334960938,
+        "bottom": 502.3225504557292
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "lineage-tree",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-lineage-tree.png",
+      "src": "art/thief-20261015/thief_f/portrait.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 38,
+        "height": 55
+      },
+      "visible": {
+        "left": 2.739990234375,
+        "top": 1.74041748046875,
+        "right": 35.2471923828125,
+        "bottom": 53.250244140625
+      },
+      "absolute": {
+        "left": 205.739990234375,
+        "top": 260.31854248046875,
+        "right": 238.2471923828125,
+        "bottom": 311.828369140625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "own-armory",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-own-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 498,
+        "height": 446
+      },
+      "visible": {
+        "left": 122.53271484375,
+        "top": 22.5623779296875,
+        "right": 375.546142578125,
+        "bottom": 423.47900390625
+      },
+      "absolute": {
+        "left": 513.53271484375,
+        "top": 643.4842529296875,
+        "right": 766.546142578125,
+        "bottom": 1044.40087890625
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false,
+      "angel": {
+        "guardianSrc": "/art/guardian-sigil-20261013/melee.webp",
+        "summoned": true,
+        "guardianOutsideFigure": true,
+        "headGap": 7,
+        "inside": true,
+        "stage": {
+          "left": 380,
+          "top": 196.921875,
+          "right": 900,
+          "bottom": 826.921875,
+          "width": 520,
+          "height": 630
+        },
+        "figure": {
+          "left": 391,
+          "top": 361.921875,
+          "right": 889,
+          "bottom": 807.921875,
+          "width": 498,
+          "height": 446
+        },
+        "guardian": {
+          "left": 566,
+          "top": 211.921875,
+          "right": 714,
+          "bottom": 354.921875,
+          "width": 148,
+          "height": 143
+        }
+      }
+    },
+    {
+      "surface": "hero-hall",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-hero-hall.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 66,
+        "height": 96
+      },
+      "visible": {
+        "left": 4.619873046875,
+        "top": 3.0201314290364394,
+        "right": 61.3775634765625,
+        "bottom": 92.97172037760413
+      },
+      "absolute": {
+        "left": 662.619873046875,
+        "top": 441.61388142903644,
+        "right": 719.3775634765625,
+        "bottom": 531.5654703776041
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "other-armory",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-other-armory.png",
+      "src": "art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 450,
+        "height": 396
+      },
+      "visible": {
+        "left": 104.65673828125,
+        "top": 7.248830159505189,
+        "right": 345.429443359375,
+        "bottom": 388.78446451822924
+      },
+      "absolute": {
+        "left": 519.65673828125,
+        "top": 447.9988301595052,
+        "right": 760.429443359375,
+        "bottom": 829.5344645182292
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    },
+    {
+      "surface": "expedition-card",
+      "width": 1280,
+      "screenshot": "docs/thief/pilot-ui/1280-expedition-card.png",
+      "src": "/art/thief-20261015/thief_f/hero.png?v=bbc390143930",
+      "native": {
+        "width": 1024,
+        "height": 1536,
+        "alphaBounds": {
+          "left": 52,
+          "top": 17,
+          "right": 998,
+          "bottom": 1516
+        },
+        "transparentFraction": 0.6984882354736328
+      },
+      "parent": {
+        "width": 250,
+        "height": 267
+      },
+      "visible": {
+        "left": 44.0291748046875,
+        "top": 5.160980224609375,
+        "right": 206.01666259765625,
+        "bottom": 261.8409423828125
+      },
+      "absolute": {
+        "left": 1001.0291748046875,
+        "top": 129.09848022460938,
+        "right": 1163.0166625976562,
+        "bottom": 385.7784423828125
+      },
+      "normalized": true,
+      "clipped": false,
+      "overflow": false
+    }
+  ],
+  "actions": [],
+  "errors": [],
+  "badResponses": [],
+  "sourceSHA256": {
+    "worker/public/index.html": "149df0225a1717b8f344aa518abc0eda23dac4c649476b80c96813f0c1185ed5",
+    "worker/public/game-brand.css": "88bf3a00f51bc60636edaed8c953d9d0b2c458a955d4fd0e8ea5e9be7d486b59",
+    "worker/public/styles.css": "64480e692afec4cf5afc6d315a012e131188cf49ef865fddaf0fe28bd2d25fbe",
+    "worker/public/battle.css": "18ea882862a4dd1f4ef86100cae07364c2832f3cc17277708f899df1720b3049",
+    "worker/public/lineage-ui.css": "060f1dff1d6819c717ed3d253fce8b9890b485cb1b5cb7f903a2f7a386929ea8",
+    "worker/public/ui-refined.css": "41cc52a66dd230b1f6e1266d93ac8cca8e804eac81b28d4597b246685946d303",
+    "worker/public/mythic-ui.css": "0ced690250e6d7ed161c14f3ac7d08fe53428cd6d5e58629d09697dc3d851580",
+    "worker/public/olympus-luxury.css": "f6d8c76a1a60c43ee0d51a67e9394d62d41e688ef327518a5d59584308e38067",
+    "worker/public/olympus-suite.css": "d62a617c32d54f0847911c1513f954e1bce3417b4a95b7d69bae3670e15b685f",
+    "worker/public/hero-display.css": "b69f830f541efd789d9ae8d8bb6ae2615ce6cf6c393b7f1f37d3f890a8a8e197",
+    "worker/public/hero-fx.css": "a2f7160e6de9698b82b583c593fd8c0f4d38f61653f80e9e972c3113c538de2b",
+    "worker/public/expedition-entry.css": "89e599d9dfcdac5f15c312674929bf9d172e8debaaaf504628b5b5b6bdcb3e66",
+    "worker/public/olympus-unified.css": "0ccc4968bedd04abf513ecc396b1963e69b1a83087adefc1e7c567b91352abee",
+    "worker/public/forge-ritual.css": "3e048876833bc8fb3389c0866cdbd2f7ef92ed7716ecf1817a11b4613cfc23fa",
+    "worker/public/bag-icons.css": "8b63f5c099497c20c05a0d564923b52bfda10e18dfa7c28cad75b50c930b8dda",
+    "worker/public/hero-size.css": "439f38d20d45e1ee987ab4fb8b9481e9a511cc1f106ca8f034e7676b2aaa64cc",
+    "worker/public/status-banner.css": "b16b512a7641907c02201796af6e1e4bb88476a5f5a8878cdcd240480f5e8f9a",
+    "worker/public/art/ui/nav-home-20261012.webp": "4faa84a87fcab83770745b41c2b4da2f73c1ad63b33c0179abf28f1b97e82b96",
+    "worker/public/art/ui/nav-bag-20261012.webp": "9ad59748eaa87f18801464b5d786adf6e85ba12be948f7794e3e2fcb3fb862e8",
+    "worker/public/art/ui/command-shop-20261012.webp": "5a168cbe39f267c3d76a8b4cdad9fe75e7cea560f004192d78f3d025bbee7b66",
+    "worker/public/art/ui/nav-boss-20261012.webp": "b8dd6652fe57d0a8c42e07f71941b78bf7b6d14daa38901e26fe9946ffeff852",
+    "worker/public/art/ui/command-trade-20261012.webp": "fb192d09b5d039f907e89e409b1d2e5e233bfbab85df3a0180d998b9a1e8b97d",
+    "worker/public/thief-class.js": "238137f52802c942832eb7358cd5ca4c50364c1cc46f31a98044943911b47363",
+    "worker/public/art.js": "dfc3f56b75d2a14a7ae9189cfc1861f0a52a6a5280b98e16797b21e1a538cbe8",
+    "worker/public/maps.js": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945",
+    "worker/public/map-video.js": "3c8eedb0074c9d494fe11b4ef24ca99dffff68380bb484f586dd3418c3800abc",
+    "worker/public/boss-waiting.css": "fbb98e39e8cb166724186403ab4c1584d3cfb96c1c705e6e256aa3bb33101423",
+    "worker/public/boss-waiting.js": "bf85e96c6c56aeb0faa3988eab3f5270bdda99ea9172ccd483b8d66cb279c35e",
+    "worker/public/map-motion.js": "5949d8982e06edda88ac4e9560f7d6444873080fd951507c1ef018ea9a329dbd",
+    "worker/public/thief-fx.js": "80bc52ff811d3dd257e6792dff61c7dc649c9c1c1967f20d680283656a2d2bd0",
+    "worker/public/skill-fx.js": "1a2dc78dd4dcbfca209c03a4352a8eddbf0b7e9d043482bdc1fadcf5d9988d6a",
+    "worker/public/elf-adv2-skill-fx.js": "082ba070e9bfaafabb3bca7998d273e9173c9db5831c21f4142202dd6fc572c8",
+    "worker/public/cinematic-fx.js": "2090afa92dfb05315c3c37d6a9ba98c3ac01ca57890b7feb990796468728b709",
+    "worker/public/hero-lavish-fx.js": "2413813a5ed37e8e4c4083906fe6b115eae6e2f77b7218352f71b11c3cde22a9",
+    "worker/public/branch-elf4-fx.js": "0c052cfacd6124539ff14b5be049ad21c1bcecf1a79744f3033c158f923c6589",
+    "worker/public/sword-adv4-fx.js": "a667101bc5ab78f2f90a67a197bd4a7dbabc2c846db983e9beffaaac4136fd9e",
+    "worker/public/hero-art-registry.js": "b41df047b8d32b567cef9d379d29d2b93c0084773e2c4668dc9c21cab4c2afc9",
+    "worker/public/hero-art-registry-fx.js": "bf24f615278842d7ae738cda99cdc98e9acee415068d84d7a60836597f509c26",
+    "worker/public/sword-branch-fx.js": "e06f910ae0f5f6af0de42007d9a3c2d335505cff4d23888ef9f41241c5a3291e",
+    "worker/public/elf-low-tier-weapon-fx.js": "4d8e1fe9c4d5ebcca3ca4f9c78038ae2f4999e9e0bf6518d365ba6718960f91f",
+    "worker/public/mage-actor-fx.js": "b5a9b260e860d3d43cde5b4c38298ac5a658e058496058b52ad3d8bf034c04c1",
+    "worker/public/hero-art-actor-adapters.js": "aec72e04143098e29b6bc88f084eb43fef79c7ce3549841aafcdd3f718e819ba",
+    "worker/public/battle.js": "c8b84460597c84dd8efa2c88744364b9b41854d35c410ce1733388160e319047",
+    "worker/public/gear-names.js": "9fab6971b51234c26254b9a57e2b3535b46d79fd25d0a610b349d1c50dd40e5a",
+    "worker/public/hero-fx.js": "9f0d5a3627ff0c9b395e6bd0b8644539a82b895e9a9ec5bdeaca46464541341e",
+    "worker/public/mythic-ui.js": "579415509e09c65b951aab8d78b3552422ff5e689e7498142634a00c5d44faf6",
+    "worker/public/guardian-assist-widget.js": "1548c5986b87225b73b35f559e82e7c2d60af447a5c2ce44684ede18b71c2dc5",
+    "worker/public/special-skill-widgets.js": "548ab7b86cca6baf27aace7d42f1dd614a747bd97cd765085f6318588e2933c2",
+    "worker/public/expedition-entry.js": "c9f2099e7196c21f663ff1de9790fec0a7f3317e9fdba234938d6336f3a02408",
+    "worker/public/monster-catalog.js": "a4d0534705d2d619d2c587ff0fae0457316b1c79db5ec01fd276b1388558f32e",
+    "worker/public/monster-expansion-catalog.js": "ef2a7046bb8bb579da5198c8102bb810c180b3c0daabff620e65d2d8f83c93d3",
+    "worker/public/monster-expansion.js": "4ced2ae24d355b47bc565cc7bdc1a300fc91f8bec90a1aec742fdc6887f2196c",
+    "worker/public/forge-ritual.js": "6e634c517ec278a6bbe9537c55d8f7fb5252cf940f825c03ff93488136c6bcb7",
+    "worker/public/market-sell.css": "2bfde2e3c03f6d75fc783b13fc9ff5347e0fec173a0ef9da1519e50ecc7bb31c",
+    "worker/public/market-sell.js": "df5d1cfd143e9893e248b1ec1f7966329f8634808a5b09efdbba8b2020469979",
+    "worker/public/market-exchange.css": "2436406ef8997bdc4a19bd80e7c67267ade54d88a2b219d6d38f3cc9e4e3579f",
+    "worker/public/market-exchange-history.css": "550eedb6f9090fe2c581d60c102a23ab5af99b7fd196662c0f3f32d05269752c",
+    "worker/public/market-exchange-history.js": "85c7a955b82c8181680819869441ec2ae842ce9974474a40ab4a1f4715ba56af",
+    "worker/public/market-exchange.js": "3c5e2770d8e7cb7def14777275be16a9417b5fd374d2b6cda671007fd52ef5e9",
+    "worker/public/collection-ui.css": "994fd5649b721a2b9836f0ead65c52929e3edc2c39cbc365187debd544934c2a",
+    "worker/public/collection-ui.js": "8b2ee86e023064de0eff8a72e74a69c748d7af41de48cccd88975d5cdca19a44",
+    "worker/public/guardian-sigil.css": "7cd44c6a2cbabdab397e71b2a3769d5627a6e8f04f7ef71299dd21853dc11072",
+    "worker/public/guardian-ritual-ui.css": "4a559c841195128723af8895284eb37b3ee67f7b8b70886d84c2b267f53816db",
+    "worker/public/guardian-fusion-ui.css": "770951523c2bf31c4f1cf239d9625d6abd9b3852d176fe08a7ad4048b308db75",
+    "worker/public/guardian-idle-fx.css": "0471106884f56f278550db0aa6a7bec2639ad3b047cd11f23f03c87798d889da",
+    "worker/public/guardian-idle-fx.js": "0ff93f81a7da86be0037bbeda54c91e6554ee7ff59ac51931f87c7973f1df0f7",
+    "worker/public/guardian-sigil-contract.js": "b2902224a9ab717af6ad335b0d2cf6bc8f91e99399c751a95dcdc7000f70a7a3",
+    "worker/public/guardian-fusion-batch.js": "186220c3c792b5a2b1faa6ed9b98899485cb4afac18b8b5e598f51d2b197942b",
+    "worker/public/guardian-fusion-ui.js": "a5ba6e85464d666e552ace7f10c8f8bcdb7728a211032a461e46cd3927e53d0b",
+    "worker/public/guardian-haptics.js": "bb8934461c5a2e0373312fea08c1bb322f516b644074e6823a2f8c6e26bc24c7",
+    "worker/public/guardian-pull.js": "b05a189c5f7001987c89db387c6ca4ae99030f3c377e9632ed3e380b20e33b36",
+    "worker/public/guardian-scene-media.js": "79bfd1a62ece160ff2a44a1b6143174e4a09c1a9373223391a96147326389f77",
+    "worker/public/guardian-worldtree.js": "1d7b70bed1faf6fa6f9c36aad8928ca8c4a7c456bb4db5ed7895bf1c61ab1660",
+    "worker/public/guardian-summon-gesture.js": "707c03d0740c854be02cba61d1b68e9e6b35539ad604e3f2b41baee872e449e5",
+    "worker/public/guardian-presentation.js": "a93a1dd32d9e442cf5589600c097019868f883f69551e5c1c461867d41e91be2",
+    "worker/public/guardian-auto-ui.js": "f45a966af6ef39854cbd91ec73f2580a6db20a5adce028eebaf041db56713a51",
+    "worker/public/guardian-ritual.js": "a823438d8acfe10c2cac7e6aa7c540ef177c3af6c0a72c51358e494c7681eed1",
+    "worker/public/guardian-sigil.js": "b07680771a4fbd42fefae8fcbc5d4437fc77f18f629bf2b82cb74ef6e77c6a85",
+    "worker/public/art/dungeons-20261011/skill-altar-banner.webp": "1916c2b728cf47cd6b28f61f5a046adfe1188b84bdd12f43f1e8f648d2622ea1",
+    "worker/public/background-workshop.css": "60db96f9614a53be8cad242fa490dad166b30b705a3ba8ae802aa400776da2b4",
+    "worker/public/background-workshop.js": "f81f8a7a1be5ee7c2ff40077e933e3b365779b4fa23b41fe09d83622ae90fe08",
+    "worker/public/auto-reroll-ui.js": "0b6c897a7fa50917e85b412089d77d57914e57916b21252aafed12fbefa87ca0",
+    "worker/public/operation-notices.js": "226aaa7d4aca395073ac484de0a7e7d52d6ac7f1d6363d90a22acda16b88c0e8",
+    "worker/public/guardian-shop.css": "c9d87316b10daf6b934e2f55182b176dec7548df66c88e0f23b114472800c278",
+    "worker/public/guardian-shop.js": "e0dd85dfc03fee67f5b95775ca889094600ff1ab134cea98546effa849b8638d",
+    "worker/public/request-client.js": "48e6d5970695955da11bc5c615b4d26dab70119e676a054752e3b2569dbcb615",
+    "worker/public/journal.css": "b05f5fdbcf248d5cb26865ac561e32a207a772c0708e983e37aa7efe35880796",
+    "worker/public/journal.js": "24b70fadfdaf5f4d9bd5fe16da58baa2d26ddd50c3fa74561616a491a5c5685e",
+    "worker/public/coin-ui.js": "bd8a2d89b19fdbb82e6b8d8ebb68e685bdd529963f43a00ad094afde91d21972",
+    "worker/public/hero-size.js": "3ffaf7effdd9ae10abe123b58487bfda38597fe764c99aa1601271238fec4743",
+    "worker/public/hero-armory.css": "8ad2eb92f373fb484752bcc39fdc8e6f37b9d06dc3e7e51797e86921bca243bf",
+    "worker/public/art/ui/nav-class-20261012.webp": "52f650147c8ec5bc3d8c025d7b8250160404bc3c09317b7cb252eaf7ffc465fe",
+    "worker/public/monster-layout.json": "9719fe9dceef28a56836380bba1afca898b28084644990e109442fbd2750d174",
+    "worker/public/theme-greek.css": "6c9d0937075468fd3085f9e5e25f8540a9f07944d6fbe2fc1bd76a837aed831f",
+    "worker/public/art/v2/heroes.json": "383e93833b8b4545e283a41ca545789bcd59e46cf86d5a984ad3907239021c22",
+    "worker/public/art/hero-display-hd-20261011/manifest.json": "a57d07fe84fb6f9648b624c42bd8af5923f785a7d421cd51d58cfc3d0583854b",
+    "worker/public/art/ui/olympus-sanctuary-v1.png": "f345dacf3a0135f805f3719ca23c4f14003f6cae6c11974e5d5850d2303f2298",
+    "worker/public/art/thief-20261015/thief_f/hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+    "worker/public/art/ui/hero-hall-v1.webp": "92771dde074ca4ff24a2248dbf22d5562336a3dd41826abbd24748aa1e0a612a",
+    "worker/public/sword-branch-manifest.json": "6b45cb5f17b7d2325612061d64fb1af17235746ad23cc13232499c177dda977e",
+    "worker/public/art/v2/bg_myth02.webp": "5a6c03a425a97829619926cbaba20ce88276fead3bba4d931e5027c851e948d9",
+    "worker/public/art/guardian-controls-20261014/divine-mist-atlas.png": "e809cfe5ec80417f793fec64ad174fcaa1fa906f3381f42b442e842c26b4592d",
+    "worker/public/art/v1/ui_marble.webp": "870e21a21db4c5c02cd9c1c17ec73fdf6e7fecd65acbcb9bfa975c6e6ee81763",
+    "worker/public/art/thief-20261015/thief_f/character.webp": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42",
+    "worker/public/art/guardian-sigil-20261013/melee.webp": "bc2818dc54e95069f62e16684b0ee2ad02b436eecf3895ab7ee6bc2747ed8269",
+    "worker/public/art/ui/hud-coin-v2.webp": "6d58e5544b7d6c0b060df5eab8446434a7da29d6bad2ce0035fa37a75b54886f",
+    "worker/public/art/ui/command-boss_time-20261012.webp": "b195e3ef04513ea79d1893bec563202a1541d3a08429dfb25ef8f8a87e3b436e",
+    "worker/public/art/ui/hermes-market-v1.webp": "9894f20263bea1bfcf92ad9e966fc33fe1f725707a66b6be35d1e93ce62a36fa",
+    "worker/public/art/ui/journal-cover-20261013.webp": "3f2fb33e96658512f6e8af1472e7d5a6c12c232436931150cabdd84058d19e37",
+    "worker/public/art/ui/fate-oracle-v1.webp": "6d876f979b7de1528b8a008bc11de8ac61b700a2e12d27b2acbbfa617ca4e999",
+    "worker/public/art/v2/mon_temple_statue.webp": "6000277f02e712fd334e1d2cf3b946f0f0bde263d1d72af39e4e7db4ff4d9e51",
+    "worker/public/art/v2/mon_temple_statue_attack.webp": "f8c64fda431c280f9900458db8506b828b60469ed48927b46d99c770a2a43c8e",
+    "worker/public/art/thief-20261015/thief_f/portrait.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+    "worker/public/art/ui/hero-fx-20261011/aegis.webp": "03516debd2d157985e1153833981cef38f2d58143efae9f102faf759a5107065",
+    "worker/public/art/ui/hero-fx-20261011/spark.webp": "a484dfcc9cd7fa3957dd90cc0129493c5e4c3888ad5eb6785ef7e8e9b961d58e",
+    "worker/public/art/guardian-cards-20261014/melee.webp": "f229594f7d2019991948194b24812332d5932f9ae7d7d3723a70f3617a659cd8",
+    "worker/public/art/collections-20261013/collection_1.webp": "d373e4a35eb020e1f2e1132cfd0403063874cc8b1df5fda19cea6ceb2544b2c4",
+    "worker/public/art/collections-20261013/collection_2.webp": "30e9a527731d46f4addc3a9a4dfca85ebfe34eb1455b8849bca91c032e541321",
+    "worker/public/art/collections-20261013/collection_3.webp": "fa91f7d3356af100f89e9a9d47b7af6f13369c5128bbb92adc26e667f908346d",
+    "worker/public/art/v2/bg_town.webp": "3d6e093194593d2c4c8afdfe5107e2aafbc64b58c34c1d0851f36e4e4e635e65",
+    "worker/public/expedition/index.html": "9d09197eb832447d3e452be6ddc473ab9d653f5c60e19d36b001dc92b58686e6",
+    "worker/public/expedition/review.css": "03c6a6ca72b568368ad6a8ad0c928cf0967511a77c16cae2f94f0445c28d7d78",
+    "worker/public/expedition/combat-playback.css": "276c837abee4a71481db93fd32d92bc4e5dce9dd0befafdae6ec944acb391f80",
+    "worker/public/expedition/live.js": "2d46de9edd60d671e67f38fe1838df49482da49a61984c04ba55346a5b9aa73e",
+    "worker/public/art/v2/mon_temple_owl.webp": "8e95ee7e44aa8ea47b1b96f99c9031b591206df76076c4a65ee59599f1024476",
+    "worker/public/art/v2/mon_temple_owl_attack.webp": "0b487724a05815eff4cfd568733dbaeb8308194ff6da49e21721d305b4e0f400",
+    "worker/public/guardian-party.js": "72354202d159f7f36b4562f359d3428e7b3ba15e212cb9a1026fbf33e346ac5b",
+    "worker/public/expedition/combat-playback.js": "4aa0e4bba5134039e054680c4999b2836c026bd1dd2d321c584924cf4bbb100b",
+    "worker/public/expedition/hero-art.js": "274ade81756db36539db44ea98586e344e147f052992d4739e2ed34059296566",
+    "worker/public/expedition/dungeon-art.js": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d",
+    "worker/public/expedition/catalogue.js": "180f4a0099622d29b351b3b2cc42c2af55ba4ad6a37aefb0b278061db2b67bfc",
+    "worker/public/expedition/hero-art-playback.js": "3ab5d88906971defccdebcdde38c9fc0605f060a1270affca2a02e51c6c66408",
+    "worker/public/expedition/assets/existing/map02.webp": "5a6c03a425a97829619926cbaba20ce88276fead3bba4d931e5027c851e948d9",
+    "worker/public/art/collections-20261013/collection_4.webp": "94e947ec68742fb630d8c953ea00436caab1003758fa53fc9f3736606ffbdae9",
+    "worker/public/art/collections-20261013/collection_5.webp": "b43f1a9e7db88045aa43c7c2af66725c816264b2a8b40d8551eed0e29fc5275f",
+    "worker/public/art/collections-20261013/collection_6.webp": "833221d059a0f3a44c06898a0425515fa2e5504dce9b3efdb3fd3307f6885518",
+    "worker/public/art/collections-20261013/collection_7.webp": "d7901ae9d0d463273ae5a709436313751eabd453f1fe44422938dea8b68d79ea",
+    "worker/public/art/collections-20261013/collection_8.webp": "ec13cdbc20cab0f178cfc217e49448b428cc0be9abed0f7fced33f4cbd91961f",
+    "worker/public/art/collections-20261013/collection_9.webp": "3ee716abd102e4605da162f159e903198a360f0e2c5fb97bada77af99c4e0903",
+    "worker/public/app.js": "6f35c55c81f3496591f07bd2ebc3682f1e318b81bb52b68da338002499aa8563"
+  },
+  "apiRequests": [
+    {
+      "action": "meta",
+      "id": "811"
+    },
+    {
+      "action": "characters",
+      "id": "811"
+    },
+    {
+      "action": "select",
+      "id": "811"
+    },
+    {
+      "action": "shop",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "trade/list",
+      "id": "811"
+    },
+    {
+      "action": "trade/requests",
+      "id": "811"
+    },
+    {
+      "action": "hall/list",
+      "id": "811"
+    },
+    {
+      "action": "hall/get",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "party/list",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "meta",
+      "id": "811"
+    },
+    {
+      "action": "characters",
+      "id": "811"
+    },
+    {
+      "action": "select",
+      "id": "811"
+    },
+    {
+      "action": "shop",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "trade/list",
+      "id": "811"
+    },
+    {
+      "action": "trade/requests",
+      "id": "811"
+    },
+    {
+      "action": "hall/list",
+      "id": "811"
+    },
+    {
+      "action": "hall/get",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "party/list",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "meta",
+      "id": "811"
+    },
+    {
+      "action": "characters",
+      "id": "811"
+    },
+    {
+      "action": "select",
+      "id": "811"
+    },
+    {
+      "action": "shop",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "trade/list",
+      "id": "811"
+    },
+    {
+      "action": "trade/requests",
+      "id": "811"
+    },
+    {
+      "action": "hall/list",
+      "id": "811"
+    },
+    {
+      "action": "hall/get",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "party/list",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "meta",
+      "id": "811"
+    },
+    {
+      "action": "characters",
+      "id": "811"
+    },
+    {
+      "action": "select",
+      "id": "811"
+    },
+    {
+      "action": "shop",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "me",
+      "id": "811"
+    },
+    {
+      "action": "trade/list",
+      "id": "811"
+    },
+    {
+      "action": "trade/requests",
+      "id": "811"
+    },
+    {
+      "action": "hall/list",
+      "id": "811"
+    },
+    {
+      "action": "hall/get",
+      "id": "811"
+    },
+    {
+      "action": "journal",
+      "id": "811"
+    },
+    {
+      "action": "ledger",
+      "id": "811"
+    },
+    {
+      "action": "expedition/me",
+      "id": "811"
+    },
+    {
+      "action": "party/list",
+      "id": "811"
+    }
+  ]
+}

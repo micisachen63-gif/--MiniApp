@@ -45,7 +45,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
       mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue,
       penaltiesToday: char.penalty_day && char.penalty_day === new Date(now + 8 * 3600e3).toISOString().slice(0, 10) ? char.penalties_today : 0,
       deathsTotal: char.deaths_total, bossDownUntil: char.boss_down_until && char.boss_down_until > now ? char.boss_down_until : null, lastReselectAt: char.last_reselect_at },
-    stats: { ...guardianStatsView(s,char), weaponElem:s.weaponElem,elementResist:s.elementResist,elementResistance:s.elementResistance,def: s.def, maxHp: s.maxHp, maxMp: s.maxMp, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 10, standard: s.std, r: Math.round(s.r * 100) / 100, skill: s.skill, passive: node.passiveText, taken: Math.round(s.taken * 100) / 100, element: s.element },
+    stats: { ...guardianStatsView(s,char), attackSpeedMultiplier:s.attackSpeedMultiplier,hitAttackMultiplier:s.hitAttackMultiplier, weaponElem:s.weaponElem,elementResist:s.elementResist,elementResistance:s.elementResistance,def: s.def, maxHp: s.maxHp, maxMp: s.maxMp, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 10, standard: s.std, r: Math.round(s.r * 100) / 100, skill: s.skill, passive: node.passiveText, taken: Math.round(s.taken * 100) / 100, element: s.element },
     guardian: char.guardian||null,
     guardianSupply:assistSupply(char,inv,char.guardianAssistSettings||activeSettings().assist),
     guardianStoneSupply:(()=>{try{return JSON.parse(char.special_json||'{}').guardianStoneSupply===true;}catch{return false;}})(),
@@ -62,7 +62,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     branches2: !gate.canAdvance && tier >= 2 ? branchChoices(char.base_class, 2, char.class_path).map(branchView) : [],
     report: report ? { ...report, relics: (report.relics || []).map((r) => ({ id: r.id, name: r.name, slot: r.slot, kind: r.kind, classReq: r.class_req, tier: r.tier })), eliteGear: (report.eliteGear || []).map((r) => ({ id: r.id, name: r.name, slot: r.slot, kind: r.kind, classReq: r.class_req, tier: r.tier })) } : null,
     // v0.4 battle animation feed: the idle tick's real numbers so the Mini App can replay `report` consistently
-    battle: { idleCombat:idleCombatState(char), atk: s.atk, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 1000, skill: s.skill, taken: s.taken, hpLossPerTick: Math.round(s.hpLoss * 10) / 10, eliteBurst: Math.round(s.burst),
+    battle: { attackSpeedMultiplier:s.attackSpeedMultiplier,hitAttackMultiplier:s.hitAttackMultiplier,idleCombat:idleCombatState(char), atk: s.atk, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 1000, skill: s.skill, taken: s.taken, hpLossPerTick: Math.round(s.hpLoss * 10) / 10, eliteBurst: Math.round(s.burst),
       killsPerTick: Math.round(s.killsPerTick * s.g * 100) / 100, mapId: map.id, monsters: monsterPool(map.id).map(m=>m.name),monsterPool:monsterPool(map.id),elitePool:monsterPool(map.id,'elite'),elite: map.elite, autoRedPct: char.auto_red_pct },
     nextBoss: nextSlot(now),
   };

@@ -100,6 +100,16 @@ function impact(scene,p,before,after,round=p.round){
  }
  applySnapshot(scene,p,after,round);
 }
+// A replay may split only the exact strike HP transitions already settled by the server.
+// MP/healing/final buffs stay on the one authoritative action snapshot.
+export function combatStrikeSteps(event,before){
+ const fallback=[event.after],strikes=event.strikes;
+ if(event.base!=='thief'||event.skillId!=='attack'||!Array.isArray(strikes)||!strikes.length||strikes.length>3||!finite(before?.enemyHp)||!finite(event.after?.enemyHp))return fallback;
+ let hp=before.enemyHp,total=0;
+ for(const strike of strikes){if(!finite(strike.damage)||strike.damage<0||strike.beforeHp!==hp||!finite(strike.afterHp)||hp-strike.afterHp!==strike.damage)return fallback;total+=strike.damage;hp=strike.afterHp;}
+ if(total!==event.damage||hp!==event.after.enemyHp)return fallback;
+ return strikes.map((strike,index)=>index===strikes.length-1?event.after:{...before,enemyHp:strike.afterHp});
+}
 export async function playCombat(scene,p){
  if(!scene)return;
  const artWarm=preparePartyArt(p.members,(p.battleTurns||[p.battleTurn]).filter(Boolean).flatMap(t=>t.events||[]));
@@ -131,14 +141,19 @@ export async function playCombat(scene,p){
     const actor=event.actorId==='boss'?boss:heroes.find(el=>el.dataset.memberId===String(event.actorId));
     const member=p.members.find(m=>String(m.id)===String(event.actorId));
     const offensive=event.skillId==='attack'||Number(event.damage)>0||event.after?.enemyHp<previous?.enemyHp;
-    if(actor&&actor!==boss&&!fast&&offensive)artAction=startRegistryAction(scene,actor,boss,member,event,{duration:windup+pause,impactAt:windup,isCancelled:cancelled});
-    if(actor&&!artAction)actor.classList.add(event.skillId==='defend'?'combat-guard':'combat-strike');
-    if(actor&&actor!==boss&&event.after?.enemyHp<previous?.enemyHp&&!fast&&!artAction?.hasFx)effect(scene,actor,boss,event.base==='archer'?'arrow':event.base==='mage'?'magic':'slash');
-    await sleep(windup);if(cancelled())return;
-    // Paint the exact authored release pose before applying the server impact snapshot.
-    artAction?.draw(windup/(windup+pause));
-    impact(scene,p,previous,event.after,turn.round);previous=event.after||previous;
-    await sleep(pause);artAction?.stop();artAction=null;[boss,...heroes].forEach(el=>el.classList.remove('combat-strike','combat-hit','combat-guard'));
+    const steps=combatStrikeSteps(event,previous),cycleWindup=windup/steps.length,cyclePause=pause/steps.length;
+    for(let strikeIndex=0;strikeIndex<steps.length;strikeIndex++){
+     if(cancelled())return;
+     const after=steps[strikeIndex],strikeEvent={...event,strikeIndex,strikeCount:steps.length};
+     if(actor&&actor!==boss&&!fast&&offensive)artAction=startRegistryAction(scene,actor,boss,member,strikeEvent,{duration:cycleWindup+cyclePause,impactAt:cycleWindup,isCancelled:cancelled});
+     if(actor&&!artAction)actor.classList.add(event.skillId==='defend'?'combat-guard':'combat-strike');
+     if(actor&&actor!==boss&&after?.enemyHp<previous?.enemyHp&&!fast&&!artAction?.hasFx)effect(scene,actor,boss,event.base==='archer'?'arrow':event.base==='mage'?'magic':'slash');
+     await sleep(cycleWindup);if(cancelled())return;
+     // Each cycle traverses the complete native sequence, including its authored recovery.
+     artAction?.draw(cycleWindup/(cycleWindup+cyclePause));
+     impact(scene,p,previous,after,turn.round);previous=after||previous;
+     await sleep(cyclePause);if(event.base==='thief')artAction?.draw(1);artAction?.stop();artAction=null;[boss,...heroes].forEach(el=>el.classList.remove('combat-strike','combat-hit','combat-guard'));
+    }
    }
    if(cancelled())return;
    // Mana recovery and floor-clear recovery are real server deltas as well.

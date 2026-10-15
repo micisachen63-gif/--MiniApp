@@ -1,5 +1,6 @@
 import {expandMapData,MONSTER_ITEMS} from './monster-data.js';
 import { BOOK_ITEMS } from './special-data.js';
+import { THIEF_CLASS, THIEF_BRANCHES2, THIEF_WEAPONS, THIEF_ARMOR } from './thief-data.js';
 // 小精靈 RPG — static game data (DESIGN.md v0.5). Pure data, no I/O.
 
 export const TICK_MS = 60_000;
@@ -48,6 +49,7 @@ export const RARITY_KEYS = Object.freeze(Object.keys(RARITIES));
 // ---- classes (tier 0 + tier 1; deeper tiers are P2/P3) ----------------------------------------
 // skill: cost MP, mult × ATK, targets; passive keys: takenPct, atkPct, expPct, freeCastPct, critPct, killPct, elemPct
 export const CLASSES = Object.freeze({
+  thief: THIEF_CLASS,
   sword: {
     key: 'sword', name: '劍士', emoji: '⚔️', blurb: '血厚耐打，主要耗紅水、最省藍水',
     atk: [12, 2.6], hp: [120, 24], mp: [30, 3], def: [6, 1.6], taken: 0.85,
@@ -82,12 +84,15 @@ export const CLASSES = Object.freeze({
     },
   },
 });
-export const CLASS_KEYS = Object.freeze(Object.keys(CLASSES));
+// Candidate classes remain available to pure rule tests, but cannot enter public creation or random relic drops.
+export const ALL_CLASS_KEYS = Object.freeze(Object.keys(CLASSES));
+export const CLASS_KEYS = Object.freeze(ALL_CLASS_KEYS.filter(key => CLASSES[key].releaseReady !== false));
 export const BRANCH_KEYS = Object.freeze(['A', 'B']);
 export const BRANCH2_KEYS = Object.freeze(['1', '2']);
 /** v0.5 二轉 (Lv60 + 樹王之心) — DESIGN §6.2–6.4. The tier-2 passive stacks on top of the tier-1 passive.
  *  lifestealPct / healPerCastPct are real in 決鬥 and modelled as a damage-taken cut in the idle math (§6.6). */
 export const BRANCHES2 = Object.freeze({
+  thief: THIEF_BRANCHES2,
   sword: {
     A: { 1: { name: '血怒戰神', skill: { name: '血之狂怒', cost: 16, mult: 2.9, targets: 3 }, passive: { text: '嗜血：吸血 8%', lifestealPct: 0.08 }, blurb: '越打越有血的範圍狂戰' },
          2: { name: '劍聖', skill: { name: '一閃', cost: 18, mult: 3.4, targets: 1 }, passive: { text: '劍心：爆擊 +20%', critPct: 0.20 }, blurb: '單體爆發最高' } },
@@ -323,6 +328,7 @@ export const PK = Object.freeze({
 
 // weapon kinds: class + optional first-advancement branch
 export const WEAPON_KINDS = Object.freeze({
+  ...THIEF_WEAPONS,
   sword: {
     cls: 'sword', branch: null, type: '單手劍',
     names: {
@@ -405,10 +411,11 @@ export const WEAPON_KINDS = Object.freeze({
     bonus: { atkPct: 0.10, expPct: 0.02 }, desc: 'ATK +10%、獵鷹/召喚類 +20%',
   },
 });
-export const GENERAL_WEAPON = Object.freeze({ sword: 'sword', mage: 'staff', archer: 'longbow' });
-export const COUNTERPART_WEAPON = Object.freeze({ greatsword: 'sword_shield', sword_shield: 'greatsword', elem_staff: 'wand', wand: 'elem_staff', compound_bow: 'crossbow', crossbow: 'compound_bow' });
+export const GENERAL_WEAPON = Object.freeze({ sword: 'sword', mage: 'staff', archer: 'longbow', thief: 'dagger' });
+export const COUNTERPART_WEAPON = Object.freeze({ greatsword: 'sword_shield', sword_shield: 'greatsword', elem_staff: 'wand', wand: 'elem_staff', compound_bow: 'crossbow', crossbow: 'compound_bow', dual_daggers: 'throwing_blades', throwing_blades: 'dual_daggers' });
 
 export const ARMOR_FAMILIES = Object.freeze({
+  thief: THIEF_ARMOR,
   sword: { key: 'plate', name: '板甲', defMult: 1.0, perPiece: { maxHpPct: 0.03 }, desc: '每件 MaxHP +3%',
     pieces: { helmet: '頭盔', armor: '板甲', gloves: '鐵護手', boots: '鐵靴' } },
   archer: { key: 'leather', name: '皮甲', defMult: 0.75, perPiece: { takenPct: -0.02 }, desc: '每件受傷 −2%',
