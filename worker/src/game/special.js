@@ -52,11 +52,13 @@ const consume=(a,type)=>{for(const b of a.buffs||[])if(b.type===type&&b.uses!=nu
 const lowest=team=>team.filter(a=>a.hp>0).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];
 export function damageEnemy(enemy,raw,m,now,actor=null){
  raw=actor?elementalDamage(raw*guardianDamageMultiplier(actor),actor,enemy):raw;
+ if(enemy.breakOnly&&!(m.shieldBonus||m.penetrate||m.breakDef))return 0;
+ if(enemy.adds?.hp>0){if((m.targets||1)>=3)enemy.adds.hp=Math.max(0,enemy.adds.hp-Math.max(1,Math.round(raw)));return 0;}
  if(enemy.combatant){return receiveDamage(enemy,raw*(enemy.damageScale??1)*(1+valueOf(enemy,'mark',now)),[enemy],actor||{},now,{elementApplied:true,defMultiplier:(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0)),shieldBonus:m.shieldBonus||0});}
  const def=enemy.def*(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0));
  let amount=Math.max(1,Math.round(raw*100/(100+Math.max(0,def))*(1+valueOf(enemy,'mark',now))));
  let shield=enemy.shield||0;if(shield){const absorbed=Math.min(shield,amount*(1+(m.shieldBonus||0)));enemy.shield-=absorbed;amount=Math.max(0,amount-absorbed/(1+(m.shieldBonus||0)));}
- const dealt=Math.min(enemy.hp,Math.round(amount),enemy.damageBudget??Infinity);enemy.hp-=dealt;if(enemy.damageBudget!=null)enemy.damageBudget-=dealt;return dealt;
+ const dealt=Math.min(Math.max(0,enemy.hp-(enemy.phaseFloorHp||0)),Math.round(amount),enemy.damageBudget??Infinity);enemy.hp-=dealt;if(enemy.damageBudget!=null)enemy.damageBudget-=dealt;return dealt;
 }
 export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={}){
  const m=mechanics[s.id];if(!m)throw new GameError('skill','技能未定義');
@@ -69,19 +71,20 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.execute&&enemy.hp/enemy.maxHp<=m.execute)raw*=1+m.executeBonus;
  if(m.uninterruptBonus&&!enemy.interruptible)raw*=1+m.uninterruptBonus;
  const crit=rng()<Math.min(.8,(actor.crit||.05)+valueOf(actor,'critUp',now));if(crit)raw*=1.5;
- const damage=coef>0?damageEnemy(enemy,raw,m,now,actor):0;
+ const targetsCount=Number(String(s.damage||'').match(/最多\s*(\d+)\s*敵/)?.[1]||1);
+ const damage=coef>0?damageEnemy(enemy,raw,{...m,targets:targetsCount},now,actor):0;
  if(damage){consume(actor,'nextDamage');consume(actor,'critUp');consume(actor,'enemyNextReduce');if(s.advancementTier<4)consume(actor,'echo');}
  if(m.breakDef)buff(enemy,'breakDef',m.breakDef,now);if(m.mark)buff(enemy,'mark',m.mark,now);
  if(m.interrupt&&enemy.windup&&enemy.interruptible)enemy.interrupted=true;
  if(m.enemyNextReduce&&!m.addsOnly)buff(enemy,'enemyNextReduce',m.enemyNextReduce,now,60,1);
- const targets=m.all?team.filter(a=>a.hp>0):[m.target||m.lowest?target:actor];let healed=0,shielded=0;
+ const targets=m.all?team.filter(a=>a.hp>0):[m.target||m.lowest?target:actor];let healed=0,shielded=0,cleansed=0;
  for(const a of targets){
   const healing=(actor.atk*(m.heal||0)+damage*(m.healDamage||0))*(1+(actor.affixPct?.healingPct||0));const heal=m.healCap?Math.min(healing,a.maxHp*m.healCap):healing;
   const gained=Math.min(a.maxHp-a.hp,Math.round(heal));a.hp+=gained;healed+=gained;
   let shield=actor.atk*(m.shield||0)*(1+(actor.affixPct?.shieldPct||0));if(m.overflow)shield+=Math.min(actor.atk*m.overflowCap,Math.max(0,heal-gained)*m.overflow);
-  if(shield){shielded+=Math.round(shield);buff(a,'shield',Math.round(shield),now);}
+  if(shield){shielded+=Math.round(shield);buff(a,'shield',Math.round(shield),now);a.buffs.find(b=>b.type==='shield').ownerId=actor.id;}
   for(const type of ['atkUp','takenUp','reduce','nextReduce','nextDamage','damageUp','echo','critUp'])if(m[type])buff(a,type,m[type],now,m.duration||60,['nextReduce','nextDamage','echo'].includes(type)?1:type==='critUp'?m.critUses:null);
-  if(m.cleanse)a.debuffs=(a.debuffs||[]).slice(1);
+  if(m.cleanse){if(a.debuffs?.length)cleansed++;a.debuffs=(a.debuffs||[]).slice(1);}
  }
  if(m.guard){actor.guard={target:target.id,pct:m.guard,until:now+60000};}
  if(m.reflect)buff(actor,'reflect',actor.atk*m.reflect,now,60,1);
@@ -90,16 +93,16 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.leech)actor.hp=Math.min(actor.maxHp,actor.hp+Math.round(Math.min(damage*m.leech,actor.maxHp*m.leechCap)));
  if(m.dot)enemy.dots=(enemy.dots||[]).concat({owner:actor.id,source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.dot*(1+(actor.affixPct?.dotPct||0)),left:m.dotCount,next:now+30000});
  if(m.summon)actor.summon={source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.summon*(1+(actor.affixPct?.summonPct||0)),left:m.summonCount,next:now+30000};
- return {damage,healed,shielded,targets:targets.map(a=>a.id),crit:damage>0&&crit};
+ return {damage,healed,shielded,cleansed,targets:targets.map(a=>a.id),crit:damage>0&&crit};
 }
 export function receiveDamage(a,raw,team,enemy,now,{guarded=false,elementApplied=false,defMultiplier=1,defApplied=false,shieldBonus=0}={}){
  if(a.hp<=0)return 0;
  if(!guarded&&!elementApplied)raw=elementalDamage(raw,enemy,a,{bonus:false});
  const defense=defApplied?1:(a.defenseScale??100)/((a.defenseScale??100)+Math.max(0,a.def*defMultiplier));
  let amount=guarded?raw:raw*takenMultiplier(a)*defense*(1-valueOf(a,'reduce',now))*(1-valueOf(a,'nextReduce',now))*(1+valueOf(a,'takenUp',now));if(!guarded)consume(a,'nextReduce');
- if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
- const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now);consume(a,'reflect');damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
- const taken=Math.min(a.hp,Math.round(Math.max(0,amount)));a.hp-=taken;
+ if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;if(guard.contribution)guard.contribution.guarded+=Math.round(share);receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
+ const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);const owner=team.find(x=>x.id===shield.ownerId);if(owner?.contribution)owner.contribution.shielding+=Math.round(absorbed);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now);consume(a,'reflect');damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
+ const taken=Math.min(a.hp,Math.round(Math.max(0,amount)));a.hp-=taken;if(a.contribution)a.contribution.taken+=taken;
  if(a.hp<=0&&valueOf(a,'lastStand',now)){a.hp=1;consume(a,'lastStand');}return taken;
 }
 // Executing a cast is atomic in the caller's player/party transaction.
