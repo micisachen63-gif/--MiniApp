@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "941f2d2362f4050e8517fa0b0a28633c1e6f2ebe",
+  "sourceCommit": "1e493645d09c3091a22ffb7ba746ac84f3efb01a",
   "service": "elf-rpg-api",
-  "productionVersion": "25d47210-39f1-415e-bfb6-b9ce76c18075",
+  "productionVersion": "a710b0ea-a74c-4541-b92a-28a5864a371c",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T09:11:39.154Z",
+  "verifiedAt": "2026-10-15T09:14:34.652Z",
   "runtimeSHA256": {
-    "index.js": "2a6d349cadd042a8696ced32da72d501899cac3d1f706dc6bda10f5ad5446432"
+    "index.js": "ef46743817e0c575db666ee833da1531e88637f3046ddfd526c0063eda046002"
   },
   "source": {
     "fileCount": 7170,
-    "sha256": "dca42cdfc840539b50bfbe2532fd2b890f3923ba196c4b1e44512cdf24e05737",
+    "sha256": "6921e4d676279d62b8c47546e99c87948ca4cff757d511676f7b63e6001a66e0",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -123,7 +123,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "e5416c52aa5a257735f15791bef8ec3112493012a0984170a46b80c699c54434"
+        "sha256": "d8374bab18adcfac320d5f188c7df710b42eb913cdab10cbbcf6c684dd196a80"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -28063,7 +28063,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "b754d6529938a5b947935e693e17b55c1c776a199ca3624d48a7eb52ad012ba7"
+        "sha256": "0450f89ea621d7cadf51d450135b756f6c05301016429047f5db6ea6d9cdc5ad"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28455,7 +28455,7 @@
       },
       {
         "file": "worker/src/game/constants.js",
-        "sha256": "9400f048531eddc7c1d625af5436c42062d8d47285be8ec677d572ae89421f4b"
+        "sha256": "98fb634e23e1c4cb3096c3810b1af0ad665a9908b4adf6888bdd68c1da63e8b5"
       },
       {
         "file": "worker/src/game/constants.js.backup-elf-redesign-20261010",
@@ -28583,7 +28583,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "635c1dc1cff8154e86f70cfcf06b8b38a44f321d46206af7721f046c136f8d7a"
+        "sha256": "0340a0ec1a58d6fe38a0d983ce3ef3b6b88a12a5e76fcfae55c836c322712980"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -28659,7 +28659,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "445e719a25c0204f3cfa5f70940a449e84fb405988ea6161c42805ae8f1843e1"
+        "sha256": "a717af1d2f402aa19058501f157b74b28bc03fd758c527bd16ce9583bd139726"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -28829,7 +28829,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "25d47210-39f1-415e-bfb6-b9ce76c18075",
+        "version_id": "a710b0ea-a74c-4541-b92a-28a5864a371c",
         "percentage": 100
       }
     ],
