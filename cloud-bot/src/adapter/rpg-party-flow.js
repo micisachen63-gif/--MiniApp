@@ -48,8 +48,8 @@ export function createPartyFlow({api,client,send,popup,st,save,chatId,deepLink,a
     const buttons=p.members.map((m,i)=>[btn(`${m.name}${m.hp===0?'（倒地）':''}`,`pz:${id}.${round}.${skillId}.${i}`)]);
     await api.call('editMessageText',{chat_id:cq.message.chat.id,message_id:cq.message.message_id,text:'選擇施放的隊友目標（隊伍技能會對全隊生效）：',reply_markup:{inline_keyboard:buttons}});
    }else{
-    const skills=(await client.call('/rpg/expedition/me',{tgId:tg})).skills;const buttons=me.special.loadout.map(id=>{const s=skills.find(s=>s.id===id);return [btn(`${s.name}｜MP ${s.mp}`,`pt:${p.id}.${p.round}.${s.id}`)];});buttons.push([btn('防禦 · 不耗魔',`pz:${p.id}.${p.round}.defend.0`)]);
-    await send(`第 ${p.round} 回合｜${me.name} MP ${me.mp}/${me.maxMp}\n選技能，再選擇隊友；結算前可改選。`,{reply_markup:{inline_keyboard:buttons}},tg);
+    const skills=(await client.call('/rpg/expedition/me',{tgId:tg})).skills;const buttons=me.special.loadout.map(id=>{const s=skills.find(s=>s.id===id);return [btn(`${s.name}｜MP ${s.mp}`,`pt:${p.id}.${p.round}.${s.id}`)];});for(const s of p.me.roleSkills||[])buttons.push([btn(`${s.name}｜MP ${s.mp}`,`pz:${p.id}.${p.round}.${s.id}.0`)]);buttons.push([btn('防禦 · 不耗魔',`pz:${p.id}.${p.round}.defend.0`)]);
+    await send(`第 ${p.round} 回合｜${me.name} MP ${me.mp}/${me.maxMp}\n職責戰技直接選擇；其他技能再選隊友，結算前可改選。`,{reply_markup:{inline_keyboard:buttons}},tg);
    }await popup(cq,action==='ps'?'技能選單已私訊，選完後返回群組':'請選隊友',false);return {rpg:'party-skill-menu'};
   }
   let r;if(action==='pr')r=await client.call('/rpg/party/reward',{tgId:tg,partyId:id,requestId});

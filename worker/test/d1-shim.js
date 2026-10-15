@@ -36,6 +36,7 @@ export class D1Shim {
 
 export function freshDb() {
   const db = new D1Shim();
-  for (const f of readdirSync(MIGRATIONS).filter((x) => x.endsWith('.sql')).sort()) db.sqlite.exec(readFileSync(join(MIGRATIONS, f), 'utf8'));
+  // Match the repository's eol=lf migration contract in pre-existing Windows worktrees too.
+  for (const f of readdirSync(MIGRATIONS).filter((x) => x.endsWith('.sql')).sort()) db.sqlite.exec(readFileSync(join(MIGRATIONS, f), 'utf8').replace(/\r\n/g, '\n'));
   return db;
 }

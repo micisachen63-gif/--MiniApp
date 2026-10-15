@@ -13,7 +13,7 @@ async function setup(level=60,path='B1'){
 }
 const action=(env,tg,b,now=T0)=>S.action(env,tg,{...b,requestId:req()},now);
 async function team(env,dungeonId='pillar',now=T0){const r=await G.create(env,'111',{kind:'dungeon',dungeonId},now);const id=r.party.id;for(const tg of ['222','333'])await G.action(env,tg,{partyId:id,op:'join',requestId:req()},now);for(const tg of ['111','222','333'])await G.action(env,tg,{partyId:id,op:'ready',requestId:req()},now);await G.action(env,'111',{partyId:id,op:'start',requestId:req()},now);return id;}
-async function win(env,id,now=T0){for(let i=0;i<40;i++){const p=await G.view(env,id,'111',now);if(p.status!=='combat')return {p,now};for(const tg of ['111','222','333'])await G.action(env,tg,{partyId:id,op:'submit',skillId:'attack',round:p.round,requestId:req()},now);now+=30000;}throw Error('No end');}
+async function win(env,id,now=T0){for(let i=0;i<40;i++){const p=await G.view(env,id,'111',now);if(p.status!=='combat')return {p,now};if(!p.cooperation)for(const tg of ['111','222','333'])await G.action(env,tg,{partyId:id,op:'submit',skillId:'attack',round:p.round,requestId:req()},now);now+=30000;}throw Error('No end');}
 test('all legacy and released thief skills have explicit mechanics and correct route qualifications',()=>{
  assert.equal(LEGACY_SPECIAL_SKILLS.length,54);assert.equal(Object.keys(SKILL_MAP).length,54+(THIEF_RELEASE_READY?6:0));for(const id of Object.keys(SKILL_MAP))assert.ok(MECHANICS[id]);
  assert.equal(eligible({base_class:'sword',class_path:'B1',level:60},SKILL_MAP.skill_02_1),true);
@@ -64,7 +64,7 @@ test('claimed runs are recorded per player and listed newest first with mode, fl
 test('third advancement accepts only a bound three-person trial item; boss mat cannot bypass',async()=>{
  const c={base_class:'sword',class_path:'B1',level:90};assert.throws(()=>advance(c,{mat_3:10},'1'));
  const r=advance(c,{trial_3:1},'1');assert.equal(r.tier,3);assert.equal(c.class_path,'B11');
- const env=await setup(90,'B1'),id=await team(env,'trial3');const {p,now}=await win(env,id);assert.equal(p.status,'won');const reward=await G.reward(env,'111',{partyId:id,requestId:req()},now);assert.equal(reward.reward.items.trial_3,1);
+ const env=await setup(90,'B1');await env.DB.prepare("UPDATE rpg_characters SET class_path='A1' WHERE tg_id='222'").run();const id=await team(env,'trial3');const {p,now}=await win(env,id);assert.equal(p.status,'won');const reward=await G.reward(env,'111',{partyId:id,requestId:req()},now);assert.equal(reward.reward.items.trial_3,1);
 });
 test('revive is once per encounter and shield/interrupt/heal mechanics change combat',()=>{
  const mk=(id,hp=500)=>({id,hp,maxHp:500,mp:200,maxMp:200,atk:100,def:0,buffs:[],special:{cooldowns:{}}});const a=mk('a'),b=mk('b',0),enemy={hp:5000,maxHp:5000,def:0,buffs:[],interruptible:true,windup:true},ctx={};

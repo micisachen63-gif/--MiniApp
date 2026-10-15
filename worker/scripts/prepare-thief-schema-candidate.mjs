@@ -24,7 +24,10 @@ export const historicalSchemaMigrationFiles = () => readdirSync(resolve(root, 'w
 
 export function repositorySchemaDatabase(transform = sql => sql) {
   const db = new DatabaseSync(':memory:');
-  for (const file of historicalSchemaMigrationFiles()) db.exec(transform(readFileSync(resolve(root, 'worker/migrations', file), 'utf8'), file));
+  // The checked-in candidate follows .gitattributes' LF migration format.
+  // Reproduce that byte-exact SQLite catalog even in older Windows worktrees.
+  // This helper opens :memory: only; live-schema preparation never uses this fixture.
+  for (const file of historicalSchemaMigrationFiles()) db.exec(transform(readFileSync(resolve(root, 'worker/migrations', file), 'utf8').replace(/\r\n/g, '\n'), file));
   db.exec('PRAGMA foreign_keys=ON');
   return db;
 }
