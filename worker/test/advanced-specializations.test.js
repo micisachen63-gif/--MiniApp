@@ -14,13 +14,13 @@ import * as P from '../src/services/player.js';
 import * as Party from '../src/services/party.js';
 import {loadPlayer} from '../src/db.js';
 
-const classes=['sword','archer','mage'],parents=['A1','A2','B1','B2'];
+const classes=['sword','archer','mage','thief'],parents=['A1','A2','B1','B2'];
 const routes=parents.flatMap(p=>['1','2'].flatMap(a=>[p+a,p+a+'1',p+a+'2']));
 const derived=(cls,path)=>computeStats(mkChar({base_class:cls,class_path:path,level:120}),standardSet(cls,120));
 const signature=s=>JSON.stringify([s.atk,s.def,s.maxHp,s.maxMp,s.taken,s.skill.cost,s.skill.mult,s.skill.targets,s.pct]);
 
-test('all 72 existing advanced paths have numerical identities and siblings differ at identical level and equipment',()=>{
- assert.equal(routes.length*classes.length,72);
+test('all 96 advanced paths have numerical identities and siblings differ at identical level and equipment',()=>{
+ assert.equal(routes.length*classes.length,96);
  for(const cls of classes)for(const parent of parents){
   for(const prefix of [parent,parent+'1',parent+'2']){
    const a=derived(cls,prefix+'1'),b=derived(cls,prefix+'2');
@@ -37,7 +37,7 @@ test('all 72 existing advanced paths have numerical identities and siblings diff
    assert.equal(choice.name,n.name);assert.deepEqual(choice.skill,n.skill);assert.ok(choice.passive.text.includes(spec.role));
   }
  }
- assert.equal(specializationFor('thief','A111'),null);assert.equal(specializationFor('sword','A1'),null);assert.equal(specializationFor('mage','A1x1'),null);
+ assert.ok(specializationFor('thief','A111'));assert.equal(specializationFor('sword','A1'),null);assert.equal(specializationFor('mage','A1x1'),null);
 });
 test('base, first and second advancement keep the released numerical definitions',()=>{
  for(const cls of classes){assert.deepEqual(nodeFor(cls,'').skill,CLASSES[cls].node.skill);

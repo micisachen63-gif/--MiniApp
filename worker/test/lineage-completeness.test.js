@@ -96,18 +96,18 @@ test('current lineage and every advancement gate render complete descriptions wi
 
 test('thief descriptions correspond to real primary mechanics instead of tactical-book effects',()=>{
   const target=()=>({id:'enemy',hp:1000,buffs:[]});
-  const actor=path=>({id:'self',base:'thief',path,atk:100,affixPct:{}});
+  const actor=path=>({id:'self',base:'thief',path,atk:100,affixPct:{},skill:nodeFor('thief',path).skill});
   const now=100000,enemy=target();
   const a1=actor('A111');applyThiefPrimary(a1,enemy,now,{damage:1});
   assert.equal(enemy.buffs[0].value,.04);assert.equal(enemy.buffs[0].until,now+90000);
-  assert.equal(thiefPrimaryMechanics(a1,enemy,now).damageMultiplier,1.1);
-  assert.equal(thiefPrimaryMechanics(actor('B111'),target(),now).penetrate,.1);
+  assert.equal(thiefPrimaryMechanics(a1,enemy,now).damageMultiplier,1.18);
+  assert.equal(thiefPrimaryMechanics(actor('B111'),target(),now).penetrate,.25);
   const poisoned=target();for(let i=0;i<4;i++)applyThiefPrimary(actor('A211'),poisoned,now,{damage:1});
   assert.equal(poisoned.dots[0].stacks,3);assert.equal(poisoned.dots[0].left,3);assert.equal(poisoned.dots[0].next,now+30000);
-  assert.equal(poisoned.dots[0].damage,36);
+  assert.ok(Math.abs(poisoned.dots[0].damage-50.4)<1e-8);
   const weakened=target();applyThiefPrimary(actor('B211'),weakened,now,{damage:1});
-  assert.equal(weakened.buffs[0].value,.1);assert.equal(weakened.buffs[0].until,now+60000);
+  assert.equal(weakened.buffs[0].value,.18);assert.equal(weakened.buffs[0].until,now+60000);
   const nodes=meta.classes.thief.lineageNodes;
-  assert.match(nodes.find(n=>n.path==='A111').effect,/4%.*90 秒.*10%/);
-  assert.match(nodes.find(n=>n.path==='A211').effect,/3 層.*30 秒.*0.12.*3 次/);
+  assert.match(nodes.find(n=>n.path==='A111').effect,/標記目標原生傷害 \+18%/);
+  assert.match(nodes.find(n=>n.path==='A211').effect,/每層毒傷 0.168×ATK/);
 });

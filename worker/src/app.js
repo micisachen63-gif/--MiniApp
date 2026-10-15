@@ -70,7 +70,7 @@ export function metaView() {
   const thief = {releaseReady:THIEF_RELEASE_READY,guardianCategory:'melee',lineageNodes:Object.values(THIEF_NODES),
     attackSpeedMultiplier:THIEF_CLASS.attackSpeedMultiplier,hitAttackMultiplier:THIEF_CLASS.hitAttackMultiplier,
     traits:['極高攻速','脆皮'],speedModel:'deterministic-strikes-per-original-action'};
-  const advancedSpecializations=Object.fromEntries(['sword','archer','mage'].map(cls=>[cls,Object.fromEntries(['A1','A2','B1','B2'].flatMap(parent=>['1','2'].flatMap(suffix=>[parent+suffix,parent+suffix+'1',parent+suffix+'2'])).map(path=>{
+  const advancedSpecializations=Object.fromEntries(CLASS_KEYS.map(cls=>[cls,Object.fromEntries(['A1','A2','B1','B2'].flatMap(parent=>['1','2'].flatMap(suffix=>[parent+suffix,parent+suffix+'1',parent+suffix+'2'])).map(path=>{
     const node=nodeFor(cls,path);return [path,{name:node.name,skill:node.skill,passive:{text:node.passiveText},role:node.specialization?.role}];
   }))]));
   const classes = Object.fromEntries(Object.entries(CLASSES).filter(([key])=>CLASS_KEYS.includes(key)).map(([k, c]) => [k, {
@@ -123,7 +123,10 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   if (action === 'characters') return json({ ok: true, characters: await listAccountCharacters(env.DB, tg), maxCharacters: 4 });
   if (action === 'create' && !auth.dev) {
     const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
-    if (!g || g.expires_at <= now) return fail('no_pass', '請先私訊小精靈輸入 /rpg（或按 ⚔️ 冒險），再從按鈕打開遊戲建立角色', 403);
+    // The short-lived admission pass gates the first character only. Existing
+    // membership comes from owned server rows, never a client-selected character ID.
+    const established = await env.DB.prepare('SELECT 1 FROM rpg_characters WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    if (!established && (!g || g.expires_at <= now)) return fail('no_pass', '首次建立角色，請先私訊 @StarJournalRpgBot 輸入 /rpg，再按「開啟旅誌」進入', 403);
   }
   if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
   if (action === 'create') {

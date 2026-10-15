@@ -1,5 +1,6 @@
 // Thief release accepted after all 62 visuals, combat modes and the preserving-data production CHECK expansion.
 // Build-time class eligibility follows the verified database and art acceptance receipts.
+import {advanceThiefNode} from './thief-advancement.js';
 export const THIEF_RELEASE_READY = true;
 
 const freeze = value => {
@@ -27,7 +28,7 @@ const nodes = {
     passive: { text: '鏡影護身：受傷 −5%', takenPct: -0.05 }, blurb: '幻刃連擊並有限削弱敵方下一次攻擊；維持脆皮特性' },
 };
 
-// Advancement continues the existing tier-2 stat budget; names, identities and choreography are distinct.
+// Each advanced identity applies its complete tier-2 + specialization budget once.
 const advanced = {
   A11: ['夜幕處刑者', '夜幕斷罪'], A12: ['幽影追獵者', '幽影獵襲'],
   A21: ['蝕毒煉師', '蝕毒連刃'], A22: ['血棘獵手', '血棘穿刺'],
@@ -44,7 +45,7 @@ const advanced = {
 };
 for (const [path, [name, skillName]] of Object.entries(advanced)) {
   const parent = nodes[path.slice(0, 2)];
-  nodes[path] = { ...parent, name, skill: { ...parent.skill, name: skillName }, passive: { ...parent.passive } };
+  nodes[path] = advanceThiefNode({ ...parent, name, skill: { ...parent.skill, name: skillName }, passive: { ...parent.passive } },path);
 }
 export const THIEF_NODES = freeze(Object.fromEntries(Object.entries(nodes).map(([path, node]) => [path, {
   ...node, path, tier: path.length, weapon: node.weapon || nodes[path[0]].weapon,

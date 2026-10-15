@@ -1,6 +1,7 @@
 // Numerical specialization for the three existing classes only. Resource-meter
 // and manual-release proposals in docs/class-combat remain a separate phase.
 import {ELF_FUTURE} from './elf-future.js';
+import {thiefSpecialization,advanceThiefNode} from './thief-advancement.js';
 import {MAGE_FUTURE} from './mage-future.js';
 import {MAGE_FOURTH,renamedPassive} from './mage-fourth.js';
 
@@ -28,6 +29,7 @@ const THIRD={
 const LABELS={lifestealPct:'吸血',maxHpPct:'生命',maxMpPct:'魔力',critPct:'爆擊率',atkPct:'攻擊',defPct:'防禦',healingPct:'治療效果',healPerCastPct:'每次施法回血',shieldPct:'護盾效果',takenPct:'承受傷害',rangedPct:'遠程傷害',magicPct:'魔法傷害',mpEfficiencyPct:'魔力效率',skillHastePct:'特殊技能冷卻縮減',expPct:'經驗',summonPct:'召喚傷害',dotPct:'持續傷害',freeCastPct:'免費施法率'};
 const round=n=>Math.round(n*10000)/10000;
 export function specializationFor(base,path){
+ if(base==='thief')return thiefSpecialization(path);
  const p=String(path||''),entry=THIRD[base]?.[p.slice(0,3)];
  if(!entry||!/^([AB])[12][12](?:[12])?$/.test(p))return null;
  const [role,mult,cost,targets,bonuses]=entry;
@@ -49,6 +51,7 @@ export function specializationFor(base,path){
  return {role:focus,passive,skillMult:round(skillMult),costScale:round(costScale),extraTargets:targets,text:`${focus}：${lines.join('、')}；${tradeoff}`};
 }
 export function specializeNode(base,path,node){
+ if(base==='thief')return node.specialization?node:advanceThiefNode(node,path);
  const spec=specializationFor(base,path);if(!spec)return node;
  const data=base==='archer'?ELF_FUTURE[path]:base==='mage'?MAGE_FUTURE[path]:null;
  const fourth=base==='mage'?MAGE_FOURTH[path]:null;

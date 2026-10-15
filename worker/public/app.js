@@ -600,7 +600,8 @@
   }
   function mutationKey(action, body) {
     const stable = Object.fromEntries(Object.entries(body || {}).filter(([k]) => k !== 'requestId').sort(([a], [b]) => a.localeCompare(b)));
-    return `elfRpgPending:${S.me?.character?.tgId||'account'}:${action}:${JSON.stringify(stable)}`;
+    const owner=action==='create'?String(tg?.initDataUnsafe?.user?.id||devTg||'account'):S.me?.character?.tgId||'account';
+    return `elfRpgPending:${owner}:${action}:${JSON.stringify(stable)}`;
   }
   function pendingRequestId(key) {
     try { let value = localStorage.getItem(key); if (!value) { value = rid(); localStorage.setItem(key, value); } return value; }
@@ -1888,9 +1889,11 @@
       if (C.step === 0 && !/^[\p{Script=Han}A-Za-z0-9_]{2,12}$/u.test(C.name.trim())) return toast('角色名要 2–12 個字，只能用中文、英文、數字或底線', true);
       C.name = C.name.trim(); C.step++; render(); };
     const go = $('#go', view); if (go) go.onclick = async () => {
-      go.disabled = true;
-      try { if(!window.RpgThiefClass.selectableClasses(S.meta.classes)[C.cls])throw new Error('此職業尚未開放建立'); await api('create', { name: C.name, baseClass: C.cls, gender: C.gender, charSlot: C.slot, requestId: rid() }); S.characters = (await api('characters')).characters; S.create = { step: 0, name: '', cls: null, gender: null, slot: null }; S.creating = false; S.choosing = true; render(); haptic('ok'); toast('🎉 角色建立完成，請選擇角色進入冒險'); }
-      catch (e) { toast(e.message, true); go.disabled = false; }
+      if(S.creationFlight)return;S.creationFlight=true;go.disabled = true;
+      const payload={name:C.name,baseClass:C.cls,gender:C.gender,charSlot:C.slot},key=mutationKey('create',payload);
+      try { if(!window.RpgThiefClass.selectableClasses(S.meta.classes)[C.cls])throw new Error('此職業尚未開放建立'); const created=await api('create', { ...payload, requestId:pendingRequestId(key) }); S.characters = created.characters; clearPendingRequest(key); S.create = { step: 0, name: '', cls: null, gender: null, slot: null }; S.creating = false; S.choosing = true; render(); haptic('ok'); toast('🎉 角色建立完成，請選擇角色進入冒險'); }
+      catch (e) { toast(e.uncertain?'創角結果待確認，請再按一次確認；會核對同一次創角，不會重複建立。':e.message, true); go.disabled = false; }
+      finally{S.creationFlight=false;}
     };
   }
 

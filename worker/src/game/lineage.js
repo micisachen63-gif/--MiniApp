@@ -28,8 +28,8 @@ export function lineageNodes(baseClass) {
       level: tier ? tier * 30 : 1, available: tier <= MAX_OPEN_CLASS_TIER,
       material, materialName: material ? ITEMS[material].name : null,
       materialSource: tier >= 3 ? '通關對應三人真人組隊試煉，領取綁定證明' : tier ? `討伐${tier === 1 ? '哥布林酋長' : '腐朽樹王'}` : null,
-      effect: baseClass === 'thief' ? THIEF_EFFECTS[path.slice(0,2)] || '極高攻速，生命與防禦較低；全路線適用近戰守護。' : null,
-      inheritance: tier >= 3 ? (baseClass === 'thief' ? '沿用二轉路線效果與被動；高階名稱不另增加倍率或被動。' : '包含二轉與一轉被動及本階專精；三、四轉專精不逐階重複疊加。') : tier === 2 ? '包含二轉與一轉被動。' : null,
+      effect: baseClass === 'thief' ? node.specialization?.text || THIEF_EFFECTS[path.slice(0,2)] || '極高攻速，生命與防禦較低；全路線適用近戰守護。' : null,
+      inheritance: tier >= 3 ? '包含二轉與一轉被動及本階專精；三、四轉專精不逐階重複疊加。' : tier === 2 ? '包含二轉與一轉被動。' : null,
     };
   }).sort((a,b) => a.tier-b.tier || a.path.localeCompare(b.path));
 }

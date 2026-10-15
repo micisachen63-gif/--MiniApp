@@ -142,19 +142,32 @@ export async function withPlayer(env, tgId, now, fn = null, { source = 'player',
 }
 
 const NAME_RE = /^[\p{L}\p{N}_]{2,12}$/u;
-export async function createCharacter(env, { tgId, tgName = null, name, gender, baseClass, charSlot = null }, now, rng = rngDefault()) {
+export async function createCharacter(env, { tgId, tgName = null, name, gender, baseClass, charSlot = null, requestId = null }, now, rng = rngDefault()) {
   const db = env.DB; const account = String(tgId || '');
   if (!/^\d{1,20}$/.test(account)) throw new GameError('tg', 'Telegram ID 無效');
   name = String(name || '').trim();
   if (!NAME_RE.test(name)) throw new GameError('name', '角色名要 2–12 個字，只能用中文、英文、數字或底線');
   if (!['m', 'f'].includes(gender)) throw new GameError('gender', '請選擇性別');
   if (!CLASS_KEYS.includes(baseClass)) throw new GameError('class', '請選擇職業');
+  const requestedSlot = charSlot == null ? null : Number(charSlot);
+  if (requestedSlot != null && (!Number.isInteger(requestedSlot) || requestedSlot < 1 || requestedSlot > 4)) throw new GameError('character_slot', '角色欄位無效');
+  const receiptId=requestId?eventId('character-create',account,requestId):null;
+  const signature=JSON.stringify({name,gender,baseClass,charSlot:requestedSlot});
+  const recover=async()=>{
+    if(!receiptId)return null;
+    const receipt=await db.prepare('SELECT tg_id,note FROM rpg_ledger WHERE event_id=?').bind(receiptId).first();
+    if(!receipt)return null;
+    const saved=JSON.parse(receipt.note);
+    if(saved.signature!==signature)throw new GameError('request_reused','這次創角編號已使用，請重新選擇角色資料',409);
+    const p=await loadPlayer(db,receipt.tg_id,env);
+    if(!p||String(p.char.account_tg_id)!==account)throw new GameError('character_changed','角色資料已改變，請重新選角',409);
+    return p;
+  };
+  const previous=await recover();if(previous)return previous;
   const owned = await db.prepare('SELECT tg_id, char_slot FROM rpg_characters WHERE account_tg_id = ? ORDER BY char_slot').bind(account).all();
   const characters = owned.results || [];
   if (characters.length >= 4) throw new GameError('character_limit', '每個 Telegram 帳號最多建立 4 隻角色');
   const usedSlots = new Set(characters.map((r) => Number(r.char_slot)));
-  const requestedSlot = charSlot == null ? null : Number(charSlot);
-  if (requestedSlot != null && (!Number.isInteger(requestedSlot) || requestedSlot < 1 || requestedSlot > 4)) throw new GameError('character_slot', '角色欄位無效');
   if (requestedSlot != null && usedSlots.has(requestedSlot)) throw new GameError('slot_taken', '這個角色欄位已被使用，請重新選擇');
   const slot = requestedSlot || [1, 2, 3, 4].find((n) => !usedSlots.has(n));
   // Keep the original Telegram ID as the first character's key for backward compatibility.
@@ -177,7 +190,8 @@ export async function createCharacter(env, { tgId, tgName = null, name, gender, 
     db.prepare(`INSERT INTO rpg_accounts (account_tg_id,active_char_id,updated_at) VALUES (?,?,?)
       ON CONFLICT(account_tg_id) DO NOTHING`).bind(account, tg, now),
   ];
-  try { await db.batch(stmts); } catch (e) { throw classifyDbError(e) || e; }
+  if(receiptId)stmts.push(ledgerStmt(db,{event_id:receiptId,tg_id:tg,type:'角色建立',note:JSON.stringify({signature})},now));
+  try { await db.batch(stmts); } catch (e) { const committed=await recover();if(committed)return committed;throw classifyDbError(e) || e; }
   void st;
   return loadPlayer(db, tg, env);
 }
