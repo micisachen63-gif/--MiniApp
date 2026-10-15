@@ -10,7 +10,9 @@ import * as R from '../src/services/auto-reroll.js';
 import * as SP from '../src/services/special.js';
 import { selectAccountCharacter } from '../src/accounts.js';
 import { handle } from '../src/index.js';
-import { ITEMS, TRADE } from '../src/game/constants.js';
+import { ITEMS, TRADE, CLASS_KEYS } from '../src/game/constants.js';
+import {THIEF_RELEASE_READY} from '../src/game/thief-data.js';
+import {LEGACY_SPECIAL_SKILLS} from '../src/game/special-data.js';
 import { SPECIAL_SKILLS, baseOf } from '../src/game/special.js';
 import { checkItemLine } from '../src/game/trade.js';
 import { makeGear } from '../src/game/gear.js';
@@ -84,13 +86,13 @@ test('60 raw collection materials are exchange-only, while finished badges and a
   assert.equal(audit(db).listings,1);
 });
 
-test('all 54 skill books use their real profession, rarity, learning level and advancement fields',async()=>{
-  const {env,db}=await setup();const skills=SPECIAL_SKILLS;assert.equal(skills.length,54);
+test('all legacy and released thief skill books use their real profession, rarity, learning level and advancement fields',async()=>{
+  const {env,db}=await setup();const skills=SPECIAL_SKILLS;assert.equal(LEGACY_SPECIAL_SKILLS.length,54);assert.equal(skills.length,54+(THIEF_RELEASE_READY?6:0));
   for(const skill of skills)await stock(db,'111','book_'+skill.id,1);
   const books=[];let cursor=null;do{const page=await X.sellable(env,'111',{filters:{category:'skillbook'},cursor});books.push(...page.items);cursor=page.nextCursor;}while(cursor);
-  assert.equal(books.length,54);assert.equal(new Set(books.map(i=>i.item)).size,54);
+  assert.equal(books.length,skills.length);assert.equal(new Set(books.map(i=>i.item)).size,skills.length);
   for(const skill of skills) {const b=books.find(i=>i.item==='book_'+skill.id);assert.equal(b.classReq,baseOf(skill));assert.equal(b.quality,skill.rarity);assert.equal(b.tier,null);assert.equal(b.advancementTier,skill.advancementTier);assert.equal(b.requiredLevel,skill.level);}
-  for(const cls of ['sword','archer','mage']) {const page=await X.sellable(env,'111',{filters:{category:'skillbook',classReq:cls}});assert.ok(page.items.length);assert.ok(page.items.every(i=>i.classReq===cls));}
+  for(const cls of CLASS_KEYS) {const page=await X.sellable(env,'111',{filters:{category:'skillbook',classReq:cls}});assert.ok(page.items.length);assert.ok(page.items.every(i=>i.classReq===cls));}
 });
 
 test('a learned duplicate book stays a real tradeable item; buying and learning consume exactly that copy',async()=>{

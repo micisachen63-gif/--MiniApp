@@ -1,0 +1,4227 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "count": 62,
+  "scope": "manual-visual-only",
+  "manualVisualAccepted": true,
+  "runtimeVerified": false,
+  "releaseReadyNotAssessed": true,
+  "registryVersion": "20261015-thief-native-443422e86d2a",
+  "registrySHA256": "1be4ada2dd9643e3703bc2d851c7e83ec0bcd7496cf9ff8059fdde58bc1645c1",
+  "verifiedAt": "2026-10-15T18:54:29.897Z",
+  "hashChecks": 976,
+  "sourceGroups": [
+    {
+      "file": "docs/thief/visual-main/manual-review-index.json",
+      "SHA256": "2a2555f964e638a84719430d35d5f94f222a941da6a0b7d3906dd711b7a80132",
+      "count": 28
+    },
+    {
+      "file": "docs/thief/art-A1-right/twenty-role-validation.json",
+      "SHA256": "3add31c6e3457f3eef3000a022f2f67e9e7df65d53bf0698a98504802d8d3207",
+      "count": 20
+    },
+    {
+      "glob": "docs/thief/art-B2/*/visual-review.json",
+      "count": 14,
+      "approvalRule": "rootVisualReview=pass and rootAccepted=true"
+    }
+  ],
+  "commonStandards": [
+    "希臘半寫實成人畫風；同身份男女正確",
+    "原畫與12格服裝、手持武器一致；頭腳刀尖完整",
+    "真透明邊界；深淺底或checker預覽無殘底",
+    "原生裁切平移；未重取樣或修除來源像素",
+    "全盜賊路線使用近戰天使分類",
+    "共用12格原生動畫；普技差異由實際FX層；runtime由獨立矩陣驗證"
+  ],
+  "attention": [
+    {
+      "key": "adv4_thief_A111_m",
+      "type": "low-risk-dynamic-followup",
+      "note": "第3格反手向左及收勢屈膝，保留root動態朝向／銜接確認。"
+    },
+    {
+      "key": "adv3_thief_A11_m",
+      "type": "approved-native-margin-exception",
+      "frame": 7,
+      "minPackedMarginPx": 19,
+      "leftMargin": 19,
+      "rightMargin": 20,
+      "nativeAlphaWidth": 601,
+      "note": "root具名核准；不改其他幀20px規則。"
+    }
+  ],
+  "sharedGearEvidence": {
+    "file": "docs/thief/gear-art/shared-shirt-earring-alpha.json",
+    "SHA256": "04c8f1bd4df248ba148d42cfa0d3791cdd55d25a4e3dfff44e660556723d5214",
+    "rootStatus": "root-numeric-and-visual-pass",
+    "count": 24,
+    "currentOutputHashesMatch": true
+  },
+  "identities": [
+    {
+      "key": "thief_m",
+      "name": "盜賊・男",
+      "gender": "m",
+      "classPath": "",
+      "tier": 0,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base/thief_m/visual-review.json",
+      "reviewSHA256": "609b5496adc3444dfbf81722d00968bad7815c487582a86107f5ed18cb863f42",
+      "nativePackFile": "docs/thief/art-base/thief_m/native-pack.json",
+      "nativePackSHA256": "c35c093638a0cd72df8b2b5bcd8b2b6b5368498fd396a3d0fad4638352d27e11",
+      "sourceSHA256": {
+        "hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "attack-0-5.png": "c82e948ed40d07adfd3165a4d59343ce42fd783c039d4969808b18996184d531",
+        "attack-6-11.png": "4686acf4aa71273ae8e013d2a58f0d0b64b97130478fc0412a1837e667b5860a"
+      },
+      "outputSHA256": {
+        "hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "portrait.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "character.png": "81b8ea0df8c1d5f37cb68d34bedf3c984213b9d0c0614eefd1dcf20914fadeca",
+        "character.webp": "12df02ca43cf0a48c1dcb033266e68c9f6b73de4c134a422a1582474e8e2af42"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/thief_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/thief_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/thief_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/thief_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/thief_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/thief_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/thief_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男性捲髮與鬍鬚、單肩藍披布及露臂皮甲一致；與女版共享材質畫風而非誤用女圖。",
+        "起手低刀、前刺與交叉收勢連貫，兩手持刃可辨，身形維持輕裝近戰。"
+      ]
+    },
+    {
+      "key": "thief_f",
+      "name": "盜賊・女",
+      "gender": "f",
+      "classPath": "",
+      "tier": 0,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base/thief_f/visual-review.json",
+      "reviewSHA256": "b54cdf5634d20432cdb546a8b686ed6be40f7d908a186919b9fb1da96802153c",
+      "nativePackFile": "docs/thief/pilot-native-pack.json",
+      "nativePackSHA256": "65d6c2df2592f3c86a281b74d205c547da538e68652bad5d7abfa1200736aa97",
+      "sourceSHA256": {
+        "hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "attack-0-5.png": "1294e91a343fd75bd82be978f2ce1599a9b72cfe69c70ce5831b1c3e0d47c8ec",
+        "attack-6-11.png": "4d4533288a9fdb1729666e37de63823e07f04b79018f329bc3d8c8f69a4c6e11"
+      },
+      "outputSHA256": {
+        "hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "portrait.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "character.png": "79a557cb75588ea6ad4439ac057ea0ecef0f44252a314e6f3ee29309344c7456",
+        "character.webp": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/thief_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/thief_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/thief_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/thief_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/thief_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/thief_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/thief_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "海軍藍希臘紋短披肩、棕黑輕皮甲與銀色雙短刃；臉型與捲髮延續試作母系。",
+        "第3/4格短刺、第5/6格交錯刀光、第8至11格收勢可辨，雙腳與刀尖完整。"
+      ]
+    },
+    {
+      "key": "adv1_thief_A_f",
+      "name": "刺客・女",
+      "gender": "f",
+      "classPath": "A",
+      "tier": 1,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_A_f/visual-review.json",
+      "reviewSHA256": "8c675d9c38b58e624e71b30040e0d610b85f3b78e9d3d46dda102dc22d93bc3c",
+      "nativePackFile": "docs/thief/art-base-adv1/adv1_thief_A_f/native-pack.json",
+      "nativePackSHA256": "3ecaf8c9dacdf789f756c0c939605863cec71705f2b337842ff9434f61744963",
+      "sourceSHA256": {
+        "hero.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "attack-0-5.png": "18f99c51e97d690e00a1527d3fbae3f8cf7c190c3e36d2faa62f53c6148dcc43",
+        "attack-6-11.png": "8cca463b10e11e5292607bedf0a8c91e906faee96235c7bcebe0c69ee342272d"
+      },
+      "outputSHA256": {
+        "hero.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "portrait.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "character.png": "b36766ad482b850aee7d53ef779c87f23149efbfc8b4778cbf5228481e24b12f",
+        "character.webp": "34db97fdecccfa1a5a0b841dee9aab39b011b963f4373fb9fd2a87ff00d80abd"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv1_thief_A_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv1_thief_A_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv1_thief_A_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv1_thief_A_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "酒紅披布與金色希臘邊紋清楚區隔基礎藍版，女性面孔與髮色延續。",
+        "兩把銀匕首、交錯白藍光與短刺姿勢保持一致，皮甲與腰帶細節延續12格。"
+      ]
+    },
+    {
+      "key": "adv1_thief_A_m",
+      "name": "刺客・男",
+      "gender": "m",
+      "classPath": "A",
+      "tier": 1,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_A_m/visual-review.json",
+      "reviewSHA256": "1855f1c1a2f8b8af325ee0a94441421226b5b71782f0925b59e29c53ec6478a8",
+      "nativePackFile": "docs/thief/art-base-adv1/adv1_thief_A_m/native-pack.json",
+      "nativePackSHA256": "f64a43c77bac81305fb1332fb384b08b14e008eb36bc323c85768acc095599ac",
+      "sourceSHA256": {
+        "hero.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "attack-0-5.png": "9dc99488f11f116fea21ac4dc4ad84e5258e943dca34d358e801e0a5cf7d904b",
+        "attack-6-11.png": "f38f4fe7beca1f7c2a043b33ace60d6b4ba898a8052c9cbdfc35fadfebe4985b"
+      },
+      "outputSHA256": {
+        "hero.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "portrait.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "character.png": "cc8084512c4cdabf4fef94794e8d136f7d1a389533ceddbd4f8aee293cfd2001",
+        "character.webp": "ba64374f31e22682551f3de928a3b5a732cfd469320d03311c9c2124d20937aa"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv1_thief_A_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv1_thief_A_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv1_thief_A_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv1_thief_A_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "酒紅單肩披布、金邊及雙銀匕首與男版原畫一致；男性臉孔與手臂比例自然。",
+        "低重心起手、短刺與交錯刀光完整，收勢保留雙刀，未見切掉靴底或額外肢體。"
+      ]
+    },
+    {
+      "key": "adv1_thief_B_f",
+      "name": "夜行者・女",
+      "gender": "f",
+      "classPath": "B",
+      "tier": 1,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_B_f/visual-review.json",
+      "reviewSHA256": "efa16954734f1c444be8c7081f0fe6836098db568dbc4678b938877378a58d4b",
+      "nativePackFile": "docs/thief/art-base-adv1/adv1_thief_B_f/native-pack.json",
+      "nativePackSHA256": "5d8276e45dfa0593afb002078d309c49c8f83ad262e7f2497cad280f589f9df7",
+      "sourceSHA256": {
+        "hero.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "attack-0-5.png": "fd48299607ee4d70a1bbcc8be2582458226471b2f0c744a5deddbd7ec76f4b5b",
+        "attack-6-11.png": "97106d074750b3dcb1cc480371dc33050d83890919d073ef90338a5808ac0002"
+      },
+      "outputSHA256": {
+        "hero.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "portrait.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "character.png": "3f220e6244431c1a9724535b95fbb0d3ff63b3d185f48f120a5337689fe4657f",
+        "character.webp": "d443c250d76a6de2aedc41b1407df9d8b854f9e60338b3d86e592917870f2ae9"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv1_thief_B_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv1_thief_B_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv1_thief_B_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv1_thief_B_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "青藍短披肩與胸前備用投刃帶可辨；備刃屬裝備配件，未見多手或漂浮武器錯誤。",
+        "藍白刃尖與迴旋弧線區隔刺客紅系，投刃動作與12格衣裝一致。"
+      ]
+    },
+    {
+      "key": "adv1_thief_B_m",
+      "name": "夜行者・男",
+      "gender": "m",
+      "classPath": "B",
+      "tier": 1,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_B_m/visual-review.json",
+      "reviewSHA256": "c997999d38620d13efeba8ce3466b035a26b2562a902cd4f8d57e6965612f54d",
+      "nativePackFile": "docs/thief/art-base-adv1/adv1_thief_B_m/native-pack.json",
+      "nativePackSHA256": "80d930a38ac6f8f1fbf22a31320df5f045608482079a8d613dac1c481ebe1626",
+      "sourceSHA256": {
+        "hero.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "attack-0-5.png": "b42230344701eb8b278f306d30976524de66aa6f13e290e802e3fd3530c116b2",
+        "attack-6-11.png": "862c4d819cec9c705d71fe834fb0ce720da1f18f3bbaca96ecc917d44bb91f82"
+      },
+      "outputSHA256": {
+        "hero.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "portrait.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "character.png": "59f26a754dc5a104b53ad3a351e639401421d0259346e920ac458146f3bbcd65",
+        "character.webp": "08c3c3a763c99e4fb74d139f4329f27d333a2463f6d906659363bb6b4adbf8a4"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv1_thief_B_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv1_thief_B_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv1_thief_B_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv1_thief_B_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "青藍單肩披布、胸前備刃與男版露臂輕甲一致；男女性別身份清楚。",
+        "第6/7格的伸臂投刃與手中剩餘短刃可辨，備刃沒有變成大劍或法杖。"
+      ]
+    },
+    {
+      "key": "adv2_thief_A1_f",
+      "name": "影襲刺客・女",
+      "gender": "f",
+      "classPath": "A1",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1/adv2_thief_A1_f/visual-review.json",
+      "reviewSHA256": "3ff94b246a3f5dc659466491843326c86c28bdeb5d9dc90017d19c9e874350ab",
+      "nativePackFile": "docs/thief/art-A1/adv2_thief_A1_f/native-pack.json",
+      "nativePackSHA256": "8f48fbc9e240fbb9e63269581da5028a551a06576d128bd0f485841a74378691",
+      "sourceSHA256": {
+        "hero.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "attack-0-5.png": "d66ce196cce403b739be3754fa475eeaf033e81f34eac65a3aa57fe37c03e160",
+        "attack-6-11.png": "c032ae5c06a9a67aa542258fac06277f11e9f11183846002cbff9c284a7be930"
+      },
+      "outputSHA256": {
+        "hero.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "portrait.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "character.png": "349b99641e9d0208adbdbd4250f4618583f11dee63cd5b7e50cc4ae96b48648c",
+        "character.webp": "0e84853dbd063d8970af83272cd0c2d4a1a0388205150dcd5526b0a1d83f0cd1"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_A1_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_A1_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_A1_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_A1_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "藍紫披布、紫色寶石月桂扣與銀色雙匕首，紫色影刃從原畫延續至12格。",
+        "短刺與第6格紫色刀弧完整，人物仍是輕皮甲刺客，沒有法師袍、翅膀或重甲。"
+      ]
+    },
+    {
+      "key": "adv2_thief_A1_m",
+      "name": "影襲刺客・男",
+      "gender": "m",
+      "classPath": "A1",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1/adv2_thief_A1_m/visual-review.json",
+      "reviewSHA256": "309f550a7740c07d5a30d98ac9690a8fc7c3fd315fab61691819acf42920716d",
+      "nativePackFile": "docs/thief/art-A1/adv2_thief_A1_m/native-pack.json",
+      "nativePackSHA256": "3e4cefbc0df643532858be86fe863c0f4a7d555cfe1cc74b97bcced7124e7c2d",
+      "sourceSHA256": {
+        "hero.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "attack-0-5.png": "56c9bea8d3441b6ea4cfce80fa5da8192edb278481e66db16353a915f18eafbc",
+        "attack-6-11.png": "52ba8270809f75ad568a2f941bfc878159d3936ff4b2ebdc816fae9b33ce3289"
+      },
+      "outputSHA256": {
+        "hero.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "portrait.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "character.png": "5b7f5ad97d8ad3aa95b1f70760f8382e7a6bec85a6ac982de2825d45164fe299",
+        "character.webp": "4e3f8b3e6b522a5eaa8c3c93d8c2185061b94a1c94997e4667e4c7a0e27130fa"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_A1_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_A1_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_A1_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_A1_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版藍紫披布與紫色扣飾、銀紋雙刀可辨；臉孔和棕黑皮甲材質一致。",
+        "兩個前刺、交叉影刃與回身收勢輪廓明確，深淺底未見矩形殘底。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A11_f",
+      "name": "夜幕處刑者",
+      "gender": "f",
+      "classPath": "A11",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv3_thief_A11_f/visual-review.json",
+      "reviewSHA256": "9da87b9a78e8038d31e8cd0b197a89eccbbc45470c69e20952c9b4121dbf85b9",
+      "nativePackFile": "docs/thief/art-A1-left/adv3_thief_A11_f/native-pack.json",
+      "nativePackSHA256": "cc348884de23b11933a76aeedba9fb1673dd4e455b2b280c82473a4349ea432f",
+      "sourceSHA256": {
+        "hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "attack-0-5.png": "3f9681d538528ed4a4026c87a0df2d0cea2f6069f5b94677593c6023c98f707b",
+        "attack-6-11.png": "422d2b4c14a2d1b2ed9518a47f813807d44fc7a8a4d9df7a250c0ecae7e09899"
+      },
+      "outputSHA256": {
+        "hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "portrait.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "character.png": "41ed9db37c1f71af5a939e63b435fab4f2548a6c130ffa6e930cfbe1e46178df",
+        "character.webp": "e50eef71f3aa39d0371750c5dc22ff832e643f2e5da8bf00807ce530fc043123"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A11_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A11_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A11_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A11_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "銀月扣、暗紫單肩短披風與尖片腰甲構成獨立高轉造型；女版面孔與母系一致。",
+        "第6格交叉紫弧、第7/8格回身與末段低刀收勢可辨，手部與刀尖完整。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A11_m",
+      "name": "夜幕處刑者",
+      "gender": "m",
+      "classPath": "A11",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv3_thief_A11_m/visual-review.json",
+      "reviewSHA256": "a2363637ef1a809862f7c279ac1a7a09cb40870a5c4ec833c7756a0967e3c116",
+      "nativePackFile": "docs/thief/art-A1-left/adv3_thief_A11_m/native-pack.json",
+      "nativePackSHA256": "a92c4f104cde4366f160ca78f817ede130689f4ec7b28f2f1606c0751ab09a93",
+      "sourceSHA256": {
+        "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "attack-0-5.png": "a0da990dfc850a331404e1e7fecaaa841a5981cb6ab53e7e6a55b15be28b2852",
+        "attack-6-11.png": "56563d309204f5f7a1ea1324d51df445544cd3fcfc2ecc986c5bbce91762b57d"
+      },
+      "outputSHA256": {
+        "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "portrait.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "character.png": "46dde975f093f3ba793a76313041abd171340420aff11c34d1780a7feefe2dd9",
+        "character.webp": "8142ac0c8a7da8e62f37208aed19fef96bbe8e9e3241c3335ab1dc91748b487f"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A11_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A11_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A11_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A11_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "暗紫月扣短披布、銀邊窄護腕與三角腰片一致；男版露臂輪廓與女版有清楚差別。",
+        "第7格寬幅雙刀完整；經核准的左19/右20px邊界沒有造成視覺裁刀，收勢比例自然。",
+        "已目視具名例外第7格的寬幅短刃：左19/右20px透明邊界，刀尖完整；不影響其餘20px規則。",
+        "具名native例外：第7格alpha寬601px，左19/右20px完整透明邊距，root已核准，其餘幀20px。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A111_f",
+      "name": "冥夜裁決者",
+      "gender": "f",
+      "classPath": "A111",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A111_f/visual-review.json",
+      "reviewSHA256": "46c2202ef07fc06eeb7088ae157bbf8daaead0cbec68b627792a972b36f9a7f6",
+      "nativePackFile": "docs/thief/art-A1-left/adv4_thief_A111_f/native-pack.json",
+      "nativePackSHA256": "de076c7732ee2e6dac69d3fc2d623e2a8ee6a9a5fe1bac5626a43a7092d37570",
+      "sourceSHA256": {
+        "hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "attack-0-5.png": "b187c04833c5d8e21691bcda50057ba47cc88225d182577e5010438306340f19",
+        "attack-6-11.png": "d9e68196ef72361d25dd64a615dbc84e5712f38488b63c8b4a9ac938fe8834d7"
+      },
+      "outputSHA256": {
+        "hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "portrait.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "character.png": "06b44bc31bef3dc075ca696f77af4af054dcbf45318442c758368189ef83f9e1",
+        "character.webp": "02033df62c427ce29630cfead37e4b58833ef3fa61f01cb91d202c9d8d96fb3c"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A111_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A111_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A111_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A111_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "雙肩月相披片、銀色月相飾鏈和短立領與母系月扣版有明確差別。",
+        "銀紋短匕與紫色弧光一致，12格服裝保持月相飾鏈，起手與末段站姿相近。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A111_m",
+      "name": "冥夜裁決者",
+      "gender": "m",
+      "classPath": "A111",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A111_m/visual-review.json",
+      "reviewSHA256": "5dd66c432abfe11f79c59c3d2ebf99638aaa544b70bedc4bd06e99625938a947",
+      "nativePackFile": "docs/thief/art-A1-left/adv4_thief_A111_m/native-pack.json",
+      "nativePackSHA256": "7449da92e32e806ae91259dc9c57b7ccb534b2bcc086dc45521c4e9ec74d5bc8",
+      "sourceSHA256": {
+        "hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "attack-0-5.png": "1ed1f94bf48b2e36c1dad55e114c6b5baea28e2ae2ffda0d68e5d68e118e442c",
+        "attack-6-11.png": "0cf9ccd1e49adc16f65ae66914935986dda5abb0d21cbdf60ef872832905829a"
+      },
+      "outputSHA256": {
+        "hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "portrait.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "character.png": "559640eeb730c93359f354ffd6f201006ebad4cdc56b6e889530dc8ef69fec58",
+        "character.webp": "500559a2209231611c14762ba9e35ae1f52df33d5b1b42b4bc5136f1399925b9"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A111_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A111_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A111_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A111_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "雙肩月相披片、銀鍊、短領皮衣與男版面孔一致，銀色細節仍維持輕甲輪廓。",
+        "第3格有反手向左伸臂動作，後段有自然屈膝；頭腳完整，靜態可接受但應確認動態朝向與銜接。",
+        "保留低風險動態追蹤：第3格反手向左、末段屈膝；本檔不推定runtime結果。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A112_f",
+      "name": "終焉斷刃",
+      "gender": "f",
+      "classPath": "A112",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A112_f/visual-review.json",
+      "reviewSHA256": "486bccd7667ae109d46d6b3505554cff7411a39e96a0c0affb17fec7b6c9f5fc",
+      "nativePackFile": "docs/thief/art-A1-left/adv4_thief_A112_f/native-pack.json",
+      "nativePackSHA256": "5dc7d79ce09516fe2ca3f93284393ccaa2f8127f9f1c6e4669980ef1f7eada56",
+      "sourceSHA256": {
+        "hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "attack-0-5.png": "84741e44b551aa2bb7c4656ea15873a244a2d65ed81700b4753d8050839cc286",
+        "attack-6-11.png": "cf1c96b341cb1d2721ef1f5d67f9657dff3c0a1b1bdb704c71eb9e452843d18a"
+      },
+      "outputSHA256": {
+        "hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "portrait.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "character.png": "493c62a365fec6556bcd627d8c3e08462fd396718c4bdfa8f7853ad6b3ece26e",
+        "character.webp": "06386eefb76d9d1faebcec3df51dd6327b24f93ea16c4631dff4baa49aedf674"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A112_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A112_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A112_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A112_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "斷環扣飾、幾何胸帶與單側尖角紫披布清楚區別月相裁決者；雙刃仍為完整短刀。",
+        "交叉紫弧與回身短刺可辨，刀刃的斷紋是紋飾，未見斷裂浮刃或缺手。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A112_m",
+      "name": "終焉斷刃",
+      "gender": "m",
+      "classPath": "A112",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A112_m/visual-review.json",
+      "reviewSHA256": "bd811c4a0de4cb57fa79856a3e8d173880febc174edc845567b3e1868dd4c142",
+      "nativePackFile": "docs/thief/art-A1-left/adv4_thief_A112_m/native-pack.json",
+      "nativePackSHA256": "33d0bef29ba971d1c796fd98c90f7c3e9f0752bcd004b9ae816fd75fab619e59",
+      "sourceSHA256": {
+        "hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "attack-0-5.png": "8001af0e3e8bef0ca923ce07089d052f2ff11c66a94a1422f1d451857c7e093b",
+        "attack-6-11.png": "d3d6bdba9885a3739407fc2f0f2aa6d60ac99ef4befaa2b0167eeccadde6b7f7"
+      },
+      "outputSHA256": {
+        "hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "portrait.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "character.png": "51ba615df87006eb4fd48c1150cef2bcd7629f6ff455becd3fd60b42ba560abd",
+        "character.webp": "207bededd936a4ff0b6ba02c97104153f00d1d2ff5bd2aea9528efc7fbb1660e"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A112_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A112_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A112_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A112_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版斷環、幾何胸帶與尖片腰甲在12格持續出現；黑皮革與銀邊材質一致。",
+        "回身與收勢短刃完整，深淺底輪廓連續，沒有把披布誤畫成大翅膀。"
+      ]
+    },
+    {
+      "key": "adv2_thief_A2_f",
+      "name": "毒刃刺客",
+      "gender": "f",
+      "classPath": "A2",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv2_thief_A2_f/visual-review.json",
+      "reviewSHA256": "86159985f64b0ae768e5a8bd83292a7c485c2a3f8c169e09784d6b84f7edcddc",
+      "nativePackFile": "docs/thief/art-A2/adv2_thief_A2_f/native-pack.json",
+      "nativePackSHA256": "be852d3226e7dafc5cd92788708f65c6eb1b1c4d0b295c16d6b16acbf2c71f02",
+      "sourceSHA256": {
+        "hero.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "attack-0-5.png": "70f1926c97c89a3a18493341145be5f04470c937972e4a629af888c29ffa4509",
+        "attack-6-11.png": "2cc37cc2c159a07d3600df1fb16327e25d485d1bc3301fde01734feecd14f1f6"
+      },
+      "outputSHA256": {
+        "hero.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "portrait.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "character.png": "f544a51c4a6465a1c2ea0de8c866eb975336fe132dd86f1ff902f23b2e60e089",
+        "character.webp": "0ac72a5c9ce56ccbebe379a06d7a8ebdd191ed8c91b9ec6c772a34bf3551aa11"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_A2_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_A2_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_A2_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_A2_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "森林綠短兜肩、蛇扣與腰間毒瓶和綠色毒刃一致；保留女性母系面孔。",
+        "綠色刀光附著在雙刃動作，起手、交叉命中與收勢可辨，沒有大片毒霧遮臉。"
+      ]
+    },
+    {
+      "key": "adv2_thief_A2_m",
+      "name": "毒刃刺客",
+      "gender": "m",
+      "classPath": "A2",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv2_thief_A2_m/visual-review.json",
+      "reviewSHA256": "b7d93f90f0dce7eaa563d26c63150e0a745845c0c2e491dbf9dbbb115d64489a",
+      "nativePackFile": "docs/thief/art-A2/adv2_thief_A2_m/native-pack.json",
+      "nativePackSHA256": "073fccfe41b156d71be69c759e4fd02f65286d46d70146ac0f45afbf3d96fc6b",
+      "sourceSHA256": {
+        "hero.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "attack-0-5.png": "ea90d07d0624f158418252c9b94004b8ea5fde8337f8aed3160a2b4edd05f489",
+        "attack-6-11.png": "48d5eb134eea2beeeb3a832224f37a61837cbca84b821e41fc54f43ef421075a"
+      },
+      "outputSHA256": {
+        "hero.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "portrait.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "character.png": "fbfa7fba79ee52b3afbfa6e652710cf113695da6d5f3bec569e4fe33a26a61bf",
+        "character.webp": "14eec02675fbb5b7657070f675bb29507073dd3da6b4a3a3c9078ce797de2ee6"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv2_thief_A2_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_A2_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_A2_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_A2_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_A2_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "森林綠肩布、蛇扣、腰瓶及男性輕甲輪廓一致，毒光局限於雙短刃。",
+        "蹲身、前刺、交錯毒弧與末段收刀完整，沒有多手、裁腳或誤用其他性別圖片。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A21_f",
+      "name": "蝕毒煉師",
+      "gender": "f",
+      "classPath": "A21",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv3_thief_A21_f/visual-review.json",
+      "reviewSHA256": "b1376ded638dda990bad086ffc51fc314c56d5eb6f3d09a40eccbad3f7aca687",
+      "nativePackFile": "docs/thief/art-A2/adv3_thief_A21_f/native-pack.json",
+      "nativePackSHA256": "61d437966bc08621110768c16ab514f7c2399fb277b1a56c16c7213e98974097",
+      "sourceSHA256": {
+        "hero.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "attack-0-5.png": "e9ebe82f37ce6d7bd0f4aed1e5ba8226009eae201452b3f7fb996522e14f6eb2",
+        "attack-6-11.png": "667ee8ce0d85f9792094bc21f794ed748d1fcfc53547f2f44d8410bb275a0701"
+      },
+      "outputSHA256": {
+        "hero.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "portrait.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "character.png": "6122efdf4b7120f10a8fb97deb53905c11d41abfd90d288539d62c9a4dc1ddcf",
+        "character.webp": "53c40f37fbc494e0b904ff3b7f864832ed5cc6d082c1038883cfb2dbf971c95c"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A21_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A21_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A21_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A21_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "斜肩綠披片、胸前毒瓶帶與分叉短圍片，明確區隔母系綠兜肩，曲刃辨識清楚。",
+        "綠色細弧與藥瓶配件持續出現，前刺及交叉釋放完整，人物沒有變成持杖藥師。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A21_m",
+      "name": "蝕毒煉師",
+      "gender": "m",
+      "classPath": "A21",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv3_thief_A21_m/visual-review.json",
+      "reviewSHA256": "7d3a7f4cdbae09de0e8c2f0f3e2de6484d3b7711cba747d1145680165f350bbb",
+      "nativePackFile": "docs/thief/art-A2/adv3_thief_A21_m/native-pack.json",
+      "nativePackSHA256": "e5361aad73291283808ea911ff3902d3f0ac0643f7a3dad185690ce965fced26",
+      "sourceSHA256": {
+        "hero.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "attack-0-5.png": "391ff49673ef3829d70a10b16bd04fbe59b2d27e8d77011303a1226b19c64115",
+        "attack-6-11.png": "f54c9335d5d9debcd71befea97498730802b442e8c2f44f99b364dea00781174"
+      },
+      "outputSHA256": {
+        "hero.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "portrait.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "character.png": "fb268b0aa0db72c42e3ae102e2620db08885c31fd33259083db095a392c155ad",
+        "character.webp": "0d83f0074208258740c339f5a5bd967cc7f192642e40dffbb1fffb31b8d5d054"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv3_thief_A21_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A21_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A21_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A21_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A21_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版露臂、三瓶斜帶與綠色斜肩皮甲一致，波紋短刃與毒液局部細節清楚。",
+        "第7格以透明間隙分離後，左右刀尖與毒滴完整，無鄰格武器混入。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A22_f",
+      "name": "血棘獵手",
+      "gender": "f",
+      "classPath": "A22",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv3_thief_A22_f/visual-review.json",
+      "reviewSHA256": "8f8be4da9acbf9bdd37dffb13e0f13c6d0cf2a99aa4b5908344ff605f8334f05",
+      "nativePackFile": "docs/thief/art-A2/adv3_thief_A22_f/native-pack.json",
+      "nativePackSHA256": "ff6119209e9d258e92aae8dd48d2b2bdc7311f1b3c9830fcea1b8c43cf962146",
+      "sourceSHA256": {
+        "hero.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "attack-0-5.png": "07e60c9206bc2b3a0022223fab2264e825f6f9aae58279ebbc1b6a9443aeecc5",
+        "attack-6-11.png": "494d5f061513932cdb8d23f2f64c443257598938acca15b2fe250f96278a2cc4"
+      },
+      "outputSHA256": {
+        "hero.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "portrait.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "character.png": "f37482d39dec179ded62578c7cd7af6f80380b2fe0c816a9093cfa5f1fea0c7b",
+        "character.webp": "988ef77b7d664a6bd9eb54ee139b5209e414883c3a8d3cc47e827edb9b674363"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A22_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A22_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A22_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A22_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "酒紅棘紋肩披、橄欖拼片與鉤形短刃可辨，毒瓶和綠刃區隔普通紅系刺客。",
+        "12格棘刺護腕與紅披布一致，綠色刀弧保持局部，不遮住臉與手。"
+      ]
+    },
+    {
+      "key": "adv3_thief_A22_m",
+      "name": "血棘獵手",
+      "gender": "m",
+      "classPath": "A22",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv3_thief_A22_m/visual-review.json",
+      "reviewSHA256": "4f2418ee151750d072d182d1d96f8775fd9b06bed26692ef73d17c2efd78f09f",
+      "nativePackFile": "docs/thief/art-A2/adv3_thief_A22_m/native-pack.json",
+      "nativePackSHA256": "da12622ce7157a405a7ff4268bb649214243325728a15e5831e70294c6e28fb1",
+      "sourceSHA256": {
+        "hero.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "attack-0-5.png": "37939689139f7f35e5b6a3c4f47dee648b4de06123492273a2df34080fb74062",
+        "attack-6-11.png": "f30e1e2d5a57d4418b0302ef76e62eb3eddeeaae70d32d92de1a5c0241e2a71c"
+      },
+      "outputSHA256": {
+        "hero.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "portrait.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "character.png": "75a77dea94205811ab5da1402008a262a2667f7d2b9bbc3e9cdf8bb8cb3d5be6",
+        "character.webp": "c6c498e3c43205d2a5266b1d214dd0720e4e175b8c0dcbfc009f3ff8b8f962c5"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv3_thief_A22_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A22_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A22_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A22_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A22_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "酒紅短披、棘紋護腕與綠色鉤刃在男版原畫和12格一致，男性輪廓自然。",
+        "低重心突刺、交錯毒刃與回身收勢可辨，衣甲未增加成重裝騎士。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A211_f",
+      "name": "九首毒刃",
+      "gender": "f",
+      "classPath": "A211",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A211_f/visual-review.json",
+      "reviewSHA256": "c86fd07ad4128d97bbee5923b64beaab493bf748081ef26e0461b11dbe1dad3c",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A211_f/native-pack.json",
+      "nativePackSHA256": "ca5e11fe05e733fdac899191f4761b9c8858b0e08d70d0583e738f46f7fb1b0d",
+      "sourceSHA256": {
+        "hero.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "attack-0-5.png": "00c20d39bb2d0eebdeb515149ca67b68f4986f2e12dcb92f250a18851715530d",
+        "attack-6-11.png": "017fc3fd6855dcfc2ec7b2e0baa521ebe09881a5095d508757cd26d9f8303006"
+      },
+      "outputSHA256": {
+        "hero.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "portrait.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "character.png": "9423d332f46a2e86c47d0612306fe41ebac3bf291076615e0d0274a7a868e03e",
+        "character.webp": "45d83c5424b171a2ac7e51d3622ee9df89a1d89cdca3f99ccec5be52881f5d5b"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A211_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A211_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A211_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A211_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "深綠蛇紋短披與多枚蛇形扣件、蛇鏈腰帶，比煉師更精細但仍是輕裝雙刃。",
+        "綠色蛇刃弧線與肩部蛇紋延續，頭髮、手部、刀尖與靴子完整。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A211_m",
+      "name": "九首毒刃",
+      "gender": "m",
+      "classPath": "A211",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A211_m/visual-review.json",
+      "reviewSHA256": "955d6571ef4418d8c9d049c5da0afb81d1533b099782e50d0fadb3c20eb77dd7",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A211_m/native-pack.json",
+      "nativePackSHA256": "436ceacb21e4f0fc4df2e33ed14fd5080c6ba997f643052bf08cb75e67ee16e8",
+      "sourceSHA256": {
+        "hero.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "attack-0-5.png": "c1ee2166cd84bf0e8afd33664e9dd64e4ebd1bb183755539a8e2f9eeb77066d5",
+        "attack-6-11.png": "298e555ecf9e3236036dab46a0e781f3da67053b6f61e3bb54ca754f14f93d36"
+      },
+      "outputSHA256": {
+        "hero.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "portrait.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "character.png": "16f8cbea937006d4645dbc56d9508c11ff394ddb71c78f600683ad36108c02e3",
+        "character.webp": "7ee580f7edfac18290dd9dab054b2a122f8a99c29121cf6ceb5ffba146231f4b"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A211_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A211_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A211_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A211_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A211_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "深綠蛇扣披肩、蛇鏈與短毒刃在男版維持一致，銀青毒光沒有改成法師大法陣。",
+        "長前刺刀光保留完整，未見鄰格靴子混入，收勢的兩刃與蛇形裝飾可辨。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A212_f",
+      "name": "冥蛇使徒",
+      "gender": "f",
+      "classPath": "A212",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A212_f/visual-review.json",
+      "reviewSHA256": "62d14671bc10dcda107ddb193063e1b26e2af6be8e9d85dd62748c3a046ee084",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A212_f/native-pack.json",
+      "nativePackSHA256": "56f836e90251a3a19bfa49e467665b04f2fdff7501d3db43874d63f5563f6cd4",
+      "sourceSHA256": {
+        "hero.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "attack-0-5.png": "9b2b76135a5946e96842c5a67a7ff88a11365a8ccc4557206bd610664be24c97",
+        "attack-6-11.png": "47a75c2f0da4a460a3b97b44f16eb88a87cf43a03073e8242e6b85f2dafca423"
+      },
+      "outputSHA256": {
+        "hero.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "portrait.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "character.png": "1aaf4889cb2de17b8b3b8fe54624e1963c90fcfaf2ea4f09eeced5835c2ff136",
+        "character.webp": "c99beebf3a7046f9f663f3f5cb1dfa0289a86a2c01b877efbda649e97678c6bc"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A212_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A212_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A212_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A212_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "黑色短皮衣、深綠半兜肩、暗紫內襯與雙色蛇刃清楚區隔深綠九首版。",
+        "一側紫光、另一側綠光的短刃延續12格；衣尾短而輕，沒有死靈法師袍。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A212_m",
+      "name": "冥蛇使徒",
+      "gender": "m",
+      "classPath": "A212",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A212_m/visual-review.json",
+      "reviewSHA256": "90bbd8cb3f1c4ce0bf9a1010ec8368c9b3133e12d763d0d74e33eb1aa8930434",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A212_m/native-pack.json",
+      "nativePackSHA256": "e705a04b8ccc9e3a7a7ed39b46883e397c25a460e41ac49a9bb976c3a0855653",
+      "sourceSHA256": {
+        "hero.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "attack-0-5.png": "8eca2e531b9b51fe584f91eeca2450e0d748ff305216e40df58ffb12eec6736d",
+        "attack-6-11.png": "1a2019ca93495f6fa3523e6bf49b985ae13abb6ab8e78f6d92ce72621228b154"
+      },
+      "outputSHA256": {
+        "hero.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "portrait.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "character.png": "30dea20cf5b642c6ba2c4cfac1d33297a0e683027453aa6b295d55c378e33bea",
+        "character.webp": "2a673c0efb08fd13d6ca0d9b4e8cf3251519ef79667e614477c9adefb59b107c"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A212_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A212_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A212_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A212_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A212_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版黑短衣與綠兜肩、紫內襯和蛇扣一致，面孔延續母系。",
+        "紫綠兩刃及交錯刀弧完整，前刺與回身可辨，靴底與手部沒有裁切。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A221_f",
+      "name": "血棘君主",
+      "gender": "f",
+      "classPath": "A221",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A221_f/visual-review.json",
+      "reviewSHA256": "e18e22406b22240891a647d381608337ecc2b4679d1a5add80d24bb3c1eb05bd",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A221_f/native-pack.json",
+      "nativePackSHA256": "4674a5c8c8be55047df152453c114c1b524398be59c8bfac100cfeacdb6277d8",
+      "sourceSHA256": {
+        "hero.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "attack-0-5.png": "3c0351f806cd820f8ff77e782b0aa5facbb634ecccb498c76318e2ee70f9f927",
+        "attack-6-11.png": "f71cd363962603c80019c5073ca6dd3ed1f8bdcfd03449cec5e09c3179b3b367"
+      },
+      "outputSHA256": {
+        "hero.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "portrait.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "character.png": "1f866b59e94172a905d68f87bd696cb1d78f4b402dde1b0332c08265820c9411",
+        "character.webp": "1e0d431c9fc5eaad4adffd689df74654cb9b600371570e8bc86293cfadf35888"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A221_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A221_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A221_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A221_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "深紅月桂棘邊披肩、多扣腰帶和毒瓶構成血棘高轉服裝，保持女版母系面孔。",
+        "紅金披布與綠刃在12格一致；與A22同紅系但月桂邊和多扣腰帶有區別。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A221_m",
+      "name": "血棘君主",
+      "gender": "m",
+      "classPath": "A221",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A221_m/visual-review.json",
+      "reviewSHA256": "ded7fa56a28b901a4854a4d37f8a734a4f1fb7946ecc2626f6301ae47de6be64",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A221_m/native-pack.json",
+      "nativePackSHA256": "1bfbe34d83bf6cc8246f955814b061cb02f647b1c7aee5a611ca5652492b8f3f",
+      "sourceSHA256": {
+        "hero.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "attack-0-5.png": "9cc42cbdef283b07c878d961e7fc194214fc31e334e3ccb4df93b712e0c7c1ed",
+        "attack-6-11.png": "3075b08917f6c159b8f8f0f5d0d217b810a5c6f930e7fdca2ac9c96e000e7d14"
+      },
+      "outputSHA256": {
+        "hero.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "portrait.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "character.png": "b4478a50d576311ac7874c5d5eef280a5be1727da0ed87a8abb3623e5dfe00f8",
+        "character.webp": "56ef88b29a1e502ed08d3b0688c1b4b9cd123678b1796128df554177e90a002b"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A221_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A221_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A221_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A221_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A221_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版深紅月桂邊、三扣腰帶與雙短刃一致，沒有冠冕、大披袍或重甲。",
+        "前刺、交叉毒弧與收勢完整；紅金細節與綠刃形成清楚職業色彩。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A222_f",
+      "name": "蝕魂收割者",
+      "gender": "f",
+      "classPath": "A222",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A222_f/visual-review.json",
+      "reviewSHA256": "e821a107bfe127b373db07261df419fce3568ee977b4335e0788dad5099bf492",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A222_f/native-pack.json",
+      "nativePackSHA256": "fc10e715944d5facffdfb48b8994c9633419325f6d53c62c0abda11cd03a8011",
+      "sourceSHA256": {
+        "hero.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "attack-0-5.png": "e78be199a3fd7464f9bd9b1ded4de11ac8d05c719736e3182d37de729bd1dcbf",
+        "attack-6-11.png": "cf0788f1474e3c0896e8156ddeafa7ba569e436c4a0c9f2b128d16a300c01aa6"
+      },
+      "outputSHA256": {
+        "hero.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "portrait.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "character.png": "8969132d5372bd33d9113d7baaebdec46a7f1c538fd1bc0228f325a916759305",
+        "character.webp": "74161fc4f7b5b3797da4067c838fecb823ed8867bbcf4c80931bbff59dde60bf"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A222_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A222_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A222_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A222_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "煙黑短皮衣、紫色短肩披與淡綠符扣，雙刃仍是短匕而非鐮刀。",
+        "紫綠刀刃及腰衣輪廓在12格一致，魂紋僅是局部裝飾，未變成法師大光圈。"
+      ]
+    },
+    {
+      "key": "adv4_thief_A222_m",
+      "name": "蝕魂收割者",
+      "gender": "m",
+      "classPath": "A222",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A2/adv4_thief_A222_m/visual-review.json",
+      "reviewSHA256": "316efbe19bf73f42366af7a65f99c64f4a68957e89a454ae8abd32d04c1be304",
+      "nativePackFile": "docs/thief/art-A2/adv4_thief_A222_m/native-pack.json",
+      "nativePackSHA256": "7ead083d58050c1011b8a8b9c11a4bc53dbaa8e508b356ae46fd9ea5787a2808",
+      "sourceSHA256": {
+        "hero.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "attack-0-5.png": "925945b9ed50bf589cf79b76e015fd36dbb25dfe5772d444c68caac52abe37ed",
+        "attack-6-11.png": "d35ca55ae8137a605fef585d93ac6d401bbf27f070b4c9fc7c40af063123a34e"
+      },
+      "outputSHA256": {
+        "hero.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "portrait.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "character.png": "d7f63c9adc4b234de9b90d8f5aff46e52760bcc9eb78316db1a02fa8640ade2a",
+        "character.webp": "e4e06b615056bc091950c80c1cbdd704bdcbe26f42e1703313c7f33e105b2012"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A2/adv4_thief_A222_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A222_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A222_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A222_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A222_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "男版煙黑皮衣與紫肩披、魂紋扣和雙刃一致；身形精瘦，沒有死神長袍。",
+        "綠色釋放刀弧與紫色細節保持局部，回身與收勢有完整兩手兩腳。"
+      ]
+    },
+    {
+      "key": "adv2_thief_B1_f",
+      "name": "飛刃遊俠",
+      "gender": "f",
+      "classPath": "B1",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv2_thief_B1_f/visual-review.json",
+      "reviewSHA256": "7c1299176d261444d2758ff172656ddd52beb26e5539a4ca9b3160058b0c3bdc",
+      "nativePackFile": "docs/thief/art-B1/adv2_thief_B1_f/native-pack.json",
+      "nativePackSHA256": "87bc1ada3fbaa677257de438c1e2e4574c363a0110d5e10b0d906aa87ab96f45",
+      "sourceSHA256": {
+        "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "attack-0-5.png": "da03915c8e6dbeeb06239e5484a478819a02dec8a9cd92efb11750f2d2caba67",
+        "attack-6-11.png": "6c380255d1f4a6fd322b1d7453308268007cd4de3aa477f4152b542bff8d453b"
+      },
+      "outputSHA256": {
+        "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "portrait.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "character.png": "af36074b9393de46d3fc9f66638a654c52a80b73278a234e35bd109caa236e02",
+        "character.webp": "74e71e457fab78f26666f5f45c6e3f55b348c0441071966a0ca00a992bea9304"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_B1_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_B1_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_B1_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_B1_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "Auburn ponytail, teal/bronze wing clasp and full leather/linen clothing retained across all frames.",
+        "Forward throw release is source frame6; exposed open hand and compact detached knife within reviewed source rectangle.",
+        "Body center and active blade hand coordinates manually located on each source frame, integer-translated by shared packer.",
+        "First candidates rejected for overlapping/cross-cell blade light; source retained. Selected replacements inspected separately.",
+        "Final output contains no grey/checker backdrop; checker composite is QA only. Original alpha has min0/max254, not an opaque background."
+      ]
+    },
+    {
+      "key": "adv2_thief_B1_m",
+      "name": "飛刃遊俠",
+      "gender": "m",
+      "classPath": "B1",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv2_thief_B1_m/visual-review.json",
+      "reviewSHA256": "2f0644af7f3b1d74626c8a730ae374fa3832e73752d1817791dbc76acca44a50",
+      "nativePackFile": "docs/thief/art-B1/adv2_thief_B1_m/native-pack.json",
+      "nativePackSHA256": "709779bc78b2efb9572666b5155c81f1b121f649141fe4e5671d5a8f3ec7a843",
+      "sourceSHA256": {
+        "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "attack-0-5.png": "b3fbdb1494d7ccd321c769457ed5aa1eccb79994deaeba4d81f467c398f4fb56",
+        "attack-6-11.png": "52310402c0d0f46c99a4147850e6c778deafd14b6a5523e67e411b4c4d3fa89d"
+      },
+      "outputSHA256": {
+        "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "portrait.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "character.png": "613916478c45c572fbff5304d52f9d4d07503b40d7ed5187bd9ef38c423072b6",
+        "character.webp": "3714133e6c4b813b2aa87c461280a81bc6200bed2284a5b864045b8519393512"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv2_thief_B1_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_B1_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_B1_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_B1_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_B1_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": [
+        "Independent male angular face and short brown hair, cream rolled sleeves, teal/blue mantle, bronze clasp and silver ring-hilt blades retained across twelve poses.",
+        "Wind-up0..5, open-hand release6, followthrough7 and four distinct draw/recovery poses8..11. No third hand or duplicated pose seen in source or packed checker.",
+        "Frame6 ROI expands to x560 through actual empty gutter to preserve full released blade; next figure starts farther right. No pixel erased or resized.",
+        "All significant alpha stays inside crop and twenty-pixel packed margins; all twelve source RGBA hashes distinct.",
+        "Original alpha min0/max254; grey/checker only QA composite."
+      ]
+    },
+    {
+      "key": "adv3_thief_B11_f",
+      "name": "疾風刃使",
+      "gender": "f",
+      "classPath": "B11",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv3_thief_B11_f/visual-review.json",
+      "reviewSHA256": "70d5cf93643d460279802ca1e1bf75e42ae84640b46d7be929c92b6b4962237f",
+      "nativePackFile": "docs/thief/art-B1/adv3_thief_B11_f/native-pack.json",
+      "nativePackSHA256": "c6b33484d4f947cc5efd65e1e15b5c93d61f18ef0b1ccba5b903740a74a18d30",
+      "sourceSHA256": {
+        "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "attack-0-5.png": "4b954fd5f7b92b56464100f0ba4680e00edcdbb2af83c99f3e968eaf3c764666",
+        "attack-6-11.png": "a92a2dcb29d87b6dad9735293fb869952e09009f17495f0e3790fbc94172c5a1"
+      },
+      "outputSHA256": {
+        "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "portrait.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "character.png": "1fe8109939aaf86e95a83e8e3e51697039cb9b1553af8e6a0530dd8d466e98d5",
+        "character.webp": "a42a4b24ba98fe58f1cd7f5c8a781af1d089cbc73df4111a8024f91e10a1b9d0"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B11_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B11_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B11_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B11_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv3_thief_B11_m",
+      "name": "疾風刃使",
+      "gender": "m",
+      "classPath": "B11",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv3_thief_B11_m/visual-review.json",
+      "reviewSHA256": "37be80a57575de0dea769170a205247966c8907b3abfcae2907942c8d9d79a30",
+      "nativePackFile": "docs/thief/art-B1/adv3_thief_B11_m/native-pack.json",
+      "nativePackSHA256": "35aa7493bd6c631a37418f727c84d84ce49f2926827c2fcf6751e4540f5c8abe",
+      "sourceSHA256": {
+        "hero.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "attack-0-5.png": "0af079604556526ca111cda8865a41672ecd5196558233e45cb00ac61591dd86",
+        "attack-6-11.png": "7a2f73e829bc9b823d4b6153190442cb3d8bd7d1568fc54ca94e241f4b93448e"
+      },
+      "outputSHA256": {
+        "hero.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "portrait.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "character.png": "bdc0fd6251a82cadc9ef8ada7f965396e98f247f5673d1d145b0e8ac67756aa5",
+        "character.webp": "13e5eeb26eba948b03b885b96346d53142ce9963028881af2b83ad5be14503b2"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv3_thief_B11_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B11_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B11_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B11_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B11_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv3_thief_B12_f",
+      "name": "星刃獵手",
+      "gender": "f",
+      "classPath": "B12",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv3_thief_B12_f/visual-review.json",
+      "reviewSHA256": "7e9155eb87efa2f04afd5906d5dcfc6dd0c7b7f797434460cea7d221f3b3fe00",
+      "nativePackFile": "docs/thief/art-B1/adv3_thief_B12_f/native-pack.json",
+      "nativePackSHA256": "d5724559b95ae5563582c1b99863c28744a6d9870e2e2e3960a80bc726176a4c",
+      "sourceSHA256": {
+        "hero.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "attack-0-5.png": "a0f6b5d6c609a754c190988f9775b2c232ed8eaa72ab18c6310d056f9d19d5a5",
+        "attack-6-11.png": "bc51a88150d8131bc739398fc8bb8147a07c478ca457af92e99223a476072198"
+      },
+      "outputSHA256": {
+        "hero.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "portrait.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "character.png": "00cf4b8b2e6ead1d7ca0f5fd387191d2e760512f66d56ae00e68d7df032c9252",
+        "character.webp": "7645749d8531cbcffa0c498c938ebc07dbf88567a30e57ceae779cb40c4a0b56"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B12_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B12_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B12_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B12_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv3_thief_B12_m",
+      "name": "星刃獵手",
+      "gender": "m",
+      "classPath": "B12",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv3_thief_B12_m/visual-review.json",
+      "reviewSHA256": "b32e64fe07deeb7dba9382e08150b4700a970f3cb7958db283ca2a5fce83fb52",
+      "nativePackFile": "docs/thief/art-B1/adv3_thief_B12_m/native-pack.json",
+      "nativePackSHA256": "d625baff647940fc4372fc4cdd4598daf7e7b0cdab82bd00adcc6b572c222ce7",
+      "sourceSHA256": {
+        "hero.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "attack-0-5.png": "f605a304d7d7f91bb4a4157dc75902d6b25c5b0beda0e2f5697ed877fcb91b4d",
+        "attack-6-11.png": "009f5ad6b7edd0e7bfe697210ead9ff3817139c50211954be88a1aaf6c7e43a7"
+      },
+      "outputSHA256": {
+        "hero.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "portrait.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "character.png": "ab5a7fa21c30b264a177e180df56c7ccf2257c95b0f922a179cb0743bf6445ab",
+        "character.webp": "d5ba89ac15dc82ee9e186668c2aa3cd1f242aeab5fc866f1f95958ecd5d63c07"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv3_thief_B12_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B12_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B12_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B12_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B12_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B111_f",
+      "name": "風暴千刃",
+      "gender": "f",
+      "classPath": "B111",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B111_f/visual-review.json",
+      "reviewSHA256": "c42e749ea0e785805f2249c6f76ccce244f869a4218336ff2a9e83b412514fe5",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B111_f/native-pack.json",
+      "nativePackSHA256": "574322c8bda6032c974b776df786eca53943fe9c9c9dca2f78aefa3e11656256",
+      "sourceSHA256": {
+        "hero.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "attack-0-5.png": "e2553c3c9449491dd1e21f6a0abfebd369558d365d20f66476c3242bfa9cc1ca",
+        "attack-6-11.png": "857a3dea9073c7d66aa6b93508b0b3fd39793ca9d30513adfc17cb0b92d4350d"
+      },
+      "outputSHA256": {
+        "hero.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "portrait.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "character.png": "a99daa38a952100a1e82f0d679164cd8267c483d52c73ff2d712537b6317943f",
+        "character.webp": "37cbd14d859e465db12a03419ea7a75cec0a416578db48658052c8bb903b2135"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B111_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B111_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B111_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B111_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B111_m",
+      "name": "風暴千刃",
+      "gender": "m",
+      "classPath": "B111",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B111_m/visual-review.json",
+      "reviewSHA256": "b6bd5b2b588ee85dc0a37dc8ed1e678b741e8eefc4a0afcb273da7597a8274f7",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B111_m/native-pack.json",
+      "nativePackSHA256": "5c3f1729f056fc29d6d122eb6d9fd162f613131670823ff73f122c02cf0830da",
+      "sourceSHA256": {
+        "hero.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "attack-0-5.png": "6265705311774353a7dd5590a2a59af642d672a502b79040c3248166f6d349f1",
+        "attack-6-11.png": "0ae450fe0ba10117dfc4f62475976bf8469ae826f0b9fda5c55657e710d90d20"
+      },
+      "outputSHA256": {
+        "hero.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "portrait.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "character.png": "66fc4e70400d87dcbc317835ddbab16fc3eac25b85de692e62718129966152fd",
+        "character.webp": "3dd06b11aec7e1aeb87ca1991892a1af55529d9780bba31f3f92cc94cc75ed4e"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B111_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B111_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B111_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B111_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B111_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B112_f",
+      "name": "疾影穿梭者",
+      "gender": "f",
+      "classPath": "B112",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B112_f/visual-review.json",
+      "reviewSHA256": "371b93a27b5a565e39ee48cb4241b4428f901706fa25b070a9b1d0eca26b5b44",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B112_f/native-pack.json",
+      "nativePackSHA256": "b797eda786d5ba215c057a5ce43798af04a8aca9ea942edc213661d7ca428276",
+      "sourceSHA256": {
+        "hero.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "attack-0-5.png": "72c7e67fe0edbbe2dc4f76e790e7fd085f5419e2e180d2b0c1bab95ef2b3835d",
+        "attack-6-11.png": "ecb30b475cd2f43dda1b5a39beba3269cf1b6d7ea2e26dd9f3fea1de5e6a7f22"
+      },
+      "outputSHA256": {
+        "hero.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "portrait.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "character.png": "24d819979de920d8e6342cdff0945018bcd882da866f850150dda16299f0b7b3",
+        "character.webp": "a090b703d560ac3a3a00e98a091b0e1846b763a2497f40b30834b7c22c02dc72"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B112_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B112_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B112_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B112_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B112_m",
+      "name": "疾影穿梭者",
+      "gender": "m",
+      "classPath": "B112",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B112_m/visual-review.json",
+      "reviewSHA256": "f0686b60dbe3d26a7985af18f0b45a133dd8fe652761d38289758a1e4942e5b9",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B112_m/native-pack.json",
+      "nativePackSHA256": "e4a889525599226b565028575e377bde8e697a783b39607c60cb479bddcec75f",
+      "sourceSHA256": {
+        "hero.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "attack-0-5.png": "ad5501e0309361350418fd70fe501cdf59d2551bf6b12b7cf3fabc71512a941f",
+        "attack-6-11.png": "b8b4f20a772b1f98dc4faf1b05aff7ea47cbd4555b2bed069b0939822211ec3f"
+      },
+      "outputSHA256": {
+        "hero.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "portrait.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "character.png": "8261d4584f560c287aa2af270822365dbee79ba56d8a0298e368761259ffb764",
+        "character.webp": "7a0dfcfaafa04c6b8ee9d9b4c3d58981a791d92a0423638d37347b6cd3ad27e8"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B112_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B112_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B112_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B112_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B112_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B121_f",
+      "name": "星隕刃使",
+      "gender": "f",
+      "classPath": "B121",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B121_f/visual-review.json",
+      "reviewSHA256": "17fa5575103c995bbcd8ff1bbc37e9392045b7d503886adfb500224db1abe8d1",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B121_f/native-pack.json",
+      "nativePackSHA256": "eeb40de8d1584a4bf448537d4b3a75931c4e6edf464795806db5142be460789d",
+      "sourceSHA256": {
+        "hero.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "attack-0-5.png": "458b29c14975d976c9a6537284a6aba3e8dc21fea7d39cc58bcec919cb2c3a43",
+        "attack-6-11.png": "3f8a64f5e1dcb9f588a5d088fbbd3c55d8c69c777dca693ec98988ffb1363c7b"
+      },
+      "outputSHA256": {
+        "hero.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "portrait.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "character.png": "3e17924d94c67757f674d5d4213c5f4d290a1ed6f2e4e3b148cbb11eb765441f",
+        "character.webp": "969288af5100ca383cfa6678e2af82985f7e68edff7aee53d9747a8b768de681"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B121_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B121_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B121_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B121_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B121_m",
+      "name": "星隕刃使",
+      "gender": "m",
+      "classPath": "B121",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B121_m/visual-review.json",
+      "reviewSHA256": "8e04a1964b94b8bb98d83585f535ae8a9b6f105454c98e71a72537c8fa5793f0",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B121_m/native-pack.json",
+      "nativePackSHA256": "517056470d962d3553cc834305531df75df31826a67d98a016f7ca0f02f5da2d",
+      "sourceSHA256": {
+        "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "attack-0-5.png": "6d2767a8d1cf7ead24fa069ad826c5281b37e820e47e94a846b8df83e7bc94d3",
+        "attack-6-11.png": "1d02af06906dffc73c744550fd26fcfca6847f8bc84b728a83848d6336ff2ab9"
+      },
+      "outputSHA256": {
+        "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "portrait.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "character.png": "081d4016d7a3c80a6d025fbdd6b0f36c67b9aa27949d3bae608add7f5fee7794",
+        "character.webp": "4b4cea655bbbd0eaa93dd9efef5e69b5d205374656fa7d7a80e041ffec65304c"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B121_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B121_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B121_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B121_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B121_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B122_f",
+      "name": "星軌追獵者",
+      "gender": "f",
+      "classPath": "B122",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B122_f/visual-review.json",
+      "reviewSHA256": "26fb8b35abd7cdb099646bbb3497364e2016690f0d60d38b130c09ff11d83ba1",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B122_f/native-pack.json",
+      "nativePackSHA256": "786c2790f02feeadf3b11db7e6c15e5173c304ca0ea5eea5eb4913d4b7f23e2a",
+      "sourceSHA256": {
+        "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "attack-0-5.png": "42817eb59889183c55203106d7d0e468639daed8ec17f530dd07a6006b69c469",
+        "attack-6-11.png": "abafa87def20c67f75cce529283ea96dbc5f8cf09d9e4beb18a706addd602e09"
+      },
+      "outputSHA256": {
+        "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "portrait.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "character.png": "dd4647157ae0d7b97bc8de9ff3c6e1558acebbbee909379574ca087994eb8083",
+        "character.webp": "8eafb6f4e5fdbc05a0c06534c5ea8aab4cc100b28a468dea58d3eb4d56efe7d5"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B122_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B122_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B122_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B122_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_B122_m",
+      "name": "星軌追獵者",
+      "gender": "m",
+      "classPath": "B122",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B1/adv4_thief_B122_m/visual-review.json",
+      "reviewSHA256": "6e954fa4ec50a3e2ead96b0e3557656f24cc007c3f9c6571923a2c6a596ad566",
+      "nativePackFile": "docs/thief/art-B1/adv4_thief_B122_m/native-pack.json",
+      "nativePackSHA256": "d2a43d6f7b5f24c8a7af8dd2e7581126bbc93dbe7c5795d5e3d97bb969771d5a",
+      "sourceSHA256": {
+        "hero.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "attack-0-5.png": "485b48895c436606dc8d3200d50ccc2cac4faeefc7a589c90236d914ca5998de",
+        "attack-6-11.png": "ddcca69b09f35ad46da2c5a6cfe444af94b86e1ac3ce197dc740b030035db755"
+      },
+      "outputSHA256": {
+        "hero.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "portrait.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "character.png": "a6b1163926a0d9a68fd01f5ee8488238997501b2a242d05383b6b59df31d7b50",
+        "character.webp": "2c81dde73ff3d8d4de4523be5e16ba4d95626ed840bb55feb46fe79bba44a102"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B1/adv4_thief_B122_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B122_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B122_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B122_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B122_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv3_thief_A12_f",
+      "name": "幽影追獵者",
+      "gender": "f",
+      "classPath": "A12",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv3_thief_A12_f/visual-review.json",
+      "reviewSHA256": "44427aff9894ac969b2cf8e9848dd1c5951aec0e5432a4fd849487592156e6a4",
+      "nativePackFile": "docs/thief/art-A1-right/adv3_thief_A12_f/native-pack.json",
+      "nativePackSHA256": "c97963f321b9c32186227f9ebe8f188856a01299849d31bcfd3199941ca08c58",
+      "sourceSHA256": {
+        "hero.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+        "attack-0-5.png": "baa2bb0aa000f66450cd5800604023dc82fc83706031f6d69ca3d4eb9f17e340",
+        "attack-6-11.png": "942854f99839a537342f42fe6628e89776083424b5639848fc0e45c157f3e1f6"
+      },
+      "outputSHA256": {
+        "hero.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+        "portrait.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+        "character.png": "2a7c385eb80fed87a0c714fb7a2ef01b62e2ff10642b8701307a609988cf8b3b",
+        "character.webp": "6ef4df6565d30b47b83bdf2eb80f5f059cdd18b23efc121d834a89fcf9f0f7a1"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A12_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A12_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A12_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A12_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv3_thief_A12_m",
+      "name": "幽影追獵者",
+      "gender": "m",
+      "classPath": "A12",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv3_thief_A12_m/visual-review.json",
+      "reviewSHA256": "05215d01ed60ff0fe1e0c0099273d6c6819028af4fe33a81514160d38f3e5ae6",
+      "nativePackFile": "docs/thief/art-A1-right/adv3_thief_A12_m/native-pack.json",
+      "nativePackSHA256": "a5ed35cf64dca86614cd825f08e25e1dc76bbdc53c8541efb0806c521af77014",
+      "sourceSHA256": {
+        "hero.png": "9849452a22cace43787147b587ce3c000891c073b28de833c2b139d4c55a1fbb",
+        "attack-0-5.png": "d94d8cbfe279edf25eb55027f7b6d2a2c63639f70e0de1c2ccedf61a0eaa1215",
+        "attack-6-11.png": "8de906f8f167f991c1a082224b1e0f9f05cb280123757d9c6ab0fb13b8ffc04f"
+      },
+      "outputSHA256": {
+        "hero.png": "9849452a22cace43787147b587ce3c000891c073b28de833c2b139d4c55a1fbb",
+        "portrait.png": "9849452a22cace43787147b587ce3c000891c073b28de833c2b139d4c55a1fbb",
+        "character.png": "b11ae30ee23a74a438df52cc09acc6aba63478e1b29010d3f14d57432d17ba1f",
+        "character.webp": "d791380da4d54d47fa8bf9f4ddfef7aa5883ee0a06763a4a9664444b85e23803"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv3_thief_A12_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_A12_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_A12_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_A12_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_A12_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_A121_f",
+      "name": "虛影行者",
+      "gender": "f",
+      "classPath": "A121",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv4_thief_A121_f/visual-review.json",
+      "reviewSHA256": "638a8bc61c8b6b750d27849f18087ed242ed678d8eaf479a7e0367ca38eb45d6",
+      "nativePackFile": "docs/thief/art-A1-right/adv4_thief_A121_f/native-pack.json",
+      "nativePackSHA256": "c0d2f6e810c7baf085878b94cd298d43d429d49f7fbaac0508d6580db668d821",
+      "sourceSHA256": {
+        "hero.png": "9b4a1079fd8493dcc4a34c4713208928e638224d8a32672198656fde5b1bce9c",
+        "attack-0-5.png": "8a1a61311a181ff4856c311c002175f5dfac1351449912c4f5a03fddc501d1a1",
+        "attack-6-11.png": "cbce54406d1b61dad1c557b1564c4ea32b89a9b535f39666d168e527c84b6436"
+      },
+      "outputSHA256": {
+        "hero.png": "9b4a1079fd8493dcc4a34c4713208928e638224d8a32672198656fde5b1bce9c",
+        "portrait.png": "9b4a1079fd8493dcc4a34c4713208928e638224d8a32672198656fde5b1bce9c",
+        "character.png": "7b92094b8d0a14cda66056812306cfc8fc8140e2fe0a55e87eaabb35ff83d415",
+        "character.webp": "905faee31e148f46b133191a8307b595e0601f8257d4461bac043a88030da736"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A121_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A121_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A121_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A121_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_A121_m",
+      "name": "虛影行者",
+      "gender": "m",
+      "classPath": "A121",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv4_thief_A121_m/visual-review.json",
+      "reviewSHA256": "3a0a29feb989147cd1812b94062dcf4dc284d6f7974d7874ea98887b67fabc99",
+      "nativePackFile": "docs/thief/art-A1-right/adv4_thief_A121_m/native-pack.json",
+      "nativePackSHA256": "a4ecc8390ce53247d6cfc22665ea35393336be4307cddf8729fa79f18d14a74b",
+      "sourceSHA256": {
+        "hero.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+        "attack-0-5.png": "a17822492d0179f27c469fcaf7df66f72b5e4748f3175b89d94ca68ac4020d49",
+        "attack-6-11.png": "9dcc9c5b91c06643241f10b726fba9b95442cb7100fcbc17f5774d4d1eb95400"
+      },
+      "outputSHA256": {
+        "hero.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+        "portrait.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+        "character.png": "6a5abd4f361c6260b684b4460614807617971b3a41e462755220113b1d79c4d1",
+        "character.webp": "0fd4a8b1539c0f63f2b7958f00ceae08bc23aa051dad8741cf4c1713338a1f96"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A121_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A121_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A121_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A121_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A121_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_A122_f",
+      "name": "無聲獵魂者",
+      "gender": "f",
+      "classPath": "A122",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv4_thief_A122_f/visual-review.json",
+      "reviewSHA256": "c0246b2a7acdedb3233b7748874d123941dc4054ab49f168bd3000d82b78ef3e",
+      "nativePackFile": "docs/thief/art-A1-right/adv4_thief_A122_f/native-pack.json",
+      "nativePackSHA256": "938d3c1f675a07c1691d390b9a3a1666129c6a456ac6f2d2dbaf6b6e8c4b72ee",
+      "sourceSHA256": {
+        "hero.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+        "attack-0-5.png": "15e56987df514043381c69a558b699cce099eef32cef0c296126393868760a41",
+        "attack-6-11.png": "0d2d8452dba86c47977fe9c975bcf88a125ed400422b558b4351c44cbf6d1881"
+      },
+      "outputSHA256": {
+        "hero.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+        "portrait.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+        "character.png": "3b164b1efc29e2826c5860e32f043e676a03751312000f8fadf6b66aa5f12735",
+        "character.webp": "bd06fb62015989c1863452c03b1a3466f91882fec0169dd9ef3a046be6aa3a42"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A122_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A122_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A122_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A122_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv4_thief_A122_m",
+      "name": "無聲獵魂者",
+      "gender": "m",
+      "classPath": "A122",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-A1-right/adv4_thief_A122_m/visual-review.json",
+      "reviewSHA256": "e935900b1d41b610db3bb09d9212f65da450188ed4328f7856cbc90606769af3",
+      "nativePackFile": "docs/thief/art-A1-right/adv4_thief_A122_m/native-pack.json",
+      "nativePackSHA256": "b625b74391352733cdea7a2dca0f1b2987991b17759207a49301fd7ab2700584",
+      "sourceSHA256": {
+        "hero.png": "4a1ee2a69e971f9d9da08b6159ce565fd644037772a1a4b501ac62632a0ff4d4",
+        "attack-0-5.png": "0009b2d672710f69202b071842cdd981b641a432bd68caa055eb5fbc3d437a28",
+        "attack-6-11.png": "4a0fbd7ca5edc30320c904efd8fbb378e55e0d6f86a61a1be4e5b44f6bcdcf44"
+      },
+      "outputSHA256": {
+        "hero.png": "4a1ee2a69e971f9d9da08b6159ce565fd644037772a1a4b501ac62632a0ff4d4",
+        "portrait.png": "4a1ee2a69e971f9d9da08b6159ce565fd644037772a1a4b501ac62632a0ff4d4",
+        "character.png": "3e2310da7adf13e36b4f066895bdeab27b9ca48692117eaeabef1cb164111810",
+        "character.webp": "5ab328a084d62ec8abf9a15d154aeff4b6babddbd429023dc7cc6fd27e39454a"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/A1-right/adv4_thief_A122_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_A122_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_A122_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_A122_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_A122_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": true,
+        "reviewOutputBinding": "direct-review-output-SHA"
+      },
+      "notes": []
+    },
+    {
+      "key": "adv2_thief_B2_f",
+      "name": "幻刃使",
+      "gender": "f",
+      "classPath": "B2",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv2_thief_B2_f/visual-review.json",
+      "reviewSHA256": "1decb02cf3c2f52e655e1913608ba89d155f01316eaa29edb99442ab59dd868b",
+      "nativePackFile": "docs/thief/art-B2/adv2_thief_B2_f/native-pack.json",
+      "nativePackSHA256": "9fcd6f67dda1bb2e98878eba9e6d993a8ad70d9356909d49ee2084496066b936",
+      "sourceSHA256": {
+        "hero.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "attack-0-5.png": "ef946758967b6e84db56e01a9e638ae2c224084946f01004e7837472f5183b06",
+        "attack-6-11.png": "eca52f97872bc32eb281189bc3fc589f332ca750927ffa98a1d6f5d06ffcf70c"
+      },
+      "outputSHA256": {
+        "hero.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "portrait.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "character.png": "ef2e211062f2cee2de61188090ac22f98201159a0811e6fed0f5f8c3aa225100",
+        "character.webp": "d26d04c09229a3d1f4cdfdbc3c497b87e35f737dcc51157e00611e4494c1875e"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_B2_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_B2_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_B2_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_B2_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "二",
+        "轉",
+        "紫",
+        "藍",
+        "輕",
+        "皮",
+        "甲",
+        "，",
+        "短",
+        "披",
+        "巾",
+        "與",
+        "小",
+        "型",
+        "鏡",
+        "碎",
+        "片",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv2_thief_B2_m",
+      "name": "幻刃使",
+      "gender": "m",
+      "classPath": "B2",
+      "tier": 2,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv2_thief_B2_m/visual-review.json",
+      "reviewSHA256": "4d1972f31d45e6f8072d0a28f5380374fb97f2b6a49e56dfc2601f33f23c0014",
+      "nativePackFile": "docs/thief/art-B2/adv2_thief_B2_m/native-pack.json",
+      "nativePackSHA256": "3752c0d20724b464a735ad2025b6dd0e0103a809664109b8bfeb63d87ab7d0a3",
+      "sourceSHA256": {
+        "hero.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "attack-0-5.png": "33dbb4347bbc257302b9c0e55807f816acff9dd02e921e85827ee390b60abbc0",
+        "attack-6-11.png": "5e036dd44c9025915ff5bc8bf437ffa41e4026d0f6ceb4b40cdb10dc38424de7"
+      },
+      "outputSHA256": {
+        "hero.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "portrait.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "character.png": "ed24ad2ce6a91229ad0cea419b1e25a2bdc11e66f34f49f7331fb0605cc1a81b",
+        "character.webp": "da5d2ce8b57fa80b1e1552443dfb70d8ea3fb6cde6a5e7e8972376fe5089c5fe"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv2_thief_B2_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv2_thief_B2_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv2_thief_B2_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv2_thief_B2_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv2_thief_B2_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "二",
+        "轉",
+        "紫",
+        "藍",
+        "輕",
+        "皮",
+        "甲",
+        "，",
+        "短",
+        "披",
+        "巾",
+        "與",
+        "小",
+        "型",
+        "鏡",
+        "碎",
+        "片",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv3_thief_B21_f",
+      "name": "鏡影舞者",
+      "gender": "f",
+      "classPath": "B21",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv3_thief_B21_f/visual-review.json",
+      "reviewSHA256": "c852b1747ab28505603c310bdbafbfe7ab28d85b0d243f4e502304794512ebce",
+      "nativePackFile": "docs/thief/art-B2/adv3_thief_B21_f/native-pack.json",
+      "nativePackSHA256": "6c92300732030ba1485d78878558530006ba058e90bcaabfb6c5e36757cdf9e5",
+      "sourceSHA256": {
+        "hero.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "attack-0-5.png": "786bcb3bce27a29c84661edb13f8f04a29f97470f4b65833843e67a2e43943bd",
+        "attack-6-11.png": "e9063454299562b90bad69ba91999f2d70264a763546af9af943da449509b21f"
+      },
+      "outputSHA256": {
+        "hero.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "portrait.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "character.png": "812a0acc8a1f65fed6333ce6ac47d5e5b1c8604e6722ef5653dc9c747fea62b1",
+        "character.webp": "d3ad0e9736524a0b9bed580de95a8b863456a91b3187d209be4821357c034cc2"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B21_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B21_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B21_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B21_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "銀",
+        "色",
+        "鏡",
+        "面",
+        "鑲",
+        "片",
+        "、",
+        "紫",
+        "藍",
+        "短",
+        "披",
+        "巾",
+        "，",
+        "延",
+        "續",
+        "輕",
+        "甲",
+        "及",
+        "雙",
+        "短",
+        "刃",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv3_thief_B21_m",
+      "name": "鏡影舞者",
+      "gender": "m",
+      "classPath": "B21",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv3_thief_B21_m/visual-review.json",
+      "reviewSHA256": "c9093a7f33db8ab8a8729b196d342e6955ecf26a66a8a825a8d0b07c44a20b40",
+      "nativePackFile": "docs/thief/art-B2/adv3_thief_B21_m/native-pack.json",
+      "nativePackSHA256": "af932a1d6370d396ad6a87faffbabf6fea3fb6820e0da88e1501ff0279338452",
+      "sourceSHA256": {
+        "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "attack-0-5.png": "62349ea184cf4c9ab5b2d8d35f50ca0ee5bb33ac06ae961f0c0b52c2f0996247",
+        "attack-6-11.png": "f13075c641d33d6c65c45b6864dd100242272d3f28dc2ba6e1a1080e8ed04747"
+      },
+      "outputSHA256": {
+        "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "portrait.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "character.png": "1d667af9f3d1f41bac9377c38b38eb51b256dde644870bc6a066e9ea8312fca6",
+        "character.webp": "29e089eed991d148b3b22fdbaa27c85e3762c645820c1ce40d6522633c0f6169"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B21_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B21_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B21_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B21_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "銀",
+        "色",
+        "鏡",
+        "面",
+        "鑲",
+        "片",
+        "、",
+        "紫",
+        "藍",
+        "短",
+        "披",
+        "巾",
+        "，",
+        "延",
+        "續",
+        "輕",
+        "甲",
+        "及",
+        "雙",
+        "短",
+        "刃",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv3_thief_B22_f",
+      "name": "暮光詭術師",
+      "gender": "f",
+      "classPath": "B22",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv3_thief_B22_f/visual-review.json",
+      "reviewSHA256": "97b1837a1b3d5d80b7a4da99cd023625a2e52a24e3e62c4e387822f01466efd5",
+      "nativePackFile": "docs/thief/art-B2/adv3_thief_B22_f/native-pack.json",
+      "nativePackSHA256": "59acca799fd580566284f82ba3a684fe9bf1e80dfb133598483ee4cd52e1488e",
+      "sourceSHA256": {
+        "hero.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "attack-0-5.png": "16c028dd2a0a7a3504858347699257b05a350dcb09f40984383252ded2875250",
+        "attack-6-11.png": "afcc2e24709fe85d7c75ab3db4da3972186b48e5e04c992ec6b8769eaea40826"
+      },
+      "outputSHA256": {
+        "hero.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "portrait.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "character.png": "a3df8ac902577d83597885e18f247f13e38e3104db65dc89ea30627142236f5f",
+        "character.webp": "0d8c82eca45bdf8a8c804dfadadbf020f9d9b277ead6829c57de0b981fe147c9"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B22_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B22_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B22_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B22_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "梅",
+        "紫",
+        "皮",
+        "革",
+        "、",
+        "煙",
+        "金",
+        "希",
+        "臘",
+        "紋",
+        "、",
+        "細",
+        "長",
+        "刀",
+        "光",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv3_thief_B22_m",
+      "name": "暮光詭術師",
+      "gender": "m",
+      "classPath": "B22",
+      "tier": 3,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv3_thief_B22_m/visual-review.json",
+      "reviewSHA256": "af392a6846a7237fdc5330a0a2cfb721f3b72cf00b69db313ab659e3c353faef",
+      "nativePackFile": "docs/thief/art-B2/adv3_thief_B22_m/native-pack.json",
+      "nativePackSHA256": "abf5f19ad8f0a98a45995924f21b66dfe7dac137e83fac2179fec9c166782ee8",
+      "sourceSHA256": {
+        "hero.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "attack-0-5.png": "de634d74ca2be3ab3fffdf1fb8a023d6914d3262c33bfc46f2e151a33b4c4f7c",
+        "attack-6-11.png": "55a1adf284dbf38530c615b2efba8aec997184f39c905931608ab7565706ffa7"
+      },
+      "outputSHA256": {
+        "hero.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "portrait.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "character.png": "e4eddaf30b044833ff566f3b61a40bea285eebd8307f02ff91006a39021baef5",
+        "character.webp": "e010d6c26aa3aa400bad1b8435ba4304d0af4e5727dd41f119988495a9a7dbe2"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv3_thief_B22_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv3_thief_B22_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv3_thief_B22_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv3_thief_B22_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv3_thief_B22_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "梅",
+        "紫",
+        "皮",
+        "革",
+        "、",
+        "煙",
+        "金",
+        "希",
+        "臘",
+        "紋",
+        "、",
+        "細",
+        "長",
+        "刀",
+        "光",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B211_f",
+      "name": "千面幻刃",
+      "gender": "f",
+      "classPath": "B211",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B211_f/visual-review.json",
+      "reviewSHA256": "2b568e72c114bb6da333c66dfc7477bd50fc052774447ebcf76619eec88dc993",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B211_f/native-pack.json",
+      "nativePackSHA256": "434d2299f01d13f37ed9b365fa21bdd1944978b28d3abe0de741dcf438748bda",
+      "sourceSHA256": {
+        "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "attack-0-5.png": "e8c878226b69a58300273c04170877daa431f1fe63e7e5c45a73ef4cff0c629e",
+        "attack-6-11.png": "8b6b119e71e7867f4334b259050364752f0ac4a15d459080738d579fa8a81295"
+      },
+      "outputSHA256": {
+        "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "portrait.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "character.png": "8bc30c8fd7be63c057a697fdc44f60be3a7b0b42d5a037ddab16c14163956de4",
+        "character.webp": "467abe5cb58fec489c0b36827347e668bc74f1df16a4d9edd54f87d0f461792d"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B211_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B211_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B211_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B211_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "碎",
+        "鏡",
+        "鑲",
+        "嵌",
+        "與",
+        "腰",
+        "間",
+        "小",
+        "型",
+        "面",
+        "具",
+        "飾",
+        "件",
+        "，",
+        "沒",
+        "有",
+        "額",
+        "外",
+        "人",
+        "物",
+        "或",
+        "第",
+        "三",
+        "手",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B211_m",
+      "name": "千面幻刃",
+      "gender": "m",
+      "classPath": "B211",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B211_m/visual-review.json",
+      "reviewSHA256": "4db20edb25f7ae9283563b78946ef3dd0fc67863e447bdc06cffe207bd565046",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B211_m/native-pack.json",
+      "nativePackSHA256": "0853fa02fa80acc6999c6add72d0215c37cc39795caf7779ddbd2ce46dc8ce57",
+      "sourceSHA256": {
+        "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "attack-0-5.png": "f7ea262d5e2fe1edc66376c3d53a46e7d7050feef102ae0ccbc6c65288a68d32",
+        "attack-6-11.png": "5e844f60868cbd64c09b30729edb9b07c4e20d8b564b5dcb75d62b05e6d7981a"
+      },
+      "outputSHA256": {
+        "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "portrait.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "character.png": "549a6376aad8f08458431bb9a985d0376fc296543ca6b99e9719cd4a2bc1e3be",
+        "character.webp": "18db40edc8bbb04770bb566e9b6ea16071d5cb93d8c3aab2beee1b0f365e4fe3"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B211_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B211_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B211_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B211_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B211_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "碎",
+        "鏡",
+        "鑲",
+        "嵌",
+        "與",
+        "腰",
+        "間",
+        "小",
+        "型",
+        "面",
+        "具",
+        "飾",
+        "件",
+        "，",
+        "沒",
+        "有",
+        "額",
+        "外",
+        "人",
+        "物",
+        "或",
+        "第",
+        "三",
+        "手",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B212_f",
+      "name": "鏡界行者",
+      "gender": "f",
+      "classPath": "B212",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B212_f/visual-review.json",
+      "reviewSHA256": "ea9c4e761ed5dab7b5b8fb15d0eab08a6cdc48c9e83cf6f495e0fa49a522f158",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B212_f/native-pack.json",
+      "nativePackSHA256": "915e414c0bc930b83e0cfedd607ee1d3b79bc3c98de1dbc8bfe33f4591baa0bb",
+      "sourceSHA256": {
+        "hero.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "attack-0-5.png": "b48c2ea172d0bfded71983f6ee2cc485347e496b7d47bab0ba486d2d6fde5265",
+        "attack-6-11.png": "c203f524bf7e33746b0c47da72bc5598746347a7f0a6ebf06de16225bbb14ac3"
+      },
+      "outputSHA256": {
+        "hero.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "portrait.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "character.png": "cb04df3db2fea020c9f92869e0183156eaca70ca893f4a776d5104eccee8140f",
+        "character.webp": "96e79da4178709b66fe11dd9c2e6466d3307c9f6ac92723ce23712e63dc5fcd1"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B212_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B212_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B212_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B212_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "深",
+        "鈷",
+        "藍",
+        "衣",
+        "裝",
+        "、",
+        "圓",
+        "鏡",
+        "扣",
+        "與",
+        "腰",
+        "側",
+        "小",
+        "型",
+        "破",
+        "鏡",
+        "環",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B212_m",
+      "name": "鏡界行者",
+      "gender": "m",
+      "classPath": "B212",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B212_m/visual-review.json",
+      "reviewSHA256": "059685a7ec29a19587676dfbb4642e2b230ea1cbaa7a6b228092605dfcb08c0e",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B212_m/native-pack.json",
+      "nativePackSHA256": "6f976993a3370b5268d1cd434f5bc3d76f8bf8c4c5c5aaecb5db8865f820b84a",
+      "sourceSHA256": {
+        "hero.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "attack-0-5.png": "c2f2e4011217db7ce09df699c885fceaf4fb6bc3563f56556fadf375f19e589c",
+        "attack-6-11.png": "5fa8f2782fad4efc77f918c2e768039a062391527620035728df86e4f9a577e3"
+      },
+      "outputSHA256": {
+        "hero.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "portrait.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "character.png": "ccbf9fd1948dcf24f9b8b97e282d07b6474a803352a51d10cf02ce07e92a9c3a",
+        "character.webp": "adce40221ca0ef271b843167397d9b7b7e3b18b300fa529c07d46bcb6e09294b"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B212_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B212_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B212_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B212_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B212_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "深",
+        "鈷",
+        "藍",
+        "衣",
+        "裝",
+        "、",
+        "圓",
+        "鏡",
+        "扣",
+        "與",
+        "腰",
+        "側",
+        "小",
+        "型",
+        "破",
+        "鏡",
+        "環",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B221_f",
+      "name": "暮光織影者",
+      "gender": "f",
+      "classPath": "B221",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B221_f/visual-review.json",
+      "reviewSHA256": "4017180b03130b782f372117734d22ee9f201bfac130226461bccdb57933a84f",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B221_f/native-pack.json",
+      "nativePackSHA256": "6f2af62dbde3a933f5a566451aee97f0718e2c31aee2d529280e55d357f2d9ab",
+      "sourceSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "attack-0-5.png": "1320f264254065afc2b626f8aa8df231dbefae6ea52018b7981b03e054101a05",
+        "attack-6-11.png": "c44fdd5cd1767648ebbac03998155f4769c36b2a5949af68485fbd962ec5247c"
+      },
+      "outputSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "portrait.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "character.png": "61414a7f51095faac8d149d82182303372a615895c18f3af59c729fb93438b21",
+        "character.webp": "87be9b77e17fa762a1714036b5ce84bc02c56f949e7b9cb628c37fb67a04bb3b"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B221_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B221_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B221_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B221_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B221_m",
+      "name": "暮光織影者",
+      "gender": "m",
+      "classPath": "B221",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B221_m/visual-review.json",
+      "reviewSHA256": "edbdd99a6bf4ebbbd3de3fd2fe10a7e6c9fc29bf4cf7c4a2138ea3f0826b4d46",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B221_m/native-pack.json",
+      "nativePackSHA256": "cbe7ab5aa2e0c04e1c43c8526be2de9fbb04878af70d7352d1c3641ad5bea0fc",
+      "sourceSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "attack-0-5.png": "46a3f85cb744d87d15bcb66824923e056b404760f736e4eefbc4aeda7a1fa035",
+        "attack-6-11.png": "bebb4fceff7f59f0c603a9dce4913f4ff5acc572e399e879d918a963b1b923bc"
+      },
+      "outputSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "portrait.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "character.png": "ea412f625872f8c2aa0267d1f54dfc8a07e1f3ff33c61b4168ec03f07b62b1fc",
+        "character.webp": "0e056d14908e85692b3f2759e4b42c289b296135511fc4ffb9edaac8c0459799"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B221_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B221_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B221_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B221_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B222_f",
+      "name": "黑月詭術師",
+      "gender": "f",
+      "classPath": "B222",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B222_f/visual-review.json",
+      "reviewSHA256": "9e3b968753c1e894d9e9ad3c2e8036b2104382456108862498bb4e5bbca69898",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B222_f/native-pack.json",
+      "nativePackSHA256": "8c83ed6f277f2518273233db07d0ecd73480fd1b99669e7897bcd1975c6d3ce8",
+      "sourceSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "attack-0-5.png": "d13b71a4bd3767165e217f78c1a3b8f12e8580075e99b278580494e98935e7a3",
+        "attack-6-11.png": "02845dfaecd667627951e47b201c88d30da86851c3351f3e3e8b552aef1d99a9"
+      },
+      "outputSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "portrait.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "character.png": "a03535a89c6d08d5f8e9b9f3be0f72f7c2658b6a4176e2dd98128a00b7f9dc2a",
+        "character.webp": "d0116e15fd2a4681ab8ac8d39ca96a13feff3b1e67d435cf1c16da983005b64e"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_f/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_f/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_f/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B222_f/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B222_f/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B222_f/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B222_f/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
+      ]
+    },
+    {
+      "key": "adv4_thief_B222_m",
+      "name": "黑月詭術師",
+      "gender": "m",
+      "classPath": "B222",
+      "tier": 4,
+      "visualAccepted": true,
+      "manualVisualAccepted": true,
+      "reviewFile": "docs/thief/art-B2/adv4_thief_B222_m/visual-review.json",
+      "reviewSHA256": "4a41c1ca9dd2c8a7e9f23c19793d76a4a19ae9809fc5473f6895d9cfed0e183d",
+      "nativePackFile": "docs/thief/art-B2/adv4_thief_B222_m/native-pack.json",
+      "nativePackSHA256": "cb0b07f16a60dc4f815867aa5262fbdf7dfccb4e7b49722418b95564acab54f8",
+      "sourceSHA256": {
+        "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "attack-0-5.png": "8beaccae5f2b4f31285e33c1514ab17a7c0cc66556e4fb41551a9be9e417ad2a",
+        "attack-6-11.png": "49466f4a608ead6d140fbe31fa12d7e7ca7d26ab638ee549fd906dee3b5a0e68"
+      },
+      "outputSHA256": {
+        "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "portrait.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "character.png": "24818385cb2992e9ebca513ed687ef25451bfa9613fba689c12f13cd635c2d18",
+        "character.webp": "9ad77b9be1ced9d9d0b4a3d0ea6b2b111ddb69525fa3a7e631c3741841f2909a"
+      },
+      "sourceFiles": {
+        "hero.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_m/hero.png",
+        "attack-0-5.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_m/attack-0-5.png",
+        "attack-6-11.png": "worker/art-production/thief-20261015/B2/adv4_thief_B222_m/attack-6-11.png"
+      },
+      "outputFiles": {
+        "hero.png": "worker/public/art/thief-20261015/adv4_thief_B222_m/hero.png",
+        "portrait.png": "worker/public/art/thief-20261015/adv4_thief_B222_m/portrait.png",
+        "character.png": "worker/public/art/thief-20261015/adv4_thief_B222_m/character.png",
+        "character.webp": "worker/public/art/thief-20261015/adv4_thief_B222_m/character.webp"
+      },
+      "proofChecks": {
+        "nativeSourceHashesMatch": true,
+        "nativeOutputHashesMatch": true,
+        "reviewSourceHashesMatch": true,
+        "reviewOutputHashesMatch": null,
+        "reviewOutputBinding": "root-manual-review-source-SHA-bound-to-current-native-pack-output"
+      },
+      "rootAccepted": true,
+      "rootVisualReview": "pass",
+      "notes": [
+        "黑",
+        "皮",
+        "革",
+        "紫",
+        "翻",
+        "領",
+        "、",
+        "銀",
+        "色",
+        "黑",
+        "月",
+        "扣",
+        "及",
+        "小",
+        "型",
+        "月",
+        "牙",
+        "光",
+        "點",
+        "。",
+        " ",
+        "1",
+        "2",
+        " ",
+        "格",
+        "為",
+        "備",
+        "戰",
+        "、",
+        "蓄",
+        "勢",
+        "、",
+        "跨",
+        "步",
+        "、",
+        "突",
+        "刺",
+        "前",
+        "置",
+        "、",
+        "低",
+        "斬",
+        "、",
+        "上",
+        "切",
+        "、",
+        "釋",
+        "放",
+        "、",
+        "延",
+        "伸",
+        "、",
+        "交",
+        "叉",
+        "斬",
+        "、",
+        "轉",
+        "身",
+        "、",
+        "回",
+        "收",
+        "、",
+        "收",
+        "勢",
+        "等",
+        "獨",
+        "立",
+        "原",
+        "生",
+        "姿",
+        "態",
+        "；",
+        "b",
+        "o",
+        "d",
+        "y",
+        " ",
+        "s",
+        "c",
+        "a",
+        "l",
+        "e",
+        " ",
+        "以",
+        "第",
+        " ",
+        "0",
+        " ",
+        "格",
+        "頭",
+        "腳",
+        "實",
+        "值",
+        "對",
+        " ",
+        "p",
+        "o",
+        "r",
+        "t",
+        "r",
+        "a",
+        "i",
+        "t",
+        " ",
+        "校",
+        "正",
+        "，",
+        "動",
+        "作",
+        "弓",
+        "步",
+        "與",
+        "收",
+        "腿",
+        "保",
+        "留",
+        "自",
+        "然",
+        "高",
+        "度",
+        "差",
+        "。",
+        "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。",
+        "按自身男版原畫維持捲袖露肘；不套用女版滿袖要求。"
+      ]
+    }
+  ],
+  "issues": []
+}

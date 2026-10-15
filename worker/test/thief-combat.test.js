@@ -40,12 +40,13 @@ test('fixed-point 1.8x cadence delivers nine genuine native strikes per five act
 });
 
 test('release-gated books require explicit catalogue; all branch descendants inherit only their legal books',()=>{
- assert.equal(THIEF_RELEASE_READY,false);assert.equal(THIEF_SKILLS.length,6);
+ assert.equal(THIEF_SKILLS.length,6);
  for(const book of THIEF_SKILLS){
-  assert.equal(SKILL_MAP[book.id],undefined);
+  assert.equal(SKILL_MAP[book.id]?.id,THIEF_RELEASE_READY?book.id:undefined);
   for(const path of THIEF_PATHS){const c=character(path,{level:120});assert.equal(eligible(c,book),path.length>=book.advancementTier&&book.eligiblePaths.some(p=>path.startsWith(p)),`${path}/${book.id}`);}
   const c=character(book.eligiblePaths[0],{level:120}),x=books([book.id]);
-  assert.throws(()=>validateCast(c,x,book.id,T0));
+  if(THIEF_RELEASE_READY)assert.equal(validateCast(c,x,book.id,T0).id,book.id);
+  else assert.throws(()=>validateCast(c,x,book.id,T0));
   assert.equal(validateCast(c,x,book.id,T0,{catalog:THIEF_SKILL_MAP}).id,book.id);
   assert.equal(eligible({...c,base_class:'sword'},book),false);
  }

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "isolatedDatabase": true,
+  "positiveJSONFunction": true,
+  "nonemptySevenTableGuardRejected": true,
+  "firstReadOnlyStatementSHA256": "1fbdf5b6fb1bcc30fddaa3947d4fe102d5b68a7c4af9f113e72ec5c3320cf4af",
+  "ddlWrites": 0,
+  "fullInitializerHosted": false,
+  "fullInitializerValidation": "27 Node SQLite tests, real CHECK constraints, historical candidate equivalence; populated production uses the separately rehearsed 165-statement atomic expansion."
+}

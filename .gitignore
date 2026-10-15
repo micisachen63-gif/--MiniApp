@@ -29,10 +29,12 @@ work-backups/
 scratch/
 .release-sync/
 
-# Full identity matrices retain JSON measurements in Git. Keep bulk local captures
-# here; selected release previews are copied to docs/thief/release-preview/.
+# Keep the accepted matrix/compact measurements and ten reviewed previews in Git.
+# Bulk raw attempts remain local, including failed/interrupted evidence.
+/docs/thief/full-ui/run-*/
 /docs/thief/full-ui/**/*.png
 /docs/thief/full-ui/**/*.jpg
+!/docs/thief/full-ui/representative-443422e86d2a/*.png
 
 # 作業系統暫存
 .DS_Store

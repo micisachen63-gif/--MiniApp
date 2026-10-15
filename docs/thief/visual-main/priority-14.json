@@ -1,0 +1,377 @@
+{
+  "reviewDate": "2026-10-16",
+  "scope": "manual-art-only",
+  "manualVisualAccepted": true,
+  "runtimeVerified": false,
+  "count": 14,
+  "criticalVisualFindings": 0,
+  "trackedItems": [
+    {
+      "key": "adv4_thief_A111_m",
+      "severity": "low",
+      "finding": "第3格反手向左、末段屈膝，站姿末段/起手頭腳高度約0.939；靜態輪廓完整。",
+      "next": "全場景矩陣確認朝敵方向、釋放點與收勢銜接，不因本人工驗收推定runtime通過。",
+      "status": "runtime-review-pending"
+    }
+  ],
+  "qualityStandard": [
+    "同一希臘半寫實成人畫風",
+    "男女身份與服裝武器在原畫/12格一致",
+    "完整輪廓與深淺底乾淨透明",
+    "自然站姿與輕裝雙刃",
+    "普技由實際FX層區分，非兩套原生格帶"
+  ],
+  "entries": [
+    {
+      "key": "thief_m",
+      "name": "盜賊・男",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "男性捲髮與鬍鬚、單肩藍披布及露臂皮甲一致；與女版共享材質畫風而非誤用女圖。",
+        "起手低刀、前刺與交叉收勢連貫，兩手持刃可辨，身形維持輕裝近戰。"
+      ],
+      "reviewFile": "docs/thief/art-base/thief_m/visual-review.json",
+      "preview": "docs/thief/visual-main/thief_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/thief_m/hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "worker/public/art/thief-20261015/thief_m/portrait.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "worker/public/art/thief-20261015/thief_m/character.png": "81b8ea0df8c1d5f37cb68d34bedf3c984213b9d0c0614eefd1dcf20914fadeca",
+        "worker/public/art/thief-20261015/thief_m/character.webp": "12df02ca43cf0a48c1dcb033266e68c9f6b73de4c134a422a1582474e8e2af42"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/thief_m/hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "worker/art-production/thief-20261015/thief_m/attack-0-5.png": "c82e948ed40d07adfd3165a4d59343ce42fd783c039d4969808b18996184d531",
+        "worker/art-production/thief-20261015/thief_m/attack-6-11.png": "4686acf4aa71273ae8e013d2a58f0d0b64b97130478fc0412a1837e667b5860a"
+      }
+    },
+    {
+      "key": "thief_f",
+      "name": "盜賊・女",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "海軍藍希臘紋短披肩、棕黑輕皮甲與銀色雙短刃；臉型與捲髮延續試作母系。",
+        "第3/4格短刺、第5/6格交錯刀光、第8至11格收勢可辨，雙腳與刀尖完整。"
+      ],
+      "reviewFile": "docs/thief/art-base/thief_f/visual-review.json",
+      "preview": "docs/thief/visual-main/thief_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/thief_f/hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "worker/public/art/thief-20261015/thief_f/portrait.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "worker/public/art/thief-20261015/thief_f/character.png": "79a557cb75588ea6ad4439ac057ea0ecef0f44252a314e6f3ee29309344c7456",
+        "worker/public/art/thief-20261015/thief_f/character.webp": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/thief_f/hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "worker/art-production/thief-20261015/thief_f/attack-0-5.png": "1294e91a343fd75bd82be978f2ce1599a9b72cfe69c70ce5831b1c3e0d47c8ec",
+        "worker/art-production/thief-20261015/thief_f/attack-6-11.png": "4d4533288a9fdb1729666e37de63823e07f04b79018f329bc3d8c8f69a4c6e11"
+      }
+    },
+    {
+      "key": "adv1_thief_A_f",
+      "name": "刺客・女",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "酒紅披布與金色希臘邊紋清楚區隔基礎藍版，女性面孔與髮色延續。",
+        "兩把銀匕首、交錯白藍光與短刺姿勢保持一致，皮甲與腰帶細節延續12格。"
+      ],
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_A_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv1_thief_A_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv1_thief_A_f/hero.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "worker/public/art/thief-20261015/adv1_thief_A_f/portrait.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "worker/public/art/thief-20261015/adv1_thief_A_f/character.png": "b36766ad482b850aee7d53ef779c87f23149efbfc8b4778cbf5228481e24b12f",
+        "worker/public/art/thief-20261015/adv1_thief_A_f/character.webp": "34db97fdecccfa1a5a0b841dee9aab39b011b963f4373fb9fd2a87ff00d80abd"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/hero.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/attack-0-5.png": "18f99c51e97d690e00a1527d3fbae3f8cf7c190c3e36d2faa62f53c6148dcc43",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_f/attack-6-11.png": "8cca463b10e11e5292607bedf0a8c91e906faee96235c7bcebe0c69ee342272d"
+      }
+    },
+    {
+      "key": "adv1_thief_A_m",
+      "name": "刺客・男",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "酒紅單肩披布、金邊及雙銀匕首與男版原畫一致；男性臉孔與手臂比例自然。",
+        "低重心起手、短刺與交錯刀光完整，收勢保留雙刀，未見切掉靴底或額外肢體。"
+      ],
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_A_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv1_thief_A_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv1_thief_A_m/hero.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "worker/public/art/thief-20261015/adv1_thief_A_m/portrait.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "worker/public/art/thief-20261015/adv1_thief_A_m/character.png": "cc8084512c4cdabf4fef94794e8d136f7d1a389533ceddbd4f8aee293cfd2001",
+        "worker/public/art/thief-20261015/adv1_thief_A_m/character.webp": "ba64374f31e22682551f3de928a3b5a732cfd469320d03311c9c2124d20937aa"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/hero.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/attack-0-5.png": "9dc99488f11f116fea21ac4dc4ad84e5258e943dca34d358e801e0a5cf7d904b",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_A_m/attack-6-11.png": "f38f4fe7beca1f7c2a043b33ace60d6b4ba898a8052c9cbdfc35fadfebe4985b"
+      }
+    },
+    {
+      "key": "adv1_thief_B_f",
+      "name": "夜行者・女",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "青藍短披肩與胸前備用投刃帶可辨；備刃屬裝備配件，未見多手或漂浮武器錯誤。",
+        "藍白刃尖與迴旋弧線區隔刺客紅系，投刃動作與12格衣裝一致。"
+      ],
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_B_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv1_thief_B_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv1_thief_B_f/hero.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "worker/public/art/thief-20261015/adv1_thief_B_f/portrait.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "worker/public/art/thief-20261015/adv1_thief_B_f/character.png": "3f220e6244431c1a9724535b95fbb0d3ff63b3d185f48f120a5337689fe4657f",
+        "worker/public/art/thief-20261015/adv1_thief_B_f/character.webp": "d443c250d76a6de2aedc41b1407df9d8b854f9e60338b3d86e592917870f2ae9"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/hero.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/attack-0-5.png": "fd48299607ee4d70a1bbcc8be2582458226471b2f0c744a5deddbd7ec76f4b5b",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_f/attack-6-11.png": "97106d074750b3dcb1cc480371dc33050d83890919d073ef90338a5808ac0002"
+      }
+    },
+    {
+      "key": "adv1_thief_B_m",
+      "name": "夜行者・男",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "青藍單肩披布、胸前備刃與男版露臂輕甲一致；男女性別身份清楚。",
+        "第6/7格的伸臂投刃與手中剩餘短刃可辨，備刃沒有變成大劍或法杖。"
+      ],
+      "reviewFile": "docs/thief/art-base-adv1/adv1_thief_B_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv1_thief_B_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv1_thief_B_m/hero.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "worker/public/art/thief-20261015/adv1_thief_B_m/portrait.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "worker/public/art/thief-20261015/adv1_thief_B_m/character.png": "59f26a754dc5a104b53ad3a351e639401421d0259346e920ac458146f3bbcd65",
+        "worker/public/art/thief-20261015/adv1_thief_B_m/character.webp": "08c3c3a763c99e4fb74d139f4329f27d333a2463f6d906659363bb6b4adbf8a4"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/hero.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/attack-0-5.png": "b42230344701eb8b278f306d30976524de66aa6f13e290e802e3fd3530c116b2",
+        "worker/art-production/thief-20261015/base-adv1/adv1_thief_B_m/attack-6-11.png": "862c4d819cec9c705d71fe834fb0ce720da1f18f3bbaca96ecc917d44bb91f82"
+      }
+    },
+    {
+      "key": "adv2_thief_A1_f",
+      "name": "影襲刺客・女",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "藍紫披布、紫色寶石月桂扣與銀色雙匕首，紫色影刃從原畫延續至12格。",
+        "短刺與第6格紫色刀弧完整，人物仍是輕皮甲刺客，沒有法師袍、翅膀或重甲。"
+      ],
+      "reviewFile": "docs/thief/art-A1/adv2_thief_A1_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv2_thief_A1_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv2_thief_A1_f/hero.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "worker/public/art/thief-20261015/adv2_thief_A1_f/portrait.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "worker/public/art/thief-20261015/adv2_thief_A1_f/character.png": "349b99641e9d0208adbdbd4250f4618583f11dee63cd5b7e50cc4ae96b48648c",
+        "worker/public/art/thief-20261015/adv2_thief_A1_f/character.webp": "0e84853dbd063d8970af83272cd0c2d4a1a0388205150dcd5526b0a1d83f0cd1"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/hero.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/attack-0-5.png": "d66ce196cce403b739be3754fa475eeaf033e81f34eac65a3aa57fe37c03e160",
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_f/attack-6-11.png": "c032ae5c06a9a67aa542258fac06277f11e9f11183846002cbff9c284a7be930"
+      }
+    },
+    {
+      "key": "adv2_thief_A1_m",
+      "name": "影襲刺客・男",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "男版藍紫披布與紫色扣飾、銀紋雙刀可辨；臉孔和棕黑皮甲材質一致。",
+        "兩個前刺、交叉影刃與回身收勢輪廓明確，深淺底未見矩形殘底。"
+      ],
+      "reviewFile": "docs/thief/art-A1/adv2_thief_A1_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv2_thief_A1_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv2_thief_A1_m/hero.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "worker/public/art/thief-20261015/adv2_thief_A1_m/portrait.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "worker/public/art/thief-20261015/adv2_thief_A1_m/character.png": "5b7f5ad97d8ad3aa95b1f70760f8382e7a6bec85a6ac982de2825d45164fe299",
+        "worker/public/art/thief-20261015/adv2_thief_A1_m/character.webp": "4e3f8b3e6b522a5eaa8c3c93d8c2185061b94a1c94997e4667e4c7a0e27130fa"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/hero.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/attack-0-5.png": "56c9bea8d3441b6ea4cfce80fa5da8192edb278481e66db16353a915f18eafbc",
+        "worker/art-production/thief-20261015/A1/adv2_thief_A1_m/attack-6-11.png": "52ba8270809f75ad568a2f941bfc878159d3936ff4b2ebdc816fae9b33ce3289"
+      }
+    },
+    {
+      "key": "adv3_thief_A11_f",
+      "name": "夜幕處刑者",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "銀月扣、暗紫單肩短披風與尖片腰甲構成獨立高轉造型；女版面孔與母系一致。",
+        "第6格交叉紫弧、第7/8格回身與末段低刀收勢可辨，手部與刀尖完整。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv3_thief_A11_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv3_thief_A11_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv3_thief_A11_f/hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "worker/public/art/thief-20261015/adv3_thief_A11_f/portrait.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "worker/public/art/thief-20261015/adv3_thief_A11_f/character.png": "41ed9db37c1f71af5a939e63b435fab4f2548a6c130ffa6e930cfbe1e46178df",
+        "worker/public/art/thief-20261015/adv3_thief_A11_f/character.webp": "e50eef71f3aa39d0371750c5dc22ff832e643f2e5da8bf00807ce530fc043123"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5.png": "3f9681d538528ed4a4026c87a0df2d0cea2f6069f5b94677593c6023c98f707b",
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-6-11.png": "422d2b4c14a2d1b2ed9518a47f813807d44fc7a8a4d9df7a250c0ecae7e09899"
+      }
+    },
+    {
+      "key": "adv3_thief_A11_m",
+      "name": "夜幕處刑者",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "暗紫月扣短披布、銀邊窄護腕與三角腰片一致；男版露臂輪廓與女版有清楚差別。",
+        "第7格寬幅雙刀完整；經核准的左19/右20px邊界沒有造成視覺裁刀，收勢比例自然。",
+        "已目視具名例外第7格的寬幅短刃：左19/右20px透明邊界，刀尖完整；不影響其餘20px規則。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv3_thief_A11_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv3_thief_A11_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv3_thief_A11_m/hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "worker/public/art/thief-20261015/adv3_thief_A11_m/portrait.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "worker/public/art/thief-20261015/adv3_thief_A11_m/character.png": "46dde975f093f3ba793a76313041abd171340420aff11c34d1780a7feefe2dd9",
+        "worker/public/art/thief-20261015/adv3_thief_A11_m/character.webp": "8142ac0c8a7da8e62f37208aed19fef96bbe8e9e3241c3335ab1dc91748b487f"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/attack-0-5.png": "a0da990dfc850a331404e1e7fecaaa841a5981cb6ab53e7e6a55b15be28b2852",
+        "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_m/attack-6-11.png": "56563d309204f5f7a1ea1324d51df445544cd3fcfc2ecc986c5bbce91762b57d"
+      }
+    },
+    {
+      "key": "adv4_thief_A111_f",
+      "name": "冥夜裁決者",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "雙肩月相披片、銀色月相飾鏈和短立領與母系月扣版有明確差別。",
+        "銀紋短匕與紫色弧光一致，12格服裝保持月相飾鏈，起手與末段站姿相近。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A111_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv4_thief_A111_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv4_thief_A111_f/hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "worker/public/art/thief-20261015/adv4_thief_A111_f/portrait.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "worker/public/art/thief-20261015/adv4_thief_A111_f/character.png": "06b44bc31bef3dc075ca696f77af4af054dcbf45318442c758368189ef83f9e1",
+        "worker/public/art/thief-20261015/adv4_thief_A111_f/character.webp": "02033df62c427ce29630cfead37e4b58833ef3fa61f01cb91d202c9d8d96fb3c"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/attack-0-5.png": "b187c04833c5d8e21691bcda50057ba47cc88225d182577e5010438306340f19",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_f/attack-6-11.png": "d9e68196ef72361d25dd64a615dbc84e5712f38488b63c8b4a9ac938fe8834d7"
+      }
+    },
+    {
+      "key": "adv4_thief_A111_m",
+      "name": "冥夜裁決者",
+      "gender": "m",
+      "qualityBand": "達共同標準；低風險動態追蹤",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "雙肩月相披片、銀鍊、短領皮衣與男版面孔一致，銀色細節仍維持輕甲輪廓。",
+        "第3格有反手向左伸臂動作，後段有自然屈膝；頭腳完整，靜態可接受但應確認動態朝向與銜接。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A111_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv4_thief_A111_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv4_thief_A111_m/hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "worker/public/art/thief-20261015/adv4_thief_A111_m/portrait.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "worker/public/art/thief-20261015/adv4_thief_A111_m/character.png": "559640eeb730c93359f354ffd6f201006ebad4cdc56b6e889530dc8ef69fec58",
+        "worker/public/art/thief-20261015/adv4_thief_A111_m/character.webp": "500559a2209231611c14762ba9e35ae1f52df33d5b1b42b4bc5136f1399925b9"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/attack-0-5.png": "1ed1f94bf48b2e36c1dad55e114c6b5baea28e2ae2ffda0d68e5d68e118e442c",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A111_m/attack-6-11.png": "0cf9ccd1e49adc16f65ae66914935986dda5abb0d21cbdf60ef872832905829a"
+      }
+    },
+    {
+      "key": "adv4_thief_A112_f",
+      "name": "終焉斷刃",
+      "gender": "f",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "斷環扣飾、幾何胸帶與單側尖角紫披布清楚區別月相裁決者；雙刃仍為完整短刀。",
+        "交叉紫弧與回身短刺可辨，刀刃的斷紋是紋飾，未見斷裂浮刃或缺手。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A112_f/visual-review.json",
+      "preview": "docs/thief/visual-main/adv4_thief_A112_f.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv4_thief_A112_f/hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "worker/public/art/thief-20261015/adv4_thief_A112_f/portrait.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "worker/public/art/thief-20261015/adv4_thief_A112_f/character.png": "493c62a365fec6556bcd627d8c3e08462fd396718c4bdfa8f7853ad6b3ece26e",
+        "worker/public/art/thief-20261015/adv4_thief_A112_f/character.webp": "06386eefb76d9d1faebcec3df51dd6327b24f93ea16c4631dff4baa49aedf674"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/attack-0-5.png": "84741e44b551aa2bb7c4656ea15873a244a2d65ed81700b4753d8050839cc286",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_f/attack-6-11.png": "cf1c96b341cb1d2721ef1f5d67f9657dff3c0a1b1bdb704c71eb9e452843d18a"
+      }
+    },
+    {
+      "key": "adv4_thief_A112_m",
+      "name": "終焉斷刃",
+      "gender": "m",
+      "qualityBand": "達共同美術標準",
+      "manualVisualAccepted": true,
+      "runtimeVerified": false,
+      "findings": [
+        "男版斷環、幾何胸帶與尖片腰甲在12格持續出現；黑皮革與銀邊材質一致。",
+        "回身與收勢短刃完整，深淺底輪廓連續，沒有把披布誤畫成大翅膀。"
+      ],
+      "reviewFile": "docs/thief/art-A1-left/adv4_thief_A112_m/visual-review.json",
+      "preview": "docs/thief/visual-main/adv4_thief_A112_m.png",
+      "outputSHA256": {
+        "worker/public/art/thief-20261015/adv4_thief_A112_m/hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "worker/public/art/thief-20261015/adv4_thief_A112_m/portrait.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "worker/public/art/thief-20261015/adv4_thief_A112_m/character.png": "51ba615df87006eb4fd48c1150cef2bcd7629f6ff455becd3fd60b42ba560abd",
+        "worker/public/art/thief-20261015/adv4_thief_A112_m/character.webp": "207bededd936a4ff0b6ba02c97104153f00d1d2ff5bd2aea9528efc7fbb1660e"
+      },
+      "sourceSHA256": {
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/attack-0-5.png": "8001af0e3e8bef0ca923ce07089d052f2ff11c66a94a1422f1d451857c7e093b",
+        "worker/art-production/thief-20261015/A1-left/adv4_thief_A112_m/attack-6-11.png": "d3d6bdba9885a3739407fc2f0f2aa6d60ac99ef4befaa2b0167eeccadde6b7f7"
+      }
+    }
+  ]
+}

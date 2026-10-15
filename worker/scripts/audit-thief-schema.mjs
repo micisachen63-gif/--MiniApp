@@ -2,9 +2,10 @@
 // This is a design inventory, not an executable thief migration.
 import { DatabaseSync } from 'node:sqlite';
 import { createHash } from 'node:crypto';
-import { readFileSync, readdirSync, mkdirSync, writeFileSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { historicalSchemaMigrationFiles } from './prepare-thief-schema-candidate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const sha = value => createHash('sha256').update(value).digest('hex');
@@ -13,7 +14,7 @@ const quote = value => `'${value.replaceAll("'", "''")}'`;
 export function auditThiefSchema() {
   const db = new DatabaseSync(':memory:');
   try {
-    const migrations = readdirSync(resolve(root, 'worker/migrations')).filter(name => name.endsWith('.sql')).sort().map(file => {
+    const migrations = historicalSchemaMigrationFiles().map(file => {
       const sql = readFileSync(resolve(root, 'worker/migrations', file), 'utf8');
       db.exec(sql);
       return { file, sha256: sha(sql) };

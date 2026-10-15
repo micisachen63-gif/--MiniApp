@@ -1,0 +1,16 @@
+{
+  "status": "PASS",
+  "releaseGateUnderFullTest": true,
+  "actualProductionGate": false,
+  "workerTests": 971,
+  "botTests": 77,
+  "failures": 0,
+  "skipped": 0,
+  "art": "art-readiness.json",
+  "visual": "visual-acceptance.json",
+  "browser": "full-ui/final-summary.json",
+  "equipment": "gear-art/readiness.json",
+  "initializer": "initializer-hosted-json-guard.json",
+  "productionDatabaseExpansion": "pending",
+  "productionDeployment": "pending"
+}

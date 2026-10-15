@@ -58,7 +58,14 @@ try{
    throw Error('Expansion not verified. Inspect the private attempt and schema; no automatic write retry.');
   }
   const receipt={status:'VERIFIED',sourceCommit,authorization:'User approved after backup, restore and hosted D1 rehearsal',databaseId:'bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4',startedAt:attempt.startedAt,verifiedAt:new Date().toISOString(),statements:165,writeAttempts:1,responseUncertain:uncertain,durationMs:result?.durationMs??null,before,after,backupSHA256:backup.backupSHA256,hostedProof:'hosted-d1-rehearsal.json',migrationTracking:'pending',gameRelease:'pending'};
-  fs.writeFileSync('docs/thief/production-schema-release.json',JSON.stringify(receipt,null,2)+'\n');
-  console.log(JSON.stringify({status:'VERIFIED',statements:165,writeAttempts:1,responseUncertain:uncertain,schemaSHA256:after.schemaSHA256,foreignKeyErrors:0,quickCheck:'ok'}));
+  const persist=()=>fs.writeFileSync('docs/thief/production-schema-release.json',JSON.stringify(receipt,null,2)+'\n');persist();
+  // One separate metadata-only request marks the guarded fresh-database initializer
+  // as already satisfied. Production must never run that initializer's DROP statements.
+  receipt.migrationTrackingAttempts=1;
+  try{await post('/record-migration',{sourceCommit});}catch{receipt.migrationTrackingResponseUncertain=true;}
+  const tracked=await schema();healthy(tracked);assert.equal(tracked.schemaSHA256,candidate.schemaSha256ExpectedAfter);
+  receipt.migrationTracking=tracked.initializerRecorded?'0025_thief_empty_database.sql recorded':'unverified';persist();
+  assert(tracked.initializerRecorded,'Schema expanded; inspect migration tracking separately without reapplying expansion');
+  console.log(JSON.stringify({status:'VERIFIED',statements:165,writeAttempts:1,responseUncertain:uncertain,migrationTracking:receipt.migrationTracking,schemaSHA256:after.schemaSHA256,foreignKeyErrors:0,quickCheck:'ok'}));
  }
 }finally{agent.destroy();}

@@ -11,6 +11,7 @@ import { mulberry32 } from '../src/game/rng.js';
 import { AFFIXES, BRANCH_AFFIXES, rollAffixes } from '../src/game/affixes.js';
 import { freshDb } from './d1-shim.js';
 import { auditThiefSchema } from '../scripts/audit-thief-schema.mjs';
+import { repositorySchemaDatabase } from '../scripts/prepare-thief-schema-candidate.mjs';
 import { compareThiefBalance } from '../scripts/compare-thief-balance.mjs';
 
 const expected = {
@@ -61,17 +62,31 @@ for (const [path, name] of Object.entries(expected)) test(`thief ${path || 'base
   assert.deepEqual(new Set(offers.map(x => x.slot)), new Set(SLOTS));
 });
 
-test('unready thief is rejected before DB access and never enters public class lists or relic drops', async () => {
-  assert.equal(THIEF_RELEASE_READY, false); assert.equal(CLASSES.thief.releaseReady, false);
-  assert.deepEqual(CLASS_KEYS, ['sword', 'archer', 'mage']); assert.ok(ALL_CLASS_KEYS.includes('thief'));
-  let dbCalls = 0;
-  const env = { DB: { prepare() { dbCalls++; throw new Error('unexpected DB access'); } } };
-  for (const gender of ['m', 'f']) await assert.rejects(createCharacter(env, { tgId: '999001', name: '盜賊測試', gender, baseClass: 'thief' }, 1, mulberry32(1)), error => error.code === 'class');
-  assert.equal(dbCalls, 0);
+test('release gate controls public creation and relic drops without bypassing database constraints', async () => {
+  assert.equal(CLASSES.thief.releaseReady, THIEF_RELEASE_READY);
+  assert.deepEqual(CLASS_KEYS, [...(THIEF_RELEASE_READY ? ['thief'] : []), 'sword', 'archer', 'mage']); assert.ok(ALL_CLASS_KEYS.includes('thief'));
+  if (!THIEF_RELEASE_READY) {
+    let dbCalls = 0;
+    const env = { DB: { prepare() { dbCalls++; throw new Error('unexpected DB access'); } } };
+    for (const gender of ['m', 'f']) await assert.rejects(createCharacter(env, { tgId: '999001', name: '盜賊測試', gender, baseClass: 'thief' }, 1, mulberry32(1)), error => error.code === 'class');
+    assert.equal(dbCalls, 0);
+  } else {
+    const env = { DB: freshDb() };
+    try {
+      for (const [index, gender] of ['m', 'f'].entries()) {
+        const tgId = String(999001 + index);
+        await createCharacter(env, { tgId, name: `盜賊測試${index}`, gender, baseClass: 'thief' }, 1, mulberry32(index));
+        assert.equal(env.DB.sqlite.prepare('SELECT base_class FROM rpg_characters WHERE tg_id=?').get(tgId).base_class, 'thief');
+      }
+    } finally { env.DB.sqlite.close(); }
+  }
+  const drops = new Set();
   for (let seed = 0; seed < 250; seed++) {
     const drop = makeRelic({ id: `fixture-${seed}`, tgId: 'fixture', tier: seed % 12 + 1, rng: mulberry32(seed), now: 1 });
-    assert.notEqual(drop.class_req, 'thief');
+    drops.add(drop.class_req);
+    assert.ok(drop.class_req === 'any' || CLASS_KEYS.includes(drop.class_req));
   }
+  assert.equal(drops.has('thief'), THIEF_RELEASE_READY);
 });
 
 test('dagger, branch weapons and all 12 armor tiers keep ownership, class, level and shared-slot rules', () => {
@@ -131,8 +146,8 @@ test('thief equipment rolls supported melee, poison and lifesteal affixes, witho
   for (const path of ['A1', 'A2', 'B1', 'B2']) assert.ok(BRANCH_AFFIXES.thief[path].includes('meleePct'));
 });
 
-test('repository schema still blocks thief on both character and equipment CHECK constraints', () => {
-  const db = freshDb();
+test('historical 0024 schema blocks thief before the separately tested fresh initializer', () => {
+  const db = { sqlite: repositorySchemaDatabase() };
   try {
     const insertCharacter = db.sqlite.prepare("INSERT INTO rpg_characters(tg_id,name,gender,base_class,last_settle_at,created_day,created_at,updated_at,hp,mp) VALUES(?,?,?,?,1,'2026-10-15',1,1,100,40)");
     for (const cls of ['sword', 'archer', 'mage']) assert.doesNotThrow(() => insertCharacter.run(`fixture-${cls}`, `測試${cls}`, 'm', cls));

@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "key": "thief_f",
+  "classPath": "",
+  "gender": "f",
+  "name": "盜賊・女",
+  "reviewDate": "2026-10-16",
+  "reviewer": "/root/thief_frontend",
+  "manualVisualAccepted": true,
+  "acceptanceScope": "manual-art-only",
+  "runtimeVerified": false,
+  "actualEventVerified": false,
+  "qualityBand": "達共同美術標準",
+  "method": "逐份人工查看真原畫／原生12格與Chromium在深色#111827及淺色#f1ede3底的實際像素預覽；自製預覽僅閱讀公開素材，未改圖。未用native PASS代替目視。",
+  "checks": {
+    "genderAndFace": {
+      "passed": true,
+      "detail": "海軍藍希臘紋短披肩、棕黑輕皮甲與銀色雙短刃；臉型與捲髮延續試作母系。"
+    },
+    "outfitAndWeaponsAcross12Frames": {
+      "passed": true,
+      "detail": "第3/4格短刺、第5/6格交錯刀光、第8至11格收勢可辨，雙腳與刀尖完整。"
+    },
+    "sharedPaintedGreekStyle": {
+      "passed": true,
+      "detail": "自然成人比例、皮革／布料／金屬材質和母系一致，短披布與雙刃維持輕裝職業。"
+    },
+    "completeSilhouette": {
+      "passed": true,
+      "detail": "逐格看過頭髮、手臂、刀尖與靴底，未見缺肢、硬裁人物或鄰格殘片。"
+    },
+    "transparentCutoutOnDarkAndLight": {
+      "passed": true,
+      "detail": "兩種實際底色均未見矩形底圖、棋盤格殘底或明顯異色邊；發光區為局部刀光。"
+    },
+    "standingProportions": {
+      "passed": true,
+      "detail": "起手／收勢成人身形自然，無明顯拉伸、壓扁或不同性別套圖。"
+    },
+    "normalSkillVisualDistinction": {
+      "passed": true,
+      "detail": "在實際RpgThiefFX.draw phase0.56比較basic與skill：普攻較小，技能有交叉弧／處刑標記／多飛刃／毒紋。兩者共用同一12格原生動畫，沒有聲稱是兩套獨立原生格帶。",
+      "scope": "static-renderer-impact-phase-only"
+    }
+  },
+  "findings": [
+    "海軍藍希臘紋短披肩、棕黑輕皮甲與銀色雙短刃；臉型與捲髮延續試作母系。",
+    "第3/4格短刺、第5/6格交錯刀光、第8至11格收勢可辨，雙腳與刀尖完整。"
+  ],
+  "trackedItems": [],
+  "evidence": {
+    "preview": "docs/thief/visual-main/thief_f.png",
+    "previewSHA256": "eb4b281a13238c551bcfbfff6b5a69f7c9cbe071cbf4dca0e36bdeb0102d401d",
+    "outputSHA256": {
+      "worker/public/art/thief-20261015/thief_f/hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+      "worker/public/art/thief-20261015/thief_f/portrait.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+      "worker/public/art/thief-20261015/thief_f/character.png": "79a557cb75588ea6ad4439ac057ea0ecef0f44252a314e6f3ee29309344c7456",
+      "worker/public/art/thief-20261015/thief_f/character.webp": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+    },
+    "sourceSHA256": {
+      "worker/art-production/thief-20261015/thief_f/hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+      "worker/art-production/thief-20261015/thief_f/attack-0-5.png": "1294e91a343fd75bd82be978f2ce1599a9b72cfe69c70ce5831b1c3e0d47c8ec",
+      "worker/art-production/thief-20261015/thief_f/attack-6-11.png": "4d4533288a9fdb1729666e37de63823e07f04b79018f329bc3d8c8f69a4c6e11"
+    },
+    "fxSHA256": "215ddfa52b42edb99a5f8a5109b9b85b3aabcf74f650138eef680b529d6a468b",
+    "sourcePixelsChangedDuringReview": false
+  },
+  "remainingVerification": [
+    "正式場景欄位比例與天使間距",
+    "真普攻/技能事件、1.8攻速、完整12格、切場清場及reduced-motion由root矩陣驗證"
+  ]
+}

@@ -23,6 +23,20 @@ await page.route('**/*',async route=>{
  return route.continue();
 });
 async function measure(scope,selector,surface,width,screenshotSelector){
+ for(let attempt=0;attempt<3;attempt++){
+  try{return await measureOnce(scope,selector,surface,width,screenshotSelector);}
+  catch(error){if(attempt===2||!/not attached to the DOM/.test(String(error)))throw error;}
+ }
+}
+async function measureOnce(scope,selector,surface,width,screenshotSelector){
+ if(surface==='lineage-tree'){
+  const image=scope.locator('.thief-ancestry '+selector).first();await image.waitFor({state:'attached'});
+  const closed=image.locator('xpath=ancestor::details[not(@open)]');
+  for(let i=await closed.count()-1;i>=0;i--)await closed.nth(i).locator(':scope>summary').click();
+  // Scroll the real node card first: an offscreen lazy image can have zero height
+  // until it enters the viewport; waiting for that image to be visible deadlocks.
+  await image.locator('xpath=ancestor::*[contains(concat(" ",normalize-space(@class)," ")," elf-node ")][1]').scrollIntoViewIfNeeded();
+ }
  const locator=scope.locator(selector).filter({visible:true}).first();await locator.waitFor({state:'visible'});await locator.scrollIntoViewIfNeeded();
  await locator.evaluate(image=>image.decode());
  await scope.waitForFunction(selector=>Array.from(document.querySelectorAll(selector)).some(image=>image.getClientRects().length&&image.naturalWidth>0&&image.classList.contains('hero-size-normalized')),selector,{timeout:15000});

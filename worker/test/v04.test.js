@@ -10,7 +10,7 @@ import { makeRelic, makeGear, canEquip, gearOffers } from '../src/game/gear.js';
 import { relicPlan, relicChances } from '../src/game/boss.js';
 import { tradeTax, netGold } from '../src/game/trade.js';
 import { mulberry32 } from '../src/game/rng.js';
-import { RELIC, TRADE, SLOTS } from '../src/game/constants.js';
+import { RELIC, TRADE, SLOTS, CLASS_KEYS } from '../src/game/constants.js';
 import { itemStat } from '../src/game/stats.js';
 
 const SECRET = 'test-secret-0123456789'; const D = '2026-10-08'; const H = 3600e3;
@@ -79,14 +79,14 @@ test('enhance / reroll work on accessories (armor scroll), shared DEF scales wit
 });
 
 // ------------------------------------------------------------------------------------------- relics
-test('relic: ×1.25 stats + one extra affix, gold-purple grade, random class across all 3, every slot', () => {
+test('relic: ×1.25 stats + one extra affix, gold-purple grade, uniform released classes, every slot', () => {
   const rng = mulberry32(42); const cls = {}; const slots = {};
   for (let i = 0; i < 3000; i++) { const r = makeRelic({ id: `r${i}`, tgId: '1', tier: 2, rng, now: 0, source: 'relic_boss' });
     assert.equal(r.grade, 'relic'); assert.ok(r.name.startsWith(RELIC.prefix)); assert.equal(Object.keys(JSON.parse(r.affix_json)).length, 1); assert.equal(r.bound, 0);
     slots[r.slot] = (slots[r.slot] || 0) + 1; if (r.class_req !== 'any') cls[r.class_req] = (cls[r.class_req] || 0) + 1;
     if (['belt', 'undershirt', 'earring', 'ring'].includes(r.slot)) assert.equal(r.class_req, 'any'); }
   for (const s of SLOTS) assert.ok(slots[s] > 3000 / SLOTS.length * 0.7, `slot ${s} ${slots[s]}`);
-  const tot = Object.values(cls).reduce((a, b) => a + b, 0); for (const c of ['sword', 'archer', 'mage']) assert.ok(Math.abs(cls[c] / tot - 1 / 3) < 0.04, `class ${c}`);
+  const tot = Object.values(cls).reduce((a, b) => a + b, 0); assert.deepEqual(Object.keys(cls).sort(),[...CLASS_KEYS].sort());for (const c of CLASS_KEYS) assert.ok(Math.abs(cls[c] / tot - 1 / CLASS_KEYS.length) < 0.04, `class ${c}`);
   const a = makeGear({ id: 'n', tgId: '1', cls: 'sword', slot: 'armor', kind: null, tier: 3, rng: mulberry32(9), now: 0, forceRarity: 'epic' });
   const b = makeGear({ id: 'r', tgId: '1', cls: 'sword', slot: 'armor', kind: null, tier: 3, rng: mulberry32(9), now: 0, forceRarity: 'epic', relic: true });
   assert.ok(Math.abs(b.base_stat / a.base_stat - RELIC.statMult) < 0.06, `${b.base_stat}/${a.base_stat}`);

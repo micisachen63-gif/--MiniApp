@@ -1,12 +1,12 @@
 // Synthetic local rehearsal only. No remote credentials, production bindings or Wrangler execution.
 import assert from 'node:assert/strict';
 import { createHash, randomUUID } from 'node:crypto';
-import { readFileSync, readdirSync, mkdirSync, writeFileSync, mkdtempSync, existsSync } from 'node:fs';
+import { readFileSync, mkdirSync, writeFileSync, mkdtempSync, existsSync } from 'node:fs';
 import { dirname, resolve, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { createRequire } from 'node:module';
 import { fileURLToPath } from 'node:url';
-import { repositorySchemaDatabase, buildThiefSchemaCandidate, schemaRows, ident } from './prepare-thief-schema-candidate.mjs';
+import { repositorySchemaDatabase, historicalSchemaMigrationFiles, buildThiefSchemaCandidate, schemaRows, ident } from './prepare-thief-schema-candidate.mjs';
 import { seedThiefSchemaFixture } from '../test/thief-schema-fixture.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
@@ -73,7 +73,7 @@ try {
     host: '127.0.0.1', port: 0, logRequests: false, telemetry: { enabled: false } };
   miniflare = new Miniflare(convertV4MiniflareOptions ? convertV4MiniflareOptions(localOptions) : localOptions);
   const d1 = await miniflare.getD1Database('DB');
-  for (const file of readdirSync(resolve(root, 'worker/migrations')).filter(name => name.endsWith('.sql')).sort()) {
+  for (const file of historicalSchemaMigrationFiles()) {
     const queries = splitSql(readFileSync(resolve(root, 'worker/migrations', file), 'utf8'));
     await d1.batch(queries.map(sql => d1.prepare(sql)));
   }

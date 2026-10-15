@@ -18,9 +18,13 @@ const guard = condition => `INSERT INTO ${ident(guardName)} (ok) SELECT CASE WHE
 export const schemaRows = db => db.prepare(`SELECT type,name,tbl_name,sql FROM sqlite_master WHERE ${catalogFilter} ORDER BY type,name`).all().map(row => ({ ...row }));
 const refersTo = (sql, name) => new RegExp(`\\b${name.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'i').test(sql || '');
 
+// Pin review/rehearsal to the pre-thief schema. Normal freshDb initialization applies all migrations.
+export const historicalSchemaMigrationFiles = () => readdirSync(resolve(root, 'worker/migrations'))
+  .filter(name => /^\d{4}_.*\.sql$/.test(name) && Number(name.slice(0, 4)) <= 24).sort();
+
 export function repositorySchemaDatabase(transform = sql => sql) {
   const db = new DatabaseSync(':memory:');
-  for (const file of readdirSync(resolve(root, 'worker/migrations')).filter(name => name.endsWith('.sql')).sort()) db.exec(transform(readFileSync(resolve(root, 'worker/migrations', file), 'utf8'), file));
+  for (const file of historicalSchemaMigrationFiles()) db.exec(transform(readFileSync(resolve(root, 'worker/migrations', file), 'utf8'), file));
   db.exec('PRAGMA foreign_keys=ON');
   return db;
 }

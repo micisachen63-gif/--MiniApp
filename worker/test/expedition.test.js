@@ -5,6 +5,8 @@ import {loadPlayer} from '../src/db.js';import {computeStats} from '../src/game/
 import {advance} from '../src/game/classes.js';import {settleIdle} from '../src/game/idle.js';
 import {SKILL_MAP,MECHANICS,eligible,performSkill,specialState} from '../src/game/special.js';
 import {isTradeableItem} from '../src/game/trade.js';
+import {THIEF_RELEASE_READY} from '../src/game/thief-data.js';
+import {LEGACY_SPECIAL_SKILLS} from '../src/game/special-data.js';
 let request=0;const req=()=>`exp-test-${++request}`;
 async function setup(level=60,path='B1'){
  const env={DB:freshDb()};for(const id of ['111','222','333','444']){await P.createCharacter(env,{tgId:id,name:'角色'+id,gender:'m',baseClass:'sword'},T0);await env.DB.prepare('UPDATE rpg_characters SET level=?,class_path=? WHERE tg_id=?').bind(level,path,id).run();const p=await loadPlayer(env.DB,id),s=computeStats(p.char,p.equipment);await env.DB.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').bind(s.maxHp,s.maxMp,id).run();}return env;
@@ -12,8 +14,8 @@ async function setup(level=60,path='B1'){
 const action=(env,tg,b,now=T0)=>S.action(env,tg,{...b,requestId:req()},now);
 async function team(env,dungeonId='pillar',now=T0){const r=await G.create(env,'111',{kind:'dungeon',dungeonId},now);const id=r.party.id;for(const tg of ['222','333'])await G.action(env,tg,{partyId:id,op:'join',requestId:req()},now);for(const tg of ['111','222','333'])await G.action(env,tg,{partyId:id,op:'ready',requestId:req()},now);await G.action(env,'111',{partyId:id,op:'start',requestId:req()},now);return id;}
 async function win(env,id,now=T0){for(let i=0;i<40;i++){const p=await G.view(env,id,'111',now);if(p.status!=='combat')return {p,now};for(const tg of ['111','222','333'])await G.action(env,tg,{partyId:id,op:'submit',skillId:'attack',round:p.round,requestId:req()},now);now+=30000;}throw Error('No end');}
-test('all 54 skills have explicit mechanics and correct route qualifications',()=>{
- assert.equal(Object.keys(SKILL_MAP).length,54);for(const id of Object.keys(SKILL_MAP))assert.ok(MECHANICS[id]);
+test('all legacy and released thief skills have explicit mechanics and correct route qualifications',()=>{
+ assert.equal(LEGACY_SPECIAL_SKILLS.length,54);assert.equal(Object.keys(SKILL_MAP).length,54+(THIEF_RELEASE_READY?6:0));for(const id of Object.keys(SKILL_MAP))assert.ok(MECHANICS[id]);
  assert.equal(eligible({base_class:'sword',class_path:'B1',level:60},SKILL_MAP.skill_02_1),true);
  assert.equal(eligible({base_class:'sword',class_path:'B1',level:60},SKILL_MAP.skill_01_1),false);
  assert.equal(isTradeableItem('book_skill_02_1'),true);assert.equal(isTradeableItem('trial_3'),false);

@@ -17,12 +17,12 @@ for(const base of ['sword','archer','mage'])for(const d of Party.DUNGEONS.filter
 let count=0;const request=()=>('thief-pipeline-'+(++count));
 async function setup(route='A1'){
  const env={DB:freshDb()};
- // Explicit local memory fixture for the pending CHECK expansion; never production configuration.
- env.DB.sqlite.exec('PRAGMA ignore_check_constraints=ON');
+ // The fresh initializer must satisfy the real constraints in both release-gate states.
+ assert.equal(env.DB.sqlite.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints,0);
  for(const id of ['111','222','333']){
   const base=id==='333'?'sword':releaseReady?'thief':'sword';
   await Player.createCharacter(env,{tgId:id,name:'測試'+id,gender:'f',baseClass:base},T0);
-  await env.DB.prepare('UPDATE rpg_characters SET level=120,class_path=?,base_class=?,auto_blue=0,auto_red_pct=0 WHERE tg_id=?').bind(id==='333'?'B1':route,id==='333'?'sword':'thief',id).run();
+  await env.DB.prepare('UPDATE rpg_characters SET level=120,class_path=?,base_class=?,auto_blue=0,auto_red_pct=20 WHERE tg_id=?').bind(id==='333'?'B1':route,id==='333'?'sword':'thief',id).run();
   const p=await DB.loadPlayer(env.DB,id),s=Stats.computeStats(p.char,p.equipment);
   await env.DB.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').bind(s.maxHp,s.maxMp,id).run();
  }

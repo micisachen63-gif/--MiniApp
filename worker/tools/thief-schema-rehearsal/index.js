@@ -10,6 +10,7 @@ const response=(data,status=200)=>Response.json(data,{status,headers:{'Cache-Con
 async function schema(db){return (await db.prepare(`SELECT type,name,tbl_name,sql FROM sqlite_master WHERE ${catalogFilter} ORDER BY type,name`).all()).results;}
 const tables=new Set(source.objects.filter(r=>r.type==='table').map(r=>r.name));
 const faults=new Set(['drop-table-leaf-first','restore-data-before-triggers','verify-all-columns-rowid-types-bytes']);
+const initializer='0025_thief_empty_database.sql';
 export default {
  async fetch(request,env){
   const isolated=env.MODE==='isolated-rehearsal';
@@ -20,12 +21,25 @@ export default {
   if(await sha(supplied)!==await sha('Bearer '+env.REHEARSAL_TOKEN))return response({ok:false},404);
   try{
    const body=await request.json(),path=new URL(request.url).pathname,db=env.DB;
-   if(production&&!['/schema','/apply'].includes(path))return response({ok:false},404);
-   if(production&&path==='/apply'&&body.sourceCommit!==env.SOURCE_COMMIT)return response({ok:false,reason:'wrong-reviewed-source'},409);
+   if(production&&!['/schema','/apply','/record-migration'].includes(path))return response({ok:false},404);
+   if(production&&['/apply','/record-migration'].includes(path)&&body.sourceCommit!==env.SOURCE_COMMIT)return response({ok:false,reason:'wrong-reviewed-source'},409);
    if(path==='/schema'){
     const rows=await schema(db),hash=await sha(JSON.stringify(rows));
     const fk=await db.prepare('PRAGMA foreign_key_check').all(),quick=await db.prepare('PRAGMA quick_check').all();
-    return response({ok:true,schemaSHA256:hash,objects:rows.length,tables:rows.filter(r=>r.type==='table').length,foreignKeyErrors:fk.results.length,quickCheck:quick.results.map(r=>Object.values(r)[0])});
+    const tracking=production?await db.prepare('SELECT COUNT(*) AS n FROM d1_migrations WHERE name=?').bind(initializer).first():null;
+    return response({ok:true,schemaSHA256:hash,objects:rows.length,tables:rows.filter(r=>r.type==='table').length,foreignKeyErrors:fk.results.length,quickCheck:quick.results.map(r=>Object.values(r)[0]),...(production?{initializerRecorded:tracking.n===1}:{})});
+   }
+   if(path==='/record-migration'&&production){
+    if(await sha(JSON.stringify(await schema(db)))!==candidate.schemaSha256ExpectedAfter)return response({ok:false,reason:'expanded-schema-required'},409);
+    // Tracking only: never execute the empty-database initializer on populated production.
+    // The exact post-expansion schema guard is rechecked inside this atomic bookkeeping batch.
+    await db.batch([
+     candidate.statements[0].sql,
+     candidate.statements.find(s=>s.phase==='verify-schema').sql,
+     `INSERT INTO d1_migrations (name) SELECT '${initializer}' WHERE NOT EXISTS (SELECT 1 FROM d1_migrations WHERE name='${initializer}')`,
+     'DROP TABLE "_thief_review_guard"',
+    ].map(sql=>db.prepare(sql)));
+    return response({ok:true,initializerRecorded:true,migration:initializer});
    }
    if(path==='/page-digest'){
     const {table,offset=0}=body;if(!tables.has(table)||!Number.isSafeInteger(offset)||offset<0)return response({ok:false},400);
