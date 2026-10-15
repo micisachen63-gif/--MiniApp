@@ -1,0 +1,659 @@
+{
+  "version": 1,
+  "baseClass": "mage",
+  "displayName": "法師",
+  "internalKeyPreserved": true,
+  "artDirection": "原創希臘神話魔導師，男女獨立服裝剪裁，元素 A 與秘法 B 各自成長，晶體、魔法陣、斗篷及法杖隨轉職進化",
+  "gender": {
+    "m": "星紋長袍、青銅肩甲、長披風與冠飾",
+    "f": "輕盈法袍、月桂寶石髮冠、星紗與符文披肩"
+  },
+  "branching": "Each advancement selects one of two children",
+  "stages": [
+    {
+      "tier": 0,
+      "at": 1,
+      "label": "初始・魔法學徒",
+      "variants": [
+        {
+          "path": "",
+          "name": "法師",
+          "theme": "星紋法袍、初始魔杖",
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "at": 30,
+      "label": "一轉・魔力覺醒",
+      "variants": [
+        {
+          "path": "A",
+          "name": "元素術士",
+          "theme": "元素晶核、雷炎法杖",
+          "skill": {
+            "name": "連鎖閃電",
+            "cost": 14,
+            "mult": 2.3,
+            "targets": 3
+          },
+          "passive": {
+            "text": "元素親和：相剋效果 +10%",
+            "elemPct": 0.1
+          },
+          "opened": true
+        },
+        {
+          "path": "B",
+          "name": "秘法師",
+          "theme": "奧術魔導書、紫晶符文",
+          "skill": {
+            "name": "奧術飛彈",
+            "cost": 10,
+            "mult": 2.1,
+            "targets": 1
+          },
+          "passive": {
+            "text": "法力回流：15% 機率不耗魔",
+            "freeCastPct": 0.15
+          },
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "at": 60,
+      "label": "二轉・魔導專精",
+      "variants": [
+        {
+          "path": "A1",
+          "name": "大魔導士",
+          "theme": "烈焰、寒霜與元素法環",
+          "skill": {
+            "name": "隕石術",
+            "cost": 30,
+            "mult": 3.4,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔導：ATK +10%",
+            "atkPct": 0.1
+          },
+          "opened": true
+        },
+        {
+          "path": "A2",
+          "name": "冰霜術士",
+          "theme": "烈焰、寒霜與元素法環",
+          "skill": {
+            "name": "暴風雪",
+            "cost": 24,
+            "mult": 2.8,
+            "targets": 4
+          },
+          "passive": {
+            "text": "冰甲：受傷 −20%",
+            "takenPct": -0.2
+          },
+          "opened": true
+        },
+        {
+          "path": "B1",
+          "name": "時空術士",
+          "theme": "時之沙、召喚契約與秘法",
+          "skill": {
+            "name": "時間扭曲",
+            "cost": 22,
+            "mult": 2.6,
+            "targets": 1
+          },
+          "passive": {
+            "text": "時之沙：EXP +10%",
+            "expPct": 0.1
+          },
+          "opened": true
+        },
+        {
+          "path": "B2",
+          "name": "召喚師",
+          "theme": "時之沙、召喚契約與秘法",
+          "skill": {
+            "name": "召喚火精靈",
+            "cost": 26,
+            "mult": 2.4,
+            "targets": 3
+          },
+          "passive": {
+            "text": "使魔護盾：受傷 −25%",
+            "takenPct": -0.25
+          },
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "at": 90,
+      "label": "三轉・奧術昇華（尚未開放）",
+      "previewOnly": true,
+      "opened": false,
+      "variants": [
+        {
+          "path": "A11",
+          "parent": "A1",
+          "tier": 3,
+          "branch": "1",
+          "name": "星炎大賢者",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "星炎大賢者・奧義",
+            "cost": 29,
+            "mult": 3.65,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A12",
+          "parent": "A1",
+          "tier": 3,
+          "branch": "2",
+          "name": "天隕魔導師",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "天隕魔導師・奧義",
+            "cost": 33,
+            "mult": 3.95,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A21",
+          "parent": "A2",
+          "tier": 3,
+          "branch": "1",
+          "name": "永霜詠唱者",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "永霜詠唱者・奧義",
+            "cost": 29,
+            "mult": 3.65,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A22",
+          "parent": "A2",
+          "tier": 3,
+          "branch": "2",
+          "name": "極光冰術師",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "極光冰術師・奧義",
+            "cost": 33,
+            "mult": 3.95,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B11",
+          "parent": "B1",
+          "tier": 3,
+          "branch": "1",
+          "name": "時序預言者",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "時序預言者・奧義",
+            "cost": 29,
+            "mult": 3.65,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B12",
+          "parent": "B1",
+          "tier": 3,
+          "branch": "2",
+          "name": "虛空旅法師",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "虛空旅法師・奧義",
+            "cost": 33,
+            "mult": 3.95,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B21",
+          "parent": "B2",
+          "tier": 3,
+          "branch": "1",
+          "name": "星靈召喚師",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "星靈召喚師・奧義",
+            "cost": 29,
+            "mult": 3.65,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B22",
+          "parent": "B2",
+          "tier": 3,
+          "branch": "2",
+          "name": "深淵契約者",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "深淵契約者・奧義",
+            "cost": 33,
+            "mult": 3.95,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        }
+      ]
+    },
+    {
+      "tier": 4,
+      "at": 120,
+      "label": "四轉・神域覺醒（尚未開放）",
+      "previewOnly": true,
+      "opened": false,
+      "variants": [
+        {
+          "path": "A111",
+          "parent": "A11",
+          "tier": 4,
+          "branch": "1",
+          "name": "太陽神炎使",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "太陽神炎使・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A112",
+          "parent": "A11",
+          "tier": 4,
+          "branch": "2",
+          "name": "熾天聖魔導",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "熾天聖魔導・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A121",
+          "parent": "A12",
+          "tier": 4,
+          "branch": "1",
+          "name": "滅星魔皇",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "滅星魔皇・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A122",
+          "parent": "A12",
+          "tier": 4,
+          "branch": "2",
+          "name": "隕日裁決者",
+          "element": "fire",
+          "theme": "金紅神炎與流星法陣",
+          "skill": {
+            "name": "隕日裁決者・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A211",
+          "parent": "A21",
+          "tier": 4,
+          "branch": "1",
+          "name": "永恆霜皇",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "永恆霜皇・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A212",
+          "parent": "A21",
+          "tier": 4,
+          "branch": "2",
+          "name": "絕對零度之主",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "絕對零度之主・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A221",
+          "parent": "A22",
+          "tier": 4,
+          "branch": "1",
+          "name": "極光聖賢",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "極光聖賢・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A222",
+          "parent": "A22",
+          "tier": 4,
+          "branch": "2",
+          "name": "蒼穹冰神",
+          "element": "ice",
+          "theme": "冰晶王冠與極光魔法",
+          "skill": {
+            "name": "蒼穹冰神・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 5
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B111",
+          "parent": "B11",
+          "tier": 4,
+          "branch": "1",
+          "name": "時光主宰",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "時光主宰・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B112",
+          "parent": "B11",
+          "tier": 4,
+          "branch": "2",
+          "name": "命運編織者",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "命運編織者・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B121",
+          "parent": "B12",
+          "tier": 4,
+          "branch": "1",
+          "name": "虛空法神",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "虛空法神・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B122",
+          "parent": "B12",
+          "tier": 4,
+          "branch": "2",
+          "name": "次元界行者",
+          "element": "time",
+          "theme": "紫金時輪與時空裂隙",
+          "skill": {
+            "name": "次元界行者・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 2
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B211",
+          "parent": "B21",
+          "tier": 4,
+          "branch": "1",
+          "name": "萬靈聖召者",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "萬靈聖召者・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B212",
+          "parent": "B21",
+          "tier": 4,
+          "branch": "2",
+          "name": "星界君王",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "星界君王・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B221",
+          "parent": "B22",
+          "tier": 4,
+          "branch": "1",
+          "name": "深淵魔契王",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "深淵魔契王・奧義",
+            "cost": 44,
+            "mult": 4.85,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔導共鳴：法術攻擊 +10%",
+            "atkPct": 0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B222",
+          "parent": "B22",
+          "tier": 4,
+          "branch": "2",
+          "name": "幽冥萬象師",
+          "element": "spirit",
+          "theme": "星界召喚陣與契約符文",
+          "skill": {
+            "name": "幽冥萬象師・奧義",
+            "cost": 48,
+            "mult": 5.15,
+            "targets": 4
+          },
+          "passive": {
+            "text": "魔能結界：受傷 −10%",
+            "takenPct": -0.1
+          },
+          "previewOnly": true,
+          "opened": false
+        }
+      ]
+    }
+  ]
+}

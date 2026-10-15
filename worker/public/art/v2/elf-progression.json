@@ -1,0 +1,588 @@
+{
+  "version": 2,
+  "baseClass": "archer",
+  "displayName": "妖精",
+  "internalKeyPreserved": true,
+  "levels": [
+    1,
+    30,
+    60,
+    90,
+    120
+  ],
+  "artDirection": "原創高精靈奇幻；修長尖耳、月桂葉冠、綠金與蒼藍自然魔法；男女共用視覺語言，服裝造型各自獨立，保留弓與自然紋章",
+  "gender": {
+    "f": {
+      "title": "女性妖精",
+      "style": "碧綠與月白絲甲、葉片髮飾、輕盈斗篷、自然光羽"
+    },
+    "m": {
+      "title": "男性妖精",
+      "style": "古青銅木紋輕甲、長披風、月桂護額、翠綠符文"
+    }
+  },
+  "stages": [
+    {
+      "tier": 0,
+      "at": 1,
+      "label": "初始・森林妖精",
+      "variants": [
+        {
+          "path": "",
+          "name": "森林妖精",
+          "theme": "葉芽與自然弓",
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 1,
+      "at": 30,
+      "label": "一轉・精靈誓約",
+      "variants": [
+        {
+          "path": "A",
+          "name": "風語妖精",
+          "theme": "青空風紋、輕弓、羽翼披風",
+          "opened": true
+        },
+        {
+          "path": "B",
+          "name": "靈獸妖精",
+          "theme": "森綠獸紋、靈獸圖騰、木靈護肩",
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 2,
+      "at": 60,
+      "label": "二轉・雙重專精",
+      "variants": [
+        {
+          "path": "A1",
+          "name": "逐風神射",
+          "theme": "銀羽長弓、鷹眼金紋",
+          "opened": true
+        },
+        {
+          "path": "A2",
+          "name": "蒼穹風舞",
+          "theme": "嵐風長披、風刃與羽衣",
+          "opened": true
+        },
+        {
+          "path": "B1",
+          "name": "森靈馭獸",
+          "theme": "狼鷹雙靈、鹿角護肩",
+          "opened": true
+        },
+        {
+          "path": "B2",
+          "name": "月影獵使",
+          "theme": "銀月陷阱、影葉符咒",
+          "opened": true
+        }
+      ]
+    },
+    {
+      "tier": 3,
+      "at": 90,
+      "label": "三轉・精靈王傳承（規劃中）",
+      "variants": [
+        {
+          "path": "A11",
+          "parent": "A1",
+          "tier": 3,
+          "branch": "1",
+          "name": "星風聖射",
+          "theme": "星輝、風翼與神聖長弓",
+          "skill": {
+            "name": "星風聖射・秘技",
+            "cost": 26,
+            "mult": 3.6,
+            "targets": 3
+          },
+          "passive": {
+            "text": "精靈祝福：攻擊 +8%",
+            "atkPct": 0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A12",
+          "parent": "A1",
+          "tier": 3,
+          "branch": "2",
+          "name": "蒼穹裁決者",
+          "theme": "星輝、風翼與神聖長弓",
+          "skill": {
+            "name": "蒼穹裁決者・秘技",
+            "cost": 29,
+            "mult": 3.85,
+            "targets": 3
+          },
+          "passive": {
+            "text": "自然共鳴：受傷 −8%",
+            "takenPct": -0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A21",
+          "parent": "A2",
+          "tier": 3,
+          "branch": "1",
+          "name": "暴風先知",
+          "theme": "星輝、風翼與神聖長弓",
+          "skill": {
+            "name": "暴風先知・秘技",
+            "cost": 26,
+            "mult": 3.6,
+            "targets": 3
+          },
+          "passive": {
+            "text": "精靈祝福：攻擊 +8%",
+            "atkPct": 0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A22",
+          "parent": "A2",
+          "tier": 3,
+          "branch": "2",
+          "name": "天羽御風者",
+          "theme": "星輝、風翼與神聖長弓",
+          "skill": {
+            "name": "天羽御風者・秘技",
+            "cost": 29,
+            "mult": 3.85,
+            "targets": 3
+          },
+          "passive": {
+            "text": "自然共鳴：受傷 −8%",
+            "takenPct": -0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B11",
+          "parent": "B1",
+          "tier": 3,
+          "branch": "1",
+          "name": "萬獸祭司",
+          "theme": "月桂、森林靈獸與自然魔法",
+          "skill": {
+            "name": "萬獸祭司・秘技",
+            "cost": 26,
+            "mult": 3.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "精靈祝福：攻擊 +8%",
+            "atkPct": 0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B12",
+          "parent": "B1",
+          "tier": 3,
+          "branch": "2",
+          "name": "古森召靈師",
+          "theme": "月桂、森林靈獸與自然魔法",
+          "skill": {
+            "name": "古森召靈師・秘技",
+            "cost": 29,
+            "mult": 3.85,
+            "targets": 4
+          },
+          "passive": {
+            "text": "自然共鳴：受傷 −8%",
+            "takenPct": -0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B21",
+          "parent": "B2",
+          "tier": 3,
+          "branch": "1",
+          "name": "皎月巡狩",
+          "theme": "月桂、森林靈獸與自然魔法",
+          "skill": {
+            "name": "皎月巡狩・秘技",
+            "cost": 26,
+            "mult": 3.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "精靈祝福：攻擊 +8%",
+            "atkPct": 0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B22",
+          "parent": "B2",
+          "tier": 3,
+          "branch": "2",
+          "name": "荊棘影衛",
+          "theme": "月桂、森林靈獸與自然魔法",
+          "skill": {
+            "name": "荊棘影衛・秘技",
+            "cost": 29,
+            "mult": 3.85,
+            "targets": 4
+          },
+          "passive": {
+            "text": "自然共鳴：受傷 −8%",
+            "takenPct": -0.08
+          },
+          "previewOnly": true,
+          "opened": false
+        }
+      ],
+      "opened": false,
+      "previewOnly": true
+    },
+    {
+      "tier": 4,
+      "at": 120,
+      "label": "四轉・神樹覺醒（規劃中）",
+      "variants": [
+        {
+          "path": "A111",
+          "parent": "A11",
+          "tier": 4,
+          "branch": "1",
+          "name": "永恆風冠",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "永恆風冠・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A112",
+          "parent": "A11",
+          "tier": 4,
+          "branch": "2",
+          "name": "群星神弓",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "群星神弓・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A121",
+          "parent": "A12",
+          "tier": 4,
+          "branch": "1",
+          "name": "蒼穹神判",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "蒼穹神判・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A122",
+          "parent": "A12",
+          "tier": 4,
+          "branch": "2",
+          "name": "聖光獵星",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "聖光獵星・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A211",
+          "parent": "A21",
+          "tier": 4,
+          "branch": "1",
+          "name": "太初風皇",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "太初風皇・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A212",
+          "parent": "A21",
+          "tier": 4,
+          "branch": "2",
+          "name": "九霄御風",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "九霄御風・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A221",
+          "parent": "A22",
+          "tier": 4,
+          "branch": "1",
+          "name": "天羽聖主",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "天羽聖主・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "A222",
+          "parent": "A22",
+          "tier": 4,
+          "branch": "2",
+          "name": "嵐靈神使",
+          "theme": "天穹神羽、風暴聖冠",
+          "skill": {
+            "name": "嵐靈神使・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B111",
+          "parent": "B11",
+          "tier": 4,
+          "branch": "1",
+          "name": "太古森皇",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "太古森皇・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B112",
+          "parent": "B11",
+          "tier": 4,
+          "branch": "2",
+          "name": "萬獸神尊",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "萬獸神尊・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B121",
+          "parent": "B12",
+          "tier": 4,
+          "branch": "1",
+          "name": "世界樹祭主",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "世界樹祭主・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B122",
+          "parent": "B12",
+          "tier": 4,
+          "branch": "2",
+          "name": "精靈祖靈",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "精靈祖靈・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B211",
+          "parent": "B21",
+          "tier": 4,
+          "branch": "1",
+          "name": "永夜月神",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "永夜月神・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B212",
+          "parent": "B21",
+          "tier": 4,
+          "branch": "2",
+          "name": "銀月聖獵",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "銀月聖獵・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B221",
+          "parent": "B22",
+          "tier": 4,
+          "branch": "1",
+          "name": "荊棘聖王",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "荊棘聖王・終章",
+            "cost": 42,
+            "mult": 4.6,
+            "targets": 4
+          },
+          "passive": {
+            "text": "神聖風靈：攻擊 +12%",
+            "atkPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        },
+        {
+          "path": "B222",
+          "parent": "B22",
+          "tier": 4,
+          "branch": "2",
+          "name": "幽林守護",
+          "theme": "世界樹神紋、太古靈獸",
+          "skill": {
+            "name": "幽林守護・終章",
+            "cost": 46,
+            "mult": 4.949999999999999,
+            "targets": 5
+          },
+          "passive": {
+            "text": "神木加護：最大生命 +12%",
+            "maxHpPct": 0.12
+          },
+          "previewOnly": true,
+          "opened": false
+        }
+      ],
+      "opened": false,
+      "previewOnly": true
+    }
+  ],
+  "branching": "Each advancement has exactly two choices; classPath retains ancestral selections"
+}
