@@ -1,4 +1,5 @@
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
+import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
 import {activateCollection} from './services/collection-blessings.js';
@@ -298,6 +299,7 @@ export async function runCron(env, now) {
 
 export async function handle(request, env) {
   const url = new URL(request.url);
+  const publicStory=fatePublic(request);if(publicStory)return publicStory;
   if (request.method === 'GET' && url.pathname === '/health') return json({ ok: true, service: 'elf-rpg-api' });
   if (url.pathname.startsWith('/app/api/')) {
     try { return await handleApp(request, env, url, { routes, json, fail, nowFor }); }

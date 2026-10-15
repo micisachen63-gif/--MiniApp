@@ -1,0 +1,33 @@
+import {SCENES,decodeResult} from './model.js';
+import {EXTRA_CHOICES} from './choices-extra-v1.js';
+import {validLife} from './life.js';
+// Original short story pools. V1 links retain their original scenes.
+const POOLS=[
+ [SCENES[0],
+ {tag:'第一幕 · 爐邊',title:'碎裂的星石，還能成為什麼？',text:'成年那天，鍛匠把一塊碎星石交給你。你可以留下，替故鄉修好守夜的燈；也可以把它帶向海港，尋找失傳的點燈方法。',choices:[['留下學會修燈','在熟悉的地方，也能學會讓世界明亮。','你在爐邊度過第一個冬天，替故鄉一盞盞修好舊燈。'],['去海港找答案','你願意把未知，慢慢走成自己的路。','你把碎星石收進行囊，循著一張舊航圖走向海港。']]},
+ {tag:'第一幕 · 來信',title:'沒有署名的信，你會送去哪裡？',text:'你在舊旅誌裡發現一封未寄出的信。信裡寫著燈塔的地址，也畫著一座無人知曉的島。這是你第一次替自己決定方向。',choices:[['先去信上的燈塔','也許有人，還在等一句遲來的話。','你敲開燈塔的門，替一封舊信找到了願意讀完的人。'],['尋找畫裡的島','那些沒有被寫下的事，也值得追尋。','你照著信上的星圖，第一次踏上沒有名字的航路。']]}],
+ [SCENES[1],
+ {tag:'第二幕 · 林間',title:'霧裡有兩條路，你先照亮哪一條？',text:'你帶著星燈穿過迷霧森林。一群旅人停在斷橋前，而另一條狹窄的山徑，似乎能通向更高處的觀測臺。',choices:[['陪旅人把橋修好','讓走得慢的人，也能一起抵達。','你在霧裡多留了三日，與陌生旅人一起把木橋重新架好。'],['上山尋找新路','也許站得高一點，就能為大家找到方向。','你獨自爬上觀測臺，再帶著新畫的路線回到旅人身邊。']]},
+ {tag:'第二幕 · 遠行',title:'有人請你留下，你怎麼回答？',text:'沿海小鎮邀你留下看守冬夜的燈塔。同一晚，老船長帶來一艘即將出航的船，說遠方有一整片尚未點亮的海。',choices:[['留下一個冬天','有些遠方，可以等一個約定完成。','你替小鎮守過一季寒夜，和居民一起等到了春潮。'],['把火種帶去遠方','如果能點亮更多地方，也值得試一次。','你帶著小鎮託付的火種出航，沿途替陌生的港口點燈。']]}],
+ [SCENES[2],
+ {tag:'第三幕 · 雪線',title:'雪停以前，最後一盞燈留在哪裡？',text:'大雪封住山路，你與同伴只剩一盞星燈。山下的旅人需要一個方向，而山脊另一頭，也有人等著你帶光抵達。',choices:[['放在回山下的路口','願每個折返的人，都有一個可辨認的方向。','你把星燈留在雪線路口，讓後來的人看得見回去的路。'],['與同伴帶過山脊','我們把光帶過去，再一起找回來的路。','你與同伴輪流提燈，走過山脊，讓光第一次抵達另一側。']]},
+ {tag:'第三幕 · 新月',title:'港口熄燈了，你願意留下嗎？',text:'新月之夜，港口的燈一盞盞熄滅。你的船就要離岸，手裡最後一盞星燈，能成為岸上的等待，也能成為海上的約定。',choices:[['留下，等最後一艘船','總有人需要知道，還有誰願意等。','你留在岸上，直到最後一艘晚歸的船看見星燈。'],['出航，把星燈傳下去','也許這一點光，能陪更多人走遠。','你讓星燈在船員手中傳遞，把同行的約定帶向下一片海。']]}],
+];
+export function scenesFor(result){if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
+export function seedForNextLife(seed,entries=[]){
+ if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
+ const recent=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(Boolean).map(scenesFor);
+ for(let i=0;i<3;i++){let byte=parseInt(seed.slice(i*2,i*2+2),16);for(let tries=0;tries<6&&recent.some(rows=>rows[i].title===scenesFor({version:3,seed})[i].title);tries++){byte=(byte+1)%256;seed=seed.slice(0,i*2)+byte.toString(16).padStart(2,'0')+seed.slice(i*2+2);}}
+ return seed;
+}
+export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光之魂'},{at:10,title:'星痕之魂'},{at:25,title:'千途之魂'},{at:50,title:'循星之魂'},{at:100,title:'萬象之魂'}];
+export function readSoul(value){
+ let raw;try{raw=typeof value==='string'?JSON.parse(value):value}catch{return {entries:[]}};
+ if(!Array.isArray(raw?.entries))return {entries:[]};const seen=new Set(),entries=[];
+ for(const e of raw.entries){if(!decodeResult(e?.code)||seen.has(e.code))continue;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=90&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
+ const draft=validLife(raw?.draft);return draft?{entries,draft}:{entries};
+}
+export function rememberSoul(record,code,at=Date.now(),memories=[]){
+ const r=readSoul(record);if(!decodeResult(code))return r;if(!r.entries.some(e=>e.code===code)&&r.entries.length<2000)r.entries.push({code,at,...(Array.isArray(memories)&&memories.length?{memories}:{})});return readSoul(r);
+}
+export function soulMilestone(record){const count=readSoul(record).entries.length;return {count,current:[...SOUL_ACHIEVEMENTS].reverse().find(a=>count>=a.at)||null,next:SOUL_ACHIEVEMENTS.find(a=>count<a.at)||null};}

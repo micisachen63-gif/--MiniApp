@@ -2032,6 +2032,7 @@
       render();
     } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : esc(e.message)); }
   }
+  window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,refresh:()=>refreshMe()};
   window.RpgExpeditionHost={characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await loadTrade(id);render();}};
   boot();
 })();
