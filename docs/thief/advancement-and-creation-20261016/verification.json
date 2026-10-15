@@ -1,5 +1,5 @@
 {
-  "status": "LOCAL_TESTS_AND_UI_PASSED",
+  "status": "RELEASED_AND_VERIFIED",
   "testedAt": "2026-10-15T20:23:34.479Z",
   "implementationCommit": "92ab4a3",
   "mergedArmoryRelease": "691066b",
@@ -53,5 +53,13 @@
     ]
   },
   "productionWritesInValidation": false,
-  "productionDeployment": "PENDING root deploy:worker and receipt"
+  "productionDeployment": {
+    "version": "2eddefdf-8f09-42b7-90da-602d3e350704",
+    "sourceCommit": "ead15a0a3b6dd53c39cf7742083ad8e4dd8ff9bd",
+    "verifiedAt": "2026-10-15T20:25:41.068Z",
+    "publicFilesVerified": 131,
+    "activePercentage": 100,
+    "receipt": "../../deployment/elf-rpg-api.json",
+    "botRedeployed": false
+  }
 }

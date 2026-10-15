@@ -61,3 +61,9 @@ lineage-completeness.test.js：四職業124節點、兩性別、預覽與實際�
 只改這些遊戲服務，不應為此重發BOT或重跑schema擴充。
 群組BOSS跨玩家共享debuff、後期配隊要求、資源條戰技屬另一期；勿把本次路線專精當成上述功能已完成。
 原 POST_RELEASE_AUDIT.txt 與其json是修正前歷史快照；其中「高階沿用二轉」已由本次更新解決。
+
+7. 正式發布
+已發布遊戲 Worker 2eddefdf-8f09-42b7-90da-602d3e350704，來源 ead15a0。
+根目錄 deploy:worker 完成正式runtime、131個靜態檔與健康檢查，收據已提交推送GitHub。
+BOT沒有重發；DB／DO bindings、cron與既有秘密保持原設定。
+前端 app.js 已更新快取版本；玩家重新開啟遊戲即可載入。
