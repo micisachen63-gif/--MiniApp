@@ -16,15 +16,16 @@ function setup() {
   const listeners={},observers=[],stages=[],document={hidden:false,addEventListener:(name,fn)=>listeners[name]=fn,querySelectorAll:()=>stages,createElement:()=>new Element()};
   class Observer {constructor(callback){this.callback=callback;observers.push(this);}observe(stage){this.stage=stage;}disconnect(){this.disconnected=true;}}
   const window={IntersectionObserver:Observer};
+  vm.runInNewContext(fs.readFileSync(new URL('../public/armory-specializations.js',import.meta.url),'utf8'),{window});
   vm.runInNewContext(source,{window,document,IntersectionObserver:Observer});
   const wardrobe=new Element();wardrobe.stage=new Element();stages.push(wardrobe.stage);
   return {api:window.RpgHeroEffects,wardrobe,document,observers,listeners};
 }
 const motif=path=>path.startsWith('A2')?'venom':path.startsWith('B2')?'mirror':path.startsWith('B')?'flying':'shadow';
 
-test('all 62 thief identities select their exclusive armory art and retain the tier-2 route through fourth advancement',()=>{
+test('zero through second-tier thief identities retain the four native armory themes',()=>{
   const {api}=setup();
-  for(const path of THIEF_PATHS)for(const gender of ['m','f']) {
+  for(const path of THIEF_PATHS.filter(p=>p.length<3))for(const gender of ['m','f']) {
     const p=api.profile({baseClass:'thief',classPath:path,classTier:path.length,gender});
     assert.equal(p.thief,true);assert.equal(p.motif,motif(path));assert.equal(p.theme,'thief-'+motif(path));
     assert.equal(p.tier,path.length);assert.equal(p.mirror,gender==='m');
@@ -32,9 +33,9 @@ test('all 62 thief identities select their exclusive armory art and retain the t
   }
 });
 
-test('legacy armory themes are preserved across every class path and gender',()=>{
+test('zero through second-tier legacy armory themes are preserved for both genders',()=>{
   const {api}=setup();
-  for(const path of THIEF_PATHS)for(const gender of ['m','f'])for(const cls of ['sword','archer','mage']) {
+  for(const path of THIEF_PATHS.filter(p=>p.length<3))for(const gender of ['m','f'])for(const cls of ['sword','archer','mage']) {
     const expected=cls==='mage'?(path.startsWith('A2')?'frost':path.startsWith('B1')?'chrono':path.startsWith('B2')?'summon':path==='B'?'chrono':'ember'):
       cls==='archer'?(path.startsWith('B2')||path.startsWith('A2')?'lunar':path==='B'||path.startsWith('B1')?'summon':'wind'):
       path.startsWith('A1')||path==='A'?'fury':path.startsWith('A2')?'lunar':'aegis';
@@ -43,7 +44,7 @@ test('legacy armory themes are preserved across every class path and gender',()=
 });
 
 test('exclusive layers use local SVGs and custom particles; visibility pauses motion without duplicating layers',()=>{
-  for(const path of ['','A','B','A111','A211','B111','B211']) {
+  for(const path of ['','A','B','A1','A2','B1','B2']) {
     const {api,wardrobe,observers,document,listeners}=setup(),stage=wardrobe.stage;
     api.mount(wardrobe,{baseClass:'thief',classPath:path,gender:'f'});
     assert.equal(stage.dataset.thiefArmoryFx,motif(path));assert.match(stage.style['--fx-art'],new RegExp('thief-armory-fx-20261016/thief-'+motif(path)+'\\.svg'));

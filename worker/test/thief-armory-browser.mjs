@@ -13,7 +13,7 @@ import {nodeFor,computeStats} from '../src/game/stats.js';
 const require=createRequire(import.meta.url);
 let playwright;try{playwright=require('playwright');}catch{playwright=require(process.env.RPG_PLAYWRIGHT_MODULE||path.join(os.homedir(),'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright'));}
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
-const output=path.join(root,'docs/thief/armory-fx-20261016');fs.mkdirSync(output,{recursive:true});
+const output=path.join(root,'docs/armory-specializations/base-thief-regression');fs.mkdirSync(output,{recursive:true});
 const meta=metaView(),preview=await createThiefPreview({identity:{classPath:'',gender:'f',level:20,className:'盜賊'}});
 const browser=await playwright.chromium.launch({channel:'chrome',headless:true}),page=await browser.newPage();
 const errors=[],cases=[],lifecycle=[],artChecks=[];page.on('pageerror',e=>errors.push(e.message));
@@ -69,16 +69,16 @@ async function measure(identity,width,angel=true) {
 try {
   await page.goto(preview.origin+'/?devTg=811');await page.locator('[data-select="811"]').click();await page.waitForFunction(()=>window.__ArmoryQA?.state.me?.character);
   await page.evaluate(()=>{const s=window.__ArmoryQA.state;s.fixtureGuardian=s.me.guardian;s.fixtureAssist=s.me.guardianAssist;});
-  for(const width of [320,390,768,1280])for(const identity of THIEF_IDENTITIES) {
+  for(const width of [320,390,768,1280])for(const identity of THIEF_IDENTITIES.filter(n=>n.classPath.length<3)) {
     await select(identity,width);const state=await measure(identity,width);assert.equal(state.runningAnimations,state.particles+1);cases.push(state);
-    if(width===390&&identity.gender==='f'&&['A111','A211','B111','B211'].includes(identity.classPath)) {
+    if(width===390&&identity.gender==='f'&&['A1','A2','B1','B2'].includes(identity.classPath)) {
       // Prove that the CSS animation timeline actually advances.
       const motion=await page.locator('.hero-fx--front .hero-fx-mote').first().evaluate(el=>{const a=el.getAnimations()[0];return {time:a.currentTime,transform:getComputedStyle(el).transform};});
       await page.waitForFunction(before=>{const el=document.querySelector('.hero-fx--front .hero-fx-mote');return el.getAnimations()[0].currentTime>before.time+150&&getComputedStyle(el).transform!==before.transform;},motion);
       await page.locator('.hero-armory .doll').screenshot({type:'jpeg',quality:82,path:path.join(output,state.motif+'.jpg')});
     }
   }
-  for(const p of ['A111','A211','B111','B211']) {
+  for(const p of ['A1','A2','B1','B2']) {
     const identity=THIEF_IDENTITIES.find(n=>n.classPath===p&&n.gender==='f');
     await select(identity,390,{angel:false});cases.push(await measure(identity,390,false));
     await page.emulateMedia({reducedMotion:'reduce'});
@@ -104,7 +104,7 @@ try {
   }
   const sources=['worker/public/hero-fx.js','worker/public/hero-fx.css','worker/public/hero-armory.css','worker/public/hero-size.js','worker/public/app.js','worker/public/index.html',...['shadow','venom','flying','mirror'].map(m=>'worker/public/art/ui/thief-armory-fx-20261016/thief-'+m+'.svg')];
   const sourceSHA256=Object.fromEntries(sources.map(f=>[f,crypto.createHash('sha256').update(fs.readFileSync(path.join(root,f))).digest('hex')]));
-  fs.writeFileSync(path.join(output,'verification.json'),JSON.stringify({passed:true,actualAppBootstrap:true,isolatedInMemoryFixture:true,mockUiCharacterOverride:true,productionWrites:false,identities:62,widths:[320,390,768,1280],cases,lifecycle,artChecks,errors,sourceSHA256},null,2)+'\n');
+  fs.writeFileSync(path.join(output,'verification.json'),JSON.stringify({passed:true,actualAppBootstrap:true,isolatedInMemoryFixture:true,mockUiCharacterOverride:true,productionWrites:false,identities:14,widths:[320,390,768,1280],cases,lifecycle,artChecks,errors,sourceSHA256},null,2)+'\n');
   console.log(JSON.stringify({passed:true,cases:cases.length,lifecycle:lifecycle.length}));
 }catch(e){await page.screenshot({path:path.join(output,'failure.png')});throw e;}
 finally {await browser.close();await preview.close();}

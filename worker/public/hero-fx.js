@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const ROOT = 'art/ui/hero-fx-20261011/';
-  const VERSION = '20261016-thief-armory1';
+  const VERSION = '20261016-advanced-armory1';
   const PALETTES = {
     aegis: { light: '#ecd99e', duration: 12, intensity: .54 },
     fury: { light: '#f9ae79', duration: 9, intensity: .47 },
@@ -19,6 +19,8 @@
   };
   function profile(c = {}) {
     const cls = c.baseClass || 'sword', path = String(c.classPath || '');
+    const advanced = window.RpgArmorySpecializations?.resolve(cls, path);
+    if (advanced) return { ...advanced, mirror: c.gender === 'm' };
     let theme;
     if (cls === 'thief') theme = path.startsWith('A2') ? 'thief-venom' : path.startsWith('B2') ? 'thief-mirror' : path.startsWith('B') ? 'thief-flying' : 'thief-shadow';
     else if (cls === 'mage') theme = path.startsWith('A2') ? 'frost' : path.startsWith('B1') ? 'chrono' : path.startsWith('B2') ? 'summon' : path === 'B' ? 'chrono' : 'ember';
@@ -47,8 +49,15 @@
     stage.dataset.heroFx = p.theme;
     stage.dataset.fxTier = String(p.tier);
     stage.dataset.fxRunning = 'false';
-    const art = p.thief ? 'art/ui/thief-armory-fx-20261016/' + p.theme + '.svg' : ROOT + p.theme + '.webp';
+    const art = p.art || (p.thief ? 'art/ui/thief-armory-fx-20261016/' + p.theme + '.svg' : ROOT + p.theme + '.webp');
     if (p.thief) stage.dataset.thiefArmoryFx = p.motif;
+    if (p.advanced) {
+      stage.dataset.advancedArmoryFx = p.id;
+      stage.dataset.fxMotion = p.motion;
+      stage.style.setProperty('--mote-art', 'url("' + p.particleArt + '?v=' + VERSION + '")');
+      stage.style.setProperty('--fx-accent', p.accent);
+      stage.style.setProperty('--advanced-motion', 'armory-' + p.motion);
+    }
     stage.style.setProperty('--fx-art', 'url("' + art + '?v=' + VERSION + '")');
     stage.style.setProperty('--fx-light', p.light);
     stage.style.setProperty('--fx-duration', p.duration + 's');
@@ -75,8 +84,8 @@
       mote.style.setProperty('--mote-x', (side ? 72 + step * 2 : 24 - step * 2) + '%');
       mote.style.setProperty('--mote-y', (93 - step * 17) + '%');
       mote.style.setProperty('--mote-size', (i % 3 === 0 ? 28 : 19) + 'px');
-      mote.style.setProperty('--mote-time', (3.6 + i * .35 + p.tier * .2) + 's');
-      mote.style.setProperty('--mote-delay', (-i * 1.7 - p.tier) + 's');
+      mote.style.setProperty('--mote-time', ((p.cadence || 3.6) + i * .35 + p.tier * .2) + 's');
+      mote.style.setProperty('--mote-delay', (-i * 1.7 - p.tier - (p.phase || 0) * .23) + 's');
       mote.style.setProperty('--mote-drift', ((side ? -1 : 1) * (10 + step * 3)) + 'px');
       front.append(mote);
     }
