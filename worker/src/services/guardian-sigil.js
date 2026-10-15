@@ -104,7 +104,7 @@ async function performSummon(env,charId,input={},now=Date.now(),autoJob=null){
  return execute(env,charId,input,'summon',{pool,count},now,async(work,cfg,rng,op)=>{
   let consumed={gold:0,vouchers:0,credits:0,freeNormalDraws:0};
   if(pool==='normal'){consumed.freeNormalDraws=Math.min(count,work.inv.guardian_free_normal||0);const paid=count-consumed.freeNormalDraws;consumed.gold=Math.floor(paid/10)*cfg.normalTenGold+(paid%10)*cfg.normalSingleGold;if(work.char.gold<consumed.gold)bad('gold','金幣不足');work.char.gold-=consumed.gold;if(consumed.freeNormalDraws)work.inv.guardian_free_normal-=consumed.freeNormalDraws;}
-  else{let quote;try{quote=creditQuote(work.inv.guardian_voucher||0,work.char.guardian_draw_remainder||0,count);}catch{bad('insufficient','召喚憑證或剩餘抽次不足');}consumed.vouchers=quote.consumedVouchers;consumed.credits=count;work.inv.guardian_voucher=quote.voucherCount;work.char.guardian_draw_remainder=quote.remainder;}
+  else{let quote;try{quote=creditQuote(work.inv.guardian_voucher||0,work.char.guardian_draw_remainder||0,count);}catch{bad('insufficient','招喚憑證或剩餘抽次不足');}consumed.vouchers=quote.consumedVouchers;consumed.credits=count;work.inv.guardian_voucher=quote.voucherCount;work.char.guardian_draw_remainder=quote.remainder;}
   if(autoJob&&autoJob.max_gold!==null&&autoJob.spent_gold+consumed.gold>autoJob.max_gold)bad('auto_budget','本批費用超過自動召喚金幣預算');
   const rows=Array.from({length:count},(_,i)=>({id:`${op}-${i.toString(36)}`,char_id:String(charId),type:TYPES[Math.floor(rng()*TYPES.length)],quality:quality(pool==='normal'?cfg.normalWeights:cfg.featuredWeights,rng),bound:0,source_operation_id:op,created_at:now}));
   const statements=rows.map(r=>insertSigil(env.DB,r));

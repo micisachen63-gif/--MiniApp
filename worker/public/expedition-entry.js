@@ -56,6 +56,7 @@
     card.append(tag, heading, text, buttons, note); return card;
   }
   window.RpgInterface.compose = (view, context) => {
+    window.RpgExpeditionOpen = open;
     original(view, context);
     if (context.tab === 'home') {
       const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||'';

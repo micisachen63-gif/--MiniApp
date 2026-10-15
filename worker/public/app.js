@@ -1157,7 +1157,7 @@
         <div class="figstats"><b>ATK ${fmt(me.stats.atk)}</b><b>DEF ${fmt(me.stats.def)}</b><b>HP ${fmt(me.stats.maxHp)}</b><b>MP ${fmt(me.stats.maxMp)}</b><b>爆擊 ${me.stats.crit}%</b></div></div></div><div class="hero-equipment-rail hero-equipment-right">${DOLL_R.map(cell).join('')}</div></div>
       <div class="acc">${DOLL_B.map(cell).join('')}</div></div>
       <div class="card bag-equipment"><h3>⚔️ 裝備列表 <small>共 ${eq.length} 件 · 依部位篩選</small></h3><div class="bag-slot-tabs" role="group" aria-label="裝備部位分類">${bagTabs}</div><div class="bag-equip-help">顯示 ${bagItems.length} 件 · 「裝備中」代表已穿戴 · 點選裝備查看詳情，⋯ 或長按管理</div><div class="bag-equip-list">${eq.filter(e => e.equipped).map(row).join('')}${eq.filter(e => !e.equipped).map(row).join('')}${bagItems.length ? '' : '<div class="bag-empty">此部位尚無裝備，可切換分類或前往商店取得。</div>'}</div></div>
-      <div class="card"><h3>🎒 道具</h3><div class="inv">${inv.map(([k, v]) => `<div ${k.startsWith('book_')?`data-skill-book="${esc(k.slice(5))}" role="button" tabindex="0"`:k==='boss_essence'||k==='relic_fragment'?'data-boss-resource role="button" tabindex="0"':''} title="${esc(S.meta.items[k] && S.meta.items[k].desc)}"><b>${k.startsWith('book_')?`<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(k.slice(5))}.webp" alt="">`:iconHtml(k, itemEmoji(k))}</b><i>${fmt(v)}</i><br>${esc(itemName(k))}</div>`).join('') || '<div class="muted">空的</div>'}</div></div>${window.RpgCollectionUI?.inventory({me,meta:S.meta},{esc,fmt,itemName})||''}</div>`;
+      <div class="card"><h3>🎒 道具</h3><div class="inv">${inv.map(([k, v]) => `<div data-inv-item="${esc(k)}" role="button" tabindex="0" title="${esc(S.meta.items[k] && S.meta.items[k].desc)}"><b>${k.startsWith('book_')?`<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(k.slice(5))}.webp" alt="">`:iconHtml(k, itemEmoji(k))}</b><i>${fmt(v)}</i><br>${esc(itemName(k))}</div>`).join('') || '<div class="muted">空的</div>'}</div></div>${window.RpgCollectionUI?.inventory({me,meta:S.meta},{esc,fmt,itemName})||''}</div>`;
   }
   function bindBag(view) {
     const guardianMarkup=window.RpgGuardianSigil?.summary(S.me.guardian,S.me.guardianSummonEnabled===true&&S.me.guardianAssist?.itemId===S.me.guardian?.id&&S.me.guardianAssist?.remainingBattles>0);if(guardianMarkup){view.querySelector('.lc-character')?.insertAdjacentHTML('beforeend',guardianMarkup);view.querySelector('[data-guardian-entry]').onclick=openGuardian;}const collectionMarkup=monsterCollectionView();if(collectionMarkup)view.querySelector('.lc-character')?.insertAdjacentHTML('beforeend',collectionMarkup);
@@ -1170,7 +1170,8 @@
     view.querySelectorAll('[data-monster-exchange]').forEach(button=>{button.onclick=async()=>{const actorId=S.me?.character?.tgId;const recipe=S.me.collection?.recipes.find(r=>r.id===button.dataset.monsterExchange);if(!recipe)return;if(!await confirmSheet('製作地圖收藏',`製作「${esc(recipe.name)}」將消耗 ${fmt(recipe.gold)} 金幣及畫面所列材料，解鎖永久收藏與通用祝福。`,'製作'))return;if(actorId!==S.me?.character?.tgId){toast('角色已切換，請重新選擇收藏',true);return;}await act('monster-exchange',{recipe:recipe.id},'地圖收藏已解鎖，可啟用收藏祝福');};});
     view.querySelectorAll('[data-bag-filter]').forEach(btn => { btn.onclick = () => { S.bagEquipSlot = btn.dataset.bagFilter; const root = btn.closest('.bag-equipment'); if (!root) return; const chosen = S.bagEquipSlot; const equipment = S.me.equipment.filter(e => chosen === 'all' || e.slot === chosen); root.querySelectorAll('[data-bag-filter]').forEach(b => { const on = b.dataset.bagFilter === chosen; b.classList.toggle('on', on); b.setAttribute('aria-pressed', String(on)); }); root.querySelectorAll('.bag-equip-list .item').forEach(el => { const e = S.me.equipment.find(x => x.id === el.dataset.item); el.hidden = !e || (chosen !== 'all' && e.slot !== chosen); }); const help = root.querySelector('.bag-equip-help'); if (help) help.textContent = '顯示 ' + equipment.length + ' 件 · 「裝備中」代表已穿戴 · 點選裝備查看詳情，⋯ 或長按管理'; let empty = root.querySelector('.bag-empty'); if (!equipment.length && !empty) { empty = document.createElement('div'); empty.className = 'bag-empty'; empty.textContent = '此部位尚無裝備，可切換分類或前往商店取得。'; root.querySelector('.bag-equip-list').appendChild(empty); } if (empty) empty.hidden = equipment.length > 0; }; });
     const pt = $('#dollpt', view); if (pt) drawPortrait(pt, heroOpts({}));
-    view.querySelectorAll('[data-item]').forEach((el) => { el.onclick = () => itemSheet(el.dataset.item); if (el.classList.contains('item')) bindLongPress(el, () => itemMenu(el.dataset.item)); });
+    view.querySelectorAll('[data-inv-item]').forEach((el) => { el.onclick = () => invItemMenu(el.dataset.invItem); el.onkeydown = (ev) => { if (ev.key === 'Enter' || ev.key === ' ') { ev.preventDefault(); invItemMenu(el.dataset.invItem); } }; });
+  view.querySelectorAll('[data-item]').forEach((el) => { el.onclick = () => itemSheet(el.dataset.item); if (el.classList.contains('item')) bindLongPress(el, () => itemMenu(el.dataset.item)); });
     view.querySelectorAll('[data-menu]').forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); itemMenu(b.dataset.menu); }; });
     view.querySelectorAll('[data-empty]').forEach((el) => { el.onclick = () => slotPicker(el.dataset.empty, Number(el.dataset.pos)); });
   }
@@ -1678,6 +1679,45 @@
     if (!(await confirmSheet('🏪 賣給商店', `確定出售「${esc(e.name)}」？<br><b>售價：💰 ${fmt(e.sellPrice)}</b><br><span class="muted">售價為同部位、同階裝備基礎商店價格的三分之一。出售後無法取回${e.grade === 'relic' ? '，請確認不再需要這件遺物' : ''}。</span>`, '出售', true))) return;
     closeSheet();
     return act('sell-gear', { itemId: e.id }, (j) => `已出售 ${j.result.itemName}，獲得 💰${fmt(j.result.gold)}`);
+  }
+  // ---- 道具欄點選選單：只顯示伺服器實際支援的操作
+  // 技能書：查看/學習(遠征頁)、分享到群組(expedition/share)、交易(expedition/trade)；可交易道具：到交易視窗放入；首領資源：兌換。
+  // 一般道具沒有「分享到群組」、「販售給商店」的伺服器功能（商店只收裝備、羽毛），所以不顯示。
+  function invItemMenu(k) {
+    const have = S.me.inventory[k] || 0, isBook = k.startsWith('book_'), skillId = isBook ? k.slice(5) : null;
+    const tradeable = (S.meta.trade?.tradeableItems || []).includes(k), bossRes = k === 'boss_essence' || k === 'relic_fragment';
+    const meta = S.meta.items[k] || {};
+    const icon = isBook ? `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(skillId)}.webp" alt="">` : iconHtml(k, itemEmoji(k));
+    const rows = [];
+    if (isBook) rows.push(['learn', '🔍 查看詳情／學習', '未使用的書可由符合職業的角色學習，學習後永久綁定該角色。'], ['bookshare', '📣 分享到群組', '把這本技能書貼到群組，夥伴可以來找你交易（每分鐘一次，組隊戰鬥中不能分享）。']);
+    if (bossRes) rows.push(['rewards', '🏺 前往兌換', '首領精華與遺物碎片在「首領精華」頁兌換裝備養成道具。']);
+    if (tradeable) rows.push([isBook ? 'booktrade' : 'trade', '🤝 交易', isBook ? '輸入對方角色名稱，建立交易視窗並先放入這本書。' : '到交易視窗，用「＋ 放入道具」放入這個道具。']);
+    const c = sheet(`<h2 class="mh">${icon} ${esc(itemName(k))} <small>×${fmt(have)}</small></h2>
+      <div class="menu"><div class="why">${esc(meta.desc || '')}</div>
+      ${rows.map(([m, label, why]) => `<button class="btn" data-m="${m}" ${have < 1 && m !== 'rewards' ? 'disabled' : ''}>${label}</button><div class="why">${esc(why)}</div>`).join('')}
+      ${!tradeable && !isBook && !bossRes ? '<div class="why">這個道具不能交易、分享或販售給商店。</div>' : ''}
+      <button class="btn ghost" data-m="x">關閉</button></div>`);
+    const reqId = () => (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2));
+    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = async () => {
+      const m = b.dataset.m;
+      if (m === 'x') return closeSheet();
+      if (m === 'learn') { closeSheet(); return window.RpgExpeditionOpen?.(skillId); }
+      if (m === 'rewards') { closeSheet(); return window.RpgExpeditionOpen?.('rewards'); }
+      if (m === 'trade') { closeSheet(); S.tab = 'trade'; S.social = 'trade'; render(); if (!S.trade) loadTrades(); toast(S.trade?.status === 'open' ? '點交易視窗的「＋ 放入道具」放入 ' + itemName(k) : '先開啟交易（群組分享貼文按「我要交易」），再放入 ' + itemName(k)); return; }
+      if (m === 'bookshare') {
+        if (!(await confirmSheet('📣 分享到群組', '把「' + esc(itemName(k)) + '」貼到群組？夥伴可以來找你交易。', '分享'))) return;
+        try { await api('expedition/share', { skillId, requestId: reqId() }); closeSheet(); toast('📣 已分享，貼文幾秒內會出現在群組'); } catch (e) { toast(e.message, true); }
+        return;
+      }
+      if (m === 'booktrade') {
+        const d = sheet('<h2>🤝 交易 · ' + esc(itemName(k)) + '</h2><div class="menu"><div class="why">輸入對方角色名稱，雙方鎖定、確認後物品才會移轉。</div><input id="bk-trade-name" placeholder="對方角色名稱" maxlength="12"><button class="btn" data-go>建立交易</button><button class="btn ghost" data-x>取消</button></div>');
+        d.querySelector('[data-x]').onclick = closeSheet;
+        d.querySelector('[data-go]').onclick = async () => {
+          const name = d.querySelector('#bk-trade-name').value.trim(); if (!name) return toast('請輸入對方角色名稱', true);
+          try { const r = await api('expedition/trade', { skillId, target: { name }, requestId: reqId() }); closeSheet(); S.tab = 'trade'; S.social = 'trade'; await loadTrade(r.tradeId); render(); toast('已建立交易視窗'); } catch (e) { toast(e.message, true); }
+        };
+      }
+    }; });
   }
   // ---- 背包長按選單：分享至群組 / 解契 / 詳細 / 販售
   function itemMenu(id) {
