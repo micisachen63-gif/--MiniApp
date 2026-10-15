@@ -27,6 +27,8 @@ function pendingKey(action,b){const stable=Object.fromEntries(Object.entries(b).
 function requestId(key){try{let id=localStorage.getItem(key);if(!id){id=crypto.randomUUID().replaceAll('-','');localStorage.setItem(key,id);}return id;}catch{return crypto.randomUUID().replaceAll('-','');}}
 function clearRequest(key){try{localStorage.removeItem(key);}catch{}}
 function artRevision(){try{return parent.RpgMonsterExpansion?.revision||parent.RpgMonsterExpansionArtRevision||'';}catch{return '';}}
+const REWARD_NAMES={tower_fragment:'星穹徽記',research_fragment:'技能研究碎片'};
+function rewardText(reward,kind){const items=Object.entries(reward?.items||{}).filter(([,n])=>n>0).map(([k,n])=>`${REWARD_NAMES[k]||(k.startsWith('book_')?'技能書':k.startsWith('trial_')?'轉職證明':k)} ×${n}`);return items.length?`獲得：${items.join('、')}（已加入背包）`:(kind==='tower'?'今日已領過，本次無獎勵':'本次無獎勵（今日次數已滿或已領過）');}
 async function api(action,b={}){
  const read=window.RpgRequest.isRead(action),key=read?null:pendingKey(action,b);
  if(!read)stateEpoch++;
@@ -100,7 +102,7 @@ document.addEventListener('click',async e=>{const b=e.target.closest('button');i
   else if(b.dataset.partyOp){if(b.dataset.partyOp==='end'||b.dataset.partyOp==='leave'){show(`<h2>${b.dataset.partyOp==='end'?'結束隊伍':'離開隊伍'}？</h2><p>結束後不發通關獎勵。</p><button class="primary" data-confirm-party="${b.dataset.partyOp}">確認</button>`);}else{party=(await api('party/action',{partyId:party.id,op:b.dataset.partyOp,ready:!party.me.ready})).party;render();}}
   else if(b.dataset.confirmParty){party=(await api('party/action',{partyId:party.id,op:b.dataset.confirmParty})).party;close();partyId=null;await refresh(true);}
   else if(b.dataset.submit){party=(await api('party/action',{partyId:party.id,op:'submit',round:party.round,skillId:b.dataset.submit,targetId:$('#target').value})).party;close();render();toast('戰術已選擇，結算前仍可改選');}
-  else if(b.hasAttribute('data-reward')){const r=await api('party/reward',{partyId:party.id});party=r.party;await refresh(true);toast('戰利品已加入正式背包');}
+  else if(b.hasAttribute('data-reward')){const r=await api('party/reward',{partyId:party.id});party=r.party;await refresh(true);toast(rewardText(r.reward,party?.kind));}
   else if(b.dataset.viewParty){reviewingParty=true;partyId=b.dataset.viewParty;await refresh(true);}
   else if(b.hasAttribute('data-refresh'))await refresh(true);
   else if(b.dataset.share){await api('expedition/share',{skillId:b.dataset.share});toast('分享已排入 TG 群組');}

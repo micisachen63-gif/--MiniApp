@@ -185,6 +185,8 @@ const routes = {
 async function claimOutbox(env, now, limit) {
   const db = env.DB;
   const claimToken = crypto.randomUUID();
+  // party_card is rendered from the party's current state, so older unclaimed cards of the same party are superseded by the newest one.
+  await db.prepare(`UPDATE rpg_outbox SET delivered_at = ?, last_error = 'superseded' WHERE kind = 'party_card' AND delivered_at IS NULL AND failed_at IS NULL AND claimed_at IS NULL AND id < (SELECT MAX(o2.id) FROM rpg_outbox o2 WHERE o2.kind = 'party_card' AND o2.delivered_at IS NULL AND o2.failed_at IS NULL AND json_extract(o2.payload_json,'$.partyId') = json_extract(rpg_outbox.payload_json,'$.partyId'))`).bind(now).run();
   const rows = await db.prepare(`UPDATE rpg_outbox SET claimed_at = ?, claim_token = ?, claim_attempts = claim_attempts + 1
     WHERE id IN (SELECT id FROM rpg_outbox WHERE delivered_at IS NULL AND failed_at IS NULL AND next_attempt_at <= ? AND (claimed_at IS NULL OR claimed_at <= ?) ORDER BY id LIMIT ?)
     RETURNING id, target, tg_id, kind, payload_json`).bind(now, claimToken, now, now - 60_000, limit).all();
