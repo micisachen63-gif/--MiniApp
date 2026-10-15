@@ -27,12 +27,13 @@ test('auth: health is public; wrong/missing secret rejected; unconfigured secret
   assert.equal((await handle(new Request('http://rpg/rpg/me', { method: 'POST', headers: { 'X-Service-Secret': 'x' }, body: '{}' }), { ...env, SERVICE_SECRET: '' })).status, 503);
 });
 
-test('create → starter kit; duplicate / bad name rejected; debug time ignored in production', async () => {
-  const { call, env } = mk(); const future = taipeiAt('2027-01-01', 8);
+test('create → starter kit; occupied character slot / duplicate or bad name rejected; production ignores debug time', async () => {
+  const { call, env, one } = mk(); const future = taipeiAt('2027-01-01', 8);
   const r = await create(call, '1001', '小明', 'sword', future);
   assert.equal(r.ok, true); assert.equal(r.character.level, 1); assert.equal(r.character.gold, 1000);
   assert.equal(r.inventory.red_1, 150); assert.equal(r.equipment.filter((e) => e.equipped).length, 2); assert.equal(r.character.className, '劍士');
-  assert.equal((await create(call, '1001', '小明二')).error, 'exists');
+  assert.equal((await call('/rpg/create', { tgId: '1001', name: '小明二', gender: 'f', baseClass: 'sword', charSlot: 1 })).error, 'slot_taken');
+  assert.equal(one('SELECT COUNT(*) n FROM rpg_characters WHERE account_tg_id = ?', '1001').n, 1, 'occupied slot cannot create another character');
   assert.equal((await create(call, '1002', '小明')).error, 'name_taken');
   assert.equal((await create(call, '1003', 'a b')).error, 'name');
   assert.equal((await call('/rpg/me', { tgId: '9999' })).error, 'no_character');
@@ -46,6 +47,9 @@ test('idle settles lazily on read; daily gold once per day; shop + 守護符 lim
   const later = await call('/rpg/me', { tgId: '2001' }, t0 + 5 * H);
   assert.ok(later.character.level >= 3); assert.ok(later.report.ticks === 300);
   const d1 = await call('/rpg/daily', { tgId: '2001', requestId: 'r1' }, t0 + 5 * H); assert.equal(d1.ok, true); assert.equal(d1.result.gold, Math.round((600 + 70 * later.character.level) * 1.5));
+  // The ledger endpoint returns only its latest 15 entries; inspect this receipt before two more days of drops.
+  const led = await call('/rpg/ledger', { tgId: '2001' }, t0 + 5 * H);
+  assert.ok(led.ledger.some((l) => l.type === '每日補給金' && l.gold_delta === d1.result.gold));
   assert.equal((await call('/rpg/daily', { tgId: '2001', requestId: 'r2' }, t0 + 6 * H)).error, 'claimed');
   assert.equal((await call('/rpg/daily', { tgId: '2001', requestId: 'r3' }, t0 + 24 * H)).ok, true, 'next Taipei day');
   const g0 = (await call('/rpg/me', { tgId: '2001' }, t0 + 24 * H)).character.gold;
@@ -61,7 +65,6 @@ test('idle settles lazily on read; daily gold once per day; shop + 守護符 lim
   assert.equal((await call('/rpg/equip', { tgId: '2001', itemId: boots.id }, t0 + 48 * H)).equipment.find((e) => e.id === boots.id).equipped, true);
   assert.equal((await call('/rpg/buy-gear', { tgId: '2001', code: 'w.sword.1', requestId: 'g2' }, t0 + 48 * H)).error, 'not_sold');
   assert.equal((await call('/rpg/settings', { tgId: '2001', autoRedPct: 90 }, t0 + 48 * H)).error, 'range');
-  const led = await call('/rpg/ledger', { tgId: '2001' }); assert.ok(led.ledger.some((l) => l.type === '每日補給金'));
 });
 
 test('optimistic lock: a stale write aborts the whole batch; CHECK stops negative inventory', async () => {
@@ -156,7 +159,7 @@ test('admin grant is audited and idempotent; dev routes refuse in production', a
   assert.equal(res.status, 403);
 });
 
-test('idle drops land in the inventory; enhance (incl. break → item deleted + group announcement) and reroll via API', async () => {
+test('idle drops persist; +8 weapon break announces; reroll changes affixes only; missing enhancement scrolls buy atomically', async () => {
   const { call, sql, one } = mk(); const t0 = taipeiAt(D, 8);
   await create(call, '8001', '鐵匠', 'sword', t0);
   sql("UPDATE rpg_characters SET level = 25 WHERE tg_id = '8001'");
@@ -168,9 +171,10 @@ test('idle drops land in the inventory; enhance (incl. break → item deleted + 
   await call('/rpg/admin/grant', { adminTgId: '1', tgId: '8001', item: 'scroll_w', qty: 60, requestId: 'g-w' });
   await call('/rpg/admin/grant', { adminTgId: '1', tgId: '8001', item: 'scroll_r', qty: 3, requestId: 'g-r' });
   const weapon = me.equipment.find((e) => e.slot === 'weapon');
-  sql('UPDATE rpg_equipment SET enhance_level = 6 WHERE id = ?', weapon.id);
   let broke = false; let last = null;
   for (let i = 0; i < 40 && !broke; i++) {
+    // Keep each attempt at the announcement threshold rather than randomly reaching the enhancement cap first.
+    sql('UPDATE rpg_equipment SET enhance_level = 8 WHERE id = ?', weapon.id);
     last = await call('/rpg/enhance', { tgId: '8001', itemId: weapon.id, requestId: `e${i}` }, t0 + 24 * H + i * 1000);
     assert.equal(last.ok, true, last.message); broke = last.result.result === 'break';
   }
@@ -179,10 +183,36 @@ test('idle drops land in the inventory; enhance (incl. break → item deleted + 
   const ann = (await call('/rpg/outbox/claim', { limit: 50 }, t0 + 25 * H)).items.filter((i) => i.kind === 'enhance');
   assert.ok(ann.length >= 1 && ann.at(-1).payload.result === 'break');
   const armor = last.equipment.find((e) => e.slot === 'armor');
+  sql("UPDATE rpg_equipment SET affixes_json = '[]' WHERE id = ?", armor.id);
+  const armorBefore = one('SELECT base_stat, element, element_stat, element_tier, enhance_level, name FROM rpg_equipment WHERE id = ?', armor.id);
   const rr = await call('/rpg/reroll', { tgId: '8001', itemId: armor.id, requestId: 'rr1' }, t0 + 25 * H);
   assert.equal(rr.ok, true); assert.equal(rr.inventory.scroll_r, (me.inventory.scroll_r || 0) + 3 - 1);
-  assert.ok(rr.result.after.element);
-  assert.equal((await call('/rpg/enhance', { tgId: '8001', itemId: armor.id, requestId: 'ea' }, t0 + 25 * H)).error, me.inventory.scroll_a ? undefined : 'no_scroll');
+  assert.equal(rr.result.before.lines.length, 0);
+  assert.equal(rr.result.after.lines.length, 1, 'a tier-1 unidentified armor receives one independent affix');
+  const rawLines = rr.result.after.lines.map(({ key, value, score }) => ({ key, value, score }));
+  assert.deepEqual(JSON.parse(one('SELECT affixes_json FROM rpg_equipment WHERE id = ?', armor.id).affixes_json), rawLines);
+  assert.deepEqual(one('SELECT base_stat, element, element_stat, element_tier, enhance_level, name FROM rpg_equipment WHERE id = ?', armor.id), armorBefore);
+
+  // Freeze time and make the shortage explicit, so idle income and random drops cannot pay the fee for this fixture.
+  sql("UPDATE rpg_characters SET gold = 200 WHERE tg_id = '8001'");
+  sql("UPDATE rpg_inventory SET quantity = 0 WHERE tg_id = '8001' AND item = 'scroll_a'");
+  sql('UPDATE rpg_equipment SET enhance_level = 0 WHERE id = ?', armor.id);
+  const enhanced = await call('/rpg/enhance', { tgId: '8001', itemId: armor.id, requestId: 'ea' }, t0 + 25 * H);
+  assert.equal(enhanced.ok, true); assert.equal(enhanced.result.goldCost, 50);
+  assert.equal(enhanced.character.gold, 150); assert.equal(enhanced.inventory.scroll_a, 0);
+  assert.equal(one("SELECT gold FROM rpg_characters WHERE tg_id = '8001'").gold, 150);
+  assert.equal(one("SELECT quantity FROM rpg_inventory WHERE tg_id = '8001' AND item = 'scroll_a'").quantity, 0);
+  assert.equal(one("SELECT gold_delta FROM rpg_ledger WHERE event_id = 'buy-enhance-scroll:8001:ea'").gold_delta, -50);
+  const enhancedLevel = one('SELECT enhance_level FROM rpg_equipment WHERE id = ?', armor.id).enhance_level;
+  assert.equal((await call('/rpg/enhance', { tgId: '8001', itemId: armor.id, requestId: 'ea' }, t0 + 25 * H)).error, 'duplicate');
+  assert.equal(one("SELECT gold FROM rpg_characters WHERE tg_id = '8001'").gold, 150);
+  assert.equal(one('SELECT enhance_level FROM rpg_equipment WHERE id = ?', armor.id).enhance_level, enhancedLevel);
+  sql("UPDATE rpg_characters SET gold = 49 WHERE tg_id = '8001'");
+  assert.equal((await call('/rpg/enhance', { tgId: '8001', itemId: armor.id, requestId: 'ea-poor' }, t0 + 25 * H)).error, 'gold');
+  assert.equal(one("SELECT gold FROM rpg_characters WHERE tg_id = '8001'").gold, 49);
+  assert.equal(one("SELECT quantity FROM rpg_inventory WHERE tg_id = '8001' AND item = 'scroll_a'").quantity, 0);
+  assert.equal(one('SELECT enhance_level FROM rpg_equipment WHERE id = ?', armor.id).enhance_level, enhancedLevel);
+  assert.equal(one("SELECT COUNT(*) n FROM rpg_ledger WHERE event_id IN ('enhance:8001:ea-poor','buy-enhance-scroll:8001:ea-poor')").n, 0);
 });
 
 test('boss slots: random map per slot from D1 context — never repeats the previous slot, stuck map forced by the last slot', async () => {

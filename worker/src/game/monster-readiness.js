@@ -110,4 +110,4 @@ export const READY_MONSTER_KEYS = Object.freeze([
   "elite_x13_m12_elite_1",
   "boss_x13_m12_boss_secondary"
 ]);
-export const MONSTER_ART_REVISION = 'monster16-v2-28624b6c52659eaec30c523760fa21d7affb46a0b782ac15d1ffba179fdbcccc';
+export const MONSTER_ART_REVISION = 'monster16-v2-d53a9de1bf9c764aa9ae991913347a30b7bc69626a18e197b74a8a452871c851';

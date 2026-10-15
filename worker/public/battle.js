@@ -61,15 +61,13 @@
       window.RpgSwordBranchFX?.clearActor(E.hero);
       window.RpgMageHeroFX?.clearActor(E.hero);
       clearGroup(); targetBar.replaceChildren(); E.floats.replaceChildren();
-      P.length = 0; FX.length = 0;
-      const painter=E.fx?.getContext?.('2d');
-      if(painter){painter.save();painter.setTransform(1,0,0,1,0,0);painter.clearRect(0,0,E.fx.width,E.fx.height);painter.restore();}
+      clearTransientFx();
       E.hero.classList.remove('hero-action-active', 'hero-sheet-active', 'down', 'slump');
       for (const node of E.hAct.querySelectorAll('.tint')) node.classList.remove('flash', 'glow', 'aura');
     }
     // Each enemy owns its DOM references and sheet metadata. Target changes are applied between turns.
     const monKeys=['mon','mAct','mImg','mName','mHp','mBar','mHpText','mHud','mSheet'];
-    const stateKeys=['mon','monSheetRatio','monBodyHeight','monSheetBody','monFeet','monSheetFeet','monFrameRun','monAtlas'];
+    const stateKeys=['mon','monSheetRatio','monBodyHeight','monSheetBody','monFeet','monSheetFeet','monFrameRun','monAtlas','monSheetAction'];
     function saveEnemy(){const e=S.group[S.selected];if(e)for(const k of stateKeys)e[k]=S[k];}
     function focusEnemy(index){saveEnemy();const e=S.group[index];if(!e)return;S.selected=index;for(const k of monKeys)E[k]=e.refs[k];for(const k of stateKeys)S[k]=e[k];}
     function clearGroup(){saveEnemy();for(const e of S.group){e.refs.mon.remove();e.refs.mHud.remove();}S.group=[];S.selected=0;S.pendingTarget=null;S.mon=null;root.classList.remove('group-battle');root.style.removeProperty('--group-height');}
@@ -244,8 +242,13 @@
     }
     function fx(dur, draw) { if (S.rm) return; FX.push({ t0: performance.now(), dur, draw }); kick(); }
     let last = 0;
+    function clearTransientFx() {
+      P.length = 0; FX.length = 0; last = 0;
+      const painter=ctx || E.fx?.getContext?.('2d');
+      if(painter){painter.save();painter.setTransform(1,0,0,1,0,0);painter.clearRect(0,0,E.fx.width,E.fx.height);painter.restore();}
+    }
     function frame(ts) {
-      if (!root.isConnected) { rafOn = false; return; }
+      if (!root.isConnected) { clearTransientFx(); rafOn = false; return; }
       if (document.hidden) { requestAnimationFrame(frame); return; }
       fit(); positionGuardian(); const dt = last ? Math.min(0.05, (ts - last) / 1000) : 0.016; last = ts; ctx.clearRect(0, 0, W, H);
       for (let i = FX.length - 1; i >= 0; i--) { const f = FX[i]; const k = (ts - f.t0) / f.dur; if (k >= 1) { FX.splice(i, 1); continue; } ctx.save(); f.draw(ctx, Math.max(0, k)); ctx.restore(); }
@@ -428,6 +431,7 @@
       S.monBodyHeight = 1;
       S.monSheetBody = 1;
       S.monFeet = 1; S.monSheetFeet = 1;
+      S.monSheetAction = null;
       E.mon.classList.remove('sheet-active'); S.monFrameRun = (S.monFrameRun || 0) + 1;
       E.mon.classList.toggle('face-left', [1,3].includes(Number(S.me.character.mapId)) && !m.sheet?.includes('monsters-clean-20261011') && !S.monAtlas);
       E.mon.classList.toggle('elite', !!elite); E.mon.classList.remove('sheet-ready'); E.mon.classList.toggle('sheet-single-idle', m.name === '蛇髮女妖'); if (m.src) E.mImg.src = m.src; else E.mImg.removeAttribute('src');
@@ -468,7 +472,8 @@
       const sheet = S.mon.sheet;const owner=S.group[S.selected],monEl=E.mon,sheetEl=E.mSheet;
       if(S.monAtlas){
         const meta=S.monAtlas,api=window.RpgMonsterExpansion,run=S.monFrameRun=(S.monFrameRun||0)+1;
-        if(owner)owner.monFrameRun=run;
+        S.monSheetAction=action;
+        if(owner){owner.monFrameRun=run;owner.monSheetAction=action;}
         const duration=actionDuration || (action==='death'?720:action==='hurt'?240:action==='move'?560:620);
         let start;
         const tick=now=>{
@@ -865,7 +870,27 @@
         }
       } finally { S.running = false; }
     }
-    function attach(slot) { if (slot && root.parentNode !== slot) slot.appendChild(root); if (root.isConnected && !E.bg.querySelector('.map-motion')) window.RpgMapMotion?.attach(root, E.bg); root.classList.toggle('paused', document.hidden);syncGuardian(); if (S.me && !S.running) loop(); }
+    function attach(slot) {
+      const detached=!root.isConnected;
+      if (slot && root.parentNode !== slot) slot.appendChild(root);
+      if (detached && root.isConnected) {
+        // Removed stages retain their canvas bitmap but stop scheduling frames.
+        // Discard those old effects and resume each living atlas under its owner.
+        clearTransientFx();
+        if (!S.rm && !document.hidden) {
+          const selected=S.selected;saveEnemy();
+          for(let i=0;i<S.group.length;i++){
+            const enemy=S.group[i];
+            if(!enemy.monAtlas || !enemy.mon || enemy.mon.hp<=0 || enemy.monSheetAction==='death')continue;
+            focusEnemy(i);animateMonsterSheet('idle');saveEnemy();
+          }
+          focusEnemy(selected);
+        }
+      }
+      if (root.isConnected && !E.bg.querySelector('.map-motion')) window.RpgMapMotion?.attach(root, E.bg);
+      root.classList.toggle('paused', document.hidden);syncGuardian();
+      if (S.me && !S.running) loop();
+    }
     return { el: root, sync, attach, state: S };
   }
   window.RpgBattle = { create, visibleBounds, layout: {} };
