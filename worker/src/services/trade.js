@@ -322,3 +322,15 @@ export async function touchUsername(env, tg, username) {
   if (!username || !/^[A-Za-z0-9_]{3,32}$/.test(username)) return;
   await env.DB.prepare('UPDATE rpg_characters SET tg_username = ? WHERE tg_id = ? AND (tg_username IS NULL OR tg_username <> ?)').bind(username, String(tg), username).run();
 }
+
+// Player-initiated trade from the gear menu: open a window with this equipment already escrowed on side a (same validation as share-accept).
+export async function openWithEquip(env, { tgId, target, equipId, requestId = null }, now) {
+  const tg = String(tgId), rid = requestId ? `gear:${String(requestId)}` : null;
+  if (rid) { const old = await env.DB.prepare('SELECT id FROM rpg_trades WHERE request_id = ? AND a_tg = ?').bind(rid, tg).first(); if (old) return { ok: true, tradeId: old.id, trade: await tradeView(env, old.id, tg, now) }; }
+  const other = await findTarget(env, target); if (!other) throw new GameError('target', '找不到交易對象');
+  const e = await env.DB.prepare('SELECT * FROM rpg_equipment WHERE id = ?').bind(String(equipId || '')).first(); checkEquipLine(e, tg);
+  const { id, stmts } = await openTradeStmts(env, { aTg: tg, bTg: other.tg_id, origin: 'gear', requestId: rid, preEquip: e }, now);
+  try { await env.DB.batch([...stmts, ...[tg, String(other.tg_id)].map((who) => outboxStmt(env.DB, { dedupe: `gear-trade:${id}:${who}`, target: 'dm', tgId: who, kind: 'trade_open', payload: { tradeId: id } }, now))]); }
+  catch (err) { throw classifyDbError(err) || err; }
+  return { ok: true, tradeId: id, trade: await tradeView(env, id, tg, now) };
+}

@@ -145,6 +145,7 @@ const routes = {
   'POST /rpg/share/like': async (env, b, now) => ({ ok: true, ...(await SH.toggleLike(env, { tgId: tgOf(b), shareId: String(b.shareId) }, now)), share: await SH.shareView(env, String(b.shareId)) }),
   'POST /rpg/share/message': async (env, b) => SH.setShareMessage(env, String(b.shareId), b.chatId, b.messageId),
   'POST /rpg/trade/request': async (env, b, now) => { const tg = tgOf(b); await T.touchUsername(env, tg, b.username); return { ok: true, request: await SH.requestTrade(env, { tgId: tg, shareId: String(b.shareId) }, now) }; },
+  'POST /rpg/trade/open': (env, b, now) => T.openWithEquip(env, { tgId: tgOf(b), target: b.target, equipId: b.equipId, requestId: b.requestId }, now),
   'POST /rpg/trade/requests': async (env, b, now) => ({ ok: true, ...(await SH.listRequests(env, tgOf(b), now)) }),
   'POST /rpg/trade/accept': async (env, b, now) => ({ ok: true, ...(await SH.acceptRequest(env, { tgId: tgOf(b), requestId: String(b.reqId || '') }, now)) }),
   'POST /rpg/trade/reject': async (env, b, now) => ({ ok: true, request: await SH.rejectRequest(env, { tgId: tgOf(b), requestId: String(b.reqId || '') }, now) }),

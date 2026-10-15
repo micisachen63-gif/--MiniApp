@@ -1728,10 +1728,20 @@
     const c = sheet(`<h2 class="mh tc-${esc(e.rarity)}">${eqIcon(e)} ${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</h2>
       <div class="menu">
         <button class="btn" data-m="share" ${sb ? 'disabled' : ''}>📣 分享至群組</button>${sb ? `<div class="why">${esc(sb)}</div>` : `<div class="why">${e.tradeBlock ? '穿戴與綁定裝備也能展示，夥伴可以按 👍 超讚。' : '分享照片與屬性，夥伴可按 🤝 我要交易／👍 超讚。'}</div>`}
+        <button class="btn" data-m="trade" ${e.tradeBlock ? 'disabled' : ''}>🤝 交易</button>${e.tradeBlock ? `<div class="why">${esc(e.tradeBlock)}（請先卸下裝備／解契）</div>` : '<div class="why">輸入對方角色名稱，開啟交易視窗並先放入這件裝備</div>'}
         ${e.bound ? `<button class="btn ghost" data-m="unbind" ${ub ? 'disabled' : ''}>🔓 解除綁定（需 ${e.unbindCost} 張・持有 ${have}）</button>${ub ? `<div class="why">${esc(ub)}</div>` : have < e.unbindCost ? '<div class="why">解契卷不夠 — 商店「📜 捲軸」500 金／張</div>' : ''}` : ''}
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-m="detail">🔍 詳細／強化</button><button class="btn ghost" data-m="x">關閉</button></div>`);
-    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+  }
+  function tradeGear(e) {
+    if (e.tradeBlock) return toast(e.tradeBlock, true);
+    const d = sheet(`<h2>🤝 交易 · ${esc(e.name)}</h2><div class="menu"><div class="why">輸入對方角色名稱，會開啟交易視窗並先放入這件裝備；雙方鎖定、確認後才會交換。</div><input id="gear-trade-name" placeholder="對方角色名稱" maxlength="12"><button class="btn" data-go>建立交易</button><button class="btn ghost" data-x>取消</button></div>`);
+    d.querySelector('[data-x]').onclick = closeSheet;
+    d.querySelector('[data-go]').onclick = async () => {
+      const name = d.querySelector('#gear-trade-name').value.trim(); if (!name) return toast('請輸入對方角色名稱', true);
+      try { const r = await api('trade/open', { equipId: e.id, target: { name }, requestId: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2) }); closeSheet(); S.tab = 'trade'; S.social = 'trade'; await loadTrade(r.tradeId); render(); refreshMe(); toast('已建立交易，裝備已放入'); } catch (err) { toast(err.message, true); }
+    };
   }
   async function shareItem(e) {
     if (e.shareBlock) return toast(e.shareBlock, true);
