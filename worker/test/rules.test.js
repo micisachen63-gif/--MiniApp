@@ -44,7 +44,10 @@ test('守護符: 400 × map tier, hold ≤5, ≤3 per day; potions by tier; 命�
   assert.equal(code(() => checkItemPurchase(c, {}, 'red_2', 1, 0)), 'not_sold');
   assert.equal(code(() => checkItemPurchase(c, {}, 'reselect_1', 1, 0)), 'not_sold');
   assert.ok(itemOffers({ ...c, level: 31, class_path: 'A' }).some((o) => o.item === 'reselect_1' && o.price === 6000));
-  assert.ok(!itemOffers(c).some((o) => /summon/.test(o.item)), 'no summon scrolls');
+  assert.ok(!itemOffers({...c,level:14}).some(o=>o.item==='guardian_summon_stone'));
+  const stone=itemOffers({...c,level:15}).find(o=>o.item==='guardian_summon_stone');
+  assert.ok(stone && stone.price>0);
+  assert.deepEqual(checkItemPurchase(c,{},stone.item,2),{price:stone.price,total:stone.price*2});
 });
 
 test('first advancement needs Lv30 + boss material; re-select book swaps branch with 30-min cooldown', () => {
@@ -63,14 +66,19 @@ test('first advancement needs Lv30 + boss material; re-select book swaps branch 
   assert.doesNotThrow(() => reselect(c, { reselect_1: 1 }, [], 1, 'A', T0 + 30 * 60_000));
 });
 
-test('v0.5 二轉: Lv60 + 樹王之心 → node 1/2 (skill + stacked passive); book II swaps 1↔2; book I keeps the slot; third still closed', () => {
+test('v0.5 二轉: Lv60 + 樹王之心 → node 1/2 (skill + stacked passive); book II swaps 1↔2; book I keeps the slot; third and fourth require trial certificates', () => {
   const c = mkChar({ base_class: 'sword', level: 60, class_path: 'A' }); const inv = { mat_2: 1 };
   assert.equal(code(() => advance(c, { mat_2: 1 }, 'A')), 'branch', 'tier 2 uses 1/2');
   assert.equal(code(() => advance(c, {}, '1')), 'material');
   const r = advance(c, inv, '1'); assert.equal(c.class_path, 'A1'); assert.equal(r.node.name, '血怒戰神'); assert.equal(inv.mat_2, 0);
   const s = computeStats(c, []); assert.equal(s.skill.name, '血之狂怒'); assert.equal(s.node.name, '血怒戰神');
   assert.equal(s.pct.lifestealPct, 0.08); assert.equal(s.pct.atkPct, 0.15, 'tier-1 狂暴 still applies');
-  assert.equal(code(() => advance({ ...c, level: 90 }, { mat_3: 1 }, 'a')), 'not_open');
+  const veteran={...c,level:90}, trials={trial_3:1,trial_4:1};
+  assert.equal(code(()=>advance(veteran,{mat_3:1},'1')),'material');
+  assert.equal(advance(veteran,trials,'1').to,'A11'); assert.equal(trials.trial_3,0);
+  assert.equal(code(()=>advance(veteran,trials,'1')),'level');
+  veteran.level=120; assert.equal(advance(veteran,trials,'2').to,'A112'); assert.equal(trials.trial_4,0);
+  assert.equal(code(()=>advance({...veteran,level:150},trials,'1')),'not_open');
   const rr = reselect(c, { reselect_2: 1 }, [], 2, '2', T0); assert.equal(c.class_path, 'A2'); assert.equal(rr.to, 'A2'); assert.equal(computeStats(c, []).skill.name, '一閃');
   const sw = { id: 'g', tg_id: c.tg_id, slot: 'weapon', kind: 'greatsword', branch_req: 'A', is_equipped: 1 };
   reselect(c, { reselect_1: 1 }, [sw], 1, 'B', T0 + 35 * 60_000); assert.equal(c.class_path, 'B2', 'deeper slot kept'); assert.equal(computeStats(c, []).node.name, '鐵壁守衛'); assert.equal(sw.is_equipped, 0);
@@ -97,19 +105,20 @@ test('enhance: safe zone 50/50, beyond safe 33/34/33 with break; costs T scrolls
   assert.equal(enhance(x, i2, () => 0.5).result, 'break'); assert.equal(enhance({ ...x }, i2, () => 0.9).result, 'nothing');
   assert.equal(enhance({ slot: 'weapon', tier: 1, enhance_level: 2 }, i2, () => 0.6).result, 'nothing', 'never breaks inside safe');
 });
-test('reroll: element/element value/rarity only, T scrolls, boss gear keeps the 高級 floor', () => {
-  const rng = mulberry32(5); const item = makeGear({ id: 'r', tgId: '1', cls: 'mage', slot: 'weapon', kind: 'staff', tier: 2, rng, now: T0, forceRarity: 'common' });
-  item.enhance_level = 3; const keep = { base_stat: item.base_stat, enhance_level: 3, tier: 2, kind: 'staff', name: item.name };
-  const inv = { scroll_r: 2 }; const r = reroll(item, inv, mulberry32(77));
-  assert.equal(inv.scroll_r, 0); for (const k in keep) assert.equal(item[k], keep[k]);
-  assert.ok(item.element_stat >= Math.round(item.base_stat * 0.2) && item.element_stat <= Math.round(item.base_stat * 0.4)); assert.ok(r.after.rarity);
-  assert.equal(code(() => reroll(item, inv, mulberry32(1))), 'no_scroll');
-  const boss = { ...item, source: 'boss', element_tier: 'epic' }; const rr = mulberry32(3); const seen = new Set();
-  for (let i = 0; i < 200; i++) { reroll(boss, { scroll_r: 2 }, rr); seen.add(boss.element_tier); }
-  assert.ok(!seen.has('common')); assert.ok(seen.has('advanced'));
-  const elem = makeGear({ id: 'e', tgId: '1', cls: 'mage', slot: 'weapon', kind: 'elem_staff', tier: 2, rng, now: T0 }); reroll(elem, { scroll_r: 2 }, mulberry32(9));
-  assert.ok(elem.element_stat >= Math.round(Math.round(elem.base_stat * 0.2) * 1.5) - 1, '元素法杖 ×1.5 element value');
+test('reroll: independent affixes and locks; item identity, element and rarity remain stable',()=>{
+ const item=makeGear({id:'r',tgId:'1',cls:'mage',slot:'weapon',kind:'staff',tier:3,rng:mulberry32(5),now:T0,forceRarity:'epic'});
+ item.enhance_level=3; const before={...item},inv={scroll_r:3};
+ const r=reroll(item,inv,mulberry32(77)); assert.equal(inv.scroll_r,0);
+ for(const key of Object.keys(before).filter(k=>k!=='affixes_json')) assert.deepEqual(item[key],before[key],key);
+ assert.equal(r.after.lines.length,2);
+ for(const line of r.after.lines){assert.ok(line.value>=line.range[0]&&line.value<=line.range[1]); assert.ok(line.score>=0&&line.score<=100);}
+ assert.equal(code(()=>reroll(item,inv,mulberry32(1))),'no_scroll');
+ const locked=JSON.parse(item.affixes_json)[0],lockInv={scroll_r:6};
+ const lockedRoll=reroll(item,lockInv,mulberry32(9),[0]);
+ assert.deepEqual(JSON.parse(item.affixes_json)[0],locked); assert.equal(lockInv.scroll_r,0); assert.deepEqual(lockedRoll.used,{scroll_r:6});
+ assert.equal(item.element_tier,'epic');
 });
+
 test('shop sells the three scrolls at 75 / 50 / 60 (v0.5.1b)', () => {
   const o = itemOffers(mkChar({ level: 5 })); const p = Object.fromEntries(o.map((x) => [x.item, x.price]));
   assert.equal(p.scroll_w, 75); assert.equal(p.scroll_a, 50); assert.equal(p.scroll_r, 60);

@@ -28,11 +28,17 @@ test('auth: health is public; wrong/missing secret rejected; unconfigured secret
 });
 
 test('create → starter kit; duplicate / bad name rejected; debug time ignored in production', async () => {
-  const { call, env } = mk(); const future = taipeiAt('2027-01-01', 8);
+  const { call, env, one } = mk(); const future = taipeiAt('2027-01-01', 8);
   const r = await create(call, '1001', '小明', 'sword', future);
   assert.equal(r.ok, true); assert.equal(r.character.level, 1); assert.equal(r.character.gold, 1000);
   assert.equal(r.inventory.red_1, 150); assert.equal(r.equipment.filter((e) => e.equipped).length, 2); assert.equal(r.character.className, '劍士');
-  assert.equal((await create(call, '1001', '小明二')).error, 'exists');
+  const second = await create(call, '1001', '小明二', 'mage', future);
+  assert.equal(second.ok,true);
+  assert.equal(one('SELECT COUNT(*) n FROM rpg_characters WHERE account_tg_id=?','1001').n,2);
+  assert.equal(second.character.tgId,r.character.tgId,'create response retains the currently selected character');
+  assert.equal((await call('/rpg/me',{tgId:'1001'},future)).character.name,'小明');
+  for(const name of ['小明三','小明四']) assert.equal((await create(call,'1001',name,'sword',future)).ok,true);
+  assert.equal((await create(call,'1001','小明五','sword',future)).error,'character_limit');
   assert.equal((await create(call, '1002', '小明')).error, 'name_taken');
   assert.equal((await create(call, '1003', 'a b')).error, 'name');
   assert.equal((await call('/rpg/me', { tgId: '9999' })).error, 'no_character');
@@ -46,6 +52,8 @@ test('idle settles lazily on read; daily gold once per day; shop + 守護符 lim
   const later = await call('/rpg/me', { tgId: '2001' }, t0 + 5 * H);
   assert.ok(later.character.level >= 3); assert.ok(later.report.ticks === 300);
   const d1 = await call('/rpg/daily', { tgId: '2001', requestId: 'r1' }, t0 + 5 * H); assert.equal(d1.ok, true); assert.equal(d1.result.gold, Math.round((600 + 70 * later.character.level) * 1.5));
+  const dailyLedger = await call('/rpg/ledger',{tgId:'2001'},t0+5*H);
+  assert.ok(dailyLedger.ledger.some(l=>l.type==='每日補給金' && l.gold_delta===d1.result.gold));
   assert.equal((await call('/rpg/daily', { tgId: '2001', requestId: 'r2' }, t0 + 6 * H)).error, 'claimed');
   assert.equal((await call('/rpg/daily', { tgId: '2001', requestId: 'r3' }, t0 + 24 * H)).ok, true, 'next Taipei day');
   const g0 = (await call('/rpg/me', { tgId: '2001' }, t0 + 24 * H)).character.gold;
@@ -61,7 +69,7 @@ test('idle settles lazily on read; daily gold once per day; shop + 守護符 lim
   assert.equal((await call('/rpg/equip', { tgId: '2001', itemId: boots.id }, t0 + 48 * H)).equipment.find((e) => e.id === boots.id).equipped, true);
   assert.equal((await call('/rpg/buy-gear', { tgId: '2001', code: 'w.sword.1', requestId: 'g2' }, t0 + 48 * H)).error, 'not_sold');
   assert.equal((await call('/rpg/settings', { tgId: '2001', autoRedPct: 90 }, t0 + 48 * H)).error, 'range');
-  const led = await call('/rpg/ledger', { tgId: '2001' }); assert.ok(led.ledger.some((l) => l.type === '每日補給金'));
+  const led = await call('/rpg/ledger', { tgId: '2001' },t0+48*H); assert.ok(led.ledger.length>0 && led.ledger.length<=15);
 });
 
 test('optimistic lock: a stale write aborts the whole batch; CHECK stops negative inventory', async () => {
@@ -168,7 +176,7 @@ test('idle drops land in the inventory; enhance (incl. break → item deleted + 
   await call('/rpg/admin/grant', { adminTgId: '1', tgId: '8001', item: 'scroll_w', qty: 60, requestId: 'g-w' });
   await call('/rpg/admin/grant', { adminTgId: '1', tgId: '8001', item: 'scroll_r', qty: 3, requestId: 'g-r' });
   const weapon = me.equipment.find((e) => e.slot === 'weapon');
-  sql('UPDATE rpg_equipment SET enhance_level = 6 WHERE id = ?', weapon.id);
+  sql('UPDATE rpg_equipment SET enhance_level = 8 WHERE id = ?', weapon.id);
   let broke = false; let last = null;
   for (let i = 0; i < 40 && !broke; i++) {
     last = await call('/rpg/enhance', { tgId: '8001', itemId: weapon.id, requestId: `e${i}` }, t0 + 24 * H + i * 1000);
@@ -181,8 +189,12 @@ test('idle drops land in the inventory; enhance (incl. break → item deleted + 
   const armor = last.equipment.find((e) => e.slot === 'armor');
   const rr = await call('/rpg/reroll', { tgId: '8001', itemId: armor.id, requestId: 'rr1' }, t0 + 25 * H);
   assert.equal(rr.ok, true); assert.equal(rr.inventory.scroll_r, (me.inventory.scroll_r || 0) + 3 - 1);
-  assert.ok(rr.result.after.element);
-  assert.equal((await call('/rpg/enhance', { tgId: '8001', itemId: armor.id, requestId: 'ea' }, t0 + 25 * H)).error, me.inventory.scroll_a ? undefined : 'no_scroll');
+  assert.equal(rr.result.after.lines.length,1); assert.ok(['C','B','A','S','SS'].includes(rr.result.after.quality));
+  sql("DELETE FROM rpg_inventory WHERE tg_id='8001' AND item='scroll_a'");
+  const armorEnhance=await call('/rpg/enhance',{tgId:'8001',itemId:armor.id,requestId:'ea'},t0+25*H);
+  assert.equal(armorEnhance.ok,true);
+  assert.equal(armorEnhance.result.goldCost,50);
+  assert.equal(armorEnhance.character.gold,rr.character.gold-50);
 });
 
 test('boss slots: random map per slot from D1 context — never repeats the previous slot, stuck map forced by the last slot', async () => {
