@@ -6,6 +6,7 @@ import {createHash,randomUUID} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
+import {assertKnownRelease} from './release-lock.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const REPO='https://github.com/micisachen63-gif/--MiniApp';
@@ -64,7 +65,7 @@ async function verify(service,commit,built,before){const token=await credentials
  const report={status:'VERIFIED',repository:REPO,sourceCommit:commit,service:service.name,productionVersion:live.versions[0].version_id,activePercentage:100,verifiedAt:new Date().toISOString(),runtimeSHA256:runtime,source:await source(service),assets:verifiedAssets,protectedState:live,noPlayerMutations:true};assert.equal(ready(),commit,'GitHub advanced during verification');await save(path.join(WORK,service.name,'verified.json'),report);console.log(`${service.name}: VERIFIED ${report.productionVersion} @100, GitHub ${commit.slice(0,12)}, ${verifiedAssets.verifiedCount} public files`);return report;
 }
 async function main(){const [mode='check',target='all']=process.argv.slice(2);assert(['check','deploy'].includes(mode),'Use check or deploy');assert(['all','worker','bot'].includes(target),'Use worker, bot, or all');assert(mode!=='deploy'||target!=='all','Deploy one service at a time');const commit=ready();
- for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials()),built=await build(service);assert.equal(ready(),commit);
+ for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials());if(mode==='deploy')assertKnownRelease(JSON.parse(await fs.readFile(path.join(ROOT,'docs/deployment',service.name+'.json'),'utf8')),before);const built=await build(service);assert.equal(ready(),commit);
   if(mode==='deploy'){
    const npm=process.env.npm_execpath;assert(npm,'Use npm run deploy:worker or npm run deploy:bot');console.log(run(process.execPath,[npm,'run',service.test]));assert.equal(ready(),commit);assert.deepEqual(await state(service,await credentials()),before,'Concurrent production change');
    await save(path.join(WORK,service.name,'pending.json'),{sourceCommit:commit,before,built,startedAt:new Date().toISOString()});

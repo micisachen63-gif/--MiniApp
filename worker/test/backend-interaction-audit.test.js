@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshDb} from './d1-shim.js';
@@ -16,7 +17,7 @@ async function setup(){
  return env;
 }
 const appCall=async(env,action,body={},now=T0)=>{
- const r=await handle(new Request('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'111','X-Debug-Now':String(now)},body:JSON.stringify(body)}),env);
+ const r=await handle(new CurrentClientRequest('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'111','X-Debug-Now':String(now)},body:JSON.stringify(body)}),env);
  const j=await r.json();assert.equal(r.status,200,JSON.stringify(j));return j;
 };
 test('repeated unchanged reads do not bump revision or write a character row',async()=>{

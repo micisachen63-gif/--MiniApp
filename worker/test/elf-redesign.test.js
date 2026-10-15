@@ -31,9 +31,9 @@ test('全部 62 組男女職業擁有完整 SVG 肖像和 5×2 PNG 攻擊影格'
   assert.equal(png.readUInt32BE(16),2000,key);assert.equal(png.readUInt32BE(20),920,key);
  }
 });
-test('三四轉仍被伺服器鎖定，不會提前發放材料或改寫角色進度',()=>{
- assert.equal(MAX_OPEN_CLASS_TIER,2);
+test('三四轉已開放但舊首領材料不能代替真人試煉證明',()=>{
+ assert.equal(MAX_OPEN_CLASS_TIER,4);
  const char={base_class:'archer',class_path:'A1',level:120};const inv={mat_3:1,mat_4:1};
- assert.throws(()=>advance(char,inv,'1'),e=>e.code==='not_open');
+ assert.throws(()=>advance(char,inv,'1'),e=>e.code==='material');
  assert.equal(char.class_path,'A1');assert.equal(inv.mat_3,1);
 });

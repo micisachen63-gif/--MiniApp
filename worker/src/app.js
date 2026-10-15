@@ -13,6 +13,7 @@ import * as T from './services/trade.js';
 import * as P from './services/player.js';
 import { history as exchangeHistory } from './services/market-exchange-history.js';
 import { activeCharacterId, listAccountCharacters, selectAccountCharacter } from './accounts.js';
+import {nodeFor} from './game/stats.js';
 
 export const APP_ACTIONS = Object.freeze({
   'exchange/list':'/rpg/exchange/list','exchange/sellable':'/rpg/exchange/sellable','exchange/mine':'/rpg/exchange/mine',
@@ -64,6 +65,9 @@ export async function appAuth(request, env, realNow = Date.now()) {
 }
 
 export function metaView() {
+  const advancedSpecializations=Object.fromEntries(['sword','archer','mage'].map(cls=>[cls,Object.fromEntries(['A1','A2','B1','B2'].flatMap(parent=>['1','2'].flatMap(suffix=>[parent+suffix,parent+suffix+'1',parent+suffix+'2'])).map(path=>{
+    const node=nodeFor(cls,path);return [path,{name:node.name,skill:node.skill,passive:{text:node.passiveText},role:node.specialization?.role}];
+  }))]));
   const classes = Object.fromEntries(Object.entries(CLASSES).map(([k, c]) => [k, {
     key: k, name: c.name, emoji: c.emoji, blurb: c.blurb, skill: c.node.skill, passive: c.node.passive.text,
     growth: { hp: c.hp, mp: c.mp, atk: c.atk, def: c.def },
@@ -71,7 +75,7 @@ export function metaView() {
   }]));
   const maps = Object.fromEntries(Object.entries(MAPS).map(([k, m]) => [k, { id: m.id, name: m.name, emoji: m.emoji, min: m.min, max: m.max, monsters: monsterPool(m.id).map(x=>x.name), elite: m.elite, boss: m.boss.name }]));
   const items = Object.fromEntries(Object.entries(ITEMS).map(([k, i]) => [k, { name: i.name, emoji: i.emoji, kind: i.kind, desc: i.desc || null, tier: i.tier ?? null, heal: i.heal ?? null, price: i.price ?? null }]));
-  return { classes, maps, items, monsterArtRevision:MONSTER_ART_REVISION, monsterExpansion:{...monsterMeta(),revision:MONSTER_ART_REVISION}, slots: SLOT_NAMES, slotCapacity: SLOT_CAPACITY, bossSlots: BOSS.slotsTaipei, attackWindowMinutes: BOSS.attackWindowMs / 60000,
+  return { classes, maps, items, advancedSpecializations,monsterArtRevision:MONSTER_ART_REVISION, monsterExpansion:{...monsterMeta(),revision:MONSTER_ART_REVISION}, slots: SLOT_NAMES, slotCapacity: SLOT_CAPACITY, bossSlots: BOSS.slotsTaipei, attackWindowMinutes: BOSS.attackWindowMs / 60000,
     trade: { taxPct: TRADE.taxPct, maxGold: TRADE.maxGold, maxOpen: TRADE.maxOpenPerPlayer, idleMinutes: TRADE.idleMs / 60e3, requestHours: TRADE.requestTtlMs / 3600e3, tradeableItems: TRADE.tradeableItems },
     share: { dailyCap: SHARE.dailyCap, cooldownSec: SHARE.cooldownMs / 1000 }, unbind: UNBIND,
     pk: { minLevel: PK.minLevel, maxLevelGap: PK.maxLevelGap, dailyCap: PK.dailyCap, pairCooldownHours: PK.pairCooldownMs / 3600e3, challengeMinutes: PK.challengeTtlMs / 60e3, dropPct: PK.dropChance } };

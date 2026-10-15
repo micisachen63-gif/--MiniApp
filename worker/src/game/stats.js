@@ -1,7 +1,7 @@
 import {collectionBlessing} from './collection-blessings.js';
 import {resistanceRate} from './elements.js';
-import {MAGE_FOURTH,renamedPassive} from './mage-fourth.js';
 import {affixTotals} from './affixes.js';
+import {specializeNode} from './advanced-specializations.js';
 // Derived character stats (pure). Equipment rows use the D1 rpg_equipment shape.
 import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
 import { monsterPressure, mapForLevel } from './formulas.js';
@@ -14,10 +14,10 @@ export function nodeFor(baseClass, path) {
   if (!p) return { tier: 0, path: '', name: cls.node.name, skill: cls.node.skill, passive: {}, passiveText: cls.node.passive.text };
   const b = cls.branches[p[0]]; if (!b) throw new Error(`unknown branch ${p}`);
   if (p.length === 1) return { tier: 1, path: p[0], name: b.name, skill: b.skill, passive: b.passive, passiveText: b.passive.text, weapon: b.weapon };
-  const n = BRANCHES2[baseClass]?.[p[0]]?.[p[1]]; if (!n) throw new Error(`unknown branch ${p}`);
+  const raw = BRANCHES2[baseClass]?.[p[0]]?.[p[1]]; if (!raw) throw new Error(`unknown branch ${p}`);
+  const n=specializeNode(baseClass,p,raw);
   const passive = { ...b.passive }; for (const [k, v] of Object.entries(n.passive)) if (k !== 'text') passive[k] = (passive[k] || 0) + v;   // tier-2 stacks on tier-1
-  const fourth=baseClass==='mage'?MAGE_FOURTH[p]:null;
-  return { tier: p.length, path: p, name: fourth?.name || n.name + (p.length>=3?' · 英雄傳承':'') + (p.length>=4?' · 神域覺醒':''), skill: fourth?{...n.skill,name:fourth.skillName}:n.skill, passive, passiveText: `${fourth?renamedPassive(n.passive.text,fourth.passiveName):n.passive.text}；${b.passive.text}`, weapon: b.weapon, parent: b.name };
+  return { tier: p.length, path: p, name:n.name, skill:n.skill, passive, passiveText:`${n.passive.text}；${b.passive.text}`, specialization:n.specialization||null, weapon:b.weapon,parent:b.name };
 }
 
 /** enhancement bonus: pet-system steps × tier scale (P2 feature; enhance_level is 0 in P1) */

@@ -5,7 +5,7 @@
   "type": "module",
   "description": "小精靈 RPG 掛機冒險 — Cloudflare Worker + D1 (P1 MVP)",
   "scripts": {
-    "test": "node --test test/*.test.js",
+    "test": "node ../scripts/run-tests.mjs worker",
     "dev": "wrangler dev --local --port 8799",
     "db:local": "wrangler d1 migrations apply elf-rpg --local",
     "smoke": "node smoke/smoke.mjs"

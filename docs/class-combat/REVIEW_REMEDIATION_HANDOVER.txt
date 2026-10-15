@@ -1,0 +1,94 @@
+星穹旅誌：審查修正與現有職業專精交接（2026-10-15）
+
+發布狀態
+本文件描述 codex/review-remediation 的實作。是否已發布，必須核對 docs/deployment/*.json
+及即時 Cloudflare；不能因分支已推送或本機測試通過，就當成正式機已更新。
+人物視窗正在製作／準備發布盜賊；本分支不啟用盜賊、不執行 D1 migrations。
+舊 codex/party-role-mechanics 仍是未完成草稿，不在本次合併範圍。
+
+修正內容
+1. 交易部分取回：依「讀取時的原始數量」選擇 DELETE 或 UPDATE，只執行其中一個。
+   SQL 同時檢查原始 qty，隨後 guardStmt；仍在既有交易 rev／角色 rev／帳本／收據批次內。
+   真實 trade service 已枚舉 1–100 堆疊的全部 5,050 個合法取回數量，確認數量守恆。
+   Mini App 案例另測雙方、全取回、取回一半、非一半、同 UUID 重送、取消與繼續成交。
+   本次不推測受影響玩家、不自動補發歷史道具；歷史資產應逐筆對帳才能補償。
+
+2. 完整測試入口：根目錄 npm test，以及 worker／cloud-bot 的 npm test 皆使用
+   scripts/run-tests.mjs。自動收錄 worker/test/*.test.js、cloud-bot/src/adapter/test/*.test.js
+   與 cloud-bot/test/*.test.mjs；服務發布測試不再只挑少量檔案。
+   Node 固定使用 24（實測 24.19.0），Wrangler 固定 4.148.0，根目錄 npm ci。
+   發布腳本原本即會阻止測試失敗；目前會執行完整服務套件。
+
+3. Bot：每輪依 update_id 順序逐一處理，最多 16 筆／5 秒預算；單筆 await 不被強制切斷。
+   有積壓下一輪約 1 秒，無積壓維持 10 秒；若新 webhook 已排更早鬧鐘，不得往後覆蓋。
+   running 遭重啟仍改 uncertain；uncertain 不自動重播，避免遊戲或 TG 訊息重複。
+   /health 增加最舊排隊等待毫秒與 reviewed 計數，移除過時的固定遊戲版本宣稱。
+   詳細核對只透過原本受 X-Service-Secret 保護的 POST /telegram/admin：
+     action=inbox-inspect，可附 limit（1–50）與 beforeId，回傳 uncertain、操作 requestId／狀態。
+     不回傳訊息原文、操作 body、私密結果。game_results_known 只表示遊戲收據已知，
+     不代表 Telegram 訊息確實送到；messageState 始終明確標示 delivery_unconfirmed。
+     action=inbox-close，需要 updateId、expectedError、resolution（verified／abandoned）與
+     至少十字 note。先人工核對玩家資產及原收據，再結案；它不重播、不扣錢、不發道具。
+   結案與 inbox_reviews 審核紀錄使用 DO storage.transactionSync，不能留下半套結案。
+   不把 Service Secret 寫進指令歷史、報告或 Git；不可在正式環境用合成案例測試。
+
+4. 現有職業三四轉：advanced-specializations.js 為 24 三轉＋48 四轉的數值權威入口。
+   保留一二轉原值，依路線增加吸血、治療／護盾、爆擊、持續／召喚傷害、耗魔與冷卻等。
+   四轉「精進」加深該三轉專精；「守望」換取生命、魔力效率與護盾，兩條互斥。
+   原生技能的倍率、MP 及目標數也實際不同；沿用既有屬性上限、PK 倍率與群王 25% 上限。
+   stats.nodeFor 與 classes.branchChoices 使用同一解析器；掛機、PK、群王與新建組隊
+   經由既有 computeStats／combatActor 套用，不另加網路輪詢或逐擊 DB 寫入。
+   現存隊伍繼續使用出發時 snapshot，避免戰鬥中途換規則。
+   血契等資源累積、手動釋放新戰技及後期副本分工，仍是另一期，並未藉此冒稱完成。
+   advancement-mechanics-design.json 的完整資源玩法仍是 DESIGN_ONLY_NOT_ENABLED。
+   護盾／治療／DOT／召喚的效果加成須有對應技能或原生效果，不能憑加成自行產生技能。
+
+5. 成長樹：meta.advancedSpecializations 回傳上述實際資料；法師／妖精圖鑑的舊預覽數字
+   被伺服器結果覆寫。舊 metadata 缺失時顯示更新提示，不繼續顯示過時倍率。
+   窄螢幕改單欄；已驗收手機 390×844 與桌面，無橫向溢出。保留既有畫風及素材。
+
+6. 公開備份與文件：public/.assetsignore 排除 .bak、.backup-*、.before-*，不刪合法素材。
+   README 修正共享密鑰用詞，舊 watchdog 明確標為停用。
+
+7. 避免並行發布：根目錄 deploy 指令先使用共享 Git common dir 內的 rpg-release.lock，
+   跨 worktree、跨兩服務只允許一個發布程序；完成／正常失敗即釋放。
+   程序強制中斷會留下 owner.json。先查程序、.release-sync 與即時正式狀態，
+   確認沒有仍在發布的子程序後才人工清除，不可自動刪鎖重發。
+   其他視窗需先整合本次 main 才具備此鎖；不要假設舊腳本自動支援。
+
+驗證結果與舊測試的界線
+起始 4f49917 從根目錄跑完整 Worker：822 項，747 通過、75 失敗。
+本次最後驗證：Worker 852/852，Bot 69/69；沒有 skip／todo／失敗白名單。
+Node 的 test 模擬 Cloudflare SQLite 與 HTTP，不等於正式負載壓測或真實 TG 實機全流程。
+5,050 組守恆測試是在真實 service + 記憶體 SQLite 執行，較原附件只重現兩條 SQL 更完整。
+Bot 額外驗證 burst、時間預算、重複 webhook、重啟 uncertain、原子人工結案與發布互斥。
+72 條職業路徑驗證同等級／同裝備的兄弟分支數值不同，實際 PK／群王 MP 與傷害上限，
+組隊 snapshot、掛機共用數值及轉職／成長樹說明一致；兄弟路線基礎單擊輸出比限制小於 1.3。
+這不是全職業勝率完全相同的承諾；後續仍應用實戰數據調整。
+
+舊測試調整原因（不得以降低測試門檻掩蓋 Bug）
+- 現行 Mini App 測試使用 current-client Request fixture 帶正確素材 revision；
+  缺少／舊 revision 的拒絕測試仍用原生 Request，仍必須通過。
+- 全套測試固定 worker cwd，移除舊外部目錄／integration 原碼依賴，改驗倉庫內正式雲端 adapter。
+- VM 補現在的美術載入介面、合成 batch 模組與背包形狀，沒有用 production fallback 掩蓋缺失。
+- 合成測試改驗「全部完整組」、剩餘卡不投入、批次主天使保護，保留手動選材安全案例。
+- 三四轉的舊「只開兩轉」及「完全沿用二轉數字」斷言改成目前真實規格。
+- 缺失的 exp_table.csv 改成已入庫的 4f49917 發行曲線 1–119 級完整快照，不能再宣稱
+  正在與一份未入庫的外部 Python CSV 全量對照。
+- 舊掛機收入測試的「每十分鐘至少 1.8 次防具強化」在原生耗魔修正前後已不成立：
+  Lv100 風語妖精 20 組合成帳號的均值約 1.704 次，與實際強化卷售價／藥水消耗有關。
+  本次不為了測試改掉寶或金幣，改以修正前固定九組 gross／藥水成本精確快照防退步。
+  這項舊經濟目標落差保留在此，若要恢復目標須另外明確調整經濟設計。
+
+低強度模型接手檢查單
+1. 先讀根目錄 AGENTS.md、AI_HANDOVER.md、本文件與 docs/deployment/*.json。
+2. git fetch origin main；檢查 main、修正分支與人物／盜賊分支，保留其他人修改。
+3. 用 Node 24、根目錄 npm ci，再 npm test。若新增職業測試失敗，修正整合問題，
+   不得改回少量測試或添加失敗白名單。
+4. 專精數字修改只改 advanced-specializations.js，並重跑 advanced-specializations、
+   advanced-specialization-ui、class-combat-parity 與完整套件；勿把未實作的資源稿拿來當規則。
+5. UI 驗收當前傳承、成長樹、90／120 級轉職選項；窄螢幕確認單欄、長文及技能 MP。
+6. 等人物發布空檔後整合最新 main，提交／推送 main，再從乾淨且等於 origin/main 的
+   checkout 執行 npm run deploy:worker，完成收據推送後再 npm run deploy:bot。
+7. 不跑 D1 migrations、不恢復舊 Token、不啟動本機長輪詢、不以重發解決不確定的發布。
+8. 檢查兩服務 runtime、public、健康狀態與 GitHub 收據。正式版本不符就先查明，不覆蓋。

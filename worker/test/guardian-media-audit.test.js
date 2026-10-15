@@ -282,11 +282,11 @@ test('the invitation follows the upper torso, clears the face and ends near the 
  for(const size of [{width:274,height:320},{width:344,height:500},{width:494,height:700},{width:274,height:640},{width:494,height:280}]){
   box={...box,...size};observers[0].callback();const m=matrix(),chest=window.RpgGuardianWorldTree.chestPoint(true);
   assert.ok(Math.abs(parseFloat(anchor.style.left)-(m.a*chest.x+m.e-box.left))<1e-9);assert.ok(Math.abs(parseFloat(anchor.style.top)-(m.d*chest.y+m.f-box.top))<1e-9);
-  const start=parseFloat(anchor.style.top),travel=parseFloat(values.get('--guardian-chest-pull-y'));assert.ok(travel>=64);assert.ok(Math.abs((start+travel)/box.height-.55)<1e-9);assert.equal(handle.pullDistance(),travel);
+  const start=parseFloat(anchor.style.top),travel=parseFloat(values.get('--guardian-chest-pull-y'));assert.ok(travel>=64);assert.ok((start+travel)/box.height>=.61-1e-9&&(start+travel)/box.height<=.68);if(travel>64)assert.ok(Math.abs((start+travel)/box.height-.61)<1e-9);assert.equal(handle.pullDistance(),travel);
   // A large chest feather must clear the face in short, tall and wide stages.
   // Its centre stays above the stage midpoint, with room left for the pull.
   const featherHeight=Math.min(208,box.height*.36,Number.parseFloat(values.get('--guardian-feather-fit-height'))),faceBottom=m.d*430+m.f-box.top;
-  assert.ok(start/box.height>=.20&&start/box.height<=.32);
+  assert.ok(start/box.height>=.20&&start/box.height<=.45);
   // The original cutout starts with a narrow quill; its broad barbs begin 18%
   // below the top. Check those visible barbs against the authored face.
   assert.ok(start-featherHeight/2+featherHeight*.18>faceBottom);

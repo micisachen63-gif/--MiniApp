@@ -1,0 +1,40 @@
+{
+  "status": "LOCAL_VERIFIED_NOT_DEPLOYED",
+  "sourceBase": "4f49917",
+  "branch": "codex/review-remediation",
+  "node": "24.19.0",
+  "wrangler": "4.148.0",
+  "tests": {
+    "worker": {
+      "pass": 852,
+      "fail": 0,
+      "skip": 0
+    },
+    "bot": {
+      "pass": 69,
+      "fail": 0,
+      "skip": 0
+    },
+    "tradeServiceConservationCases": 5050,
+    "advancedPaths": 72
+  },
+  "builds": {
+    "worker": "77cbe6f718c55b77ad458a25f6c91b62e3ed3bf74a9f24c8a64ac7f9e6469fff",
+    "bot": "84df5e4ad8204b8fa84be971c2e8f3aa0f0deb48d45ef5d40481cf2cfd789186"
+  },
+  "ui": {
+    "mobileViewport": "390x844",
+    "horizontalOverflow": false,
+    "evidence": [
+      "review-ui/mobile.png",
+      "review-ui/desktop.png"
+    ]
+  },
+  "productionMutations": false,
+  "limitations": [
+    "No live load test or real Telegram test messages",
+    "Resource meters and manual advanced combat actions remain design-only",
+    "Late-party role mechanics remain a separate unmerged draft",
+    "Historical missing trade assets are not automatically credited"
+  ]
+}

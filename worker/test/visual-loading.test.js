@@ -32,13 +32,13 @@ test('a failed class atlas activates the original cinematic fallback',()=>{
 function widgets(){let hidden=true,overlay=false,calls=0;const nodes=[],timers=[],events=new Map();
  const doc={hidden:false,getElementById:id=>id==='expedition-overlay'&&overlay?{}:null,querySelectorAll:s=>s==='.skill-widget'?nodes.filter(n=>n.isConnected):[],addEventListener:(type,fn)=>events.set(type,fn),createElement:()=>({dataset:{},isConnected:true,querySelectorAll:()=>[],querySelector:()=>null,closest:()=>hidden?{}:null,append(){},prepend(){}})};
  const view={querySelector:()=>null,append:n=>{if(!nodes.includes(n))nodes.push(n)}};
- const window={RpgExpeditionHost:{characterId:()=>111,skillState:async()=>{calls++;return {character:{baseClass:'sword'},skills:[],special:{learned:[]}};}},addEventListener:(type,fn)=>events.set(type,fn)};
+ const window={RpgExpeditionHost:{characterId:()=>111,skillState:async()=>{calls++;return {character:{baseClass:'sword'},skills:[],inventory:{},special:{learned:[]}};}},addEventListener:(type,fn)=>events.set(type,fn)};
  vm.runInContext(read('special-skill-widgets.js'),vm.createContext({window,document:doc,setInterval:(fn,ms)=>timers.push({fn,ms}),Date,Promise,crypto:{randomUUID:()=>''}}));
  return {mount:()=>window.RpgSkillWidgets.mount(view,'hero',()=>{}),events,timers,nodes,get calls(){return calls;},show:()=>hidden=false,overlay:value=>overlay=value};
 }
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
 test('skill widgets defer hidden hero panels and load immediately when the player opens that panel',async()=>{
- const s=widgets();s.mount();await turn();assert.equal(s.calls,0);s.show();s.events.get('click')({target:{closest:()=>({})}});await turn();assert.equal(s.calls,1);assert.equal(s.nodes[0].dataset.ready,'1');
+ const s=widgets();s.mount();await turn();assert.equal(s.calls,0);s.show();s.events.get('click')({target:{closest:()=>({})}});await turn();assert.equal(s.calls,1);assert.equal(s.nodes[0].dataset.ready,'1',s.nodes[0].textContent);
 });
 test('opening the expedition iframe pauses underlying skill polling and returning resumes it',async()=>{
  const s=widgets();s.show();s.mount();await turn();assert.equal(s.calls,1);s.overlay(true);s.timers.find(t=>t.ms===30000).fn();await turn();assert.equal(s.calls,1);s.overlay(false);s.events.get('elf-skills-refresh')();await turn();assert.equal(s.calls,2);

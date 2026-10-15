@@ -23,7 +23,7 @@ function setup(){
  const rows=['111','222','333'].map(id=>{const el=element('row'+id);el.dataset.memberId=id;el.hp=element('hp'+id);el.mp=element('mp'+id);el.querySelector=s=>s==='[data-member-hp]'?el.hp:el.mp;return el;});
  const nodes={'.scene-boss':element('boss'),'.scene-bg':element('bg'),'.scene-floor':element('floor'),'.boss-meter .meter i':element('bar'),'.boss-meter small':element('bossHp')};
  const scene=element('scene');scene.isConnected=true;scene.querySelector=s=>nodes[s];scene.querySelectorAll=s=>s==='.scene-hero'?heroes:[];scene.closest=()=>({querySelectorAll:s=>s==='.members [data-member-id]'?rows:s==='[data-member-id]'?[...heroes,...rows]:[]});scene.append=el=>{if(el.className?.startsWith('combat-number'))log.push({key:'number',value:el.textContent});};
- const document={hidden:false,createElement:tag=>element(tag)},ctx=vm.createContext({document,matchMedia:()=>({matches:true}),setTimeout:fn=>{queueMicrotask(fn);return 1;},dungeonTheme:p=>({name:'敵'+p.floor,rank:p.floor%5===0?'boss':'normal',background:'floor'+p.floor+'.webp',boss:'boss'+p.floor+'.webp',accent:'#ffeedd'})});
+ const document={hidden:false,createElement:tag=>element(tag)},ctx=vm.createContext({document,preparePartyArt:()=>{},startRegistryAction:()=>false,matchMedia:()=>({matches:true}),setTimeout:fn=>{queueMicrotask(fn);return 1;},dungeonTheme:p=>({name:'敵'+p.floor,rank:p.floor%5===0?'boss':'normal',background:'floor'+p.floor+'.webp',boss:'boss'+p.floor+'.webp',accent:'#ffeedd'})});
  vm.runInContext(source+'\nthis.h={playCombat,combatView,combatCursor};',ctx);
  return {...ctx.h,scene,nodes,rows,heroes,log,document};
 }

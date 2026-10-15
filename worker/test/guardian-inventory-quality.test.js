@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshDb} from './d1-shim.js';
@@ -49,6 +50,6 @@ test('malformed quality/cursor fail clearly before a read, and authenticated Min
   const {env}=await fixture();let prepared=0;const prepare=env.DB.prepare.bind(env.DB);env.DB.prepare=sql=>{prepared++;return prepare(sql);};
   for(const quality of [null,'','White','rare',1,[],{},"white' OR 1=1--"])await assert.rejects(G.state(env,'790',T0,{quality}),{code:'quality'});
   for(const cursor of [1,{},[],false,'','\u0000bad'])await assert.rejects(G.state(env,'790',T0,{quality:'white',cursor}),{code:'cursor'});assert.equal(prepared,0);
-  const response=await handle(new Request('http://local/app/api/guardian/inventory',{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'790','X-Debug-Now':String(T0)},body:JSON.stringify({quality:'cyan',tgId:'791',charId:'791'})}),env),body=await response.json();
+  const response=await handle(new CurrentClientRequest('http://local/app/api/guardian/inventory',{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'790','X-Debug-Now':String(T0)},body:JSON.stringify({quality:'cyan',tgId:'791',charId:'791'})}),env),body=await response.json();
   assert.equal(response.status,200,JSON.stringify(body));assert.equal(body.state.charId,'790');assert.equal(body.state.inventory.quality,'cyan');assert.deepEqual(body.state.inventory.items,[]);assert.equal(body.state.inventory.totalCount,95);
 });

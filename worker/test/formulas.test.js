@@ -4,12 +4,14 @@ import { readFileSync } from 'node:fs';
 import { EXP_TABLE, expPerTick, dailyGold, mapForLevel, pyRound } from '../src/game/formulas.js';
 import { taipeiDay, taipeiAt } from '../src/game/time.js';
 
-test('EXP table matches sim.py exp_table.csv for Lv1–119', () => {
-  const rows = readFileSync(new URL('../../exp_table.csv', import.meta.url), 'utf8').trim().split('\n').slice(1).map((l) => l.split(',').map(Number));
-  assert.equal(rows.length, 119);
-  for (const [L, perTick, need] of rows) { assert.equal(expPerTick(L), perTick, `tick L${L}`); assert.equal(EXP_TABLE[L], need, `need L${L}`); }
-  assert.equal(EXP_TABLE[120], null);
+test('released EXP curve matches the tracked pre-remediation baseline for every level 1–119',()=>{
+  // Frozen from release 4f49917. This isn't a claim to validate an absent sim.py.
+  const rows=readFileSync(new URL('./fixtures/exp-table-release-4f49917.csv',import.meta.url),'utf8').trim().split('\n').slice(1).map(line=>line.split(',').map(Number));
+  assert.equal(rows.length,119);
+  for(const [level,tick,next] of rows){assert.equal(expPerTick(level),tick,`tick ${level}`);assert.equal(EXP_TABLE[level],next,`next ${level}`);}
+  assert.equal(EXP_TABLE[120],null);
 });
+
 test('python-style rounding, daily gold, map tiers', () => {
   assert.equal(pyRound(2.5), 2); assert.equal(pyRound(3.5), 4);
   assert.equal(dailyGold(1), 670); assert.equal(dailyGold(30), 2700);

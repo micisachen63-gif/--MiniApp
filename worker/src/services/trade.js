@@ -203,8 +203,12 @@ export async function removeLine(env, { tgId, tradeId, equipId = null, sigilId =
       logStmt(db, t.id, tg, 'remove', { equip: l.ref }, now), ...updateNote(db, t, now)], result: { removed: l.ref } };
     const n = qty == null ? l.qty : Math.min(l.qty, Number(qty)); if (!Number.isInteger(n) || n < 1) throw new GameError('qty', '數量無效');
     return { stmts: [...base,
-      db.prepare("UPDATE rpg_trade_items SET qty = qty - ? WHERE trade_id = ? AND side = ? AND kind = 'item' AND ref = ? AND qty > ?").bind(n, t.id, s, l.ref, n),
-      db.prepare("DELETE FROM rpg_trade_items WHERE trade_id = ? AND side = ? AND kind = 'item' AND ref = ? AND qty = ?").bind(t.id, s, l.ref, n),
+      // Decide from the original escrow quantity. Running UPDATE then DELETE loses
+      // the remainder when withdrawing exactly half of a stack.
+      n === l.qty
+        ? db.prepare("DELETE FROM rpg_trade_items WHERE trade_id = ? AND side = ? AND kind = 'item' AND ref = ? AND qty = ?").bind(t.id, s, l.ref, l.qty)
+        : db.prepare("UPDATE rpg_trade_items SET qty = qty - ? WHERE trade_id = ? AND side = ? AND kind = 'item' AND ref = ? AND qty = ?").bind(n, t.id, s, l.ref, l.qty),
+      guardStmt(db),
       invDeltaStmt(db, tg, l.ref, n),
       ledgerStmt(db, { event_id: `trade:${t.id}:${t.rev}:${tg}:remove:${l.ref}`, tg_id: tg, type: '交易退回道具', item: l.ref, item_delta: n, note: t.id }, now),
       logStmt(db, t.id, tg, 'remove', { item: l.ref, qty: n }, now), ...updateNote(db, t, now)], result: { removed: l.ref, qty: n } };
