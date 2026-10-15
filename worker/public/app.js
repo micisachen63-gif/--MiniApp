@@ -1957,7 +1957,8 @@
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
     const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
-    const want = tradeId || reqId || pkId ? 'trade' : { guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    const want = tradeId || reqId || pkId ? 'trade' : { gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
     fetch('art/v2/heroes.json?v=20261011-elf-adv4-2').then((r) => r.json()).then((h) => { HEROES.nodes = new Set(h.nodes || []); HEROES.meta = h.meta || {}; if (S.me) render(); }).catch(() => {});
