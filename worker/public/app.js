@@ -517,7 +517,7 @@
     const DEFAULT_FONT = 'D';   // ミカサ 21:07 picked D (Noto Serif TC Black titles + Cinzel numerals + Noto Sans TC body); ?font= / localStorage still override for previews
     const F0 = FONTS[fk] || FONTS[DEFAULT_FONT]; const R = document.documentElement.style; document.body.dataset.font = FONTS[fk] ? fk : DEFAULT_FONT;
     R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
-    for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261011-fx2', 'olympus-unified.css?v=20261011-unified-1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+    for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261011-fx2', 'olympus-unified.css?v=20261015-sheet-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
   }
   const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${String(k).startsWith('blessed_scroll_')?'class="blessed-scroll-icon"':''} alt="${collectionArt?esc(itemName(k)):''}" loading="lazy">` : fallback; };
   const gearIcon = (g, fallback) => { const src = artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy" decoding="async">` : fallback; };
@@ -1166,6 +1166,9 @@
     window.RpgCollectionUI?.bind(view,collectionItemSheet,collectionMaterialSheet);
     window.RpgCollectionUI?.bindInventory(view);
     view.querySelectorAll("[data-collection-activate]").forEach(button=>{button.onclick=async()=>{button.disabled=true;const result=await chooseCollectionBlessing(Number(button.dataset.collectionActivate));if(!result&&button.isConnected)button.disabled=false;};});
+    const coreOffers=(S.me.collection?.coreExchange||[]).filter(o=>!o.owned&&o.have<o.need);
+    if(coreOffers.length){const gold=S.me.character?.gold||0,frag=S.me.inventory?.research_fragment||0;const markup=`<details class="monster-core-exchange"><summary>💠 兌換首領核心 · 金幣或技能研究碎片</summary><p class="muted">沒打到地圖首領也能補核心，用來製作地圖收藏。核心綁定、不可交易；只能兌換你已抵達或通過的地圖。</p>${coreOffers.map(o=>`<div class="item"><div class="ic art">${iconHtml(o.item,'💠')}</div><div class="mid"><div class="t">${esc(o.name)}</div><div class="d">持有 ${fmt(o.have)} / 需要 ${fmt(o.need)}</div></div><button class="btn sm" data-core-exchange="${o.mapId}" data-pay="gold" ${gold<o.gold?'disabled':''}>🪙 ${fmt(o.gold)}</button><button class="btn sm ghost" data-core-exchange="${o.mapId}" data-pay="fragment" ${frag<o.fragments?'disabled':''}>🔹 ${fmt(o.fragments)}</button></div>`).join('')}</details>`;view.querySelector('.monster-collection')?.insertAdjacentHTML('beforeend',markup);}
+    view.querySelectorAll('[data-core-exchange]').forEach(button=>{button.onclick=async()=>{const actorId=S.me?.character?.tgId;const offer=(S.me.collection?.coreExchange||[]).find(o=>String(o.mapId)===button.dataset.coreExchange);if(!offer)return;const pay=button.dataset.pay==='fragment'?'fragment':'gold';const cost=pay==='gold'?`${fmt(offer.gold)} 金幣`:`${fmt(offer.fragments)} 個技能研究碎片`;if(!await confirmSheet('兌換首領核心',`用 ${cost} 兌換 1 個 ${esc(offer.name)}？核心綁定、不可交易。`,'兌換'))return;if(actorId!==S.me?.character?.tgId){toast('角色已切換，請重新選擇',true);return;}await act('monster-exchange',{action:'core',map:offer.mapId,pay},`已兌換 ${offer.name}`);};});
     const refineOptions=S.me.collection?.refineOptions || [];
     if(refineOptions.length){const markup=`<details class="monster-refining"><summary>向下精煉材料 · 3 份換 1 份</summary><p class="muted">較高地圖的同類材料可換取缺少的低圖材料。精煉後無法換回。</p>${refineOptions.map((r,index)=>`<div class="item"><div class="mid"><div class="t">${esc(itemName(r.source))} → ${esc(itemName(r.target))}</div><div class="d">持有 ${fmt(r.have)} 份 · 每次消耗 3 份</div></div><button class="btn sm" data-monster-refine="${index}">換取</button></div>`).join('')}</details>`;view.querySelector('.monster-collection')?.insertAdjacentHTML('beforeend',markup);}
     view.querySelectorAll('[data-monster-refine]').forEach(button=>{button.onclick=async()=>{const actorId=S.me?.character?.tgId;const option=refineOptions[Number(button.dataset.monsterRefine)];if(!option)return;const targetRecipe=S.me.collection.recipes.find(r=>r.ingredients.some(i=>i.item===option.target)),ingredient=targetRecipe?.ingredients.find(i=>i.item===option.target);const missing=Math.max(1,(ingredient?.qty||1)-(ingredient?.have||0)),max=Math.min(100,Math.floor(option.have/3),missing);const card=sheet(`<h2>精煉材料</h2><p>${esc(itemName(option.source))} → ${esc(itemName(option.target))}</p><p class="muted">3 份高圖材料換 1 份低圖材料，精煉後無法換回。</p><label>換取份數 <input id="refine-count" type="number" min="1" max="${max}" value="${max}" inputmode="numeric"></label><p>最多可補 ${fmt(max)} 份缺料。</p><button class="btn" data-refine-confirm>確認精煉</button>`);card.querySelector('[data-refine-confirm]').onclick=async()=>{if(actorId!==S.me?.character?.tgId){closeSheet();toast('角色已切換，請重新選擇材料',true);return;}const count=Number(card.querySelector('#refine-count').value);if(!Number.isInteger(count)||count<1||count>max){toast('請輸入範圍內的整數份數',true);return;}const result=await act('monster-exchange',{action:'refine',sourceItem:option.source,refineTarget:option.target,count},`已取得 ${itemName(option.target)} ×${count}`);if(result)closeSheet();};};});
@@ -1216,6 +1219,8 @@
         <button class="btn ghost" data-a="reroll" ${e.inTrade?'disabled':''}>🎲 洗屬性<small>${e.affixes?.lines?.length||0}/${e.affixes?.slots||1} 條 · ${esc(e.affixes?.quality||'未鑑定')}</small></button>
         ${e.convertible ? '<button class="btn ghost" data-a="convert">🔄 轉換路線</button>' : ''}
         <button class="btn ghost" data-a="share" ${e.shareBlock ? 'disabled' : ''} title="${esc(e.shareBlock || '')}">📣 分享至群組</button>
+        <button class="btn ghost" data-a="trade" ${e.tradeBlock ? 'disabled' : ''} title="${esc(e.tradeBlock || '')}">🤝 交易${e.tradeBlock ? '<small>' + esc(e.tradeBlock) + '</small>' : ''}</button>
+        <button class="btn ghost" data-a="list" ${e.tradeBlock ? 'disabled' : ''} title="${esc(e.tradeBlock || '')}">🏷️ 掛賣到交易所${e.tradeBlock ? '<small>' + esc(e.tradeBlock) + '</small>' : ''}</button>
         ${e.bound ? `<button class="btn ghost" data-a="unbind" ${e.unbindBlock ? 'disabled' : ''} title="${esc(e.unbindBlock || '')}">🔓 解契（${S.me.inventory.unbind || 0}/${e.unbindCost}）</button>` : ''}
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-a="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-a="close">關閉</button>
@@ -1224,6 +1229,8 @@
       const a = b.dataset.a;
       if (a === 'close') return closeSheet();
       if (a === 'share') return shareItem(e);
+      if (a === 'trade') return tradeGear(e);
+      if (a === 'list') return listGear(e);
       if (a === 'unbind') return unbindItem(e);
       if (a === 'sell') return sellGearItem(e);
       if (a === 'equip') {
@@ -1729,10 +1736,20 @@
       <div class="menu">
         <button class="btn" data-m="share" ${sb ? 'disabled' : ''}>📣 分享至群組</button>${sb ? `<div class="why">${esc(sb)}</div>` : `<div class="why">${e.tradeBlock ? '穿戴與綁定裝備也能展示，夥伴可以按 👍 超讚。' : '分享照片與屬性，夥伴可按 🤝 我要交易／👍 超讚。'}</div>`}
         <button class="btn" data-m="trade" ${e.tradeBlock ? 'disabled' : ''}>🤝 交易</button>${e.tradeBlock ? `<div class="why">${esc(e.tradeBlock)}（請先卸下裝備／解契）</div>` : '<div class="why">輸入對方角色名稱，開啟交易視窗並先放入這件裝備</div>'}
+        <button class="btn ghost" data-m="list" ${e.tradeBlock ? 'disabled' : ''}>🏷️ 掛賣到交易所</button>
         ${e.bound ? `<button class="btn ghost" data-m="unbind" ${ub ? 'disabled' : ''}>🔓 解除綁定（需 ${e.unbindCost} 張・持有 ${have}）</button>${ub ? `<div class="why">${esc(ub)}</div>` : have < e.unbindCost ? '<div class="why">解契卷不夠 — 商店「📜 捲軸」500 金／張</div>' : ''}` : ''}
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-m="detail">🔍 詳細／強化</button><button class="btn ghost" data-m="x">關閉</button></div>`);
-    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'list') return listGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+  }
+  function listGear(e) {
+    if (e.tradeBlock) return toast(e.tradeBlock, true);
+    const d = sheet(`<h2>🏷️ 掛賣 · ${esc(e.name)}</h2><div class="menu"><div class="why">設定售價（1–1,000,000 金幣），成交後扣除手續費入帳；掛賣期間這件裝備會被保管，可在交易所「我的掛單」撤回。</div><input id="gear-list-price" inputmode="numeric" placeholder="售價（金幣）" maxlength="7"><button class="btn" data-go>確認掛賣</button><button class="btn ghost" data-x>取消</button></div>`);
+    d.querySelector('[data-x]').onclick = closeSheet;
+    d.querySelector('[data-go]').onclick = async () => {
+      const price = Math.floor(Number(String(d.querySelector('#gear-list-price').value).replace(/[^\d]/g, '')) || 0); if (price < 1 || price > 1000000) return toast('售價需為 1–1,000,000 的整數', true);
+      try { await api('exchange/create', { characterId: String(S.me.character.tgId), equipId: e.id, price, requestId: window.RpgMarketExchange.requestId() }); closeSheet(); toast('已掛賣到交易所'); refreshMe(); } catch (err) { toast(err.message, true); }
+    };
   }
   function tradeGear(e) {
     if (e.tradeBlock) return toast(e.tradeBlock, true);

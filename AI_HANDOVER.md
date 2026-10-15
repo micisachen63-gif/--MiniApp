@@ -4,6 +4,8 @@
 > 本手冊包含「星穹旅誌」截至 2026-10-15 的最新架構狀態、線上版本、部署流程與開發規範。  
 > 閱讀本文件後，你將具備與前任助理 100% 相同的專案上下文，請立即接續使用者需求提供支援。
 
+> 2026-10-15 使用者要求後續以本 GitHub 倉庫開發並與正式機同步。請先讀 AGENTS.md 的「正式機與 GitHub 同步」及 docs/deployment/*.json；本文固定版本號為歷史資料。根目錄 npm run deploy:worker／deploy:bot 已改為 GitHub 提交與線上版本的同步流程，勿再直接執行子目錄 wrangler deploy 繞過核對。只需核對時執行 npm run sync:check。推送 main 不會自動上線。
+
 ---
 
 ## 一、目前系統線上架構與即時狀態
@@ -14,7 +16,7 @@
 - **目錄**：`worker/`
 - **服務網址**：https://elf-rpg-api.micisachen.workers.dev
 - **健康檢查**：`GET /health` -> `{"ok":true,"service":"elf-rpg-api"}`
-- **目前線上版本**：`49a27728-4b6a-4020-ba96-4b542165d332` @ 100%
+- **目前線上版本**：以 `docs/deployment/elf-rpg-api.json` 及即時 Cloudflare 狀態為準；下方版本屬歷史紀錄。
 - **核心架構**：
   - 後端：Cloudflare Worker (`src/index.js`)，處理戰鬥、裝備、鍛造、掉寶、職業分支、掛機結算。
   - 前端：Telegram WebApp Mini App (`public/`)，包含 7,000+ 個靜態資源與全角色高階傳承美術圖鑑。
@@ -64,8 +66,10 @@
    - 測試機器人適配器：`npm run test:bot`
 
 2. **發布部署**：
-   - 部署遊戲核心/前端：進入 `worker/` 執行 `npx wrangler deploy`
-   - 部署雲端機器人：進入 `cloud-bot/` 執行 `npx wrangler deploy`
+   - 在根目錄先 `npm ci`；修改完成並測試、提交／合併及推送 main。
+   - 部署遊戲核心/前端：根目錄執行 `npm run deploy:worker`
+   - 部署雲端機器人：根目錄執行 `npm run deploy:bot`
+   - 必須確認 GitHub 收據推送與線上驗證成功，才算同步完成。
 
 3. **規範約束**：
    - 除非使用者特別要求，否則嚴禁執行未經審查的 D1 破壞性 migration。

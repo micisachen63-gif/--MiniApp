@@ -1,4 +1,5 @@
-import {MONSTER_RECIPES,materialPair} from '../game/monsters.js';
+import {MONSTER_RECIPES,materialPair,coreExchangePrice} from '../game/monsters.js';
+import {MONSTER_ITEMS} from '../game/monster-data.js';
 import {mapForLevel} from '../game/formulas.js';
 import {GameError} from '../game/classes.js';
 export function monsterExchange(work,ctx,b) {
@@ -16,6 +17,20 @@ export function monsterExchange(work,ctx,b) {
       {event_id:`monster-exchange:${tg}:${request}:${target}`,tg_id:tg,type:'地圖材料精煉',item:target,item_delta:count,note}];
     work.inv[source]-=3*count;work.inv[target]=(work.inv[target]||0)+count;
     return {ledger,result:{refined:true,sourceItem:source,sourceQty:3*count,item:target,targetQty:count}};
+  }
+  if(b.action==='core'){
+    const n=Number(b.map);if(!Number.isInteger(n)||n<1||n>12)throw new GameError('map','地圖不正確');
+    const recipe=MONSTER_RECIPES.find(r=>r.mapId===n),item=`hunt_${n}_core`,need=recipe?.ingredients.find(x=>x.item===item);
+    if(!need||!MONSTER_ITEMS[item])throw new GameError('recipe','這張地圖沒有首領核心');
+    if(mapForLevel(work.char.level)<n)throw new GameError('level','尚未抵達這張地圖');
+    if((work.inv[recipe.item]||0)>0)throw new GameError('owned','已解鎖這張地圖收藏');
+    if((work.inv[item]||0)>=need.qty)throw new GameError('enough','首領核心已足夠製作');
+    const price=coreExchangePrice(n),pay=b.pay==='fragment'?'fragment':'gold',tg=String(work.char.tg_id),note=`兌換 ${MONSTER_ITEMS[item].name}`;
+    const ledger=[{event_id:`monster-exchange:${tg}:${request}`,tg_id:tg,type:'地圖收藏兌換核心',note},{event_id:`monster-exchange:${tg}:${request}:${item}`,tg_id:tg,type:'地圖收藏兌換',item,item_delta:1,note}];
+    if(pay==='gold'){if(work.char.gold<price.gold)throw new GameError('gold',`需要 ${price.gold} 金幣`);work.char.gold-=price.gold;ledger[1].gold_delta=-price.gold;}
+    else{if((work.inv.research_fragment||0)<price.fragments)throw new GameError('insufficient',`需要 ${price.fragments} 個技能研究碎片`);work.inv.research_fragment-=price.fragments;ledger.push({event_id:`monster-exchange:${tg}:${request}:research_fragment`,tg_id:tg,type:'地圖收藏兌換',item:'research_fragment',item_delta:-price.fragments,note});}
+    work.inv[item]=(work.inv[item]||0)+1;
+    return {ledger,result:{core:true,item,mapId:n,pay,gold:pay==='gold'?price.gold:0,fragments:pay==='fragment'?price.fragments:0}};
   }
   const recipe=MONSTER_RECIPES.find(r=>r.id===b.recipe);if(!recipe)throw new GameError('recipe','無效製作配方');
   if(mapForLevel(work.char.level)<recipe.mapId)throw new GameError('level','尚未到達這張地圖');

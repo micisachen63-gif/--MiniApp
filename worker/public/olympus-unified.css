@@ -39,6 +39,10 @@ body.greek.v2.mythic.olympus-suite #app #view :is(.tabs,.seg,.bag-slot-tabs,.bag
 body.greek.v2.mythic.olympus-suite :is(#view,#sheet) :is(input,select,textarea){background:#111f34;color:#ece1cd;border:1px solid #a58a5a88;border-radius:3px;font:13px/1.5 var(--f-ui)}
 body.greek.v2.mythic.olympus-suite #sheet .sheet-bg{background:#050b17c9;backdrop-filter:blur(6px)}
 body.greek.v2.mythic.olympus-suite #sheet .sheet-card{background:linear-gradient(135deg,#17263cf7,#0d182bef),url('art/ui/hero-hall-v1.webp') center/cover;color:#ede0c5;border-color:#b3935e;box-shadow:0 -10px 40px #0009}
+/* Nested sheet panels must share the current surface, not the legacy marble card. */
+body.greek.v2.mythic.olympus-suite #sheet .card:not(.warnbox),body.greek.v2.mythic.olympus-suite #sheet .branch{background:linear-gradient(115deg,#17283bf5,#101c2ff0),url('art/ui/hero-hall-v1.webp') right center/cover;border:1px solid #a58b5c88;border-radius:5px;padding:16px 14px;color:#eee3ce;box-shadow:inset 0 0 0 3px #0b1526,inset 0 0 0 4px #d1af7022,0 4px 12px #0004;font:13px/1.65 var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #sheet :is(.card,.branch)::before{content:none}
+body.greek.v2.mythic.olympus-suite #sheet .affix-list>b{color:#f0d39a;font:700 15px/1.6 var(--f-title);padding-bottom:8px;border-bottom:1px solid #c1a57140}
 body.greek.v2.mythic.olympus-suite #sheet :is(h2,h3,.my-forge h3,.my-item-commerce summary){color:#f0d39a;font-family:var(--f-title)}
 body.greek.v2.mythic.olympus-suite #sheet :is(.muted,.kv span,.showcase-sub,.item .d){color:#b6c4d7}
 body.greek.v2.mythic.olympus-suite #sheet :is(.my-artifact-stats,.item,.showcase-tags span){background:#17283e;border-color:#a58a5c66;color:#eadcc2}
