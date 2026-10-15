@@ -2,9 +2,9 @@
   "releaseFrameIndex": 6,
   "skillKind": "mirror",
   "neutralBodyBoundsPx": [
-    121,
-    151,
-    534,
+    214,
+    158,
+    425,
     600
   ],
   "frames": [
@@ -15,10 +15,88 @@
         512,
         512
       ],
+      "bodyCenterX": 245,
+      "castAnchorPx": [
+        354,
+        290
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "bodyCenterX": 785,
+      "castAnchorPx": [
+        897,
+        327
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1214,
+        101
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "bodyCenterX": 250,
+      "castAnchorPx": [
+        351,
+        663
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "bodyCenterX": 785,
+      "castAnchorPx": [
+        811,
+        905
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1420,
+        620
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
       "bodyCenterX": 285,
       "castAnchorPx": [
-        429,
-        301
+        389,
+        158
       ]
     },
     {
@@ -28,10 +106,10 @@
         1024,
         512
       ],
-      "bodyCenterX": 800,
+      "bodyCenterX": 770,
       "castAnchorPx": [
-        814,
-        245
+        720,
+        175
       ]
     },
     {
@@ -41,128 +119,51 @@
         1536,
         512
       ],
-      "bodyCenterX": 1290,
-      "castAnchorPx": [
-        1438,
-        283
-      ]
-    },
-    {
-      "sourceRect": [
-        0,
-        512,
-        575,
-        1024
-      ],
-      "bodyCenterX": 270,
-      "castAnchorPx": [
-        459,
-        650
-      ]
-    },
-    {
-      "sourceRect": [
-        580,
-        512,
-        1060,
-        1024
-      ],
-      "bodyCenterX": 800,
-      "castAnchorPx": [
-        944,
-        772
-      ]
-    },
-    {
-      "sourceRect": [
-        1080,
-        500,
-        1536,
-        1024
-      ],
-      "bodyCenterX": 1290,
-      "castAnchorPx": [
-        1424,
-        568
-      ]
-    },
-    {
-      "sourceRect": [
-        0,
-        0,
-        580,
-        500
-      ],
-      "bodyCenterX": 290,
-      "castAnchorPx": [
-        465,
-        126
-      ]
-    },
-    {
-      "sourceRect": [
-        570,
-        0,
-        1024,
-        500
-      ],
-      "bodyCenterX": 800,
-      "castAnchorPx": [
-        857,
-        250
-      ]
-    },
-    {
-      "sourceRect": [
-        1050,
-        0,
-        1536,
-        500
-      ],
       "bodyCenterX": 1280,
       "castAnchorPx": [
-        1418,
-        304
+        1455,
+        352
       ]
     },
     {
       "sourceRect": [
         0,
-        500,
+        512,
         512,
         1024
       ],
-      "bodyCenterX": 290,
+      "bodyCenterX": 285,
       "castAnchorPx": [
-        330,
-        706
+        352,
+        750
       ]
     },
     {
       "sourceRect": [
         512,
-        500,
+        512,
         1024,
         1024
       ],
-      "bodyCenterX": 800,
+      "bodyCenterX": 780,
       "castAnchorPx": [
-        902,
-        759
+        841,
+        766
       ]
     },
     {
       "sourceRect": [
         1024,
-        500,
+        512,
         1536,
         1024
       ],
       "bodyCenterX": 1280,
       "castAnchorPx": [
-        1368,
-        747
+        1410,
+        750
       ]
     }
-  ]
+  ],
+  "manualReview": "v3 portrait consistency repair: full continuous black leather sleeves on both arms in every pose, matching portrait"
 }

@@ -2,9 +2,9 @@
   "releaseFrameIndex": 6,
   "skillKind": "mirror",
   "neutralBodyBoundsPx": [
-    151,
-    173,
-    529,
+    214,
+    165,
+    430,
     600
   ],
   "frames": [
@@ -15,10 +15,88 @@
         512,
         512
       ],
+      "bodyCenterX": 260,
+      "castAnchorPx": [
+        350,
+        285
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        835,
+        412
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1242,
+        97
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "bodyCenterX": 260,
+      "castAnchorPx": [
+        409,
+        678
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "bodyCenterX": 800,
+      "castAnchorPx": [
+        652,
+        826
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1190,
+        584
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
       "bodyCenterX": 285,
       "castAnchorPx": [
-        430,
-        325
+        401,
+        231
       ]
     },
     {
@@ -28,101 +106,23 @@
         1024,
         512
       ],
-      "bodyCenterX": 800,
+      "bodyCenterX": 770,
       "castAnchorPx": [
-        817,
-        266
+        724,
+        235
       ]
     },
     {
       "sourceRect": [
         1024,
-        0,
-        1536,
-        512
-      ],
-      "bodyCenterX": 1290,
-      "castAnchorPx": [
-        1422,
-        308
-      ]
-    },
-    {
-      "sourceRect": [
-        0,
-        512,
-        575,
-        1024
-      ],
-      "bodyCenterX": 270,
-      "castAnchorPx": [
-        463,
-        660
-      ]
-    },
-    {
-      "sourceRect": [
-        580,
-        512,
-        1060,
-        1024
-      ],
-      "bodyCenterX": 800,
-      "castAnchorPx": [
-        936,
-        775
-      ]
-    },
-    {
-      "sourceRect": [
-        1080,
-        500,
-        1536,
-        1024
-      ],
-      "bodyCenterX": 1290,
-      "castAnchorPx": [
-        1408,
-        582
-      ]
-    },
-    {
-      "sourceRect": [
-        0,
-        0,
-        580,
-        512
-      ],
-      "bodyCenterX": 290,
-      "castAnchorPx": [
-        465,
-        145
-      ]
-    },
-    {
-      "sourceRect": [
-        600,
-        0,
-        1024,
-        512
-      ],
-      "bodyCenterX": 800,
-      "castAnchorPx": [
-        888,
-        260
-      ]
-    },
-    {
-      "sourceRect": [
-        1050,
         0,
         1536,
         512
       ],
       "bodyCenterX": 1280,
       "castAnchorPx": [
-        1435,
-        307
+        1368,
+        402
       ]
     },
     {
@@ -132,10 +132,10 @@
         512,
         1024
       ],
-      "bodyCenterX": 290,
+      "bodyCenterX": 285,
       "castAnchorPx": [
-        337,
-        703
+        390,
+        780
       ]
     },
     {
@@ -145,10 +145,10 @@
         1024,
         1024
       ],
-      "bodyCenterX": 800,
+      "bodyCenterX": 780,
       "castAnchorPx": [
-        896,
-        751
+        840,
+        767
       ]
     },
     {
@@ -158,11 +158,12 @@
         1536,
         1024
       ],
-      "bodyCenterX": 1280,
+      "bodyCenterX": 1275,
       "castAnchorPx": [
-        1358,
-        733
+        1357,
+        756
       ]
     }
-  ]
+  ],
+  "manualReview": "v3 portrait consistency repair: both daggers visibly curved in all poses, matching portrait"
 }

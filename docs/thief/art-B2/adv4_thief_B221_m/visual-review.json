@@ -1,28 +1,32 @@
 {
   "key": "adv4_thief_B221_m",
-  "authorVisualReview": "pass",
-  "rootVisualReview": "pending",
+  "authorVisualReview": "pass-v3-portrait-consistency",
+  "rootVisualReview": "pass",
+  "rootAccepted": true,
   "runtimeActualEventVerified": false,
-  "checks": {
-    "sameGreekSemirealHumanStyle": true,
-    "twoArmsTwoGrippingHandsTwoShortBlades": true,
-    "completeHeadFeetWeaponTips": true,
-    "noElfEarsStaffWingsOrGhostBody": true,
-    "smallMirrorMagicAuthoredIntoSource": true,
-    "twelveOriginalDifferentPosesNotCopies": true,
-    "sourceGutterManuallyChecked": true,
-    "neutralHeadFeetBodyBoundsManuallyMarked": true,
-    "portraitAndAttackHeightUsesMeasuredRatio": true,
-    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
-  },
-  "notes": "梅紫金線編織、短衣片與近手鏡線。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "reason": "both daggers visibly curved in all poses, matching portrait",
+  "manualBodySourceBounds": [
+    136,
+    72,
+    366,
+    490
+  ],
   "neutralBodyBoundsPx": [
-    142,
-    152,
-    512,
+    206,
+    182,
+    436,
     600
   ],
-  "heightScale": 1.226748511904762,
+  "heightScale": 1.314792663476874,
+  "checks": {
+    "allTwelvePosesOriginal": true,
+    "twoHandsTwoBlades": true,
+    "fullHeadFeetTips": true,
+    "transparentRectangularGutters": true,
+    "weaponsMatchPortrait": true,
+    "sleevesMatchPortrait": true,
+    "noResamplingOrAlphaEditing": true
+  },
   "prompts": {
     "hero": {
       "file": "docs/thief/art-B2/adv4_thief_B221_m/hero-prompt.txt",
@@ -30,18 +34,39 @@
     },
     "attack-0-5": {
       "file": "docs/thief/art-B2/adv4_thief_B221_m/attack-0-5-prompt.txt",
-      "SHA256": "adae7cecea20811cb0329d0008f9c8dec8fc5166b10123a778063935950a559b"
+      "SHA256": "3e33dabc03dbc935404ae347d798b9c5608cbbc65bae24aecbf8bf1d51569d17"
     },
     "attack-6-11": {
       "file": "docs/thief/art-B2/adv4_thief_B221_m/attack-6-11-prompt.txt",
-      "SHA256": "f150af5c52f09e98ad2498667df69b0698d6fcbd1674b0906e1c420839d4ac99"
+      "SHA256": "1cc0a8b69984d42af80532cc74470567cb21bdb9be693cef54d026afe788858c"
     }
   },
   "sourceSHA256": {
     "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
-    "attack-0-5.png": "6c4ca89574544ae69767f1e3a948ae7f629569b79ddc040fb7c915a90836caa4",
-    "attack-6-11.png": "ab6a0448d8cc3f294ce2a4c1520f40a3100256a524a42d5d9d0c8ce9f7f69e25"
+    "attack-0-5.png": "46a3f85cb744d87d15bcb66824923e056b404760f736e4eefbc4aeda7a1fa035",
+    "attack-6-11.png": "bebb4fceff7f59f0c603a9dce4913f4ff5acc572e399e879d918a963b1b923bc"
   },
-  "rejectedSources": [],
-  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。"
+  "supersededSources": [
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-0-5-v2.png",
+      "SHA256": "60c85e4be159781699132d8b4cb43060027d7c3c292f06770d46c7684a264d17",
+      "reason": "earlier candidate before portrait/gutter corrections"
+    },
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-6-11-v2.png",
+      "SHA256": "73226b27be57ecec474aaf4c3e2567914545bedbb23ab8531e080adc4c34a4d5",
+      "reason": "earlier candidate before portrait/gutter corrections"
+    },
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-0-5-rejected-portrait-inconsistency.png",
+      "SHA256": "6c4ca89574544ae69767f1e3a948ae7f629569b79ddc040fb7c915a90836caa4",
+      "reason": "original weapon or sleeve mismatch"
+    },
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv4_thief_B221_m/attack-6-11-rejected-portrait-inconsistency.png",
+      "SHA256": "ab6a0448d8cc3f294ce2a4c1520f40a3100256a524a42d5d9d0c8ce9f7f69e25",
+      "reason": "original weapon or sleeve mismatch"
+    }
+  ],
+  "rootNotes": "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。"
 }

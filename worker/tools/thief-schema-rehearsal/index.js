@@ -1,6 +1,7 @@
 // Fixed, authenticated, isolated-D1 rehearsal. No arbitrary SQL and no player data responses.
 import candidate from '../../../docs/thief/live-schema-candidate.json' with {type:'json'};
 import source from '../../../docs/thief/live-schema-source.json' with {type:'json'};
+import hostedProof from '../../../docs/thief/hosted-d1-rehearsal.json' with {type:'json'};
 const catalogFilter="name NOT GLOB 'sqlite_*' AND name NOT GLOB '_cf_*' AND name NOT GLOB '_thief_*' AND name<>'d1_migrations'";
 const ident=s=>'"'+s.replaceAll('"','""')+'"';
 const encoder=new TextEncoder();
@@ -11,11 +12,16 @@ const tables=new Set(source.objects.filter(r=>r.type==='table').map(r=>r.name));
 const faults=new Set(['drop-table-leaf-first','restore-data-before-triggers','verify-all-columns-rowid-types-bytes']);
 export default {
  async fetch(request,env){
-  if(request.method!=='POST'||!env.REHEARSAL_TOKEN||env.MODE!=='isolated-rehearsal')return response({ok:false},404);
+  const isolated=env.MODE==='isolated-rehearsal';
+  const proven=hostedProof.status==='PASS'&&hostedProof.apply.ok&&hostedProof.apply.statements===165&&hostedProof.apply.schemaSHA256===candidate.schemaSha256ExpectedAfter&&hostedProof.rollbackProofs.length===3&&hostedProof.rollbackProofs.every(p=>p.ok&&p.rolledBack&&p.schemaSHA256===candidate.schemaSha256Before);
+  const production=env.MODE==='authorized-production-expansion'&&env.EXPECTED_DATABASE_ID==='bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4'&&env.AUTHORIZATION==='human-approved-thief-expansion-20261015'&&/^[a-f0-9]{40}$/.test(env.SOURCE_COMMIT||'')&&proven;
+  if(request.method!=='POST'||!env.REHEARSAL_TOKEN||(!isolated&&!production))return response({ok:false},404);
   const supplied=request.headers.get('Authorization')||'';
   if(await sha(supplied)!==await sha('Bearer '+env.REHEARSAL_TOKEN))return response({ok:false},404);
   try{
    const body=await request.json(),path=new URL(request.url).pathname,db=env.DB;
+   if(production&&!['/schema','/apply'].includes(path))return response({ok:false},404);
+   if(production&&path==='/apply'&&body.sourceCommit!==env.SOURCE_COMMIT)return response({ok:false,reason:'wrong-reviewed-source'},409);
    if(path==='/schema'){
     const rows=await schema(db),hash=await sha(JSON.stringify(rows));
     const fk=await db.prepare('PRAGMA foreign_key_check').all(),quick=await db.prepare('PRAGMA quick_check').all();

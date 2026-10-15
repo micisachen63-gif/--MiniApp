@@ -1,5 +1,5 @@
 {
-  "status": "review-only-live-schema-source; hosted-D1-backup-and-authorization-pending",
+  "status": "hosted-D1-rehearsal-pass-production-pending-final-release-review",
   "productionReady": false,
   "remoteReads": 0,
   "remoteWrites": 0,
@@ -1278,5 +1278,7 @@
   "sourceCaptureSHA256": "1a07576609b0568516a53b1a0c2639da36bd3c685d4cc23088db7da45497b1a9",
   "sourceIsSchemaOnly": true,
   "productionWrites": 0,
-  "executionSource": "Structured JSON statements only; the .sql file is for human review. Preserve literal newlines in schema guards."
+  "executionSource": "Structured JSON statements only; the .sql file is for human review. Preserve literal newlines in schema guards.",
+  "authorization": "User explicitly approved conditional production expansion and publication on 2026-10-15",
+  "hostedD1Proof": "docs/thief/hosted-d1-rehearsal.json"
 }

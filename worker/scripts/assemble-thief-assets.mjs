@@ -31,8 +31,11 @@ for(const [key,entry] of [...candidates].sort(([a],[b])=>a.localeCompare(b))){
  entry.normalFx={...entry.normalFx,kind:entry.classPath.startsWith('B')?'pierce':'dagger'};
  const skillKind=entry.classPath.startsWith('A2')?'poison':entry.classPath.startsWith('B2')?'mirror':entry.classPath.startsWith('B')?'flying':entry.classPath.startsWith('A1')?'execute':'cross';
  assert.equal(entry.skillFx.kind,skillKind,'Wrong native skill FX metadata '+key);
+ const visualAccepted=entry.visualAccepted===true,runtimeAccepted=entry.actualEventVerified===true;
+ // Review receipts live in docs. Keep render inputs stable when acceptance evidence is updated.
+ delete entry.status;delete entry.visualAccepted;delete entry.actualEventVerified;
  registry.heroes[key]=entry;
- receipts.push({key,name:entry.name,classPath:entry.classPath,gender:entry.gender,nativePacked:true,visualAccepted:entry.visualAccepted===true,runtimeAccepted:entry.actualEventVerified===true,
+ receipts.push({key,name:entry.name,classPath:entry.classPath,gender:entry.gender,nativePacked:true,visualAccepted,runtimeAccepted,
   guardianCategory:'melee',nativeFrames:12,entrySHA256:sha(JSON.stringify(entry)),outputs:proof.outputs,packingEvidence:entry.provenance.packingEvidence});
 }
 const missing=[...expected].filter(([key])=>!candidates.has(key)).map(([key,c])=>({key,name:c.name,classPath:c.classPath,gender:c.gender}));

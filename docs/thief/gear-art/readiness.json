@@ -1,0 +1,334 @@
+{
+  "status": "local-rules-art-and-ui-verified",
+  "productionReleaseReady": false,
+  "productionWrites": false,
+  "equipment": {
+    "physicalSlots": 11,
+    "tiers": 12,
+    "usableDesigns": 130,
+    "newClassDesigns": 82,
+    "existingSharedDesigns": 48,
+    "weapons": {
+      "dagger": {
+        "cls": "thief",
+        "branch": null,
+        "type": "短匕",
+        "names": {
+          "1": "月桂短匕",
+          "2": "雅典短匕",
+          "3": "聖林短匕",
+          "4": "海神短匕",
+          "5": "迷宮短匕",
+          "6": "熔爐短匕",
+          "7": "冥河短匕",
+          "8": "神諭短匕",
+          "9": "泰坦短匕",
+          "10": "雲門短匕",
+          "11": "至福短匕",
+          "12": "星穹短匕"
+        },
+        "bonus": {}
+      },
+      "dual_daggers": {
+        "cls": "thief",
+        "branch": "A",
+        "type": "雙匕",
+        "names": {
+          "2": "雅典交錯雙匕",
+          "3": "聖林交錯雙匕",
+          "4": "海神交錯雙匕",
+          "5": "迷宮交錯雙匕",
+          "6": "熔爐交錯雙匕",
+          "7": "冥河交錯雙匕",
+          "8": "神諭交錯雙匕",
+          "9": "泰坦交錯雙匕",
+          "10": "雲門交錯雙匕",
+          "11": "至福交錯雙匕",
+          "12": "星穹交錯雙匕"
+        },
+        "bonus": {
+          "critPct": 0.08,
+          "atkPct": 0.05
+        },
+        "desc": "爆擊 +8%、ATK +5%"
+      },
+      "throwing_blades": {
+        "cls": "thief",
+        "branch": "B",
+        "type": "飛刃",
+        "names": {
+          "2": "雅典迴旋飛刃",
+          "3": "聖林迴旋飛刃",
+          "4": "海神迴旋飛刃",
+          "5": "迷宮迴旋飛刃",
+          "6": "熔爐迴旋飛刃",
+          "7": "冥河迴旋飛刃",
+          "8": "神諭迴旋飛刃",
+          "9": "泰坦迴旋飛刃",
+          "10": "雲門迴旋飛刃",
+          "11": "至福迴旋飛刃",
+          "12": "星穹迴旋飛刃"
+        },
+        "bonus": {
+          "critPct": 0.05,
+          "mpCostPct": -0.05
+        },
+        "desc": "爆擊 +5%、耗魔 −5%"
+      }
+    },
+    "armor": {
+      "key": "light_leather",
+      "name": "輕甲",
+      "defMult": 0.4,
+      "perPiece": {
+        "takenPct": -0.01
+      },
+      "desc": "每件受傷 −1%；防禦低，維持迅捷脆皮定位",
+      "pieces": {
+        "helmet": "夜行兜帽",
+        "armor": "盜賊輕甲",
+        "gloves": "輕革護手",
+        "boots": "軟底短靴"
+      }
+    },
+    "branchTierOneExcluded": true,
+    "acquisition": {
+      "starter": "T1 dagger and light_leather armor; bound",
+      "shop": "own class / current A or B weapon branch plus shared slots, up to unlocked current map tier",
+      "gacha": {
+        "rarities": [
+          [
+            "legendary",
+            85
+          ],
+          [
+            "supreme",
+            15
+          ]
+        ],
+        "tier": "current map tier",
+        "weapon": "own class and current branch",
+        "armor": "four class armor plus belt and undershirt; earrings/rings outside this gacha pool"
+      },
+      "elite": "own class/current branch legal gear, minimum advanced rarity",
+      "relic": "global CLASS_KEYS excludes thief until release-ready; existing random classes/slots/rarity rules unchanged",
+      "classChange": "existing branch weapon reselect token retained"
+    },
+    "art": {
+      "native": "native-pack.json",
+      "fullROI": "complete-native-verification.json",
+      "icons": 82,
+      "cards": 492,
+      "cardDerivatives": "cards-status.json",
+      "sharedBeltRing": "existing 24 named + 2 generic true alpha icons visually checked on checker and real app background; no matte/dirty holes detected",
+      "sharedShirtEarring": "shared-shirt-earring-alpha.json",
+      "sharedVisualReview": "all 48 named shared belt/ring/undershirt/earring icons checked; transparent exterior and real openings, no matte or clipped ornaments",
+      "allSevenGroupsVisualReview": "passed: dagger, dual_daggers, throwing_blades, helmet, armor, gloves, boots; whole silhouettes/handles/openings visible and no cut edge",
+      "classSpecificFallbacks": 0
+    }
+  },
+  "combat": {
+    "nodes": 31,
+    "class": {
+      "key": "thief",
+      "name": "盜賊",
+      "emoji": "🗡️",
+      "blurb": "極高攻速、低生命與低防禦；以破綻、毒刃與幻影掌控戰局",
+      "releaseReady": false,
+      "atk": [
+        12,
+        2.8
+      ],
+      "hp": [
+        60,
+        9
+      ],
+      "mp": [
+        44,
+        4
+      ],
+      "def": [
+        2,
+        0.65
+      ],
+      "taken": 1,
+      "attackSpeedMultiplier": 1.8,
+      "hitAttackMultiplier": 0.6,
+      "node": {
+        "name": "盜賊",
+        "skill": {
+          "name": "迅刃突刺",
+          "cost": 4,
+          "mult": 1.7,
+          "targets": 1
+        },
+        "passive": {
+          "text": "疾刃：原生攻擊頻率 ×1.8；單擊威力 60%，生命與防禦較低"
+        },
+        "weapon": "dagger",
+        "path": "",
+        "tier": 0
+      },
+      "branches": {
+        "A": {
+          "name": "刺客",
+          "line": "刺客系",
+          "weapon": "dual_daggers",
+          "skill": {
+            "name": "交錯刃擊",
+            "cost": 8,
+            "mult": 2.05,
+            "targets": 1
+          },
+          "passive": {
+            "text": "要害洞察：爆擊 +10%",
+            "critPct": 0.1
+          },
+          "blurb": "雙匕近戰，發展單體爆發與毒刃",
+          "path": "A",
+          "tier": 1
+        },
+        "B": {
+          "name": "夜行者",
+          "line": "夜行者系",
+          "weapon": "throwing_blades",
+          "skill": {
+            "name": "迴旋飛刃",
+            "cost": 10,
+            "mult": 1.9,
+            "targets": 2
+          },
+          "passive": {
+            "text": "夜行身法：受傷 −4%",
+            "takenPct": -0.04
+          },
+          "blurb": "飛刃中距離攻擊，發展多目標與幻影戰術；生命與防禦仍低",
+          "path": "B",
+          "tier": 1
+        }
+      }
+    },
+    "guardian": "all 31 nodes use melee including B routes",
+    "speedContract": "actual server 9 strikes per 5 native actions; one mana payment/native action",
+    "idleBudget": "attackSpeedMultiplier * hitAttackMultiplier = 1.08 once; 27 real strikes per five native minutes"
+  },
+  "skills": {
+    "nativeAutomaticNodes": 31,
+    "tacticalBooks": 6,
+    "minimumTacticalLevel": 30,
+    "maximumNewTacticalBookLevel": 60,
+    "higherAdvancement": "Lv90/120 inherit their legal parent tactical books; no additional Lv90/120 tactical books were added",
+    "catalogue": [
+      {
+        "id": "skill_thief_01",
+        "name": "破綻標記",
+        "level": 30,
+        "paths": [
+          "A",
+          "B"
+        ],
+        "mp": 18,
+        "cooldown": 90
+      },
+      {
+        "id": "skill_thief_02",
+        "name": "煙幕幻步",
+        "level": 40,
+        "paths": [
+          "A",
+          "B"
+        ],
+        "mp": 20,
+        "cooldown": 90
+      },
+      {
+        "id": "skill_thief_03",
+        "name": "無聲處刑",
+        "level": 60,
+        "paths": [
+          "A1"
+        ],
+        "mp": 30,
+        "cooldown": 120
+      },
+      {
+        "id": "skill_thief_04",
+        "name": "淬毒祕術",
+        "level": 60,
+        "paths": [
+          "A2"
+        ],
+        "mp": 28,
+        "cooldown": 90
+      },
+      {
+        "id": "skill_thief_05",
+        "name": "穿心飛刃",
+        "level": 60,
+        "paths": [
+          "B1"
+        ],
+        "mp": 28,
+        "cooldown": 90
+      },
+      {
+        "id": "skill_thief_06",
+        "name": "鏡影反制",
+        "level": 60,
+        "paths": [
+          "B2"
+        ],
+        "mp": 26,
+        "cooldown": 120
+      }
+    ],
+    "gateFalse": "legacy 54 SPECIAL_SKILLS / BOOK_ITEMS / ITEMS / TRADE catalogues and 3-class drop pool unchanged; all six thief pipelines reject",
+    "gateTrue": "60 catalogue entries; all six can drop/research, learn, equip, cast, share and trade through existing authoritative services",
+    "acquisition": {
+      "normalResearch": 80,
+      "advancedResearch": 160,
+      "researchPerDungeon": 8,
+      "bookDropChance": 0.35,
+      "booksPerSuccess": 1,
+      "legalDrop": "level/path/tier checked; higher dungeons fall back to unlocked legal thief books"
+    },
+    "evidenceFalse": "skill-pipeline-false.json",
+    "evidenceTrue": "skill-pipeline-true.json",
+    "legacyByteIdenticalPools": 21,
+    "icons": "skill-icons-native-pack.json"
+  },
+  "validation": {
+    "nodeTests": 35,
+    "pythonCardTests": 2,
+    "strictAudit": {
+      "totalDesigns": 130,
+      "physicalPositions": 11,
+      "tiers": 12,
+      "thiefWeapons": {
+        "dagger": 12,
+        "dual_daggers": 11,
+        "throwing_blades": 11
+      },
+      "newClassDesigns": 82,
+      "sharedExistingDesigns": 48,
+      "missingClassSpecificDesigns": 0,
+      "frontendEmojiOnly": 0,
+      "backendSwordFallback": 0,
+      "backendPlateFallback": 0,
+      "frontendMissingFiles": 0,
+      "backendMissingFiles": 0,
+      "missingSharedIcons": 0,
+      "nameMapBrowserServerIdentical": true,
+      "newIconsMissing": 0,
+      "newCardsMissing": 0,
+      "specialistMappingMismatch": 0
+    },
+    "nativeIcons": 82,
+    "derivedCards": 492,
+    "browser": "browser-2026-10-15T15-56-56-621Z/verified.json",
+    "browserCases": 27,
+    "browserErrors": 0,
+    "browser404": 0,
+    "browserCaveat": "real app bootstrap/renderers with clearly marked memory and browser catalogue/equipment fixtures; release gate remains false; no real players or Telegram messages"
+  }
+}

@@ -1,7 +1,7 @@
 {
   "key": "adv4_thief_B222_m",
   "authorVisualReview": "pass",
-  "rootVisualReview": "pending",
+  "rootVisualReview": "pass",
   "runtimeActualEventVerified": false,
   "checks": {
     "sameGreekSemirealHumanStyle": true,
@@ -49,5 +49,7 @@
       "reason": "row-overlap"
     }
   ],
-  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。"
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。",
+  "rootNotes": "root 已目視原畫及完整12格淺底，確認半寫實人類畫風、完整頭腳刀尖及服裝武器一致；B221男女雙彎刃、B222女滿袖已以v3重畫，B222男按自身原畫維持捲袖露肘。runtime另依最終矩陣。",
+  "rootAccepted": true
 }

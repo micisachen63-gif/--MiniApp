@@ -32,9 +32,11 @@ try{
   phase='ingest';
   result=await api({action:'ingest',filename:result.filename,etag});
  }
+ let bookmark=result.at_bookmark;
  while(!['complete','error'].includes(result.status)){
   fs.writeFileSync('.release-sync/thief-isolated-import-progress.json',JSON.stringify(result));console.log(JSON.stringify({phase:'import',status:result.status||'pending'}));
-  phase='poll';result=await api({action:'poll',current_bookmark:result.at_bookmark});
+  bookmark=result.at_bookmark||bookmark;assert(bookmark,'Import poll requires the last confirmed bookmark');
+  phase='poll';result=await api({action:'poll',current_bookmark:bookmark});
  }
  assert.equal(result.status,'complete','Isolated import failed; private response retained');
  assert(await committed(),'Import completed without its atomic progress marker');

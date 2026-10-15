@@ -1,0 +1,64 @@
+{
+  "status": "native-and-root-visual-pass-runtime-pending",
+  "repairedIdentities": [
+    {
+      "key": "adv4_thief_B221_f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B221_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "attack-0-5.png": "1320f264254065afc2b626f8aa8df231dbefae6ea52018b7981b03e054101a05",
+        "attack-6-11.png": "c44fdd5cd1767648ebbac03998155f4769c36b2a5949af68485fbd962ec5247c"
+      },
+      "outputSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "portrait.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "character.png": "61414a7f51095faac8d149d82182303372a615895c18f3af59c729fb93438b21",
+        "character.webp": "87be9b77e17fa762a1714036b5ce84bc02c56f949e7b9cb628c37fb67a04bb3b"
+      },
+      "rootAccepted": true,
+      "reason": "both daggers visibly curved in all poses, matching portrait"
+    },
+    {
+      "key": "adv4_thief_B221_m",
+      "fragment": "docs/thief/art-B2/adv4_thief_B221_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "attack-0-5.png": "46a3f85cb744d87d15bcb66824923e056b404760f736e4eefbc4aeda7a1fa035",
+        "attack-6-11.png": "bebb4fceff7f59f0c603a9dce4913f4ff5acc572e399e879d918a963b1b923bc"
+      },
+      "outputSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "portrait.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "character.png": "ea412f625872f8c2aa0267d1f54dfc8a07e1f3ff33c61b4168ec03f07b62b1fc",
+        "character.webp": "0e056d14908e85692b3f2759e4b42c289b296135511fc4ffb9edaac8c0459799"
+      },
+      "rootAccepted": true,
+      "reason": "both daggers visibly curved in all poses, matching portrait"
+    },
+    {
+      "key": "adv4_thief_B222_f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B222_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "attack-0-5.png": "d13b71a4bd3767165e217f78c1a3b8f12e8580075e99b278580494e98935e7a3",
+        "attack-6-11.png": "02845dfaecd667627951e47b201c88d30da86851c3351f3e3e8b552aef1d99a9"
+      },
+      "outputSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "portrait.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "character.png": "a03535a89c6d08d5f8e9b9f3be0f72f7c2658b6a4176e2dd98128a00b7f9dc2a",
+        "character.webp": "d0116e15fd2a4681ab8ac8d39ca96a13feff3b1e67d435cf1c16da983005b64e"
+      },
+      "rootAccepted": true,
+      "reason": "full continuous black leather sleeves on both arms in every pose, matching portrait"
+    }
+  ],
+  "unchangedMaleB222": {
+    "key": "adv4_thief_B222_m",
+    "rootAccepted": false,
+    "authorVisualReview": "pass",
+    "reason": "portrait has rolled sleeves with exposed elbow above bracer; all 12 poses preserve the same rolled-sleeve cut and silver crescent straight dagger guards. Female full-length sleeves are a different identity, not the male reference."
+  },
+  "registryChanged": false,
+  "appChanged": false
+}

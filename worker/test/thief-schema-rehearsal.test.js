@@ -14,3 +14,8 @@ test('authenticated rehearsal has no arbitrary SQL endpoint and restricts digest
   const response=await rehearsal.fetch(request(path,'correct',body),env);assert.equal(response.status,status);
  }
 });
+test('authorized production executor cannot fault-inject, expose row digests, or apply a different source',async()=>{
+ const env={DB:db,MODE:'authorized-production-expansion',REHEARSAL_TOKEN:'correct',EXPECTED_DATABASE_ID:'bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4',AUTHORIZATION:'human-approved-thief-expansion-20261015',SOURCE_COMMIT:'a'.repeat(40)};
+ for(const path of ['/rollback','/page-digest','/sequence-digest'])assert.equal((await rehearsal.fetch(request(path,'correct'),env)).status,404);
+ assert.equal((await rehearsal.fetch(request('/apply','correct',{sourceCommit:'b'.repeat(40)}),env)).status,409);
+});

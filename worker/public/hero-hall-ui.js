@@ -1,6 +1,6 @@
-(()=>{'use strict';const classes=[['all','全部'],['sword','劍士'],['archer','妖精'],['mage','法師']],pageSize=20;
+(()=>{'use strict';const baseClasses=[['all','全部'],['sword','劍士'],['archer','妖精'],['mage','法師']],pageSize=20;
 function render(listing,state,{esc,fmt,portrait,includeThief=false}){
- const classes=includeThief?[['all','全部'],['sword','劍士'],['archer','妖精'],['mage','法師'],['thief','盜賊']]:[['all','全部'],['sword','劍士'],['archer','妖精'],['mage','法師']];
+ const classes=includeThief?[...baseClasses,['thief','盜賊']]:baseClasses;
  const filter=classes.some(([key])=>key===state.filter)?state.filter:'all',heroes=listing?.heroes||[],filtered=heroes.filter(h=>filter==='all'||h.baseClass===filter),pages=Math.max(1,Math.ceil(filtered.length/pageSize)),page=Math.max(1,Math.min(pages,Number(state.page)||1)),start=(page-1)*pageSize;
  const tabs='<div class="hall-tabs" role="tablist" aria-label="等級排名職業">'+classes.map(([key,name])=>'<button class="btn '+(key===filter?'gold':'ghost')+'" role="tab" aria-selected="'+(key===filter)+'" data-hall-class="'+key+'">'+name+'<small>'+heroes.filter(h=>key==='all'||h.baseClass===key).length+'</small></button>').join('')+'</div>';
  const cards=!listing?'<p class="muted" role="status">載入英雄中…</p>':filtered.length?filtered.slice(start,start+pageSize).map((h,i)=>'<button class="hall-hero" data-hall-hero="'+esc(h.id)+'" aria-label="第 '+(start+i+1)+' 名 '+esc(h.name)+'，等級 '+h.level+'，查看英雄武裝"><em class="hall-rank">第 '+(start+i+1)+' 名</em><img loading="lazy" decoding="async" src="'+esc(portrait(h))+'" alt="'+esc(h.name)+'外觀"><span><b>'+esc(h.name)+'</b><strong class="hall-level">Lv.'+h.level+'</strong><small>'+esc(h.className)+'</small><strong>戰力 '+fmt(h.power)+'</strong></span></button>').join(''):'<p class="muted hall-empty">此職業尚無英雄</p>';
