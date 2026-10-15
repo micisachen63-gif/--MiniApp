@@ -72,7 +72,7 @@ function guardianInfo(env,row) {
   const guardian={...sigilView(row),...guardianEffect(row,env)};
   return {kind:'guardian',guardianId:row.id,equipId:null,item:null,equipment:null,guardian,
     name:guardian.qualityName+'・'+guardian.typeName,emoji:'✦',desc:`${guardian.ability} +${Math.round((guardian.damageBonus||guardian.lootBonus)*100)}%`,art:guardian.artUrl,
-    category:'guardian',classReq:GUARDIAN_CLASSES[row.type],tier:null,quality:guardian.quality,qualityName:guardian.qualityName,enhance:null};
+    category:'guardian',classReq:GUARDIAN_CLASSES[row.type],usableClasses:row.type==='melee'?['sword','thief']:[GUARDIAN_CLASSES[row.type]],tier:null,quality:guardian.quality,qualityName:guardian.qualityName,enhance:null};
 }
 function checkGuardian(row,c) {
   if(!row||row.char_id!==String(c.tg_id))fail('not_found','找不到你的守護天使',404);
@@ -96,7 +96,7 @@ function normalizeFilters(input={}) {
   return f;
 }
 const matchInfo=(info,f)=> (f.category==='all'||info.category===f.category)&&
-  (f.classReq==='all'||info.classReq===f.classReq||(f.classReq!=='any'&&info.classReq==='any'))&&
+  (f.classReq==='all'||info.classReq===f.classReq||info.usableClasses?.includes(f.classReq)||(f.classReq!=='any'&&info.classReq==='any'))&&
   (f.tier===null||info.tier===f.tier)&&(f.quality==='all'||info.quality===f.quality)&&
   (f.enhanceMin===null||(info.enhance!==null&&info.enhance>=f.enhanceMin))&&
   (f.enhanceMax===null||(info.enhance!==null&&info.enhance<=f.enhanceMax));
@@ -108,7 +108,10 @@ function listingCursor(cursor) {
 function filterSQL(f,alias='l') {
   const parts=[],params=[];
   if(f.category!=='all'){parts.push(`${alias}.category=?`);params.push(f.category);}
-  if(f.classReq!=='all'){parts.push(f.classReq==='any'?`${alias}.class_req=?`:`${alias}.class_req IN (?,'any')`);params.push(f.classReq);}
+  if(f.classReq==='thief'){
+    // Preserve existing indexed melee listings; never include sword-only equipment/books.
+    parts.push(`(${alias}.class_req IN (?,'any') OR (${alias}.kind='guardian' AND ${alias}.class_req='sword'))`);params.push(f.classReq);
+  }else if(f.classReq!=='all'){parts.push(f.classReq==='any'?`${alias}.class_req=?`:`${alias}.class_req IN (?,'any')`);params.push(f.classReq);}
   if(f.tier!==null){parts.push(`${alias}.tier=?`);params.push(f.tier);}
   if(f.quality!=='all'){parts.push(`${alias}.quality=?`);params.push(f.quality);}
   if(f.enhanceMin!==null){parts.push(`${alias}.enhance>=?`);params.push(f.enhanceMin);}
@@ -153,7 +156,7 @@ export async function sellable(env,tg,b={}) {
   const guardianWhere=['g.char_id=?','g.bound=0','g.active=0','g.locked=0','g.trade_id IS NULL','g.exchange_id IS NULL'],guardianParams=[String(tg)];
   if(c.level<15||c.party_id||(f.category!=='all'&&f.category!=='guardian')||f.tier!==null||f.enhanceMin!==null||f.enhanceMax!==null)guardianWhere.push('0');
   const guardianClass="CASE g.type WHEN 'melee' THEN 'sword' WHEN 'ranged' THEN 'archer' WHEN 'magic' THEN 'mage' ELSE 'any' END";
-  if(f.classReq!=='all'){guardianWhere.push(f.classReq==='any'?`${guardianClass}=?`:`${guardianClass} IN (?,'any')`);guardianParams.push(f.classReq);}
+  if(f.classReq!=='all'){guardianWhere.push(f.classReq==='any'?`${guardianClass}=?`:`${guardianClass} IN (?,'any')`);guardianParams.push(f.classReq==='thief'?'sword':f.classReq);}
   if(f.quality!=='all'){guardianWhere.push('g.quality=?');guardianParams.push(QUALITY_ORDER.indexOf(f.quality)+1);}
   const outer=cursor?'WHERE (kind>? OR (kind=? AND ref>?))':'';
   const rows=(await db.prepare(`SELECT * FROM (SELECT 'equip' kind,e.id ref,1 qty FROM rpg_equipment e WHERE ${gearWhere.join(' AND ')} UNION ALL SELECT 'guardian' kind,g.id ref,1 qty FROM rpg_guardian_sigils g WHERE ${guardianWhere.join(' AND ')} UNION ALL SELECT 'item' kind,item ref,quantity qty FROM rpg_inventory WHERE tg_id=? AND quantity>0 AND item IN (${itemKeys.length?itemKeys.map(literal).join(','):"''"})) ${outer} ORDER BY kind,ref LIMIT 31`).bind(...gearParams,...guardianParams,String(tg),...(cursor?[cursor.kind,cursor.kind,cursor.ref]:[])).all()).results||[];

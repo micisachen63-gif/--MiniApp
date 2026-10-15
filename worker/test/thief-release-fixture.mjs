@@ -99,5 +99,8 @@ if(!releaseReady){
  }
 }
 const report={passed:true,releaseReadyUnderTest:releaseReady,overrideMethod:'test-only Node module load hook for both release states; no file changes',productionWrites:false,isolatedInMemoryFixture:true,legacyPoolByteEquality:true,legacyPoolChecks:legacyChecks.length,dropChance:.35,researchPerRun:8,bookQuantity:1,skills:results};
-const file=new URL('../../docs/thief/gear-art/skill-pipeline-'+releaseReady+'.json',import.meta.url);fs.writeFileSync(file,JSON.stringify(report,null,2));console.log(JSON.stringify({passed:true,releaseReady,skills:results.length,legacyPoolChecks:legacyChecks.length}));
+// The standard suite is read-only with respect to tracked acceptance evidence.
+// A deliberate acceptance run may opt in to writing a separate report path.
+if(process.env.THIEF_PIPELINE_REPORT)fs.writeFileSync(process.env.THIEF_PIPELINE_REPORT,JSON.stringify(report,null,2));
+console.log(JSON.stringify({passed:true,releaseReady,skills:results.length,legacyPoolChecks:legacyChecks.length}));
 

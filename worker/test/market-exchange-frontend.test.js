@@ -36,6 +36,15 @@ test('two stacked halls can remain open together; closed exchange and passive up
   assert.ok(shell.indexOf('data-market-hall="shop"')<shell.indexOf('data-market-hall="exchange"'));assert.doesNotMatch(shell,/<details[^>]+name=/);
   assert.equal(h.calls.length,0);h.open('shop');h.open('exchange');await tick();assert.equal(h.halls.every(x=>x.open),true);assert.equal(h.calls.length,1);const writes=h.root.writes;h.handle.update();h.handle.update();assert.equal(h.root.writes,writes);assert.equal(h.calls.length,1);
 });
+test('thief is selectable in browse and candidate filters and melee guardians identify both compatible classes',async()=>{
+  const melee={...angel,guardianId:'melee-angel',classReq:'sword',usableClasses:['sword','thief'],guardian:{...angel.guardian,type:'melee',ability:'近戰傷害'}};
+  const h=setup({api:async()=>({items:[melee]})});h.open();await tick();
+  const choose=()=>{const form=h.root.querySelector('[data-exchange-filter-form]');assert.match(form.innerHTML,/<option value="thief"/);form.elements.classReq.value='thief';form.dispatch('submit');};
+  choose();await tick();assert.equal(h.calls.at(-1).body.filters.classReq,'thief');assert.match(h.root.innerHTML,/劍士／盜賊/);
+  h.root.click('data-exchange-tab','create');await tick();choose();await tick();
+  assert.equal(h.calls.at(-1).action,'exchange/sellable');assert.equal(h.calls.at(-1).body.filters.classReq,'thief');assert.match(h.root.innerHTML,/劍士／盜賊/);
+});
+
 test('candidate pagination appends beyond thirty, preserves selection and retains a later skill book',async()=>{
   const first=Array.from({length:30},(_,i)=>gear('g'+i)),second=[gear('g29'),gear('g30'),book];
   const h=setup({api:async(action,body)=>action==='exchange/sellable'?{items:body.cursor?second:first,nextCursor:body.cursor?null:'equip:g29'}:{items:[]}});

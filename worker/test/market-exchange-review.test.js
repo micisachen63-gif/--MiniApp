@@ -326,6 +326,36 @@ test('review: all eight guardian qualities and real type classes filter independ
   assert.equal((await Market.sellable(env,'111',{filters:{category:'guardian'}})).items.length,0);
 });
 
+test('review: thief filters include melee and loot guardians in both candidates and legacy listings without borrowing sword gear',async()=>{
+  const {env,guardian,gear}=await fixture(),angels={};
+  for(const type of ['melee','ranged','magic','loot'])angels[type]=await guardian(type,4);
+  const sword=await gear('sword-only');
+  const expected=[angels.melee.id,angels.loot.id].sort();
+  const candidates=await Market.sellable(env,'111',{filters:{classReq:'thief'}});
+  assert.deepEqual(candidates.items.filter(x=>x.kind==='guardian').map(x=>x.guardianId).sort(),expected);
+  assert.ok(!candidates.items.some(x=>x.equipId===sword.id));
+  for(const g of Object.values(angels))await Market.create(env,'111',{guardianId:g.id,price:101,requestId:uuid()},T0);
+  await Market.create(env,'111',{equipId:sword.id,price:101,requestId:uuid()},T0);
+  // Melee listings created before thief remain indexed as sword. No DB rewrite is required.
+  assert.equal(env.DB.sqlite.prepare('SELECT class_req FROM rpg_exchange_listings WHERE ref=?').get(angels.melee.id).class_req,'sword');
+  for(const category of ['all','guardian']){
+    const page=await Market.list(env,'222',{filters:{classReq:'thief',category}});
+    assert.deepEqual(page.items.filter(x=>x.kind==='guardian').map(x=>x.guardianId).sort(),expected);
+    assert.ok(!page.items.some(x=>x.equipId===sword.id));
+    assert.deepEqual(page.items.find(x=>x.guardianId===angels.melee.id).usableClasses,['sword','thief']);
+  }
+  const other=await Market.list(env,'222',{filters:{classReq:'mage',category:'guardian'}});
+  assert.deepEqual(other.items.map(x=>x.guardianId).sort(),[angels.magic.id,angels.loot.id].sort());
+  const listed=await Market.list(env,'222',{filters:{classReq:'thief',category:'guardian',quality:'purple'}});
+  const id=listed.items.find(x=>x.guardianId===angels.melee.id).id;
+  await env.DB.prepare("UPDATE rpg_characters SET base_class='thief',class_path='A1' WHERE tg_id='222'").run();
+  await Market.buy(env,'222',{listingId:id,requestId:uuid()},T0);
+  await Guardian.activate(env,'222',{itemId:angels.melee.id,requestId:'thief_market_activate'},T0);
+  const buyer=await loadPlayer(env.DB,'222',env);assert.equal(buyer.char.guardian.type,'melee');
+  assert.equal(gold(env.DB,'222'),99899);assert.equal(gold(env.DB,'111'),100095);
+  assert.equal(guardianDamageMultiplier(buyer.char),1+activeSettings(env).damageBonuses[3]);
+});
+
 test('review: old guardian share request becomes unavailable when listing begins; direct trade works again after cancel',async()=>{
   const { env,guardian }=await fixture(),g=await guardian('magic',4);
   const share=await Guardian.share(env,'111',{itemId:g.id,requestId:'audit_pre_share_'+uuid().replaceAll('-','')},T0);

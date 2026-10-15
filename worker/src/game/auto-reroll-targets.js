@@ -2,7 +2,7 @@ import {AFFIXES,BRANCH_AFFIXES,affixLines,affixSlots} from './affixes.js';
 import {GameError} from './classes.js';
 export const QUALITY_SCORES=Object.freeze({C:0,B:40,A:65,S:85,SS:95});
 export function usefulTargets(char){
- const cls=char.base_class,branch=String(char.class_path||'').slice(0,2),recommended=BRANCH_AFFIXES[cls]?.[branch]||[],attack={sword:'meleePct',archer:'rangedPct',mage:'magicPct'}[cls];
+ const cls=char.base_class,branch=String(char.class_path||'').slice(0,2),recommended=BRANCH_AFFIXES[cls]?.[branch]||[],attack={sword:'meleePct',thief:'meleePct',archer:'rangedPct',mage:'magicPct'}[cls];
  const entries=[['attack','攻擊',attack],['experience','經驗','expPct'],['critical','爆擊','critPct'],['life','生命','maxHpPct'],['mana','魔力','maxMpPct'],['guard','減傷','mitigationPct'],['economy','節魔','mpEfficiencyPct'],['haste','技能冷卻','skillHastePct']];
  for(const key of ['healingPct','shieldPct','dotPct','summonPct','lifestealPct','elemPct'])if(recommended.includes(key))entries.push([key,AFFIXES[key].name,key]);
  return entries.filter(x=>x[2]).map(([id,name,key])=>({id,name,key,affixName:AFFIXES[key].name,recommended:recommended.includes(key)}));
