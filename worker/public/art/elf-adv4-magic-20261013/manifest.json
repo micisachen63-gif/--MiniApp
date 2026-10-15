@@ -1,0 +1,969 @@
+{
+  "version": "20261013-elf4-magic2",
+  "cellWidth": 640,
+  "cellHeight": 960,
+  "frames": 8,
+  "variants": {
+    "adv4_archer_A111_f": {
+      "name": "永恆風冠・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.103125,
+        0.045112781954887216,
+        0.7703125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.103125,
+        0.4041666666666667,
+        0.8265625,
+        0.95625
+      ]
+    },
+    "adv4_archer_A111_m": {
+      "name": "永恆風冠・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1921875,
+        0.045112781954887216,
+        0.75,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.16875,
+        0.40729166666666666,
+        0.83125,
+        0.9572916666666667
+      ]
+    },
+    "adv4_archer_A112_f": {
+      "name": "群星神弓・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.153125,
+        0.045112781954887216,
+        0.7328125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1515625,
+        0.3885416666666667,
+        0.83125,
+        0.9614583333333333
+      ]
+    },
+    "adv4_archer_A112_m": {
+      "name": "群星神弓・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2171875,
+        0.045112781954887216,
+        0.76875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.165625,
+        0.4010416666666667,
+        0.8984375,
+        0.9697916666666667
+      ]
+    },
+    "adv4_archer_A121_f": {
+      "name": "蒼穹神判・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2734375,
+        0.045112781954887216,
+        0.78,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1984375,
+        0.421875,
+        0.875,
+        0.9520833333333333
+      ]
+    },
+    "adv4_archer_A121_m": {
+      "name": "蒼穹神判・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.25625,
+        0.045112781954887216,
+        0.78,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.21875,
+        0.42604166666666665,
+        0.878125,
+        0.9625
+      ]
+    },
+    "adv4_archer_A122_f": {
+      "name": "聖光獵星・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.159375,
+        0.045112781954887216,
+        0.7359375,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.14375,
+        0.43125,
+        0.84375,
+        0.9739583333333334
+      ]
+    },
+    "adv4_archer_A122_m": {
+      "name": "聖光獵星・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.26875,
+        0.045112781954887216,
+        0.78,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.2140625,
+        0.39375,
+        0.903125,
+        0.95625
+      ]
+    },
+    "adv4_archer_A211_f": {
+      "name": "太初風皇・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2140625,
+        0.045112781954887216,
+        0.7546875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.171875,
+        0.4114583333333333,
+        0.8234375,
+        0.9583333333333334
+      ]
+    },
+    "adv4_archer_A211_m": {
+      "name": "太初風皇・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1828125,
+        0.045112781954887216,
+        0.740625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1828125,
+        0.4010416666666667,
+        0.9625,
+        0.953125
+      ]
+    },
+    "adv4_archer_A212_f": {
+      "name": "九霄御風・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1859375,
+        0.045112781954887216,
+        0.740625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1859375,
+        0.40729166666666666,
+        0.828125,
+        0.95
+      ]
+    },
+    "adv4_archer_A212_m": {
+      "name": "九霄御風・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2109375,
+        0.045112781954887216,
+        0.7796875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1703125,
+        0.3802083333333333,
+        0.8359375,
+        0.9541666666666667
+      ]
+    },
+    "adv4_archer_A221_f": {
+      "name": "天羽聖主・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2109375,
+        0.045112781954887216,
+        0.746875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1203125,
+        0.396875,
+        0.8015625,
+        0.9510416666666667
+      ]
+    },
+    "adv4_archer_A221_m": {
+      "name": "天羽聖主・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.184375,
+        0.045112781954887216,
+        0.7296875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1828125,
+        0.4083333333333333,
+        0.8171875,
+        0.9625
+      ]
+    },
+    "adv4_archer_A222_f": {
+      "name": "嵐靈神使・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.215625,
+        0.045112781954887216,
+        0.753125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.2078125,
+        0.409375,
+        0.859375,
+        0.953125
+      ]
+    },
+    "adv4_archer_A222_m": {
+      "name": "嵐靈神使・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1578125,
+        0.045112781954887216,
+        0.70625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1484375,
+        0.3927083333333333,
+        0.825,
+        0.959375
+      ]
+    },
+    "adv4_archer_B111_f": {
+      "name": "太古森皇・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.184375,
+        0.045112781954887216,
+        0.7125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1828125,
+        0.43333333333333335,
+        0.809375,
+        0.9541666666666667
+      ]
+    },
+    "adv4_archer_B111_m": {
+      "name": "太古森皇・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1984375,
+        0.045112781954887216,
+        0.7265625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1890625,
+        0.42291666666666666,
+        0.8390625,
+        0.95625
+      ]
+    },
+    "adv4_archer_B112_f": {
+      "name": "萬獸神尊・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.246875,
+        0.045112781954887216,
+        0.7734375,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.240625,
+        0.465625,
+        0.7953125,
+        0.9458333333333333
+      ]
+    },
+    "adv4_archer_B112_m": {
+      "name": "萬獸神尊・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2296875,
+        0.045112781954887216,
+        0.7484375,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.190625,
+        0.4479166666666667,
+        0.79375,
+        0.9489583333333333
+      ]
+    },
+    "adv4_archer_B121_f": {
+      "name": "世界樹祭主・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.23125,
+        0.045112781954887216,
+        0.765625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.2265625,
+        0.43854166666666666,
+        0.8765625,
+        0.94375
+      ]
+    },
+    "adv4_archer_B121_m": {
+      "name": "世界樹祭主・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2,
+        0.045112781954887216,
+        0.734375,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.196875,
+        0.421875,
+        0.8796875,
+        0.9604166666666667
+      ]
+    },
+    "adv4_archer_B122_f": {
+      "name": "精靈祖靈・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.20625,
+        0.045112781954887216,
+        0.746875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1953125,
+        0.41458333333333336,
+        0.8359375,
+        0.953125
+      ]
+    },
+    "adv4_archer_B122_m": {
+      "name": "精靈祖靈・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1921875,
+        0.045112781954887216,
+        0.74375,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1921875,
+        0.44375,
+        0.8109375,
+        0.9541666666666667
+      ]
+    },
+    "adv4_archer_B211_f": {
+      "name": "永夜月神・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1859375,
+        0.045112781954887216,
+        0.7328125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.18125,
+        0.42916666666666664,
+        0.803125,
+        0.9541666666666667
+      ]
+    },
+    "adv4_archer_B211_m": {
+      "name": "永夜月神・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1765625,
+        0.045112781954887216,
+        0.7296875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1734375,
+        0.390625,
+        0.8203125,
+        0.9489583333333333
+      ]
+    },
+    "adv4_archer_B212_f": {
+      "name": "銀月聖獵・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1375,
+        0.045112781954887216,
+        0.6890625,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1375,
+        0.4239583333333333,
+        0.7546875,
+        0.9541666666666667
+      ]
+    },
+    "adv4_archer_B212_m": {
+      "name": "銀月聖獵・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.215625,
+        0.045112781954887216,
+        0.753125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.2125,
+        0.40520833333333334,
+        0.83125,
+        0.946875
+      ]
+    },
+    "adv4_archer_B221_f": {
+      "name": "荊棘聖王・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.1765625,
+        0.045112781954887216,
+        0.7171875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.175,
+        0.40208333333333335,
+        0.8078125,
+        0.9552083333333333
+      ]
+    },
+    "adv4_archer_B221_m": {
+      "name": "荊棘聖王・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2046875,
+        0.045112781954887216,
+        0.7421875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1890625,
+        0.4375,
+        0.8140625,
+        0.9583333333333334
+      ]
+    },
+    "adv4_archer_B222_f": {
+      "name": "幽林守護・女",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.2046875,
+        0.045112781954887216,
+        0.746875,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.1828125,
+        0.41875,
+        0.8203125,
+        0.95625
+      ]
+    },
+    "adv4_archer_B222_m": {
+      "name": "幽林守護・男",
+      "cols": 4,
+      "rows": 2,
+      "firstFrame": 0,
+      "heightScale": 1.8045112781954886,
+      "preservePlacement": true,
+      "useAsIdle": true,
+      "authoredEffects": true,
+      "bodyHeight": 0.8421052631578947,
+      "feet": 0.8872180451127819,
+      "fig": [
+        0.19375,
+        0.045112781954887216,
+        0.73125,
+        0.8872180451127819
+      ],
+      "portraitCrop": {
+        "left": 0,
+        "top": 428,
+        "width": 640,
+        "height": 532
+      },
+      "frameBounds": [
+        0.178125,
+        0.4197916666666667,
+        0.896875,
+        0.9458333333333333
+      ]
+    }
+  },
+  "sourceManifest": "C:\\Users\\User\\Documents\\ChatGPT\\營運自動化\\elf-adv4-20261013/manifest.json"
+}

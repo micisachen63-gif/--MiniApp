@@ -1,0 +1,200 @@
+{
+  "schemaVersion": 1,
+  "version": "20261013-elf4-attack2",
+  "baseClass": "archer",
+  "genderMode": "shared",
+  "assetStatus": "validated",
+  "cols": 4,
+  "rows": 2,
+  "cell": 512,
+  "frames": 8,
+  "masterCell": null,
+  "transparentBorderMinimum": 32,
+  "frameOrder": [
+    "charge",
+    "flight-early",
+    "flight-mid",
+    "flight-late",
+    "impact-start",
+    "impact-bloom",
+    "impact-scatter",
+    "impact-fade"
+  ],
+  "phaseContract": {
+    "charge": {
+      "range": [
+        0,
+        0.22
+      ],
+      "frames": [
+        0
+      ],
+      "anchor": "from"
+    },
+    "flight": {
+      "range": [
+        0.22,
+        0.65
+      ],
+      "frames": [
+        1,
+        2,
+        3
+      ],
+      "anchor": "from-to-linear",
+      "artDirection": "right"
+    },
+    "impact": {
+      "range": [
+        0.65,
+        1
+      ],
+      "frames": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "anchor": "to"
+    }
+  },
+  "entries": {
+    "A111": {
+      "path": "A111",
+      "name": "永恆風冠",
+      "theme": "象牙白金冠冕、天青風翼；白金風矢與風冠命中花",
+      "color": "#b8eeff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A111.webp"
+    },
+    "A112": {
+      "path": "A112",
+      "name": "群星神弓",
+      "theme": "星夜靛藍、星座弓矢；靛藍星矢與星座爆發",
+      "color": "#adbfff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A112.webp"
+    },
+    "A121": {
+      "path": "A121",
+      "name": "蒼穹神判",
+      "theme": "銀藍雷紋、天穹符印；雷紋箭與銀藍裁決爆發",
+      "color": "#a6ddff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A121.webp"
+    },
+    "A122": {
+      "path": "A122",
+      "name": "聖光獵星",
+      "theme": "日耀白金、聖光星矢；金白光箭與放射星芒",
+      "color": "#ffe3a4",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A122.webp"
+    },
+    "A211": {
+      "path": "A211",
+      "name": "太初風皇",
+      "theme": "翡翠青金、風暴羽甲；翡翠風矢與羽狀風暴",
+      "color": "#8ef2cc",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A211.webp"
+    },
+    "A212": {
+      "path": "A212",
+      "name": "九霄御風",
+      "theme": "雲白天藍、九霄長弓；雲羽箭與天藍雲環爆發",
+      "color": "#c4efff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A212.webp"
+    },
+    "A221": {
+      "path": "A221",
+      "name": "天羽聖主",
+      "theme": "白金神羽、天界弓；神羽光箭與白金翼狀爆發",
+      "color": "#fff0b9",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A221.webp"
+    },
+    "A222": {
+      "path": "A222",
+      "name": "嵐靈神使",
+      "theme": "青碧風靈、靈弓；青碧靈箭與靈紋風花",
+      "color": "#83efde",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_A222.webp"
+    },
+    "B111": {
+      "path": "B111",
+      "name": "太古森皇",
+      "theme": "古木翠甲、森林靈冠；翠木箭與枝葉符紋爆發",
+      "color": "#99e999",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B111.webp"
+    },
+    "B112": {
+      "path": "B112",
+      "name": "萬獸神尊",
+      "theme": "獸靈金紋、森綠神弓；金綠獸紋箭與獸靈光芒",
+      "color": "#e8d694",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B112.webp"
+    },
+    "B121": {
+      "path": "B121",
+      "name": "世界樹祭主",
+      "theme": "翡翠符文、根脈；翡翠根紋箭與世界樹枝狀爆發",
+      "color": "#78ecc2",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B121.webp"
+    },
+    "B122": {
+      "path": "B122",
+      "name": "精靈祖靈",
+      "theme": "月白祖靈、古老靈紋；月白符箭與祖靈紋爆發",
+      "color": "#d4eeff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B122.webp"
+    },
+    "B211": {
+      "path": "B211",
+      "name": "永夜月神",
+      "theme": "深靛月銀、新月神弓；靛銀月箭與新月爆發",
+      "color": "#b5bcff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B211.webp"
+    },
+    "B212": {
+      "path": "B212",
+      "name": "銀月聖獵",
+      "theme": "銀白月紋、冷光弓矢；冷銀月箭與月霜星芒",
+      "color": "#d6f5ff",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B212.webp"
+    },
+    "B221": {
+      "path": "B221",
+      "name": "荊棘聖王",
+      "theme": "暗翡翠棘甲、赤金荊棘；赤金棘箭與荊棘光瓣",
+      "color": "#ffb58d",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B221.webp"
+    },
+    "B222": {
+      "path": "B222",
+      "name": "幽林守護",
+      "theme": "幽綠古木、林影符文；幽綠靈箭與林影葉紋",
+      "color": "#90d8b4",
+      "src": "art/elf-adv4-attack-fx-20261013/archer_B222.webp"
+    }
+  },
+  "sourceMetadata": "source-manifest.json",
+  "nativeResolutionNote": "Sources are native image_gen output; 512 cells include transparent padding and do not imply 512px native artwork. See source metadata.",
+  "petSkills": {
+    "獵鷹助攻": {
+      "src": "art/elf-adv4-attack-fx-20261013/pet-falcon.webp",
+      "type": "falcon"
+    },
+    "獵鷹標記": {
+      "src": "art/elf-adv4-attack-fx-20261013/pet-falcon.webp",
+      "type": "falcon"
+    },
+    "靈獸撲擊": {
+      "src": "art/elf-adv4-attack-fx-20261013/pet-beast.webp",
+      "type": "beast"
+    },
+    "野獸之王": {
+      "src": "art/elf-adv4-attack-fx-20261013/pet-wolf.webp",
+      "type": "wolf",
+      "companion": "falcon"
+    },
+    "萬獸神尊・終章": {
+      "src": "art/elf-adv4-attack-fx-20261013/pet-beast.webp",
+      "type": "beast"
+    }
+  }
+}
