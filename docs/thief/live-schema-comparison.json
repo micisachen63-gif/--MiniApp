@@ -1,0 +1,205 @@
+{
+  "scope": "schema-only read; no player rows or remote writes",
+  "capturedAt": "2026-10-15T10:53:36.301Z",
+  "productionWrites": 0,
+  "captureSHA256": "1a07576609b0568516a53b1a0c2639da36bd3c685d4cc23088db7da45497b1a9",
+  "liveObjects": 135,
+  "repositoryObjects": 135,
+  "repositorySchemaSHA256": "e44fab19c436e7a7c037ebba9e28d50140546c7dd47a227ad9039f2d49acf695",
+  "liveSchemaSHA256": "1dae0300e2858fb19c67233cb322672ab225e616bd65c98d36d60749076abb34",
+  "exactMatch": false,
+  "sameDefinitionsAfterLineEndingNormalization": false,
+  "lineEndingOnly": [
+    "idx_rpg_outbox_delivery",
+    "idx_rpg_outbox_retry",
+    "rpg_accounts",
+    "rpg_admin_audit",
+    "rpg_app_access",
+    "rpg_auto_enhance",
+    "rpg_auto_reroll",
+    "rpg_background_operations",
+    "rpg_book_trade_operations",
+    "rpg_class_changes",
+    "rpg_daily_counters",
+    "rpg_equipment",
+    "rpg_exchange_listings",
+    "rpg_exchange_operations",
+    "rpg_guardian_auto",
+    "rpg_guardian_operations",
+    "rpg_guardian_sigils",
+    "rpg_guardian_voucher_grants",
+    "rpg_guardian_welcome",
+    "rpg_idle_reports",
+    "rpg_inventory",
+    "rpg_journal_cards",
+    "rpg_journals",
+    "rpg_ledger",
+    "rpg_notice_dismissals",
+    "rpg_parties",
+    "rpg_party_members",
+    "rpg_party_operations",
+    "rpg_party_presence",
+    "rpg_party_rewards",
+    "rpg_share_likes",
+    "rpg_shares",
+    "rpg_trade_items",
+    "rpg_trade_operations",
+    "rpg_trade_requests",
+    "background_enhance_dismiss",
+    "background_enhance_start",
+    "background_guardian_seen",
+    "background_guardian_start",
+    "background_reroll_start",
+    "collection_blessing_keep_delete",
+    "collection_blessing_keep_update",
+    "collection_blessing_owner",
+    "collection_blessing_party",
+    "guardian_grant_guard",
+    "guardian_grant_no_delete",
+    "guardian_grant_no_update",
+    "guardian_grant_resources",
+    "guardian_sigil_delete_guard",
+    "guardian_sigil_delete_revision",
+    "guardian_sigil_insert_revision",
+    "guardian_sigil_party_delete",
+    "guardian_sigil_party_update",
+    "guardian_sigil_transfer_guard",
+    "guardian_sigil_update_revision",
+    "guardian_welcome_guard",
+    "guardian_welcome_resources",
+    "rpg_auto_enhance_equipment_delete",
+    "rpg_auto_enhance_equipment_update",
+    "rpg_auto_enhance_start_guard",
+    "rpg_auto_reroll_equipment_delete",
+    "rpg_auto_reroll_equipment_update",
+    "rpg_auto_reroll_start_guard",
+    "rpg_exchange_enhance_resume",
+    "rpg_exchange_enhance_start",
+    "rpg_exchange_equipment_delete",
+    "rpg_exchange_equipment_update",
+    "rpg_exchange_guardian_claim",
+    "rpg_exchange_guardian_delete",
+    "rpg_exchange_guardian_request",
+    "rpg_exchange_guardian_share",
+    "rpg_exchange_guardian_update",
+    "rpg_exchange_reroll_resume",
+    "rpg_exchange_reroll_start"
+  ],
+  "differences": [
+    {
+      "name": "rpg_boss_attacks",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_boss_attacks",
+        "tbl_name": "rpg_boss_attacks",
+        "sql": "CREATE TABLE rpg_boss_attacks (\r\n  boss_id TEXT NOT NULL,\r\n  tg_id TEXT NOT NULL,\r\n  win INTEGER NOT NULL,                -- one attack per player per 3-minute window\r\n  damage INTEGER NOT NULL,\r\n  created_at INTEGER NOT NULL,\r\n  PRIMARY KEY (boss_id, tg_id, win)\r\n)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_boss_attacks",
+        "tbl_name": "rpg_boss_attacks",
+        "sql": "CREATE TABLE rpg_boss_attacks (\n  boss_id TEXT NOT NULL,\n  tg_id TEXT NOT NULL,\n  win INTEGER NOT NULL,                \n  damage INTEGER NOT NULL,\n  created_at INTEGER NOT NULL,\n  PRIMARY KEY (boss_id, tg_id, win)\n)"
+      }
+    },
+    {
+      "name": "rpg_boss_instances",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_boss_instances",
+        "tbl_name": "rpg_boss_instances",
+        "sql": "CREATE TABLE rpg_boss_instances (\r\n  id TEXT PRIMARY KEY,                 -- b<YYYYMMDD><HH> (Taipei slot) — one boss per slot\r\n  chat_id TEXT,\r\n  map_id INTEGER NOT NULL,\r\n  name TEXT NOT NULL,\r\n  element TEXT,\r\n  base_hp INTEGER NOT NULL,\r\n  max_hp INTEGER NOT NULL,\r\n  hp INTEGER NOT NULL CHECK (hp >= 0),\r\n  participants INTEGER NOT NULL DEFAULT 0,\r\n  spawn_reason TEXT,\r\n  started_at INTEGER NOT NULL,\r\n  ends_at INTEGER NOT NULL,\r\n  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','settling','killed','fled','vanished')),\r\n  message_chat_id TEXT, message_id INTEGER,\r\n  result_json TEXT,\r\n  settled_at INTEGER\r\n)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_boss_instances",
+        "tbl_name": "rpg_boss_instances",
+        "sql": "CREATE TABLE rpg_boss_instances (\n  id TEXT PRIMARY KEY,                 \n  chat_id TEXT,\n  map_id INTEGER NOT NULL,\n  name TEXT NOT NULL,\n  element TEXT,\n  base_hp INTEGER NOT NULL,\n  max_hp INTEGER NOT NULL,\n  hp INTEGER NOT NULL CHECK (hp >= 0),\n  participants INTEGER NOT NULL DEFAULT 0,\n  spawn_reason TEXT,\n  started_at INTEGER NOT NULL,\n  ends_at INTEGER NOT NULL,\n  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','settling','killed','fled','vanished')),\n  message_chat_id TEXT, message_id INTEGER,\n  result_json TEXT,\n  settled_at INTEGER\n)"
+      }
+    },
+    {
+      "name": "rpg_characters",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_characters",
+        "tbl_name": "rpg_characters",
+        "sql": "CREATE TABLE rpg_characters (\r\n  tg_id TEXT PRIMARY KEY,\r\n  name TEXT NOT NULL UNIQUE COLLATE NOCASE,\r\n  tg_name TEXT,\r\n  gender TEXT NOT NULL CHECK (gender IN ('m','f')),\r\n  base_class TEXT NOT NULL CHECK (base_class IN ('mage','sword','archer')),\r\n  class_path TEXT NOT NULL DEFAULT '',\r\n  pending_tier INTEGER,\r\n  level INTEGER NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 120),\r\n  exp INTEGER NOT NULL DEFAULT 0 CHECK (exp >= 0),\r\n  hp INTEGER NOT NULL,\r\n  mp INTEGER NOT NULL,\r\n  map_id INTEGER NOT NULL DEFAULT 1,\r\n  idle_state TEXT NOT NULL DEFAULT 'fighting' CHECK (idle_state IN ('fighting','no_mp','town_no_red','reviving','gate')),\r\n  state_until INTEGER,\r\n  auto_red_pct INTEGER NOT NULL DEFAULT 50 CHECK (auto_red_pct BETWEEN 20 AND 80),\r\n  auto_blue INTEGER NOT NULL DEFAULT 1,\r\n  gold INTEGER NOT NULL DEFAULT 0 CHECK (gold >= 0),\r\n  last_settle_at INTEGER NOT NULL,\r\n  last_daily_gold_day TEXT,\r\n  penalty_day TEXT,\r\n  penalties_today INTEGER NOT NULL DEFAULT 0,\r\n  drop_day TEXT,                       -- Taipei day of drops_today (idle scroll daily caps)\r\n  drops_today TEXT,                    -- JSON {scroll_w,scroll_a,scroll_r}\r\n  deaths_total INTEGER NOT NULL DEFAULT 0,\r\n  last_reselect_at INTEGER,\r\n  boss_down_until INTEGER,\r\n  ladder_points INTEGER NOT NULL DEFAULT 100,\r\n  pvp_wins INTEGER NOT NULL DEFAULT 0,\r\n  pvp_losses INTEGER NOT NULL DEFAULT 0,\r\n  created_day TEXT NOT NULL,\r\n  created_at INTEGER NOT NULL,\r\n  updated_at INTEGER NOT NULL,\r\n  rev INTEGER NOT NULL DEFAULT 0\r\n, tg_username TEXT, account_tg_id TEXT, char_slot INTEGER NOT NULL DEFAULT 1 CHECK (char_slot BETWEEN 1 AND 4), special_json TEXT NOT NULL DEFAULT '{}', party_id TEXT, idle_combat_json TEXT, guardian_draw_remainder INTEGER NOT NULL DEFAULT 0\r\n CHECK(guardian_draw_remainder BETWEEN 0 AND 4), collection_active_map INTEGER NOT NULL DEFAULT 0\r\n CHECK(typeof(collection_active_map)='integer' AND collection_active_map BETWEEN 0 AND 12))"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_characters",
+        "tbl_name": "rpg_characters",
+        "sql": "CREATE TABLE rpg_characters (\n  tg_id TEXT PRIMARY KEY,\n  name TEXT NOT NULL UNIQUE COLLATE NOCASE,\n  tg_name TEXT,\n  gender TEXT NOT NULL CHECK (gender IN ('m','f')),\n  base_class TEXT NOT NULL CHECK (base_class IN ('mage','sword','archer')),\n  class_path TEXT NOT NULL DEFAULT '',\n  pending_tier INTEGER,\n  level INTEGER NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 120),\n  exp INTEGER NOT NULL DEFAULT 0 CHECK (exp >= 0),\n  hp INTEGER NOT NULL,\n  mp INTEGER NOT NULL,\n  map_id INTEGER NOT NULL DEFAULT 1,\n  idle_state TEXT NOT NULL DEFAULT 'fighting' CHECK (idle_state IN ('fighting','no_mp','town_no_red','reviving','gate')),\n  state_until INTEGER,\n  auto_red_pct INTEGER NOT NULL DEFAULT 50 CHECK (auto_red_pct BETWEEN 20 AND 80),\n  auto_blue INTEGER NOT NULL DEFAULT 1,\n  gold INTEGER NOT NULL DEFAULT 0 CHECK (gold >= 0),\n  last_settle_at INTEGER NOT NULL,\n  last_daily_gold_day TEXT,\n  penalty_day TEXT,\n  penalties_today INTEGER NOT NULL DEFAULT 0,\n  drop_day TEXT,                       \n  drops_today TEXT,                    \n  deaths_total INTEGER NOT NULL DEFAULT 0,\n  last_reselect_at INTEGER,\n  boss_down_until INTEGER,\n  ladder_points INTEGER NOT NULL DEFAULT 100,\n  pvp_wins INTEGER NOT NULL DEFAULT 0,\n  pvp_losses INTEGER NOT NULL DEFAULT 0,\n  created_day TEXT NOT NULL,\n  created_at INTEGER NOT NULL,\n  updated_at INTEGER NOT NULL,\n  rev INTEGER NOT NULL DEFAULT 0\n, tg_username TEXT, account_tg_id TEXT, char_slot INTEGER NOT NULL DEFAULT 1 CHECK (char_slot BETWEEN 1 AND 4), special_json TEXT NOT NULL DEFAULT '{}', party_id TEXT, idle_combat_json TEXT, guardian_draw_remainder INTEGER NOT NULL DEFAULT 0\n CHECK(guardian_draw_remainder BETWEEN 0 AND 4), collection_active_map INTEGER NOT NULL DEFAULT 0\n CHECK(typeof(collection_active_map)='integer' AND collection_active_map BETWEEN 0 AND 12))"
+      }
+    },
+    {
+      "name": "rpg_outbox",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_outbox",
+        "tbl_name": "rpg_outbox",
+        "sql": "CREATE TABLE rpg_outbox (            -- messages for 小精靈 to deliver (the Worker never calls Telegram in P1)\r\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n  dedupe_key TEXT UNIQUE,\r\n  target TEXT NOT NULL CHECK (target IN ('group','dm')),\r\n  tg_id TEXT,\r\n  kind TEXT NOT NULL,\r\n  payload_json TEXT,\r\n  created_at INTEGER NOT NULL,\r\n  claimed_at INTEGER\r\n, delivered_at INTEGER, claim_token TEXT, claim_attempts INTEGER NOT NULL DEFAULT 0, next_attempt_at INTEGER NOT NULL DEFAULT 0, failed_at INTEGER, last_error_code INTEGER, last_error TEXT)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_outbox",
+        "tbl_name": "rpg_outbox",
+        "sql": "CREATE TABLE rpg_outbox (            \n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  dedupe_key TEXT UNIQUE,\n  target TEXT NOT NULL CHECK (target IN ('group','dm')),\n  tg_id TEXT,\n  kind TEXT NOT NULL,\n  payload_json TEXT,\n  created_at INTEGER NOT NULL,\n  claimed_at INTEGER\n, delivered_at INTEGER, claim_token TEXT, claim_attempts INTEGER NOT NULL DEFAULT 0, next_attempt_at INTEGER NOT NULL DEFAULT 0, failed_at INTEGER, last_error_code INTEGER, last_error TEXT)"
+      }
+    },
+    {
+      "name": "rpg_pk",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_pk",
+        "tbl_name": "rpg_pk",
+        "sql": "CREATE TABLE rpg_pk (\r\n  id TEXT PRIMARY KEY,\r\n  a_tg TEXT NOT NULL,                  -- challenger\r\n  b_tg TEXT NOT NULL,                  -- challenged\r\n  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','done','declined','cancelled','expired')),\r\n  origin TEXT NOT NULL DEFAULT 'app',  -- app | group\r\n  chat_id TEXT, message_id INTEGER,    -- group card\r\n  winner_tg TEXT, loser_tg TEXT,\r\n  seed INTEGER,                        -- crypto-random at accept time (replayable, not predictable)\r\n  rounds INTEGER, log_json TEXT,       -- summary for the card / Mini App replay\r\n  drop_equip_id TEXT, drop_json TEXT, ward_used INTEGER NOT NULL DEFAULT 0,\r\n  created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, decided_at INTEGER,\r\n  CHECK (a_tg <> b_tg)\r\n)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_pk",
+        "tbl_name": "rpg_pk",
+        "sql": "CREATE TABLE rpg_pk (\n  id TEXT PRIMARY KEY,\n  a_tg TEXT NOT NULL,                  \n  b_tg TEXT NOT NULL,                  \n  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','done','declined','cancelled','expired')),\n  origin TEXT NOT NULL DEFAULT 'app',  \n  chat_id TEXT, message_id INTEGER,    \n  winner_tg TEXT, loser_tg TEXT,\n  seed INTEGER,                        \n  rounds INTEGER, log_json TEXT,       \n  drop_equip_id TEXT, drop_json TEXT, ward_used INTEGER NOT NULL DEFAULT 0,\n  created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, decided_at INTEGER,\n  CHECK (a_tg <> b_tg)\n)"
+      }
+    },
+    {
+      "name": "rpg_trade_log",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_trade_log",
+        "tbl_name": "rpg_trade_log",
+        "sql": "CREATE TABLE rpg_trade_log (\r\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\r\n  trade_id TEXT NOT NULL,\r\n  tg_id TEXT,\r\n  action TEXT NOT NULL,                -- open | add | remove | gold | confirm | unconfirm | done | cancel | expire\r\n  details TEXT,\r\n  created_at INTEGER NOT NULL\r\n)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_trade_log",
+        "tbl_name": "rpg_trade_log",
+        "sql": "CREATE TABLE rpg_trade_log (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  trade_id TEXT NOT NULL,\n  tg_id TEXT,\n  action TEXT NOT NULL,                \n  details TEXT,\n  created_at INTEGER NOT NULL\n)"
+      }
+    },
+    {
+      "name": "rpg_trades",
+      "kind": "definition-drift",
+      "local": {
+        "type": "table",
+        "name": "rpg_trades",
+        "tbl_name": "rpg_trades",
+        "sql": "CREATE TABLE rpg_trades (\r\n  id TEXT PRIMARY KEY,\r\n  a_tg TEXT NOT NULL,                  -- initiator\r\n  b_tg TEXT NOT NULL,                  -- counterparty\r\n  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','cancelled','expired')),\r\n  a_gold INTEGER NOT NULL DEFAULT 0 CHECK (a_gold BETWEEN 0 AND 1000000),   -- escrowed gold (already taken from the wallet)\r\n  b_gold INTEGER NOT NULL DEFAULT 0 CHECK (b_gold BETWEEN 0 AND 1000000),\r\n  a_ok INTEGER NOT NULL DEFAULT 0, b_ok INTEGER NOT NULL DEFAULT 0,\r\n  offer_rev INTEGER NOT NULL DEFAULT 0,   -- content version: any change resets both confirmations; confirm must name it\r\n  rev INTEGER NOT NULL DEFAULT 0,         -- row lock (every write)\r\n  origin TEXT NOT NULL DEFAULT 'app',     -- app | group\r\n  chat_id TEXT, message_id INTEGER,       -- group trade card\r\n  tax_gold INTEGER NOT NULL DEFAULT 0,\r\n  created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, expires_at INTEGER NOT NULL,\r\n  closed_at INTEGER, closed_by TEXT, a_lock INTEGER NOT NULL DEFAULT 0, b_lock INTEGER NOT NULL DEFAULT 0, share_id TEXT, request_id TEXT,\r\n  CHECK (a_tg <> b_tg)\r\n)"
+      },
+      "live": {
+        "type": "table",
+        "name": "rpg_trades",
+        "tbl_name": "rpg_trades",
+        "sql": "CREATE TABLE rpg_trades (\n  id TEXT PRIMARY KEY,\n  a_tg TEXT NOT NULL,                  \n  b_tg TEXT NOT NULL,                  \n  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','cancelled','expired')),\n  a_gold INTEGER NOT NULL DEFAULT 0 CHECK (a_gold BETWEEN 0 AND 1000000),   \n  b_gold INTEGER NOT NULL DEFAULT 0 CHECK (b_gold BETWEEN 0 AND 1000000),\n  a_ok INTEGER NOT NULL DEFAULT 0, b_ok INTEGER NOT NULL DEFAULT 0,\n  offer_rev INTEGER NOT NULL DEFAULT 0,   \n  rev INTEGER NOT NULL DEFAULT 0,         \n  origin TEXT NOT NULL DEFAULT 'app',     \n  chat_id TEXT, message_id INTEGER,       \n  tax_gold INTEGER NOT NULL DEFAULT 0,\n  created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, expires_at INTEGER NOT NULL,\n  closed_at INTEGER, closed_by TEXT, a_lock INTEGER NOT NULL DEFAULT 0, b_lock INTEGER NOT NULL DEFAULT 0, share_id TEXT, request_id TEXT,\n  CHECK (a_tg <> b_tg)\n)"
+      }
+    }
+  ],
+  "releaseReady": false,
+  "productionMigrationAuthorized": false,
+  "executionNote": "The current candidate guards intentionally require exact SQL. Regenerate from the captured live schema and execute structured JSON statements, preserving literal newlines; review SQL files are not an execution source."
+}

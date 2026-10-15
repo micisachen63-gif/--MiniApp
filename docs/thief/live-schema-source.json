@@ -1,0 +1,815 @@
+{
+  "scope": "Schema only, no player rows",
+  "objects": [
+    {
+      "type": "index",
+      "name": "idx_guardian_grants_day",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE INDEX idx_guardian_grants_day ON rpg_guardian_voucher_grants(account_id,day)"
+    },
+    {
+      "type": "index",
+      "name": "idx_guardian_one_active",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE UNIQUE INDEX idx_guardian_one_active ON rpg_guardian_sigils(char_id) WHERE active=1"
+    },
+    {
+      "type": "index",
+      "name": "idx_guardian_operations_owner",
+      "tbl_name": "rpg_guardian_operations",
+      "sql": "CREATE INDEX idx_guardian_operations_owner ON rpg_guardian_operations(char_id,created_at,operation_id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_guardian_owner",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE INDEX idx_guardian_owner ON rpg_guardian_sigils(char_id,created_at,id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_guardian_trade",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE INDEX idx_guardian_trade ON rpg_guardian_sigils(trade_id) WHERE trade_id IS NOT NULL"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_boss_attack_owner_day",
+      "tbl_name": "rpg_boss_attacks",
+      "sql": "CREATE INDEX idx_rpg_boss_attack_owner_day ON rpg_boss_attacks(tg_id,created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_boss_status",
+      "tbl_name": "rpg_boss_instances",
+      "sql": "CREATE INDEX idx_rpg_boss_status ON rpg_boss_instances(status, ends_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_characters_account",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE INDEX idx_rpg_characters_account ON rpg_characters(account_tg_id, char_slot)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_characters_account_slot",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE UNIQUE INDEX idx_rpg_characters_account_slot ON rpg_characters(account_tg_id, char_slot)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_characters_username",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE INDEX idx_rpg_characters_username ON rpg_characters(tg_username COLLATE NOCASE)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_equipment_owner",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE INDEX idx_rpg_equipment_owner ON rpg_equipment(tg_id, is_equipped)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_equipment_trade",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE INDEX idx_rpg_equipment_trade ON rpg_equipment(trade_id) WHERE trade_id IS NOT NULL"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_ledger_owner",
+      "tbl_name": "rpg_ledger",
+      "sql": "CREATE INDEX idx_rpg_ledger_owner ON rpg_ledger(tg_id, created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_likes_owner_day",
+      "tbl_name": "rpg_share_likes",
+      "sql": "CREATE INDEX idx_rpg_likes_owner_day ON rpg_share_likes(tg_id,created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_outbox_delivery",
+      "tbl_name": "rpg_outbox",
+      "sql": "CREATE INDEX idx_rpg_outbox_delivery\n  ON rpg_outbox(delivered_at, claimed_at, id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_outbox_failed",
+      "tbl_name": "rpg_outbox",
+      "sql": "CREATE INDEX idx_rpg_outbox_failed ON rpg_outbox(failed_at) WHERE failed_at IS NOT NULL"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_outbox_pending",
+      "tbl_name": "rpg_outbox",
+      "sql": "CREATE INDEX idx_rpg_outbox_pending ON rpg_outbox(claimed_at, id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_outbox_retry",
+      "tbl_name": "rpg_outbox",
+      "sql": "CREATE INDEX idx_rpg_outbox_retry\n ON rpg_outbox(next_attempt_at,claimed_at,id)\n WHERE delivered_at IS NULL AND failed_at IS NULL"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_party_member_account",
+      "tbl_name": "rpg_party_members",
+      "sql": "CREATE INDEX idx_rpg_party_member_account ON rpg_party_members(account_id,party_id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_pk_a",
+      "tbl_name": "rpg_pk",
+      "sql": "CREATE INDEX idx_rpg_pk_a ON rpg_pk(a_tg, status, decided_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_pk_b",
+      "tbl_name": "rpg_pk",
+      "sql": "CREATE INDEX idx_rpg_pk_b ON rpg_pk(b_tg, status, decided_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_pk_open",
+      "tbl_name": "rpg_pk",
+      "sql": "CREATE INDEX idx_rpg_pk_open ON rpg_pk(status, expires_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_reports_owner",
+      "tbl_name": "rpg_idle_reports",
+      "sql": "CREATE INDEX idx_rpg_reports_owner ON rpg_idle_reports(tg_id, created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_shares_equip",
+      "tbl_name": "rpg_shares",
+      "sql": "CREATE INDEX idx_rpg_shares_equip ON rpg_shares(equip_id, created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_shares_owner",
+      "tbl_name": "rpg_shares",
+      "sql": "CREATE INDEX idx_rpg_shares_owner ON rpg_shares(tg_id, created_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_trade_log_trade",
+      "tbl_name": "rpg_trade_log",
+      "sql": "CREATE INDEX idx_rpg_trade_log_trade ON rpg_trade_log(trade_id, id)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_trades_a",
+      "tbl_name": "rpg_trades",
+      "sql": "CREATE INDEX idx_rpg_trades_a ON rpg_trades(a_tg, status)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_trades_b",
+      "tbl_name": "rpg_trades",
+      "sql": "CREATE INDEX idx_rpg_trades_b ON rpg_trades(b_tg, status)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_trades_open",
+      "tbl_name": "rpg_trades",
+      "sql": "CREATE INDEX idx_rpg_trades_open ON rpg_trades(status, expires_at)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_treq_once",
+      "tbl_name": "rpg_trade_requests",
+      "sql": "CREATE UNIQUE INDEX idx_rpg_treq_once ON rpg_trade_requests(share_id, requester_tg) WHERE status = 'pending'"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_treq_owner",
+      "tbl_name": "rpg_trade_requests",
+      "sql": "CREATE INDEX idx_rpg_treq_owner ON rpg_trade_requests(owner_tg, status)"
+    },
+    {
+      "type": "index",
+      "name": "idx_rpg_treq_req",
+      "tbl_name": "rpg_trade_requests",
+      "sql": "CREATE INDEX idx_rpg_treq_req ON rpg_trade_requests(requester_tg, status)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_auto_enhance_due",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE INDEX rpg_auto_enhance_due ON rpg_auto_enhance(status,next_at)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_auto_enhance_owner",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE UNIQUE INDEX rpg_auto_enhance_owner ON rpg_auto_enhance(owner) WHERE status IN ('running','processing')"
+    },
+    {
+      "type": "index",
+      "name": "rpg_auto_reroll_due",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE INDEX rpg_auto_reroll_due ON rpg_auto_reroll(status,next_at)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_auto_reroll_item",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE INDEX rpg_auto_reroll_item ON rpg_auto_reroll(item_id,status)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_auto_reroll_owner",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE UNIQUE INDEX rpg_auto_reroll_owner ON rpg_auto_reroll(owner) WHERE status IN ('running','processing')"
+    },
+    {
+      "type": "index",
+      "name": "rpg_background_operations_pending",
+      "tbl_name": "rpg_background_operations",
+      "sql": "CREATE INDEX rpg_background_operations_pending ON rpg_background_operations(owner,dismissed_at,seq)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_active",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_active ON rpg_exchange_listings(status,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_category",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_category ON rpg_exchange_listings(status,category,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_class",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_class ON rpg_exchange_listings(status,class_req,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_enhance_item",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE INDEX rpg_exchange_enhance_item ON rpg_auto_enhance(item_id,status)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_equipment",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE UNIQUE INDEX rpg_exchange_equipment ON rpg_exchange_listings(ref) WHERE status='active' AND kind='equip'"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_guardian",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE UNIQUE INDEX rpg_exchange_guardian ON rpg_exchange_listings(ref) WHERE status='active' AND kind='guardian'"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_history",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_history ON rpg_exchange_listings(seller_account,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_quality",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_quality ON rpg_exchange_listings(status,quality,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_seller",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_seller ON rpg_exchange_listings(seller_account,status,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_exchange_tier",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE INDEX rpg_exchange_tier ON rpg_exchange_listings(status,tier,seq DESC)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_guardian_auto_due",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE INDEX rpg_guardian_auto_due ON rpg_guardian_auto(status,next_at)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_guardian_auto_notice",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE INDEX rpg_guardian_auto_notice ON rpg_guardian_auto(owner,seen_at,created_at)"
+    },
+    {
+      "type": "index",
+      "name": "rpg_guardian_auto_owner",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE UNIQUE INDEX rpg_guardian_auto_owner ON rpg_guardian_auto(owner) WHERE status='running'"
+    },
+    {
+      "type": "index",
+      "name": "rpg_guardian_exchange",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE UNIQUE INDEX rpg_guardian_exchange ON rpg_guardian_sigils(exchange_id) WHERE exchange_id IS NOT NULL"
+    },
+    {
+      "type": "index",
+      "name": "rpg_parties_open",
+      "tbl_name": "rpg_parties",
+      "sql": "CREATE INDEX rpg_parties_open ON rpg_parties(status,expires_at)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_accounts",
+      "tbl_name": "rpg_accounts",
+      "sql": "CREATE TABLE rpg_accounts (\n  account_tg_id TEXT PRIMARY KEY,\n  active_char_id TEXT,\n  updated_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_admin_audit",
+      "tbl_name": "rpg_admin_audit",
+      "sql": "CREATE TABLE rpg_admin_audit (\n  id TEXT PRIMARY KEY, admin_tg_id TEXT, action TEXT NOT NULL, details TEXT, created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_app_access",
+      "tbl_name": "rpg_app_access",
+      "sql": "CREATE TABLE rpg_app_access (\n  tg_id TEXT PRIMARY KEY,\n  granted_at INTEGER NOT NULL,\n  expires_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_auto_enhance",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE TABLE rpg_auto_enhance (\n id TEXT PRIMARY KEY, owner TEXT NOT NULL, tg_id TEXT NOT NULL, item_id TEXT NOT NULL,\n item_name TEXT NOT NULL, target INTEGER NOT NULL CHECK(target BETWEEN 1 AND 15), blessed INTEGER NOT NULL,\n status TEXT NOT NULL, reason TEXT, level INTEGER NOT NULL, attempts INTEGER NOT NULL DEFAULT 0,\n spent_gold INTEGER NOT NULL DEFAULT 0, spent_scrolls INTEGER NOT NULL DEFAULT 0,\n rev INTEGER NOT NULL DEFAULT 0, next_at INTEGER NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_auto_reroll",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE TABLE rpg_auto_reroll (\n id TEXT PRIMARY KEY,owner TEXT NOT NULL,tg_id TEXT NOT NULL,item_id TEXT NOT NULL,item_name TEXT NOT NULL,\n request_id TEXT NOT NULL,config_json TEXT NOT NULL,class_snapshot TEXT NOT NULL,\n status TEXT NOT NULL CHECK(status IN ('running','processing','ended')),reason TEXT,\n attempts INTEGER NOT NULL DEFAULT 0,spent_gold INTEGER NOT NULL DEFAULT 0,spent_scrolls INTEGER NOT NULL DEFAULT 0,\n result_json TEXT NOT NULL DEFAULT '{}',rev INTEGER NOT NULL DEFAULT 0,next_at INTEGER NOT NULL,created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL,\n UNIQUE(owner,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_background_operations",
+      "tbl_name": "rpg_background_operations",
+      "sql": "CREATE TABLE rpg_background_operations (\n seq INTEGER PRIMARY KEY AUTOINCREMENT,owner TEXT NOT NULL,\n kind TEXT NOT NULL CHECK(kind IN ('auto_enhance_end','guardian_auto','auto_reroll_end')),\n ref_id TEXT NOT NULL,created_at INTEGER NOT NULL,dismissed_at INTEGER,\n UNIQUE(kind,ref_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_book_trade_operations",
+      "tbl_name": "rpg_book_trade_operations",
+      "sql": "CREATE TABLE rpg_book_trade_operations (\n char_id TEXT NOT NULL, request_id TEXT NOT NULL, trade_id TEXT NOT NULL,\n PRIMARY KEY(char_id,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_boss_attacks",
+      "tbl_name": "rpg_boss_attacks",
+      "sql": "CREATE TABLE rpg_boss_attacks (\n  boss_id TEXT NOT NULL,\n  tg_id TEXT NOT NULL,\n  win INTEGER NOT NULL,                \n  damage INTEGER NOT NULL,\n  created_at INTEGER NOT NULL,\n  PRIMARY KEY (boss_id, tg_id, win)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_boss_instances",
+      "tbl_name": "rpg_boss_instances",
+      "sql": "CREATE TABLE rpg_boss_instances (\n  id TEXT PRIMARY KEY,                 \n  chat_id TEXT,\n  map_id INTEGER NOT NULL,\n  name TEXT NOT NULL,\n  element TEXT,\n  base_hp INTEGER NOT NULL,\n  max_hp INTEGER NOT NULL,\n  hp INTEGER NOT NULL CHECK (hp >= 0),\n  participants INTEGER NOT NULL DEFAULT 0,\n  spawn_reason TEXT,\n  started_at INTEGER NOT NULL,\n  ends_at INTEGER NOT NULL,\n  status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active','settling','killed','fled','vanished')),\n  message_chat_id TEXT, message_id INTEGER,\n  result_json TEXT,\n  settled_at INTEGER\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_characters",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE TABLE rpg_characters (\n  tg_id TEXT PRIMARY KEY,\n  name TEXT NOT NULL UNIQUE COLLATE NOCASE,\n  tg_name TEXT,\n  gender TEXT NOT NULL CHECK (gender IN ('m','f')),\n  base_class TEXT NOT NULL CHECK (base_class IN ('mage','sword','archer')),\n  class_path TEXT NOT NULL DEFAULT '',\n  pending_tier INTEGER,\n  level INTEGER NOT NULL DEFAULT 1 CHECK (level BETWEEN 1 AND 120),\n  exp INTEGER NOT NULL DEFAULT 0 CHECK (exp >= 0),\n  hp INTEGER NOT NULL,\n  mp INTEGER NOT NULL,\n  map_id INTEGER NOT NULL DEFAULT 1,\n  idle_state TEXT NOT NULL DEFAULT 'fighting' CHECK (idle_state IN ('fighting','no_mp','town_no_red','reviving','gate')),\n  state_until INTEGER,\n  auto_red_pct INTEGER NOT NULL DEFAULT 50 CHECK (auto_red_pct BETWEEN 20 AND 80),\n  auto_blue INTEGER NOT NULL DEFAULT 1,\n  gold INTEGER NOT NULL DEFAULT 0 CHECK (gold >= 0),\n  last_settle_at INTEGER NOT NULL,\n  last_daily_gold_day TEXT,\n  penalty_day TEXT,\n  penalties_today INTEGER NOT NULL DEFAULT 0,\n  drop_day TEXT,                       \n  drops_today TEXT,                    \n  deaths_total INTEGER NOT NULL DEFAULT 0,\n  last_reselect_at INTEGER,\n  boss_down_until INTEGER,\n  ladder_points INTEGER NOT NULL DEFAULT 100,\n  pvp_wins INTEGER NOT NULL DEFAULT 0,\n  pvp_losses INTEGER NOT NULL DEFAULT 0,\n  created_day TEXT NOT NULL,\n  created_at INTEGER NOT NULL,\n  updated_at INTEGER NOT NULL,\n  rev INTEGER NOT NULL DEFAULT 0\n, tg_username TEXT, account_tg_id TEXT, char_slot INTEGER NOT NULL DEFAULT 1 CHECK (char_slot BETWEEN 1 AND 4), special_json TEXT NOT NULL DEFAULT '{}', party_id TEXT, idle_combat_json TEXT, guardian_draw_remainder INTEGER NOT NULL DEFAULT 0\n CHECK(guardian_draw_remainder BETWEEN 0 AND 4), collection_active_map INTEGER NOT NULL DEFAULT 0\n CHECK(typeof(collection_active_map)='integer' AND collection_active_map BETWEEN 0 AND 12))"
+    },
+    {
+      "type": "table",
+      "name": "rpg_class_changes",
+      "tbl_name": "rpg_class_changes",
+      "sql": "CREATE TABLE rpg_class_changes (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  tg_id TEXT NOT NULL, tier INTEGER NOT NULL, from_path TEXT, to_path TEXT, kind TEXT NOT NULL, created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_daily_counters",
+      "tbl_name": "rpg_daily_counters",
+      "sql": "CREATE TABLE rpg_daily_counters (\n  tg_id TEXT NOT NULL, day TEXT NOT NULL, key TEXT NOT NULL, n INTEGER NOT NULL DEFAULT 0,\n  PRIMARY KEY (tg_id, day, key)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_equipment",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TABLE \"rpg_equipment\" (\n  id TEXT PRIMARY KEY,\n  tg_id TEXT NOT NULL,\n  slot TEXT NOT NULL CHECK (slot IN ('weapon','helmet','armor','gloves','boots','belt','undershirt','earring','ring')),\n  kind TEXT NOT NULL,\n  class_req TEXT NOT NULL CHECK (class_req IN ('mage','sword','archer','any')),\n  branch_req TEXT CHECK (branch_req IS NULL OR branch_req IN ('A','B')),\n  tier INTEGER NOT NULL CHECK (tier BETWEEN 1 AND 12),\n  level_req INTEGER NOT NULL,\n  name TEXT NOT NULL,\n  source TEXT NOT NULL DEFAULT 'shop',\n  base_stat INTEGER NOT NULL,\n  bonus_json TEXT,\n  element TEXT,\n  element_stat INTEGER NOT NULL DEFAULT 0,\n  element_tier TEXT NOT NULL DEFAULT 'common',\n  enhance_level INTEGER NOT NULL DEFAULT 0,\n  is_equipped INTEGER NOT NULL DEFAULT 0 CHECK (is_equipped BETWEEN 0 AND 2),\n  convert_token INTEGER NOT NULL DEFAULT 0,\n  created_at INTEGER NOT NULL,\n  grade TEXT NOT NULL DEFAULT 'normal' CHECK (grade IN ('normal','relic')),\n  affix_json TEXT,\n  bound INTEGER NOT NULL DEFAULT 0,\n  trade_id TEXT, affixes_json TEXT NOT NULL DEFAULT '[]',\n  CHECK (trade_id IS NULL OR is_equipped = 0)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_exchange_listings",
+      "tbl_name": "rpg_exchange_listings",
+      "sql": "CREATE TABLE rpg_exchange_listings (\n seq INTEGER PRIMARY KEY AUTOINCREMENT, id TEXT NOT NULL UNIQUE,\n seller_account TEXT NOT NULL, seller_char TEXT NOT NULL, buyer_char TEXT,\n kind TEXT NOT NULL CHECK(kind IN ('equip','item','guardian')), ref TEXT NOT NULL,\n qty INTEGER NOT NULL CHECK(qty BETWEEN 1 AND 99999),\n price INTEGER NOT NULL CHECK(price BETWEEN 1 AND 1000000),\n fee INTEGER NOT NULL CHECK(fee=(price+19)/20),\n category TEXT NOT NULL CHECK(category IN ('equipment','scroll','collection','skillbook','other','guardian')),\n class_req TEXT NOT NULL CHECK(class_req IN ('any','sword','archer','mage')), tier INTEGER CHECK(tier BETWEEN 1 AND 12),\n quality TEXT, enhance INTEGER, snapshot_json TEXT NOT NULL,\n status TEXT NOT NULL CHECK(status IN ('active','sold','cancelled')),\n rev INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL,\n closed_at INTEGER, CHECK(kind='item' OR qty=1)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_exchange_operations",
+      "tbl_name": "rpg_exchange_operations",
+      "sql": "CREATE TABLE rpg_exchange_operations (\n account_tg_id TEXT NOT NULL, request_id TEXT NOT NULL, char_id TEXT NOT NULL,\n action TEXT NOT NULL, payload_json TEXT NOT NULL, result_json TEXT NOT NULL, created_at INTEGER NOT NULL,\n PRIMARY KEY(account_tg_id,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guard",
+      "tbl_name": "rpg_guard",
+      "sql": "CREATE TABLE rpg_guard (ok INTEGER NOT NULL)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guardian_auto",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE TABLE rpg_guardian_auto (\n id TEXT PRIMARY KEY, owner TEXT NOT NULL, char_id TEXT NOT NULL,\n request_id TEXT NOT NULL, pool TEXT NOT NULL CHECK(pool IN ('normal','featured')),\n draw_count INTEGER NOT NULL CHECK(draw_count IN (5,10)),\n target_type TEXT NOT NULL CHECK(target_type IN ('any','attack','melee','ranged','magic','loot')),\n target_rank INTEGER NOT NULL CHECK(target_rank BETWEEN 0 AND 6),\n max_gold INTEGER CHECK(max_gold IS NULL OR max_gold>=0),\n status TEXT NOT NULL CHECK(status IN ('running','ended')), reason TEXT, match_id TEXT,\n batches INTEGER NOT NULL DEFAULT 0, total_draws INTEGER NOT NULL DEFAULT 0,\n spent_gold INTEGER NOT NULL DEFAULT 0, spent_vouchers INTEGER NOT NULL DEFAULT 0,\n used_free INTEGER NOT NULL DEFAULT 0, counts_json TEXT NOT NULL DEFAULT '[0,0,0,0,0,0,0,0]',\n rev INTEGER NOT NULL DEFAULT 0,next_at INTEGER NOT NULL,seen_at INTEGER,\n created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL, single_draw INTEGER NOT NULL DEFAULT 0 CHECK(single_draw IN (0,1)),UNIQUE(owner,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guardian_operations",
+      "tbl_name": "rpg_guardian_operations",
+      "sql": "CREATE TABLE rpg_guardian_operations (\n operation_id TEXT PRIMARY KEY,\n account_id TEXT NOT NULL,\n char_id TEXT NOT NULL REFERENCES rpg_characters(tg_id),\n request_id TEXT NOT NULL CHECK(length(request_id) BETWEEN 6 AND 100),\n action TEXT NOT NULL CHECK(action IN('summon','fuse','activate','lock','unbind','share')),\n payload_hash TEXT NOT NULL CHECK(length(payload_hash)=64),\n config_version TEXT NOT NULL,\n cost_json TEXT NOT NULL CHECK(json_valid(cost_json)),\n result_json TEXT NOT NULL CHECK(json_valid(result_json)),\n created_at INTEGER NOT NULL,\n UNIQUE(char_id,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guardian_sigils",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TABLE rpg_guardian_sigils (\n id TEXT PRIMARY KEY,\n char_id TEXT NOT NULL REFERENCES rpg_characters(tg_id),\n type TEXT NOT NULL CHECK(type IN('melee','ranged','magic','loot')),\n quality INTEGER NOT NULL CHECK(quality BETWEEN 1 AND 8),\n bound INTEGER NOT NULL DEFAULT 0 CHECK(bound IN(0,1)),\n active INTEGER NOT NULL DEFAULT 0 CHECK(active IN(0,1)),\n locked INTEGER NOT NULL DEFAULT 0 CHECK(locked IN(0,1)),\n trade_id TEXT REFERENCES rpg_trades(id),\n rev INTEGER NOT NULL DEFAULT 0 CHECK(rev>=0),\n source_operation_id TEXT NOT NULL REFERENCES rpg_guardian_operations(operation_id),\n created_at INTEGER NOT NULL,updated_at INTEGER NOT NULL, exchange_id TEXT REFERENCES rpg_exchange_listings(id),\n CHECK(active=0 OR bound=1),\n CHECK(trade_id IS NULL OR (active=0 AND bound=0 AND locked=0))\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guardian_voucher_grants",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE TABLE rpg_guardian_voucher_grants (\n account_id TEXT NOT NULL REFERENCES rpg_accounts(account_tg_id),\n boss_id TEXT NOT NULL REFERENCES rpg_boss_instances(id),\n day TEXT NOT NULL,\n recipient_char_id TEXT NOT NULL REFERENCES rpg_characters(tg_id),\n created_at INTEGER NOT NULL,\n PRIMARY KEY(account_id,boss_id),\n CHECK(day=date(created_at/1000,'unixepoch','+8 hours'))\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_guardian_welcome",
+      "tbl_name": "rpg_guardian_welcome",
+      "sql": "CREATE TABLE rpg_guardian_welcome (\n account_id TEXT PRIMARY KEY REFERENCES rpg_accounts(account_tg_id),\n recipient_char_id TEXT NOT NULL REFERENCES rpg_characters(tg_id),\n draws INTEGER NOT NULL DEFAULT 200 CHECK(draws=200),\n created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_idle_reports",
+      "tbl_name": "rpg_idle_reports",
+      "sql": "CREATE TABLE rpg_idle_reports (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  tg_id TEXT NOT NULL,\n  from_at INTEGER, to_at INTEGER, ticks INTEGER, skipped_ticks INTEGER,\n  kills INTEGER, exp_gained INTEGER, exp_lost INTEGER, deaths INTEGER, elites INTEGER, gold_gained INTEGER,\n  used_json TEXT, drops_json TEXT, levels_gained INTEGER, end_state TEXT, created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_inventory",
+      "tbl_name": "rpg_inventory",
+      "sql": "CREATE TABLE rpg_inventory (\n  tg_id TEXT NOT NULL,\n  item TEXT NOT NULL,\n  quantity INTEGER NOT NULL DEFAULT 0 CHECK (quantity >= 0),\n  PRIMARY KEY (tg_id, item)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_journal_cards",
+      "tbl_name": "rpg_journal_cards",
+      "sql": "CREATE TABLE rpg_journal_cards (\n day TEXT PRIMARY KEY, chat_id TEXT NOT NULL, message_id INTEGER\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_journals",
+      "tbl_name": "rpg_journals",
+      "sql": "CREATE TABLE rpg_journals (\n account_id TEXT NOT NULL, day TEXT NOT NULL, char_id TEXT NOT NULL,\n tier INTEGER NOT NULL CHECK(tier BETWEEN 1 AND 12), checked_at INTEGER,\n claims_json TEXT NOT NULL DEFAULT '{}', claim_count INTEGER NOT NULL DEFAULT 0 CHECK(claim_count BETWEEN 0 AND 3),\n bonus_claimed INTEGER NOT NULL DEFAULT 0 CHECK(bonus_claimed IN(0,1)),\n rev INTEGER NOT NULL DEFAULT 0, created_at INTEGER NOT NULL,\n PRIMARY KEY(account_id,day)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_ledger",
+      "tbl_name": "rpg_ledger",
+      "sql": "CREATE TABLE rpg_ledger (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  event_id TEXT NOT NULL UNIQUE,\n  tg_id TEXT NOT NULL,\n  type TEXT NOT NULL,\n  gold_delta INTEGER NOT NULL DEFAULT 0,\n  item TEXT,\n  item_delta INTEGER NOT NULL DEFAULT 0,\n  exp_delta INTEGER NOT NULL DEFAULT 0,\n  note TEXT,\n  created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_notice_dismissals",
+      "tbl_name": "rpg_notice_dismissals",
+      "sql": "CREATE TABLE rpg_notice_dismissals (\n account_tg_id TEXT NOT NULL REFERENCES rpg_accounts(account_tg_id),\n kind TEXT NOT NULL CHECK(kind IN('auto_enhance_end','guardian_summon','guardian_fuse')),\n ref_id TEXT NOT NULL CHECK(length(ref_id) BETWEEN 8 AND 120),\n created_at INTEGER NOT NULL,\n PRIMARY KEY(account_tg_id,kind,ref_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_outbox",
+      "tbl_name": "rpg_outbox",
+      "sql": "CREATE TABLE rpg_outbox (            \n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  dedupe_key TEXT UNIQUE,\n  target TEXT NOT NULL CHECK (target IN ('group','dm')),\n  tg_id TEXT,\n  kind TEXT NOT NULL,\n  payload_json TEXT,\n  created_at INTEGER NOT NULL,\n  claimed_at INTEGER\n, delivered_at INTEGER, claim_token TEXT, claim_attempts INTEGER NOT NULL DEFAULT 0, next_attempt_at INTEGER NOT NULL DEFAULT 0, failed_at INTEGER, last_error_code INTEGER, last_error TEXT)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_parties",
+      "tbl_name": "rpg_parties",
+      "sql": "CREATE TABLE rpg_parties (\n id TEXT PRIMARY KEY, leader_id TEXT NOT NULL, kind TEXT NOT NULL,\n status TEXT NOT NULL DEFAULT 'lobby', rev INTEGER NOT NULL DEFAULT 0,\n state_json TEXT NOT NULL, created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL,\n expires_at INTEGER NOT NULL, chat_id TEXT, message_id INTEGER\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_party_members",
+      "tbl_name": "rpg_party_members",
+      "sql": "CREATE TABLE rpg_party_members (\n party_id TEXT NOT NULL REFERENCES rpg_parties(id), char_id TEXT NOT NULL,\n account_id TEXT NOT NULL, ready INTEGER NOT NULL DEFAULT 0,\n joined_at INTEGER NOT NULL, PRIMARY KEY(party_id,char_id), UNIQUE(party_id,account_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_party_operations",
+      "tbl_name": "rpg_party_operations",
+      "sql": "CREATE TABLE rpg_party_operations (\n party_id TEXT NOT NULL, char_id TEXT NOT NULL, request_id TEXT NOT NULL,\n result_json TEXT NOT NULL, PRIMARY KEY(party_id,char_id,request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_party_presence",
+      "tbl_name": "rpg_party_presence",
+      "sql": "CREATE TABLE rpg_party_presence (\n account_id TEXT PRIMARY KEY, party_id TEXT NOT NULL, char_id TEXT NOT NULL UNIQUE\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_party_rewards",
+      "tbl_name": "rpg_party_rewards",
+      "sql": "CREATE TABLE rpg_party_rewards (\n party_id TEXT NOT NULL, char_id TEXT NOT NULL, reward_json TEXT NOT NULL,\n created_at INTEGER NOT NULL, PRIMARY KEY(party_id,char_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_pk",
+      "tbl_name": "rpg_pk",
+      "sql": "CREATE TABLE rpg_pk (\n  id TEXT PRIMARY KEY,\n  a_tg TEXT NOT NULL,                  \n  b_tg TEXT NOT NULL,                  \n  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','done','declined','cancelled','expired')),\n  origin TEXT NOT NULL DEFAULT 'app',  \n  chat_id TEXT, message_id INTEGER,    \n  winner_tg TEXT, loser_tg TEXT,\n  seed INTEGER,                        \n  rounds INTEGER, log_json TEXT,       \n  drop_equip_id TEXT, drop_json TEXT, ward_used INTEGER NOT NULL DEFAULT 0,\n  created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, decided_at INTEGER,\n  CHECK (a_tg <> b_tg)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_share_likes",
+      "tbl_name": "rpg_share_likes",
+      "sql": "CREATE TABLE rpg_share_likes (\n  share_id TEXT NOT NULL, tg_id TEXT NOT NULL, created_at INTEGER NOT NULL,\n  PRIMARY KEY (share_id, tg_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_shares",
+      "tbl_name": "rpg_shares",
+      "sql": "CREATE TABLE \"rpg_shares\" (\n  id TEXT PRIMARY KEY,\n  tg_id TEXT NOT NULL,\n  equip_id TEXT NOT NULL,\n  kind TEXT NOT NULL CHECK (kind IN ('share','relic','pk','enhance')),\n  snapshot_json TEXT NOT NULL,\n  context_json TEXT,\n  tradeable INTEGER NOT NULL DEFAULT 1,\n  likes INTEGER NOT NULL DEFAULT 0,\n  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','traded')),\n  chat_id TEXT,\n  message_id INTEGER,\n  created_at INTEGER NOT NULL\n, object_kind TEXT NOT NULL DEFAULT 'equip' CHECK(object_kind IN ('equip','sigil')))"
+    },
+    {
+      "type": "table",
+      "name": "rpg_trade_items",
+      "tbl_name": "rpg_trade_items",
+      "sql": "CREATE TABLE \"rpg_trade_items\" (\n trade_id TEXT NOT NULL,\n side TEXT NOT NULL CHECK(side IN ('a','b')),\n kind TEXT NOT NULL CHECK(kind IN ('equip','item','sigil')),\n ref TEXT NOT NULL,\n qty INTEGER NOT NULL DEFAULT 1 CHECK(qty>0),\n snapshot_json TEXT,\n PRIMARY KEY(trade_id,side,kind,ref)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_trade_log",
+      "tbl_name": "rpg_trade_log",
+      "sql": "CREATE TABLE rpg_trade_log (\n  id INTEGER PRIMARY KEY AUTOINCREMENT,\n  trade_id TEXT NOT NULL,\n  tg_id TEXT,\n  action TEXT NOT NULL,                \n  details TEXT,\n  created_at INTEGER NOT NULL\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_trade_operations",
+      "tbl_name": "rpg_trade_operations",
+      "sql": "CREATE TABLE rpg_trade_operations (\n  trade_id TEXT NOT NULL,\n  tg_id TEXT NOT NULL,\n  request_id TEXT NOT NULL,\n  result_json TEXT NOT NULL,\n  created_at INTEGER NOT NULL,\n  PRIMARY KEY (trade_id, tg_id, request_id)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_trade_requests",
+      "tbl_name": "rpg_trade_requests",
+      "sql": "CREATE TABLE rpg_trade_requests (\n  id TEXT PRIMARY KEY,\n  share_id TEXT NOT NULL,\n  equip_id TEXT NOT NULL,\n  owner_tg TEXT NOT NULL,\n  requester_tg TEXT NOT NULL,\n  status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','accepted','rejected','expired','cancelled')),\n  trade_id TEXT,\n  created_at INTEGER NOT NULL, expires_at INTEGER NOT NULL, decided_at INTEGER, object_kind TEXT NOT NULL DEFAULT 'equip' CHECK(object_kind IN ('equip','sigil')),\n  CHECK (owner_tg <> requester_tg)\n)"
+    },
+    {
+      "type": "table",
+      "name": "rpg_trades",
+      "tbl_name": "rpg_trades",
+      "sql": "CREATE TABLE rpg_trades (\n  id TEXT PRIMARY KEY,\n  a_tg TEXT NOT NULL,                  \n  b_tg TEXT NOT NULL,                  \n  status TEXT NOT NULL DEFAULT 'open' CHECK (status IN ('open','done','cancelled','expired')),\n  a_gold INTEGER NOT NULL DEFAULT 0 CHECK (a_gold BETWEEN 0 AND 1000000),   \n  b_gold INTEGER NOT NULL DEFAULT 0 CHECK (b_gold BETWEEN 0 AND 1000000),\n  a_ok INTEGER NOT NULL DEFAULT 0, b_ok INTEGER NOT NULL DEFAULT 0,\n  offer_rev INTEGER NOT NULL DEFAULT 0,   \n  rev INTEGER NOT NULL DEFAULT 0,         \n  origin TEXT NOT NULL DEFAULT 'app',     \n  chat_id TEXT, message_id INTEGER,       \n  tax_gold INTEGER NOT NULL DEFAULT 0,\n  created_at INTEGER NOT NULL, updated_at INTEGER NOT NULL, expires_at INTEGER NOT NULL,\n  closed_at INTEGER, closed_by TEXT, a_lock INTEGER NOT NULL DEFAULT 0, b_lock INTEGER NOT NULL DEFAULT 0, share_id TEXT, request_id TEXT,\n  CHECK (a_tg <> b_tg)\n)"
+    },
+    {
+      "type": "trigger",
+      "name": "background_enhance_dismiss",
+      "tbl_name": "rpg_notice_dismissals",
+      "sql": "CREATE TRIGGER background_enhance_dismiss AFTER INSERT ON rpg_notice_dismissals WHEN NEW.kind='auto_enhance_end'\nBEGIN UPDATE rpg_background_operations SET dismissed_at=COALESCE(dismissed_at,NEW.created_at) WHERE owner=NEW.account_tg_id AND kind=NEW.kind AND ref_id=NEW.ref_id; END"
+    },
+    {
+      "type": "trigger",
+      "name": "background_enhance_start",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE TRIGGER background_enhance_start AFTER INSERT ON rpg_auto_enhance\nBEGIN INSERT INTO rpg_background_operations(owner,kind,ref_id,created_at) VALUES(NEW.owner,'auto_enhance_end',NEW.id,NEW.created_at); END"
+    },
+    {
+      "type": "trigger",
+      "name": "background_guardian_seen",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE TRIGGER background_guardian_seen AFTER UPDATE OF seen_at ON rpg_guardian_auto WHEN NEW.seen_at IS NOT NULL AND NEW.status='ended'\nBEGIN UPDATE rpg_background_operations SET dismissed_at=COALESCE(dismissed_at,NEW.seen_at) WHERE owner=NEW.owner AND kind='guardian_auto' AND ref_id=NEW.id; END"
+    },
+    {
+      "type": "trigger",
+      "name": "background_guardian_start",
+      "tbl_name": "rpg_guardian_auto",
+      "sql": "CREATE TRIGGER background_guardian_start AFTER INSERT ON rpg_guardian_auto\nBEGIN INSERT INTO rpg_background_operations(owner,kind,ref_id,created_at) VALUES(NEW.owner,'guardian_auto',NEW.id,NEW.created_at); END"
+    },
+    {
+      "type": "trigger",
+      "name": "background_reroll_start",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE TRIGGER background_reroll_start AFTER INSERT ON rpg_auto_reroll\nBEGIN INSERT INTO rpg_background_operations(owner,kind,ref_id,created_at) VALUES(NEW.owner,'auto_reroll_end',NEW.id,NEW.created_at); END"
+    },
+    {
+      "type": "trigger",
+      "name": "collection_blessing_keep_delete",
+      "tbl_name": "rpg_inventory",
+      "sql": "CREATE TRIGGER collection_blessing_keep_delete BEFORE DELETE ON rpg_inventory\nWHEN OLD.item LIKE 'collection_%' BEGIN\n SELECT RAISE(ABORT,'collection_active_owned') WHERE EXISTS(\n  SELECT 1 FROM rpg_characters WHERE tg_id=OLD.tg_id AND collection_active_map>0 AND OLD.item='collection_'||collection_active_map);\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "collection_blessing_keep_update",
+      "tbl_name": "rpg_inventory",
+      "sql": "CREATE TRIGGER collection_blessing_keep_update BEFORE UPDATE OF quantity,item,tg_id ON rpg_inventory\nWHEN OLD.item LIKE 'collection_%' AND (NEW.quantity<1 OR NEW.item<>OLD.item OR NEW.tg_id<>OLD.tg_id) BEGIN\n SELECT RAISE(ABORT,'collection_active_owned') WHERE EXISTS(\n  SELECT 1 FROM rpg_characters WHERE tg_id=OLD.tg_id AND collection_active_map>0 AND OLD.item='collection_'||collection_active_map);\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "collection_blessing_owner",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE TRIGGER collection_blessing_owner BEFORE UPDATE OF collection_active_map ON rpg_characters\nWHEN NEW.collection_active_map<>OLD.collection_active_map AND NEW.collection_active_map>0 BEGIN\n SELECT RAISE(ABORT,'collection_not_owned') WHERE NOT EXISTS(\n  SELECT 1 FROM rpg_inventory WHERE tg_id=NEW.tg_id AND item='collection_'||NEW.collection_active_map AND quantity>0);\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "collection_blessing_party",
+      "tbl_name": "rpg_characters",
+      "sql": "CREATE TRIGGER collection_blessing_party BEFORE UPDATE OF collection_active_map ON rpg_characters\nWHEN NEW.collection_active_map<>OLD.collection_active_map AND OLD.party_id IS NOT NULL BEGIN\n SELECT RAISE(ABORT,'collection_party_locked');\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_grant_guard",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE TRIGGER guardian_grant_guard BEFORE INSERT ON rpg_guardian_voucher_grants BEGIN\n SELECT RAISE(ABORT,'guardian_invalid_participant') WHERE NOT EXISTS(\n  SELECT 1 FROM rpg_characters c JOIN rpg_boss_attacks a ON a.tg_id=c.tg_id\n  WHERE c.tg_id=NEW.recipient_char_id AND c.account_tg_id=NEW.account_id\n   AND a.boss_id=NEW.boss_id AND a.damage>0\n );\n SELECT RAISE(ABORT,'guardian_voucher_daily_cap') WHERE COALESCE((SELECT n FROM rpg_daily_counters\n  WHERE tg_id=NEW.account_id AND day=NEW.day AND key='guardian_voucher'),0)>=4\n ;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_grant_no_delete",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE TRIGGER guardian_grant_no_delete BEFORE DELETE ON rpg_guardian_voucher_grants BEGIN\n SELECT RAISE(ABORT,'guardian_grant_immutable');\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_grant_no_update",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE TRIGGER guardian_grant_no_update BEFORE UPDATE ON rpg_guardian_voucher_grants BEGIN\n SELECT RAISE(ABORT,'guardian_grant_immutable');\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_grant_resources",
+      "tbl_name": "rpg_guardian_voucher_grants",
+      "sql": "CREATE TRIGGER guardian_grant_resources AFTER INSERT ON rpg_guardian_voucher_grants BEGIN\n INSERT INTO rpg_daily_counters(tg_id,day,key,n) VALUES(NEW.account_id,NEW.day,'guardian_voucher',1)\n ON CONFLICT(tg_id,day,key) DO UPDATE SET n=n+1;\n INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(NEW.recipient_char_id,'guardian_voucher',1)\n ON CONFLICT(tg_id,item) DO UPDATE SET quantity=quantity+1;\n INSERT INTO rpg_ledger(event_id,tg_id,type,item,item_delta,note,created_at)\n VALUES('guardian-voucher:'||NEW.boss_id||':'||NEW.account_id,NEW.recipient_char_id,\n  '守護神召喚憑證','guardian_voucher',1,NEW.boss_id,NEW.created_at);\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.created_at WHERE tg_id=NEW.recipient_char_id;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_delete_guard",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_delete_guard BEFORE DELETE ON rpg_guardian_sigils\n WHEN OLD.active=1 OR OLD.locked=1 OR OLD.trade_id IS NOT NULL\n BEGIN SELECT RAISE(ABORT,'guardian_sigil_protected'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_delete_revision",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_delete_revision AFTER DELETE ON rpg_guardian_sigils BEGIN\n UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=OLD.char_id;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_insert_revision",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_insert_revision AFTER INSERT ON rpg_guardian_sigils BEGIN\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.updated_at WHERE tg_id=NEW.char_id;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_party_delete",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_party_delete BEFORE DELETE ON rpg_guardian_sigils\n WHEN EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=OLD.char_id AND party_id IS NOT NULL)\n BEGIN SELECT RAISE(ABORT,'guardian_party_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_party_update",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_party_update BEFORE UPDATE ON rpg_guardian_sigils\n WHEN EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=OLD.char_id AND party_id IS NOT NULL)\n BEGIN SELECT RAISE(ABORT,'guardian_party_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_transfer_guard",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_transfer_guard BEFORE UPDATE OF char_id ON rpg_guardian_sigils\n WHEN NEW.char_id<>OLD.char_id AND (OLD.active=1 OR OLD.bound=1 OR OLD.locked=1)\n BEGIN SELECT RAISE(ABORT,'guardian_transfer_protected'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_sigil_update_revision",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER guardian_sigil_update_revision AFTER UPDATE ON rpg_guardian_sigils BEGIN\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.updated_at WHERE tg_id=OLD.char_id OR tg_id=NEW.char_id;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_welcome_guard",
+      "tbl_name": "rpg_guardian_welcome",
+      "sql": "CREATE TRIGGER guardian_welcome_guard BEFORE INSERT ON rpg_guardian_welcome BEGIN\n SELECT RAISE(ABORT,'guardian_welcome_locked') WHERE NOT EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=NEW.recipient_char_id\n  AND account_tg_id=NEW.account_id AND level>=15);\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_welcome_no_delete",
+      "tbl_name": "rpg_guardian_welcome",
+      "sql": "CREATE TRIGGER guardian_welcome_no_delete BEFORE DELETE ON rpg_guardian_welcome BEGIN SELECT RAISE(ABORT,'guardian_welcome_immutable'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_welcome_no_update",
+      "tbl_name": "rpg_guardian_welcome",
+      "sql": "CREATE TRIGGER guardian_welcome_no_update BEFORE UPDATE ON rpg_guardian_welcome BEGIN SELECT RAISE(ABORT,'guardian_welcome_immutable'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "guardian_welcome_resources",
+      "tbl_name": "rpg_guardian_welcome",
+      "sql": "CREATE TRIGGER guardian_welcome_resources AFTER INSERT ON rpg_guardian_welcome BEGIN\n INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(NEW.recipient_char_id,'guardian_free_normal',NEW.draws)\n ON CONFLICT(tg_id,item) DO UPDATE SET quantity=quantity+excluded.quantity;\n INSERT INTO rpg_ledger(event_id,tg_id,type,item,item_delta,note,created_at)\n VALUES('guardian-welcome:'||NEW.account_id,NEW.recipient_char_id,'守護神初見贈禮','guardian_free_normal',NEW.draws,'首次進入；免費普通召喚',NEW.created_at);\n UPDATE rpg_characters SET rev=rev+1,updated_at=NEW.created_at WHERE tg_id=NEW.recipient_char_id;\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_enhance_equipment_delete",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_auto_enhance_equipment_delete BEFORE DELETE ON rpg_equipment\nWHEN EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=OLD.id AND status='running')\nBEGIN SELECT RAISE(ABORT,'auto_enhance_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_enhance_equipment_update",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_auto_enhance_equipment_update BEFORE UPDATE ON rpg_equipment\nWHEN EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=OLD.id AND status='running')\nBEGIN SELECT RAISE(ABORT,'auto_enhance_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_enhance_start_guard",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE TRIGGER rpg_auto_enhance_start_guard BEFORE INSERT ON rpg_auto_enhance\nWHEN EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=NEW.item_id AND status IN ('running','processing'))\nBEGIN SELECT RAISE(ABORT,'background_item_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_reroll_equipment_delete",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_auto_reroll_equipment_delete BEFORE DELETE ON rpg_equipment\nWHEN EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=OLD.id AND status='running')\nBEGIN SELECT RAISE(ABORT,'auto_reroll_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_reroll_equipment_update",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_auto_reroll_equipment_update BEFORE UPDATE ON rpg_equipment\nWHEN EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=OLD.id AND status='running')\nBEGIN SELECT RAISE(ABORT,'auto_reroll_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_auto_reroll_start_guard",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE TRIGGER rpg_auto_reroll_start_guard BEFORE INSERT ON rpg_auto_reroll\nWHEN EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=NEW.item_id AND status IN ('running','processing'))\nBEGIN SELECT RAISE(ABORT,'background_item_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_enhance_resume",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE TRIGGER rpg_exchange_enhance_resume BEFORE UPDATE OF status,item_id ON rpg_auto_enhance\nWHEN NEW.status IN ('running','processing') AND EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_enhance_start",
+      "tbl_name": "rpg_auto_enhance",
+      "sql": "CREATE TRIGGER rpg_exchange_enhance_start BEFORE INSERT ON rpg_auto_enhance\nWHEN EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_equipment_delete",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_exchange_equipment_delete BEFORE DELETE ON rpg_equipment\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\n)\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_equipment_update",
+      "tbl_name": "rpg_equipment",
+      "sql": "CREATE TRIGGER rpg_exchange_equipment_update BEFORE UPDATE ON rpg_equipment\nWHEN OLD.trade_id LIKE 'exchange:%' AND EXISTS(\n SELECT 1 FROM rpg_exchange_listings WHERE id=substr(OLD.trade_id,10) AND status='active' AND kind='equip' AND ref=OLD.id\n)\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_guardian_claim",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER rpg_exchange_guardian_claim BEFORE UPDATE OF exchange_id ON rpg_guardian_sigils\nWHEN NEW.exchange_id IS NOT NULL\nBEGIN\n SELECT RAISE(ABORT,'exchange_guardian_locked') WHERE NEW.bound<>0 OR NEW.active<>0 OR NEW.locked<>0 OR NEW.trade_id IS NOT NULL\n  OR NOT EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=NEW.exchange_id AND status='active' AND kind='guardian' AND ref=NEW.id AND seller_char=NEW.char_id);\nEND"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_guardian_delete",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER rpg_exchange_guardian_delete BEFORE DELETE ON rpg_guardian_sigils\nWHEN OLD.exchange_id IS NOT NULL AND EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=OLD.exchange_id AND status='active' AND kind='guardian' AND ref=OLD.id)\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_guardian_request",
+      "tbl_name": "rpg_trade_requests",
+      "sql": "CREATE TRIGGER rpg_exchange_guardian_request BEFORE INSERT ON rpg_trade_requests\nWHEN NEW.object_kind='sigil' AND EXISTS(SELECT 1 FROM rpg_guardian_sigils WHERE id=NEW.equip_id AND exchange_id IS NOT NULL)\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_guardian_share",
+      "tbl_name": "rpg_shares",
+      "sql": "CREATE TRIGGER rpg_exchange_guardian_share BEFORE INSERT ON rpg_shares\nWHEN NEW.object_kind='sigil' AND EXISTS(SELECT 1 FROM rpg_guardian_sigils WHERE id=NEW.equip_id AND exchange_id IS NOT NULL)\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_guardian_update",
+      "tbl_name": "rpg_guardian_sigils",
+      "sql": "CREATE TRIGGER rpg_exchange_guardian_update BEFORE UPDATE ON rpg_guardian_sigils\nWHEN OLD.exchange_id IS NOT NULL AND EXISTS(SELECT 1 FROM rpg_exchange_listings WHERE id=OLD.exchange_id AND status='active' AND kind='guardian' AND ref=OLD.id)\nBEGIN SELECT RAISE(ABORT,'exchange_guardian_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_reroll_resume",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE TRIGGER rpg_exchange_reroll_resume BEFORE UPDATE OF status,item_id ON rpg_auto_reroll\nWHEN NEW.status IN ('running','processing') AND EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    },
+    {
+      "type": "trigger",
+      "name": "rpg_exchange_reroll_start",
+      "tbl_name": "rpg_auto_reroll",
+      "sql": "CREATE TRIGGER rpg_exchange_reroll_start BEFORE INSERT ON rpg_auto_reroll\nWHEN EXISTS(SELECT 1 FROM rpg_equipment WHERE id=NEW.item_id AND trade_id LIKE 'exchange:%')\nBEGIN SELECT RAISE(ABORT,'exchange_equipment_locked'); END"
+    }
+  ]
+}

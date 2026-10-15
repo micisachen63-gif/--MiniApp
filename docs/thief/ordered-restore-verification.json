@@ -1,0 +1,13 @@
+{
+  "status": "FK-enabled-ordered-restore-pass",
+  "sourceSHA256": "74b35bbb1a48a2f4dcfd6d6fa4b7dbeec01e3d46fba5f9da124c065ca3e82eb9",
+  "orderedSHA256": "345879fabcc93550061848a7b981a800dcdda3a08b711285045d679d444a0f0b",
+  "tables": 42,
+  "statements": 147050,
+  "largestStatementBytes": 21446,
+  "allTablesCreatedBeforeData": true,
+  "parentDataBeforeChildren": true,
+  "triggersAfterData": true,
+  "schemaAndEveryRowBytePreserved": true,
+  "productionWrites": 0
+}

@@ -1,0 +1,18 @@
+{
+  "status": "private-export-offline-restore-and-candidate-pass",
+  "productionWrites": 0,
+  "hostedD1Rehearsal": false,
+  "backupBytes": 51721467,
+  "backupSHA256": "74b35bbb1a48a2f4dcfd6d6fa4b7dbeec01e3d46fba5f9da124c065ca3e82eb9",
+  "businessTables": 41,
+  "exactSchemaMatch": true,
+  "allRowsTypesBytesRowidsAndSequencesPreserved": true,
+  "rollbackProofPhases": [
+    "drop-table-leaf-first",
+    "restore-data-before-triggers",
+    "verify-all-columns-rowid-types-bytes"
+  ],
+  "foreignKeyCheck": "pass",
+  "integrityCheck": "ok",
+  "restoredDataNeverPrinted": true
+}

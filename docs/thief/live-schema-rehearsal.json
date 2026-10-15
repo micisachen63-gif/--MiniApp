@@ -1,0 +1,53 @@
+{
+  "status": "SQLite-memory-pass; hosted-D1-not-rehearsed",
+  "productionReady": false,
+  "productionWrites": 0,
+  "schemaOnlySource": true,
+  "capturedSchemaSHA256": "1dae0300e2858fb19c67233cb322672ab225e616bd65c98d36d60749076abb34",
+  "sourceObjects": 135,
+  "sourceTables": 41,
+  "exactSourceGuardVerified": true,
+  "syntheticDataOnly": true,
+  "allTableRowBytesTypesRowidsAndSequencePreserved": true,
+  "faultRollbacks": [
+    {
+      "phase": "drop-trigger",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "drop-table-leaf-first",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "restore-data-before-triggers",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "restore-sequence",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "restore-index",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "restore-trigger",
+      "allDataAndSchemaRestored": true
+    },
+    {
+      "phase": "verify-all-columns-rowid-types-bytes",
+      "allDataAndSchemaRestored": true
+    }
+  ],
+  "foreignKeyCheck": [],
+  "integrityCheck": "ok",
+  "statements": 165,
+  "requiredBeforeProduction": [
+    "Hosted D1 atomic rehearsal and rollback proof",
+    "Verified recoverable backup and restore rehearsal",
+    "Final fresh schema match",
+    "Write quiescence plan",
+    "Explicit authorization under AGENTS.md"
+  ],
+  "releaseReady": false
+}
