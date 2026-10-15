@@ -1,3 +1,7 @@
 # Keep schema fixtures identical across Windows and cloud checkouts.
 worker/migrations/*.sql text eol=lf
 worker/public/art/ui/armory-specializations-20261016/*.svg text eol=lf
+worker/public/expedition/index.html text eol=lf
+worker/public/expedition/live.js text eol=lf
+worker/public/expedition/party-tactics.js text eol=lf
+worker/public/expedition/review.css text eol=lf
