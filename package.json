@@ -11,7 +11,10 @@
     "sync:check:worker": "node scripts/release-sync.mjs check worker",
     "sync:check:bot": "node scripts/release-sync.mjs check bot",
     "deploy:worker": "node scripts/release-sync.mjs deploy worker",
-    "deploy:bot": "node scripts/release-sync.mjs deploy bot"
+    "deploy:bot": "node scripts/release-sync.mjs deploy bot",
+    "test:monsters": "node --test worker/test/monster-*.test.js",
+    "monster:check": "node worker/tools/refresh-monster-catalog.mjs --check",
+    "monster:review": "cd worker && node tools/build-monster-review-data.mjs"
   },
   "devDependencies": {
     "wrangler": "4.148.0"

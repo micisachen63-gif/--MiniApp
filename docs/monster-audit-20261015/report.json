@@ -1,0 +1,1144 @@
+{
+  "date": "2026-10-15",
+  "baseCommit": "2bc508eb89e5c5eb9f1b1ba0dfe117d93b00c245",
+  "integratedCodeCommit": "a9e3853a492beebd4da02fe81188e7b4faeadb84",
+  "scope": {
+    "maps": 12,
+    "totalMonsters": 180,
+    "existingMonsters": 72,
+    "expansionMonsters": 108,
+    "expandedRasterFiles": 216,
+    "expandedFrames": 1728
+  },
+  "rasterVerification": {
+    "emptyFrames": 0,
+    "duplicateFrames": 0,
+    "minTransparentMarginPx": 30,
+    "componentFlagsReviewedAsAuthoredDecorations": 12,
+    "sceneApprovalForEveryIndividualMonster": false
+  },
+  "changes": [
+    "Restart surviving independent monster atlases on stage reattachment, preserving selected target and authoritative HP/queues.",
+    "Clear expired particle/spell bitmap when the stage detaches or reattaches.",
+    "Recompute current map7 secondary boss bounds and body height; preserve the other107 runtime definitions and all artwork.",
+    "Project only runtime catalog fields; gzip 51763 to13136bytes (74.6% smaller).",
+    "Review data now covers actual180 client art routes and uses the deployed hero identity registry and current HUD references.",
+    "Refresh tool verifies all216 raster SHA256 values and matching server/catalog content revision without old source directories."
+  ],
+  "tests": {
+    "monsterRelated": 121,
+    "requiredWorker": 19,
+    "pass": 140,
+    "fullSuite": {
+      "tests": 804,
+      "pass": 725,
+      "existingFailures": 79,
+      "newFailures": 0
+    },
+    "oldDeploymentTestFixturesUpdated": 6,
+    "gameplayRulesChanged": false
+  },
+  "browserCoverage": {
+    "representativeTwoMonsterScenes": [
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m01_moonshadow_wolf",
+        "map": "1",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m01_moonshadow_wolf.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 月影狼"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_laurel_treant.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 月桂樹精"
+          }
+        ],
+        "names": [
+          "月影狼",
+          "月桂樹精"
+        ],
+        "stage": {
+          "bottom": 1278.609375,
+          "height": 779.421875,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m02_rune_beetle",
+        "map": "2",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m02_rune_beetle.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 符文甲蟲"
+          },
+          {
+            "frame": "",
+            "height": 171.43896774193547,
+            "image": "art/v2/mon_temple_owl.webp",
+            "loaded": true,
+            "name": "檢視血量 智慧夜梟"
+          }
+        ],
+        "names": [
+          "符文甲蟲",
+          "智慧夜梟"
+        ],
+        "stage": {
+          "bottom": 1318.34375,
+          "height": 819.15625,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m03_thorn_boar",
+        "map": "3",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m03_thorn_boar.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 棘角野豬"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_arcadia_nymph.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 山林仙女"
+          }
+        ],
+        "names": [
+          "棘角野豬",
+          "山林仙女"
+        ],
+        "stage": {
+          "bottom": 1323.34375,
+          "height": 824.15625,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m04_coral_mage",
+        "map": "4",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m04_coral_mage.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 珊瑚法師"
+          },
+          {
+            "frame": "",
+            "height": 163.37694915254235,
+            "image": "art/v2/mon_tidal_beetle.webp",
+            "loaded": true,
+            "name": "檢視血量 潮汐甲蟲"
+          }
+        ],
+        "names": [
+          "珊瑚法師",
+          "潮汐甲蟲"
+        ],
+        "stage": {
+          "bottom": 1278.609375,
+          "height": 779.421875,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m05_labyrinth_hound",
+        "map": "5",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m05_labyrinth_hound.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 迷宮獵犬"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_bronze_bull.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 青銅公牛"
+          }
+        ],
+        "names": [
+          "迷宮獵犬",
+          "青銅公牛"
+        ],
+        "stage": {
+          "bottom": 1288.359375,
+          "height": 789.171875,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m06_molten_drake",
+        "map": "6",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m06_molten_drake.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 熔核幼龍"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_forge_golem.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 鍛造巨傀儡"
+          }
+        ],
+        "names": [
+          "熔核幼龍",
+          "鍛造巨傀儡"
+        ],
+        "stage": {
+          "bottom": 1302.265625,
+          "height": 803.078125,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m07_styx_naiad",
+        "map": "7",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m07_styx_naiad.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 冥河水妖"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_styx_bone_soldier.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 斯堤克斯骨兵"
+          }
+        ],
+        "names": [
+          "冥河水妖",
+          "斯堤克斯骨兵"
+        ],
+        "stage": {
+          "bottom": 1278.609375,
+          "height": 779.421875,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m08_sun_disc_acolyte",
+        "map": "8",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m08_sun_disc_acolyte.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 日輪祭徒"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_apollo_sun_hawk.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 阿波羅日鷹"
+          }
+        ],
+        "names": [
+          "日輪祭徒",
+          "阿波羅日鷹"
+        ],
+        "stage": {
+          "bottom": 1286.5,
+          "height": 787.3125,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m09_stone_bear",
+        "map": "9",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m09_stone_bear.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 岩甲巨熊"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_earthsplit_stone_demon.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 裂地石魔"
+          }
+        ],
+        "names": [
+          "岩甲巨熊",
+          "裂地石魔"
+        ],
+        "stage": {
+          "bottom": 1313.625,
+          "height": 814.4375,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m10_cloudshield_guard",
+        "map": "10",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m10_cloudshield_guard.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 雲盾神兵"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_celestial_patrol_bird.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 天界巡翼鳥"
+          }
+        ],
+        "names": [
+          "雲盾神兵",
+          "天界巡翼鳥"
+        ],
+        "stage": {
+          "bottom": 1282.3125,
+          "height": 783.125,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m11_moonwell_deer",
+        "map": "11",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m11_moonwell_deer.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 月泉仙鹿"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_immortal_bird.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 長生鳥"
+          }
+        ],
+        "names": [
+          "月泉仙鹿",
+          "長生鳥"
+        ],
+        "stage": {
+          "bottom": 1278.609375,
+          "height": 779.421875,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 360,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m12_star_ring_eye",
+        "map": "12",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m12_star_ring_eye.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 星環浮眼"
+          },
+          {
+            "frame": "",
+            "height": 159.78559999999996,
+            "image": "art/monsters-clean-20261011/mon_zodiac_beast.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 星座巨獸"
+          }
+        ],
+        "names": [
+          "星環浮眼",
+          "星座巨獸"
+        ],
+        "stage": {
+          "bottom": 1285.265625,
+          "height": 786.078125,
+          "left": 28,
+          "right": 332,
+          "top": 499.1875,
+          "width": 304,
+          "x": 28,
+          "y": 499.1875
+        },
+        "viewport": {
+          "height": 812,
+          "width": 375
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m01_moonshadow_wolf",
+        "map": "1",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m01_moonshadow_wolf.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 月影狼"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_laurel_treant.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 月桂樹精"
+          }
+        ],
+        "names": [
+          "月影狼",
+          "月桂樹精"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m02_rune_beetle",
+        "map": "2",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m02_rune_beetle.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 符文甲蟲"
+          },
+          {
+            "frame": "",
+            "height": 171.43896774193547,
+            "image": "art/v2/mon_temple_owl.webp",
+            "loaded": true,
+            "name": "檢視血量 智慧夜梟"
+          }
+        ],
+        "names": [
+          "符文甲蟲",
+          "智慧夜梟"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m03_thorn_boar",
+        "map": "3",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m03_thorn_boar.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 棘角野豬"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_arcadia_nymph.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 山林仙女"
+          }
+        ],
+        "names": [
+          "棘角野豬",
+          "山林仙女"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m04_coral_mage",
+        "map": "4",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m04_coral_mage.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 珊瑚法師"
+          },
+          {
+            "frame": "",
+            "height": 163.37694915254235,
+            "image": "art/v2/mon_tidal_beetle.webp",
+            "loaded": true,
+            "name": "檢視血量 潮汐甲蟲"
+          }
+        ],
+        "names": [
+          "珊瑚法師",
+          "潮汐甲蟲"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m05_labyrinth_hound",
+        "map": "5",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m05_labyrinth_hound.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 迷宮獵犬"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_bronze_bull.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 青銅公牛"
+          }
+        ],
+        "names": [
+          "迷宮獵犬",
+          "青銅公牛"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m06_molten_drake",
+        "map": "6",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m06_molten_drake.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 熔核幼龍"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_forge_golem.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 鍛造巨傀儡"
+          }
+        ],
+        "names": [
+          "熔核幼龍",
+          "鍛造巨傀儡"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m07_styx_naiad",
+        "map": "7",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m07_styx_naiad.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 冥河水妖"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_styx_bone_soldier.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 斯堤克斯骨兵"
+          }
+        ],
+        "names": [
+          "冥河水妖",
+          "斯堤克斯骨兵"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m08_sun_disc_acolyte",
+        "map": "8",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m08_sun_disc_acolyte.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 日輪祭徒"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_apollo_sun_hawk.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 阿波羅日鷹"
+          }
+        ],
+        "names": [
+          "日輪祭徒",
+          "阿波羅日鷹"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m09_stone_bear",
+        "map": "9",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m09_stone_bear.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 岩甲巨熊"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_earthsplit_stone_demon.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 裂地石魔"
+          }
+        ],
+        "names": [
+          "岩甲巨熊",
+          "裂地石魔"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m10_cloudshield_guard",
+        "map": "10",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m10_cloudshield_guard.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 雲盾神兵"
+          },
+          {
+            "frame": "",
+            "height": 179.55839999999998,
+            "image": "art/monsters-clean-20261011/mon_celestial_patrol_bird.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 天界巡翼鳥"
+          }
+        ],
+        "names": [
+          "雲盾神兵",
+          "天界巡翼鳥"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m11_moonwell_deer",
+        "map": "11",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.55839999999998,
+            "image": "art/monster-expansion-20261013/mon_x13_m11_moonwell_deer.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 月泉仙鹿"
+          },
+          {
+            "frame": "",
+            "height": 179.5584,
+            "image": "art/monsters-clean-20261011/mon_immortal_bird.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 長生鳥"
+          }
+        ],
+        "names": [
+          "月泉仙鹿",
+          "長生鳥"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      },
+      {
+        "documentWidth": 1280,
+        "hero": "sword_f",
+        "heroHeight": 160.31999999999996,
+        "hp": [
+          "120／120",
+          "120／120"
+        ],
+        "key": "mon_x13_m12_star_ring_eye",
+        "map": "12",
+        "monsters": [
+          {
+            "frame": "66.6667% 0%",
+            "height": 179.5584,
+            "image": "art/monster-expansion-20261013/mon_x13_m12_star_ring_eye.webp?v=20261015-monster47",
+            "loaded": true,
+            "name": "檢視血量 星環浮眼"
+          },
+          {
+            "frame": "",
+            "height": 159.78559999999996,
+            "image": "art/monsters-clean-20261011/mon_zodiac_beast.png?v=20261011-clean-4",
+            "loaded": true,
+            "name": "檢視血量 星座巨獸"
+          }
+        ],
+        "names": [
+          "星環浮眼",
+          "星座巨獸"
+        ],
+        "stage": {
+          "bottom": 691.1875,
+          "height": 440,
+          "left": 240,
+          "right": 1040,
+          "top": 251.1875,
+          "width": 800,
+          "x": 240,
+          "y": 251.1875
+        },
+        "viewport": {
+          "height": 900,
+          "width": 1280
+        }
+      }
+    ],
+    "additionalChecks": [
+      "map7 secondary boss with actual185.15625px hero,222.1875px boss (1.20x)",
+      "4-enemy desktop group, hero mage_f",
+      "Interrupted cast stage detach/return: HP retained, idle resumes",
+      "Leftward spell renderer covered by frontend tests and review playback"
+    ]
+  },
+  "followUp": [
+    {
+      "scope": "Legacy wide-body art",
+      "example": "map12 mon_void_devourer with mage_f",
+      "observedFigureRatio": 0.92,
+      "reason": "Existing width cap preserves legacy proportions; a more upright authored silhouette can improve visible height on narrow screens."
+    }
+  ],
+  "evidence": [
+    "boss7-mobile.jpg",
+    "group4-desktop.jpg"
+  ],
+  "deploymentReceipt": "../deployment/elf-rpg-api.json"
+}
