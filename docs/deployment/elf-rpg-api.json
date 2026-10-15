@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "ca758883dec2c240f818c361d0b4b460a41d948f",
+  "sourceCommit": "682be1b1aba630bf4587bd4d0e9083d6cedfa158",
   "service": "elf-rpg-api",
-  "productionVersion": "02d8ad19-1c2f-47fc-ad8c-30205db8fc88",
+  "productionVersion": "eb4a6fe2-6143-4825-934f-e226178e774b",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T09:19:56.594Z",
+  "verifiedAt": "2026-10-15T09:22:57.726Z",
   "runtimeSHA256": {
     "index.js": "ef46743817e0c575db666ee833da1531e88637f3046ddfd526c0063eda046002"
   },
   "source": {
-    "fileCount": 7172,
-    "sha256": "e8ed8aa64f9fc673f507da246c6e13ff6474f291525a304ee676a28651057c4a",
+    "fileCount": 7173,
+    "sha256": "58dd8fef5d32c7527678ec9b17006d2695351a7210a3913c42e5d721ee5711e0",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -123,7 +123,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "ab9e702c15c4adb2bdf5b773a822f9f9ff04f06632376895fcf5631e352d0b73"
+        "sha256": "cfd7e6514e84ea336679d7aec432f8fe542f87429d39bab002cab43942350c09"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -24918,6 +24918,10 @@
         "sha256": "c5dd3364680a43b5bc24adbec4176649e82a1102601a1af68c0d4bbbc00552a2"
       },
       {
+        "file": "worker/public/art/ui/gacha-armor-blue-20261015.webp",
+        "sha256": "0ebb772b2484f2ca42551972edec29a5a0fa68b49e25da397675591007fe41e4"
+      },
+      {
         "file": "worker/public/art/ui/gacha-weapon-20261015.webp",
         "sha256": "045e0d78ef6182cf53da99d0fafb1535ecef8add2b5281588c2ce9b4a8a12736"
       },
@@ -28071,7 +28075,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "a1b33676b8afc269d2001b6093a4b6cac2a8b445ea61310e20f48142c4fa0a5c"
+        "sha256": "be4a7366b9f916d664cf639faeb9596988e29fa86c76ee9e45792e69c289b414"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28705,7 +28709,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 127,
+    "verifiedCount": 126,
     "files": [
       "worker/public/app.js",
       "worker/public/art.js",
@@ -28713,8 +28717,7 @@
       "worker/public/art/cards/equipment-20261011-r2/gear_wpn_titan_crossbow_epic.jpg",
       "worker/public/art/cards/equipment-20261011/gear_wpn_titan_elem_staff_advanced.jpg",
       "worker/public/art/skill-fx-cinematic-20261011/tile-12.png",
-      "worker/public/art/ui/gacha-armor-20261015.webp",
-      "worker/public/art/ui/gacha-weapon-20261015.webp",
+      "worker/public/art/ui/gacha-armor-blue-20261015.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -28839,7 +28842,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "02d8ad19-1c2f-47fc-ad8c-30205db8fc88",
+        "version_id": "eb4a6fe2-6143-4825-934f-e226178e774b",
         "percentage": 100
       }
     ],
