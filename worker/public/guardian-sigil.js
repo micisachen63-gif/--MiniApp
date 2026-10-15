@@ -520,10 +520,22 @@
     root.addEventListener('click', click);root.addEventListener('change',change);root.addEventListener('toggle',toggleRates,true); root.addEventListener('error', imageError, true); paint(); if (options.autoLoad !== false) void refresh(); return api;
   }
   function effectCopy(guardian){const label={melee:'近戰傷害',ranged:'遠程傷害',magic:'魔法傷害',loot:'隨機掉寶率'}[guardian?.type],bonus=guardian?.type==='loot'?guardian.lootBonus:guardian?.damageBonus;return label&&Number.isFinite(bonus)?`${label} +${(bonus*100).toLocaleString('zh-TW',{maximumFractionDigits:2})}%`:'能力待確認';}
+
+  // Lazy-load summary card videos: no src until the card is on screen; skipped for data-saver / reduced-motion.
+  (function(){
+    if(typeof document==='undefined'||window.__guardianSummaryVideo)return;window.__guardianSummaryVideo=true;
+    const skip=()=>!!(window.matchMedia?.('(prefers-reduced-motion: reduce)')?.matches||window.navigator?.connection?.saveData);
+    const io=typeof IntersectionObserver==='function'?new IntersectionObserver(entries=>{for(const e of entries){const v=e.target;if(e.isIntersecting&&!document.hidden){if(!v.getAttribute('src')){if(skip())continue;v.src=v.dataset.guardianVideo;}v.muted=true;v.play?.().catch(()=>{});}else if(v.getAttribute('src'))try{v.pause();}catch{}}},{threshold:.1}):null;
+    const prepare=v=>{if(v.__gsv)return;v.__gsv=true;v.muted=true;v.defaultMuted=true;v.addEventListener('playing',()=>v.parentElement?.classList.add('is-summary-video-ready'));v.addEventListener('error',()=>{v.removeAttribute('src');v.parentElement?.classList.remove('is-summary-video-ready');});if(io)io.observe(v);};
+    const scan=root=>{if(root.nodeType!==1)return;if(root.matches?.('video[data-guardian-video]'))prepare(root);root.querySelectorAll?.('video[data-guardian-video]').forEach(prepare);};
+    new MutationObserver(ms=>{for(const m of ms)m.addedNodes.forEach(scan);}).observe(document.documentElement,{childList:true,subtree:true});
+    document.addEventListener('visibilitychange',()=>{document.querySelectorAll('video[data-guardian-video][src]').forEach(v=>{if(document.hidden)try{v.pause();}catch{}else if(v.parentElement?.isConnected)v.play?.().catch(()=>{});});});
+    scan(document.documentElement);
+  })();
   function summary(guardian,summoned=true){
     if(!summoned)guardian=null;
     const type=guardian&&Object.hasOwn(C.TYPE_NAMES,guardian.type)?guardian.type:'empty',art=`/art/guardian-cards-20261014/${type}.webp`,quality=C.QUALITY_ORDER.includes(guardian?.quality)?guardian.quality:'white';
-    return `<section class="guardian-summary has-guardian-art guardian-quality-${quality}" data-guardian-summary-type="${type}"><img class="guardian-summary-background" src="${art}" alt="" aria-hidden="true" decoding="async"><div class="guardian-summary-copy"><small class="guardian-summary-eyebrow">星光之約 · 同行的守護</small><h3>守護天使</h3>${guardian?`<strong class="guardian-name">${esc(guardian.qualityName)} · ${esc(guardian.typeName)}</strong><p>${esc(effectCopy(guardian))}</p><small>正在與你同行 · 掛機、群組 Boss 與組隊副本適用。</small>`:'<strong class="guardian-summary-empty">尚未有天使守護你</strong><p>將祈願交給世界樹，迎接旅途中的同行者。</p><small>15 級，開啟守護之約。</small>'}<button type="button" data-guardian-entry>召喚守護天使</button></div></section>`;
+    return `<section class="guardian-summary has-guardian-art guardian-quality-${quality}" data-guardian-summary-type="${type}"><img class="guardian-summary-background" src="${art}" alt="" aria-hidden="true" decoding="async"><video class="guardian-summary-background guardian-summary-video" data-guardian-video="${art.replace('.webp','.mp4')}" poster="${art}" muted playsinline loop preload="none" aria-hidden="true" tabindex="-1"></video><div class="guardian-summary-copy"><small class="guardian-summary-eyebrow">星光之約 · 同行的守護</small><h3>守護天使</h3>${guardian?`<strong class="guardian-name">${esc(guardian.qualityName)} · ${esc(guardian.typeName)}</strong><p>${esc(effectCopy(guardian))}</p><small>正在與你同行 · 掛機、群組 Boss 與組隊副本適用。</small>`:'<strong class="guardian-summary-empty">尚未有天使守護你</strong><p>將祈願交給世界樹，迎接旅途中的同行者。</p><small>15 級，開啟守護之約。</small>'}<button type="button" data-guardian-entry>召喚守護天使</button></div></section>`;
   }
   function head(guardian){const art=C.safeArtUrl(guardian?.artUrl);return guardian?.visual===true&&C.QUALITY_ORDER.indexOf(guardian.quality)>=3&&art?`<span class="guardian-head-display guardian-quality-${guardian.quality}"><img src="${esc(art)}" alt="${esc(guardian.typeName)}守護"><small class="guardian-name">${esc(guardian.typeName)}</small></span>`:'';}
   const effectImages=new Map();
