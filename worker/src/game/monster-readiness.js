@@ -110,5 +110,4 @@ export const READY_MONSTER_KEYS = Object.freeze([
   "elite_x13_m12_elite_1",
   "boss_x13_m12_boss_secondary"
 ]);
-// The release gate writes the approved full-catalogue content digest with READY keys.
-export const MONSTER_ART_REVISION = 'monster16-v2-9ee5f5c6908b4107';
+export const MONSTER_ART_REVISION = 'monster16-v2-4a7ad381e75bf3190883de9224caa00e86a0ede9f54087566d3b4610af07a459';
