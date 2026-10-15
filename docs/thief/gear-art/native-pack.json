@@ -1,0 +1,3552 @@
+{
+  "status": "PASS",
+  "expected": 82,
+  "packed": 82,
+  "distinctNativeIcons": 82,
+  "cellSize": 640,
+  "sourceSHA256": {
+    "worker/art-production/thief-gear-20261015/dagger/first.png": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+    "worker/art-production/thief-gear-20261015/dagger/last.png": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+    "worker/art-production/thief-gear-20261015/dual_daggers/first.png": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+    "worker/art-production/thief-gear-20261015/dual_daggers/last.png": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+    "worker/art-production/thief-gear-20261015/throwing_blades/first.png": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+    "worker/art-production/thief-gear-20261015/throwing_blades/last.png": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+    "worker/art-production/thief-gear-20261015/helmet/first.png": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+    "worker/art-production/thief-gear-20261015/helmet/last.png": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+    "worker/art-production/thief-gear-20261015/armor/first.png": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+    "worker/art-production/thief-gear-20261015/armor/last.png": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+    "worker/art-production/thief-gear-20261015/gloves/first.png": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+    "worker/art-production/thief-gear-20261015/gloves/last.png": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+    "worker/art-production/thief-gear-20261015/boots/first.png": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+    "worker/art-production/thief-gear-20261015/boots/last.png": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51"
+  },
+  "missingSources": [],
+  "proofs": [
+    {
+      "key": "gear_wpn_laurel_dagger",
+      "tier": 1,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        33,
+        28,
+        483,
+        500
+      ],
+      "translationPx": [
+        62,
+        56
+      ],
+      "packedAlphaBounds": [
+        95,
+        84,
+        545,
+        556
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "5aef14e7b1f967666beed46491b7592b082f120f87e0d48ddd18ee224bb3f27a",
+      "transparentFraction": 0.89101806640625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_laurel_dagger.png",
+        "SHA256": "114e846011aa4fb898a0fdadba0212ec7d58f75f9424d9dfdbdf3f9ce1644937"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_laurel_dagger.webp",
+        "SHA256": "e97a9a13b82a971cc4ca2c4c0499861c5117a220d765239c362d291c2c6769f0"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_athena_dagger",
+      "tier": 2,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        62,
+        19,
+        490,
+        500
+      ],
+      "translationPx": [
+        44,
+        60
+      ],
+      "packedAlphaBounds": [
+        106,
+        79,
+        534,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "1521931e5fb455c0ce0877ea0744cda333eddf0ac4d7a1adfeaad74f6437494a",
+      "transparentFraction": 0.8744287109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_athena_dagger.png",
+        "SHA256": "b6a783b6ce15d5257ca916c125974e2d9bd939ff5189cfbecf379f5be99cb9f0"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_athena_dagger.webp",
+        "SHA256": "9febc895b6b5599569e2a31ad8fd08e3ca7bc51c9ce5b00e1be60fcc872c5e34"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_sacred_dagger",
+      "tier": 3,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        83,
+        21,
+        485,
+        496
+      ],
+      "translationPx": [
+        36,
+        61
+      ],
+      "packedAlphaBounds": [
+        119,
+        82,
+        521,
+        557
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "a7ac1ed4c2bd88d931b06d922eb9b9deaa2ad737916171bc4fbeb369ecdff4da",
+      "transparentFraction": 0.87586181640625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_sacred_dagger.png",
+        "SHA256": "d266e41074d44a6d9cb819178b08cde8f07bcd3b72ac9d2fb36cd07869922248"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_sacred_dagger.webp",
+        "SHA256": "f561b1a185ad6fca37ed3227e6b52ca66f2f53bc2266c0ae77b291a50cba6215"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_poseidon_dagger",
+      "tier": 4,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        82,
+        16,
+        480,
+        481
+      ],
+      "translationPx": [
+        39,
+        71
+      ],
+      "packedAlphaBounds": [
+        121,
+        87,
+        519,
+        552
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "3272d9fd682ed407a0aa6e9ac900cf2ddbad24a6a27086eedd5897dea51cc993",
+      "transparentFraction": 0.88249755859375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_poseidon_dagger.png",
+        "SHA256": "e1dddf6fc4636454c9ebde335cc5b8594c76ca1c2b9d99c9d7d6fad9382561db"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_poseidon_dagger.webp",
+        "SHA256": "31c67ff662b0ee659f39a133c1fd23353696b6c8b9ff6eb914bfb85f884d8cab"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_labyrinth_dagger",
+      "tier": 5,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        82,
+        16,
+        473,
+        481
+      ],
+      "translationPx": [
+        42,
+        71
+      ],
+      "packedAlphaBounds": [
+        124,
+        87,
+        515,
+        552
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "b846cb1229e765d2face9e9a35119cb1f280f5ad08522de67dee43452eb283bb",
+      "transparentFraction": 0.88674072265625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_labyrinth_dagger.png",
+        "SHA256": "d938d5a59a4c5d01aa2581e9c3fde84447324ddfc46994a2671d4b1fcd4cf0fd"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_labyrinth_dagger.webp",
+        "SHA256": "a60dbe4d5778c8b64d1c344ef33572363224f1279425101808d8b7ee6e35c83a"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_forge_dagger",
+      "tier": 6,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/first.png",
+      "sourceSHA256": "467f19a48678c0bd1829174be1c3ee65e1ca5f815c9b5885bc298a46ace9fb2f",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        104,
+        14,
+        485,
+        481
+      ],
+      "translationPx": [
+        25,
+        72
+      ],
+      "packedAlphaBounds": [
+        129,
+        86,
+        510,
+        553
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "6a26455be1b13cfc768ad5d70fdf6734f3a52b95e03ee67ae5ba4ffab0a8faf1",
+      "transparentFraction": 0.8920458984375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_forge_dagger.png",
+        "SHA256": "84654e1d84eadf8afb346c5ac3a3035193950f9566ed9807347a309355dce7f2"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_forge_dagger.webp",
+        "SHA256": "773eb269e4b712968f1a9c6b285240b4b60f1eddbe998c08fcee6705bbf834b0"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_styx_dagger",
+      "tier": 7,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        39,
+        23,
+        490,
+        496
+      ],
+      "translationPx": [
+        55,
+        60
+      ],
+      "packedAlphaBounds": [
+        94,
+        83,
+        545,
+        556
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "5342e89010d522b70167abc0dfd4887e0835445ea15265076d1e4641aae072c9",
+      "transparentFraction": 0.8867822265625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_styx_dagger.png",
+        "SHA256": "0b1e34823994a82ea0bddf0d409d525b46003ed0997c7a9c98e0154cf9e0bc26"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_styx_dagger.webp",
+        "SHA256": "e18d74cbfebb3db921f81fd72e14ac7da88e12c3852fc11bffd74303bab394cd"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_oracle_dagger",
+      "tier": 8,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        56,
+        21,
+        484,
+        505
+      ],
+      "translationPx": [
+        50,
+        57
+      ],
+      "packedAlphaBounds": [
+        106,
+        78,
+        534,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "9251e7b8719efcd7129050a6a3472492d41ea4982bb8fa2a01436f3626dd1699",
+      "transparentFraction": 0.89989013671875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_oracle_dagger.png",
+        "SHA256": "f30dc26a2fdf4a91b1365ff79c220ff61ebfa84750289b88abccb781a3c85b27"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_oracle_dagger.webp",
+        "SHA256": "22734b75909bc5e072bcfd71a5151378ef98869d4ac8666324fc6fda2d11c9a9"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_titan_dagger",
+      "tier": 9,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        63,
+        24,
+        493,
+        504
+      ],
+      "translationPx": [
+        42,
+        56
+      ],
+      "packedAlphaBounds": [
+        105,
+        80,
+        535,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "7e96322b1d64c97746e6b480fdf6082bbff9158864c6627fbaf065ea81f533ec",
+      "transparentFraction": 0.865712890625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_titan_dagger.png",
+        "SHA256": "63fb20298e621df5541c83eac55d7f727b56e0313d24cc1ef56f8883dc14edc3"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_titan_dagger.webp",
+        "SHA256": "bdc3dd02e1954dc436a7983171a4ed13cf6e18883f0662a545d25388ac8e3c17"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cloudgate_dagger",
+      "tier": 10,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        38,
+        14,
+        494,
+        494
+      ],
+      "translationPx": [
+        54,
+        66
+      ],
+      "packedAlphaBounds": [
+        92,
+        80,
+        548,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "4787f7012434e21906de00de402a438b2d10c5275f60b84f2aa0e12c7bc899d9",
+      "transparentFraction": 0.8719873046875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_cloudgate_dagger.png",
+        "SHA256": "7bd73900d48389ccb5fa7a07d246cff570f2f681aec7474c320890fa2731bb2b"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cloudgate_dagger.webp",
+        "SHA256": "aa198c8cb4d10df667a71318d024a10c881b64d02f6151c1ecfcd3366ce6ed19"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_elysium_dagger",
+      "tier": 11,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        62,
+        21,
+        498,
+        495
+      ],
+      "translationPx": [
+        40,
+        62
+      ],
+      "packedAlphaBounds": [
+        102,
+        83,
+        538,
+        557
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "351cee59d3c5e5c936f762836ee194efd93fef8e5e7fea6149c0402709ae72e1",
+      "transparentFraction": 0.88796142578125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_elysium_dagger.png",
+        "SHA256": "c86cc628de7f6c693ba7688503e80ebad94f3a7736d43733f559c24efbbc375e"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_elysium_dagger.webp",
+        "SHA256": "c5ceed53bdfa67e6f2f770f6932b6c682ca7b14ee5e19cd3ef98d95cf1c6ee5c"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cosmos_dagger",
+      "tier": 12,
+      "group": "dagger",
+      "source": "worker/art-production/thief-gear-20261015/dagger/last.png",
+      "sourceSHA256": "596215722789da5c882a042ec747668d08545cdb4463df43bea7758323ca53e2",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        74,
+        5,
+        492,
+        496
+      ],
+      "translationPx": [
+        37,
+        69
+      ],
+      "packedAlphaBounds": [
+        111,
+        74,
+        529,
+        565
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "76c1160f9b8b9055026a7cc37ad0ed5c8699d13ae077aba57008e4dddab229a6",
+      "transparentFraction": 0.8855322265625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dagger/packed/gear_wpn_cosmos_dagger.png",
+        "SHA256": "0483ccd1d1247ad61795dfc1e561c1c0155fc48ce9f19fe798ec71f8176fd6f9"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cosmos_dagger.webp",
+        "SHA256": "2e759d274f9ffdca58e359eb4a6857ecfed9eb719f0c92df9a9a369923ff64e5"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_athena_dual_daggers",
+      "tier": 2,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
+      "sourceSHA256": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        61,
+        41,
+        451,
+        473
+      ],
+      "translationPx": [
+        64,
+        63
+      ],
+      "packedAlphaBounds": [
+        125,
+        104,
+        515,
+        536
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "719958752b2011325b2433c0a976e9bb9bfda6ca4450eb4705190662f4118fde",
+      "transparentFraction": 0.83556884765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_athena_dual_daggers.png",
+        "SHA256": "fc4dfad241ab122fdff0b99d47240fb186fb56ddb637b30c3cf4a8f668ed8270"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_athena_dual_daggers.webp",
+        "SHA256": "1326156fdc686009503fc58048cf7e8b4da74210914d0b15d4b72b6da4bcd952"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_sacred_dual_daggers",
+      "tier": 3,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
+      "sourceSHA256": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        62,
+        32,
+        450,
+        473
+      ],
+      "translationPx": [
+        64,
+        67
+      ],
+      "packedAlphaBounds": [
+        126,
+        99,
+        514,
+        540
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "912e3e0fa3c17bba4d1fe903edb74a27c98126ac81b3f91d7165f1ffb164dc62",
+      "transparentFraction": 0.83783447265625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_sacred_dual_daggers.png",
+        "SHA256": "8abb1758e407c69f7e45f63358aaa03b6232d4b048ac8096a6105e1ff5579ee5"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_sacred_dual_daggers.webp",
+        "SHA256": "23eb10063005a7ac09a47d79b0e49eae0499c645a3f2186c35013e43734c243a"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_poseidon_dual_daggers",
+      "tier": 4,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
+      "sourceSHA256": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        52,
+        30,
+        461,
+        475
+      ],
+      "translationPx": [
+        63,
+        67
+      ],
+      "packedAlphaBounds": [
+        115,
+        97,
+        524,
+        542
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "385fddb2e510225b4732d53d1489201608b7a8bdaf5d5f835923563605d46ec2",
+      "transparentFraction": 0.81237060546875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_poseidon_dual_daggers.png",
+        "SHA256": "0692f2556d7452259c8616c27fe19d250aa7a12bfffe77e5aa0ab2dd90ee4059"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_poseidon_dual_daggers.webp",
+        "SHA256": "9626f4fc398fcc1963fe04b119e706302b9164a156d38481475e89969eb1cfbd"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_labyrinth_dual_daggers",
+      "tier": 5,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
+      "sourceSHA256": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        57,
+        27,
+        455,
+        466
+      ],
+      "translationPx": [
+        64,
+        73
+      ],
+      "packedAlphaBounds": [
+        121,
+        100,
+        519,
+        539
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "52c7a77bfe862681d386a4a6e3eb4ead171c7b848c45e91b9aee904c3311f5e2",
+      "transparentFraction": 0.83139892578125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_labyrinth_dual_daggers.png",
+        "SHA256": "d852faea77bd279c46a699cd7c00890d209d97ae6904dfb2a4ba3479dfc4af22"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_labyrinth_dual_daggers.webp",
+        "SHA256": "8a9e4b9d9f98aa134726f16c2013285e2abe03c44a959ad778932b7b0c137960"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_forge_dual_daggers",
+      "tier": 6,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/first.png",
+      "sourceSHA256": "bf20b318df2db53095c24daaa98cf40386898263799089858586575b34b5b164",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        56,
+        23,
+        457,
+        466
+      ],
+      "translationPx": [
+        63,
+        75
+      ],
+      "packedAlphaBounds": [
+        119,
+        98,
+        520,
+        541
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "295ae00f923e563a18f07041aca263e5cbd7a29ff2869b94d3ef79805bef137d",
+      "transparentFraction": 0.839453125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_forge_dual_daggers.png",
+        "SHA256": "d973fac0737df3d7268e8b1bd154973b075fb4da10a1666c46685fc0bb5719c5"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_forge_dual_daggers.webp",
+        "SHA256": "feb3552035b79fa8ddc29585ddd6e10fc907c0e887e10219ca0ad9f0bdd5c365"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_styx_dual_daggers",
+      "tier": 7,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        65,
+        40,
+        454,
+        483
+      ],
+      "translationPx": [
+        60,
+        58
+      ],
+      "packedAlphaBounds": [
+        125,
+        98,
+        514,
+        541
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "8ac034bd32e73aad6ee4e28f20ad11e8853346892df11a2e46da9b1dd1a3dede",
+      "transparentFraction": 0.8406787109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_styx_dual_daggers.png",
+        "SHA256": "44ed64624b77636ec48402656a2ec5bc6fc417bc8356682dc5811798d0d2aa52"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_styx_dual_daggers.webp",
+        "SHA256": "3f9839b2830e0d1edbd2ea9bfa47fd0b3d7b5ce9476f58dbeb0cda0b1eacf9a9"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_oracle_dual_daggers",
+      "tier": 8,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        60,
+        35,
+        454,
+        479
+      ],
+      "translationPx": [
+        63,
+        63
+      ],
+      "packedAlphaBounds": [
+        123,
+        98,
+        517,
+        542
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "06de6a0996a4afe0aa0ae7940a085520359ecd5f441d84f0ed3f27a76eb2965b",
+      "transparentFraction": 0.8318701171875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_oracle_dual_daggers.png",
+        "SHA256": "a9b40aed54922eff9624c965c24b7da7928d9f3fb4da5a2ccadcac09d70dc939"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_oracle_dual_daggers.webp",
+        "SHA256": "82804c0d48671e26fc3eb2ef2f3ef171fba2f5b4ddc0ad302dcf91116e85a6c7"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_titan_dual_daggers",
+      "tier": 9,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        62,
+        36,
+        448,
+        482
+      ],
+      "translationPx": [
+        65,
+        61
+      ],
+      "packedAlphaBounds": [
+        127,
+        97,
+        513,
+        543
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "4dc94f1346888e67b54187c9a765d6e323b386b4756f2c879309062dc245f09c",
+      "transparentFraction": 0.81138427734375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_titan_dual_daggers.png",
+        "SHA256": "91129c072d13384d6c194ef61f41e375245f63b0688c054e78df8854fbc5af15"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_titan_dual_daggers.webp",
+        "SHA256": "14cdbaf2b0fdb44d343678ed79ab47feecad39c15d1e29502a0b79cb09688f52"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cloudgate_dual_daggers",
+      "tier": 10,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        66,
+        29,
+        458,
+        474
+      ],
+      "translationPx": [
+        58,
+        68
+      ],
+      "packedAlphaBounds": [
+        124,
+        97,
+        516,
+        542
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "11ac90895b3c129b07e9533f57d6c7e7dcd145865ad3cf5195d06f005b1b5e84",
+      "transparentFraction": 0.83462158203125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_cloudgate_dual_daggers.png",
+        "SHA256": "c7cbd64aad963f5b84c705ae3f53fa7efe4551a16a46bc731b91d40fbb3ecb9f"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cloudgate_dual_daggers.webp",
+        "SHA256": "ca8b322ebfe48b310e952515c9ac9ca56c2872c2dc76a948c954db7743f829e7"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_elysium_dual_daggers",
+      "tier": 11,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        51,
+        26,
+        462,
+        474
+      ],
+      "translationPx": [
+        63,
+        70
+      ],
+      "packedAlphaBounds": [
+        114,
+        96,
+        525,
+        544
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "3a5e4e1eebb5c2d4473d321d7af7b337f072256ad9733733de93899e0d2a6da5",
+      "transparentFraction": 0.827890625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_elysium_dual_daggers.png",
+        "SHA256": "5130ef302aea4b60531cfc6658ec51dcd7544b37eaeb47155cca0e6c64c15111"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_elysium_dual_daggers.webp",
+        "SHA256": "eac4e67e0722f5b719a5ebfeab54fb524ae766c8f97fb4e7ce2983f9d840e724"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cosmos_dual_daggers",
+      "tier": 12,
+      "group": "dual_daggers",
+      "source": "worker/art-production/thief-gear-20261015/dual_daggers/last.png",
+      "sourceSHA256": "dfd7230e8f08b3ed90dd5344ba6a685c64e9f656feb82a2ca20458dc8f3cbe97",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        54,
+        29,
+        456,
+        473
+      ],
+      "translationPx": [
+        65,
+        69
+      ],
+      "packedAlphaBounds": [
+        119,
+        98,
+        521,
+        542
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "35779e089adaed83a578370287524019dcb40e54e2558f5c2d00b81617501a21",
+      "transparentFraction": 0.8311376953125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/dual_daggers/packed/gear_wpn_cosmos_dual_daggers.png",
+        "SHA256": "b691f1c4e6005f51c54b8b4c1e9a062db11d6df885606c29d401fae67d8e6637"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cosmos_dual_daggers.webp",
+        "SHA256": "cbb7eb81c63341865684fb9c1009b77ab235c42a8d294e992fa96e9377d224ed"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_athena_throwing_blades",
+      "tier": 2,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
+      "sourceSHA256": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        500
+      ],
+      "sourceAlphaBounds": [
+        38,
+        5,
+        475,
+        483
+      ],
+      "translationPx": [
+        63,
+        76
+      ],
+      "packedAlphaBounds": [
+        101,
+        81,
+        538,
+        559
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "22eba8cf49b6784312ffd65828f1ee872cab5fd785d37eb380ba2e00bb916b89",
+      "transparentFraction": 0.7911767578125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_athena_throwing_blades.png",
+        "SHA256": "664e4fc0c66e8d476693e1ba3c7ba99d61b1d683007b3820d1e20b786cf29c6c"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_athena_throwing_blades.webp",
+        "SHA256": "b153acca385cf520ba09e57138ad7f7455c0fec77b775bda7b59bf58173e42c9"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_sacred_throwing_blades",
+      "tier": 3,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
+      "sourceSHA256": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        500
+      ],
+      "sourceAlphaBounds": [
+        16,
+        9,
+        476,
+        484
+      ],
+      "translationPx": [
+        74,
+        73
+      ],
+      "packedAlphaBounds": [
+        90,
+        82,
+        550,
+        557
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "84745f6b7f5143a3d5cee54e8a7ae4d6ca3ec26db7721fbe695f99e6605cd6e3",
+      "transparentFraction": 0.7861669921875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_sacred_throwing_blades.png",
+        "SHA256": "b514696efec4fef9297f9bfe02c544f36c02955b1e6b16488057be36a02d0c65"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_sacred_throwing_blades.webp",
+        "SHA256": "1398710951e2019b0224cc3cfad580729338209ade9abad3edb6a1001a5637eb"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_poseidon_throwing_blades",
+      "tier": 4,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
+      "sourceSHA256": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+      "sourceRect": [
+        0,
+        500,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        37,
+        6,
+        501,
+        487
+      ],
+      "translationPx": [
+        51,
+        73
+      ],
+      "packedAlphaBounds": [
+        88,
+        79,
+        552,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "53c67213fe7e7f61a831858421ffc1c62b16020d4a466fdc2da09c1196f40693",
+      "transparentFraction": 0.79616943359375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_poseidon_throwing_blades.png",
+        "SHA256": "f472ee29500ee6b45babe21c415f0fc8ecbbf9812cf2e27bd8d5a47064eeb305"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_poseidon_throwing_blades.webp",
+        "SHA256": "2f9143df6c134c261a0d6ba2775696bc4df34b43aa172dba4084658589f979e6"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_labyrinth_throwing_blades",
+      "tier": 5,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
+      "sourceSHA256": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+      "sourceRect": [
+        512,
+        500,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        39,
+        3,
+        473,
+        488
+      ],
+      "translationPx": [
+        64,
+        74
+      ],
+      "packedAlphaBounds": [
+        103,
+        77,
+        537,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "e4c564464f2bf6c42f7a3e252b86c525d8d4ea6013413e79f0ea4366b585bf1c",
+      "transparentFraction": 0.8031787109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_labyrinth_throwing_blades.png",
+        "SHA256": "6728a105ff0c26b537e17690b8d6aac4dc159cc0fd3ef6568521f046702e40ed"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_labyrinth_throwing_blades.webp",
+        "SHA256": "88c97a1e074ca488c5d2bb84a05f3650198b3e4842947b8feaf1505d0e573aab"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_forge_throwing_blades",
+      "tier": 6,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/first.png",
+      "sourceSHA256": "0524d017caeb054e00026db85e5ed25c6e5ff14074c4b72662c11f101a71564c",
+      "sourceRect": [
+        1024,
+        500,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        17,
+        2,
+        477,
+        487
+      ],
+      "translationPx": [
+        73,
+        75
+      ],
+      "packedAlphaBounds": [
+        90,
+        77,
+        550,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "83789f4f83fed0e5e902c67922fd0fddbfdecacf6c2c8ca6817ef6000500209d",
+      "transparentFraction": 0.79315185546875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_forge_throwing_blades.png",
+        "SHA256": "cc92e3b1e5d9ac75183484776aca893a3af3a311949d6499b421aaa845d39c4d"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_forge_throwing_blades.webp",
+        "SHA256": "56bfcf43d7580aeb7efc2d14a607757b997807de48430034b6fed18286fc2693"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_styx_throwing_blades",
+      "tier": 7,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        513
+      ],
+      "sourceAlphaBounds": [
+        42,
+        9,
+        506,
+        512
+      ],
+      "translationPx": [
+        46,
+        59
+      ],
+      "packedAlphaBounds": [
+        88,
+        68,
+        552,
+        571
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "2b9b40a31a9de6b6a68722bedbedd53bd7d325792098c901ff5110c630c45d00",
+      "transparentFraction": 0.80067626953125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_styx_throwing_blades.png",
+        "SHA256": "e36a1f5e5e531c0491bfd4c5c6d469074fc131050ee0b6947fbc4a91ba638adc"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_styx_throwing_blades.webp",
+        "SHA256": "8568537e6ef8d5557bb4d04e601cb19937aa25a0fae358adee7ef3c6a87587d5"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_oracle_throwing_blades",
+      "tier": 8,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        512,
+        0,
+        1040,
+        513
+      ],
+      "sourceAlphaBounds": [
+        41,
+        8,
+        516,
+        505
+      ],
+      "translationPx": [
+        41,
+        63
+      ],
+      "packedAlphaBounds": [
+        82,
+        71,
+        557,
+        568
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "396424b8f27d6c165117ef1c86ce8f08ec26aadb689cc405b9446b5f6804001e",
+      "transparentFraction": 0.78876708984375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_oracle_throwing_blades.png",
+        "SHA256": "8ca22af0ad961dae2133cdea19188ac478660e6cbb6fdc1126ddf511a6cbf606"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_oracle_throwing_blades.webp",
+        "SHA256": "f99c90e0b97b71eb26f4c3cd2c31f2ad9c48c219b4daabb18c5b0c2ef00c1ea3"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_titan_throwing_blades",
+      "tier": 9,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        1040,
+        0,
+        1536,
+        513
+      ],
+      "sourceAlphaBounds": [
+        43,
+        9,
+        477,
+        503
+      ],
+      "translationPx": [
+        60,
+        64
+      ],
+      "packedAlphaBounds": [
+        103,
+        73,
+        537,
+        567
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "a519e3b405dafca411e76e86844b4fd367768ca898dd1ecb7f4d0926fd0fddd1",
+      "transparentFraction": 0.78388671875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_titan_throwing_blades.png",
+        "SHA256": "a656d31d9a0ed0a37f5068f47b098c50ac6e4b30dcf8db5b4713b006f48dc440"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_titan_throwing_blades.webp",
+        "SHA256": "16c6071d85e674b068143e2e5383ef5bd36318ee3e31abed9bc23635033e224f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cloudgate_throwing_blades",
+      "tier": 10,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        0,
+        513,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        42,
+        1,
+        497,
+        505
+      ],
+      "translationPx": [
+        50,
+        67
+      ],
+      "packedAlphaBounds": [
+        92,
+        68,
+        547,
+        572
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "b381b2a6e90785ff75c7aa8fc264a740b156be0182af048c16f3c5f1fc1fca97",
+      "transparentFraction": 0.79541259765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_cloudgate_throwing_blades.png",
+        "SHA256": "e0c6fd31f13e0f8ce9cb193e8d734630c39d2155db87dca1f4667fe4d480c47a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cloudgate_throwing_blades.webp",
+        "SHA256": "233a0f0a4e23388399e34d57b92932dacccbd8bb790c363d0d3b24b465419f4c"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_elysium_throwing_blades",
+      "tier": 11,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        512,
+        513,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        54,
+        3,
+        511,
+        504
+      ],
+      "translationPx": [
+        37,
+        66
+      ],
+      "packedAlphaBounds": [
+        91,
+        69,
+        548,
+        570
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "a5586dc9059483dda483834d19054733596dbd24e8eab9877b6436989dfd235d",
+      "transparentFraction": 0.78915771484375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_elysium_throwing_blades.png",
+        "SHA256": "27042c9dbe2163bfbc9ce510c3e8042c4bf7df9bf1edb0acad118513ff4ff751"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_elysium_throwing_blades.webp",
+        "SHA256": "4d9abb2eb828aad05905e07a3a284c0211195ea1bceb9a0b84058c75c486bcae"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_wpn_cosmos_throwing_blades",
+      "tier": 12,
+      "group": "throwing_blades",
+      "source": "worker/art-production/thief-gear-20261015/throwing_blades/last.png",
+      "sourceSHA256": "65fc23ac355334a134adfe093765f40c6a5239f3d767e866854f884a5375b848",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        76,
+        1,
+        510,
+        506
+      ],
+      "translationPx": [
+        27,
+        66
+      ],
+      "packedAlphaBounds": [
+        103,
+        67,
+        537,
+        572
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "64e417e4b07e6c6c16e0bf52c0ba238d01b29e3f956f974750e1893dc68fa89e",
+      "transparentFraction": 0.79220458984375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/throwing_blades/packed/gear_wpn_cosmos_throwing_blades.png",
+        "SHA256": "4ba9b26e84406cbcddde18e831849ccb4503323b2ae9e25f0f333e7c89286d7f"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_wpn_cosmos_throwing_blades.webp",
+        "SHA256": "4f4bb68b7c5092a8bdd561642b0725e9f1ef2b929b17d2c2d7eddfe716e3a7c1"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_laurel_light_leather",
+      "tier": 1,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        65,
+        26,
+        444,
+        489
+      ],
+      "translationPx": [
+        65,
+        62
+      ],
+      "packedAlphaBounds": [
+        130,
+        88,
+        509,
+        551
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "3a086e75128263b56c0291f4738554b16554aa6721654df82f898b3f1362af68",
+      "transparentFraction": 0.7486474609375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_laurel_light_leather.png",
+        "SHA256": "6a8667280eb75f0640e60d5c718bf181e42d8f974926532150624384ad5ecbfa"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_laurel_light_leather.webp",
+        "SHA256": "b9531cf11167a4b8eab3da1822f4b3b459303f503044890a5bfebcc5f0b24528"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_athena_light_leather",
+      "tier": 2,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        62,
+        23,
+        455,
+        488
+      ],
+      "translationPx": [
+        61,
+        64
+      ],
+      "packedAlphaBounds": [
+        123,
+        87,
+        516,
+        552
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "83ed2c60cf1a64129904da26d56b4d467b05d252ab7a0ec02f4abad6613a96b8",
+      "transparentFraction": 0.7327587890625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_athena_light_leather.png",
+        "SHA256": "395056bc53d6c364a5a55a5c65eebf0f6270d87526d0f9f6dd2ff0bb8bfa883b"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_athena_light_leather.webp",
+        "SHA256": "ec5d685e27f7d68e83a70141e0fe1bbb36b9b9c7acf36a807ddaf16d7fbaa03f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_sacred_light_leather",
+      "tier": 3,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        62,
+        26,
+        465,
+        497
+      ],
+      "translationPx": [
+        56,
+        58
+      ],
+      "packedAlphaBounds": [
+        118,
+        84,
+        521,
+        555
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "41bff155fa9c944bf4d6b6cdd1ab37d37cdfcfcac654e11a45f24c67e222ef2e",
+      "transparentFraction": 0.71711669921875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_sacred_light_leather.png",
+        "SHA256": "bd98bb4c818410f974578f7182eb85b5bdd21664922455d58646bdb205509e7e"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_sacred_light_leather.webp",
+        "SHA256": "4a86a60b8e9595c6084678395a4897afa916899b888bf80d11d05115121d50fa"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_poseidon_light_leather",
+      "tier": 4,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        58,
+        9,
+        481,
+        484
+      ],
+      "translationPx": [
+        50,
+        73
+      ],
+      "packedAlphaBounds": [
+        108,
+        82,
+        531,
+        557
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "32926fe8f48b312d1d2a08dbba60e273ea856a424b6f7792a7c6f7e7682b752f",
+      "transparentFraction": 0.706982421875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_poseidon_light_leather.png",
+        "SHA256": "f5bfacfb1f05ddbddfe0205d595ad75f30fa6e361e536a347f80252e352d17fb"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_poseidon_light_leather.webp",
+        "SHA256": "6cd7ba168812e5dc41f7cca74515b1a973b1877eaea40acbcfd7ea59a4c048ba"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_labyrinth_light_leather",
+      "tier": 5,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        53,
+        14,
+        461,
+        486
+      ],
+      "translationPx": [
+        63,
+        70
+      ],
+      "packedAlphaBounds": [
+        116,
+        84,
+        524,
+        556
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "9eaa92178d956124d3726062691f34909b75802433e4a0ab627cfe841500745e",
+      "transparentFraction": 0.72107666015625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_labyrinth_light_leather.png",
+        "SHA256": "c6c57bebcbf98febc855599b8d403f312c39fd30f4715b2a12f96de23c09732f"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_labyrinth_light_leather.webp",
+        "SHA256": "b27f6f3483620e20ac487a2f6c1a91b8552837e7faa80d523219d0ac6acb8693"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_forge_light_leather",
+      "tier": 6,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/first.png",
+      "sourceSHA256": "db6286c0e947670ad91a7d93d9206b9498a11dbb53f54c17c5f2313527c6e873",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        78,
+        11,
+        472,
+        483
+      ],
+      "translationPx": [
+        45,
+        73
+      ],
+      "packedAlphaBounds": [
+        123,
+        84,
+        517,
+        556
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "8a11d152fe456a29db7119688345fedd8e2aec46769d12a1460caee57ef0a300",
+      "transparentFraction": 0.72168701171875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_forge_light_leather.png",
+        "SHA256": "368261e0bb1e0d053d925fe3666989232b22eeabcea7fdbbde1f27fe667b3529"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_forge_light_leather.webp",
+        "SHA256": "a51000aa8c45c6526db621c7e2da150dfc70b29c7aa0ac0f8dddb2e8fd64737e"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_styx_light_leather",
+      "tier": 7,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        63,
+        13,
+        447,
+        502
+      ],
+      "translationPx": [
+        65,
+        62
+      ],
+      "packedAlphaBounds": [
+        128,
+        75,
+        512,
+        564
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "5f51b805add773df416e780c32ee2e67e1350106bc3bccb754680e67b160a71d",
+      "transparentFraction": 0.68928955078125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_styx_light_leather.png",
+        "SHA256": "1f4f113c78f2c09ed3370c40086cf2919fbbbcc587d9d826745db9385c84a7e3"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_styx_light_leather.webp",
+        "SHA256": "ed0fc6b969ed453664633f0f2003010e45e080d33dde5d40030d2b29944564cf"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_oracle_light_leather",
+      "tier": 8,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        47,
+        9,
+        448,
+        506
+      ],
+      "translationPx": [
+        72,
+        62
+      ],
+      "packedAlphaBounds": [
+        119,
+        71,
+        520,
+        568
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "854548746ee34e2173016012209c177b4d70997f99cb4aaf77fd2fff327d9055",
+      "transparentFraction": 0.688994140625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_oracle_light_leather.png",
+        "SHA256": "94f168e1b192d01257bcb64b3491266ee5b334bd979691a8c195bc855ccc07bd"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_oracle_light_leather.webp",
+        "SHA256": "6c8ea6f5daba165ef456ac623fbd6f0b68ffae980077ce7f477b1b2bc8852c5d"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_titan_light_leather",
+      "tier": 9,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        71,
+        13,
+        444,
+        505
+      ],
+      "translationPx": [
+        62,
+        61
+      ],
+      "packedAlphaBounds": [
+        133,
+        74,
+        506,
+        566
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "8cec2d6702fde8a31dcf9adbfc178ba72c010014876b5c09cee05bc75c177fd0",
+      "transparentFraction": 0.69931884765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_titan_light_leather.png",
+        "SHA256": "3867dfca144f7f372f32acc3c0289b70bf6a55df09a76f20d34e3f1e7f1eedc0"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_titan_light_leather.webp",
+        "SHA256": "016ed402bda0f4f3efa9dca98448af9e9002d100eeffb8da2ca4a7d2c906392e"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_cloudgate_light_leather",
+      "tier": 10,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        67,
+        2,
+        450,
+        496
+      ],
+      "translationPx": [
+        61,
+        71
+      ],
+      "packedAlphaBounds": [
+        128,
+        73,
+        511,
+        567
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "23b352c1a892105bf3e525d753e9889b877b76813afa0b771151d60d9499cce0",
+      "transparentFraction": 0.68200439453125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_cloudgate_light_leather.png",
+        "SHA256": "a5d35f5f5c4aafb3ca4f26d5ecc88de8c52f5b615e8fa0865646f1fcff6a1f9c"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_cloudgate_light_leather.webp",
+        "SHA256": "e70c9cb7effdc05a282f492da77fc0c33dcaa47ebc6fc570763292da7278fbdb"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_elysium_light_leather",
+      "tier": 11,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        60,
+        6,
+        440,
+        491
+      ],
+      "translationPx": [
+        70,
+        71
+      ],
+      "packedAlphaBounds": [
+        130,
+        77,
+        510,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "5eac62bbf4ae6d4d03d33cd1bcbd707c4e5b086923331b9530756c3d565e51cf",
+      "transparentFraction": 0.68936279296875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_elysium_light_leather.png",
+        "SHA256": "35ed10abe8e15879266b324859fdf30b903cdac107bffcf1d7f007186ee0b76e"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_elysium_light_leather.webp",
+        "SHA256": "60e5bd3718fdb9eeac13fce2ed298da573d0aa5dcfa6d8011b69fa4ea6ef6abd"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_helm_cosmos_light_leather",
+      "tier": 12,
+      "group": "helmet",
+      "source": "worker/art-production/thief-gear-20261015/helmet/last.png",
+      "sourceSHA256": "7fc659a95dd35bf378b07ad95beeda43f4b4229b3c53343d06ca1ad548e66175",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        54,
+        6,
+        439,
+        489
+      ],
+      "translationPx": [
+        73,
+        72
+      ],
+      "packedAlphaBounds": [
+        127,
+        78,
+        512,
+        561
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "d8a129843321fc6a11f6653ece32f77753d456426b9bf3151f719417b6e90407",
+      "transparentFraction": 0.70011962890625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/helmet/packed/gear_helm_cosmos_light_leather.png",
+        "SHA256": "d44c167f1bafee0c72e5d27104f0f186d833237f55c95f9cccb8befe4d79c5d7"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_helm_cosmos_light_leather.webp",
+        "SHA256": "1b8ef4f4badc89da63bdc063d570f1d642bb8d99a4432e9a810320ab886128d7"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_laurel_light_leather",
+      "tier": 1,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        89,
+        24,
+        451,
+        504
+      ],
+      "translationPx": [
+        50,
+        56
+      ],
+      "packedAlphaBounds": [
+        139,
+        80,
+        501,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "2073cfd9a92c2c686258746c030145c084cf6de3bae46430f23ae72e58bb67ee",
+      "transparentFraction": 0.71016357421875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_laurel_light_leather.png",
+        "SHA256": "9b6d7e2557df4d4e3201f9a3e9c0837264a1375debc0a0bceedc8848c23d4677"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_laurel_light_leather.webp",
+        "SHA256": "5f8e20fad7e34e85d787391d147ca318bf303ce76afd2de89646475a0b8eb3b0"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_athena_light_leather",
+      "tier": 2,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        66,
+        17,
+        419,
+        508
+      ],
+      "translationPx": [
+        77,
+        57
+      ],
+      "packedAlphaBounds": [
+        143,
+        74,
+        496,
+        565
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "36fc579a319418100d3bd079f6c4cd8d44a340c8d5b33ca868b6f8f7a3dd12b2",
+      "transparentFraction": 0.7018115234375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_athena_light_leather.png",
+        "SHA256": "4e3d2e8f47b4f0ee6f39cc257d424b9e237bb4558d846e569d44bfe15324b7b3"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_athena_light_leather.webp",
+        "SHA256": "36d8c0a5e73cb3b42a5c86a2edac2460801324902d744c9e981a0b2c3afdf6be"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_sacred_light_leather",
+      "tier": 3,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        60,
+        21,
+        424,
+        507
+      ],
+      "translationPx": [
+        78,
+        56
+      ],
+      "packedAlphaBounds": [
+        138,
+        77,
+        502,
+        563
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "50b8bdf663a8d547d4e69c9be320fe97e084b03be7e27e4b0f81a5f28acc73a6",
+      "transparentFraction": 0.71581787109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_sacred_light_leather.png",
+        "SHA256": "2e14ba960a9496c2b8a4fd96614ff28f16fe7ac1213621111c77ae2304ecce3a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_sacred_light_leather.webp",
+        "SHA256": "c37b279c683379ffa7397682fd612d1140f2dc8957eb8745779e65de0ff0c9ef"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_poseidon_light_leather",
+      "tier": 4,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        86,
+        8,
+        449,
+        493
+      ],
+      "translationPx": [
+        52,
+        69
+      ],
+      "packedAlphaBounds": [
+        138,
+        77,
+        501,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "ca5d179d80fa3eb5720a254a0f46e298c190861c054f809244ac7f98f6867c91",
+      "transparentFraction": 0.69486328125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_poseidon_light_leather.png",
+        "SHA256": "ed59be875e9056e64a29b5583ba8503e5e77307229636271fb539ed61f516095"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_poseidon_light_leather.webp",
+        "SHA256": "a7b51d799a61bf841996904d3c07f842e7ac8e2e45123980c2070c427aea498a"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_labyrinth_light_leather",
+      "tier": 5,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        73,
+        13,
+        428,
+        493
+      ],
+      "translationPx": [
+        69,
+        67
+      ],
+      "packedAlphaBounds": [
+        142,
+        80,
+        497,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "a95f2b18609fdb85d4e07b8dca063537b378fba6d816196383e0f365c9ad62b1",
+      "transparentFraction": 0.7106884765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_labyrinth_light_leather.png",
+        "SHA256": "def60ce632d2b2673954e5f84e5d47701aef56b8e81c0274a67aab57c1098a5e"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_labyrinth_light_leather.webp",
+        "SHA256": "a3df261915e5355cc28c05040afb50f91b61eb27b12e2be179f0f423e25b9bc5"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_forge_light_leather",
+      "tier": 6,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/first.png",
+      "sourceSHA256": "2581069a6e1f16825c1b9df8c25a85116aaa8130ac4d4b25332d867c76325530",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        73,
+        9,
+        436,
+        491
+      ],
+      "translationPx": [
+        65,
+        70
+      ],
+      "packedAlphaBounds": [
+        138,
+        79,
+        501,
+        561
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "0ea7871fc2b85bfe786ee3f662e678b12ca94c5f1fd7f5ac839b037ddca26164",
+      "transparentFraction": 0.705283203125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_forge_light_leather.png",
+        "SHA256": "80ace59e1ed8011f99920f200e5e802f7efd67f70502955e0f2fb77a1332724a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_forge_light_leather.webp",
+        "SHA256": "29084ea9be571a9113e92af6821bef8e2e763723bdcd93a01e1038676d5073bd"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_styx_light_leather",
+      "tier": 7,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        513
+      ],
+      "sourceAlphaBounds": [
+        95,
+        17,
+        466,
+        506
+      ],
+      "translationPx": [
+        39,
+        58
+      ],
+      "packedAlphaBounds": [
+        134,
+        75,
+        505,
+        564
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "6d419a127ebcd288d785cbf7c2b498e48ec0a4bb79f83026048ef6d489f4fa67",
+      "transparentFraction": 0.6965625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_styx_light_leather.png",
+        "SHA256": "f67295a0e92bd532b8e96afbf1dfdca416e4eafd839879d0839dd2877a918412"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_styx_light_leather.webp",
+        "SHA256": "c1c3af2b4359807ed65bd9ef7ac7bdff8742fd59d8f14c97313b547e0a027d60"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_oracle_light_leather",
+      "tier": 8,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        513
+      ],
+      "sourceAlphaBounds": [
+        64,
+        15,
+        439,
+        512
+      ],
+      "translationPx": [
+        68,
+        56
+      ],
+      "packedAlphaBounds": [
+        132,
+        71,
+        507,
+        568
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "6e37055d78b52f03000a3a5fa8faab528e94450bfa6c36b3f4a3f1279a595f26",
+      "transparentFraction": 0.69275634765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_oracle_light_leather.png",
+        "SHA256": "350958c8093f4e030206a8ef37b297a8e3a908b17e59eec526d69d6cabd250d1"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_oracle_light_leather.webp",
+        "SHA256": "093a0b4f7a62f0a670d3cac4071300286665848e1b4e4327853875a1b632dd4f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_titan_light_leather",
+      "tier": 9,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        513
+      ],
+      "sourceAlphaBounds": [
+        51,
+        21,
+        443,
+        502
+      ],
+      "translationPx": [
+        73,
+        58
+      ],
+      "packedAlphaBounds": [
+        124,
+        79,
+        516,
+        560
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "9c0f5b728ff631a31c061a88258f463f2f74bd603bad7c1e02eafa45d381dd56",
+      "transparentFraction": 0.68440673828125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_titan_light_leather.png",
+        "SHA256": "6a32f3426a055bfbffd5ecf50a2ce0175ef2bcb2cb2ec43a2ff636e1e03b85eb"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_titan_light_leather.webp",
+        "SHA256": "65e2491688fbc827c389be3ab71bce2b2ffa647fbe2ecc4b9b598515308e8b0a"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_cloudgate_light_leather",
+      "tier": 10,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        0,
+        513,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        89,
+        2,
+        468,
+        487
+      ],
+      "translationPx": [
+        41,
+        75
+      ],
+      "packedAlphaBounds": [
+        130,
+        77,
+        509,
+        562
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "b5542e040a1ef5492050c698ea64a5e886ec1c5fbd2b523b63218891450fad68",
+      "transparentFraction": 0.69300048828125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_cloudgate_light_leather.png",
+        "SHA256": "fb245ddb537aebb4f7885cb769709592b27a63fe83f621e63c7af52f2181e844"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_cloudgate_light_leather.webp",
+        "SHA256": "215148b30bce235be3c4e6588ae507f8ac4e62aad2e42699e86ab0d19c09bfa5"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_elysium_light_leather",
+      "tier": 11,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        512,
+        513,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        64,
+        2,
+        450,
+        488
+      ],
+      "translationPx": [
+        63,
+        75
+      ],
+      "packedAlphaBounds": [
+        127,
+        77,
+        513,
+        563
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "5be51eb57dc3a6ede0205bf939110b550f663cb1841b72391dade83b4aecf153",
+      "transparentFraction": 0.70093994140625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_elysium_light_leather.png",
+        "SHA256": "b2f46c9def7c5bf5995a740595f7df539ee9874e13c722c31f33b0077c6c11f2"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_elysium_light_leather.webp",
+        "SHA256": "f4120b91db5ea3424799c38f557e060ec66f0486d48e812684921a902f5f0a5a"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_arm_cosmos_light_leather",
+      "tier": 12,
+      "group": "armor",
+      "source": "worker/art-production/thief-gear-20261015/armor/last.png",
+      "sourceSHA256": "6746565b83d35a2132dfc91c3df5bdb5a326c775a84b05839d22f56c9f07d45e",
+      "sourceRect": [
+        1024,
+        513,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        60,
+        6,
+        429,
+        489
+      ],
+      "translationPx": [
+        75,
+        72
+      ],
+      "packedAlphaBounds": [
+        135,
+        78,
+        504,
+        561
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "f35b29c6580a71ca468e83b706e6d6a9d9f9d7b8f6dfad01064b0fbf98d33d15",
+      "transparentFraction": 0.70495849609375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/armor/packed/gear_arm_cosmos_light_leather.png",
+        "SHA256": "347d2769e1fa2dc5827d2c0bdec1ec035ed3d786b01321f70c8d35cd75a113e2"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_arm_cosmos_light_leather.webp",
+        "SHA256": "883b6adbc3739d28476f2fd18579e6f4dd4de15c5ae2af033d7fbfddd2f54a42"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_laurel_light_leather",
+      "tier": 1,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        34,
+        54,
+        473,
+        470
+      ],
+      "translationPx": [
+        66,
+        58
+      ],
+      "packedAlphaBounds": [
+        100,
+        112,
+        539,
+        528
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "31866fe6987de387264a289eed1b68f6e660bf6a741aeefa56011ec755877391",
+      "transparentFraction": 0.70653564453125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_laurel_light_leather.png",
+        "SHA256": "5c36b7e1a0e241ec15c0d200ac904c07f920ffc4ec64eca36d6ae647899b5a16"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_laurel_light_leather.webp",
+        "SHA256": "23e5f4638d7bbac32781fe1bc10bd5d753d08a022cc8367f9930f17018b32a6f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_athena_light_leather",
+      "tier": 2,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        39,
+        67,
+        475,
+        466
+      ],
+      "translationPx": [
+        63,
+        53
+      ],
+      "packedAlphaBounds": [
+        102,
+        120,
+        538,
+        519
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "f15fcba78977c39619cf3ccc9f40b62862b80c91fd3ac3edaebe5047715545c9",
+      "transparentFraction": 0.69823486328125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_athena_light_leather.png",
+        "SHA256": "c32fe257770e2dc283c3ebd382d8485bae516b11c19d03e697e503c6df734425"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_athena_light_leather.webp",
+        "SHA256": "5706eaf2d2f57ce5d736975a73990052046ac245048ed551e5e59c874e5c6a92"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_sacred_light_leather",
+      "tier": 3,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        32,
+        55,
+        489,
+        471
+      ],
+      "translationPx": [
+        59,
+        57
+      ],
+      "packedAlphaBounds": [
+        91,
+        112,
+        548,
+        528
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "57784e7546d1a94ef1812d8df3393623e4146465d1676ec4917e15b66d2467bb",
+      "transparentFraction": 0.7009765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_sacred_light_leather.png",
+        "SHA256": "cb17471532c9984c6d1b404f4b3188884c6d1a2295e93e0e5baeb27cc92409b1"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_sacred_light_leather.webp",
+        "SHA256": "64555cb0d35edefe5f43ccd473449b11d9d83e9efd6bdbcf1c8891596d0f2caa"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_poseidon_light_leather",
+      "tier": 4,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        52,
+        36,
+        468,
+        448
+      ],
+      "translationPx": [
+        60,
+        78
+      ],
+      "packedAlphaBounds": [
+        112,
+        114,
+        528,
+        526
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "f86e20b69717fdb5c27bd3ff67e1fa7b1b469d24cd4fa8c41f0fac46ecb8a2f3",
+      "transparentFraction": 0.701494140625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_poseidon_light_leather.png",
+        "SHA256": "dc02a2265833b58b752340c7b4bcf3625417a21d7fec5ac5942123bddd2d3471"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_poseidon_light_leather.webp",
+        "SHA256": "98117a4e902948aab7c6d6bf0bb1f501cd6d813c8e34cecddf7e4b3114c4fe4f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_labyrinth_light_leather",
+      "tier": 5,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        41,
+        33,
+        473,
+        438
+      ],
+      "translationPx": [
+        63,
+        84
+      ],
+      "packedAlphaBounds": [
+        104,
+        117,
+        536,
+        522
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "6111e5d422c1d28c976a82dd0a380f86a61c079876e371ef33d3ce6ea3a968e0",
+      "transparentFraction": 0.69275634765625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_labyrinth_light_leather.png",
+        "SHA256": "32dacec92149d2a25afcad06f324ccd117698bad86c8dd1f4e780a599ea2bf2a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_labyrinth_light_leather.webp",
+        "SHA256": "321fa0a618f56db01f3c1e859d7f24f2c2233b778988c83fe17144e9c6e82599"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_forge_light_leather",
+      "tier": 6,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/first.png",
+      "sourceSHA256": "bb75313eef48473492fedb9340f8c47230f4d31f092a7739df5d0b5b328e4caf",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        42,
+        36,
+        474,
+        450
+      ],
+      "translationPx": [
+        62,
+        77
+      ],
+      "packedAlphaBounds": [
+        104,
+        113,
+        536,
+        527
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "3cc27f9cc7ab69653a1fde91de66048d249b9a3dbc8d42b9bddc04c7b24db7de",
+      "transparentFraction": 0.70259521484375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_forge_light_leather.png",
+        "SHA256": "12d8f17d8a4f0cf39dad6b7eada9619a1d092c47fed90742b1de2a7694bf251c"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_forge_light_leather.webp",
+        "SHA256": "8c8dbb7d5f35d81af4f665c735753aa0d186835123562fe0f4b112189b7a7cd8"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_styx_light_leather",
+      "tier": 7,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        34,
+        53,
+        485,
+        476
+      ],
+      "translationPx": [
+        60,
+        55
+      ],
+      "packedAlphaBounds": [
+        94,
+        108,
+        545,
+        531
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "13cb13aa592172ccb5503e44649ac3d665fd48a53d4e4c853b81bad3d9e5860d",
+      "transparentFraction": 0.70015380859375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_styx_light_leather.png",
+        "SHA256": "438ab517ee334232d0a944505392be99b6f29d7d1c2a979fdf92905aa5a2b1df"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_styx_light_leather.webp",
+        "SHA256": "c80cc338a8d2daa419d3eb961db6520b857a55aa892f43a248d0986cf569328e"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_oracle_light_leather",
+      "tier": 8,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        43,
+        47,
+        478,
+        467
+      ],
+      "translationPx": [
+        59,
+        63
+      ],
+      "packedAlphaBounds": [
+        102,
+        110,
+        537,
+        530
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "6f388618ca9a07fd50504cf5d14662ccf82eb6942db92caf8bae0803f650a7e3",
+      "transparentFraction": 0.7078271484375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_oracle_light_leather.png",
+        "SHA256": "9e93abc9dd1f992561248e21500e3c6a9609a3225f9be061baa6f62d00be086a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_oracle_light_leather.webp",
+        "SHA256": "f37978baebacff91bf2b787d5b6a596e3e6bc0db5ddd9af8dcc10b889417f328"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_titan_light_leather",
+      "tier": 9,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        47,
+        54,
+        482,
+        474
+      ],
+      "translationPx": [
+        55,
+        56
+      ],
+      "packedAlphaBounds": [
+        102,
+        110,
+        537,
+        530
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "0f9e7bd740412d2150ca3c6fe459588ac6be3425e65ba6fcd3c598e796f488f4",
+      "transparentFraction": 0.704287109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_titan_light_leather.png",
+        "SHA256": "63c8814189d932255858e5151a8ef419c58d76c50bc5681182407009124be14a"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_titan_light_leather.webp",
+        "SHA256": "d19850134fa3599668451c8369bd6f267a4feea763939268a612549b670b525f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_cloudgate_light_leather",
+      "tier": 10,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        37,
+        30,
+        479,
+        449
+      ],
+      "translationPx": [
+        62,
+        80
+      ],
+      "packedAlphaBounds": [
+        99,
+        110,
+        541,
+        529
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "134a98fede04c01a688fe0522f7df4601b3f2a600637ec9dbbdb88f1a8909a63",
+      "transparentFraction": 0.689169921875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_cloudgate_light_leather.png",
+        "SHA256": "9a45b4b9bd1d791e49c422f70ce736217dd79e1d9bbe62d528529dc51cb18b2b"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_cloudgate_light_leather.webp",
+        "SHA256": "810ce491ea87c7adca9e9628dc6d4d23e704933e7609ad6f66a5be50f646389d"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_elysium_light_leather",
+      "tier": 11,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        38,
+        21,
+        479,
+        452
+      ],
+      "translationPx": [
+        61,
+        83
+      ],
+      "packedAlphaBounds": [
+        99,
+        104,
+        540,
+        535
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "bf223c225c9f720d5d2846a57242712c27821b72ad52f225e8cdb29dea6af4d2",
+      "transparentFraction": 0.69395751953125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_elysium_light_leather.png",
+        "SHA256": "d11c5b5670ac855927be40d5e00e0015d8eb767e5c91974f6d38585889ae54f1"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_elysium_light_leather.webp",
+        "SHA256": "5155f8583e15323b2d22fcc248c2d97d82e0321fdfd687a31a7d8f81d93f9f36"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_gloves_cosmos_light_leather",
+      "tier": 12,
+      "group": "gloves",
+      "source": "worker/art-production/thief-gear-20261015/gloves/last.png",
+      "sourceSHA256": "5216a1d1cdd57e7edd8bf4c3b23d8f77a3171c15f3f347aab19043c304733d5a",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        36,
+        28,
+        483,
+        445
+      ],
+      "translationPx": [
+        60,
+        83
+      ],
+      "packedAlphaBounds": [
+        96,
+        111,
+        543,
+        528
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "95e9e0ec552803aea1318c959d8b8702cede41bad03713c01f8306c73b071fd6",
+      "transparentFraction": 0.69139404296875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/gloves/packed/gear_gloves_cosmos_light_leather.png",
+        "SHA256": "8c3bcb11ec5f63529b1d12d5dc484b9c53491a48088e03dfd386b0c2ba87deb4"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_gloves_cosmos_light_leather.webp",
+        "SHA256": "2b4a1cc4d93821237fda0c2cd1271d868083aa83bbf876d80c33ef23e435b058"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_laurel_light_leather",
+      "tier": 1,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        64,
+        35,
+        447,
+        493
+      ],
+      "translationPx": [
+        64,
+        56
+      ],
+      "packedAlphaBounds": [
+        128,
+        91,
+        511,
+        549
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "9cfe157071d053f883aab085751fc3a811fcf2a16e54436472c806e59f046327",
+      "transparentFraction": 0.70742431640625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_laurel_light_leather.png",
+        "SHA256": "388d62b1f9b0b4711a283ccc56f18dcb0e1878338ce351d13e43e2b49a4db641"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_laurel_light_leather.webp",
+        "SHA256": "7e81f93b8f1b3fb545fd48147ca3a7e723a6ee0a4b45bc224b2710385362998e"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_athena_light_leather",
+      "tier": 2,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        44,
+        29,
+        450,
+        486
+      ],
+      "translationPx": [
+        73,
+        62
+      ],
+      "packedAlphaBounds": [
+        117,
+        91,
+        523,
+        548
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "dbb4abb658870a3b5a881854860c08539e29786dedf25f16e4b17c653911982b",
+      "transparentFraction": 0.70816162109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_athena_light_leather.png",
+        "SHA256": "ce83a57422e3402bb192b22e3968118a84f4cbd40958d224386618f87ba62473"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_athena_light_leather.webp",
+        "SHA256": "b3f7e77869d6e7e7b22d37dbfbf94bef3cfd32db4e332960fe6d56bafb2641bd"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_sacred_light_leather",
+      "tier": 3,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        48,
+        34,
+        442,
+        493
+      ],
+      "translationPx": [
+        75,
+        56
+      ],
+      "packedAlphaBounds": [
+        123,
+        90,
+        517,
+        549
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "1795485bd2d89ccace2ca15dbf5f69c803c0751397120d51065fa6bd98361ef9",
+      "transparentFraction": 0.70276611328125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_sacred_light_leather.png",
+        "SHA256": "e2c08044492c7adaf4959c85823ebf85682713083a82dbbca3a79dfa59bc8d75"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_sacred_light_leather.webp",
+        "SHA256": "a09faf6156bf59858a4432e3f90f97cedb6a14a53b6634c1728e221a60136312"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_poseidon_light_leather",
+      "tier": 4,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        61,
+        15,
+        471,
+        480
+      ],
+      "translationPx": [
+        54,
+        72
+      ],
+      "packedAlphaBounds": [
+        115,
+        87,
+        525,
+        552
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "3bd0883b659e6528b6209f765a79a1284517886a660217d6afcd1f4683497544",
+      "transparentFraction": 0.68284912109375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_poseidon_light_leather.png",
+        "SHA256": "984c6207f49d5eb8abfacef7131fac092e429cbe16fecb357ffdfd575abe7e49"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_poseidon_light_leather.webp",
+        "SHA256": "740e5b5bc9fdeae23579e3f1070dedc3ba34c24c0838e133e6b040a6e09a0e0d"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_labyrinth_light_leather",
+      "tier": 5,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        47,
+        10,
+        447,
+        485
+      ],
+      "translationPx": [
+        73,
+        72
+      ],
+      "packedAlphaBounds": [
+        120,
+        82,
+        520,
+        557
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "eaf011e62d482a2f0e5f1de8edcf3bb0c51c9dc5282f427de3c47dd8983912fd",
+      "transparentFraction": 0.7001220703125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_labyrinth_light_leather.png",
+        "SHA256": "aab8901ffb2e17185fa0dec8575b34d02a704f0feaf7cbbe1c42422a6c2fc195"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_labyrinth_light_leather.webp",
+        "SHA256": "1ac32e09792dc841bfe5f78a0b25adb4579faa95af8e3a256dd5fc343305fa3c"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_forge_light_leather",
+      "tier": 6,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/first.png",
+      "sourceSHA256": "9ea222fb37c2a72d04e0b1954c2bb839975d1e91bd7f7c68bdaaf943b252e52d",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        46,
+        14,
+        447,
+        480
+      ],
+      "translationPx": [
+        73,
+        73
+      ],
+      "packedAlphaBounds": [
+        119,
+        87,
+        520,
+        553
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "f0dc6e4659caadcff453cc12ad08733628ee959fc9e6d6d54120ff620859d72d",
+      "transparentFraction": 0.68977294921875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_forge_light_leather.png",
+        "SHA256": "54314f7517b5c28d5607b11848ffc022b4ad8cb3f8e38318203cc839d50108b8"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_forge_light_leather.webp",
+        "SHA256": "fd7ef361fc2f89d0886e70ac1ec947dce893087730890c8a39d7d2b14c424368"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_styx_light_leather",
+      "tier": 7,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        42,
+        64,
+        478,
+        473
+      ],
+      "translationPx": [
+        60,
+        51
+      ],
+      "packedAlphaBounds": [
+        102,
+        115,
+        538,
+        524
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "8ed15f22bf3d30c9cd4965c68fa4edff3ab9b6ffca55cf39110c610f26aa6b6f",
+      "transparentFraction": 0.73177001953125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_styx_light_leather.png",
+        "SHA256": "d9fd83504679b716ce005125cf59c9d7b3b0e35cdc66f72f2e8c0f9d3a572d32"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_styx_light_leather.webp",
+        "SHA256": "79f8e10836d6f1939c327703eda143202171733f28df3917589fa6f1f24efc4f"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_oracle_light_leather",
+      "tier": 8,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "sourceAlphaBounds": [
+        58,
+        48,
+        470,
+        479
+      ],
+      "translationPx": [
+        56,
+        56
+      ],
+      "packedAlphaBounds": [
+        114,
+        104,
+        526,
+        535
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "05f5d0b9226a9914c986a427fe65390a689d7d65bd813979a03072a46966f58a",
+      "transparentFraction": 0.7427734375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_oracle_light_leather.png",
+        "SHA256": "564dc9ce4d5cbdb851ea7a92d6254ac45eea695b7a3cd4c6818a863fdb2a47b3"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_oracle_light_leather.webp",
+        "SHA256": "a64bff50fda3b837d6b22cedede6b85402d987dba57d36dee42f8366e0113b89"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_titan_light_leather",
+      "tier": 9,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "sourceAlphaBounds": [
+        47,
+        55,
+        473,
+        477
+      ],
+      "translationPx": [
+        60,
+        54
+      ],
+      "packedAlphaBounds": [
+        107,
+        109,
+        533,
+        531
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "915af5e8b89a6879fa16ec2818ab6c2b73cc3ae79c810ed7da2248b643ddb345",
+      "transparentFraction": 0.72134033203125,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_titan_light_leather.png",
+        "SHA256": "89f690d417f3b0d5f9e65d52b34298c63909e7216525a6a813030c4a9a1de54e"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_titan_light_leather.webp",
+        "SHA256": "afa0606faffbcbd4dd5d06447d1c633e71b7b3b8100f6bfad7210b42f5c60b9d"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_cloudgate_light_leather",
+      "tier": 10,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        49,
+        35,
+        483,
+        469
+      ],
+      "translationPx": [
+        54,
+        68
+      ],
+      "packedAlphaBounds": [
+        103,
+        103,
+        537,
+        537
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "87788ef8a428b260da9ffed38f4591ac908279b4163f74ae6bdd5f50888076bd",
+      "transparentFraction": 0.71574462890625,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_cloudgate_light_leather.png",
+        "SHA256": "5cf9c8a84f716715cd12945dc4c8df5df286b1bd182d5395c13a14b8203004a9"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_cloudgate_light_leather.webp",
+        "SHA256": "f9fb58dd3be80e090fcd031c51dad62f3a247d4440d330c98c156fef5e4ef03e"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_elysium_light_leather",
+      "tier": 11,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        67,
+        36,
+        483,
+        468
+      ],
+      "translationPx": [
+        45,
+        68
+      ],
+      "packedAlphaBounds": [
+        112,
+        104,
+        528,
+        536
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "cfb9da5858ebf9f809343c93b4e41f803413d649338fcc16dbb5c538a56e10b3",
+      "transparentFraction": 0.72679443359375,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_elysium_light_leather.png",
+        "SHA256": "7fb2d7701e794938057dc8797d51e275735e58bf947331da6364100cb26a29ae"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_elysium_light_leather.webp",
+        "SHA256": "0c1036ccae7636ddcbb79e04c4c491a77699926b1bc32b3fc8f52f4d7ca00565"
+      },
+      "losslessWebPEquality": true
+    },
+    {
+      "key": "gear_boots_cosmos_light_leather",
+      "tier": 12,
+      "group": "boots",
+      "source": "worker/art-production/thief-gear-20261015/boots/last.png",
+      "sourceSHA256": "e5371511f3145315d989bbd75f5df978da5491690d59cff006cffe7a86849c51",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "sourceAlphaBounds": [
+        60,
+        42,
+        479,
+        466
+      ],
+      "translationPx": [
+        50,
+        66
+      ],
+      "packedAlphaBounds": [
+        110,
+        108,
+        529,
+        532
+      ],
+      "nativePixelsPreserved": true,
+      "noResampling": true,
+      "alphaNotEdited": true,
+      "rgbaSHA256": "285a52837ad0a7f7f438045e8cd2c6717e4246d46d725b8505db51dddc20cfb9",
+      "transparentFraction": 0.73098388671875,
+      "PNG": {
+        "file": "worker/art-production/thief-gear-20261015/boots/packed/gear_boots_cosmos_light_leather.png",
+        "SHA256": "1c2c89b7e386f7fdbbcbc9d11f58a71c320eccf619360b1fa07acfd724cf39b5"
+      },
+      "WebP": {
+        "file": "worker/public/art/thief-gear-20261015/gear_boots_cosmos_light_leather.webp",
+        "SHA256": "9c7a921a3294816a34edcd8e54b875a8011ec4800ba445518686ccedddd626ec"
+      },
+      "losslessWebPEquality": true
+    }
+  ]
+}

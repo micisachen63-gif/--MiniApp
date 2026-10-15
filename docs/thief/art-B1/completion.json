@@ -1,0 +1,433 @@
+{
+  "status": "fourteen-visually-reviewed-runtime-pending",
+  "scope": "B1/B11/B12/B111/B112/B121/B122 each female and male only",
+  "reviewed": 14,
+  "nativeAttackPoses": 168,
+  "independentHeroSources": 14,
+  "crossIdentityDuplicatePoseHashes": false,
+  "generator": "built-in image_gen only",
+  "productionTransforms": "integer crop and translate only; no resizing, resampling, repainting, fabricated poses or alpha removal",
+  "runtimeAccepted": false,
+  "records": [
+    {
+      "key": "adv2_thief_B1_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        200,
+        180,
+        457,
+        600
+      ],
+      "heightScale": 1.4970238095238095,
+      "sourceSHA256": {
+        "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "attack-0-5.png": "da03915c8e6dbeeb06239e5484a478819a02dec8a9cd92efb11750f2d2caba67",
+        "attack-6-11.png": "6c380255d1f4a6fd322b1d7453308268007cd4de3aa477f4152b542bff8d453b"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv2_thief_B1_f/fragment.json"
+    },
+    {
+      "key": "adv2_thief_B1_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        196,
+        162,
+        478,
+        600
+      ],
+      "heightScale": 1.4079147640791476,
+      "sourceSHA256": {
+        "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "attack-0-5.png": "b3fbdb1494d7ccd321c769457ed5aa1eccb79994deaeba4d81f467c398f4fb56",
+        "attack-6-11.png": "52310402c0d0f46c99a4147850e6c778deafd14b6a5523e67e411b4c4d3fa89d"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv2_thief_B1_m/fragment.json"
+    },
+    {
+      "key": "adv3_thief_B11_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        192,
+        105,
+        474,
+        600
+      ],
+      "heightScale": 1.2575757575757576,
+      "sourceSHA256": {
+        "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "attack-0-5.png": "4b954fd5f7b92b56464100f0ba4680e00edcdbb2af83c99f3e968eaf3c764666",
+        "attack-6-11.png": "a92a2dcb29d87b6dad9735293fb869952e09009f17495f0e3790fbc94172c5a1"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv3_thief_B11_f/fragment.json"
+    },
+    {
+      "key": "adv3_thief_B11_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        185,
+        168,
+        460,
+        600
+      ],
+      "heightScale": 1.4641203703703702,
+      "sourceSHA256": {
+        "hero.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "attack-0-5.png": "0af079604556526ca111cda8865a41672ecd5196558233e45cb00ac61591dd86",
+        "attack-6-11.png": "7a2f73e829bc9b823d4b6153190442cb3d8bd7d1568fc54ca94e241f4b93448e"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv3_thief_B11_m/fragment.json"
+    },
+    {
+      "key": "adv3_thief_B12_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        200,
+        117,
+        415,
+        600
+      ],
+      "heightScale": 1.3121118012422361,
+      "sourceSHA256": {
+        "hero.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "attack-0-5.png": "a0f6b5d6c609a754c190988f9775b2c232ed8eaa72ab18c6310d056f9d19d5a5",
+        "attack-6-11.png": "bc51a88150d8131bc739398fc8bb8147a07c478ca457af92e99223a476072198"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv3_thief_B12_f/fragment.json"
+    },
+    {
+      "key": "adv3_thief_B12_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        196,
+        108,
+        478,
+        600
+      ],
+      "heightScale": 1.2711720867208671,
+      "sourceSHA256": {
+        "hero.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "attack-0-5.png": "f605a304d7d7f91bb4a4157dc75902d6b25c5b0beda0e2f5697ed877fcb91b4d",
+        "attack-6-11.png": "009f5ad6b7edd0e7bfe697210ead9ff3817139c50211954be88a1aaf6c7e43a7"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv3_thief_B12_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B111_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        194,
+        108,
+        460,
+        600
+      ],
+      "heightScale": 1.279640921409214,
+      "sourceSHA256": {
+        "hero.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "attack-0-5.png": "e2553c3c9449491dd1e21f6a0abfebd369558d365d20f66476c3242bfa9cc1ca",
+        "attack-6-11.png": "857a3dea9073c7d66aa6b93508b0b3fd39793ca9d30513adfc17cb0b92d4350d"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B111_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B111_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        168,
+        108,
+        522,
+        600
+      ],
+      "heightScale": 1.274559620596206,
+      "sourceSHA256": {
+        "hero.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "attack-0-5.png": "6265705311774353a7dd5590a2a59af642d672a502b79040c3248166f6d349f1",
+        "attack-6-11.png": "0ae450fe0ba10117dfc4f62475976bf8469ae826f0b9fda5c55657e710d90d20"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B111_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B112_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        200,
+        195,
+        424,
+        600
+      ],
+      "heightScale": 1.5545267489711936,
+      "sourceSHA256": {
+        "hero.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "attack-0-5.png": "72c7e67fe0edbbe2dc4f76e790e7fd085f5419e2e180d2b0c1bab95ef2b3835d",
+        "attack-6-11.png": "ecb30b475cd2f43dda1b5a39beba3269cf1b6d7ea2e26dd9f3fea1de5e6a7f22"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B112_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B112_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        188,
+        203,
+        467,
+        600
+      ],
+      "heightScale": 1.569059613769941,
+      "sourceSHA256": {
+        "hero.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "attack-0-5.png": "ad5501e0309361350418fd70fe501cdf59d2551bf6b12b7cf3fabc71512a941f",
+        "attack-6-11.png": "b8b4f20a772b1f98dc4faf1b05aff7ea47cbd4555b2bed069b0939822211ec3f"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B112_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B121_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        190,
+        119,
+        488,
+        600
+      ],
+      "heightScale": 1.2941787941787941,
+      "sourceSHA256": {
+        "hero.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "attack-0-5.png": "458b29c14975d976c9a6537284a6aba3e8dc21fea7d39cc58bcec919cb2c3a43",
+        "attack-6-11.png": "3f8a64f5e1dcb9f588a5d088fbbd3c55d8c69c777dca693ec98988ffb1363c7b"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B121_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B121_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        171,
+        115,
+        435,
+        600
+      ],
+      "heightScale": 1.2972508591065293,
+      "sourceSHA256": {
+        "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "attack-0-5.png": "6d2767a8d1cf7ead24fa069ad826c5281b37e820e47e94a846b8df83e7bc94d3",
+        "attack-6-11.png": "1d02af06906dffc73c744550fd26fcfca6847f8bc84b728a83848d6336ff2ab9"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B121_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B122_f",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        168,
+        111,
+        487,
+        600
+      ],
+      "heightScale": 1.280674846625767,
+      "sourceSHA256": {
+        "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "attack-0-5.png": "42817eb59889183c55203106d7d0e468639daed8ec17f530dd07a6006b69c469",
+        "attack-6-11.png": "abafa87def20c67f75cce529283ea96dbc5f8cf09d9e4beb18a706addd602e09"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B122_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_B122_m",
+      "heroDimensions": [
+        1024,
+        1536
+      ],
+      "heroAlphaRange": [
+        0,
+        254
+      ],
+      "nativeFrames": 12,
+      "distinctPoses": true,
+      "nativePixelsPreserved": true,
+      "pngWebpRGBAEqual": true,
+      "manualNeutralBodyBoundsPx": [
+        174,
+        132,
+        502,
+        600
+      ],
+      "heightScale": 1.3381410256410258,
+      "sourceSHA256": {
+        "hero.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "attack-0-5.png": "485b48895c436606dc8d3200d50ccc2cac4faeefc7a589c90236d914ca5998de",
+        "attack-6-11.png": "ddcca69b09f35ad46da2c5a6cfe444af94b86e1ac3ce197dc740b030035db755"
+      },
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-B1/adv4_thief_B122_m/fragment.json"
+    }
+  ]
+}

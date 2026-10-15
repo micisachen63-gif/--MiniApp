@@ -1,0 +1,35 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv4_thief_A122_f",
+  "reviewer": "thief_skills manual full hero and both six-pose sources plus packed checker inspection",
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "checks": {
+    "sameA1FaceIdentity": true,
+    "independentHigherTierCostume": true,
+    "twelveDifferentPoses": true,
+    "exactlyTwoHeldDaggers": true,
+    "noExtraHandsOrLimbs": true,
+    "fullKnifeTipsAndFeet": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "manualNeutralBodyBounds": true
+  },
+  "candidateNotes": "A122 female first bareforearm drift corrected via built-in imagegen; female last rowoverlap rejected/re-generated; male last erroneous navy/gold panel corrected via built-in imagegen. All selected native sources and 12-frame checker manually inspected. No raster retouching.",
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "sourceSHA256": {
+    "hero.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+    "attack-0-5.png": "15e56987df514043381c69a558b699cce099eef32cef0c296126393868760a41",
+    "attack-6-11.png": "0d2d8452dba86c47977fe9c975bcf88a125ed400422b558b4351c44cbf6d1881"
+  },
+  "outputSHA256": {
+    "hero.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+    "portrait.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+    "character.png": "3b164b1efc29e2826c5860e32f043e676a03751312000f8fadf6b66aa5f12735",
+    "character.webp": "bd06fb62015989c1863452c03b1a3466f91882fec0169dd9ef3a046be6aa3a42"
+  },
+  "scope": "Manual visual acceptance only; runtime UI/animation acceptance remains pending root matrix"
+}

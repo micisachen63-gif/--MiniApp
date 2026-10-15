@@ -350,6 +350,7 @@
   /** gear row/offer → icon file: specific named item if present, else fallback to weapon kind / armor family / shared slot */
   const GEAR_ART = (g) => {
     if (!g) return null;
+    if (window.RpgThiefGearArt?.isThiefClassGear(g)) return window.RpgThiefGearArt.resolve(g)?.artId || null;
     const directName = cleanGearName(g.name);
     if (directName && GEAR_NAME_ART[directName]) return GEAR_NAME_ART[directName];
     return (g.slot === 'weapon' ? WPN[g.kind] : ARMOR_ART[g.slot] ? ARMOR_ART[g.slot][FAM[g.classReq] || g.kind] || ARMOR_ART[g.slot][g.kind] : ['belt', 'undershirt', 'earring', 'ring'].includes(g.slot) ? g.slot : null);
@@ -404,7 +405,7 @@
     }
     else if (kind === 'item') f = ITEM_ART(key);
     else if (kind === 'gear') f = GEAR_ART(key);
-    if (kind === 'gear' && f) return `art/v2/${f}.webp?v=20261011-equipment-2`;
+    if (kind === 'gear' && f) return window.RpgThiefGearArt?.iconForArtId(f) || `art/v2/${f}.webp?v=20261011-equipment-2`;
     // First-advancement swordsmen: branch A berserkers and branch B knights use four aligned 4x2/8-frame sheets.
     if (V2 && /^adv1_sword_[AB]_[fm]$/.test(String(key))) {
       const asset = `art/sword-adv1-clean-20261011/hero_${key}`;
@@ -1998,6 +1999,7 @@
 
   function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
   async function boot() {
+    await import('./thief-gear-art.js?v=20261015-thief-gear1');
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
     const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);

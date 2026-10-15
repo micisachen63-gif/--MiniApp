@@ -1,0 +1,33 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv3_thief_B11_f",
+  "reviewer": "thief_skills manual source and packed checker inspection",
+  "checks": {
+    "adultGreekPainterlyIdentity": true,
+    "twelveGenuinelyDifferentPoses": true,
+    "twoArmsTwoHandsTwoLegs": true,
+    "allKnifeTipsAndFeetPreserved": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "neutralBodyBoundsManuallyMarked": true
+  },
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "candidateNotes": "V1 first failed overlap. V2 both wrong canvas dimensions. V3 first selected with row-specific transparent gutter; V1 last is separable at x560/y518 and selected after numeric+visual review.",
+  "sourceSHA256": {
+    "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+    "attack-0-5.png": "4b954fd5f7b92b56464100f0ba4680e00edcdbb2af83c99f3e968eaf3c764666",
+    "attack-6-11.png": "a92a2dcb29d87b6dad9735293fb869952e09009f17495f0e3790fbc94172c5a1"
+  },
+  "outputSHA256": {
+    "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+    "portrait.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+    "character.png": "1fe8109939aaf86e95a83e8e3e51697039cb9b1553af8e6a0530dd8d466e98d5",
+    "character.webp": "a42a4b24ba98fe58f1cd7f5c8a781af1d089cbc73df4111a8024f91e10a1b9d0"
+  },
+  "scope": "Manual hero, all 12 original poses and packed checker inspection. Runtime matrix remains pending root."
+}

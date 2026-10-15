@@ -1,0 +1,47 @@
+{
+  "key": "adv4_thief_B222_f",
+  "authorVisualReview": "pass",
+  "rootVisualReview": "pending",
+  "runtimeActualEventVerified": false,
+  "checks": {
+    "sameGreekSemirealHumanStyle": true,
+    "twoArmsTwoGrippingHandsTwoShortBlades": true,
+    "completeHeadFeetWeaponTips": true,
+    "noElfEarsStaffWingsOrGhostBody": true,
+    "smallMirrorMagicAuthoredIntoSource": true,
+    "twelveOriginalDifferentPosesNotCopies": true,
+    "sourceGutterManuallyChecked": true,
+    "neutralHeadFeetBodyBoundsManuallyMarked": true,
+    "portraitAndAttackHeightUsesMeasuredRatio": true,
+    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
+  },
+  "notes": "黑皮革紫翻領、銀色黑月扣及小型月牙光點。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "neutralBodyBoundsPx": [
+    121,
+    151,
+    534,
+    600
+  ],
+  "heightScale": 1.3511507052709726,
+  "prompts": {
+    "hero": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_f/hero-prompt.txt",
+      "SHA256": "723a9f31299bdf9a5e2a46bb99e81bc5eb378580d9acea900775a0fb754a9b54"
+    },
+    "attack-0-5": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_f/attack-0-5-prompt.txt",
+      "SHA256": "7a1dd1a8844753a937d49a14633d0ab9594e281f318650370c78db0740fbcdb2"
+    },
+    "attack-6-11": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_f/attack-6-11-prompt.txt",
+      "SHA256": "80046466dd66adfb7872299a9f7881f3afe565efb13e4516a8d168d7061f68e2"
+    }
+  },
+  "sourceSHA256": {
+    "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+    "attack-0-5.png": "c9c544df8d3a196d7d16290746d138e607e79849dbcd84bb2cd90ddbe42b1453",
+    "attack-6-11.png": "9f2d9ea6eb9a7ee7f495a43abf2b9a2527fed47d3648e7b73cfbeb6291eeef1c"
+  },
+  "rejectedSources": [],
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。"
+}

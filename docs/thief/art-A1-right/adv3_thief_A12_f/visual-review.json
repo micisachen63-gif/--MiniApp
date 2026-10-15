@@ -1,0 +1,35 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv3_thief_A12_f",
+  "reviewer": "thief_skills manual full source and packed checker inspection",
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "checks": {
+    "sameA1FaceIdentity": true,
+    "independentHigherTierCostume": true,
+    "twelveDifferentPoses": true,
+    "exactlyTwoHeldDaggers": true,
+    "noExtraHandsOrLimbs": true,
+    "fullKnifeTipsAndFeet": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "manualNeutralBodyBounds": true
+  },
+  "candidateNotes": "V1 portrait too close to mother silhouette rejected, V2 hood/full sleeves/threecoat tails selected. Female first V1 extra third dagger+overlap rejected. Male last V1 row overlap rejected; V2 extra third blade at frame8 rejected; built-in imagegen V3 correction selected and inspected. No raster retouching.",
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "sourceSHA256": {
+    "hero.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+    "attack-0-5.png": "baa2bb0aa000f66450cd5800604023dc82fc83706031f6d69ca3d4eb9f17e340",
+    "attack-6-11.png": "942854f99839a537342f42fe6628e89776083424b5639848fc0e45c157f3e1f6"
+  },
+  "outputSHA256": {
+    "hero.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+    "portrait.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+    "character.png": "2a7c385eb80fed87a0c714fb7a2ef01b62e2ff10642b8701307a609988cf8b3b",
+    "character.webp": "6ef4df6565d30b47b83bdf2eb80f5f059cdd18b23efc121d834a89fcf9f0f7a1"
+  },
+  "scope": "Manual visual acceptance only; runtime UI/animation acceptance remains pending root matrix"
+}

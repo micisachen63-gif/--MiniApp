@@ -1,0 +1,62 @@
+{
+  "key": "adv2_thief_B1_f",
+  "name": "飛刃遊俠",
+  "gender": "f",
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "reviewed": [
+    "hero original and grey-alpha composite",
+    "selected six-pose first sheet full image",
+    "selected six-pose recovery sheet full image",
+    "final 12-cell checker composite"
+  ],
+  "checks": {
+    "adultGreekPainterlyStyle": true,
+    "identityMatchesOwnPortrait": true,
+    "twoArmsTwoHandsTwoLegsEveryFrame": true,
+    "twelveDistinctPoses": true,
+    "bladeAndFeetComplete": true,
+    "nativeRGBAUnchanged": true,
+    "PNGWebPEqual": true,
+    "noUpscaling": true,
+    "trueTransparentAlpha": true,
+    "footBaseline600": true,
+    "sourceAndPromptPreserved": true
+  },
+  "manualNotes": [
+    "Auburn ponytail, teal/bronze wing clasp and full leather/linen clothing retained across all frames.",
+    "Forward throw release is source frame6; exposed open hand and compact detached knife within reviewed source rectangle.",
+    "Body center and active blade hand coordinates manually located on each source frame, integer-translated by shared packer.",
+    "First candidates rejected for overlapping/cross-cell blade light; source retained. Selected replacements inspected separately.",
+    "Final output contains no grey/checker backdrop; checker composite is QA only. Original alpha has min0/max254, not an opaque background."
+  ],
+  "rejectedSources": [
+    "attack-0-5-rejected-overlap-v1.png",
+    "attack-6-11-rejected-overlap-v1.png"
+  ],
+  "qaFiles": [
+    "hero-checker.jpg",
+    "atlas-checker.jpg",
+    "native-pack.json",
+    "fragment.json"
+  ],
+  "sources": {
+    "attack-0-5-rejected-overlap-v1.png": "8121e1fb87172d9cb7c3441f9e02c81897eb2094d7d024f3dc621adcc3a3a5bb",
+    "attack-0-5.png": "da03915c8e6dbeeb06239e5484a478819a02dec8a9cd92efb11750f2d2caba67",
+    "attack-6-11-rejected-overlap-v1.png": "79e389449a80badce772ccaca57ab712888079a6acb61dceac4ffa5fe3aac9c4",
+    "attack-6-11.png": "6c380255d1f4a6fd322b1d7453308268007cd4de3aa477f4152b542bff8d453b",
+    "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60"
+  },
+  "sourceSHA256": {
+    "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+    "attack-0-5.png": "da03915c8e6dbeeb06239e5484a478819a02dec8a9cd92efb11750f2d2caba67",
+    "attack-6-11.png": "6c380255d1f4a6fd322b1d7453308268007cd4de3aa477f4152b542bff8d453b"
+  },
+  "outputSHA256": {
+    "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+    "portrait.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+    "character.png": "af36074b9393de46d3fc9f66638a654c52a80b73278a234e35bd109caa236e02",
+    "character.webp": "74e71e457fab78f26666f5f45c6e3f55b348c0441071966a0ca00a992bea9304"
+  },
+  "scope": "Manual hero, all 12 original poses and packed checker inspection. Runtime matrix remains pending root."
+}

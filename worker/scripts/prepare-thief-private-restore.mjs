@@ -39,13 +39,27 @@ const post=statements.filter(s=>/^CREATE\s+(?:UNIQUE\s+)?(?:INDEX|VIEW|TRIGGER)\
 const ignored=statements.filter(s=>!creates.includes(s)&&!inserts.includes(s)&&!post.includes(s));
 assert(ignored.every(s=>/^PRAGMA\s+defer_foreign_keys/i.test(leading(s))),'Unknown dump statement must not be silently dropped');
 const ordered=['PRAGMA defer_foreign_keys=TRUE;',...creates,...inserts,...post,'PRAGMA defer_foreign_keys=FALSE;'].join('\n');
+const chunks=[];let chunk=[],chunkBytes=0;
+for(const statement of [...creates,...inserts,...post]){
+ if(chunkBytes+Buffer.byteLength(statement)>4000000&&chunk.length){chunks.push(chunk);chunk=[];chunkBytes=0;}
+ chunk.push(statement);chunkBytes+=Buffer.byteLength(statement)+1;
+}if(chunk.length)chunks.push(chunk);
 const target=new DatabaseSync(':memory:');target.exec('PRAGMA foreign_keys=ON;BEGIN');target.exec(ordered);target.exec('COMMIT');
 assert.deepEqual(schemaRows(target),schemaRows(source));
 const sha=v=>createHash('sha256').update(v).digest('hex');
-function digest(db){const output={};for(const name of tables){const columns=db.prepare(`PRAGMA table_info(${literal(name)})`).all().map(c=>c.name),fields=['CAST(rowid AS TEXT) AS saved_rowid',...columns.flatMap((c,i)=>[`typeof(${ident(c)}) AS t${i}`,`hex(${ident(c)}) AS b${i}`])];const h=createHash('sha256');let rows=0;for(const row of db.prepare(`SELECT ${fields.join(',')} FROM ${ident(name)} ORDER BY rowid`).iterate()){h.update(JSON.stringify({...row})+'\n');rows++;}output[name]={rows,sha256:h.digest('hex')};}output.sqlite_sequence=source.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all().map(r=>({...r}));return output;}
+function digest(db){const output={};for(const name of tables){const columns=db.prepare(`PRAGMA table_info(${literal(name)})`).all().map(c=>c.name),fields=['CAST(rowid AS TEXT) AS saved_rowid',...columns.flatMap((c,i)=>[`typeof(${ident(c)}) AS t${i}`,`hex(${ident(c)}) AS b${i}`])];const h=createHash('sha256');let rows=0;for(const row of db.prepare(`SELECT ${fields.join(',')} FROM ${ident(name)} ORDER BY rowid`).iterate()){h.update(JSON.stringify({...row})+'\n');rows++;}output[name]={rows,sha256:h.digest('hex')};}output.sqlite_sequence=db.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all().map(r=>({...r}));return output;}
 const before=digest(source);assert.deepEqual(digest(target),before);assert.deepEqual(target.prepare('PRAGMA foreign_key_check').all(),[]);assert.equal(target.prepare('PRAGMA integrity_check').get().integrity_check,'ok');
+const incremental=new DatabaseSync(':memory:');incremental.exec('PRAGMA foreign_keys=ON; CREATE TABLE _thief_restore_progress (chunk_index INTEGER PRIMARY KEY, sha TEXT NOT NULL)');
+fs.mkdirSync('.release-sync/thief-restore-chunks',{recursive:true});
+for(const [index,pieces] of chunks.entries()){
+ const marker=sha(pieces.join('\n'));
+ const sql=['PRAGMA defer_foreign_keys=TRUE;',...pieces,`INSERT INTO _thief_restore_progress (chunk_index,sha) VALUES(${index},'${marker}');`,'PRAGMA defer_foreign_keys=FALSE;'].join('\n');
+ incremental.exec('BEGIN');incremental.exec(sql);incremental.exec('COMMIT');
+ fs.writeFileSync(`.release-sync/thief-restore-chunks/${String(index).padStart(3,'0')}.sql`,sql);
+}
+assert.deepEqual(digest(incremental),before);assert.deepEqual(schemaRows(incremental),schemaRows(source));incremental.close();
 fs.writeFileSync('.release-sync/thief-d1-restore-ordered.sql',ordered);
 fs.writeFileSync('.release-sync/thief-d1-restore-offline-digests.json',JSON.stringify(before,null,2));
-const receipt={status:'FK-enabled-ordered-restore-pass',sourceSHA256:sha(raw),orderedSHA256:sha(ordered),tables:tables.length,statements:statements.length,largestStatementBytes:statements.reduce((m,s)=>Math.max(m,Buffer.byteLength(s)),0),allTablesCreatedBeforeData:true,parentDataBeforeChildren:true,triggersAfterData:true,schemaAndEveryRowBytePreserved:true,productionWrites:0};
+const receipt={status:'FK-enabled-ordered-restore-pass',sourceSHA256:sha(raw),orderedSHA256:sha(ordered),tables:tables.length,statements:statements.length,largestStatementBytes:statements.reduce((m,s)=>Math.max(m,Buffer.byteLength(s)),0),restoreOnlyChunks:chunks.length,chunkedOfflineRestoreAlsoByteEqual:true,allTablesCreatedBeforeData:true,parentDataBeforeChildren:true,triggersAfterData:true,schemaAndEveryRowBytePreserved:true,productionWrites:0};
 fs.writeFileSync('docs/thief/ordered-restore-verification.json',JSON.stringify(receipt,null,2)+'\n');console.log(JSON.stringify(receipt));
 source.close();target.close();

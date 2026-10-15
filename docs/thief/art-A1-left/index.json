@@ -1,0 +1,215 @@
+{
+  "branch": "A1-left",
+  "status": "native-packing-pass-review-pending",
+  "identities": 6,
+  "selectedSourceImages": 18,
+  "distinctNativeFrames": 72,
+  "publicFiles": 24,
+  "releaseReady": false,
+  "sharedRegistryModified": false,
+  "requiredNext": [
+    "Main review of every portrait and animation",
+    "Integrate accepted exact identity fragments",
+    "Actual bootstrap field/guardian/action/reduced-motion verification"
+  ],
+  "checks": {
+    "sourceAndOutputSHA": true,
+    "trueAlphaBorders": true,
+    "nativePixelsPreserved": true,
+    "pngWebpRGBAEqual": true,
+    "neutralHeightFromReviewedHeadFoot": true,
+    "allGuardiansMelee": true
+  },
+  "entries": [
+    {
+      "standEndHeightRatio": 1.043956043956044,
+      "key": "adv3_thief_A11_f",
+      "classPath": "A11",
+      "gender": "f",
+      "name": "夜幕處刑者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "attack-0-5.png": "3f9681d538528ed4a4026c87a0df2d0cea2f6069f5b94677593c6023c98f707b",
+        "attack-6-11.png": "422d2b4c14a2d1b2ed9518a47f813807d44fc7a8a4d9df7a250c0ecae7e09899"
+      },
+      "outputsSHA256": {
+        "hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "portrait.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "character.png": "41ed9db37c1f71af5a939e63b435fab4f2548a6c130ffa6e930cfbe1e46178df",
+        "character.webp": "e50eef71f3aa39d0371750c5dc22ff832e643f2e5da8bf00807ce530fc043123"
+      },
+      "heightScale": 1.3736263736263736,
+      "neutralBodyBoundsPx": [
+        175,
+        145,
+        465,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv3_thief_A11_f/fragment.json"
+    },
+    {
+      "standEndHeightRatio": 1.0345572354211663,
+      "key": "adv3_thief_A11_m",
+      "classPath": "A11",
+      "gender": "m",
+      "name": "夜幕處刑者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "attack-0-5.png": "a0da990dfc850a331404e1e7fecaaa841a5981cb6ab53e7e6a55b15be28b2852",
+        "attack-6-11.png": "56563d309204f5f7a1ea1324d51df445544cd3fcfc2ecc986c5bbce91762b57d"
+      },
+      "outputsSHA256": {
+        "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "portrait.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "character.png": "46dde975f093f3ba793a76313041abd171340420aff11c34d1780a7feefe2dd9",
+        "character.webp": "8142ac0c8a7da8e62f37208aed19fef96bbe8e9e3241c3335ab1dc91748b487f"
+      },
+      "heightScale": 1.3507919366450685,
+      "neutralBodyBoundsPx": [
+        165,
+        137,
+        455,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv3_thief_A11_m/fragment.json"
+    },
+    {
+      "standEndHeightRatio": 1.0340425531914894,
+      "key": "adv4_thief_A111_f",
+      "classPath": "A111",
+      "gender": "f",
+      "name": "冥夜裁決者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "attack-0-5.png": "b187c04833c5d8e21691bcda50057ba47cc88225d182577e5010438306340f19",
+        "attack-6-11.png": "d9e68196ef72361d25dd64a615dbc84e5712f38488b63c8b4a9ac938fe8834d7"
+      },
+      "outputsSHA256": {
+        "hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "portrait.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "character.png": "06b44bc31bef3dc075ca696f77af4af054dcbf45318442c758368189ef83f9e1",
+        "character.webp": "02033df62c427ce29630cfead37e4b58833ef3fa61f01cb91d202c9d8d96fb3c"
+      },
+      "heightScale": 1.324468085106383,
+      "neutralBodyBoundsPx": [
+        175,
+        130,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv4_thief_A111_f/fragment.json"
+    },
+    {
+      "standEndHeightRatio": 0.9392624728850325,
+      "key": "adv4_thief_A111_m",
+      "classPath": "A111",
+      "gender": "m",
+      "name": "冥夜裁決者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "attack-0-5.png": "1ed1f94bf48b2e36c1dad55e114c6b5baea28e2ae2ffda0d68e5d68e118e442c",
+        "attack-6-11.png": "0cf9ccd1e49adc16f65ae66914935986dda5abb0d21cbdf60ef872832905829a"
+      },
+      "outputsSHA256": {
+        "hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "portrait.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "character.png": "559640eeb730c93359f354ffd6f201006ebad4cdc56b6e889530dc8ef69fec58",
+        "character.webp": "500559a2209231611c14762ba9e35ae1f52df33d5b1b42b4bc5136f1399925b9"
+      },
+      "heightScale": 1.36117136659436,
+      "neutralBodyBoundsPx": [
+        170,
+        139,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv4_thief_A111_m/fragment.json"
+    },
+    {
+      "standEndHeightRatio": 0.9936034115138592,
+      "key": "adv4_thief_A112_f",
+      "classPath": "A112",
+      "gender": "f",
+      "name": "終焉斷刃",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "attack-0-5.png": "84741e44b551aa2bb7c4656ea15873a244a2d65ed81700b4753d8050839cc286",
+        "attack-6-11.png": "cf1c96b341cb1d2721ef1f5d67f9657dff3c0a1b1bdb704c71eb9e452843d18a"
+      },
+      "outputsSHA256": {
+        "hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "portrait.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "character.png": "493c62a365fec6556bcd627d8c3e08462fd396718c4bdfa8f7853ad6b3ece26e",
+        "character.webp": "06386eefb76d9d1faebcec3df51dd6327b24f93ea16c4631dff4baa49aedf674"
+      },
+      "heightScale": 1.3308457711442785,
+      "neutralBodyBoundsPx": [
+        170,
+        131,
+        450,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv4_thief_A112_f/fragment.json"
+    },
+    {
+      "standEndHeightRatio": 1.0149253731343284,
+      "key": "adv4_thief_A112_m",
+      "classPath": "A112",
+      "gender": "m",
+      "name": "終焉斷刃",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "attack-0-5.png": "8001af0e3e8bef0ca923ce07089d052f2ff11c66a94a1422f1d451857c7e093b",
+        "attack-6-11.png": "d3d6bdba9885a3739407fc2f0f2aa6d60ac99ef4befaa2b0167eeccadde6b7f7"
+      },
+      "outputsSHA256": {
+        "hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "portrait.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "character.png": "51ba615df87006eb4fd48c1150cef2bcd7629f6ff455becd3fd60b42ba560abd",
+        "character.webp": "207bededd936a4ff0b6ba02c97104153f00d1d2ff5bd2aea9528efc7fbb1660e"
+      },
+      "heightScale": 1.336176261549396,
+      "neutralBodyBoundsPx": [
+        170,
+        131,
+        450,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A1-left/adv4_thief_A112_m/fragment.json"
+    }
+  ],
+  "marginExceptions": [
+    {
+      "key": "adv3_thief_A11_m",
+      "frame": 7,
+      "margin": 19,
+      "leftMargin": 19,
+      "rightMargin": 20,
+      "reason": "Root-approved 2026-10-15: original native alpha width is 601px, fully preserved in 640px cell with left19/right20px transparent margins. This preserves the authored proportions and complete blade; no crop/resizing. Named exception only for this identity/frame."
+    }
+  ]
+}

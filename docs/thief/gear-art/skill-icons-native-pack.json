@@ -1,0 +1,155 @@
+{
+  "status": "PASS",
+  "source": "worker/art-production/thief-skills-20261015/source.png",
+  "sourceSHA256": "7ffdf960feb2e4c3ad5ce3b3ad5868f2c3c54aeafe65ad612cda98abd676f0b5",
+  "prompt": "worker/art-production/thief-skills-20261015/source-prompt.json",
+  "promptSHA256": "dc5e49305b43eedbdb59bb1fc736ed18e89c851d53a8b68421bc5017789d965d",
+  "noResize": true,
+  "alphaNotEdited": true,
+  "icons": [
+    {
+      "id": "skill_thief_01",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        41,
+        40,
+        475,
+        473
+      ],
+      "edgeAlphaMax": 1,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_01.webp",
+      "SHA256": "4b425393c5d0eb6ec731840cc5f7265e0f9ebeaf8bdd203cfce14b0391a612cb",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    },
+    {
+      "id": "skill_thief_02",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        40,
+        474,
+        474
+      ],
+      "edgeAlphaMax": 1,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_02.webp",
+      "SHA256": "03162d4b460c8f95dfcf31abf1e88d9a339a943a19fb16041b3d748d3745bb26",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    },
+    {
+      "id": "skill_thief_03",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        40,
+        473,
+        473
+      ],
+      "edgeAlphaMax": 1,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_03.webp",
+      "SHA256": "7fe480a58d74008b3d26f7e82473ac13b37a46ec2f311e4728e0cbe17a279df2",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    },
+    {
+      "id": "skill_thief_04",
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        41,
+        40,
+        475,
+        472
+      ],
+      "edgeAlphaMax": 1,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_04.webp",
+      "SHA256": "3a9659fe3598e43a4fad15d01fda34a289189072f30812b93fa2361ff24c3ea7",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    },
+    {
+      "id": "skill_thief_05",
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        40,
+        474,
+        472
+      ],
+      "edgeAlphaMax": 0,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_05.webp",
+      "SHA256": "9d535b3bccd35a174ed5f1c2bc5e2a0b9de5df28116ecce0588a611db158cf19",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    },
+    {
+      "id": "skill_thief_06",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "translationPx": [
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        40,
+        473,
+        473
+      ],
+      "edgeAlphaMax": 0,
+      "file": "worker/public/expedition/assets/skills-painted-20261011/skill_thief_06.webp",
+      "SHA256": "10ac0907d3f8a79311156b91727eb698bcb8095edb588f1a6d2906bea3f89234",
+      "nativeRGBAUnchanged": true,
+      "intentionalPaintedInterior": true
+    }
+  ]
+}

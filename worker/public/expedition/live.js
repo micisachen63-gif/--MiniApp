@@ -1,10 +1,11 @@
 import {mountPartyGuardians} from '../guardian-party.js?v=20261013-guardian1';
-import {playCombat,combatView,combatCursor} from './combat-playback.js?v=20261014-art-6125dca91d72';
+import {playCombat,combatView,combatCursor} from './combat-playback.js?v=20261015-thief-complete1';
 import {heroArt} from './hero-art.js?v=20261014-art-6125dca91d72';
 import {dungeonTheme} from './dungeon-art.js?v=20261012-tower-roster1';
 import {catalogue as data} from './catalogue.js';
 import '../request-client.js?v=20261012-client-audit1';
-const skills=data.skills,$=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+let skills=data.skills;
+const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const byId=id=>state?.skills?.find(s=>s.id===id)||skills.find(s=>s.id===id),icon=s=>`assets/skills-painted-20261011/${s.id}.webp`,base=s=>s.eligibleBase||({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
 const hero=heroArt;
 let guardianPartyCleanup=null;let state=null,party=null,groupActive=null,drops=[],listing=[],dungeons=[],history=[],tab='skills',busy=false,filter='all',scope='own',search='',pinned=null,clockSkew=0;
@@ -62,7 +63,8 @@ function refresh(full=false){
   const id=selectedPartyId||nextParty?.id;
   if(id)nextParty=(await api('party/get',partyRead(id))).party;
   if(epoch!==stateEpoch||selectedPartyId!==partyId||!pageActive)return null;
-  state=nextState;if(list){listing=list.parties;drops=list.drops||[];groupActive=list.groupActive||null;history=list.history||[];dungeons=list.dungeons;}party=nextParty;
+  state=nextState;if(Array.isArray(nextState.skills))skills=nextState.skills;
+  if(list){listing=list.parties;drops=list.drops||[];groupActive=list.groupActive||null;history=list.history||[];dungeons=list.dungeons;}party=nextParty;
   if(partyLinkPending&&party?.id===selectedPartyId){tab=party.kind==='tower'?'tower':'dungeons';partyLinkPending=false;}
   if(selectedPartyId&&!party.me&&party.status==='lobby')tab=party.kind==='tower'?'tower':'dungeons';
   if(party?.status==='ended'&&!reviewingParty){const kind=party.kind;party=null;partyId=null;tab=kind==='tower'?'tower':'dungeons';toast('招募或挑戰已結束，可以重新組隊');}
@@ -131,7 +133,7 @@ function poll(){
  pollFlight=(async()=>{try{
   if(id){const next=(await api('party/get',partyRead(id))).party;if(epoch!==stateEpoch||id!==(partyId||party?.id))return null;party=next;if(['won','lost','ended'].includes(party.status))await refresh(true);else render();}
   else if(tab==='tower'||tab==='dungeons')await refresh(true);
-  if(/^skill_\d{2}_\d$/.test(initial)&&byId(initial))detail(initial);
+  if(/^(?:skill_\d{2}_\d|skill_thief_0[1-6])$/.test(initial)&&byId(initial))detail(initial);
  }catch(e){if(!cancelled(e))toast(e.message);}finally{pollFlight=null;}})();return pollFlight;
 }
 let partyTimer,stateTimer;

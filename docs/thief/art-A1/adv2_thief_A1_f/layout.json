@@ -1,0 +1,168 @@
+{
+  "neutralBodyBoundsPx": [
+    180,
+    128,
+    460,
+    600
+  ],
+  "frames": [
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "bodyCenterX": 270,
+      "castAnchorPx": [
+        395,
+        315
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        932,
+        326
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1300,
+      "castAnchorPx": [
+        1270,
+        161
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        365,
+        640
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        512,
+        1084,
+        1024
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        949,
+        640
+      ]
+    },
+    {
+      "sourceRect": [
+        1084,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1310,
+      "castAnchorPx": [
+        1350,
+        680
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        0,
+        550,
+        503
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        273,
+        214
+      ]
+    },
+    {
+      "sourceRect": [
+        550,
+        0,
+        1100,
+        503
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        970,
+        265
+      ]
+    },
+    {
+      "sourceRect": [
+        1100,
+        0,
+        1536,
+        503
+      ],
+      "bodyCenterX": 1300,
+      "castAnchorPx": [
+        1376,
+        145
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        503,
+        512,
+        1024
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        272,
+        634
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        503,
+        1024,
+        1024
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        928,
+        755
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        503,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1300,
+      "castAnchorPx": [
+        1440,
+        758
+      ]
+    }
+  ],
+  "releaseFrameIndex": 6,
+  "skillKind": "execute"
+}

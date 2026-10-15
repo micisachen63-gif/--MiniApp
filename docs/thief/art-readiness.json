@@ -1,501 +1,1193 @@
 {
   "releaseReady": false,
   "plannedIdentities": 62,
-  "registeredPilot": "thief_f",
+  "registeredIdentities": 62,
+  "nativePackedIdentities": 62,
+  "visualAcceptedIdentities": 20,
+  "runtimeAcceptedIdentities": 0,
   "completedIdentities": 0,
-  "nativePackedIdentities": 1,
-  "visualAndRuntimeReviewPending": true,
-  "missing": [
+  "existingHeroesUnchanged": 186,
+  "registryVersion": "20261015-thief-native-a439217bc7e3",
+  "realPlayerEventsVerified": false,
+  "missing": [],
+  "identities": [
     {
-      "key": "thief:base:m",
-      "baseClass": "thief",
+      "key": "adv1_thief_A_f",
+      "name": "刺客・女",
+      "classPath": "A",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "5eaf8ca443ee14b2117f99ea8cfce79d87505e0ae284599c4a7bebf07594788b",
+      "outputs": {
+        "hero.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "portrait.png": "8234ac67a63efa876ad9fa7738a355aa28f132574710a7fff560b29a514cf0f7",
+        "character.png": "b36766ad482b850aee7d53ef779c87f23149efbfc8b4778cbf5228481e24b12f",
+        "character.webp": "34db97fdecccfa1a5a0b841dee9aab39b011b963f4373fb9fd2a87ff00d80abd"
+      },
+      "packingEvidence": "docs/thief/art-base-adv1/adv1_thief_A_f/native-pack.json"
+    },
+    {
+      "key": "adv1_thief_A_m",
+      "name": "刺客・男",
+      "classPath": "A",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "a34b86b9406c58842cd77a31867d624e92911d4810def1345293320b4296b685",
+      "outputs": {
+        "hero.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "portrait.png": "a844a4499ff397e8c73eead83679037b62fbfe1fd43d89bdede5d922dbf48fec",
+        "character.png": "cc8084512c4cdabf4fef94794e8d136f7d1a389533ceddbd4f8aee293cfd2001",
+        "character.webp": "ba64374f31e22682551f3de928a3b5a732cfd469320d03311c9c2124d20937aa"
+      },
+      "packingEvidence": "docs/thief/art-base-adv1/adv1_thief_A_m/native-pack.json"
+    },
+    {
+      "key": "adv1_thief_B_f",
+      "name": "夜行者・女",
+      "classPath": "B",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "e0308ddabf3c571bdd3e5d1c84839f68e028288977a9e1a2585dc6331d9670ac",
+      "outputs": {
+        "hero.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "portrait.png": "26b818386b48df2515c08b77a6d4abb8aa2440140b7b598cee09dfaeb7106bed",
+        "character.png": "3f220e6244431c1a9724535b95fbb0d3ff63b3d185f48f120a5337689fe4657f",
+        "character.webp": "d443c250d76a6de2aedc41b1407df9d8b854f9e60338b3d86e592917870f2ae9"
+      },
+      "packingEvidence": "docs/thief/art-base-adv1/adv1_thief_B_f/native-pack.json"
+    },
+    {
+      "key": "adv1_thief_B_m",
+      "name": "夜行者・男",
+      "classPath": "B",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "7c9d453314989a3f03e9b4dda00916707211086e17dcb79ed96dd551eadb194e",
+      "outputs": {
+        "hero.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "portrait.png": "5810f5c6acbf608e03512c94b17aac18df8e67b1fde0ac72edbd3aad3b16eb44",
+        "character.png": "59f26a754dc5a104b53ad3a351e639401421d0259346e920ac458146f3bbcd65",
+        "character.webp": "08c3c3a763c99e4fb74d139f4329f27d333a2463f6d906659363bb6b4adbf8a4"
+      },
+      "packingEvidence": "docs/thief/art-base-adv1/adv1_thief_B_m/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_A1_f",
+      "name": "影襲刺客・女",
+      "classPath": "A1",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "7246a0cb2ed0d0b8c309382c43647a165475e3006e43f95aa3e1db5231a91b2b",
+      "outputs": {
+        "hero.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "portrait.png": "17856edece98971a58d247f84e591f5b355b48135f05f9a917bc06d3818b1e34",
+        "character.png": "349b99641e9d0208adbdbd4250f4618583f11dee63cd5b7e50cc4ae96b48648c",
+        "character.webp": "0e84853dbd063d8970af83272cd0c2d4a1a0388205150dcd5526b0a1d83f0cd1"
+      },
+      "packingEvidence": "docs/thief/art-A1/adv2_thief_A1_f/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_A1_m",
+      "name": "影襲刺客・男",
+      "classPath": "A1",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "404e6af303c4735d5254772a5b10145d7da06e293717895e339f991aa59ffc7d",
+      "outputs": {
+        "hero.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "portrait.png": "7adbedcdce55090044ce6730c6bfdfa64f3a93f3f471413b08fa95bd4d64c4a2",
+        "character.png": "5b7f5ad97d8ad3aa95b1f70760f8382e7a6bec85a6ac982de2825d45164fe299",
+        "character.webp": "4e3f8b3e6b522a5eaa8c3c93d8c2185061b94a1c94997e4667e4c7a0e27130fa"
+      },
+      "packingEvidence": "docs/thief/art-A1/adv2_thief_A1_m/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_A2_f",
+      "name": "毒刃刺客",
+      "classPath": "A2",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "9606d62e1529281329be9f7386e816fd7216b3b27bf6492817bfd9bcfa908922",
+      "outputs": {
+        "hero.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "portrait.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "character.png": "f544a51c4a6465a1c2ea0de8c866eb975336fe132dd86f1ff902f23b2e60e089",
+        "character.webp": "0ac72a5c9ce56ccbebe379a06d7a8ebdd191ed8c91b9ec6c772a34bf3551aa11"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv2_thief_A2_f/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_A2_m",
+      "name": "毒刃刺客",
+      "classPath": "A2",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "945fbcb1ad2ff45c89c7f6467c15708587520766a728dabf7d3cfcf00a8a5ce0",
+      "outputs": {
+        "hero.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "portrait.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "character.png": "fbfa7fba79ee52b3afbfa6e652710cf113695da6d5f3bec569e4fe33a26a61bf",
+        "character.webp": "14eec02675fbb5b7657070f675bb29507073dd3da6b4a3a3c9078ce797de2ee6"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv2_thief_A2_m/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_B1_f",
+      "name": "飛刃遊俠",
+      "classPath": "B1",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "a0840a63812f7fc41aaae2d54877e25e4183ae828071b437b4dd3d0017545c45",
+      "outputs": {
+        "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "portrait.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+        "character.png": "af36074b9393de46d3fc9f66638a654c52a80b73278a234e35bd109caa236e02",
+        "character.webp": "74e71e457fab78f26666f5f45c6e3f55b348c0441071966a0ca00a992bea9304"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv2_thief_B1_f/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_B1_m",
+      "name": "飛刃遊俠",
+      "classPath": "B1",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "74c175fdaaed7e761d5045733b076654a351bc15e57efb88da4d82fc7eb83d35",
+      "outputs": {
+        "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "portrait.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+        "character.png": "613916478c45c572fbff5304d52f9d4d07503b40d7ed5187bd9ef38c423072b6",
+        "character.webp": "3714133e6c4b813b2aa87c461280a81bc6200bed2284a5b864045b8519393512"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv2_thief_B1_m/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_B2_f",
+      "name": "幻刃使",
+      "classPath": "B2",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "9ec12ecad37cef7d0887285684a6590dd23109faf0ef152b0eb1f02106e8b49d",
+      "outputs": {
+        "hero.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "portrait.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "character.png": "ef2e211062f2cee2de61188090ac22f98201159a0811e6fed0f5f8c3aa225100",
+        "character.webp": "d26d04c09229a3d1f4cdfdbc3c497b87e35f737dcc51157e00611e4494c1875e"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv2_thief_B2_f/native-pack.json"
+    },
+    {
+      "key": "adv2_thief_B2_m",
+      "name": "幻刃使",
+      "classPath": "B2",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "b53818cde8a5f22fa83127dd90e97a6a5ffaeca6456ee3b4fc566a596b64fd95",
+      "outputs": {
+        "hero.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "portrait.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "character.png": "ed24ad2ce6a91229ad0cea419b1e25a2bdc11e66f34f49f7331fb0605cc1a81b",
+        "character.webp": "da5d2ce8b57fa80b1e1552443dfb70d8ea3fb6cde6a5e7e8972376fe5089c5fe"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv2_thief_B2_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A11_f",
+      "name": "夜幕處刑者",
+      "classPath": "A11",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "ba5ff856e1b9d3e899b8e2aaeca5f9c7994c30dd77ac9320e078e4712340da57",
+      "outputs": {
+        "hero.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "portrait.png": "a485e7924afda6ac03f117e3fc86855d8711a41ed18e38d36d88ab1ba79005c9",
+        "character.png": "41ed9db37c1f71af5a939e63b435fab4f2548a6c130ffa6e930cfbe1e46178df",
+        "character.webp": "e50eef71f3aa39d0371750c5dc22ff832e643f2e5da8bf00807ce530fc043123"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv3_thief_A11_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A11_m",
+      "name": "夜幕處刑者",
+      "classPath": "A11",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "5a152a5831bd6a1dc6be55284b6e684898d27d2268b1f51bb43c7ae36fc69862",
+      "outputs": {
+        "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "portrait.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+        "character.png": "46dde975f093f3ba793a76313041abd171340420aff11c34d1780a7feefe2dd9",
+        "character.webp": "8142ac0c8a7da8e62f37208aed19fef96bbe8e9e3241c3335ab1dc91748b487f"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv3_thief_A11_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A12_f",
+      "name": "幽影追獵者",
+      "classPath": "A12",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "a2e2059b79eb731ed510725ce53355a5f94cd76ff5ccc95b43b02e1f34a35854",
+      "outputs": {
+        "hero.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+        "portrait.png": "3b40251993a7e0ea16b81e7e5d7b2850b23242de50a622e93412c5ddf27b1e3c",
+        "character.png": "2a7c385eb80fed87a0c714fb7a2ef01b62e2ff10642b8701307a609988cf8b3b",
+        "character.webp": "6ef4df6565d30b47b83bdf2eb80f5f059cdd18b23efc121d834a89fcf9f0f7a1"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv3_thief_A12_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A12_m",
+      "name": "幽影追獵者",
+      "classPath": "A12",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "54e3f691dcb940612f554789b3d565dd28091057f90f3ac85e7d12639ff6fc6e",
+      "outputs": {
+        "hero.png": "9849452a22cace43787147b587ce3c000891c073b28de833c2b139d4c55a1fbb",
+        "portrait.png": "9849452a22cace43787147b587ce3c000891c073b28de833c2b139d4c55a1fbb",
+        "character.png": "b11ae30ee23a74a438df52cc09acc6aba63478e1b29010d3f14d57432d17ba1f",
+        "character.webp": "d791380da4d54d47fa8bf9f4ddfef7aa5883ee0a06763a4a9664444b85e23803"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv3_thief_A12_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A21_f",
+      "name": "蝕毒煉師",
+      "classPath": "A21",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "d2e1cd4a5429c920afaa37b9bf89aa622c4a5daa0c9e91d9783fc41850ff876e",
+      "outputs": {
+        "hero.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "portrait.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "character.png": "6122efdf4b7120f10a8fb97deb53905c11d41abfd90d288539d62c9a4dc1ddcf",
+        "character.webp": "53c40f37fbc494e0b904ff3b7f864832ed5cc6d082c1038883cfb2dbf971c95c"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv3_thief_A21_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A21_m",
+      "name": "蝕毒煉師",
+      "classPath": "A21",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f1e82f79137804f88d997d408195edaecd86e538ddd066777b6ce669b4eca49c",
+      "outputs": {
+        "hero.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "portrait.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "character.png": "fb268b0aa0db72c42e3ae102e2620db08885c31fd33259083db095a392c155ad",
+        "character.webp": "0d83f0074208258740c339f5a5bd967cc7f192642e40dffbb1fffb31b8d5d054"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv3_thief_A21_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A22_f",
+      "name": "血棘獵手",
+      "classPath": "A22",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f4f15015c64ba894fae040f2a3804a9db17da086268ee5178162e00077b4807c",
+      "outputs": {
+        "hero.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "portrait.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "character.png": "f37482d39dec179ded62578c7cd7af6f80380b2fe0c816a9093cfa5f1fea0c7b",
+        "character.webp": "988ef77b7d664a6bd9eb54ee139b5209e414883c3a8d3cc47e827edb9b674363"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv3_thief_A22_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_A22_m",
+      "name": "血棘獵手",
+      "classPath": "A22",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "3922c83d84ed2cfa354eceb219b5c5348fcc1b38b5d3f2545f64122b2dc16d0e",
+      "outputs": {
+        "hero.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "portrait.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "character.png": "75a77dea94205811ab5da1402008a262a2667f7d2b9bbc3e9cdf8bb8cb3d5be6",
+        "character.webp": "c6c498e3c43205d2a5266b1d214dd0720e4e175b8c0dcbfc009f3ff8b8f962c5"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv3_thief_A22_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B11_f",
+      "name": "疾風刃使",
+      "classPath": "B11",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "d2e4160d887446bf8858df7e40ba3183bbaca34beeed4e2ae237b8d19e9cdc65",
+      "outputs": {
+        "hero.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "portrait.png": "22b810b9fe842c21af2db015e0ea816345cff7028441bb75e09c548e386a6309",
+        "character.png": "1fe8109939aaf86e95a83e8e3e51697039cb9b1553af8e6a0530dd8d466e98d5",
+        "character.webp": "a42a4b24ba98fe58f1cd7f5c8a781af1d089cbc73df4111a8024f91e10a1b9d0"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv3_thief_B11_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B11_m",
+      "name": "疾風刃使",
+      "classPath": "B11",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "af725f35d8bd92d4e0a1d866e2f0a3d9d803a66c7a59550cb6b1d612e0c92300",
+      "outputs": {
+        "hero.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "portrait.png": "9701db3438d031f874d973c6a9113fada899385bd5ebfc1e69a065adb33ba3ce",
+        "character.png": "bdc0fd6251a82cadc9ef8ada7f965396e98f247f5673d1d145b0e8ac67756aa5",
+        "character.webp": "13e5eeb26eba948b03b885b96346d53142ce9963028881af2b83ad5be14503b2"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv3_thief_B11_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B12_f",
+      "name": "星刃獵手",
+      "classPath": "B12",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "3fdf12d4fc490b0d5ad38739ee48931efe7a475ea9183df3332cca540faf0caf",
+      "outputs": {
+        "hero.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "portrait.png": "8caf0278e9090af56a87ebaf2819c17879b06d1e8f3f272af9b34ce5b5ee8d39",
+        "character.png": "00cf4b8b2e6ead1d7ca0f5fd387191d2e760512f66d56ae00e68d7df032c9252",
+        "character.webp": "7645749d8531cbcffa0c498c938ebc07dbf88567a30e57ceae779cb40c4a0b56"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv3_thief_B12_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B12_m",
+      "name": "星刃獵手",
+      "classPath": "B12",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "3033590abecc4f9788f50203511dc2dc95063145670018ae436706833e2a6c93",
+      "outputs": {
+        "hero.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "portrait.png": "5bbb839170b63a5258f18388ad0ef8d5b333f9e1da955a5c024aecb03515efe9",
+        "character.png": "ab5a7fa21c30b264a177e180df56c7ccf2257c95b0f922a179cb0743bf6445ab",
+        "character.webp": "d5ba89ac15dc82ee9e186668c2aa3cd1f242aeab5fc866f1f95958ecd5d63c07"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv3_thief_B12_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B21_f",
+      "name": "鏡影舞者",
+      "classPath": "B21",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "e105ccdb43e03f0f42240e669f9e770e0ccb4d1e6de40288f749d33060d4edd8",
+      "outputs": {
+        "hero.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "portrait.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "character.png": "812a0acc8a1f65fed6333ce6ac47d5e5b1c8604e6722ef5653dc9c747fea62b1",
+        "character.webp": "d3ad0e9736524a0b9bed580de95a8b863456a91b3187d209be4821357c034cc2"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv3_thief_B21_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B21_m",
+      "name": "鏡影舞者",
+      "classPath": "B21",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "34ec9b6202c6fbe8d7b3e0e4b6c59d46a0118af102cafbcf2f7cef744cd6731b",
+      "outputs": {
+        "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "portrait.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "character.png": "1d667af9f3d1f41bac9377c38b38eb51b256dde644870bc6a066e9ea8312fca6",
+        "character.webp": "29e089eed991d148b3b22fdbaa27c85e3762c645820c1ce40d6522633c0f6169"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv3_thief_B21_m/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B22_f",
+      "name": "暮光詭術師",
+      "classPath": "B22",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "2b6590a270fbb5bed3833a4d5d7576239b3376f7b8d74288bd17782c7f297270",
+      "outputs": {
+        "hero.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "portrait.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "character.png": "a3df8ac902577d83597885e18f247f13e38e3104db65dc89ea30627142236f5f",
+        "character.webp": "0d8c82eca45bdf8a8c804dfadadbf020f9d9b277ead6829c57de0b981fe147c9"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv3_thief_B22_f/native-pack.json"
+    },
+    {
+      "key": "adv3_thief_B22_m",
+      "name": "暮光詭術師",
+      "classPath": "B22",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "c12c096aaa1231c119f6e90774c82f84810cf6d40a40c352f74248884aac4e60",
+      "outputs": {
+        "hero.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "portrait.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "character.png": "e4eddaf30b044833ff566f3b61a40bea285eebd8307f02ff91006a39021baef5",
+        "character.webp": "e010d6c26aa3aa400bad1b8435ba4304d0af4e5727dd41f119988495a9a7dbe2"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv3_thief_B22_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A111_f",
+      "name": "冥夜裁決者",
+      "classPath": "A111",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "1569696144d1da8d89e72218162001fec53fc5bcbb0a3be62190b40277d76db1",
+      "outputs": {
+        "hero.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "portrait.png": "604f7acb8111e436e3aabea1079b0a3e8656cd0ac5f505f989b1bde4f1183813",
+        "character.png": "06b44bc31bef3dc075ca696f77af4af054dcbf45318442c758368189ef83f9e1",
+        "character.webp": "02033df62c427ce29630cfead37e4b58833ef3fa61f01cb91d202c9d8d96fb3c"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv4_thief_A111_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A111_m",
+      "name": "冥夜裁決者",
+      "classPath": "A111",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "500f726ea44064ecfada9323c9607fe55f903ec24437aecabdeb70b1e5f45b80",
+      "outputs": {
+        "hero.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "portrait.png": "96b427c6598e61f7bb0122f7ac5d17b5462a173d47406d1e9715b7eca90a6e5f",
+        "character.png": "559640eeb730c93359f354ffd6f201006ebad4cdc56b6e889530dc8ef69fec58",
+        "character.webp": "500559a2209231611c14762ba9e35ae1f52df33d5b1b42b4bc5136f1399925b9"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv4_thief_A111_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A112_f",
+      "name": "終焉斷刃",
+      "classPath": "A112",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "bd7ae85395597a12f0112ef202071f2a2d444b7a478f6592526d0256d5e7cc70",
+      "outputs": {
+        "hero.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "portrait.png": "4e1b37683bd7ee23a95d9b0e76e9b0be3a96c3f67ca1edd7c4e2590e39d7e097",
+        "character.png": "493c62a365fec6556bcd627d8c3e08462fd396718c4bdfa8f7853ad6b3ece26e",
+        "character.webp": "06386eefb76d9d1faebcec3df51dd6327b24f93ea16c4631dff4baa49aedf674"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv4_thief_A112_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A112_m",
+      "name": "終焉斷刃",
+      "classPath": "A112",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f17dee436ac83c8c1cdbfda909877e4482c9024345281ab1f1d444ce73cd59f3",
+      "outputs": {
+        "hero.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "portrait.png": "4cbb18de87b1a01eab1c26d3b4a2d8410e8fcc0396da9ed52f8bfd1a9aad6d10",
+        "character.png": "51ba615df87006eb4fd48c1150cef2bcd7629f6ff455becd3fd60b42ba560abd",
+        "character.webp": "207bededd936a4ff0b6ba02c97104153f00d1d2ff5bd2aea9528efc7fbb1660e"
+      },
+      "packingEvidence": "docs/thief/art-A1-left/adv4_thief_A112_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A121_f",
+      "name": "虛影行者",
+      "classPath": "A121",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "cd844bc8962ae1f3d7dfaed9d2d6c7181fc798d9e856625a56da5ac3680a8c8e",
+      "outputs": {
+        "hero.png": "9b4a1079fd8493dcc4a34c4713208928e638224d8a32672198656fde5b1bce9c",
+        "portrait.png": "9b4a1079fd8493dcc4a34c4713208928e638224d8a32672198656fde5b1bce9c",
+        "character.png": "7b92094b8d0a14cda66056812306cfc8fc8140e2fe0a55e87eaabb35ff83d415",
+        "character.webp": "905faee31e148f46b133191a8307b595e0601f8257d4461bac043a88030da736"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv4_thief_A121_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A121_m",
+      "name": "虛影行者",
+      "classPath": "A121",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "d83ef2eb5830199e4aec393ef7a3c6795db1106a0db6fbcde3eb6eddce8d6d38",
+      "outputs": {
+        "hero.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+        "portrait.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+        "character.png": "6a5abd4f361c6260b684b4460614807617971b3a41e462755220113b1d79c4d1",
+        "character.webp": "0fd4a8b1539c0f63f2b7958f00ceae08bc23aa051dad8741cf4c1713338a1f96"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv4_thief_A121_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A122_f",
+      "name": "無聲獵魂者",
+      "classPath": "A122",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "fcef865f907664fb38af04b9d84e30e9df6bf9ba406c17a2ceadccf87e0c5ee0",
+      "outputs": {
+        "hero.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+        "portrait.png": "418453d2dfb813971e1e9fe89b78f5872ff4e3a47b2ad28daf27c9238195a2bb",
+        "character.png": "3b164b1efc29e2826c5860e32f043e676a03751312000f8fadf6b66aa5f12735",
+        "character.webp": "bd06fb62015989c1863452c03b1a3466f91882fec0169dd9ef3a046be6aa3a42"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv4_thief_A122_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A122_m",
+      "name": "無聲獵魂者",
+      "classPath": "A122",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "d8736a10254b3a3676237dd585321a377d5f144c972bef1c4215250b464ee4c5",
+      "outputs": {
+        "hero.png": "4a1ee2a69e971f9d9da08b6159ce565fd644037772a1a4b501ac62632a0ff4d4",
+        "portrait.png": "4a1ee2a69e971f9d9da08b6159ce565fd644037772a1a4b501ac62632a0ff4d4",
+        "character.png": "3e2310da7adf13e36b4f066895bdeab27b9ca48692117eaeabef1cb164111810",
+        "character.webp": "5ab328a084d62ec8abf9a15d154aeff4b6babddbd429023dc7cc6fd27e39454a"
+      },
+      "packingEvidence": "docs/thief/art-A1-right/adv4_thief_A122_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A211_f",
+      "name": "九首毒刃",
+      "classPath": "A211",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "3dc830a20b5566b12387099b22574d278ffc7bbfa1d543f1ba0da313e3b2079a",
+      "outputs": {
+        "hero.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "portrait.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "character.png": "9423d332f46a2e86c47d0612306fe41ebac3bf291076615e0d0274a7a868e03e",
+        "character.webp": "45d83c5424b171a2ac7e51d3622ee9df89a1d89cdca3f99ccec5be52881f5d5b"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A211_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A211_m",
+      "name": "九首毒刃",
+      "classPath": "A211",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "c988b370e9e2c7e28a92e01efe7ca0b92a5c91431492c8b17d28e84c7de959c6",
+      "outputs": {
+        "hero.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "portrait.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "character.png": "16f8cbea937006d4645dbc56d9508c11ff394ddb71c78f600683ad36108c02e3",
+        "character.webp": "7ee580f7edfac18290dd9dab054b2a122f8a99c29121cf6ceb5ffba146231f4b"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A211_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A212_f",
+      "name": "冥蛇使徒",
+      "classPath": "A212",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "2a85619edd620f21a98d889ab6d9c1939eef9a24de4a1dd89d38a9688e0e6c23",
+      "outputs": {
+        "hero.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "portrait.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "character.png": "1aaf4889cb2de17b8b3b8fe54624e1963c90fcfaf2ea4f09eeced5835c2ff136",
+        "character.webp": "c99beebf3a7046f9f663f3f5cb1dfa0289a86a2c01b877efbda649e97678c6bc"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A212_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A212_m",
+      "name": "冥蛇使徒",
+      "classPath": "A212",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "48f49b09d1cbf263ae2c56eeb1474ef01d33a88b84c5e70593f2f16a38612982",
+      "outputs": {
+        "hero.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "portrait.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "character.png": "30dea20cf5b642c6ba2c4cfac1d33297a0e683027453aa6b295d55c378e33bea",
+        "character.webp": "2a673c0efb08fd13d6ca0d9b4e8cf3251519ef79667e614477c9adefb59b107c"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A212_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A221_f",
+      "name": "血棘君主",
+      "classPath": "A221",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f994274d5dfa60541b1b9b24f5b19dbe44e5a95c3d75bfc2c81eaa016838e5b7",
+      "outputs": {
+        "hero.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "portrait.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "character.png": "1f866b59e94172a905d68f87bd696cb1d78f4b402dde1b0332c08265820c9411",
+        "character.webp": "1e0d431c9fc5eaad4adffd689df74654cb9b600371570e8bc86293cfadf35888"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A221_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A221_m",
+      "name": "血棘君主",
+      "classPath": "A221",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f2f1e7c20f646527211c70485f2299c3a8595289f5ecbad0638a3754819206c8",
+      "outputs": {
+        "hero.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "portrait.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "character.png": "b4478a50d576311ac7874c5d5eef280a5be1727da0ed87a8abb3623e5dfe00f8",
+        "character.webp": "56ef88b29a1e502ed08d3b0688c1b4b9cd123678b1796128df554177e90a002b"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A221_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A222_f",
+      "name": "蝕魂收割者",
+      "classPath": "A222",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "63276d15dbaca178d92c9e41e39e652a5dcfa5da402c17ed82804aabc2ea20eb",
+      "outputs": {
+        "hero.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "portrait.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "character.png": "8969132d5372bd33d9113d7baaebdec46a7f1c538fd1bc0228f325a916759305",
+        "character.webp": "74161fc4f7b5b3797da4067c838fecb823ed8867bbcf4c80931bbff59dde60bf"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A222_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_A222_m",
+      "name": "蝕魂收割者",
+      "classPath": "A222",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "9f9be27694da491729f387ad9660d53e8fffb89e12c227dea6f4d3f21a1758c4",
+      "outputs": {
+        "hero.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "portrait.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "character.png": "d7f63c9adc4b234de9b90d8f5aff46e52760bcc9eb78316db1a02fa8640ade2a",
+        "character.webp": "e4e06b615056bc091950c80c1cbdd704bdcbe26f42e1703313c7f33e105b2012"
+      },
+      "packingEvidence": "docs/thief/art-A2/adv4_thief_A222_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B111_f",
+      "name": "風暴千刃",
+      "classPath": "B111",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "a43b394b374e5235ad6c70baf90dc9151ed833da58a65bf3acba64323dfc2f38",
+      "outputs": {
+        "hero.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "portrait.png": "3fd4e066052b6342452a0f91da1cea2e67339a2d7d19bd666a814ca0cad98146",
+        "character.png": "a99daa38a952100a1e82f0d679164cd8267c483d52c73ff2d712537b6317943f",
+        "character.webp": "37cbd14d859e465db12a03419ea7a75cec0a416578db48658052c8bb903b2135"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B111_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B111_m",
+      "name": "風暴千刃",
+      "classPath": "B111",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f52efd8f2e997e14c42748099cf680e56ed106fe6904b97ed699da4fff61629b",
+      "outputs": {
+        "hero.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "portrait.png": "44119cbaa96d500529ad511267bf20497d978a3579ac003fa6cf07116d4893d5",
+        "character.png": "66fc4e70400d87dcbc317835ddbab16fc3eac25b85de692e62718129966152fd",
+        "character.webp": "3dd06b11aec7e1aeb87ca1991892a1af55529d9780bba31f3f92cc94cc75ed4e"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B111_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B112_f",
+      "name": "疾影穿梭者",
+      "classPath": "B112",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "c197d70bd11659fdfdc6d0a19c4629b4ac70c7dda84a8312080f0922885e190e",
+      "outputs": {
+        "hero.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "portrait.png": "287021b780b64d1d6c7069c21dcc5f0e16c8a0a04a3c7f957ab2939146f6c97f",
+        "character.png": "24d819979de920d8e6342cdff0945018bcd882da866f850150dda16299f0b7b3",
+        "character.webp": "a090b703d560ac3a3a00e98a091b0e1846b763a2497f40b30834b7c22c02dc72"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B112_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B112_m",
+      "name": "疾影穿梭者",
+      "classPath": "B112",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "160fdb7b7b9e41584e8ed1a8665517721bd03f9205c3155e93884c79b95e0769",
+      "outputs": {
+        "hero.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "portrait.png": "95c3f74d0c15abc1739c060e442aa83bc420a0d8e06680747f49061c34a0781c",
+        "character.png": "8261d4584f560c287aa2af270822365dbee79ba56d8a0298e368761259ffb764",
+        "character.webp": "7a0dfcfaafa04c6b8ee9d9b4c3d58981a791d92a0423638d37347b6cd3ad27e8"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B112_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B121_f",
+      "name": "星隕刃使",
+      "classPath": "B121",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "d71d294637ab2891200b2ab39c2ce614698606f1e4a7bb7d5385719f2978436f",
+      "outputs": {
+        "hero.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "portrait.png": "db058b6448b332964c1acb4bfe3c53bda8f194de86cc0b2d28bfc89e87c3293a",
+        "character.png": "3e17924d94c67757f674d5d4213c5f4d290a1ed6f2e4e3b148cbb11eb765441f",
+        "character.webp": "969288af5100ca383cfa6678e2af82985f7e68edff7aee53d9747a8b768de681"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B121_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B121_m",
+      "name": "星隕刃使",
+      "classPath": "B121",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "5ed695021e9c8d8ad1a46d981bd092d616e7cd1fb198000a7539e97cd7570717",
+      "outputs": {
+        "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "portrait.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+        "character.png": "081d4016d7a3c80a6d025fbdd6b0f36c67b9aa27949d3bae608add7f5fee7794",
+        "character.webp": "4b4cea655bbbd0eaa93dd9efef5e69b5d205374656fa7d7a80e041ffec65304c"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B121_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B122_f",
+      "name": "星軌追獵者",
+      "classPath": "B122",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "c06f425f953fa34dbac2baf4f420e0325c6d9866ac15367adf5eac37681ed6fd",
+      "outputs": {
+        "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "portrait.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+        "character.png": "dd4647157ae0d7b97bc8de9ff3c6e1558acebbbee909379574ca087994eb8083",
+        "character.webp": "8eafb6f4e5fdbc05a0c06534c5ea8aab4cc100b28a468dea58d3eb4d56efe7d5"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B122_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B122_m",
+      "name": "星軌追獵者",
+      "classPath": "B122",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": true,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "6eeddeb07fed161637fe9bd5816473752f56e1fe04b5750112cf1670c10475a5",
+      "outputs": {
+        "hero.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "portrait.png": "d6d800d8f023f07f3a5828a8f70216202685d9684743a406a03029631b827916",
+        "character.png": "a6b1163926a0d9a68fd01f5ee8488238997501b2a242d05383b6b59df31d7b50",
+        "character.webp": "2c81dde73ff3d8d4de4523be5e16ba4d95626ed840bb55feb46fe79bba44a102"
+      },
+      "packingEvidence": "docs/thief/art-B1/adv4_thief_B122_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B211_f",
+      "name": "千面幻刃",
+      "classPath": "B211",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "cc71780e48e23a7aa7da10af6b7b83eb26314bce1b13caad8d86ea8ac1731743",
+      "outputs": {
+        "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "portrait.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "character.png": "8bc30c8fd7be63c057a697fdc44f60be3a7b0b42d5a037ddab16c14163956de4",
+        "character.webp": "467abe5cb58fec489c0b36827347e668bc74f1df16a4d9edd54f87d0f461792d"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B211_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B211_m",
+      "name": "千面幻刃",
+      "classPath": "B211",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "defa536de183a1afb660f6c898cf3d7b06211afc6edbb08eaaa1d3f72f4c3663",
+      "outputs": {
+        "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "portrait.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "character.png": "549a6376aad8f08458431bb9a985d0376fc296543ca6b99e9719cd4a2bc1e3be",
+        "character.webp": "18db40edc8bbb04770bb566e9b6ea16071d5cb93d8c3aab2beee1b0f365e4fe3"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B211_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B212_f",
+      "name": "鏡界行者",
+      "classPath": "B212",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "cab7e26d984279c7d83d46f2e6529b413eddb536733dd3f555ed462da5a31d02",
+      "outputs": {
+        "hero.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "portrait.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "character.png": "cb04df3db2fea020c9f92869e0183156eaca70ca893f4a776d5104eccee8140f",
+        "character.webp": "96e79da4178709b66fe11dd9c2e6466d3307c9f6ac92723ce23712e63dc5fcd1"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B212_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B212_m",
+      "name": "鏡界行者",
+      "classPath": "B212",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "e61c9d58d7e66616bc29675f51ad680e7318917e922147b2533d113067d3a9d4",
+      "outputs": {
+        "hero.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "portrait.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "character.png": "ccbf9fd1948dcf24f9b8b97e282d07b6474a803352a51d10cf02ce07e92a9c3a",
+        "character.webp": "adce40221ca0ef271b843167397d9b7b7e3b18b300fa529c07d46bcb6e09294b"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B212_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B221_f",
+      "name": "暮光織影者",
+      "classPath": "B221",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "92df28d6441c8abbe1c3cb80a872dffeae03827f1fbb964251462a23e1b65c78",
+      "outputs": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "portrait.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "character.png": "edb1a7c10a231f6aa8dd885533460cc96a8f27eb8218c639b7b0042f7cb35dd6",
+        "character.webp": "c0c0776dae9840bc56f998f73db705f3101ecd50f4981fdefc3cf6526c231c1f"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B221_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B221_m",
+      "name": "暮光織影者",
+      "classPath": "B221",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "73aeefe729461fec2c430a8ba18ba7aa6f0b902a96e5fb804436983df3f453d2",
+      "outputs": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "portrait.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "character.png": "acff585d99bab3f8de4453865f04c75e4a799dbe2d306db7a11524bbf2c1969a",
+        "character.webp": "11587abaf46fca277f13a9855fe3c161b23bbe22312fd26af827ff2d2db9e03c"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B221_m/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B222_f",
+      "name": "黑月詭術師",
+      "classPath": "B222",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "082eb8bddba32f1f9c87cffdacb3a57692bac0cb9bf685cd99402d65bfaf91e3",
+      "outputs": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "portrait.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "character.png": "08ad3009f4e26dab96aff6cba1fb5503f68e68c07e263c0a175708ff2ac7ac1e",
+        "character.webp": "e131d4dbefd1781410c836dbb3ac4f9c5b3aba2e85c2012dc64eb241334c1154"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B222_f/native-pack.json"
+    },
+    {
+      "key": "adv4_thief_B222_m",
+      "name": "黑月詭術師",
+      "classPath": "B222",
+      "gender": "m",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "2d72d07c1291bdee1fa867435e57ca6132000c0cf36550c24ce9f86eb2bddd5d",
+      "outputs": {
+        "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "portrait.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "character.png": "24818385cb2992e9ebca513ed687ef25451bfa9613fba689c12f13cd635c2d18",
+        "character.webp": "9ad77b9be1ced9d9d0b4a3d0ea6b2b111ddb69525fa3a7e631c3741841f2909a"
+      },
+      "packingEvidence": "docs/thief/art-B2/adv4_thief_B222_m/native-pack.json"
+    },
+    {
+      "key": "thief_f",
+      "name": "盜賊・女",
+      "classPath": "",
+      "gender": "f",
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "f70c5f51aa3f25da8c5f8f6e7c915d8b177957a20fe27da1ce11c1962f06df40",
+      "outputs": {
+        "hero.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "portrait.png": "bbc390143930499dceed60e32dac6db40f350449ffcccc647b8a3302779285eb",
+        "character.png": "79a557cb75588ea6ad4439ac057ea0ecef0f44252a314e6f3ee29309344c7456",
+        "character.webp": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+      },
+      "packingEvidence": "docs/thief/pilot-native-pack.json"
+    },
+    {
+      "key": "thief_m",
+      "name": "盜賊・男",
       "classPath": "",
       "gender": "m",
-      "name": "盜賊",
-      "tier": 0
-    },
-    {
-      "key": "thief:A:m",
-      "baseClass": "thief",
-      "classPath": "A",
-      "gender": "m",
-      "name": "刺客",
-      "tier": 1
-    },
-    {
-      "key": "thief:A:f",
-      "baseClass": "thief",
-      "classPath": "A",
-      "gender": "f",
-      "name": "刺客",
-      "tier": 1
-    },
-    {
-      "key": "thief:B:m",
-      "baseClass": "thief",
-      "classPath": "B",
-      "gender": "m",
-      "name": "夜行者",
-      "tier": 1
-    },
-    {
-      "key": "thief:B:f",
-      "baseClass": "thief",
-      "classPath": "B",
-      "gender": "f",
-      "name": "夜行者",
-      "tier": 1
-    },
-    {
-      "key": "thief:A1:m",
-      "baseClass": "thief",
-      "classPath": "A1",
-      "gender": "m",
-      "name": "影襲刺客",
-      "tier": 2
-    },
-    {
-      "key": "thief:A1:f",
-      "baseClass": "thief",
-      "classPath": "A1",
-      "gender": "f",
-      "name": "影襲刺客",
-      "tier": 2
-    },
-    {
-      "key": "thief:A2:m",
-      "baseClass": "thief",
-      "classPath": "A2",
-      "gender": "m",
-      "name": "毒刃刺客",
-      "tier": 2
-    },
-    {
-      "key": "thief:A2:f",
-      "baseClass": "thief",
-      "classPath": "A2",
-      "gender": "f",
-      "name": "毒刃刺客",
-      "tier": 2
-    },
-    {
-      "key": "thief:B1:m",
-      "baseClass": "thief",
-      "classPath": "B1",
-      "gender": "m",
-      "name": "飛刃遊俠",
-      "tier": 2
-    },
-    {
-      "key": "thief:B1:f",
-      "baseClass": "thief",
-      "classPath": "B1",
-      "gender": "f",
-      "name": "飛刃遊俠",
-      "tier": 2
-    },
-    {
-      "key": "thief:B2:m",
-      "baseClass": "thief",
-      "classPath": "B2",
-      "gender": "m",
-      "name": "幻刃使",
-      "tier": 2
-    },
-    {
-      "key": "thief:B2:f",
-      "baseClass": "thief",
-      "classPath": "B2",
-      "gender": "f",
-      "name": "幻刃使",
-      "tier": 2
-    },
-    {
-      "key": "thief:A11:m",
-      "baseClass": "thief",
-      "classPath": "A11",
-      "gender": "m",
-      "name": "夜幕處刑者",
-      "tier": 3
-    },
-    {
-      "key": "thief:A11:f",
-      "baseClass": "thief",
-      "classPath": "A11",
-      "gender": "f",
-      "name": "夜幕處刑者",
-      "tier": 3
-    },
-    {
-      "key": "thief:A12:m",
-      "baseClass": "thief",
-      "classPath": "A12",
-      "gender": "m",
-      "name": "幽影追獵者",
-      "tier": 3
-    },
-    {
-      "key": "thief:A12:f",
-      "baseClass": "thief",
-      "classPath": "A12",
-      "gender": "f",
-      "name": "幽影追獵者",
-      "tier": 3
-    },
-    {
-      "key": "thief:A21:m",
-      "baseClass": "thief",
-      "classPath": "A21",
-      "gender": "m",
-      "name": "蝕毒煉師",
-      "tier": 3
-    },
-    {
-      "key": "thief:A21:f",
-      "baseClass": "thief",
-      "classPath": "A21",
-      "gender": "f",
-      "name": "蝕毒煉師",
-      "tier": 3
-    },
-    {
-      "key": "thief:A22:m",
-      "baseClass": "thief",
-      "classPath": "A22",
-      "gender": "m",
-      "name": "血棘獵手",
-      "tier": 3
-    },
-    {
-      "key": "thief:A22:f",
-      "baseClass": "thief",
-      "classPath": "A22",
-      "gender": "f",
-      "name": "血棘獵手",
-      "tier": 3
-    },
-    {
-      "key": "thief:B11:m",
-      "baseClass": "thief",
-      "classPath": "B11",
-      "gender": "m",
-      "name": "疾風刃使",
-      "tier": 3
-    },
-    {
-      "key": "thief:B11:f",
-      "baseClass": "thief",
-      "classPath": "B11",
-      "gender": "f",
-      "name": "疾風刃使",
-      "tier": 3
-    },
-    {
-      "key": "thief:B12:m",
-      "baseClass": "thief",
-      "classPath": "B12",
-      "gender": "m",
-      "name": "星刃獵手",
-      "tier": 3
-    },
-    {
-      "key": "thief:B12:f",
-      "baseClass": "thief",
-      "classPath": "B12",
-      "gender": "f",
-      "name": "星刃獵手",
-      "tier": 3
-    },
-    {
-      "key": "thief:B21:m",
-      "baseClass": "thief",
-      "classPath": "B21",
-      "gender": "m",
-      "name": "鏡影舞者",
-      "tier": 3
-    },
-    {
-      "key": "thief:B21:f",
-      "baseClass": "thief",
-      "classPath": "B21",
-      "gender": "f",
-      "name": "鏡影舞者",
-      "tier": 3
-    },
-    {
-      "key": "thief:B22:m",
-      "baseClass": "thief",
-      "classPath": "B22",
-      "gender": "m",
-      "name": "暮光詭術師",
-      "tier": 3
-    },
-    {
-      "key": "thief:B22:f",
-      "baseClass": "thief",
-      "classPath": "B22",
-      "gender": "f",
-      "name": "暮光詭術師",
-      "tier": 3
-    },
-    {
-      "key": "thief:A111:m",
-      "baseClass": "thief",
-      "classPath": "A111",
-      "gender": "m",
-      "name": "冥夜裁決者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A111:f",
-      "baseClass": "thief",
-      "classPath": "A111",
-      "gender": "f",
-      "name": "冥夜裁決者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A112:m",
-      "baseClass": "thief",
-      "classPath": "A112",
-      "gender": "m",
-      "name": "終焉斷刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:A112:f",
-      "baseClass": "thief",
-      "classPath": "A112",
-      "gender": "f",
-      "name": "終焉斷刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:A121:m",
-      "baseClass": "thief",
-      "classPath": "A121",
-      "gender": "m",
-      "name": "虛影行者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A121:f",
-      "baseClass": "thief",
-      "classPath": "A121",
-      "gender": "f",
-      "name": "虛影行者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A122:m",
-      "baseClass": "thief",
-      "classPath": "A122",
-      "gender": "m",
-      "name": "無聲獵魂者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A122:f",
-      "baseClass": "thief",
-      "classPath": "A122",
-      "gender": "f",
-      "name": "無聲獵魂者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A211:m",
-      "baseClass": "thief",
-      "classPath": "A211",
-      "gender": "m",
-      "name": "九首毒刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:A211:f",
-      "baseClass": "thief",
-      "classPath": "A211",
-      "gender": "f",
-      "name": "九首毒刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:A212:m",
-      "baseClass": "thief",
-      "classPath": "A212",
-      "gender": "m",
-      "name": "冥蛇使徒",
-      "tier": 4
-    },
-    {
-      "key": "thief:A212:f",
-      "baseClass": "thief",
-      "classPath": "A212",
-      "gender": "f",
-      "name": "冥蛇使徒",
-      "tier": 4
-    },
-    {
-      "key": "thief:A221:m",
-      "baseClass": "thief",
-      "classPath": "A221",
-      "gender": "m",
-      "name": "血棘君主",
-      "tier": 4
-    },
-    {
-      "key": "thief:A221:f",
-      "baseClass": "thief",
-      "classPath": "A221",
-      "gender": "f",
-      "name": "血棘君主",
-      "tier": 4
-    },
-    {
-      "key": "thief:A222:m",
-      "baseClass": "thief",
-      "classPath": "A222",
-      "gender": "m",
-      "name": "蝕魂收割者",
-      "tier": 4
-    },
-    {
-      "key": "thief:A222:f",
-      "baseClass": "thief",
-      "classPath": "A222",
-      "gender": "f",
-      "name": "蝕魂收割者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B111:m",
-      "baseClass": "thief",
-      "classPath": "B111",
-      "gender": "m",
-      "name": "風暴千刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:B111:f",
-      "baseClass": "thief",
-      "classPath": "B111",
-      "gender": "f",
-      "name": "風暴千刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:B112:m",
-      "baseClass": "thief",
-      "classPath": "B112",
-      "gender": "m",
-      "name": "疾影穿梭者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B112:f",
-      "baseClass": "thief",
-      "classPath": "B112",
-      "gender": "f",
-      "name": "疾影穿梭者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B121:m",
-      "baseClass": "thief",
-      "classPath": "B121",
-      "gender": "m",
-      "name": "星隕刃使",
-      "tier": 4
-    },
-    {
-      "key": "thief:B121:f",
-      "baseClass": "thief",
-      "classPath": "B121",
-      "gender": "f",
-      "name": "星隕刃使",
-      "tier": 4
-    },
-    {
-      "key": "thief:B122:m",
-      "baseClass": "thief",
-      "classPath": "B122",
-      "gender": "m",
-      "name": "星軌追獵者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B122:f",
-      "baseClass": "thief",
-      "classPath": "B122",
-      "gender": "f",
-      "name": "星軌追獵者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B211:m",
-      "baseClass": "thief",
-      "classPath": "B211",
-      "gender": "m",
-      "name": "千面幻刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:B211:f",
-      "baseClass": "thief",
-      "classPath": "B211",
-      "gender": "f",
-      "name": "千面幻刃",
-      "tier": 4
-    },
-    {
-      "key": "thief:B212:m",
-      "baseClass": "thief",
-      "classPath": "B212",
-      "gender": "m",
-      "name": "鏡界行者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B212:f",
-      "baseClass": "thief",
-      "classPath": "B212",
-      "gender": "f",
-      "name": "鏡界行者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B221:m",
-      "baseClass": "thief",
-      "classPath": "B221",
-      "gender": "m",
-      "name": "暮光織影者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B221:f",
-      "baseClass": "thief",
-      "classPath": "B221",
-      "gender": "f",
-      "name": "暮光織影者",
-      "tier": 4
-    },
-    {
-      "key": "thief:B222:m",
-      "baseClass": "thief",
-      "classPath": "B222",
-      "gender": "m",
-      "name": "黑月詭術師",
-      "tier": 4
-    },
-    {
-      "key": "thief:B222:f",
-      "baseClass": "thief",
-      "classPath": "B222",
-      "gender": "f",
-      "name": "黑月詭術師",
-      "tier": 4
+      "nativePacked": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "guardianCategory": "melee",
+      "nativeFrames": 12,
+      "entrySHA256": "cabf9f2d37c16190cd3c8a6c40da39da2aa7be15eb0b8edd2e75e8bf2c9d5a7f",
+      "outputs": {
+        "hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "portrait.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+        "character.png": "81b8ea0df8c1d5f37cb68d34bedf3c984213b9d0c0614eefd1dcf20914fadeca",
+        "character.webp": "12df02ca43cf0a48c1dcb033266e68c9f6b73de4c134a422a1582474e8e2af42"
+      },
+      "packingEvidence": "docs/thief/art-base/thief_m/native-pack.json"
     }
-  ],
-  "existingHeroesUnchanged": 186,
-  "registryVersion": "20261015-thief-pilot-f70c5f51aa3f",
-  "realPlayerEventsVerified": false
+  ]
 }

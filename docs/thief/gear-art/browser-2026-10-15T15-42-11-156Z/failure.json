@@ -1,0 +1,797 @@
+{
+  "error": "TimeoutError: locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-bag-filter=\"weapon\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"\" type=\"button\" aria-pressed=\"false\" data-bag-filter=\"weapon\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    53 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m  - element was detached from the DOM, retrying\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"\" type=\"button\" aria-pressed=\"false\" data-bag-filter=\"weapon\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n",
+  "stack": "locator.click: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-bag-filter=\"weapon\"]')\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"\" type=\"button\" aria-pressed=\"false\" data-bag-filter=\"weapon\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    53 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m       - element is not visible\u001b[22m\n\u001b[2m     - retrying click action\u001b[22m\n\u001b[2m       - waiting 500ms\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m  - element was detached from the DOM, retrying\u001b[22m\n\u001b[2m    - locator resolved to <button class=\"\" type=\"button\" aria-pressed=\"false\" data-bag-filter=\"weapon\">…</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m    - waiting 20ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 100ms\u001b[22m\n\u001b[2m    2 × waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m      - element is not visible\u001b[22m\n\u001b[2m    - retrying click action\u001b[22m\n\u001b[2m      - waiting 500ms\u001b[22m\n\n    at C:\\Users\\User\\Documents\\ChatGPT\\star-journal-thief\\worker\\scripts\\thief-gear-browser.mjs:39:55",
+  "cases": [
+    {
+      "surface": "bag-and-armory",
+      "width": 390,
+      "equipment": 130,
+      "physicalSlots": 11,
+      "correctIconSources": 130,
+      "sources": [
+        {
+          "id": "qa-gear-0",
+          "src": "art/thief-gear-20261015/gear_wpn_laurel_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-1",
+          "src": "art/thief-gear-20261015/gear_helm_laurel_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-2",
+          "src": "art/thief-gear-20261015/gear_arm_laurel_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-3",
+          "src": "art/thief-gear-20261015/gear_gloves_laurel_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-4",
+          "src": "art/thief-gear-20261015/gear_boots_laurel_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-5",
+          "src": "art/v2/gear_belt_laurel.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-6",
+          "src": "art/v2/gear_undershirt_laurel.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-7",
+          "src": "art/v2/gear_earring_laurel.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-8",
+          "src": "art/v2/gear_ring_laurel.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-17",
+          "src": "art/v2/gear_earring_athena.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-18",
+          "src": "art/v2/gear_ring_athena.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-9",
+          "src": "art/thief-gear-20261015/gear_wpn_athena_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-10",
+          "src": "art/thief-gear-20261015/gear_wpn_athena_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-11",
+          "src": "art/thief-gear-20261015/gear_helm_athena_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-12",
+          "src": "art/thief-gear-20261015/gear_arm_athena_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-13",
+          "src": "art/thief-gear-20261015/gear_gloves_athena_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-14",
+          "src": "art/thief-gear-20261015/gear_boots_athena_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-15",
+          "src": "art/v2/gear_belt_athena.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-16",
+          "src": "art/v2/gear_undershirt_athena.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-19",
+          "src": "art/thief-gear-20261015/gear_wpn_sacred_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-20",
+          "src": "art/thief-gear-20261015/gear_wpn_sacred_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-21",
+          "src": "art/thief-gear-20261015/gear_helm_sacred_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-22",
+          "src": "art/thief-gear-20261015/gear_arm_sacred_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-23",
+          "src": "art/thief-gear-20261015/gear_gloves_sacred_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-24",
+          "src": "art/thief-gear-20261015/gear_boots_sacred_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-25",
+          "src": "art/v2/gear_belt_sacred.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-26",
+          "src": "art/v2/gear_undershirt_sacred.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-27",
+          "src": "art/v2/gear_earring_sacred.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-28",
+          "src": "art/v2/gear_ring_sacred.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-29",
+          "src": "art/thief-gear-20261015/gear_wpn_poseidon_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-30",
+          "src": "art/thief-gear-20261015/gear_wpn_poseidon_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-31",
+          "src": "art/thief-gear-20261015/gear_helm_poseidon_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-32",
+          "src": "art/thief-gear-20261015/gear_arm_poseidon_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-33",
+          "src": "art/thief-gear-20261015/gear_gloves_poseidon_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-34",
+          "src": "art/thief-gear-20261015/gear_boots_poseidon_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-35",
+          "src": "art/v2/gear_belt_poseidon.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-36",
+          "src": "art/v2/gear_undershirt_poseidon.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-37",
+          "src": "art/v2/gear_earring_poseidon.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-38",
+          "src": "art/v2/gear_ring_poseidon.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-39",
+          "src": "art/thief-gear-20261015/gear_wpn_labyrinth_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-40",
+          "src": "art/thief-gear-20261015/gear_wpn_labyrinth_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-41",
+          "src": "art/thief-gear-20261015/gear_helm_labyrinth_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-42",
+          "src": "art/thief-gear-20261015/gear_arm_labyrinth_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-43",
+          "src": "art/thief-gear-20261015/gear_gloves_labyrinth_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-44",
+          "src": "art/thief-gear-20261015/gear_boots_labyrinth_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-45",
+          "src": "art/v2/gear_belt_labyrinth.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-46",
+          "src": "art/v2/gear_undershirt_labyrinth.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-47",
+          "src": "art/v2/gear_earring_labyrinth.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-48",
+          "src": "art/v2/gear_ring_labyrinth.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-49",
+          "src": "art/thief-gear-20261015/gear_wpn_forge_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-50",
+          "src": "art/thief-gear-20261015/gear_wpn_forge_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-51",
+          "src": "art/thief-gear-20261015/gear_helm_forge_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-52",
+          "src": "art/thief-gear-20261015/gear_arm_forge_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-53",
+          "src": "art/thief-gear-20261015/gear_gloves_forge_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-54",
+          "src": "art/thief-gear-20261015/gear_boots_forge_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-55",
+          "src": "art/v2/gear_belt_forge.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-56",
+          "src": "art/v2/gear_undershirt_forge.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-57",
+          "src": "art/v2/gear_earring_forge.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-58",
+          "src": "art/v2/gear_ring_forge.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-59",
+          "src": "art/thief-gear-20261015/gear_wpn_styx_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-60",
+          "src": "art/thief-gear-20261015/gear_wpn_styx_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-61",
+          "src": "art/thief-gear-20261015/gear_helm_styx_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-62",
+          "src": "art/thief-gear-20261015/gear_arm_styx_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-63",
+          "src": "art/thief-gear-20261015/gear_gloves_styx_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-64",
+          "src": "art/thief-gear-20261015/gear_boots_styx_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-65",
+          "src": "art/v2/gear_belt_styx.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-66",
+          "src": "art/v2/gear_undershirt_styx.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-67",
+          "src": "art/v2/gear_earring_styx.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-68",
+          "src": "art/v2/gear_ring_styx.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-69",
+          "src": "art/thief-gear-20261015/gear_wpn_oracle_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-70",
+          "src": "art/thief-gear-20261015/gear_wpn_oracle_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-71",
+          "src": "art/thief-gear-20261015/gear_helm_oracle_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-72",
+          "src": "art/thief-gear-20261015/gear_arm_oracle_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-73",
+          "src": "art/thief-gear-20261015/gear_gloves_oracle_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-74",
+          "src": "art/thief-gear-20261015/gear_boots_oracle_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-75",
+          "src": "art/v2/gear_belt_oracle.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-76",
+          "src": "art/v2/gear_undershirt_oracle.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-77",
+          "src": "art/v2/gear_earring_oracle.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-78",
+          "src": "art/v2/gear_ring_oracle.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-79",
+          "src": "art/thief-gear-20261015/gear_wpn_titan_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-80",
+          "src": "art/thief-gear-20261015/gear_wpn_titan_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-81",
+          "src": "art/thief-gear-20261015/gear_helm_titan_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-82",
+          "src": "art/thief-gear-20261015/gear_arm_titan_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-83",
+          "src": "art/thief-gear-20261015/gear_gloves_titan_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-84",
+          "src": "art/thief-gear-20261015/gear_boots_titan_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-85",
+          "src": "art/v2/gear_belt_titan.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-86",
+          "src": "art/v2/gear_undershirt_titan.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-87",
+          "src": "art/v2/gear_earring_titan.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-88",
+          "src": "art/v2/gear_ring_titan.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-89",
+          "src": "art/thief-gear-20261015/gear_wpn_cloudgate_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-90",
+          "src": "art/thief-gear-20261015/gear_wpn_cloudgate_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-91",
+          "src": "art/thief-gear-20261015/gear_helm_cloudgate_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-92",
+          "src": "art/thief-gear-20261015/gear_arm_cloudgate_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-93",
+          "src": "art/thief-gear-20261015/gear_gloves_cloudgate_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-94",
+          "src": "art/thief-gear-20261015/gear_boots_cloudgate_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-95",
+          "src": "art/v2/gear_belt_cloudgate.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-96",
+          "src": "art/v2/gear_undershirt_cloudgate.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-97",
+          "src": "art/v2/gear_earring_cloudgate.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-98",
+          "src": "art/v2/gear_ring_cloudgate.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-99",
+          "src": "art/thief-gear-20261015/gear_wpn_elysium_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-100",
+          "src": "art/thief-gear-20261015/gear_wpn_elysium_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-101",
+          "src": "art/thief-gear-20261015/gear_helm_elysium_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-102",
+          "src": "art/thief-gear-20261015/gear_arm_elysium_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-103",
+          "src": "art/thief-gear-20261015/gear_gloves_elysium_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-104",
+          "src": "art/thief-gear-20261015/gear_boots_elysium_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-105",
+          "src": "art/v2/gear_belt_elysium.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-106",
+          "src": "art/v2/gear_undershirt_elysium.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-107",
+          "src": "art/v2/gear_earring_elysium.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-108",
+          "src": "art/v2/gear_ring_elysium.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-109",
+          "src": "art/thief-gear-20261015/gear_wpn_cosmos_dagger.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-110",
+          "src": "art/thief-gear-20261015/gear_wpn_cosmos_dual_daggers.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-111",
+          "src": "art/thief-gear-20261015/gear_helm_cosmos_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-112",
+          "src": "art/thief-gear-20261015/gear_arm_cosmos_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-113",
+          "src": "art/thief-gear-20261015/gear_gloves_cosmos_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-114",
+          "src": "art/thief-gear-20261015/gear_boots_cosmos_light_leather.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-115",
+          "src": "art/v2/gear_belt_cosmos.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-116",
+          "src": "art/v2/gear_undershirt_cosmos.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-117",
+          "src": "art/v2/gear_earring_cosmos.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-118",
+          "src": "art/v2/gear_ring_cosmos.webp?v=20261011-equipment-2",
+          "width": 256,
+          "height": 256
+        },
+        {
+          "id": "qa-gear-119",
+          "src": "art/thief-gear-20261015/gear_wpn_athena_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-120",
+          "src": "art/thief-gear-20261015/gear_wpn_sacred_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-121",
+          "src": "art/thief-gear-20261015/gear_wpn_poseidon_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-122",
+          "src": "art/thief-gear-20261015/gear_wpn_labyrinth_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-123",
+          "src": "art/thief-gear-20261015/gear_wpn_forge_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-124",
+          "src": "art/thief-gear-20261015/gear_wpn_styx_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-125",
+          "src": "art/thief-gear-20261015/gear_wpn_oracle_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-126",
+          "src": "art/thief-gear-20261015/gear_wpn_titan_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-127",
+          "src": "art/thief-gear-20261015/gear_wpn_cloudgate_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-128",
+          "src": "art/thief-gear-20261015/gear_wpn_elysium_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        },
+        {
+          "id": "qa-gear-129",
+          "src": "art/thief-gear-20261015/gear_wpn_cosmos_throwing_blades.webp",
+          "width": 640,
+          "height": 640
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "badResponses": []
+}

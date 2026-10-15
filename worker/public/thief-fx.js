@@ -5,7 +5,7 @@
  const colors={base:'#d5e8ff',A:'#d7d0ff',B:'#9bdde8',A1:'#c9b7ff',A2:'#91dcad',B1:'#a3e9f1',B2:'#b9a8fa'};
  function profile(name='',path='',{basic=false}={}){
   const route=String(path).slice(0,2),book={破綻標記:'mark',煙幕幻步:'smoke',無聲處刑:'execute',淬毒祕術:'poison',穿心飛刃:'pierce',鏡影反制:'mirror'}[name];
-  return {name,thief:true,route,basic,kind:basic?'dagger':book||(route==='A2'?'poison':route==='B2'?'mirror':route[0]==='B'?'flying':route==='A1'?'execute':'cross'),color:colors[route]||colors.base,power:Math.min(1.25,1+String(path).length*.05)};
+  return {name,thief:true,route,basic,kind:basic?(route[0]==='B'?'pierce':'dagger'):book||(route==='A2'?'poison':route==='B2'?'mirror':route[0]==='B'?'flying':route==='A1'?'execute':'cross'),color:colors[route]||colors.base,power:Math.min(1.25,1+String(path).length*.05)};
  }
  function stroke(g,pts,color,width,alpha=1){g.globalAlpha=alpha;g.strokeStyle=color;g.lineWidth=width;g.lineCap='round';g.lineJoin='round';g.beginPath();pts.forEach((p,i)=>i?g.lineTo(p.x,p.y):g.moveTo(p.x,p.y));g.stroke();}
  function blade(g,at,angle,size,color,alpha){

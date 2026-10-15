@@ -1,0 +1,12 @@
+Use case: stylized-concept.
+Create a 1536x1024 transparent PNG spritesheet. EXACT SIX SMALL sprites in3 columns2 rows, one character per512x512cell. This is CRITICAL TECHNICAL LAYOUT: each COMPLETE sprite INCLUDING ALL dagger tips, hair and magical light must be no wider than320px and no taller than350px. Place at cell center x256, top y90, footbaseline y435. FULLY EMPTY ALPHA VERTICAL GUTTERS at x0-80,x432-592,x944-1104,x1456-1536 across whole canvas; horizontal empty band y460-580. Each figure has90pixels overhead and75pixels below. Treat these gutters as forbidden regions for ALL effects. Use tightly folded elbows and compact stabbing, NOT wide lunging. NO EXTENDED STRAIGHT ARM out to next cell.
+Reference image1 defines face/clothing of the adult human female mirror-blade thief: brunette curls tied back, indigo violet light leather armor, bronze Greek meander trim, small silver mirror clasp, soft boots, two short daggers. Reference image2 shows six earlier animation poses; create NEXT six different poses, same figure scale or SMALLER. Faces RIGHT all six, full body, exactly TWO physical arms and TWO clear gripping hands.
+Frames6-11 chronological:
+6 compact close-range impact: lead elbow partly bent, dagger only at chest-distance in front, off-hand at waist; a TINY violet star-shaped shard flash at dagger tip, max40px;
+7 hip pivot close double-blade cut, both elbows stay near body, short arc only30px beyondblade;
+8 downward dagger cut with bent knees and both hands visible close to chest/waist, tiny violet edge;
+9 recoil with front foot pulling back, two knives retract, three tiny fading shards;
+10 upright recovery, knives angled diagonally low close to hips, faint blue edge;
+11 fresh ready stance with different knee/shoulder angle, two knives near waist, no large aura.
+Detailed semi-real Greek fantasy game illustration, matching reference costume and normal human ears. Blue-violet mirror magic is small decorative blade-edge accents ONLY, no fog/haze/bloom clouds or long trails. NO HUGE POSES. Make the characters visually SMALL within each cell, generous empty space. Keep all anatomy, boots, knives inside the safe regions.
+Actual transparent alpha backdrop, no floor, no cast shadow, no scene, no text/numbers/borders/grid/checkerboard/logo. No ghost bodies, detached hands, third arms, angel, wings, elf ears, staff, sword.

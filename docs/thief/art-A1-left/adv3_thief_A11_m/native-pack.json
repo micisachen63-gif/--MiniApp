@@ -1,0 +1,384 @@
+{
+  "status": "native-packing-pass",
+  "key": "adv3_thief_A11_m",
+  "frames": [
+    {
+      "index": 0,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "translation": [
+        60,
+        99
+      ],
+      "alphaBounds": [
+        132,
+        137,
+        483,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        190,
+        367
+      ],
+      "rgbaSHA256": "f18c3373d1cee0e7332d1a3c3795e14b2dc940676d32ad1823212e3f2c7601ca",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 1,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "translation": [
+        42,
+        102
+      ],
+      "alphaBounds": [
+        123,
+        166,
+        506,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        183,
+        382
+      ],
+      "rgbaSHA256": "4aec822d668f3a9633285121fdd9def803f4dd82d62d6e24b4677de91d4d9b6d",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 2,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "translation": [
+        64,
+        98
+      ],
+      "alphaBounds": [
+        195,
+        157,
+        518,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        301,
+        248
+      ],
+      "rgbaSHA256": "827c7989a49f731c2fe3ce280ace69d544f91730e24067a9a10abec1e775a7f0",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 3,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        0,
+        512,
+        516,
+        1024
+      ],
+      "translation": [
+        40,
+        130
+      ],
+      "alphaBounds": [
+        108,
+        166,
+        553,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        457,
+        259
+      ],
+      "rgbaSHA256": "00167daa0f174d285c3593f33b795942f934564455da0a28e480ee4e6b2c85e3",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 4,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        516,
+        512,
+        1041,
+        1024
+      ],
+      "translation": [
+        46,
+        126
+      ],
+      "alphaBounds": [
+        94,
+        171,
+        569,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        471,
+        268
+      ],
+      "rgbaSHA256": "b7c0506c77e5954e4293b88ba588ebe50e25a3c80ba105e285412b48352c7188",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 5,
+      "source": "attack-0-5.png",
+      "sourceRect": [
+        1041,
+        512,
+        1536,
+        1024
+      ],
+      "translation": [
+        81,
+        128
+      ],
+      "alphaBounds": [
+        159,
+        166,
+        540,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        388,
+        305
+      ],
+      "rgbaSHA256": "50aa3db93f703e5611954fd7e309bcc9d9060455c902aa1feff0cf3c1a0afb75",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 6,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        0,
+        0,
+        506,
+        509
+      ],
+      "translation": [
+        55,
+        99
+      ],
+      "alphaBounds": [
+        119,
+        123,
+        484,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        270,
+        226
+      ],
+      "rgbaSHA256": "d45400d8e483c6446ce24137ba10d6f537195d819f214527b168fef396358b66",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 7,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        506,
+        0,
+        1113,
+        509
+      ],
+      "translation": [
+        15,
+        99
+      ],
+      "alphaBounds": [
+        19,
+        174,
+        620,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 19,
+      "marginExceptionReason": "Root-approved 2026-10-15: original native alpha width is 601px, fully preserved in 640px cell with left19/right20px transparent margins. This preserves the authored proportions and complete blade; no crop/resizing. Named exception only for this identity/frame.",
+      "castAnchorPx": [
+        508,
+        338
+      ],
+      "rgbaSHA256": "17c459a4f44f216cc78ca8314c2aad1c3a21fae5af1a65e69ea2551f7c7c70b9",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 8,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        1113,
+        0,
+        1536,
+        509
+      ],
+      "translation": [
+        153,
+        112
+      ],
+      "alphaBounds": [
+        173,
+        149,
+        551,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        423,
+        257
+      ],
+      "rgbaSHA256": "de2dd5be75edd0baade5db30db0d354843616a27f3328bd31621c9872aaca401",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 9,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        0,
+        509,
+        512,
+        1024
+      ],
+      "translation": [
+        55,
+        115
+      ],
+      "alphaBounds": [
+        124,
+        122,
+        502,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        419,
+        323
+      ],
+      "rgbaSHA256": "80f981e84555edba3ced199e08ed3e5ca74882777acc3425bc0aa806316299e2",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 10,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        512,
+        509,
+        1024,
+        1024
+      ],
+      "translation": [
+        42,
+        117
+      ],
+      "alphaBounds": [
+        159,
+        124,
+        514,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        441,
+        387
+      ],
+      "rgbaSHA256": "59c350cce67d39941123e94888c6033b56a6aa95517ce5166ddc79cee1ea2750",
+      "nativePixelsPreserved": true
+    },
+    {
+      "index": 11,
+      "source": "attack-6-11.png",
+      "sourceRect": [
+        1024,
+        509,
+        1536,
+        1024
+      ],
+      "translation": [
+        69,
+        117
+      ],
+      "alphaBounds": [
+        133,
+        121,
+        504,
+        600
+      ],
+      "footBaseline": 600,
+      "minPackedMarginPx": 20,
+      "marginExceptionReason": null,
+      "castAnchorPx": [
+        425,
+        372
+      ],
+      "rgbaSHA256": "5cbeaed1f0ac6ab437a87d81c75224cc4671ff4412af88a4e4fd687e8bd3d0ac",
+      "nativePixelsPreserved": true
+    }
+  ],
+  "distinctFrames": 12,
+  "cellSize": 640,
+  "columns": 4,
+  "rows": 3,
+  "nativePixelsPreserved": true,
+  "noUpscaling": true,
+  "noBackgroundEditing": true,
+  "heroBounds": [
+    36,
+    16,
+    1010,
+    1517
+  ],
+  "heroDimensions": [
+    1024,
+    1536
+  ],
+  "sources": {
+    "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+    "attack-0-5.png": "a0da990dfc850a331404e1e7fecaaa841a5981cb6ab53e7e6a55b15be28b2852",
+    "attack-6-11.png": "56563d309204f5f7a1ea1324d51df445544cd3fcfc2ecc986c5bbce91762b57d"
+  },
+  "outputs": {
+    "hero.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+    "portrait.png": "12bd86f44aa99f55d2cc92608c01056d6d510be2d5e97a71c2ad547a59817a15",
+    "character.png": "46dde975f093f3ba793a76313041abd171340420aff11c34d1780a7feefe2dd9",
+    "character.webp": "8142ac0c8a7da8e62f37208aed19fef96bbe8e9e3241c3335ab1dc91748b487f"
+  },
+  "visualAccepted": false,
+  "runtimeAccepted": false
+}

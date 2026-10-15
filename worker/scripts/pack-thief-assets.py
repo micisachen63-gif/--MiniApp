@@ -59,7 +59,11 @@ for index, spec in enumerate(layout['frames']):
     assert box and box[0] > 0 and box[1] > 0 and box[2] < crop.width and box[3] < crop.height, (index, 'Source clipping', box)
     dx, dy = 320 - (spec['bodyCenterX'] - rect[0]), 600 - box[3]
     assert all(isinstance(v, int) for v in [dx, dy])
-    assert dx + box[0] >= 20 and dx + box[2] <= 620 and dy + box[1] >= 20, (index, 'Packed margin', box)
+    min_margin = spec.get('minPackedMarginPx', 20)
+    if min_margin != 20:
+        assert opts.key == 'adv3_thief_A11_m' and min_margin == 19 and box[2] - box[0] == 601
+        assert spec.get('marginExceptionReason'), 'Document the single 601px native-width exception'
+    assert dx + box[0] >= min_margin and dx + box[2] <= 640 - min_margin and dy + box[1] >= 20, (index, 'Packed margin', box)
     frame = Image.new('RGBA', (640, 640), (0, 0, 0, 0))
     frame.paste(crop, (dx, dy))
     assert frame.crop((dx + box[0], dy + box[1], dx + box[2], dy + box[3])).tobytes() == crop.crop(box).tobytes()
@@ -72,6 +76,7 @@ for index, spec in enumerate(layout['frames']):
     atlas.paste(frame, (index % 4 * 640, index // 4 * 640))
     frames.append({'index': index, 'source': name, 'sourceRect': rect, 'translation': [dx, dy],
                    'alphaBounds': alpha_bounds(frame), 'footBaseline': alpha_bounds(frame)[3],
+                   'minPackedMarginPx': min_margin, 'marginExceptionReason': spec.get('marginExceptionReason'),
                    'castAnchorPx': anchor, 'rgbaSHA256': rgba_sha, 'nativePixelsPreserved': True})
 hero = Image.open(source_dir / 'hero.png').convert('RGBA')
 assert hero.getchannel('A').getextrema()[0] == 0 and hero.width >= 768 and hero.height >= 1024
@@ -101,8 +106,8 @@ entry = {'key': opts.key, 'name': opts.name, 'baseClass': 'thief', 'classPath': 
                        'castAnchorsPx': anchors, 'castAnchorRole': 'active-blade-hand',
                        'castAnchorMethod': 'Manual source coordinates with exact integer pack translation',
                        'nativePixelsPreserved': True, 'authoredEffects': True, 'preservePlacement': True},
-         'normalFx': {'renderer': 'thief-native-canvas', 'kind': 'dagger', 'durationMs': 360},
-         'skillFx': {'renderer': 'thief-native-canvas', 'kind': layout.get('skillKind', 'cross'), 'durationMs': 560},
+         'normalFx': {'renderer': 'thief-native-canvas', 'kind': 'pierce' if opts.class_path.startswith('B') else 'dagger', 'durationMs': 360},
+         'skillFx': {'renderer': 'thief-native-canvas', 'kind': layout.get('skillKind', 'poison' if opts.class_path.startswith('A2') else 'mirror' if opts.class_path.startswith('B2') else 'flying' if opts.class_path.startswith('B') else 'execute' if opts.class_path.startswith('A1') else 'cross'), 'durationMs': 560},
          'guardianCategory': 'melee', 'status': 'native-packed-review-pending', 'visualAccepted': False,
          'actualEventVerified': False, 'provenance': {'generator': 'built-in image_gen',
          'sourceSHA256': {name: sha(source_dir / name) for name in sources}, 'packingEvidence': str((qa_dir / 'native-pack.json').relative_to(ROOT)).replace('\\', '/')}}

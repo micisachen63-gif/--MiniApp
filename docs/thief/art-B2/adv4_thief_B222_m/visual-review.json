@@ -1,0 +1,53 @@
+{
+  "key": "adv4_thief_B222_m",
+  "authorVisualReview": "pass",
+  "rootVisualReview": "pending",
+  "runtimeActualEventVerified": false,
+  "checks": {
+    "sameGreekSemirealHumanStyle": true,
+    "twoArmsTwoGrippingHandsTwoShortBlades": true,
+    "completeHeadFeetWeaponTips": true,
+    "noElfEarsStaffWingsOrGhostBody": true,
+    "smallMirrorMagicAuthoredIntoSource": true,
+    "twelveOriginalDifferentPosesNotCopies": true,
+    "sourceGutterManuallyChecked": true,
+    "neutralHeadFeetBodyBoundsManuallyMarked": true,
+    "portraitAndAttackHeightUsesMeasuredRatio": true,
+    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
+  },
+  "notes": "黑皮革紫翻領、銀色黑月扣及小型月牙光點。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "neutralBodyBoundsPx": [
+    141,
+    150,
+    526,
+    600
+  ],
+  "heightScale": 1.3527777777777779,
+  "prompts": {
+    "hero": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_m/hero-prompt.txt",
+      "SHA256": "fd0b223f584fecf0ff358f4497ba218cc06696a69a5ccc8293a8863606c01d49"
+    },
+    "attack-0-5": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_m/attack-0-5-prompt.txt",
+      "SHA256": "9b3265b9104022a4d6813e46266d6edbf682fd4b7e0c5f382ca0e58d0b4021cc"
+    },
+    "attack-6-11": {
+      "file": "docs/thief/art-B2/adv4_thief_B222_m/attack-6-11-prompt.txt",
+      "SHA256": "3d3caa420434dcdf78764eefd2bf164d562dfa74a32f3309e1d285b49e6502c3"
+    }
+  },
+  "sourceSHA256": {
+    "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+    "attack-0-5.png": "8beaccae5f2b4f31285e33c1514ab17a7c0cc66556e4fb41551a9be9e417ad2a",
+    "attack-6-11.png": "49466f4a608ead6d140fbe31fa12d7e7ca7d26ab638ee549fd906dee3b5a0e68"
+  },
+  "rejectedSources": [
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv4_thief_B222_m/attack-0-5-rejected-row-overlap.png",
+      "SHA256": "90a3cb056b03166bae71f3b8ee8b6f2397dc67b00a59e7ee5f0d37c7b20c08ed",
+      "reason": "row-overlap"
+    }
+  ],
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。"
+}

@@ -1,4 +1,5 @@
-export const SPECIAL_SKILLS = [
+import {withThiefSkills,skillBookItems} from './thief-skill-catalog.js';
+export const LEGACY_SPECIAL_SKILLS = [
   {
     "id": "skill_01_1",
     "eligibleJob": "狂戰士",
@@ -702,4 +703,5 @@ export const SPECIAL_SKILLS = [
     "rarity": "神話"
   }
 ];
-export const BOOK_ITEMS=Object.fromEntries(SPECIAL_SKILLS.map(s=>[`book_${s.id}`,{name:`${s.bookType} · ${s.name}`,emoji:s.bookType==='精靈水晶'?'💎':'📖',kind:'skill_book',desc:`${s.eligibleJob} Lv.${s.level}｜${s.damage}｜${s.effect}`,skillId:s.id}]));
+export const SPECIAL_SKILLS=withThiefSkills(LEGACY_SPECIAL_SKILLS);
+export const BOOK_ITEMS=skillBookItems(SPECIAL_SKILLS);

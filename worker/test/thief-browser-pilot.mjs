@@ -4,12 +4,12 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {createRequire} from 'node:module';
-import {createThiefPreview} from '../scripts/thief-preview.mjs';
+import {createThiefPreview,thiefQaIdentity,thiefQaOutput,thiefQaEvidence} from '../scripts/thief-preview.mjs';
 const require=createRequire(import.meta.url);
 const {chromium}=require('C:/Users/User/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright');
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
-const output=path.join(root,'docs/thief/pilot-ui');fs.mkdirSync(output,{recursive:true});
-const preview=await createThiefPreview(),browser=await chromium.launch({headless:true,channel:'chrome'});
+const identity=thiefQaIdentity(),output=thiefQaOutput();
+const preview=await createThiefPreview({identity}),browser=await chromium.launch({headless:true,channel:'chrome'});
 const page=await browser.newPage();page.setDefaultTimeout(12000);
 const errors=[],badResponses=[],cases=[],actions=[];
 page.on('pageerror',error=>errors.push(error.message));
@@ -23,9 +23,9 @@ await page.route('**/*',async route=>{
  return route.continue();
 });
 async function measure(scope,selector,surface,width,screenshotSelector){
- const locator=scope.locator(selector).first();await locator.waitFor({state:'visible'});await locator.scrollIntoViewIfNeeded();
+ const locator=scope.locator(selector).filter({visible:true}).first();await locator.waitFor({state:'visible'});await locator.scrollIntoViewIfNeeded();
  await locator.evaluate(image=>image.decode());
- await scope.waitForFunction(selector=>{const image=document.querySelector(selector);return image?.naturalWidth>0&&image.classList.contains('hero-size-normalized');},selector,{timeout:15000});
+ await scope.waitForFunction(selector=>Array.from(document.querySelectorAll(selector)).some(image=>image.getClientRects().length&&image.naturalWidth>0&&image.classList.contains('hero-size-normalized')),selector,{timeout:15000});
  const result=await locator.evaluate(image=>{
   const r=image.getBoundingClientRect(),parent=image.parentElement.getBoundingClientRect(),canvas=document.createElement('canvas');
   canvas.width=image.naturalWidth;canvas.height=image.naturalHeight;
@@ -36,21 +36,23 @@ async function measure(scope,selector,surface,width,screenshotSelector){
   const visible={left:absolute.left-parent.left,top:absolute.top-parent.top,right:absolute.right-parent.left,bottom:absolute.bottom-parent.top};
   return {src:image.getAttribute('src'),native:{width:canvas.width,height:canvas.height,alphaBounds:{left,top,right:right+1,bottom:bottom+1},transparentFraction:transparent/(canvas.width*canvas.height)},parent:{width:parent.width,height:parent.height},visible,absolute,normalized:true,clipped:visible.left<-.8||visible.top<-.8||visible.right>parent.width+.8||visible.bottom>parent.height+.8,overflow:document.documentElement.scrollWidth>innerWidth+1};
  });
- const registry=JSON.parse(fs.readFileSync(path.join(root,'worker/public/hero-art-registry.json'),'utf8')).heroes.thief_f;
+ const registry=identity.entry;
  assert.ok([registry.hero,registry.portrait,'/'+registry.hero,'/'+registry.portrait].includes(result.src),'wrong thief image '+surface);
  assert.ok(!result.clipped,surface+' alpha clips '+JSON.stringify(result));assert.ok(!result.overflow,surface+' horizontal overflow');assert.ok(result.native.transparentFraction>.1,'opaque background');
- const file=`${width}-${surface}.png`;await scope.locator(screenshotSelector||selector).first().screenshot({path:path.join(output,file)});
- const record={surface,width,screenshot:'docs/thief/pilot-ui/'+file,...result};cases.push(record);return record;
+ const file=`${width}-${surface}.png`;
+ const shot=surface==='lineage-tree'?locator.locator('xpath=ancestor::*[contains(concat(" ",normalize-space(@class)," ")," elf-tier ")][1]'):scope.locator(screenshotSelector||selector).filter({visible:true}).first();
+ await shot.screenshot({path:path.join(output,file)});
+ const record={surface,width,screenshot:path.relative(root,path.join(output,file)).replaceAll('\\','/'),...result};cases.push(record);return record;
 }
 try{
  for(const width of [320,390,768,1280]){
   await page.setViewportSize({width,height:1050});await page.goto(preview.origin+'/?devTg=811');
-  await page.locator('[data-select="811"]').click();await page.waitForFunction(()=>window.__ThiefQA?.state.me?.character.baseClass==='thief');
+  await page.locator('[data-select="811"]').click();await page.waitForFunction(expected=>{const c=window.__ThiefQA?.state.me?.character;return c?.baseClass==='thief'&&c.classPath===expected.classPath&&c.gender===expected.gender&&c.level===expected.level;},identity);
   await measure(page,'#pt','home',width,'.my-vitals');
   await page.locator('[data-tab="class"]').click();await page.locator('[data-panel="destiny"]').click();
   await measure(page,'#cpt','lineage-current',width,'.lc-class-screen');
   await page.locator('[data-panel="lineage"]').click();
-  await measure(page,'[data-lineage-key="thief_f"]','lineage-tree',width,'.thief-ancestry .elf-tier');
+  await measure(page,`[data-lineage-key="${identity.key}"]`,'lineage-tree',width,'.thief-ancestry .elf-tier');
   await page.locator('[data-tab="bag"]').click();
   const own=await measure(page,'.hero-armory .fig>img','own-armory',width,'.hero-armory');
   await page.waitForFunction(()=>document.querySelector('.hero-armory .hero-guardian-companion img')?.naturalWidth>0);
@@ -63,21 +65,18 @@ try{
   assert.ok(angel.summoned&&angel.guardianOutsideFigure&&angel.inside);assert.ok(angel.headGap>=5,'angel gap');own.angel=angel;
   await page.locator('[data-tab="trade"]').click();await page.locator('[data-soc="hall"]').click();
   await measure(page,'[data-hall-hero="812"] img','hero-hall',width,'.hero-hall');
-  await page.locator('[data-hall-hero="812"]').click();await measure(page,'.hall-loadout .fig>img','other-armory',width,'.hall-loadout');console.log('closing hall '+width);await page.locator('[data-hall-close]').evaluate(button=>button.click());console.log('closed hall '+width);
-  console.log('home before iframe '+width);await page.locator('[data-tab="home"]').click({force:true});
-  console.log('opening expedition '+width);
+  await page.locator('[data-hall-hero="812"]').click();await measure(page,'.hall-loadout .fig>img','other-armory',width,'.hall-loadout');await page.locator('[data-hall-close]').evaluate(button=>button.click());
+  await page.locator('[data-tab="home"]').click({force:true});
   await page.evaluate(()=>{window.Telegram={WebApp:{initData:'thief-local-ui-fixture'}};RpgExpeditionOpen('skills');});
-  console.log('opened expedition '+width);
-  const frame=page.frameLocator('#expedition-overlay iframe');
   const inner=await page.locator('#expedition-overlay iframe').elementHandle();const content=await inner.contentFrame();
   await measure(content,'.expedition-hero-portrait img','expedition-card',width,'#main>.hero');
   await page.locator('#expedition-overlay>header button').click();
   console.log(JSON.stringify({width,surfaces:'passed',angelGap:angel.headGap}));
  }
- assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(badResponses.length,0,JSON.stringify(badResponses));
+ assert.equal(cases.length,28,'All seven surfaces at four widths are required');assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(badResponses.length,0,JSON.stringify(badResponses));
  const sources=Object.fromEntries([...preview.served].filter(([file])=>/\.(js|css|html|json|png|webp)$/.test(file)).map(([file,bytes])=>[path.relative(root,file).replaceAll('\\','/'),crypto.createHash('sha256').update(bytes).digest('hex')]));
  sources['worker/public/app.js']=crypto.createHash('sha256').update(fs.readFileSync(path.join(root,'worker/public/app.js'))).digest('hex');
- fs.writeFileSync(path.join(output,'verified.json'),JSON.stringify({passed:true,actualAppBootstrap:true,isolatedInMemoryFixture:true,productionWrites:false,productReleaseReady:false,mockMetaOverride:true,identity:'thief_f',widths:[320,390,768,1280],cases,actions,errors,badResponses,sourceSHA256:sources,apiRequests:preview.requests},null,2));
+ fs.writeFileSync(path.join(output,'verified.json'),JSON.stringify({passed:true,actualAppBootstrap:true,isolatedInMemoryFixture:true,productionWrites:false,productReleaseReady:false,mockMetaOverride:true,identity:identity.key,fixture:thiefQaEvidence(identity),widths:[320,390,768,1280],cases,actions,errors,badResponses,sourceSHA256:sources,apiRequests:preview.requests},null,2));
  console.log(JSON.stringify({passed:true,cases:cases.length}));
-}catch(error){await page.screenshot({path:path.join(output,'failure.png')}).catch(()=>{});fs.writeFileSync(path.join(output,'failure.json'),JSON.stringify({error:String(error),stack:error.stack,cases,errors,badResponses,body:await page.locator('body').innerText().catch(()=>'' ),apiRequests:preview.requests},null,2));throw error;}
+}catch(error){await page.screenshot({path:path.join(output,'failure.png')}).catch(()=>{});fs.writeFileSync(path.join(output,'failure.json'),JSON.stringify({identity:identity.key,fixture:thiefQaEvidence(identity),error:String(error),stack:error.stack,cases,errors,badResponses,body:await page.locator('body').innerText().catch(()=>'' ),apiRequests:preview.requests},null,2));throw error;}
 finally{await browser.close();await preview.close();}

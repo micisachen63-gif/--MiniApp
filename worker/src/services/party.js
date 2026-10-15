@@ -9,6 +9,7 @@ import { GameError } from '../game/classes.js';
 import { specialState,saveSpecial,SKILL_MAP,eligible,validateCast,castSpecial,combatActor,performThiefNativeStrikes,periodic,receiveDamage,damageEnemy,valueOf,autoPartyAction } from '../game/special.js';
 import {spendMana,restoreOnAction} from '../game/combat-passives.js';
 import { SPECIAL_SKILLS } from '../game/special-data.js';
+import {dungeonSkillPool} from '../game/thief-skill-catalog.js';
 import { taipeiDay } from '../game/time.js';
 export const DUNGEONS=[
  {id:'pillar',name:'百柱遺跡',level:30,map:2,skillLevels:[30]},
@@ -145,7 +146,7 @@ export async function reward(env,tg,b,now){
   if(p.state.trial){const key=`trial_${p.state.trial}`;if(c.level>=p.state.trial*30&&c.class_path.length===p.state.trial-1){const count=await db.prepare('SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item=?').bind(tg,key).first();if(!count?.quantity)reward.items[key]=1;}}
   else if(p.kind==='tower'){const x=specialState(c);x.towerBest=Math.max(x.towerBest,p.state.floor);reward.items.tower_fragment=10;stmts.push(db.prepare('UPDATE rpg_characters SET special_json=?,rev=rev+1 WHERE tg_id=? AND rev=?').bind(JSON.stringify(x),tg,c.rev),guardStmt(db));}
   else{
-    reward.items.research_fragment=8;const d=DUNGEONS.find(d=>d.id===p.state.dungeonId);const pool=SPECIAL_SKILLS.filter(s=>d.skillLevels.includes(s.level));const rng=crypto.getRandomValues(new Uint32Array(2));if(rng[0]/2**32<guardianChance(.35,p.state.actors.find(a=>a.id===tg)))reward.items[`book_${pool[rng[1]%pool.length].id}`]=1;
+    reward.items.research_fragment=8;const d=DUNGEONS.find(d=>d.id===p.state.dungeonId);const pool=dungeonSkillPool(SPECIAL_SKILLS,d.skillLevels,c);const rng=crypto.getRandomValues(new Uint32Array(2));if(pool.length&&rng[0]/2**32<guardianChance(.35,p.state.actors.find(a=>a.id===tg)))reward.items[`book_${pool[rng[1]%pool.length].id}`]=1;
   }
   for(const [item,qty] of Object.entries(reward.items))stmts.push(invDeltaStmt(db,tg,item,qty));
   if(p.kind!=='tower')stmts.push(db.prepare('UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=? AND rev=?').bind(tg,c.rev),guardStmt(db));

@@ -1,0 +1,71 @@
+{
+  "key": "adv3_thief_B21_m",
+  "authorVisualReview": "pass",
+  "rootVisualReview": "pass",
+  "runtimeActualEventVerified": false,
+  "checks": {
+    "sameGreekSemirealHumanStyle": true,
+    "twoArmsTwoGrippingHandsTwoShortBlades": true,
+    "completeHeadFeetWeaponTips": true,
+    "noElfEarsStaffWingsOrGhostBody": true,
+    "smallMirrorMagicAuthoredIntoSource": true,
+    "twelveOriginalDifferentPosesNotCopies": true,
+    "sourceGutterManuallyChecked": true,
+    "neutralHeadFeetBodyBoundsManuallyMarked": true,
+    "portraitAndAttackHeightUsesMeasuredRatio": true,
+    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
+  },
+  "notes": "銀色鏡面鑲片、紫藍短披巾，延續輕甲及雙短刃。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "neutralBodyBoundsPx": [
+    154,
+    152,
+    508,
+    600
+  ],
+  "heightScale": 1.38671875,
+  "prompts": {
+    "hero": {
+      "file": "docs/thief/art-B2/adv3_thief_B21_m/hero-prompt.txt",
+      "SHA256": "faddd8333258ede6198be5ffe2e3c91c10b31142b6e7e8e2ebc300bf03bdf723"
+    },
+    "attack-0-5": {
+      "file": "docs/thief/art-B2/adv3_thief_B21_m/attack-0-5-prompt.txt",
+      "SHA256": "9b6338981d0f25189e02a718d9ddfe19da6f5650f0b87e048e98786ec01422af"
+    },
+    "attack-6-11": {
+      "file": "docs/thief/art-B2/adv3_thief_B21_m/attack-6-11-prompt.txt",
+      "SHA256": "6119f04d8bbf129b93559c01398759d1a899ddaf8c98cf223bd510f9e683e0ff"
+    }
+  },
+  "sourceSHA256": {
+    "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+    "attack-0-5.png": "62349ea184cf4c9ab5b2d8d35f50ca0ee5bb33ac06ae961f0c0b52c2f0996247",
+    "attack-6-11.png": "f13075c641d33d6c65c45b6864dd100242272d3f28dc2ba6e1a1080e8ed04747"
+  },
+  "rejectedSources": [
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/attack-0-5-rejected-crowding.png",
+      "SHA256": "97b657b93f2230a05bfc53a9f50b18382b707e635edb4485c07fc4032213a9fb",
+      "reason": "crowding"
+    },
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/attack-6-11-rejected-costume.png",
+      "SHA256": "23de7c3434ec7f123659a0fcc566cde0d26c0579939909246326bdfa090ccb18",
+      "reason": "costume"
+    },
+    {
+      "file": "worker/art-production/thief-20261015/B2/adv3_thief_B21_m/attack-6-11-rejected-row-gutter.png",
+      "SHA256": "4e7146514b3912f7c1e8cb922a4a2c3d1f62bf057e8552b6e0c8df50a9691ec9",
+      "reason": "row-gutter"
+    }
+  ],
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。",
+  "rootReviewedEvidence": [
+    "root-portrait-review-1.jpg",
+    "root-portrait-review-2.jpg",
+    "root-portrait-review-3.jpg",
+    "root-portrait-review-4.jpg",
+    "qa-light.jpg"
+  ],
+  "rootNotes": "原畫、十二動作淺底逐身份目視，希臘半寫實人類比例、完整刀尖與頭腳、魔法碎片與短披風一致。普通攻擊與技能執行仍待實際matrix。"
+}

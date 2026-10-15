@@ -5,6 +5,8 @@
   "tables": 42,
   "statements": 147050,
   "largestStatementBytes": 21446,
+  "restoreOnlyChunks": 13,
+  "chunkedOfflineRestoreAlsoByteEqual": true,
   "allTablesCreatedBeforeData": true,
   "parentDataBeforeChildren": true,
   "triggersAfterData": true,

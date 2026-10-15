@@ -1,0 +1,35 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv4_thief_A121_m",
+  "reviewer": "thief_skills manual full hero and both six-pose sources plus packed checker inspection",
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "checks": {
+    "sameA1FaceIdentity": true,
+    "independentHigherTierCostume": true,
+    "twelveDifferentPoses": true,
+    "exactlyTwoHeldDaggers": true,
+    "noExtraHandsOrLimbs": true,
+    "fullKnifeTipsAndFeet": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "manualNeutralBodyBounds": true
+  },
+  "candidateNotes": "A121 V1 portrait too close to mother silhouette rejected; V2 withoutcloak/hood withsilvergrey narrowtabard selected. All 12 sources and checker manually inspected.",
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "sourceSHA256": {
+    "hero.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+    "attack-0-5.png": "a17822492d0179f27c469fcaf7df66f72b5e4748f3175b89d94ca68ac4020d49",
+    "attack-6-11.png": "9dcc9c5b91c06643241f10b726fba9b95442cb7100fcbc17f5774d4d1eb95400"
+  },
+  "outputSHA256": {
+    "hero.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+    "portrait.png": "2fccff4d2d29baf280ec1bc34cbd4a548fa5e117ba37f2e4cc745db6c1f4f6b3",
+    "character.png": "6a5abd4f361c6260b684b4460614807617971b3a41e462755220113b1d79c4d1",
+    "character.webp": "0fd4a8b1539c0f63f2b7958f00ceae08bc23aa051dad8741cf4c1713338a1f96"
+  },
+  "scope": "Manual visual acceptance only; runtime UI/animation acceptance remains pending root matrix"
+}

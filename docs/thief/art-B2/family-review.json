@@ -1,0 +1,342 @@
+{
+  "family": "B2",
+  "identities": 14,
+  "authoredSources": 42,
+  "distinctNativeAttackFrames": 168,
+  "status": "native-art-complete-awaiting-root-runtime-review",
+  "releaseReady": false,
+  "productionGateChanged": false,
+  "sharedRegistryChanged": false,
+  "sourceResampling": false,
+  "alphaPainting": false,
+  "heroOrAnatomyRepairByCode": false,
+  "nativeSourcePixelsPreserved": true,
+  "pngWebpLosslessEquality": true,
+  "allGuardianCategories": "melee",
+  "allNormalFx": "pierce",
+  "allUseAsIdle": false,
+  "entries": [
+    {
+      "key": "adv2_thief_B2_f",
+      "name": "幻刃使",
+      "classPath": "B2",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv2_thief_B2_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "attack-0-5.png": "ef946758967b6e84db56e01a9e638ae2c224084946f01004e7837472f5183b06",
+        "attack-6-11.png": "eca52f97872bc32eb281189bc3fc589f332ca750927ffa98a1d6f5d06ffcf70c"
+      },
+      "outputSHA256": {
+        "hero.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "portrait.png": "1cf4d668b47c83717d59a24bf31393ff09c86091d163c64c17e9a011fc9642f6",
+        "character.png": "ef2e211062f2cee2de61188090ac22f98201159a0811e6fed0f5f8c3aa225100",
+        "character.webp": "d26d04c09229a3d1f4cdfdbc3c497b87e35f737dcc51157e00611e4494c1875e"
+      },
+      "layoutSHA256": "e636c17906ead2823d1edd3e92d0559ffceaa20063e25697bd0793d06e8e9bc2",
+      "heightScale": 1.6036324786324787,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv2_thief_B2_m",
+      "name": "幻刃使",
+      "classPath": "B2",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv2_thief_B2_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "attack-0-5.png": "33dbb4347bbc257302b9c0e55807f816acff9dd02e921e85827ee390b60abbc0",
+        "attack-6-11.png": "5e036dd44c9025915ff5bc8bf437ffa41e4026d0f6ceb4b40cdb10dc38424de7"
+      },
+      "outputSHA256": {
+        "hero.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "portrait.png": "5cadee27108f9339c6ca5e8c16935a9af1b33aaeedb99bf4595bff3340b2b545",
+        "character.png": "ed24ad2ce6a91229ad0cea419b1e25a2bdc11e66f34f49f7331fb0605cc1a81b",
+        "character.webp": "da5d2ce8b57fa80b1e1552443dfb70d8ea3fb6cde6a5e7e8972376fe5089c5fe"
+      },
+      "layoutSHA256": "056d3aa3a3252fbed60d27409cb37be3330e2994ac5162ba6f0d5d536528941c",
+      "heightScale": 1.492971887550201,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv3_thief_B21_f",
+      "name": "鏡影舞者",
+      "classPath": "B21",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv3_thief_B21_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "attack-0-5.png": "786bcb3bce27a29c84661edb13f8f04a29f97470f4b65833843e67a2e43943bd",
+        "attack-6-11.png": "e9063454299562b90bad69ba91999f2d70264a763546af9af943da449509b21f"
+      },
+      "outputSHA256": {
+        "hero.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "portrait.png": "6c77a8672a21b28d01398148aa49aa174fc2c8daa88040c9e04c90f9e4c2cd54",
+        "character.png": "812a0acc8a1f65fed6333ce6ac47d5e5b1c8604e6722ef5653dc9c747fea62b1",
+        "character.webp": "d3ad0e9736524a0b9bed580de95a8b863456a91b3187d209be4821357c034cc2"
+      },
+      "layoutSHA256": "171144c17ce62214f86239ee47c117356e72073e26940182aafbd0b3e1a51d5e",
+      "heightScale": 1.471169036334913,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv3_thief_B21_m",
+      "name": "鏡影舞者",
+      "classPath": "B21",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv3_thief_B21_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "attack-0-5.png": "62349ea184cf4c9ab5b2d8d35f50ca0ee5bb33ac06ae961f0c0b52c2f0996247",
+        "attack-6-11.png": "f13075c641d33d6c65c45b6864dd100242272d3f28dc2ba6e1a1080e8ed04747"
+      },
+      "outputSHA256": {
+        "hero.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "portrait.png": "838958916801da145ded706f1c74079e1a74e9e5e45a9e6ff7dd7a696f185f39",
+        "character.png": "1d667af9f3d1f41bac9377c38b38eb51b256dde644870bc6a066e9ea8312fca6",
+        "character.webp": "29e089eed991d148b3b22fdbaa27c85e3762c645820c1ce40d6522633c0f6169"
+      },
+      "layoutSHA256": "fb358813aef9df1f298e087c5aed19701eedf04429d43a2a23a7408db34e8dc8",
+      "heightScale": 1.38671875,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv3_thief_B22_f",
+      "name": "暮光詭術師",
+      "classPath": "B22",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv3_thief_B22_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "attack-0-5.png": "16c028dd2a0a7a3504858347699257b05a350dcb09f40984383252ded2875250",
+        "attack-6-11.png": "afcc2e24709fe85d7c75ab3db4da3972186b48e5e04c992ec6b8769eaea40826"
+      },
+      "outputSHA256": {
+        "hero.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "portrait.png": "7654565b521e4aadc569d47d1ce792fb71fcb6a082401bfd6c9e6a18bf52bfaf",
+        "character.png": "a3df8ac902577d83597885e18f247f13e38e3104db65dc89ea30627142236f5f",
+        "character.webp": "0d8c82eca45bdf8a8c804dfadadbf020f9d9b277ead6829c57de0b981fe147c9"
+      },
+      "layoutSHA256": "17cebaf531c29d6647e9a9597a0e8a7794ede51ccd8148688776251dfc8bc36d",
+      "heightScale": 1.5026815181518152,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv3_thief_B22_m",
+      "name": "暮光詭術師",
+      "classPath": "B22",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv3_thief_B22_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "attack-0-5.png": "de634d74ca2be3ab3fffdf1fb8a023d6914d3262c33bfc46f2e151a33b4c4f7c",
+        "attack-6-11.png": "55a1adf284dbf38530c615b2efba8aec997184f39c905931608ab7565706ffa7"
+      },
+      "outputSHA256": {
+        "hero.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "portrait.png": "ecec034b16740ac1a12350cfd1f707a50662ac5ce96a9ef401ffda85f314b0ee",
+        "character.png": "e4eddaf30b044833ff566f3b61a40bea285eebd8307f02ff91006a39021baef5",
+        "character.webp": "e010d6c26aa3aa400bad1b8435ba4304d0af4e5727dd41f119988495a9a7dbe2"
+      },
+      "layoutSHA256": "50ee5640a0b6d2715573d6b90091d72274c56336ab52ec696fd4d37b802c87f6",
+      "heightScale": 1.4886634844868736,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B211_f",
+      "name": "千面幻刃",
+      "classPath": "B211",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B211_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "attack-0-5.png": "e8c878226b69a58300273c04170877daa431f1fe63e7e5c45a73ef4cff0c629e",
+        "attack-6-11.png": "8b6b119e71e7867f4334b259050364752f0ac4a15d459080738d579fa8a81295"
+      },
+      "outputSHA256": {
+        "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "portrait.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+        "character.png": "8bc30c8fd7be63c057a697fdc44f60be3a7b0b42d5a037ddab16c14163956de4",
+        "character.webp": "467abe5cb58fec489c0b36827347e668bc74f1df16a4d9edd54f87d0f461792d"
+      },
+      "layoutSHA256": "8b382c161fc0c23f0c675c6c3e71177d7ce349b6e67ad0348b3218a678a6e7ff",
+      "heightScale": 1.3546215429403203,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B211_m",
+      "name": "千面幻刃",
+      "classPath": "B211",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv4_thief_B211_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "attack-0-5.png": "f7ea262d5e2fe1edc66376c3d53a46e7d7050feef102ae0ccbc6c65288a68d32",
+        "attack-6-11.png": "5e844f60868cbd64c09b30729edb9b07c4e20d8b564b5dcb75d62b05e6d7981a"
+      },
+      "outputSHA256": {
+        "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "portrait.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+        "character.png": "549a6376aad8f08458431bb9a985d0376fc296543ca6b99e9719cd4a2bc1e3be",
+        "character.webp": "18db40edc8bbb04770bb566e9b6ea16071d5cb93d8c3aab2beee1b0f365e4fe3"
+      },
+      "layoutSHA256": "21678d5e046da498e10127fc70e0480da808ecb1eab8bd32712ff6c73d0d63d7",
+      "heightScale": 1.3854862657757983,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B212_f",
+      "name": "鏡界行者",
+      "classPath": "B212",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B212_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "attack-0-5.png": "b48c2ea172d0bfded71983f6ee2cc485347e496b7d47bab0ba486d2d6fde5265",
+        "attack-6-11.png": "c203f524bf7e33746b0c47da72bc5598746347a7f0a6ebf06de16225bbb14ac3"
+      },
+      "outputSHA256": {
+        "hero.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "portrait.png": "90ab31c45c78eaa7da9326cdc331f37e3355c6e2481c5d7cfbafe8b2debc138e",
+        "character.png": "cb04df3db2fea020c9f92869e0183156eaca70ca893f4a776d5104eccee8140f",
+        "character.webp": "96e79da4178709b66fe11dd9c2e6466d3307c9f6ac92723ce23712e63dc5fcd1"
+      },
+      "layoutSHA256": "11e011883e08a87ef61ca916f076b505a7bf8b0f3fe6916ecb4acdd84f1d2acc",
+      "heightScale": 1.4742063492063493,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B212_m",
+      "name": "鏡界行者",
+      "classPath": "B212",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv4_thief_B212_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "attack-0-5.png": "c2f2e4011217db7ce09df699c885fceaf4fb6bc3563f56556fadf375f19e589c",
+        "attack-6-11.png": "5fa8f2782fad4efc77f918c2e768039a062391527620035728df86e4f9a577e3"
+      },
+      "outputSHA256": {
+        "hero.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "portrait.png": "aed187c6ff5f0175ca6bf61bd984820b04e6802e08bcfc0b6ef6bdbd8761c744",
+        "character.png": "ccbf9fd1948dcf24f9b8b97e282d07b6474a803352a51d10cf02ce07e92a9c3a",
+        "character.webp": "adce40221ca0ef271b843167397d9b7b7e3b18b300fa529c07d46bcb6e09294b"
+      },
+      "layoutSHA256": "a9f57012d05ceab0b13b751266c5ddefcc2783207a6f710a537cfae751532048",
+      "heightScale": 1.3888888888888888,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B221_f",
+      "name": "暮光織影者",
+      "classPath": "B221",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B221_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "attack-0-5.png": "88f58484d7e002e6ca0c7d790e9644a32a999a6705e65f27c349ceda4968b513",
+        "attack-6-11.png": "fd1bcc88921c6f9c71838817fcd4677383246b7da5db61ce13586c3b786e9940"
+      },
+      "outputSHA256": {
+        "hero.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "portrait.png": "9fa53a7b690617e9e8247469019c6ea3ef03a5c43966842d4a715935c1606a6c",
+        "character.png": "edb1a7c10a231f6aa8dd885533460cc96a8f27eb8218c639b7b0042f7cb35dd6",
+        "character.webp": "c0c0776dae9840bc56f998f73db705f3101ecd50f4981fdefc3cf6526c231c1f"
+      },
+      "layoutSHA256": "d71251634dd723c15d36ee007d16532ac454790462242b8f95d1540b0522b45c",
+      "heightScale": 1.252927400468384,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B221_m",
+      "name": "暮光織影者",
+      "classPath": "B221",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv4_thief_B221_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "attack-0-5.png": "6c4ca89574544ae69767f1e3a948ae7f629569b79ddc040fb7c915a90836caa4",
+        "attack-6-11.png": "ab6a0448d8cc3f294ce2a4c1520f40a3100256a524a42d5d9d0c8ce9f7f69e25"
+      },
+      "outputSHA256": {
+        "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "portrait.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+        "character.png": "acff585d99bab3f8de4453865f04c75e4a799dbe2d306db7a11524bbf2c1969a",
+        "character.webp": "11587abaf46fca277f13a9855fe3c161b23bbe22312fd26af827ff2d2db9e03c"
+      },
+      "layoutSHA256": "10731549b8b3991d5cede29d890b7b43d1b573edfa725f6dc7f1698beb20626d",
+      "heightScale": 1.226748511904762,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B222_f",
+      "name": "黑月詭術師",
+      "classPath": "B222",
+      "gender": "f",
+      "fragment": "docs/thief/art-B2/adv4_thief_B222_f/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "attack-0-5.png": "c9c544df8d3a196d7d16290746d138e607e79849dbcd84bb2cd90ddbe42b1453",
+        "attack-6-11.png": "9f2d9ea6eb9a7ee7f495a43abf2b9a2527fed47d3648e7b73cfbeb6291eeef1c"
+      },
+      "outputSHA256": {
+        "hero.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "portrait.png": "e8495b7847110e540832d469f02374cc3cd631b7f5b191236d3a48736872de5f",
+        "character.png": "08ad3009f4e26dab96aff6cba1fb5503f68e68c07e263c0a175708ff2ac7ac1e",
+        "character.webp": "e131d4dbefd1781410c836dbb3ac4f9c5b3aba2e85c2012dc64eb241334c1154"
+      },
+      "layoutSHA256": "b5730406631230b9647e14cb002fad1c04d191337ffae4574bfa50405c27d641",
+      "heightScale": 1.3511507052709726,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    },
+    {
+      "key": "adv4_thief_B222_m",
+      "name": "黑月詭術師",
+      "classPath": "B222",
+      "gender": "m",
+      "fragment": "docs/thief/art-B2/adv4_thief_B222_m/fragment.json",
+      "sourceSHA256": {
+        "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "attack-0-5.png": "8beaccae5f2b4f31285e33c1514ab17a7c0cc66556e4fb41551a9be9e417ad2a",
+        "attack-6-11.png": "49466f4a608ead6d140fbe31fa12d7e7ca7d26ab638ee549fd906dee3b5a0e68"
+      },
+      "outputSHA256": {
+        "hero.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "portrait.png": "1a83519194d60c3697ba4f161b163a7d6c1b482434b1524492bc16ee7da9fed3",
+        "character.png": "24818385cb2992e9ebca513ed687ef25451bfa9613fba689c12f13cd635c2d18",
+        "character.webp": "9ad77b9be1ced9d9d0b4a3d0ea6b2b111ddb69525fa3a7e631c3741841f2909a"
+      },
+      "layoutSHA256": "ea4c9a412ed95af7e90924e18fbd418f6d6c574b0c356487b44923f058ee3c0c",
+      "heightScale": 1.3527777777777779,
+      "nativePacking": "pass",
+      "authorVisualReview": "pass",
+      "runtimeActualEventVerified": false
+    }
+  ]
+}

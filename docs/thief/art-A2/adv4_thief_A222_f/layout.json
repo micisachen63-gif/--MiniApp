@@ -1,0 +1,175 @@
+{
+  "key": "adv4_thief_A222_f",
+  "skillKind": "poison",
+  "releaseFrameIndex": 6,
+  "neutralBodyBoundsPx": [
+    190,
+    155,
+    440,
+    600
+  ],
+  "frames": [
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "bodyCenterX": 270,
+      "castAnchorPx": [
+        166,
+        291
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "bodyCenterX": 805,
+      "castAnchorPx": [
+        692,
+        297
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1217,
+        151
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        569,
+        1024
+      ],
+      "bodyCenterX": 300,
+      "castAnchorPx": [
+        458,
+        665
+      ]
+    },
+    {
+      "sourceRect": [
+        569,
+        512,
+        1025,
+        1024
+      ],
+      "bodyCenterX": 795,
+      "castAnchorPx": [
+        937,
+        769
+      ]
+    },
+    {
+      "sourceRect": [
+        1025,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1280,
+      "castAnchorPx": [
+        1361,
+        659
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        273,
+        218
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1080,
+        512
+      ],
+      "bodyCenterX": 810,
+      "castAnchorPx": [
+        989,
+        292
+      ]
+    },
+    {
+      "sourceRect": [
+        1080,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1405,
+        217
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        512,
+        1024
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        311,
+        708
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        512,
+        1024,
+        1024
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        860,
+        785
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1290,
+      "castAnchorPx": [
+        1418,
+        800
+      ]
+    }
+  ],
+  "reviewMethod": "Manual torso/head/feet/active blade-hand landmarks from displayed original source; rectangles follow inspected true-alpha gutters; no anatomy inference, resizing or pixel edits.",
+  "neutralBodyLandmarksSourcePx": {
+    "headY": 66,
+    "footY": 511
+  },
+  "neutralBodyBoundsMethod": "Neutral pose manually inspected: topmost nontransparent shape is hair and bottommost is boot sole, no blade/light above/below body. Source head/foot pixel landmarks snapped to alpha>=16; torso/boot horizontal extent manually reviewed. Converted with exact integer pack translation, no resizing."
+}

@@ -1,0 +1,240 @@
+{
+  "key": "adv2_thief_B1_f",
+  "name": "飛刃遊俠",
+  "baseClass": "thief",
+  "classPath": "B1",
+  "gender": "f",
+  "hero": "art/thief-20261015/adv2_thief_B1_f/hero.png?v=b6a498bc3604",
+  "portrait": "art/thief-20261015/adv2_thief_B1_f/portrait.png?v=b6a498bc3604",
+  "heroBounds": [
+    0.140625,
+    0.006510416666666667,
+    0.880859375,
+    0.9889322916666666
+  ],
+  "heroMeta": {
+    "fig": [
+      0.140625,
+      0.006510416666666667,
+      0.880859375,
+      0.9889322916666666
+    ]
+  },
+  "animation": {
+    "src": "art/thief-20261015/adv2_thief_B1_f/character.webp?v=74e71e457fab",
+    "png": "art/thief-20261015/adv2_thief_B1_f/character.png?v=af36074b9393",
+    "cols": 4,
+    "rows": 3,
+    "firstFrame": 0,
+    "totalFrames": 12,
+    "frames": 12,
+    "cellWidth": 640,
+    "cellHeight": 640,
+    "durationMs": 1000,
+    "durationsMs": [
+      100,
+      70,
+      70,
+      65,
+      65,
+      70,
+      90,
+      80,
+      80,
+      90,
+      110,
+      110
+    ],
+    "frameBounds": [
+      0.228125,
+      0.253125,
+      0.878125,
+      0.9375
+    ],
+    "frameBoundsPerFrame": [
+      [
+        0.3109375,
+        0.3078125,
+        0.734375,
+        0.9375
+      ],
+      [
+        0.253125,
+        0.309375,
+        0.753125,
+        0.9375
+      ],
+      [
+        0.2421875,
+        0.3453125,
+        0.675,
+        0.9375
+      ],
+      [
+        0.2734375,
+        0.253125,
+        0.728125,
+        0.9375
+      ],
+      [
+        0.2453125,
+        0.321875,
+        0.79375,
+        0.9375
+      ],
+      [
+        0.228125,
+        0.3421875,
+        0.8625,
+        0.9375
+      ],
+      [
+        0.2453125,
+        0.2703125,
+        0.878125,
+        0.9375
+      ],
+      [
+        0.2859375,
+        0.296875,
+        0.6796875,
+        0.9375
+      ],
+      [
+        0.246875,
+        0.3453125,
+        0.6953125,
+        0.9375
+      ],
+      [
+        0.2875,
+        0.275,
+        0.6984375,
+        0.9375
+      ],
+      [
+        0.2640625,
+        0.290625,
+        0.721875,
+        0.9375
+      ],
+      [
+        0.284375,
+        0.28125,
+        0.7140625,
+        0.9375
+      ]
+    ],
+    "frameFig": [
+      0.3125,
+      0.28125,
+      0.7140625,
+      0.9375
+    ],
+    "bodyBounds": [
+      0.3125,
+      0.28125,
+      0.7140625,
+      0.9375
+    ],
+    "heightScale": 1.4970238095238095,
+    "useAsIdle": false,
+    "neutralBodyBoundsPx": [
+      200,
+      180,
+      457,
+      600
+    ],
+    "footBaseline": 600,
+    "releaseFrameIndex": 6,
+    "releaseAtMs": 440,
+    "castAnchorsPx": [
+      [
+        260,
+        397
+      ],
+      [
+        250,
+        258
+      ],
+      [
+        262,
+        260
+      ],
+      [
+        299,
+        185
+      ],
+      [
+        431,
+        323
+      ],
+      [
+        475,
+        311
+      ],
+      [
+        488,
+        250
+      ],
+      [
+        350,
+        406
+      ],
+      [
+        270,
+        376
+      ],
+      [
+        404,
+        319
+      ],
+      [
+        302,
+        290
+      ],
+      [
+        310,
+        363
+      ]
+    ],
+    "castAnchorRole": "active-blade-hand",
+    "castAnchorMethod": "Manual source coordinates with exact integer pack translation",
+    "nativePixelsPreserved": true,
+    "authoredEffects": true,
+    "preservePlacement": true
+  },
+  "normalFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "pierce",
+    "durationMs": 360
+  },
+  "skillFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "flying",
+    "durationMs": 560
+  },
+  "guardianCategory": "melee",
+  "status": "visual-reviewed-runtime-pending",
+  "visualAccepted": true,
+  "actualEventVerified": false,
+  "provenance": {
+    "generator": "built-in image_gen",
+    "sourceSHA256": {
+      "hero.png": "b6a498bc360434a44ed44457e3f980329e09b245457c1fd9f860b6c61b10ef60",
+      "attack-0-5.png": "da03915c8e6dbeeb06239e5484a478819a02dec8a9cd92efb11750f2d2caba67",
+      "attack-6-11.png": "6c380255d1f4a6fd322b1d7453308268007cd4de3aa477f4152b542bff8d453b"
+    },
+    "packingEvidence": "docs/thief/art-B1/adv2_thief_B1_f/native-pack.json",
+    "promptRecords": [
+      "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/attack-prompts.json",
+      "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/first-selected-prompt.json",
+      "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/last-selected-prompt.json",
+      "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/prompts.json"
+    ],
+    "layout": "worker/art-production/thief-20261015/B1/adv2_thief_B1_f/layout.json",
+    "visualEvidence": "docs/thief/art-B1/adv2_thief_B1_f/atlas-checker.jpg"
+  },
+  "runtimeAccepted": false,
+  "visualReview": "docs/thief/art-B1/adv2_thief_B1_f/visual-review.json"
+}

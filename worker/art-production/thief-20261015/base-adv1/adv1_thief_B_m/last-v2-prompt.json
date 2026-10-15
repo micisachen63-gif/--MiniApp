@@ -1,0 +1,7 @@
+{
+  "mode": "built-in image_gen",
+  "prompt": "Use case: identity-preserve. SIX-pose secondhalf production atlas, native1536x1024 3columns2rows. Image1 is ONLY compact pose/gutter layout. Image2 is actual TARGETMAN identity/costume. Redraw targetman SAME face/hair/charcoal leather armor/stormteal shortGreekcloak/throwingknife bandolier in six distinct poses6..11: compact wristflickrelease with SMALL iceblue magicglint right beside heldknife; followthrough; pullback; bringknivesguard; settle; fullyrecoveredready. IMPORTANT no flying blade or largeexternal arc painted in this sheet; only TINY attached bladeglints (20px). Separate gameCanvas will draw projectiles. Entirefigure widthatmost380px includingdaggers/effects; at least40px horizontal emptyalpha gutters. Twohands2shortknives, allhead/feetinsideeachcell, noextra limbs/longstride. Toprowfinishbeforey495, bottomrowstartaftery535; keepemptytransparentband. Fixed3quarterrightview, samebody scale allsix, leanadultmale exactcostumeinallposes. Truealpha transparency, nofloor/text/grid/UI/borders/background. Semi-realistic paintedGreekRPG matchingtarget.",
+  "original": "C:\\Users\\User\\.codex\\generated_images\\01a137f7-1f11-7f73-acbb-6046125807a7\\exec-73df16f4-33e9-418c-b0f8-b649f7214868.png",
+  "replaces": "attack-6-11-rejected-cross-grid.png",
+  "reason": "Original horizontal effects lack a transparent gutter between first-row columns; v2 uses compact attached glints."
+}

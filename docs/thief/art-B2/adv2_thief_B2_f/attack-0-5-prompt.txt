@@ -1,0 +1,12 @@
+Use case: stylized-concept.
+Asset type: native production RPG attack animation sheet, EXACT landscape 1536x1024 RGBA TRANSPARENT. Reference image is identity/costume/style reference for the female human MIRROR BLADE THIEF; preserve her face, curled tied brown hair, full practical indigo/violet leather armor, bronze Greek trim and mirror clasp. Normal human ears.
+LAYOUT IS CRITICAL: exactly SIX independent full-body character poses in an invisible 3 columns x 2 rows grid, cell size512x512. Every pose including knives and effects fits entirely inside its own cell. Each figure is SMALL, about370 pixels tall. Cell-local head y75, boots baseliney440, at least60 transparent pixels above and55 below. Keep transparent gutters at x0-48 andx464-512, no touching neighboring poses. Row1 characters end before y460, row2 characters begin after y580. No long cloak, no tall effects, no decorations between cells.
+One same female character percell, facing RIGHT through the action. No other characters or detached limbs. Exactly two arms, two visible hands and two short daggers per pose. Every pose genuinely DIFFERENT, not duplicates, arranged chronological left-to-right top-to-bottom. Animation frames0-5 of a12-pose extremely fast double-dagger mirror attack:
+0 balanced low ready stance, both daggers angled down;
+1 compressed knees, chest draws back, blades tucked toward hips;
+2 lead foot advances right, torso coils, right dagger held back near rib, left dagger front low;
+3 short forward thrust preparation, lead arm half-extends, rear hand firmly gripping its own dagger;
+4 low forward silver-blue dagger slash, torso rotates, compact violet crescent below face;
+5 crossing follow-up blade sweeps upward from hip to shoulder level, feet still grounded, compact mirror chips beside active hand.
+Small authored blue-violet MAGIC blade-edge light on all poses, brief crescent on frames4/5 only; a few tiny reflective chips near knives, not a ghost person. Barely any haze. Crystal-clear anatomical arms and gripping hands. Detailed semi-realistic Greek fantasy painted game art matching reference. Keep figures small and separated: NEVER fill cell height.
+BACKGROUND IS ACTUAL TRANSPARENT ALPHA. No floor, no shadow rectangle, no scene, no text/numbers, no cell borders, no grid lines, no watermark. No elf ears, angel, wings, staff, long sword, third hand, duplicate body or floating hand.

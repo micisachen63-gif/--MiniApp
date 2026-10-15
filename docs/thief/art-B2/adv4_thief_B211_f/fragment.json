@@ -1,0 +1,230 @@
+{
+  "key": "adv4_thief_B211_f",
+  "name": "千面幻刃",
+  "baseClass": "thief",
+  "classPath": "B211",
+  "gender": "f",
+  "hero": "art/thief-20261015/adv4_thief_B211_f/hero.png?v=6bc0073f4c5c",
+  "portrait": "art/thief-20261015/adv4_thief_B211_f/portrait.png?v=6bc0073f4c5c",
+  "heroBounds": [
+    0.0185546875,
+    0.01171875,
+    1.0,
+    0.9811197916666666
+  ],
+  "heroMeta": {
+    "fig": [
+      0.0185546875,
+      0.01171875,
+      1.0,
+      0.9811197916666666
+    ]
+  },
+  "animation": {
+    "src": "art/thief-20261015/adv4_thief_B211_f/character.webp?v=467abe5cb58f",
+    "png": "art/thief-20261015/adv4_thief_B211_f/character.png?v=8bc30c8fd7be",
+    "cols": 4,
+    "rows": 3,
+    "firstFrame": 0,
+    "totalFrames": 12,
+    "frames": 12,
+    "cellWidth": 640,
+    "cellHeight": 640,
+    "durationMs": 1000,
+    "durationsMs": [
+      100,
+      70,
+      70,
+      65,
+      65,
+      70,
+      90,
+      80,
+      80,
+      90,
+      110,
+      110
+    ],
+    "frameBounds": [
+      0.1125,
+      0.221875,
+      0.9421875,
+      0.9375
+    ],
+    "frameBoundsPerFrame": [
+      [
+        0.1671875,
+        0.221875,
+        0.853125,
+        0.9375
+      ],
+      [
+        0.2640625,
+        0.2234375,
+        0.75625,
+        0.9375
+      ],
+      [
+        0.209375,
+        0.2234375,
+        0.853125,
+        0.9375
+      ],
+      [
+        0.1125,
+        0.2671875,
+        0.9421875,
+        0.9375
+      ],
+      [
+        0.1203125,
+        0.2609375,
+        0.8625,
+        0.9375
+      ],
+      [
+        0.1875,
+        0.2296875,
+        0.8703125,
+        0.9375
+      ],
+      [
+        0.2140625,
+        0.2375,
+        0.91875,
+        0.9375
+      ],
+      [
+        0.24375,
+        0.2359375,
+        0.7609375,
+        0.9375
+      ],
+      [
+        0.1875,
+        0.2375,
+        0.728125,
+        0.9375
+      ],
+      [
+        0.2265625,
+        0.259375,
+        0.7109375,
+        0.9375
+      ],
+      [
+        0.2203125,
+        0.2265625,
+        0.75,
+        0.9375
+      ],
+      [
+        0.2203125,
+        0.259375,
+        0.7546875,
+        0.9375
+      ]
+    ],
+    "frameFig": [
+      0.1953125,
+      0.221875,
+      0.8453125,
+      0.9375
+    ],
+    "bodyBounds": [
+      0.1953125,
+      0.221875,
+      0.8453125,
+      0.9375
+    ],
+    "heightScale": 1.3546215429403203,
+    "useAsIdle": false,
+    "neutralBodyBoundsPx": [
+      125,
+      142,
+      541,
+      600
+    ],
+    "footBaseline": 600,
+    "releaseFrameIndex": 6,
+    "releaseAtMs": 440,
+    "castAnchorsPx": [
+      [
+        466,
+        414
+      ],
+      [
+        342,
+        354
+      ],
+      [
+        455,
+        405
+      ],
+      [
+        507,
+        288
+      ],
+      [
+        451,
+        397
+      ],
+      [
+        444,
+        204
+      ],
+      [
+        515,
+        260
+      ],
+      [
+        380,
+        368
+      ],
+      [
+        436,
+        437
+      ],
+      [
+        385,
+        330
+      ],
+      [
+        421,
+        396
+      ],
+      [
+        413,
+        369
+      ]
+    ],
+    "castAnchorRole": "active-blade-hand",
+    "castAnchorMethod": "Manual source coordinates with exact integer pack translation",
+    "nativePixelsPreserved": true,
+    "authoredEffects": true,
+    "preservePlacement": true
+  },
+  "normalFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "pierce",
+    "durationMs": 360
+  },
+  "skillFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "mirror",
+    "durationMs": 560
+  },
+  "guardianCategory": "melee",
+  "status": "native-packed-review-pending",
+  "visualAccepted": false,
+  "actualEventVerified": false,
+  "provenance": {
+    "generator": "built-in image_gen",
+    "sourceSHA256": {
+      "hero.png": "6bc0073f4c5ced29c59a76889184bcf12850ce74000ef68603dda37cbe179a03",
+      "attack-0-5.png": "e8c878226b69a58300273c04170877daa431f1fe63e7e5c45a73ef4cff0c629e",
+      "attack-6-11.png": "8b6b119e71e7867f4334b259050364752f0ac4a15d459080738d579fa8a81295"
+    },
+    "packingEvidence": "docs/thief/art-B2/adv4_thief_B211_f/native-pack.json"
+  }
+}

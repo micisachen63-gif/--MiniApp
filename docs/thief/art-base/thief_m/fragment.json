@@ -1,0 +1,230 @@
+{
+  "key": "thief_m",
+  "name": "盜賊・男",
+  "baseClass": "thief",
+  "classPath": "",
+  "gender": "m",
+  "hero": "art/thief-20261015/thief_m/hero.png?v=7940991d4a9a",
+  "portrait": "art/thief-20261015/thief_m/portrait.png?v=7940991d4a9a",
+  "heroBounds": [
+    0.0224609375,
+    0.005859375,
+    0.984375,
+    0.9850260416666666
+  ],
+  "heroMeta": {
+    "fig": [
+      0.0224609375,
+      0.005859375,
+      0.984375,
+      0.9850260416666666
+    ]
+  },
+  "animation": {
+    "src": "art/thief-20261015/thief_m/character.webp?v=12df02ca43cf",
+    "png": "art/thief-20261015/thief_m/character.png?v=81b8ea0df8c1",
+    "cols": 4,
+    "rows": 3,
+    "firstFrame": 0,
+    "totalFrames": 12,
+    "frames": 12,
+    "cellWidth": 640,
+    "cellHeight": 640,
+    "durationMs": 1000,
+    "durationsMs": [
+      100,
+      70,
+      70,
+      65,
+      65,
+      70,
+      90,
+      80,
+      80,
+      90,
+      110,
+      110
+    ],
+    "frameBounds": [
+      0.13125,
+      0.16875,
+      0.93125,
+      0.9375
+    ],
+    "frameBoundsPerFrame": [
+      [
+        0.2171875,
+        0.16875,
+        0.7828125,
+        0.9375
+      ],
+      [
+        0.2078125,
+        0.2375,
+        0.796875,
+        0.9375
+      ],
+      [
+        0.2125,
+        0.196875,
+        0.765625,
+        0.9375
+      ],
+      [
+        0.13125,
+        0.221875,
+        0.93125,
+        0.9375
+      ],
+      [
+        0.1796875,
+        0.215625,
+        0.93125,
+        0.9375
+      ],
+      [
+        0.1953125,
+        0.2234375,
+        0.834375,
+        0.9375
+      ],
+      [
+        0.1609375,
+        0.2078125,
+        0.8203125,
+        0.9375
+      ],
+      [
+        0.1453125,
+        0.2484375,
+        0.8875,
+        0.9375
+      ],
+      [
+        0.178125,
+        0.209375,
+        0.7828125,
+        0.9375
+      ],
+      [
+        0.1875,
+        0.203125,
+        0.7859375,
+        0.9375
+      ],
+      [
+        0.15625,
+        0.2046875,
+        0.81875,
+        0.9375
+      ],
+      [
+        0.140625,
+        0.2,
+        0.8328125,
+        0.9375
+      ]
+    ],
+    "frameFig": [
+      0.28125,
+      0.16875,
+      0.71875,
+      0.9375
+    ],
+    "bodyBounds": [
+      0.28125,
+      0.16875,
+      0.71875,
+      0.9375
+    ],
+    "heightScale": 1.273712737127371,
+    "useAsIdle": false,
+    "neutralBodyBoundsPx": [
+      180,
+      108,
+      460,
+      600
+    ],
+    "footBaseline": 600,
+    "releaseFrameIndex": 6,
+    "releaseAtMs": 440,
+    "castAnchorsPx": [
+      [
+        460,
+        390
+      ],
+      [
+        455,
+        390
+      ],
+      [
+        264,
+        259
+      ],
+      [
+        500,
+        241
+      ],
+      [
+        500,
+        224
+      ],
+      [
+        280,
+        260
+      ],
+      [
+        296,
+        323
+      ],
+      [
+        496,
+        391
+      ],
+      [
+        244,
+        223
+      ],
+      [
+        386,
+        246
+      ],
+      [
+        454,
+        392
+      ],
+      [
+        440,
+        384
+      ]
+    ],
+    "castAnchorRole": "active-blade-hand",
+    "castAnchorMethod": "Manual source coordinates with exact integer pack translation",
+    "nativePixelsPreserved": true,
+    "authoredEffects": true,
+    "preservePlacement": true
+  },
+  "normalFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "dagger",
+    "durationMs": 360
+  },
+  "skillFx": {
+    "renderer": "thief-native-canvas",
+    "kind": "cross",
+    "durationMs": 560
+  },
+  "guardianCategory": "melee",
+  "status": "native-packed-review-pending",
+  "visualAccepted": false,
+  "actualEventVerified": false,
+  "provenance": {
+    "generator": "built-in image_gen",
+    "sourceSHA256": {
+      "hero.png": "7940991d4a9ac130310f3a5499b189db2ce6172a2e517ceba31d23df0e94ddb1",
+      "attack-0-5.png": "c82e948ed40d07adfd3165a4d59343ce42fd783c039d4969808b18996184d531",
+      "attack-6-11.png": "4686acf4aa71273ae8e013d2a58f0d0b64b97130478fc0412a1837e667b5860a"
+    },
+    "packingEvidence": "docs/thief/art-base/thief_m/native-pack.json"
+  }
+}

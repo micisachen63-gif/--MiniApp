@@ -1,0 +1,436 @@
+{
+  "status": "PASS",
+  "icons": 82,
+  "cards": 492,
+  "sources": 14,
+  "prompts": {
+    "worker/art-production/thief-gear-20261015/dagger/first-prompt.json": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4",
+    "worker/art-production/thief-gear-20261015/dagger/last-prompt.json": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855",
+    "worker/art-production/thief-gear-20261015/dual_daggers/first-prompt.json": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437",
+    "worker/art-production/thief-gear-20261015/dual_daggers/last-prompt.json": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c",
+    "worker/art-production/thief-gear-20261015/throwing_blades/first-prompt.json": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303",
+    "worker/art-production/thief-gear-20261015/throwing_blades/last-prompt.json": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9",
+    "worker/art-production/thief-gear-20261015/helmet/first-prompt.json": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0",
+    "worker/art-production/thief-gear-20261015/helmet/last-prompt.json": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4",
+    "worker/art-production/thief-gear-20261015/armor/first-prompt.json": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd",
+    "worker/art-production/thief-gear-20261015/armor/last-prompt.json": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff",
+    "worker/art-production/thief-gear-20261015/gloves/first-prompt.json": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d",
+    "worker/art-production/thief-gear-20261015/gloves/last-prompt.json": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304",
+    "worker/art-production/thief-gear-20261015/boots/first-prompt.json": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177",
+    "worker/art-production/thief-gear-20261015/boots/last-prompt.json": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+  },
+  "fullROIProofs": [
+    {
+      "key": "gear_wpn_laurel_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_athena_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_sacred_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_poseidon_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_labyrinth_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_forge_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0abb5671b4aea24b047086ab33b86b57daeb637eb79b35166ac08c8efd5b5ff4"
+    },
+    {
+      "key": "gear_wpn_styx_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_oracle_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_titan_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_cloudgate_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_elysium_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_cosmos_dagger",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "884990da42a10729671c64a48c2183c3c5d13af1aef5750dd7c39d8e106bf855"
+    },
+    {
+      "key": "gear_wpn_athena_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
+    },
+    {
+      "key": "gear_wpn_sacred_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
+    },
+    {
+      "key": "gear_wpn_poseidon_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
+    },
+    {
+      "key": "gear_wpn_labyrinth_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
+    },
+    {
+      "key": "gear_wpn_forge_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "8240f34344ce45d97dd5f6cadf18607d7f951788eb4ecdeeb2cda27a585a9437"
+    },
+    {
+      "key": "gear_wpn_styx_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_oracle_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_titan_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_cloudgate_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_elysium_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_cosmos_dual_daggers",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "ec980c28285a0bba8f9f9f3db774546b6dc5af965ae62d23c306a547f4a0315c"
+    },
+    {
+      "key": "gear_wpn_athena_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
+    },
+    {
+      "key": "gear_wpn_sacred_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
+    },
+    {
+      "key": "gear_wpn_poseidon_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
+    },
+    {
+      "key": "gear_wpn_labyrinth_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
+    },
+    {
+      "key": "gear_wpn_forge_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "aa7f886b28e1f641ba52a940bb30b73b77eba9967922ec2e2425c8bf9aca1303"
+    },
+    {
+      "key": "gear_wpn_styx_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_wpn_oracle_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_wpn_titan_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_wpn_cloudgate_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_wpn_elysium_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_wpn_cosmos_throwing_blades",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "0d66d6bf394c658207a928f0bb23fe732183e4f8dd1ace7a2fc1855aa6db01f9"
+    },
+    {
+      "key": "gear_helm_laurel_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_athena_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_sacred_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_poseidon_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_labyrinth_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_forge_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "072afefe55068494acba2a74195bfa15993d319b672f0d77b1144ad99c08c4d0"
+    },
+    {
+      "key": "gear_helm_styx_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_helm_oracle_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_helm_titan_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_helm_cloudgate_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_helm_elysium_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_helm_cosmos_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "f3d6dd32b40a3dfbb5b787d342d9d0311ddf86a47410ca503f750c61911a53f4"
+    },
+    {
+      "key": "gear_arm_laurel_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_athena_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_sacred_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_poseidon_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_labyrinth_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_forge_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "1811ce4295e9addb6939697ff2ff519dd612937bcf1ed23071adc585eaaa84cd"
+    },
+    {
+      "key": "gear_arm_styx_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_arm_oracle_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_arm_titan_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_arm_cloudgate_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_arm_elysium_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_arm_cosmos_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "2aa7339b252a0c492d07d8658161704775db01ed5a7266594d1cf6341fec5eff"
+    },
+    {
+      "key": "gear_gloves_laurel_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_athena_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_sacred_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_poseidon_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_labyrinth_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_forge_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "91e635d9acc8fb902b24927963a55e3c31cfac13c332f0ec06ae233fed05de3d"
+    },
+    {
+      "key": "gear_gloves_styx_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_gloves_oracle_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_gloves_titan_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_gloves_cloudgate_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_gloves_elysium_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_gloves_cosmos_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "9b95eb14e48d6c940eb382b1952f827d7a813facf4e65e61ded29d55549c5304"
+    },
+    {
+      "key": "gear_boots_laurel_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_athena_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_sacred_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_poseidon_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_labyrinth_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_forge_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "25430776f21b5c88ad24b49da4a7bb652e9f9f0d04f017a7021b6f7e392c0177"
+    },
+    {
+      "key": "gear_boots_styx_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    },
+    {
+      "key": "gear_boots_oracle_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    },
+    {
+      "key": "gear_boots_titan_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    },
+    {
+      "key": "gear_boots_cloudgate_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    },
+    {
+      "key": "gear_boots_elysium_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    },
+    {
+      "key": "gear_boots_cosmos_light_leather",
+      "fullROIRGBAEquality": true,
+      "promptSHA256": "45c830ddcd9e5d192cc151dea17b80b0ab9a4786c4a5290cce55995e3edb3945"
+    }
+  ],
+  "nativePixelsAndAlphaUnchanged": true,
+  "contactSheetsResizedForQAOnly": true
+}

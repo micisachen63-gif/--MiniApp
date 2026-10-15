@@ -2,23 +2,50 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
+import crypto from 'node:crypto';
+import assert from 'node:assert/strict';
 import {fileURLToPath} from 'node:url';
 import {freshDb} from '../test/d1-shim.js';
 import {T0} from '../test/helpers.js';
 import * as Player from '../src/services/player.js';
 import * as Guardian from '../src/services/guardian-sigil.js';
 import {handle} from '../src/index.js';
-import {metaView} from '../src/app.js';
-import {THIEF_CLASS} from '../src/game/thief-data.js';
+import {THIEF_CLASS,THIEF_NODES,THIEF_RELEASE_READY} from '../src/game/thief-data.js';
 const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..');
-export async function createThiefPreview(){
+const digest=value=>crypto.createHash('sha256').update(value).digest('hex');
+export function thiefQaIdentity(key=process.env.THIEF_QA_KEY||'thief_f'){
+ assert.equal(THIEF_RELEASE_READY,false,'Browser QA must not open the production release gate');
+ const registryFile=path.join(root,'worker/public/hero-art-registry.json'),bytes=fs.readFileSync(registryFile),registry=JSON.parse(bytes),entry=registry.heroes?.[key];
+ assert.ok(entry&&entry.key===key&&entry.baseClass==='thief','Missing exact thief registry entry: '+key);
+ const classPath=entry.classPath||'',gender=entry.gender,node=THIEF_NODES[classPath];
+ assert.ok(node&&['m','f'].includes(gender),'Invalid thief registry identity: '+key);
+ assert.equal(key,classPath?`adv${classPath.length}_thief_${classPath}_${gender}`:`thief_${gender}`,'Registry key/path/gender mismatch');
+ const publicSourceSHA256={};
+ for(const src of new Set([entry.hero,entry.portrait,entry.animation?.src,entry.animation?.png].filter(Boolean))){
+  assert.ok(!/^(?:[a-z]+:)?\/\//i.test(src),'QA assets must be local public files');
+  const rel=src.split('?')[0].replace(/^\//,''),file=path.resolve(root,'worker/public',rel),base=path.resolve(root,'worker/public');
+  assert.ok(file.startsWith(base+path.sep),'Asset outside public directory');
+  publicSourceSHA256[path.relative(root,file).replaceAll('\\','/')]=digest(fs.readFileSync(file));
+ }
+ return {key,classPath,gender,level:Math.max(20,classPath.length*30),className:node.name,nativeSkillName:node.skill.name,entry,entrySHA256:digest(JSON.stringify(entry)),registrySHA256:digest(bytes),publicSourceSHA256};
+}
+export function thiefQaOutput(defaultRelative='docs/thief/pilot-ui'){
+ const output=path.resolve(root,process.env.THIEF_QA_DIR||defaultRelative),base=path.join(root,'docs/thief');
+ assert.ok(output.startsWith(base+path.sep),'QA output must stay inside docs/thief');
+ fs.mkdirSync(output,{recursive:true});return output;
+}
+export function thiefQaEvidence(identity){
+ const {entry,...evidence}=identity;
+ return {...evidence,isolatedInMemoryFixture:true,fixtureMetaOverride:true,productionWrites:false,productReleaseReady:false};
+}
+export async function createThiefPreview({identity=thiefQaIdentity()}={}){
  const db=freshDb(),env={DB:db,ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',ALLOW_DEBUG_TIME:'true'};
  const ids=['811','812','813'];
  // This pragma applies only to this brand-new in-memory fixture; no remote DB or migration.
  db.sqlite.exec('PRAGMA ignore_check_constraints=ON');
  for(const id of ids){
-  await Player.createCharacter(env,{tgId:id,name:id==='811'?'盜賊女試驗':id==='812'?'盜賊女同伴':'盜賊女分身',baseClass:'sword',gender:'f'},T0);
-  await db.prepare("UPDATE rpg_characters SET base_class='thief',class_path='',level=20,gold=300000,last_settle_at=? WHERE tg_id=?").bind(T0,id).run();
+  await Player.createCharacter(env,{tgId:id,name:identity.className+(id==='811'?'試驗':id==='812'?'同伴':'分身'),baseClass:'sword',gender:identity.gender},T0);
+  await db.prepare("UPDATE rpg_characters SET base_class='thief',class_path=?,gender=?,level=?,gold=300000,last_settle_at=? WHERE tg_id=?").bind(identity.classPath,identity.gender,identity.level,T0,id).run();
   await db.prepare("DELETE FROM rpg_equipment WHERE tg_id=?").bind(id).run();
   const op='thief-ui-guardian-'+id;
   await db.prepare('INSERT INTO rpg_guardian_operations(operation_id,account_id,char_id,request_id,action,payload_hash,config_version,cost_json,result_json,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)').bind(op,id,id,op,'summon','0'.repeat(64),'fixture','{}','{}',T0).run();
@@ -58,5 +85,5 @@ export async function createThiefPreview(){
   res.writeHead(200,{'content-type':mime[path.extname(file)]||'application/octet-stream','cache-control':'no-store'});res.end(req.method==='HEAD'?null:bytes);
  }catch(error){json(res,500,{ok:false,error:'fixture',message:error.stack});}});
  await new Promise(resolve=>server.listen(0,'127.0.0.1',resolve));
- return {origin:'http://127.0.0.1:'+server.address().port,requests,served,close:()=>new Promise(resolve=>server.close(()=>{db.sqlite.close();resolve();}))};
+ return {identity,origin:'http://127.0.0.1:'+server.address().port,requests,served,close:()=>new Promise(resolve=>server.close(()=>{db.sqlite.close();resolve();}))};
 }

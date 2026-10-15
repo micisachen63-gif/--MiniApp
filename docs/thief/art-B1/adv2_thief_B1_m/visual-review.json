@@ -1,0 +1,56 @@
+{
+  "key": "adv2_thief_B1_m",
+  "name": "飛刃遊俠",
+  "gender": "m",
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "reviewed": [
+    "hero original and alpha-checker composite",
+    "first six-pose sheet full image",
+    "last six-pose sheet full image",
+    "packed twelve-cell checker composite"
+  ],
+  "checks": {
+    "adultGreekPainterlyStyle": true,
+    "identityMatchesOwnPortrait": true,
+    "twoArmsTwoHandsTwoLegsEveryFrame": true,
+    "twelveDistinctPoses": true,
+    "bladeAndFeetComplete": true,
+    "nativeRGBAUnchanged": true,
+    "PNGWebPEqual": true,
+    "noUpscaling": true,
+    "trueTransparentAlpha": true,
+    "footBaseline600": true,
+    "sourceAndPromptPreserved": true
+  },
+  "manualNotes": [
+    "Independent male angular face and short brown hair, cream rolled sleeves, teal/blue mantle, bronze clasp and silver ring-hilt blades retained across twelve poses.",
+    "Wind-up0..5, open-hand release6, followthrough7 and four distinct draw/recovery poses8..11. No third hand or duplicated pose seen in source or packed checker.",
+    "Frame6 ROI expands to x560 through actual empty gutter to preserve full released blade; next figure starts farther right. No pixel erased or resized.",
+    "All significant alpha stays inside crop and twenty-pixel packed margins; all twelve source RGBA hashes distinct.",
+    "Original alpha min0/max254; grey/checker only QA composite."
+  ],
+  "qaFiles": [
+    "hero-checker.jpg",
+    "atlas-checker.jpg",
+    "native-pack.json",
+    "fragment.json"
+  ],
+  "sources": {
+    "attack-0-5.png": "b3fbdb1494d7ccd321c769457ed5aa1eccb79994deaeba4d81f467c398f4fb56",
+    "attack-6-11.png": "52310402c0d0f46c99a4147850e6c778deafd14b6a5523e67e411b4c4d3fa89d",
+    "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a"
+  },
+  "sourceSHA256": {
+    "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+    "attack-0-5.png": "b3fbdb1494d7ccd321c769457ed5aa1eccb79994deaeba4d81f467c398f4fb56",
+    "attack-6-11.png": "52310402c0d0f46c99a4147850e6c778deafd14b6a5523e67e411b4c4d3fa89d"
+  },
+  "outputSHA256": {
+    "hero.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+    "portrait.png": "05a710513bc782552529e27c6c8c230ac179cbfe436626c3ea3e916cad88415a",
+    "character.png": "613916478c45c572fbff5304d52f9d4d07503b40d7ed5187bd9ef38c423072b6",
+    "character.webp": "3714133e6c4b813b2aa87c461280a81bc6200bed2284a5b864045b8519393512"
+  },
+  "scope": "Manual hero, all 12 original poses and packed checker inspection. Runtime matrix remains pending root."
+}

@@ -1,0 +1,33 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv4_thief_B122_f",
+  "reviewer": "thief_skills manual source and packed checker inspection",
+  "checks": {
+    "adultGreekPainterlyIdentity": true,
+    "twelveGenuinelyDifferentPoses": true,
+    "twoArmsTwoHandsTwoLegs": true,
+    "allKnifeTipsAndFeetPreserved": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "neutralBodyBoundsManuallyMarked": true
+  },
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "candidateNotes": "Independent own portrait plus twelve actual poses; source and packed checker all manually viewed. Per-row/per-column cuts lie in transparent gutters. Female B122 white-sleeve drift rejected and corrected through built-in image_gen, never raster editing.",
+  "sourceSHA256": {
+    "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+    "attack-0-5.png": "42817eb59889183c55203106d7d0e468639daed8ec17f530dd07a6006b69c469",
+    "attack-6-11.png": "abafa87def20c67f75cce529283ea96dbc5f8cf09d9e4beb18a706addd602e09"
+  },
+  "outputSHA256": {
+    "hero.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+    "portrait.png": "c5c0e60b94f41740c1c1ccf2ac1ba01a4b105414db3a28faa8f2b5a87082c104",
+    "character.png": "dd4647157ae0d7b97bc8de9ff3c6e1558acebbbee909379574ca087994eb8083",
+    "character.webp": "8eafb6f4e5fdbc05a0c06534c5ea8aab4cc100b28a468dea58d3eb4d56efe7d5"
+  },
+  "scope": "Manual hero, all 12 original poses and packed checker inspection. Runtime matrix remains pending root."
+}

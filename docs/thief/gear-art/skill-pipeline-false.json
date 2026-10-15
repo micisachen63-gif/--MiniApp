@@ -1,0 +1,74 @@
+{
+  "passed": true,
+  "releaseReadyUnderTest": false,
+  "overrideMethod": "test-only Node module load hook for both release states; no file changes",
+  "productionWrites": false,
+  "isolatedInMemoryFixture": true,
+  "legacyPoolByteEquality": true,
+  "legacyPoolChecks": 21,
+  "dropChance": 0.35,
+  "researchPerRun": 8,
+  "bookQuantity": 1,
+  "skills": [
+    {
+      "skillId": "skill_thief_01",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    },
+    {
+      "skillId": "skill_thief_02",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    },
+    {
+      "skillId": "skill_thief_03",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    },
+    {
+      "skillId": "skill_thief_04",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    },
+    {
+      "skillId": "skill_thief_05",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    },
+    {
+      "skillId": "skill_thief_06",
+      "published": false,
+      "learnBlocked": true,
+      "redeemBlocked": true,
+      "loadoutBlocked": true,
+      "castBlocked": true,
+      "shareBlocked": true,
+      "tradeBlocked": true
+    }
+  ]
+}

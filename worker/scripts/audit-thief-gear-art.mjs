@@ -1,0 +1,33 @@
+// Read-only equipment art inventory. Does not mutate mappings, app assets or a database.
+import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import vm from 'node:vm';import {fileURLToPath} from 'node:url';
+import {gearOffers} from '../src/game/gear.js';import {iconForArtId} from '../src/game/gear-art.js';import {gearArt,cardPhoto,CARD_FRAMES} from '../src/game/share.js';import {THIEF_WEAPONS} from '../src/game/thief-data.js';
+const root=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../..'),output=path.join(root,'docs/thief/gear-art');fs.mkdirSync(output,{recursive:true});
+const app=fs.readFileSync(path.join(root,'worker/public/app.js'),'utf8'),ctx={window:{}};
+vm.runInNewContext(fs.readFileSync(path.join(root,'worker/public/gear-names.js'),'utf8'),ctx);
+vm.runInNewContext(fs.readFileSync(path.join(root,'worker/public/thief-gear-art.js'),'utf8').replaceAll('export ',''),ctx);
+vm.runInNewContext(app.slice(app.indexOf('  const WPN ='),app.indexOf('  const AV1 ='))+';globalThis.resolveGear=GEAR_ART;',ctx);
+const names=JSON.parse(fs.readFileSync(path.join(root,'worker/public/gear-names.json'),'utf8'));
+const themes=['laurel','athena','sacred','poseidon','labyrinth','forge','styx','oracle','titan','cloudgate','elysium','cosmos'];
+const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+const record=rel=>{if(!rel)return null;const file=path.join(root,'worker/public',rel.replace(/^\//,''));return {src:rel,exists:fs.existsSync(file),SHA256:fs.existsSync(file)?sha(fs.readFileSync(file)):null};};
+const offers=new Map();
+for(const classPath of ['A','B'])for(const offer of gearOffers({base_class:'thief',class_path:classPath,level:120}))offers.set(offer.name,{...offer,classReq:'thief',class_req:'thief'});
+const entries=[...offers.values()].map(g=>{
+ const front=ctx.resolveGear(g)||null,server=gearArt(g),direct=names[g.name]||null;
+ const specialized=g.slot==='weapon'||['helmet','armor','gloves','boots'].includes(g.slot),abbr={helmet:'helm',armor:'arm',gloves:'gloves',boots:'boots'}[g.slot];
+ const expected=specialized?(g.slot==='weapon'?`gear_wpn_${themes[g.tier-1]}_${g.kind}`:`gear_${abbr}_${themes[g.tier-1]}_light_leather`):direct;
+ return {name:g.name,code:g.code,tier:g.tier,slot:g.slot,kind:g.kind,branch:g.branch,positions:['earring','ring'].includes(g.slot)?[1,2]:[1],uses:['shop','bag','item detail','own armory','other armory','trade','market','BOT share/relic/PK drop card'],classSpecific:specialized,nameSpecificMapping:direct,expectedArtId:expected,proposedCleanIcon:specialized?`art/thief-gear-20261015/${expected}.webp`:`art/v2/${expected}.webp`,frontend:{artId:front,resolution:front?(front===expected&&specialized?'thief-specific':direct?'name-specific':'generic-kind-or-family'):'emoji-only',icon:record(front?(ctx.window.RpgThiefGearArt.iconForArtId(front)||`art/v2/${front}.webp`):null)},backend:{artId:server,resolution:server===expected&&specialized?'thief-specific':direct?'name-specific':server==='wpn_sword'?'sword-fallback':/^.*plate$/.test(server)?'plate-fallback':'generic-slot',icon:record(server?(iconForArtId(server)||`art/v2/${server}.webp`):null),cards:CARD_FRAMES.map(rarity=>record(cardPhoto({...g,rarity,grade:rarity==='relic'?'relic':'normal'})))},missingClassSpecificArt:specialized&&!record(`art/thief-gear-20261015/${expected}.webp`).exists};
+});
+const summary={totalDesigns:entries.length,physicalPositions:11,tiers:12,thiefWeapons:Object.fromEntries(Object.entries(THIEF_WEAPONS).map(([kind,w])=>[kind,Object.keys(w.names).length])),newClassDesigns:entries.filter(x=>x.classSpecific).length,sharedExistingDesigns:entries.filter(x=>!x.classSpecific).length,missingClassSpecificDesigns:entries.filter(x=>x.missingClassSpecificArt).length,frontendEmojiOnly:entries.filter(x=>x.frontend.resolution==='emoji-only').length,backendSwordFallback:entries.filter(x=>x.backend.resolution==='sword-fallback').length,backendPlateFallback:entries.filter(x=>x.backend.resolution==='plate-fallback').length,frontendMissingFiles:entries.filter(x=>x.frontend.icon&&!x.frontend.icon.exists).length,backendMissingFiles:entries.filter(x=>!x.backend.icon?.exists||x.backend.cards.some(c=>c&&!c.exists)).length,missingSharedIcons:entries.filter(x=>!x.classSpecific&&!x.frontend.icon?.exists).length,nameMapBrowserServerIdentical:JSON.stringify(names)===JSON.stringify(ctx.window.RpgGearNames)};
+const newAssets=entries.filter(e=>e.classSpecific).map(e=>({key:e.expectedArtId,icon:record(e.proposedCleanIcon),cards:CARD_FRAMES.map(rarity=>record(`art/cards/thief-gear-20261015/${e.expectedArtId}_${rarity}.jpg`))}));
+summary.newIconsMissing=newAssets.filter(e=>!e.icon.exists).length;summary.newCardsMissing=newAssets.flatMap(e=>e.cards).filter(e=>!e.exists).length;summary.specialistMappingMismatch=entries.filter(e=>e.classSpecific&&(e.frontend.artId!==e.expectedArtId||e.backend.artId!==e.expectedArtId)).length;
+const assets=new Map();
+for(const e of entries)for(const resource of [e.frontend.icon,e.backend.icon,...e.backend.cards]){if(!resource)continue;if(!assets.has(resource.src))assets.set(resource.src,{...resource,uses:[]});assets.get(resource.src).uses.push({name:e.name,tier:e.tier,slot:e.slot,branch:e.branch});}
+for(const art of ['belt','ring']){const resource=record(`art/v2/${art}.webp`);assets.set(resource.src,{...resource,uses:[{slot:art,kind:'legacy generic fallback'}]});}
+const report={status:'inventory-only',productionWrites:false,assetChanges:false,summary,mappingSources:{frontend:'worker/public/app.js:351 GEAR_ART -> art/v2/{id}.webp',backend:'worker/src/game/share.js:gearArt -> equipmentView.art; cardPhoto -> /art/cards/[equipment-20261011-r2/]...jpg',bot:'cloud-bot/src/adapter/rpg-flow.js:postShare sends Worker item.photo as image/jpeg; definite image errors fall back to text',note:'JPG cards intentionally contain rarity frames/background; they are not alpha item icons. Item icon transparency must be assessed on source art/v2 WebP.'},entries,newAssets,assets:[...assets.values()]};
+fs.writeFileSync(path.join(output,'inventory.json'),JSON.stringify(report,null,2));
+const csv=['tier,slot,kind,name,frontendArtId,backendArtId,nameSpecificMapping,missingClassSpecificArt',...entries.map(e=>[e.tier,e.slot,e.kind,e.name,e.frontend.artId,e.backend.artId,e.nameSpecificMapping,e.missingClassSpecificArt].map(v=>JSON.stringify(v??'')).join(','))].join('\n');
+fs.writeFileSync(path.join(output,'inventory.csv'),csv);
+console.log(JSON.stringify(summary,null,2));
+if(process.argv.includes('--strict')&&(summary.specialistMappingMismatch||summary.newIconsMissing||summary.newCardsMissing||summary.missingSharedIcons||summary.backendSwordFallback||summary.backendPlateFallback))process.exitCode=1;
+

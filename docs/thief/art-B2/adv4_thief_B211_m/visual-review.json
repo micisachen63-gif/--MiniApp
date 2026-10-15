@@ -1,0 +1,55 @@
+{
+  "key": "adv4_thief_B211_m",
+  "authorVisualReview": "pass",
+  "rootVisualReview": "pass",
+  "runtimeActualEventVerified": false,
+  "checks": {
+    "sameGreekSemirealHumanStyle": true,
+    "twoArmsTwoGrippingHandsTwoShortBlades": true,
+    "completeHeadFeetWeaponTips": true,
+    "noElfEarsStaffWingsOrGhostBody": true,
+    "smallMirrorMagicAuthoredIntoSource": true,
+    "twelveOriginalDifferentPosesNotCopies": true,
+    "sourceGutterManuallyChecked": true,
+    "neutralHeadFeetBodyBoundsManuallyMarked": true,
+    "portraitAndAttackHeightUsesMeasuredRatio": true,
+    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
+  },
+  "notes": "碎鏡鑲嵌與腰間小型面具飾件，沒有額外人物或第三手。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "neutralBodyBoundsPx": [
+    151,
+    151,
+    509,
+    600
+  ],
+  "heightScale": 1.3854862657757983,
+  "prompts": {
+    "hero": {
+      "file": "docs/thief/art-B2/adv4_thief_B211_m/hero-prompt.txt",
+      "SHA256": "65da03adfafa68eedd9312da70290c887fc4ad855c8d4010042f2bb436119b49"
+    },
+    "attack-0-5": {
+      "file": "docs/thief/art-B2/adv4_thief_B211_m/attack-0-5-prompt.txt",
+      "SHA256": "9d4eb036d7914586b7054c3419e075593f5f1066bc149bd3b1194be778a2b901"
+    },
+    "attack-6-11": {
+      "file": "docs/thief/art-B2/adv4_thief_B211_m/attack-6-11-prompt.txt",
+      "SHA256": "3fcb1afe4fdbca2e3fdf10bd0300596b157b3c48f91a6e8a7cc225e7d44361a4"
+    }
+  },
+  "sourceSHA256": {
+    "hero.png": "98995aa42b6b7562a5bffa427496815d9031c7f48deed8491811ceebc38e5410",
+    "attack-0-5.png": "f7ea262d5e2fe1edc66376c3d53a46e7d7050feef102ae0ccbc6c65288a68d32",
+    "attack-6-11.png": "5e844f60868cbd64c09b30729edb9b07c4e20d8b564b5dcb75d62b05e6d7981a"
+  },
+  "rejectedSources": [],
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。",
+  "rootReviewedEvidence": [
+    "root-portrait-review-1.jpg",
+    "root-portrait-review-2.jpg",
+    "root-portrait-review-3.jpg",
+    "root-portrait-review-4.jpg",
+    "qa-light.jpg"
+  ],
+  "rootNotes": "原畫、十二動作淺底逐身份目視，希臘半寫實人類比例、完整刀尖與頭腳、魔法碎片與短披風一致。普通攻擊與技能執行仍待實際matrix。"
+}

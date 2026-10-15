@@ -1,0 +1,47 @@
+{
+  "key": "adv4_thief_B221_m",
+  "authorVisualReview": "pass",
+  "rootVisualReview": "pending",
+  "runtimeActualEventVerified": false,
+  "checks": {
+    "sameGreekSemirealHumanStyle": true,
+    "twoArmsTwoGrippingHandsTwoShortBlades": true,
+    "completeHeadFeetWeaponTips": true,
+    "noElfEarsStaffWingsOrGhostBody": true,
+    "smallMirrorMagicAuthoredIntoSource": true,
+    "twelveOriginalDifferentPosesNotCopies": true,
+    "sourceGutterManuallyChecked": true,
+    "neutralHeadFeetBodyBoundsManuallyMarked": true,
+    "portraitAndAttackHeightUsesMeasuredRatio": true,
+    "headSpaceReservedByRuntimeLayoutForSeparateGuardian": true
+  },
+  "notes": "梅紫金線編織、短衣片與近手鏡線。 12 格為備戰、蓄勢、跨步、突刺前置、低斬、上切、釋放、延伸、交叉斬、轉身、回收、收勢等獨立原生姿態；body scale 以第 0 格頭腳實值對 portrait 校正，動作弓步與收腿保留自然高度差。",
+  "neutralBodyBoundsPx": [
+    142,
+    152,
+    512,
+    600
+  ],
+  "heightScale": 1.226748511904762,
+  "prompts": {
+    "hero": {
+      "file": "docs/thief/art-B2/adv4_thief_B221_m/hero-prompt.txt",
+      "SHA256": "2098153a3528c03ad1e6af5a6b5a9bb8005ab6cb90e9830395fc8fa19d0af4cf"
+    },
+    "attack-0-5": {
+      "file": "docs/thief/art-B2/adv4_thief_B221_m/attack-0-5-prompt.txt",
+      "SHA256": "adae7cecea20811cb0329d0008f9c8dec8fc5166b10123a778063935950a559b"
+    },
+    "attack-6-11": {
+      "file": "docs/thief/art-B2/adv4_thief_B221_m/attack-6-11-prompt.txt",
+      "SHA256": "f150af5c52f09e98ad2498667df69b0698d6fcbd1674b0906e1c420839d4ac99"
+    }
+  },
+  "sourceSHA256": {
+    "hero.png": "3c51d064fd407d8763d85494b35f63ba7d82d740ee2967a42a3bc851109a6d34",
+    "attack-0-5.png": "6c4ca89574544ae69767f1e3a948ae7f629569b79ddc040fb7c915a90836caa4",
+    "attack-6-11.png": "ab6a0448d8cc3f294ce2a4c1520f40a3100256a524a42d5d9d0c8ce9f7f69e25"
+  },
+  "rejectedSources": [],
+  "acceptanceBoundary": "作者逐來源與打包規則檢查；不代替主視窗逐欄尺寸/天使/實際戰鬥事件驗證。"
+}

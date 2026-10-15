@@ -1,0 +1,127 @@
+{
+  "group": "throwing_blades",
+  "cellSize": 640,
+  "method": "Manual native sheet rectangular ROI inside measured transparent gutters; center by integer translation only",
+  "frames": [
+    {
+      "tier": 1,
+      "source": "first.png",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        500
+      ]
+    },
+    {
+      "tier": 2,
+      "source": "first.png",
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        500
+      ]
+    },
+    {
+      "tier": 3,
+      "source": "first.png",
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        500
+      ]
+    },
+    {
+      "tier": 4,
+      "source": "first.png",
+      "sourceRect": [
+        0,
+        500,
+        512,
+        1024
+      ]
+    },
+    {
+      "tier": 5,
+      "source": "first.png",
+      "sourceRect": [
+        512,
+        500,
+        1024,
+        1024
+      ]
+    },
+    {
+      "tier": 6,
+      "source": "first.png",
+      "sourceRect": [
+        1024,
+        500,
+        1536,
+        1024
+      ]
+    },
+    {
+      "tier": 7,
+      "source": "last.png",
+      "sourceRect": [
+        0,
+        0,
+        512,
+        513
+      ]
+    },
+    {
+      "tier": 8,
+      "source": "last.png",
+      "sourceRect": [
+        512,
+        0,
+        1040,
+        513
+      ]
+    },
+    {
+      "tier": 9,
+      "source": "last.png",
+      "sourceRect": [
+        1040,
+        0,
+        1536,
+        513
+      ]
+    },
+    {
+      "tier": 10,
+      "source": "last.png",
+      "sourceRect": [
+        0,
+        513,
+        512,
+        1024
+      ]
+    },
+    {
+      "tier": 11,
+      "source": "last.png",
+      "sourceRect": [
+        512,
+        513,
+        1024,
+        1024
+      ]
+    },
+    {
+      "tier": 12,
+      "source": "last.png",
+      "sourceRect": [
+        1024,
+        512,
+        1536,
+        1024
+      ]
+    }
+  ]
+}

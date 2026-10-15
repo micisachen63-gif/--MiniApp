@@ -2,6 +2,8 @@
 import { UNBIND, SHARE } from './constants.js';
 import { GameError } from './classes.js';
 import gearNames from '../../public/gear-names.json' with { type: 'json' };
+import {thiefGearArt,isThiefClassGear,thiefGearCardPhoto} from './gear-art.js';
+import {THIEF_RELEASE_READY} from './thief-data.js';
 
 const WPN = { sword: 'wpn_sword', greatsword: 'wpn_greatsword', sword_shield: 'wpn_sword_shield', staff: 'wpn_staff', elem_staff: 'wpn_elemental_staff', wand: 'wpn_grimoire', longbow: 'wpn_longbow', compound_bow: 'wpn_composite_bow', crossbow: 'wpn_crossbow' };
 const FAM = { sword: 'plate', archer: 'leather', mage: 'cloth' };
@@ -12,6 +14,8 @@ export const CARD_ART = [...Object.values(WPN), ...Object.values(ARMOR_ART).flat
 
 /** same mapping as the Mini App's GEAR_ART (worker/public/app.js) */
 export function gearArt(e) {
+  // Missing or invalid thief art must never masquerade as a sword/plate fallback.
+  if (isThiefClassGear(e)) return thiefGearArt(e)?.artId || null;
   const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英))*/, '').trim();
   if (gearNames[name]) return gearNames[name];
   const classReq = e.class_req ?? e.classReq;
@@ -21,6 +25,11 @@ export function gearArt(e) {
 }
 /** composed item-card JPG (art/cards, built by art-gen/cards.py): painted art + rarity frame + rarity label */
 export const cardPhoto = (e) => {
+  if (isThiefClassGear(e)) {
+    // Until release art is accepted, BOT captions retain the existing no-photo path.
+    if (!THIEF_RELEASE_READY) return null;
+    return thiefGearCardPhoto(e,e.grade === 'relic' ? 'relic' : (e.element_tier ?? e.rarity ?? 'common'));
+  }
   const art = gearArt(e);
   const frame = e.grade === 'relic' ? 'relic' : (e.element_tier ?? e.rarity ?? 'common');
   return `/art/cards/${art.startsWith('gear_') ? 'equipment-20261011-r2/' : ''}${art}_${CARD_FRAMES.includes(frame) ? frame : 'common'}.jpg`;

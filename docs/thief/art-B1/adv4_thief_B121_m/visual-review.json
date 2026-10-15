@@ -1,0 +1,33 @@
+{
+  "status": "visual-reviewed-runtime-pending",
+  "identity": "adv4_thief_B121_m",
+  "reviewer": "thief_skills manual source and packed checker inspection",
+  "checks": {
+    "adultGreekPainterlyIdentity": true,
+    "twelveGenuinelyDifferentPoses": true,
+    "twoArmsTwoHandsTwoLegs": true,
+    "allKnifeTipsAndFeetPreserved": true,
+    "transparentGutters": true,
+    "nativePixelsNoResampling": true,
+    "neutralBodyBoundsManuallyMarked": true
+  },
+  "visualAccepted": true,
+  "runtimeAccepted": false,
+  "evidence": [
+    "atlas-checker.jpg",
+    "native-pack.json"
+  ],
+  "candidateNotes": "Independent own portrait plus twelve actual poses; source and packed checker all manually viewed. Per-row/per-column cuts lie in transparent gutters.",
+  "sourceSHA256": {
+    "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+    "attack-0-5.png": "6d2767a8d1cf7ead24fa069ad826c5281b37e820e47e94a846b8df83e7bc94d3",
+    "attack-6-11.png": "1d02af06906dffc73c744550fd26fcfca6847f8bc84b728a83848d6336ff2ab9"
+  },
+  "outputSHA256": {
+    "hero.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+    "portrait.png": "de9ced1ff238d4140d4191445fcab2fa6f56e953a2fc4d0c60422f6a2e24bb24",
+    "character.png": "081d4016d7a3c80a6d025fbdd6b0f36c67b9aa27949d3bae608add7f5fee7794",
+    "character.webp": "4b4cea655bbbd0eaa93dd9efef5e69b5d205374656fa7d7a80e041ffec65304c"
+  },
+  "scope": "Manual hero, all 12 original poses and packed checker inspection. Runtime matrix remains pending root."
+}

@@ -1,0 +1,140 @@
+{
+  "passed": true,
+  "releaseReadyUnderTest": true,
+  "overrideMethod": "test-only Node module load hook for both release states; no file changes",
+  "productionWrites": false,
+  "isolatedInMemoryFixture": true,
+  "legacyPoolByteEquality": true,
+  "legacyPoolChecks": 21,
+  "dropChance": 0.35,
+  "researchPerRun": 8,
+  "bookQuantity": 1,
+  "skills": [
+    {
+      "skillId": "skill_thief_01",
+      "level": 30,
+      "path": "A",
+      "redeemCost": 80,
+      "dungeon": "pillar",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_01",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_01",
+        "spentMp": 18,
+        "damage": 474
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    },
+    {
+      "skillId": "skill_thief_02",
+      "level": 40,
+      "path": "A",
+      "redeemCost": 80,
+      "dungeon": "aegean",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_02",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_02",
+        "spentMp": 20,
+        "damage": 0
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    },
+    {
+      "skillId": "skill_thief_03",
+      "level": 60,
+      "path": "A1",
+      "redeemCost": 160,
+      "dungeon": "forge",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_03",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_03",
+        "spentMp": 30,
+        "damage": 771
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    },
+    {
+      "skillId": "skill_thief_04",
+      "level": 60,
+      "path": "A2",
+      "redeemCost": 160,
+      "dungeon": "forge",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_04",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_04",
+        "spentMp": 28,
+        "damage": 567
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    },
+    {
+      "skillId": "skill_thief_05",
+      "level": 60,
+      "path": "B1",
+      "redeemCost": 160,
+      "dungeon": "forge",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_05",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_05",
+        "spentMp": 28,
+        "damage": 815
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    },
+    {
+      "skillId": "skill_thief_06",
+      "level": 60,
+      "path": "B2",
+      "redeemCost": 160,
+      "dungeon": "forge",
+      "researchPerRun": 8,
+      "dropBook": "skill_thief_06",
+      "dropCount": 1,
+      "duplicateRewardStable": true,
+      "learnConsumesOne": true,
+      "loadout": true,
+      "partyCast": {
+        "skillId": "skill_thief_06",
+        "spentMp": 26,
+        "damage": 0
+      },
+      "idleCast": true,
+      "shareOutbox": true,
+      "tradeTransferredExactlyOne": true
+    }
+  ]
+}

@@ -1,0 +1,431 @@
+{
+  "branch": "A2",
+  "status": "native-packing-pass-review-pending",
+  "identities": 14,
+  "selectedSourceImages": 42,
+  "distinctNativeFrames": 168,
+  "publicFiles": 56,
+  "releaseReady": false,
+  "sharedRegistryModified": false,
+  "requiredNext": [
+    "Main review of every portrait and animation",
+    "Integrate accepted exact identity fragments",
+    "Actual bootstrap field/guardian/action/reduced-motion verification"
+  ],
+  "checks": {
+    "sourceAndOutputSHA": true,
+    "trueAlphaBorders": true,
+    "nativePixelsPreserved": true,
+    "pngWebpRGBAEqual": true,
+    "neutralHeightFromReviewedHeadFoot": true,
+    "allGuardiansMelee": true
+  },
+  "entries": [
+    {
+      "key": "adv2_thief_A2_f",
+      "classPath": "A2",
+      "gender": "f",
+      "name": "毒刃刺客",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "attack-0-5.png": "70f1926c97c89a3a18493341145be5f04470c937972e4a629af888c29ffa4509",
+        "attack-6-11.png": "2cc37cc2c159a07d3600df1fb16327e25d485d1bc3301fde01734feecd14f1f6"
+      },
+      "outputsSHA256": {
+        "hero.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "portrait.png": "9e29d8da97d217431bd2cab51ea6141903b9cdde4c2cd1a5b2f926942afa2a58",
+        "character.png": "f544a51c4a6465a1c2ea0de8c866eb975336fe132dd86f1ff902f23b2e60e089",
+        "character.webp": "0ac72a5c9ce56ccbebe379a06d7a8ebdd191ed8c91b9ec6c772a34bf3551aa11"
+      },
+      "heightScale": 1.415719696969697,
+      "neutralBodyBoundsPx": [
+        180,
+        160,
+        460,
+        600
+      ],
+      "rootPortraitAccepted": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv2_thief_A2_f/fragment.json"
+    },
+    {
+      "key": "adv2_thief_A2_m",
+      "classPath": "A2",
+      "gender": "m",
+      "name": "毒刃刺客",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "attack-0-5.png": "ea90d07d0624f158418252c9b94004b8ea5fde8337f8aed3160a2b4edd05f489",
+        "attack-6-11.png": "48d5eb134eea2beeeb3a832224f37a61837cbca84b821e41fc54f43ef421075a"
+      },
+      "outputsSHA256": {
+        "hero.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "portrait.png": "5934b5152eabe60948bb2ad09cf350276d9bb0797425edd6914412a46c82fc27",
+        "character.png": "fbfa7fba79ee52b3afbfa6e652710cf113695da6d5f3bec569e4fe33a26a61bf",
+        "character.webp": "14eec02675fbb5b7657070f675bb29507073dd3da6b4a3a3c9078ce797de2ee6"
+      },
+      "heightScale": 1.4515186915887852,
+      "neutralBodyBoundsPx": [
+        195,
+        172,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": true,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv2_thief_A2_m/fragment.json"
+    },
+    {
+      "key": "adv3_thief_A21_f",
+      "classPath": "A21",
+      "gender": "f",
+      "name": "蝕毒煉師",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "attack-0-5.png": "e9ebe82f37ce6d7bd0f4aed1e5ba8226009eae201452b3f7fb996522e14f6eb2",
+        "attack-6-11.png": "667ee8ce0d85f9792094bc21f794ed748d1fcfc53547f2f44d8410bb275a0701"
+      },
+      "outputsSHA256": {
+        "hero.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "portrait.png": "6d47e2b0fd0442416bdd5084f26de7eb4a04eaef52091102ca62c0b0c1b11248",
+        "character.png": "6122efdf4b7120f10a8fb97deb53905c11d41abfd90d288539d62c9a4dc1ddcf",
+        "character.webp": "53c40f37fbc494e0b904ff3b7f864832ed5cc6d082c1038883cfb2dbf971c95c"
+      },
+      "heightScale": 1.3097787294789436,
+      "neutralBodyBoundsPx": [
+        180,
+        133,
+        480,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv3_thief_A21_f/fragment.json"
+    },
+    {
+      "key": "adv3_thief_A21_m",
+      "classPath": "A21",
+      "gender": "m",
+      "name": "蝕毒煉師",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "attack-0-5.png": "391ff49673ef3829d70a10b16bd04fbe59b2d27e8d77011303a1226b19c64115",
+        "attack-6-11.png": "f54c9335d5d9debcd71befea97498730802b442e8c2f44f99b364dea00781174"
+      },
+      "outputsSHA256": {
+        "hero.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "portrait.png": "7663b7f1369ab680331d75579fb9fad079f5f6b1d9197ee751c708019838bf49",
+        "character.png": "fb268b0aa0db72c42e3ae102e2620db08885c31fd33259083db095a392c155ad",
+        "character.webp": "0d83f0074208258740c339f5a5bd967cc7f192642e40dffbb1fffb31b8d5d054"
+      },
+      "heightScale": 1.4476246105919004,
+      "neutralBodyBoundsPx": [
+        180,
+        172,
+        460,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv3_thief_A21_m/fragment.json"
+    },
+    {
+      "key": "adv3_thief_A22_f",
+      "classPath": "A22",
+      "gender": "f",
+      "name": "血棘獵手",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "attack-0-5.png": "07e60c9206bc2b3a0022223fab2264e825f6f9aae58279ebbc1b6a9443aeecc5",
+        "attack-6-11.png": "494d5f061513932cdb8d23f2f64c443257598938acca15b2fe250f96278a2cc4"
+      },
+      "outputsSHA256": {
+        "hero.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "portrait.png": "2dacbb7747aabf77ec8f0f6f14c04abedc1565c824ad60e54cfdd25d604aa9b3",
+        "character.png": "f37482d39dec179ded62578c7cd7af6f80380b2fe0c816a9093cfa5f1fea0c7b",
+        "character.webp": "988ef77b7d664a6bd9eb54ee139b5209e414883c3a8d3cc47e827edb9b674363"
+      },
+      "heightScale": 1.3401875901875901,
+      "neutralBodyBoundsPx": [
+        190,
+        138,
+        450,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv3_thief_A22_f/fragment.json"
+    },
+    {
+      "key": "adv3_thief_A22_m",
+      "classPath": "A22",
+      "gender": "m",
+      "name": "血棘獵手",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "attack-0-5.png": "37939689139f7f35e5b6a3c4f47dee648b4de06123492273a2df34080fb74062",
+        "attack-6-11.png": "f30e1e2d5a57d4418b0302ef76e62eb3eddeeaae70d32d92de1a5c0241e2a71c"
+      },
+      "outputsSHA256": {
+        "hero.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "portrait.png": "6abfa8a4185e2394530b32d01bce5eb8e049f7967bc832e09c04b1c1960ebe2a",
+        "character.png": "75a77dea94205811ab5da1402008a262a2667f7d2b9bbc3e9cdf8bb8cb3d5be6",
+        "character.webp": "c6c498e3c43205d2a5266b1d214dd0720e4e175b8c0dcbfc009f3ff8b8f962c5"
+      },
+      "heightScale": 1.5375,
+      "neutralBodyBoundsPx": [
+        185,
+        200,
+        465,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv3_thief_A22_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A211_f",
+      "classPath": "A211",
+      "gender": "f",
+      "name": "九首毒刃",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "attack-0-5.png": "00c20d39bb2d0eebdeb515149ca67b68f4986f2e12dcb92f250a18851715530d",
+        "attack-6-11.png": "017fc3fd6855dcfc2ec7b2e0baa521ebe09881a5095d508757cd26d9f8303006"
+      },
+      "outputsSHA256": {
+        "hero.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "portrait.png": "bce91fcd9a7d2622f07ed5ac71ea2c177488e67648edb1308af777276a8a0103",
+        "character.png": "9423d332f46a2e86c47d0612306fe41ebac3bf291076615e0d0274a7a868e03e",
+        "character.webp": "45d83c5424b171a2ac7e51d3622ee9df89a1d89cdca3f99ccec5be52881f5d5b"
+      },
+      "heightScale": 1.4212328767123288,
+      "neutralBodyBoundsPx": [
+        200,
+        162,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A211_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A211_m",
+      "classPath": "A211",
+      "gender": "m",
+      "name": "九首毒刃",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "attack-0-5.png": "c1ee2166cd84bf0e8afd33664e9dd64e4ebd1bb183755539a8e2f9eeb77066d5",
+        "attack-6-11.png": "298e555ecf9e3236036dab46a0e781f3da67053b6f61e3bb54ca754f14f93d36"
+      },
+      "outputsSHA256": {
+        "hero.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "portrait.png": "fa160bb87c4eef03c7a3f68145252a6a12d1e7c673b501213f5bd6e907490527",
+        "character.png": "16f8cbea937006d4645dbc56d9508c11ff394ddb71c78f600683ad36108c02e3",
+        "character.webp": "7ee580f7edfac18290dd9dab054b2a122f8a99c29121cf6ceb5ffba146231f4b"
+      },
+      "heightScale": 1.39894419306184,
+      "neutralBodyBoundsPx": [
+        185,
+        158,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A211_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A212_f",
+      "classPath": "A212",
+      "gender": "f",
+      "name": "冥蛇使徒",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "attack-0-5.png": "9b2b76135a5946e96842c5a67a7ff88a11365a8ccc4557206bd610664be24c97",
+        "attack-6-11.png": "47a75c2f0da4a460a3b97b44f16eb88a87cf43a03073e8242e6b85f2dafca423"
+      },
+      "outputsSHA256": {
+        "hero.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "portrait.png": "424176524a4a88f17928ce912a9a8f7db58be4db9c6dc7de4fb2a72916911feb",
+        "character.png": "1aaf4889cb2de17b8b3b8fe54624e1963c90fcfaf2ea4f09eeced5835c2ff136",
+        "character.webp": "c99beebf3a7046f9f663f3f5cb1dfa0289a86a2c01b877efbda649e97678c6bc"
+      },
+      "heightScale": 1.5651172529313235,
+      "neutralBodyBoundsPx": [
+        200,
+        202,
+        430,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A212_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A212_m",
+      "classPath": "A212",
+      "gender": "m",
+      "name": "冥蛇使徒",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "attack-0-5.png": "8eca2e531b9b51fe584f91eeca2450e0d748ff305216e40df58ffb12eec6736d",
+        "attack-6-11.png": "1a2019ca93495f6fa3523e6bf49b985ae13abb6ab8e78f6d92ce72621228b154"
+      },
+      "outputsSHA256": {
+        "hero.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "portrait.png": "15e608aae5562c235c377dcc04792ed6285ed0cf40ea41d2925c541cd650a36a",
+        "character.png": "30dea20cf5b642c6ba2c4cfac1d33297a0e683027453aa6b295d55c378e33bea",
+        "character.webp": "2a673c0efb08fd13d6ca0d9b4e8cf3251519ef79667e614477c9adefb59b107c"
+      },
+      "heightScale": 1.3869863013698631,
+      "neutralBodyBoundsPx": [
+        195,
+        162,
+        460,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A212_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A221_f",
+      "classPath": "A221",
+      "gender": "f",
+      "name": "血棘君主",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "attack-0-5.png": "3c0351f806cd820f8ff77e782b0aa5facbb634ecccb498c76318e2ee70f9f927",
+        "attack-6-11.png": "f71cd363962603c80019c5073ca6dd3ed1f8bdcfd03449cec5e09c3179b3b367"
+      },
+      "outputsSHA256": {
+        "hero.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "portrait.png": "fec1511bbea4881fb599d6209dd4afe22339b4d718d34a2300208d5af3859497",
+        "character.png": "1f866b59e94172a905d68f87bd696cb1d78f4b402dde1b0332c08265820c9411",
+        "character.webp": "1e0d431c9fc5eaad4adffd689df74654cb9b600371570e8bc86293cfadf35888"
+      },
+      "heightScale": 1.446192696192696,
+      "neutralBodyBoundsPx": [
+        180,
+        171,
+        445,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A221_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A221_m",
+      "classPath": "A221",
+      "gender": "m",
+      "name": "血棘君主",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "attack-0-5.png": "9cc42cbdef283b07c878d961e7fc194214fc31e334e3ccb4df93b712e0c7c1ed",
+        "attack-6-11.png": "3075b08917f6c159b8f8f0f5d0d217b810a5c6f930e7fdca2ac9c96e000e7d14"
+      },
+      "outputsSHA256": {
+        "hero.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "portrait.png": "b862feeaa1444843cee005523d6f7bdb5193a95600b20eea834e2888b4bd3d3b",
+        "character.png": "b4478a50d576311ac7874c5d5eef280a5be1727da0ed87a8abb3623e5dfe00f8",
+        "character.webp": "56ef88b29a1e502ed08d3b0688c1b4b9cd123678b1796128df554177e90a002b"
+      },
+      "heightScale": 1.5243652743652745,
+      "neutralBodyBoundsPx": [
+        185,
+        193,
+        440,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A221_m/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A222_f",
+      "classPath": "A222",
+      "gender": "f",
+      "name": "蝕魂收割者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "attack-0-5.png": "e78be199a3fd7464f9bd9b1ded4de11ac8d05c719736e3182d37de729bd1dcbf",
+        "attack-6-11.png": "cf0788f1474e3c0896e8156ddeafa7ba569e436c4a0c9f2b128d16a300c01aa6"
+      },
+      "outputsSHA256": {
+        "hero.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "portrait.png": "a5e9e8e47b1a46583109302874c0af85620698b23d5233c53187f4be53784b78",
+        "character.png": "8969132d5372bd33d9113d7baaebdec46a7f1c538fd1bc0228f325a916759305",
+        "character.webp": "74161fc4f7b5b3797da4067c838fecb823ed8867bbcf4c80931bbff59dde60bf"
+      },
+      "heightScale": 1.3941947565543071,
+      "neutralBodyBoundsPx": [
+        190,
+        155,
+        440,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A222_f/fragment.json"
+    },
+    {
+      "key": "adv4_thief_A222_m",
+      "classPath": "A222",
+      "gender": "m",
+      "name": "蝕魂收割者",
+      "packing": "PASS",
+      "sourceSHA256": {
+        "hero.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "attack-0-5.png": "925945b9ed50bf589cf79b76e015fd36dbb25dfe5772d444c68caac52abe37ed",
+        "attack-6-11.png": "d35ca55ae8137a605fef585d93ac6d401bbf27f070b4c9fc7c40af063123a34e"
+      },
+      "outputsSHA256": {
+        "hero.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "portrait.png": "378ce83c3c42aa6d730703ef4b2c976114763efa734a8a74ecc077638479fab3",
+        "character.png": "d7f63c9adc4b234de9b90d8f5aff46e52760bcc9eb78316db1a02fa8640ade2a",
+        "character.webp": "e4e06b615056bc091950c80c1cbdd704bdcbe26f42e1703313c7f33e105b2012"
+      },
+      "heightScale": 1.4394818252126835,
+      "neutralBodyBoundsPx": [
+        185,
+        169,
+        450,
+        600
+      ],
+      "rootPortraitAccepted": false,
+      "visualAccepted": false,
+      "runtimeAccepted": false,
+      "fragment": "docs/thief/art-A2/adv4_thief_A222_m/fragment.json"
+    }
+  ]
+}

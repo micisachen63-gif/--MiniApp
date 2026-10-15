@@ -1,0 +1,15 @@
+B2 幻刃家族原生美術交接
+範圍：B2/B21/B22/B211/B212/B221/B222，各男女，共 14 身份。
+每身份：獨立 1024x1536 portrait/hero 來源；兩張 1536x1024、每張六個原生不同動作；4x3、640 cell 的 12 格 atlas。
+品質證據：family-review.json / fragments.json；每身份 layout.json、native-pack.json、visual-review.json、三份 prompt 與 sourceSHA256。
+每份動畫使用完整原生像素 crop + integer translation，不 resize、拉伸、補像素、修手或去背。PNG 與 lossless exact WebP 的 RGBA 逐像素一致。
+動作順序：0備戰、1蓄勢、2跨步、3突刺前置、4低斬、5上切、6鏡刃釋放、7延伸、8交叉斬、9轉身、10回收、11收勢；不是相同站姿重複貼圖。
+共用造型：希臘半寫實成年人類、正常人耳、輕皮甲、雙手各一短刃、藍紫色小型鏡片魔法。沒有法杖、巨翼、第三手、天使或重複幽靈人物。
+尺寸：neutralBodyBoundsPx 手標第0格頭腳與腳部橫向範圍，不含刀光。bodyBounds/frameFig = px/640；heightScale 由 portrait 的 heroBounds 高度除以第0格 bodyBounds 高度算出；useAsIdle=false。每格腳底600，保留姿態弓步/收腿自然變化。實際欄位尺寸與守護天使頭頂位置需主視窗整合驗證。
+所有 guardianCategory=melee；所有 normalFx.kind=pierce；skillFx.kind=mirror。沒有改 shared registry/app 或正式開放閘門。
+qa-dark.jpg 與 qa-light.jpg 是僅供檢視的真 alpha 合成圖。部分圖片檢視器直接顯示透明像素所存 RGB，會看見矩形色霧；以 alpha 合成證據為準，production RGBA 沒有改寫。
+不合格來源留原檔與拒絕理由於各資料夾 rejected 檔名，包括透明 gutter 不足、相鄰格干擾、尺寸/衣裝不符；未進 public atlas。
+本次最後重生 B222 男 attack-0-5：原圖 top row 靴子與 bottom row 刀光無透明橫向 gutter，已重新原生生成後通過完整裁切。
+作者視審與 native packing 通過不代表 runtime 事件已驗證。B2 女主視窗先前已確認12格可接受；其餘 rootVisualReview pending，所有 runtimeActualEventVerified=false。正式 release gate 保持 false。
+重現：用具 Pillow/numpy 的 bundled Python 執行 docs/thief/art-B2/verify-and-repack.py，直接讀最終 canonical layout，會完整重打包、驗證 SHA/168格獨特性/像素與 metadata，再輸出14份 fragments。
+

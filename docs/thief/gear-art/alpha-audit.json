@@ -1,0 +1,2962 @@
+{
+  "status": "metrics-complete-pending-visual",
+  "assets": [
+    {
+      "src": "art/v2/wpn_sword.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.872955322265625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        17,
+        33,
+        238,
+        223
+      ],
+      "uses": [
+        {
+          "name": "月桂短匕",
+          "tier": 1,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "雅典短匕",
+          "tier": 2,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "雅典交錯雙匕",
+          "tier": 2,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "聖林短匕",
+          "tier": 3,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "聖林交錯雙匕",
+          "tier": 3,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "海神短匕",
+          "tier": 4,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "海神交錯雙匕",
+          "tier": 4,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "迷宮短匕",
+          "tier": 5,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "迷宮交錯雙匕",
+          "tier": 5,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "熔爐短匕",
+          "tier": 6,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "熔爐交錯雙匕",
+          "tier": 6,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "冥河短匕",
+          "tier": 7,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "冥河交錯雙匕",
+          "tier": 7,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "神諭短匕",
+          "tier": 8,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "神諭交錯雙匕",
+          "tier": 8,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "泰坦短匕",
+          "tier": 9,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "泰坦交錯雙匕",
+          "tier": 9,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "雲門短匕",
+          "tier": 10,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "雲門交錯雙匕",
+          "tier": 10,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "至福短匕",
+          "tier": 11,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "至福交錯雙匕",
+          "tier": 11,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "星穹短匕",
+          "tier": 12,
+          "slot": "weapon",
+          "branch": null
+        },
+        {
+          "name": "星穹交錯雙匕",
+          "tier": 12,
+          "slot": "weapon",
+          "branch": "A"
+        },
+        {
+          "name": "雅典迴旋飛刃",
+          "tier": 2,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "聖林迴旋飛刃",
+          "tier": 3,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "海神迴旋飛刃",
+          "tier": 4,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "迷宮迴旋飛刃",
+          "tier": 5,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "熔爐迴旋飛刃",
+          "tier": 6,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "冥河迴旋飛刃",
+          "tier": 7,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "神諭迴旋飛刃",
+          "tier": 8,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "泰坦迴旋飛刃",
+          "tier": 9,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "雲門迴旋飛刃",
+          "tier": 10,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "至福迴旋飛刃",
+          "tier": 11,
+          "slot": "weapon",
+          "branch": "B"
+        },
+        {
+          "name": "星穹迴旋飛刃",
+          "tier": 12,
+          "slot": "weapon",
+          "branch": "B"
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/helm_leather.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.54571533203125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        23,
+        17,
+        232,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂夜行兜帽",
+          "tier": 1,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "雅典夜行兜帽",
+          "tier": 2,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "聖林夜行兜帽",
+          "tier": 3,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "海神夜行兜帽",
+          "tier": 4,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "迷宮夜行兜帽",
+          "tier": 5,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "熔爐夜行兜帽",
+          "tier": 6,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "冥河夜行兜帽",
+          "tier": 7,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "神諭夜行兜帽",
+          "tier": 8,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "泰坦夜行兜帽",
+          "tier": 9,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "雲門夜行兜帽",
+          "tier": 10,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "至福夜行兜帽",
+          "tier": 11,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "星穹夜行兜帽",
+          "tier": 12,
+          "slot": "helmet",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/helm_plate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6408233642578125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        51,
+        17,
+        204,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂夜行兜帽",
+          "tier": 1,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "雅典夜行兜帽",
+          "tier": 2,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "聖林夜行兜帽",
+          "tier": 3,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "海神夜行兜帽",
+          "tier": 4,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "迷宮夜行兜帽",
+          "tier": 5,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "熔爐夜行兜帽",
+          "tier": 6,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "冥河夜行兜帽",
+          "tier": 7,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "神諭夜行兜帽",
+          "tier": 8,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "泰坦夜行兜帽",
+          "tier": 9,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "雲門夜行兜帽",
+          "tier": 10,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "至福夜行兜帽",
+          "tier": 11,
+          "slot": "helmet",
+          "branch": null
+        },
+        {
+          "name": "星穹夜行兜帽",
+          "tier": 12,
+          "slot": "helmet",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/arm_leather.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6274566650390625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        51,
+        17,
+        205,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂盜賊輕甲",
+          "tier": 1,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "雅典盜賊輕甲",
+          "tier": 2,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "聖林盜賊輕甲",
+          "tier": 3,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "海神盜賊輕甲",
+          "tier": 4,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "迷宮盜賊輕甲",
+          "tier": 5,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "熔爐盜賊輕甲",
+          "tier": 6,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "冥河盜賊輕甲",
+          "tier": 7,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "神諭盜賊輕甲",
+          "tier": 8,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "泰坦盜賊輕甲",
+          "tier": 9,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "雲門盜賊輕甲",
+          "tier": 10,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "至福盜賊輕甲",
+          "tier": 11,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "星穹盜賊輕甲",
+          "tier": 12,
+          "slot": "armor",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/arm_plate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.586334228515625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        36,
+        17,
+        220,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂盜賊輕甲",
+          "tier": 1,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "雅典盜賊輕甲",
+          "tier": 2,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "聖林盜賊輕甲",
+          "tier": 3,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "海神盜賊輕甲",
+          "tier": 4,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "迷宮盜賊輕甲",
+          "tier": 5,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "熔爐盜賊輕甲",
+          "tier": 6,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "冥河盜賊輕甲",
+          "tier": 7,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "神諭盜賊輕甲",
+          "tier": 8,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "泰坦盜賊輕甲",
+          "tier": 9,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "雲門盜賊輕甲",
+          "tier": 10,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "至福盜賊輕甲",
+          "tier": 11,
+          "slot": "armor",
+          "branch": null
+        },
+        {
+          "name": "星穹盜賊輕甲",
+          "tier": 12,
+          "slot": "armor",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gloves_leather.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6247100830078125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        17,
+        44,
+        238,
+        212
+      ],
+      "uses": [
+        {
+          "name": "月桂輕革護手",
+          "tier": 1,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "雅典輕革護手",
+          "tier": 2,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "聖林輕革護手",
+          "tier": 3,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "海神輕革護手",
+          "tier": 4,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "迷宮輕革護手",
+          "tier": 5,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "熔爐輕革護手",
+          "tier": 6,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "冥河輕革護手",
+          "tier": 7,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "神諭輕革護手",
+          "tier": 8,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "泰坦輕革護手",
+          "tier": 9,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "雲門輕革護手",
+          "tier": 10,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "至福輕革護手",
+          "tier": 11,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "星穹輕革護手",
+          "tier": 12,
+          "slot": "gloves",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gloves_plate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.5904388427734375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        17,
+        30,
+        238,
+        225
+      ],
+      "uses": [
+        {
+          "name": "月桂輕革護手",
+          "tier": 1,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "雅典輕革護手",
+          "tier": 2,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "聖林輕革護手",
+          "tier": 3,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "海神輕革護手",
+          "tier": 4,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "迷宮輕革護手",
+          "tier": 5,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "熔爐輕革護手",
+          "tier": 6,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "冥河輕革護手",
+          "tier": 7,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "神諭輕革護手",
+          "tier": 8,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "泰坦輕革護手",
+          "tier": 9,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "雲門輕革護手",
+          "tier": 10,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "至福輕革護手",
+          "tier": 11,
+          "slot": "gloves",
+          "branch": null
+        },
+        {
+          "name": "星穹輕革護手",
+          "tier": 12,
+          "slot": "gloves",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/boots_leather.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.521270751953125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        20,
+        17,
+        235,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂軟底短靴",
+          "tier": 1,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "雅典軟底短靴",
+          "tier": 2,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "聖林軟底短靴",
+          "tier": 3,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "海神軟底短靴",
+          "tier": 4,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "迷宮軟底短靴",
+          "tier": 5,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "熔爐軟底短靴",
+          "tier": 6,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "冥河軟底短靴",
+          "tier": 7,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "神諭軟底短靴",
+          "tier": 8,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "泰坦軟底短靴",
+          "tier": 9,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "雲門軟底短靴",
+          "tier": 10,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "至福軟底短靴",
+          "tier": 11,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "星穹軟底短靴",
+          "tier": 12,
+          "slot": "boots",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/boots_plate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.659393310546875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        20,
+        17,
+        236,
+        238
+      ],
+      "uses": [
+        {
+          "name": "月桂軟底短靴",
+          "tier": 1,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "雅典軟底短靴",
+          "tier": 2,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "聖林軟底短靴",
+          "tier": 3,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "海神軟底短靴",
+          "tier": 4,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "迷宮軟底短靴",
+          "tier": 5,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "熔爐軟底短靴",
+          "tier": 6,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "冥河軟底短靴",
+          "tier": 7,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "神諭軟底短靴",
+          "tier": 8,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "泰坦軟底短靴",
+          "tier": 9,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "雲門軟底短靴",
+          "tier": 10,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "至福軟底短靴",
+          "tier": 11,
+          "slot": "boots",
+          "branch": null
+        },
+        {
+          "name": "星穹軟底短靴",
+          "tier": 12,
+          "slot": "boots",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_laurel.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6048736572265625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        21,
+        240,
+        235
+      ],
+      "uses": [
+        {
+          "name": "月桂編織腰帶",
+          "tier": 1,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "月桂編織腰帶",
+          "tier": 1,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_laurel.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.339996337890625,
+      "borderOpaqueFraction": 0.00390625,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        2,
+        0,
+        254,
+        256
+      ],
+      "uses": [
+        {
+          "name": "月桂亞麻內衣",
+          "tier": 1,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "月桂亞麻內衣",
+          "tier": 1,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_laurel.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.72454833984375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        41,
+        0,
+        214,
+        256
+      ],
+      "uses": [
+        {
+          "name": "月桂葉耳飾",
+          "tier": 1,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "月桂葉耳飾",
+          "tier": 1,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_laurel.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.589752197265625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        21,
+        240,
+        235
+      ],
+      "uses": [
+        {
+          "name": "月桂枝戒",
+          "tier": 1,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "月桂枝戒",
+          "tier": 1,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_athena.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6520538330078125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        59,
+        240,
+        196
+      ],
+      "uses": [
+        {
+          "name": "雅典神殿皮帶",
+          "tier": 2,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "雅典神殿皮帶",
+          "tier": 2,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_athena.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.311553955078125,
+      "borderOpaqueFraction": 0.0029296875,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        0,
+        5,
+        256,
+        250
+      ],
+      "uses": [
+        {
+          "name": "雅典絲織內衣",
+          "tier": 2,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "雅典絲織內衣",
+          "tier": 2,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_athena.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.688262939453125,
+      "borderOpaqueFraction": 0.0048828125,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        26,
+        0,
+        230,
+        256
+      ],
+      "uses": [
+        {
+          "name": "雅典石玉耳墜",
+          "tier": 2,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "雅典石玉耳墜",
+          "tier": 2,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_athena.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.4611663818359375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        18,
+        16,
+        238,
+        240
+      ],
+      "uses": [
+        {
+          "name": "雅典銀印戒",
+          "tier": 2,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "雅典銀印戒",
+          "tier": 2,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_sacred.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.59527587890625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        17,
+        240,
+        238
+      ],
+      "uses": [
+        {
+          "name": "聖林精靈腰帶",
+          "tier": 3,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "聖林精靈腰帶",
+          "tier": 3,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_sacred.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.3374176025390625,
+      "borderOpaqueFraction": 0.00390625,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        0,
+        15,
+        256,
+        241
+      ],
+      "uses": [
+        {
+          "name": "聖林木棉內衣",
+          "tier": 3,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "聖林木棉內衣",
+          "tier": 3,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_sacred.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6933441162109375,
+      "borderOpaqueFraction": 0.00390625,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        32,
+        0,
+        223,
+        256
+      ],
+      "uses": [
+        {
+          "name": "聖林泉水耳墜",
+          "tier": 3,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "聖林泉水耳墜",
+          "tier": 3,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_sacred.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.5854034423828125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        17,
+        16,
+        239,
+        240
+      ],
+      "uses": [
+        {
+          "name": "聖林翡翠戒",
+          "tier": 3,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "聖林翡翠戒",
+          "tier": 3,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_poseidon.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.5860748291015625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        38,
+        240,
+        218
+      ],
+      "uses": [
+        {
+          "name": "海神波濤腰帶",
+          "tier": 4,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "海神波濤腰帶",
+          "tier": 4,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_poseidon.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.2225341796875,
+      "borderOpaqueFraction": 0.001953125,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        8,
+        0,
+        247,
+        256
+      ],
+      "uses": [
+        {
+          "name": "海神鱗紋內衣",
+          "tier": 4,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "海神鱗紋內衣",
+          "tier": 4,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_poseidon.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6579132080078125,
+      "borderOpaqueFraction": 0.0126953125,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        36,
+        0,
+        220,
+        256
+      ],
+      "uses": [
+        {
+          "name": "海神珍珠耳墜",
+          "tier": 4,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "海神珍珠耳墜",
+          "tier": 4,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_poseidon.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6517181396484375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        40,
+        16,
+        215,
+        240
+      ],
+      "uses": [
+        {
+          "name": "海神珊瑚戒",
+          "tier": 4,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "海神珊瑚戒",
+          "tier": 4,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_labyrinth.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.66650390625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        63,
+        240,
+        193
+      ],
+      "uses": [
+        {
+          "name": "迷宮牛皮腰帶",
+          "tier": 5,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "迷宮牛皮腰帶",
+          "tier": 5,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_labyrinth.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.4969024658203125,
+      "borderOpaqueFraction": 0.0009765625,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        27,
+        0,
+        229,
+        256
+      ],
+      "uses": [
+        {
+          "name": "迷宮密織內衣",
+          "tier": 5,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "迷宮密織內衣",
+          "tier": 5,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_labyrinth.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.8540802001953125,
+      "borderOpaqueFraction": 0.0009765625,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        82,
+        0,
+        174,
+        256
+      ],
+      "uses": [
+        {
+          "name": "迷宮秘石耳環",
+          "tier": 5,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "迷宮秘石耳環",
+          "tier": 5,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_labyrinth.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.4642791748046875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        19,
+        240,
+        236
+      ],
+      "uses": [
+        {
+          "name": "迷宮紋章戒",
+          "tier": 5,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "迷宮紋章戒",
+          "tier": 5,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_forge.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6705474853515625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        64,
+        240,
+        192
+      ],
+      "uses": [
+        {
+          "name": "熔爐鍛鐵腰帶",
+          "tier": 6,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "熔爐鍛鐵腰帶",
+          "tier": 6,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_forge.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6188812255859375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        52,
+        16,
+        203,
+        240
+      ],
+      "uses": [
+        {
+          "name": "熔爐抗火內衣",
+          "tier": 6,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "熔爐抗火內衣",
+          "tier": 6,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_forge.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.7267608642578125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        24,
+        16,
+        232,
+        240
+      ],
+      "uses": [
+        {
+          "name": "熔爐火晶耳墜",
+          "tier": 6,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "熔爐火晶耳墜",
+          "tier": 6,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_forge.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.528533935546875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        18,
+        16,
+        238,
+        240
+      ],
+      "uses": [
+        {
+          "name": "熔爐赤銅戒",
+          "tier": 6,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "熔爐赤銅戒",
+          "tier": 6,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_styx.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.64324951171875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        45,
+        240,
+        211
+      ],
+      "uses": [
+        {
+          "name": "冥河幽魂腰帶",
+          "tier": 7,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "冥河幽魂腰帶",
+          "tier": 7,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_styx.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6137237548828125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        16,
+        216,
+        240
+      ],
+      "uses": [
+        {
+          "name": "冥河陰影內衣",
+          "tier": 7,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "冥河陰影內衣",
+          "tier": 7,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_styx.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.80828857421875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        56,
+        16,
+        199,
+        240
+      ],
+      "uses": [
+        {
+          "name": "冥河黑曜耳墜",
+          "tier": 7,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "冥河黑曜耳墜",
+          "tier": 7,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_styx.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.49676513671875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        16,
+        239,
+        240
+      ],
+      "uses": [
+        {
+          "name": "冥河渡魂戒",
+          "tier": 7,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "冥河渡魂戒",
+          "tier": 7,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_oracle.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.7021636962890625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        52,
+        240,
+        203
+      ],
+      "uses": [
+        {
+          "name": "神諭秘銀腰帶",
+          "tier": 8,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "神諭秘銀腰帶",
+          "tier": 8,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_oracle.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.644622802734375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        47,
+        16,
+        209,
+        240
+      ],
+      "uses": [
+        {
+          "name": "神諭祈福內衣",
+          "tier": 8,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "神諭祈福內衣",
+          "tier": 8,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_oracle.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.7274627685546875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        27,
+        16,
+        228,
+        240
+      ],
+      "uses": [
+        {
+          "name": "神諭日輝耳飾",
+          "tier": 8,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "神諭日輝耳飾",
+          "tier": 8,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_oracle.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6256256103515625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        28,
+        16,
+        228,
+        240
+      ],
+      "uses": [
+        {
+          "name": "神諭光芒戒",
+          "tier": 8,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "神諭光芒戒",
+          "tier": 8,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_titan.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.66650390625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        61,
+        240,
+        195
+      ],
+      "uses": [
+        {
+          "name": "泰坦巨力腰帶",
+          "tier": 9,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "泰坦巨力腰帶",
+          "tier": 9,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_titan.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6450958251953125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        58,
+        16,
+        197,
+        240
+      ],
+      "uses": [
+        {
+          "name": "泰坦韌絲內衣",
+          "tier": 9,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "泰坦韌絲內衣",
+          "tier": 9,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_titan.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.7156982421875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        34,
+        16,
+        221,
+        240
+      ],
+      "uses": [
+        {
+          "name": "泰坦琥珀耳環",
+          "tier": 9,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "泰坦琥珀耳環",
+          "tier": 9,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_titan.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.5732574462890625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        27,
+        16,
+        229,
+        240
+      ],
+      "uses": [
+        {
+          "name": "泰坦玄岩戒",
+          "tier": 9,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "泰坦玄岩戒",
+          "tier": 9,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_cloudgate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.68560791015625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        52,
+        240,
+        204
+      ],
+      "uses": [
+        {
+          "name": "雲門天境腰帶",
+          "tier": 10,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "雲門天境腰帶",
+          "tier": 10,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_cloudgate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.656890869140625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        16,
+        217,
+        240
+      ],
+      "uses": [
+        {
+          "name": "雲門霞光內衣",
+          "tier": 10,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "雲門霞光內衣",
+          "tier": 10,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_cloudgate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.75201416015625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        25,
+        16,
+        231,
+        240
+      ],
+      "uses": [
+        {
+          "name": "雲門天羽耳墜",
+          "tier": 10,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "雲門天羽耳墜",
+          "tier": 10,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_cloudgate.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6005859375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        20,
+        16,
+        236,
+        240
+      ],
+      "uses": [
+        {
+          "name": "雲門白雲戒",
+          "tier": 10,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "雲門白雲戒",
+          "tier": 10,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_elysium.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6622314453125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        56,
+        240,
+        199
+      ],
+      "uses": [
+        {
+          "name": "至福純金腰帶",
+          "tier": 11,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "至福純金腰帶",
+          "tier": 11,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_elysium.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6454620361328125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        54,
+        16,
+        201,
+        240
+      ],
+      "uses": [
+        {
+          "name": "至福祥瑞內衣",
+          "tier": 11,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "至福祥瑞內衣",
+          "tier": 11,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_elysium.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.745941162109375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        45,
+        16,
+        211,
+        240
+      ],
+      "uses": [
+        {
+          "name": "至福極樂耳墜",
+          "tier": 11,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "至福極樂耳墜",
+          "tier": 11,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_elysium.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.579986572265625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        22,
+        240,
+        233
+      ],
+      "uses": [
+        {
+          "name": "至福英靈戒",
+          "tier": 11,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "至福英靈戒",
+          "tier": 11,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_belt_cosmos.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.69744873046875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        16,
+        47,
+        240,
+        208
+      ],
+      "uses": [
+        {
+          "name": "星穹神輝腰帶",
+          "tier": 12,
+          "slot": "belt",
+          "branch": null
+        },
+        {
+          "name": "星穹神輝腰帶",
+          "tier": 12,
+          "slot": "belt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_undershirt_cosmos.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6601715087890625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        56,
+        16,
+        200,
+        240
+      ],
+      "uses": [
+        {
+          "name": "星穹辰光內衣",
+          "tier": 12,
+          "slot": "undershirt",
+          "branch": null
+        },
+        {
+          "name": "星穹辰光內衣",
+          "tier": 12,
+          "slot": "undershirt",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_earring_cosmos.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.7912750244140625,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        39,
+        16,
+        216,
+        240
+      ],
+      "uses": [
+        {
+          "name": "星穹神星耳環",
+          "tier": 12,
+          "slot": "earring",
+          "branch": null
+        },
+        {
+          "name": "星穹神星耳環",
+          "tier": 12,
+          "slot": "earring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/gear_ring_cosmos.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.602996826171875,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        20,
+        16,
+        235,
+        240
+      ],
+      "uses": [
+        {
+          "name": "星穹永恆戒",
+          "tier": 12,
+          "slot": "ring",
+          "branch": null
+        },
+        {
+          "name": "星穹永恆戒",
+          "tier": 12,
+          "slot": "ring",
+          "branch": null
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/belt.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6150970458984375,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        17,
+        63,
+        238,
+        192
+      ],
+      "uses": [
+        {
+          "slot": "belt",
+          "kind": "legacy generic fallback"
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    },
+    {
+      "src": "art/v2/ring.webp",
+      "size": [
+        256,
+        256
+      ],
+      "mode": "RGBA",
+      "minAlpha": 0,
+      "maxAlpha": 255,
+      "transparentFraction": 0.6073760986328125,
+      "borderOpaqueFraction": 0.0,
+      "cornerAlpha": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "alphaBounds": [
+        18,
+        47,
+        237,
+        208
+      ],
+      "uses": [
+        {
+          "slot": "ring",
+          "kind": "legacy generic fallback"
+        }
+      ],
+      "issue": "alpha-present-visual-review-required"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+{
+  "key": "adv3_thief_A11_m",
+  "skillKind": "execute",
+  "releaseFrameIndex": 6,
+  "neutralBodyBoundsPx": [
+    165,
+    137,
+    455,
+    600
+  ],
+  "frames": [
+    {
+      "sourceRect": [
+        0,
+        0,
+        512,
+        512
+      ],
+      "bodyCenterX": 260,
+      "castAnchorPx": [
+        130,
+        268
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        0,
+        1024,
+        512
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        653,
+        280
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        0,
+        1536,
+        512
+      ],
+      "bodyCenterX": 1280,
+      "castAnchorPx": [
+        1261,
+        150
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        512,
+        516,
+        1024
+      ],
+      "bodyCenterX": 280,
+      "castAnchorPx": [
+        417,
+        641
+      ]
+    },
+    {
+      "sourceRect": [
+        516,
+        512,
+        1041,
+        1024
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        941,
+        654
+      ]
+    },
+    {
+      "sourceRect": [
+        1041,
+        512,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1280,
+      "castAnchorPx": [
+        1348,
+        689
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        0,
+        506,
+        509
+      ],
+      "bodyCenterX": 265,
+      "castAnchorPx": [
+        215,
+        127
+      ]
+    },
+    {
+      "sourceRect": [
+        506,
+        0,
+        1113,
+        509
+      ],
+      "bodyCenterX": 811,
+      "castAnchorPx": [
+        999,
+        239
+      ],
+      "minPackedMarginPx": 19,
+      "marginExceptionReason": "Root-approved 2026-10-15: original native alpha width is 601px, fully preserved in 640px cell with left19/right20px transparent margins. This preserves the authored proportions and complete blade; no crop/resizing. Named exception only for this identity/frame."
+    },
+    {
+      "sourceRect": [
+        1113,
+        0,
+        1536,
+        509
+      ],
+      "bodyCenterX": 1280,
+      "castAnchorPx": [
+        1383,
+        145
+      ]
+    },
+    {
+      "sourceRect": [
+        0,
+        509,
+        512,
+        1024
+      ],
+      "bodyCenterX": 265,
+      "castAnchorPx": [
+        364,
+        717
+      ]
+    },
+    {
+      "sourceRect": [
+        512,
+        509,
+        1024,
+        1024
+      ],
+      "bodyCenterX": 790,
+      "castAnchorPx": [
+        911,
+        779
+      ]
+    },
+    {
+      "sourceRect": [
+        1024,
+        509,
+        1536,
+        1024
+      ],
+      "bodyCenterX": 1275,
+      "castAnchorPx": [
+        1380,
+        764
+      ]
+    }
+  ],
+  "reviewMethod": "Manual torso/head/feet/active blade-hand landmarks from displayed original source; rectangles follow inspected true-alpha gutters; no anatomy inference, resizing or pixel edits.",
+  "neutralBodyLandmarksSourcePx": {
+    "headY": 38,
+    "footY": 501
+  },
+  "neutralBodyBoundsMethod": "Neutral source manually reviewed: hair is topmost alpha>=16, boot sole is bottommost; no overhead or below-foot effects. Exact integer translation snaps head/foot without resampling; horizontal body extent is manual, excluding daggers."
+}

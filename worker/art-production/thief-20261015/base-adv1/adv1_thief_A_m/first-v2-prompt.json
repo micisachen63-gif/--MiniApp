@@ -1,0 +1,7 @@
+{
+  "mode": "built-in image_gen",
+  "prompt": "Use case: precise-object-edit. Edit this six-pose Greek assassin MAN sprite sheet. Preserve the SAME6poses, face, wine-redGreekcloak, charcoalarmor, twohands/twodaggers, fixedscale and1536x1024 layout. CHANGE ONLY excessive white bloom around daggers: replace broad haze with tiny silver blade glints. In upper-right pose, shorten and tuck the rear dagger slightly inward so all blade paint and anyglow ends at least30px before rightedge. Every figure inclweapons has actual clear alpha margin, no crop. Keep fullhead/feet and allotherposeanatomy. Output truealphatransparent background, nofloor/text/UI/grid/border, keep semirealisticpaintedGreekstyle. Do not expand anyfigure or changegender/costume. All6wholefigures must remain separatedbytransparent gutters.",
+  "original": "C:\\Users\\User\\.codex\\generated_images\\01a137f7-1f11-7f73-acbb-6046125807a7\\exec-f4ceb4ab-cc84-407c-9ee3-58af8cbb5437.png",
+  "replaces": "attack-0-5-rejected-edge-bloom.png",
+  "reason": "Original upper-right knife bloom touches the canvas edge; built-in edit shortens/tucks the knife and limits glint."
+}
