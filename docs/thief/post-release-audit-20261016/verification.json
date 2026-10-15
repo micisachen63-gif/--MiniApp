@@ -1,0 +1,48 @@
+{
+  "checkedAt": "2026-10-15T20:09:51.268Z",
+  "baselineCommit": "d34e57b",
+  "mergedLineageCommit": "4f6bc53",
+  "fixCommit": "904b695",
+  "releasedSourceCommit": "ebe6821e81af0317b2bbd8329c47ecca10e0e360",
+  "workerVersion": "207c74de-c19c-4365-b575-2fa1e63a2c2a",
+  "botUnchangedVersion": "1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd",
+  "tests": {
+    "worker": 979,
+    "bot": 77,
+    "failures": 0,
+    "skipped": 0,
+    "todo": 0,
+    "logSHA256": "87efb5d7764823f1f804fe9986fbd7f446b504fe800055101132dd523c1eea59"
+  },
+  "regressionsReproducedBeforeFix": 3,
+  "fixes": [
+    "thief attack reroll target",
+    "thief marketplace class filter",
+    "melee guardian compatibility in candidates and existing listings"
+  ],
+  "browser": {
+    "scope": "Actual market component/CSS, isolated synthetic catalogue; not a repeat of the prior all-character matrix.",
+    "viewportWidth": 375,
+    "overflow": false,
+    "missingImages": 0,
+    "browseThiefSelection": true,
+    "candidateThiefSelection": true,
+    "compatibilityLabel": "劍士／盜賊",
+    "screenshot": "market-thief-mobile.png"
+  },
+  "remaining": {
+    "advancedThiefNodesInheritingSecondTier": 24,
+    "newLevel90And120Books": 0,
+    "groupBossSharedDebuffs": false,
+    "latePartyRoleRequirements": false
+  },
+  "deployment": {
+    "status": "VERIFIED",
+    "publicFiles": 131,
+    "receipt": "../../deployment/elf-rpg-api.json",
+    "readOnlyRecovery": true,
+    "noAdditionalPublication": true,
+    "noSchemaChange": true,
+    "noDirectPlayerMutations": true
+  }
+}

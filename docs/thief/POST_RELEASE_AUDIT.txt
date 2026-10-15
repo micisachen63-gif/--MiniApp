@@ -62,3 +62,11 @@ Node 24.19.0，在倉庫根目錄執行 npm test（或 node scripts/run-tests.mj
 只變更遊戲服務，無需重發 BOT。用共用發布鎖及最新正式收據防止覆蓋其他視窗的合法新版。
 發布不明時先唯讀核對，不可重試覆蓋。驗證工具如遇換行差異，先比對原始收據與 LF／CRLF，勿判定為遊戲功能損毀。
 完整首次上線證據仍保留 docs/thief/release-validation.json；候選期 combat-readiness 等檔案的 false 不代表正式職業被停用。
+
+七、本次發布結果
+本次修正已發布 Worker 207c74de-c19c-4365-b575-2fa1e63a2c2a，發布來源 ebe6821。
+初次發布後讀到上一版靜態檔的換行形式，核對因此中止；保留發布資料後執行唯讀 sync:check:worker。
+後續核對 runtime、131個靜態檔的逐位元組內容與健康狀態全部通過，未重複發布。
+另外比對原始 pending 記錄，確認 DB／DO bindings 與 cron 未變更。
+收據已補入 docs/deployment/elf-rpg-api.json；BOT 保持原發布版本。
+可攜式驗證摘要與手機畫面：docs/thief/post-release-audit-20261016/verification.json、market-thief-mobile.png。
