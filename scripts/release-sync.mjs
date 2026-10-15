@@ -34,7 +34,7 @@ async function state(service,token){
  const bindings=sorted(b.map(x=>{const {text,json,...rest}=x;return {...rest,...(text!==undefined?{valueSHA256:sha(text)}:{}),...(json!==undefined?{valueSHA256:sha(JSON.stringify(json))}:{})}}));
  return {versions:deployment.result.deployments[0].versions,bindings,crons};
 }
-async function modules(service,token){const form=await(await api(service,'content/v2',token)).formData(),out={};for(const [,value]of form)if(typeof value!=='string'&&!value.name.endsWith('.map'))out[value.name]=sha(Buffer.from(await value.arrayBuffer()));assert(Object.keys(out).length,'No live runtime modules');return out}
+async function modules(service,token){const form=await(await api(service,'content/v2',token)).formData(),out={};for(const [,value]of form)if(typeof value!=='string'&&!value.name.endsWith('.map')){const name=value.name.replace(/^(?:\.\/)+/,'');assert(!Object.hasOwn(out,name),'Duplicate live runtime module');out[name]=sha(Buffer.from(await value.arrayBuffer()))}assert(Object.keys(out).length,'No live runtime modules');return out}
 function ready(){
  assert.equal(git('remote','get-url','origin').replace(/\.git$/,''),REPO,'Unexpected GitHub origin');git('fetch','origin','main');
  assert.equal(git('rev-parse','HEAD'),git('rev-parse','origin/main'),'Push this exact source commit to GitHub before checking/deploying');
