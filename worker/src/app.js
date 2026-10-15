@@ -37,7 +37,7 @@ export const APP_ACTIONS = Object.freeze({
   'collection/activate':'/rpg/collection/activate',
   'boss-exchange':'/rpg/boss-exchange',
   me: '/rpg/me', create: '/rpg/create', daily: '/rpg/daily', shop: '/rpg/shop', buy: '/rpg/buy', refill: '/rpg/refill',
-  gacha: '/rpg/gacha', 'buy-gear': '/rpg/buy-gear', 'sell-gear': '/rpg/sell-gear', 'sell-gear-batch': '/rpg/sell-gear-batch', equip: '/rpg/equip', unequip: '/rpg/unequip', settings: '/rpg/settings', advance: '/rpg/advance',
+  gacha: '/rpg/gacha', 'gacha/open': '/rpg/gacha/open', 'buy-gear': '/rpg/buy-gear', 'sell-gear': '/rpg/sell-gear', 'sell-gear-batch': '/rpg/sell-gear-batch', equip: '/rpg/equip', unequip: '/rpg/unequip', settings: '/rpg/settings', advance: '/rpg/advance',
   reselect: '/rpg/reselect', convert: '/rpg/convert', enhance: '/rpg/enhance', reroll: '/rpg/reroll', ledger: '/rpg/ledger',
   unbind: '/rpg/unbind', share: '/rpg/share', 'share/get': '/rpg/share/get',
   'trade/open': '/rpg/trade/open', 'trade/requests': '/rpg/trade/requests', 'trade/accept': '/rpg/trade/accept', 'trade/reject': '/rpg/trade/reject', 'trade/withdraw': '/rpg/trade/withdraw',
