@@ -17,7 +17,7 @@ import {createPkAnimationFlow} from './rpg-pk-animation-flow.js';
 // Callback prefix is "rpg:" (NOT "rp:": relay.js already uses rp:網頁版GPT and its /^r([ascgpm]):/ catch-all would also swallow rp:*).
 
 export const RPG_CALLBACK_RE = /^rpg:([a-zA-Z]{2})(?::([A-Za-z0-9_.-]{1,48}))?$/;
-const START_RE = /^(?:\/rpg(?:@([A-Za-z0-9_]+))?|\/start\s+rpg(?:boss|guardian|bag|shop)?|⚔️ 冒險|⚔️ RPG 冒險)$/i;
+const START_RE = /^(?:\/rpg(?:@([A-Za-z0-9_]+))?|\/start\s+rpg(?:boss|guardian|bag|shop|fate)?|⚔️ 冒險|⚔️ RPG 冒險)$/i;
 const BOSS_START_RE = /^\/start\s+rpgboss$/i;
 const TRADE_START_RE = /^\/start\s+rpg(trade|req|pk)_([tqp][0-9a-f]{11})$/i;
 const TRADE_RE = /^\/(?:交易|trade)(?:@([A-Za-z0-9_]+))?(?:\s+[\s\S]*)?$/i;
@@ -136,7 +136,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   const members = new Map(); const dirty = persistentMap(st,save,'dirtyBoss'); const sdirty = persistentMap(st,save,'dirtyShare');
   const timing=()=>st().cloudTiming??={lastClaim:0,lastPhoto:0}; let lastClaim=timing().lastClaim||0,lastPhoto=timing().lastPhoto||0,ticking=false;
   const warn = (what, error) => log.warn(`rpg ${what}: ${error?.message || error}`);
-  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':(screen==='shop'||screen==='gacha')?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
+  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'fate'?'rpgfate':screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':(screen==='shop'||screen==='gacha')?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
   /** web_app button (private chats only — Telegram rejects web_app inline buttons in groups) */
   const appBtn = (text, screen = '') => (app.url ? { text, web_app: { url: screen ? `${app.url}?screen=${screen}` : app.url } } : null);
   const popup = async (cq, text, alert = true) => { try { await api.call('answerCallbackQuery', { callback_query_id: cq.id, text: String(text).slice(0, 190), show_alert: alert }); } catch (error) { warn('answer', error); } };
@@ -417,7 +417,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       await send(body, a ? { reply_markup: { inline_keyboard: [[a]] } } : {}, msg.chat.id); return { rpg: 'trade-link', kind };
     }
     const partyStart=/^\/start\s+rpgparty_(p[\da-f]{15})$/i.exec(text);if(partyStart)return showMain(msg.chat.id,msg.from,null,'',`party_${partyStart[1]}`);
-    if (START_RE.test(text)) return showMain(msg.chat.id, msg.from, null, '', /^\/start\s+rpgguardian$/i.test(text)?'guardian':/^\/start\s+rpgbag$/i.test(text)?'bag':/^\/start\s+rpgshop$/i.test(text)?'shop':BOSS_START_RE.test(text) ? 'boss' : '');
+    if (START_RE.test(text)) return showMain(msg.chat.id, msg.from, null, '', /^\/start\s+rpgfate$/i.test(text)?'fate':/^\/start\s+rpgguardian$/i.test(text)?'guardian':/^\/start\s+rpgbag$/i.test(text)?'bag':/^\/start\s+rpgshop$/i.test(text)?'shop':BOSS_START_RE.test(text) ? 'boss' : '');
     return null;
   }
 
@@ -574,6 +574,35 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
+    if(item.kind==='fate_event'&&item.target==='group'){
+      if(typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>2)return;
+      const key=`${p.lifeId}:${p.index}`,cards=st().fateCards??={};
+      if(cards[key]?.messageId)return;
+      if(cards[key])throw Error('命運旅章通知送達待核對：'+key);
+      const check=await client.call('/rpg/fate/notification',{lifeId:p.lifeId,index:p.index});
+      if(check?.night&&check?.pending||check?.valid===true&&new Date(now()+TPE).getUTCHours()<6){
+        const retryAt=check.retryAt||Math.floor((now()+TPE)/86400000)*86400000-TPE+6*3600000;
+        throw Object.assign(Error('命運旅章夜間靜默'),{definite:true,errorCode:429,parameters:{retry_after:Math.max(1,Math.ceil((retryAt-now())/1000))}});
+      }
+      if(check?.valid!==true)return;
+      const event=check.payload,remaining=Math.min(Number(check.remainingMs),Number(event?.deadline)-now());
+      if(!Number.isFinite(remaining)||remaining<=0||!/^[1-9]\d{0,18}$/.test(String(event.accountId)))return;
+      const name=html(String(event.name||'旅人').slice(0,40)),age=Math.max(0,Math.min(90,Math.floor(Number(event.age)||0)));
+      const caption=`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：<a href="tg://user?id=${event.accountId}">${name}</a>\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
+      const link=deepLink('fate'),home=deepLink();
+      const keyboard=[...(link?[[{text:'回應旅章',url:link}]]:[]),...(home?[[{text:'🎮 進入遊戲',url:home}]]:[])];
+      // Commit intent before Telegram: a lost response or process restart must not post the same life/index twice.
+      // Only a definite rejection releases the key; uncertain sends stay available for operator inspection.
+      cards[key]={at:now(),uncertain:true};save();
+      try{
+        const art=app.url?new URL('/art/fate-chapter-20261016/share.jpg',app.url):null;
+        const options={parse_mode:'HTML',reply_markup:{inline_keyboard:keyboard}};
+        const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,chatId);
+        const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認命運旅章通知');
+        cards[key]={at:now(),messageId};save();
+      }catch(error){if(error?.definite===true){delete cards[key];save();}throw error;}
+      return;
+    }
     if(item.kind==='journal_card'&&item.target==='group'){
       const day=new Date(now()+8*3600e3).toISOString().slice(0,10);if(p.day!==day)return;
       const existing=await client.call('/rpg/journal/card',{day});if(existing.card?.message_id)return;
@@ -740,6 +769,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
         for (const [uid, d] of Object.entries(st().drafts)) if (t - (d.at || 0) > 24 * 3600e3) { delete st().drafts[uid]; save(); }
         for (const [id, c] of Object.entries(st().scards)) if (t - (c.at || c.lastEdit || 0) > 7 * 24 * 3600e3) { delete st().scards[id]; save(); }
         for (const [id, c] of Object.entries(st().pcards)) if (t - (c.at || 0) > 3600e3) { delete st().pcards[id]; save(); }
+        for (const [id, c] of Object.entries(st().fateCards||{})) if (t - c.at > 7*86400000) { delete st().fateCards[id]; save(); }
       }
       for (const id of [...dirty.keys()]) {
         const c = st().cards[id]; if (!c || now() - (c.lastEdit || 0) < editThrottleMs) continue;

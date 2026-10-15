@@ -34,14 +34,14 @@ export function createCloudBot({config,api,store,log=console,rpgApi,renderBattle
   if(cq){try{await api.call('answerCallbackQuery',{callback_query_id:cq.id},{timeoutMs:3000,retries429:0})}catch(e){if(e.definite&&/query is too old|query ID is invalid/i.test(e.description||e.message)){log.warn('Expired callback ignored before game operation');return {ignored:'expired callback'}}log.warn('Callback acknowledgement unavailable: '+(e.name||'Error'))}}
   // Cosmetic public prologue: retain it across the membership gate. No DOB or reward token.
   if(privateChat(msg.chat,user)){
-   const start=/^\/start(?:@([A-Za-z0-9_]+))?\s+fate_((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f3[0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/i.exec(String(msg.text||'').trim());
-   const resume=/^fate_resume:((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f3[0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/.exec(String(cq?.data||''));
+   const start=/^\/start(?:@([A-Za-z0-9_]+))?\s+fate_((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[34][0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/i.exec(String(msg.text||'').trim());
+   const resume=/^fate_resume:((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[34][0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/.exec(String(cq?.data||''));
    if(start?.[1]&&start[1].toLowerCase()!==config.botUsername.toLowerCase())return;
    const code=(resume?.[1]||start?.[2])?.toLowerCase();
    if(code){
     if(!await isGroupMember(user))return send('✧ 你的命運旅章已備妥\n\n先加入冒險者之庭，回來按「繼續旅程」，就能創建角色，讓這段故事在星穹延續。',{reply_markup:{inline_keyboard:[[{text:'🌌 加入冒險者之庭',url:config.inviteLink}],[{text:'✧ 已加入，繼續旅程',callback_data:'fate_resume:'+code}]]}},msg.chat.id);
     await rpgApi.call('/rpg/app/grant',{tgId:String(user.id)});
-    const app=new URL(config.appUrl);app.searchParams.set('fate',code);app.searchParams.set('screen','home');
+    const app=new URL(config.appUrl);app.searchParams.set('fate',code);app.searchParams.set('screen','fate');
     return send('✧ 星燈已為你點亮\n\n從一段短篇，走進屬於你的奇幻冒險。開啟遊戲後可選擇角色，把旅章收進旅誌，與夥伴一起打寶、爬塔、迎戰首領。',{reply_markup:{inline_keyboard:[[{text:'✨ 開啟遊戲，接續旅章',web_app:{url:app.href}}]]}},msg.chat.id);
    }
   }

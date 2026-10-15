@@ -1,8 +1,9 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
-2026-10-16 命運旅章目前為 `codex/fate-chapter` 的本機互動預覽，未合併 main、未發布。
-最新兩小時一世、夜間暫停、事件池、分享、已驗證範圍及命盤/任務/持久化待辦見
-`docs/fate/FATE_PREVIEW_HANDOVER.txt`。使用者要先看預覽；不可將示意提醒或本機成就當正式功能。
+2026-10-16 命運旅章第一期的正式人生、雲端旅誌、任務解鎖提醒、出生檔案、架空年鑑、
+手繪終章與TG事件通知已完成整合。規則、測試與低強度模型接手步驟見
+`docs/fate/FORMAL_HANDOVER.txt`、內容量測見 `docs/fate/NARRATIVE_V4.txt`。
+是否已發布仍以 `docs/deployment/*.json` 與即時Cloudflare為準；先前預覽文件屬歷史記錄。
 
 > **致接手的 AI 助手（無論在哪台電腦）**：  
 > 本手冊包含「星穹旅誌」截至 2026-10-15 的最新架構狀態、線上版本、部署流程與開發規範。  

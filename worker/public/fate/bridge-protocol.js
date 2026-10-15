@@ -1,0 +1,4 @@
+export const FATE_ACTIONS=Object.freeze(['fate/me','fate/state','fate/history','fate/start','fate/choice','fate/keep','fate/daily','fate/profile','fate/profile/save','fate/profile/delete']);
+export const validRpcId=id=>typeof id==='string'&&/^[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$/i.test(id);
+export function validRpc(data,charId){return data?.type==='star-fate-rpc'&&validRpcId(data.id)&&String(data.charId)===String(charId)&&FATE_ACTIONS.includes(data.action)&&data.body!==null&&typeof data.body==='object'&&!Array.isArray(data.body);}
+export function friendlyError(error){const s=String(error?.message||error||'');if(/角色|character|CHARACTER/i.test(s))return '目前角色已改變，請返回冒險後重新開啟旅章。';if(/timeout|逾時|超時/i.test(s))return '星燈的回信稍慢，請重試；同一次操作不會重複計算。';return s.slice(0,180)||'暫時無法取得旅章，請稍後重試。';}

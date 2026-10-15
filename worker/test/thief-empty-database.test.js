@@ -23,7 +23,9 @@ test('normal fresh initialization preserves every definition except the three wi
     assert.deepEqual(plan.createOrder, tables);
     const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
       ? { ...row, sql: plan.tablePlans.find(table => table.table === row.name).afterSQL } : row);
-    assert.deepEqual(schemaRows(current), expected);
+    // 0025's frozen contract covers the pre-existing schema. 0026 only adds
+    // independent Fate tables/indexes, verified by fate-service.test.js.
+    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')), expected);
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);
     assert.deepEqual(current.prepare('PRAGMA foreign_key_check').all(), []);

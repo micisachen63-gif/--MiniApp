@@ -1,0 +1,23 @@
+// City centres, used only when explicitly selected. No implicit geolocation or paid geocoder.
+export const PLACES=[
+ ['taipei','台灣・台北','Asia/Taipei',25.033,121.5654],['taoyuan','台灣・桃園','Asia/Taipei',24.9936,121.301],
+ ['hsinchu','台灣・新竹','Asia/Taipei',24.8138,120.9675],['taichung','台灣・台中','Asia/Taipei',24.1477,120.6736],
+ ['tainan','台灣・台南','Asia/Taipei',22.9999,120.227],['kaohsiung','台灣・高雄','Asia/Taipei',22.6273,120.3014],
+ ['keelung','台灣・基隆','Asia/Taipei',25.1276,121.7392],['yilan','台灣・宜蘭','Asia/Taipei',24.757,121.753],
+ ['hualien','台灣・花蓮','Asia/Taipei',23.9872,121.6015],['taitung','台灣・台東','Asia/Taipei',22.7583,121.1444],
+ ['chiayi','台灣・嘉義','Asia/Taipei',23.4801,120.4491],['pingtung','台灣・屏東','Asia/Taipei',22.6761,120.4942],
+ ['penghu','台灣・澎湖','Asia/Taipei',23.5711,119.5793],['kinmen','台灣・金門','Asia/Taipei',24.4321,118.3171],
+ ['hongkong','香港','Asia/Hong_Kong',22.3193,114.1694],['macau','澳門','Asia/Macau',22.1987,113.5439],
+ ['beijing','中國・北京','Asia/Shanghai',39.9042,116.4074],['shanghai','中國・上海','Asia/Shanghai',31.2304,121.4737],
+ ['guangzhou','中國・廣州','Asia/Shanghai',23.1291,113.2644],['chengdu','中國・成都','Asia/Shanghai',30.5728,104.0668],
+ ['tokyo','日本・東京','Asia/Tokyo',35.6762,139.6503],['osaka','日本・大阪','Asia/Tokyo',34.6937,135.5023],
+ ['seoul','韓國・首爾','Asia/Seoul',37.5665,126.978],['singapore','新加坡','Asia/Singapore',1.3521,103.8198],
+ ['kualalumpur','馬來西亞・吉隆坡','Asia/Kuala_Lumpur',3.139,101.6869],['bangkok','泰國・曼谷','Asia/Bangkok',13.7563,100.5018],
+ ['hanoi','越南・河內','Asia/Ho_Chi_Minh',21.0278,105.8342],['manila','菲律賓・馬尼拉','Asia/Manila',14.5995,120.9842],
+ ['delhi','印度・新德里','Asia/Kolkata',28.6139,77.209],['london','英國・倫敦','Europe/London',51.5074,-.1278],
+ ['paris','法國・巴黎','Europe/Paris',48.8566,2.3522],['berlin','德國・柏林','Europe/Berlin',52.52,13.405],
+ ['newyork','美國・紐約','America/New_York',40.7128,-74.006],['losangeles','美國・洛杉磯','America/Los_Angeles',34.0522,-118.2437],
+ ['chicago','美國・芝加哥','America/Chicago',41.8781,-87.6298],['vancouver','加拿大・溫哥華','America/Vancouver',49.2827,-123.1207],
+ ['toronto','加拿大・多倫多','America/Toronto',43.6532,-79.3832],['sydney','澳洲・雪梨','Australia/Sydney',-33.8688,151.2093],
+ ['melbourne','澳洲・墨爾本','Australia/Melbourne',-37.8136,144.9631],['auckland','紐西蘭・奧克蘭','Pacific/Auckland',-36.8509,174.7645],
+];

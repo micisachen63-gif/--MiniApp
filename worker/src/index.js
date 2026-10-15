@@ -9,6 +9,8 @@ import {bossExchange} from './services/boss-exchange.js';
 import * as SP from './services/special.js';
 import * as PARTY from './services/party.js';
 import * as JOURNAL from './services/journal.js';
+import * as FATE from './services/fate.js';
+import {isOpenTime as fateIsOpenTime} from '../public/fate/life.js';
 import * as GUARDIAN from './services/guardian-sigil.js';
 import * as GUARDIAN_SHOP from './services/guardian-shop.js';
 import * as EXCHANGE from './services/market-exchange.js';
@@ -85,6 +87,17 @@ const routes = {
   'POST /rpg/guardian/history': (env,b)=>GUARDIAN.history(env,tgOf(b),b),
   'POST /rpg/journal': (env,b,now)=>JOURNAL.view(env,tgOf(b),now),
   'POST /rpg/journal/enroll': (env,b,now)=>JOURNAL.enroll(env,tgOf(b),now),
+  'POST /rpg/fate/me': (env,b,now)=>FATE.me(env,tgOf(b),now),
+  'POST /rpg/fate/state': (env,b,now)=>FATE.state(env,tgOf(b),now),
+  'POST /rpg/fate/history': (env,b,now)=>FATE.history(env,tgOf(b),b,now),
+  'POST /rpg/fate/start': (env,b,now)=>FATE.start(env,tgOf(b),b,now),
+  'POST /rpg/fate/choice': (env,b,now)=>FATE.choose(env,tgOf(b),b,now),
+  'POST /rpg/fate/keep': (env,b,now)=>FATE.keep(env,tgOf(b),b,now),
+  'POST /rpg/fate/daily': (env,b,now)=>FATE.daily(env,tgOf(b),now),
+  'POST /rpg/fate/profile': async(env,b)=>({ok:true,profile:await FATE.profileView(env,tgOf(b))}),
+  'POST /rpg/fate/profile/save': (env,b,now)=>FATE.saveProfile(env,tgOf(b),b,now),
+  'POST /rpg/fate/profile/delete': (env,b,now)=>FATE.deleteProfile(env,tgOf(b),b,now),
+  'POST /rpg/fate/notification': (env,b,now)=>FATE.notification(env,b,now),
   'POST /rpg/journal/claim': (env,b,now)=>JOURNAL.claim(env,tgOf(b),b,now),
   'POST /rpg/journal/checkin': (env,b,now)=>JOURNAL.checkin(env,tgOf(b),b,now),
   'POST /rpg/journal/card': (env,b)=>JOURNAL.card(env,b),
@@ -192,8 +205,8 @@ async function claimOutbox(env, now, limit) {
   // party_card is rendered from the party's current state, so older unclaimed cards of the same party are superseded by the newest one.
   await db.prepare(`UPDATE rpg_outbox SET delivered_at = ?, last_error = 'superseded' WHERE kind = 'party_card' AND delivered_at IS NULL AND failed_at IS NULL AND claimed_at IS NULL AND id < (SELECT MAX(o2.id) FROM rpg_outbox o2 WHERE o2.kind = 'party_card' AND o2.delivered_at IS NULL AND o2.failed_at IS NULL AND json_extract(o2.payload_json,'$.partyId') = json_extract(rpg_outbox.payload_json,'$.partyId'))`).bind(now).run();
   const rows = await db.prepare(`UPDATE rpg_outbox SET claimed_at = ?, claim_token = ?, claim_attempts = claim_attempts + 1
-    WHERE id IN (SELECT id FROM rpg_outbox WHERE delivered_at IS NULL AND failed_at IS NULL AND next_attempt_at <= ? AND (claimed_at IS NULL OR claimed_at <= ?) ORDER BY id LIMIT ?)
-    RETURNING id, target, tg_id, kind, payload_json`).bind(now, claimToken, now, now - 60_000, limit).all();
+    WHERE id IN (SELECT id FROM rpg_outbox WHERE delivered_at IS NULL AND failed_at IS NULL AND next_attempt_at <= ? AND (claimed_at IS NULL OR claimed_at <= ?) AND (?=1 OR kind<>'fate_event') ORDER BY id LIMIT ?)
+    RETURNING id, target, tg_id, kind, payload_json`).bind(now, claimToken, now, now - 60_000, fateIsOpenTime(now)?1:0, limit).all();
   const items = [];
   for (const r of (rows.results || []).sort((a, b) => a.id - b.id)) {
     try {
@@ -332,6 +345,6 @@ function errorResponse(e, url) {
 
 export default {
   fetch: (request, env, ctx) => handle(request, {...env,autoRerollWake:id=>ctx?.waitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),guardianAutoWake:id=>ctx?.waitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),autoEnhanceWake:id=>ctx?.waitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message)))}),
-  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime)]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
+  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),FATE.sweep(env,event.scheduledTime)]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
 };
 void equipmentView;

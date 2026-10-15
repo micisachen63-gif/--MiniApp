@@ -21,5 +21,10 @@
   },
   "engines": {
     "node": ">=24 <25"
+  },
+  "dependencies": {
+    "astronomy-engine": "2.1.19",
+    "iztro": "2.6.2",
+    "lunar-javascript": "1.7.7"
   }
 }

@@ -1,6 +1,6 @@
 {
   "created": "2026-10-16",
-  "purpose": "Original Star Journal RPG Fate Chapter preview; not deployed",
+  "purpose": "Original Star Journal RPG Fate Chapter artwork and formal v4 endings",
   "image_source": "OpenAI imagegen, original artwork commissioned in this chat",
   "image_prompt": "Premium Greek-myth fantasy RPG key art, 16:9, deep midnight navy and Aegean ivory-gold. An ornate brass armillary over an illuminated open journal, three constellation trails leading toward a distant lighthouse, cloud temples and a starlit coast. Refined cinematic texture, central crop usable on mobile, calm darker bottom for interface, no text and no people.",
   "video_source": "Grok Imagine, authenticated user session",
@@ -29,5 +29,40 @@
       "bytes": 241367,
       "sha256": "47250f1d72b44518766c003ed09be2c2e0441bffdc0520a28e32ad5d00480197"
     }
-  ]
+  ],
+  "ending_art": {
+    "source": "OpenAI imagegen; four original hand-painted illustrations commissioned in this chat",
+    "date": "2026-10-16",
+    "dimensions": "1536 x 1024",
+    "direction": "Premium literary Greek fantasy: fine graphite/sepia ink and translucent gouache/watercolor on warm ivory paper, Aegean blue, midnight indigo and antique gold; painterly edges and refined architecture; no text, logos, watermark or modern objects.",
+    "scenes": {
+      "atelier": "Elder artisan passing a handmade lantern to a child in an intricate coastal workshop",
+      "voyage": "Companions on a quiet boat leaving a Greek island shore",
+      "garden": "Elderly couple in a peaceful olive courtyard",
+      "harbor": "Elderly lamplighter by the Greek coastal harbor wall with a star lantern"
+    },
+    "processing": "Format conversion to WebP quality 88 only; no compositing or illustration edits",
+    "files": [
+      {
+        "file": "worker/public/art/fate-ending-20261016/harbor.webp",
+        "bytes": 579336,
+        "sha256": "0f24d9a8287414cf9bfd0a84dbc56f374f89ae8049f2a3cdec0d1c0d9eaa1696"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/voyage.webp",
+        "bytes": 517930,
+        "sha256": "dac1deeb159eae673124abb3e3797ab3ce52f262f57b7473e96e1613e632e71b"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/atelier.webp",
+        "bytes": 529610,
+        "sha256": "639692d70d98ccbb2b66fec235b820fd013e6312910d329476f5188b2353df96"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/garden.webp",
+        "bytes": 549662,
+        "sha256": "66054e6ea10fe9c041d3c9a10b3d7ae1b44eefe6919a07c79c164a2321f19675"
+      }
+    ]
+  }
 }

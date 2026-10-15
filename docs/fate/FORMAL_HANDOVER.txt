@@ -1,0 +1,85 @@
+命運旅章第一期｜正式功能接手文件｜2026-10-16
+
+先讀根目錄 AGENTS.md、AI_HANDOVER.md。本功能來源為 GitHub --MiniApp，禁止用舊營運自動化副本覆蓋。
+發布是否成功，只認 docs/deployment/elf-rpg-api.json、star-journal-rpg-bot.json 與即時 Cloudflare；
+此文件不是發布收據。FATE_PREVIEW_HANDOVER.txt 是先前預覽階段的歷史記錄，已由本文件取代其待辦清單。
+
+一、已實作的規則
+1. 掛機首頁第一張「命運旅章」卡片，開啟獨立全頁；深藍描金、原創美術、Grok 六秒靜音背景。
+2. 一世兩個有效小時，0–90 歲；台北06:00–24:00 成長，00:00–06:00 暫停。
+   例如23:00 開始，次日07:00 落款。抉擇的90秒期限也扣除夜間。
+3. 每個TG帳號每天最多開始四世（所有角色合計），每個角色同時一世；結束不自動續開。
+4. 約30秒一條紀事，共241條含出身。18/40/66歲各一次重大抉擇；逾90有效秒由命運代選。
+   未來因果只在抉擇期限後出現，避免玩家晚答而改寫先前已讀紀事。
+5. 職業10章、人際6章、物件4章各有前置。架空世界年鑑的事件、收成、海運、物價、學識等
+   會影響紀事及虛構生活狀態；不增減實際RPG金幣、戰力或掉落。內容規模/重複量測見 NARRATIVE_V4.txt。
+6. 每世結尾六段約600–1000字短篇，引用該世真實紀事、選擇及代選來源；依結局配四張手繪風插畫。
+   雲端保存種子/答案，重播還原內容，並非呼叫付費AI逐次生成文章/圖片。
+7. 靈魂旅誌按角色保存；1/5/10/25/50/100世成就由伺服器完整走完的紀錄計算，屬紀念用途。
+   訪客/公開分享碼只能收藏為「旅人來信」，不能灌正式成就。公開碼並非完成兩小時的證明。
+8. 訪客不用登入即可體驗，完成/分享可導TG Bot入群確認、通行證、創角/選角，再收藏來信。
+   IG/Threads分享為本機生成1080×1350或1080×1920圖片，提供裝置分享與儲存，未自動代發社群。
+
+二、今日旅箋、出生資料與限制
+1. 每完成一類有效同行任務，固定依健康→工作→感情啟封。帳號跨角共用，每類每日一次、最多三則。
+   任務為：真正擊殺指定群組BOSS且當日有正傷害；三個不同帳號打寶勝利且本人有手動戰技（轉職試煉不算）；
+   同場組隊爬塔當日成功五層且本人有參戰記錄。讀既有權威戰鬥資料，無前端自行解鎖入口。
+   鎖定內容不在API回應裡；同日第一次生成後不因修改出生檔案而重抽。
+2. 生日模式必填生日，可選擇純隨機人生。完整出生資料須另勾同意保存。
+   出生時分、40個城市/自訂經緯度與IANA時區、排盤用性別均選填；不從RPG角色推測本人性別。
+   完整資料才套三套傳統系統；不足明示「生活靈感」。提醒為具體如果場景、可執行行動與原因，
+   不是現實預言、醫療診斷或命中保證。前台提醒正文不用命理專有術語。
+3. 使用 lunar-javascript 1.7.7（節氣四柱）、iztro 2.6.2（紫微年/月/日流曜）、
+   astronomy-engine 2.1.19（地心黃道行星、上升、月宿及Vimshottari）本地運算。
+   印度恆星黃道用Lahiri J2000基準加IAU平均歲差近似，非Swiss Ephemeris；詳見fate-chart.js。
+   四柱年/月依UTC+8節氣邊界；日/時按出生地民用鐘錶時間，午夜換日。未實作真太陽時修正。
+   IANA歷史時區拒絕不存在的夏令時間；重複時刻讓用戶選較早/較晚。不支援南北緯65度外完整座標。
+4. 使用者2026/27/28私人曆表：1096日干支比對全符，72節氣最大差31秒（參考只到分鐘）。
+   這是曆算驗證，不是命理準確性證明；原始私人檔案未入Git。
+5. 帳號出生檔案獨立資料表；只在驗證後的個人profile API回完整資料。
+   人生草稿、分享碼、圖卡、TG通知不含原始出生資料。刪除會同時清除該帳號所有已存個人提醒。
+   生成提醒採條件INSERT核對profile內容及版本，防止跨裝置刪除後被舊請求復活。
+
+三、主要檔案/資料契約
+worker/src/services/fate.js：權威state/start/choice/history/keep/profile/daily/sweep/notification。
+worker/src/services/fate-quests.js：三種任務實際參戰證據。
+worker/src/game/fate-birth.js、fate-chart.js、fate-reminders.js：出生校驗、曆算、原創提醒池。
+worker/public/fate/：model/life/cycles、formal-events及v4目錄、world、ending-story、app/life-ui/profile-ui。
+worker/public/fate-entry.js：首頁卡/iframe/RPC；bridge-protocol.js與cloud-client.js限制同源、來源視窗、角色及端點。
+worker/src/app.js：App allowlist、HMAC與角色固定；worker/src/index.js：內部路由、既有每分鐘cron及夜間outbox過濾。
+cloud-bot/src/adapter/rpg-flow.js：事件插畫通知、標記真實帳號主人、期限確認、去重與不確定送達處理。
+新增0026_fate_chapter.sql僅六張rpg_fate_*資料表及索引，不更動既有玩家/金幣/背包。
+每世DB只存精簡草稿；每30秒紀事本機重播，不逐條寫D1。前端45秒/關鍵期限/恢復可見時同步。
+逐秒只更新畫面；不能把本機答案/加速時鐘/訪客成就當正式權威。
+POST /app/api/fate/{me,state,history,start,choice,keep,daily,profile,profile/save,profile/delete}。
+寫入需requestId，斷線重試沿用；帳號/角色/內容綁定收據，並發由D1原子batch+rev守護。
+/rpg/fate/notification僅內部Service Secret，不能加進公開App allowlist。
+TG事件按鈕進fate頁；同帳號多角時依卡片角色名稱手動切換，本期沒有通知自動切角。
+夜間不claim fate_event以免耗重試次數；過期/已回應不發，未知是否送達記uncertain且不盲目重送。
+
+四、接手模型驗證步驟
+使用Node24、根目錄npm ci。先git fetch origin main，保留其他視窗未提交內容。
+1. npm test（等同scripts/run-tests.mjs all）必須完整零失敗零跳過，不能略掉舊職業/交易/守護天使測試。
+2. 針對性：node --test worker/test/fate*.test.js；npm run test:bot。
+   fate-service：帳號四世/並發/冪等/跨夜/過期choice/成就/任務正反例/隱私/真HMAC/角色409/通知。
+   fate-chart：獨立四柱、DST gap/fold、epoch0、Lahiri/行星/大運範例；reminders：固定順序與內容避重。
+   fate-narrative：前置章節、世界門檻、30秒節奏、不可改寫過去、96世結尾、四世實測重複。
+   fate-life-ui：午夜/期限即刻停用與只讀serverdraft；bridge：同源、固定角色與逾時重試。
+3. 本機UI：node scripts/preview-fate.mjs，127.0.0.1:9555（僅假帳號及記憶體DB，無正式TG/CF）。
+   /?screen=fate選「星燈驗收旅人」→啟程→年鑑→每日旅箋→出生資料同意保存；關閉重開仍續同世。
+   /fate/?preview=1僅本機允許加速/跳抉擇；正式iframe絕不帶preview=1。
+   /fate/r/f43010001x9c61a7d2可看手繪終章，生成兩種分享尺寸，確認無日期/時分/地點。
+   測390×844與桌面，不橫向溢出；夜間停止與deadline需同步關閉按鈕。
+4. schema：僅本次0026為正式新增。絕不可執行全部migration（0025只供空資料庫，會拒絕有玩家環境）。
+   若rpg_fate表已存在先查schema/收據，不重跑舊DDL，不DROP、不重seed。
+5. 發布：完成提交推送/合併main，乾淨且等於origin/main，依根npm run deploy:worker及deploy:bot。
+   保留rpg-release.lock及.release-sync異常線索，不繞過鎖。Worker先、Bot後；核對runtime/public/health與收據push。
+   未完成兩端部署與GitHub收據前，不能回報「已同步」。
+
+五、已知範圍與後續
+事件池有限，固定種子/選擇必須重現同一故事；不是無限生成。v1–3舊分享語義保持不變。
+正式發布後v4內容/選取規則也必須凍結。增加內容或改故事演算法請開v5，不改舊碼的過去。
+新世最多64候選，依近三世實際文字/ID與最近路徑投影避重；未來玩家仍可選不同分支，無法保證不重複。
+沒有接網頁GPT自動問答、沒有付費API、沒有TG Stars內購、沒有新服務/cron/訂閱。
+沿用既有Cloudflare額度，未承諾無限玩家零額外用量；未進行使用者已取消的流量測試。
+尚未有正式玩家長期行為資料；內容重複、任務參與及通知量可在後續依真實反饋調整。

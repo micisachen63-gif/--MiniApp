@@ -582,7 +582,7 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
     try {
@@ -2032,7 +2032,7 @@
       render();
     } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : esc(e.message)); }
   }
-  window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,refresh:()=>refreshMe()};
+  window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,request:(action,body)=>api(action,body),refresh:()=>refreshMe()};
   window.RpgExpeditionHost={characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await loadTrade(id);render();}};
   boot();
 })();

@@ -1,6 +1,8 @@
 import {SCENES,decodeResult} from './model.js';
 import {EXTRA_CHOICES} from './choices-extra-v1.js';
 import {validLife} from './life.js';
+import {formalScenes,plannedContent} from './formal-events.js';
+import {hash as narrativeHash} from './world.js';
 // Original short story pools. V1 links retain their original scenes.
 const POOLS=[
  [SCENES[0],
@@ -13,11 +15,29 @@ const POOLS=[
  {tag:'第三幕 · 雪線',title:'雪停以前，最後一盞燈留在哪裡？',text:'大雪封住山路，你與同伴只剩一盞星燈。山下的旅人需要一個方向，而山脊另一頭，也有人等著你帶光抵達。',choices:[['放在回山下的路口','願每個折返的人，都有一個可辨認的方向。','你把星燈留在雪線路口，讓後來的人看得見回去的路。'],['與同伴帶過山脊','我們把光帶過去，再一起找回來的路。','你與同伴輪流提燈，走過山脊，讓光第一次抵達另一側。']]},
  {tag:'第三幕 · 新月',title:'港口熄燈了，你願意留下嗎？',text:'新月之夜，港口的燈一盞盞熄滅。你的船就要離岸，手裡最後一盞星燈，能成為岸上的等待，也能成為海上的約定。',choices:[['留下，等最後一艘船','總有人需要知道，還有誰願意等。','你留在岸上，直到最後一艘晚歸的船看見星燈。'],['出航，把星燈傳下去','也許這一點光，能陪更多人走遠。','你讓星燈在船員手中傳遞，把同行的約定帶向下一片海。']]}],
 ];
-export function scenesFor(result){if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
-export function seedForNextLife(seed,entries=[]){
+export function scenesFor(result){if(result.version===4)return formalScenes(result);if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
+export function seedForNextLife(seed,entries=[],version=3){
  if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
+ if(version===4){
+  const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>r?.version===4);
+  if(!previous.length)return seed;
+  const sceneSets=[0,1,2].map(i=>new Set(previous.map(p=>formalScenes(p)[i].id)));
+  const avoidScenes=candidate=>{for(let i=0;i<3;i++){let b=parseInt(candidate.slice(i*2,i*2+2),16);for(let n=0;n<256&&sceneSets[i].has(formalScenes({seed:candidate})[i].id);n++){b=(b+1)%256;candidate=candidate.slice(0,i*2)+b.toString(16).padStart(2,'0')+candidate.slice(i*2+2);}}return candidate;};
+  const previousRows=previous.flatMap(p=>plannedContent(p)),texts=new Set(previousRows.map(e=>e.text)),ids=new Set(previousRows.map(e=>e.id));
+  // The next decisions do not yet exist. Score a projection using the most recent path;
+  // only the selected seed is saved. Replay never consults history or this projection.
+  const projection=previous.at(-1),seenCandidates=new Set();let best=null,bestScore=Infinity;
+  for(let i=0;i<64;i++){
+   const candidate=avoidScenes(i===0?seed:narrativeHash('fate-v4-next:'+seed+':'+i).toString(16).padStart(8,'0'));
+   if(seenCandidates.has(candidate))continue;seenCandidates.add(candidate);
+   const score=plannedContent({...projection,seed:candidate}).reduce((n,e)=>n+(texts.has(e.text)?1000:0)+(ids.has(e.id)?1:0),0);
+   if(score<bestScore){best=candidate;bestScore=score;}
+  }
+  return best;
+ }
  const recent=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(Boolean).map(scenesFor);
- for(let i=0;i<3;i++){let byte=parseInt(seed.slice(i*2,i*2+2),16);for(let tries=0;tries<6&&recent.some(rows=>rows[i].title===scenesFor({version:3,seed})[i].title);tries++){byte=(byte+1)%256;seed=seed.slice(0,i*2)+byte.toString(16).padStart(2,'0')+seed.slice(i*2+2);}}
+ const key=scene=>version===4?scene.id||scene.text:scene.title;
+ for(let i=0;i<3;i++){let byte=parseInt(seed.slice(i*2,i*2+2),16);for(let tries=0;tries<(version===4?256:6)&&recent.some(rows=>key(rows[i])===key(scenesFor({version,seed})[i]));tries++){byte=(byte+1)%256;seed=seed.slice(0,i*2)+byte.toString(16).padStart(2,'0')+seed.slice(i*2+2);}}
  return seed;
 }
 export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光之魂'},{at:10,title:'星痕之魂'},{at:25,title:'千途之魂'},{at:50,title:'循星之魂'},{at:100,title:'萬象之魂'}];

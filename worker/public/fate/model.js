@@ -1,5 +1,6 @@
 // Version 1 is immutable: public links retain their original story, without a database.
 // A code contains cosmetic story indices and random entropy ONLY. Never encode DOB.
+import {endingForLife} from './ending-story.js';
 export const ART='/art/fate-chapter-20261016/';
 export const ZODIAC=['摩羯','水瓶','雙魚','牡羊','金牛','雙子','巨蟹','獅子','處女','天秤','天蠍','射手'];
 export const ORBITS=[
@@ -35,15 +36,17 @@ export function validBirth(value,today=new Date()){
 }
 export function zodiacFor(month,day){const edges=[20,19,21,20,21,22,23,23,23,24,23,22];return day<edges[month-1]?month-1:month%12;}
 export function encodeResult({orbit,answers,zodiac=null,seed,version=1,auto=[]}){
- const code=`f${version}${orbit.toString(36)}${answers.join('')}${version===3?auto.join(''):''}${zodiac===null?'x':zodiac.toString(36)}${seed}`;
+ const code=`f${version}${orbit.toString(36)}${answers.join('')}${version>=3?auto.join(''):''}${zodiac===null?'x':zodiac.toString(36)}${seed}`;
  if(!decodeResult(code))throw Error('Invalid story');return code;
 }
 export function decodeResult(code){
- if(typeof code!=='string'||!/^(?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f3[0-9ab][01]{6}[0-9abx][a-f0-9]{8})$/.test(code))return null;
- const version=Number(code[1]),orbit=parseInt(code[2],36),answers=[...code.slice(3,6)].map(Number),z=version===3?9:6,zodiac=code[z]==='x'?null:parseInt(code[z],36),ending=answers.reduce((a,b)=>a+b,0);
- const end=version===3?{...ENDINGS[ending]}:version>=2&&ending===2?{...ENDINGS[ending],body:'你將星燈交到同伴手裡，沿途替彼此照亮下一步。多年後你才發現，真正留下來的，是那些願意與你一起走過黑夜的人。'}:ENDINGS[ending];
- if(version===3)end.body=['你把許多重要的片刻留給身邊的人。那些不起眼的守候，後來成了別人願意回來的理由；這一生，你也找到了願意安放星燈的地方。','你在熟悉的地方與未知的遠方之間，慢慢走出自己的步調。有些約定一直帶在身上，有些答案，是在回望時才終於明白。','你與許多人交換過方向，也曾替彼此照亮下一步。這一生最鮮明的記憶，不只關於抵達哪裡，更關於那些願意一起走過的人。','你一次次走向尚未明朗的道路，把疑問留在旅誌，把星光帶向下一個相遇。世界仍有許多空白，而這一生的每一步，都留下了屬於你的筆跡。'][ending];
- return {version,code,orbit,answers,auto:version===3?[...code.slice(6,9)].map(Number):answers.map(()=>0),zodiac,seed:code.slice(z+1),identity:ORBITS[orbit],ending:end,endingIndex:ending};
+ if(typeof code!=='string'||!/^(?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[34][0-9ab][01]{6}[0-9abx][a-f0-9]{8})$/.test(code))return null;
+ const version=Number(code[1]),orbit=parseInt(code[2],36),answers=[...code.slice(3,6)].map(Number),z=version>=3?9:6,zodiac=code[z]==='x'?null:parseInt(code[z],36),ending=answers.reduce((a,b)=>a+b,0);
+ const end=version>=3?{...ENDINGS[ending]}:version>=2&&ending===2?{...ENDINGS[ending],body:'你將星燈交到同伴手裡，沿途替彼此照亮下一步。多年後你才發現，真正留下來的，是那些願意與你一起走過黑夜的人。'}:ENDINGS[ending];
+ if(version>=3)end.body=['你把許多重要的片刻留給身邊的人。那些不起眼的守候，後來成了別人願意回來的理由；這一生，你也找到了願意安放星燈的地方。','你在熟悉的地方與未知的遠方之間，慢慢走出自己的步調。有些約定一直帶在身上，有些答案，是在回望時才終於明白。','你與許多人交換過方向，也曾替彼此照亮下一步。這一生最鮮明的記憶，不只關於抵達哪裡，更關於那些願意一起走過的人。','你一次次走向尚未明朗的道路，把疑問留在旅誌，把星光帶向下一個相遇。世界仍有許多空白，而這一生的每一步，都留下了屬於你的筆跡。'][ending];
+ const result={version,code,orbit,answers,auto:version>=3?[...code.slice(6,9)].map(Number):answers.map(()=>0),zodiac,seed:code.slice(z+1),identity:ORBITS[orbit],ending:end,endingIndex:ending};
+ if(version===4){const formal=endingForLife(result);result.ending={...end,...formal,body:formal.summary};}
+ return result;
 }
 export function newSeed(){const b=new Uint8Array(4);crypto.getRandomValues(b);return [...b].map(v=>v.toString(16).padStart(2,'0')).join('');}
 export function randomOrbit(zodiac=null){const b=new Uint32Array(2);crypto.getRandomValues(b);return zodiac!==null&&b[0]%2===0?zodiac:b[1]%12;}
