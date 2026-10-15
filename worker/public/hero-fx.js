@@ -2,7 +2,7 @@
 (() => {
   'use strict';
   const ROOT = 'art/ui/hero-fx-20261011/';
-  const VERSION = '20261011-fx2';
+  const VERSION = '20261016-thief-armory1';
   const PALETTES = {
     aegis: { light: '#ecd99e', duration: 12, intensity: .54 },
     fury: { light: '#f9ae79', duration: 9, intensity: .47 },
@@ -12,16 +12,22 @@
     frost: { light: '#bfebff', duration: 16, intensity: .54 },
     chrono: { light: '#d1b9ed', duration: 20, intensity: .54 },
     summon: { light: '#a9dfce', duration: 18, intensity: .53 },
+    'thief-shadow': { light: '#c9b7ff', duration: 7, intensity: .38 },
+    'thief-venom': { light: '#91dcad', duration: 10, intensity: .40 },
+    'thief-flying': { light: '#a3e9f1', duration: 6, intensity: .38 },
+    'thief-mirror': { light: '#b9a8fa', duration: 12, intensity: .42 },
   };
   function profile(c = {}) {
     const cls = c.baseClass || 'sword', path = String(c.classPath || '');
     let theme;
-    if (cls === 'mage') theme = path.startsWith('A2') ? 'frost' : path.startsWith('B1') ? 'chrono' : path.startsWith('B2') ? 'summon' : path === 'B' ? 'chrono' : 'ember';
+    if (cls === 'thief') theme = path.startsWith('A2') ? 'thief-venom' : path.startsWith('B2') ? 'thief-mirror' : path.startsWith('B') ? 'thief-flying' : 'thief-shadow';
+    else if (cls === 'mage') theme = path.startsWith('A2') ? 'frost' : path.startsWith('B1') ? 'chrono' : path.startsWith('B2') ? 'summon' : path === 'B' ? 'chrono' : 'ember';
     else if (cls === 'archer') theme = path.startsWith('B2') || path.startsWith('A2') ? 'lunar' : path === 'B' || path.startsWith('B1') ? 'summon' : 'wind';
     else theme = path.startsWith('A1') || path === 'A' ? 'fury' : path.startsWith('A2') ? 'lunar' : 'aegis';
     const tier = Math.min(4, Number(c.classTier) || path.length);
     // Male/female variants retain the same class language; placement follows pose.
-    return { theme, ...PALETTES[theme], tier, mirror: c.gender === 'm', density: tier >= 2 ? 8 : 6 };
+    return { theme, ...PALETTES[theme], tier, mirror: c.gender === 'm', density: tier >= 2 ? 8 : 6,
+      ...(cls === 'thief' ? { thief: true, motif: theme.slice(6) } : {}) };
   }
   let observer;
   function syncVisibility(stage, inView) {
@@ -41,7 +47,9 @@
     stage.dataset.heroFx = p.theme;
     stage.dataset.fxTier = String(p.tier);
     stage.dataset.fxRunning = 'false';
-    stage.style.setProperty('--fx-art', 'url("' + ROOT + p.theme + '.webp?v=' + VERSION + '")');
+    const art = p.thief ? 'art/ui/thief-armory-fx-20261016/' + p.theme + '.svg' : ROOT + p.theme + '.webp';
+    if (p.thief) stage.dataset.thiefArmoryFx = p.motif;
+    stage.style.setProperty('--fx-art', 'url("' + art + '?v=' + VERSION + '")');
     stage.style.setProperty('--fx-light', p.light);
     stage.style.setProperty('--fx-duration', p.duration + 's');
     stage.style.setProperty('--fx-intensity', p.intensity);
@@ -61,6 +69,7 @@
     for (let i = 0; i < p.density; i++) {
       const mote = document.createElement('i');
       mote.className = 'hero-fx-mote';
+      if (p.thief) mote.classList.add('thief-fx-' + p.motif);
       // Keep every mote on the sides, leaving the face and torso readable.
       const side = i % 2, step = Math.floor(i / 2);
       mote.style.setProperty('--mote-x', (side ? 72 + step * 2 : 24 - step * 2) + '%');
