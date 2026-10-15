@@ -1245,13 +1245,22 @@
   }
 
   let guardianController=null,guardianActor=null;
-  const SHOP_TABS = [['sell', '可販售'], ['weapon', '⚔️ 武器'], ['armor', '🛡️ 防具'], ['accessory', '💍 飾品'], ['potion', '🧪 藥水'], ['scroll', '📜 捲軸'], ['special', '🧿 特殊']];
+  const SHOP_TABS = [['sell', '可販售'], ['gacha', '轉蛋'], ['weapon', '⚔️ 武器'], ['armor', '🛡️ 防具'], ['accessory', '💍 飾品'], ['potion', '🧪 藥水'], ['scroll', '📜 捲軸'], ['special', '🧿 特殊']];
   const ARMOR_FILTER = [['all', '全部'], ['armor', '盔甲'], ['helmet', '頭盔'], ['gloves', '手套'], ['boots', '長靴'], ['belt', '腰帶'], ['undershirt', '內衣']];
+  function gachaCards(type=null) {
+    const rates=(S.shop.gachaRates||[]).map(r=>`${r.rarity==='legendary'?'紫色傳說':'紅色霸主'} ${r.pct}%`).join(' · ');
+    return (S.shop.gacha||[]).filter(g=>!type||g.type===type).map(g=>{
+      const gear=S.shop.gear.find(e=>e.group===g.type&&e.tier===g.tier);
+      return `<div class="item"><div class="ic art">${gear?gearIcon({...gear,classReq:S.me.character.baseClass},''):''}</div><div class="mid"><div class="t">${esc(g.name)}</div><div class="d">${esc(g.description)} · T${g.tier}</div><div class="d">${esc(rates)}</div><div class="price"><img class="currency-coin" src="art/ui/hud-coin-v2.webp" alt=""> ${fmt(g.price)} 金幣 / 顆</div></div><button class="btn sm" data-gacha="${g.type}" ${S.me.character.gold<g.price?'disabled':''}>購買並開啟</button></div>`;
+    }).join('');
+  }
   function shopBody() {
     if (!S.shop) return '<div class="card muted">商店載入中…</div>';
     const t = S.shopTab; const inv = S.me.inventory; let body = '';
     if (t === 'sell') return `<div class="tabs">${SHOP_TABS.map(([k, n]) => `<button data-st="${k}" class="${k === t ? 'on' : ''}">${n}</button>`).join('')}</div>${window.RpgMarketSell.render({me:S.me,autoEnhance:S.autoEnhance},{esc,fmt,gearIcon})}`;
-    if (t === 'weapon' || t === 'armor' || t === 'accessory') {
+    if(t==='gacha') { body=gachaCards(); }
+    else if (t === 'weapon' || t === 'armor' || t === 'accessory') {
+      if(t!=='accessory')body+=gachaCards(t);
       let list = S.shop.gear.filter((g) => (g.group || (g.slot === 'weapon' ? 'weapon' : 'armor')) === t);
       if (t === 'armor') { body += `<div class="seg chipsel">${ARMOR_FILTER.map(([k, n]) => `<button data-af="${k}" class="${S.armorSlot === k ? 'on' : ''}">${n}</button>`).join('')}</div>`; if (S.armorSlot !== 'all') list = list.filter((g) => g.slot === S.armorSlot); }
       const owned = (g) => S.me.equipment.filter((e) => e.slot === g.slot && e.tier === g.tier).length;
@@ -1302,6 +1311,16 @@
       const result=await act('sell-gear-batch',{itemIds},j=>`已販售 ${j.result.count} 件裝備，獲得 ${fmt(j.result.gold)} 金幣`);
       if(!result)await refreshMe({silent:true,full:true});return result;
     }});
+    view.querySelectorAll('[data-gacha]').forEach(button=>{button.onclick=async()=>{
+      if(button.disabled)return;button.disabled=true;
+      const actor=S.me.character.tgId,g=S.shop.gacha.find(x=>x.type===button.dataset.gacha);
+      try{
+        if(!await confirmSheet(esc(g.name),`花費 ${fmt(g.price)} 金幣購買並立即開啟 1 顆？<br>${esc(g.description)}（T${g.tier}）。<br>紫色傳說 85% · 紅色霸主 15%`,'購買並開啟'))return;
+        if(actor!==S.me?.character?.tgId)return;
+        const j=await act('gacha',{type:g.type});
+        if(j?.result){const item=S.me.equipment.find(e=>e.id===j.result.item.id);toast('獲得 '+(item?.rarityName||'')+' '+j.result.item.name);if(item)itemSheet(item.id);}
+      }finally{button.disabled=false;}
+    };});
     view.querySelectorAll('[data-st]').forEach((b) => { b.onclick = () => { S.shopTab = b.dataset.st; updateShopSurface(true); }; });
     view.querySelectorAll('[data-af]').forEach((b) => { b.onclick = () => { S.armorSlot = b.dataset.af; updateShopSurface(true); }; });
     view.querySelectorAll('[data-buy]').forEach((b) => { b.onclick = () => act('buy', { item: b.dataset.buy, qty: Number(b.dataset.q) }, `🛒 購買 ${itemName(b.dataset.buy)} ×${b.dataset.q}`).then((j) => { if (j) loadShop(true); }); });

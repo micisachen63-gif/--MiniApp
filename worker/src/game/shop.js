@@ -3,18 +3,16 @@ import { ITEMS, POTIONS, MAX_OPEN_MAP } from './constants.js';
 import { mapForLevel } from './formulas.js';
 import { classTier } from './stats.js';
 import { GameError } from './classes.js';
-import { gearOffers, armorPrice, weaponPrice } from './gear.js';
+import { gearOffers } from './gear.js';
 import {activeSettings} from './guardian-sigil-config.js';
 
 // 裝備轉蛋：目前可穿戴最高 T；遺物保留首領與菁英獨有。
-export const GACHA_RATES = Object.freeze([['advanced',45],['epic',35],['legendary',17],['supreme',3]]);
+export const GACHA_RATES = Object.freeze([['legendary',85],['supreme',15]]);
 export function gachaOffers(char) {
-  const offers=gearOffers(char);const tier=Math.min(mapForLevel(char.level),MAX_OPEN_MAP);
-  const weapons=offers.filter(g=>g.group==='weapon'&&g.tier===tier);
-  const armor=offers.filter(g=>g.group==='armor'&&g.tier===tier);
+  const tier=Math.min(mapForLevel(char.level),MAX_OPEN_MAP);
   return [
-    {type:'weapon',name:'⚔️ 武器轉蛋',tier,price:Math.ceil(Math.max(...weapons.map(g=>g.price))*2),slots:['weapon'],description:'隨機獲得目前職業／轉職路線可穿戴的最高階武器'},
-    {type:'armor',name:'🛡️ 防具轉蛋',tier,price:Math.ceil(armorPrice('armor',tier)*2),slots:['armor','helmet','gloves','boots','belt','undershirt'],description:'隨機獲得目前職業可穿戴的最高階六部位防具'}
+    {type:'weapon',name:'⚔️ 武器轉蛋',tier,price:10000,slots:['weapon'],description:'保證紫色以上，對應目前等級與職業／轉職路線的武器'},
+    {type:'armor',name:'🛡️ 防具轉蛋',tier,price:5000,slots:['armor','helmet','gloves','boots','belt','undershirt'],description:'保證紫色以上，對應目前等級與職業的六部位隨機防具'}
   ];
 }
 export function drawGacha(char,type,rng){
