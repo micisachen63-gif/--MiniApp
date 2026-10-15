@@ -1,0 +1,1 @@
+{"name":"star-journal-rpg-bot","private":true,"type":"module","scripts":{"start":"node service.mjs start","stop":"node service.mjs stop","status":"node service.mjs status","test":"node --test test/*.test.mjs"}}

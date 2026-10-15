@@ -1,0 +1,5 @@
+import fs from 'node:fs';import {createTelegramApi} from '../爆分監控/src/telegram.js';import {createRpgApi,loadRpgConfig} from '../爆分監控/src/rpg-api.js';import {bossLootText} from '../爆分監控/src/rpg-flow.js';
+const c=JSON.parse(fs.readFileSync('telegram.local.json')),api=createTelegramApi(c.botToken),client=createRpgApi(loadRpgConfig('rpg.local.json')),state=JSON.parse(fs.readFileSync('state/telegram.json'));
+const pair=Object.entries(state.rpg?.cards||{}).find(([,v])=>v.messageId===8&&String(v.chatId)===c.chatId);
+if(pair){const b=(await client.call('/rpg/boss/get',{bossId:pair[0]})).boss;if(b?.status==='active'){const full='🐉 群組首領【'+b.name+'】\nHP '+b.hp.toLocaleString()+' / '+b.maxHp.toLocaleString()+'｜參戰 '+b.participants+' 人\n剩 '+Math.ceil(b.secondsLeft/60)+' 分鐘\n\n'+bossLootText(b);await api.call('editMessageCaption',{chat_id:c.chatId,message_id:8,caption:full});console.log('Current boss loot caption corrected');}}
+await api.call('deleteMessage',{chat_id:c.chatId,message_id:7});console.log('Obsolete duplicate boss card removed');

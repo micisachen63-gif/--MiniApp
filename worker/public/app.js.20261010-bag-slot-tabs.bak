@@ -1,0 +1,1394 @@
+// 小精靈 RPG 掛機冒險 — Telegram Mini App front-end (vanilla JS, no build step).
+// Auth: every API call carries Telegram.WebApp.initData (verified server-side with 小精靈's bot token).
+// Local dev only: ?devTg=<id> sends X-Dev-Tg-Id, which the Worker accepts ONLY when ENVIRONMENT=development + ALLOW_DEV_AUTH=true.
+(() => {
+  'use strict';
+  const tg = window.Telegram && window.Telegram.WebApp;
+  const qs = new URLSearchParams(location.search);
+  const initData = (tg && tg.initData) || '';
+  const devTg = !initData ? qs.get('devTg') : null;
+  const A = window.RpgArt;
+  // ---- art direction: v2 painted Byzantine set (default) · ?art=v1 the SVG samples · ?art=svg pure procedural canvas art (art.js)
+  const ARTQ = qs.get('art'); const MODE = ARTQ === 'v1' || ARTQ === 'svg' ? ARTQ : 'v2'; const V2 = MODE === 'v2';
+  const ART = MODE !== 'svg';
+  const MON = { 蛇髮女妖: 'mon_gorgon', 史萊姆: 'mon_slime_novice', 野狼: 'mon_wolf', 哈耳庇厄: 'mon_harpy', 哥布林: 'mon_goblin', 骷髏兵: 'mon_skeleton', 毒蜘蛛: 'mon_spider', 樹妖: 'mon_treant', 哥布林突擊隊長: 'elite_goblin_captain', 劇毒巨蛛: 'elite_giant_spider', 月光野兔: 'mon_moon_hare', 月桂樹精: 'mon_laurel_treant', 林地花仙: 'mon_wood_nymph', 林精斥候: 'mon_forest_scout', 阿耳忒彌斯巡林長: 'elite_artemis_ranger', 月桂巨樹精: 'boss_ancient_laurel', 百柱石像: 'mon_temple_statue', 智慧夜梟: 'mon_temple_owl', 青銅衛兵: 'mon_bronze_guard', 神殿侍從鬼魂: 'mon_temple_ghost', 神殿禁衛百夫長: 'elite_temple_centurion', 潘神幼獸: 'mon_pan_cub', 山林仙女: 'mon_arcadia_nymph', 聖角羚羊: 'mon_sacred_antelope', 古木守衛: 'mon_olive_guardian', 狂暴潘神衛士: 'elite_pan_warden' };
+  const MON_ANIM = { 蛇髮女妖: 'mon_gorgon_attack', 史萊姆: 'mon_slime_attack', 月光野兔: 'mon_moon_hare_attack', 月桂樹精: 'mon_laurel_treant_attack', 林地花仙: 'mon_wood_nymph_attack', 林精斥候: 'mon_forest_scout_attack', 阿耳忒彌斯巡林長: 'elite_artemis_ranger_attack', 月桂巨樹精: 'boss_ancient_laurel_attack', 百柱石像: 'mon_temple_statue_attack', 智慧夜梟: 'mon_temple_owl_attack', 青銅衛兵: 'mon_bronze_guard_attack', 神殿侍從鬼魂: 'mon_temple_ghost_attack', 潘神幼獸: 'mon_pan_cub_attack', 山林仙女: 'mon_arcadia_nymph_attack', 聖角羚羊: 'mon_sacred_antelope_attack', 古木守衛: 'mon_olive_guardian_attack' };
+  const ELITE_ANIM = { 阿耳忒彌斯巡林長: 'elite_artemis_ranger_attack', 神殿禁衛百夫長: 'elite_temple_centurion_attack', 狂暴潘神衛士: 'elite_pan_warden_attack' };
+  const BOSS_ANIM = { 1: 'boss_ancient_laurel_attack', 2: 'boss_hundred_pillar_colossus_attack', 3: 'boss_arcadia_goblin_chief_attack' };
+  Object.assign(MON, { '海崖塞壬': 'mon_aegean_siren', '潮汐甲蟲': 'mon_tidal_beetle', '波濤飛魚': 'mon_wave_fish', '海潮巨蟹': 'mon_sea_crab', '深海狂暴巨蟹': 'elite_deepsea_crab', '海崖利維坦': 'boss_aegean_leviathan' });
+  Object.assign(MON_ANIM, { '海崖塞壬': 'mon_aegean_siren_attack', '潮汐甲蟲': 'mon_tidal_beetle_attack', '波濤飛魚': 'mon_wave_fish_attack', '海潮巨蟹': 'mon_sea_crab_attack', '海崖利維坦': 'boss_aegean_leviathan_attack' });
+  Object.assign(ELITE_ANIM, { '深海狂暴巨蟹': 'elite_deepsea_crab_attack' });
+  Object.assign(BOSS_ANIM, { 4: 'boss_aegean_leviathan_attack' });
+  // Attack sheets are keyed by exact class path where generated; unmatched advancement routes retain procedural motion.
+  const HERO_ANIM = {
+    archer_f: { file: 'hero_archer_f_attack', cols: 5, rows: 2, firstFrame: 0 },
+    archer_m: { file: 'hero_archer_m_attack', cols: 5, rows: 2, firstFrame: 0 },
+    mage_f: { file: 'hero_mage_f_attack', cols: 4, rows: 2, firstFrame: 0 },
+    mage_m: { file: 'hero_mage_m_attack', cols: 4, rows: 2, firstFrame: 0 },
+    adv1_mage_A_f: { file: 'hero_adv1_mage_A_f_attack', cols: 4, rows: 3, firstFrame: 0 },
+    adv1_mage_A_m: { file: 'hero_adv1_mage_A_m_attack', cols: 4, rows: 3, firstFrame: 0 },
+    adv1_mage_B_f: { file: 'hero_adv1_mage_B_f_attack', cols: 4, rows: 3, firstFrame: 0 },
+    adv1_mage_B_m: { file: 'hero_adv1_mage_B_m_attack', cols: 4, rows: 3, firstFrame: 0 },
+    adv2_mage_A1_f: { file: 'hero_adv2_mage_A1_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_A1_m: { file: 'hero_adv2_mage_A1_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_A2_f: { file: 'hero_adv2_mage_A2_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_A2_m: { file: 'hero_adv2_mage_A2_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_B1_f: { file: 'hero_adv2_mage_B1_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_B1_m: { file: 'hero_adv2_mage_B1_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_B2_f: { file: 'hero_adv2_mage_B2_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_mage_B2_m: { file: 'hero_adv2_mage_B2_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A11_f: { file: 'hero_adv3_mage_A11_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A11_m: { file: 'hero_adv3_mage_A11_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A12_f: { file: 'hero_adv3_mage_A12_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A12_m: { file: 'hero_adv3_mage_A12_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A21_f: { file: 'hero_adv3_mage_A21_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A21_m: { file: 'hero_adv3_mage_A21_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A22_f: { file: 'hero_adv3_mage_A22_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_A22_m: { file: 'hero_adv3_mage_A22_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B11_f: { file: 'hero_adv3_mage_B11_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B11_m: { file: 'hero_adv3_mage_B11_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B12_f: { file: 'hero_adv3_mage_B12_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B12_m: { file: 'hero_adv3_mage_B12_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B21_f: { file: 'hero_adv3_mage_B21_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B21_m: { file: 'hero_adv3_mage_B21_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B22_f: { file: 'hero_adv3_mage_B22_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_mage_B22_m: { file: 'hero_adv3_mage_B22_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A111_f: { file: 'hero_adv4_mage_A111_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A111_m: { file: 'hero_adv4_mage_A111_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A112_f: { file: 'hero_adv4_mage_A112_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A112_m: { file: 'hero_adv4_mage_A112_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A121_f: { file: 'hero_adv4_mage_A121_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A121_m: { file: 'hero_adv4_mage_A121_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A122_f: { file: 'hero_adv4_mage_A122_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A122_m: { file: 'hero_adv4_mage_A122_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A211_f: { file: 'hero_adv4_mage_A211_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A211_m: { file: 'hero_adv4_mage_A211_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A212_f: { file: 'hero_adv4_mage_A212_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A212_m: { file: 'hero_adv4_mage_A212_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A221_f: { file: 'hero_adv4_mage_A221_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A221_m: { file: 'hero_adv4_mage_A221_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A222_f: { file: 'hero_adv4_mage_A222_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_A222_m: { file: 'hero_adv4_mage_A222_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B111_f: { file: 'hero_adv4_mage_B111_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B111_m: { file: 'hero_adv4_mage_B111_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B112_f: { file: 'hero_adv4_mage_B112_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B112_m: { file: 'hero_adv4_mage_B112_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B121_f: { file: 'hero_adv4_mage_B121_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B121_m: { file: 'hero_adv4_mage_B121_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B122_f: { file: 'hero_adv4_mage_B122_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B122_m: { file: 'hero_adv4_mage_B122_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B211_f: { file: 'hero_adv4_mage_B211_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B211_m: { file: 'hero_adv4_mage_B211_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B212_f: { file: 'hero_adv4_mage_B212_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B212_m: { file: 'hero_adv4_mage_B212_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B221_f: { file: 'hero_adv4_mage_B221_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B221_m: { file: 'hero_adv4_mage_B221_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B222_f: { file: 'hero_adv4_mage_B222_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_mage_B222_m: { file: 'hero_adv4_mage_B222_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A11_f: { file: 'hero_adv3_archer_A11_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A11_m: { file: 'hero_adv3_archer_A11_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A12_f: { file: 'hero_adv3_archer_A12_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A12_m: { file: 'hero_adv3_archer_A12_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A21_f: { file: 'hero_adv3_archer_A21_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A21_m: { file: 'hero_adv3_archer_A21_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A22_f: { file: 'hero_adv3_archer_A22_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_A22_m: { file: 'hero_adv3_archer_A22_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B11_f: { file: 'hero_adv3_archer_B11_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B11_m: { file: 'hero_adv3_archer_B11_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B12_f: { file: 'hero_adv3_archer_B12_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B12_m: { file: 'hero_adv3_archer_B12_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B21_f: { file: 'hero_adv3_archer_B21_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B21_m: { file: 'hero_adv3_archer_B21_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B22_f: { file: 'hero_adv3_archer_B22_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv3_archer_B22_m: { file: 'hero_adv3_archer_B22_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A111_f: { file: 'hero_adv4_archer_A111_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A111_m: { file: 'hero_adv4_archer_A111_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A112_f: { file: 'hero_adv4_archer_A112_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A112_m: { file: 'hero_adv4_archer_A112_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A121_f: { file: 'hero_adv4_archer_A121_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A121_m: { file: 'hero_adv4_archer_A121_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A122_f: { file: 'hero_adv4_archer_A122_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A122_m: { file: 'hero_adv4_archer_A122_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A211_f: { file: 'hero_adv4_archer_A211_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A211_m: { file: 'hero_adv4_archer_A211_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A212_f: { file: 'hero_adv4_archer_A212_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A212_m: { file: 'hero_adv4_archer_A212_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A221_f: { file: 'hero_adv4_archer_A221_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A221_m: { file: 'hero_adv4_archer_A221_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A222_f: { file: 'hero_adv4_archer_A222_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_A222_m: { file: 'hero_adv4_archer_A222_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B111_f: { file: 'hero_adv4_archer_B111_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B111_m: { file: 'hero_adv4_archer_B111_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B112_f: { file: 'hero_adv4_archer_B112_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B112_m: { file: 'hero_adv4_archer_B112_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B121_f: { file: 'hero_adv4_archer_B121_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B121_m: { file: 'hero_adv4_archer_B121_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B122_f: { file: 'hero_adv4_archer_B122_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B122_m: { file: 'hero_adv4_archer_B122_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B211_f: { file: 'hero_adv4_archer_B211_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B211_m: { file: 'hero_adv4_archer_B211_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B212_f: { file: 'hero_adv4_archer_B212_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B212_m: { file: 'hero_adv4_archer_B212_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B221_f: { file: 'hero_adv4_archer_B221_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B221_m: { file: 'hero_adv4_archer_B221_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B222_f: { file: 'hero_adv4_archer_B222_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv4_archer_B222_m: { file: 'hero_adv4_archer_B222_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    archer_f: { file: 'hero_archer_f_attack', cols: 5, rows: 2, firstFrame: 0 },
+    adv1_archer_A_f: { file: 'hero_adv1_archer_A_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv1_archer_B_f: { file: 'hero_adv1_archer_B_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_A1_f: { file: 'hero_adv2_archer_A1_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_A2_f: { file: 'hero_adv2_archer_A2_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_B1_f: { file: 'hero_adv2_archer_B1_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_B2_f: { file: 'hero_adv2_archer_B2_f_attack', cols: 5, rows: 2, firstFrame: 1 },
+    archer_m: { file: 'hero_archer_m_attack', cols: 5, rows: 2, firstFrame: 0 },
+    adv1_archer_A_m: { file: 'hero_adv1_archer_A_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv1_archer_B_m: { file: 'hero_adv1_archer_B_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_A1_m: { file: 'hero_adv2_archer_A1_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_A2_m: { file: 'hero_adv2_archer_A2_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_B1_m: { file: 'hero_adv2_archer_B1_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv2_archer_B2_m: { file: 'hero_adv2_archer_B2_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv1_sword_A_f: { file: 'hero_adv1_sword_A_f_attack', cols: 5, rows: 2, firstFrame: 3 },
+    adv2_sword_A1_f: { file: 'hero_adv2_sword_A1_f_attack', cols: 4, rows: 2, firstFrame: 2 },
+    adv1_mage_A_f: { file: 'hero_adv1_mage_A_f_attack', cols: 5, rows: 2, firstFrame: 5 },
+    adv1_mage_A_m: { file: 'hero_adv1_mage_A_m_attack', cols: 10, rows: 1, firstFrame: 5 },
+    adv1_archer_A_m: { file: 'hero_adv1_archer_A_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    adv1_archer_B_m: { file: 'hero_adv1_archer_B_m_attack', cols: 5, rows: 2, firstFrame: 1 },
+    sword_f: { file: 'hero_sword_f_attack', cols: 5, rows: 2, firstFrame: 3 },
+    archer_f: { file: 'hero_archer_f_attack', cols: 5, rows: 2, firstFrame: 0 },
+    archer_m: { file: 'hero_archer_m_attack', cols: 5, rows: 2, firstFrame: 0 },
+    sword_m: { file: 'hero_sword_m_attack', cols: 4, rows: 2, firstFrame: 3 },
+  };
+  const WPN = { sword: 'wpn_sword', greatsword: 'wpn_greatsword', sword_shield: 'wpn_sword_shield', staff: 'wpn_staff', elem_staff: 'wpn_elemental_staff', wand: 'wpn_grimoire', longbow: 'wpn_longbow', compound_bow: 'wpn_composite_bow', crossbow: 'wpn_crossbow' };
+  const FAM = { sword: 'plate', archer: 'leather', mage: 'cloth' };
+  const ARMOR_ART = { armor: { plate: 'arm_plate', leather: 'arm_leather', cloth: 'arm_robe' }, helmet: { plate: 'helm_plate', leather: 'helm_leather', cloth: 'helm_cloth' },
+    gloves: { plate: 'gloves_plate', leather: 'gloves_leather', cloth: 'gloves_cloth' }, boots: { plate: 'boots_plate', leather: 'boots_leather', cloth: 'boots_cloth' } };
+  const ITEM_ART = (k) => (/^(red|blue)_\d$/.test(k) ? `item_potion_${k}` : { scroll_w: 'item_scroll_weapon', scroll_a: 'item_scroll_armor', blessed_scroll_w: 'item_scroll_blessed_weapon', blessed_scroll_a: 'item_scroll_blessed_armor', scroll_r: 'item_scroll_reroll', unbind: 'item_scroll_unbind', ward: 'item_guardian', gold: 'item_gold',
+    reselect_1: 'item_fate_book', reselect_2: 'item_fate_book', reselect_3: 'item_fate_book', mat_1: 'item_mat1', mat_2: 'item_mat2', mat_3: 'item_mat3', mat_4: 'item_mat4' }[k] || null);
+  const GEAR_NAME_ART = {
+    // T1 月桂階 (19 件全套)
+    '月桂短劍': 'gear_wpn_laurel_sword',
+    '月桂法杖': 'gear_wpn_laurel_staff',
+    '月桂狩獵弓': 'gear_wpn_laurel_longbow',
+    '月桂頭盔': 'gear_helm_laurel_plate',
+    '月桂板甲': 'gear_arm_laurel_plate',
+    '月桂鐵護手': 'gear_gloves_laurel_plate',
+    '月桂鐵靴': 'gear_boots_laurel_plate',
+    '月桂皮帽': 'gear_helm_laurel_leather',
+    '月桂皮甲': 'gear_arm_laurel_leather',
+    '月桂皮手套': 'gear_gloves_laurel_leather',
+    '月桂皮靴': 'gear_boots_laurel_leather',
+    '月桂法師帽': 'gear_helm_laurel_cloth',
+    '月桂法袍': 'gear_arm_laurel_robe',
+    '月桂法師手套': 'gear_gloves_laurel_cloth',
+    '月桂法師鞋': 'gear_boots_laurel_cloth',
+    '月桂編織腰帶': 'gear_belt_laurel',
+    '月桂亞麻內衣': 'gear_undershirt_laurel',
+    '月桂葉耳飾': 'gear_earring_laurel',
+    '月桂枝戒': 'gear_ring_laurel',
+
+    // T2 雅典階 (19 件主套 + 6 件分支武器)
+    '雅典佩劍': 'gear_wpn_athena_sword',
+    '雅典厚刃巨劍': 'gear_wpn_athena_greatsword',
+    '雅典衛士劍盾': 'gear_wpn_athena_sword_shield',
+    '雅典智慧杖': 'gear_wpn_athena_staff',
+    '雅典元素使杖': 'gear_wpn_athena_elem_staff',
+    '雅典智慧短杖': 'gear_wpn_athena_wand',
+    '雅典守衛弓': 'gear_wpn_athena_longbow',
+    '雅典風切複合弓': 'gear_wpn_athena_compound_bow',
+    '雅典鋼弦重弩': 'gear_wpn_athena_crossbow',
+    '雅典頭盔': 'gear_helm_athena_plate',
+    '雅典板甲': 'gear_arm_athena_plate',
+    '雅典鐵護手': 'gear_gloves_athena_plate',
+    '雅典鐵靴': 'gear_boots_athena_plate',
+    '雅典皮帽': 'gear_helm_athena_leather',
+    '雅典皮甲': 'gear_arm_athena_leather',
+    '雅典皮手套': 'gear_gloves_athena_leather',
+    '雅典皮靴': 'gear_boots_athena_leather',
+    '雅典法師帽': 'gear_helm_athena_cloth',
+    '雅典法袍': 'gear_arm_athena_robe',
+    '雅典法師手套': 'gear_gloves_athena_cloth',
+    '雅典法師鞋': 'gear_boots_athena_cloth',
+    '雅典神殿皮帶': 'gear_belt_athena',
+    '雅典絲織內衣': 'gear_undershirt_athena',
+    '雅典石玉耳墜': 'gear_earring_athena',
+    '雅典銀印戒': 'gear_ring_athena',
+
+    // T3 聖林階 (19 件主套 + 6 件分支武器)
+    '聖林銳劍': 'gear_wpn_sacred_sword',
+    '聖林裂地巨劍': 'gear_wpn_sacred_greatsword',
+    '聖林守護劍盾': 'gear_wpn_sacred_sword_shield',
+    '聖林藤木杖': 'gear_wpn_sacred_staff',
+    '聖林風雷之杖': 'gear_wpn_sacred_elem_staff',
+    '聖林秘語典籍': 'gear_wpn_sacred_wand',
+    '聖林青藤弓': 'gear_wpn_sacred_longbow',
+    '聖林疾風複合弓': 'gear_wpn_sacred_compound_bow',
+    '聖林百步弩': 'gear_wpn_sacred_crossbow',
+    '聖林頭盔': 'gear_helm_sacred_plate',
+    '聖林板甲': 'gear_arm_sacred_plate',
+    '聖林鐵護手': 'gear_gloves_sacred_plate',
+    '聖林鐵靴': 'gear_boots_sacred_plate',
+    '聖林皮帽': 'gear_helm_sacred_leather',
+    '聖林皮甲': 'gear_arm_sacred_leather',
+    '聖林皮手套': 'gear_gloves_sacred_leather',
+    '聖林皮靴': 'gear_boots_sacred_leather',
+    '聖林法師帽': 'gear_helm_sacred_cloth',
+    '聖林法袍': 'gear_arm_sacred_robe',
+    '聖林法師手套': 'gear_gloves_sacred_cloth',
+    '聖林法師鞋': 'gear_boots_sacred_cloth',
+    '聖林精靈腰帶': 'gear_belt_sacred',
+    '聖林木棉內衣': 'gear_undershirt_sacred',
+    '聖林泉水耳墜': 'gear_earring_sacred',
+    '聖林翡翠戒': 'gear_ring_sacred',
+
+    // T4 海神階 (19 件主套 + 6 件分支武器)
+    '海神之劍': 'gear_wpn_poseidon_sword',
+    '海神破浪巨劍': 'gear_wpn_poseidon_greatsword',
+    '海神浪壁劍盾': 'gear_wpn_poseidon_sword_shield',
+    '海神潮汐杖': 'gear_wpn_poseidon_staff',
+    '海神怒濤元素杖': 'gear_wpn_poseidon_elem_staff',
+    '海神深藍魔杖': 'gear_wpn_poseidon_wand',
+    '海神風暴弓': 'gear_wpn_poseidon_longbow',
+    '海神破浪複合弓': 'gear_wpn_poseidon_compound_bow',
+    '海神重潮弩': 'gear_wpn_poseidon_crossbow',
+    '海神頭盔': 'gear_helm_poseidon_plate',
+    '海神板甲': 'gear_arm_poseidon_plate',
+    '海神鐵護手': 'gear_gloves_poseidon_plate',
+    '海神鐵靴': 'gear_boots_poseidon_plate',
+    '海神皮帽': 'gear_helm_poseidon_leather',
+    '海神皮甲': 'gear_arm_poseidon_leather',
+    '海神皮手套': 'gear_gloves_poseidon_leather',
+    '海神皮靴': 'gear_boots_poseidon_leather',
+    '海神法師帽': 'gear_helm_poseidon_cloth',
+    '海神法袍': 'gear_arm_poseidon_robe',
+    '海神法師手套': 'gear_gloves_poseidon_cloth',
+    '海神法師鞋': 'gear_boots_poseidon_cloth',
+    '海神波濤腰帶': 'gear_belt_poseidon',
+    '海神鱗紋內衣': 'gear_undershirt_poseidon',
+    '海神珍珠耳墜': 'gear_earring_poseidon',
+    '海神珊瑚戒': 'gear_ring_poseidon',
+
+    // T5 迷宮階 (19 件主套 + 6 件分支武器)
+    '迷宮秘劍': 'gear_wpn_labyrinth_sword',
+    '迷宮屠牛巨劍': 'gear_wpn_labyrinth_greatsword',
+    '迷宮迷蹤劍盾': 'gear_wpn_labyrinth_sword_shield',
+    '迷宮引路杖': 'gear_wpn_labyrinth_staff',
+    '迷宮秘術元素杖': 'gear_wpn_labyrinth_elem_staff',
+    '迷宮符文寶典': 'gear_wpn_labyrinth_wand',
+    '迷宮穿楊弓': 'gear_wpn_labyrinth_longbow',
+    '迷宮死線複合弓': 'gear_wpn_labyrinth_compound_bow',
+    '迷宮陷陣弩': 'gear_wpn_labyrinth_crossbow',
+    '迷宮頭盔': 'gear_helm_labyrinth_plate',
+    '迷宮板甲': 'gear_arm_labyrinth_plate',
+    '迷宮鐵護手': 'gear_gloves_labyrinth_plate',
+    '迷宮鐵靴': 'gear_boots_labyrinth_plate',
+    '迷宮皮帽': 'gear_helm_labyrinth_leather',
+    '迷宮皮甲': 'gear_arm_labyrinth_leather',
+    '迷宮皮手套': 'gear_gloves_labyrinth_leather',
+    '迷宮皮靴': 'gear_boots_labyrinth_leather',
+    '迷宮法師帽': 'gear_helm_labyrinth_cloth',
+    '迷宮法袍': 'gear_arm_labyrinth_robe',
+    '迷宮法師手套': 'gear_gloves_labyrinth_cloth',
+    '迷宮法師鞋': 'gear_boots_labyrinth_cloth',
+    '迷宮牛皮腰帶': 'gear_belt_labyrinth',
+    '迷宮密織內衣': 'gear_undershirt_labyrinth',
+    '迷宮秘石耳環': 'gear_earring_labyrinth',
+    '迷宮紋章戒': 'gear_ring_labyrinth',
+
+    // T6 熔爐階 (19 件主套 + 6 件分支武器)
+    '熔爐鍛劍': 'gear_wpn_forge_sword',
+    '熔爐熾炎巨劍': 'gear_wpn_forge_greatsword',
+    '熔爐烈鋼劍盾': 'gear_wpn_forge_sword_shield',
+    '熔爐熾晶杖': 'gear_wpn_forge_staff',
+    '熔爐純火元素杖': 'gear_wpn_forge_elem_staff',
+    '熔爐火印魔杖': 'gear_wpn_forge_wand',
+    '熔爐火翎弓': 'gear_wpn_forge_longbow',
+    '熔爐焰爆複合弓': 'gear_wpn_forge_compound_bow',
+    '熔爐熾炎鋼弩': 'gear_wpn_forge_crossbow',
+    '熔爐頭盔': 'gear_helm_forge_plate',
+    '熔爐板甲': 'gear_arm_forge_plate',
+    '熔爐鐵護手': 'gear_gloves_forge_plate',
+    '熔爐鐵靴': 'gear_boots_forge_plate',
+    '熔爐皮帽': 'gear_helm_forge_leather',
+    '熔爐皮甲': 'gear_arm_forge_leather',
+    '熔爐皮手套': 'gear_gloves_forge_leather',
+    '熔爐皮靴': 'gear_boots_forge_leather',
+    '熔爐法師帽': 'gear_helm_forge_cloth',
+    '熔爐法袍': 'gear_arm_forge_robe',
+    '熔爐法師手套': 'gear_gloves_forge_cloth',
+    '熔爐法師鞋': 'gear_boots_forge_cloth',
+    '熔爐鍛鐵腰帶': 'gear_belt_forge',
+    '熔爐抗火內衣': 'gear_undershirt_forge',
+    '熔爐火晶耳墜': 'gear_earring_forge',
+    '熔爐赤銅戒': 'gear_ring_forge',
+  };
+  const cleanGearName = (name) => String(name || '').replace(/^(遺物・|菁英)/, '').trim();
+  /** gear row/offer → icon file: specific named item if present, else fallback to weapon kind / armor family / shared slot */
+  const GEAR_ART = (g) => {
+    if (!g) return null;
+    const directName = cleanGearName(g.name);
+    if (directName && GEAR_NAME_ART[directName]) return GEAR_NAME_ART[directName];
+    return (g.slot === 'weapon' ? WPN[g.kind] : ARMOR_ART[g.slot] ? ARMOR_ART[g.slot][FAM[g.classReq] || g.kind] || ARMOR_ART[g.slot][g.kind] : ['belt', 'undershirt', 'earring', 'ring'].includes(g.slot) ? g.slot : null);
+  };
+  const AV1 = { portrait: { 'archer:f': 'portrait_archer_f', 'archer:m': 'portrait_archer_m' }, sprite: { 'archer:f': 'sprite_archer_f', 'archer:m': 'sprite_archer_m' },
+    monster: { '哥布林': 'monster_goblin' }, boss: { 1: 'boss_goblin_chief' }, map: { 1: 'map1_meadow' }, item: { red_1: 'item_red_potion', scroll_w: 'item_scroll_enhance', scroll_a: 'item_scroll_enhance' } };
+  const HEROES = { nodes: new Set(), meta: {} };
+  /** class_path 'A1' → adv2_<cls>_A1_<g> if present, else adv1_<cls>_A_<g>, else the base <cls>_<g> */
+  function heroKey(cls, g, path) {
+    const p = String(path || ''); g = g || 'm';
+    for (let L = Math.min(4, p.length); L >= 1; L--) { const k = `adv${L}_${cls}_${p.slice(0, L)}_${g}`; if (HEROES.nodes.has(k)) return k; }
+    return `${cls}_${g}`;
+  }
+  const myHeroKey = () => { const c = S.me ? S.me.character : {}; return heroKey(c.baseClass, c.gender, c.classPath); };
+  function artFile(kind, key) {
+    if (MODE === 'svg') return null;
+    if (MODE === 'v1') { const k = kind === 'hero' ? 'sprite' : kind; const f = AV1[k] && AV1[k][String(key).replace('_', ':')] || (AV1[k] && AV1[k][key]); return f ? `art/v1/${f}.webp` : null; }
+    let f = null;
+    if (kind === 'hero' || kind === 'sprite') f = `hero_${String(key).replace(':', '_')}`;
+    else if (kind === 'heroAnim') f = HERO_ANIM[key] ? HERO_ANIM[key].file : null;
+    else if (kind === 'portrait') f = `portrait_${String(key).replace(':', '_')}`;
+    else if (kind === 'monster' || kind === 'elite') f = MON[key] || null;
+    else if (kind === 'monsterAnim') f = MON_ANIM[key] || null;
+    else if (kind === 'eliteAnim') f = ELITE_ANIM[key] || null;
+    else if (kind === 'boss') f = { 1: 'boss_ancient_laurel', 2: 'boss_hundred_pillar_colossus', 3: 'boss_arcadia_goblin_chief', 4: 'boss_aegean_leviathan' }[key] || MON[key] || null;
+    else if (kind === 'bossAnim') f = BOSS_ANIM[key] || MON_ANIM[key] || null;
+    else if (kind === 'map') {
+      if (key === 'town') f = 'bg_town';
+      else if (typeof key === 'string' && /^myth(?:0[1-9]|1[0-2])$/.test(key)) return `art/v2/bg_${key}.webp?v=20261010-greek-maps-1`;
+      else f = { 1: 'bg_map1', 2: 'bg_map2', 3: 'bg_map3', 4: 'bg_map4' }[key] || null;
+    }
+    else if (kind === 'item') f = ITEM_ART(key);
+    else if (kind === 'gear') f = GEAR_ART(key);
+    // Mage zero-turn and future painted advancement overrides must run before any legacy SVG fallback.
+    // Original zero-advancement Greek-mythic mage artwork and painted eight-frame animation.
+    if (V2 && /^mage_[fm]$/.test(String(key))) {
+      const gender = String(key).slice(-1);
+      if (kind === 'hero' || kind === 'sprite' || kind === 'portrait') return `art/mage-zero-clean-20261010/hero_mage_${gender}.png?v=20261010-mage-zero-4x2-live-4`;
+      if (kind === 'heroAnim') return `art/mage-zero-clean-20261010/hero_mage_${gender}_attack.png?v=20261010-mage-zero-4x2-live-4`;
+    }
+    // Legacy mage artwork is fallback-only. Never override published painted character assets.
+    if (V2 && (kind === 'hero' || kind === 'sprite' || kind === 'portrait') && /^((adv[1-4]_)?mage(_[AB][12]*)?_[fm])$/.test(String(key))) {
+      const file = `${kind === 'portrait' ? 'portrait' : 'hero'}_${key}`;
+      return `art/mage/${file}.svg?v=20261010-mage-legacy-1`;
+    }
+    // Fresh original elf artwork. Exact archer class only; advanced careers retain their existing assets.
+    if (V2 && /^(archer_[fm])$/.test(String(key))) {
+      const gender = String(key).slice(-1);
+      if (kind === 'hero' || kind === 'sprite' || kind === 'portrait') return `art/elf-v2-20261010/hero_archer_${gender}.webp?v=20261010-attack-v2`;
+      if (kind === 'heroAnim') return `art/elf-clean-20261010/hero_archer_${gender}_attack.png?v=20261010-clean-2s-1`;
+    }
+    // First-advancement elf: original high-resolution Greek-mythic characters and eight clean painted poses.
+    if (V2 && /^adv1_archer_[AB]_[fm]$/.test(String(key))) {
+      if (kind === 'hero' || kind === 'sprite' || kind === 'portrait') return `art/elf-adv1-clean-20261010/hero_${key}.png?v=20261010-adv1-live-1`;
+      if (kind === 'heroAnim') return `art/elf-adv1-clean-20261010/hero_${key}_attack.png?v=20261010-adv1-live-1`;
+    }
+    // Production-quality safety fallback: use existing painted WebP, never flat procedural elf SVG.
+    if (V2 && (kind === 'hero' || kind === 'sprite' || kind === 'portrait') && /^((adv[1-4]_)?archer(_[AB][12]*)?_[fm])$/.test(String(key))) {
+      const parts = String(key).match(/^adv([1-4])_archer_([AB][12]*)_[fm]$/);
+      const safeKey = parts && Number(parts[1]) > 2 ? `adv2_archer_${parts[2].slice(0,2)}_${String(key).slice(-1)}` : key;
+      return `art/v2/${kind === 'portrait' ? 'portrait' : 'hero'}_${safeKey}.webp?v=20261010-painted-restore`;
+    }
+    const refreshedArt = ['hero_sword_f', 'portrait_sword_f', 'hero_sword_f_attack', 'hero_sword_m', 'portrait_sword_m', 'hero_mage_m', 'portrait_mage_m', 'hero_sword_m_attack', 'hero_mage_m_attack', 'hero_archer_m', 'portrait_archer_m', 'hero_archer_m_attack', 'mon_gorgon', 'mon_gorgon_attack', 'hero_adv1_mage_A_f', 'portrait_adv1_mage_A_f', 'hero_adv1_mage_A_f_attack', 'hero_adv1_mage_A_m', 'portrait_adv1_mage_A_m', 'hero_adv1_mage_A_m_attack', 'hero_adv1_archer_A_m', 'portrait_adv1_archer_A_m', 'hero_adv1_archer_A_m_attack', 'hero_adv1_archer_B_m', 'portrait_adv1_archer_B_m', 'hero_adv1_archer_B_m_attack'];
+    if (kind === 'heroAnim' && /^hero_(adv[1-4]_)?mage_/.test(f || '')) return `art/mage/${f}.png?v=20261010-mage-anim-2`;
+    // Disable all rotated paper-cutout attack sheets until genuinely animated painted frames exist.
+    if (kind === 'heroAnim' && /^((adv[1-4]_)?archer(_[AB][12]*)?_[fm])$/.test(String(key))) return null;
+    return f ? `art/v2/${f}.webp${refreshedArt.includes(f) ? (f.startsWith('hero_archer_m') || f === 'portrait_archer_m' ? '?v=20261009-archer-m-2' : f.startsWith('mon_gorgon') ? '?v=20261009-gorgon-1' : f.startsWith('hero_adv1_mage_A_') || f.startsWith('portrait_adv1_mage_A_') ? '?v=20261009-adv1-mage-a-1' : f.startsWith('hero_adv1_archer_') || f.startsWith('portrait_adv1_archer_') ? '?v=20261009-adv1-archer-branches-2' : '?v=20261009-hero-refresh-2') : ''}` : null;
+  }
+  const IMG = {};
+  const artSrc = (kind, key) => artFile(kind, key);
+  function artImg(kind, key) { const src = artSrc(kind, key); if (!src) return null; if (!IMG[src]) { const i = new Image(); i.decoding = 'async'; i.src = src; IMG[src] = i; } const i = IMG[src]; return i.complete && i.naturalWidth ? i : null; }
+  if (ART) {
+    document.body.classList.add('greek'); if (V2) document.body.classList.add('v2');
+    // font treatments (staging: ?font=A|B|C|D, remembered in localStorage; default = current v0.5 look). Google Fonts CSS2 slices CJK by unicode-range + display=swap.
+    const SERIF = '"Noto Serif TC","Noto Serif CJK TC","Songti TC",serif', SANS = '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', SYS = '-apple-system,"PingFang TC","Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif';
+    // v0.5.1: each CJK weight costs ~0.5–0.9 MB of slices on a busy screen → only 2 CJK weights per option (700 text maps to 900 / synthesises)
+    const FONTS = {
+      cur: { q: 'family=Cinzel:wght@700;900&family=Noto+Serif+TC:wght@500;700;900', body: SERIF, title: `Cinzel,${SERIF}`, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 500, wt: 900 },
+      A: { q: 'family=Noto+Serif+TC:wght@500;900', body: SERIF, title: SERIF, ui: SERIF, num: SERIF, wb: 500, wt: 900 },
+      B: { q: 'family=LXGW+WenKai+TC:wght@400&family=Noto+Serif+TC:wght@900', body: `"LXGW WenKai TC",${SERIF}`, title: SERIF, ui: `"LXGW WenKai TC",${SERIF}`, num: `"LXGW WenKai TC",${SERIF}`, wb: 400, wt: 900 },
+      C: { q: 'family=Iansui&family=Noto+Sans+TC:wght@400;700', body: SANS, title: `Iansui,${SANS}`, ui: SANS, num: SANS, wb: 400, wt: 400 },
+      E: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900', body: SYS, title: SERIF, ui: SYS, num: `Cinzel,${SYS}`, wb: 400, wt: 900 },   // lightest: system UI font for body (PingFang TC / Noto Sans CJK), web font only for titles
+      D: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;700', body: SANS, title: SERIF, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 400, wt: 900 },
+    };
+    let fk = (new URLSearchParams(location.search).get('font') || '').toUpperCase(); if (fk === 'CUR') fk = 'cur';
+    try { if (FONTS[fk]) localStorage.setItem('elfFont', fk); else fk = localStorage.getItem('elfFont') || ''; } catch (_) {}
+    const DEFAULT_FONT = 'D';   // ミカサ 21:07 picked D (Noto Serif TC Black titles + Cinzel numerals + Noto Sans TC body); ?font= / localStorage still override for previews
+    const F0 = FONTS[fk] || FONTS[DEFAULT_FONT]; const R = document.documentElement.style; document.body.dataset.font = FONTS[fk] ? fk : DEFAULT_FONT;
+    R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
+    for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+  }
+  const iconHtml = (k, fallback) => { const src = artSrc('item', k); return src ? `<img src="${src}" alt="" loading="lazy">` : fallback; };
+  const gearIcon = (g, fallback) => { const src = artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy">` : fallback; };
+  function portraitHtml(id, cls, gender) { const c = S.me ? S.me.character : {}; const key = cls ? heroKey(cls, gender || c.gender) : myHeroKey(); const src = artSrc('hero', key); return src ? `<img class="portrait" id="${id}" src="${src}" alt="">` : `<canvas class="portrait" id="${id}"></canvas>`; }
+  const $ = (s, el = document) => el.querySelector(s);
+  const esc = (s) => String(s ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+  const fmt = (n) => Number(n || 0).toLocaleString('zh-TW');
+  const pct = (a, b) => (b > 0 ? Math.max(0, Math.min(100, (a / b) * 100)) : 0);
+  const mmss = (ms) => { const s = Math.max(0, Math.ceil(ms / 1000)); const h = Math.floor(s / 3600), m = Math.floor((s % 3600) / 60), x = s % 60; return h ? `${h}:${String(m).padStart(2, '0')}:${String(x).padStart(2, '0')}` : `${m}:${String(x).padStart(2, '0')}`; };
+  const rid = () => (crypto.randomUUID ? crypto.randomUUID().replace(/-/g, '') : Date.now().toString(36) + Math.random().toString(36).slice(2, 12)).slice(0, 32);
+  const haptic = (k) => { try { if (k === 'ok' || k === 'error' || k === 'warning') tg.HapticFeedback.notificationOccurred(k === 'ok' ? 'success' : k); else tg.HapticFeedback.impactOccurred(k || 'light'); } catch (_) {} };
+  const WEAPON_EMOJI = { sword: '⚔️', archer: '🏹', mage: '🪄' };
+  const SLOT_EMOJI = { weapon: '⚔️', helmet: '🪖', armor: '🛡️', gloves: '🧤', boots: '👢', belt: '🎗️', undershirt: '👕', earring: '💎', ring: '💍' };
+  // 11 equipped positions (v0.4): paper-doll left / right columns + accessory row
+  const DOLL_L = [['helmet', 1], ['armor', 1], ['gloves', 1], ['boots', 1]];
+  const DOLL_R = [['weapon', 1], ['undershirt', 1], ['belt', 1]];
+  const DOLL_B = [['earring', 1], ['earring', 2], ['ring', 1], ['ring', 2]];
+  const MULTI = { earring: 2, ring: 2 };
+  const slotLabel = (slot, pos) => `${(S.meta && S.meta.slots[slot]) || slot}${MULTI[slot] ? pos : ''}`;
+  const ELEM = { earth: '🌍地', water: '🌊水', fire: '🔥火', wind: '🌪️風', light: '☀️光', dark: '🌑暗' };
+
+  const S = { meta: null, me: null, shop: null, boss: null, ledger: null, tab: 'home', shopTab: 'weapon', skew: 0, lastReport: null,
+    session: { kills: 0, exp: 0, gold: 0, ticks: 0 }, create: { step: 0, name: '', cls: null, gender: null }, busy: false, armorSlot: 'all', trades: null, trade: null, tradeTimer: 0 };
+  const ITEMS_REF = {};
+  const BATTLE = V2 && window.RpgBattle ? window.RpgBattle.create({ src: artSrc, items: ITEMS_REF, fmt: (n) => fmt(n), stateInfo: (me) => stateInfo(me),
+    heroKey: (c) => heroKey(c.baseClass, c.gender, c.classPath), heroMeta: (k) => HEROES.meta[`hero_${k}`] || null,
+    heroAnim: (k) => HERO_ANIM[k] ? { src: artSrc('heroAnim', k), cols: /^(archer_[fm]|adv1_archer_[AB]_[fm])$/.test(k) ? 4 : HERO_ANIM[k].cols, rows: HERO_ANIM[k].rows, firstFrame: /^(mage_[fm]|adv1_archer_[AB]_[fm])$/.test(k) ? 0 : HERO_ANIM[k].firstFrame } : null }) : null;
+
+  // ---------- Telegram theme ----------
+  function applyTheme() {
+    const light = tg && tg.colorScheme === 'light';
+    document.body.classList.toggle('light', !!light);
+    const p = (tg && tg.themeParams) || {};
+    const r = document.documentElement.style;
+    if (ART) {   // v0.5.1: the painted theme owns its palette — never inherit Telegram text/bg colors (iOS dark made text dark-on-navy)
+      document.body.classList.remove('light');
+      try { tg.setHeaderColor && tg.setHeaderColor('#170f09'); tg.setBackgroundColor && tg.setBackgroundColor('#121a2e'); tg.setBottomBarColor && tg.setBottomBarColor('#121a2e'); } catch (_) {}
+      return;
+    }
+    if (p.bg_color) r.setProperty('--bg', light ? p.secondary_bg_color || p.bg_color : p.bg_color);
+    if (p.section_bg_color || p.secondary_bg_color) r.setProperty('--panel', light ? p.bg_color || '#fff' : p.section_bg_color || p.secondary_bg_color);
+    if (p.text_color) r.setProperty('--text', p.text_color);
+    if (p.hint_color) r.setProperty('--muted', p.hint_color);
+    if (p.button_color) r.setProperty('--accent', p.button_color);
+    try { tg.setHeaderColor && tg.setHeaderColor(light ? 'secondary_bg_color' : 'bg_color'); } catch (_) {}
+  }
+  if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
+
+  // ---------- API ----------
+  async function api(action, body = {}) {
+    const headers = { 'content-type': 'application/json' };
+    if (initData) headers['X-Telegram-Init-Data'] = initData; else if (devTg) headers['X-Dev-Tg-Id'] = devTg;
+    const res = await fetch(`/app/api/${action}`, { method: 'POST', headers, body: JSON.stringify(body) });
+    let j = null; try { j = await res.json(); } catch (_) {}
+    if (!j || !j.ok) { const e = new Error((j && j.message) || `連線失敗（${res.status}）`); e.code = j && j.error; e.status = res.status; throw e; }
+    return j;
+  }
+  function mutationKey(action, body) {
+    const stable = Object.fromEntries(Object.entries(body || {}).filter(([k]) => k !== 'requestId').sort(([a], [b]) => a.localeCompare(b)));
+    return `elfRpgPending:${action}:${JSON.stringify(stable)}`;
+  }
+  function pendingRequestId(key) {
+    try { let value = localStorage.getItem(key); if (!value) { value = rid(); localStorage.setItem(key, value); } return value; }
+    catch (_) { return rid(); }
+  }
+  function clearPendingRequest(key) { try { localStorage.removeItem(key); } catch (_) {} }
+  function absorb(j) {
+    if (j && j.character) {
+      if (BATTLE) BATTLE.sync(j, j.report && j.report.ticks ? j.report : null);
+      if (j.report && j.report.ticks) { S.lastReport = j.report; { const r = j.report; const P = S.pending || (S.pending = { ticks: 0, kills: 0, gold_gained: 0, elites: 0, drops: {} }); P.ticks += r.ticks || 0; P.kills += r.kills || 0; P.gold_gained += r.gold_gained || 0; P.elites += r.elites || 0; for (const [k, v] of Object.entries(r.drops || {})) P.drops[k] = (P.drops[k] || 0) + v; } S.session.kills += j.report.kills || 0; S.session.exp += (j.report.exp_gained || 0) - (j.report.exp_lost || 0); S.session.gold += j.report.gold_gained || 0; S.session.ticks += j.report.ticks || 0; }
+      const prevState = S.me && S.me.character.state; S.me = j;
+      if (prevState && prevState !== j.character.state) resetFight();
+    }
+    if (j && j.shop) S.shop = j.shop;
+    if (j && 'boss' in j && j.now) { S.boss = j.boss; S.skew = j.now - Date.now(); }
+    return j;
+  }
+  async function act(action, body = {}, okMsg) {
+    if (S.busy) return null; S.busy = true;
+    const key = mutationKey(action, body);
+    try { const j = absorb(await api(action, { ...body, requestId: pendingRequestId(key) })); clearPendingRequest(key); if (okMsg) toast(typeof okMsg === 'function' ? okMsg(j) : okMsg); haptic('ok'); render(); return j; }
+    catch (e) { if (e.code === 'duplicate') { clearPendingRequest(key); refreshMe(); toast('剛才的操作已完成，資料已更新'); haptic('ok'); } else { if (e.status && e.status < 500) clearPendingRequest(key); toast(e.message, true); haptic('error'); } return null; }
+    finally { S.busy = false; }
+  }
+
+  // ---------- UI helpers ----------
+  let toastT = 0;
+  function toast(msg, err) { const t = $('#toast'); t.textContent = msg; t.className = err ? 'err' : ''; t.hidden = false; clearTimeout(toastT); toastT = setTimeout(() => { t.hidden = true; }, 4000); }
+  function sheet(html) { const s = $('#sheet'); $('.sheet-card', s).innerHTML = html; s.hidden = false; $('.sheet-bg', s).onclick = closeSheet; return $('.sheet-card', s); }
+  function closeSheet() { $('#sheet').hidden = true; }
+  function confirmSheet(title, body, okText = '確定', danger = false) {
+    return new Promise((resolve) => {
+      const c = sheet(`<h2>${title}</h2><div>${body}</div><div class="row mt"><button class="btn ghost" data-x="0">取消</button><button class="btn ${danger ? 'red' : ''}" data-x="1">${okText}</button></div>`);
+      c.querySelectorAll('[data-x]').forEach((b) => { b.onclick = () => { closeSheet(); resolve(b.dataset.x === '1'); }; });
+      $('.sheet-bg').onclick = () => { closeSheet(); resolve(false); };
+    });
+  }
+  const bar = (cls, a, b, label) => `<div class="bar ${cls}"><i style="width:${pct(a, b)}%"></i><b>${label}</b></div>`;
+  const itemEmoji = (k) => (S.meta && S.meta.items[k] ? S.meta.items[k].emoji : '📦');
+  const itemName = (k) => (S.meta && S.meta.items[k] ? S.meta.items[k].name : k);
+  function sumKind(kind) { const inv = (S.me && S.me.inventory) || {}; return Object.entries(inv).filter(([k]) => S.meta.items[k] && S.meta.items[k].kind === kind).reduce((n, [, v]) => n + v, 0); }
+
+  // ---------- canvases + animation loop ----------
+  let drawers = [];
+  function fitCanvas(c) { const d = Math.min(2, window.devicePixelRatio || 1); const w = c.clientWidth || 300, h = c.clientHeight || 150; if (c.width !== Math.round(w * d)) { c.width = Math.round(w * d); c.height = Math.round(h * d); } const ctx = c.getContext('2d'); ctx.setTransform(d, 0, 0, d, 0, 0); return { ctx, w, h }; }
+  function loop(ts) { const t = ts / 1000; for (const d of drawers) { if (!d.c.isConnected) continue; const { ctx, w, h } = fitCanvas(d.c); ctx.clearRect(0, 0, w, h); d.fn(ctx, w, h, t); } requestAnimationFrame(loop); }
+  requestAnimationFrame(loop);
+  function heroOpts(extra) { const c = S.me ? S.me.character : {}; return { cls: c.baseClass, gender: c.gender, path: c.classPath, ...extra }; }
+  function drawPortrait(c, o, animate = true) { if (!c || c.tagName !== 'CANVAS') return; if (animate) drawers.push({ c, fn: (ctx, w, h, t) => A.hero(ctx, w / 2, h - 6, h / 95, { ...o, t }) }); else { const { ctx, w, h } = fitCanvas(c); A.hero(ctx, w / 2, h - 6, h / 95, o); } }
+
+  // idle-combat simulation (purely visual; real progress comes from the server's 1-minute idle ticks)
+  const F = { mon: null, floats: [], t0: 0, hit: 0, dieAt: 0, heroHurt: 0, monHurt: 0, monActT: -10, act: 'idle', actT: 0, idx: 0 };
+  function resetFight() { F.mon = null; F.floats = []; }
+  function spawnMon(t) {
+    const m = S.meta.maps[S.me.character.mapId] || S.meta.maps[1]; const elite = Math.random() < 0.07;
+    const name = m.monsters[(F.idx++) % m.monsters.length];
+    F.mon = { name: elite ? m.monsters[m.monsters.length - 1] : name, label: elite ? m.elite : name, elite, hp: elite ? 6 : 3 + Math.floor(Math.random() * 2), max: 0, born: t, alpha: 0 };
+    F.mon.max = F.mon.hp; F.dieAt = 0; F.hit = t + 0.9;
+  }
+  /** draw an art-v1 sprite (feet at x,y) with idle bob / attack lunge / hurt flash; returns false when no sprite → caller uses art.js */
+  function drawSprite(ctx, im, x, y, hgt, { t = 0, action = 'idle', p = 0, flip = false, alpha = 1, glow = null, sheet = null } = {}) {
+    if (!im) return false;
+    const sheetReady = sheet && sheet.image && sheet.image.complete && sheet.image.naturalWidth;
+    const frameW = sheetReady ? sheet.image.naturalWidth / sheet.cols : im.width;
+    const frameH = sheetReady ? sheet.image.naturalHeight / sheet.rows : im.height;
+    const wdt = hgt * frameW / frameH;
+    const bob = action === 'rest' ? 0 : Math.sin(t * 3) * 1.2; const lunge = action === 'attack' || action === 'cast' ? Math.sin(Math.min(1, p) * Math.PI) * 12 * (flip ? -1 : 1) : 0;
+    const shake = action === 'hurt' ? Math.sin(t * 60) * 2 : 0;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(x, y, wdt * 0.32, 5, 0, 0, Math.PI * 2); ctx.fill();
+    if (glow) { ctx.shadowColor = glow; ctx.shadowBlur = 16; }
+    if (action === 'hurt') ctx.filter = 'brightness(1.8)';
+    ctx.translate(x + lunge + shake, y + bob); if (flip) ctx.scale(-1, 1);
+    if (sheetReady) {
+      const cols = sheet.cols, rows = sheet.rows, total = cols * rows;
+      const cellW = sheet.image.naturalWidth / cols, cellH = sheet.image.naturalHeight / rows; let frame = 0;
+      if (action === 'attack' || action === 'cast') { const start = sheet.attackStart ?? 3, count = sheet.attackFrames ?? total - start; frame = start + Math.min(count - 1, Math.floor(Math.max(0, Math.min(0.999, p)) * count)); }
+      else if (action === 'hurt') frame = sheet.hurtFrame ?? 2;
+      else if (action !== 'rest') frame = (sheet.idleStart ?? 0) + Math.floor(t * 3) % (sheet.idleFrames ?? 3);
+      const sx = (frame % cols) * cellW, sy = Math.floor(frame / cols) * cellH;
+      ctx.drawImage(sheet.image, sx, sy, cellW, cellH, -wdt / 2, -hgt, wdt, hgt);
+    } else ctx.drawImage(im, -wdt / 2, -hgt, wdt, hgt);
+    ctx.restore(); return true;
+  }
+  const heroSprite = () => { const c = S.me && S.me.character; return c ? artImg('sprite', myHeroKey()) : null; };
+  const heroAnimSprite = () => { const c = S.me && S.me.character; if (!c) return null; const spec = HERO_ANIM[myHeroKey()]; return spec ? { image: artImg('heroAnim', myHeroKey()), cols: spec.cols, rows: spec.rows } : null; };
+  const bossAnimSprite = (mapId) => { const image = artImg('bossAnim', mapId); return image ? { image, cols: 5, rows: 2, idleStart: mapId >= 3 ? 9 : 7, idleFrames: mapId >= 3 ? 1 : 3, attackStart: 0, attackFrames: mapId === 3 ? 9 : 5, hurtFrame: 5 } : null; };
+  const monsterAnimSprite = (name) => {
+    const image = artImg('monsterAnim', name) || artImg('eliteAnim', name);
+    return image ? { image, cols: 5, rows: 2, idleStart: 9, idleFrames: 1, attackStart: 0, attackFrames: 9, hurtFrame: 5 } : null;
+  };
+  function float(x, y, text, color, t, size = 16) { F.floats.push({ x, y, text, color, t0: t, size }); if (F.floats.length > 12) F.floats.shift(); }
+  function drawStage(ctx, w, h, t) {
+    const c = S.me.character; const st = c.state; const town = st === 'town_no_red';
+    const scene = window.RpgMaps && window.RpgMaps.get(c.level);
+    const bgImg = !town && artImg('map', scene ? window.RpgMaps.key(c.level) : c.mapId);
+    if (bgImg) { const s = Math.max(w / bgImg.width, h / bgImg.height); ctx.drawImage(bgImg, (w - bgImg.width * s) / 2, h - bgImg.height * s, bgImg.width * s, bgImg.height * s); }
+    else A.scene(ctx, w, h, { mapId: Math.min(4, c.mapId), town, t, scroll: 0 });
+    const gy = h * 0.9, hx = w * 0.3;
+    if (st === 'reviving') {
+      A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'dead' }));   // tombstone stays procedural
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('復活中…', hx, gy - 60);
+    } else if (town) {
+      if (!drawSprite(ctx, heroSprite(), w * 0.5, gy, 120, { t, action: 'rest' })) A.hero(ctx, w * 0.5, gy, 1.3, heroOpts({ t, action: 'rest' }));
+      if (Math.floor(t * 1.2) !== Math.floor((t - 1 / 60) * 1.2)) float(w * 0.5 + 18, gy - 50, 'z', '#fff', t, 14);
+    } else if (st === 'gate') {
+      if (!drawSprite(ctx, heroSprite(), hx, gy, 120, { t })) A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'idle' }));
+      const px = w * 0.72, py = gy - 46; const g = ctx.createRadialGradient(px, py, 4, px, py, 46); g.addColorStop(0, 'rgba(230,210,255,.95)'); g.addColorStop(0.5, 'rgba(140,90,255,.6)'); g.addColorStop(1, 'rgba(80,40,200,0)');
+      ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(px, py, 26 + Math.sin(t * 3) * 3, 44, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#ffd34d'; ctx.font = 'bold 26px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', hx, gy - 74 + Math.sin(t * 5) * 3);
+    } else {
+      const slow = st === 'no_mp'; const period = slow ? 1.9 : 1.25;
+      if (!F.mon || (F.dieAt && t - F.dieAt > 0.9)) spawnMon(t);
+      const mon = F.mon; const map3 = Number(c.mapId) === 3; const map4 = Number(c.mapId) === 4; const mx = w * 0.7 + (map3 ? 38 : map4 ? 26 : 0); mon.alpha = F.dieAt ? Math.max(0, 1 - (t - F.dieAt) / 0.6) : Math.min(1, (t - mon.born) / 0.4);
+      if (!F.dieAt && t >= F.hit) {
+        const skill = !slow && Math.random() < 0.3; F.act = skill ? 'cast' : 'attack'; F.actT = t; F.hit = t + period;
+        const dmg = Math.round((S.me.stats.atk || 10) * (skill ? S.me.stats.skill.mult : 1) * (0.85 + Math.random() * 0.3));
+        if (skill) float(hx, gy - 86, S.me.stats.skill.name, '#9fd0ff', t, 13);
+        setTimeout(() => {}, 0); mon.hp -= skill ? 2 : 1; F.monHurt = t + 0.18; float(mx + (Math.random() * 16 - 8), gy - 50, String(dmg), skill ? '#7fe0ff' : '#ffe066', t, skill ? 20 : 16);
+        if (mon.hp <= 0) { F.dieAt = t + 0.2; float(mx, gy - 74, mon.elite ? '精英擊破！' : '+EXP', mon.elite ? '#ff9b4a' : '#8dff7a', t + 0.2, 15); }
+        else if (Math.random() < 0.35) { F.heroHurt = t + 0.5; F.monActT = t; setTimeout(() => {}, 0); float(hx, gy - 60, `-${Math.max(1, Math.round((mon.elite ? 14 : 6) * S.me.stats.taken))}`, '#ff6b6b', t + 0.45, 14); }
+      }
+      const p = (t - F.actT) / 0.35; const action = t < F.heroHurt && t > F.heroHurt - 0.2 ? 'hurt' : p < 1 ? F.act : 'idle';
+      if (!drawSprite(ctx, heroSprite(), hx, gy, 120, { t, action, p: Math.max(0, p), sheet: heroAnimSprite() })) A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action, p: Math.max(0, p) }));
+      if (F.act === 'cast' && p < 1) {
+        const q = Math.max(0, Math.min(1, p)); const cx = hx + (mx - hx) * Math.min(1, q * 1.35), cy = gy - 46 - Math.sin(q * Math.PI) * 20;
+        const g = ctx.createRadialGradient(cx, cy, 2, cx, cy, 22); g.addColorStop(0, 'rgba(255,250,210,.95)'); g.addColorStop(.35, 'rgba(135,205,255,.8)'); g.addColorStop(1, 'rgba(85,90,255,0)');
+        ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, 22 * (0.45 + q * 0.55), 0, Math.PI * 2); ctx.fill();
+        ctx.strokeStyle = `rgba(222,236,255,${0.8 * (1 - q)})`; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(mx, gy - 28, 18 + 32 * q, -Math.PI * .8, Math.PI * .8); ctx.stroke();
+      }
+      const monP = (t - F.monActT) / 0.36; const monAction = t < F.monHurt ? 'hurt' : monP >= 0 && monP < 1 ? 'attack' : 'idle';
+      const monSpriteName = mon.elite ? mon.label : mon.name; const monKind = mon.elite ? 'elite' : 'monster';
+      if (!drawSprite(ctx, artImg(monKind, monSpriteName) || artImg('monster', mon.name), mx, gy, mon.elite ? 92 : 80, { t, action: monAction, p: Math.max(0, monP), flip: map3 || mon.name === '哈耳庇厄', alpha: mon.alpha, glow: mon.elite ? '#ff3b3b' : mon.name === '哈耳庇厄' && monAction === 'attack' ? '#8fe8ff' : null, sheet: monsterAnimSprite(monSpriteName) }))
+        A.monster(ctx, mx, gy, 1.3, { name: mon.name, elite: mon.elite, t, hurt: t < F.monHurt, alpha: mon.alpha });
+      if (!F.dieAt) { ctx.fillStyle = 'rgba(0,0,0,.5)'; ctx.fillRect(mx - 22, gy - 74, 44, 5); ctx.fillStyle = mon.elite ? '#ff7a3b' : '#ff4d5e'; ctx.fillRect(mx - 22, gy - 74, 44 * Math.max(0, mon.hp / mon.max), 5);
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(mon.label, mx, gy - 80); }
+    }
+    ctx.textAlign = 'center';
+    F.floats = F.floats.filter((f) => t - f.t0 < 1.1);
+    for (const f of F.floats) { const k = (t - f.t0) / 1.1; if (k < 0) continue; ctx.globalAlpha = 1 - k; ctx.font = `900 ${f.size}px ${ART ? (getComputedStyle(document.documentElement).getPropertyValue('--f-num') || 'serif') : 'sans-serif'}`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.strokeText(f.text, f.x, f.y - k * 34); ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - k * 34); ctx.globalAlpha = 1; }
+  }
+
+  // ---------- header + nav ----------
+  function renderHud() {
+    const hud = $('#hud'), nav = $('#nav');
+    if (!S.me) { hud.hidden = true; nav.hidden = true; return; }
+    const c = S.me.character; hud.hidden = false; nav.hidden = false;
+    hud.innerHTML = `<div class="who"><div class="nm">${esc(c.emoji)} ${esc(c.name)}</div><div class="sub">${esc(c.className)} · Lv.${c.level}</div></div>
+      <span class="chip gold">💰 ${fmt(c.gold)}</span>`;
+    nav.querySelectorAll('button').forEach((b) => {
+      b.classList.toggle('on', b.dataset.tab === S.tab);
+      b.classList.toggle('dot', (b.dataset.tab === 'boss' && !!(S.me.boss && S.me.boss.status === 'active')) || (b.dataset.tab === 'class' && S.me.gate.canAdvance) || (b.dataset.tab === 'home' && !S.me.daily.claimed));
+      const bd = S.me.badges || {}; const n = b.dataset.tab === 'trade' ? (bd.requests || 0) + (bd.challenges || 0) + (bd.trades || 0) : 0;
+      let cnt = b.querySelector('.nb'); if (n) { if (!cnt) { cnt = document.createElement('b'); cnt.className = 'nb'; b.appendChild(cnt); } cnt.textContent = n > 9 ? '9+' : String(n); } else if (cnt) cnt.remove();
+      b.onclick = () => { S.tab = b.dataset.tab; haptic('light'); render(); load(S.tab); };
+    });
+  }
+
+  // ---------- screens ----------
+  function stateInfo(me) {
+    const c = me.character, g = me.gate;
+    switch (c.state) {
+      case 'fighting': return { cls: '', text: '⚔️ 自動戰鬥中' };
+      case 'no_mp': return { cls: 'warn', text: '💙 沒藍水：只用普攻（較慢）' };
+      case 'town_no_red': return { cls: 'warn', text: '🏠 沒紅水：回城休息，暫停練功' };
+      case 'reviving': return { cls: 'warn', text: `🪦 死亡復活中${c.stateUntil ? ` · ${mmss(c.stateUntil - Date.now() - 0)}` : ''}` };
+      case 'gate': return { cls: 'gate', text: `🔒 等轉職：Lv.${g.gateLevel} 需要「${g.materialName}」` };
+      default: return { cls: '', text: c.state };
+    }
+  }
+  function homeView() {
+    const me = S.me, c = me.character, st = me.stats, si = stateInfo(me);
+    const scene = window.RpgMaps && window.RpgMaps.get(c.level);
+    const mapLabel = scene ? `${scene.emoji} ${scene.name}` : c.mapName;
+    const red = sumKind('red'), blue = sumKind('blue');
+    const g = me.gate; const r = S.lastReport;
+    const used = r ? Object.entries(r.used || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${fmt(v)}`).join('、') : '';
+    const drops = r ? Object.entries(r.drops || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${v}`).join('、') : '';
+    return `
+    <div class="lc-adventure"><div class="lc-topline"><span>✦ ADVENTURE ✦</span><span>${esc(mapLabel)}</span></div>
+    <div class="card lc-profile"><div class="hero">${portraitHtml('pt')}<div class="info">
+      <div class="cls">${esc(c.className)} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span></div>
+      ${bar('hp', c.hp, c.maxHp, `HP ${fmt(c.hp)} / ${fmt(c.maxHp)}`)}
+      ${bar('mp', c.mp, c.maxMp, `MP ${fmt(c.mp)} / ${fmt(c.maxMp)}`)}
+      ${bar('exp', c.expPct, 100, c.expNeed ? `EXP ${c.expPct}%` : 'EXP MAX')}
+    </div></div></div>
+    <div class="lc-battle-shell"><div class="lc-battle-head"><span>⚔ 狩獵戰場</span><span>${si.text}</span></div>
+    ${BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
+    </div></div>
+    ${todoHtml()}
+    ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
+    ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>沒紅水了</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
+    <div class="card"><h3>🧪 補給 <small>自動喝紅水 ≤ ${c.autoRedPct}%</small></h3>
+      <div class="grid2"><div class="pot"><span class="ic">${iconHtml(`red_${Math.min(2, c.mapId)}`, '🧪')}</span><div><div class="n">${fmt(red)}</div><div class="h">紅水 · 約 ${me.supply.redHours} 小時</div></div></div>
+      <div class="pot"><span class="ic">${iconHtml(`blue_${Math.min(2, c.mapId)}`, '💙')}</span><div><div class="n">${fmt(blue)}</div><div class="h">藍水 · 約 ${me.supply.blueHours} 小時</div></div></div></div>
+      <div class="row mt"><button class="btn" id="refill" ${me.refill.cost > 0 ? '' : 'disabled'}>${me.refill.cost > 0 ? `🧪 補滿 24 小時 · 💰${fmt(me.refill.cost)}` : '✅ 水量充足（24h）'}</button></div>
+      <div class="mt muted">自動喝紅水：HP 低於或等於設定比例時使用</div><div class="seg" id="redSeg">${[30, 40, 50, 60, 70].map((v) => `<button data-v="${v}" class="${c.autoRedPct === v ? 'on' : ''}">${v}%</button>`).join('')}</div>
+      <div class="mt row" style="justify-content:space-between"><span class="muted" style="flex:1">自動喝藍水：開啟後使用技能，關閉則只用普攻</span><div class="seg" style="flex:none"><button id="blueTog" class="${c.autoBlue ? 'on' : ''}">${c.autoBlue ? '開' : '關'}</button></div></div>
+    </div>
+    <div class="card"><h3>💰 每日補給金 <small>${me.daily.firstWeek ? '首週加成中' : '每天 00:00 重置'}</small></h3>
+      <button class="btn gold" id="daily" ${me.daily.claimed ? 'disabled' : ''}>${me.daily.claimed ? '✅ 今天已領取' : `領取 💰${fmt(me.daily.total)}${me.daily.bonus ? `（含首週 +${fmt(me.daily.bonus)}）` : ''}`}</button></div>
+    <div class="card"><h3>📜 戰報 <small>開啟以來：擊殺 ${fmt(S.session.kills)} · EXP ${fmt(S.session.exp)} · 💰${fmt(S.session.gold)}</small></h3>
+      ${r ? `<div class="log"><div>⏱️ 結算 ${r.ticks} 分鐘${r.skipped_ticks ? `（${r.skipped_ticks} 分鐘停滯）` : ''}</div><div>⚔️ 擊殺 ${fmt(r.kills)}${r.elites ? `（精英 ${r.elites}）` : ''} · ✨ EXP +${fmt(r.exp_gained)}${r.exp_lost ? ` / −${fmt(r.exp_lost)}` : ''}</div>
+        <div>💰 金幣 +${fmt(r.gold_gained)}${r.gold_elites ? `（打怪 ${fmt(r.gold_kills || 0)}・菁英 ${fmt(r.gold_elites)}）` : ''}${r.levels_gained ? ` · 🎉 升了 ${r.levels_gained} 級` : ''}${r.deaths ? ` · 🪦 死亡 ${r.deaths}` : ''}${r.wards_used ? ` · 🧿 守護符 ${r.wards_used}` : ''}</div>
+        ${used ? `<div>🧪 消耗：${used}</div>` : ''}${drops ? `<div>🎁 掉落：${drops}</div>` : ''}</div>` : '<div class="muted">掛機每分鐘結算一次，開著畫面會自動更新戰報。</div>'}
+      <h3 class="mt">🧾 最近紀錄</h3><div class="log" id="ledger">${ledgerHtml()}</div></div>
+    <div class="card"><h3>📊 能力</h3><div class="stats"><div><b>${fmt(st.atk)}</b><span>攻擊</span></div><div><b>${fmt(st.def)}</b><span>防禦</span></div><div><b>${fmt(st.power)}</b><span>戰力</span></div><div><b>${fmt(st.standard)}</b><span>地圖推薦</span></div></div>
+      <div class="mt muted">技能「${esc(st.skill.name)}」MP ${st.skill.cost} · ×${st.skill.mult}${st.skill.targets > 1 ? ` · ${st.skill.targets} 目標` : ''}　被動：${esc(st.passive)}</div></div>`;
+  }
+  function ledgerHtml() {
+    if (!S.ledger) return '<div class="muted">載入中…</div>';
+    if (!S.ledger.length) return '<div class="muted">還沒有紀錄</div>';
+    return S.ledger.map((l) => { const d = new Date(l.created_at + 8 * 3600e3).toISOString().slice(5, 16).replace('T', ' ');
+      const parts = [l.gold_delta ? `💰${l.gold_delta > 0 ? '+' : ''}${fmt(l.gold_delta)}` : '', l.item && !String(l.item).startsWith('equip:') ? `${itemEmoji(l.item)}${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : ''].filter(Boolean).join(' ');
+      let note = l.note || ''; if (note.startsWith('{')) note = '';
+      return `<div><span class="muted">${d}</span> ${esc(l.type)} ${parts} <span class="muted">${esc(note)}</span></div>`; }).join('');
+  }
+  function bindHome(view) {
+    drawPortrait($('#pt', view), heroOpts({}));
+    if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
+    $('#refill', view).onclick = () => act('refill', {}, (j) => `🧪 已補水，花費 💰${fmt(j.result && j.result.cost)}`);
+    $('#daily', view).onclick = () => act('daily', {}, (j) => `💰 領到 ${fmt(j.result && j.result.gold)} 金幣`);
+    view.querySelectorAll('#redSeg button').forEach((b) => { b.onclick = () => act('settings', { autoRedPct: Number(b.dataset.v) }, `HP ≤ ${b.dataset.v}% 自動喝紅水`); });
+    $('#blueTog', view).onclick = () => act('settings', { autoBlue: !S.me.character.autoBlue }, (j) => (j.character.autoBlue ? '已開啟自動藍水' : '已關閉自動藍水（只用普攻）'));
+    view.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => { S.tab = b.dataset.go; render(); }; });
+    bindTodo(view);
+  }
+  // ---------- v0.5.1「現在可以做」: every visit shows what to spend gold / time on ----------
+  const RAR_ORDER = ['common', 'advanced', 'epic', 'legendary', 'supreme'];
+  const scrollPrice = (k) => (S.meta.items[k] && S.meta.items[k].price) || (S.shop && (S.shop.items.find((x) => x.item === k) || {}).price) || { scroll_w: 75, scroll_a: 50, scroll_r: 60 }[k] || 0;
+  /** what an enhance/reroll attempt needs right now: scrolls owned, missing, gold to buy the rest, affordable? */
+  function attemptCost(e, scroll) {
+    const have = S.me.inventory[scroll] || 0; const miss = Math.max(0, e.scrollCost - have); const gold = miss * scrollPrice(scroll);
+    return { have, miss, gold, ok: gold <= S.me.character.gold };
+  }
+  function todoList() {
+    const me = S.me, c = me.character, out = [], bd = me.badges || {}; const r = S.pending;   // everything earned since the last 收下 (incl. the offline settlement on open)
+    if (r && r.ticks && (r.gold_gained || Object.keys(r.drops || {}).length)) {
+      const dr = Object.entries(r.drops || {}).map(([k, v]) => `${itemEmoji(k)}×${v}`).join(' ');
+      out.push({ k: 'collect', ic: '🎁', t: `掛機收穫 💰+${fmt(r.gold_gained)}${dr ? ` ${dr}` : ''}`, s: `${r.ticks >= 120 ? `${Math.round(r.ticks / 6) / 10} 小時` : `${r.ticks} 分鐘`} · 擊殺 ${fmt(r.kills)}${r.elites ? ` · 菁英 ${r.elites}` : ''}`, b: '收下', cls: 'gold' });
+    }
+    if (!me.daily.claimed) out.push({ k: 'daily', ic: '💰', t: `每日補給金 ${fmt(me.daily.total)}`, s: me.daily.firstWeek ? '首週 +50%' : '每天 00:00 重置', b: '領取', cls: 'gold' });
+    if (me.gate && me.gate.canAdvance) out.push({ k: 'go:class', ic: '✨', t: '可以轉職了！', s: `${me.gate.materialName} 已到手`, b: '轉職', cls: 'gold' });
+    const nReq = (bd.requests || 0) + (bd.trades || 0) + (bd.challenges || 0);
+    if (nReq) out.push({ k: 'go:trade', ic: '🤝', t: `${nReq} 個交易／決鬥等你回覆`, s: [bd.requests ? `交易請求 ${bd.requests}` : '', bd.trades ? `交易視窗 ${bd.trades}` : '', bd.challenges ? `決鬥 ${bd.challenges}` : ''].filter(Boolean).join(' · '), b: '查看' });
+    if (me.refill.cost > 0 && me.supply.redHours < 8) out.push({ k: 'refill', ic: '🧪', t: `水只剩約 ${me.supply.redHours} 小時`, s: `補滿 24h 💰${fmt(me.refill.cost)}`, b: '補水' });
+    // safe enhancement first (no break chance), highest tier / lowest + first
+    const eq = me.equipment.filter((e) => e.equipped && e.enhanceNext && !e.inTrade);
+    const safe = eq.filter((e) => !e.enhanceNext.break).map((e) => ({ e, a: attemptCost(e, e.scroll) })).filter((x) => x.a.ok).sort((x, y) => y.e.tier - x.e.tier || x.e.enhance - y.e.enhance || x.a.gold - y.a.gold);
+    if (safe.length) { const { e, a } = safe[0];
+      out.push({ k: `item:${e.id}`, ic: '⚒️', t: `可強化 +${e.enhance + 1}：${e.name}`, s: `安全 · 成功 ${Math.round(e.enhanceNext.success * 100)}% · ${a.miss ? `買捲 💰${fmt(a.gold)}` : `捲軸 ${a.have}/${e.scrollCost}`}${safe.length > 1 ? ` · 還有 ${safe.length - 1} 件可強化` : ''}`, b: '強化', cls: 'green' }); }
+    const rr = eq.map((e) => ({ e, a: attemptCost(e, 'scroll_r') })).filter((x) => x.a.ok && RAR_ORDER.indexOf(x.e.rarity) < 3).sort((x, y) => RAR_ORDER.indexOf(x.e.rarity) - RAR_ORDER.indexOf(y.e.rarity) || y.e.tier - x.e.tier);
+    if (rr.length) { const { e, a } = rr[0]; out.push({ k: `item:${e.id}`, ic: '🎲', t: `洗屬性：${e.name}（${e.rarityName}）`, s: `追極品／傳說 · ${a.miss ? `買捲 💰${fmt(a.gold)}` : `捲軸 ${a.have}/${e.scrollCost}`}`, b: '洗' }); }
+    if (S.shop) { // a better shop piece for a slot you can afford now
+      const best = {}; for (const e of me.equipment.filter((x) => x.equipped)) best[e.slot] = Math.max(best[e.slot] || 0, e.tier);
+      const up = S.shop.gear.filter((o) => o.levelReq <= c.level && o.price <= c.gold && o.tier > (best[o.slot] || 0)).sort((a, b) => b.tier - a.tier || a.price - b.price);
+      if (up.length) out.push({ k: 'go:shop', ic: '🛒', t: `買得起：${up[0].name}（T${up[0].tier}）`, s: `💰${fmt(up[0].price)}${up.length > 1 ? ` · 共 ${up.length} 件升級` : ''}`, b: '商店' });
+    }
+    if (S.boss && S.boss.status === 'active') out.push({ k: 'go:boss', ic: '👹', t: `首領出現中：${S.boss.name || '地圖首領'}`, s: '每 3 分鐘可攻擊一次', b: '去打', cls: 'red' });
+    else if (me.nextBoss) out.push({ k: 'go:boss', ic: '⏰', t: `下一隻首領 ${String(me.nextBoss.hour).padStart(2, '0')}:00`, s: `<span id="todoCd">${mmss(me.nextBoss.start - sNow())}</span> 後出現`, b: '看看' });
+    return out;
+  }
+  function todoHtml() {
+    const list = todoList();
+    return `<div class="card todo"><h3>⚡ 現在可以做 <small>💰 ${fmt(S.me.character.gold)}</small></h3>${list.length ? list.slice(0, 6).map((t, i) => `<div class="todo-row" data-todo="${i}"><span class="ti">${t.ic}</span><div class="tm"><b>${esc(t.t)}</b><small>${t.s}</small></div><button class="btn sm ${t.cls || ''}">${t.b}</button></div>`).join('') : '<div class="muted">都處理好了，安心掛機 ☕</div>'}</div>`;
+  }
+  function bindTodo(view) {
+    if (!S.shop && !S.shopLoading) { S.shopLoading = true; api('shop').then((j) => { absorb(j); if (S.tab === 'home' && $('#sheet').hidden) render(); }).catch(() => {}); }
+    const list = todoList();
+    view.querySelectorAll('[data-todo]').forEach((row) => { row.onclick = () => {
+      const t = list[Number(row.dataset.todo)]; if (!t) return; haptic('light');
+      if (t.k === 'collect') {
+        // Idle rewards are credited by the server when it settles the report. The
+        // collect button acknowledges that report; animate the already-credited
+        // amount into the HUD instead of issuing a second gold mutation.
+        const reward = Math.max(0, Number(S.pending && S.pending.gold_gained) || 0);
+        const total = Math.max(0, Number(S.me && S.me.character && S.me.character.gold) || 0);
+        S.pending = null; collectFx(row, reward, total); setTimeout(render, 700); return;
+      }
+      if (t.k === 'daily') return act('daily', {}, (j) => `💰 領到 ${fmt(j.result && j.result.gold)} 金幣`);
+      if (t.k === 'refill') return act('refill', {}, (j) => `🧪 已補水，花費 💰${fmt(j.result && j.result.cost)}`);
+      if (t.k.startsWith('go:')) { S.tab = t.k.slice(3); render(); return; }
+      if (t.k.startsWith('item:')) return itemSheet(t.k.slice(5));
+    }; });
+  }
+  /** coins fly from the row to the gold chip */
+  function collectFx(row, reward = 0, total = 0) {
+    const from = row.getBoundingClientRect(); const chip = $('#hud .chip') || $('#hud'); const to = chip ? chip.getBoundingClientRect() : { left: innerWidth - 60, top: 10, width: 40, height: 20 };
+    for (let i = 0; i < 10; i++) { const c = document.createElement('span'); c.className = 'coinfly'; c.textContent = '🪙';
+      c.style.left = `${from.left + 24 + Math.random() * 40}px`; c.style.top = `${from.top + from.height / 2}px`;
+      c.style.setProperty('--dx', `${to.left + to.width / 2 - from.left - 40}px`); c.style.setProperty('--dy', `${to.top + to.height / 2 - from.top - from.height / 2}px`);
+      c.style.animationDelay = `${i * 40}ms`; document.body.appendChild(c); setTimeout(() => c.remove(), 1100); }
+    if (chip && reward > 0) {
+      const start = Math.max(0, total - reward), startedAt = performance.now(), duration = 700;
+      const countUp = (now) => {
+        if (!chip.isConnected) return;
+        const p = Math.min(1, (now - startedAt) / duration);
+        chip.textContent = `💰 ${fmt(Math.round(start + (total - start) * p))}`;
+        if (p < 1) requestAnimationFrame(countUp);
+      };
+      chip.textContent = `💰 ${fmt(start)}`; requestAnimationFrame(countUp);
+      toast(`掛機金幣 +${fmt(reward)} 已入帳`);
+    }
+    haptic('ok');
+  }
+  // ---------- v0.5.1 強化／洗屬性 reveal (quick loop: buy missing scrolls → attempt → reveal → 再一次) ----------
+  const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  async function forge(e, kind, run) {
+    let ov = $('#forge'); if (!ov) { ov = document.createElement('div'); ov.id = 'forge'; document.body.appendChild(ov); }
+    ov.className = `forge ${kind} charging`; ov.hidden = false;
+    ov.innerHTML = `<div class="fg-box"><div class="fg-ring"></div><div class="fg-ic ic rar-${esc(e.rarity)}">${eqIcon(e)}${e.enhance ? `<em>+${e.enhance}</em>` : ''}</div>
+      <div class="fg-t">${kind === 'enhance' ? `強化中… +${e.enhance} → +${e.enhance + 1}` : '洗屬性中…'}</div><div class="fg-r"></div><div class="fg-s"></div><div class="fg-b"></div></div>`;
+    haptic('light'); let spin = 0; const keys = Object.keys(ELEM);
+    const iv = kind === 'reroll' ? setInterval(() => { const el = ov.querySelector('.fg-r'); if (el) el.textContent = ELEM[keys[spin++ % keys.length]]; }, 90) : 0;
+    const [j] = await Promise.all([run(), new Promise((r) => setTimeout(r, reducedMotion() ? 150 : 900))]); clearInterval(iv);
+    if (!j || !j.result) { ov.hidden = true; return null; }
+    const r = j.result; ov.classList.remove('charging');
+    const set = (cls, title, sub) => { ov.classList.add(cls); ov.querySelector('.fg-t').innerHTML = title; ov.querySelector('.fg-r').innerHTML = sub; };
+    if (kind === 'enhance') {
+      if (r.result === 'success') { set('ok', `✨ 強化成功！`, `<b class="big">+${r.to}</b>`); haptic('ok'); sparks(ov, ['#ffd75e', '#fff1b0', '#7fd6ff'], 26); }
+      else if (r.result === 'break') { set('boom', '💥 爆裝了…', `「${esc(e.name)}」碎掉了`); haptic('error'); sparks(ov, ['#ff8296', '#a1102c', '#ffd2a0'], 20); }
+      else { set('none', '😶 沒有變化', '捲軸已消耗，再試一次？'); haptic('warning'); }
+    } else {
+      const a = r.after; set(r.upgraded ? 'ok' : 'roll', r.upgraded ? '⬆️ 稀有度提升！' : '🎲 洗好了', `<b class="big tc-${esc(a.rarity)}">${ELEM[a.element] || a.element} +${fmt(a.element_stat)}</b><br><span class="tc-${esc(a.rarity)}">${esc(r.rarityName)}</span> <span class="muted">（原本 ${ELEM[r.before.element] || r.before.element} +${fmt(r.before.element_stat)}）</span>`);
+      haptic(r.upgraded ? 'ok' : 'light'); if (r.upgraded) sparks(ov, ['#d7a6ff', '#ffc857', '#fff'], 24);
+    }
+    const ne = S.me.equipment.find((x) => x.id === e.id);
+    const again = ne && (kind === 'reroll' ? attemptCost(ne, 'scroll_r') : ne.enhanceNext ? attemptCost(ne, ne.scroll) : null);
+    const label = again && again.ok ? (again.miss ? `再一次 · 💰${fmt(again.gold)}` : '再一次') : '';
+    ov.querySelector('.fg-s').innerHTML = `<small class="muted">💰 ${fmt(S.me.character.gold)} · ${kind === 'reroll' ? `洗屬性捲 ${S.me.inventory.scroll_r || 0}` : `${itemName(e.scroll)} ${S.me.inventory[e.scroll] || 0}`}</small>`;
+    ov.querySelector('.fg-b').innerHTML = `${label ? `<button class="btn ${kind === 'enhance' && ne.enhanceNext && ne.enhanceNext.break ? 'red' : 'green'}" data-f="again">${label}</button>` : ''}<button class="btn ghost" data-f="done">完成</button>`;
+    return new Promise((res) => { ov.querySelectorAll('[data-f]').forEach((b) => { b.onclick = () => { ov.hidden = true; res(b.dataset.f);
+      if (b.dataset.f === 'again' && ne) (kind === 'reroll' ? doReroll : doEnhance)(ne); else if (ne) itemSheet(ne.id); }; }); });
+  }
+  function sparks(ov, cols, n) {
+    if (reducedMotion()) return; const box = ov.querySelector('.fg-box');
+    for (let i = 0; i < n; i++) { const p = document.createElement('i'); p.className = 'spark'; const a = Math.random() * Math.PI * 2, d = 60 + Math.random() * 90;
+      p.style.setProperty('--dx', `${Math.cos(a) * d}px`); p.style.setProperty('--dy', `${Math.sin(a) * d}px`); p.style.background = cols[i % cols.length]; box.appendChild(p); setTimeout(() => p.remove(), 900); }
+  }
+  async function buyMissing(scroll, miss) { return miss ? act('buy', { item: scroll, qty: miss }) : true; }
+  async function doEnhance(e) {
+    const nx = e.enhanceNext; if (!nx) return; const a = attemptCost(e, e.scroll);
+    if (!a.ok) return toast(`需要${itemName(e.scroll)} ×${e.scrollCost}（你有 ${a.have}），買齊要 💰${fmt(a.gold)}`, true);
+    if (nx.break > 0) {
+      haptic('warning');
+      const ok = await confirmSheet('⚠️ 危險強化', `<div class="warnbox"><b>+${e.enhance} 已超過安全值。</b><br>成功 ${Math.round(nx.success * 100)}% · 無變化 ${Math.round(nx.nothing * 100)}% · <b style="color:var(--danger)">爆裝 ${Math.round(nx.break * 100)}%</b><br>爆裝代表「${esc(e.name)}」<b>直接消失，無法復原</b>。</div>消耗 ${itemName(e.scroll)} ×${e.scrollCost}${a.miss ? `（先買 ${a.miss} 張 💰${fmt(a.gold)}）` : ''}，確定要衝 +${e.enhance + 1}？`, '💥 我要衝', true);
+      if (!ok) return;
+    }
+    closeSheet();
+    return forge(e, 'enhance', async () => act('enhance', { itemId: e.id }));
+  }
+  async function doBlessedEnhance(e) {
+    const key = e.blessedScroll;
+    const have = S.me.inventory[key] || 0;
+    if (!e.blessedEnhanceNext || !have) return toast(`需要${itemName(key)} ×1`, true);
+    const nx = e.blessedEnhanceNext;
+    const ok = await confirmSheet('✨ 祝福強化', `使用「${esc(itemName(key))}」×1，強化「${esc(e.name)}」：成功 ${Math.round(nx.success * 100)}%、無變化 ${Math.round(nx.nothing * 100)}%${nx.break ? `、<b style="color:var(--danger)">爆裝 ${Math.round(nx.break * 100)}%</b>（裝備可能消失）` : ''}。祝福僅提高成功率 10 個百分點，不降低爆裝率。`, '✨ 使用祝福卷軸', !!nx.break);
+    if (!ok) return;
+    closeSheet();
+    return forge(e, 'enhance', async () => act('enhance', { itemId: e.id, blessed: true }));
+  }
+  async function doReroll(e) {
+    const a = attemptCost(e, 'scroll_r');
+    if (!a.ok) return toast(`需要洗屬性捲 ×${e.scrollCost}（你有 ${a.have}），買齊要 💰${fmt(a.gold)}`, true);
+    closeSheet();
+    return forge(e, 'reroll', async () => act('reroll', { itemId: e.id }));
+  }
+
+  function eqIcon(e) { return gearIcon(e, SLOT_EMOJI[e.slot] || '⚔️'); }
+  const relicCls = (e) => (e.grade === 'relic' ? ' relic' : '');
+  const clsCls = (e) => `ic-${(e && (e.classReq || e.class_req)) || 'shared'}`;
+  const clsTag = (e) => {
+    const c = (e && (e.classReq || e.class_req)) || 'any';
+    if (c === 'sword') return '<span class="tag-cls tag-sword">⚔️ 劍士</span>';
+    if (c === 'archer') return '<span class="tag-cls tag-archer">🧝 妖精</span>';
+    if (c === 'mage') return '<span class="tag-cls tag-mage">🔮 法師</span>';
+    return '<span class="tag-cls tag-shared">💎 通用</span>';
+  };
+  const rarTag = (e) => `<span class="rar-tag rar-${esc(e.rarity || 'common')}">${esc(e.rarityName || '一般')}</span>`;
+  const AFFIX = { atk: 'ATK', def: 'DEF', hp: 'HP', mp: 'MP', critPct: '爆擊', takenPct: '受傷', maxHpPct: 'MaxHP', maxMpPct: 'MaxMP', expPct: 'EXP', atkPct: 'ATK' };
+  const fmtBonus = (k, v) => `${AFFIX[k] || k} ${v > 0 ? '+' : '−'}${/Pct$/.test(k) ? `${Math.round(Math.abs(v) * 1000) / 10}%` : fmt(Math.abs(v))}`;
+  function extrasText(e) {
+    const parts = Object.entries(e.extras || {}).filter(([, v]) => v).map(([k, v]) => fmtBonus(k, v));
+    for (const [k, v] of Object.entries(e.pct || {})) if (v && AFFIX[k]) parts.push(fmtBonus(k, v));
+    return parts.join(' · ');
+  }
+  function bagView() {
+    const me = S.me; const eq = me.equipment; const c = me.character;
+    const at = (slot, pos) => eq.find((e) => e.slot === slot && e.equipped && (MULTI[slot] ? e.position === pos : true));
+    const cell = ([slot, pos]) => { const e = at(slot, pos);
+      return e ? `<div class="slot has rar-${esc(e.rarity)}${relicCls(e)} ${clsCls(e)}" data-item="${esc(e.id)}">${eqIcon(e)}${e.enhance ? `<em>+${e.enhance}</em>` : ''}<small>${esc(slotLabel(slot, pos))}</small></div>`
+        : `<div class="slot" data-empty="${slot}" data-pos="${pos}"><span class="ph">${SLOT_EMOJI[slot]}</span><small>${esc(slotLabel(slot, pos))}</small></div>`; };
+    const off = eq.filter((e) => !e.equipped);
+    const inv = Object.entries(me.inventory).filter(([, v]) => v > 0).sort((a, b) => Object.keys(S.meta.items).indexOf(a[0]) - Object.keys(S.meta.items).indexOf(b[0]));
+    const row = (e) => `<div class="item${relicCls(e)}" data-item="${esc(e.id)}"><div class="ic rar-${esc(e.rarity)} ${clsCls(e)}">${eqIcon(e)}${e.enhance ? `<em>+${e.enhance}</em>` : ''}</div><div class="mid"><div class="t tc-${esc(e.rarity)}">${clsTag(e)}${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}${e.equipped ? ' <span class="muted">(裝備中)</span>' : ''}</div>
+      <div class="d">${rarTag(e)}${esc(e.slotName)}${e.equipped && MULTI[e.slot] ? e.position : ''} · T${e.tier} · ${e.statName} ${fmt(e.stat)} · ${esc(e.elementName)} +${fmt(e.elemStat)}${e.affix ? ' · ✦詞條' : ''}</div>${e.cannotEquip && !e.equipped ? `<div class="d" style="color:var(--danger)">${esc(e.cannotEquip)}</div>` : ''}</div><button class="more" data-menu="${esc(e.id)}" aria-label="更多">⋯</button></div>`;
+    const portrait = artSrc('hero', myHeroKey());
+    return `<div class="lc-character"><div class="lc-window-title"><span>✥ CHARACTER / EQUIPMENT</span><strong>${esc(c.name)} · Lv.${c.level}</strong></div><div class="card lc-equip"><h3>🛡️ 裝備 <small>11 個欄位 · 點欄位穿脫</small></h3>
+      <div class="doll"><div class="col">${DOLL_L.map(cell).join('')}</div><div class="fig">${portrait ? `<img src="${portrait}" alt="">` : portraitHtml('dollpt')}
+        <div class="figstats"><b>ATK ${fmt(me.stats.atk)}</b><b>DEF ${fmt(me.stats.def)}</b><b>HP ${fmt(me.stats.maxHp)}</b><b>MP ${fmt(me.stats.maxMp)}</b><b>爆擊 ${me.stats.crit}%</b></div></div><div class="col">${DOLL_R.map(cell).join('')}</div></div>
+      <div class="acc">${DOLL_B.map(cell).join('')}</div></div>
+      <div class="card"><h3>⚔️ 裝備列表 <small>${eq.length} 件 · (裝備中)為穿戴狀態 · ⋯／長按可販售、分享或解契</small></h3>${eq.filter((e) => e.equipped).map(row).join('')}${off.map(row).join('') || '<div class="muted">沒有未裝備的裝備，去商店或打首領取得吧</div>'}</div>
+      <div class="card"><h3>🎒 道具</h3><div class="inv">${inv.map(([k, v]) => `<div title="${esc(S.meta.items[k] && S.meta.items[k].desc)}"><b>${iconHtml(k, itemEmoji(k))}</b><i>${fmt(v)}</i><br>${esc(itemName(k))}</div>`).join('') || '<div class="muted">空的</div>'}</div></div></div>`;
+  }
+  function bindBag(view) {
+    const pt = $('#dollpt', view); if (pt) drawPortrait(pt, heroOpts({}));
+    view.querySelectorAll('[data-item]').forEach((el) => { el.onclick = () => itemSheet(el.dataset.item); if (el.classList.contains('item')) bindLongPress(el, () => itemMenu(el.dataset.item)); });
+    view.querySelectorAll('[data-menu]').forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); itemMenu(b.dataset.menu); }; });
+    view.querySelectorAll('[data-empty]').forEach((el) => { el.onclick = () => slotPicker(el.dataset.empty, Number(el.dataset.pos)); });
+  }
+  /** empty slot → pick a compatible unequipped item for that slot/position */
+  function slotPicker(slot, pos) {
+    const list = S.me.equipment.filter((e) => e.slot === slot && !e.equipped);
+    const c = sheet(`<h2>${SLOT_EMOJI[slot]} ${esc(slotLabel(slot, pos))}</h2>${list.map((e) => `<div class="item${relicCls(e)}" data-pick="${esc(e.id)}"><div class="ic rar-${esc(e.rarity)} ${clsCls(e)}">${eqIcon(e)}</div><div class="mid"><div class="t tc-${esc(e.rarity)}">${clsTag(e)}${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</div><div class="d">${rarTag(e)}${e.statName} ${fmt(e.stat)} · ${esc(e.className)}${e.cannotEquip ? ` · <span style="color:var(--danger)">${esc(e.cannotEquip)}</span>` : ''}</div></div><button class="btn sm" ${e.cannotEquip ? 'disabled' : ''}>裝備</button></div>`).join('') || `<div class="muted">背包裡沒有${esc(S.meta.slots[slot])}。商店的「${slot === 'earring' || slot === 'ring' ? '💍 飾品' : slot === 'weapon' ? '⚔️ 武器' : '🛡️ 防具'}」分頁可以買。</div>`}
+      <button class="btn ghost mt" data-x>關閉</button>`);
+    c.querySelector('[data-x]').onclick = closeSheet;
+    c.querySelectorAll('[data-pick]').forEach((el) => { el.onclick = () => { const e = list.find((x) => x.id === el.dataset.pick); if (e.cannotEquip) return toast(e.cannotEquip, true); closeSheet(); act('equip', { itemId: e.id, position: MULTI[slot] ? pos : null }, `已裝備 ${e.name}`); }; });
+  }
+  function itemSheet(id) {
+    const e = S.me.equipment.find((x) => x.id === id); if (!e) return closeSheet();
+    const inv = S.me.inventory; const nx = e.enhanceNext; const have = inv[e.scroll] || 0; const haveR = inv.scroll_r || 0;
+    const ac = attemptCost(e, e.scroll), rc = attemptCost(e, 'scroll_r');
+    const ex = extrasText(e); const aff = e.affix ? Object.entries(e.affix).map(([k, v]) => fmtBonus(k, v)).join(' · ') : '';
+    const scReq = e.classReq || e.class_req || 'shared';
+    const scClass = `showcase showcase-${esc(scReq)} rar-${esc(e.rarity)}${e.grade === 'relic' ? ' relic' : ''}`;
+    const c = sheet(`<div class="${scClass}">
+        <div class="showcase-img-wrap rar-${esc(e.rarity)} ${clsCls(e)}">
+          ${eqIcon(e)}
+        </div>
+        <div class="showcase-tags">
+          ${clsTag(e)}
+          ${rarTag(e)}
+          ${e.grade === 'relic' ? '<span class="relictag">神話遺物</span>' : ''}
+          ${e.source === 'boss' ? '<span class="chip">👑 首領裝</span>' : e.source === 'elite' ? '<span class="chip">⚔️ 菁英掉落</span>' : ''}
+        </div>
+        <h2 class="showcase-title tc-${esc(e.rarity)}">${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</h2>
+        <div class="showcase-sub">${esc(e.type || '')} · ${esc(e.slotName)} · 需求 Lv.${e.levelReq}</div>
+      </div>
+      <div class="kv"><span>${e.statName}</span><b>${fmt(e.stat)}</b>${ex ? `<span>附加</span><b>${esc(ex)}</b>` : ''}${aff ? `<span>遺物詞條</span><b class="relictxt">${esc(aff)}</b>` : ''}<span>屬性</span><b>${esc(e.elementName)} +${fmt(e.elemStat)}</b><span>裝備階</span><b>T${e.tier} · Lv.${e.levelReq}</b>${e.branchReq ? `<span>路線</span><b>${esc(e.branchReq)} 路線限定</b>` : ''}
+      <span>交易</span><b>${e.inTrade ? '🤝 交易中（保管）' : e.tradeBlock ? `🔒 ${esc(e.tradeBlock)}` : '可交易・可分享'}</b>
+      <span>強化</span><b>${nx ? `+${e.enhance} → +${e.enhance + 1}：成功 ${Math.round(nx.success * 100)}%${nx.break ? ` · <span style="color:var(--danger)">爆裝 ${Math.round(nx.break * 100)}%</span>` : '（安全）'}` : '已達上限'}</b></div>
+      ${e.cannotEquip ? `<div class="warnbox">${esc(e.cannotEquip)}</div>` : ''}
+      <div class="grid2">
+        ${e.equipped ? '<button class="btn ghost" data-a="unequip">卸下</button>' : MULTI[e.slot] ? [1, 2].map((p) => `<button class="btn" data-a="equip" data-pos="${p}" ${e.cannotEquip ? 'disabled' : ''}>裝到 ${esc(slotLabel(e.slot, p))}</button>`).join('') : `<button class="btn" data-a="equip" ${e.cannotEquip ? 'disabled' : ''}>${e.grade === 'relic' && !e.bound ? '裝備（綁定）' : '裝備'}</button>`}
+        <button class="btn ${nx && nx.break ? 'red' : 'green'}" data-a="enhance" ${nx && ac.ok ? '' : 'disabled'}>${itemEmoji(e.scroll)} 強化（${have}/${e.scrollCost}）${nx && ac.miss ? `<small class="buy">買 ${ac.miss} 張 💰${fmt(ac.gold)}</small>` : ''}</button>
+        <button class="btn gold" data-a="blessed-enhance" ${nx && (inv[e.blessedScroll] || 0) > 0 ? '' : 'disabled'}>✨ 祝福強化（${inv[e.blessedScroll] || 0}/1）${nx ? `<small>成功 ${Math.round(e.blessedEnhanceNext.success * 100)}% · 成功率 +10%</small>` : ''}</button>
+        <button class="btn ghost" data-a="reroll" ${rc.ok ? '' : 'disabled'}>🎲 洗屬性（${haveR}/${e.scrollCost}）${rc.miss ? `<small class="buy">買 ${rc.miss} 張 💰${fmt(rc.gold)}</small>` : ''}</button>
+        ${e.convertible ? '<button class="btn ghost" data-a="convert">🔄 轉換路線</button>' : ''}
+        <button class="btn ghost" data-a="share" ${e.shareBlock ? 'disabled' : ''} title="${esc(e.shareBlock || '')}">📣 分享至群組</button>
+        ${e.bound ? `<button class="btn ghost" data-a="unbind" ${e.unbindBlock ? 'disabled' : ''} title="${esc(e.unbindBlock || '')}">🔓 解契（${S.me.inventory.unbind || 0}/${e.unbindCost}）</button>` : ''}
+        ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-a="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
+        <button class="btn ghost" data-a="close">關閉</button>
+      </div>${e.shareBlock ? `<div class="muted mt">📣 不能分享：${esc(e.shareBlock)}${e.bound && !e.equipped ? '（可用 🔓 赫密士解契卷解除綁定）' : ''}</div>` : ''}`);
+    c.querySelectorAll('[data-a]').forEach((b) => { b.onclick = async () => {
+      const a = b.dataset.a;
+      if (a === 'close') return closeSheet();
+      if (a === 'share') return shareItem(e);
+      if (a === 'unbind') return unbindItem(e);
+      if (a === 'sell') return sellGearItem(e);
+      if (a === 'equip') {
+        if (!e.bound && (e.grade === 'relic' || e.source !== 'starter') && !(await confirmSheet('🔒 穿上後綁定', `穿上「${esc(e.name)}」後會<b>綁定</b>，之後不能再交易。`, '穿上'))) return;
+        closeSheet(); return act('equip', { itemId: e.id, position: b.dataset.pos ? Number(b.dataset.pos) : null }, `已裝備 ${e.name}`); }
+      if (a === 'unequip') { closeSheet(); return act('unequip', { itemId: e.id }, `已卸下 ${e.name}`); }
+      if (a === 'convert') { const ok = await confirmSheet('🔄 轉換路線', `把「${esc(e.name)}」轉成你目前路線的同階裝備？`, '轉換'); if (ok) await act('convert', { itemId: e.id }, '轉換完成'); return; }
+      if (a === 'reroll') return doReroll(e);
+      if (a === 'enhance') return doEnhance(e);
+      if (a === 'blessed-enhance') return doBlessedEnhance(e);
+    }; });
+  }
+
+  const SHOP_TABS = [['weapon', '⚔️ 武器'], ['armor', '🛡️ 防具'], ['accessory', '💍 飾品'], ['potion', '🧪 藥水'], ['scroll', '📜 捲軸'], ['special', '🧿 特殊']];
+  const ARMOR_FILTER = [['all', '全部'], ['armor', '盔甲'], ['helmet', '頭盔'], ['gloves', '手套'], ['boots', '長靴'], ['belt', '腰帶'], ['undershirt', '內衣']];
+  function shopView() {
+    if (!S.shop) return '<div class="card muted">商店載入中…</div>';
+    const t = S.shopTab; const inv = S.me.inventory; let body = '';
+    if (t === 'weapon' || t === 'armor' || t === 'accessory') {
+      let list = S.shop.gear.filter((g) => (g.group || (g.slot === 'weapon' ? 'weapon' : 'armor')) === t);
+      if (t === 'armor') { body += `<div class="seg chipsel">${ARMOR_FILTER.map(([k, n]) => `<button data-af="${k}" class="${S.armorSlot === k ? 'on' : ''}">${n}</button>`).join('')}</div>`; if (S.armorSlot !== 'all') list = list.filter((g) => g.slot === S.armorSlot); }
+      const owned = (g) => S.me.equipment.filter((e) => e.slot === g.slot && e.tier === g.tier).length;
+      body += list.map((g) => `<div class="item"><div class="ic art">${gearIcon({ ...g, classReq: S.me.character.baseClass }, SLOT_EMOJI[g.slot])}</div><div class="mid"><div class="t">${esc(g.name)} ${owned(g) ? `<span class="muted">已有 ${owned(g)}</span>` : ''}</div><div class="d">${esc(g.type)} · T${g.tier} · Lv.${g.levelReq}${g.branch ? ` · ${esc(g.branch)}路線` : ''}</div><div class="d">${esc(g.desc || '')}</div></div>
+        <div style="text-align:right"><div class="price">💰${fmt(g.price)}</div><button class="btn sm mt" data-gear="${esc(g.code)}">購買</button></div></div>`).join('') || '<div class="muted card">目前沒有可買的裝備</div>';
+      if (t === 'accessory') body += '<div class="muted">耳環、戒指各有 2 個欄位，全職業通用。遺物級飾品只會從首領與精英掉落。</div>';
+    } else {
+      const kinds = { potion: ['red', 'blue'], scroll: ['scroll'], special: ['ward', 'reselect'] }[t];
+      const list = S.shop.items.filter((i) => S.meta.items[i.item] && kinds.includes(S.meta.items[i.item].kind));
+      const qtys = t === 'potion' ? [10, 50, 100] : [1, 5];
+      body = list.map((i) => { const art = iconHtml(i.item, ''); return `<div class="item"><div class="ic${art ? ' art' : ''}">${art || itemEmoji(i.item)}</div><div class="mid"><div class="t">${esc(i.name)} <span class="muted">持有 ${fmt(inv[i.item] || 0)}</span></div><div class="d">${esc(i.desc || '')}</div><div class="price">💰${fmt(i.price)} / 個</div></div>
+        <div style="display:flex;flex-direction:column;gap:4px">${qtys.map((q) => `<button class="btn sm ${q === qtys[0] ? '' : 'ghost'}" data-buy="${esc(i.item)}" data-q="${q}">×${q}</button>`).join('')}</div></div>`; }).join('') || '<div class="muted card">目前沒有商品</div>';
+      if (t === 'special') body += '<div class="muted">🧿 守護符：死亡時自動抵銷 EXP 損失；決鬥落敗掉裝時也會擋下（各消耗 1 張，有持有上限）。📖 命運轉職書：轉職後可重選路線（有冷卻）。</div>';
+      if (t === 'scroll') body += '<div class="muted">🔓 赫密士解契卷：解除「未穿戴」裝備的綁定，之後可交易、分享。每次用的張數＝裝備階 T × 品階倍率（遺物 ×3）＋強化每 3 級 +1。</div>';
+    }
+    return `<div class="tabs">${SHOP_TABS.map(([k, n]) => `<button data-st="${k}" class="${k === t ? 'on' : ''}">${n}</button>`).join('')}</div>${body}`;
+  }
+  function bindShop(view) {
+    view.querySelectorAll('[data-st]').forEach((b) => { b.onclick = () => { S.shopTab = b.dataset.st; render(); }; });
+    view.querySelectorAll('[data-af]').forEach((b) => { b.onclick = () => { S.armorSlot = b.dataset.af; render(); }; });
+    view.querySelectorAll('[data-buy]').forEach((b) => { b.onclick = () => act('buy', { item: b.dataset.buy, qty: Number(b.dataset.q) }, `🛒 購買 ${itemName(b.dataset.buy)} ×${b.dataset.q}`).then((j) => { if (j) loadShop(true); }); });
+    view.querySelectorAll('[data-gear]').forEach((b) => { b.onclick = async () => {
+      const g = S.shop.gear.find((x) => x.code === b.dataset.gear);
+      if (!(await confirmSheet('🛒 購買裝備', `花費 💰${fmt(g.price)} 購買「${esc(g.name)}」？<br><span class="muted">屬性與稀有度在購買時隨機決定。</span>`, '購買'))) return;
+      const j = await act('buy-gear', { code: g.code }); if (j && j.result) { const it = j.result.item; const v = S.me.equipment.find((x) => x.id === it.id); toast(`🎁 獲得 ${it.name}${v ? `（${v.rarityName} · ${v.elementName}）` : ''}`); S.tab = 'bag'; render(); if (v) itemSheet(v.id); }
+    }; });
+  }
+
+  function branchCard(cls, b, opts = {}) {
+    const sk = b.skill || {};
+    return `<div class="branch ${opts.current ? 'pick' : ''}"><div class="top"><canvas data-br="${esc(b.branch || '')}" data-path="${esc(opts.path || b.branch || '')}" data-cls="${esc(cls)}"></canvas><div style="flex:1"><div class="cls">${esc(b.name)} ${opts.current ? '<span class="chip">目前</span>' : ''}</div><div class="muted">${esc(b.line || '')}${b.weapon ? ` · 武器：${esc(b.weapon)}` : ''}</div><div style="font-size:13px;margin-top:4px">${esc(b.blurb || '')}</div></div></div>
+      <div class="sk"><div><b>${esc(sk.name)}</b>技能</div><div><b>${sk.cost} MP</b>消耗</div><div><b>×${sk.mult}${sk.targets > 1 ? ` · ${sk.targets}體` : ''}</b>倍率</div></div>
+      <div class="muted mt">被動：${esc(b.passive)}</div>${opts.button || ''}</div>`;
+  }
+  const ELF_STAGES = [{"tier":0,"title":"初始・森林妖精","preview":false,"entries":[{"path":"","name":"森林妖精","theme":"葉芽與自然弓","skill":null,"passive":null}]},{"tier":1,"title":"一轉・精靈誓約","preview":false,"entries":[{"path":"A","name":"風語妖精","theme":"青空風紋、輕弓、羽翼披風","skill":null,"passive":null},{"path":"B","name":"靈獸妖精","theme":"森綠獸紋、靈獸圖騰、木靈護肩","skill":null,"passive":null}]},{"tier":2,"title":"二轉・雙重專精","preview":false,"entries":[{"path":"A1","name":"逐風神射","theme":"銀羽長弓、鷹眼金紋","skill":null,"passive":null},{"path":"A2","name":"蒼穹風舞","theme":"嵐風長披、風刃與羽衣","skill":null,"passive":null},{"path":"B1","name":"森靈馭獸","theme":"狼鷹雙靈、鹿角護肩","skill":null,"passive":null},{"path":"B2","name":"月影獵使","theme":"銀月陷阱、影葉符咒","skill":null,"passive":null}]},{"tier":3,"title":"三轉・精靈王傳承（規劃中）","preview":true,"entries":[{"path":"A11","name":"星風聖射","theme":"星輝、風翼與神聖長弓","skill":{"name":"星風聖射・秘技","cost":26,"mult":3.6,"targets":3},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"A12","name":"蒼穹裁決者","theme":"星輝、風翼與神聖長弓","skill":{"name":"蒼穹裁決者・秘技","cost":29,"mult":3.85,"targets":3},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"A21","name":"暴風先知","theme":"星輝、風翼與神聖長弓","skill":{"name":"暴風先知・秘技","cost":26,"mult":3.6,"targets":3},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"A22","name":"天羽御風者","theme":"星輝、風翼與神聖長弓","skill":{"name":"天羽御風者・秘技","cost":29,"mult":3.85,"targets":3},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"B11","name":"萬獸祭司","theme":"月桂、森林靈獸與自然魔法","skill":{"name":"萬獸祭司・秘技","cost":26,"mult":3.6,"targets":4},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"B12","name":"古森召靈師","theme":"月桂、森林靈獸與自然魔法","skill":{"name":"古森召靈師・秘技","cost":29,"mult":3.85,"targets":4},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}},{"path":"B21","name":"皎月巡狩","theme":"月桂、森林靈獸與自然魔法","skill":{"name":"皎月巡狩・秘技","cost":26,"mult":3.6,"targets":4},"passive":{"text":"精靈祝福：攻擊 +8%","atkPct":0.08}},{"path":"B22","name":"荊棘影衛","theme":"月桂、森林靈獸與自然魔法","skill":{"name":"荊棘影衛・秘技","cost":29,"mult":3.85,"targets":4},"passive":{"text":"自然共鳴：受傷 −8%","takenPct":-0.08}}]},{"tier":4,"title":"四轉・神樹覺醒（規劃中）","preview":true,"entries":[{"path":"A111","name":"永恆風冠","theme":"天穹神羽、風暴聖冠","skill":{"name":"永恆風冠・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A112","name":"群星神弓","theme":"天穹神羽、風暴聖冠","skill":{"name":"群星神弓・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A121","name":"蒼穹神判","theme":"天穹神羽、風暴聖冠","skill":{"name":"蒼穹神判・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A122","name":"聖光獵星","theme":"天穹神羽、風暴聖冠","skill":{"name":"聖光獵星・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A211","name":"太初風皇","theme":"天穹神羽、風暴聖冠","skill":{"name":"太初風皇・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A212","name":"九霄御風","theme":"天穹神羽、風暴聖冠","skill":{"name":"九霄御風・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"A221","name":"天羽聖主","theme":"天穹神羽、風暴聖冠","skill":{"name":"天羽聖主・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"A222","name":"嵐靈神使","theme":"天穹神羽、風暴聖冠","skill":{"name":"嵐靈神使・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B111","name":"太古森皇","theme":"世界樹神紋、太古靈獸","skill":{"name":"太古森皇・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B112","name":"萬獸神尊","theme":"世界樹神紋、太古靈獸","skill":{"name":"萬獸神尊・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B121","name":"世界樹祭主","theme":"世界樹神紋、太古靈獸","skill":{"name":"世界樹祭主・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B122","name":"精靈祖靈","theme":"世界樹神紋、太古靈獸","skill":{"name":"精靈祖靈・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B211","name":"永夜月神","theme":"世界樹神紋、太古靈獸","skill":{"name":"永夜月神・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B212","name":"銀月聖獵","theme":"世界樹神紋、太古靈獸","skill":{"name":"銀月聖獵・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}},{"path":"B221","name":"荊棘聖王","theme":"世界樹神紋、太古靈獸","skill":{"name":"荊棘聖王・終章","cost":42,"mult":4.6,"targets":4},"passive":{"text":"神聖風靈：攻擊 +12%","atkPct":0.12}},{"path":"B222","name":"幽林守護","theme":"世界樹神紋、太古靈獸","skill":{"name":"幽林守護・終章","cost":46,"mult":4.949999999999999,"targets":5},"passive":{"text":"神木加護：最大生命 +12%","maxHpPct":0.12}}]}];
+  function elfPathPreview(c) {
+    const sex = c.gender === 'f' ? '女性妖精' : '男性妖精';
+    const current = String(c.classPath || '');
+    const gender = c.gender === 'f' ? 'f' : 'm';
+    return `<section class="elf-ancestry" aria-label="妖精完整成長路線"><div class="elf-ancestry-title"><span>❧ 精靈血脈 · ${sex}</span><small>一、二轉已開放；三、四轉為設計預覽</small></div><div class="elf-progression">${ELF_STAGES.map(stage => `<div class="elf-tier"><h4>${esc(stage.title)} <em>Lv.${stage.tier ? stage.tier * 30 : 1}</em></h4><div class="elf-nodes">${stage.entries.filter(v => stage.tier < 3 || !current || v.path.startsWith(current) || current.startsWith(v.path.slice(0,Math.min(2,current.length)))).map(v => { const imageKey = stage.tier ? `adv${stage.tier}_archer_${v.path}_${gender}` : `archer_${gender}`; return `<div class="elf-node ${stage.preview ? 'locked' : 'available'} ${v.path && current.startsWith(v.path) ? 'chosen' : ''}"><span class="elf-rune">${stage.tier <= 2 ? `<img class="elf-preview-art" src="art/v2/portrait_${imageKey}.webp?v=20261010-painted-restore" alt="${esc(v.name)}" loading="lazy">` : `<span aria-label="美術重製中">✧</span>`}</span><strong>${esc(v.name)}</strong><small>${esc(v.theme)}</small>${v.skill ? `<small>技能：${esc(v.skill.name)} · MP ${v.skill.cost} · ×${v.skill.mult}</small>` : ''}${v.passive ? `<small>被動：${esc(v.passive.text)}</small>` : ''}${stage.preview ? '<i>尚未開放</i>' : ''}</div>`; }).join('')}</div></div>`).join('')}</div></section>`;
+  }
+  const MAGE_STAGES = [{"tier":0,"title":"初始・魔法學徒","preview":false,"entries":[{"path":"","name":"法師","theme":"星紋法袍、初始魔杖","skill":null,"passive":null}]},{"tier":1,"title":"一轉・魔力覺醒","preview":false,"entries":[{"path":"A","name":"元素術士","theme":"元素晶核、雷炎法杖","skill":{"name":"連鎖閃電","cost":14,"mult":2.3,"targets":3},"passive":{"text":"元素親和：相剋效果 +10%","elemPct":0.1}},{"path":"B","name":"秘法師","theme":"奧術魔導書、紫晶符文","skill":{"name":"奧術飛彈","cost":10,"mult":2.1,"targets":1},"passive":{"text":"法力回流：15% 機率不耗魔","freeCastPct":0.15}}]},{"tier":2,"title":"二轉・魔導專精","preview":false,"entries":[{"path":"A1","name":"大魔導士","theme":"烈焰、寒霜與元素法環","skill":{"name":"隕石術","cost":30,"mult":3.4,"targets":4},"passive":{"text":"魔導：ATK +10%","atkPct":0.1}},{"path":"A2","name":"冰霜術士","theme":"烈焰、寒霜與元素法環","skill":{"name":"暴風雪","cost":24,"mult":2.8,"targets":4},"passive":{"text":"冰甲：受傷 −20%","takenPct":-0.2}},{"path":"B1","name":"時空術士","theme":"時之沙、召喚契約與秘法","skill":{"name":"時間扭曲","cost":22,"mult":2.6,"targets":1},"passive":{"text":"時之沙：EXP +10%","expPct":0.1}},{"path":"B2","name":"召喚師","theme":"時之沙、召喚契約與秘法","skill":{"name":"召喚火精靈","cost":26,"mult":2.4,"targets":3},"passive":{"text":"使魔護盾：受傷 −25%","takenPct":-0.25}}]},{"tier":3,"title":"三轉・奧術昇華（尚未開放）","preview":true,"entries":[{"path":"A11","name":"星炎大賢者","theme":"金紅神炎與流星法陣","skill":{"name":"星炎大賢者・奧義","cost":29,"mult":3.65,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A12","name":"天隕魔導師","theme":"金紅神炎與流星法陣","skill":{"name":"天隕魔導師・奧義","cost":33,"mult":3.95,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"A21","name":"永霜詠唱者","theme":"冰晶王冠與極光魔法","skill":{"name":"永霜詠唱者・奧義","cost":29,"mult":3.65,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A22","name":"極光冰術師","theme":"冰晶王冠與極光魔法","skill":{"name":"極光冰術師・奧義","cost":33,"mult":3.95,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B11","name":"時序預言者","theme":"紫金時輪與時空裂隙","skill":{"name":"時序預言者・奧義","cost":29,"mult":3.65,"targets":2},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B12","name":"虛空旅法師","theme":"紫金時輪與時空裂隙","skill":{"name":"虛空旅法師・奧義","cost":33,"mult":3.95,"targets":2},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B21","name":"星靈召喚師","theme":"星界召喚陣與契約符文","skill":{"name":"星靈召喚師・奧義","cost":29,"mult":3.65,"targets":4},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B22","name":"深淵契約者","theme":"星界召喚陣與契約符文","skill":{"name":"深淵契約者・奧義","cost":33,"mult":3.95,"targets":4},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}}]},{"tier":4,"title":"四轉・神域覺醒（尚未開放）","preview":true,"entries":[{"path":"A111","name":"太陽神炎使","theme":"金紅神炎與流星法陣","skill":{"name":"太陽神炎使・奧義","cost":44,"mult":4.85,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A112","name":"熾天聖魔導","theme":"金紅神炎與流星法陣","skill":{"name":"熾天聖魔導・奧義","cost":48,"mult":5.15,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"A121","name":"滅星魔皇","theme":"金紅神炎與流星法陣","skill":{"name":"滅星魔皇・奧義","cost":44,"mult":4.85,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A122","name":"隕日裁決者","theme":"金紅神炎與流星法陣","skill":{"name":"隕日裁決者・奧義","cost":48,"mult":5.15,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"A211","name":"永恆霜皇","theme":"冰晶王冠與極光魔法","skill":{"name":"永恆霜皇・奧義","cost":44,"mult":4.85,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A212","name":"絕對零度之主","theme":"冰晶王冠與極光魔法","skill":{"name":"絕對零度之主・奧義","cost":48,"mult":5.15,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"A221","name":"極光聖賢","theme":"冰晶王冠與極光魔法","skill":{"name":"極光聖賢・奧義","cost":44,"mult":4.85,"targets":5},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"A222","name":"蒼穹冰神","theme":"冰晶王冠與極光魔法","skill":{"name":"蒼穹冰神・奧義","cost":48,"mult":5.15,"targets":5},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B111","name":"時光主宰","theme":"紫金時輪與時空裂隙","skill":{"name":"時光主宰・奧義","cost":44,"mult":4.85,"targets":2},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B112","name":"命運編織者","theme":"紫金時輪與時空裂隙","skill":{"name":"命運編織者・奧義","cost":48,"mult":5.15,"targets":2},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B121","name":"虛空法神","theme":"紫金時輪與時空裂隙","skill":{"name":"虛空法神・奧義","cost":44,"mult":4.85,"targets":2},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B122","name":"次元界行者","theme":"紫金時輪與時空裂隙","skill":{"name":"次元界行者・奧義","cost":48,"mult":5.15,"targets":2},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B211","name":"萬靈聖召者","theme":"星界召喚陣與契約符文","skill":{"name":"萬靈聖召者・奧義","cost":44,"mult":4.85,"targets":4},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B212","name":"星界君王","theme":"星界召喚陣與契約符文","skill":{"name":"星界君王・奧義","cost":48,"mult":5.15,"targets":4},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}},{"path":"B221","name":"深淵魔契王","theme":"星界召喚陣與契約符文","skill":{"name":"深淵魔契王・奧義","cost":44,"mult":4.85,"targets":4},"passive":{"text":"魔導共鳴：法術攻擊 +10%","atkPct":0.1}},{"path":"B222","name":"幽冥萬象師","theme":"星界召喚陣與契約符文","skill":{"name":"幽冥萬象師・奧義","cost":48,"mult":5.15,"targets":4},"passive":{"text":"魔能結界：受傷 −10%","takenPct":-0.1}}]}];
+  function magePathPreview(c) {
+    const gender = c.gender === 'f' ? 'f' : 'm';
+    const sex = gender === 'f' ? '女性法師' : '男性法師';
+    const current = String(c.classPath || '');
+    return `<section class="elf-ancestry mage-ancestry" aria-label="法師完整成長樹"><div class="elf-ancestry-title"><span>✧ 奧術傳承 · ${sex}</span><small>三、四轉屬於尚未開放的設計預覽</small></div><div class="elf-progression">${MAGE_STAGES.map(stage => `<div class="elf-tier"><h4>${esc(stage.title)} <em>Lv.${stage.tier ? stage.tier * 30 : 1}</em></h4><div class="elf-nodes">${stage.entries.filter(v => stage.tier < 3 || !current || v.path.startsWith(current) || current.startsWith(v.path.slice(0, Math.min(2, current.length)))).map(v => { const key = stage.tier ? `adv${stage.tier}_mage_${v.path}_${gender}` : `mage_${gender}`; return `<div class="elf-node ${stage.preview ? 'locked' : 'available'} ${v.path && current.startsWith(v.path) ? 'chosen' : ''}"><span class="elf-rune"><img class="elf-preview-art" src="art/mage/portrait_${key}.svg?v=20261010-1" alt="${esc(v.name)}" loading="lazy"></span><strong>${esc(v.name)}</strong><small>${esc(v.theme)}</small>${v.skill ? `<small>技能：${esc(v.skill.name)} · MP ${v.skill.cost} · ×${v.skill.mult}</small>` : ''}${v.passive ? `<small>被動：${esc(v.passive.text)}</small>` : ''}${stage.preview ? '<i>尚未開放</i>' : ''}</div>`; }).join('')}</div></div>`).join('')}</div></section>`;
+  }
+  function classView() {
+    const me = S.me, c = me.character, g = me.gate; const base = S.meta.classes[c.baseClass];
+    let html = `<div class="lc-class-title"><span>✥ CHARACTER / STATUS</span><strong>${esc(c.name)} · Lv.${c.level}</strong></div><div class="card"><h3>✨ 職業 <small>${esc(base.name)}系</small></h3><div class="hero">${portraitHtml('cpt')}<div class="info"><div class="cls">${esc(c.className)}</div><div class="muted">Lv.${c.level} · 轉職階段 ${c.classTier}</div>
+      <div class="mt" style="font-size:13px">技能「${esc(me.stats.skill.name)}」MP ${me.stats.skill.cost} · ×${me.stats.skill.mult}<br>被動：${esc(me.stats.passive)}</div></div></div></div>`;
+    if (g.canAdvance) {
+      html += `<div class="banner gate"><span class="e">🎉</span><div>${c.classTier ? '第二次轉職！' : ''}已達 Lv.${(c.classTier + 1) * 30}，用「${esc(g.materialName)}」（${g.have}/1）選一條路線轉職！</div></div>`;
+      html += me.branches.map((b) => branchCard(c.baseClass, b, { path: b.path, button: `<button class="btn mt" data-adv="${esc(b.branch)}" ${g.have ? '' : 'disabled'}>${g.have ? `選擇「${esc(b.name)}」` : `缺「${esc(g.materialName)}」`}</button>` })).join('');
+    } else if (c.classTier >= 1) {
+      const book = me.inventory.reselect_1 || 0; const cur = c.classPath[0];
+      html += `<div class="card"><h3>📖 命運轉職書 I <small>持有 ${book}</small></h3><div class="muted">可把第一次轉職改成另一條路線（有冷卻；路線限定裝備可再轉換）。</div></div>`;
+      if (c.classTier >= 2 && (me.branches2 || []).length) { const book2 = me.inventory.reselect_2 || 0; const cur2 = c.classPath[1];
+        html += `<div class="card"><h3>📖 命運轉職書 II <small>持有 ${book2}</small></h3><div class="muted">把第二次轉職改成同系的另一個職業（7 天冷卻）。</div></div>`;
+        html += me.branches2.map((b) => branchCard(c.baseClass, b, { path: b.path, current: b.branch === cur2, button: b.branch === cur2 ? '' : `<button class="btn ghost mt" data-resel2="${esc(b.branch)}" ${book2 ? '' : 'disabled'}>📖 改為「${esc(b.name)}」</button>` })).join('');
+        html += `<h3 class="sect">一轉路線</h3>`; }
+      html += me.branches.map((b) => branchCard(c.baseClass, b, { path: c.classTier >= 2 && b.branch !== cur ? b.branch + c.classPath[1] : b.branch === cur ? c.classPath : b.branch, current: b.branch === cur, button: b.branch === cur ? '' : `<button class="btn ghost mt" data-resel="${esc(b.branch)}" ${book ? '' : 'disabled'}>📖 改走「${esc(b.name)}」</button>` })).join('');
+      if (g.atGate) html += `<div class="banner gate"><span class="e">🔒</span><div>下一階轉職：Lv.${g.gateLevel} + 「${esc(g.materialName)}」（${g.have}/1）</div></div>`;
+    } else {
+      html += `<div class="card"><h3>🔒 第一次轉職 <small>Lv.${c.level} / ${g.gateLevel}</small></h3>${bar('exp', c.level, g.gateLevel, `Lv.${c.level} / ${g.gateLevel}`)}
+        <div class="mt muted">需要「${esc(g.materialName)}」（${g.have}/1）— 打倒地圖首領取得。到達 Lv.${g.gateLevel} 後會停在門檻等轉職。</div></div>`;
+      html += Object.entries(base.branches).map(([k, b]) => branchCard(c.baseClass, { ...b, branch: k }, { path: k })).join('');
+    }
+    return `<div class="lc-class-screen">${html}${c.baseClass === 'archer' ? elfPathPreview(c) : c.baseClass === 'mage' ? magePathPreview(c) : ''}</div>`;
+  }
+  function bindClass(view) {
+    drawPortrait($('#cpt', view), heroOpts({}));
+    view.querySelectorAll('canvas[data-br]').forEach((cv) => { const src = V2 && artSrc('hero', heroKey(cv.dataset.cls, S.me.character.gender, cv.dataset.path)); if (src) cv.replaceWith(Object.assign(document.createElement('img'), { src, className: 'brimg' })); else drawPortrait(cv, { cls: cv.dataset.cls, gender: S.me.character.gender, path: cv.dataset.br }); });
+    view.querySelectorAll('[data-adv]').forEach((b) => { b.onclick = async () => { const br = S.me.branches.find((x) => x.branch === b.dataset.adv);
+      if (await confirmSheet('✨ 轉職', `確定轉職為「${esc(br.name)}」？將消耗「${esc(S.me.gate.materialName)}」×1。<br><span class="muted">之後可用命運轉職書重選。</span>`, '轉職！')) act('advance', { branch: br.branch }, `🎉 轉職成功：${br.name}`); }; });
+    view.querySelectorAll('[data-resel]').forEach((b) => { b.onclick = async () => { const br = S.me.branches.find((x) => x.branch === b.dataset.resel);
+      if (await confirmSheet('📖 命運轉職書', `消耗命運轉職書 I，改為「${esc(br.name)}」？${S.me.character.classTier >= 2 ? '<br><span class="muted">二轉會換成新路線的同位置職業（可再用轉職書 II 調整）。</span>' : ''}`, '確定')) act('reselect', { tier: 1, branch: br.branch }, `📖 已改為 ${br.name}`); }; });
+    view.querySelectorAll('[data-resel2]').forEach((b) => { b.onclick = async () => { const br = S.me.branches2.find((x) => x.branch === b.dataset.resel2);
+      if (await confirmSheet('📖 命運轉職書 II', `消耗命運轉職書 II，二轉改為「${esc(br.name)}」？`, '確定')) act('reselect', { tier: 2, branch: br.branch }, `📖 已改為 ${br.name}`); }; });
+  }
+
+  const sNow = () => Date.now() + S.skew;
+  function bossView() {
+    const b = S.boss;
+    if (b === null || b === undefined) {
+      const nb = S.me.nextBoss; const slots = S.meta.bossSlots;
+      return `<div class="bossbox"><canvas id="bcv"></canvas><div class="tag">👹 首領尚未出現</div></div>
+        <div class="card"><h3>⏰ 下一隻首領 <small>${nb ? `${nb.day.slice(5)} ${String(nb.hour).padStart(2, '0')}:00` : ''}</small></h3>
+        <div style="font-size:28px;font-weight:900;text-align:center" id="nextCd">${nb ? mmss(nb.start - sNow()) : '--'}</div>
+        <div class="seg mt" style="justify-content:center">${slots.map((h) => `<button>${String(h).padStart(2, '0')}:00</button>`).join('')}</div>
+        <div class="muted mt">每個時段隨機出現一隻地圖首領（不會連續同一隻）；有人卡在轉職門檻缺材料的地圖，每天保證至少出現一次。出現時群組會發首領卡。</div></div>`;
+    }
+    const me = b.me || {}; const now = sNow(); const left = b.endsAt - now;
+    const myRank = (b.top || []).findIndex((t) => String(t.tgId) === String(S.me.character.tgId));
+    let btn;
+    if (b.status !== 'active' || left <= 0) btn = '<button class="btn" disabled>首領已結束</button>';
+    else if (!me.hasCharacter) btn = '<button class="btn" disabled>需要角色</button>';
+    else if (me.downUntil && me.downUntil > now) btn = `<button class="btn red" disabled id="atk">🪦 倒地中 <span data-cd="${me.downUntil}">${mmss(me.downUntil - now)}</span></button>`;
+    else if (me.attackedThisWindow && me.nextAttackAt > now) btn = `<button class="btn" disabled id="atk">⏳ 冷卻中 <span data-cd="${me.nextAttackAt}">${mmss(me.nextAttackAt - now)}</span></button>`;
+    else btn = '<button class="btn red" id="atk" style="font-size:18px;padding:14px">⚔️ 攻擊！</button>';
+    return `<div class="bossbox"><canvas id="bcv"></canvas><div class="tag">${esc(b.elementEmoji || '')} ${esc(b.name)}</div><div class="timer">⏱️ <span data-cd="${b.endsAt}">${mmss(left)}</span></div></div>
+      <div class="card">${bar('boss', b.hp, b.maxHp, `HP ${fmt(b.hp)} / ${fmt(b.maxHp)}`)}
+        <div class="muted mt">${esc(b.mapName)} · 屬性 ${esc(b.elementName)} · 參戰 ${b.participants} 人 · 每 ${b.attackWindowMinutes} 分鐘可攻擊 1 次 · 掉落「${esc(b.material)}」</div>
+        <div class="mt">${btn}</div>
+        <div class="muted mt">我的輸出：${fmt(me.damage)}（${me.hits || 0} 次）${myRank >= 0 ? ` · 第 ${myRank + 1} 名` : ''}</div></div>
+      <div class="card"><h3>🏆 傷害排行</h3><div class="rank">${(b.top || []).map((t, i) => `<div class="${String(t.tgId) === String(S.me.character.tgId) ? 'me' : ''}"><span>${['🥇', '🥈', '🥉'][i] || i + 1}</span><span>${esc(t.name)}</span><span>${fmt(t.damage)}</span></div>`).join('') || '<div class="muted">還沒有人出手，搶頭香！</div>'}</div></div>`;
+  }
+  const BF = { hitT: -9, dmg: 0, crit: false };
+  function bindBoss(view) {
+    const b = S.boss;
+    drawers.push({ c: $('#bcv', view), fn: (ctx, w, h, t) => {
+      const mapId = b ? b.mapId : (S.me.character.mapId || 1); const bi = artImg('map', mapId);
+      if (bi) { const s = Math.max(w / bi.width, h / bi.height); ctx.drawImage(bi, (w - bi.width * s) / 2, h - bi.height * s, bi.width * s, bi.height * s); } else A.scene(ctx, w, h, { mapId: Math.min(4, mapId), t });
+      const gy = h * 0.92; const k = t - BF.hitT;
+      const bx = w * 0.66;
+      if (b && !drawSprite(ctx, artImg('boss', b.mapId), bx, gy, 200, { t, action: k > 0.15 && k < 0.45 ? 'hurt' : 'idle', flip: Number(b.mapId) === 3, sheet: bossAnimSprite(b.mapId) })) A.boss(ctx, bx, gy, 1.15, { mapId: b.mapId, t, hurt: k > 0.15 && k < 0.45 });
+      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
+      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action: k < 0.4 ? 'attack' : 'idle', p: k / 0.4 })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action: k < 0.4 ? 'attack' : 'idle', p: k / 0.4 }));
+      if (k > 0.15 && k < 1.4) { const q = (k - 0.15) / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.globalAlpha = 1; }
+    } });
+    const atk = $('#atk', view);
+    if (atk && !atk.disabled) atk.onclick = async () => {
+      if (S.busy) return; S.busy = true; atk.disabled = true; haptic('heavy');
+      try {
+        const j = await api('boss/attack', { bossId: b.id }); S.boss = j.boss; if (j.now) S.skew = j.now - Date.now();
+        const r = j.result || {}; BF.hitT = performance.now() / 1000; BF.dmg = r.damage || 0; BF.crit = (r.crits || 0) > 0;
+        toast(`⚔️ 造成 ${fmt(r.damage)} 傷害${r.crits ? `（爆擊 ${r.crits}）` : ''}${r.killed ? ' · 🎉 首領倒下！' : ''}${r.downed ? ' · 你被打倒了' : ''}`); haptic('ok');
+        render(); setTimeout(refreshMe, 1500);
+      } catch (e) { toast(e.message, true); haptic('error'); render(); }
+      finally { S.busy = false; }
+    };
+  }
+
+
+  // ---------- 交易 v0.5: 分享 → 我要交易 → 擁有者確認 → 雙方鎖定 → OK ・ 決鬥 ----------
+  const TSTATUS = { open: '進行中', done: '✅ 完成', cancelled: '✕ 取消', expired: '⌛ 過期' };
+  const PHASE = { placing: '放置中', one_locked: '一方已鎖定', ready: '雙方已鎖定 · 等 OK', ok_wait: '等對方按 OK', done: '✅ 交易完成', cancelled: '✕ 已取消（已退回）', expired: '⌛ 太久沒動作，已退回' };
+  const tradeSide = (t) => (t.me === 'b' ? [t.b, t.a] : [t.a, t.b]);
+  const SLOTS = 6;
+  function tradeLineHtml(l, mine) {
+    const ic = l.kind === 'equip' ? gearIcon({ ...l, kind: l.wkind }, SLOT_EMOJI[l.slot]) : iconHtml(l.ref, l.emoji || '📦');
+    const d = l.kind === 'equip' ? `${esc(l.slotName)} · T${l.tier} · ${l.statName} ${fmt(l.stat)} · ${esc(l.grade === 'relic' ? '遺物' : l.rarityName)}` : `×${fmt(l.qty)}`;
+    return `<div class="tslot has${l.grade === 'relic' ? ' relic' : ''}${l.rarity ? ` rar-${esc(l.rarity)}` : ''}" title="${esc(l.name)}"><span class="ic">${ic}</span>${l.enhance ? `<em>+${l.enhance}</em>` : ''}${l.kind === 'item' ? `<i>${fmt(l.qty)}</i>` : ''}<small class="${l.rarity ? `tc-${esc(l.rarity)}` : ''}">${esc(l.name)}</small><small class="dd">${d}</small>${mine ? `<button class="x" data-rm="${esc(l.kind)}:${esc(l.ref)}" aria-label="取回">✕</button>` : ''}</div>`;
+  }
+  function tradePanel(t, x, role, isMe, open) {
+    const canEdit = isMe && open && !x.locked; const cells = x.lines.map((l) => tradeLineHtml(l, canEdit));
+    for (let i = cells.length; i < SLOTS; i++) cells.push(`<div class="tslot${canEdit && i === x.lines.length ? ' add" data-tadd="pick' : ''}">${canEdit && i === x.lines.length ? '<span class="ph">＋</span>' : ''}</div>`);
+    return `<div class="tpanel ${x.locked ? 'locked' : ''} ${x.ok ? 'ok' : ''} ${isMe ? 'mine' : ''}"><h4><span class="role">${role}</span> ${esc(x.name)}${isMe ? '（我）' : ''}<span class="flags">${x.locked ? '<span class="chip lock">🔒 已鎖定</span>' : '<span class="chip">放置中</span>'}${x.ok ? '<span class="chip ok">✅ OK</span>' : ''}</span></h4>
+      <div class="tslots">${cells.join('')}</div>
+      <div class="tgold">💰 ${fmt(x.gold)}${x.gold ? ` <small>→ 對方實收 ${fmt(x.goldNet)}（稅 ${fmt(x.tax)}）</small>` : ''}${canEdit ? ' <button class="btn sm ghost" data-tadd="gold">設定金幣</button>' : ''}</div>
+      ${canEdit ? '<div class="row mt"><button class="btn sm ghost" data-tadd="equip">＋裝備</button><button class="btn sm ghost" data-tadd="item">＋道具</button></div>' : ''}</div>`;
+  }
+  function tradeWindowHtml(t) {
+    const open = t.status === 'open'; const [mine] = tradeSide(t); const other = t.me === 'a' ? t.b : t.a;
+    const both = t.a.locked && t.b.locked; const meta = S.meta.trade || {};
+    const ph = open ? PHASE[t.phase] || '' : PHASE[t.status];
+    let actions = '';
+    if (open) {
+      actions = `<div class="tact">${mine.locked ? '<button class="btn ghost" disabled>🔒 我已鎖定</button>' : '<button class="btn" id="tlock">🔒 鎖定</button>'}
+        <button class="btn gold" id="tok" ${both && !mine.ok ? '' : 'disabled'}>${mine.ok ? '✅ 已確認交易' : '確認交易'}</button>
+        <button class="btn red" id="tcancel">✕ 取消</button></div>
+        <div class="muted mt">${!mine.locked ? '放好要給的物品與金幣後按「🔒 鎖定」。鎖定後不能再加減（要改就取消重來）。' : !other.locked ? `等 ${esc(other.name)} 鎖定…` : mine.ok ? `等待 ${esc(other.name)} 確認交易…` : '雙方已鎖定。請核對裝備、道具與金幣，再按「確認交易」。雙方確認後才會成交。'}
+        金幣收 ${Math.round((t.taxPct || meta.taxPct || 0.05) * 100)}% 稅。${t.idleMinutes || meta.idleMinutes || 30} 分鐘沒有動作會自動取消並退回。</div>`;
+    } else if (t.status === 'done') actions = `<div class="tdone">🎉 交易完成！物品已送到雙方背包${t.taxGold ? ` · 稅 💰${fmt(t.taxGold)}` : ''}</div>`;
+    else actions = `<div class="muted mt">${PHASE[t.status] || t.status}，物品與金幣都已退回。</div>`;
+    return `<div class="card twin phase-${esc(open ? t.phase : t.status)}"><h3>🤝 與 ${esc(other.name)} 交易 <small>${ph}${open ? ` · <span data-cd="${t.expiresAt}">${mmss(t.expiresAt - sNow())}</span>` : ''}</small></h3>
+      ${actions}
+      ${tradePanel(t, t.a, '發起人', t.me === 'a', open)}
+      <div class="tswap">⇅</div>
+      ${tradePanel(t, t.b, '接受者', t.me === 'b', open)}
+      <button class="btn ghost mt" id="tback">↩️ 交易列表</button></div>
+      <div class="card"><h3>🧾 交易紀錄</h3><div class="log" id="tlog"><div class="muted">載入中…</div></div></div>`;
+  }
+  function reqItemHtml(r, kind) {
+    const it = r.item || {}; const who = kind === 'in' ? r.requester : r.owner;
+    const left = r.expiresAt - sNow(); const pend = r.status === 'pending';
+    const st = { pending: '等待確認', accepted: '✅ 已開窗', rejected: '✕ 已婉拒', expired: '⌛ 過期', cancelled: '已撤回' }[r.status] || r.status;
+    const btns = !pend ? (r.status === 'accepted' && r.tradeId ? `<button class="btn sm" data-otrade="${esc(r.tradeId)}">打開</button>` : '')
+      : kind === 'in' ? `<div class="col2"><button class="btn sm gold" data-racc="${esc(r.id)}">確認</button><button class="btn sm ghost" data-rrej="${esc(r.id)}">拒絕</button></div>` : `<button class="btn sm ghost" data-rwd="${esc(r.id)}">撤回</button>`;
+    return `<div class="item${it.grade === 'relic' ? ' relic' : ''}"><div class="ic rar-${esc(it.rarity || 'common')}">${gearIcon({ ...it, classReq: it.classReq }, SLOT_EMOJI[it.slot] || '⚔️')}${it.enhance ? `<em>+${it.enhance}</em>` : ''}</div><div class="mid">
+      <div class="t">${kind === 'in' ? `${esc(who.name)} 想要` : `向 ${esc(who.name)} 要`}【${it.enhance ? `+${it.enhance} ` : ''}${esc(it.name || '?')}】</div>
+      <div class="d">${kind === 'in' && who.level ? `Lv.${who.level} ${esc((S.meta.classes[who.baseClass] || {}).name || '')} · ` : ''}${st}${pend ? ` · 剩 <span data-cd="${r.expiresAt}">${mmss(left)}</span>` : ''}</div></div>${btns}</div>`;
+  }
+  function tradeListHtml() {
+    const meta = S.meta.trade || {}; const L = S.trades; const R = S.reqs;
+    const inPend = R ? R.incoming.filter((r) => r.status === 'pending') : []; const outAll = R ? R.outgoing.slice(0, 8) : [];
+    const card = (t) => { const [mine, theirs] = tradeSide(t); return `<div class="item" data-trade="${esc(t.id)}"><div class="ic">🤝</div><div class="mid"><div class="t">${esc(theirs.name)} <span class="muted">${t.status === 'open' ? PHASE[t.phase] : TSTATUS[t.status]}</span></div>
+      <div class="d">我方 ${mine.lines.length} 項${mine.gold ? ` + 💰${fmt(mine.gold)}` : ''} ⇄ 對方 ${theirs.lines.length} 項${theirs.gold ? ` + 💰${fmt(theirs.gold)}` : ''}</div></div><span class="muted">›</span></div>`; };
+    return `<div class="card"><h3>🤝 交易怎麼開始？</h3><div class="muted">「🎒 背包」<b>長按</b>（電腦版按「⋯」）一件沒綁定的裝備 →「📣 分享至群組」。群組裡想要的人按「🤝 我要交易」，你在這裡按「確認」就會打開交易視窗：雙方放物品／金幣 → 🔒 鎖定 → 都按 OK 才成交（金幣收 ${Math.round((meta.taxPct || 0.05) * 100)}% 稅）。</div></div>
+      <div class="card"><h3>📥 收到的交易請求 <small>${inPend.length}</small></h3>${!R ? '<div class="muted">載入中…</div>' : inPend.map((r) => reqItemHtml(r, 'in')).join('') || '<div class="muted">沒有待確認的請求</div>'}</div>
+      ${L && L.open.length ? `<div class="card"><h3>🔄 進行中的交易視窗 <small>${L.open.length}</small></h3>${L.open.map(card).join('')}</div>` : ''}
+      <div class="card"><h3>📤 我送出的請求</h3>${!R ? '<div class="muted">載入中…</div>' : outAll.map((r) => reqItemHtml(r, 'out')).join('') || '<div class="muted">在群組的分享貼文按「🤝 我要交易」就會出現在這裡</div>'}</div>
+      ${L ? `<div class="card"><h3>📜 交易歷史</h3>${L.history.map(card).join('') || '<div class="muted">還沒有交易紀錄</div>'}</div>` : ''}`;
+  }
+  // ---- 決鬥 (PK)
+  const PKST = { pending: '等待接受', done: '已結束', declined: '✕ 拒絕', cancelled: '已取消', expired: '⌛ 過期' };
+  function pkCardHtml(p) {
+    const meSide = p.me; const other = meSide === 'a' ? p.b : p.a; const inc = p.status === 'pending' && meSide === 'b';
+    const res = p.status === 'done' ? (p.winner === meSide ? '🏆 勝' : '💀 敗') : PKST[p.status];
+    const btn = p.status === 'pending' ? (inc ? `<div class="col2"><button class="btn sm red" data-pacc="${esc(p.id)}">⚔️ 接受</button><button class="btn sm ghost" data-pdec="${esc(p.id)}">拒絕</button></div>` : `<button class="btn sm ghost" data-pdec="${esc(p.id)}">取消</button>`) : p.status === 'done' ? `<button class="btn sm ghost" data-pview="${esc(p.id)}">重播</button>` : '';
+    return `<div class="item"><div class="ic pkic"><img src="${artSrc('portrait', heroKey(other.baseClass, other.gender, other.classPath))}" alt=""></div><div class="mid"><div class="t">${inc ? `${esc(other.name)} 向你挑戰` : meSide === 'a' ? `挑戰 ${esc(other.name)}` : `vs ${esc(other.name)}`} <span class="muted">${res}</span></div>
+      <div class="d">Lv.${other.level} ${esc(other.className || '')}${p.status === 'pending' ? ` · 剩 <span data-cd="${p.expiresAt}">${mmss(p.expiresAt - sNow())}</span>` : ''}${p.drop ? ` · 💥 ${p.winner === meSide ? '奪得' : '掉落'}【${esc(p.drop.name)}】` : p.wardUsed ? ' · 🧿 守護符擋下掉裝' : ''}</div></div>${btn}</div>`;
+  }
+  function pkListHtml() {
+    const r = S.meta.pk || {}; const P = S.pks; const lv = S.me.character.level;
+    return `<div class="card"><h3>⚔️ 決鬥 <small>今天 ${P ? P.today : '-'} / ${r.dailyCap || 5} 場</small></h3>
+      <div class="muted">雙方 Lv.${r.minLevel || 10} 以上、等級差 ≤ ${r.maxLevelGap || 10}；同一對手 ${r.pairCooldownHours || 12} 小時 1 場；挑戰 ${r.challengeMinutes || 10} 分鐘內要接受。決鬥用滿血滿魔模擬，<b>不扣 HP／EXP</b>。<br>⚠️ 輸的人有 <b>${Math.round((r.dropPct || 0.2) * 100)}%</b> 機率掉 1 件<b>身上穿的</b>裝備（武器也會掉）給贏家，掉出的裝備<b>解除綁定</b>、可以交易買回；背包有 🧿 守護符會自動擋下並消耗 1 張。</div>
+      <button class="btn red mt" id="pknew" ${lv < (r.minLevel || 10) ? 'disabled' : ''}>${lv < (r.minLevel || 10) ? `Lv.${r.minLevel || 10} 才能決鬥` : '⚔️ 發起決鬥'}</button></div>
+      ${!P ? '<div class="card muted">載入中…</div>' : `<div class="card"><h3>⏳ 等待中 <small>${P.pending.length}</small></h3>${P.pending.map(pkCardHtml).join('') || '<div class="muted">沒有等待中的挑戰（群組也可以輸入「/決鬥 @對方」）</div>'}</div>
+      <div class="card"><h3>📜 決鬥紀錄</h3>${P.history.map(pkCardHtml).join('') || '<div class="muted">還沒有決鬥紀錄</div>'}</div>`}`;
+  }
+  function tradeView() {
+    const badge = S.me.badges || {}; const sub = S.social || 'trade';
+    const seg = `<div class="tabs"><button data-soc="trade" class="${sub === 'trade' ? 'on' : ''}">🤝 交易${(badge.requests || 0) + (badge.trades || 0) ? ` <b class="cnt">${(badge.requests || 0) + (badge.trades || 0)}</b>` : ''}</button><button data-soc="pk" class="${sub === 'pk' ? 'on' : ''}">⚔️ 決鬥${badge.challenges ? ` <b class="cnt">${badge.challenges}</b>` : ''}</button></div>`;
+    if (sub === 'pk') return seg + pkListHtml();
+    if (S.trade) return seg + tradeWindowHtml(S.trade);
+    return seg + tradeListHtml();
+  }
+  async function tradeCall(action, body, okMsg) {
+    if (S.busy) return null; S.busy = true;
+    const key = mutationKey(`trade/${action}`, body);
+    try { const j = await api(`trade/${action}`, { ...body, requestId: pendingRequestId(key) }); clearPendingRequest(key); if (j.trade) S.trade = j.trade; if (okMsg) toast(okMsg); haptic('ok'); refreshMe(); render(); return j; }
+    catch (e) { if (e.status && e.status < 500 && e.code !== 'conflict') clearPendingRequest(key); toast(e.message, true); haptic('error'); if (S.trade) loadTrade(S.trade.id); return null; }
+    finally { S.busy = false; }
+  }
+  async function loadTrades() {
+    try { const [j, r] = await Promise.all([api('trade/list'), api('trade/requests')]); S.trades = { open: j.open, history: j.history }; S.reqs = { incoming: r.incoming, outgoing: r.outgoing }; if (S.tab === 'trade' && !S.trade && $('#sheet').hidden) render(); } catch (e) { toast(e.message, true); }
+  }
+  async function loadTrade(id) {
+    try { const j = await api('trade/get', { tradeId: id }); const o = S.trade;
+      const changed = !o || o.id !== j.trade.id || o.offerRev !== j.trade.offerRev || o.status !== j.trade.status || o.phase !== j.trade.phase || o.a.ok !== j.trade.a.ok || o.b.ok !== j.trade.b.ok || o.a.locked !== j.trade.a.locked || o.b.locked !== j.trade.b.locked;
+      S.trade = j.trade; if (S.tab === 'trade' && changed && $('#sheet').hidden) { render(); if (o && o.status === 'open' && j.trade.status === 'done') { toast('🎉 交易完成！'); haptic('ok'); refreshMe(); } } loadTradeLog(id); } catch (e) { toast(e.message, true); S.trade = null; render(); }
+  }
+  async function loadPks() { try { const j = await api('pk/list'); S.pks = { pending: j.pending, history: j.history, today: j.today }; if (S.tab === 'trade' && S.social === 'pk' && $('#sheet').hidden) render(); } catch (e) { toast(e.message, true); } }
+  async function loadTradeLog(id) {
+    try { const j = await api('trade/log', { tradeId: id }); const el = $('#tlog'); if (!el || !S.trade) return; const nm = (tg) => (String(tg) === String(S.trade.a.tgId) ? S.trade.a.name : String(tg) === String(S.trade.b.tgId) ? S.trade.b.name : '系統');
+      const A = { open: '開啟交易視窗', add: '放入', remove: '取回', gold: '金幣改為', lock: '🔒 鎖定', confirm: '按 OK', done: '✅ 交易完成', cancel: '取消交易', expire: '⌛ 逾時退回' };
+      el.innerHTML = j.log.map((l) => `<div><span class="muted">${new Date(l.created_at + 8 * 3600e3).toISOString().slice(11, 16)}</span> ${esc(nm(l.tg_id))} ${A[l.action] || l.action} ${l.details ? esc(l.details.name || (l.details.item ? `${itemName(l.details.item)}×${l.details.qty}` : l.details.to != null ? fmt(l.details.to) : '')) : ''}</div>`).join(''); } catch (_) {}
+  }
+  function bindTrade(view) {
+    view.querySelectorAll('[data-soc]').forEach((b) => { b.onclick = () => { S.social = b.dataset.soc; render(); if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); }; });
+    if (S.social === 'pk') return bindPk(view);
+    view.querySelectorAll('[data-trade],[data-otrade]').forEach((el) => { el.onclick = () => { S.trade = null; S._lastTab = null; window.scrollTo(0, 0); loadTrade(el.dataset.trade || el.dataset.otrade); }; });
+    view.querySelectorAll('[data-racc]').forEach((b) => { b.onclick = async () => { if (S.busy) return; S.busy = true;
+      try { const j = await api('trade/accept', { reqId: b.dataset.racc }); S.trade = j.trade; S.social = 'trade'; S._lastTab = null; window.scrollTo(0, 0); toast('🤝 交易視窗已開啟，操作按鈕在視窗上方'); haptic('ok'); refreshMe(); render(); } catch (e) { toast(e.message, true); loadTrades(); } finally { S.busy = false; } }; });
+    view.querySelectorAll('[data-rrej]').forEach((b) => { b.onclick = async () => { if (!(await confirmSheet('婉拒交易請求', '對方會收到婉拒通知。', '婉拒'))) return; try { await api('trade/reject', { reqId: b.dataset.rrej }); toast('已婉拒'); refreshMe(); loadTrades(); } catch (e) { toast(e.message, true); } }; });
+    view.querySelectorAll('[data-rwd]').forEach((b) => { b.onclick = async () => { try { await api('trade/withdraw', { reqId: b.dataset.rwd }); toast('已撤回請求'); loadTrades(); } catch (e) { toast(e.message, true); } }; });
+    const bk = $('#tback', view); if (bk) bk.onclick = () => { S.trade = null; render(); loadTrades(); };
+    if (!S.trade) return;
+    const t = S.trade; loadTradeLog(t.id);
+    const lk = $('#tlock', view); if (lk) lk.onclick = async () => { const [mine] = tradeSide(t);
+      if (await confirmSheet('🔒 鎖定交易內容', `你要給：${mine.lines.map((l) => esc(l.name) + (l.kind === 'item' ? `×${l.qty}` : '')).join('、') || '（不放東西）'}${mine.gold ? ` + 💰${fmt(mine.gold)}` : ''}<br><span class="muted">鎖定後這一邊不能再加減；要改只能取消交易。</span>`, '鎖定')) tradeCall('lock', { tradeId: t.id }, '🔒 已鎖定'); };
+    const ok = $('#tok', view); if (ok) ok.onclick = async () => { const [mine, theirs] = tradeSide(t);
+      if (await confirmSheet('✅ 按 OK 成交', `你給：${mine.lines.length} 項${mine.gold ? ` + 💰${fmt(mine.gold)}` : ''}<br>你收：${theirs.lines.length} 項${theirs.gold ? ` + 💰${fmt(theirs.goldNet)}（已扣稅）` : ''}<br><span class="muted">兩邊都按 OK 立即成交，無法還原。</span>`, 'OK')) {
+        const j = await tradeCall('confirm', { tradeId: t.id }); if (j && j.result && j.result.done) { toast('🎉 交易完成！'); haptic('ok'); } } };
+    const cc = $('#tcancel', view); if (cc) cc.onclick = async () => { if (await confirmSheet('✕ 取消交易', '取消後雙方的物品與金幣都會退回。', '取消交易', true)) tradeCall('cancel', { tradeId: t.id }, '交易已取消，物品已退回'); };
+    view.querySelectorAll('[data-rm]').forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); const [kind, ref] = b.dataset.rm.split(':'); tradeCall('remove', kind === 'equip' ? { tradeId: t.id, equipId: ref } : { tradeId: t.id, item: ref }); }; });
+    view.querySelectorAll('[data-tadd]').forEach((b) => { b.onclick = () => tradeAddSheet(b.dataset.tadd); });
+  }
+  function tradeAddSheet(kind) {
+    const t = S.trade; if (!t) return;
+    if (kind === 'pick') { const c = sheet('<h2>＋ 放入</h2><div class="grid2"><button class="btn" data-k="equip">⚔️ 裝備</button><button class="btn" data-k="item">🎒 道具</button><button class="btn gold" data-k="gold">💰 金幣</button><button class="btn ghost" data-k="x">關閉</button></div>');
+      c.querySelectorAll('[data-k]').forEach((b) => { b.onclick = () => (b.dataset.k === 'x' ? closeSheet() : tradeAddSheet(b.dataset.k)); }); return; }
+    if (kind === 'gold') {
+      const mine = tradeSide(t)[0]; const c = sheet(`<h2>💰 放入金幣</h2><div class="muted">你有 💰${fmt(S.me.character.gold + mine.gold)}（含已放入 ${fmt(mine.gold)}）。對方實收扣 ${Math.round((S.meta.trade?.taxPct || 0.05) * 100)}% 稅。</div>
+        <input class="name-in mt" id="tg" inputmode="numeric" value="${mine.gold || ''}" placeholder="0"><div class="muted mt" id="tgnet"></div><div class="row mt"><button class="btn ghost" data-x>取消</button><button class="btn gold" id="tgo">設定</button></div>`);
+      const inp = c.querySelector('#tg'); const net = () => { const v = Math.max(0, Math.floor(Number(String(inp.value).replace(/[^\d]/g, '')) || 0)); const tax = Math.ceil(v * (S.meta.trade?.taxPct || 0.05)); c.querySelector('#tgnet').textContent = v ? `對方實收 💰${fmt(v - tax)}（稅 ${fmt(tax)}）` : ''; }; inp.oninput = net; net();
+      c.querySelector('[data-x]').onclick = closeSheet; c.querySelector('#tgo').onclick = () => { const v = Math.max(0, Math.floor(Number(String(inp.value).replace(/[^\d]/g, '')) || 0)); closeSheet(); tradeCall('gold', { tradeId: t.id, gold: v }, `💰 已放入 ${fmt(v)}`); };
+      return;
+    }
+    if (kind === 'equip') {
+      const list = S.me.equipment.filter((e) => !e.tradeBlock);
+      const c = sheet(`<h2>＋ 放入裝備</h2>${list.map((e) => `<div class="item${relicCls(e)}" data-pe="${esc(e.id)}"><div class="ic rar-${esc(e.rarity)}">${eqIcon(e)}</div><div class="mid"><div class="t tc-${esc(e.rarity)}">${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</div><div class="d">${esc(e.slotName)} · ${e.statName} ${fmt(e.stat)} · ${esc(e.className)}</div></div></div>`).join('') || '<div class="muted">沒有可交易的裝備（穿過的會綁定，可用 🔓 赫密士解契卷解除；穿戴中要先卸下）</div>'}<button class="btn ghost mt" data-x>關閉</button>`);
+      c.querySelector('[data-x]').onclick = closeSheet; c.querySelectorAll('[data-pe]').forEach((el) => { el.onclick = () => { closeSheet(); tradeCall('add', { tradeId: t.id, equipId: el.dataset.pe }); }; });
+      return;
+    }
+    const keys = (S.meta.trade?.tradeableItems || []).filter((k) => (S.me.inventory[k] || 0) > 0);
+    const c = sheet(`<h2>＋ 放入道具</h2>${keys.map((k) => `<div class="item"><div class="ic art">${iconHtml(k, itemEmoji(k))}</div><div class="mid"><div class="t">${esc(itemName(k))}</div><div class="d">持有 ${fmt(S.me.inventory[k])}</div></div><input class="qty" data-q="${k}" inputmode="numeric" placeholder="數量"><button class="btn sm" data-pi="${k}">放入</button></div>`).join('') || '<div class="muted">沒有可交易的道具（守護符、轉職書不能交易）</div>'}<button class="btn ghost mt" data-x>關閉</button>`);
+    c.querySelector('[data-x]').onclick = closeSheet;
+    c.querySelectorAll('[data-pi]').forEach((b) => { b.onclick = () => { const k = b.dataset.pi; const q = Math.floor(Number(c.querySelector(`[data-q="${k}"]`).value) || 0) || 1; closeSheet(); tradeCall('add', { tradeId: t.id, item: k, qty: q }, `已放入 ${itemName(k)} ×${q}`); }; });
+  }
+  function bindPk(view) {
+    const nb = $('#pknew', view); if (nb) nb.onclick = () => playerPicker();
+    view.querySelectorAll('[data-pacc]').forEach((b) => { b.onclick = async () => { const p = S.pks.pending.find((x) => x.id === b.dataset.pacc); const other = p.a;
+      const ward = S.me.inventory.ward || 0;
+      if (!(await confirmSheet('⚔️ 接受決鬥', `對手：${esc(other.name)}（Lv.${other.level} ${esc(other.className || '')}）<br>輸了有 ${Math.round((S.meta.pk?.dropPct || 0.2) * 100)}% 機率掉 1 件身上的裝備。${ward ? `<br>🧿 你有守護符 ×${ward}，掉裝時會自動擋下（消耗 1 張）。` : '<br><b>你沒有守護符</b>，掉裝無法阻擋。'}`, '開打！', true))) return;
+      if (S.busy) return; S.busy = true;
+      try { const j = await api('pk/accept', { pkId: p.id }); haptic('heavy'); refreshMe(); loadPks(); pkReplay(j.pk); } catch (e) { toast(e.message, true); loadPks(); } finally { S.busy = false; } }; });
+    view.querySelectorAll('[data-pdec]').forEach((b) => { b.onclick = async () => { try { const j = await api('pk/decline', { pkId: b.dataset.pdec }); toast(j.pk.status === 'cancelled' ? '已取消挑戰' : '已拒絕決鬥'); refreshMe(); loadPks(); } catch (e) { toast(e.message, true); } }; });
+    view.querySelectorAll('[data-pview]').forEach((b) => { b.onclick = async () => { try { const j = await api('pk/get', { pkId: b.dataset.pview }); pkReplay(j.pk); } catch (e) { toast(e.message, true); } }; });
+  }
+  /** duel replay: both portraits, HP bars driven by the server's log (purely a playback of the settled result) */
+  function pkReplay(p) {
+    const lg = p.log || {}; const steps = lg.steps || []; const max = lg.max || { a: 1, b: 1 };
+    const side = (x, k) => `<div class="pkf" id="pk_${k}"><img src="${artSrc('portrait', heroKey(x.baseClass, x.gender, x.classPath))}" alt=""><b>${esc(x.name)}</b><small>Lv.${x.level} ${esc(x.className || '')}</small>${bar('hp', max[k], max[k], `HP ${fmt(max[k])}`)}<div class="pkdmg"></div></div>`;
+    const c = sheet(`<h2>⚔️ ${esc(p.a.name)} vs ${esc(p.b.name)}</h2><div class="pkarena">${side(p.a, 'a')}<div class="pkvs">VS</div>${side(p.b, 'b')}</div><div class="pkres muted" id="pkres">${p.rounds} 回合…</div><div class="row mt"><button class="btn ghost" data-skip>跳過</button><button class="btn" data-x>關閉</button></div>`);
+    const hp = { a: max.a, b: max.b }; let i = 0; let tm = 0;
+    const set = (k) => { const el = c.querySelector(`#pk_${k} .bar`); if (el) { el.querySelector('i').style.width = `${pct(hp[k], max[k])}%`; el.querySelector('b').textContent = `HP ${fmt(hp[k])}`; } };
+    const finish = () => { clearTimeout(tm); if (lg.hp) { hp.a = lg.hp.a; hp.b = lg.hp.b; set('a'); set('b'); } const w = p.winner === 'a' ? p.a : p.b, l = p.winner === 'a' ? p.b : p.a;
+      c.querySelector(`#pk_${p.winner}`).classList.add('win'); c.querySelector(`#pk_${p.winner === 'a' ? 'b' : 'a'}`).classList.add('lose');
+      const r = c.querySelector('#pkres'); r.className = 'pkres'; r.innerHTML = `🏆 <b>${esc(w.name)}</b> 勝！${lg.ko ? `${p.rounds} 回合擊倒` : `${p.rounds} 回合判定`}<br>${p.drop ? `💥 ${esc(l.name)} 掉落【${esc(p.drop.name)}】→ ${esc(w.name)}（已解除綁定，可交易買回）` : p.wardUsed ? `🧿 ${esc(l.name)} 的守護符擋下了掉裝` : `${esc(l.name)} 沒有掉裝備`}`; };
+    const step = () => { if (!c.isConnected || i >= steps.length) return finish(); const s = steps[i++]; const tgt = s.by === 'a' ? 'b' : 'a'; hp[tgt] = s.hp; set(tgt);
+      const f = c.querySelector(`#pk_${tgt}`); const atk = c.querySelector(`#pk_${s.by}`); atk.classList.remove('hitme', 'atk'); f.classList.remove('hitme'); void f.offsetWidth; atk.classList.add('atk'); f.classList.add('hitme');
+      const d = f.querySelector('.pkdmg'); d.textContent = `${s.crit ? '💥' : ''}-${fmt(s.dmg)}`; d.className = `pkdmg on${s.crit ? ' crit' : ''}${s.skill ? ' skill' : ''}`;
+      tm = setTimeout(step, matchMedia('(prefers-reduced-motion: reduce)').matches ? 120 : s.crit ? 700 : 480); };
+    c.querySelector('[data-x]').onclick = () => { clearTimeout(tm); closeSheet(); }; c.querySelector('[data-skip]').onclick = () => { i = steps.length; finish(); };
+    tm = setTimeout(step, 500);
+  }
+  async function playerPicker() {
+    const r = S.meta.pk || {}; const me = S.me.character;
+    const c = sheet(`<h2>⚔️ 向誰挑戰？</h2><div class="muted">Lv.${r.minLevel || 10}+、等級差 ≤ ${r.maxLevelGap || 10}</div><input class="name-in mt" id="pq" placeholder="搜尋角色名或 @username"><div id="plist" class="mt"><div class="muted">載入中…</div></div><button class="btn ghost mt" data-x>關閉</button>`);
+    c.querySelector('[data-x]').onclick = closeSheet;
+    const show = async (q) => { try { const j = await api('players', { q }); const el = $('#plist'); if (!el) return;
+      el.innerHTML = j.players.map((p) => { const bad = p.level < (r.minLevel || 10) ? `需 Lv.${r.minLevel || 10}` : Math.abs(p.level - me.level) > (r.maxLevelGap || 10) ? '等級差太大' : '';
+        return `<div class="item" data-pp="${esc(p.tgId)}" data-nm="${esc(p.name)}"><div class="ic pkic"><img src="${artSrc('portrait', heroKey(p.baseClass, p.gender, p.classPath))}" alt=""></div><div class="mid"><div class="t">${esc(p.name)}</div><div class="d">Lv.${p.level} · ${esc((S.meta.classes[p.baseClass] || {}).name || '')}${p.username ? ` · @${esc(p.username)}` : ''}</div></div><button class="btn sm red" ${bad ? 'disabled' : ''}>${bad || '挑戰'}</button></div>`; }).join('') || '<div class="muted">找不到有角色的玩家</div>';
+      el.querySelectorAll('[data-pp]').forEach((x) => { const btn = x.querySelector('button'); if (btn.disabled) return; x.onclick = async () => { closeSheet(); if (S.busy) return; S.busy = true;
+        try { await api('pk/challenge', { target: { tgId: x.dataset.pp } }); toast(`⚔️ 已向 ${x.dataset.nm} 發出挑戰，群組也會貼出決鬥卡`); S.social = 'pk'; S.tab = 'trade'; loadPks(); render(); } catch (e) { toast(e.message, true); } finally { S.busy = false; } }; }); } catch (e) { toast(e.message, true); } };
+    let tmr = 0; c.querySelector('#pq').oninput = (ev) => { clearTimeout(tmr); tmr = setTimeout(() => show(ev.target.value), 300); }; show('');
+  }
+  async function sellGearItem(e) {
+    if (e.sellBlock) return toast(e.sellBlock, true);
+    if (!(await confirmSheet('🏪 賣給商店', `確定出售「${esc(e.name)}」？<br><b>售價：💰 ${fmt(e.sellPrice)}</b><br><span class="muted">售價為該裝備基礎商店價格的三分之一；遺物裝備不可出售。</span>`, '出售', true))) return;
+    closeSheet();
+    return act('sell-gear', { itemId: e.id }, (j) => `已出售 ${j.result.itemName}，獲得 💰${fmt(j.result.gold)}`);
+  }
+  // ---- 背包長按選單：分享至群組 / 解契 / 詳細 / 販售
+  function itemMenu(id) {
+    const e = S.me.equipment.find((x) => x.id === id); if (!e) return;
+    const have = S.me.inventory.unbind || 0; const sb = e.shareBlock; const ub = e.unbindBlock;
+    const c = sheet(`<h2 class="mh tc-${esc(e.rarity)}">${eqIcon(e)} ${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</h2>
+      <div class="menu">
+        <button class="btn" data-m="share" ${sb ? 'disabled' : ''}>📣 分享至群組</button>${sb ? `<div class="why">${esc(sb)}${e.bound && !e.equipped ? ' — 可用 🔓 赫密士解契卷解除綁定' : ''}</div>` : '<div class="why">發照片貼文到群組，大家可以按 🤝 我要交易／👍 超讚</div>'}
+        ${e.bound ? `<button class="btn ghost" data-m="unbind" ${ub ? 'disabled' : ''}>🔓 解除綁定（需 ${e.unbindCost} 張・持有 ${have}）</button>${ub ? `<div class="why">${esc(ub)}</div>` : have < e.unbindCost ? '<div class="why">解契卷不夠 — 商店「📜 捲軸」500 金／張</div>' : ''}` : ''}
+        ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
+        <button class="btn ghost" data-m="detail">🔍 詳細／強化</button><button class="btn ghost" data-m="x">關閉</button></div>`);
+    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+  }
+  async function shareItem(e) {
+    if (e.shareBlock) return toast(e.shareBlock, true);
+    if (!(await confirmSheet('📣 分享至群組', `把「${esc(e.name)}」的卡片照片和完整屬性貼到群組？<br><span class="muted">群組成員可以按「🤝 我要交易」，你在「交易」分頁確認後才會開啟交易視窗。每天最多 ${S.meta.share?.dailyCap || 10} 次。</span>`, '分享'))) return;
+    const j = await act('share', { equipId: e.id }); if (j) toast('📣 已分享！照片貼文幾秒內會出現在群組');
+  }
+  async function unbindItem(e) {
+    const have = S.me.inventory.unbind || 0;
+    if (have < e.unbindCost) { toast(`需要赫密士解契卷 ×${e.unbindCost}（你有 ${have}），商店「📜 捲軸」有賣`, true); return; }
+    if (!(await confirmSheet('🔓 赫密士解契卷', `消耗 ×${e.unbindCost} 解除「${esc(e.name)}」的綁定？<br><span class="muted">解除後可以交易、分享；再穿上又會綁定。</span>`, '解除綁定'))) return;
+    const j = await act('unbind', { itemId: e.id }); if (j) { toast(`🔓 ${e.name} 已解除綁定`); itemMenu(e.id); }
+  }
+  /** long-press (touch) / right-click / ⋯ button on bag rows → itemMenu */
+  function bindLongPress(el, fn) {
+    let tm = 0, fired = false, sx = 0, sy = 0;
+    el.addEventListener('pointerdown', (ev) => { fired = false; sx = ev.clientX; sy = ev.clientY; clearTimeout(tm); tm = setTimeout(() => { fired = true; haptic('medium'); fn(); }, 480); });
+    el.addEventListener('pointermove', (ev) => { if (Math.abs(ev.clientX - sx) + Math.abs(ev.clientY - sy) > 10) clearTimeout(tm); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((k) => el.addEventListener(k, () => clearTimeout(tm)));
+    el.addEventListener('contextmenu', (ev) => { ev.preventDefault(); clearTimeout(tm); if (!fired) fn(); fired = true; });
+    el.addEventListener('click', (ev) => { if (fired) { ev.stopImmediatePropagation(); ev.preventDefault(); fired = false; } }, true);
+  }
+
+  // ---------- creation flow ----------
+  function createView() {
+    const C = S.create; const steps = `<div class="steps">${[0, 1, 2].map((i) => `<i class="${i <= C.step ? 'on' : ''}"></i>`).join('')}</div>`;
+    const cls = S.meta.classes;
+    if (C.step === 0) return `<div class="create">${steps}<h1>⚔️ 小精靈 RPG</h1><p>掛機冒險：設定好補給，角色會自己練功</p>
+      <div class="card"><h3>1. 角色名稱</h3><input class="name-in" id="nm" maxlength="12" placeholder="2–12 個字" value="${esc(C.name)}"><div class="muted mt">中文、英文、數字或底線</div></div><button class="btn" id="next">下一步</button></div>`;
+    if (C.step === 1) { const sel = C.cls && cls[C.cls];
+      return `<div class="create">${steps}<h1>2. 選擇職業</h1><p>轉職後還會分成兩條路線</p><div class="pick3">${Object.values(cls).map((c) => `<div class="pickc ${C.cls === c.key ? 'on' : ''}" data-cls="${c.key}"><canvas data-pc="${c.key}"></canvas><b>${esc(c.emoji)} ${esc(c.name)}</b><small>${esc(c.blurb)}</small></div>`).join('')}</div>
+      ${sel ? `<div class="desc"><b>${esc(sel.name)}</b>　技能「${esc(sel.skill.name)}」MP ${sel.skill.cost} · ×${sel.skill.mult}<br>被動：${esc(sel.passive)}<br>轉職路線：${Object.values(sel.branches).map((b) => `${esc(b.name)}（${esc(b.skill.name)} ${b.skill.cost}MP）`).join('、')}</div>` : ''}
+      <div class="row mt"><button class="btn ghost" id="back">上一步</button><button class="btn" id="next" ${C.cls ? '' : 'disabled'}>下一步</button></div></div>`; }
+    return `<div class="create">${steps}<h1>3. 選擇性別</h1><p>${esc(cls[C.cls].emoji)} ${esc(cls[C.cls].name)}・${esc(C.name)}</p><div class="grid2">${['m', 'f'].map((g) => `<div class="pickc ${C.gender === g ? 'on' : ''}" data-g="${g}"><canvas data-pg="${g}" style="height:160px"></canvas><b>${g === 'm' ? '♂ 男' : '♀ 女'}</b></div>`).join('')}</div>
+      <div class="row mt"><button class="btn ghost" id="back">上一步</button><button class="btn gold" id="go" ${C.gender ? '' : 'disabled'}>⚔️ 開始冒險</button></div></div>`;
+  }
+  function bindCreate(view) {
+    const C = S.create;
+    const nm = $('#nm', view); if (nm) { nm.oninput = () => { C.name = nm.value; }; }
+    view.querySelectorAll('[data-pc]').forEach((cv) => { const src = artSrc('hero', `${cv.dataset.pc}:${C.gender || 'f'}`); if (V2 && src) cv.replaceWith(Object.assign(document.createElement('img'), { src, className: 'pickimg' })); else drawPortrait(cv, { cls: cv.dataset.pc, gender: C.gender || 'm' }); });
+    view.querySelectorAll('[data-pg]').forEach((cv) => { const src = artSrc('hero', `${C.cls}:${cv.dataset.pg}`); if (V2 && src) cv.replaceWith(Object.assign(document.createElement('img'), { src, className: 'pickimg big' })); else drawPortrait(cv, { cls: C.cls, gender: cv.dataset.pg }); });
+    view.querySelectorAll('[data-cls]').forEach((el) => { el.onclick = () => { C.cls = el.dataset.cls; haptic('light'); render(); }; });
+    view.querySelectorAll('[data-g]').forEach((el) => { el.onclick = () => { C.gender = el.dataset.g; haptic('light'); render(); }; });
+    const back = $('#back', view); if (back) back.onclick = () => { C.step--; render(); };
+    const next = $('#next', view); if (next) next.onclick = () => {
+      if (C.step === 0 && !/^[\p{Script=Han}A-Za-z0-9_]{2,12}$/u.test(C.name.trim())) return toast('角色名要 2–12 個字，只能用中文、英文、數字或底線', true);
+      C.name = C.name.trim(); C.step++; render(); };
+    const go = $('#go', view); if (go) go.onclick = async () => {
+      go.disabled = true;
+      try { absorb(await api('create', { name: C.name, baseClass: C.cls, gender: C.gender, requestId: rid() })); haptic('ok'); toast('🎉 角色建立完成，開始掛機！'); S.tab = 'home'; render(); load('home'); }
+      catch (e) { toast(e.message, true); go.disabled = false; }
+    };
+  }
+
+  // ---------- render / load ----------
+  function render() {
+    drawers = []; const view = $('#view');
+    if (!S.meta) return;
+    if (!S.me) { renderHud(); view.innerHTML = createView(); bindCreate(view); return; }
+    renderHud();
+    const scrollKeep = S._lastTab === S.tab ? window.scrollY : 0; S._lastTab = S.tab;
+    if (S.tab === 'home') { view.innerHTML = homeView(); bindHome(view); }
+    else if (S.tab === 'bag') { view.innerHTML = bagView(); bindBag(view); }
+    else if (S.tab === 'trade') { view.innerHTML = tradeView(); bindTrade(view); }
+    else if (S.tab === 'shop') { view.innerHTML = shopView(); bindShop(view); }
+    else if (S.tab === 'class') { view.innerHTML = classView(); bindClass(view); }
+    else if (S.tab === 'boss') { view.innerHTML = bossView(); bindBoss(view); }
+    window.scrollTo(0, scrollKeep);
+  }
+  async function refreshMe() { try { absorb(await api('me')); render(); } catch (e) { if (e.code !== 'no_character') toast(e.message, true); } }
+  async function loadShop(force) { if (S.shop && !force) return; try { absorb(await api('shop')); if (S.tab === 'shop') render(); } catch (e) { toast(e.message, true); } }
+  async function loadBoss() { try { absorb(await api('boss')); if (S.tab === 'boss') render(); } catch (e) { toast(e.message, true); } }
+  async function loadLedger() { try { S.ledger = (await api('ledger')).ledger; const el = $('#ledger'); if (el) el.innerHTML = ledgerHtml(); } catch (_) {} }
+  function load(tab) { if (tab === 'shop') loadShop(true); else if (tab === 'boss') loadBoss(); else if (tab === 'home') loadLedger(); else if (tab === 'trade') { if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); } }
+  // live polling: open trade window every 3 s (other side's items / 鎖定 / OK); request + duel lists every 12 s
+  setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.social === 'pk' || !S.trade || S.trade.status !== 'open' || S.busy || !$('#sheet').hidden) return; loadTrade(S.trade.id); }, 3000);
+  setInterval(() => { if (document.hidden || S.tab !== 'trade' || S.busy || !$('#sheet').hidden) return; if (S.social === 'pk') loadPks(); else if (!S.trade) loadTrades(); }, 12000);
+
+  // 1-second ticker for countdowns (no full re-render)
+  setInterval(() => {
+    document.querySelectorAll('[data-cd]').forEach((el) => { const left = Number(el.dataset.cd) - sNow(); el.textContent = mmss(left); if (left <= 0 && S.tab === 'boss' && !S.busy) { el.removeAttribute('data-cd'); loadBoss(); } });
+    const n = $('#nextCd'); if (n && S.me && S.me.nextBoss) n.textContent = mmss(S.me.nextBoss.start - sNow());
+    const tc = $('#todoCd'); if (tc && S.me && S.me.nextBoss) tc.textContent = mmss(S.me.nextBoss.start - sNow());
+  }, 1000);
+  // live idle status: the server settles idle progress on every read; poll gently
+  setInterval(() => { if (document.hidden || !S.me || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me) refreshMe(); });
+
+  function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
+  async function boot() {
+    if (!initData && !devTg) return fatal('請從 Telegram 的「小精靈」打開遊戲<br><span class="muted">私訊小精靈輸入 /rpg 或按 ⚔️ 冒險</span>');
+    const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
+    const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
+    const want = tradeId || reqId || pkId ? 'trade' : { boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    if (pkId || spx === 'pk') S.social = 'pk';
+    if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
+    fetch('art/v2/heroes.json').then((r) => r.json()).then((h) => { HEROES.nodes = new Set(h.nodes || []); HEROES.meta = h.meta || {}; if (S.me) render(); }).catch(() => {});
+    try {
+      const [m] = await Promise.all([api('meta')]); S.meta = m.meta; Object.assign(ITEMS_REF, m.meta.items);
+      const u = tg && tg.initDataUnsafe && tg.initDataUnsafe.user; S.create.name = u ? String(u.first_name || '').replace(/[^\p{Script=Han}A-Za-z0-9_]/gu, '').slice(0, 12) : '';
+      try { absorb(await api('me')); S.tab = want; } catch (e) { if (e.code !== 'no_character') throw e; S.me = null; }
+      render(); if (S.me) { load(S.tab); if (S.tab !== 'home') loadLedger(); if (pkId) api('pk/get', { pkId: pkId[1] }).then((j) => { if (j.pk.status === 'done') pkReplay(j.pk); }).catch(() => {}); }
+    } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從小精靈重新打開' : esc(e.message)); }
+  }
+  boot();
+})();

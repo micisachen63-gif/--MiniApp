@@ -1,0 +1,102 @@
+// Telegram Mini App API (/app/api/*). Auth = Telegram WebApp initData (HMAC with 小精靈's BOT_TOKEN, auth_date ≤ 24h).
+// Development only (ENVIRONMENT=development + ALLOW_DEV_AUTH=true): X-Dev-Tg-Id header bypass for local smoke tests.
+// The player id ALWAYS comes from the verified initData, never from the request body.
+import { verifyInitData } from './auth.js';
+import { GameError } from './game/classes.js';
+import { CLASSES, MAPS, ITEMS, BOSS, SLOT_NAMES, WEAPON_KINDS, SLOT_CAPACITY, TRADE, PK, SHARE, UNBIND } from './game/constants.js';
+import { attackWindow } from './game/boss.js';
+import { outboxStmt } from './db.js';
+import * as B from './services/boss.js';
+import * as T from './services/trade.js';
+
+export const APP_ACTIONS = Object.freeze({
+  me: '/rpg/me', create: '/rpg/create', daily: '/rpg/daily', shop: '/rpg/shop', buy: '/rpg/buy', refill: '/rpg/refill',
+  'buy-gear': '/rpg/buy-gear', 'sell-gear': '/rpg/sell-gear', equip: '/rpg/equip', unequip: '/rpg/unequip', settings: '/rpg/settings', advance: '/rpg/advance',
+  reselect: '/rpg/reselect', convert: '/rpg/convert', enhance: '/rpg/enhance', reroll: '/rpg/reroll', ledger: '/rpg/ledger',
+  unbind: '/rpg/unbind', share: '/rpg/share', 'share/get': '/rpg/share/get',
+  'trade/requests': '/rpg/trade/requests', 'trade/accept': '/rpg/trade/accept', 'trade/reject': '/rpg/trade/reject', 'trade/withdraw': '/rpg/trade/withdraw',
+  'trade/get': '/rpg/trade/get', 'trade/list': '/rpg/trade/list', 'trade/log': '/rpg/trade/log', 'trade/gold': '/rpg/trade/gold',
+  'trade/add': '/rpg/trade/add', 'trade/remove': '/rpg/trade/remove', 'trade/lock': '/rpg/trade/lock', 'trade/confirm': '/rpg/trade/confirm', 'trade/cancel': '/rpg/trade/cancel',
+  'pk/challenge': '/rpg/pk/challenge', 'pk/accept': '/rpg/pk/accept', 'pk/decline': '/rpg/pk/decline', 'pk/get': '/rpg/pk/get', 'pk/list': '/rpg/pk/list',
+});
+export const APP_GRANT_MS = 24 * 3600e3;   // create pass issued by 小精靈 after its group-membership check
+const devAuth = (env) => env.ENVIRONMENT === 'development' && String(env.ALLOW_DEV_AUTH) === 'true';
+
+/** → { tgId, user } | { error, status } */
+export async function appAuth(request, env, realNow = Date.now()) {
+  const init = request.headers.get('X-Telegram-Init-Data');
+  if (init) {
+    if (!env.BOT_TOKEN) return { error: 'not_configured', status: 503 };
+    const user = await verifyInitData(init, env.BOT_TOKEN, realNow);
+    return user?.id ? { tgId: String(user.id), user } : { error: 'bad_init_data', status: 401 };
+  }
+  if (devAuth(env)) {
+    const d = request.headers.get('X-Dev-Tg-Id');
+    if (d && /^\d{1,20}$/.test(d)) return { tgId: d, user: { id: Number(d), first_name: `dev${d}` }, dev: true };
+  }
+  return { error: 'unauthorized', status: 401 };
+}
+
+export function metaView() {
+  const classes = Object.fromEntries(Object.entries(CLASSES).map(([k, c]) => [k, {
+    key: k, name: c.name, emoji: c.emoji, blurb: c.blurb, skill: c.node.skill, passive: c.node.passive.text,
+    growth: { hp: c.hp, mp: c.mp, atk: c.atk, def: c.def },
+    branches: Object.fromEntries(Object.entries(c.branches).map(([b, x]) => [b, { name: x.name, line: x.line, skill: x.skill, passive: x.passive.text, blurb: x.blurb, weapon: WEAPON_KINDS[x.weapon]?.type }])),
+  }]));
+  const maps = Object.fromEntries(Object.entries(MAPS).map(([k, m]) => [k, { id: m.id, name: m.name, emoji: m.emoji, min: m.min, max: m.max, monsters: m.monsters, elite: m.elite, boss: m.boss.name }]));
+  const items = Object.fromEntries(Object.entries(ITEMS).map(([k, i]) => [k, { name: i.name, emoji: i.emoji, kind: i.kind, desc: i.desc || null, tier: i.tier ?? null, heal: i.heal ?? null, price: i.price ?? null }]));
+  return { classes, maps, items, slots: SLOT_NAMES, slotCapacity: SLOT_CAPACITY, bossSlots: BOSS.slotsTaipei, attackWindowMinutes: BOSS.attackWindowMs / 60000,
+    trade: { taxPct: TRADE.taxPct, maxGold: TRADE.maxGold, maxOpen: TRADE.maxOpenPerPlayer, idleMinutes: TRADE.idleMs / 60e3, requestHours: TRADE.requestTtlMs / 3600e3, tradeableItems: TRADE.tradeableItems },
+    share: { dailyCap: SHARE.dailyCap, cooldownSec: SHARE.cooldownMs / 1000 }, unbind: UNBIND,
+    pk: { minLevel: PK.minLevel, maxLevelGap: PK.maxLevelGap, dailyCap: PK.dailyCap, pairCooldownHours: PK.pairCooldownMs / 3600e3, challengeMinutes: PK.challengeTtlMs / 60e3, dropPct: PK.dropChance } };
+}
+
+async function bossFor(env, tg, now) {
+  const boss = await B.currentBoss(env, now);
+  if (!boss) return { boss: null };
+  const rows = await env.DB.prepare('SELECT win, damage FROM rpg_boss_attacks WHERE boss_id = ? AND tg_id = ?').bind(boss.id, tg).all();
+  const mine = rows.results || []; const win = attackWindow({ started_at: boss.startedAt }, now);
+  const attacked = mine.some((r) => r.win === win);
+  const ch = await env.DB.prepare('SELECT boss_down_until FROM rpg_characters WHERE tg_id = ?').bind(tg).first();
+  const downUntil = ch?.boss_down_until && ch.boss_down_until > now ? ch.boss_down_until : null;
+  const nextAt = attacked ? boss.startedAt + (win + 1) * BOSS.attackWindowMs : now;
+  return { boss: { ...boss, me: { hits: mine.length, damage: mine.reduce((s, r) => s + r.damage, 0), attackedThisWindow: attacked, nextAttackAt: Math.max(nextAt, downUntil || 0), downUntil, hasCharacter: !!ch } }, now };
+}
+
+/** handles /app/api/<action>; `routes` = the service routes from index.js (same game logic, same D1 rows) */
+export async function handleApp(request, env, url, { routes, json, fail, nowFor }) {
+  if (request.method !== 'POST') return fail('method', 'POST only', 405);
+  const auth = await appAuth(request, env);
+  if (auth.error) return fail(auth.error, auth.error === 'not_configured' ? 'Mini App 尚未設定' : '請從 Telegram 小精靈開啟遊戲', auth.status);
+  let body = {};
+  try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
+  const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;
+  const reqId = typeof body.requestId === 'string' && /^[A-Za-z0-9_-]{6,64}$/.test(body.requestId) ? `app:${body.requestId}` : `app:${tg}:${now}:${Math.random().toString(36).slice(2, 8)}`;
+  const safe = { ...body, tgId: tg, requestId: reqId };
+  if (action === 'create' && !auth.dev) {
+    const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
+    if (!g || g.expires_at <= now) return fail('no_pass', '請先私訊小精靈輸入 /rpg（或按 ⚔️ 冒險），再從按鈕打開遊戲建立角色', 403);
+  }
+  if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
+  if (auth.user?.username && action === 'me') await T.touchUsername(env, tg, auth.user.username).catch(() => null);
+  if (action === 'pk/challenge') { safe.origin = 'app'; delete safe.chatId; safe.username = auth.user?.username || null; }
+  if (action === 'players') {   // 決鬥 opponent picker: other characters (name, class, level) — no ids of non-players
+    const q = String(body.q || '').trim().slice(0, 20);
+    const rows = await env.DB.prepare(`SELECT tg_id, name, base_class, class_path, gender, level, tg_username FROM rpg_characters WHERE tg_id <> ? ${q ? 'AND (name LIKE ? OR tg_username LIKE ?)' : ''} ORDER BY updated_at DESC LIMIT 30`)
+      .bind(...(q ? [tg, `%${q}%`, `%${q}%`] : [tg])).all();
+    return json({ ok: true, players: (rows.results || []).map((r) => ({ tgId: r.tg_id, name: r.name, baseClass: r.base_class, classPath: r.class_path, gender: r.gender, level: r.level, username: r.tg_username })) });
+  }
+  if (action === 'meta') return json({ ok: true, meta: metaView(), dev: !!auth.dev });
+  if (action === 'boss') return json({ ok: true, ...(await bossFor(env, tg, now)) });
+  if (action === 'boss/attack') {
+    const bossId = String(body.bossId || '');
+    const r = await B.attackBoss(env, tg, bossId, now);
+    const win = attackWindow({ started_at: (await env.DB.prepare('SELECT started_at FROM rpg_boss_instances WHERE id = ?').bind(bossId).first())?.started_at || now }, now);
+    // ask 小精靈 to refresh the group boss card (throttled on its side); a kill already queues boss_end
+    if (!r.killed) await env.DB.batch([outboxStmt(env.DB, { dedupe: `boss_upd:${bossId}:${tg}:${win}`, target: 'group', kind: 'boss_update', payload: { bossId } }, now)]);
+    return json({ ok: true, result: r, ...(await bossFor(env, tg, now)) });
+  }
+  const path = APP_ACTIONS[action]; if (!path) return fail('not_found', 'not found', 404);
+  return json(await routes[`POST ${path}`](env, safe, now));
+}
+export { GameError };

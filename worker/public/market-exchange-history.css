@@ -1,0 +1,34 @@
+.mythic #view .exchange-tabs.exchange-tabs-history{grid-template-columns:repeat(4,minmax(0,1fr))}
+.mythic #view .exchange-tabs-history button{padding:8px 2px;font-size:11px;letter-spacing:0;word-break:keep-all}
+.exchange-history{min-width:0}
+.exchange-history-head{padding:2px 0 12px;border-bottom:1px solid #aa8c4d33;margin-bottom:12px}
+.exchange-history-head h3{margin:0;color:#ead29a;font:700 17px/1.6 var(--f-title,serif);letter-spacing:1px}
+.exchange-history-head p,.exchange-history-note,.exchange-history-snapshot{margin:5px 0 9px;color:#a8b6c9;font-size:11px;line-height:1.8}
+.exchange-history-filters{display:flex;gap:6px;margin-bottom:14px}
+.exchange-history-filters button{flex:1;min-height:44px;padding:8px 12px;color:#bac6d5;border:1px solid #ab925944;background:#142438;border-radius:3px;font:inherit;font-size:12px;cursor:pointer}
+.exchange-history-filters button.on{color:#efdab0;border-color:#b89b5c;background:linear-gradient(140deg,#55452870,#253c5480)}
+.exchange-history-list{display:flex;flex-direction:column;gap:10px}
+.exchange-history-record{display:flex;align-items:center;gap:11px;width:100%;padding:11px 10px;text-align:left;min-width:0;color:#dccca7;border:1px solid #a38c554d;border-radius:4px;background:linear-gradient(140deg,#233248a8,#101d2edb);font:inherit;cursor:pointer;box-shadow:inset 0 0 18px #0002}
+.exchange-history-art{flex:0 0 64px;display:grid;place-items:center;width:64px;height:76px;background:radial-gradient(ellipse,#b4946030,transparent 72%);font-size:28px}
+.exchange-history-art img{display:block;width:64px;height:76px;object-fit:contain}
+.exchange-history-info{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.exchange-history-record-head{display:flex;align-items:center;justify-content:space-between;gap:5px}
+.exchange-history-record-head time{font-size:9px;line-height:1.5;color:#8fa1b7;white-space:nowrap}
+.exchange-history-role{padding:2px 7px;border:1px solid #929fa644;border-radius:2px;font-size:9px;color:#b8c8d9}
+.exchange-history-role.is-sell{color:#dcc796;border-color:#b0996044;background:#a18a4820}
+.exchange-history-info>strong{color:#e8d19c;font:700 12px/1.6 var(--f-title,serif);overflow-wrap:anywhere}
+.exchange-history .guardian-name,.exchange-history-detail .guardian-name{color:var(--guardian-quality,#d3d5dc)}
+.exchange-history-info>small{color:#a1b2c9;font-size:10px;line-height:1.6}
+.exchange-history-total{display:flex;align-items:baseline;gap:5px;color:#a9b7c9;font-size:10px;padding-top:6px;margin-top:2px;border-top:1px solid #ad945529}
+.exchange-history-total b{color:#ecd098;font:700 17px/1.3 var(--f-num,serif);overflow-wrap:anywhere}
+.exchange-history-total small{font-size:9px}.exchange-history-chevron{margin-left:auto;font:20px/1 sans-serif;color:#b69d62}
+.exchange-history-detail-heading{display:flex;align-items:center;gap:14px;margin-bottom:12px}
+.exchange-history-detail-heading>div{min-width:0}.exchange-history-detail-heading h3{color:#efd6a1;font:700 18px/1.5 var(--f-title,serif);margin:4px 0;overflow-wrap:anywhere}
+.exchange-history-detail-heading small,.exchange-history-detail-heading p{color:#b0bdcf;font-size:11px;line-height:1.7;margin:2px 0}
+.exchange-history-money{margin:14px 0;padding:12px 14px;border:1px solid #ad945547;background:#111f3180;border-radius:3px}
+.exchange-history-money>div{display:flex;justify-content:space-between;gap:10px;padding:5px 0;color:#c0c9d6;font-size:12px}
+.exchange-history-money dd{margin:0;color:#e7d0a1;font:700 16px/1.4 var(--f-num,serif)}
+.exchange-history-money .is-total{padding-top:10px;margin-top:5px;border-top:1px solid #b19a6038;color:#dfcca2}.exchange-history-money .is-total dd{font-size:20px}
+.exchange-history-snapshot{margin-top:16px;padding-top:10px;border-top:1px solid #aa8c4d2e}
+.exchange-history button:disabled{opacity:.5;cursor:default}
+@media(max-width:360px){.mythic #view .exchange-tabs-history button{font-size:10px}.exchange-history-record{gap:8px;padding:10px 8px}.exchange-history-art,.exchange-history-art img{width:52px;height:66px}.exchange-history-art{flex-basis:52px}.exchange-history-record-head time{font-size:8px}}

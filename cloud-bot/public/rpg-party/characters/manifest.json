@@ -1,0 +1,606 @@
+{
+  "heroes": {
+    "adv1_archer_A_f": {
+      "file": "characters/adv1_archer_A_f.png",
+      "source": "art/elf-adv1-hd-20261011/hero_adv1_archer_A_f.png"
+    },
+    "adv1_archer_A_m": {
+      "file": "characters/adv1_archer_A_m.png",
+      "source": "art/elf-adv1-hd-20261011/hero_adv1_archer_A_m.png"
+    },
+    "adv1_archer_B_f": {
+      "file": "characters/adv1_archer_B_f.png",
+      "source": "art/elf-adv1-hd-20261011/hero_adv1_archer_B_f.png"
+    },
+    "adv1_archer_B_m": {
+      "file": "characters/adv1_archer_B_m.png",
+      "source": "art/elf-adv1-hd-20261011/hero_adv1_archer_B_m.png"
+    },
+    "adv1_mage_A_f": {
+      "file": "characters/adv1_mage_A_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv1_mage_A_m": {
+      "file": "characters/adv1_mage_A_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv1_mage_B_f": {
+      "file": "characters/adv1_mage_B_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv1_mage_B_m": {
+      "file": "characters/adv1_mage_B_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv1_sword_A_f": {
+      "file": "characters/adv1_sword_A_f.png",
+      "source": "art/sword-adv1-clean-20261011/hero_adv1_sword_A_f.png"
+    },
+    "adv1_sword_A_m": {
+      "file": "characters/adv1_sword_A_m.png",
+      "source": "art/sword-adv1-clean-20261011/hero_adv1_sword_A_m.png"
+    },
+    "adv1_sword_B_f": {
+      "file": "characters/adv1_sword_B_f.png",
+      "source": "art/sword-adv1-clean-20261011/hero_adv1_sword_B_f.png"
+    },
+    "adv1_sword_B_m": {
+      "file": "characters/adv1_sword_B_m.png",
+      "source": "art/sword-adv1-clean-20261011/hero_adv1_sword_B_m.png"
+    },
+    "adv2_archer_A1_f": {
+      "file": "characters/adv2_archer_A1_f.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_A1_f.png"
+    },
+    "adv2_archer_A1_m": {
+      "file": "characters/adv2_archer_A1_m.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_A1_m.png"
+    },
+    "adv2_archer_A2_f": {
+      "file": "characters/adv2_archer_A2_f.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_A2_f.png"
+    },
+    "adv2_archer_A2_m": {
+      "file": "characters/adv2_archer_A2_m.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_A2_m.png"
+    },
+    "adv2_archer_B1_f": {
+      "file": "characters/adv2_archer_B1_f.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_B1_f.png"
+    },
+    "adv2_archer_B1_m": {
+      "file": "characters/adv2_archer_B1_m.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_B1_m.png"
+    },
+    "adv2_archer_B2_f": {
+      "file": "characters/adv2_archer_B2_f.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_B2_f.png"
+    },
+    "adv2_archer_B2_m": {
+      "file": "characters/adv2_archer_B2_m.png",
+      "source": "art/elf-adv2-magic-20261013/hero_adv2_archer_B2_m.png"
+    },
+    "adv2_mage_A1_f": {
+      "file": "characters/adv2_mage_A1_f.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_A1_f.png"
+    },
+    "adv2_mage_A1_m": {
+      "file": "characters/adv2_mage_A1_m.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_A1_m.png"
+    },
+    "adv2_mage_A2_f": {
+      "file": "characters/adv2_mage_A2_f.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_A2_f.png"
+    },
+    "adv2_mage_A2_m": {
+      "file": "characters/adv2_mage_A2_m.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_A2_m.png"
+    },
+    "adv2_mage_B1_f": {
+      "file": "characters/adv2_mage_B1_f.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_B1_f.png"
+    },
+    "adv2_mage_B1_m": {
+      "file": "characters/adv2_mage_B1_m.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_B1_m.png"
+    },
+    "adv2_mage_B2_f": {
+      "file": "characters/adv2_mage_B2_f.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_B2_f.png"
+    },
+    "adv2_mage_B2_m": {
+      "file": "characters/adv2_mage_B2_m.png",
+      "source": "art/mage-adv2-hd-20261012/hero_adv2_mage_B2_m.png"
+    },
+    "adv2_sword_A1_f": {
+      "file": "characters/adv2_sword_A1_f.png",
+      "source": "art/v2/hero_adv2_sword_A1_f.webp"
+    },
+    "adv2_sword_A1_m": {
+      "file": "characters/adv2_sword_A1_m.png",
+      "source": "art/v2/hero_adv2_sword_A1_m.webp"
+    },
+    "adv2_sword_A2_f": {
+      "file": "characters/adv2_sword_A2_f.png",
+      "source": "art/v2/hero_adv2_sword_A2_f.webp"
+    },
+    "adv2_sword_A2_m": {
+      "file": "characters/adv2_sword_A2_m.png",
+      "source": "art/v2/hero_adv2_sword_A2_m.webp"
+    },
+    "adv2_sword_B1_f": {
+      "file": "characters/adv2_sword_B1_f.png",
+      "source": "art/v2/hero_adv2_sword_B1_f.webp"
+    },
+    "adv2_sword_B1_m": {
+      "file": "characters/adv2_sword_B1_m.png",
+      "source": "art/v2/hero_adv2_sword_B1_m.webp"
+    },
+    "adv2_sword_B2_f": {
+      "file": "characters/adv2_sword_B2_f.png",
+      "source": "art/v2/hero_adv2_sword_B2_f.webp"
+    },
+    "adv2_sword_B2_m": {
+      "file": "characters/adv2_sword_B2_m.png",
+      "source": "art/v2/hero_adv2_sword_B2_m.webp"
+    },
+    "mage_m": {
+      "file": "characters/mage_m.png",
+      "source": "art/mage-zero-clean-20261010/hero_mage_m.png"
+    },
+    "mage_f": {
+      "file": "characters/mage_f.png",
+      "source": "art/mage-zero-clean-20261010/hero_mage_f.png"
+    },
+    "adv3_mage_A11_m": {
+      "file": "characters/adv3_mage_A11_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv3_mage_A11_f": {
+      "file": "characters/adv3_mage_A11_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv3_mage_A12_m": {
+      "file": "characters/adv3_mage_A12_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv3_mage_A12_f": {
+      "file": "characters/adv3_mage_A12_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv3_mage_A21_m": {
+      "file": "characters/adv3_mage_A21_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv3_mage_A21_f": {
+      "file": "characters/adv3_mage_A21_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv3_mage_A22_m": {
+      "file": "characters/adv3_mage_A22_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv3_mage_A22_f": {
+      "file": "characters/adv3_mage_A22_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv3_mage_B11_m": {
+      "file": "characters/adv3_mage_B11_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv3_mage_B11_f": {
+      "file": "characters/adv3_mage_B11_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv3_mage_B12_m": {
+      "file": "characters/adv3_mage_B12_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv3_mage_B12_f": {
+      "file": "characters/adv3_mage_B12_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv3_mage_B21_m": {
+      "file": "characters/adv3_mage_B21_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv3_mage_B21_f": {
+      "file": "characters/adv3_mage_B21_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv3_mage_B22_m": {
+      "file": "characters/adv3_mage_B22_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv3_mage_B22_f": {
+      "file": "characters/adv3_mage_B22_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_A111_m": {
+      "file": "characters/adv4_mage_A111_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A111_f": {
+      "file": "characters/adv4_mage_A111_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A112_m": {
+      "file": "characters/adv4_mage_A112_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A112_f": {
+      "file": "characters/adv4_mage_A112_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A121_m": {
+      "file": "characters/adv4_mage_A121_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A121_f": {
+      "file": "characters/adv4_mage_A121_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A122_m": {
+      "file": "characters/adv4_mage_A122_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A122_f": {
+      "file": "characters/adv4_mage_A122_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A211_m": {
+      "file": "characters/adv4_mage_A211_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A211_f": {
+      "file": "characters/adv4_mage_A211_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A212_m": {
+      "file": "characters/adv4_mage_A212_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A212_f": {
+      "file": "characters/adv4_mage_A212_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A221_m": {
+      "file": "characters/adv4_mage_A221_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A221_f": {
+      "file": "characters/adv4_mage_A221_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_A222_m": {
+      "file": "characters/adv4_mage_A222_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_m.png"
+    },
+    "adv4_mage_A222_f": {
+      "file": "characters/adv4_mage_A222_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_A_f.png"
+    },
+    "adv4_mage_B111_m": {
+      "file": "characters/adv4_mage_B111_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B111_f": {
+      "file": "characters/adv4_mage_B111_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B112_m": {
+      "file": "characters/adv4_mage_B112_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B112_f": {
+      "file": "characters/adv4_mage_B112_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B121_m": {
+      "file": "characters/adv4_mage_B121_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B121_f": {
+      "file": "characters/adv4_mage_B121_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B122_m": {
+      "file": "characters/adv4_mage_B122_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B122_f": {
+      "file": "characters/adv4_mage_B122_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B211_m": {
+      "file": "characters/adv4_mage_B211_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B211_f": {
+      "file": "characters/adv4_mage_B211_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B212_m": {
+      "file": "characters/adv4_mage_B212_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B212_f": {
+      "file": "characters/adv4_mage_B212_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B221_m": {
+      "file": "characters/adv4_mage_B221_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B221_f": {
+      "file": "characters/adv4_mage_B221_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv4_mage_B222_m": {
+      "file": "characters/adv4_mage_B222_m.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_m.png"
+    },
+    "adv4_mage_B222_f": {
+      "file": "characters/adv4_mage_B222_f.png",
+      "source": "art/mage-adv1-hd-20261011/hero_adv1_mage_B_f.png"
+    },
+    "adv3_archer_A11_f": {
+      "file": "characters/adv3_archer_A11_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A11_f.png"
+    },
+    "adv3_archer_A11_m": {
+      "file": "characters/adv3_archer_A11_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A11_m.png"
+    },
+    "adv3_archer_A12_f": {
+      "file": "characters/adv3_archer_A12_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A12_f.png"
+    },
+    "adv3_archer_A12_m": {
+      "file": "characters/adv3_archer_A12_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A12_m.png"
+    },
+    "adv3_archer_A21_f": {
+      "file": "characters/adv3_archer_A21_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A21_f.png"
+    },
+    "adv3_archer_A21_m": {
+      "file": "characters/adv3_archer_A21_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A21_m.png"
+    },
+    "adv3_archer_A22_f": {
+      "file": "characters/adv3_archer_A22_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A22_f.png"
+    },
+    "adv3_archer_A22_m": {
+      "file": "characters/adv3_archer_A22_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_A22_m.png"
+    },
+    "adv3_archer_B11_f": {
+      "file": "characters/adv3_archer_B11_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B11_f.png"
+    },
+    "adv3_archer_B11_m": {
+      "file": "characters/adv3_archer_B11_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B11_m.png"
+    },
+    "adv3_archer_B12_f": {
+      "file": "characters/adv3_archer_B12_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B12_f.png"
+    },
+    "adv3_archer_B12_m": {
+      "file": "characters/adv3_archer_B12_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B12_m.png"
+    },
+    "adv3_archer_B21_f": {
+      "file": "characters/adv3_archer_B21_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B21_f.png"
+    },
+    "adv3_archer_B21_m": {
+      "file": "characters/adv3_archer_B21_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B21_m.png"
+    },
+    "adv3_archer_B22_f": {
+      "file": "characters/adv3_archer_B22_f.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B22_f.png"
+    },
+    "adv3_archer_B22_m": {
+      "file": "characters/adv3_archer_B22_m.png",
+      "source": "art/elf-adv3-clean-20261011/hero_adv3_archer_B22_m.png"
+    },
+    "adv4_archer_A111_f": {
+      "file": "characters/adv4_archer_A111_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A111_f.png"
+    },
+    "adv4_archer_A111_m": {
+      "file": "characters/adv4_archer_A111_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A111_m.png"
+    },
+    "adv4_archer_A112_f": {
+      "file": "characters/adv4_archer_A112_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A112_f.png"
+    },
+    "adv4_archer_A112_m": {
+      "file": "characters/adv4_archer_A112_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A112_m.png"
+    },
+    "adv4_archer_A121_f": {
+      "file": "characters/adv4_archer_A121_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A121_f.png"
+    },
+    "adv4_archer_A121_m": {
+      "file": "characters/adv4_archer_A121_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A121_m.png"
+    },
+    "adv4_archer_A122_f": {
+      "file": "characters/adv4_archer_A122_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A122_f.png"
+    },
+    "adv4_archer_A122_m": {
+      "file": "characters/adv4_archer_A122_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A122_m.png"
+    },
+    "adv4_archer_A211_f": {
+      "file": "characters/adv4_archer_A211_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A211_f.png"
+    },
+    "adv4_archer_A211_m": {
+      "file": "characters/adv4_archer_A211_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A211_m.png"
+    },
+    "adv4_archer_A212_f": {
+      "file": "characters/adv4_archer_A212_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A212_f.png"
+    },
+    "adv4_archer_A212_m": {
+      "file": "characters/adv4_archer_A212_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A212_m.png"
+    },
+    "adv4_archer_A221_f": {
+      "file": "characters/adv4_archer_A221_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A221_f.png"
+    },
+    "adv4_archer_A221_m": {
+      "file": "characters/adv4_archer_A221_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A221_m.png"
+    },
+    "adv4_archer_A222_f": {
+      "file": "characters/adv4_archer_A222_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A222_f.png"
+    },
+    "adv4_archer_A222_m": {
+      "file": "characters/adv4_archer_A222_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_A222_m.png"
+    },
+    "adv4_archer_B111_f": {
+      "file": "characters/adv4_archer_B111_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B111_f.png"
+    },
+    "adv4_archer_B111_m": {
+      "file": "characters/adv4_archer_B111_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B111_m.png"
+    },
+    "adv4_archer_B112_f": {
+      "file": "characters/adv4_archer_B112_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B112_f.png"
+    },
+    "adv4_archer_B112_m": {
+      "file": "characters/adv4_archer_B112_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B112_m.png"
+    },
+    "adv4_archer_B121_f": {
+      "file": "characters/adv4_archer_B121_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B121_f.png"
+    },
+    "adv4_archer_B121_m": {
+      "file": "characters/adv4_archer_B121_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B121_m.png"
+    },
+    "adv4_archer_B122_f": {
+      "file": "characters/adv4_archer_B122_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B122_f.png"
+    },
+    "adv4_archer_B122_m": {
+      "file": "characters/adv4_archer_B122_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B122_m.png"
+    },
+    "adv4_archer_B211_f": {
+      "file": "characters/adv4_archer_B211_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B211_f.png"
+    },
+    "adv4_archer_B211_m": {
+      "file": "characters/adv4_archer_B211_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B211_m.png"
+    },
+    "adv4_archer_B212_f": {
+      "file": "characters/adv4_archer_B212_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B212_f.png"
+    },
+    "adv4_archer_B212_m": {
+      "file": "characters/adv4_archer_B212_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B212_m.png"
+    },
+    "adv4_archer_B221_f": {
+      "file": "characters/adv4_archer_B221_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B221_f.png"
+    },
+    "adv4_archer_B221_m": {
+      "file": "characters/adv4_archer_B221_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B221_m.png"
+    },
+    "adv4_archer_B222_f": {
+      "file": "characters/adv4_archer_B222_f.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B222_f.png"
+    },
+    "adv4_archer_B222_m": {
+      "file": "characters/adv4_archer_B222_m.png",
+      "source": "art/elf-adv4-clean-20261011/hero_adv4_archer_B222_m.png"
+    },
+    "sword_m": {
+      "file": "characters/sword_m.png",
+      "source": "art/sword-zero-clean-20261011/hero_sword_m.png"
+    },
+    "sword_f": {
+      "file": "characters/sword_f.png",
+      "source": "art/sword-zero-clean-20261011/hero_sword_f.png"
+    },
+    "archer_m": {
+      "file": "characters/archer_m.png",
+      "source": "art/elf-v2-20261010/hero_archer_m.webp"
+    },
+    "archer_f": {
+      "file": "characters/archer_f.png",
+      "source": "art/elf-v2-20261010/hero_archer_f.webp"
+    }
+  },
+  "bosses": {
+    "1": {
+      "file": "characters/boss_1.png",
+      "source": "art/monsters-clean-20261011/boss_ancient_laurel.png"
+    },
+    "2": {
+      "file": "characters/boss_2.png",
+      "source": "art/v2/boss_hundred_pillar_colossus.webp"
+    },
+    "3": {
+      "file": "characters/boss_3.png",
+      "source": "art/monsters-clean-20261011/boss_arcadia_goblin_chief.png"
+    },
+    "4": {
+      "file": "characters/boss_4.png",
+      "source": "art/v2/boss_aegean_leviathan.webp"
+    },
+    "5": {
+      "file": "characters/boss_5.png",
+      "source": "art/monsters-clean-20261011/boss_minos_bull.png"
+    },
+    "6": {
+      "file": "characters/boss_6.png",
+      "source": "art/monsters-clean-20261011/boss_rotten_tree_king.png"
+    },
+    "7": {
+      "file": "characters/boss_7.png",
+      "source": "art/monsters-clean-20261011/boss_styx_ferryman.png"
+    },
+    "8": {
+      "file": "characters/boss_8.png",
+      "source": "art/monsters-clean-20261011/boss_python_serpent.png"
+    },
+    "9": {
+      "file": "characters/boss_9.png",
+      "source": "art/monsters-clean-20261011/boss_lava_colossus.png"
+    },
+    "10": {
+      "file": "characters/boss_10.png",
+      "source": "art/monsters-clean-20261011/boss_cloud_gate_deity.png"
+    },
+    "11": {
+      "file": "characters/boss_11.png",
+      "source": "art/monsters-clean-20261011/boss_elysium_guardian_king.png"
+    },
+    "12": {
+      "file": "characters/boss_12.png",
+      "source": "art/monsters-clean-20261011/boss_frost_dragon_queen.png"
+    }
+  }
+}

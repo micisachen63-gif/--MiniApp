@@ -1,0 +1,31 @@
+# ==============================================================================
+# 機密與敏感資訊防護（絕不上傳）
+# ==============================================================================
+*.local.json
+.env
+.env.*
+secrets/
+*.pem
+*.key
+
+# 依賴套件
+node_modules/
+package-lock.json
+
+# 雲端建置與部署產物
+.wrangler/
+backend/
+dist/
+build/
+*.log
+wrangler-logs/
+
+# 執行期狀態與本地日誌
+state/
+logs/
+backup/
+work-backups/
+
+# 作業系統暫存
+.DS_Store
+Thumbs.db

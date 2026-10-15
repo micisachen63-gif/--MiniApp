@@ -1,0 +1,11 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { CLASSES, MAX_OPEN_CLASS_TIER, MAX_OPEN_MAP } from '../src/game/constants.js';
+import { MAGE_FUTURE, mageFutureChoices } from '../src/game/mage-future.js';
+const root='public/art/mage/';
+const tree=JSON.parse(fs.readFileSync('public/art/v2/mage-progression.json','utf8'));
+test('法師既有識別碼與一二轉安全限制保持不變',()=>{assert.equal(CLASSES.mage.key,'mage');assert.equal(MAX_OPEN_CLASS_TIER,2);assert.equal(MAX_OPEN_MAP,12);assert.equal(CLASSES.mage.branches.A.name,'元素術士');assert.equal(CLASSES.mage.branches.B.name,'秘法師')});
+test('法師成長樹具有 1、2、4、8、16 個職業節點',()=>{assert.deepEqual(tree.stages.map(s=>s.variants.length),[1,2,4,8,16]);assert.equal(Object.keys(MAGE_FUTURE).length,24);for(const parent of ['A1','A2','B1','B2',...Object.keys(MAGE_FUTURE).filter(p=>p.length===3)]){const children=mageFutureChoices(parent);assert.equal(children.length,2,parent);for(const n of children){assert.equal(n.parent,parent);assert.equal(n.opened,false);assert.equal(n.previewOnly,true);assert.ok(n.skill.name);assert.ok(n.passive.text)}}});
+test('男女法師 62 組素材與透明動畫尺寸正確',()=>{let count=0;for(const stage of tree.stages)for(const v of stage.variants)for(const gender of ['f','m']){const key=(stage.tier?`adv${stage.tier}_`:'')+`mage${v.path?'_'+v.path:''}_${gender}`;for(const type of ['hero','portrait'])assert.ok(fs.statSync(root+type+'_'+key+'.svg').size>500,key);const png=fs.readFileSync(root+'hero_'+key+'_attack.png');assert.equal(png.subarray(0,8).toString('hex'),'89504e470d0a1a0a');assert.equal(png.readUInt32BE(16),2000);assert.equal(png.readUInt32BE(20),920);count++}assert.equal(count,62)});
+test('所有法師動畫均已正確註冊至前端',()=>{const app=fs.readFileSync('public/app.js','utf8');for(const stage of tree.stages)for(const v of stage.variants)for(const gender of ['f','m']){const key=(stage.tier?`adv${stage.tier}_`:'')+`mage${v.path?'_'+v.path:''}_${gender}`;assert.ok(app.includes(key+': { file:'),key)}assert.ok(app.includes('function magePathPreview(c)'));assert.ok(app.includes('art/mage/${f}.png'))});

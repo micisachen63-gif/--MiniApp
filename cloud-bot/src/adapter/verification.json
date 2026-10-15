@@ -1,0 +1,98 @@
+{
+  "verifiedAt": "2026-10-14T06:59:41.130Z",
+  "status": "ADAPTER_READY_LOCAL_VERIFIED_NOT_DEPLOYED",
+  "tests": {
+    "total": 57,
+    "pass": 57,
+    "fail": 0,
+    "trafficTest": false,
+    "pureMock": true
+  },
+  "runtimeFiles": [
+    {
+      "file": "index.mjs",
+      "sha256": "94ecf3a529f4dcd0d69488b63890b02b4f3d8c82ca8e6280190c786b3497dc52",
+      "bytes": 353
+    },
+    {
+      "file": "cloud-bot.js",
+      "sha256": "f6c646b139862275e97a847018dcc205cd572e3fc74229dc6019f8c071b55e54",
+      "bytes": 6215
+    },
+    {
+      "file": "rpg-flow.js",
+      "sha256": "d7cc4667731e49df9d0de342bec00f364ced0382d89d891b5f099fbd9477406f",
+      "bytes": 76634
+    },
+    {
+      "file": "rpg-party-flow.js",
+      "sha256": "6b0c171df9923c9cfd49063aa2210dcecce5e763142177e879756680cc127f9d",
+      "bytes": 8142
+    },
+    {
+      "file": "rpg-pk-animation-flow.js",
+      "sha256": "15448a6f695e12606e9743eac5e190c397d75ab96931ea2fc2eeb261c49289e7",
+      "bytes": 2718
+    },
+    {
+      "file": "party-caption.js",
+      "sha256": "f88a8eab095cc70f207c5e2d50574fa0538a4b8967a662a5db026cf95dc3923c",
+      "bytes": 812
+    },
+    {
+      "file": "battle-key.js",
+      "sha256": "1f6f643f5411ab47c83c27551c568474136c483f2d063cf6f907467954e99785",
+      "bytes": 150
+    },
+    {
+      "file": "persistent-map.js",
+      "sha256": "e36956d3f5b661fc628aad30d28cd92f196e1864c409f8a441e0404f5f796d67",
+      "bytes": 1222
+    },
+    {
+      "file": "operation-api.js",
+      "sha256": "dc5c77c959031b22d4015313bc6d68a61d4634d8264f3acedd322f573d47150c",
+      "bytes": 4339
+    }
+  ],
+  "originalFiles": [
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-flow.js",
+      "sha256": "df97345b854034a1283cbdcdfcb9deb950ec610a5ab18ed8f8ca027cb1b4ad6b",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-party-flow.js",
+      "sha256": "8df03d951cfea9caf29d2775fd5f0bbdbb8c8bb646cfca03748bfcabc3b34995",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-pk-animation-flow.js",
+      "sha256": "41e0cad84182d0d3dcbaabc69e4fe5b2f1ea9b8f5e43e42ae4f450bd54de4689",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-party-card.js",
+      "sha256": "eab8c994c6cf46d20225d7eae3d5dd13931629519e77ccf322ea527706dce372",
+      "unchanged": true
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-battle-animation.js",
+      "sha256": "c2d1179816ecae360a5b633717d2605feaccd424c691a7b8c06c1ead41073d6e",
+      "unchanged": true
+    },
+    {
+      "path": "C:/Users/User/Documents/ChatGPT/星穹旅誌/bot.mjs",
+      "sha256": "f43e70a714d5405c979025d802b18dce43f6a656c31f6e189dd17642834474f8",
+      "unchanged": true
+    }
+  ],
+  "originalFilesChanged": false,
+  "secretsRead": false,
+  "telegramNetworkCalls": false,
+  "liveDeploy": false,
+  "entry": "index.mjs",
+  "export": "createCloudBot",
+  "integration": "root-controlled SQLite DO + Service Binding RPG_API + WASM renderer",
+  "outboxClaimLimit": 2
+}

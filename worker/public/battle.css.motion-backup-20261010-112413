@@ -1,0 +1,176 @@
+/* v0.5 battle animation layer (battle.js). Only transform/opacity animate; filters/masks are static per element. */
+.bstage{position:relative;height:236px;overflow:hidden;border-radius:16px;border:1px solid var(--line);margin-bottom:12px;background:#0b1020;contain:layout paint;isolation:isolate;user-select:none;-webkit-user-select:none}
+.bstage .world{position:absolute;inset:0;will-change:transform}
+.bstage .bg{position:absolute;inset:-4%;background:#1c2540 center 88%/cover no-repeat}
+.bstage .bg::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.05) 55%,rgba(0,0,0,.35))}
+.bstage .fighter{position:absolute;bottom:5%;will-change:transform;z-index:2}
+.bstage .hero{left:3%;height:80%}
+.bstage[data-cls="archer"] .hero{left:calc(24% - 19px)}
+.bstage .mon{right:5%;height:54%;transition:opacity .35s}
+.bstage .mon.elite{height:64%}
+.bstage .mon.boss{height:74%}
+.bstage .fighter .bob{height:100%;animation:b-bob 2.6s ease-in-out infinite;transform-origin:50% 100%}
+.bstage .mon .bob{animation-duration:2.1s;animation-delay:-.7s}
+.bstage .fighter .act{height:100%;position:relative;transform-origin:50% 100%}
+.bstage .fighter img{height:100%;width:auto;display:block;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5));-webkit-user-drag:none;pointer-events:none}
+.bstage .hero .hero-sheet{display:none;position:absolute;top:0;background-repeat:no-repeat;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5));pointer-events:none}
+.bstage .hero.hero-sheet-active .hero-sheet{display:block}
+.bstage .hero.hero-sheet-active .act>img{visibility:hidden}
+.bstage[data-cls="mage"] .hero .act>img:not(.cape){transform:scaleX(-1)}
+.bstage[data-cls="mage"] .hero img.cape{display:none}
+.bstage[data-cls="mage"] .hero .tint{transform:scaleX(-1)}
+.bstage .hero.hero-action-active[data-action="hero-sword-action"]{animation:b-hero-sword var(--action-duration,330ms) ease-out both;transform-origin:50% 100%}
+.bstage .hero.hero-action-active[data-action="hero-archer-action"]{animation:b-hero-archer var(--action-duration,300ms) ease-out both;transform-origin:50% 100%}
+.bstage .hero.hero-action-active[data-action="hero-mage-action"]{animation:b-hero-mage var(--action-duration,420ms) ease-in-out both;transform-origin:50% 100%}
+.bstage.rm .hero.hero-action-active{animation:none!important}
+.bstage .mon .sheet{display:none;position:absolute;inset:0;background-position:100% 100%;background-repeat:no-repeat;background-size:500% 200%;filter:drop-shadow(0 4px 3px rgba(0,0,0,.5));pointer-events:none}
+.bstage .mon.sheet-ready .sheet{display:block;animation:b-sheet-idle 1.35s steps(1,end) infinite}
+.bstage .mon.sheet-single-idle.sheet-ready .sheet:not(.attack){animation:none;background-position:100% 100%}
+.bstage .mon.sheet-ready .act>img:first-child{visibility:hidden}
+.bstage .mon.sheet-ready .tint{display:none}
+.bstage .mon .sheet.attack{animation:b-sheet-attack .9s steps(1,end) both}
+.bstage .hero .tint{position:absolute;inset:0;opacity:0;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;pointer-events:none}
+.bstage .hero .tint:not(.flash):not(.glow):not(.aura){display:none}
+.bstage .mon .tint{position:absolute;inset:0;opacity:0;-webkit-mask:var(--m) center/100% 100% no-repeat;mask:var(--m) center/100% 100% no-repeat;pointer-events:none}
+.bstage .tint.w{background:#fff}.bstage .tint.r{background:#ff2a2a}.bstage .tint.g{background:#57ff8a}.bstage .tint.b{background:#5fb4ff}.bstage .tint.k{background:#ffd76a}
+.bstage .shadow{position:absolute;bottom:-5px;left:18%;right:18%;height:12px;border-radius:50%;background:radial-gradient(closest-side,rgba(0,0,0,.5),transparent);z-index:-1}
+.bstage .mon.elite img{filter:drop-shadow(0 0 6px rgba(255,60,40,.85)) drop-shadow(0 4px 3px rgba(0,0,0,.5))}
+.bstage .mhp{position:absolute;left:50%;top:-14px;width:64px;margin-left:-32px;height:6px;border-radius:3px;background:rgba(0,0,0,.55);overflow:hidden;border:1px solid rgba(255,255,255,.25)}
+.bstage .mhp i{position:absolute;inset:0;background:linear-gradient(90deg,#c01f2f,#ff5a5a);transform-origin:0 50%;transition:transform .25s ease-out}
+.bstage .mon.elite .mhp i{background:linear-gradient(90deg,#d04a10,#ffa040)}
+.bstage .mname{position:absolute;left:50%;top:-30px;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:800;color:#fff;text-shadow:0 1px 2px #000}
+.bstage .hbars{position:absolute;left:8px;bottom:8px;width:92px;z-index:4}
+.bstage .hbars div{height:6px;border-radius:3px;background:rgba(0,0,0,.6);margin-top:3px;overflow:hidden;border:1px solid rgba(255,255,255,.2)}
+.bstage .hbars i{display:block;height:100%;transform-origin:0 50%;transition:transform .35s ease-out}
+.bstage .hbars .h i{background:linear-gradient(90deg,#b8263a,#ff5a6a)}.bstage .hbars .m i{background:linear-gradient(90deg,#1f5fd1,#5fb4ff)}
+.bstage canvas.fx{position:absolute;inset:0;width:100%;height:100%;z-index:3;pointer-events:none}
+.bstage .floats{position:absolute;inset:0;z-index:5;pointer-events:none}
+.bstage .fl{position:absolute;transform:translate(-50%,0);font:900 18px/1 var(--f-num,Cinzel),sans-serif;color:#ffe066;text-shadow:0 2px 0 #000,0 0 3px #000;white-space:nowrap;animation:b-float 1.05s ease-out forwards;will-change:transform,opacity}
+.bstage .fl.crit{font-size:28px;color:#ffc93a;animation-name:b-crit}.bstage .fl.miss{color:#d8e2ff;font-size:16px}
+.bstage .fl.hurt{color:#ff6b6b;font-size:17px}.bstage .fl.heal{color:#6dff9a}.bstage .fl.mana{color:#8fd0ff}
+.bstage .fl.skill{color:#bfe6ff;font-size:14px;letter-spacing:1px;background:rgba(20,30,60,.65);padding:3px 8px;border-radius:8px;border:1px solid rgba(160,210,255,.6);animation-name:b-label}
+.bstage .fl.exp{color:#9dff7a;font-size:14px}.bstage .fl.gold{color:#ffd34d;font-size:14px}.bstage .fl.loss{color:#ff8a8a;font-size:15px}
+.bstage .fl.relic{font-size:15px;color:#fff;background:linear-gradient(90deg,#6b2bd0,#c99a2e);padding:4px 10px;border-radius:8px;border:1px solid #ffe7a0;animation-name:b-label;animation-duration:2.2s}
+.bstage .lvup{position:absolute;left:50%;top:30%;z-index:6;transform:translate(-50%,-50%);font:900 30px/1 var(--f-num,Cinzel),serif;color:#ffe9a6;letter-spacing:3px;text-shadow:0 0 12px #ffb300,0 3px 0 #6b4400;opacity:0;pointer-events:none}
+.bstage .lvup.on{animation:b-lvup 2.1s ease-out forwards}
+.bstage .ring{position:absolute;width:150px;height:150px;margin:-75px 0 0 -75px;border-radius:50%;background:radial-gradient(closest-side,rgba(255,230,140,.9),rgba(255,190,40,.45) 55%,transparent);opacity:0;z-index:1;pointer-events:none}
+.bstage .ring.on{animation:b-ring 1.4s ease-out forwards}
+.bstage .bagi{position:absolute;right:8px;bottom:8px;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:18px;background:radial-gradient(circle at 40% 35%,#5a4523,#1d140a);border:2px solid #c9a24a;z-index:6}
+.bstage .bagi.bump{animation:b-bump .35s ease-out}
+.bstage .loot{position:absolute;width:30px;height:30px;z-index:6;pointer-events:none;will-change:transform,opacity}
+.bstage .loot img{width:100%;height:100%;filter:drop-shadow(0 0 4px rgba(255,220,120,.9))}
+.bstage .hint{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);z-index:6;background:rgba(20,14,8,.85);border:1.5px solid #c9a24a;color:#f6e3a8;font-size:12px;font-weight:800;padding:6px 10px;border-radius:8px;white-space:nowrap;display:none}
+.bstage.stalled .hint{display:block}
+.bstage .status{position:absolute;left:10px;top:10px;z-index:6;padding:5px 10px;border-radius:10px;background:rgba(0,0,0,.55);color:#fff;font-size:13px;font-weight:700}
+.bstage .status.warn{background:rgba(190,40,40,.85)}.bstage .status.gate{background:rgba(120,70,220,.85)}
+.bstage .mapname{position:absolute;right:10px;top:10px;z-index:6;padding:4px 9px;border-radius:10px;background:rgba(0,0,0,.45);color:#fff;font-size:12px}
+/* actions (class names toggled on .act / .world) */
+.bstage .act.lunge{animation:b-lunge .52s cubic-bezier(.3,.7,.3,1)}
+.bstage .act.recoil{animation:b-recoil .5s ease-out}
+.bstage .act.raise{animation:b-raise .62s ease-in-out}
+.bstage .act.knock{animation:b-knock .32s ease-out}
+.bstage .act.mlunge{animation:b-mlunge .48s cubic-bezier(.3,.7,.3,1)}
+.bstage .act.hit{animation:b-hit .3s ease-out}
+.bstage .act.die{animation:b-die .7s ease-in forwards}
+.bstage .act.spawn{animation:b-spawn .55s ease-out}
+.bstage .tint.flash{animation:b-flash .26s ease-out}
+.bstage .tint.glow{animation:b-glow .9s ease-out}
+.bstage .world.shake{animation:b-shake .32s linear}
+.bstage .hero.down .act{transition:transform .7s cubic-bezier(.5,0,.8,.6);transform:translate(10%,4%) rotate(-82deg)}
+.bstage .hero.down img,.bstage .hero.slump img{filter:grayscale(1) brightness(.7) drop-shadow(0 4px 3px rgba(0,0,0,.5))}
+.bstage .hero.slump .act{transition:transform .6s ease;transform:translateY(5%) rotate(5deg) scaleY(.93)}
+.bstage .hero.down .bob,.bstage .hero.slump .bob{animation:none}
+.bstage.paused *,.bstage.paused *::before,.bstage.paused *::after{animation-play-state:paused!important}
+@keyframes b-bob{50%{transform:translateY(-1.6%) scaleY(1.012)}}
+@keyframes b-sheet-idle{0%,34%{background-position:50% 100%}35%,67%{background-position:75% 100%}68%,100%{background-position:100% 100%}}
+@keyframes b-sheet-attack{0%,10%{background-position:0% 0%}11%,20%{background-position:25% 0%}21%,30%{background-position:50% 0%}31%,40%{background-position:75% 0%}41%,50%{background-position:100% 0%}51%,60%{background-position:0% 100%}61%,70%{background-position:25% 100%}71%,80%{background-position:50% 100%}81%,90%{background-position:75% 100%}91%,100%{background-position:100% 100%}}
+@keyframes b-hero-sword{0%{transform:translateX(0) rotate(0)}28%{transform:translateX(-4px) rotate(-5deg)}58%{transform:translateX(12px) rotate(8deg)}76%{transform:translateX(8px) rotate(4deg)}100%{transform:translateX(0) rotate(0)}}
+@keyframes b-hero-archer{0%{transform:translateX(0) rotate(0)}30%{transform:translateX(-12px) rotate(-10deg) scale(.98,1.02)}48%{transform:translateX(-16px) rotate(-12deg) scale(.98,1.02)}62%{transform:translateX(14px) rotate(10deg) scale(1.02,.98)}78%{transform:translateX(-5px) rotate(-3deg)}100%{transform:translateX(0) rotate(0)}}
+@keyframes b-hero-mage{0%{transform:translateY(0) scale(1)}45%{transform:translateY(-4px) scale(1.025)}72%{transform:translateY(-2px) scale(1.01)}100%{transform:translateY(0) scale(1)}}
+@keyframes b-lunge{0%{transform:none}38%{transform:translateX(var(--lx,120px)) rotate(4deg)}58%{transform:translateX(var(--lx,120px)) rotate(2deg)}100%{transform:none}}
+@keyframes b-recoil{0%{transform:none}35%{transform:translateX(-4%) rotate(-2deg)}50%{transform:translateX(-6%)}62%{transform:translateX(2%)}100%{transform:none}}
+@keyframes b-raise{0%{transform:none}40%{transform:translateY(-4%) rotate(-3deg)}70%{transform:translateY(-4%) rotate(1deg)}100%{transform:none}}
+@keyframes b-knock{0%{transform:none}30%{transform:translateX(9%) rotate(4deg)}100%{transform:none}}
+@keyframes b-hit{0%{transform:none}25%{transform:translateX(-6%) rotate(-3deg)}100%{transform:none}}
+@keyframes b-mlunge{0%{transform:none}40%{transform:translateX(var(--mx,-90px))}55%{transform:translateX(var(--mx,-90px))}100%{transform:none}}
+@keyframes b-die{0%{transform:none;opacity:1}30%{transform:translateX(6%) rotate(5deg);opacity:1}100%{transform:translate(10%,8%) scale(.82) rotate(12deg);opacity:0}}
+@keyframes b-spawn{0%{transform:translateX(35%);opacity:0}100%{transform:none;opacity:1}}
+@keyframes b-flash{0%{opacity:.85}100%{opacity:0}}
+@keyframes b-glow{0%{opacity:0}30%{opacity:.6}100%{opacity:0}}
+@keyframes b-shake{0%,100%{transform:none}20%{transform:translate(-5px,2px)}40%{transform:translate(5px,-2px)}60%{transform:translate(-4px,1px)}80%{transform:translate(3px,-1px)}}
+@keyframes b-float{0%{transform:translate(-50%,6px) scale(.7);opacity:0}15%{transform:translate(-50%,0) scale(1.1);opacity:1}100%{transform:translate(-50%,-46px) scale(1);opacity:0}}
+@keyframes b-crit{0%{transform:translate(-50%,8px) scale(.4);opacity:0}18%{transform:translate(-50%,-4px) scale(1.35);opacity:1}35%{transform:translate(-50%,-8px) scale(1)}100%{transform:translate(-50%,-52px) scale(1);opacity:0}}
+@keyframes b-label{0%{transform:translate(-50%,6px);opacity:0}12%{transform:translate(-50%,0);opacity:1}80%{opacity:1}100%{transform:translate(-50%,-16px);opacity:0}}
+@keyframes b-lvup{0%{transform:translate(-50%,-50%) scale(.3);opacity:0}15%{transform:translate(-50%,-50%) scale(1.15);opacity:1}25%{transform:translate(-50%,-50%) scale(1)}80%{opacity:1}100%{transform:translate(-50%,-70%) scale(1);opacity:0}}
+@keyframes b-ring{0%{transform:scale(.2);opacity:0}25%{opacity:1}100%{transform:scale(1.9);opacity:0}}
+@keyframes b-bump{50%{transform:scale(1.25)}}
+/* reduced motion: no movement, only short fades */
+.bstage.rm .fighter .bob{animation:none}
+.bstage.rm .mon.sheet-ready .sheet{animation:none!important;background-position:100% 100%!important}
+.bstage.rm .act.lunge,.bstage.rm .act.recoil,.bstage.rm .act.raise,.bstage.rm .act.knock,.bstage.rm .act.mlunge,.bstage.rm .act.hit,.bstage.rm .act.spawn,.bstage.rm .world.shake{animation:none}
+.bstage.rm .act.die{animation:b-fadeout .5s forwards}
+.bstage.rm .fl,.bstage.rm .fl.crit,.bstage.rm .fl.skill,.bstage.rm .fl.relic{animation:b-fadeonly 1.2s forwards}
+.bstage.rm .lvup.on{animation:b-fadeonly 2s forwards}
+@keyframes b-fadeout{to{opacity:0}}@keyframes b-fadeonly{0%,70%{opacity:1}100%{opacity:0}}
+body.greek .bstage{border:3px solid var(--g-gold);border-radius:6px;box-shadow:inset 0 0 0 2px #2b2118,0 8px 18px rgba(0,0,0,.5)}
+body.greek .bstage .status,body.greek .bstage .mapname{background:rgba(26,18,11,.85);border:1.5px solid var(--g-gold);border-radius:4px;color:var(--g-gold-l);font-family:var(--f-ui,"Noto Serif TC"),serif}
+body.greek .bstage .status.warn{background:rgba(106,31,43,.92)}body.greek .bstage .status.gate{background:rgba(27,42,78,.92)}
+
+/* ---- v0.5 natural motion ---- */
+.bstage .fighter .bob{animation:b-breathe 2.8s ease-in-out infinite}
+.bstage .mon .bob{animation:b-bob 2.1s ease-in-out infinite;animation-delay:-.7s}
+/* cape / hair layer: the back third of the figure, top-anchored, sways a little (skew) */
+.bstage .hero img.cape{position:absolute;left:0;top:0;filter:none;transform-origin:50% 22%;animation:b-cape 3.4s ease-in-out infinite;
+  -webkit-mask:linear-gradient(90deg,#000 0,#000 var(--c0,30%),transparent var(--c1,46%)),linear-gradient(180deg,transparent 0,transparent 18%,#000 30%);-webkit-mask-composite:source-in;
+  mask:linear-gradient(90deg,#000 0,#000 var(--c0,30%),transparent var(--c1,46%)) intersect,linear-gradient(180deg,transparent 0,transparent 18%,#000 30%);mask-composite:intersect}
+.bstage .act.slash{animation:b-slash calc(var(--d,1)*.78s) cubic-bezier(.3,.6,.3,1)}
+.bstage .act.bash{animation:b-bash calc(var(--d,1)*.74s) cubic-bezier(.3,.6,.3,1)}
+.bstage .act.draw{animation:b-draw var(--action-duration,650ms) ease-out both}
+.bstage .hero .bow-fx{display:none!important}
+.bstage .hero[data-action="hero-archer-action"] .bow-fx{display:none!important}
+.bstage .hero .bow-fx svg{width:100%;height:100%;overflow:visible}
+.bstage .hero .bow-fx .bowstring,.bstage .hero .bow-fx .bowstring-pull{fill:none;stroke:#fff0ae;stroke-width:2.4;stroke-linecap:round;filter:drop-shadow(0 0 3px #ffbd42)}
+.bstage .hero .bow-fx .bowstring-pull{stroke:#fff;stroke-width:3;opacity:0;animation:b-bowstring var(--action-duration,650ms) ease-out both}
+.bstage .hero .bow-fx .bow-arrow{fill:none;stroke:#ffe6a0;stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px #ffb82e);transform-box:fill-box;transform-origin:50% 50%;animation:b-bow-arrow var(--action-duration,650ms) ease-out both}
+.bstage .act.channel{animation:b-channel var(--action-duration,420ms) ease-in forwards}
+.bstage .hero .staff-fx{display:none;position:absolute;left:0;top:0;width:100%;height:100%;z-index:5;pointer-events:none;overflow:visible}
+.bstage[data-cls="mage"] .hero .staff-fx{left:0;right:auto}
+.bstage .hero .act.channel .staff-fx,.bstage .hero .act.cast .staff-fx{display:block}
+.bstage .hero .staff-fx svg{width:100%;height:100%;overflow:visible}
+.bstage .hero .staff-aura{fill:rgba(126,211,255,.45);stroke:#e9fbff;stroke-width:1.6;filter:drop-shadow(0 0 4px #58baff);animation:b-staff-aura .42s ease-in-out infinite alternate}
+.bstage .hero .staff-rune,.bstage .hero .staff-rays{fill:none;stroke:#bfeaff;stroke-width:1.1;opacity:0;filter:drop-shadow(0 0 3px #49aaff);transform-box:view-box;transform-origin:92px 7px}
+.bstage .hero .act.channel .staff-rune,.bstage .hero .act.channel .staff-rays{opacity:.85;animation:b-staff-rune .42s linear infinite}
+.bstage .hero .act.cast .staff-rune,.bstage .hero .act.cast .staff-rays{animation:b-staff-release .5s ease-out both}
+.bstage .act.cast{animation:b-cast calc(var(--d,1)*.5s) cubic-bezier(.2,.8,.3,1)}
+.bstage .act.mcast{animation:b-mcast calc(var(--d,1)*.86s) ease-in-out}
+.bstage .act.mlunge{animation-duration:calc(var(--d,1)*.56s)}
+/* breathing: slight vertical squash + inverse horizontal stretch */
+@keyframes b-breathe{0%,100%{transform:none}50%{transform:translateY(-1.2%) scale(1.006,1.014)}}
+@keyframes b-cape{0%,100%{transform:skewX(0)}30%{transform:skewX(2.2deg)}65%{transform:skewX(-1.2deg)}}
+/* sword: anticipation (crouch back) → dash in, lean → hit-stop hold → follow-through over-rotate → step back → settle */
+@keyframes b-slash{0%{transform:none}14%{transform:translateX(-5%) scale(1.02,.96) rotate(-3deg)}36%{transform:translateX(var(--lx,120px)) rotate(7deg)}46%{transform:translateX(var(--lx,120px)) rotate(9deg)}
+  58%{transform:translateX(calc(var(--lx,120px) + 6px)) rotate(-4deg)}80%{transform:translateX(-3%) rotate(-1deg)}100%{transform:none}}
+/* knight shield bash: plant → shoulder charge (no rotation, low) → recoil */
+@keyframes b-bash{0%{transform:none}16%{transform:translateX(-4%) scale(1.03,.95)}38%{transform:translateX(var(--lx,120px)) scale(1.04,.98)}50%{transform:translateX(calc(var(--lx,120px) - 8px))}78%{transform:translateX(-2%)}100%{transform:none}}
+/* archer: draw back + lean → hold → release snap → recoil → settle */
+@keyframes b-draw{0%{transform:none}28%{transform:translateX(-12px) rotate(-8deg) scale(.97,1.03)}43%{transform:translateX(-17px) rotate(-11deg) scale(.97,1.03)}51%{transform:translateX(-18px) rotate(-12deg)}62%{transform:translateX(15px) rotate(10deg) scale(1.03,.97)}76%{transform:translateX(-5px) rotate(-3deg)}100%{transform:none}}
+@keyframes b-bowstring{0%,24%{opacity:0}40%,53%{opacity:1}66%,100%{opacity:0}}
+@keyframes b-bow-arrow{0%,20%{opacity:0;transform:translateX(0)}38%{opacity:1;transform:translateX(-13px)}52%{opacity:1;transform:translateX(-15px)}62%{opacity:1;transform:translateX(17px)}78%{opacity:.85;transform:translateX(72px)}100%{opacity:0;transform:translateX(140px)}}
+/* mage: channel (rise, lean back) → push forward cast → follow-through */
+@keyframes b-channel{0%{transform:none}55%{transform:translateY(-12px) translateX(-10px) rotate(-9deg) scale(1.035)}100%{transform:translateY(-12px) translateX(-10px) rotate(-9deg) scale(1.035)}}
+@keyframes b-cast{0%{transform:translateY(-12px) translateX(-10px) rotate(-9deg) scale(1.035)}22%{transform:translateY(-3px) translateX(22px) rotate(13deg) scale(1.05)}42%{transform:translateX(16px) rotate(8deg) scale(1.025)}68%{transform:translateX(-5px) rotate(-2deg)}100%{transform:none}}
+@keyframes b-staff-aura{to{r:9;opacity:.45}}
+@keyframes b-staff-rune{to{transform:rotate(180deg)}}
+@keyframes b-staff-release{0%{opacity:.9;transform:scale(1)}35%{opacity:1;transform:scale(1.7)}100%{opacity:0;transform:scale(2.3)}}
+/* monster spell: rear back + swell → release */
+@keyframes b-mcast{0%{transform:none}45%{transform:translateX(5%) scale(1.06,1.04) rotate(3deg)}62%{transform:translateX(-6%) scale(.98,1.02) rotate(-3deg)}100%{transform:none}}
+.bstage.rm .hero img.cape{animation:none}
+.bstage.rm .act.slash,.bstage.rm .act.bash,.bstage.rm .act.draw,.bstage.rm .act.channel,.bstage.rm .act.cast,.bstage.rm .act.mcast{animation:none}
+.bstage .tint.aura{animation:b-aura .8s ease-out}
+@keyframes b-aura{0%{opacity:0}25%{opacity:.34}100%{opacity:0}}
+.bstage.rm .tint.aura{animation:none}
+
+/* v0.5.1 contrast: floating numbers / labels get a dark stroke + halo so they read on any painted background */
+.bstage .fl{-webkit-text-stroke:1.2px rgba(0,0,0,.85);paint-order:stroke fill;text-shadow:0 2px 0 #000,0 0 4px #000,0 0 8px rgba(0,0,0,.6)}
+.bstage .mname{font-size:12px;color:#fffaf0;-webkit-text-stroke:.4px rgba(0,0,0,.8);text-shadow:0 0 3px #000,0 1px 2px #000;background:rgba(10,8,6,.55);padding:1px 6px;border-radius:6px}
+.bstage .lvup{-webkit-text-stroke:1.5px rgba(60,30,0,.9);paint-order:stroke fill}

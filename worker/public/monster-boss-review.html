@@ -1,0 +1,81 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><link rel="stylesheet" href="styles.css"><style>body{background:#101827;color:white;font:14px system-ui}.bossbox{width:min(960px,100%);margin:20px auto}canvas{width:100%;height:310px;display:block}</style><h1>首領美術驗收（正式繪圖程式・模擬資料）</h1><script src="battle.js"></script><div id="grid"></div><script>
+const BATTLE=true,drawers=[],BF={hitT:-9,dmg:0,crit:false},S={me:{character:{mapId:1}},boss:null};
+const A={boss(){},hero(){},scene(){}},fmt=String,$=(s,v)=>v.querySelector(s),heroAnimSprite=()=>null,heroOpts=()=>({});
+const cache=new Map(),image=src=>{if(!cache.has(src)){const im=new Image();im.src=src;cache.set(src,im)}const im=cache.get(src);return im.complete&&im.naturalWidth?im:null};
+const heroSprite=()=>image('art/sword-zero-clean-20261011/hero_sword_f.png');
+const bosses=[{"map":1,"name":"月桂巨樹精","key":"boss_ancient_laurel"},{"map":2,"name":"百柱守護巨像","key":"boss_hundred_pillar_colossus"},{"map":3,"name":"哥布林酋長","key":"boss_arcadia_goblin_chief"},{"map":4,"name":"海崖利維坦","key":"boss_aegean_leviathan"},{"map":5,"name":"米諾斯魔牛","key":"boss_minos_bull"},{"map":6,"name":"腐朽樹王","key":"boss_rotten_tree_king"},{"map":7,"name":"冥河擺渡者","key":"boss_styx_ferryman"},{"map":8,"name":"皮同巨蟒","key":"boss_python_serpent"},{"map":9,"name":"熔岩巨像","key":"boss_lava_colossus"},{"map":10,"name":"雲門守門巨神","key":"boss_cloud_gate_deity"},{"map":11,"name":"至福守護王者","key":"boss_elysium_guardian_king"},{"map":12,"name":"霜龍女皇","key":"boss_frost_dragon_queen"}].filter(b=>!new URLSearchParams(location.search).get('map')||b.map===Number(new URLSearchParams(location.search).get('map'))),clean=["boss_ancient_laurel","boss_arcadia_goblin_chief","mon_labyrinth_patrol","mon_bronze_bull","mon_gorgon_phantom","mon_petrifying_bat","elite_labyrinth_general","boss_minos_bull","mon_lava_salamander","mon_forge_golem","mon_fire_crystal_demon","mon_forge_fire_bat","elite_molten_forgemaster","boss_rotten_tree_king","mon_lost_soul","mon_styx_bone_soldier","mon_underworld_raven","mon_cerberus_pup","elite_styx_ferry_general","boss_styx_ferryman","mon_oracle_python","mon_apollo_sun_hawk","mon_prophet_priest_ghost","mon_sunlight_stone_spirit","elite_oracle_high_priest","boss_python_serpent","mon_titan_hoof_beast","mon_earthsplit_stone_demon","mon_mountain_gale_bird","mon_thunder_lizard","elite_titan_vanguard","boss_lava_colossus","mon_cloud_pegasus","mon_celestial_patrol_bird","mon_cloud_nymph","mon_holy_light_statue","elite_cloud_gate_guard","boss_cloud_gate_deity","mon_heroic_spirit","mon_immortal_bird","mon_pure_gold_lion","mon_elysium_fairy","elite_achilles_spirit","boss_elysium_guardian_king","mon_astral_attendant","mon_zodiac_beast","mon_corona_spirit","mon_void_devourer","elite_astral_high_priest","boss_frost_dragon_queen"];
+function artImg(kind,key){if(kind==='map')return image('art/v2/bg_myth'+String(key).padStart(2,'0')+'.webp');const b=bosses.find(x=>x.map===Number(key));if(!b)return null;return image((clean.includes(b.key)?'art/monsters-clean-20261011/':'art/v2/')+b.key+(kind==='bossAnim'?'_attack':'')+(clean.includes(b.key)?'.png':'.webp'));}
+const bossAnimSprite=mapId=>({image:artImg('bossAnim',mapId),cols:5,rows:2,idleStart:9,idleFrames:1,attackStart:0,attackFrames:5,castStart:5,castFrames:3,hurtFrame:clean.includes(bosses.find(x=>x.map===mapId).key)?8:5});
+  function drawSprite(ctx, im, x, y, hgt, { t = 0, action = 'idle', p = 0, flip = false, attackDirection = null, alpha = 1, glow = null, sheet = null } = {}) {
+    if (!im) return false;
+    const sheetReady = sheet && sheet.image && sheet.image.complete && sheet.image.naturalWidth;
+    const frameW = sheetReady ? sheet.image.naturalWidth / sheet.cols : im.width;
+    const frameH = sheetReady ? sheet.image.naturalHeight / sheet.rows : im.height;
+    const wdt = hgt * frameW / frameH;
+    const bob = action === 'rest' ? 0 : Math.sin(t * 3) * 1.2; const lunge = action === 'attack' || action === 'cast' ? Math.sin(Math.min(1, p) * Math.PI) * 12 * (attackDirection ?? (flip ? -1 : 1)) : 0;
+    const shake = action === 'hurt' ? Math.sin(t * 60) * 2 : 0;
+    ctx.save(); ctx.globalAlpha = alpha; ctx.fillStyle = 'rgba(0,0,0,.28)'; ctx.beginPath(); ctx.ellipse(x, y, wdt * 0.32, 5, 0, 0, Math.PI * 2); ctx.fill();
+    if (glow) { ctx.shadowColor = glow; ctx.shadowBlur = 16; }
+    if (action === 'hurt') ctx.filter = 'brightness(1.8)';
+    ctx.translate(x + lunge + shake, y + bob); if (flip) ctx.scale(-1, 1);
+    if (sheetReady) {
+      const cols = sheet.cols, rows = sheet.rows, total = cols * rows;
+      const cellW = sheet.image.naturalWidth / cols, cellH = sheet.image.naturalHeight / rows; let frame = 0;
+      if (action === 'attack' || action === 'cast') { const start = action === 'cast' ? sheet.castStart ?? sheet.attackStart ?? 3 : sheet.attackStart ?? 3, count = action === 'cast' ? sheet.castFrames ?? sheet.attackFrames ?? total-start : sheet.attackFrames ?? total - start; frame = start + Math.min(count - 1, Math.floor(Math.max(0, Math.min(0.999, p)) * count)); }
+      else if (action === 'hurt') frame = sheet.hurtFrame ?? 2;
+      else if (action !== 'rest') frame = (sheet.idleStart ?? 0) + Math.floor(t * 3) % (sheet.idleFrames ?? 3);
+      const sx = (frame % cols) * cellW, sy = Math.floor(frame / cols) * cellH;
+      ctx.drawImage(sheet.image, sx, sy, cellW, cellH, -wdt / 2, -hgt, wdt, hgt);
+    } else ctx.drawImage(im, -wdt / 2, -hgt, wdt, hgt);
+    ctx.restore(); return true;
+  }
+
+  function bindBoss(view) {
+    const b = S.boss;
+    drawers.push({ c: $('#bcv', view), fn: (ctx, w, h, t) => {
+      const mapId = b ? b.mapId : (S.me.character.mapId || 1); const bi = artImg('map', mapId);
+      if (bi) { const s = Math.max(w / bi.width, h / bi.height); ctx.drawImage(bi, (w - bi.width * s) / 2, h - bi.height * s, bi.width * s, bi.height * s); } else A.scene(ctx, w, h, { mapId: Math.min(4, mapId), t });
+      const gy = h * 0.92; const k = t - BF.hitT;
+      const heroFigure = BATTLE ? window.RpgBattle.visibleBounds(heroSprite()) : [0,0,1,1];
+      const bossSheet = b ? bossAnimSprite(b.mapId) : null;
+      const bossImage = b ? artImg('boss', b.mapId) : null;
+      const bossFrame = bossSheet && bossSheet.image;
+      const bossLayout = BATTLE && bossFrame ? window.RpgBattle.layout[bossFrame.currentSrc.split('/').at(-1).split('?')[0]] : null;
+      const bossFigure = BATTLE ? window.RpgBattle.visibleBounds(bossImage) : [0,0,1,1];
+      const bossBody = bossLayout ? bossLayout.bodyHeight : bossFigure[3]-bossFigure[1];
+      const bossHeight = Math.min(120*(heroFigure[3]-heroFigure[1])*1.2/Math.max(.1,bossBody),120*(heroFigure[3]-heroFigure[1])*1.45/Math.max(.1,bossFigure[2]-bossFigure[0]));
+      const bossRatio = bossFrame && bossFrame.naturalWidth ? (bossFrame.naturalWidth/5)/(bossFrame.naturalHeight/2) : bossImage ? bossImage.width/bossImage.height : 1;
+      const bx = Math.min(w*.7,w-bossHeight*bossRatio/2-8);
+      const bossY = gy-120*(1-heroFigure[3])+bossHeight*(1-(bossLayout ? bossLayout.feet : bossFigure[3]));
+      view.dataset.heroVisible=120*(heroFigure[3]-heroFigure[1]);view.dataset.bossVisible=bossHeight*bossBody;view.dataset.frameRight=w-bx-bossHeight*bossRatio/2;view.dataset.loaded=!!bossImage;const phase=t%8,casting=phase>=4&&phase<5,attacking=phase>=2&&phase<2.65;
+      const bossAction=k>.15&&k<.45?'hurt':casting?'cast':attacking?'attack':'idle';
+      if (b) { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011'), sheet: bossSheet })) A.boss(ctx, bx, gy, 1.15, { mapId: b.mapId, t, hurt: k > 0.15 && k < 0.45 }); }
+      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
+      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action: k < 0.4 ? 'attack' : 'idle', p: k / 0.4 })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action: k < 0.4 ? 'attack' : 'idle', p: k / 0.4 }));
+      if(b&&casting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+        const p=phase-4,travel=Math.max(0,Math.min(1,(p-.35)/.55)),x=bx+(w*.24-bx)*travel,y=gy-bossHeight*.48-Math.sin(travel*Math.PI)*24;
+        const color=[4,7,12].includes(Number(b.mapId))?'#77dfff':[6,9].includes(Number(b.mapId))?'#ff7b36':[1,3].includes(Number(b.mapId))?'#a7e568':'#c4a1ff';
+        ctx.save();ctx.globalCompositeOperation='lighter';ctx.globalAlpha=Math.sin(p*Math.PI);
+        const glow=ctx.createRadialGradient(x,y,0,x,y,22);glow.addColorStop(0,'#fff');glow.addColorStop(.25,color);glow.addColorStop(1,'transparent');ctx.fillStyle=glow;ctx.beginPath();ctx.arc(x,y,22,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(bx,gy,18+p*20,5+p*6,p*2,0,Math.PI*2);ctx.stroke();ctx.restore();
+      }
+      if (k > 0.15 && k < 1.4) { const q = (k - 0.15) / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.globalAlpha = 1; }
+    } });
+    const atk = $('#atk', view);
+    if (atk && !atk.disabled) atk.onclick = async () => {
+      if (S.busy) return; S.busy = true; atk.disabled = true; haptic('heavy');
+      try {
+        const j = await api('boss/attack', { bossId: b.id }); S.boss = j.boss; if (j.now) S.skew = j.now - Date.now();
+        const r = j.result || {}; BF.hitT = performance.now() / 1000; BF.dmg = r.damage || 0; BF.crit = (r.crits || 0) > 0;
+        toast(`⚔️ 造成 ${fmt(r.damage)} 傷害${r.crits ? `（爆擊 ${r.crits}）` : ''}${r.killed ? ' · 🎉 首領倒下！' : ''}${r.downed ? ' · 你被打倒了' : ''}`); haptic('ok');
+        render(); setTimeout(refreshMe, 1500);
+      } catch (e) { toast(e.message, true); haptic('error'); render(); }
+      finally { S.busy = false; }
+    };
+  }
+
+
+
+for(const b of bosses){const card=document.createElement('section');card.className='bossbox';card.innerHTML='<h2>'+b.name+'</h2><canvas id="bcv"></canvas>';document.querySelector('#grid').append(card);S.boss={mapId:b.map};bindBoss(card)}
+function frame(ms){for(const d of drawers){const c=d.c,w=c.clientWidth,h=c.clientHeight;c.width=w*devicePixelRatio;c.height=h*devicePixelRatio;const ctx=c.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);d.fn(ctx,w,h,ms/1000)}requestAnimationFrame(frame)}requestAnimationFrame(frame);
+</script></html>

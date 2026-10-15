@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "configVersion": "guardian-20261014-v3",
+  "assist": {"stoneGold": 3000, "battlesPerStone": 1440},
+  "status": "approved",
+  "enabled": true,
+  "selectedScheme": "balanced",
+  "qualityOrder": [
+    "white",
+    "green",
+    "blue",
+    "purple",
+    "red",
+    "gold",
+    "pink",
+    "cyan"
+  ],
+  "normalWeights": [
+    649490,
+    285000,
+    53000,
+    7500,
+    5000,
+    10,
+    0,
+    0
+  ],
+  "featuredWeights": [
+    0,
+    300000,
+    589800,
+    80000,
+    30000,
+    200,
+    0,
+    0
+  ],
+  "normalSingleGold": 850,
+  "normalTenGold": 8500,
+  "upgradeMaterials": [
+    4,
+    4,
+    4,
+    4,
+    4,
+    6,
+    6
+  ],
+  "upgradeSuccess": [
+    1,
+    0.95,
+    0.85,
+    0.8,
+    0.4,
+    0.8,
+    0.95
+  ],
+  "upgradeGoldFees": [
+    250,
+    450,
+    850,
+    1700,
+    3400,
+    6800,
+    13600
+  ],
+  "mixedFromQuality": 6,
+  "unbindScrolls": [
+    1,
+    1,
+    2,
+    4,
+    8,
+    16,
+    24,
+    40
+  ],
+  "damageBonuses": [
+    0.01,
+    0.02,
+    0.04,
+    0.07,
+    0.11,
+    0.16,
+    0.22,
+    0.3
+  ],
+  "lootBonuses": [
+    0.02,
+    0.05,
+    0.1,
+    0.18,
+    0.3,
+    0.5,
+    0.75,
+    1
+  ],
+  "limits": {
+    "dailyVouchers": 4,
+    "drawsPerVoucher": 5,
+    "maxDraws": 10,
+    "announcementMinimumRank": 4,
+    "visualMinimumRank": 4,
+    "unlockLevel": 15
+  },
+  "bossGrantTiming": "first_effective_hit",
+  "voucherTradeable": false,
+  "pity": false,
+  "welcomeNormalDraws": 200
+}

@@ -1,0 +1,30 @@
+# Cloudflare Worker 設定範本
+name = "elf-rpg-api"
+main = "src/index.js"
+compatibility_date = "2025-09-01"
+# account_id = "請填入您的 Cloudflare Account ID"
+
+[assets]
+directory = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "elf-rpg"
+database_id = "請填入您的 D1 Database ID"
+migrations_dir = "migrations"
+
+[[durable_objects.bindings]]
+name = "AUTO_ENHANCE_RUNNER"
+class_name = "AutoEnhanceRunner"
+
+[[migrations]]
+tag = "auto-enhance-alarm-v1"
+new_sqlite_classes = ["AutoEnhanceRunner"]
+
+# 每日排程與每分鐘結算
+[triggers]
+crons = ["*/30 * * * *", "* * * * *"]
+
+[vars]
+ENVIRONMENT = "production"
+# GROUP_CHAT_ID = "-100XXXXXXXXXX" # 您的 Telegram 超級群組 ID

@@ -1,0 +1,36 @@
+{
+  "adaptedAt": "2026-10-14T06:56:12.856Z",
+  "liveFilesModified": false,
+  "secretsRead": false,
+  "sources": [
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-flow.js",
+      "sha256": "df97345b854034a1283cbdcdfcb9deb950ec610a5ab18ed8f8ca027cb1b4ad6b"
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-party-flow.js",
+      "sha256": "8df03d951cfea9caf29d2775fd5f0bbdbb8c8bb646cfca03748bfcabc3b34995"
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-pk-animation-flow.js",
+      "sha256": "41e0cad84182d0d3dcbaabc69e4fe5b2f1ea9b8f5e43e42ae4f450bd54de4689"
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-party-card.js",
+      "sha256": "eab8c994c6cf46d20225d7eae3d5dd13931629519e77ccf322ea527706dce372"
+    },
+    {
+      "path": "C:\\Users\\User\\Documents\\ChatGPT\\爆分監控\\src\\rpg-battle-animation.js",
+      "sha256": "c2d1179816ecae360a5b633717d2605feaccd424c691a7b8c06c1ead41073d6e"
+    },
+    {
+      "path": "C:/Users/User/Documents/ChatGPT/星穹旅誌/bot.mjs",
+      "sha256": "f43e70a714d5405c979025d802b18dce43f6a656c31f6e189dd17642834474f8"
+    }
+  ],
+  "notes": [
+    "No source config, service process, Telegram state or credentials were read or changed.",
+    "Refresh only this adapter from the newest code if the original source changes before deployment.",
+    "Original game API remains injected; this adapter never calls Windows or filesystem configuration."
+  ]
+}

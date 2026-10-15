@@ -1,0 +1,41 @@
+/* Real transparent VFX plates; transform and opacity animate on compositor layers. */
+body.greek.v2.mythic.olympus-suite #view .doll[data-hero-fx] > .col {z-index:4;grid-row:1;grid-column:1}
+body.greek.v2.mythic.olympus-suite #view .doll[data-hero-fx] > .fig + .col {grid-column:3}
+body.greek.v2.mythic.olympus-suite #view .doll[data-hero-fx] > .fig {z-index:1}
+.hero-fx {position:absolute;inset:0;overflow:hidden;pointer-events:none!important;user-select:none;contain:paint}
+.hero-fx--back {z-index:0}
+.hero-fx--front {z-index:2}
+.hero-fx-aura {position:absolute;inset:0 9%;background:var(--fx-art) center/100% 100% no-repeat;mix-blend-mode:screen;mask-image:linear-gradient(90deg,#000 0%,#000 23%,transparent 35%,transparent 65%,#000 77%,#000 100%);opacity:.85;transform-origin:50% 80%;animation:hero-fx-aura 4.8s ease-in-out infinite alternate;pointer-events:none}
+@keyframes hero-fx-aura {from{opacity:.62;transform:translateY(7px) rotate(-1.5deg) scale(.96)}to{opacity:.96;transform:translateY(-8px) rotate(1.5deg) scale(1.035)}}
+[data-fx-running="false"] .hero-fx-aura {animation-play-state:paused}
+@media(prefers-reduced-motion:reduce) {.hero-fx-aura{animation:none!important;opacity:.7}}
+.hero-fx-art,.hero-fx-floor {position:absolute;inset:0;background-image:var(--fx-art);background-size:100% 100%;background-repeat:no-repeat;pointer-events:none;transform-origin:50% 88%;mix-blend-mode:screen}
+.hero-fx-art {opacity:var(--fx-intensity,.52);mask-image:radial-gradient(ellipse 28% 44% at 50% 44%,transparent 65%,#000 100%);animation:hero-fx-breathe var(--fx-duration,14s) ease-in-out infinite alternate}
+.hero-fx-floor {opacity:.18;mask-image:linear-gradient(transparent 74%,#000 89%);animation:hero-fx-floor 19s ease-in-out infinite alternate}
+.hero-fx-mote {position:absolute;left:var(--mote-x);top:var(--mote-y);width:var(--mote-size);height:var(--mote-size);background:url('art/ui/hero-fx-20261011/spark.webp?v=20261011-fx1') center/contain no-repeat;opacity:0;mix-blend-mode:screen;animation:hero-fx-rise var(--mote-time) linear var(--mote-delay) infinite}
+[data-hero-fx="frost"] .hero-fx-mote,[data-hero-fx="lunar"] .hero-fx-mote {filter:hue-rotate(155deg) saturate(.5)}
+[data-hero-fx="chrono"] .hero-fx-mote {filter:hue-rotate(210deg) saturate(.6)}
+[data-hero-fx="wind"] .hero-fx-mote,[data-hero-fx="summon"] .hero-fx-mote {filter:hue-rotate(65deg) saturate(.6)}
+[data-hero-fx="fury"] .hero-fx-mote {filter:hue-rotate(325deg)}
+[data-fx-tier="0"] .hero-fx-floor {opacity:.12}
+[data-fx-running="false"] .hero-fx-art,[data-fx-running="false"] .hero-fx-floor,[data-fx-running="false"] .hero-fx-mote {animation-play-state:paused}
+@keyframes hero-fx-breathe {from{opacity:calc(var(--fx-intensity) * .68);transform:translateY(2px) scale(.985)}to{opacity:var(--fx-intensity);transform:translateY(-3px) scale(1.015)}}
+@keyframes hero-fx-floor {from{opacity:.11;transform:translateX(-2px) scaleX(.98)}to{opacity:.25;transform:translateX(2px) scaleX(1.025)}}
+@keyframes hero-fx-rise {0%{opacity:0;transform:translate3d(0,12px,0) scale(.5) rotate(0deg)}18%{opacity:.68}65%{opacity:.42}100%{opacity:0;transform:translate3d(var(--mote-drift),-85px,0) scale(.85) rotate(65deg)}}
+@media(prefers-reduced-motion:reduce) {.hero-fx-art,.hero-fx-floor,.hero-fx-mote{animation:none!important}.hero-fx-art{opacity:.35}.hero-fx-floor{opacity:.1}.hero-fx-mote{opacity:0}}
+/* Opaque equipment frames sit above every effect and keep clear part labels. */
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .slot,
+body.greek.v2.mythic.olympus-suite #view .lc-character .acc .slot {--slot-tone:#e3c58b;opacity:1;background:linear-gradient(145deg,#30435a,#152338 55%,#0a1525);border:1px solid #b7a079;border-style:solid;box-shadow:inset 0 0 0 2px #07111f,inset 0 0 0 3px #d4b57766,0 3px 10px #000c;touch-action:manipulation;transition:transform .15s ease,box-shadow .15s ease}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.has {border-color:var(--slot-tone);box-shadow:inset 0 0 0 2px #07111f,inset 0 0 0 3px #d4b57788,0 0 8px #b18f4233,0 3px 10px #000c}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.has::after {content:'';position:absolute;top:5px;right:5px;width:5px;height:5px;background:var(--slot-tone);clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%);box-shadow:0 0 4px var(--slot-tone);pointer-events:none}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot small {left:0;right:0;bottom:0;height:17px;line-height:16px;background:#081322f5;border-top:1px solid #c4a76d66;color:#f7e6c4;font-size:10px;font-weight:700;text-align:center;letter-spacing:.3px;text-shadow:0 1px 2px #000;pointer-events:none}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.has small {color:#fff0cb;border-top-color:#d4b57799}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot .ph {opacity:.72;filter:grayscale(1);text-shadow:0 1px 3px #000}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.rar-advanced {--slot-tone:#8fdbc0}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.rar-epic {--slot-tone:#c6a9f3}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.rar-legendary {--slot-tone:#ffe19b}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.rar-relic {--slot-tone:#ffb4bf}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot:focus-visible {outline:2px solid #fff0bb;outline-offset:-2px;box-shadow:0 0 0 2px #bd924f,0 0 12px #ead39a55}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot:active {transform:translateY(1px) scale(.97)}
+@media(hover:hover) {body.greek.v2.mythic.olympus-suite #view .lc-character .slot:hover {box-shadow:inset 0 0 0 2px #07111f,inset 0 0 0 3px #ffe2a7aa,0 0 12px #d4b57755}}
+

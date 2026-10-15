@@ -1,0 +1,311 @@
+// 小精靈 RPG — static game data (DESIGN.md v0.5). Pure data, no I/O.
+
+export const TICK_MS = 60_000;
+export const MAX_SETTLE_TICKS = 1440;          // offline cap: 24h
+export const MAX_LEVEL = 120;
+export const MAX_OPEN_MAP = 2;                  // P1: maps 1–2 (Lv1–60); Lv60 gate waits for P2 content
+export const MAX_OPEN_CLASS_TIER = 2;           // v0.5: first + second advancement (Lv30 / Lv60); third (Lv90) later
+export const NEWBIE_EXP_LEVEL = 10;             // Lv1–10: EXP ×3 and no death penalty
+export const NEWBIE_EXP_MULT = 3;
+
+export const IDLE = Object.freeze({
+  townHpPct: 0.25,          // no red potion and HP ≤ 25% → return to town
+  basicEff: 0.35,           // no MP for the skill → basic attacks only
+  hpRegenPct: 0.003,        // natural HP regen per tick while fighting
+  mpRegenPct: 0.01,         // + 1 flat
+  townRegenPct: 0.02,       // HP/MP regen per tick in town (gate / no-red / reviving)
+  eliteChance: 0.03,        // elite ambush per tick
+  eliteBurstPct: 0.22,      // burst = 22% MaxHP × (1/r)^1.5
+  reviveTicks: 10,
+  reviveHpPct: 0.5,
+  goldPerDayPct: 0,         // v0.5.1: replaced by per-kill gold (MONSTER_GOLD)
+});
+// v0.5.1 掛機打怪掉金幣 (ミカサ 20:15「打怪可以給大方一點 還要衝裝備 洗屬性」): gold per normal kill = (base + perLevel × L) × mapMul,
+// ±variance per tick; kills already scale with gear (stats.js gearSpeed: 0.3 … 1.5 at ≈+5 … 2.0 at ≈+10 epic) so stronger gear → more gold/EXP per hour.
+// A survived elite ambush = elite × a kill; map bosses keep their pool (BOSS.goldPerTierPerPlayer). Balanced in sim.py §v0.5.1:
+// idle ≈ 2.5–3 × potion upkeep with standard gear, so the surplus funds enhancement/reroll scrolls (the main gold sinks) + next tier.
+// v0.5.1b (ミカサ 21:31「金幣掉落加大吧」+ 21:33「10分鐘 至少要能衝3-5次裝 新手期卡太久」): flat 12 gold/kill + 0.1/Lv,
+// map 3/4 ×1.25/×1.5; scrolls cut to 75/50/60 → standard idler affords ~4 weapon / ~6 armor one-tap attempts per 10 min at every tier.
+export const MONSTER_GOLD = Object.freeze({ base: 12, perLevel: 0.1, variance: 0.2, elite: 15, mapMul: Object.freeze([1, 1, 1.25, 1.5]) });
+
+export const DEATH = Object.freeze({ expPct: 0.05, dailyPenaltyCap: 3 });
+
+export const ELEMENTS = Object.freeze({
+  earth: { name: '地', emoji: '🌍' }, water: { name: '水', emoji: '🌊' }, fire: { name: '火', emoji: '🔥' },
+  wind: { name: '風', emoji: '🌪️' }, light: { name: '光', emoji: '☀️' }, dark: { name: '暗', emoji: '🌑' },
+});
+export const ELEMENT_KEYS = Object.freeze(Object.keys(ELEMENTS));
+export const RARITIES = Object.freeze({   // MMORPG color tiers: 白(一般) / 綠(高級) / 藍(極品) / 紫(傳說) / 紅(霸主)
+  common: { name: '一般', color: 'white', colorName: '白裝', weight: 50, mult: 1.0 },
+  advanced: { name: '高級', color: 'green', colorName: '綠裝', weight: 30, mult: 1.2 },
+  epic: { name: '極品', color: 'blue', colorName: '藍裝', weight: 13, mult: 1.5 },
+  legendary: { name: '傳說', color: 'purple', colorName: '紫裝', weight: 5, mult: 2.0 },
+  supreme: { name: '霸主', color: 'red', colorName: '紅裝', weight: 2, mult: 3.0 },
+});
+export const RARITY_KEYS = Object.freeze(Object.keys(RARITIES));
+
+// ---- classes (tier 0 + tier 1; deeper tiers are P2/P3) ----------------------------------------
+// skill: cost MP, mult × ATK, targets; passive keys: takenPct, atkPct, expPct, freeCastPct, critPct, killPct, elemPct
+export const CLASSES = Object.freeze({
+  sword: {
+    key: 'sword', name: '劍士', emoji: '⚔️', blurb: '血厚耐打，主要耗紅水、最省藍水',
+    atk: [12, 2.6], hp: [120, 24], mp: [30, 3], def: [6, 1.6], taken: 0.85,
+    node: { name: '劍士', skill: { name: '強力斬', cost: 3, mult: 1.6, targets: 1 }, passive: { text: '堅韌：受傷 −15%' } },
+    branches: {
+      A: { name: '狂戰士', line: '狂戰士系', weapon: 'greatsword', skill: { name: '旋風斬', cost: 9, mult: 2.1, targets: 3 },
+        passive: { text: '狂暴：ATK +15%、受傷 +10%', atkPct: 0.15, takenPct: 0.10 }, blurb: '範圍輸出高，比較吃紅水' },
+      B: { name: '騎士', line: '騎士系', weapon: 'sword_shield', skill: { name: '盾擊', cost: 6, mult: 1.8, targets: 1 },
+        passive: { text: '盾牆：受傷 −20%', takenPct: -0.20 }, blurb: '最耐打、最省水，輸出普通' },
+    },
+  },
+  archer: {
+    key: 'archer', name: '弓箭手', emoji: '🏹', blurb: '迴避高，紅藍平均消耗',
+    atk: [13, 3.0], hp: [95, 18], mp: [40, 4], def: [4, 1.2], taken: 0.80,
+    node: { name: '弓箭手', skill: { name: '二連射', cost: 4, mult: 1.7, targets: 1 }, passive: { text: '靈巧：受傷 −20%' } },
+    branches: {
+      A: { name: '遊俠', line: '遊俠系', weapon: 'compound_bow', skill: { name: '箭雨', cost: 11, mult: 2.1, targets: 4 },
+        passive: { text: '遠距：受傷 −10%', takenPct: -0.10 }, blurb: '範圍清怪快，耗藍較多' },
+      B: { name: '獵人', line: '獵人系', weapon: 'crossbow', skill: { name: '獵鷹助攻', cost: 8, mult: 1.9, targets: 1 },
+        passive: { text: '獵鷹：擊殺 +10%（EXP +10%）', expPct: 0.10 }, blurb: '單體穩定、省藍' },
+    },
+  },
+  mage: {
+    key: 'mage', name: '法師', emoji: '🔥', blurb: '輸出最高，主要耗藍水',
+    atk: [14, 3.4], hp: [80, 14], mp: [60, 6], def: [3, 0.9], taken: 0.70,
+    node: { name: '法師', skill: { name: '火球術', cost: 5, mult: 1.8, targets: 1 }, passive: { text: '魔法屏障：受傷 −30%' } },
+    branches: {
+      A: { name: '元素術士', line: '元素術士系', weapon: 'elem_staff', skill: { name: '連鎖閃電', cost: 14, mult: 2.3, targets: 3 },
+        passive: { text: '元素親和：相剋效果 +10%', elemPct: 0.10 }, blurb: '範圍爆發最高，最吃藍水' },
+      B: { name: '秘法師', line: '秘法師系', weapon: 'wand', skill: { name: '奧術飛彈', cost: 10, mult: 2.1, targets: 1 },
+        passive: { text: '法力回流：15% 機率不耗魔', freeCastPct: 0.15 }, blurb: '單體穩定、最省藍的法師' },
+    },
+  },
+});
+export const CLASS_KEYS = Object.freeze(Object.keys(CLASSES));
+export const BRANCH_KEYS = Object.freeze(['A', 'B']);
+export const BRANCH2_KEYS = Object.freeze(['1', '2']);
+/** v0.5 二轉 (Lv60 + 樹王之心) — DESIGN §6.2–6.4. The tier-2 passive stacks on top of the tier-1 passive.
+ *  lifestealPct / healPerCastPct are real in 決鬥 and modelled as a damage-taken cut in the idle math (§6.6). */
+export const BRANCHES2 = Object.freeze({
+  sword: {
+    A: { 1: { name: '血怒戰神', skill: { name: '血之狂怒', cost: 16, mult: 2.9, targets: 3 }, passive: { text: '嗜血：吸血 8%', lifestealPct: 0.08 }, blurb: '越打越有血的範圍狂戰' },
+         2: { name: '劍聖', skill: { name: '一閃', cost: 18, mult: 3.4, targets: 1 }, passive: { text: '劍心：爆擊 +20%', critPct: 0.20 }, blurb: '單體爆發最高' } },
+    B: { 1: { name: '聖騎士', skill: { name: '神聖制裁', cost: 15, mult: 2.5, targets: 3 }, passive: { text: '聖光：每次施法回 1% HP', healPerCastPct: 0.01 }, blurb: '範圍＋自我治療' },
+         2: { name: '鐵壁守衛', skill: { name: '不動如山', cost: 12, mult: 2.0, targets: 1 }, passive: { text: '鐵壁：受傷 −35%', takenPct: -0.35 }, blurb: '最省水的坦克' } },
+  },
+  archer: {
+    A: { 1: { name: '神射手', skill: { name: '穿透狙擊', cost: 22, mult: 3.3, targets: 3 }, passive: { text: '鷹眼：爆擊 +20%', critPct: 0.20 }, blurb: '穿透多目標的狙擊' },
+         2: { name: '風行者', skill: { name: '疾風連射', cost: 18, mult: 2.8, targets: 4 }, passive: { text: '疾風：迴避再 +15%（受傷 −15%）', takenPct: -0.15 }, blurb: '快速清怪、閃避高' } },
+    B: { 1: { name: '馴獸師', skill: { name: '野獸之王', cost: 20, mult: 2.6, targets: 3 }, passive: { text: '狼群守護：受傷 −25%', takenPct: -0.25 }, blurb: '狼與鷹一起作戰' },
+         2: { name: '陷阱大師', skill: { name: '爆裂陷阱', cost: 14, mult: 2.5, targets: 5 }, passive: { text: '機關：範圍技耗魔 −15%', mpCostPct: -0.15 }, blurb: '最便宜的大範圍' } },
+  },
+  mage: {
+    A: { 1: { name: '大魔導士', skill: { name: '隕石術', cost: 30, mult: 3.4, targets: 4 }, passive: { text: '魔導：ATK +10%', atkPct: 0.10 }, blurb: '最高範圍爆發，很吃藍' },
+         2: { name: '冰霜術士', skill: { name: '暴風雪', cost: 24, mult: 2.8, targets: 4 }, passive: { text: '冰甲：受傷 −20%', takenPct: -0.20 }, blurb: '範圍控場、耐打' } },
+    B: { 1: { name: '時空術士', skill: { name: '時間扭曲', cost: 22, mult: 2.6, targets: 1 }, passive: { text: '時之沙：EXP +10%', expPct: 0.10 }, blurb: '練功最快的單體法師' },
+         2: { name: '召喚師', skill: { name: '召喚火精靈', cost: 26, mult: 2.4, targets: 3 }, passive: { text: '使魔護盾：受傷 −25%', takenPct: -0.25 }, blurb: '召喚獸分擔傷害' } },
+  },
+});
+
+// ---- maps, bosses, materials --------------------------------------------------------------------
+export const MAPS = Object.freeze({
+  1: { id: 1, name: '翠風草原', emoji: '🌿', min: 1, max: 30, monsters: ['史萊姆', '野狼', '哈耳庇厄', '哥布林'], elite: '哥布林突擊隊長',
+    boss: { name: '哥布林酋長', mat: 'mat_1', baseHp: 7000, perPlayer: 5000 } },
+  2: { id: 2, name: '幽暗森林', emoji: '🌲', min: 31, max: 60, monsters: ['骷髏兵', '毒蜘蛛', '樹妖', '蛇髮女妖'], elite: '劇毒巨蛛',
+    boss: { name: '腐朽樹王', mat: 'mat_2', baseHp: 20000, perPlayer: 14000 } },
+  3: { id: 3, name: '熔岩峽谷', emoji: '🌋', min: 61, max: 90, monsters: ['火蜥蜴', '岩石魔像', '炎魔'], elite: '炎魔衛兵',
+    boss: { name: '熔岩巨像', mat: 'mat_3', baseHp: 43000, perPlayer: 30000 } },
+  4: { id: 4, name: '永凍王座', emoji: '❄️', min: 91, max: 120, monsters: ['冰原狼人', '霜巨人', '冰龍'], elite: '霜巨人督軍',
+    boss: { name: '霜龍女皇', mat: 'mat_4', baseHp: 90000, perPlayer: 63000 } },
+});
+
+// ---- items ----------------------------------------------------------------------------------------
+export const POTIONS = Object.freeze({
+  red_1: { kind: 'red', tier: 1, name: '紅色藥水', heal: 50, price: 6 },
+  red_2: { kind: 'red', tier: 2, name: '橙色藥水', heal: 150, price: 15 },
+  red_3: { kind: 'red', tier: 3, name: '白色藥水', heal: 320, price: 28 },
+  red_4: { kind: 'red', tier: 4, name: '濃縮體力藥水', heal: 600, price: 45 },
+  blue_1: { kind: 'blue', tier: 1, name: '藍色藥水', heal: 40, price: 6 },
+  blue_2: { kind: 'blue', tier: 2, name: '精神藥水', heal: 100, price: 14 },
+  blue_3: { kind: 'blue', tier: 3, name: '高級精神藥水', heal: 200, price: 25 },
+  blue_4: { kind: 'blue', tier: 4, name: '賢者藥水', heal: 400, price: 42 },
+});
+export const ITEMS = Object.freeze({
+  ...Object.fromEntries(Object.entries(POTIONS).map(([k, p]) => [k, { ...p, emoji: p.kind === 'red' ? '🧪' : '💙' }])),
+  scroll_w: { kind: 'scroll', name: '武器強化捲', emoji: '📜', price: 75, desc: '武器強化 1 次（每次消耗張數＝裝備階 T）' },
+  scroll_a: { kind: 'scroll', name: '防具強化捲', emoji: '📜', price: 50, desc: '防具（盔甲／頭盔／手套／長靴／腰帶／內衣）與耳環、戒指強化 1 次（每次消耗張數＝T）' },
+  blessed_scroll_w: { kind: 'scroll', name: '受祝福的武器強化卷軸', emoji: '✨', desc: '武器強化成功率增加 10 個百分點；每次消耗 1 張，不改變爆裝率。菁英怪／群組首領掉落，可交易，不在商店出售。' },
+  blessed_scroll_a: { kind: 'scroll', name: '受祝福的防具強化卷軸', emoji: '✨', desc: '防具與飾品強化成功率增加 10 個百分點；每次消耗 1 張，不改變爆裝率。菁英怪／群組首領掉落，可交易，不在商店出售。' },
+  scroll_r: { kind: 'scroll', name: '洗屬性捲', emoji: '🎲', price: 60, desc: '重抽裝備的元素、元素值、品階（每次消耗張數＝T）' },
+  unbind: { kind: 'scroll', name: '赫密士解契卷', emoji: '🔓', price: 500, desc: '解除裝備綁定（未穿戴的綁定裝備；張數依裝備階、品階、遺物、強化而定）→ 可再交易、分享' },
+  ward: { kind: 'ward', name: '守護符', emoji: '🧿', priceBase: 400, maxHold: 5, dailyBuy: 3, desc: '死亡時自動消耗 1 張，抵銷這次 EXP 損失；決鬥落敗掉裝時也會消耗 1 張擋下' },
+  reselect_1: { kind: 'reselect', tier: 1, name: '命運轉職書 I', emoji: '📖', price: 6000, maxHold: 1, desc: '重選一轉路線（A↔B）' },
+  reselect_2: { kind: 'reselect', tier: 2, name: '命運轉職書 II', emoji: '📖', price: 12000, maxHold: 1, desc: '重選二轉路線（1↔2）' },
+  reselect_3: { kind: 'reselect', tier: 3, name: '命運轉職書 III', emoji: '📖', price: 24000, maxHold: 1, desc: '重選三轉（P3 開放）' },
+  mat_1: { kind: 'mat', tier: 1, name: '酋長之證', emoji: '🏅', desc: '一轉材料（哥布林酋長）' },
+  mat_2: { kind: 'mat', tier: 2, name: '樹王之心', emoji: '🏅', desc: '二轉材料（腐朽樹王）' },
+  mat_3: { kind: 'mat', tier: 3, name: '巨像之核', emoji: '🏅', desc: '三轉材料（熔岩巨像）' },
+  mat_4: { kind: 'mat', tier: 4, name: '女皇之鱗', emoji: '🏅', desc: 'Lv120 後內容預留' },
+});
+export const RESELECT_COOLDOWN_MS = 7 * 86_400_000;
+
+// ---- equipment ------------------------------------------------------------------------------------
+// v0.4: 11 equipped positions = weapon + 6 armor slots + 2 earrings + 2 rings. A row's `slot` is the item type; for
+// earring/ring `is_equipped` is the position (1 or 2), for everything else it is 0/1.
+export const SLOTS = Object.freeze(['weapon', 'helmet', 'armor', 'gloves', 'boots', 'belt', 'undershirt', 'earring', 'ring']);
+export const SLOT_NAMES = Object.freeze({ weapon: '武器', helmet: '頭盔', armor: '盔甲', gloves: '手套', boots: '長靴', belt: '腰帶', undershirt: '內衣', earring: '耳環', ring: '戒指' });
+export const SLOT_CAPACITY = Object.freeze({ earring: 2, ring: 2 });            // others: 1
+export const CLASS_ARMOR_SLOTS = Object.freeze(['helmet', 'armor', 'gloves', 'boots']);   // plate / leather / cloth by class
+export const SHARED_SLOTS = Object.freeze(['belt', 'undershirt', 'earring', 'ring']);     // class_req 'any'
+export const ARMOR_SCROLL_SLOTS = Object.freeze(SLOTS.filter((s) => s !== 'weapon'));    // 防具強化捲 also covers accessories
+/**
+ * Per-slot stats (DESIGN v0.4 §7.3). main = what base_stat means; defShare = share of ARMOR_DEF[T] (× the WEARER's family
+ * defMult, so the full 6-piece set gives the same 2.2× body-armor DEF as v0.3's 4 pieces); flat = fixed secondary stats per
+ * tier (× rarity); pct = fixed % bonuses. Earring main = MaxMP, ring main = ATK (tables below, rolled ±20%).
+ */
+export const SLOT_SPEC = Object.freeze({
+  armor: { main: 'def', defShare: 1.0, flat: {}, pct: {} },
+  helmet: { main: 'def', defShare: 0.35, flat: { hp: [12, 35, 75, 130] }, pct: {} },
+  gloves: { main: 'def', defShare: 0.2, flat: { atk: [1, 3, 6, 10] }, pct: {} },
+  boots: { main: 'def', defShare: 0.3, flat: { hp: [6, 18, 40, 65] }, pct: { takenPct: -0.01 } },
+  belt: { main: 'def', defShare: 0.15, flat: { hp: [15, 45, 95, 160], mp: [6, 15, 30, 55] }, pct: {} },
+  undershirt: { main: 'def', defShare: 0.2, flat: { hp: [10, 30, 60, 100] }, pct: {} },
+  earring: { main: 'mp', range: { 1: [5, 9], 2: [14, 22], 3: [30, 42], 4: [50, 70] }, flat: {}, pct: { maxMpPct: 0.01 } },
+  ring: { main: 'atk', range: { 1: [1, 3], 2: [3, 6], 3: [6, 10], 4: [10, 16] }, flat: {}, pct: { critPct: 0.01 } },
+});
+export const SHARED_NAMES = Object.freeze({
+  belt: { 1: '粗製皮腰帶', 2: '精製銅扣腰帶', 3: '熔岩金腰帶', 4: '霜龍鱗腰帶' },
+  undershirt: { 1: '粗製亞麻內衣', 2: '精製絲綢內衣', 3: '熔岩鎖子內衣', 4: '霜龍絨內衣' },
+  earring: { 1: '銅環耳飾', 2: '珍珠耳墜', 3: '火晶耳墜', 4: '冰魄耳墜' },
+  ring: { 1: '銅戒', 2: '銀印戒', 3: '紅玉戒', 4: '霜龍之戒' },
+});
+export const TIER_PREFIX = Object.freeze({ 1: '粗製', 2: '精製', 3: '熔岩', 4: '霜龍' });
+export const TIER_LEVEL_REQ = Object.freeze({ 1: 1, 2: 31, 3: 61, 4: 91 });
+export const WEAPON_ATK = Object.freeze({ 1: [10, 18], 2: [35, 55], 3: [70, 100], 4: [110, 150] });
+export const ARMOR_DEF = Object.freeze({ 1: [6, 12], 2: [18, 30], 3: [40, 60], 4: [70, 100] });   // body armor; other pieces ×0.4
+export const WEAPON_PRICE = Object.freeze({ 1: 1500, 2: 4000, 3: 9000, 4: 16000 });
+export const BRANCH_WEAPON_PRICE_MULT = 1.3;
+export const ARMOR_PRICE = Object.freeze({ armor: { 1: 1000, 2: 2700, 3: 6000, 4: 11000 }, piece: { 1: 600, 2: 1600, 3: 3600, 4: 6400 },
+  belt: { 1: 450, 2: 1200, 3: 2700, 4: 4800 }, undershirt: { 1: 400, 2: 1100, 3: 2400, 4: 4300 },
+  earring: { 1: 500, 2: 1300, 3: 2900, 4: 5200 }, ring: { 1: 600, 2: 1500, 3: 3400, 4: 6000 } });
+
+// ---- 遺物級 relic gear (v0.4): never sold; ×1.25 of the same-tier shop item (main + flat stats) + 1 random affix ----------
+export const RELIC = Object.freeze({
+  statMult: 1.25, prefix: '遺物・', rarityFloor: 'advanced',
+  eliteChance: 0.005,          // per elite kill (= survived elite ambush) in idle
+  eliteDailyCap: 1,            // per Taipei day
+  bossChance: 0.35,            // per group-boss kill: 35% chance of exactly 1 relic (ミカサ 2026-10-08: keep relics rare)
+  bossFloorShare: 0.10,        // weight = damage share + 0.10/N → every attacker has a non-zero chance
+  cappedMult: 0.2,            // boss relic weight for attackers already past BOSS.fullLootPerDay today (still non-zero)
+  // affix pool: [key, label, per-tier values] (flat values × tier table, % values flat)
+  affixes: [
+    ['atk', 'ATK', [4, 12, 24, 40]], ['def', 'DEF', [4, 12, 26, 44]], ['hp', 'HP', [40, 120, 260, 440]], ['mp', 'MP', [20, 50, 100, 180]],
+    ['critPct', '爆擊', [0.02, 0.03, 0.04, 0.05]], ['takenPct', '受傷', [-0.02, -0.03, -0.04, -0.05]], ['maxHpPct', 'MaxHP', [0.03, 0.04, 0.05, 0.06]],
+    ['maxMpPct', 'MaxMP', [0.03, 0.04, 0.05, 0.06]], ['expPct', 'EXP', [0.02, 0.03, 0.04, 0.05]],
+  ],
+});
+
+// ---- 交易 group trading (v0.4) -------------------------------------------------------------------------
+export const TRADE = Object.freeze({
+  ttlMs: 24 * 3600e3,          // open trades expire after 24h → escrow returned
+  maxOpenPerPlayer: 3,
+  taxPct: 0.05,                // 5% of the gold part, taken from the gold the receiver gets (gold sink)
+  maxGold: 1_000_000,          // per side per trade
+  maxLines: 12,                // item lines per side
+  // Inventory items have no per-item bound flag: allow every item stack to trade.
+  tradeableItems: Object.keys(ITEMS),
+  // v0.5: trades start from a shared item → 我要交易 → owner 確認 (or never). Window: place → 鎖定 (irreversible) → both OK.
+  idleMs: 30 * 60e3,           // an open window expires after 30 min without any action (escrow returned)
+  requestTtlMs: 24 * 3600e3,   // an unanswered 我要交易 request expires after 24h
+  maxPendingOut: 5,            // pending requests a player may have sent
+  maxPendingIn: 20,            // pending requests a player may have received
+});
+
+// ---- v0.5 分享至群組 (item photo posts) ----------------------------------------------------------------
+export const SHARE = Object.freeze({
+  cooldownMs: 60e3,            // per player between shares
+  dailyCap: 10,                // shares per player per Taipei day
+  sameItemMs: 10 * 60e3,       // the same item can't be re-shared within 10 min
+});
+
+// ---- v0.5 赫密士解契卷: scrolls needed = ceil(T × rarity × grade) + floor(enhance / 3); 500 gold each ---------
+export const UNBIND = Object.freeze({
+  rarity: { common: 1, advanced: 1, epic: 2, legendary: 3, supreme: 4 },
+  relicMult: 3,
+  enhanceStep: 3,              // +1 scroll per 3 enhance levels
+});
+
+// ---- v0.5 群組決鬥 1v1 PK (P2 feature pulled into v0.5) ---------------------------------------------------
+export const PK = Object.freeze({
+  minLevel: 10,                // both sides (newbie protection ends at Lv10)
+  maxLevelGap: 10,             // |levelA − levelB| ≤ 10
+  dailyCap: 5,                 // fought duels per player per Taipei day
+  pairCooldownMs: 12 * 3600e3, // same two players: one duel per 12h (either direction)
+  challengeTtlMs: 10 * 60e3,   // unanswered challenge expires
+  maxPendingOut: 1, maxPendingIn: 3,
+  dropChance: 0.20,            // loser drops ONE random equipped item (weapons included) → winner's bag, unbound
+  maxRounds: 30,               // then higher HP% wins
+  dmgScale: 0.6,               // PvP damage scale so a duel lasts several rounds
+  critMult: 1.5,
+});
+
+// weapon kinds: class + optional first-advancement branch
+export const WEAPON_KINDS = Object.freeze({
+  sword: { cls: 'sword', branch: null, type: '單手劍', names: { 1: '鐵製長劍', 2: '精鋼長劍', 3: '熔岩之刃', 4: '霜魂聖劍' }, bonus: {} },
+  greatsword: { cls: 'sword', branch: 'A', type: '雙手巨劍', names: { 2: '碎岩巨劍', 3: '炎魔斬首劍', 4: '冰龍屠戮者' }, bonus: { atkPct: 0.15, critPct: 0.05 }, desc: 'ATK +15%、爆擊 +5%' },
+  sword_shield: { cls: 'sword', branch: 'B', type: '劍盾組', names: { 2: '橡木劍盾', 3: '熔鐵守護劍盾', 4: '永凍聖盾劍' }, bonus: { atkPct: -0.05, defFromWeaponPct: 0.30, takenPct: -0.05 }, desc: 'ATK −5%、附加 DEF、受傷 −5%' },
+  staff: { cls: 'mage', branch: null, type: '法杖', names: { 1: '學徒木杖', 2: '橡木法杖', 3: '熔岩法杖', 4: '冰晶大法杖' }, bonus: {} },
+  elem_staff: { cls: 'mage', branch: 'A', type: '元素法杖', names: { 2: '雷鳴法杖', 3: '炎核元素杖', 4: '四元聖杖' }, bonus: { elemStatMult: 1.5, elemPct: 0.10 }, desc: '元素屬性 ×1.5、相剋 +10%' },
+  wand: { cls: 'mage', branch: 'B', type: '魔杖／魔導書', names: { 2: '秘紋短杖', 3: '時砂魔杖', 4: '虛空魔導書' }, bonus: { maxMpPct: 0.15, mpCostPct: -0.10 }, desc: 'MaxMP +15%、耗魔 −10%' },
+  longbow: { cls: 'archer', branch: null, type: '長弓', names: { 1: '練習短弓', 2: '紫杉長弓', 3: '火羽長弓', 4: '霜翼長弓' }, bonus: {} },
+  compound_bow: { cls: 'archer', branch: 'A', type: '複合弓', names: { 2: '風切複合弓', 3: '炎翎複合弓', 4: '星辰複合弓' }, bonus: { extraTargets: 1, critPct: 0.05 }, desc: '範圍技能目標 +1、爆擊 +5%' },
+  crossbow: { cls: 'archer', branch: 'B', type: '十字弩', names: { 2: '鐵弦十字弩', 3: '熔岩重弩', 4: '冰龍連弩' }, bonus: { atkPct: 0.10, expPct: 0.02 }, desc: 'ATK +10%、獵鷹/召喚類 +20%' },
+});
+export const GENERAL_WEAPON = Object.freeze({ sword: 'sword', mage: 'staff', archer: 'longbow' });
+export const COUNTERPART_WEAPON = Object.freeze({ greatsword: 'sword_shield', sword_shield: 'greatsword', elem_staff: 'wand', wand: 'elem_staff', compound_bow: 'crossbow', crossbow: 'compound_bow' });
+
+export const ARMOR_FAMILIES = Object.freeze({
+  sword: { key: 'plate', name: '板甲', defMult: 1.0, perPiece: { maxHpPct: 0.03 }, desc: '每件 MaxHP +3%',
+    pieces: { helmet: '頭盔', armor: '板甲', gloves: '鐵護手', boots: '鐵靴' } },
+  archer: { key: 'leather', name: '皮甲', defMult: 0.75, perPiece: { takenPct: -0.02 }, desc: '每件受傷 −2%',
+    pieces: { helmet: '皮帽', armor: '皮甲', gloves: '皮手套', boots: '皮靴' } },
+  mage: { key: 'cloth', name: '布袍', defMult: 0.5, perPiece: { maxMpPct: 0.04 }, desc: '每件 MaxMP +4%',
+    pieces: { helmet: '法師帽', armor: '法袍', gloves: '法師手套', boots: '法師鞋' } },
+});
+
+// ---- group boss -----------------------------------------------------------------------------------
+export const BOSS = Object.freeze({
+  slotsTaipei: [9, 12, 15, 18, 20, 22],   // fixed daily spawns, Asia/Taipei
+  durationMs: 30 * 60_000,                // disappears 30 min after spawn (attacked or not)
+  attackWindowMs: 3 * 60_000,             // one attack per player per 3-minute window → up to 10 attacks
+  castsPerAttack: 5,
+  counterHpPct: 0.25,
+  downMs: 10 * 60_000,
+  helperDamageMult: 0.5,                  // above the map's level range
+  goldPerTierPerPlayer: 1500,
+  helperGoldWeight: 1.5,
+  fullLootPerDay: 4,                      // full loot for the first 4 kills per day (material always)
+  cappedGoldPct: 0.2,
+  gearBonusPct: 0.15,
+});
+
+// ---- idle drops (掛機掉落) -------------------------------------------------------------------------
+// Per fighting tick (= one idle battle, 1 min). Chance = base × map tier T × efficiency (basic-attack ticks ×0.35).
+// ×T because one enhancement/reroll on a tier-T item costs T scrolls → attempts per day stay ~constant across maps.
+// No drops while in town / reviving / waiting at the gate. Daily cap per Taipei day = capPerTier × T.
+export const DROPS = Object.freeze({
+  scroll_w: { base: 0.0007, capPerTier: 2 },   // ≈1.0/day × T at full uptime
+  scroll_a: { base: 0.0010, capPerTier: 3 },   // ≈1.44/day × T
+  scroll_r: { base: 0.0005, capPerTier: 2 },   // ≈0.72/day × T
+});
+export const DROP_KEYS = Object.freeze(Object.keys(DROPS));
+// Blessed scrolls are exclusive elite/group-boss loot, never ordinary idle-tick/shop drops.
+export const BLESSED_DROPS = Object.freeze({ eliteChance: 0.015, bossChance: 0.20, keys: Object.freeze(['blessed_scroll_w', 'blessed_scroll_a']) });
+
+// ---- enhancement (same rules as the pet system) + reroll ----------------------------------------
+export const ENHANCE = Object.freeze({
+  safe: { weapon: 6, armor: 4 },     // armor = every non-weapon slot (6 armor slots + earrings + rings)
+  safeSuccess: 0.5,                  // inside safe: 50% +1 / 50% nothing
+  overSuccess: 0.33, overBreak: 0.33, // beyond safe: 33% +1 / 34% nothing / 33% the item breaks (destroyed)
+  max: 15,
+});

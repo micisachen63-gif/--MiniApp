@@ -1,0 +1,4 @@
+import fs from 'node:fs';import {createTelegramApi} from '../爆分監控/src/telegram.js';
+const c=JSON.parse(fs.readFileSync('backup/cutover-20261012/legacy-telegram.local.json')),api=createTelegramApi(c.botToken),file='state/cutover-announcements.json';
+const rec=JSON.parse(fs.readFileSync(file));
+if(!rec.oldGroup){const m=await api.call('sendMessage',{chat_id:c.chatId,text:'🌌《星穹旅誌》已搬到專屬庭院！\n\n遊戲現在由「星穹旅誌 ✨」BOT 提供服務，組隊、副本、爬塔與首領戰況都集中到新群組。\n\n原角色、裝備、技能與金幣全部保留。請使用同一個 Telegram 帳號，加入新群，再到新 BOT 私訊按 START。\n\n小精靈的其他功能照常使用。',reply_markup:{inline_keyboard:[[{text:'🌌 加入冒險者之庭',url:'https://t.me/+5hDQa1rrBv4xMDhl'}],[{text:'✨ 開啟星穹旅誌 BOT',url:'https://t.me/StarJournalRpgBot?start=rpg'}]]}});rec.oldGroup=m.message_id;fs.writeFileSync(file,JSON.stringify(rec));console.log('Original group relocation announcement confirmed');}

@@ -1,0 +1,41 @@
+Cloudflare Telegram 完整戰況媒體 renderer（2026-10-14）
+
+入口 media.mjs，純 JavaScript + WebAssembly；無原生binary、worker_threads、Windows字型、fs、定時器、Telegram發送、D1寫入。未部署、未切Webhook，root负责整合正式版本。
+
+API
+import wasmModule from './deps/resvg.wasm'; // Wrangler CompiledWasm module
+import { createRpgMediaRenderer, battleKey, partyCaption } from './media.mjs';
+const media = createRpgMediaRenderer({
+  wasmModule,
+  loadFont: async () => new Uint8Array(await (await env.ASSETS.fetch('https://assets.invalid/rpg-renderer/NotoSansTC.ttf')).arrayBuffer()),
+  loadPartyAsset: async file => new Uint8Array(await (await env.ASSETS.fetch('https://assets.invalid/rpg-party/' + file)).arrayBuffer()),
+  loadBossAsset: async map => new Uint8Array(await (await env.ASSETS.fetch('https://assets.invalid/rpg-boss/boss-' + map + '.png')).arrayBuffer()),
+});
+await media.renderBattleAnimation('party' | 'pk', serverOutcome); // Uint8Array GIF
+await media.renderPartyCard(party); // Uint8Array PNG,1600×900,原人物/背景/首領/HP完整畫面
+await media.bossCardBytes({mapId:1..12}); // Uint8Array 原PNG；無效map回null
+
+Wrapper變動
+renderBattleAnimation簽名與原版完全一致，可注入createPartyFlow/createPkAnimationFlow animationRenderer。
+renderPartyCard從同步改async，rpg-party-flow兩處 buffer:renderPartyCard(p) 改為 buffer:await renderPartyCard(p)。
+bossCardBytes從同步改async，rpg-flow原呼叫加await；若既有adapter直接讓Telegram取已部署telegram-media/boss JPEG URL仍可沿用，完整原圖不需要重新生成。
+partyCaption/battleKey/battleHeroAsset/battleTheme直接export，原隊伍文案/真角色gender/classPath/12張Boss/7副本主題/爬塔區域都保留。
+
+素材
+本封裝不複製138份角色PNG及12/7組美術，依既有爆分監控/art-runtime/rpg-party與rpg-boss全檔加入Cloudflare assets，不重製、改名或替換角色。
+角色manifest內source是遊戲原畫對應；當前renderer exact映射138份角色。新增人物模組時依原同步工具更新manifest和素材，不能拿通用人物替代。
+loadPartyAsset只接上述已註冊相對file，公開端點不接受任意路徑。loader要檢查HTTP status並設定超時；範例簡写省略host統一處理。
+loadFont直接讀deps/NotoSansTC.ttf（SIL OFL1.1，NotoSansTC-OFL.txt同包），不用Windows Microsoft JhengHei。已在build時固化Regular400，完整20950glyph保留，7,149,124bytes；runtime不需要fonttools、不出現variable字型過細問題。
+Resvg WASM2.6.2（MPL2.0）、gifenc1.0.3（MIT）包在deps，沒有npm install/runtime native。
+WebAssembly在模組內僅初始化一次；font在factory內cache。所有JS/WASM Resvg / RenderedImage實例finally free；RGBA及indexed幀buffer重用，每次render只載當场3~5檔。不要預載所有角色/地圖；不要將GIF結果無上限cache。
+
+保留效果
+720×405、120ms/幀、原4intro+4×event+6結尾（最多6事件＝34幀），PK原關鍵交鋒截取規則保持；三人治療、護盾、暈眩、不同Boss/職業效果、倒地透明、爆擊、真HP/實際有效傷害完全同原scene。
+群組戰況同一訊息由原party/pk flow編輯，原lastRev/animationKey/節流/未知發送去重/ACK保留；本renderer不負責發送，root不能因媒體搬移刪掉這些保障。
+photo主標原殘留小精靈RPG更新為現遊戲名「星穹旅誌 · 群組冒險」，其餘原布局保留。
+
+功能證據
+animation-spike/functional-check.json：2份真fixture完整GIF、720×405/34幀由frame-check.json/Pillow驗證；真HP/有效治療/138 exact角色映射、7副本和爬塔、1600×900照片、Boss原圖bytes共8組PASS。buffer重用在同一variable字型時前後GIF SHA相同，證據既有benchmark/isolated JSON；最後版Regular400字型提高文字可讀性，GIF新SHA以functional-check為準。
+animation-spike/output/cloud-pk.gif、cloud-party.gif、cloud-party-card.png、cloud-party-lobby.png可供檢視。全是假人物，沒有正式玩家操作或Telegram測試。
+本地workerd 2026-10-06在這台Windows連最小純Response Worker也啟動access violation/stack overflow；功能驗證為Node執行同WASM+JS，不能宣称已通過Cloudflare部署/雲端runtime。root执行实际整合部署与Readonly验收。
+使用者要求直接轉移、不要測流量；本檔沒有壓測或流量評估，不擅自申請新付費方案。

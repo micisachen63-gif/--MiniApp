@@ -1,0 +1,14 @@
+.hall-hero .hall-portrait{position:relative;width:66px;height:96px;flex:0 0 66px;overflow:hidden}
+.hall-portrait img.hero-size-normalized,.hall-loadout .fig img.hero-size-normalized,body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig img.hero-size-normalized{position:absolute;max-width:none;max-height:none;object-fit:fill;transform:none;flex:none;pointer-events:none}
+.hall-loadout .fig{overflow:hidden}
+.hero-fit-frame{position:relative;display:inline-block;overflow:hidden;flex:none}
+.hero-fit-frame[data-slot="info"]{width:72px;height:99px}
+.hero-fit-frame[data-slot="current"]{width:84px;height:110px}
+.hero-fit-frame[data-slot="lineage"]{width:88px;height:110px}
+.hero-fit-frame img.hero-size-normalized,.elf-rune img.hero-size-normalized{position:absolute!important;max-width:none!important;max-height:none!important;min-width:0!important;object-fit:fill;transform:none;pointer-events:none}
+.elf-rune:has(>img.hero-size-normalized){position:relative;overflow:hidden;display:block;width:38px;height:55px;min-height:55px}
+@media(max-width:370px){.hero-fit-frame[data-slot="info"]{width:56px;height:86px}}
+.expedition-hero-portrait{position:absolute;right:32px;bottom:8px;width:250px;height:285px;max-height:calc(100% - 16px);overflow:hidden;z-index:-2;pointer-events:none}
+.expedition-hero-portrait>.hero-character.hero-size-normalized{position:absolute!important;max-width:none!important;max-height:none!important;right:auto!important;bottom:auto!important;object-fit:fill;transform:none;opacity:1}
+@media(min-width:1440px){.expedition-hero-portrait{right:10%;width:290px;height:330px}}
+@media(max-width:720px){.expedition-hero-portrait{right:8px;width:152px;height:220px}}

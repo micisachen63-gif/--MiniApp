@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+<meta name="color-scheme" content="dark light">
+<link rel="stylesheet" href="/game-brand.css?v=20261012-1">
+<link rel="icon" href="/expedition/assets/items/crystal.svg">
+<title>星穹旅誌｜神話冒險</title>
+<script src="https://telegram.org/js/telegram-web-app.js?57"></script>
+<link rel="stylesheet" href="styles.css?v=20261011-affixes-1">
+<link rel="stylesheet" href="battle.css?v=20261014-art-6125dca91d72">
+<link rel="stylesheet" href="lineage-ui.css?v=14">
+<link rel="stylesheet" href="ui-refined.css?v=20261011-1">
+<link rel="stylesheet" href="mythic-ui.css?v=20261011-2">
+<link rel="stylesheet" href="olympus-luxury.css?v=20261011-1">
+<link rel="stylesheet" href="olympus-suite.css?v=20261011-home-panels-1">
+<link rel="stylesheet" href="hero-display.css?v=20261011-3">
+<link rel="stylesheet" href="hero-fx.css?v=20261011-fx2">
+<link rel="stylesheet" href="expedition-entry.css?v=20261014-guardian-controls1">
+<link rel="stylesheet" href="olympus-unified.css?v=20261012-premium-nav1">
+<link rel="stylesheet" href="forge-ritual.css?v=20261012-chinese-confirm-1">
+<link rel="stylesheet" href="bag-icons.css?v=20261011-market-size-1">
+<link rel="stylesheet" href="hero-size.css?v=20261014-art-6125dca91d72">
+<link rel="stylesheet" href="status-banner.css?v=20261013-contrast1">
+</head>
+<body class="mythic">
+<div id="app">
+  <header id="hud" hidden></header>
+  <main id="view"><div class="boot journey-loading" role="status" aria-live="polite"><div class="journey-star" aria-hidden="true">✦</div><small class="journey-eyebrow">A JOURNAL BEYOND THE STARS</small><h1>星穹旅誌</h1><p>與星同行，將遠方寫成故事</p><div class="journey-progress" aria-hidden="true"><span></span></div><span class="journey-status">正在展開旅程…</span><footer class="game-credit"><span class="credit-label">Game Producer</span><span class="credit-divider" aria-hidden="true">·</span><strong>ミカサ</strong></footer></div></main>
+  <footer class="game-credit"><span class="credit-label">Game Producer</span><span class="credit-divider" aria-hidden="true">·</span><strong>ミカサ</strong></footer>
+  <nav id="nav" hidden aria-label="遊戲主選單">
+    <button data-tab="home" aria-label="冒險"><span class="nav-icon"><img src="art/ui/nav-home-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>冒險</small></button>
+    <button data-tab="bag" aria-label="背包"><span class="nav-icon"><img src="art/ui/nav-bag-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>背包</small></button>
+    <button data-tab="shop" aria-label="商店"><span class="nav-icon"><img src="art/ui/command-shop-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>商店</small></button>
+    <button data-tab="boss" aria-label="首領"><span class="nav-icon"><img src="art/ui/nav-boss-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>首領</small></button>
+    <button data-tab="trade" aria-label="交易"><span class="nav-icon"><img src="art/ui/command-trade-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>交易</small></button>
+    <button data-tab="class" aria-label="職業"><span class="nav-icon"><img src="art/ui/nav-class-20261012.webp" alt="" aria-hidden="true" draggable="false"></span><small>職業</small></button>
+    <button data-logout aria-label="登出並返回選角畫面"><span class="nav-icon"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M21 8H11a3 3 0 0 0-3 3v26a3 3 0 0 0 3 3h10" fill="#bd8740" stroke="#392614" stroke-width="2.8" stroke-linejoin="round"/><path d="M22 24h18m-7-8 8 8-8 8" fill="none" stroke="#f5dfa0" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 14v20" stroke="#f5dfa0" stroke-width="2" opacity=".8"/></svg></span><small>登出</small></button>
+  </nav>
+</div>
+<div id="sheet" hidden><div class="sheet-bg"></div><div class="sheet-card"></div></div>
+<div id="toast" hidden role="status" aria-live="polite"></div>
+<script src="art.js?v=2"></script>
+<script src="maps.js?v=2"></script>
+<script src="map-video.js?v=20261012-video-complete"></script>
+<link rel="stylesheet" href="boss-waiting.css?v=20261012-wait1">
+<script src="boss-waiting.js?v=20261012-wait1"></script>
+<script src="map-motion.js?v=20261012-video-complete"></script>
+<script src="skill-fx.js?v=20261013-mage4-names1"></script>
+<script src="elf-adv2-skill-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="cinematic-fx.js?v=20261012-connection-audit3s1"></script><script src="hero-lavish-fx.js?v=20261012-connection-audit3s1"></script>
+<script src="branch-elf4-fx.js?v=20261013-elf4-attack2"></script>
+<script src="sword-adv4-fx.js?v=20261013-sword4-magic1"></script>
+<script src="hero-art-registry.js?v=20261014-art-6125dca91d72"></script>
+<script src="hero-art-registry-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="sword-branch-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="elf-low-tier-weapon-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="mage-actor-fx.js?v=20261014-art-6125dca91d72"></script>
+<script src="hero-art-actor-adapters.js?v=20261014-art-6125dca91d72"></script>
+<script src="battle.js?v=20261014-art-6125dca91d72"></script>
+<script src="gear-names.js?v=20261011-equipment-1"></script>
+<script src="hero-fx.js?v=20261011-fx2"></script>
+<script src="mythic-ui.js?v=20261014-blessings1"></script>
+<script src="guardian-assist-widget.js?v=20261014-guardian-controls1"></script>
+<script src="special-skill-widgets.js?v=20261014-guardian-controls1"></script>
+<script src="expedition-entry.js?v=20261013-journal1"></script>
+<script src="monster-catalog.js?v=20261011-monsters-1"></script>
+<script src="monster-expansion-catalog.js?v=20261013-expansion1"></script>
+<script src="monster-expansion.js?v=20261014-blessings2"></script>
+<script src="forge-ritual.js?v=20261012-connection-audit3s1"></script>
+<link rel="stylesheet" href="market-sell.css?v=20261013-bulk-sale1">
+<script src="market-sell.js?v=20261014-shop-notice1"></script>
+<link rel="stylesheet" href="market-exchange.css?v=20261014-market-exchange1">
+<link rel="stylesheet" href="market-exchange-history.css?v=20261014-guardian-controls1">
+<script src="market-exchange-history.js?v=20261014-guardian-controls1"></script>
+<script src="market-exchange.js?v=20261014-guardian-controls1"></script>
+<link rel="stylesheet" href="collection-ui.css?v=20261014-blessings1">
+<script src="collection-ui.js?v=20261014-blessings2"></script>
+<link rel="stylesheet" href="guardian-sigil.css?v=20261014-interaction2">
+<link rel="stylesheet" href="guardian-ritual-ui.css?v=20261014-interaction2">
+<link rel="stylesheet" href="guardian-fusion-ui.css?v=20261014-guardian-controls1">
+<link rel="stylesheet" href="guardian-idle-fx.css?v=20261014-guardian-controls1">
+<script src="guardian-idle-fx.js?v=20261014-guardian-controls1"></script>
+<script src="guardian-sigil-contract.js?v=20261014-guardian-controls1"></script>
+<script src="guardian-fusion-batch.js?v=20261014-interaction2"></script>
+<script src="guardian-fusion-ui.js?v=20261014-interaction2"></script>
+<script src="guardian-haptics.js?v=20261014-guardian-result1"></script>
+<script src="guardian-pull.js?v=20261014-guardian-review1"></script>
+<script src="guardian-scene-media.js?v=20261014-guardian-result1"></script>
+<script src="guardian-worldtree.js?v=20261014-interaction2"></script>
+<script src="guardian-summon-gesture.js?v=20261014-interaction2"></script>
+<script src="guardian-presentation.js?v=20261014-guardian-controls1"></script>
+<script src="guardian-auto-ui.js?v=20261014-interaction2"></script>
+<script src="guardian-ritual.js?v=20261014-interaction2"></script>
+<script src="guardian-sigil.js?v=20261014-shop-notice1"></script>
+<link rel="stylesheet" href="background-workshop.css?v=20261014-workshop1">
+<script src="background-workshop.js?v=20261014-workshop1"></script>
+<script src="auto-reroll-ui.js?v=20261014-workshop1"></script>
+<script src="operation-notices.js?v=20261014-workshop1"></script>
+<link rel="stylesheet" href="guardian-shop.css?v=20261014-shop-notice1">
+<script src="guardian-shop.js?v=20261014-shop-notice1"></script>
+<script src="request-client.js?v=20261014-shop-notice1"></script><script src="app.js?v=20261014-art-6125dca91d72"></script>
+<link rel="stylesheet" href="journal.css?v=20261013-journal1">
+<script src="journal.js?v=20261013-journal1"></script>
+<script src="coin-ui.js?v=20261012-all-coins1"></script>
+<script src="hero-size.js?v=20261014-art-6125dca91d72"></script>
+<link rel="stylesheet" href="hero-armory.css?v=20261014-armory1">
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

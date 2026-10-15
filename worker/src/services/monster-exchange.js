@@ -1,0 +1,31 @@
+import {MONSTER_RECIPES,materialPair} from '../game/monsters.js';
+import {mapForLevel} from '../game/formulas.js';
+import {GameError} from '../game/classes.js';
+export function monsterExchange(work,ctx,b) {
+  const request=String(b.requestId||'');if(!/^(?:app:)?[\w-]{8,80}$/.test(request))throw new GameError('request','缺少有效操作編號');
+  if(work.char.party_id)throw new GameError('party','請先完成組隊冒險再製作');
+  if(b.action==='refine'||b.refineTarget!=null){
+    const source=String(b.sourceItem||''),target=String(b.refineTarget||'');
+    const count=Number(b.count??b.refineCount??1);
+    if(!Number.isInteger(count)||count<1||count>100)throw new GameError('quantity','每次精煉份數限1至100');
+    if(!materialPair(source,target))throw new GameError('refine','只能將高地圖同種類材料以3比1精煉至較低地圖');
+    if((work.inv[source]||0)<3*count)throw new GameError('insufficient',`精煉需要${3*count}個來源材料`);
+    const tg=String(work.char.tg_id),note=`${source} ×${3*count} → ${target} ×${count}`;
+    const ledger=[{event_id:`monster-exchange:${tg}:${request}`,tg_id:tg,type:'地圖材料精煉操作',note},
+      {event_id:`monster-exchange:${tg}:${request}:${source}`,tg_id:tg,type:'地圖材料精煉',item:source,item_delta:-3*count,note},
+      {event_id:`monster-exchange:${tg}:${request}:${target}`,tg_id:tg,type:'地圖材料精煉',item:target,item_delta:count,note}];
+    work.inv[source]-=3*count;work.inv[target]=(work.inv[target]||0)+count;
+    return {ledger,result:{refined:true,sourceItem:source,sourceQty:3*count,item:target,targetQty:count}};
+  }
+  const recipe=MONSTER_RECIPES.find(r=>r.id===b.recipe);if(!recipe)throw new GameError('recipe','無效製作配方');
+  if(mapForLevel(work.char.level)<recipe.mapId)throw new GameError('level','尚未到達這張地圖');
+  if((work.inv[recipe.item]||0)>0)throw new GameError('owned','已解鎖這項地圖收藏');
+  if(work.char.gold<recipe.gold)throw new GameError('gold',`需要 ${recipe.gold} 金幣`);
+  for(const x of recipe.ingredients)if((work.inv[x.item]||0)<x.qty)throw new GameError('insufficient','地圖材料不足');
+  const tg=String(work.char.tg_id),ledger=[{event_id:`monster-exchange:${work.char.tg_id}:${request}`,tg_id:String(work.char.tg_id),type:'地圖收藏製作操作',note:recipe.id}];
+  const row=(item,delta)=>({event_id:`monster-exchange:${tg}:${request}:${item}`,tg_id:tg,type:'地圖收藏製作',item,item_delta:delta,note:recipe.name});
+  for(const x of recipe.ingredients){work.inv[x.item]-=x.qty;ledger.push(row(x.item,-x.qty));}
+  work.char.gold-=recipe.gold;work.inv[recipe.item]=1;
+  ledger.push({...row(recipe.item,1),gold_delta:-recipe.gold});
+  return {ledger,result:{item:recipe.item,name:recipe.name,mapId:recipe.mapId,spell:recipe.spell}};
+}

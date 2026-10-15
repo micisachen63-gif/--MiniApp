@@ -1,0 +1,141 @@
+/* 「中古世紀希臘」 art direction v1 (sample, opt-in with ?art=v1): lapis mosaic, marble panels, gold leaf, meander borders */
+body.greek{--g-gold:#c9a24a;--g-gold-l:#f1d68a;--g-gold-d:#8a6a22;--g-lapis:#1b2a4e;--g-ink:#2b2118;--g-por:#6a1f2b;--g-olive:#5f6b3a;--g-sepia:#6b5a44;--meander:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2212%22%20viewBox%3D%220%200%2024%2012%22%3E%3Cpath%20d%3D%22M0%2011%20L0%201%20L10%201%20L10%208%20L4%208%20L4%204.5%20L7%204.5%20M0%2011%20L12%2011%20M12%2011%20L12%201%20L22%201%20L22%208%20L16%208%20L16%204.5%20L19%204.5%20M12%2011%20L24%2011%22%20fill%3D%22none%22%20stroke%3D%22%23e2bd5f%22%20stroke-width%3D%221.6%22/%3E%3C/svg%3E");
+  background:linear-gradient(rgba(10,16,32,.62),rgba(10,16,32,.72)),#121a2e url(art/v1/ui_lapis_tile.webp) repeat;background-size:auto,96px;background-attachment:fixed,fixed;color:var(--g-ink);font-family:var(--f-body,"Noto Serif TC",serif);font-weight:var(--w-body,400)}
+body.greek .boot{color:#d9c48c}
+body.greek #hud{background:linear-gradient(#2c1f14,#170f09);border-bottom:3px solid var(--g-gold);color:var(--g-gold-l)}
+body.greek #hud::after{content:"";position:absolute;left:0;right:0;bottom:-15px;height:12px;background:var(--g-lapis) var(--meander) repeat-x center/24px 12px;border-bottom:2px solid var(--g-gold);pointer-events:none}
+body.greek #hud .nm{font-family:var(--f-title);font-weight:900;letter-spacing:.5px;color:var(--g-gold-l);text-shadow:0 1px 0 #000}
+body.greek #hud .sub{color:#cdb67c}
+body.greek .chip{background:#1a120b;border:1.5px solid var(--g-gold);color:var(--g-gold-l);border-radius:4px;font-family:var(--f-num)}
+body.greek main{padding-top:24px}
+body.greek .card{background:#f3efe6 url(art/v1/ui_marble.webp) center/360px;border:2px solid var(--g-gold);border-radius:6px;padding:26px 12px 12px;position:relative;color:var(--g-ink);
+  box-shadow:inset 0 0 0 3px #faf5e8,inset 0 0 0 4px var(--g-gold-d),0 8px 18px rgba(0,0,0,.5)}
+body.greek .card::before{content:"";position:absolute;left:7px;right:7px;top:7px;height:11px;background:var(--g-lapis) var(--meander) repeat-x center/22px 11px;border-top:1px solid var(--g-gold-d);border-bottom:1px solid var(--g-gold-d)}
+body.greek .card h3{font-family:var(--f-title);font-weight:900;color:var(--g-por);letter-spacing:.5px}
+body.greek .card h3 small,body.greek .muted{color:var(--g-sepia)}
+body.greek .cls{font-family:var(--f-title);font-weight:900;color:var(--g-por)}
+body.greek .lv{color:var(--g-sepia)}
+body.greek img.portrait{width:96px;height:120px;object-fit:contain;object-position:center;border-radius:4px;border:2px solid var(--g-gold-d);box-shadow:0 3px 8px rgba(0,0,0,.35);flex:none;background:linear-gradient(180deg,rgba(245,239,222,.96),rgba(222,212,189,.94))}
+body.greek .bar{border-radius:2px;border:1.5px solid var(--g-gold-d);background:#2b2118;height:15px}
+body.greek .bar i{border-radius:0}
+body.greek .bar b{font-family:var(--f-num);letter-spacing:.3px;line-height:13px}
+body.greek .bar.hp i{background:linear-gradient(#b8424e,#6a1f2b)}body.greek .bar.mp i{background:linear-gradient(#4f74c4,#1b2a4e)}body.greek .bar.exp i{background:linear-gradient(#e8c766,#7d7a2c)}
+body.greek .bar.boss i{background:linear-gradient(#c24a4a,#6a1f2b)}
+body.greek .stage,body.greek .bossbox{border:3px solid var(--g-gold);border-radius:6px;box-shadow:inset 0 0 0 2px #2b2118,0 8px 18px rgba(0,0,0,.5)}
+body.greek .stage .status,body.greek .stage .mapname,body.greek .bossbox .tag{background:rgba(26,18,11,.85);border:1.5px solid var(--g-gold);border-radius:4px;color:var(--g-gold-l);font-family:var(--f-ui)}
+body.greek .stage .status.warn,body.greek .bossbox .timer{background:rgba(106,31,43,.92);border:1.5px solid var(--g-gold);border-radius:4px}
+body.greek .stage .status.gate{background:rgba(27,42,78,.92)}
+body.greek .pot{background:rgba(255,253,245,.7);border:1.5px solid #c9b07a;border-radius:4px}
+body.greek .pot .ic img{width:34px;height:34px;display:block}
+body.greek .btn{background:linear-gradient(#f6de95,#cfa143 55%,#a57a26);color:#2b1a08;border:1px solid #6b4f16;border-radius:4px;box-shadow:0 3px 0 #6b4f16,inset 0 1px 0 #fff4c4;font-family:var(--f-ui);font-weight:900;text-shadow:0 1px 0 rgba(255,240,200,.6)}
+body.greek .btn:active{box-shadow:0 1px 0 #6b4f16}
+body.greek .btn.gold{background:linear-gradient(#fff0b8,#e8c25a 50%,#b8862b)}
+body.greek .btn.red{background:linear-gradient(#a6343f,#6a1f2b);color:var(--g-gold-l);border-color:#3a0e14;box-shadow:0 3px 0 #3a0e14,inset 0 1px 0 #d66;text-shadow:0 1px 0 #000}
+body.greek .btn.green{background:linear-gradient(#8a9a4a,#4f5a2a);color:#fbf3d6;border-color:#2f3618;box-shadow:0 3px 0 #2f3618;text-shadow:0 1px 0 #000}
+body.greek .btn.ghost{background:#f6f1e4;color:var(--g-ink);border:1.5px solid var(--g-gold);box-shadow:0 2px 0 var(--g-gold-d)}
+body.greek .seg button{background:#f6f1e4;border:1.5px solid #c9b07a;border-radius:4px;color:var(--g-ink);font-family:var(--f-ui)}
+body.greek .seg button.on{background:var(--g-lapis);border-color:var(--g-gold);color:var(--g-gold-l)}
+body.greek .stats div{background:rgba(255,253,245,.7);border:1px solid #d6c08e;border-radius:4px}
+body.greek .stats b{font-family:var(--f-num);color:var(--g-por)}
+body.greek .log div{border-bottom:1px solid rgba(138,106,34,.35)}
+body.greek .banner.gate{background:linear-gradient(135deg,#24366a,#141d33);border:2px solid var(--g-gold);border-radius:6px;color:#f3e7c3}
+body.greek .banner.warn{background:linear-gradient(135deg,#7a2430,#3b1218);border:2px solid var(--g-gold);border-radius:6px}
+body.greek .tabs button{background:#f3efe6 url(art/v1/ui_marble.webp) center/240px;border:1.5px solid var(--g-gold);border-radius:4px;color:var(--g-ink);font-family:var(--f-ui)}
+body.greek .tabs button.on{background:var(--g-lapis);color:var(--g-gold-l);box-shadow:inset 0 0 0 1px var(--g-gold-l)}
+body.greek .item{background:#f3efe6 url(art/v1/ui_marble.webp) center/360px;border:1.5px solid var(--g-gold);border-radius:6px;box-shadow:inset 0 0 0 2px #faf5e8,0 4px 10px rgba(0,0,0,.35);color:var(--g-ink)}
+body.greek .item .ic{border-radius:50%;background:radial-gradient(circle at 40% 35%,#e79a63,#a5532a);border:2px solid #1a0f08}
+body.greek .item .ic.art{background:none;border:0;width:54px;height:54px}
+body.greek .item .ic.art img{width:100%;height:100%;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.45))}
+body.greek .item .t{font-family:var(--f-title);font-weight:900}
+body.greek .item .d{color:var(--g-sepia)}
+body.greek .item .price{color:#8a5a10;font-family:var(--f-num)}
+body.greek .inv div{background:rgba(255,253,245,.7);border:1px solid #d6c08e;border-radius:4px}
+body.greek .inv img{width:34px;height:34px;display:block;margin:0 auto}
+body.greek .slot{background:rgba(255,253,245,.6);border:2px dashed #c9b07a;border-radius:50%}
+body.greek .slot img{width:86%;height:86%}
+body.greek #nav{background:linear-gradient(#24324f,#121a2e);border-top:3px solid var(--g-gold)}
+body.greek #nav::before{content:"";position:absolute;left:0;right:0;top:-15px;height:12px;background:var(--g-lapis) var(--meander) repeat-x center/24px 12px;border-top:2px solid var(--g-gold);pointer-events:none}
+body.greek #nav button{color:#b9a777;font-family:var(--f-ui)}
+body.greek #nav button.on{color:var(--g-gold-l);text-shadow:0 0 8px rgba(241,214,138,.6)}
+body.greek .sheet-card{background:#f3efe6 url(art/v1/ui_marble.webp) center/360px;border-top:4px solid var(--g-gold);color:var(--g-ink)}
+body.greek .sheet-card h2{font-family:var(--f-title);color:var(--g-por)}
+body.greek #toast{background:rgba(26,18,11,.95);border:1.5px solid var(--g-gold);color:var(--g-gold-l);border-radius:4px}
+body.greek .rank div{border-bottom:1px solid rgba(138,106,34,.35)}body.greek .rank .me{color:var(--g-por)}
+body.greek .branch{background:#f3efe6 url(art/v1/ui_marble.webp) center/360px;border:2px solid var(--g-gold);border-radius:6px;color:var(--g-ink)}
+body.greek .item .ic img,body.greek .slot img{width:100%;height:100%;display:block;object-fit:contain}
+body.greek .item .ic:has(img){background:none;border:0;width:54px;height:54px}
+body.greek .sheet-card h2 img{width:40px;height:40px;vertical-align:middle}
+body.greek .tc-common{color:#4a3d2e}body.greek .tc-advanced{color:#1d5f8f}body.greek .tc-epic{color:#6a2c8f}body.greek .tc-legendary{color:#9a5a00}body.greek .tc-supreme{color:#a3122e}
+body.greek .sheet-card .tc-common,body.greek #hud .tc-common{color:#efe6d2}
+body.greek .rar-common{border-color:#b9ab8e!important}
+/* v0.4 */
+body.greek .doll .fig{background:radial-gradient(ellipse at 50% 88%,rgba(214,170,74,.35),transparent 62%),url(art/v2/bg_town.webp) center 70%/cover;border:2px solid var(--g-gold-d)}
+body.greek .doll .slot,body.greek .acc .slot{background:linear-gradient(180deg,#f5ecd8,#e3d3b0);border:2px solid var(--g-gold-d)}
+body.greek .doll .slot:not(.has),body.greek .acc .slot:not(.has){border-style:dashed;opacity:.85}
+body.greek .doll .slot.rar-common,body.greek .acc .slot.rar-common{border-color:var(--g-gold-d)!important}
+body.greek .doll .slot img,body.greek .acc .slot img{width:80%;height:80%}
+body.greek .tpanel{background:rgba(255,250,238,.7);border-color:var(--g-gold-d)}
+body.greek .item .ic.relic:has(img),body.greek .item.relic .ic:has(img){background:radial-gradient(circle,rgba(197,140,255,.35),transparent 70%);border:0}
+
+/* font treatments: titles take --w-title (Iansui has a single weight → no faux bold) */
+body.greek #hud .nm,body.greek .card h3,body.greek .cls,body.greek .sheet-card h2{font-weight:var(--w-title,900)}
+body.greek[data-font="C"] .item .t{font-weight:400}
+body.greek .bar b,body.greek .chip,body.greek .stats b,body.greek .item .price{font-variant-numeric:tabular-nums lining-nums}
+body.greek[data-font="A"] .bar b,body.greek[data-font="B"] .bar b{letter-spacing:0}
+
+/* ===== v0.5.1 contrast pass (「文字的顏色跟底圖要有高反差」) =====
+   Two surfaces only: DARK (navy mosaic / dark plates) → ivory text; PARCHMENT (marble cards, items, sheets) → dark ink.
+   Our own palette everywhere (Telegram theme vars are no longer applied in the painted theme). */
+body.greek{color:#f5ecd7;--text:#f5ecd7;--muted:#d9cba6;--panel:rgba(20,14,8,.86);--panel2:rgba(34,24,14,.9);--line:#8a6a22;--accent:#e2b85a;
+  --r1:#efe6d2;--r2:#7fd6ff;--r3:#d7a6ff;--r4:#ffc857;--r5:#ff8296;--ink:#2b2118;--ink2:#4a3b2a}
+/* parchment surfaces: dark ink + dark-tuned rarity colors (all ≥ 4.5:1 on #f3efe6) */
+body.greek .card,body.greek .item,body.greek .sheet-card,body.greek .branch,body.greek .tpanel,body.greek .pot,body.greek .stats div,body.greek .inv div{
+  --text:#2b2118;--muted:#4f402c;--panel:rgba(255,253,245,.82);--panel2:#efe6d0;--line:#b89a5a;--accent:#8a5a10;
+  --r1:#3b3024;--r2:#084a7a;--r3:#6c1fa3;--r4:#8a4a00;--r5:#a1102c;color:var(--text)}
+body.greek .muted,body.greek .card h3 small,body.greek .lv,body.greek .item .d{color:var(--muted)}
+body.greek .card .muted,body.greek .item .d,body.greek .sheet-card .muted{color:#4f402c}
+body.greek .tc-common{color:var(--r1)}body.greek .tc-advanced{color:var(--r2)}body.greek .tc-epic{color:var(--r3)}body.greek .tc-legendary{color:var(--r4)}body.greek .tc-supreme{color:var(--r5)}
+body.greek .sheet-card .tc-common{color:var(--r1)}
+body.greek #hud .tc-common{color:#efe6d2}
+body.greek .item .price{color:#7a4a00}
+/* text directly on the navy mosaic: ivory with a soft dark halo */
+body.greek .create h1,body.greek .create>p,body.greek h3.sect,body.greek .boot,body.greek .empty{color:#f5ecd7;text-shadow:0 1px 2px #000,0 0 6px rgba(0,0,0,.6)}
+body.greek .create>p,body.greek h3.sect{color:#e6d8b4}
+body.greek .create h1{font-family:var(--f-title);font-weight:var(--w-title,900);color:#f8e7b0}
+body.greek .steps i{background:#4a5677}body.greek .steps i.on{background:#e2b85a}
+/* create-flow class cards + info box: dark plates with ivory text */
+body.greek .pickc{background:rgba(20,14,8,.86);border:2px solid #8a6a22;border-radius:8px;color:#f5ecd7}
+body.greek .pickc b{color:#f8e7b0;font-family:var(--f-title);font-weight:var(--w-title,900);font-size:15px;text-shadow:0 1px 0 #000}
+body.greek .pickc small{color:#e6d8b4}
+body.greek .pickc.on{border-color:#f1d68a;box-shadow:0 0 0 3px rgba(241,214,138,.35)}
+body.greek .desc{background:rgba(20,14,8,.88);border:1.5px solid #8a6a22;border-radius:8px;color:#f5ecd7;line-height:1.6}
+body.greek .desc b{color:#f8e7b0}
+body.greek .name-in{background:#fffaf0;color:#2b2118;border-color:#b89a5a}
+/* nav, chips, gold-on-dark: lighter gold (no mid-tone gold on brown) */
+body.greek #nav button{color:#e3d3a6}body.greek #nav button.on{color:#ffe7a3}
+body.greek #hud .sub{color:#e9d9ae}
+/* bars: label always ivory with a 1px dark stroke */
+body.greek .bar b{color:#fffaf0;text-shadow:0 0 2px #000,0 1px 1px #000;-webkit-text-stroke:.3px rgba(0,0,0,.6);font-size:10.5px}
+/* buttons */
+body.greek .btn{color:#22160a;text-shadow:none}
+body.greek .btn:disabled{opacity:1;filter:grayscale(.6) brightness(.85);color:#3b2f22}
+body.greek .btn.ghost{background:#fbf6ea;color:#2b2118}
+body.greek .tabs button,body.greek .seg button{color:#2b2118}
+body.greek .tabs button.on,body.greek .seg button.on{color:#ffe7a3}
+/* trade window */
+body.greek .tslot.has{background:rgba(255,253,245,.92)}
+body.greek .tslot small.dd{color:#4f402c}
+body.greek .menu .why{color:#4f402c}
+/* v0.5.1 Telegram light theme can never leak in (belt-and-braces: app.js also drops body.light when the painted theme is on) */
+body.greek.light{--bg:#121a2e;--text:#f5ecd7;--muted:#d9cba6;--panel:rgba(20,14,8,.86);--panel2:rgba(34,24,14,.9);--line:#8a6a22}
+body.greek.light #hud{background:none}
+/* v0.5.1「現在可以做」rows sit on a parchment card → light rows, ink text */
+body.greek .todo-row{background:rgba(255,250,236,.78);border:1px solid #c9ae6e}
+body.greek .todo-row .tm b{color:#2b2118}body.greek .todo-row .tm small{color:#4f402c}
+body.greek .todo h3 small{color:#7a4a00}
+body.greek .fg-box{font-family:var(--f-body)}body.greek .fg-t{font-family:var(--f-title);font-weight:var(--w-title,900)}
+body.greek .slot em,.slot em{background:#170f09;color:#ffd75e;border:1px solid #b08a3a;border-radius:6px;padding:0 4px;line-height:1.35;font-family:var(--f-num,inherit)}
+
+/* Keep level labels readable on gold todo cards. */
+body.greek.light .todo-row .tm .lv{color:#3b3024}
+

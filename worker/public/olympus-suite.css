@@ -1,0 +1,189 @@
+/* Production art and component hierarchy. Battlefield/canvas dimensions stay in
+   the existing battle styles; this layer never sets their width or height. */
+body.greek.v2.mythic.olympus-suite {background-color:#080f1e;background-image:linear-gradient(#0813268a,#071020dd),url('art/ui/olympus-sanctuary-v1.png');--suite-gold:#c7a367;--suite-line:#a688514f}
+body.greek.v2.mythic.olympus-suite #app {background:linear-gradient(90deg,#050d1b80,transparent 15%,transparent 85%,#050d1b80)}
+body.greek.v2.mythic.olympus-suite #hud {height:63.578125px;background:linear-gradient(#182335,#101725);border-bottom:1px solid #bda06a;box-shadow:0 4px 20px #0007}
+body.greek.v2.mythic.olympus-suite #hud .my-hud-crest {background:linear-gradient(#5c4930,#282519);border-radius:4px;clip-path:polygon(0 0,100% 0,100% 83%,50% 100%,0 83%)}
+body.greek.v2.mythic.olympus-suite #view {padding-top:12px}
+body.greek.v2.mythic.olympus-suite .my-chapter {position:relative;isolation:isolate;min-height:142px;padding:23px 17px;margin:0 0 14px;border:1px solid #c4a26988;border-radius:5px;background:#132038 url('art/ui/olympus-sanctuary-v1.png') center 29%/cover;box-shadow:inset 0 0 0 3px #080f1c,inset 0 0 0 4px #c0a36b44,0 6px 20px #0006;overflow:hidden;gap:13px}
+body.greek.v2.mythic.olympus-suite .my-chapter::before {content:'';position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,#071020ef,#091426b3 52%,#0a152b18);pointer-events:none}
+body.greek.v2.mythic.olympus-suite .my-chapter::after {content:'';position:absolute;left:17px;bottom:14px;width:83px;height:1px;background:linear-gradient(90deg,#e6c480,transparent)}
+body.greek.v2.mythic.olympus-suite [data-screen="bag"] .my-chapter {background-image:url('art/ui/hero-hall-v1.webp');background-position:center 23%}
+body.greek.v2.mythic.olympus-suite [data-screen="shop"] .my-chapter,body.greek.v2.mythic.olympus-suite [data-screen="trade"] .my-chapter {background-image:url('art/ui/hermes-market-v1.webp');background-position:right 62%}
+body.greek.v2.mythic.olympus-suite [data-screen="boss"] .my-chapter {background-image:url('art/ui/titan-gate-v1.webp');background-position:right 47%}
+body.greek.v2.mythic.olympus-suite [data-screen="class"] .my-chapter {background-image:url('art/ui/fate-oracle-v1.webp');background-position:right 50%}
+body.greek.v2.mythic.olympus-suite .my-chapter-copy {min-width:0}
+body.greek.v2.mythic.olympus-suite .my-domain {font:600 8px/1.4 var(--f-ui);letter-spacing:2.3px;color:#d5b77d;margin-bottom:8px}
+body.greek.v2.mythic.olympus-suite .my-chapter h1 {font-size:26px;letter-spacing:3px;color:#ffe4ad;text-shadow:0 2px 6px #000}
+body.greek.v2.mythic.olympus-suite .my-chapter p {color:#d5cbb6;font-size:10px;letter-spacing:.3px;max-width:230px;line-height:1.6;margin-top:8px}
+body.greek.v2.mythic.olympus-suite .my-sigil {width:42px;height:51px;background:linear-gradient(#20324ad9,#0b1324);border-color:#b9965a;outline:none;clip-path:polygon(0 0,100% 0,100% 83%,50% 100%,0 83%);box-shadow:inset 0 0 0 3px #101929,inset 0 0 0 4px #bfa06666}
+body.greek.v2.mythic.olympus-suite .my-sigil::after {display:none}
+body.greek.v2.mythic.olympus-suite .my-sigil svg {width:31px;height:31px;margin-top:-4px;filter:drop-shadow(0 2px 2px #0008)}
+body.greek.v2.mythic.olympus-suite .my-tabs {padding:3px;gap:3px;margin-bottom:16px;background:linear-gradient(#253046,#111c2e);border-color:#a68c56;border-radius:4px;box-shadow:inset 0 1px #ffffff15,0 5px 14px #0006}
+body.greek.v2.mythic.olympus-suite .my-tabs button {min-height:42px;font-size:12px;letter-spacing:.7px}
+body.greek.v2.mythic.olympus-suite .my-tabs button.on {background:linear-gradient(#f3dfac,#d4b36d 55%,#b58a41);color:#30210c;border-color:#f0d79b;box-shadow:inset 0 1px #fff5,0 2px 0 #665027}
+body.greek.v2.mythic.olympus-suite .my-eyebrow {font-size:8px;letter-spacing:2px;margin-bottom:12px}
+body.greek.v2.mythic.olympus-suite #view .card:not(.lc-profile):not(.lc-equip),body.greek.v2.mythic.olympus-suite .my-guide,body.greek.v2.mythic.olympus-suite .sheet-card {background-image:linear-gradient(#f6eddbc9,#f0e4cdc9),url('art/v1/ui_marble.webp');background-size:auto,360px;border-radius:4px;border-color:#b79a61;box-shadow:inset 0 0 0 3px #fffcf04d,0 6px 20px #0006}
+body.greek.v2.mythic.olympus-suite #view .card:not(.lc-profile):not(.lc-equip) h3 {font-size:15px;color:#65451f;border-bottom:1px solid #b69a6144;padding-bottom:9px;margin-bottom:11px}
+body.greek.v2.mythic.olympus-suite #view .card h3 small {font:10px/1.6 var(--f-ui);color:#7b6848}
+body.greek.v2.mythic.olympus-suite #view .todo-row {background:linear-gradient(#fbf5e8,#e8dcc3);border-color:#b49c6d;border-radius:3px;padding:11px 8px;box-shadow:inset 0 1px #fff8}
+body.greek.v2.mythic.olympus-suite #view .todo-row .tm b {color:#67451e;font-size:12px}
+body.greek.v2.mythic.olympus-suite #view .todo-row .tm small {color:#7d6b4e;font-size:10px;line-height:1.6}
+body.greek.v2.mythic.olympus-suite #view .stats>div,body.greek.v2.mythic.olympus-suite #view .inv>div {background:linear-gradient(#fffaf0,#e9dfca);border-color:#bba373;border-radius:3px;padding:12px 7px;box-shadow:inset 0 1px #fff9}
+body.greek.v2.mythic.olympus-suite #view .stats b {color:#755226;font-size:19px}
+body.greek.v2.mythic.olympus-suite #view .stats span {color:#7b6748;font-size:10px}
+body.greek.v2.mythic.olympus-suite #view .lc-class-screen .hero {padding:2px 0 5px;gap:13px}
+body.greek.v2.mythic.olympus-suite #view .lc-class-screen .hero .portrait {width:84px;height:110px;background:linear-gradient(#20314b88,#14233aee),url('art/ui/fate-oracle-v1.webp') right center/cover;border:1px solid #b19358;box-shadow:inset 0 0 0 3px #17273b,0 4px 10px #0004}
+body.greek.v2.mythic.olympus-suite #view .branch {position:relative;padding:16px 12px;background:linear-gradient(#f7efdecc,#e9ddc4e8),url('art/v1/ui_marble.webp') center/360px;border-color:#b4985e;border-radius:4px;box-shadow:inset 0 0 0 3px #fffcf04d,0 7px 20px #0006;margin-bottom:14px}
+body.greek.v2.mythic.olympus-suite #view .branch .brimg {height:116px;width:83px;object-fit:contain;filter:drop-shadow(0 4px 5px #7c643544)}
+body.greek.v2.mythic.olympus-suite #view .branch .sk {gap:5px;padding:12px 0 2px;border-top:1px solid #baa37366;margin-top:12px}
+body.greek.v2.mythic.olympus-suite #view .branch .sk div {background:linear-gradient(#fdf8ec,#e5d7b8);border:1px solid #bba37355;border-radius:3px;padding:10px 4px;color:#7b684a}
+body.greek.v2.mythic.olympus-suite #view .branch .sk b {color:#6c461c;font-size:15px}
+body.greek.v2.mythic.olympus-suite #view .branch.pick {border-color:#9d772f;box-shadow:inset 3px 0 #b29250,inset 0 0 0 3px #fffcf04d,0 7px 20px #0006}
+body.greek.v2.mythic.olympus-suite #nextCd {font-family:var(--f-num);font-size:36px!important;color:#775128;text-shadow:0 1px #fff8;letter-spacing:2px;padding:5px 0 11px}
+body.greek.v2.mythic.olympus-suite #view .rank div {padding:10px 6px;font-size:12px;background:#fff5;margin:5px 0;border:1px solid #bca56d44;border-radius:3px}
+body.greek.v2.mythic.olympus-suite #view .rank .me {background:#e9d7a8;border-color:#b08b48;color:#62421a}
+/* Hero vitals: portrait + gauges, then a clear combat-stat ledger. */
+body.greek.v2.mythic.olympus-suite #view .card.lc-profile {padding:13px 10px 10px;background:linear-gradient(110deg,#25334ba8,#101b30ef),url('art/ui/hero-hall-v1.webp') center/cover!important;border-color:#bd9b60!important;box-shadow:inset 0 0 0 3px #111b2c,inset 0 0 0 4px #c9a96c30,0 4px 12px #0006!important}
+body.greek.v2.mythic.olympus-suite .my-vitals .portrait {width:72px;height:99px;border-radius:3px;background:radial-gradient(ellipse,#85714a,#1b2a40 76%);box-shadow:inset 0 0 0 2px #11192b,0 3px 12px #0008}
+body.greek.v2.mythic.olympus-suite .my-vitals .hero {gap:10px}
+body.greek.v2.mythic.olympus-suite .my-vitals .cls {font-size:17px;letter-spacing:.5px}
+body.greek.v2.mythic.olympus-suite .my-hero-name {font-weight:900;overflow-wrap:anywhere;line-height:1.4}
+body.greek.v2.mythic.olympus-suite .my-hero-profession {color:#c8bca6;font:10px/1.5 var(--f-ui);margin:0 0 4px}
+body.greek.v2.mythic.olympus-suite .my-vitals .lv {font-size:10px;white-space:nowrap}
+body.greek.v2.mythic.olympus-suite .my-hero-stats {border-top:1px solid #c2a46766;padding:13px 0 9px;margin-top:12px;gap:0;border-bottom:1px solid #c2a46733}
+body.greek.v2.mythic.olympus-suite .my-hero-stats>div {border:0;border-right:1px solid #b69c6144;background:none;border-radius:0;padding:0 3px}
+body.greek.v2.mythic.olympus-suite .my-hero-stats>div:last-child {border-right:0}
+body.greek.v2.mythic.olympus-suite .my-hero-stats dt {font-size:10px;color:#bfb29a}
+body.greek.v2.mythic.olympus-suite .my-hero-stats dd {font-size:21px;font-weight:800;color:#ffe2a1;text-shadow:0 2px #0008;margin-top:4px}
+body.greek.v2.mythic.olympus-suite .my-hero-elements {gap:4px;margin-top:9px}
+body.greek.v2.mythic.olympus-suite .my-hero-elements>div {padding:5px 1px;background:#0b152a;border-color:#63748c55;border-radius:2px}
+body.greek.v2.mythic.olympus-suite .my-hero-traits {margin-top:9px;line-height:1.6;color:#baac91;gap:8px;flex-wrap:wrap}
+body.greek.v2.mythic.olympus-suite #view .lc-adventure {background:linear-gradient(140deg,#44402e,#131e31 20%,#0b1425 82%,#53412a);box-shadow:inset 0 0 0 1px #f8d98a30,0 8px 24px #0008}
+body.greek.v2.mythic.olympus-suite .lc-battle-head {letter-spacing:.5px;background:linear-gradient(#24324a,#111d32);color:#efd59b}
+/* Original character sprites and all eleven equipment slots remain in place. */
+body.greek.v2.mythic.olympus-suite #view .card.lc-equip {background:linear-gradient(#142138eb,#0c1728f2),url('art/ui/hero-hall-v1.webp') center/cover;color:#ecd6a8;border-color:#b39459;padding:14px 12px;box-shadow:inset 0 0 0 3px #081422,inset 0 0 0 4px #bfa36930,0 8px 25px #0008}
+body.greek.v2.mythic.olympus-suite .lc-equip>.my-eyebrow {display:none}
+body.greek.v2.mythic.olympus-suite .my-hall-heading {display:flex;justify-content:space-between;align-items:center;padding:2px 1px 13px;margin-bottom:12px;border-bottom:1px solid #c2a46a55;gap:8px}
+body.greek.v2.mythic.olympus-suite .my-hall-copy,body.greek.v2.mythic.olympus-suite .my-hall-power {display:flex;flex-direction:column;gap:4px}
+body.greek.v2.mythic.olympus-suite .my-hall-heading small {font-size:9px;color:#b6a584;letter-spacing:1.5px}
+body.greek.v2.mythic.olympus-suite .my-hall-copy strong {font:900 21px/1.3 var(--f-title);color:#ffe4ad;letter-spacing:1px}
+body.greek.v2.mythic.olympus-suite .my-hall-power {text-align:right}
+body.greek.v2.mythic.olympus-suite .my-hall-power strong {font:800 24px/1.1 var(--f-num,var(--f-ui));color:#edc477}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll {background:url('art/ui/hero-hall-v1.webp') center bottom/cover;border:1px solid #ad925333;padding:8px 0 0;gap:6px}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig {min-height:325px;background:none;border:0;border-radius:0;overflow:visible;justify-content:flex-end;padding-bottom:24px}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig img {max-height:286px;max-width:140%;width:150px;filter:drop-shadow(0 7px 11px #0009);pointer-events:none}
+body.greek.v2.mythic.olympus-suite #view .lc-character .doll .slot,body.greek.v2.mythic.olympus-suite #view .lc-character .acc .slot {background:linear-gradient(145deg,#283b52,#0c1728 75%);border:1px solid #9c8655;border-radius:3px;box-shadow:inset 0 0 0 3px #111d2c,inset 0 0 0 4px #b69a6633,0 2px 7px #0008}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot.has {border-color:#d5b16c;background:radial-gradient(ellipse at center,#475164,#152237 75%);box-shadow:inset 0 0 0 2px #131c2d,inset 0 0 0 3px #ddb66e55,0 0 13px #d5b16c18}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot small {font-size:9px;color:#d7be87;letter-spacing:.5px}
+body.greek.v2.mythic.olympus-suite #view .lc-character .slot .ph {font-size:20px;opacity:.25;filter:grayscale(1)}
+body.greek.v2.mythic.olympus-suite #view .lc-character .acc {border-top:1px solid #d1b57344;padding-top:11px;margin-top:10px}
+body.greek.v2.mythic.olympus-suite #view .my-hall-stats {display:flex;justify-content:center;gap:5px;margin-top:15px;padding-top:12px;border-top:1px solid #d1b57344;font-size:10px}
+body.greek.v2.mythic.olympus-suite #view .my-hall-stats b {padding:6px 8px;background:#0a1528;border:1px solid #a58e5940;border-radius:2px;color:#ebd3a2}
+body.greek.v2.mythic.olympus-suite .my-hall-hint {margin:11px 0 0;color:#a99b81;font-size:9px;text-align:center;letter-spacing:.5px}
+/* Merchant cards display the original item art on a lit bronze pedestal. */
+body.greek.v2.mythic.olympus-suite .my-market-balance {padding:12px 14px;border:1px solid #b4975f;border-radius:3px;background:linear-gradient(110deg,#253249,#111b2e);box-shadow:inset 0 0 0 3px #0e1828}
+body.greek.v2.mythic.olympus-suite .my-market-balance span {font-size:10px;color:#baab8a;letter-spacing:1px}
+body.greek.v2.mythic.olympus-suite .my-market-balance strong {font-size:23px;color:#f7dc98}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid>.item,body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .item {background:linear-gradient(145deg,#28364cbf,#111c30f5),url('art/ui/hero-hall-v1.webp') center/cover;border-color:#a88d57;color:#ead9b6;border-radius:4px;box-shadow:inset 0 0 0 3px #101a2c,inset 0 0 0 4px #c4a36422,0 5px 15px #0007;padding:15px 11px 12px;gap:10px}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .ic {position:relative;width:110px;height:116px;background:radial-gradient(ellipse at center,#ab8c4644,transparent 68%);margin:2px auto 4px;box-shadow:none;overflow:visible}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .ic::after,body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .ic::after {content:'';position:absolute;left:8%;right:8%;bottom:-3px;height:10px;border:1px solid #a78c5466;border-radius:50%;background:linear-gradient(#574b31,#132039);box-shadow:0 3px 8px #0006;z-index:0;pointer-events:none}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .ic img,body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .ic img {position:relative;z-index:1;filter:drop-shadow(0 5px 6px #0009)}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .t,body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .t {color:#f6dc9d;font-weight:800;font-size:12px;line-height:1.6}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .d,body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .d {color:#c3b89f;font-size:10px;line-height:1.7}
+body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .ic {position:relative;background:radial-gradient(ellipse,#a58b4144,transparent 68%);width:88px;height:92px;border:0;border-radius:0;margin-bottom:5px}
+body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .muted {color:#e2c17c}
+body.greek.v2.mythic.olympus-suite #view .my-equipment-grid .more {color:#d7ba7a}
+body.greek.v2.mythic.olympus-suite #view .my-product-footer {display:flex;flex-direction:column;gap:9px;padding-top:11px;border-top:1px solid #a58e5955}
+body.greek.v2.mythic.olympus-suite #view .my-product-footer .price {color:#f0d28f;font-size:16px;text-align:center;letter-spacing:.3px}
+body.greek.v2.mythic.olympus-suite #view .my-product-footer .btn {margin:0;min-height:39px;font-size:12px}
+body.greek.v2.mythic.olympus-suite #view .my-market-grid .mid {flex:1}
+/* Art is distinct from combat scenery. Original boss canvas stays untouched. */
+body.greek.v2.mythic.olympus-suite .my-boss-arena {border:2px solid #ac8a51;border-radius:4px;box-shadow:inset 0 0 0 3px #0e1726,0 6px 20px #0008}
+body.greek.v2.mythic.olympus-suite .bossbox .tag,body.greek.v2.mythic.olympus-suite .bossbox .timer {background:linear-gradient(#263247ed,#111b2ef2);color:#ffdc99;border:1px solid #bea06499;border-radius:3px;backdrop-filter:blur(3px);font-size:11px;padding:6px 9px}
+body.greek.v2.mythic.olympus-suite .bossbox .timer {background:linear-gradient(#6e3138eb,#361822ef);border-color:#bb7764;color:#ffdbb4}
+body.greek.v2.mythic.olympus-suite .my-trade-steps {gap:5px;margin:13px 0}
+body.greek.v2.mythic.olympus-suite .my-trade-steps span {padding:13px 3px;background:linear-gradient(#29364a,#131e30);border:1px solid #b0955d77;color:#ead2a1;font-size:10px;box-shadow:inset 0 0 0 2px #0d182a;border-radius:3px}
+body.greek.v2.mythic.olympus-suite #view .tpanel {background:linear-gradient(#233146,#111b2d);border-color:#a68c55;color:#e3d2ae;box-shadow:inset 0 0 0 3px #0e1829}
+body.greek.v2.mythic.olympus-suite #view .tpanel .muted {color:#baac91}
+body.greek.v2.mythic.olympus-suite #view .tpanel.locked,body.greek.v2.mythic.olympus-suite #view .tpanel.ok {border-color:#dcba77;box-shadow:inset 0 0 0 3px #0e1829,0 0 12px #b99c5222}
+body.greek.v2.mythic.olympus-suite .elf-ancestry {background:linear-gradient(#18263bea,#0a1529f2),url('art/ui/fate-oracle-v1.webp') center/cover;border-color:#b1975d;box-shadow:inset 0 0 0 3px #0a1325,0 8px 25px #0008}
+body.greek.v2.mythic.olympus-suite .elf-ancestry-title {color:#efcf93;border-color:#a98e5844}
+body.greek.v2.mythic.olympus-suite .elf-ancestry-title small {color:#b7aa8f}
+body.greek.v2.mythic.olympus-suite .elf-tier {border-color:#c2a16366}
+body.greek.v2.mythic.olympus-suite .elf-tier h4 {color:#e7c47f}
+body.greek.v2.mythic.olympus-suite .elf-tier h4 em {color:#b4a081}
+body.greek.v2.mythic.olympus-suite .my-future-tier summary {cursor:pointer;position:relative;list-style:none;padding:8px 24px 8px 0;border:1px solid #ba9b5c44;background:#1b293d}
+body.greek.v2.mythic.olympus-suite .my-future-tier summary::-webkit-details-marker {display:none}
+body.greek.v2.mythic.olympus-suite .my-future-tier summary::after {content:'＋';position:absolute;right:7px;top:9px;color:#d9ba7a;font-size:16px}
+body.greek.v2.mythic.olympus-suite .my-future-tier[open] summary::after {content:'−'}
+body.greek.v2.mythic.olympus-suite .my-future-tier summary h4 {margin:0;padding:0 8px;background:none}
+body.greek.v2.mythic.olympus-suite .my-future-tier[open] .elf-nodes {margin-top:10px}
+body.greek.v2.mythic.olympus-suite .elf-node .elf-preview-art {width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 2px 3px #0005)}
+body.greek.v2.mythic.olympus-suite .elf-node,body.greek.v2.mythic.olympus-suite .elf-node.available,body.greek.v2.mythic.olympus-suite .elf-node.locked {background:linear-gradient(#29374e,#111d30);border-color:#ad925855;color:#dacbae;box-shadow:inset 0 1px #ffffff0c;border-radius:3px;padding:12px 9px}
+body.greek.v2.mythic.olympus-suite .elf-node strong {color:#e6cb97}
+body.greek.v2.mythic.olympus-suite .elf-node small {color:#bdaf94}
+body.greek.v2.mythic.olympus-suite .elf-node.chosen {background:linear-gradient(#4e4230,#202636);border-color:#d6b475;box-shadow:inset 3px 0 #dbb976,0 0 12px #dfbd6b22}
+body.greek.v2.mythic.olympus-suite .elf-node.locked {background:linear-gradient(#1f2b40,#131c2c);border-color:#6b768955}
+body.greek.v2.mythic.olympus-suite .elf-node.locked i {background:#273345;color:#a7b0bf}
+body.greek.v2.mythic.olympus-suite .elf-node.locked .elf-rune {background:#182339;border-color:#9d874e66;color:#c0a269}
+/* Relic detail: original item art gets a ceremonial display, with actions below. */
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase {background:linear-gradient(#101a2d44,#101a2d8c),url('art/ui/hero-hall-v1.webp') center/cover;padding:25px 13px 20px;border-color:#b69a61;box-shadow:inset 0 0 0 3px #0b1528,inset 0 0 0 4px #ba9c6244}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase-img-wrap {width:140px;height:148px;border:0;box-shadow:none;background:radial-gradient(ellipse,#ab8e5055,transparent 68%);margin-bottom:15px;overflow:visible}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase-img-wrap img {width:124px;height:130px;filter:drop-shadow(0 6px 9px #000b)}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase-title {font-size:23px;line-height:1.4;color:#ffe1a0;margin:10px 0 6px;text-shadow:0 2px 5px #000}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase-tags {gap:5px}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .showcase-sub {color:#d8c8a5;font-size:11px}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .my-artifact-stats {background:linear-gradient(#fbf5e6,#eee1c8);padding:14px;border-color:#b99b61;margin:14px 0;font-size:12px}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .my-forge h3 {font-size:17px;letter-spacing:.5px}
+body.greek.v2.mythic.olympus-suite .my-artifact-sheet .my-equip-actions .btn {min-height:43px}
+body.greek.v2.mythic.olympus-suite .char-card {background:linear-gradient(#12203999,#101a2ee6),url('art/ui/hero-hall-v1.webp') center/cover;border-radius:5px;padding-top:20px;border-color:#b59a62;box-shadow:inset 0 0 0 4px #0d1728,inset 0 0 0 5px #bb9e6644,0 8px 25px #0007}
+body.greek.v2.mythic.olympus-suite .char-card::before {border-radius:3px;inset:8px}
+body.greek.v2.mythic.olympus-suite .char-empty {background:linear-gradient(#16243bbd,#0e192dea),url('art/ui/hero-hall-v1.webp') center/cover}
+body.greek.v2.mythic.olympus-suite .char-question {background:radial-gradient(ellipse,#51442e,#152137);border-radius:50%;border-color:#a28852;color:#ccb37b}
+body.greek.v2.mythic.olympus-suite .pickc {background:linear-gradient(#142238bb,#0e192de6),url('art/ui/hero-hall-v1.webp') center/cover;border-radius:4px;color:#e5d1aa;border-color:#987f4f}
+body.greek.v2.mythic.olympus-suite .pickc.on {background:linear-gradient(#6a583977,#15223dda),url('art/ui/hero-hall-v1.webp') center/cover;border-color:#e0bd72;box-shadow:inset 0 0 0 2px #bba069,0 0 15px #c9a35233}
+body.greek.v2.mythic.olympus-suite .create .pickc b {color:#f6d79d}
+body.greek.v2.mythic.olympus-suite .pickc small {color:#c9b99a}
+body.greek.v2.mythic.olympus-suite {
+  --safe-b:max(env(safe-area-inset-bottom,0px),var(--tg-safe-area-inset-bottom,0px),var(--tg-content-safe-area-inset-bottom,0px));
+  --nav-safe-left:max(env(safe-area-inset-left,0px),var(--tg-safe-area-inset-left,0px),var(--tg-content-safe-area-inset-left,0px));
+  --nav-safe-right:max(env(safe-area-inset-right,0px),var(--tg-safe-area-inset-right,0px),var(--tg-content-safe-area-inset-right,0px));
+}
+body.greek.v2.mythic.olympus-suite #app {padding-bottom:calc(83px + var(--safe-b))}
+body.greek.v2.mythic.olympus-suite #nav {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;height:calc(71px + var(--safe-b));padding:10px calc(8px + var(--nav-safe-right)) calc(7px + var(--safe-b)) calc(8px + var(--nav-safe-left));background:linear-gradient(#25324b,#111a2d);border-color:#c2a466;box-shadow:0 -6px 22px #0008}
+body.greek.v2.mythic.olympus-suite #nav button {min-width:0;min-height:44px;padding:0 1px;gap:3px;justify-content:center;align-self:stretch}
+body.greek.v2.mythic.olympus-suite #nav button small {line-height:12px;white-space:nowrap;letter-spacing:.5px}
+body.greek.v2.mythic.olympus-suite #nav button.on {background:radial-gradient(ellipse at 50% 20%,#b4944933,transparent 75%);color:#ffe1a0}
+body.greek.v2.mythic.olympus-suite #nav button.on .nav-icon {filter:drop-shadow(0 0 7px #d7b56866)}
+body.greek.v2.mythic.olympus-suite button:focus-visible,body.greek.v2.mythic.olympus-suite [tabindex]:focus-visible {outline:2px solid #f2d58d;outline-offset:3px}
+@media(max-width:370px) {body.greek.v2.mythic.olympus-suite .my-chapter{min-height:132px;padding:19px 12px;gap:9px}body.greek.v2.mythic.olympus-suite .my-chapter h1{font-size:23px;letter-spacing:2px}body.greek.v2.mythic.olympus-suite .my-domain{font-size:7px;letter-spacing:1.6px}body.greek.v2.mythic.olympus-suite .my-chapter p{font-size:9px}body.greek.v2.mythic.olympus-suite .my-vitals .portrait{width:56px;height:86px}body.greek.v2.mythic.olympus-suite .my-hero-stats dd{font-size:18px}body.greek.v2.mythic.olympus-suite .my-vitals .cls{font-size:15px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll{grid-template-columns:54px minmax(0,1fr) 54px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .slot{width:54px;height:58px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig{min-height:300px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig img{width:125px}body.greek.v2.mythic.olympus-suite .my-hall-copy strong{font-size:18px}body.greek.v2.mythic.olympus-suite #view .my-market-grid .ic{width:95px;height:106px}}
+@media(min-width:700px) {body.greek.v2.mythic.olympus-suite .my-chapter{min-height:170px;padding:28px 25px;background-size:cover}body.greek.v2.mythic.olympus-suite .my-chapter h1{font-size:34px}body.greek.v2.mythic.olympus-suite .my-chapter p{font-size:12px;max-width:400px}body.greek.v2.mythic.olympus-suite .my-domain{font-size:10px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig img{width:210px;max-height:325px}body.greek.v2.mythic.olympus-suite #view .lc-character .doll .fig{min-height:370px}}
+/* Home utility panels: dark temple surfaces, restrained gilding, readable actions. */
+body.greek.v2.mythic.olympus-suite #view .my-home .card:is(.my-command-board,.my-daily-blessing){position:relative;overflow:hidden;isolation:isolate;background:#101d30;border:1px solid #b7955d99;padding:18px 14px;color:#eee3d0;box-shadow:inset 0 0 0 3px #0a1322,inset 0 0 0 4px #c5a36b22,0 7px 20px #0006;border-radius:5px}
+body.greek.v2.mythic.olympus-suite #view .my-home .card:is(.my-command-board,.my-daily-blessing)::before{content:"";display:block;height:auto;border:0;position:absolute;inset:0;z-index:-1;pointer-events:none;background:linear-gradient(90deg,#101d30f5 10%,#101d30c9 65%,#101d3066),url('art/ui/hermes-market-v1.webp') right top/auto 310px no-repeat;opacity:.65}
+body.greek.v2.mythic.olympus-suite #view .my-home .card.my-daily-blessing::before{background:linear-gradient(90deg,#101d30ed 5%,#101d30ce 57%,#101d306b),url('art/ui/fate-oracle-v1.webp') right center/cover no-repeat;opacity:.8}
+body.greek.v2.mythic.olympus-suite #view .my-home .card:is(.my-command-board,.my-daily-blessing) h3{margin:0;padding:0;border:0;color:#f3d99f;font:700 19px/1.4 var(--f-title);letter-spacing:1.5px;text-shadow:0 2px 4px #0009}
+body.greek.v2.mythic.olympus-suite #view .my-home .command-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:0 2px 16px;border-bottom:1px solid #bfa06b44;margin-bottom:4px}
+body.greek.v2.mythic.olympus-suite #view .my-home .command-kicker,.my-daily-blessing .my-eyebrow{display:block;color:#cbb17e;font:600 9px/1.5 var(--f-ui);letter-spacing:1.7px;margin-bottom:6px}
+body.greek.v2.mythic.olympus-suite #view .my-home .command-balance{color:#e3c894;background:#0913239c;border:1px solid #ac8c4b55;padding:5px 7px;font:600 11px/1.5 var(--f-ui);white-space:nowrap;border-radius:3px}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .todo-row{background:linear-gradient(90deg,#1c2b4199,#101d3077);border:0;border-bottom:1px solid #c5a7742e;border-radius:0;padding:13px 0;gap:9px;margin:0;box-shadow:none}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .todo-row:last-child{border-bottom:0;padding-bottom:2px}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .ti{display:grid;place-items:center;flex:0 0 31px;width:31px;height:35px;background:linear-gradient(#56462e88,#16243b);border:1px solid #b8986155;border-radius:3px;font-size:18px}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .tm{min-width:0;flex:1}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .tm b{color:#eee4d4;font:600 13px/1.6 var(--f-ui);overflow-wrap:anywhere}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .tm small{display:block;color:#b6c1d0;font:400 11px/1.6 var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .btn{flex-shrink:0;min-width:54px;min-height:40px;padding:7px 10px;border:1px solid #cba66d;color:#f4dcaa;background:linear-gradient(#394356,#19273d);box-shadow:inset 0 1px #ffffff21,inset 0 0 0 2px #121d2e,0 2px 4px #0007;border-radius:3px;font:600 12px/1.4 var(--f-ui);letter-spacing:1px}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .btn.gold{background:linear-gradient(#ecd49a,#b88e4f);color:#30210e;border-color:#f1dca9;box-shadow:inset 0 0 0 2px #d5b779,0 2px 5px #0007}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-heading{display:flex;align-items:center;justify-content:space-between;gap:9px}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-heading>small{font:500 10px/1.6 var(--f-ui);color:#e2c78e;border:1px solid #ba975f66;border-radius:3px;padding:3px 6px;white-space:nowrap}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-reward{display:flex;align-items:center;gap:15px;margin:20px 0;position:relative}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-seal{display:grid;place-items:center;flex:0 0 54px;width:54px;height:54px;border-radius:50%;border:1px solid #d4b57b;background:radial-gradient(#8d7134,#342c21 60%,#121d2e);box-shadow:inset 0 0 0 4px #141e2d,inset 0 0 0 5px #aa8c53;color:#f5de9b;font-size:30px}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-caption{display:block;color:#b7c4d5;font:400 11px/1.5 var(--f-ui);letter-spacing:.6px}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-reward strong{display:block;color:#ffe5ac;font:600 32px/1.4 var(--f-title);font-variant-numeric:tabular-nums;text-shadow:0 2px 5px #000}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-reward strong small{font:500 12px var(--f-ui);color:#d1bd92;margin-left:3px}
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-note{display:block;color:#c6b894;font:400 10px/1.5 var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-daily-blessing #daily{display:flex;align-items:center;justify-content:center;gap:18px;width:100%;min-height:45px;border:1px solid #f1dca0;border-radius:3px;background:linear-gradient(#f0dcab,#d5b571 50%,#b58b49);color:#30220e;box-shadow:inset 0 0 0 2px #dbbd83,inset 0 1px #fff9,0 3px 9px #0007;font:700 13px/1.5 var(--f-ui);letter-spacing:1.5px}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-daily-blessing #daily:disabled{opacity:1;background:linear-gradient(#29364a,#142137);border-color:#7e7259;color:#b8ad91;box-shadow:inset 0 0 0 2px #152235;cursor:default}
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board>.muted{color:#bfcedb;padding:14px 0}
+@media(max-width:370px){body.greek.v2.mythic.olympus-suite #view .my-home .card:is(.my-command-board,.my-daily-blessing){padding:16px 10px}body.greek.v2.mythic.olympus-suite #view .my-home .blessing-reward{gap:10px}.blessing-heading>small{font-size:9px!important}}

@@ -1,0 +1,27 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>妖精四轉 · 實際特效渲染</title>
+<style>body{margin:0;background:#101719;color:#edf7ef;font-family:system-ui;padding:24px}h1{font-size:24px}p{color:#adc4b9;line-height:1.7}nav{display:flex;gap:14px;flex-wrap:wrap}label{display:grid;gap:6px}select,button{padding:10px;background:#1d3031;color:#eef7ef;border:1px solid #477570;border-radius:8px}canvas{display:block;width:100%;max-width:1100px;border:1px solid #3b5b57;border-radius:15px;background:#171824;margin:24px 0}input{width:100%;max-width:900px}#status{color:#b9e8cb}a{color:#b9e8cb}</style>
+<h1>妖精四轉 · 實際特效渲染</h1><p>使用專案的特效渲染器及透明圖集，檢查蓄力、飛行、命中與消散。</p>
+<nav><label>職業<select id="path"></select></label><label>技能<select id="skill"><option value="">職業魔法箭</option><option value="獵鷹助攻">獵鷹助攻</option><option value="獵鷹標記">獵鷹標記</option><option value="靈獸撲擊">靈獸撲擊</option><option value="野獸之王">野獸之王 · 狼與鷹</option><option value="萬獸神尊・終章">萬獸神尊・終章</option></select></label><label>方向<select id="direction"><option value="right">向右攻擊</option><option value="left">向左攻擊</option></select></label><button id="play">暫停動畫</button></nav>
+<p id="status" role="status">讀取素材中…</p><canvas id="stage" width="1100" height="520" aria-label="職業魔法或寵物移向目標的實際渲染畫布"></canvas><label>逐時刻檢查<input id="phase" type="range" min="0" max="0.99" step="0.01" value="0.4"></label><p id="phase-label"></p>
+<script src="skill-fx.js?v=20261013-mage4-names1"></script><script src="elf-adv2-skill-fx.js?v=20261013-mage4-names1"></script><script src="cinematic-fx.js?v=20261012-connection-audit3s1"></script><script src="hero-lavish-fx.js?v=20261012-connection-audit3s1"></script><script src="branch-elf4-fx.js?v=20261013-elf4-attack2"></script>
+<script>
+const $=id=>document.getElementById(id),names={A111:'永恆風冠',A112:'群星神弓',A121:'蒼穹神判',A122:'聖光獵星',A211:'太初風皇',A212:'九霄御風',A221:'天羽聖主',A222:'嵐靈神使',B111:'太古森皇',B112:'萬獸神尊',B121:'世界樹祭主',B122:'精靈祖靈',B211:'永夜月神',B212:'銀月聖獵',B221:'荊棘聖王',B222:'幽林守護'};
+for(const [value,name]of Object.entries(names)){const o=document.createElement('option');o.value=value;o.textContent=name;$('path').append(o)}
+const ctx=$('stage').getContext('2d');let profile=null,playing=true,start=performance.now(),generation=0;
+async function prepare(){
+  const hasPets=$('path').value.startsWith('B');
+  for(const option of $('skill').options)if(option.value)option.disabled=!hasPets;
+  if(!hasPets)$('skill').value='';
+  const run=++generation;profile=null;$('status').textContent='讀取素材中…';
+  const ready=await RpgElf4AttackFX.prepare('archer',$('path').value);if(run!==generation)return;
+  profile=RpgSkillFX.profile($('skill').value,'archer',$('path').value);
+  const key=profile.elf4Attack?.key;
+  const mode=key==='falcon'?'獵鷹俯衝':key==='beast'?'靈獸撲擊':key==='wolf'?'狼與獵鷹聯合衝刺':'職業魔法箭';
+  $('status').textContent=ready?'已載入 · '+names[$('path').value]+' · '+mode:'素材尚未就緒';
+  $('stage').dataset.effect=key||'fallback';start=performance.now();
+}
+function draw(now){const k=playing?((now-start)%1800)/1800:Number($('phase').value);ctx.clearRect(0,0,1100,520);ctx.fillStyle='#171824';ctx.fillRect(0,0,1100,520);const left=$('direction').value==='left',from={x:left?940:160,y:260},to={x:left?160:940,y:260};ctx.strokeStyle='#405451';ctx.lineWidth=1;ctx.beginPath();ctx.arc(to.x,to.y,35,0,Math.PI*2);ctx.stroke();ctx.fillStyle='#93aaa0';ctx.font='16px system-ui';ctx.fillText('施放',from.x-16,445);ctx.fillText('目標',to.x-16,445);if(profile)RpgSkillFX.draw(ctx,k,from,to,profile);$('phase-label').textContent=(k<.22?'蓄力':k<.65?'飛行': '命中與消散')+' · '+Math.round(k*100)+'%';if(playing)$('phase').value=k;requestAnimationFrame(draw);}
+for(const id of ['path','skill'])$(id).addEventListener('change',prepare);$('play').onclick=()=>{playing=!playing;start=performance.now()-Number($('phase').value)*1800;$('play').textContent=playing?'暫停動畫':'播放動畫'};$('phase').oninput=()=>{playing=false;$('play').textContent='播放動畫'};prepare();requestAnimationFrame(draw);
+</script></html>
+
+

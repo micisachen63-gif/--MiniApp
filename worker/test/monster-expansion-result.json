@@ -1,0 +1,23 @@
+{
+  "date": "2026-10-13",
+  "total": 385,
+  "pass": 374,
+  "fail": 11,
+  "newExpansionTests": 25,
+  "knownFailures": [
+    "create → starter kit; duplicate / bad name rejected; debug time ignored in production",
+    "idle drops land in the inventory; enhance (incl. break → item deleted + group announcement) and reroll via API",
+    "app api: player id comes ONLY from initData (body tgId ignored); create uses Telegram name",
+    "app api: every action maps to a real service route; meta has branches with skill MP costs",
+    "三四轉仍被伺服器鎖定，不會提前發放材料或改寫角色進度",
+    "法師既有識別碼與一二轉安全限制保持不變",
+    "男女法師 62 組素材與透明動畫尺寸正確",
+    "v0.5 二轉: Lv60 + 樹王之心 → node 1/2 (skill + stacked passive); book II swaps 1↔2; book I keeps the slot; third still closed",
+    "reroll: element/element value/rarity only, T scrolls, boss gear keeps the 高級 floor",
+    "later tiers: standard +0 gear still affords ≥1 weapon / ≥1.8 armor attempts per 10 min at that tier (price × T)"
+  ],
+  "unexpected": [
+    "snapshots include exact HP and MP before skill cost and after recovery"
+  ],
+  "status": "REGRESSION"
+}

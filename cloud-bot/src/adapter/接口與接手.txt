@@ -1,0 +1,28 @@
+Cloud TG BOT adapter（2026-10-14）
+
+可複製的程式檔案：index.mjs、cloud-bot.js、rpg-flow.js、rpg-party-flow.js、rpg-pk-animation-flow.js、party-caption.js、battle-key.js、persistent-map.js、operation-api.js。
+全部runtime檔案不讀本機fs/path/local.json，不依賴native renderer、node:worker_threads或全域Buffer。影像直接採Uint8Array/公開HTTPS圖網址；WASM renderer由root另行注入。
+adapt.mjs/copy-regressions.mjs/test/是開發與純mock驗證用途，無須部署。adaptation-source.json記錄實際來源SHA；正式BOT原始碼沒有修改，這份adapter包含最新祝福圖片與bag/shop深連結。
+
+匯入：import {createCloudBot,commands} from './adapter/index.mjs'
+建立：createCloudBot({config,api,store,log,rpgApi,renderBattleAnimation,renderPartyCard,fetchImpl,now,outboxClaimLimit})
+config需要active:true、chatId、botUsername、appUrl(https完整遊戲URL)、inviteLink；mainMiniApp:false保持現有開啟方式。
+api需要call(method,body,options)、sendPhoto({chatId,photoUrl?,buffer?,caption,replyMarkup,mimeType,fileName})、sendAnimation(...)、editMessageMedia(...)。未知Telegram錯誤需definite:false；確定API拒絕需definite:true/errorCode/httpStatus/description，429保留retry_after。不能啟用付費broadcast。
+renderBattleAnimation(kind,p)為async回傳Uint8Array；kind為party或pk，p是真服務端完整快照。renderPartyCard(p)為async回傳Uint8Array。兩者均必填，避免遷移時悄悄移除動畫功能。
+bossCardBytes可傳入但adapter不使用：原正式Worker已有12张telegram-media/boss-{1..12}.jpg，群Boss直接URL傳精美圖；不生成替代圖、不搬本機檔。
+store.data包含原完整rpg状态；save()必須同步提交SQL，回Promise會拒絕。store.operations={get(key),put(key,value)}也必須同步提交，root單獨operations SQL table已相容。adapter對root空rpg:{}初始化drafts/cards等必要map。
+rpgApi.call(path,body)由Service Binding RPG_API→elf-rpg-api及原SERVICE_SECRET注入；不訪問localhost、不另複製遊戲數值/業務。回傳舊格式{ok:true,...}，Error保留code/status。
+
+回傳：{handle(update),tick(options),active,commands}。
+handle/tick內部串行，避免會員／update操作上下文混用；持久inbox去重、webhook enable與poller切換由root的Coordinator負責。adapter不自行啟timer或Webhook。
+tick預設每30秒claim一次，outboxClaimLimit預設2；root仍每10秒tick。可tick({forceOutbox:true})讓「有更多待交付通知」的下一個alarm繼續小批處理，不需等30秒。
+tick回傳claimed/hasMore/pendingPhotos/pendingPartyEdits/nextWakeAt與舊delivered/photos/spawn欄位，可用於root的due alarm。dirty Boss/Share/Party與claim/photo時間戳持久，DO重新建立後會繼續編輯原message_id。
+
+冪等接口：每個update的遊戲mutating call都有deterministic requestId與prepared/done/failed/ambiguous SQL收據。既有cq requestId保留；讀取路由仍每次讀真進度。已完成相同call直接回原result；變body拒絕；未知like toggle不盲重送。只有已知原子receipt路由允許原requestId重試。
+可選rpgApi.recoverOperation({path,body,requestId,operationKey})=>{found:true,value}或{found:false,retrySafe:true}；isIdempotent(path)=>true可明確證明其它路由支持相同requestId。root將running inbox在崩潰後改uncertain而不自動重送，與此相容。
+如果root將minimumUpdateId從最後本機offset導入，應加導入後24h期限：TG一週無updates後ID可能重新隨機起點，不能永久以最大watermark忽略較小未見ID。新updates使用inbox唯一ID；不要丟pending updates。
+
+安全驗證
+bundled Node --test 本目錄/test/*.test.js；純mock、無TG呼叫、無流量／容量測試、無部署、無正式玩家操作。
+涵蓋六指令、四深連結/會員門檻、同update toggle與未知回覆、原requestId/收據恢復、跨重啟dirty card、12Boss圖與按鈕、真PK原卡動畫、party async renderer/未知送出、最新祝福图/双按钮、4天使能力图/交易/再抽、原分享/日誌/私訊outbox回歸。
+此驗證不等同WASM畫面或Cloudflare真實服務已上線；完整renderer及Webhook/SQLDO/切换測試由root負責。無任何新增付費方案、沒有恢復舊小精靈或修改玩家庫。

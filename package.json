@@ -1,0 +1,13 @@
+{
+  "name": "star-journal-rpg-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Star Journal RPG (星穹旅誌) - Unified Monorepo (Worker + Cloud Bot + Local Bot)",
+  "scripts": {
+    "test:worker": "node --test worker/test/rules.test.js worker/test/api.test.js",
+    "test:bot": "node --test cloud-bot/src/adapter/test/*.test.js",
+    "test": "npm run test:worker && npm run test:bot",
+    "deploy:worker": "cd worker && npx wrangler deploy",
+    "deploy:bot": "cd cloud-bot && npx wrangler deploy"
+  }
+}

@@ -1,0 +1,10 @@
+import {readFileSync,writeFileSync} from 'node:fs';import {dirname,join} from 'node:path';import {fileURLToPath} from 'node:url';import {createHash} from 'node:crypto';
+const root=dirname(fileURLToPath(import.meta.url));
+const runtime=['index.mjs','cloud-bot.js','rpg-flow.js','rpg-party-flow.js','rpg-pk-animation-flow.js','party-caption.js','battle-key.js','persistent-map.js','operation-api.js'];
+const hash=bytes=>createHash('sha256').update(bytes).digest('hex');
+const files=runtime.map(file=>{const bytes=readFileSync(join(root,file));const source=bytes.toString('utf8');if(/^import[^\n]*['"]node:|\bBuffer\b|worker_threads|from ['"]@resvg/m.test(source))throw Error('Non-cloud runtime dependency: '+file);return {file,sha256:hash(bytes),bytes:bytes.length};});
+const original=JSON.parse(readFileSync(join(root,'adaptation-source.json'),'utf8'));const sources=original.sources.map(row=>({...row,unchanged:hash(readFileSync(row.path))===row.sha256}));
+if(sources.some(row=>!row.unchanged))throw Error('Original source drifted; inspect latest change before deployment.');
+const log=readFileSync(join(root,'regression.log'),'utf8');if(!/tests 57/.test(log)||!/pass 57/.test(log)||!/fail 0/.test(log))throw Error('Missing current passing regression proof');
+const proof={verifiedAt:new Date().toISOString(),status:'ADAPTER_READY_LOCAL_VERIFIED_NOT_DEPLOYED',tests:{total:57,pass:57,fail:0,trafficTest:false,pureMock:true},runtimeFiles:files,originalFiles:sources,originalFilesChanged:false,secretsRead:false,telegramNetworkCalls:false,liveDeploy:false,entry:'index.mjs',export:'createCloudBot',integration:'root-controlled SQLite DO + Service Binding RPG_API + WASM renderer',outboxClaimLimit:2};
+writeFileSync(join(root,'verification.json'),JSON.stringify(proof,null,2)+'\n');console.log(JSON.stringify({status:proof.status,files:files.length,tests:proof.tests,originalFilesUnchanged:true}));

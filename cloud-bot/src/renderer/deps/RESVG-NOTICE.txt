@@ -1,0 +1,7 @@
+@resvg/resvg-wasm 2.6.2
+Copyright 2021-present yisibl and resvg-js contributors.
+MPL-2.0: https://www.mozilla.org/en-US/MPL/2.0/
+Upstream source: https://github.com/thx/resvg-js
+Pinned package source: https://registry.npmjs.org/@resvg%2fresvg-wasm/2.6.2
+The distributed JavaScript wrapper has only an additional read-only wasmMemoryBytes() export for diagnostics; rendering behavior is unchanged. The WebAssembly binary is unmodified.
+Pinned registry integrity is recorded in ../../deps/download-manifest.json.

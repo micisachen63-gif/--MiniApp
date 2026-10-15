@@ -1,0 +1,3 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {bossLootText} from '../rpg-flow.js';
+test('retired boss materials never appear as undefined and essence matches map tier',()=>{const caption=bossLootText({mapId:4});assert.doesNotMatch(caption,/undefined|需要的人/);assert.match(caption,/首領精華 ×8/);assert.match(caption,/每日前四隻/);});
+test('early advancement proof remains visible only on its actual boss',()=>{assert.match(bossLootText({mapId:3,material:'酋長之證'}),/酋長之證/);assert.doesNotMatch(bossLootText({mapId:12}),/undefined/);assert.match(bossLootText({mapId:12}),/首領精華 ×16/);});

@@ -1,0 +1,38 @@
+no_bundle=false
+account_id="48259a9f84c8307f8de8ceaf704b9f8f"
+keep_vars=true
+# 小精靈 RPG 掛機冒險 — Cloudflare Worker (P1 MVP). Separate from minigame-pet.
+name = "elf-rpg-api"
+main="src/index.js"
+compatibility_date = "2025-09-01"
+
+# Telegram Mini App (static files). Unmatched paths (/health, /rpg/*, /app/api/*) fall through to the Worker.
+[assets]
+directory = "public"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "elf-rpg"
+database_id = "bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4"   # created 2026-10-08 16:52 Taipei (APAC)
+migrations_dir = "migrations"
+
+[[durable_objects.bindings]]
+name = "AUTO_ENHANCE_RUNNER"
+class_name = "AutoEnhanceRunner"
+
+[[migrations]]
+tag = "auto-enhance-alarm-v1"
+new_sqlite_classes = ["AutoEnhanceRunner"]
+
+# Every 30 minutes: hourly boss at Taipei 00:00 and 08:00–23:00; no spawns 01:00–07:59,
+# expiry 30 minutes later, idle settlement only for each account's selected character, notification outbox.
+[triggers]
+crons = ["*/30 * * * *", "* * * * *"]
+
+[vars]
+ENVIRONMENT = "production"
+GROUP_CHAT_ID = "-1004342516953"   # 星穹旅誌｜冒險者之庭；不可恢復舊小精靈群組 ID
+
+# Secrets (never in this file):  npx wrangler secret put SERVICE_SECRET   (same value as 小精靈 rpg.local.json serviceSecret)
+# Mini App:  npx wrangler secret put BOT_TOKEN   (@StarJournalRpgBot token; verifies Telegram initData; never printed)
+

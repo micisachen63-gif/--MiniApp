@@ -1,0 +1,1 @@
+import fs from 'node:fs';import {telegramPhoto} from './telegram-media.mjs';const b=fs.readFileSync('assets/group-avatar.png');const j=telegramPhoto(b);if(!j)throw Error('conversion failed');fs.writeFileSync('assets/group-welcome.jpg',j);console.log('Welcome bytes: '+b.length+' -> '+j.length);

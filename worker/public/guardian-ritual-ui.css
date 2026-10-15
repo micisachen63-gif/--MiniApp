@@ -1,0 +1,203 @@
+/* The portrait stage owns the space; settings float above it without shrinking the angel. */
+/* The immersive root is fixed. Reserve real space for the shared notification
+ * strip so its close button cannot fall behind the ritual's back button. */
+body.guardian-mode .bw-strip:not([hidden]){position:fixed;top:8px;left:50%;transform:translateX(-50%);width:calc(100% - 24px);max-width:520px;height:80px;box-sizing:border-box;margin:0;z-index:42}
+body.guardian-mode:has(.bw-strip:not([hidden])) #guardian-root{top:94px!important;height:calc(var(--guardian-frame-height) - 84px)!important}
+body.guardian-mode:has(.bw-strip:not([hidden])) #guardian-root>.guardian-sigil{height:100%!important}
+body.greek.v2 .guardian-ritual{padding:10px 12px!important;isolation:isolate}
+body.greek.v2 .guardian-ritual-header{padding:6px 48px 9px;min-height:62px;box-sizing:border-box}
+body.greek.v2 .guardian-ritual-header>small{font-size:9px;letter-spacing:2px}
+body.greek.v2 .guardian-ritual-header>h2{font-size:23px;line-height:1.35;letter-spacing:2px;margin:4px 0!important}
+body.greek.v2 .guardian-ritual-header>p{font-size:10px;line-height:1.5;min-height:15px;margin:0!important}
+body.greek.v2 .guardian-ritual-header>button{min-height:34px;padding:5px 10px;font-size:11px}
+body.greek.v2 .guardian-ritual-content{overflow:hidden;display:flex;min-height:150px}
+body.greek.v2 .guardian-ritual-content>.guardian-worldtree-scene{flex:1;min-height:0!important;height:auto;margin:0;border-radius:7px;border-color:#d6b57766;background:#101a28;box-shadow:inset 0 0 36px #040b1888,0 0 18px #e9be6510;container-type:size}
+body.greek.v2 .guardian-ritual .guardian-angel-foreground{left:3%;top:-16%;width:94%;height:98%}
+body.greek.v2 .guardian-ritual .guardian-angel-art{width:100%;height:100%;object-fit:contain}
+body.greek.v2 .guardian-ritual .guardian-tree-art{object-fit:cover;object-position:center}
+body.greek.v2 .guardian-ritual .guardian-summon-instruction{bottom:9px;left:15px;right:15px;font-size:11px;line-height:1.5;padding:5px 8px;border:1px solid #d5b66b33;border-radius:20px;background:#071323c9;color:#f4e1bb;backdrop-filter:blur(5px)}
+body.greek.v2 .guardian-ritual .guardian-tree-speech{max-width:85%;line-height:1.6;z-index:9}
+body.greek.v2 .guardian-ritual-footer{position:relative;z-index:10;padding:7px 0 0;border-top-color:#d1b17066}
+body.greek.v2 .guardian-resource-summary{font-size:10px;text-align:center;color:#c5cfdd;line-height:1.5;margin:0 0 5px!important}
+body.greek.v2 .guardian-summon-settings{margin:0;position:relative;color:#e9d2a1;font-size:12px}
+body.greek.v2 .guardian-summon-settings>summary{list-style:none;display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;min-height:36px;padding:5px 10px;box-sizing:border-box;border:1px solid #b69b6566;border-radius:5px;background:linear-gradient(110deg,#213347,#142235);box-shadow:inset 0 1px #efddad12}
+body.greek.v2 .guardian-summon-settings>summary::-webkit-details-marker{display:none}
+body.greek.v2 .guardian-summon-settings>summary>span{font-size:12px;letter-spacing:1px;white-space:nowrap}
+body.greek.v2 .guardian-summon-settings>summary>small{font-size:10px;color:#bac8d5;flex:1;text-align:right}
+body.greek.v2 .guardian-summon-settings>summary:after{content:'⌃';font-size:16px;color:#d4b87d;line-height:1;transition:transform .2s}
+body.greek.v2 .guardian-summon-settings[open]>summary:after{transform:rotate(180deg)}
+body.greek.v2 .guardian-settings-panel{position:absolute;left:0;right:0;bottom:calc(100% + 7px);max-height:min(57dvh,455px);overflow:auto;overscroll-behavior:contain;padding:13px 12px;border:1px solid #d4b779;border-radius:8px;background:linear-gradient(145deg,#1d2d42fa,#0d1828fa);box-shadow:0 -12px 40px #030913b3,inset 0 0 0 3px #102031;box-sizing:border-box;scrollbar-width:thin;scrollbar-color:#ac9460 #142236;backdrop-filter:blur(12px)}
+body.greek.v2 .guardian-settings-panel .guardian-ritual-choices{padding:6px 7px}
+body.greek.v2 .guardian-settings-panel .guardian-ritual-choices label{min-height:42px}
+body.greek.v2 .guardian-settings-panel .guardian-batch-options label{min-height:35px;box-sizing:border-box}
+body.greek.v2 .guardian-settings-panel .guardian-single-hint{font-size:10px;line-height:1.5;margin:6px 0}
+body.greek.v2 .guardian-settings-panel .guardian-ritual-rates{margin:8px 0;border-top:1px solid #ac925a33;padding-top:4px}
+body.greek.v2 .guardian-settings-panel .guardian-ritual-rates>summary{min-height:32px;box-sizing:border-box;font-size:11px}
+body.greek.v2 .guardian-settings-panel .guardian-auto-options{max-height:none!important;overflow:visible;border-top:1px solid #ac925a44;margin-top:9px;padding-top:9px}
+body.greek.v2 .guardian-settings-panel .guardian-auto-check{font-size:12px;line-height:1.6;display:flex;align-items:center;gap:8px}
+body.greek.v2 .guardian-settings-panel .guardian-auto-options>small{font-size:10px;line-height:1.7}
+body.greek.v2 .guardian-settings-panel button{min-height:40px}
+body.greek.v2 .guardian-settings-panel select,body.greek.v2 .guardian-settings-panel input[type=number]{min-height:39px;font-size:12px}
+body.greek.v2 .guardian-auto-progress-entry{margin:5px 0 0;width:100%;min-height:32px;padding:5px 10px;display:flex;align-items:center;justify-content:center;gap:8px;background:#203349;border:1px solid #b99d5966;border-radius:5px;color:#ecdbb4;font-size:11px}
+body.greek.v2 .guardian-ritual-footer>.guardian-planning{font-size:10px;line-height:1.5;margin:5px 0!important;min-height:15px}
+body.greek.v2 .guardian-ritual-buttons>button{min-height:42px;font-size:13px;letter-spacing:1px}
+body.greek.v2 .guardian-ritual .guardian-notice{font-size:11px;line-height:1.5;padding:4px 7px;margin:0 0 5px!important;max-height:45px;overflow:auto}
+/* Keep the feather's authored proportions, and tint only a server-confirmed quality. */
+body.greek.v2 .guardian-ritual .guardian-feather-anchor{--guardian-feather-width:clamp(90px,27vw,125px);--guardian-feather-height:clamp(174px,48vw,228px)}
+body.greek.v2 .guardian-ritual .guardian-held-feather-art,body.greek.v2 .guardian-ritual .guardian-rest-feather>img{left:calc(50% - var(--guardian-feather-width)/2);top:0;width:var(--guardian-feather-width)!important;height:var(--guardian-feather-height)!important;object-fit:contain;filter:drop-shadow(0 2px 4px #02081388) drop-shadow(0 0 8px #f4ecda55);user-select:none}
+body.greek.v2 .guardian-ritual .guardian-preview-feather .guardian-card-cover{height:var(--guardian-feather-height);overflow:visible;isolation:isolate}
+body.greek.v2 .guardian-ritual .guardian-summon-gesture .guardian-card-cover>small{display:none}
+body.greek.v2 .guardian-ritual .guardian-preview-feather .guardian-card-cover:after{content:'';display:block;position:absolute;left:calc(50% - var(--guardian-feather-width)/2);top:0;width:var(--guardian-feather-width);height:var(--guardian-feather-height);border:0;background:var(--guardian-quality,#fff);mask:url('/art/guardian-sigil-20261013/summon-feather.webp') center/contain no-repeat;-webkit-mask:url('/art/guardian-sigil-20261013/summon-feather.webp') center/contain no-repeat;mix-blend-mode:multiply;opacity:0;pointer-events:none;transform:none;transition:opacity .14s}
+body.greek.v2 .guardian-ritual .guardian-preview-feather.is-edge-visible .guardian-card-cover:after{opacity:.64}
+body.greek.v2 .guardian-ritual .guardian-preview-feather.is-edge-visible .guardian-held-feather-art{filter:drop-shadow(0 2px 4px #02081388) drop-shadow(0 0 8px var(--guardian-quality)) drop-shadow(0 0 15px color-mix(in srgb,var(--guardian-quality) 35%,transparent))}
+body.greek.v2 .guardian-ritual .guardian-preview-feather.is-pulling .guardian-held-feather-art{filter:brightness(calc(1 + var(--guardian-reveal-progress,0)*.14)) drop-shadow(0 0 8px var(--guardian-quality,#dce7f5))}
+body.greek.v2 .guardian-ritual .guardian-pull-flow{background:linear-gradient(180deg,transparent,var(--guardian-quality,#edf4ff) 44%,transparent 78%);opacity:calc(var(--guardian-reveal-progress,0)*.4);filter:blur(3px)}
+body.greek.v2 .guardian-ritual .guardian-preview-result.is-revealed .guardian-item-feather:after{content:'';display:block;position:absolute;inset:0;width:100%;height:100%;background:var(--guardian-quality);mask:url('/art/guardian-sigil-20261013/summon-feather.webp') center/contain no-repeat;-webkit-mask:url('/art/guardian-sigil-20261013/summon-feather.webp') center/contain no-repeat;transform:none;mix-blend-mode:multiply;opacity:.55;pointer-events:none;z-index:1}
+body.greek.v2 .guardian-ritual .guardian-result-portrait{z-index:2}
+@media(max-width:360px){body.greek.v2 .guardian-ritual{padding:8px 9px!important}body.greek.v2 .guardian-ritual-header{padding:4px 42px 7px;min-height:58px}body.greek.v2 .guardian-ritual-header>h2{font-size:20px;letter-spacing:1px}body.greek.v2 .guardian-ritual .guardian-feather-anchor{--guardian-feather-width:90px;--guardian-feather-height:174px}body.greek.v2 .guardian-settings-panel{padding:10px 9px}}
+@media(max-height:650px){body.greek.v2 .guardian-ritual-header>p{display:none}body.greek.v2 .guardian-ritual-header{min-height:46px;padding-top:0;padding-bottom:4px}body.greek.v2 .guardian-ritual-header>h2{font-size:20px;margin:2px 0!important}body.greek.v2 .guardian-ritual-header>small{font-size:8px}body.greek.v2 .guardian-resource-summary{margin-bottom:3px!important}body.greek.v2 .guardian-ritual .guardian-feather-anchor{--guardian-feather-width:80px;--guardian-feather-height:150px}}
+@media(prefers-reduced-motion:reduce){body.greek.v2 .guardian-ritual *,body.greek.v2 .guardian-ritual *:before,body.greek.v2 .guardian-ritual *:after{animation:none!important;transition:none!important}}
+/* Authored clips remain separate from the interactive hand and feather. */
+.guardian-worldtree-scene .guardian-tree-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none;opacity:0;transition:opacity .3s}
+.guardian-worldtree-scene.is-tree-video-ready .guardian-tree-video{opacity:1}
+.guardian-worldtree-scene .guardian-angel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;opacity:0;transition:opacity .18s}
+.guardian-worldtree-scene.is-angel-video-ready:not(.is-angel-interacting) .guardian-angel-video{opacity:1}
+.guardian-worldtree-scene.is-angel-video-ready:not(.is-angel-interacting) .guardian-angel-art{opacity:0}
+.guardian-worldtree-scene.is-angel-interacting .guardian-angel-art{opacity:1}
+@media(prefers-reduced-motion:reduce){.guardian-worldtree-scene .guardian-tree-video,.guardian-worldtree-scene .guardian-angel-video{display:none!important}.guardian-worldtree-scene.is-angel-video-ready .guardian-angel-art{opacity:1!important}}
+.guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-angel-upperarm{transform-origin:304px 507px;transform:rotate(calc(var(--guardian-limb-progress,0)*-3deg))}
+.guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-angel-forearm{transform-origin:265px 625px;transform:rotate(calc(var(--guardian-limb-progress,0)*14deg))}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-feather-anchor{--guardian-feather-width:124px;--guardian-feather-height:188px;--guardian-feather-travel:24px}
+@supports(height:1cqh){body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-feather-anchor{--guardian-feather-width:min(124px,24cqh);--guardian-feather-height:min(188px,36cqh);--guardian-feather-travel:min(24px,4cqh)}}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-preview-feather{height:var(--guardian-feather-height)!important}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-angel-pose="portrait"] .guardian-preview-feather .guardian-card-cover{transform:translate(var(--guardian-wrist-x,0px),calc(var(--guardian-wrist-y,0px) + var(--guardian-feather-detach,0)*var(--guardian-feather-travel,24px))) rotate(calc(var(--guardian-feather-detach,0)*3deg))}
+/* The invitation floats at the chest. Only the feather moves when pulled; the
+ * angel's arms remain in their authored pose. The matrix sets the final centre. */
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-feather-anchor{--guardian-feather-width:148px;--guardian-feather-height:224px;left:50%;top:39%;width:var(--guardian-feather-width);height:var(--guardian-feather-height);transform:translate(-50%,-50%);z-index:7;pointer-events:none}
+@supports(height:1cqh){body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-feather-anchor{--guardian-feather-width:clamp(120px,30cqh,184px);--guardian-feather-height:min(264px,44cqh,var(--guardian-feather-fit-height,264px))}}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-rest-feather{height:var(--guardian-feather-height)}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-preview-feather{display:block;width:100%!important;height:100%!important;margin:0;padding:0;border:0;border-radius:0;overflow:visible;background:transparent;box-shadow:none;pointer-events:auto;touch-action:none!important;transform:translateY(calc(var(--guardian-chest-progress,0)*var(--guardian-chest-pull-y,24cqh)));transition:none;outline-offset:6px}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-preview-feather:before{display:none}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-preview-feather .guardian-card-cover{inset:0;width:100%;height:100%;border:0;border-radius:0;background:none;transform:none;pointer-events:none}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-preview-feather .guardian-card-cover:before{display:none}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-held-feather-art,
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-rest-feather>img{opacity:calc(.86 + var(--guardian-chest-progress,0)*.14);filter:grayscale(1) sepia(.7) saturate(1.4) brightness(calc(1.05 + var(--guardian-chest-progress,0)*.16)) drop-shadow(-1px 0 1px #071321ee) drop-shadow(1px 2px 2px #071321ee) drop-shadow(0 0 5px #edc77788) drop-shadow(0 0 calc(var(--guardian-chest-progress,0)*10px) color-mix(in srgb,var(--guardian-quality,#f4ecda) 45%,transparent));transition:opacity .08s linear}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .guardian-held-feather-art{animation:guardian-chest-feather-hover 4.8s ease-in-out infinite}
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"] .is-pulling .guardian-held-feather-art,
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene[data-guardian-feather-anchor="chest"].is-guardian-scattering .guardian-held-feather-art{animation:none!important}
+@keyframes guardian-chest-feather-hover{50%{transform:translateY(-2px)}}
+
+/* Direct per-angel actions, with the rare administration controls tucked away. */
+body.greek.v2 .guardian-assist-toggle{min-height:42px;min-width:74px;border:1px solid #d3b574;border-radius:5px;background:linear-gradient(120deg,#e8d29d,#b69551);color:#1c293b;font:700 13px/1.5 var(--f-ui,sans-serif);letter-spacing:2px;box-shadow:inset 0 1px #fff4ce66}
+body.greek.v2 .guardian-assist-toggle:is(.is-summoned,.is-active){background:linear-gradient(130deg,#33445b,#162437);color:#e9d3a0}
+body.greek.v2 .guardian-assist-toggle:disabled{opacity:.4;cursor:default}
+body.greek.v2 .guardian-item-management{grid-column:1/-1;border-top:1px solid #b79b5e33;color:#aeabb0;margin-top:7px}
+body.greek.v2 .guardian-item-management>summary,body.greek.v2 .guardian-supply-management>summary{display:flex;justify-content:space-between;padding:9px 3px;font-size:11px;cursor:pointer;list-style:none;color:#c2af84;min-height:38px;box-sizing:border-box}
+body.greek.v2 .guardian-item-management>summary::-webkit-details-marker,body.greek.v2 .guardian-supply-management>summary::-webkit-details-marker{display:none}
+body.greek.v2 .guardian-item-management .guardian-item-actions{padding:4px 0;display:flex;flex-wrap:wrap;gap:5px}
+body.greek.v2 .guardian-assist-continuation{display:flex;align-items:center;gap:8px;min-height:44px;padding:9px 12px;border:1px solid #b49c6244;border-radius:4px;color:#d9c79c;background:#142338;box-sizing:border-box;font-size:12px}
+body.greek.v2 .guardian-assist-continuation input{width:18px;height:18px;accent-color:#d8bd77;flex:none}
+body.greek.v2 .guardian-assist-status{color:#92beae;line-height:1.7}
+body.greek.v2 .guardian-fusion-outcome{display:block;font:normal 11px/1.6 var(--f-ui,sans-serif);color:#e4d2a6;max-width:230px;padding:4px 7px}
+
+/* Revealed guardians are whole transparent figures in a formation, without a
+ * seal, card or feather behind them. Percent cells keep all wings inside the
+ * stage and remain the same when restoring an existing operation receipt. */
+body.greek.v2 .guardian-ritual .guardian-worldtree-scene.is-batch-ready .guardian-angel-foreground{visibility:hidden;opacity:0!important;pointer-events:none}
+body.greek.v2 .guardian-ritual .guardian-preview-results{inset:0;overflow:visible}
+body.greek.v2 .guardian-ritual .guardian-preview-result{
+ --guardian-result-glow:4px;--guardian-result-light:24%;--guardian-result-light-peak:34%;
+ width:var(--result-width)!important;height:var(--result-height)!important;
+ left:var(--feather-x);top:var(--feather-y);margin:0!important;padding:0!important;
+ display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
+ min-width:0!important;min-height:0!important;max-width:none!important;max-height:none!important;
+ transform:translate(-50%,-50%);border:0!important;border-radius:0!important;
+ background:none!important;box-shadow:none!important;filter:none;overflow:visible!important;
+ color:var(--guardian-quality,#d9e3ec);transition:none;
+}
+body.greek.v2 .guardian-ritual .guardian-preview-result:before,
+body.greek.v2 .guardian-ritual .guardian-preview-result:after{content:none!important}
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-item-feather{
+ position:relative;flex:1;min-height:0;width:100%!important;height:auto!important;margin:0;
+ border:0;border-radius:0;background:none!important;clip-path:none!important;
+ filter:none;animation:guardian-result-hover 4.8s ease-in-out infinite;
+ animation-delay:var(--feather-delay);transform:none;overflow:visible;pointer-events:none;
+}
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-item-feather:before,
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-item-feather:after{content:none!important;display:none!important}
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-result-portrait{
+ position:absolute;inset:0!important;left:0!important;bottom:auto!important;
+ width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;
+ object-fit:contain;object-position:center bottom;background:none!important;border:0!important;
+ border-radius:0!important;box-shadow:none!important;
+ filter:drop-shadow(0 2px 5px #030b1466) drop-shadow(0 0 var(--guardian-result-glow) color-mix(in srgb,var(--guardian-quality) var(--guardian-result-light),transparent));
+ animation:guardian-result-light 4.8s ease-in-out infinite;animation-delay:var(--feather-delay);
+}
+body.greek.v2 .guardian-ritual .guardian-preview-result.guardian-result-radiant{--guardian-result-glow:9px;--guardian-result-light:54%;--guardian-result-light-peak:64%}
+body.greek.v2 .guardian-ritual .guardian-preview-result.guardian-result-radiant .guardian-result-portrait{
+ filter:drop-shadow(0 2px 5px #030b1466) drop-shadow(0 0 var(--guardian-result-glow) color-mix(in srgb,var(--guardian-quality) var(--guardian-result-light),transparent));
+}
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-result-feather{
+ position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:contain;
+ object-position:center bottom;filter:drop-shadow(0 2px 4px #030b1466) drop-shadow(0 0 var(--guardian-result-glow) color-mix(in srgb,var(--guardian-quality) var(--guardian-result-light),transparent));transform:rotate(var(--feather-angle));animation:guardian-result-light 4.8s ease-in-out infinite;animation-delay:var(--feather-delay);
+}
+body.greek.v2 .guardian-ritual .guardian-results-1 .guardian-result-feather{inset:auto 0 0;height:88%;max-height:none}
+body.greek.v2 .guardian-ritual .guardian-results-10 .guardian-preview-result{min-width:44px!important}
+body.greek.v2 .guardian-ritual .guardian-preview-result.is-selected:not(.is-revealed) .guardian-result-feather{filter:drop-shadow(0 0 7px color-mix(in srgb,var(--guardian-quality) 55%,transparent))}
+body.greek.v2 .guardian-ritual .guardian-preview-result .guardian-result-label{
+ flex:none;width:100%;height:27px;margin:3px 0 0;padding:0;
+ color:#e8dcc1;text-align:center;font-size:9px;line-height:1.35;
+ text-shadow:0 1px 4px #030b14,0 0 8px #030b14;pointer-events:none;
+}
+body.greek.v2 .guardian-ritual .guardian-result-label>b{display:block;color:var(--guardian-quality);font-size:12px;font-weight:500;letter-spacing:1px}
+body.greek.v2 .guardian-ritual .guardian-result-label>span{display:block;color:var(--guardian-quality);font-size:9px;letter-spacing:.5px}
+body.greek.v2 .guardian-ritual .guardian-results-1 .guardian-result-label{height:35px;margin-top:7px}
+body.greek.v2 .guardian-ritual .guardian-results-1 .guardian-result-label>b{font-size:18px;letter-spacing:3px}
+body.greek.v2 .guardian-ritual .guardian-results-1 .guardian-result-label>span{font-size:11px;line-height:1.5}
+body.greek.v2 .guardian-ritual .guardian-results-10 .guardian-result-label>b{font-size:10px;letter-spacing:.5px}
+body.greek.v2 .guardian-ritual .guardian-results-10 .guardian-result-label>span{font-size:8px}
+body.greek.v2 .guardian-ritual .guardian-preview-result.is-selected{z-index:var(--feather-z);transform:translate(-50%,-50%);filter:none}
+body.greek.v2 .guardian-ritual .guardian-preview-result.is-selected .guardian-result-label{color:#fff0c9}
+body.greek.v2 .guardian-ritual .guardian-preview-result:focus-visible{outline:1px dashed #e4ca8b88;outline-offset:2px;border-radius:4px!important}
+body.greek.v2 .guardian-ritual .guardian-result-art-unavailable{display:flex;height:100%;align-items:center;justify-content:center;font-size:36px;color:var(--guardian-quality)}
+body.greek.v2 .guardian-ritual .guardian-result-sparks{position:absolute;inset:0;pointer-events:none;color:var(--guardian-quality)}
+body.greek.v2 .guardian-ritual .guardian-result-sparks>i{
+ position:absolute;left:12%;top:35%;font-style:normal;font-size:7px;opacity:.12;
+ text-shadow:0 0 4px currentColor;animation:guardian-result-starlight 4.8s ease-in-out infinite;
+ animation-delay:var(--feather-delay);
+}
+body.greek.v2 .guardian-ritual .guardian-result-sparks>i+ i{left:auto;right:13%;top:65%;font-size:5px;animation-delay:calc(var(--feather-delay) - 2.4s)}
+body.greek.v2 .guardian-ritual .guardian-result-radiant .guardian-result-sparks>i{font-size:9px;opacity:.38;text-shadow:0 0 7px currentColor}
+body.greek.v2 .guardian-ritual .guardian-result-radiant .guardian-result-sparks>i+ i{font-size:7px}
+@keyframes guardian-result-hover{50%{transform:translateY(-2.5px)}}
+@keyframes guardian-result-light{50%{filter:drop-shadow(0 2px 5px #030b1466) drop-shadow(0 0 calc(var(--guardian-result-glow) + 2px) color-mix(in srgb,var(--guardian-quality) var(--guardian-result-light-peak),transparent))}}
+@keyframes guardian-result-starlight{50%{opacity:.05;transform:translateY(-1px)}}
+@media(max-width:360px){body.greek.v2 .guardian-ritual .guardian-result-label>b{font-size:11px}body.greek.v2 .guardian-ritual .guardian-results-10 .guardian-result-label>b{font-size:9px}body.greek.v2 .guardian-ritual .guardian-results-1 .guardian-result-label>b{font-size:17px}}
+@media(prefers-reduced-motion:reduce){body.greek.v2 .guardian-ritual .guardian-preview-results *{animation:none!important;transition:none!important}}
+
+/* A single short, receipt-owned transition. The burst begins at the feather's
+ * measured point in this scene, then releases the selection without polling. */
+body.greek.v2 .guardian-ritual .is-guardian-scattering .guardian-preview-results{opacity:0;visibility:hidden;pointer-events:none}
+body.greek.v2 .guardian-ritual .is-guardian-scattering .guardian-angel-foreground{pointer-events:none;animation:guardian-scatter-master-fade var(--guardian-scatter-duration,1600ms) ease-out both}
+body.greek.v2 .guardian-ritual .is-guardian-scattering .guardian-feather-anchor{pointer-events:none;animation:guardian-scatter-held-fade var(--guardian-scatter-duration,1600ms) ease-out both}
+body.greek.v2 .guardian-ritual .guardian-scatter{position:absolute;inset:0;z-index:12;overflow:hidden;pointer-events:none;contain:paint}
+body.greek.v2 .guardian-ritual .guardian-scatter-fallback{position:absolute;inset:0;transition:opacity .12s}
+body.greek.v2 .guardian-ritual .guardian-scatter-burst{position:absolute;left:var(--guardian-scatter-x);top:var(--guardian-scatter-y);width:18px;height:18px;border:0;border-radius:50%;background:radial-gradient(circle,#fffdf3 0%,#fff0bbdd 15%,#edc57599 34%,#ddaa4233 56%,transparent 74%);filter:blur(2px);transform:translate(-50%,-50%);animation:guardian-scatter-light var(--guardian-scatter-duration) cubic-bezier(.16,.65,.3,1) both}
+body.greek.v2 .guardian-ritual .guardian-scatter-feather{position:absolute;left:var(--guardian-scatter-x);top:var(--guardian-scatter-y);width:clamp(20px,8cqw,37px);height:clamp(30px,12cqw,56px);opacity:0;transform:translate(-50%,-50%);animation:guardian-scatter-flight var(--guardian-scatter-duration) cubic-bezier(.14,.64,.22,1) both;animation-delay:var(--scatter-delay)}
+body.greek.v2 .guardian-ritual .guardian-scatter-feather>img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 0 6px #fff1cbb3);border:0;background:none}
+body.greek.v2 .guardian-ritual .guardian-scatter-video{position:absolute;left:var(--guardian-scatter-x);top:var(--guardian-scatter-y);width:180%;height:180%;max-width:none;max-height:none;transform:translate(-50%,-50%);object-fit:contain;opacity:0;pointer-events:none}
+body.greek.v2 .guardian-ritual .guardian-scatter.is-video-ready .guardian-scatter-video{opacity:1}
+body.greek.v2 .guardian-ritual .guardian-scatter.is-video-ready .guardian-scatter-fallback{opacity:0}
+@keyframes guardian-scatter-light{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}8%{opacity:.33}60%{opacity:.18;transform:translate(-50%,-50%) scale(48)}100%{opacity:0;transform:translate(-50%,-50%) scale(80)}}
+@keyframes guardian-scatter-flight{0%{opacity:0;transform:translate(-50%,-50%) scale(.35) rotate(0)}12%{opacity:.9}72%{opacity:.7}100%{opacity:0;transform:translate(calc(-50% + var(--scatter-dx)),calc(-50% + var(--scatter-dy))) scale(.95) rotate(var(--scatter-rotation))}}
+@keyframes guardian-scatter-master-fade{0%,14%{opacity:1}65%,100%{opacity:0}}
+@keyframes guardian-scatter-held-fade{0%,14%{opacity:1}48%,100%{opacity:0}}
+@media(prefers-reduced-motion:reduce){body.greek.v2 .guardian-ritual .guardian-scatter{display:none!important}}
+
+/* Receipt-backed batch results stay below the large reveal stage. */
+body.greek.v2 .guardian-batch-results{margin-top:8px;border-top:1px solid #b69e6144;padding-top:6px;color:#dbc795;font-size:11px}
+body.greek.v2 .guardian-batch-results>summary{cursor:pointer;min-height:32px;line-height:32px}
+body.greek.v2 .guardian-batch-results-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;max-height:180px;overflow:auto}
+body.greek.v2 .guardian-batch-results-grid article{display:grid;grid-template-columns:40px 1fr;gap:3px 7px;align-items:center;background:#162437;border-radius:4px;padding:5px}
+body.greek.v2 .guardian-batch-results-grid img{width:40px;height:64px;object-fit:contain;grid-row:span 2}
+body.greek.v2 .guardian-batch-results-grid small{color:#aaafb9;line-height:1.5}

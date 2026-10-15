@@ -1,0 +1,37 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>首領結束刷新驗收</title><style>body{font:18px system-ui;background:#101827;color:#eee;margin:25px}.card,.bossbox{padding:18px;border:1px solid #8b794d;border-radius:12px;margin:12px 0}canvas{display:none}.muted{color:#b8c5d5}.tag{font-size:24px;color:#ffdc91}button{padding:10px}#view button{pointer-events:none}</style><h1>星穹旅誌｜首領結束刷新驗收</h1><p>模擬回應測試，不操作玩家帳號。</p><button id="simulate">模擬首領死亡回應（沒有 now）</button><div id="view"></div><script>const S={boss:{id:'test',name:'海崖利維坦',hp:1,maxHp:100,endsAt:Date.now()+100000,status:'active',top:[],me:{hasCharacter:true},participants:1},skew:0,me:{character:{tgId:'1'},nextBoss:null},meta:{bossSlots:[16,17,18]}};const fmt=String,esc=x=>String(x??''),sNow=()=>Date.now(),mmss=()=> '--',bar=(kind,a,b,label)=>'<p>'+label+'</p>';  function absorb(j) {
+    if (j && j.character) {
+      if (BATTLE) BATTLE.sync(j, j.report && j.report.ticks ? j.report : null);
+      if (j.report && j.report.ticks) { S.lastReport = j.report; { const r = j.report; const P = S.pending || (S.pending = { ticks: 0, kills: 0, gold_gained: 0, elites: 0, drops: {} }); P.ticks += r.ticks || 0; P.kills += r.kills || 0; P.gold_gained += r.gold_gained || 0; P.elites += r.elites || 0; for (const [k, v] of Object.entries(r.drops || {})) P.drops[k] = (P.drops[k] || 0) + v; } S.session.kills += j.report.kills || 0; S.session.exp += (j.report.exp_gained || 0) - (j.report.exp_lost || 0); S.session.gold += j.report.gold_gained || 0; S.session.ticks += j.report.ticks || 0; }
+      const prevState = S.me && S.me.character.state; S.me = j;
+      if (prevState && prevState !== j.character.state) resetFight();
+    }
+    if (j && j.shop) S.shop = j.shop;
+    if (j && 'boss' in j) {S.bossRevision=(S.bossRevision||0)+1; if(S.boss&&!j.boss)S.lastBoss=S.boss;S.boss = j.boss;if(j.now)S.skew = j.now - Date.now(); }
+    return j;
+  }
+  function bossView() {
+    const b = S.boss;
+    if (b === null || b === undefined) {
+      const nb = S.me.nextBoss; const slots = S.meta.bossSlots;
+      return `<div class="bossbox"><canvas id="bcv"></canvas><div class="tag">${S.lastBoss?(S.lastBoss.status==='killed'||S.lastBoss.hp<=0?'🎉 首領已擊敗':'本場首領已結束'):'👹 首領尚未出現'}</div></div>${S.lastBoss?`<div class="card">${esc(S.lastBoss.name)} · 本場已結束。角色資料會同步伺服器的結算結果。</div>`:''}
+        <div class="card"><h3>⏰ 下一隻首領 <small>${nb ? `${nb.day.slice(5)} ${String(nb.hour).padStart(2, '0')}:00` : ''}</small></h3>
+        <div style="font-size:28px;font-weight:900;text-align:center" id="nextCd">${nb ? mmss(nb.start - sNow()) : '--'}</div>
+        <div class="seg mt" style="justify-content:center">${slots.map((h) => `<button>${String(h).padStart(2, '0')}:00</button>`).join('')}</div>
+        <div class="muted mt">每個時段隨機出現一隻地圖首領（不會連續同一隻）；有人卡在轉職門檻缺材料的地圖，每天保證至少出現一次。出現時群組會發首領卡。</div></div>`;
+    }
+    const me = b.me || {}; const now = sNow(); const left = b.endsAt - now;
+    const myRank = (b.top || []).findIndex((t) => String(t.tgId) === String(S.me.character.tgId));
+    let btn;
+    if (b.status !== 'active' || left <= 0) btn = '<button class="btn" disabled>首領已結束</button>';
+    else if (!me.hasCharacter) btn = '<button class="btn" disabled>需要角色</button>';
+    else if (me.downUntil && me.downUntil > now) btn = `<button class="btn red" disabled id="atk">🪦 倒地中 <span data-cd="${me.downUntil}">${mmss(me.downUntil - now)}</span></button>`;
+    else if (me.attackedThisWindow && me.nextAttackAt > now) btn = `<button class="btn" disabled id="atk">⏳ 冷卻中 <span data-cd="${me.nextAttackAt}">${mmss(me.nextAttackAt - now)}</span></button>`;
+    else btn = '<button class="btn red" id="atk" style="font-size:18px;padding:14px">⚔️ 攻擊！</button>';
+    return `<div class="bossbox"><canvas id="bcv"></canvas><div class="tag">${esc(b.elementEmoji || '')} ${esc(b.name)}</div><div class="timer">⏱️ <span data-cd="${b.endsAt}">${mmss(left)}</span></div></div>
+      <div class="card">${bar('boss', b.hp, b.maxHp, `HP ${fmt(b.hp)} / ${fmt(b.maxHp)}`)}
+        <div class="muted mt">${esc(b.mapName)} · 屬性 ${esc(b.elementName)} · 參戰 ${b.participants} 人 · 每 ${b.attackWindowMinutes} 分鐘可攻擊 1 次 · 掉落「${esc(b.material)}」</div>
+        <div class="mt">${btn}</div>
+        <div class="muted mt">我的輸出：${fmt(me.damage)}（${me.hits || 0} 次）${myRank >= 0 ? ` · 第 ${myRank + 1} 名` : ''}</div></div>
+      <div class="card"><h3>🏆 傷害排行</h3><div class="rank">${(b.top || []).map((t, i) => `<div class="${String(t.tgId) === String(S.me.character.tgId) ? 'me' : ''}"><span>${['🥇', '🥈', '🥉'][i] || i + 1}</span><span>${esc(t.name)}</span><span>${fmt(t.damage)}</span></div>`).join('') || '<div class="muted">還沒有人出手，搶頭香！</div>'}</div></div>`;
+  }
+document.querySelector('#view').innerHTML=bossView();document.querySelector('#simulate').onclick=()=>{S.boss.hp=0;absorb({ok:true,boss:null});document.querySelector('#view').innerHTML=bossView();};</script></html>

@@ -1,0 +1,80 @@
+/* Shared Olympus surfaces. Keep character art, rarity colors, gauges and battle geometry intact. */
+body.greek.v2.mythic.olympus-suite{--my-ink:#eee3ce;--my-muted:#b8c3d2;--my-stone:#152238;--my-paper:#101c2f;--text:#eee3ce;--muted:#b8c3d2;color-scheme:dark}
+body.greek.v2.mythic.olympus-suite #view{--panel-art:url('art/ui/olympus-sanctuary-v1.png')}
+body.greek.v2.mythic.olympus-suite #view[data-screen=bag]{--panel-art:url('art/ui/hero-hall-v1.webp')}
+body.greek.v2.mythic.olympus-suite #view[data-screen=shop],body.greek.v2.mythic.olympus-suite #view[data-screen=trade]{--panel-art:url('art/ui/hermes-market-v1.webp')}
+body.greek.v2.mythic.olympus-suite #view[data-screen=boss]{--panel-art:url('art/ui/titan-gate-v1.webp')}
+body.greek.v2.mythic.olympus-suite #view[data-screen=class]{--panel-art:url('art/ui/fate-oracle-v1.webp')}
+body.greek.v2.mythic.olympus-suite #app #view .card:not(.lc-profile):not(.lc-equip):not(.my-command-board):not(.my-daily-blessing),body.greek.v2.mythic.olympus-suite #app #view .branch,body.greek.v2.mythic.olympus-suite #app #view .my-guide{background:linear-gradient(115deg,#152238f5 10%,#101b2ee8 65%,#0d182bcb),var(--panel-art) right center/cover;border:1px solid #a58b5c88;border-radius:5px;color:#eee3ce;box-shadow:inset 0 0 0 3px #0b1526,inset 0 0 0 4px #d1af7022,0 5px 18px #0006;font:13px/1.65 var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #app #view .card:not(.my-command-board):not(.my-daily-blessing) h3{font:700 17px/1.5 var(--f-title);color:#f2d59d;letter-spacing:.7px;border-bottom-color:#c1a57140}
+body.greek.v2.mythic.olympus-suite #app #view .card h3 small{font:11px/1.6 var(--f-ui);color:#b8c3d2}
+body.greek.v2.mythic.olympus-suite #app #view :is(.muted,.lv,.item .d,.pot .h,.stats span,.inv small,.branch .sk div,.elf-node small,.showcase-sub,.log){color:#b9c4d3;font-family:var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #app #view :is(.cls,.item .t,.pot .n,.stats b,.branch .sk b,.my-guide summary){color:#ecd4a6}
+body.greek.v2.mythic.olympus-suite #app #view :is(.stats>div,.inv>div,.pot,.branch .sk div){background:linear-gradient(#26374d,#132238);border:1px solid #a78b5855;border-radius:3px;color:#e1d8c5;box-shadow:inset 0 1px #ffffff0c}
+body.greek.v2.mythic.olympus-suite #app #view :is(.stats b,.pot .n){font:700 21px/1.4 var(--f-num,var(--f-ui));color:#f1d49a}
+body.greek.v2.mythic.olympus-suite #app #view .item:not(.my-market-grid>.item){background:linear-gradient(115deg,#213149f2,#111e32ed);border-color:#9d855955;border-radius:4px;color:#e9ddc6}
+body.greek.v2.mythic.olympus-suite #app #view .ic{background:radial-gradient(ellipse,#46526a,#142239 78%);border-color:#ac906566;color:#d9c49a}
+body.greek.v2.mythic.olympus-suite #app #view .item .t{font-size:13px;line-height:1.55;overflow-wrap:anywhere}
+body.greek.v2.mythic.olympus-suite #app #view .item .d{font-size:11px;line-height:1.65}
+body.greek.v2.mythic.olympus-suite #app #view .my-market-grid .ic{background:radial-gradient(ellipse,#67624b44,transparent 72%);border:0}
+body.greek.v2.mythic.olympus-suite #app #view .price{color:#ebc983}
+body.greek.v2.mythic.olympus-suite #app #view .branch.pick{border-color:#d5b576;box-shadow:inset 3px 0 #d5b576,inset 0 0 0 3px #102037,0 5px 18px #0006}
+body.greek.v2.mythic.olympus-suite #app #view .branch .sk div{font-size:11px}
+body.greek.v2.mythic.olympus-suite #app #view .branch .sk b{font-size:15px}
+body.greek.v2.mythic.olympus-suite #app #view .my-guide summary{font-size:13px}
+body.greek.v2.mythic.olympus-suite #app #view :is(.my-eyebrow,.elf-ancestry-title small){color:#c9ad7a;font-size:10px;line-height:1.5}
+body.greek.v2.mythic.olympus-suite #app #view #nextCd{color:#f4d797;text-shadow:0 2px 4px #000;letter-spacing:1px}
+body.greek.v2.mythic.olympus-suite #app #view .rank div{background:#1e2e44;border-color:#a68b5544;color:#dce2e9}
+body.greek.v2.mythic.olympus-suite #app #view .rank .me{background:#3a352d;border-color:#c6a360;color:#f3d59d}
+body.greek.v2.mythic.olympus-suite #app #view .banner,body.greek.v2.mythic.olympus-suite .warnbox{background:linear-gradient(#482c31,#281d2b);border-color:#b97871;color:#f2c8b6}
+body.greek.v2.mythic.olympus-suite #app #view .banner.gate{background:linear-gradient(#403726,#202739);border-color:#c6a168;color:#f0d8a7}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn{background:linear-gradient(#3b4960,#1b2a40);border:1px solid #b99b64;color:#eed9b3;border-radius:3px;box-shadow:inset 0 1px #ffffff20,inset 0 0 0 2px #162237,0 2px 4px #0005;font:600 13px/1.5 var(--f-ui);text-shadow:none;min-height:42px}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn.gold{background:linear-gradient(#f1deaf,#d1ad6a 55%,#b18543);border-color:#eed7a3;color:#31220f;box-shadow:inset 0 0 0 2px #d5b67a,0 2px 5px #0006}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn.ghost{background:linear-gradient(#26374d,#142238);color:#ddc496;border-color:#b0925c;box-shadow:inset 0 1px #ffffff12}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn.red{background:linear-gradient(#774549,#432733);border-color:#b57972;color:#ffe3d1}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn.green{background:linear-gradient(#394b51,#1c2d3e);border-color:#b2a078;color:#ede2c9}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) .btn:disabled{background:#172438;color:#a1a9b8;border-color:#647087;box-shadow:inset 0 0 0 2px #101c2d;opacity:.7;filter:none}
+body.greek.v2.mythic.olympus-suite #app #view :is(.tabs,.seg,.bag-slot-tabs,.bag-equip-tabs) button{background:linear-gradient(#2b3a50,#142236);color:#ddcaa6;border-color:#9d8455;box-shadow:inset 0 1px #ffffff15;border-radius:3px;font:600 12px/1.5 var(--f-ui);min-height:40px}
+body.greek.v2.mythic.olympus-suite #app #view :is(.tabs,.seg,.bag-slot-tabs,.bag-equip-tabs) button.on{background:linear-gradient(#e8d199,#b68e4c);border-color:#edcf90;color:#31210f;box-shadow:inset 0 0 0 2px #d4b47b}
+body.greek.v2.mythic.olympus-suite :is(#view,#sheet) :is(input,select,textarea){background:#111f34;color:#ece1cd;border:1px solid #a58a5a88;border-radius:3px;font:13px/1.5 var(--f-ui)}
+body.greek.v2.mythic.olympus-suite #sheet .sheet-bg{background:#050b17c9;backdrop-filter:blur(6px)}
+body.greek.v2.mythic.olympus-suite #sheet .sheet-card{background:linear-gradient(135deg,#17263cf7,#0d182bef),url('art/ui/hero-hall-v1.webp') center/cover;color:#ede0c5;border-color:#b3935e;box-shadow:0 -10px 40px #0009}
+body.greek.v2.mythic.olympus-suite #sheet :is(h2,h3,.my-forge h3,.my-item-commerce summary){color:#f0d39a;font-family:var(--f-title)}
+body.greek.v2.mythic.olympus-suite #sheet :is(.muted,.kv span,.showcase-sub,.item .d){color:#b6c4d7}
+body.greek.v2.mythic.olympus-suite #sheet :is(.my-artifact-stats,.item,.showcase-tags span){background:#17283e;border-color:#a58a5c66;color:#eadcc2}
+body.greek.v2.mythic.olympus-suite #sheet .item .t{color:#efd49d}
+body.greek.v2.mythic.olympus-suite #sheet .showcase-tags{color:#ddc6a0}
+body.greek.v2.mythic.olympus-suite #sheet .x{color:#e6cd9d}
+body.greek.v2.mythic.olympus-suite #view .expedition-entry,body.greek.v2.mythic.olympus-suite #view .skill-widget{background:linear-gradient(110deg,#18263ced,#0d192dda),var(--entry-art,var(--panel-art)) right center/cover;border-radius:5px;border-color:#a58b5c88;box-shadow:inset 0 0 0 3px #101a2b}
+body.greek.v2.mythic.olympus-suite #view .expedition-entry h3,body.greek.v2.mythic.olympus-suite #view .skill-widget h3{font:700 17px/1.5 var(--f-title);color:#f2d59d;letter-spacing:.5px}
+body.greek.v2.mythic.olympus-suite #view :is(.expedition-entry-actions button,.skill-widget-head button,.skill-widget-foot button,.skill-widget-cast){background:linear-gradient(#35465b,#14253b);border:1px solid #b29460;border-radius:3px;color:#ecd3a1;box-shadow:inset 0 1px #ffffff20;font:600 12px/1.5 var(--f-ui);min-height:42px}
+body.greek.v2.mythic.olympus-suite #view :is(.skill-widget-slot,.skill-widget-empty){border-radius:4px;background:#15253b;border-color:#a48b5955}
+/* Preserve every gear rarity as an information color on the shared dark surface. */
+body.greek.v2.mythic.olympus-suite :is(#app #view,#sheet .item,#sheet) .tc-common{color:#e4d9c1}
+body.greek.v2.mythic.olympus-suite :is(#app #view,#sheet .item,#sheet) .tc-advanced{color:#b1d49f}
+body.greek.v2.mythic.olympus-suite :is(#app #view,#sheet .item,#sheet) .tc-epic{color:#ccadf0}
+body.greek.v2.mythic.olympus-suite :is(#app #view,#sheet .item,#sheet) .tc-legendary{color:#f1ce7e}
+body.greek.v2.mythic.olympus-suite :is(#app #view,#sheet .item,#sheet) .tc-relic{color:#e6abb8}
+
+body.greek.v2.mythic.olympus-suite #view .godwar-entry{--entry-art:url("art/dungeons-20261011/godwar-banner.webp")}
+body.greek.v2.mythic.olympus-suite #view .skill-widget[data-mode="battle"]{--entry-art:url("art/dungeons-20261011/skill-altar-banner.webp")}
+
+#hud .my-hud-crest img{width:29px;height:29px;display:block;object-fit:contain}#hud .hud-actions .chip.gold{display:inline-flex;align-items:center;gap:4px;white-space:nowrap}#hud .hud-coin{width:22px;height:22px;object-fit:contain;filter:drop-shadow(0 1px 2px #0008);flex-shrink:0}
+
+#hud .my-hud-crest{background:radial-gradient(ellipse,#51452b66,#101b2d);border-color:#b69b60}#hud .my-hud-crest img{width:32px;height:32px;filter:drop-shadow(0 1px 2px #0009)}#hud .hud-coin{width:22px;height:22px}
+
+body.greek.v2.mythic.olympus-suite #view .my-home .blessing-seal{background:none;border:0;box-shadow:none;border-radius:0}#view .blessing-seal img{display:block;width:54px;height:54px;object-fit:contain;filter:drop-shadow(0 3px 5px #0008)}#view .daily-coin-icon{width:28px;height:28px;object-fit:contain;vertical-align:middle}#view .command-balance{display:flex;align-items:center;gap:4px}#view .command-balance .daily-coin-icon{width:20px;height:20px}
+
+img.currency-coin{display:inline-block!important;width:1.3em!important;height:1.3em!important;object-fit:contain!important;vertical-align:-.25em;margin:0 .15em;filter:drop-shadow(0 1px 2px #0007)}button img.currency-coin{pointer-events:none}
+
+body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .ti{flex:0 0 42px;width:42px;height:46px;border:0;background:none;box-shadow:none}#view .my-command-board .command-icon{display:block;width:42px;height:42px;object-fit:contain;filter:drop-shadow(0 2px 4px #0009)}@media(max-width:360px){body.greek.v2.mythic.olympus-suite #view .my-home .my-command-board .ti{flex-basis:36px;width:36px}#view .my-command-board .command-icon{width:36px;height:38px}}
+
+.hall-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.hall-hero{display:flex;align-items:center;gap:10px;padding:12px;background:linear-gradient(140deg,#1e3049,#111e32);border:1px solid #aa8a55;color:#eadab7;text-align:left;min-width:0}.hall-hero img{width:66px;height:96px;object-fit:contain;filter:drop-shadow(0 3px 5px #0008)}.hall-hero span{min-width:0}.hall-hero b,.hall-hero small,.hall-hero strong{display:block;overflow-wrap:anywhere}.hall-hero small{color:#b6c4d8;font-size:11px;margin:6px 0}.hall-hero strong{font-size:12px;color:#f0d28c}.hall-loadout .fig img{width:100%;height:100%;object-fit:contain}.hall-loadout .hall-stats{padding:12px;color:#e7d4a2}.hall-equipment-list small{display:block}.hall-loadout [data-hall-close]{width:100%;position:sticky;bottom:0}@media(max-width:360px){.hall-grid{grid-template-columns:1fr}}
+
+.hall-hero{flex-direction:column;justify-content:flex-start;text-align:center}.hall-hero img{width:100%;height:190px;object-fit:contain}.hall-hero span{width:100%}.hall-loadout .doll{position:relative;min-height:420px;isolation:isolate}.hall-loadout .doll>.col{position:relative;z-index:2}.hall-loadout .doll .fig{position:absolute;inset:12px 6px;min-height:0;padding:0;background:none;border:0;box-shadow:none;pointer-events:none}.hall-loadout .doll .fig img{width:100%;height:100%;object-fit:contain;object-position:center bottom}@media(max-width:360px){.hall-hero img{height:230px}}
+
+/* Ranking keeps its original compact, consistent portrait dimensions. */
+.hall-hero{flex-direction:row;text-align:left;justify-content:flex-start}.hall-hero img{width:66px;height:96px;flex:0 0 66px}.hall-hero span{width:auto}@media(max-width:360px){.hall-hero img{height:96px}}
+
+/* Painted Greek navigation assets; preserve button geometry and safe-area padding. */
+body.greek.v2.mythic.olympus-suite #nav .nav-icon{background:none;border:0;box-shadow:none;filter:none;display:grid;place-items:center}#nav .nav-icon img{display:block;width:34px;height:34px;object-fit:contain;pointer-events:none;filter:saturate(.85) brightness(.9) drop-shadow(0 2px 2px #0009);transition:filter .2s}#nav button.on .nav-icon img{filter:brightness(1.12) saturate(1.08) drop-shadow(0 0 5px #e9c78166)}body.greek.v2.mythic.olympus-suite #nav button{border-radius:5px;background:transparent;box-shadow:none}body.greek.v2.mythic.olympus-suite #nav button.on{background:linear-gradient(#d9b66d16,#d9b66d05);box-shadow:inset 0 -2px #cfad68}#nav button small{letter-spacing:.5px}

@@ -1,0 +1,10 @@
+.bossbox.boss-wait{height:clamp(280px,65vw,380px);background:#101a2c;isolation:isolate}
+.boss-wait-poster,.boss-wait-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 45%;pointer-events:none}
+.boss-wait-video{opacity:0;transition:opacity .35s}
+.boss-wait-video.ready{opacity:1}
+.bossbox.boss-wait:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,#080e2033 0%,transparent 38%,#080e2033 65%,#080e20ce 100%);pointer-events:none;z-index:1}
+.bossbox.boss-wait .tag{z-index:2}
+.boss-wait-caption{position:absolute;bottom:22px;left:16px;right:16px;z-index:2;text-align:center;color:#f3dfb7;text-shadow:0 2px 8px #000}
+.boss-wait-caption span{display:block;font-size:clamp(18px,4vw,24px);font-weight:600;letter-spacing:.15em}
+.boss-wait-caption small{display:block;margin-top:9px;font-size:12px;color:#d0d8e5;letter-spacing:.07em}
+@media(prefers-reduced-motion:reduce){.boss-wait-video{transition:none}}
