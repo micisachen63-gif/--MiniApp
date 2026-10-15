@@ -372,6 +372,8 @@
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
     if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
+    if(kind==='item'&&key==='gacha_weapon')return 'art/ui/gacha-weapon-20261015.webp';
+    if(kind==='item'&&key==='gacha_armor')return 'art/ui/gacha-armor-blue-20261015.webp';
     if(kind==='item'&&key==='gold')return 'art/ui/hud-coin-v2.webp';
     if(kind === 'item' && ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a','unbind'].includes(key)) return `art/items-scrolls-cutout-20261011/${key}.webp`;
     // Thieves only use their exact authored registry identity; missing art never borrows another class or tier.
@@ -1253,8 +1255,8 @@
   function gachaCards(type=null) {
     const rates=(S.shop.gachaRates||[]).map(r=>`${r.rarity==='legendary'?'紫色傳說':'紅色霸主'} ${r.pct}%`).join(' · ');
     return (S.shop.gacha||[]).filter(g=>!type||g.type===type).map(g=>{
-      const gear=S.shop.gear.find(e=>e.group===g.type&&e.tier===g.tier);
-      return `<div class="item"><div class="ic art">${gear?gearIcon({...gear,classReq:S.me.character.baseClass},''):''}</div><div class="mid"><div class="t">${esc(g.name)}</div><div class="d">${esc(g.description)} · T${g.tier}</div><div class="d">${esc(rates)}</div><div class="price"><img class="currency-coin" src="art/ui/hud-coin-v2.webp" alt=""> ${fmt(g.price)} 金幣 / 顆</div></div><button class="btn sm" data-gacha="${g.type}" ${S.me.character.gold<g.price?'disabled':''}>購買並開啟</button></div>`;
+
+      return `<div class="item gacha-item"><div class="ic art">${iconHtml('gacha_'+g.type,'')}</div><div class="mid"><div class="t">${esc(g.name)}</div><div class="d">購買後存入道具庫 · 開啟時依角色等級與職業決定</div><div class="d">${esc(rates)}</div><div class="price"><img class="currency-coin" src="art/ui/hud-coin-v2.webp" alt=""> ${fmt(g.price)} 金幣 / 顆</div></div><button class="btn sm" data-gacha="${g.type}" ${S.me.character.gold<g.price?'disabled':''}>購買轉蛋</button></div>`;
     }).join('');
   }
   function shopBody() {
@@ -1318,10 +1320,10 @@
       if(button.disabled)return;button.disabled=true;
       const actor=S.me.character.tgId,g=S.shop.gacha.find(x=>x.type===button.dataset.gacha);
       try{
-        if(!await confirmSheet(esc(g.name),`花費 ${fmt(g.price)} 金幣購買並立即開啟 1 顆？<br>${esc(g.description)}（T${g.tier}）。<br>紫色傳說 85% · 紅色霸主 15%`,'購買並開啟'))return;
+        if(!await confirmSheet(esc(g.name),`花費 ${fmt(g.price)} 金幣購買 1 顆存入道具背包？<br>開啟時依角色當下等級、職業決定裝備。<br>紫色傳說 85% · 紅色霸主 15%`,'購買轉蛋'))return;
         if(actor!==S.me?.character?.tgId)return;
         const j=await act('gacha',{type:g.type});
-        if(j?.result){const item=S.me.equipment.find(e=>e.id===j.result.item.id);toast('獲得 '+(item?.rarityName||'')+' '+j.result.item.name);if(item)itemSheet(item.id);}
+        if(j?.result){toast('已購買 '+g.name+'，請到英雄的道具庫開啟');}
       }finally{button.disabled=false;}
     };});
     view.querySelectorAll('[data-st]').forEach((b) => { b.onclick = () => { S.shopTab = b.dataset.st; updateShopSurface(true); }; });
@@ -1760,6 +1762,7 @@
     const meta = S.meta.items[k] || {};
     const icon = isBook ? `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(skillId)}.webp" alt="">` : iconHtml(k, itemEmoji(k));
     const rows = [];
+    if(meta.kind==='gacha')rows.push(['gachaopen','開啟 1 顆','依目前角色等級與職業抽取裝備，紫色傳說 85%、紅色霸主 15%。']);
     if (isBook) rows.push(['learn', '🔍 查看詳情／學習', '未使用的書可由符合職業的角色學習，學習後永久綁定該角色。'], ['bookshare', '📣 分享到群組', '把這本技能書貼到群組，夥伴可以來找你交易（每分鐘一次，組隊戰鬥中不能分享）。']);
     if (bossRes) rows.push(['rewards', '🏺 前往兌換', '首領精華與遺物碎片在「首領精華」頁兌換裝備養成道具。']);
     if (tradeable) rows.push([isBook ? 'booktrade' : 'trade', '🤝 交易', isBook ? '輸入對方角色名稱，建立交易視窗並先放入這本書。' : '到交易視窗，用「＋ 放入道具」放入這個道具。']);
@@ -1772,6 +1775,7 @@
     c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = async () => {
       const m = b.dataset.m;
       if (m === 'x') return closeSheet();
+      if(m==='gachaopen'){if(b.disabled)return;b.disabled=true;closeSheet();const j=await act('gacha/open',{type:k==='gacha_weapon'?'weapon':'armor'});if(j?.result){const item=S.me.equipment.find(e=>e.id===j.result.item.id);toast('獲得 '+(item?.rarityName||'')+' '+j.result.item.name);if(item)itemSheet(item.id);}return;}
       if (m === 'learn') { closeSheet(); return window.RpgExpeditionOpen?.(skillId); }
       if (m === 'rewards') { closeSheet(); return window.RpgExpeditionOpen?.('rewards'); }
       if (m === 'trade') { closeSheet(); S.tab = 'trade'; S.social = 'trade'; render(); if (!S.trade) loadTrades(); toast(S.trade?.status === 'open' ? '點交易視窗的「＋ 放入道具」放入 ' + itemName(k) : '先開啟交易（群組分享貼文按「我要交易」），再放入 ' + itemName(k)); return; }
@@ -1997,7 +2001,8 @@
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
     const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
-    const want = tradeId || reqId || pkId ? 'trade' : { guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    const want = tradeId || reqId || pkId ? 'trade' : { gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
     fetch('art/v2/heroes.json?v=20261011-elf-adv4-2').then((r) => r.json()).then((h) => { HEROES.nodes = new Set(h.nodes || []); HEROES.meta = h.meta || {}; if (S.me) render(); }).catch(() => {});

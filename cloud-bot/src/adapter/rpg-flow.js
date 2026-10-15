@@ -49,6 +49,7 @@ export function shareHead(sh, short = false) {
   if(sh.item?.kind==='sigil')return `✦ ${sh.ownerName} 分享守護羽毛`;
   const c = sh.context || {};
   const it = sh.item || {};
+  if(c.source==='gacha')return `🎉【轉蛋紅裝降臨】恭喜 ${sh.ownerName} 開啟${c.type==='armor'?'防具':'武器'}轉蛋，獲得${it.rarityName||'稀有'}裝備！`;
   if (sh.kind === 'enhance') return `✨ 恭喜 ${sh.ownerName} 把「${c.itemName || sh.item?.name || '裝備'}」強化到 +${c.to}！`;
   if (sh.kind === 'relic') return c.source === 'boss' ? `👑【神話遺物 傲視群倫】${sh.ownerName} 從首領「${c.boss}」的戰利品獲得！` : `👑【神話遺物 傲視群倫】${sh.ownerName} 在${c.map ? `「${c.map}」` : ''}擊敗「${c.elite}」獲得！`;
   if (c.source === 'boss') return `🐉 首領戰利品！${sh.ownerName} 從「${c.boss || '首領'}」獲得`;
@@ -72,11 +73,11 @@ export function shareCaption(sh) {
     `品階 ${grade}｜${it.slotName}${it.type && it.type !== it.slotName ? `・${it.type}` : ''}｜${clsName}${it.branchReq ? `（${it.branchReq} 線）` : ''}｜T${it.tier}・Lv${it.levelReq}${it.enhance ? `｜強化 +${it.enhance}` : ''}`,
     `${SLOT_ICON[it.slot] || '⚔️'} ${it.statName} ${fmt(it.stat)}${it.classReq === 'any' && ['belt', 'undershirt'].includes(it.slot) ? `（${CLASS_INFO[it.statClass]?.n || '持有者職業'} DEF；跨職業數值不同）` : ''}${it.element ? `　${ELEM[it.element] || ''} +${fmt(it.elemStat)}` : ''}`,
     it.affixes?.lines?.length ? `能力詞條（${it.affixes.quality}）：${it.affixes.lines.map(x=>`${x.name} +${(x.value*100).toFixed(2)}%【${x.quality}】`).join('・')}` : null,extras.length ? `附加：${extras.join('・')}` : null, aff.length ? `✦ 詞條：${aff.join('・')}` : null,
-    sh.status === 'traded' ? '✅ 已成交' : sh.showcase ? '✨ 裝備展示・歡迎喝采！穿戴與綁定狀態保留，這張卡不開放交易。' : it.bound || it.equipped || it.inTrade ? '🔒 目前不能直接交易；可先按「我要交易」表達意願，主人處理裝備後再確認' : sh.tradeable ? '🔓 未綁定・可交易' : '🔓 目前不可交易；可向主人提出交易意願',
+    sh.context?.source==='gacha' ? '🎁 轉蛋稀有獎勵 · 為幸運的冒險者按個超讚！' : sh.status === 'traded' ? '✅ 已成交' : sh.showcase ? '✨ 裝備展示・歡迎喝采！穿戴與綁定狀態保留，這張卡不開放交易。' : it.bound || it.equipped || it.inTrade ? '🔒 目前不能直接交易；可先按「我要交易」表達意願，主人處理裝備後再確認' : sh.tradeable ? '🔓 未綁定・可交易' : '🔓 目前不可交易；可向主人提出交易意願',
     `👤 持有者：${sh.ownerName}`, '📋 屬性為分享當下快照；按鈕依目前狀態更新'];
   return lines.filter(Boolean).join('\n');
 }
-export function shareKeyboard(sh, { guardianLink = null } = {}) {
+export function shareKeyboard(sh, { guardianLink = null, gachaLink = null } = {}) {
   if(sh.context?.source==='guardian'&&sh.context?.announcement===true){
     const rows=[];
     if(sh.status!=='traded')rows.push(btn('🤝 我要交易',`sq:${sh.id}`));
@@ -84,6 +85,7 @@ export function shareKeyboard(sh, { guardianLink = null } = {}) {
     return rows.length?[rows]:[];
   }
   const like = btn(`👍 超讚${sh.likes ? ` ${sh.likes}` : ''}`, `sl:${sh.id}`);
+  if(sh.context?.source==='gacha')return [[like,...(gachaLink?[{text:'🎁 我也要抽',url:gachaLink}]:[])]];
   if (sh.status === 'traded') return [[like]];
   return (sh.requestable ?? sh.tradeable) ? [[btn('🤝 我要交易', `sq:${sh.id}`), like]] : [[like]];
 }
@@ -134,7 +136,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   const members = new Map(); const dirty = persistentMap(st,save,'dirtyBoss'); const sdirty = persistentMap(st,save,'dirtyShare');
   const timing=()=>st().cloudTiming??={lastClaim:0,lastPhoto:0}; let lastClaim=timing().lastClaim||0,lastPhoto=timing().lastPhoto||0,ticking=false;
   const warn = (what, error) => log.warn(`rpg ${what}: ${error?.message || error}`);
-  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':screen==='shop'?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
+  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':(screen==='shop'||screen==='gacha')?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
   /** web_app button (private chats only — Telegram rejects web_app inline buttons in groups) */
   const appBtn = (text, screen = '') => (app.url ? { text, web_app: { url: screen ? `${app.url}?screen=${screen}` : app.url } } : null);
   const popup = async (cq, text, alert = true) => { try { await api.call('answerCallbackQuery', { callback_query_id: cq.id, text: String(text).slice(0, 190), show_alert: alert }); } catch (error) { warn('answer', error); } };
@@ -252,7 +254,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   async function sendCardPhoto(input){return api.sendPhoto(input);}
   async function postShare(sh) {
     const cards = st().scards; if (cards[sh.id] || sh.messageId) return { skipped: true };
-    const caption = shareCaption(sh).slice(0, 1024); const kb = shareKeyboard(sh); let m = null; let photo = false;
+    const caption = shareCaption(sh).slice(0, 1024); const kb = shareKeyboard(sh,{gachaLink:deepLink('gacha')}); let m = null; let photo = false;
     const photoUrl = typeof api.sendPhoto === 'function' ? photoReference(sh.item?.photo) : null;
     if (photoUrl) { try { m = await sendCardPhoto({ chatId, photoUrl, mimeType: 'image/jpeg', fileName: (sh.item.photo.split('/').pop() || 'item.jpg'), caption, replyMarkup: { inline_keyboard: kb } }); photo = true; } catch (error) { if(!rejectedImage(error))throw error;warn('share photo', error); } }
     if (!m) m = await send(caption, { reply_markup: { inline_keyboard: kb } }, chatId);   // text fallback (no art URL / upload failed)
@@ -267,7 +269,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     if (!c) return false;
     if (!force && now() - (c.lastEdit || 0) < likeThrottleMs) { sdirty.set(sh.id, true); return true; }
     try {
-      await api.call('editMessageReplyMarkup', { chat_id: c.chatId, message_id: c.messageId, reply_markup: { inline_keyboard: shareKeyboard(sh,{guardianLink:deepLink('guardian')}) } });
+      await api.call('editMessageReplyMarkup', { chat_id: c.chatId, message_id: c.messageId, reply_markup: { inline_keyboard: shareKeyboard(sh,{guardianLink:deepLink('guardian'),gachaLink:deepLink('gacha')}) } });
       c.lastEdit = now(); sdirty.delete(sh.id); save();
       return true;
     } catch (error) {

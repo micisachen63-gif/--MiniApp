@@ -5,3 +5,6 @@ body.greek.v2.mythic.olympus-suite #app #view .inv>div>b{display:grid;place-item
 body.greek.v2.mythic.olympus-suite #app #view .inv>div>b>img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;position:relative;filter:drop-shadow(0 5px 6px #0009)}
 body.greek.v2.mythic.olympus-suite #app #view .inv>div>i{display:inline-block;margin-top:4px;font-size:14px}
 @media(max-width:370px){body.greek.v2.mythic.olympus-suite #app #view .inv>div>b{width:95px;height:106px}}
+
+/* Dedicated sealed capsule art shared by merchant and inventory. */
+#view .gacha-item .ic.art{width:80px;height:100px;flex:0 0 80px;background:radial-gradient(ellipse,#8560bd26,transparent 70%);border:0;box-shadow:none}#view .gacha-item .ic.art img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 3px 7px #0009)}#view .gacha-item .mid{min-width:0}#view .gacha-item>.btn{flex-shrink:0}
