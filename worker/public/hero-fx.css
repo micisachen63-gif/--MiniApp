@@ -23,6 +23,46 @@ body.greek.v2.mythic.olympus-suite #view .doll[data-hero-fx] > .fig {z-index:1}
 @keyframes hero-fx-floor {from{opacity:.11;transform:translateX(-2px) scaleX(.98)}to{opacity:.25;transform:translateX(2px) scaleX(1.025)}}
 @keyframes hero-fx-rise {0%{opacity:0;transform:translate3d(0,12px,0) scale(.5) rotate(0deg)}18%{opacity:.68}65%{opacity:.42}100%{opacity:0;transform:translate3d(var(--mote-drift),-85px,0) scale(.85) rotate(65deg)}}
 @media(prefers-reduced-motion:reduce) {.hero-fx-art,.hero-fx-floor,.hero-fx-mote{animation:none!important}.hero-fx-art{opacity:.35}.hero-fx-floor{opacity:.1}.hero-fx-mote{opacity:0}}
+/* Thief ornaments track the figure frame, below the reserved angel space. */
+body.greek.v2.mythic.olympus-suite #view .hero-armory .doll[data-thief-armory-fx] > .hero-fx {
+  inset:calc(var(--armory-spirit-space) + 10px) 10px 18px;
+}
+[data-thief-armory-fx] .hero-fx-aura {
+  opacity:.48;
+  animation:thief-fx-haze 5s ease-in-out infinite alternate;
+}
+[data-thief-armory-fx] .hero-fx-mote {
+  background:linear-gradient(145deg,#f1f5ff 0%,var(--fx-light) 35%,transparent 95%);
+  filter:drop-shadow(0 0 4px var(--fx-light));
+  animation-name:thief-fx-blade;
+}
+[data-thief-armory-fx] .thief-fx-shadow {
+  clip-path:polygon(50% 0,65% 55%,96% 68%,62% 73%,58% 100%,42% 100%,38% 73%,4% 68%,35% 55%);
+}
+[data-thief-armory-fx] .thief-fx-venom {
+  background:radial-gradient(ellipse at 45% 65%,#d9ffb888,var(--fx-light) 28%,transparent 70%);
+  border-radius:60% 40% 65% 35%;
+  width:calc(var(--mote-size) * 1.8);
+  height:calc(var(--mote-size) * 1.8);
+  filter:blur(2px);
+  animation-name:thief-fx-venom;
+}
+[data-thief-armory-fx] .thief-fx-flying {
+  clip-path:polygon(50% 0,100% 80%,50% 52%,0 80%);
+  animation-name:thief-fx-flying;
+}
+[data-thief-armory-fx] .thief-fx-mirror {
+  clip-path:polygon(40% 0,85% 30%,58% 100%,10% 65%);
+  background:linear-gradient(120deg,#f4eeffb3,var(--fx-light) 38%,#7773bc22 60%,#e0dcff88);
+  animation-name:thief-fx-mirror;
+}
+@keyframes thief-fx-haze { from {opacity:.25;transform:translateY(4px) scale(.98)} to {opacity:.58;transform:translateY(-5px) scale(1.015)} }
+@keyframes thief-fx-blade { 0% {opacity:0;transform:translate(0,14px) rotate(-28deg)} 20% {opacity:.8} 70% {opacity:.5} 100% {opacity:0;transform:translate(var(--mote-drift),-70px) rotate(20deg)} }
+@keyframes thief-fx-venom { 0% {opacity:0;transform:translate(0,8px) scale(.6)} 28% {opacity:.7} 75% {opacity:.35} 100% {opacity:0;transform:translate(var(--mote-drift),-62px) scale(1.25)} }
+@keyframes thief-fx-flying { 0% {opacity:0;transform:translate(0,18px) rotate(0)} 20% {opacity:.85} 70% {opacity:.55} 100% {opacity:0;transform:translate(var(--mote-drift),-90px) rotate(280deg)} }
+@keyframes thief-fx-mirror { 0% {opacity:0;transform:translate(0,8px) rotate(-12deg) scaleX(.8)} 25% {opacity:.8} 65% {opacity:.3;transform:translate(0,-24px) rotate(10deg) scaleX(.35)} 100% {opacity:0;transform:translate(var(--mote-drift),-58px) rotate(-8deg) scaleX(1)} }
+[data-thief-armory-fx][data-fx-running="false"] .hero-fx-aura {animation-play-state:paused}
+@media(prefers-reduced-motion:reduce) { [data-thief-armory-fx] .hero-fx-aura {animation:none!important;opacity:.35} }
 /* Opaque equipment frames sit above every effect and keep clear part labels. */
 body.greek.v2.mythic.olympus-suite #view .lc-character .doll .slot,
 body.greek.v2.mythic.olympus-suite #view .lc-character .acc .slot {--slot-tone:#e3c58b;opacity:1;background:linear-gradient(145deg,#30435a,#152338 55%,#0a1525);border:1px solid #b7a079;border-style:solid;box-shadow:inset 0 0 0 2px #07111f,inset 0 0 0 3px #d4b57766,0 3px 10px #000c;touch-action:manipulation;transition:transform .15s ease,box-shadow .15s ease}

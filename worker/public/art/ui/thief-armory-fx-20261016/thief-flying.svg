@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" fill="none">
+  <defs>
+    <linearGradient id="steel"><stop stop-color="#f2ffff"/><stop offset=".5" stop-color="#a3e9f1"/><stop offset="1" stop-color="#4695af" stop-opacity=".1"/></linearGradient>
+    <g id="blade"><path d="M-24 10 0-28 24 10 0 1Z" fill="url(#steel)"/><path d="M-20 8 0-23 20 8M0-23V1" stroke="#efffff" stroke-width="1"/></g>
+  </defs>
+  <g stroke="#a3e9f1" stroke-opacity=".6"><path d="M94 140C-15 200 7 434 95 502M306 140C415 200 393 434 305 502"/><path d="M79 180C-1 275 22 401 83 452M321 180C401 275 378 401 317 452" stroke-width="3" stroke-dasharray="30 75"/><path d="M45 240 19 284M355 350 381 394M78 405 52 449M322 205 348 249" stroke-width="1.5"/></g>
+  <use href="#blade" transform="translate(49 222) rotate(20)"/><use href="#blade" transform="translate(351 355) rotate(200)"/>
+  <use href="#blade" transform="translate(79 428) rotate(-20) scale(.7)"/><use href="#blade" transform="translate(321 180) rotate(160) scale(.7)"/>
+  <g stroke="url(#steel)"><path d="M28 262 43 232M370 315 354 346M61 466 74 437M341 147 327 171" stroke-width="2"/><path d="M97 552Q200 586 303 552M115 563Q200 587 285 563"/></g>
+</svg>

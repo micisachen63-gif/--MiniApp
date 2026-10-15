@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" fill="none">
+  <defs>
+    <radialGradient id="mist"><stop stop-color="#b4f5aa" stop-opacity=".6"/><stop offset=".4" stop-color="#67cf90" stop-opacity=".25"/><stop offset="1" stop-color="#276651" stop-opacity="0"/></radialGradient>
+    <linearGradient id="drop" x2="0" y2="1"><stop stop-color="#e1ffb9"/><stop offset="1" stop-color="#68d59a" stop-opacity=".1"/></linearGradient>
+    <g id="venom"><path d="M0-17C-2-6-9 0-9 7a9 9 0 0 0 18 0C9 0 2-6 0-17Z" fill="url(#drop)"/><path d="M-4 6q-2 5 3 7" stroke="#dcffca" stroke-width="1.2"/></g>
+  </defs>
+  <g fill="url(#mist)"><ellipse cx="48" cy="390" rx="72" ry="150"/><ellipse cx="352" cy="340" rx="72" ry="150"/><ellipse cx="88" cy="510" rx="50" ry="75"/><ellipse cx="312" cy="510" rx="50" ry="75"/></g>
+  <g stroke="#91dcad" stroke-opacity=".7"><path d="M60 510C-16 447 113 395 48 326S113 229 65 179M340 510C416 447 287 395 352 326S287 229 335 179"/><path d="M70 477C-3 408 108 342 72 277M330 477C403 408 292 342 328 277" stroke-dasharray="3 22"/></g>
+  <use href="#venom" transform="translate(54 230)"/><use href="#venom" transform="translate(345 383)"/>
+  <use href="#venom" transform="translate(79 440) scale(.7)"/><use href="#venom" transform="translate(320 180) scale(.7)"/>
+  <g stroke="#b4ed98" opacity=".55"><circle cx="42" cy="345" r="5"/><circle cx="362" cy="288" r="4"/><circle cx="74" cy="500" r="7"/><circle cx="326" cy="475" r="6"/><path d="M95 558q105 30 210 0"/></g>
+</svg>

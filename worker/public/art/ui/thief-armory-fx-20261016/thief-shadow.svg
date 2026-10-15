@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" fill="none">
+  <defs>
+    <linearGradient id="edge" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3efff"/><stop offset=".48" stop-color="#c9b7ff"/><stop offset="1" stop-color="#6558ab" stop-opacity="0"/></linearGradient>
+    <radialGradient id="haze"><stop stop-color="#9b7ee8" stop-opacity=".4"/><stop offset="1" stop-color="#685299" stop-opacity="0"/></radialGradient>
+    <g id="dagger"><path d="M0-45 8-8 3 9-3 9-8-8Z" fill="url(#edge)"/><path d="M0-38V8M-11 10H11M0 10V25" stroke="#e4d9ff" stroke-width="1.5"/></g>
+  </defs>
+  <ellipse cx="55" cy="390" rx="58" ry="180" fill="url(#haze)"/>
+  <ellipse cx="345" cy="350" rx="58" ry="180" fill="url(#haze)"/>
+  <g stroke="#baa0ff" stroke-opacity=".65"><path d="M90 140Q-8 300 70 485M310 170Q408 320 330 500"/><path d="M65 190Q10 330 84 450M335 210Q390 350 316 465" stroke-dasharray="24 40"/></g>
+  <use href="#dagger" transform="translate(59 273) rotate(25)"/>
+  <use href="#dagger" transform="translate(341 335) rotate(-25)"/>
+  <use href="#dagger" transform="translate(82 435) rotate(30) scale(.65)" opacity=".65"/>
+  <use href="#dagger" transform="translate(318 183) rotate(-30) scale(.65)" opacity=".65"/>
+  <path d="M104 552Q200 588 296 552M123 566Q200 591 277 566" stroke="#c9b7ff" stroke-opacity=".55"/>
+</svg>

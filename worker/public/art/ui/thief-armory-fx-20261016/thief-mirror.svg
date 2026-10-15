@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 600" fill="none">
+  <defs>
+    <linearGradient id="glass" x2="1" y2="1"><stop stop-color="#ecedff" stop-opacity=".75"/><stop offset=".5" stop-color="#b9a8fa" stop-opacity=".25"/><stop offset="1" stop-color="#7773bc" stop-opacity="0"/></linearGradient>
+    <g id="shard"><path d="M0-34 13-6 5 30-10 10Z" fill="url(#glass)" stroke="#cabdff" stroke-width="1.2"/><path d="M0-34 2 3 5 30M2 3 13-6M2 3-10 10" stroke="#efecff" stroke-opacity=".6"/></g>
+  </defs>
+  <g stroke="#b9a8fa" stroke-opacity=".5"><path d="M94 160 34 245 85 490M306 160 366 245 315 490"/><path d="M73 170 16 280 70 465M327 170 384 280 330 465" stroke-dasharray="12 18"/></g>
+  <use href="#shard" transform="translate(60 225) rotate(16)"/><use href="#shard" transform="translate(340 350) rotate(-16)"/>
+  <use href="#shard" transform="translate(84 420) rotate(-24) scale(.7)"/><use href="#shard" transform="translate(316 170) rotate(24) scale(.7)"/>
+  <use href="#shard" transform="translate(40 350) rotate(10) scale(.45)" opacity=".6"/><use href="#shard" transform="translate(360 465) rotate(-10) scale(.45)" opacity=".6"/>
+  <g stroke="#d7d1ff" opacity=".7"><path d="m42 280 5 9-5 9-5-9ZM353 245l5 9-5 9-5-9Z"/><path d="M104 553 147 567M296 553 253 567M155 569h22M245 569h-22"/></g>
+</svg>
