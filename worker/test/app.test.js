@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 // Mini App: Telegram initData verification + /app/api/* (auth, tgId override, dev bypass gating, boss attack → boss_update outbox).
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -39,10 +40,10 @@ test('verifyInitData: valid / tampered / wrong token / stale / future / missing 
 function mk(over = {}) {
   const env = { DB: freshDb(), SERVICE_SECRET: SECRET, BOT_TOKEN: TOKEN, ENVIRONMENT: 'production', GROUP_CHAT_ID: '-100123', ...over };
   const app = async (action, body = {}, headers = {}, method = 'POST') => {
-    const res = await handle(new Request(`http://rpg/app/api/${action}`, { method, headers: { 'content-type': 'application/json', ...headers }, body: method === 'POST' ? JSON.stringify(body) : undefined }), env);
+    const res = await handle(new CurrentClientRequest(`http://rpg/app/api/${action}`, { method, headers: { 'content-type': 'application/json', ...headers }, body: method === 'POST' ? JSON.stringify(body) : undefined }), env);
     return { status: res.status, ...(await res.json()) };
   };
-  const svc = async (path, body = {}, headers = {}) => { const res = await handle(new Request(`http://rpg${path}`, { method: 'POST', headers: { 'X-Service-Secret': SECRET, ...headers }, body: JSON.stringify(body) }), env); return { status: res.status, ...(await res.json()) }; };
+  const svc = async (path, body = {}, headers = {}) => { const res = await handle(new CurrentClientRequest(`http://rpg${path}`, { method: 'POST', headers: { 'X-Service-Secret': SECRET, ...headers }, body: JSON.stringify(body) }), env); return { status: res.status, ...(await res.json()) }; };
   return { env, app, svc, one: (q, ...p) => env.DB.sqlite.prepare(q).get(...p), all: (q, ...p) => env.DB.sqlite.prepare(q).all(...p) };
 }
 const H = (init) => ({ 'X-Telegram-Init-Data': init });
@@ -65,7 +66,7 @@ test('app api: player id comes ONLY from initData (body tgId ignored); create us
   assert.equal(np.status, 403); assert.equal(np.error, 'no_pass', 'no create pass from 小精靈 (membership check) → refused');
   assert.equal((await svc('/rpg/app/grant', { tgId: '777001' })).ok, true);
   const c = await app('create', { tgId: '424242', name: '白雪', baseClass: 'mage', gender: 'f' }, h);
-  assert.equal(c.ok, true); assert.equal(c.character.tgId, '777001');
+  assert.equal(c.ok, true); assert.equal((await app('me', {}, h)).character.tgId, '777001');
   assert.equal(one('SELECT COUNT(*) n FROM rpg_characters WHERE tg_id = ?', '424242').n, 0);
   assert.equal(one('SELECT tg_name FROM rpg_characters WHERE tg_id = ?', '777001').tg_name, 'Mika');
   // another user cannot act on 777001 by passing its tgId
@@ -76,12 +77,12 @@ test('app api: player id comes ONLY from initData (body tgId ignored); create us
   // same D1 rows as the bot's service routes
   assert.equal((await svc('/rpg/me', { tgId: '777001' })).character.name, '白雪');
   // service routes still demand the secret (initData is not accepted there)
-  const res = await handle(new Request('http://rpg/rpg/me', { method: 'POST', headers: H(initFor(777001, 'Mika')), body: JSON.stringify({ tgId: '777001' }) }), mk().env);
+  const res = await handle(new CurrentClientRequest('http://rpg/rpg/me', { method: 'POST', headers: H(initFor(777001, 'Mika')), body: JSON.stringify({ tgId: '777001' }) }), mk().env);
   assert.equal(res.status, 401);
 });
 
 test('dev bypass X-Dev-Tg-Id works only with ENVIRONMENT=development AND ALLOW_DEV_AUTH=true', async () => {
-  const req = () => new Request('http://rpg/app/api/me', { method: 'POST', headers: { 'X-Dev-Tg-Id': '9001' }, body: '{}' });
+  const req = () => new CurrentClientRequest('http://rpg/app/api/me', { method: 'POST', headers: { 'X-Dev-Tg-Id': '9001' }, body: '{}' });
   assert.equal((await appAuth(req(), { ENVIRONMENT: 'production', ALLOW_DEV_AUTH: 'true' })).status, 401);
   assert.equal((await appAuth(req(), { ENVIRONMENT: 'development' })).status, 401);
   assert.equal((await appAuth(req(), { ALLOW_DEV_AUTH: 'true' })).status, 401);
@@ -100,7 +101,7 @@ test('app api: every action maps to a real service route; meta has branches with
   const m = await app('meta', {}, h);
   assert.equal(m.ok, true); assert.equal(m.dev, false);
   for (const c of Object.values(m.meta.classes)) { assert.ok(c.skill.cost > 0); for (const b of Object.values(c.branches)) { assert.ok(b.skill.cost > 0); assert.ok(b.name); } }
-  assert.deepEqual(m.meta.bossSlots, [9, 12, 15, 18, 20, 22]);
+  assert.deepEqual(m.meta.bossSlots, [0, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23]);
 });
 
 test('boss via Mini App: status, attack, cooldown, boss_update outbox (deduped per window)', async () => {
@@ -124,7 +125,7 @@ test('boss via Mini App: status, attack, cooldown, boss_update outbox (deduped p
 test('create pass expires after 24h and is only issued through the service secret', async () => {
   const { app, svc } = mk({ ENVIRONMENT: 'development', ALLOW_DEBUG_TIME: 'true' });
   const t0 = taipeiAt('2026-10-08', 10); const h = (t) => ({ ...H(initFor(61, 'P')), 'X-Debug-Now': String(t) });
-  const noSecret = await handle(new Request('http://rpg/rpg/app/grant', { method: 'POST', headers: H(initFor(61, 'P')), body: JSON.stringify({ tgId: '61' }) }), mk().env);
+  const noSecret = await handle(new CurrentClientRequest('http://rpg/rpg/app/grant', { method: 'POST', headers: H(initFor(61, 'P')), body: JSON.stringify({ tgId: '61' }) }), mk().env);
   assert.equal(noSecret.status, 401);
   await svc('/rpg/app/grant', { tgId: '61' }, { 'X-Debug-Now': String(t0) });
   assert.equal((await app('create', { name: '過期', baseClass: 'archer', gender: 'm' }, h(t0 + 25 * 3600e3))).error, 'no_pass');

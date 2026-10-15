@@ -1,0 +1,1375 @@
+{
+  "status": "IMPLEMENTED_IN_REMEDIATION_BRANCH_NOT_A_RELEASE_RECEIPT",
+  "level": 120,
+  "classes": 3,
+  "routes": [
+    {
+      "class": "sword",
+      "path": "A11",
+      "name": "血怒戰神 · 血契",
+      "role": "血契",
+      "baseSkill": {
+        "name": "血之狂怒 · 血契",
+        "cost": 17,
+        "mult": 3.074,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 血契",
+        "cost": 17,
+        "mult": 3.074,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；血契：吸血 +3%；原生技能倍率 +6%、基礎耗魔 ×1.06；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A111",
+      "name": "血怒戰神 · 血契 · 精進",
+      "role": "血契 · 精進",
+      "baseSkill": {
+        "name": "血之狂怒 · 血契 · 精進",
+        "cost": 18,
+        "mult": 3.1662,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 血契 · 精進",
+        "cost": 18,
+        "mult": 3.1662,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；血契 · 精進：吸血 +4.5%；原生技能倍率 +9.18%、基礎耗魔 ×1.1024；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A112",
+      "name": "血怒戰神 · 血契 · 守望",
+      "role": "血契 · 守望",
+      "baseSkill": {
+        "name": "血之狂怒 · 血契 · 守望",
+        "cost": 17,
+        "mult": 3.0433,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 血契 · 守望",
+        "cost": 16,
+        "mult": 3.0433,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；血契 · 守望：吸血 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +4.94%、基礎耗魔 ×1.06；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A12",
+      "name": "血怒戰神 · 怒潮",
+      "role": "怒潮",
+      "baseSkill": {
+        "name": "血之狂怒 · 怒潮",
+        "cost": 16,
+        "mult": 2.958,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 怒潮",
+        "cost": 16,
+        "mult": 2.958,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；怒潮：生命 +8%、吸血 +2%；原生技能倍率 +2%、基礎耗魔 ×1；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A121",
+      "name": "血怒戰神 · 怒潮 · 精進",
+      "role": "怒潮 · 精進",
+      "baseSkill": {
+        "name": "血之狂怒 · 怒潮 · 精進",
+        "cost": 17,
+        "mult": 3.0467,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 怒潮 · 精進",
+        "cost": 17,
+        "mult": 3.0467,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；怒潮 · 精進：生命 +12%、吸血 +3%；原生技能倍率 +5.06%、基礎耗魔 ×1.04；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A122",
+      "name": "血怒戰神 · 怒潮 · 守望",
+      "role": "怒潮 · 守望",
+      "baseSkill": {
+        "name": "血之狂怒 · 怒潮 · 守望",
+        "cost": 16,
+        "mult": 2.9284,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "血之狂怒 · 怒潮 · 守望",
+        "cost": 16,
+        "mult": 2.9284,
+        "targets": 3
+      },
+      "passive": "嗜血：吸血 8%；怒潮 · 守望：生命 +14%、吸血 +2%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×1；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A21",
+      "name": "劍聖 · 劍意",
+      "role": "劍意",
+      "baseSkill": {
+        "name": "一閃 · 劍意",
+        "cost": 19,
+        "mult": 3.604,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 劍意",
+        "cost": 19,
+        "mult": 3.604,
+        "targets": 1
+      },
+      "passive": "劍心：爆擊 +20%；劍意：爆擊率 +6%；原生技能倍率 +6%、基礎耗魔 ×1.05；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A211",
+      "name": "劍聖 · 劍意 · 精進",
+      "role": "劍意 · 精進",
+      "baseSkill": {
+        "name": "一閃 · 劍意 · 精進",
+        "cost": 20,
+        "mult": 3.7121,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 劍意 · 精進",
+        "cost": 20,
+        "mult": 3.7121,
+        "targets": 1
+      },
+      "passive": "劍心：爆擊 +20%；劍意 · 精進：爆擊率 +9%；原生技能倍率 +9.18%、基礎耗魔 ×1.092；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A212",
+      "name": "劍聖 · 劍意 · 守望",
+      "role": "劍意 · 守望",
+      "baseSkill": {
+        "name": "一閃 · 劍意 · 守望",
+        "cost": 19,
+        "mult": 3.568,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 劍意 · 守望",
+        "cost": 18,
+        "mult": 3.568,
+        "targets": 1
+      },
+      "passive": "劍心：爆擊 +20%；劍意 · 守望：爆擊率 +6%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +4.94%、基礎耗魔 ×1.05；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A22",
+      "name": "劍聖 · 裂空",
+      "role": "裂空",
+      "baseSkill": {
+        "name": "一閃 · 裂空",
+        "cost": 20,
+        "mult": 3.298,
+        "targets": 2
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 裂空",
+        "cost": 20,
+        "mult": 3.298,
+        "targets": 2
+      },
+      "passive": "劍心：爆擊 +20%；裂空：攻擊 +3%；原生技能倍率 −3%、基礎耗魔 ×1.1、目標 +1；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A221",
+      "name": "劍聖 · 裂空 · 精進",
+      "role": "裂空 · 精進",
+      "baseSkill": {
+        "name": "一閃 · 裂空 · 精進",
+        "cost": 21,
+        "mult": 3.3969,
+        "targets": 2
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 裂空 · 精進",
+        "cost": 21,
+        "mult": 3.3969,
+        "targets": 2
+      },
+      "passive": "劍心：爆擊 +20%；裂空 · 精進：攻擊 +4.5%；原生技能倍率 −0.09%、基礎耗魔 ×1.144、目標 +1；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "A222",
+      "name": "劍聖 · 裂空 · 守望",
+      "role": "裂空 · 守望",
+      "baseSkill": {
+        "name": "一閃 · 裂空 · 守望",
+        "cost": 20,
+        "mult": 3.265,
+        "targets": 2
+      },
+      "standardGearActualSkill": {
+        "name": "一閃 · 裂空 · 守望",
+        "cost": 19,
+        "mult": 3.265,
+        "targets": 2
+      },
+      "passive": "劍心：爆擊 +20%；裂空 · 守望：攻擊 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 −3.97%、基礎耗魔 ×1.1、目標 +1；狂暴：ATK +15%、受傷 +10%"
+    },
+    {
+      "class": "sword",
+      "path": "B11",
+      "name": "聖騎士 · 聖療",
+      "role": "聖療",
+      "baseSkill": {
+        "name": "神聖制裁 · 聖療",
+        "cost": 15,
+        "mult": 2.575,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 聖療",
+        "cost": 15,
+        "mult": 2.575,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；聖療：治療效果 +12%、每次施法回血 +0.5%；原生技能倍率 +3%、基礎耗魔 ×1.03；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B111",
+      "name": "聖騎士 · 聖療 · 精進",
+      "role": "聖療 · 精進",
+      "baseSkill": {
+        "name": "神聖制裁 · 聖療 · 精進",
+        "cost": 16,
+        "mult": 2.6523,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 聖療 · 精進",
+        "cost": 16,
+        "mult": 2.6523,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；聖療 · 精進：治療效果 +18%、每次施法回血 +0.75%；原生技能倍率 +6.09%、基礎耗魔 ×1.0712；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B112",
+      "name": "聖騎士 · 聖療 · 守望",
+      "role": "聖療 · 守望",
+      "baseSkill": {
+        "name": "神聖制裁 · 聖療 · 守望",
+        "cost": 15,
+        "mult": 2.5493,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 聖療 · 守望",
+        "cost": 15,
+        "mult": 2.5493,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；聖療 · 守望：治療效果 +12%、每次施法回血 +0.5%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +1.97%、基礎耗魔 ×1.03；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B12",
+      "name": "聖騎士 · 庇護",
+      "role": "庇護",
+      "baseSkill": {
+        "name": "神聖制裁 · 庇護",
+        "cost": 15,
+        "mult": 2.5,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 庇護",
+        "cost": 15,
+        "mult": 2.5,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；庇護：護盾效果 +12%、生命 +6%、承受傷害 −2%；原生技能倍率 +0%、基礎耗魔 ×1；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B121",
+      "name": "聖騎士 · 庇護 · 精進",
+      "role": "庇護 · 精進",
+      "baseSkill": {
+        "name": "神聖制裁 · 庇護 · 精進",
+        "cost": 16,
+        "mult": 2.575,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 庇護 · 精進",
+        "cost": 16,
+        "mult": 2.575,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；庇護 · 精進：護盾效果 +18%、生命 +9%、承受傷害 −3%；原生技能倍率 +3%、基礎耗魔 ×1.04；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B122",
+      "name": "聖騎士 · 庇護 · 守望",
+      "role": "庇護 · 守望",
+      "baseSkill": {
+        "name": "神聖制裁 · 庇護 · 守望",
+        "cost": 15,
+        "mult": 2.475,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "神聖制裁 · 庇護 · 守望",
+        "cost": 15,
+        "mult": 2.475,
+        "targets": 3
+      },
+      "passive": "聖光：每次施法回 1% HP；庇護 · 守望：護盾效果 +18%、生命 +12%、承受傷害 −2%、魔力效率 +3%；原生技能倍率 −1%、基礎耗魔 ×1；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B21",
+      "name": "鐵壁守衛 · 壁壘",
+      "role": "壁壘",
+      "baseSkill": {
+        "name": "不動如山 · 壁壘",
+        "cost": 12,
+        "mult": 2,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 壁壘",
+        "cost": 12,
+        "mult": 2,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；壁壘：承受傷害 −3%、防禦 +6%、護盾效果 +8%；原生技能倍率 +0%、基礎耗魔 ×1；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B211",
+      "name": "鐵壁守衛 · 壁壘 · 精進",
+      "role": "壁壘 · 精進",
+      "baseSkill": {
+        "name": "不動如山 · 壁壘 · 精進",
+        "cost": 12,
+        "mult": 2.06,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 壁壘 · 精進",
+        "cost": 12,
+        "mult": 2.06,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；壁壘 · 精進：承受傷害 −4.5%、防禦 +9%、護盾效果 +12%；原生技能倍率 +3%、基礎耗魔 ×1.04；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B212",
+      "name": "鐵壁守衛 · 壁壘 · 守望",
+      "role": "壁壘 · 守望",
+      "baseSkill": {
+        "name": "不動如山 · 壁壘 · 守望",
+        "cost": 12,
+        "mult": 1.98,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 壁壘 · 守望",
+        "cost": 12,
+        "mult": 1.98,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；壁壘 · 守望：承受傷害 −3%、防禦 +6%、護盾效果 +14%、生命 +6%、魔力效率 +3%；原生技能倍率 −1%、基礎耗魔 ×1；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B22",
+      "name": "鐵壁守衛 · 反攻",
+      "role": "反攻",
+      "baseSkill": {
+        "name": "不動如山 · 反攻",
+        "cost": 13,
+        "mult": 2.1,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 反攻",
+        "cost": 13,
+        "mult": 2.1,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；反攻：攻擊 +6%、護盾效果 +10%、承受傷害 +2%；原生技能倍率 +5%、基礎耗魔 ×1.06；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B221",
+      "name": "鐵壁守衛 · 反攻 · 精進",
+      "role": "反攻 · 精進",
+      "baseSkill": {
+        "name": "不動如山 · 反攻 · 精進",
+        "cost": 13,
+        "mult": 2.163,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 反攻 · 精進",
+        "cost": 13,
+        "mult": 2.163,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；反攻 · 精進：攻擊 +9%、護盾效果 +15%、承受傷害 +3%；原生技能倍率 +8.15%、基礎耗魔 ×1.1024；盾牆：受傷 −20%"
+    },
+    {
+      "class": "sword",
+      "path": "B222",
+      "name": "鐵壁守衛 · 反攻 · 守望",
+      "role": "反攻 · 守望",
+      "baseSkill": {
+        "name": "不動如山 · 反攻 · 守望",
+        "cost": 13,
+        "mult": 2.079,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "不動如山 · 反攻 · 守望",
+        "cost": 13,
+        "mult": 2.079,
+        "targets": 1
+      },
+      "passive": "鐵壁：受傷 −35%；反攻 · 守望：攻擊 +6%、護盾效果 +16%、承受傷害 +2%、生命 +6%、魔力效率 +3%；原生技能倍率 +3.95%、基礎耗魔 ×1.06；盾牆：受傷 −20%"
+    },
+    {
+      "class": "archer",
+      "path": "A11",
+      "name": "星風聖射",
+      "role": "鷹眼",
+      "baseSkill": {
+        "name": "星風聖射・秘技",
+        "cost": 23,
+        "mult": 3.432,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "星風聖射・秘技",
+        "cost": 23,
+        "mult": 3.432,
+        "targets": 3
+      },
+      "passive": "鷹眼：爆擊 +20%；鷹眼：爆擊率 +5%、遠程傷害 +3%；原生技能倍率 +4%、基礎耗魔 ×1.04；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A111",
+      "name": "永恆風冠",
+      "role": "鷹眼 · 精進",
+      "baseSkill": {
+        "name": "永恆風冠・終章",
+        "cost": 24,
+        "mult": 3.535,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "永恆風冠・終章",
+        "cost": 24,
+        "mult": 3.535,
+        "targets": 3
+      },
+      "passive": "鷹眼：爆擊 +20%；鷹眼 · 精進：爆擊率 +7.5%、遠程傷害 +4.5%；原生技能倍率 +7.12%、基礎耗魔 ×1.0816；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A112",
+      "name": "群星神弓",
+      "role": "鷹眼 · 守望",
+      "baseSkill": {
+        "name": "群星神弓・終章",
+        "cost": 23,
+        "mult": 3.3977,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "群星神弓・終章",
+        "cost": 22,
+        "mult": 3.3977,
+        "targets": 3
+      },
+      "passive": "鷹眼：爆擊 +20%；鷹眼 · 守望：爆擊率 +5%、遠程傷害 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +2.96%、基礎耗魔 ×1.04；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A12",
+      "name": "蒼穹裁決者",
+      "role": "星雨",
+      "baseSkill": {
+        "name": "蒼穹裁決者・秘技",
+        "cost": 24,
+        "mult": 3.234,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "蒼穹裁決者・秘技",
+        "cost": 24,
+        "mult": 3.234,
+        "targets": 4
+      },
+      "passive": "鷹眼：爆擊 +20%；星雨：魔力效率 +2%；原生技能倍率 −2%、基礎耗魔 ×1.08、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A121",
+      "name": "蒼穹神判",
+      "role": "星雨 · 精進",
+      "baseSkill": {
+        "name": "蒼穹神判・終章",
+        "cost": 25,
+        "mult": 3.331,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "蒼穹神判・終章",
+        "cost": 24,
+        "mult": 3.331,
+        "targets": 4
+      },
+      "passive": "鷹眼：爆擊 +20%；星雨 · 精進：魔力效率 +3%；原生技能倍率 +0.94%、基礎耗魔 ×1.1232、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A122",
+      "name": "聖光獵星",
+      "role": "星雨 · 守望",
+      "baseSkill": {
+        "name": "聖光獵星・終章",
+        "cost": 24,
+        "mult": 3.2017,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "聖光獵星・終章",
+        "cost": 23,
+        "mult": 3.2017,
+        "targets": 4
+      },
+      "passive": "鷹眼：爆擊 +20%；星雨 · 守望：魔力效率 +5%、生命 +6%、護盾效果 +6%；原生技能倍率 −2.98%、基礎耗魔 ×1.08、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A21",
+      "name": "暴風先知",
+      "role": "風步",
+      "baseSkill": {
+        "name": "暴風先知・秘技",
+        "cost": 18,
+        "mult": 2.856,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "暴風先知・秘技",
+        "cost": 18,
+        "mult": 2.856,
+        "targets": 4
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；風步：承受傷害 −4%、特殊技能冷卻縮減 +4%；原生技能倍率 +2%、基礎耗魔 ×1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A211",
+      "name": "太初風皇",
+      "role": "風步 · 精進",
+      "baseSkill": {
+        "name": "太初風皇・終章",
+        "cost": 19,
+        "mult": 2.9417,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "太初風皇・終章",
+        "cost": 19,
+        "mult": 2.9417,
+        "targets": 4
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；風步 · 精進：承受傷害 −6%、特殊技能冷卻縮減 +6%；原生技能倍率 +5.06%、基礎耗魔 ×1.04；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A212",
+      "name": "九霄御風",
+      "role": "風步 · 守望",
+      "baseSkill": {
+        "name": "九霄御風・終章",
+        "cost": 18,
+        "mult": 2.8274,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "九霄御風・終章",
+        "cost": 17,
+        "mult": 2.8274,
+        "targets": 4
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；風步 · 守望：承受傷害 −4%、特殊技能冷卻縮減 +4%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A22",
+      "name": "天羽御風者",
+      "role": "巡風",
+      "baseSkill": {
+        "name": "天羽御風者・秘技",
+        "cost": 18,
+        "mult": 2.688,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "天羽御風者・秘技",
+        "cost": 17,
+        "mult": 2.688,
+        "targets": 5
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；巡風：魔力效率 +5%、經驗 +2%；原生技能倍率 −4%、基礎耗魔 ×1、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A221",
+      "name": "天羽聖主",
+      "role": "巡風 · 精進",
+      "baseSkill": {
+        "name": "天羽聖主・終章",
+        "cost": 19,
+        "mult": 2.7686,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "天羽聖主・終章",
+        "cost": 18,
+        "mult": 2.7686,
+        "targets": 5
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；巡風 · 精進：魔力效率 +7.5%、經驗 +3%；原生技能倍率 −1.12%、基礎耗魔 ×1.04、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "A222",
+      "name": "嵐靈神使",
+      "role": "巡風 · 守望",
+      "baseSkill": {
+        "name": "嵐靈神使・終章",
+        "cost": 18,
+        "mult": 2.6611,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "嵐靈神使・終章",
+        "cost": 17,
+        "mult": 2.6611,
+        "targets": 5
+      },
+      "passive": "疾風：迴避再 +15%（受傷 −15%）；巡風 · 守望：魔力效率 +8%、經驗 +2%、生命 +6%、護盾效果 +6%；原生技能倍率 −4.96%、基礎耗魔 ×1、目標 +1；遠距：受傷 −10%"
+    },
+    {
+      "class": "archer",
+      "path": "B11",
+      "name": "萬獸祭司",
+      "role": "獸契",
+      "baseSkill": {
+        "name": "萬獸祭司・秘技",
+        "cost": 21,
+        "mult": 2.652,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "萬獸祭司・秘技",
+        "cost": 21,
+        "mult": 2.9172000000000002,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；獸契：召喚傷害 +10%、治療效果 +6%；原生技能倍率 +2%、基礎耗魔 ×1.03；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B111",
+      "name": "太古森皇",
+      "role": "獸契 · 精進",
+      "baseSkill": {
+        "name": "太古森皇・終章",
+        "cost": 21,
+        "mult": 2.7316,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "太古森皇・終章",
+        "cost": 21,
+        "mult": 3.1413399999999996,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；獸契 · 精進：召喚傷害 +15%、治療效果 +9%；原生技能倍率 +5.06%、基礎耗魔 ×1.0712；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B112",
+      "name": "萬獸神尊",
+      "role": "獸契 · 守望",
+      "baseSkill": {
+        "name": "萬獸神尊・終章",
+        "cost": 21,
+        "mult": 2.6255,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "萬獸神尊・終章",
+        "cost": 20,
+        "mult": 2.8880500000000002,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；獸契 · 守望：召喚傷害 +10%、治療效果 +6%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×1.03；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B12",
+      "name": "古森召靈師",
+      "role": "森護",
+      "baseSkill": {
+        "name": "古森召靈師・秘技",
+        "cost": 20,
+        "mult": 2.6,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "古森召靈師・秘技",
+        "cost": 20,
+        "mult": 2.6,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；森護：護盾效果 +10%、每次施法回血 +0.4%；原生技能倍率 +0%、基礎耗魔 ×1；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B121",
+      "name": "世界樹祭主",
+      "role": "森護 · 精進",
+      "baseSkill": {
+        "name": "世界樹祭主・終章",
+        "cost": 21,
+        "mult": 2.678,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "世界樹祭主・終章",
+        "cost": 21,
+        "mult": 2.678,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；森護 · 精進：護盾效果 +15%、每次施法回血 +0.6%；原生技能倍率 +3%、基礎耗魔 ×1.04；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B122",
+      "name": "精靈祖靈",
+      "role": "森護 · 守望",
+      "baseSkill": {
+        "name": "精靈祖靈・終章",
+        "cost": 20,
+        "mult": 2.574,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "精靈祖靈・終章",
+        "cost": 19,
+        "mult": 2.574,
+        "targets": 3
+      },
+      "passive": "狼群守護：受傷 −25%；森護 · 守望：護盾效果 +16%、每次施法回血 +0.4%、生命 +6%、魔力效率 +3%；原生技能倍率 −1%、基礎耗魔 ×1；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B21",
+      "name": "皎月巡狩",
+      "role": "蝕影",
+      "baseSkill": {
+        "name": "皎月巡狩・秘技",
+        "cost": 14,
+        "mult": 2.55,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "皎月巡狩・秘技",
+        "cost": 12,
+        "mult": 2.856,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；蝕影：持續傷害 +12%、特殊技能冷卻縮減 +4%；原生技能倍率 +2%、基礎耗魔 ×1.03；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B211",
+      "name": "永夜月神",
+      "role": "蝕影 · 精進",
+      "baseSkill": {
+        "name": "永夜月神・終章",
+        "cost": 15,
+        "mult": 2.6265,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "永夜月神・終章",
+        "cost": 13,
+        "mult": 3.0992699999999997,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；蝕影 · 精進：持續傷害 +18%、特殊技能冷卻縮減 +6%；原生技能倍率 +5.06%、基礎耗魔 ×1.0712；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B212",
+      "name": "銀月聖獵",
+      "role": "蝕影 · 守望",
+      "baseSkill": {
+        "name": "銀月聖獵・終章",
+        "cost": 14,
+        "mult": 2.5245,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "銀月聖獵・終章",
+        "cost": 12,
+        "mult": 2.8274400000000006,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；蝕影 · 守望：持續傷害 +12%、特殊技能冷卻縮減 +4%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×1.03；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B22",
+      "name": "荊棘影衛",
+      "role": "月巡",
+      "baseSkill": {
+        "name": "荊棘影衛・秘技",
+        "cost": 14,
+        "mult": 2.5,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "荊棘影衛・秘技",
+        "cost": 11,
+        "mult": 2.5,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；月巡：魔力效率 +6%、魔力 +8%；原生技能倍率 +0%、基礎耗魔 ×1；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B221",
+      "name": "荊棘聖王",
+      "role": "月巡 · 精進",
+      "baseSkill": {
+        "name": "荊棘聖王・終章",
+        "cost": 15,
+        "mult": 2.575,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "荊棘聖王・終章",
+        "cost": 12,
+        "mult": 2.575,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；月巡 · 精進：魔力效率 +9%、魔力 +12%；原生技能倍率 +3%、基礎耗魔 ×1.04；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "archer",
+      "path": "B222",
+      "name": "幽林守護",
+      "role": "月巡 · 守望",
+      "baseSkill": {
+        "name": "幽林守護・終章",
+        "cost": 14,
+        "mult": 2.475,
+        "targets": 5
+      },
+      "standardGearActualSkill": {
+        "name": "幽林守護・終章",
+        "cost": 11,
+        "mult": 2.475,
+        "targets": 5
+      },
+      "passive": "機關：範圍技耗魔 −15%；月巡 · 守望：魔力效率 +9%、魔力 +8%、生命 +6%、護盾效果 +6%；原生技能倍率 −1%、基礎耗魔 ×1；獵鷹：擊殺 +10%（EXP +10%）"
+    },
+    {
+      "class": "mage",
+      "path": "A11",
+      "name": "星炎大賢者",
+      "role": "星炎",
+      "baseSkill": {
+        "name": "星炎大賢者・奧義",
+        "cost": 32,
+        "mult": 3.57,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "星炎大賢者・奧義",
+        "cost": 32,
+        "mult": 3.57,
+        "targets": 4
+      },
+      "passive": "魔導：ATK +10%；星炎：魔法傷害 +5%、爆擊率 +3%；原生技能倍率 +5%、基礎耗魔 ×1.08；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A111",
+      "name": "太陽神炎使",
+      "role": "星炎 · 精進",
+      "baseSkill": {
+        "name": "日冕焚界",
+        "cost": 34,
+        "mult": 3.6771,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "日冕焚界",
+        "cost": 34,
+        "mult": 3.6771,
+        "targets": 4
+      },
+      "passive": "日冕共鳴：ATK +10%；星炎 · 精進：魔法傷害 +7.5%、爆擊率 +4.5%；原生技能倍率 +8.15%、基礎耗魔 ×1.1232；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A112",
+      "name": "熾天聖魔導",
+      "role": "星炎 · 守望",
+      "baseSkill": {
+        "name": "熾天裁決",
+        "cost": 32,
+        "mult": 3.5343,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "熾天裁決",
+        "cost": 31,
+        "mult": 3.5343,
+        "targets": 4
+      },
+      "passive": "熾羽結界：ATK +10%；星炎 · 守望：魔法傷害 +5%、爆擊率 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +3.95%、基礎耗魔 ×1.08；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A12",
+      "name": "天隕魔導師",
+      "role": "焚星",
+      "baseSkill": {
+        "name": "天隕魔導師・奧義",
+        "cost": 29,
+        "mult": 3.468,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "天隕魔導師・奧義",
+        "cost": 29,
+        "mult": 3.468,
+        "targets": 4
+      },
+      "passive": "魔導：ATK +10%；焚星：持續傷害 +10%、魔力 +8%；原生技能倍率 +2%、基礎耗魔 ×0.97；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A121",
+      "name": "滅星魔皇",
+      "role": "焚星 · 精進",
+      "baseSkill": {
+        "name": "星核崩滅",
+        "cost": 30,
+        "mult": 3.572,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "星核崩滅",
+        "cost": 30,
+        "mult": 3.572,
+        "targets": 4
+      },
+      "passive": "星核共鳴：ATK +10%；焚星 · 精進：持續傷害 +15%、魔力 +12%；原生技能倍率 +5.06%、基礎耗魔 ×1.0088；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A122",
+      "name": "隕日裁決者",
+      "role": "焚星 · 守望",
+      "baseSkill": {
+        "name": "隕日終審",
+        "cost": 29,
+        "mult": 3.4333,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "隕日終審",
+        "cost": 28,
+        "mult": 3.4333,
+        "targets": 4
+      },
+      "passive": "隕日結界：ATK +10%；焚星 · 守望：持續傷害 +10%、魔力 +8%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×0.97；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A21",
+      "name": "永霜詠唱者",
+      "role": "霜壁",
+      "baseSkill": {
+        "name": "永霜詠唱者・奧義",
+        "cost": 24,
+        "mult": 2.8,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "永霜詠唱者・奧義",
+        "cost": 24,
+        "mult": 2.8,
+        "targets": 4
+      },
+      "passive": "冰甲：受傷 −20%；霜壁：承受傷害 −4%、護盾效果 +10%；原生技能倍率 +0%、基礎耗魔 ×1；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A211",
+      "name": "永恆霜皇",
+      "role": "霜壁 · 精進",
+      "baseSkill": {
+        "name": "永霜王域",
+        "cost": 25,
+        "mult": 2.884,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "永霜王域",
+        "cost": 25,
+        "mult": 2.884,
+        "targets": 4
+      },
+      "passive": "霜皇共鳴：受傷 −20%；霜壁 · 精進：承受傷害 −6%、護盾效果 +15%；原生技能倍率 +3%、基礎耗魔 ×1.04；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A212",
+      "name": "絕對零度之主",
+      "role": "霜壁 · 守望",
+      "baseSkill": {
+        "name": "零界封絕",
+        "cost": 24,
+        "mult": 2.772,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "零界封絕",
+        "cost": 23,
+        "mult": 2.772,
+        "targets": 4
+      },
+      "passive": "零界結界：受傷 −20%；霜壁 · 守望：承受傷害 −4%、護盾效果 +16%、生命 +6%、魔力效率 +3%；原生技能倍率 −1%、基礎耗魔 ×1；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A22",
+      "name": "極光冰術師",
+      "role": "霜序",
+      "baseSkill": {
+        "name": "極光冰術師・奧義",
+        "cost": 25,
+        "mult": 2.884,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "極光冰術師・奧義",
+        "cost": 25,
+        "mult": 2.884,
+        "targets": 4
+      },
+      "passive": "冰甲：受傷 −20%；霜序：特殊技能冷卻縮減 +5%、魔法傷害 +3%；原生技能倍率 +3%、基礎耗魔 ×1.05；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A221",
+      "name": "極光聖賢",
+      "role": "霜序 · 精進",
+      "baseSkill": {
+        "name": "極光聖降",
+        "cost": 26,
+        "mult": 2.9705,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "極光聖降",
+        "cost": 26,
+        "mult": 2.9705,
+        "targets": 4
+      },
+      "passive": "極光共鳴：受傷 −20%；霜序 · 精進：特殊技能冷卻縮減 +7.5%、魔法傷害 +4.5%；原生技能倍率 +6.09%、基礎耗魔 ×1.092；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "A222",
+      "name": "蒼穹冰神",
+      "role": "霜序 · 守望",
+      "baseSkill": {
+        "name": "蒼穹冰葬",
+        "cost": 25,
+        "mult": 2.8552,
+        "targets": 4
+      },
+      "standardGearActualSkill": {
+        "name": "蒼穹冰葬",
+        "cost": 24,
+        "mult": 2.8552,
+        "targets": 4
+      },
+      "passive": "蒼冰結界：受傷 −20%；霜序 · 守望：特殊技能冷卻縮減 +5%、魔法傷害 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +1.97%、基礎耗魔 ×1.05；元素親和：相剋效果 +10%"
+    },
+    {
+      "class": "mage",
+      "path": "B11",
+      "name": "時序預言者",
+      "role": "時流",
+      "baseSkill": {
+        "name": "時序預言者・奧義",
+        "cost": 22,
+        "mult": 2.6,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "時序預言者・奧義",
+        "cost": 21,
+        "mult": 2.6,
+        "targets": 1
+      },
+      "passive": "時之沙：EXP +10%；時流：魔力效率 +6%、魔力 +10%；原生技能倍率 +0%、基礎耗魔 ×1；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B111",
+      "name": "時光主宰",
+      "role": "時流 · 精進",
+      "baseSkill": {
+        "name": "時序崩解",
+        "cost": 23,
+        "mult": 2.678,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "時序崩解",
+        "cost": 21,
+        "mult": 2.678,
+        "targets": 1
+      },
+      "passive": "時輪共鳴：EXP +10%；時流 · 精進：魔力效率 +9%、魔力 +15%；原生技能倍率 +3%、基礎耗魔 ×1.04；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B112",
+      "name": "命運編織者",
+      "role": "時流 · 守望",
+      "baseSkill": {
+        "name": "命運斷章",
+        "cost": 22,
+        "mult": 2.574,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "命運斷章",
+        "cost": 20,
+        "mult": 2.574,
+        "targets": 1
+      },
+      "passive": "命運結界：EXP +10%；時流 · 守望：魔力效率 +9%、魔力 +10%、生命 +6%、護盾效果 +6%；原生技能倍率 −1%、基礎耗魔 ×1；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B12",
+      "name": "虛空旅法師",
+      "role": "虛詠",
+      "baseSkill": {
+        "name": "虛空旅法師・奧義",
+        "cost": 23,
+        "mult": 2.678,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "虛空旅法師・奧義",
+        "cost": 23,
+        "mult": 2.678,
+        "targets": 1
+      },
+      "passive": "時之沙：EXP +10%；虛詠：免費施法率 +5%、魔法傷害 +3%；原生技能倍率 +3%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B121",
+      "name": "虛空法神",
+      "role": "虛詠 · 精進",
+      "baseSkill": {
+        "name": "虛空湮滅",
+        "cost": 24,
+        "mult": 2.7583,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "虛空湮滅",
+        "cost": 24,
+        "mult": 2.7583,
+        "targets": 1
+      },
+      "passive": "虛空共鳴：EXP +10%；虛詠 · 精進：免費施法率 +7.5%、魔法傷害 +4.5%；原生技能倍率 +6.09%、基礎耗魔 ×1.0712；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B122",
+      "name": "次元界行者",
+      "role": "虛詠 · 守望",
+      "baseSkill": {
+        "name": "次元裂隙",
+        "cost": 23,
+        "mult": 2.6512,
+        "targets": 1
+      },
+      "standardGearActualSkill": {
+        "name": "次元裂隙",
+        "cost": 22,
+        "mult": 2.6512,
+        "targets": 1
+      },
+      "passive": "次元結界：EXP +10%；虛詠 · 守望：免費施法率 +5%、魔法傷害 +3%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +1.97%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B21",
+      "name": "星靈召喚師",
+      "role": "靈契",
+      "baseSkill": {
+        "name": "星靈召喚師・奧義",
+        "cost": 27,
+        "mult": 2.4,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "星靈召喚師・奧義",
+        "cost": 27,
+        "mult": 2.64,
+        "targets": 3
+      },
+      "passive": "使魔護盾：受傷 −25%；靈契：召喚傷害 +10%、護盾效果 +10%；原生技能倍率 +0%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B211",
+      "name": "萬靈聖召者",
+      "role": "靈契 · 精進",
+      "baseSkill": {
+        "name": "萬靈降臨",
+        "cost": 28,
+        "mult": 2.472,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "萬靈降臨",
+        "cost": 28,
+        "mult": 2.8427999999999995,
+        "targets": 3
+      },
+      "passive": "萬靈共鳴：受傷 −25%；靈契 · 精進：召喚傷害 +15%、護盾效果 +15%；原生技能倍率 +3%、基礎耗魔 ×1.0712；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B212",
+      "name": "星界君王",
+      "role": "靈契 · 守望",
+      "baseSkill": {
+        "name": "星界御令",
+        "cost": 27,
+        "mult": 2.376,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "星界御令",
+        "cost": 26,
+        "mult": 2.6136,
+        "targets": 3
+      },
+      "passive": "星界結界：受傷 −25%；靈契 · 守望：召喚傷害 +10%、護盾效果 +16%、生命 +6%、魔力效率 +3%；原生技能倍率 −1%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B22",
+      "name": "深淵契約者",
+      "role": "冥契",
+      "baseSkill": {
+        "name": "深淵契約者・奧義",
+        "cost": 27,
+        "mult": 2.448,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "深淵契約者・奧義",
+        "cost": 27,
+        "mult": 2.448,
+        "targets": 3
+      },
+      "passive": "使魔護盾：受傷 −25%；冥契：魔法傷害 +4%、每次施法回血 +0.4%；原生技能倍率 +2%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B221",
+      "name": "深淵魔契王",
+      "role": "冥契 · 精進",
+      "baseSkill": {
+        "name": "深淵魔召",
+        "cost": 28,
+        "mult": 2.5214,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "深淵魔召",
+        "cost": 28,
+        "mult": 2.5214,
+        "targets": 3
+      },
+      "passive": "魔契共鳴：受傷 −25%；冥契 · 精進：魔法傷害 +6%、每次施法回血 +0.6%；原生技能倍率 +5.06%、基礎耗魔 ×1.0712；法力回流：15% 機率不耗魔"
+    },
+    {
+      "class": "mage",
+      "path": "B222",
+      "name": "幽冥萬象師",
+      "role": "冥契 · 守望",
+      "baseSkill": {
+        "name": "冥界開門",
+        "cost": 27,
+        "mult": 2.4235,
+        "targets": 3
+      },
+      "standardGearActualSkill": {
+        "name": "冥界開門",
+        "cost": 26,
+        "mult": 2.4235,
+        "targets": 3
+      },
+      "passive": "幽冥結界：受傷 −25%；冥契 · 守望：魔法傷害 +4%、每次施法回血 +0.4%、生命 +6%、魔力效率 +3%、護盾效果 +6%；原生技能倍率 +0.98%、基礎耗魔 ×1.03；法力回流：15% 機率不耗魔"
+    }
+  ]
+}

@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { freshDb } from './d1-shim.js';
@@ -38,7 +39,7 @@ const create=(env,id,body)=>X.create(env,id,op(id,body),T0);
 const buy=(env,id,listingId)=>X.buy(env,id,op(id,{listingId}),T0);
 const cancel=(env,id,listingId)=>X.cancel(env,id,op(id,{listingId}),T0);
 async function api(env,tg,action,body={}) {
-  const r=await handle(new Request('http://local/app/api/exchange/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':tg,'X-Debug-Now':String(T0)},body:JSON.stringify(body)}),env);
+  const r=await handle(new CurrentClientRequest('http://local/app/api/exchange/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':tg,'X-Debug-Now':String(T0)},body:JSON.stringify(body)}),env);
   return {status:r.status,body:await r.json()};
 }
 const audit=db=>({listings:scalar(db,'SELECT COUNT(*) n FROM rpg_exchange_listings').n,receipts:scalar(db,'SELECT COUNT(*) n FROM rpg_exchange_operations').n,ledger:scalar(db,"SELECT COUNT(*) n FROM rpg_ledger WHERE event_id LIKE 'exchange:%'").n});
@@ -237,7 +238,7 @@ test('escrow triggers protect every old equipment UPDATE/DELETE and cannot reviv
   for(const sql of ["UPDATE rpg_equipment SET is_equipped=1 WHERE id=?","UPDATE rpg_equipment SET enhance_level=1 WHERE id=?","UPDATE rpg_equipment SET bound=0 WHERE id=?","UPDATE rpg_equipment SET trade_id=NULL WHERE id=?","DELETE FROM rpg_equipment WHERE id=?"])await assert.rejects(db.prepare(sql).bind(gear.id).run(),/exchange_equipment_locked/);
   await assert.rejects(A.start(env,'111',{itemId:gear.id,target:5},T0),e=>e.code==='busy');
   for(const action of ['sell-gear','enhance','reroll','equip','unbind']) {
-    const response=await handle(new Request('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'111','X-Debug-Now':String(T0)},body:JSON.stringify({itemId:gear.id,requestId:'old-'+action})}),env);assert.equal((await response.json()).ok,false,action);
+    const response=await handle(new CurrentClientRequest('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'111','X-Debug-Now':String(T0)},body:JSON.stringify({itemId:gear.id,requestId:'old-'+action})}),env);assert.equal((await response.json()).ok,false,action);
   }
   assert.equal(gold(db,'111'),2000000);assert.equal(scalar(db,'SELECT COUNT(*) n FROM rpg_equipment WHERE id=?',gear.id).n,1);
 });
@@ -246,5 +247,5 @@ test('Mini App authenticates the account and ignores spoofed seller, buyer or tg
   const {env,db}=await setup();let r=await api(env,'111','create',op('111',{item:'scroll_w',price:20,tgId:'222',seller:'222'}));assert.equal(r.status,200);assert.equal(r.body.result.listing.seller.characterId,'111');
   const id=r.body.result.listingId;r=await api(env,'222','buy',op('222',{listingId:id,buyer:'333',tgId:'333'}));assert.equal(r.status,200);assert.equal(qty(db,'222','scroll_w'),101);assert.equal(qty(db,'333','scroll_w'),100);
   r=await api(env,'111','create',{item:'scroll_w',price:20,characterId:'111'});assert.equal(r.status,400);assert.equal(r.body.error,'request');
-  const unauth=await handle(new Request('http://local/app/api/exchange/list',{method:'POST',body:'{}'}),env);assert.equal(unauth.status,401);
+  const unauth=await handle(new CurrentClientRequest('http://local/app/api/exchange/list',{method:'POST',body:'{}'}),env);assert.equal(unauth.status,401);
 });

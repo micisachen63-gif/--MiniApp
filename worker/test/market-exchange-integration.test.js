@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 // Exercise the real public host/request adapter against the Mini App router and
 // transactional SQLite. A mocked UUID would miss host/service contract drift.
 import test from 'node:test';
@@ -45,7 +46,7 @@ function actualHost(env,id,{dropAfterCommit}={}) {
     renderHud(){},openCharacterSelect(){},refreshMe:async options=>{refreshes.push(options);},sheet(){throw Error('detail view is not part of this API fixture');},closeSheet(){},
     fetch:async (url,options)=>{
       const body=JSON.parse(options.body);sent.push({url,body,headers:{...options.headers}});
-      const response=await handle(new Request('http://isolated'+url,{...options,headers:{...options.headers,'X-Debug-Now':String(T0)}}),env);
+      const response=await handle(new CurrentClientRequest('http://isolated'+url,{...options,headers:{...options.headers,'X-Debug-Now':String(T0)}}),env);
       if(drop===url&&response.ok){drop=null;throw Error('simulated transport lost AFTER commit');}
       return response;
     }});

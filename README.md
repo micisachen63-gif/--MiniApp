@@ -52,7 +52,7 @@ star-journal-rpg/
 ├── bot/                     # 歷史長輪詢備份，不啟動
 │   ├── service.mjs          # 機器人啟動入口與服務管理
 │   ├── bot.mjs              # 訊息分發、群組指令、權限過濾
-│   ├── watchdog.mjs         # 看門狗進程（保證服務 7x24 不中斷）
+│   ├── watchdog.mjs         # 舊本機看門狗，已停用
 │   ├── game-fetch.mjs       # 安全 API 傳輸底層
 │   ├── flows/               # 核心 RPG 互動流程
 │   │   ├── rpg-flow.js      # RPG 核心卡片與互動選單
@@ -110,4 +110,6 @@ npm run deploy:bot
 
 - **零金鑰外洩**：所有敏感性設定檔（包含 `*.local.json`、`.env`）已全數由 `.gitignore` 隔離保護。
 - **無狀態認證**：Telegram Mini App 採用標準 Telegram `initData` HMAC-SHA256 密碼學校驗。
-- **後端鑑權**：Bot 與 Worker 之間採用專屬 `X-Service-Secret` 雙向簽章，確保外部無法直接偽造首領攻擊或玩家獎勵發放。
+- **後端鑑權**：Bot 透過 Cloudflare Service Binding 呼叫遊戲 API，並以 `X-Service-Secret` 共享密鑰驗證服務身分；這不是逐筆請求簽章。秘密只存放在 Cloudflare。
+
+測試使用 Node.js 24（已驗證 24.19.0）與根目錄 `npm ci`。根目錄 `npm test` 執行完整 Worker 與雲端 Bot 測試；`npm run test:worker`／`npm run test:bot` 分別執行完整服務測試。子目錄 `npm test` 使用相同入口，新增測試檔自動納入，任何失敗均會讓發布中止。

@@ -97,3 +97,9 @@ body.greek.v2 .guardian-summary-copy>h3{font-size:20px;letter-spacing:2px;margin
 body.greek.v2 .guardian-summary-empty{display:block;color:#efe4ca;font-size:13px;line-height:1.7}
 body.greek.v2 .guardian-summary.has-guardian-art .guardian-summary-copy{max-width:56%;text-shadow:0 1px 4px #041020}
 @media(min-width:600px){body.greek.v2 .guardian-summary.has-guardian-art{min-height:260px;padding:24px}body.greek.v2 .guardian-summary.has-guardian-art .guardian-summary-copy{max-width:46%}}
+
+/* Angel card video: never crop on wider screens; media keeps 3:2 */
+body.greek.v2 .guardian-summary-video{opacity:0;transition:opacity .6s ease}
+body.greek.v2 .guardian-summary.is-summary-video-ready .guardian-summary-video{opacity:1}
+body.greek.v2 .guardian-summary:not(.is-summary-video-ready) .guardian-summary-video{pointer-events:none}
+@media(min-width:520px){body.greek.v2 .guardian-summary.has-guardian-art{aspect-ratio:3/2;min-height:0;height:auto}body.greek.v2 .guardian-summary .guardian-summary-background{object-fit:contain!important;object-position:center!important}}

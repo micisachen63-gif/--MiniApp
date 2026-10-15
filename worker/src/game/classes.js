@@ -1,8 +1,8 @@
 // Class advancement (needs the map boss material) and 命運轉職書 re-selection (pure).
 import { CLASSES, BRANCH_KEYS, BRANCH2_KEYS, BRANCHES2, ITEMS, RESELECT_COOLDOWN_MS, MAX_OPEN_CLASS_TIER } from './constants.js';
 import { classTier } from './stats.js';
-import {MAGE_FOURTH,renamedPassive} from './mage-fourth.js';
 import { THIEF_NODES } from './thief-data.js';
+import {specializeNode} from './advanced-specializations.js';
 
 export class GameError extends Error { constructor(code, message, status = 400) { super(message); this.code = code; this.status = status; } }
 
@@ -15,8 +15,7 @@ export function branchChoices(baseClass, tier = 1, path = '') {
   if (tier === 1) return BRANCH_KEYS.map((k) => ({ branch: k, path: k, tier: 1, ...CLASSES[baseClass].branches[k] }));
   if (tier === 2 && path && path[0]) { const p = CLASSES[baseClass].branches[path[0]];
     return BRANCH2_KEYS.map((k) => ({ branch: k, path: path[0] + k, tier: 2, line: `${p.name}系`, weapon: p.weapon, ...BRANCHES2[baseClass][path[0]][k] })); }
-  if(tier===4&&baseClass==='mage')return BRANCH2_KEYS.map(k=>({branch:k,path:path+k,tier,...nodeAt(baseClass,path+k)}));
-  if (tier >= 3 && tier <= 4) return BRANCH2_KEYS.map(k => ({branch:k,path:path+k,tier,...nodeAt(baseClass,path),name:`${nodeAt(baseClass,path).name} · ${tier===3?'英雄傳承':'神域覺醒'} ${k}`}));
+  if (tier >= 3 && tier <= 4) return BRANCH2_KEYS.map(k=>({branch:k,path:path+k,tier,...nodeAt(baseClass,path+k)}));
   return [];
 }
 const keysFor = (tier) => (tier === 1 ? BRANCH_KEYS : BRANCH2_KEYS);
@@ -27,8 +26,7 @@ const nodeAt = (baseClass, path) => {
    return node;
  }
  if(path.length===1)return CLASSES[baseClass].branches[path];
- const base=BRANCHES2[baseClass][path[0]][path[1]],fourth=baseClass==='mage'?MAGE_FOURTH[path]:null;
- return {...base,name:fourth?.name||`${base.name}${path.length>=3?' · 英雄傳承':''}${path.length>=4?' · 神域覺醒':''}`,skill:fourth?{...base.skill,name:fourth.skillName}:base.skill,passive:fourth?{...base.passive,text:renamedPassive(base.passive.text,fourth.passiveName)}:base.passive};
+ return specializeNode(baseClass,path,BRANCHES2[baseClass][path[0]][path[1]]);
 };
 
 /** first advancement at Lv30 (P1). mutates c / inv; returns summary */

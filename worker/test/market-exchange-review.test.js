@@ -1,3 +1,4 @@
+import {MONSTER_ART_REVISION} from '../src/game/monster-art-compatibility.js';
 // Independent integrity audit. Real migrations and SQLite transactions; no live players.
 import test from 'node:test';
 import assert from 'node:assert/strict';
@@ -35,7 +36,7 @@ async function fixture() {
     await insertEquipStmt(env.DB, e).run(); return e;
   };
   const api = async (account, action, body = {}) => {
-    const res = await handle(new Request('https://local/app/api/' + action, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': account, 'X-Debug-Now': String(T0) }, body: JSON.stringify({characterId:body.selectedCharacterId||account,...body}) }), env);
+    const res = await handle(new Request('https://local/app/api/' + action, { method: 'POST', headers: { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': account, 'X-Debug-Now': String(T0),'X-Monster-Art-Revision':MONSTER_ART_REVISION }, body: JSON.stringify({characterId:body.selectedCharacterId||account,...body}) }), env);
     return { status: res.status, ...await res.json() };
   };
   const guardian = async (type='melee',quality=4,tg='111') => {

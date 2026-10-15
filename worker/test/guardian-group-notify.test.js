@@ -14,10 +14,7 @@ import * as M from '../src/services/market-exchange.js';
 import {activeSettings,TYPES,QUALITY_ORDER} from '../src/game/guardian-sigil-config.js';
 import {mulberry32} from '../src/game/rng.js';
 const runtime=process.env.GUARDIAN_NOTIFY_COMPILED_URL?(await import(process.env.GUARDIAN_NOTIFY_COMPILED_URL)).default.fetch:handle;
-const botRoot='C:/Users/User/Documents/ChatGPT/爆分監控/src/';
-let adapterSource=readFileSync(new URL('../../integration/rpg-flow.js',import.meta.url),'utf8');
-for(const name of ['rpg-party-flow.js','rpg-pk-animation-flow.js','rpg-api.js','rpg-boss-card.js'])adapterSource=adapterSource.replace(`'./${name}'`,JSON.stringify(pathToFileURL(botRoot+name).href));
-const Adapter=await import('data:text/javascript;base64,'+Buffer.from(adapterSource).toString('base64'));
+const Adapter=await import('../../cloud-bot/src/adapter/rpg-flow.js');
 async function fixture(){
  const db=freshDb();db.sqlite.exec('PRAGMA foreign_keys=ON');
  const env={DB:db,ENVIRONMENT:'development',ALLOW_DEBUG_TIME:'true',SERVICE_SECRET:'offline-test-secret-0001',GROUP_CHAT_ID:'-1001234567890'};

@@ -1,3 +1,4 @@
+import {CurrentClientRequest} from './client-request.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { freshDb } from './d1-shim.js';
@@ -17,7 +18,7 @@ import { SPECIAL_SKILLS } from '../src/game/special.js';
 const compiledUrl=process.env.MARKET_HISTORY_COMPILED_URL||process.env.GUARDIAN_HISTORY_COMPILED_URL;
 const runtime=compiledUrl?(await import(compiledUrl)).default.fetch:handle;
 async function action(env,account,path,body={},now=T0) {
-  const response=await runtime(new Request('http://local/app/api/'+path,{method:'POST',headers:{'Content-Type':'application/json',...(account?{'X-Dev-Tg-Id':account}:{}),'X-Debug-Now':String(now)},body:JSON.stringify(body)}),env,{waitUntil(p){void Promise.resolve(p).catch(()=>{});}});
+  const response=await runtime(new CurrentClientRequest('http://local/app/api/'+path,{method:'POST',headers:{'Content-Type':'application/json',...(account?{'X-Dev-Tg-Id':account}:{}),'X-Debug-Now':String(now)},body:JSON.stringify(body)}),env,{waitUntil(p){void Promise.resolve(p).catch(()=>{});}});
   return {status:response.status,...await response.json()};
 }
 async function compiledAction(env,tg,path,body={},now=T0) {

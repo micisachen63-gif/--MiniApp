@@ -4,19 +4,22 @@
   "private": true,
   "description": "Star Journal RPG (星穹旅誌) - Unified Monorepo (Worker + Cloud Bot + Local Bot)",
   "scripts": {
-    "test:worker": "node --test worker/test/rules.test.js worker/test/api.test.js worker/test/class-combat-parity.test.js worker/test/expedition.test.js worker/test/party-event-sync.test.js worker/test/pk-event-sync.test.js worker/test/boss.test.js worker/test/elements.test.js worker/test/idle.test.js worker/test/idle-event-sync.test.js worker/test/idle-report-accounting.test.js worker/test/collection-blessings.test.js worker/test/v05.test.js worker/test/gacha.test.js worker/test/gacha-api.test.js worker/test/gacha-announcements.test.js worker/test/gacha-miniapp.test.js worker/test/thief-class.test.js worker/test/thief-combat.test.js worker/test/thief-ui.test.js worker/test/thief-meta.test.js worker/test/thief-art.test.js worker/test/thief-playback.test.js worker/test/thief-schema.test.js worker/test/thief-gear-art.test.js worker/test/thief-schema-rehearsal.test.js",
-    "test:bot": "node --test cloud-bot/src/adapter/test/*.test.js",
-    "test": "npm run test:worker && npm run test:bot",
+    "test:worker": "node scripts/run-tests.mjs worker",
+    "test:bot": "node scripts/run-tests.mjs bot",
+    "test": "node scripts/run-tests.mjs all",
     "sync:check": "node scripts/release-sync.mjs check all",
     "sync:check:worker": "node scripts/release-sync.mjs check worker",
     "sync:check:bot": "node scripts/release-sync.mjs check bot",
-    "deploy:worker": "node scripts/release-sync.mjs deploy worker",
-    "deploy:bot": "node scripts/release-sync.mjs deploy bot",
+    "deploy:worker": "node scripts/deploy-locked.mjs worker",
+    "deploy:bot": "node scripts/deploy-locked.mjs bot",
     "test:monsters": "node --test worker/test/monster-*.test.js",
     "monster:check": "node worker/tools/refresh-monster-catalog.mjs --check",
     "monster:review": "cd worker && node tools/build-monster-review-data.mjs"
   },
   "devDependencies": {
     "wrangler": "4.148.0"
+  },
+  "engines": {
+    "node": ">=24 <25"
   }
 }
