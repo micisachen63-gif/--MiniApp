@@ -1,0 +1,21 @@
+{
+  "status": "VERIFIED_INCLUDED_IN_CURRENT_PRODUCTION",
+  "implementationCommit": "123a5447ac9ed10fe20e8d806da18d35d95eb147",
+  "verifiedSourceCommit": "1c0382bc23f2bbde15005f61a92e40205c4c6db4",
+  "productionVersion": "5f508cf1-9b1b-434d-b316-62fab64618e6",
+  "activePercentage": 100,
+  "runtimeSHA256": {
+    "index.js": "58bbc076556cea1316ccd1be165e15430771cbd4f23da398343e538ae3ac1a28"
+  },
+  "assetsVerificationReceipt": "docs/deployment/elf-rpg-api.json",
+  "verifiedAssetCount": 125,
+  "health": {
+    "ok": true,
+    "service": "elf-rpg-api"
+  },
+  "at": "2026-10-15T08:43:39.164Z",
+  "originalPublication": "ab1bf3b4-5492-470a-bd88-6fe430fd43fa",
+  "recovery": "A concurrent release from the updated main superseded the initial publication. Its runtime hashes equal this feature build and its source includes implementationCommit. Verified current deployment with official Wrangler CLI. No second publication by this task.",
+  "protectedBindingsAndSchedulesUnchanged": true,
+  "advancedMechanicsEnabled": false
+}

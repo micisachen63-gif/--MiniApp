@@ -59,7 +59,7 @@ idle-event-sync、idle-report-accounting、collection-blessings、v05、rules、
 
 完整測試庫的既有問題
 基線全量為 789 項／704 通過／85 失敗。該基線含另一視窗的未提交介面，前端錯誤僅供參考。
-本版全量為 803 項／725 通過／78 失敗；新增失敗名稱為 0。詳見 regression-summary.json。
+整合最新怪物主線後全量為 813 項／735 通過／78 失敗；新增失敗名稱為 0。詳見 regression-summary.json。
 多數舊失敗涉及舊測試未帶 X-Monster-Art-Revision、遺失美術測試依賴、前端舊 harness 與歷史經濟假設。
 不可把剩餘 78 項標成通過；本次只更新發布必跑及直接相關的過時案例，不以降低驗證門檻通過發布。
 
@@ -78,3 +78,8 @@ BOT 無程式異動，這次只發布遊戲 Worker，不重啟或部署舊本機
 scripts/release-sync.mjs 改由官方 wrangler auth token --json 提供認證，憑證只留在記憶體。
 禁止輸出 auth 回應、讀取／提交玩家執行期狀態、覆蓋遠端 Secrets 或重新 seed。
 正式發布證據以 docs/deployment/elf-rpg-api.json 的 commit、版本、runtime 與 public 核對為準。
+
+正式完成狀態：目前線上 5f508cf1-9b1b-434d-b316-62fab64618e6，100%；包含本次 123a544 戰鬥修正。
+怪物視窗後續從 1c0382b 發布，runtime 與本分支已驗證建置完全相同；125 個 public 檔案由共用正式收據核對。
+初次發布後曾因另一視窗部署的 CRLF/LF 素材換行差異中斷核對，後依最新正式收據完成承接，不重複部署。
+本次接手證據見 release-verification.json；三、四轉專屬資源機制仍是設計稿。

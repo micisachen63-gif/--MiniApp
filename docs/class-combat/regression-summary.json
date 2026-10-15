@@ -8,8 +8,8 @@
     "failed": 85
   },
   "result": {
-    "tests": 803,
-    "passed": 725,
+    "tests": 813,
+    "passed": 735,
     "failed": 78
   },
   "newFailureNames": [],
@@ -102,5 +102,11 @@
     "worker\\test\\guardian-group-notify.test.js",
     "worker\\test\\mage-redesign.test.js"
   ],
-  "scope": "No remote player operations or deployment in tests."
+  "scope": "No remote player operations or deployment in tests.",
+  "preIntegrationResult": {
+    "tests": 803,
+    "passed": 725,
+    "failed": 78
+  },
+  "resultSource": "123a544 (integrates monster main through 993fcb0; subsequent source changes are tests/docs only)"
 }
