@@ -1,18 +1,22 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "4064e0535acfd9d2a2c2339f8e8a423d65666ec0",
+  "sourceCommit": "1c0382bc23f2bbde15005f61a92e40205c4c6db4",
   "service": "elf-rpg-api",
-  "productionVersion": "4317ced9-a026-40ba-8661-980c4e7da5f7",
+  "productionVersion": "5f508cf1-9b1b-434d-b316-62fab64618e6",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T08:10:06.657Z",
+  "verifiedAt": "2026-10-15T08:41:28.763Z",
   "runtimeSHA256": {
-    "index.js": "fe76f1db10ce92e862cb137572579b44fec961825a8cf3fdb8b0731306ddee75"
+    "index.js": "58bbc076556cea1316ccd1be165e15430771cbd4f23da398343e538ae3ac1a28"
   },
   "source": {
-    "fileCount": 7168,
-    "sha256": "b153416f7454e55a4218c6edc788f31b326f2bc88cf143a30707f8b04f613682",
+    "fileCount": 7170,
+    "sha256": "c10244c01d9f05760cb0d1de1614bc01ce238c012c56abdfba7dcc165bc4624d",
     "files": [
+      {
+        "file": "worker/art-manifests/monster-expansion.json",
+        "sha256": "6df9deee2ea4ff0a27f042733b0e661d107d18352355659929af6532c6ee3dbd"
+      },
       {
         "file": "worker/build.toml",
         "sha256": "44d3e9d8deff906a6c278afa1673648afe5ae1a209aba4e4dfc898556c0b8079"
@@ -119,7 +123,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "a677a26ea2fd5c445ddbf24ae494c462d36e8b09dce370d2de1833fbc2d6d631"
+        "sha256": "829b852fb02bfb0714c10241fafc098f2cab6f293c9551d4c3bc241fbe712ee5"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -27227,7 +27231,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "ddb7ed542a190184dc79824af92dedd1158bac6d631d56309891ef246a580960"
+        "sha256": "7bd67433408f5d9380d3e992603c3466e2d09d9794ae6e75018aea9a4ba534d0"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -28059,7 +28063,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "611ea9c6061975f132459c20bc57cacc9dbb8f4f123a14c7b5ca1b55af213b53"
+        "sha256": "7af135171b85e87745bf9d2ee6bba3aed48587ca792ca745436671710ca9f736"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28155,15 +28159,15 @@
       },
       {
         "file": "worker/public/monster-expansion-catalog.js",
-        "sha256": "92e533b97d60152e357635b05edad5655b2db4c1e3dbd82c93884041c43a4b86"
+        "sha256": "ef2a7046bb8bb579da5198c8102bb810c180b3c0daabff620e65d2d8f83c93d3"
       },
       {
         "file": "worker/public/monster-expansion-review-data.json",
-        "sha256": "a87d9269eb9c42d7c2e80fa6c9585d6e44513a0325c820995668d3e880f7af95"
+        "sha256": "e7476279c18af13f81e4a2456a5b27d02555cfe7290db1f00d9eca497b8a9fd7"
       },
       {
         "file": "worker/public/monster-expansion-review.html",
-        "sha256": "77c006fbd0aa9f6edfd4dcce61b1cabbcfe209fa4115def5ce5def61c43016aa"
+        "sha256": "c7f2cafc78bd06b3024b70f431acde91c7571f6752f8394dfb853b16b419056e"
       },
       {
         "file": "worker/public/monster-expansion.js",
@@ -28175,7 +28179,7 @@
       },
       {
         "file": "worker/public/monster-layout.json",
-        "sha256": "a630a822ad8efc2fc264c8256b018409a7e558208cc3922ace726ea4060b82fb"
+        "sha256": "9719fe9dceef28a56836380bba1afca898b28084644990e109442fbd2750d174"
       },
       {
         "file": "worker/public/monster-review-heroes.json",
@@ -28203,7 +28207,7 @@
       },
       {
         "file": "worker/public/olympus-unified.css",
-        "sha256": "041fdffae17a07c6222b6622d14124739cb0daf57b32ba922c40e246d2599ad2"
+        "sha256": "0ccc4968bedd04abf513ecc396b1963e69b1a83087adefc1e7c567b91352abee"
       },
       {
         "file": "worker/public/operation-notices.js",
@@ -28435,7 +28439,7 @@
       },
       {
         "file": "worker/src/game/boss.js",
-        "sha256": "01e25adf95aebc46f5791fd673718fb27b6172213ff3a03aef7a5b27b611dd84"
+        "sha256": "007d1524a237d3e05adb3e3d93f80d6aba36dbef284a8d1389817a13bf264e58"
       },
       {
         "file": "worker/src/game/classes.js",
@@ -28444,6 +28448,10 @@
       {
         "file": "worker/src/game/collection-blessings.js",
         "sha256": "e8fd3b03d1b1011b1e43c0072a2661b08af9f7a3c8e696e0191998628d2c650d"
+      },
+      {
+        "file": "worker/src/game/combat-passives.js",
+        "sha256": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf"
       },
       {
         "file": "worker/src/game/constants.js",
@@ -28499,11 +28507,11 @@
       },
       {
         "file": "worker/src/game/idle-combat.js",
-        "sha256": "df94f875f2ea8e272023e95e46fe63b9d98e2c7109648d1724f41052d18b31c8"
+        "sha256": "fac47c27a920269054bca9c37166c7c1a8fa4fa2d7f3155542f2677987072b3d"
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "a018aa791ca8cd020394ad18554b829af6ef79445f1da562f95f8f1f5884b31b"
+        "sha256": "5be29abea5a05dbea0116968713cf0632305afa66e0c3e7a54504e153c2b9792"
       },
       {
         "file": "worker/src/game/mage-fourth.js",
@@ -28523,15 +28531,15 @@
       },
       {
         "file": "worker/src/game/monster-readiness.js",
-        "sha256": "e00401aa680d9a65fce8bb893d526b1ba58c1cd5134bd280e7f454821520d49c"
+        "sha256": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef"
       },
       {
         "file": "worker/src/game/monsters.js",
-        "sha256": "0ac61859c8de28b8c6ab9de7913addc7f7860739e92bc4f10e836e12e1767cea"
+        "sha256": "81e639c10c6572ac53af4973b019656d2e6f5947cc4d2538efe775f75ae5d5d3"
       },
       {
         "file": "worker/src/game/pk.js",
-        "sha256": "f677b005371d361a442a21993827596bde99f47094ebc79521d203d45cd4fb6c"
+        "sha256": "390c4111954a01439a55b22ef91708aee65c77f2a17db4886d39df27463058d6"
       },
       {
         "file": "worker/src/game/rng.js",
@@ -28555,15 +28563,15 @@
       },
       {
         "file": "worker/src/game/special-idle.js",
-        "sha256": "25cc827763870131c64fd715bf31563260da5d9b2304edbbca50fd4381299d8d"
+        "sha256": "c54065f43bf0f5d0cf53b601083de43a3a53a44e83e6acf3a2b7b43b4fabafed"
       },
       {
         "file": "worker/src/game/special.js",
-        "sha256": "94ed8c89e3db7edd9006d2af69560de66b1ca14c87fb974e576443b95965341d"
+        "sha256": "8ace8337945372e2758ee15d74e240ceb2f40174e7a08763774d616334b57b92"
       },
       {
         "file": "worker/src/game/stats.js",
-        "sha256": "d86596d2924eb5c61b159dbb48f8721648666c590cd13194e57fba64decd9039"
+        "sha256": "3c0100593d595c3b0d66f8e2576686a24350ee73c48df4b66c71c2cdb7b91bcf"
       },
       {
         "file": "worker/src/game/time.js",
@@ -28635,7 +28643,7 @@
       },
       {
         "file": "worker/src/services/monster-exchange.js",
-        "sha256": "9d78e243f6a429b9f2aac64ae3990fff37811eeaf8a910d371babe0cf4d47f0b"
+        "sha256": "1da438740daa66e62c59194e5fe94c2d2dd5a0accfa473513f2bd43fea6f5711"
       },
       {
         "file": "worker/src/services/operation-notices.js",
@@ -28643,11 +28651,11 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "6e261ca63c7451fc353ee41525f2d5b16c409bcc0fd5b37c79ef1f3a82e67213"
+        "sha256": "f3129c52b0eadd1a5c25453595c0a7f8adadb368c4300cb4bfb17b5d05b774a2"
       },
       {
         "file": "worker/src/services/pk.js",
-        "sha256": "fb2c49d3b758f9f9208c2774fb5457db35fde9897e0b0f2be642195dbfc86c2d"
+        "sha256": "a3fd9b6d4ae77af1313fca089c96f26ea380d853b945214114ba764dd1aa1aac"
       },
       {
         "file": "worker/src/services/player.js",
@@ -28663,7 +28671,7 @@
       },
       {
         "file": "worker/src/services/special.js",
-        "sha256": "940614505768f0d186c5116dbd62da9b71b060ce47218e33e9d0f424031ba7ea"
+        "sha256": "df65541eba95317a369df3a4d838cb3031a2b3b85f805797660122015aeaf772"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -28821,7 +28829,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "4317ced9-a026-40ba-8661-980c4e7da5f7",
+        "version_id": "5f508cf1-9b1b-434d-b316-62fab64618e6",
         "percentage": 100
       }
     ],
