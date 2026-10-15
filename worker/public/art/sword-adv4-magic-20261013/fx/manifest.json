@@ -1,0 +1,6770 @@
+{
+  "A111": {
+    "key": "A111",
+    "code": "A111",
+    "name": "血獄魔神",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.39878542510121456,
+      0.3831578947368421,
+      0.6093117408906883,
+      0.5978947368421053
+    ],
+    "frameBounds": [
+      0.12348178137651822,
+      0.1368421052631579,
+      0.8623481781376519,
+      0.8105263157894737
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 494,
+    "cellHeight": 475,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 1976,
+    "packedHeight": 950,
+    "nativeSource": "fx/native/fx_sword_adv4_A111.png",
+    "nativeSha256": "01b97b0fb0a60e75400557ac34e51dedb31daf134ca03ccd541be650fc62ae03",
+    "pngSha256": "77c752a01de90fb53132143e85a71857acc37c12a9e409f923c509333c2f2a13",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "row-specific transparent gutters",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 454,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 441,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1328,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 441,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": false,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 18,
+          "width": 441,
+          "height": 435
+        },
+        "left": 27,
+        "top": 20,
+        "soleSource": 434,
+        "footCenterSource": 220.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 442,
+          "top": 21,
+          "width": 445,
+          "height": 433
+        },
+        "left": 25,
+        "top": 22,
+        "soleSource": 432,
+        "footCenterSource": 222.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 888,
+          "top": 25,
+          "width": 437,
+          "height": 428
+        },
+        "left": 29,
+        "top": 27,
+        "soleSource": 427,
+        "footCenterSource": 218.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 1329,
+          "top": 21,
+          "width": 419,
+          "height": 425
+        },
+        "left": 38,
+        "top": 30,
+        "soleSource": 424,
+        "footCenterSource": 209.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 17,
+          "top": 459,
+          "width": 424,
+          "height": 418
+        },
+        "left": 35,
+        "top": 37,
+        "soleSource": 417,
+        "footCenterSource": 212,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 442,
+          "top": 455,
+          "width": 445,
+          "height": 416
+        },
+        "left": 25,
+        "top": 39,
+        "soleSource": 415,
+        "footCenterSource": 222.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 888,
+          "top": 459,
+          "width": 453,
+          "height": 428
+        },
+        "left": 21,
+        "top": 27,
+        "soleSource": 427,
+        "footCenterSource": 226.5,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 1342,
+          "top": 461,
+          "width": 412,
+          "height": 426
+        },
+        "left": 41,
+        "top": 29,
+        "soleSource": 425,
+        "footCenterSource": 206,
+        "footBaselineOutput": 454,
+        "footCenterOutput": 247
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          197,
+          182,
+          301,
+          284
+        ],
+        "pixelBounds": [
+          27,
+          20,
+          468,
+          455
+        ],
+        "transparent": 224128,
+        "opaque": 0,
+        "partial": 10522,
+        "edge": 0,
+        "sha256": "f575e3f14650f93676f8591d04b1d59774a635c7b6a31076b9ffc8c8a4a00639"
+      },
+      {
+        "frame": 2,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          150,
+          110,
+          347,
+          353
+        ],
+        "pixelBounds": [
+          25,
+          22,
+          470,
+          455
+        ],
+        "transparent": 206997,
+        "opaque": 1,
+        "partial": 27652,
+        "edge": 0,
+        "sha256": "94932e77c4b3ce8e23e212cb9feb066a578814aa64213e58fb5c469b55441799"
+      },
+      {
+        "frame": 3,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          147,
+          113,
+          345,
+          349
+        ],
+        "pixelBounds": [
+          29,
+          27,
+          466,
+          455
+        ],
+        "transparent": 201128,
+        "opaque": 5,
+        "partial": 33517,
+        "edge": 0,
+        "sha256": "6eebb3693bb7f65886413e6782a83a937b7cda2fc0a7476099858ebb4ddad52b"
+      },
+      {
+        "frame": 4,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          147,
+          100,
+          397,
+          382
+        ],
+        "pixelBounds": [
+          38,
+          30,
+          457,
+          455
+        ],
+        "transparent": 189834,
+        "opaque": 1,
+        "partial": 44815,
+        "edge": 0,
+        "sha256": "c6b98c98bedc80beb87a4f5e8538ac88c540ae7463105950b6f97df158678bf7"
+      },
+      {
+        "frame": 5,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          61,
+          65,
+          419,
+          385
+        ],
+        "pixelBounds": [
+          35,
+          37,
+          459,
+          455
+        ],
+        "transparent": 155012,
+        "opaque": 15,
+        "partial": 79623,
+        "edge": 0,
+        "sha256": "0a125d885942ade21dd331335f3009f8003606e176f5a95f6c4203173de52e38"
+      },
+      {
+        "frame": 6,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          90,
+          90,
+          426,
+          380
+        ],
+        "pixelBounds": [
+          25,
+          39,
+          470,
+          455
+        ],
+        "transparent": 162485,
+        "opaque": 16,
+        "partial": 72149,
+        "edge": 0,
+        "sha256": "5ee20594f6293d20e9dc2acffbcc4720e15fed754f6fbd7263bf709051ae9980"
+      },
+      {
+        "frame": 7,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          125,
+          117,
+          392,
+          320
+        ],
+        "pixelBounds": [
+          21,
+          27,
+          474,
+          455
+        ],
+        "transparent": 204992,
+        "opaque": 31,
+        "partial": 29627,
+        "edge": 0,
+        "sha256": "5010a3da3077bc19ccff7571199c9aa450d43cb648f1429289cfdb82e4742e2b"
+      },
+      {
+        "frame": 8,
+        "width": 494,
+        "height": 475,
+        "bounds": [
+          222,
+          185,
+          304,
+          256
+        ],
+        "pixelBounds": [
+          41,
+          29,
+          453,
+          455
+        ],
+        "transparent": 229044,
+        "opaque": 0,
+        "partial": 5606,
+        "edge": 0,
+        "sha256": "c4133a940d3540cbb194d18ccaca03be3c8a101fb5e9ae7054d59b24465a7a40"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A112": {
+    "key": "A112",
+    "code": "A112",
+    "name": "噬魂劍獄",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.38392857142857145,
+      0.4046153846153846,
+      0.5660714285714286,
+      0.6107692307692307
+    ],
+    "frameBounds": [
+      0.15714285714285714,
+      0.2246153846153846,
+      0.8446428571428571,
+      0.7907692307692308
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 560,
+    "cellHeight": 650,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2240,
+    "packedHeight": 1300,
+    "nativeSource": "fx/native/fx_sword_adv4_A112.png",
+    "nativeSha256": "60198e4f11d794e41af2daa30cac398810dfd8e0c15e3ab5c0672d0d6ef9cf86",
+    "pngSha256": "8892484b1357e31d0a7d6699984b2af7335ff33a54c4305257357f38ae0848ed",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 417,
+        "crossingPixels": 14,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 456,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 879,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1345,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 466,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 869,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1316,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 0,
+          "width": 424,
+          "height": 395
+        },
+        "left": 43,
+        "top": 106,
+        "soleSource": 222,
+        "footCenterSource": 222,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 423,
+          "top": 0,
+          "width": 442,
+          "height": 411
+        },
+        "left": 23,
+        "top": 106,
+        "soleSource": 222,
+        "footCenterSource": 242,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 864,
+          "top": 17,
+          "width": 461,
+          "height": 457
+        },
+        "left": 20,
+        "top": 123,
+        "soleSource": 205,
+        "footCenterSource": 245,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 1313,
+          "top": 9,
+          "width": 455,
+          "height": 515
+        },
+        "left": 26,
+        "top": 115,
+        "soleSource": 213,
+        "footCenterSource": 239,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 21,
+          "top": 357,
+          "width": 468,
+          "height": 530
+        },
+        "left": 64,
+        "top": 20,
+        "soleSource": 308,
+        "footCenterSource": 201,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 467,
+          "top": 394,
+          "width": 455,
+          "height": 493
+        },
+        "left": 67,
+        "top": 57,
+        "soleSource": 271,
+        "footCenterSource": 198,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 912,
+          "top": 452,
+          "width": 472,
+          "height": 435
+        },
+        "left": 68,
+        "top": 115,
+        "soleSource": 213,
+        "footCenterSource": 197,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 1367,
+          "top": 517,
+          "width": 389,
+          "height": 356
+        },
+        "left": 80,
+        "top": 180,
+        "soleSource": 148,
+        "footCenterSource": 185,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 265
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          215,
+          263,
+          317,
+          397
+        ],
+        "pixelBounds": [
+          43,
+          106,
+          467,
+          501
+        ],
+        "transparent": 348792,
+        "opaque": 0,
+        "partial": 15208,
+        "edge": 0,
+        "sha256": "f2244631be619d34607aa15800d0fa0531443dc998913b5ae36b784004be03e3"
+      },
+      {
+        "frame": 2,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          162,
+          225,
+          371,
+          438
+        ],
+        "pixelBounds": [
+          23,
+          106,
+          465,
+          517
+        ],
+        "transparent": 336351,
+        "opaque": 1,
+        "partial": 27648,
+        "edge": 0,
+        "sha256": "f81e529f6ab5fe52860f0dd642f03bd1dfef8fe0a2e70400b124a17578845bf3"
+      },
+      {
+        "frame": 3,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          149,
+          218,
+          369,
+          447
+        ],
+        "pixelBounds": [
+          20,
+          123,
+          481,
+          580
+        ],
+        "transparent": 324167,
+        "opaque": 1,
+        "partial": 39832,
+        "edge": 0,
+        "sha256": "f245263fa7ef01871e1859c6f7e8743bf1ab1b881fc14a2812942d38f96abbd0"
+      },
+      {
+        "frame": 4,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          147,
+          186,
+          411,
+          475
+        ],
+        "pixelBounds": [
+          26,
+          115,
+          481,
+          630
+        ],
+        "transparent": 304012,
+        "opaque": 1,
+        "partial": 59987,
+        "edge": 0,
+        "sha256": "5c0a31b2a8047ccf9e6c89e7a573005a02654a907f325ab90d4f318d94a709d4"
+      },
+      {
+        "frame": 5,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          88,
+          146,
+          473,
+          514
+        ],
+        "pixelBounds": [
+          64,
+          20,
+          532,
+          550
+        ],
+        "transparent": 268550,
+        "opaque": 10,
+        "partial": 95440,
+        "edge": 0,
+        "sha256": "ebdfba5249d8fb04104228e68c708317a1c70df47f878c5710554a58de8a3e1b"
+      },
+      {
+        "frame": 6,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          107,
+          196,
+          439,
+          472
+        ],
+        "pixelBounds": [
+          67,
+          57,
+          522,
+          550
+        ],
+        "transparent": 295428,
+        "opaque": 6,
+        "partial": 68566,
+        "edge": 0,
+        "sha256": "e1e29f45a481ab01889fd6a3c3885fb29a772f451ffd7e87d959c7473dc9b33a"
+      },
+      {
+        "frame": 7,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          171,
+          243,
+          395,
+          430
+        ],
+        "pixelBounds": [
+          68,
+          115,
+          540,
+          550
+        ],
+        "transparent": 340382,
+        "opaque": 12,
+        "partial": 23606,
+        "edge": 0,
+        "sha256": "4bf43ed76e7e8d4ca8b842665ef2dc774b1f3b46e8f5361b464323a58502f9fe"
+      },
+      {
+        "frame": 8,
+        "width": 560,
+        "height": 650,
+        "bounds": [
+          221,
+          311,
+          326,
+          359
+        ],
+        "pixelBounds": [
+          80,
+          180,
+          469,
+          536
+        ],
+        "transparent": 353550,
+        "opaque": 0,
+        "partial": 10450,
+        "edge": 0,
+        "sha256": "c39d42eabee4041bb0dde9c6134ff3615a7db4da5b2888c196890d31a856c539"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A121": {
+    "key": "A121",
+    "code": "A121",
+    "name": "焚天戰帝",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3684210526315789,
+      0.42589928057553955,
+      0.59375,
+      0.6230215827338129
+    ],
+    "frameBounds": [
+      0.1875,
+      0.22302158273381295,
+      0.8536184210526315,
+      0.7683453237410072
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 608,
+    "cellHeight": 695,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2432,
+    "packedHeight": 1390,
+    "nativeSource": "fx/native/fx_sword_adv4_A121.png",
+    "nativeSha256": "a566eba094a9abc75d4a84b7b0a8ae8922282816a2d30e13c7c2a00f907f661e",
+    "pngSha256": "34e8fbe6d5c55153760f855768c36217988cb9251f0cfc4599b6c744f90ed70b",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 393,
+        "crossingPixels": 4,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 456,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 895,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1365,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 492,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 881,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1312,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 9,
+          "width": 427,
+          "height": 358
+        },
+        "left": 67,
+        "top": 140,
+        "soleSource": 213,
+        "footCenterSource": 222,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 426,
+          "top": 19,
+          "width": 459,
+          "height": 408
+        },
+        "left": 50,
+        "top": 150,
+        "soleSource": 203,
+        "footCenterSource": 239,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 840,
+          "top": 15,
+          "width": 497,
+          "height": 447
+        },
+        "left": 20,
+        "top": 146,
+        "soleSource": 207,
+        "footCenterSource": 269,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 1289,
+          "top": 30,
+          "width": 485,
+          "height": 514
+        },
+        "left": 26,
+        "top": 161,
+        "soleSource": 192,
+        "footCenterSource": 263,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 29,
+          "top": 332,
+          "width": 455,
+          "height": 555
+        },
+        "left": 96,
+        "top": 20,
+        "soleSource": 333,
+        "footCenterSource": 193,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 452,
+          "top": 378,
+          "width": 512,
+          "height": 499
+        },
+        "left": 76,
+        "top": 66,
+        "soleSource": 287,
+        "footCenterSource": 213,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 928,
+          "top": 491,
+          "width": 457,
+          "height": 396
+        },
+        "left": 108,
+        "top": 179,
+        "soleSource": 174,
+        "footCenterSource": 181,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      },
+      {
+        "sourceRect": {
+          "left": 1360,
+          "top": 516,
+          "width": 406,
+          "height": 371
+        },
+        "left": 97,
+        "top": 204,
+        "soleSource": 149,
+        "footCenterSource": 192,
+        "footBaselineOutput": 353,
+        "footCenterOutput": 289
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          224,
+          296,
+          361,
+          433
+        ],
+        "pixelBounds": [
+          67,
+          140,
+          494,
+          498
+        ],
+        "transparent": 409156,
+        "opaque": 0,
+        "partial": 13404,
+        "edge": 0,
+        "sha256": "e3bee6412608d29a1f0ccb27b1dc1fa4280391d44eb09b956a18b02486b5c9a3"
+      },
+      {
+        "frame": 2,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          181,
+          258,
+          397,
+          477
+        ],
+        "pixelBounds": [
+          50,
+          150,
+          509,
+          558
+        ],
+        "transparent": 393831,
+        "opaque": 0,
+        "partial": 28729,
+        "edge": 0,
+        "sha256": "013b64197481d0529046ae5744d9f1adce9d8bc87269f0a7da687bbb0613adf7"
+      },
+      {
+        "frame": 3,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          169,
+          247,
+          394,
+          488
+        ],
+        "pixelBounds": [
+          20,
+          146,
+          517,
+          593
+        ],
+        "transparent": 371634,
+        "opaque": 4,
+        "partial": 50922,
+        "edge": 0,
+        "sha256": "890217047e7a249c83f2e061647134043e1b3b7c4df61e3b34200875af9e45b2"
+      },
+      {
+        "frame": 4,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          142,
+          218,
+          423,
+          514
+        ],
+        "pixelBounds": [
+          26,
+          161,
+          511,
+          675
+        ],
+        "transparent": 357246,
+        "opaque": 5,
+        "partial": 65309,
+        "edge": 0,
+        "sha256": "49292f56c64c9047b724001bb2eeb8446652588e5e86861c8eae005270c7d8f3"
+      },
+      {
+        "frame": 5,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          114,
+          155,
+          519,
+          534
+        ],
+        "pixelBounds": [
+          96,
+          20,
+          551,
+          575
+        ],
+        "transparent": 329504,
+        "opaque": 7,
+        "partial": 93049,
+        "edge": 0,
+        "sha256": "d5337ac321342c1697b55f6d16a99a59f3a3e4f645f96709b00f9013660599ce"
+      },
+      {
+        "frame": 6,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          136,
+          188,
+          482,
+          488
+        ],
+        "pixelBounds": [
+          76,
+          66,
+          588,
+          565
+        ],
+        "transparent": 343013,
+        "opaque": 5,
+        "partial": 79542,
+        "edge": 0,
+        "sha256": "6d42eb41be547539cd98d97257d81a0a13ed81bbe9eea71fcede5c6c4046ab09"
+      },
+      {
+        "frame": 7,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          183,
+          259,
+          388,
+          435
+        ],
+        "pixelBounds": [
+          108,
+          179,
+          565,
+          575
+        ],
+        "transparent": 394551,
+        "opaque": 7,
+        "partial": 28002,
+        "edge": 0,
+        "sha256": "e566eccb3f11b02702bf3bf6ab6f5a939985bede67fc9efde8ba52bda0d9962f"
+      },
+      {
+        "frame": 8,
+        "width": 608,
+        "height": 695,
+        "bounds": [
+          247,
+          314,
+          321,
+          380
+        ],
+        "pixelBounds": [
+          97,
+          204,
+          503,
+          575
+        ],
+        "transparent": 416923,
+        "opaque": 0,
+        "partial": 5637,
+        "edge": 0,
+        "sha256": "ae2dd5169f1a31de18c3dbed9cf82646d863107e0e2b772a7d58ab5682bb02e1"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A122": {
+    "key": "A122",
+    "code": "A122",
+    "name": "赤曜神皇",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3867595818815331,
+      0.42260061919504643,
+      0.5627177700348432,
+      0.6253869969040248
+    ],
+    "frameBounds": [
+      0.18989547038327526,
+      0.24613003095975233,
+      0.7613240418118467,
+      0.7507739938080495
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 574,
+    "cellHeight": 646,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2296,
+    "packedHeight": 1292,
+    "nativeSource": "fx/native/fx_sword_adv4_A122.png",
+    "nativeSha256": "2ee9902687371bbe76f38c3962dbd116473b29a74e2a7729ccd13594d63c10fd",
+    "pngSha256": "c49cd8c8355ecd1421749c46ec225b5d9f12d3929d91dbbc2e272a3ecfef97fa",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 385,
+        "crossingPixels": 30,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 456,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 903,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 472,
+        "crossingPixels": 1,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 968,
+        "crossingPixels": 1,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1345,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 12,
+          "width": 423,
+          "height": 386
+        },
+        "left": 50,
+        "top": 118,
+        "soleSource": 210,
+        "footCenterSource": 222,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 418,
+          "top": 10,
+          "width": 467,
+          "height": 419
+        },
+        "left": 25,
+        "top": 116,
+        "soleSource": 212,
+        "footCenterSource": 247,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 867,
+          "top": 9,
+          "width": 456,
+          "height": 457
+        },
+        "left": 30,
+        "top": 115,
+        "soleSource": 213,
+        "footCenterSource": 242,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 1300,
+          "top": 23,
+          "width": 466,
+          "height": 497
+        },
+        "left": 20,
+        "top": 129,
+        "soleSource": 199,
+        "footCenterSource": 252,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 357,
+          "width": 468,
+          "height": 514
+        },
+        "left": 50,
+        "top": 20,
+        "soleSource": 308,
+        "footCenterSource": 222,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 439,
+          "top": 403,
+          "width": 490,
+          "height": 484
+        },
+        "left": 46,
+        "top": 66,
+        "soleSource": 262,
+        "footCenterSource": 226,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 902,
+          "top": 436,
+          "width": 489,
+          "height": 451
+        },
+        "left": 65,
+        "top": 99,
+        "soleSource": 229,
+        "footCenterSource": 207,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      },
+      {
+        "sourceRect": {
+          "left": 1358,
+          "top": 505,
+          "width": 406,
+          "height": 382
+        },
+        "left": 78,
+        "top": 168,
+        "soleSource": 160,
+        "footCenterSource": 194,
+        "footBaselineOutput": 328,
+        "footCenterOutput": 272
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          222,
+          273,
+          323,
+          404
+        ],
+        "pixelBounds": [
+          50,
+          118,
+          473,
+          504
+        ],
+        "transparent": 353821,
+        "opaque": 0,
+        "partial": 16983,
+        "edge": 0,
+        "sha256": "7e19b7dd45243da22175fd386f44e76bc562ec2097cd880232235b211a73b0c2"
+      },
+      {
+        "frame": 2,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          183,
+          252,
+          364,
+          429
+        ],
+        "pixelBounds": [
+          25,
+          116,
+          492,
+          535
+        ],
+        "transparent": 342164,
+        "opaque": 0,
+        "partial": 28640,
+        "edge": 0,
+        "sha256": "ac6cc08f8b6af022b59ae9d90ef515c7c12a75fb58cbeb87ec921d7bdb9d31f9"
+      },
+      {
+        "frame": 3,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          172,
+          235,
+          364,
+          435
+        ],
+        "pixelBounds": [
+          30,
+          115,
+          486,
+          572
+        ],
+        "transparent": 329137,
+        "opaque": 0,
+        "partial": 41667,
+        "edge": 0,
+        "sha256": "d33bb84a3aa92636d35603f0783c9198a19e94cc7c717f21fe739bb79d04bec6"
+      },
+      {
+        "frame": 4,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          141,
+          212,
+          392,
+          460
+        ],
+        "pixelBounds": [
+          20,
+          129,
+          486,
+          626
+        ],
+        "transparent": 310720,
+        "opaque": 0,
+        "partial": 60084,
+        "edge": 0,
+        "sha256": "b654aae030be94f60d23ca38076d995b500dc9f6aca02094cfc7c5343e479915"
+      },
+      {
+        "frame": 5,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          109,
+          159,
+          437,
+          485
+        ],
+        "pixelBounds": [
+          50,
+          20,
+          518,
+          534
+        ],
+        "transparent": 283052,
+        "opaque": 0,
+        "partial": 87752,
+        "edge": 0,
+        "sha256": "a70a2fe937f52d720e2e9f9c99c0481aaece74540afe5f88bc76cc9acd3ea7e2"
+      },
+      {
+        "frame": 6,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          136,
+          193,
+          412,
+          434
+        ],
+        "pixelBounds": [
+          46,
+          66,
+          536,
+          550
+        ],
+        "transparent": 311921,
+        "opaque": 6,
+        "partial": 58877,
+        "edge": 0,
+        "sha256": "e41ce204a4700ba7064387f00a84fb1a337e8631ed55e2372392c107198f9d87"
+      },
+      {
+        "frame": 7,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          177,
+          244,
+          354,
+          412
+        ],
+        "pixelBounds": [
+          65,
+          99,
+          554,
+          550
+        ],
+        "transparent": 337606,
+        "opaque": 2,
+        "partial": 33196,
+        "edge": 0,
+        "sha256": "c7d96cf1ba0b79af7cf85bf2d8331f4503a68650470e466e2d0592f7bbad5977"
+      },
+      {
+        "frame": 8,
+        "width": 574,
+        "height": 646,
+        "bounds": [
+          222,
+          303,
+          318,
+          343
+        ],
+        "pixelBounds": [
+          78,
+          168,
+          484,
+          550
+        ],
+        "transparent": 363157,
+        "opaque": 0,
+        "partial": 7647,
+        "edge": 0,
+        "sha256": "67acaf32df9c91059d4b06461edec754ba5c8049875c41e4b13ef9e755b71d02"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A211": {
+    "key": "A211",
+    "code": "A211",
+    "name": "天穹劍神",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3848684210526316,
+      0.41459627329192544,
+      0.5805921052631579,
+      0.6319875776397516
+    ],
+    "frameBounds": [
+      0.21217105263157895,
+      0.2391304347826087,
+      0.7911184210526315,
+      0.7779503105590062
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 608,
+    "cellHeight": 644,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2432,
+    "packedHeight": 1288,
+    "nativeSource": "fx/native/fx_sword_adv4_A211.png",
+    "nativeSha256": "0940a9b003cf673a6650bf8b228f449f6e753bb76ee10f52ae2fca308352aac2",
+    "pngSha256": "2dcf26014cea12f7ccfac78f3a10af4fd53c76fb90a14dcbe312a9ff71d1f356",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 401,
+        "crossingPixels": 49,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 458,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 895,
+        "crossingPixels": 2,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1345,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 458,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 933,
+        "crossingPixels": 4,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1276,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 19,
+          "width": 425,
+          "height": 374
+        },
+        "left": 68,
+        "top": 127,
+        "soleSource": 203,
+        "footCenterSource": 222,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 426,
+          "top": 17,
+          "width": 453,
+          "height": 419
+        },
+        "left": 51,
+        "top": 125,
+        "soleSource": 205,
+        "footCenterSource": 239,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 870,
+          "top": 13,
+          "width": 451,
+          "height": 463
+        },
+        "left": 51,
+        "top": 121,
+        "soleSource": 209,
+        "footCenterSource": 239,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 1282,
+          "top": 15,
+          "width": 478,
+          "height": 501
+        },
+        "left": 20,
+        "top": 123,
+        "soleSource": 207,
+        "footCenterSource": 270,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 15,
+          "top": 355,
+          "width": 457,
+          "height": 532
+        },
+        "left": 83,
+        "top": 20,
+        "soleSource": 310,
+        "footCenterSource": 207,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 450,
+          "top": 372,
+          "width": 513,
+          "height": 515
+        },
+        "left": 75,
+        "top": 37,
+        "soleSource": 293,
+        "footCenterSource": 215,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 910,
+          "top": 464,
+          "width": 445,
+          "height": 423
+        },
+        "left": 91,
+        "top": 129,
+        "soleSource": 201,
+        "footCenterSource": 199,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      },
+      {
+        "sourceRect": {
+          "left": 1349,
+          "top": 503,
+          "width": 407,
+          "height": 384
+        },
+        "left": 87,
+        "top": 168,
+        "soleSource": 162,
+        "footCenterSource": 203,
+        "footBaselineOutput": 330,
+        "footCenterOutput": 290
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          234,
+          267,
+          353,
+          407
+        ],
+        "pixelBounds": [
+          68,
+          127,
+          493,
+          501
+        ],
+        "transparent": 365648,
+        "opaque": 0,
+        "partial": 25904,
+        "edge": 0,
+        "sha256": "165d5073ff9508fd76d31a6a3f4cd3d4c4c734ac526b6dfadd3c55866e0a32c2"
+      },
+      {
+        "frame": 2,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          189,
+          220,
+          402,
+          457
+        ],
+        "pixelBounds": [
+          51,
+          125,
+          504,
+          544
+        ],
+        "transparent": 357608,
+        "opaque": 1,
+        "partial": 33943,
+        "edge": 0,
+        "sha256": "af0552f66dab79297250de5896c93c0b419e9dca9bd73c106587c9057d93d090"
+      },
+      {
+        "frame": 3,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          197,
+          222,
+          398,
+          467
+        ],
+        "pixelBounds": [
+          51,
+          121,
+          502,
+          584
+        ],
+        "transparent": 344496,
+        "opaque": 0,
+        "partial": 47056,
+        "edge": 0,
+        "sha256": "d149a0acf59574685d5807a611e42a1f30c0ffad5c9f7e56e1eb785043beab35"
+      },
+      {
+        "frame": 4,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          162,
+          189,
+          428,
+          501
+        ],
+        "pixelBounds": [
+          20,
+          123,
+          498,
+          624
+        ],
+        "transparent": 332641,
+        "opaque": 1,
+        "partial": 58910,
+        "edge": 0,
+        "sha256": "2e62d5b282545f98eaf179bccf5d8cc6c9764edbc278c55a80e7037e3edddfa6"
+      },
+      {
+        "frame": 5,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          129,
+          154,
+          481,
+          484
+        ],
+        "pixelBounds": [
+          83,
+          20,
+          540,
+          552
+        ],
+        "transparent": 312851,
+        "opaque": 1,
+        "partial": 78700,
+        "edge": 0,
+        "sha256": "ebb113b530bc0f649857ae7ef3b868950d125ad319ddad2a2c6ea02769c0d870"
+      },
+      {
+        "frame": 6,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          150,
+          171,
+          463,
+          477
+        ],
+        "pixelBounds": [
+          75,
+          37,
+          588,
+          552
+        ],
+        "transparent": 313100,
+        "opaque": 14,
+        "partial": 78438,
+        "edge": 0,
+        "sha256": "22bab505e368250fba27cac93ffca76a0e814d89b3187e68eaea7836608b8ccc"
+      },
+      {
+        "frame": 7,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          188,
+          235,
+          391,
+          389
+        ],
+        "pixelBounds": [
+          91,
+          129,
+          536,
+          552
+        ],
+        "transparent": 358246,
+        "opaque": 4,
+        "partial": 33302,
+        "edge": 0,
+        "sha256": "6a2fb296fa6e5acf406cb042ad02d373c818c10a90fc21dd8cfc1a1729a27d66"
+      },
+      {
+        "frame": 8,
+        "width": 608,
+        "height": 644,
+        "bounds": [
+          232,
+          290,
+          336,
+          352
+        ],
+        "pixelBounds": [
+          87,
+          168,
+          494,
+          552
+        ],
+        "transparent": 378790,
+        "opaque": 0,
+        "partial": 12762,
+        "edge": 0,
+        "sha256": "79d5ec64f406fe3ee6c2a10241f5983d9f397f763655a18d1244d84a55ba6f95"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A212": {
+    "key": "A212",
+    "code": "A212",
+    "name": "聖辰劍帝",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.38879159369527144,
+      0.4072249589490969,
+      0.5464098073555166,
+      0.5812807881773399
+    ],
+    "frameBounds": [
+      0.2136602451838879,
+      0.25779967159277506,
+      0.7250437828371279,
+      0.7126436781609196
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 571,
+    "cellHeight": 609,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2284,
+    "packedHeight": 1218,
+    "nativeSource": "fx/native/fx_sword_adv4_A212.png",
+    "nativeSha256": "8a9fc0224c6d0d29f430d6a4fd5d8baba377ab8941ee13c20573303b3e9f8546",
+    "pngSha256": "168ddca87cb1b6d8b068ecd644f22747db34845282cf2b3a320117ec5e1debd3",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 423,
+        "crossingPixels": 2,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 446,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 893,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 456,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1331,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 61,
+          "width": 424,
+          "height": 328
+        },
+        "left": 43,
+        "top": 138,
+        "soleSource": 161,
+        "footCenterSource": 222,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 420,
+          "top": 37,
+          "width": 451,
+          "height": 358
+        },
+        "left": 20,
+        "top": 114,
+        "soleSource": 185,
+        "footCenterSource": 245,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 872,
+          "top": 7,
+          "width": 453,
+          "height": 446
+        },
+        "left": 28,
+        "top": 84,
+        "soleSource": 215,
+        "footCenterSource": 237,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 1313,
+          "top": 19,
+          "width": 445,
+          "height": 493
+        },
+        "left": 26,
+        "top": 96,
+        "soleSource": 203,
+        "footCenterSource": 239,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 386,
+          "width": 454,
+          "height": 501
+        },
+        "left": 43,
+        "top": 20,
+        "soleSource": 279,
+        "footCenterSource": 222,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 445,
+          "top": 390,
+          "width": 500,
+          "height": 477
+        },
+        "left": 45,
+        "top": 24,
+        "soleSource": 275,
+        "footCenterSource": 220,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 896,
+          "top": 457,
+          "width": 499,
+          "height": 402
+        },
+        "left": 52,
+        "top": 91,
+        "soleSource": 208,
+        "footCenterSource": 213,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      },
+      {
+        "sourceRect": {
+          "left": 1348,
+          "top": 491,
+          "width": 406,
+          "height": 340
+        },
+        "left": 61,
+        "top": 125,
+        "soleSource": 174,
+        "footCenterSource": 204,
+        "footBaselineOutput": 299,
+        "footCenterOutput": 265
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          222,
+          248,
+          312,
+          354
+        ],
+        "pixelBounds": [
+          43,
+          138,
+          467,
+          466
+        ],
+        "transparent": 337744,
+        "opaque": 0,
+        "partial": 9995,
+        "edge": 0,
+        "sha256": "530d4c1bd751eeb5ef194088ab89a56cf7533e72434a5736ba4d450c89e5b8e3"
+      },
+      {
+        "frame": 2,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          172,
+          201,
+          360,
+          398
+        ],
+        "pixelBounds": [
+          20,
+          114,
+          471,
+          472
+        ],
+        "transparent": 327117,
+        "opaque": 0,
+        "partial": 20622,
+        "edge": 0,
+        "sha256": "4c82bdd7ae9550fffd21e24156da37267b787afee1a7198d631deae1c0608f60"
+      },
+      {
+        "frame": 3,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          156,
+          200,
+          369,
+          398
+        ],
+        "pixelBounds": [
+          28,
+          84,
+          481,
+          530
+        ],
+        "transparent": 311532,
+        "opaque": 0,
+        "partial": 36207,
+        "edge": 0,
+        "sha256": "739cdcdcbcb9947d999705e36bf18fe19ddd3ff5dced7f4346dbea95f7a6b1db"
+      },
+      {
+        "frame": 4,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          137,
+          185,
+          389,
+          413
+        ],
+        "pixelBounds": [
+          26,
+          96,
+          471,
+          589
+        ],
+        "transparent": 302006,
+        "opaque": 3,
+        "partial": 45730,
+        "edge": 0,
+        "sha256": "bcdd36f8ec7a03de8157bf5b6a836b540ac382eb5773e0de4aa73718a02f1255"
+      },
+      {
+        "frame": 5,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          122,
+          157,
+          414,
+          434
+        ],
+        "pixelBounds": [
+          43,
+          20,
+          497,
+          521
+        ],
+        "transparent": 298726,
+        "opaque": 0,
+        "partial": 49013,
+        "edge": 0,
+        "sha256": "20df6b3ed93c90b1f2fbdbcb727ddfaad7adbda8c0b7df1c4c4c9c5d4361a280"
+      },
+      {
+        "frame": 6,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          152,
+          162,
+          399,
+          434
+        ],
+        "pixelBounds": [
+          45,
+          24,
+          545,
+          501
+        ],
+        "transparent": 295379,
+        "opaque": 12,
+        "partial": 52348,
+        "edge": 0,
+        "sha256": "bcc604a966720f950f2d8f904c3eb63ab2a7dbd14301be80a5f69c53ca8ad73f"
+      },
+      {
+        "frame": 7,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          178,
+          224,
+          371,
+          370
+        ],
+        "pixelBounds": [
+          52,
+          91,
+          551,
+          493
+        ],
+        "transparent": 330119,
+        "opaque": 0,
+        "partial": 17620,
+        "edge": 0,
+        "sha256": "8454bbfe01aa768f75482b8268f93f5e195c155431577485972b9cdbf3d62433"
+      },
+      {
+        "frame": 8,
+        "width": 571,
+        "height": 609,
+        "bounds": [
+          211,
+          268,
+          323,
+          330
+        ],
+        "pixelBounds": [
+          61,
+          125,
+          467,
+          465
+        ],
+        "transparent": 341472,
+        "opaque": 0,
+        "partial": 6267,
+        "edge": 0,
+        "sha256": "a1818088e9890ee67e3327bc5911c7933106323b9a8bac16d103f512fee840b3"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A221": {
+    "key": "A221",
+    "code": "A221",
+    "name": "朔月劍神",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.42980935875216636,
+      0.45021645021645024,
+      0.5459272097053726,
+      0.6349206349206349
+    ],
+    "frameBounds": [
+      0.17157712305025996,
+      0.24386724386724387,
+      0.8942807625649913,
+      0.784992784992785
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 577,
+    "cellHeight": 693,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2308,
+    "packedHeight": 1386,
+    "nativeSource": "fx/native/fx_sword_adv4_A221.png",
+    "nativeSha256": "a297bf93ce1a7decfb8526667826fc0fef41ce20310927f4476a334bbd1a1f7a",
+    "pngSha256": "0b62673e82ece06ff109f40059923fdcda1ab61a8e6992150c276affd2c9a234",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 385,
+        "crossingPixels": 41,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 357,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 925,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1345,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 478,
+        "crossingPixels": 1,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 933,
+        "crossingPixels": 9,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1393,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 21,
+          "width": 426,
+          "height": 348
+        },
+        "left": 59,
+        "top": 173,
+        "soleSource": 201,
+        "footCenterSource": 222,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 412,
+          "top": 9,
+          "width": 485,
+          "height": 407
+        },
+        "left": 28,
+        "top": 161,
+        "soleSource": 213,
+        "footCenterSource": 253,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 848,
+          "top": 0,
+          "width": 462,
+          "height": 450
+        },
+        "left": 20,
+        "top": 152,
+        "soleSource": 222,
+        "footCenterSource": 261,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 1292,
+          "top": 13,
+          "width": 482,
+          "height": 508
+        },
+        "left": 21,
+        "top": 165,
+        "soleSource": 209,
+        "footCenterSource": 260,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 311,
+          "width": 498,
+          "height": 576
+        },
+        "left": 59,
+        "top": 20,
+        "soleSource": 354,
+        "footCenterSource": 222,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 434,
+          "top": 360,
+          "width": 497,
+          "height": 527
+        },
+        "left": 50,
+        "top": 69,
+        "soleSource": 305,
+        "footCenterSource": 231,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 913,
+          "top": 440,
+          "width": 470,
+          "height": 447
+        },
+        "left": 85,
+        "top": 149,
+        "soleSource": 225,
+        "footCenterSource": 196,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      },
+      {
+        "sourceRect": {
+          "left": 1362,
+          "top": 499,
+          "width": 394,
+          "height": 356
+        },
+        "left": 91,
+        "top": 208,
+        "soleSource": 166,
+        "footCenterSource": 190,
+        "footBaselineOutput": 374,
+        "footCenterOutput": 281
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          248,
+          312,
+          315,
+          440
+        ],
+        "pixelBounds": [
+          59,
+          173,
+          485,
+          521
+        ],
+        "transparent": 383003,
+        "opaque": 1,
+        "partial": 16857,
+        "edge": 0,
+        "sha256": "644eed27ce2c13ea7ba649f396d64a221df079b35f55024bbd1842f169535950"
+      },
+      {
+        "frame": 2,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          181,
+          267,
+          385,
+          476
+        ],
+        "pixelBounds": [
+          28,
+          161,
+          513,
+          568
+        ],
+        "transparent": 363884,
+        "opaque": 0,
+        "partial": 35977,
+        "edge": 0,
+        "sha256": "f23d50d6d3e26e098ae5e084f05e2e0deec1655edce14d68d20c46d3e4cc9d47"
+      },
+      {
+        "frame": 3,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          174,
+          249,
+          390,
+          506
+        ],
+        "pixelBounds": [
+          20,
+          152,
+          482,
+          602
+        ],
+        "transparent": 345743,
+        "opaque": 0,
+        "partial": 54118,
+        "edge": 0,
+        "sha256": "21ce47e7b5b12500b08a417e51168e23a4cdd2caa858cd1225491c2e1a987d92"
+      },
+      {
+        "frame": 4,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          111,
+          240,
+          453,
+          515
+        ],
+        "pixelBounds": [
+          21,
+          165,
+          503,
+          673
+        ],
+        "transparent": 320943,
+        "opaque": 0,
+        "partial": 78918,
+        "edge": 0,
+        "sha256": "a7ea4f64262ec1caace299c8c4af88bccd6d7f0155ab98966ddb76213216acbe"
+      },
+      {
+        "frame": 5,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          99,
+          169,
+          516,
+          544
+        ],
+        "pixelBounds": [
+          59,
+          20,
+          557,
+          596
+        ],
+        "transparent": 288591,
+        "opaque": 0,
+        "partial": 111270,
+        "edge": 0,
+        "sha256": "18719bcfb557b46d80398d4f1ffd384721a699b42f8b6bd7e321bd98c0c7bbdf"
+      },
+      {
+        "frame": 6,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          121,
+          208,
+          472,
+          508
+        ],
+        "pixelBounds": [
+          50,
+          69,
+          547,
+          596
+        ],
+        "transparent": 300129,
+        "opaque": 1,
+        "partial": 99731,
+        "edge": 0,
+        "sha256": "d6eeb8dbbac5e682e50f5d6585a244cc302ad3e99261d6dba970f1b6b9d4b586"
+      },
+      {
+        "frame": 7,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          170,
+          243,
+          410,
+          492
+        ],
+        "pixelBounds": [
+          85,
+          149,
+          555,
+          596
+        ],
+        "transparent": 360516,
+        "opaque": 0,
+        "partial": 39345,
+        "edge": 0,
+        "sha256": "de101724afc44c262dbd05a0fd541998b5044d8fd10d302d28d0c24253050a52"
+      },
+      {
+        "frame": 8,
+        "width": 577,
+        "height": 693,
+        "bounds": [
+          226,
+          325,
+          324,
+          387
+        ],
+        "pixelBounds": [
+          91,
+          208,
+          485,
+          564
+        ],
+        "transparent": 386067,
+        "opaque": 0,
+        "partial": 13794,
+        "edge": 0,
+        "sha256": "69872a51430510c3a23f06b39b3b234c9f05acb77b8b5ecf26c125554d800fe2"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "A222": {
+    "key": "A222",
+    "code": "A222",
+    "name": "永夜劍皇",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3811881188118812,
+      0.37777777777777777,
+      0.6336633663366337,
+      0.6263888888888889
+    ],
+    "frameBounds": [
+      0.19306930693069307,
+      0.23055555555555557,
+      0.8646864686468647,
+      0.7666666666666667
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 606,
+    "cellHeight": 720,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2424,
+    "packedHeight": 1440,
+    "nativeSource": "fx/native/fx_sword_adv4_A222.png",
+    "nativeSha256": "0eb63c84baf57cc7bbe70f6c2d3114ba92c13baf54166abf8a25b85db32c1af4",
+    "pngSha256": "dc1c149d93b88852f91cc17e869c5aa395560c9f3057effb46043c7d0d6f046d",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 421,
+        "crossingPixels": 1,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 470,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 873,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 456,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 889,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 17,
+          "top": 9,
+          "width": 410,
+          "height": 338
+        },
+        "left": 100,
+        "top": 151,
+        "soleSource": 213,
+        "footCenterSource": 205,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 422,
+          "top": 13,
+          "width": 481,
+          "height": 425
+        },
+        "left": 62,
+        "top": 155,
+        "soleSource": 209,
+        "footCenterSource": 243,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 836,
+          "top": 15,
+          "width": 543,
+          "height": 463
+        },
+        "left": 32,
+        "top": 157,
+        "soleSource": 207,
+        "footCenterSource": 273,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 1267,
+          "top": 7,
+          "width": 507,
+          "height": 551
+        },
+        "left": 20,
+        "top": 149,
+        "soleSource": 215,
+        "footCenterSource": 285,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 321,
+          "width": 486,
+          "height": 566
+        },
+        "left": 83,
+        "top": 20,
+        "soleSource": 344,
+        "footCenterSource": 222,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 442,
+          "top": 348,
+          "width": 504,
+          "height": 539
+        },
+        "left": 82,
+        "top": 47,
+        "soleSource": 317,
+        "footCenterSource": 223,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 914,
+          "top": 462,
+          "width": 451,
+          "height": 425
+        },
+        "left": 110,
+        "top": 161,
+        "soleSource": 203,
+        "footCenterSource": 195,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      },
+      {
+        "sourceRect": {
+          "left": 1362,
+          "top": 531,
+          "width": 402,
+          "height": 356
+        },
+        "left": 115,
+        "top": 230,
+        "soleSource": 134,
+        "footCenterSource": 190,
+        "footBaselineOutput": 364,
+        "footCenterOutput": 305
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          231,
+          272,
+          384,
+          451
+        ],
+        "pixelBounds": [
+          100,
+          151,
+          510,
+          489
+        ],
+        "transparent": 415869,
+        "opaque": 0,
+        "partial": 20451,
+        "edge": 0,
+        "sha256": "7d26e7727af52c99e565b3a31b2f2656b0f1126d41cbf702f5317a802b7fe791"
+      },
+      {
+        "frame": 2,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          190,
+          232,
+          421,
+          495
+        ],
+        "pixelBounds": [
+          62,
+          155,
+          543,
+          580
+        ],
+        "transparent": 404860,
+        "opaque": 2,
+        "partial": 31458,
+        "edge": 0,
+        "sha256": "4752224748d6d8ce654437f96b49e4e31c9f4440747c9798d984a911030888ca"
+      },
+      {
+        "frame": 3,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          183,
+          226,
+          423,
+          523
+        ],
+        "pixelBounds": [
+          32,
+          157,
+          575,
+          620
+        ],
+        "transparent": 389661,
+        "opaque": 1,
+        "partial": 46658,
+        "edge": 0,
+        "sha256": "7d8a7dd125d09d4724164449e96473673de2afd92980a246ef6161fa751b346a"
+      },
+      {
+        "frame": 4,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          144,
+          187,
+          461,
+          552
+        ],
+        "pixelBounds": [
+          20,
+          149,
+          527,
+          700
+        ],
+        "transparent": 364029,
+        "opaque": 0,
+        "partial": 72291,
+        "edge": 0,
+        "sha256": "0f98d81f6ef5891decf8d227fcfe06a5b4156b265ad2ca0029d03e3d07e7925b"
+      },
+      {
+        "frame": 5,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          117,
+          166,
+          524,
+          549
+        ],
+        "pixelBounds": [
+          83,
+          20,
+          569,
+          586
+        ],
+        "transparent": 324689,
+        "opaque": 7,
+        "partial": 111624,
+        "edge": 0,
+        "sha256": "f4f614ab1d00cead8eb20482ece738489eecfb116975f119a1d5e8aec342b5c4"
+      },
+      {
+        "frame": 6,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          144,
+          176,
+          485,
+          544
+        ],
+        "pixelBounds": [
+          82,
+          47,
+          586,
+          586
+        ],
+        "transparent": 343301,
+        "opaque": 7,
+        "partial": 93012,
+        "edge": 0,
+        "sha256": "ddabe7fc4714b28b039e70f5ad5754ec00cf5809340e5d43cce12e18872c1730"
+      },
+      {
+        "frame": 7,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          209,
+          254,
+          422,
+          451
+        ],
+        "pixelBounds": [
+          110,
+          161,
+          561,
+          586
+        ],
+        "transparent": 414657,
+        "opaque": 7,
+        "partial": 21656,
+        "edge": 0,
+        "sha256": "c81a237da47e504b5555ef3d05ae6f4e64001cf1c0be4809e9c12cf390f068f3"
+      },
+      {
+        "frame": 8,
+        "width": 606,
+        "height": 720,
+        "bounds": [
+          245,
+          333,
+          351,
+          400
+        ],
+        "pixelBounds": [
+          115,
+          230,
+          517,
+          586
+        ],
+        "transparent": 426819,
+        "opaque": 0,
+        "partial": 9501,
+        "edge": 0,
+        "sha256": "fd8bf8fa797ff0392cea662eace4d5720f291567fe1b96397c2610c67d5a6087"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B111": {
+    "key": "B111",
+    "code": "B111",
+    "name": "熾日聖裁神",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.4008097165991903,
+      0.3800813008130081,
+      0.5587044534412956,
+      0.5467479674796748
+    ],
+    "frameBounds": [
+      0.23279352226720648,
+      0.258130081300813,
+      0.7591093117408907,
+      0.7621951219512195
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 494,
+    "cellHeight": 492,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 1976,
+    "packedHeight": 984,
+    "nativeSource": "fx/native/fx_sword_adv4_B111.png",
+    "nativeSha256": "bc718cf6a2eb8122074724a658add4c3d80ca5981e0cd5265a9dca69d33f0069",
+    "pngSha256": "3c125fba199ea0128dfe284fc2581afbb51251413a01da1ea48c2956ed326944",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "row-specific transparent gutters",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 470,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 431,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1341,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 454,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 885,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1318,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": false,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 33,
+          "top": 37,
+          "width": 398,
+          "height": 433
+        },
+        "left": 48,
+        "top": 39,
+        "soleSource": 432,
+        "footCenterSource": 199,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 432,
+          "top": 29,
+          "width": 451,
+          "height": 441
+        },
+        "left": 22,
+        "top": 31,
+        "soleSource": 440,
+        "footCenterSource": 225.5,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 888,
+          "top": 18,
+          "width": 453,
+          "height": 452
+        },
+        "left": 21,
+        "top": 20,
+        "soleSource": 451,
+        "footCenterSource": 226.5,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 1342,
+          "top": 17,
+          "width": 420,
+          "height": 451
+        },
+        "left": 37,
+        "top": 21,
+        "soleSource": 450,
+        "footCenterSource": 210,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 471,
+          "width": 454,
+          "height": 416
+        },
+        "left": 20,
+        "top": 56,
+        "soleSource": 415,
+        "footCenterSource": 227,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 455,
+          "top": 471,
+          "width": 430,
+          "height": 416
+        },
+        "left": 32,
+        "top": 56,
+        "soleSource": 415,
+        "footCenterSource": 215,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 886,
+          "top": 471,
+          "width": 432,
+          "height": 416
+        },
+        "left": 31,
+        "top": 56,
+        "soleSource": 415,
+        "footCenterSource": 216,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      },
+      {
+        "sourceRect": {
+          "left": 1319,
+          "top": 472,
+          "width": 429,
+          "height": 415
+        },
+        "left": 33,
+        "top": 57,
+        "soleSource": 414,
+        "footCenterSource": 214.5,
+        "footBaselineOutput": 471,
+        "footCenterOutput": 247
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          198,
+          187,
+          276,
+          269
+        ],
+        "pixelBounds": [
+          48,
+          39,
+          446,
+          472
+        ],
+        "transparent": 236348,
+        "opaque": 0,
+        "partial": 6700,
+        "edge": 0,
+        "sha256": "6f74ce926f720f7d5e66c861a0e202966c859ace208c2d0fb716f43f09592479"
+      },
+      {
+        "frame": 2,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          187,
+          150,
+          329,
+          306
+        ],
+        "pixelBounds": [
+          22,
+          31,
+          473,
+          472
+        ],
+        "transparent": 229270,
+        "opaque": 0,
+        "partial": 13778,
+        "edge": 0,
+        "sha256": "c2c1daf0f8cd91baab4412e30052ced3bf85756e467e374f32539d5fbfebda8b"
+      },
+      {
+        "frame": 3,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          160,
+          144,
+          345,
+          316
+        ],
+        "pixelBounds": [
+          21,
+          20,
+          474,
+          472
+        ],
+        "transparent": 217270,
+        "opaque": 0,
+        "partial": 25778,
+        "edge": 0,
+        "sha256": "7a8d007d1b90ac01f99c9949c31848ad93aec003703218e614d6213b22657a48"
+      },
+      {
+        "frame": 4,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          138,
+          132,
+          367,
+          336
+        ],
+        "pixelBounds": [
+          37,
+          21,
+          457,
+          472
+        ],
+        "transparent": 206578,
+        "opaque": 0,
+        "partial": 36470,
+        "edge": 0,
+        "sha256": "1d52ba33ff2d1678aa6bd61b44531e507b25890ff1946bad09cb9422a3e90a36"
+      },
+      {
+        "frame": 5,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          115,
+          127,
+          375,
+          375
+        ],
+        "pixelBounds": [
+          20,
+          56,
+          474,
+          472
+        ],
+        "transparent": 195782,
+        "opaque": 0,
+        "partial": 47266,
+        "edge": 0,
+        "sha256": "e364fb79461eb11d582fdcfc9886eb12cba7310b7dc8bedd1ab801449d960d22"
+      },
+      {
+        "frame": 6,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          128,
+          139,
+          352,
+          363
+        ],
+        "pixelBounds": [
+          32,
+          56,
+          462,
+          472
+        ],
+        "transparent": 199652,
+        "opaque": 0,
+        "partial": 43396,
+        "edge": 0,
+        "sha256": "355a95120088f3d29535c7e250af5b1f42d5ed88775833286a674aee59939bec"
+      },
+      {
+        "frame": 7,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          180,
+          168,
+          330,
+          339
+        ],
+        "pixelBounds": [
+          31,
+          56,
+          463,
+          472
+        ],
+        "transparent": 218772,
+        "opaque": 4,
+        "partial": 24272,
+        "edge": 0,
+        "sha256": "2439bddb9579e02c7527578070b5058f82ba4cfacff1c7ecc326a08df0d61b78"
+      },
+      {
+        "frame": 8,
+        "width": 494,
+        "height": 492,
+        "bounds": [
+          222,
+          215,
+          310,
+          281
+        ],
+        "pixelBounds": [
+          33,
+          57,
+          462,
+          472
+        ],
+        "transparent": 234299,
+        "opaque": 0,
+        "partial": 8749,
+        "edge": 0,
+        "sha256": "d96a52912258e73a73612cd1d0e8e5399b38aaf613e1edeef4a155bee9afa2ab"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B112": {
+    "key": "B112",
+    "code": "B112",
+    "name": "黎明神衛",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.34265734265734266,
+      0.3701188455008489,
+      0.6206293706293706,
+      0.6689303904923599
+    ],
+    "frameBounds": [
+      0.21153846153846154,
+      0.2563667232597623,
+      0.743006993006993,
+      0.7572156196943973
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 572,
+    "cellHeight": 589,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2288,
+    "packedHeight": 1178,
+    "nativeSource": "fx/native/fx_sword_adv4_B112.png",
+    "nativeSha256": "f218f78f9defec2c5832739c07e8b8d4896fed2aed3d5659eb459e50b695475b",
+    "pngSha256": "1bcbf516df64c1cbd11c7cc50bb58ca3e09a17e00b08da2ceac3cdf83b45564b",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 409,
+        "crossingPixels": 46,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 506,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 877,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1357,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 474,
+        "crossingPixels": 2,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 917,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1345,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 21,
+          "top": 17,
+          "width": 404,
+          "height": 384
+        },
+        "left": 72,
+        "top": 106,
+        "soleSource": 205,
+        "footCenterSource": 201,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 420,
+          "top": 9,
+          "width": 453,
+          "height": 431
+        },
+        "left": 28,
+        "top": 98,
+        "soleSource": 213,
+        "footCenterSource": 245,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 856,
+          "top": 9,
+          "width": 481,
+          "height": 471
+        },
+        "left": 20,
+        "top": 98,
+        "soleSource": 213,
+        "footCenterSource": 253,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 1301,
+          "top": 3,
+          "width": 451,
+          "height": 475
+        },
+        "left": 22,
+        "top": 92,
+        "soleSource": 219,
+        "footCenterSource": 251,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 21,
+          "top": 374,
+          "width": 450,
+          "height": 513
+        },
+        "left": 72,
+        "top": 20,
+        "soleSource": 291,
+        "footCenterSource": 201,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 442,
+          "top": 399,
+          "width": 502,
+          "height": 488
+        },
+        "left": 50,
+        "top": 45,
+        "soleSource": 266,
+        "footCenterSource": 223,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 900,
+          "top": 452,
+          "width": 439,
+          "height": 435
+        },
+        "left": 64,
+        "top": 98,
+        "soleSource": 213,
+        "footCenterSource": 209,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      },
+      {
+        "sourceRect": {
+          "left": 1313,
+          "top": 463,
+          "width": 449,
+          "height": 424
+        },
+        "left": 34,
+        "top": 109,
+        "soleSource": 202,
+        "footCenterSource": 239,
+        "footBaselineOutput": 311,
+        "footCenterOutput": 273
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          196,
+          218,
+          355,
+          394
+        ],
+        "pixelBounds": [
+          72,
+          106,
+          476,
+          490
+        ],
+        "transparent": 310098,
+        "opaque": 0,
+        "partial": 26810,
+        "edge": 0,
+        "sha256": "9b6063a79d8313cccc87bb23735eca05ca2c3b4660c32b654eff3c3e2940c5be"
+      },
+      {
+        "frame": 2,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          149,
+          185,
+          401,
+          427
+        ],
+        "pixelBounds": [
+          28,
+          98,
+          481,
+          529
+        ],
+        "transparent": 288136,
+        "opaque": 0,
+        "partial": 48772,
+        "edge": 0,
+        "sha256": "4968008d98e8476c35b459655ab5e8f2ad7143bca81496ce1ccf044320c81e4f"
+      },
+      {
+        "frame": 3,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          121,
+          155,
+          425,
+          446
+        ],
+        "pixelBounds": [
+          20,
+          98,
+          501,
+          569
+        ],
+        "transparent": 262259,
+        "opaque": 1,
+        "partial": 74648,
+        "edge": 0,
+        "sha256": "d123ec587ce22040d4d95b7bfd3e76eb08f46721b96e523b4ff0c91b22c48673"
+      },
+      {
+        "frame": 4,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          135,
+          186,
+          401,
+          437
+        ],
+        "pixelBounds": [
+          22,
+          92,
+          473,
+          567
+        ],
+        "transparent": 295016,
+        "opaque": 0,
+        "partial": 41892,
+        "edge": 0,
+        "sha256": "78d2f5f914cba03de98cddb1bd0e5b62da2583eb50f70f28b190464046de0f6a"
+      },
+      {
+        "frame": 5,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          130,
+          151,
+          421,
+          437
+        ],
+        "pixelBounds": [
+          72,
+          20,
+          522,
+          533
+        ],
+        "transparent": 262305,
+        "opaque": 0,
+        "partial": 74603,
+        "edge": 0,
+        "sha256": "6b64bec69a5f57db82b6a463dfcc4376c09e16aad9a9cfa1af654063f6e5280f"
+      },
+      {
+        "frame": 6,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          143,
+          164,
+          405,
+          436
+        ],
+        "pixelBounds": [
+          50,
+          45,
+          552,
+          533
+        ],
+        "transparent": 265752,
+        "opaque": 0,
+        "partial": 71156,
+        "edge": 0,
+        "sha256": "e954c68d919a7f8cb1e0fdc9a30a1f7fd65999fcdc9b8f47beb26f270700ccf5"
+      },
+      {
+        "frame": 7,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          202,
+          222,
+          341,
+          404
+        ],
+        "pixelBounds": [
+          64,
+          98,
+          503,
+          533
+        ],
+        "transparent": 302119,
+        "opaque": 0,
+        "partial": 34789,
+        "edge": 0,
+        "sha256": "c7cbb049540bf14df4e84c0f4c19dcba999a9df82bf4527a6b3485d5c2d81aa9"
+      },
+      {
+        "frame": 8,
+        "width": 572,
+        "height": 589,
+        "bounds": [
+          179,
+          206,
+          354,
+          388
+        ],
+        "pixelBounds": [
+          34,
+          109,
+          483,
+          533
+        ],
+        "transparent": 304011,
+        "opaque": 0,
+        "partial": 32897,
+        "edge": 0,
+        "sha256": "df8f242f56f64010dd351e835f0d98b0aeffbd9ec1256d46c39430643ad4236d"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B121": {
+    "key": "B121",
+    "code": "B121",
+    "name": "星穹聖盾",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.357504215851602,
+      0.37886178861788616,
+      0.6138279932546374,
+      0.6617886178861788
+    ],
+    "frameBounds": [
+      0.19224283305227655,
+      0.24390243902439024,
+      0.7622259696458684,
+      0.7788617886178861
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 593,
+    "cellHeight": 615,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2372,
+    "packedHeight": 1230,
+    "nativeSource": "fx/native/fx_sword_adv4_B121.png",
+    "nativeSha256": "5ab3763b39c6f2b31149503be9a2b8e2e2f4c3f936e21b7815288a35c1afb3bc",
+    "pngSha256": "8d98c879395ee4331f459da3c0c9f7428d60f08e9823fc62cc44131a95d3e1fa",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 391,
+        "crossingPixels": 15,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 452,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1326,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 458,
+        "crossingPixels": 2,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 937,
+        "crossingPixels": 17,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1304,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 19,
+          "width": 438,
+          "height": 400
+        },
+        "left": 61,
+        "top": 112,
+        "soleSource": 203,
+        "footCenterSource": 222,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 425,
+          "top": 15,
+          "width": 434,
+          "height": 412
+        },
+        "left": 43,
+        "top": 108,
+        "soleSource": 207,
+        "footCenterSource": 240,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 846,
+          "top": 9,
+          "width": 553,
+          "height": 456
+        },
+        "left": 20,
+        "top": 102,
+        "soleSource": 213,
+        "footCenterSource": 263,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 1309,
+          "top": 3,
+          "width": 457,
+          "height": 499
+        },
+        "left": 40,
+        "top": 96,
+        "soleSource": 219,
+        "footCenterSource": 243,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 370,
+          "width": 474,
+          "height": 517
+        },
+        "left": 61,
+        "top": 20,
+        "soleSource": 295,
+        "footCenterSource": 222,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 442,
+          "top": 394,
+          "width": 477,
+          "height": 493
+        },
+        "left": 60,
+        "top": 44,
+        "soleSource": 271,
+        "footCenterSource": 223,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 892,
+          "top": 445,
+          "width": 475,
+          "height": 442
+        },
+        "left": 66,
+        "top": 95,
+        "soleSource": 220,
+        "footCenterSource": 217,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      },
+      {
+        "sourceRect": {
+          "left": 1354,
+          "top": 496,
+          "width": 420,
+          "height": 391
+        },
+        "left": 85,
+        "top": 146,
+        "soleSource": 169,
+        "footCenterSource": 198,
+        "footBaselineOutput": 315,
+        "footCenterOutput": 283
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          212,
+          233,
+          364,
+          407
+        ],
+        "pixelBounds": [
+          61,
+          112,
+          499,
+          512
+        ],
+        "transparent": 324139,
+        "opaque": 0,
+        "partial": 40556,
+        "edge": 0,
+        "sha256": "0711765afa6fad5e6a9153db21a16d942beb8d3db4f411de004585561961563b"
+      },
+      {
+        "frame": 2,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          169,
+          196,
+          401,
+          432
+        ],
+        "pixelBounds": [
+          43,
+          108,
+          477,
+          520
+        ],
+        "transparent": 321989,
+        "opaque": 0,
+        "partial": 42706,
+        "edge": 0,
+        "sha256": "d8bdfcba1a15f8abfc626d6d02b28f47b5d47f552f2dab0994c5843d3f4273d5"
+      },
+      {
+        "frame": 3,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          127,
+          162,
+          437,
+          467
+        ],
+        "pixelBounds": [
+          20,
+          102,
+          573,
+          558
+        ],
+        "transparent": 278400,
+        "opaque": 0,
+        "partial": 86295,
+        "edge": 0,
+        "sha256": "9e849f07de74bb6971a300236dc1ce0871396f706bdd70307caa88534db3f2a2"
+      },
+      {
+        "frame": 4,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          157,
+          168,
+          429,
+          455
+        ],
+        "pixelBounds": [
+          40,
+          96,
+          497,
+          595
+        ],
+        "transparent": 301681,
+        "opaque": 0,
+        "partial": 63014,
+        "edge": 0,
+        "sha256": "7529417deac3b936a30379a059631ddbd285b5ebdb42e331d508eb4b744cc3a6"
+      },
+      {
+        "frame": 5,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          114,
+          150,
+          452,
+          479
+        ],
+        "pixelBounds": [
+          61,
+          20,
+          535,
+          537
+        ],
+        "transparent": 260060,
+        "opaque": 4,
+        "partial": 104631,
+        "edge": 0,
+        "sha256": "73e35ed0eff33b28be689f2cb0e7e47d2d9ea3d6bfcd5e7a20decd1ba149d775"
+      },
+      {
+        "frame": 6,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          136,
+          166,
+          444,
+          457
+        ],
+        "pixelBounds": [
+          60,
+          44,
+          537,
+          537
+        ],
+        "transparent": 265505,
+        "opaque": 3,
+        "partial": 99187,
+        "edge": 0,
+        "sha256": "261e93638447032ee568b173e9f09f3f01e34eefa10b1c82d7409676d2db1427"
+      },
+      {
+        "frame": 7,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          147,
+          185,
+          420,
+          433
+        ],
+        "pixelBounds": [
+          66,
+          95,
+          541,
+          537
+        ],
+        "transparent": 305693,
+        "opaque": 0,
+        "partial": 59002,
+        "edge": 0,
+        "sha256": "7a34c41468b991250cb80b2fb7a67fc3d43344bb925b77a1b55f5db8d548556b"
+      },
+      {
+        "frame": 8,
+        "width": 593,
+        "height": 615,
+        "bounds": [
+          169,
+          246,
+          400,
+          390
+        ],
+        "pixelBounds": [
+          85,
+          146,
+          505,
+          537
+        ],
+        "transparent": 335261,
+        "opaque": 0,
+        "partial": 29434,
+        "edge": 0,
+        "sha256": "26f96a0646d70c0ce55d109b5f55805894edebab488e72fe687a4627563da8c8"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B122": {
+    "key": "B122",
+    "code": "B122",
+    "name": "銀河誓衛",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.33974358974358976,
+      0.4025157232704403,
+      0.6495726495726496,
+      0.7253668763102725
+    ],
+    "frameBounds": [
+      0.1346153846153846,
+      0.259958071278826,
+      0.8461538461538461,
+      0.89937106918239
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 468,
+    "cellHeight": 477,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 1872,
+    "packedHeight": 954,
+    "nativeSource": "fx/native/fx_sword_adv4_B122.png",
+    "nativeSha256": "1fc8e6996d370f390ad4c4a92c9339840998a87ce661b37e485368975fc37e18",
+    "pngSha256": "ecc0693caa10f5ebeb5d292a4503b50d7ea8fa21210149bcb4df94a9a1095c1e",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "row-specific transparent gutters",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 444,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 443,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1330,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 446,
+        "crossingPixels": 0,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 887,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1328,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": false,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 25,
+          "top": 9,
+          "width": 418,
+          "height": 425
+        },
+        "left": 25,
+        "top": 32,
+        "soleSource": 424,
+        "footCenterSource": 209,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 444,
+          "top": 23,
+          "width": 427,
+          "height": 413
+        },
+        "left": 21,
+        "top": 44,
+        "soleSource": 412,
+        "footCenterSource": 213.5,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 918,
+          "top": 23,
+          "width": 412,
+          "height": 404
+        },
+        "left": 28,
+        "top": 53,
+        "soleSource": 403,
+        "footCenterSource": 206,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 1332,
+          "top": 23,
+          "width": 398,
+          "height": 421
+        },
+        "left": 35,
+        "top": 36,
+        "soleSource": 420,
+        "footCenterSource": 199,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 33,
+          "top": 450,
+          "width": 413,
+          "height": 397
+        },
+        "left": 28,
+        "top": 60,
+        "soleSource": 396,
+        "footCenterSource": 206.5,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 447,
+          "top": 457,
+          "width": 412,
+          "height": 384
+        },
+        "left": 28,
+        "top": 73,
+        "soleSource": 383,
+        "footCenterSource": 206,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 904,
+          "top": 450,
+          "width": 423,
+          "height": 437
+        },
+        "left": 23,
+        "top": 20,
+        "soleSource": 436,
+        "footCenterSource": 211.5,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      },
+      {
+        "sourceRect": {
+          "left": 1329,
+          "top": 463,
+          "width": 407,
+          "height": 384
+        },
+        "left": 31,
+        "top": 73,
+        "soleSource": 383,
+        "footCenterSource": 203.5,
+        "footBaselineOutput": 456,
+        "footCenterOutput": 234
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          159,
+          192,
+          304,
+          346
+        ],
+        "pixelBounds": [
+          25,
+          32,
+          443,
+          457
+        ],
+        "transparent": 215510,
+        "opaque": 0,
+        "partial": 7726,
+        "edge": 0,
+        "sha256": "3f9a0308c761bc847f6b32ddeb155caf56c8edaf076fd06a0759a7926c0860d8"
+      },
+      {
+        "frame": 2,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          109,
+          134,
+          379,
+          400
+        ],
+        "pixelBounds": [
+          21,
+          44,
+          448,
+          457
+        ],
+        "transparent": 189350,
+        "opaque": 0,
+        "partial": 33886,
+        "edge": 0,
+        "sha256": "14575d87c25ef51d44379cacfaf46168e7be3a02f3f13306afd4d892b9fcbaa8"
+      },
+      {
+        "frame": 3,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          63,
+          124,
+          371,
+          429
+        ],
+        "pixelBounds": [
+          28,
+          53,
+          440,
+          457
+        ],
+        "transparent": 175097,
+        "opaque": 0,
+        "partial": 48139,
+        "edge": 0,
+        "sha256": "02e28cc2a3a63382908a69509bea28e237b0b9490f1bfe1c02e013fa5c428c19"
+      },
+      {
+        "frame": 4,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          118,
+          156,
+          396,
+          359
+        ],
+        "pixelBounds": [
+          35,
+          36,
+          433,
+          457
+        ],
+        "transparent": 185147,
+        "opaque": 7,
+        "partial": 38082,
+        "edge": 0,
+        "sha256": "a655a2eeeac566f25db61ebfe9273f104bbd9304decfd7567ac3224da1978cc5"
+      },
+      {
+        "frame": 5,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          70,
+          151,
+          375,
+          395
+        ],
+        "pixelBounds": [
+          28,
+          60,
+          441,
+          457
+        ],
+        "transparent": 178282,
+        "opaque": 0,
+        "partial": 44954,
+        "edge": 0,
+        "sha256": "dc61688b7abd9ea67caf0bf175b1df8e3fde3d3993410e2b366b792b6b70217e"
+      },
+      {
+        "frame": 6,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          113,
+          168,
+          381,
+          387
+        ],
+        "pixelBounds": [
+          28,
+          73,
+          440,
+          457
+        ],
+        "transparent": 177963,
+        "opaque": 1,
+        "partial": 45272,
+        "edge": 0,
+        "sha256": "679de5a5844c631ee937b15bed3bd24dd87bee4aee0856c5463d5d7deea0484e"
+      },
+      {
+        "frame": 7,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          128,
+          148,
+          325,
+          323
+        ],
+        "pixelBounds": [
+          23,
+          20,
+          446,
+          457
+        ],
+        "transparent": 201131,
+        "opaque": 3,
+        "partial": 22102,
+        "edge": 0,
+        "sha256": "811d30c03bc780de4c2822627b534216814172c59c76ad5f9bc78f9e67b4c2c8"
+      },
+      {
+        "frame": 8,
+        "width": 468,
+        "height": 477,
+        "bounds": [
+          166,
+          176,
+          335,
+          353
+        ],
+        "pixelBounds": [
+          31,
+          73,
+          438,
+          457
+        ],
+        "transparent": 207066,
+        "opaque": 0,
+        "partial": 16170,
+        "edge": 0,
+        "sha256": "8f00751b5b34764050d05100de7e5c51c5edfd47b64247edac90921af2fde692"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B211": {
+    "key": "B211",
+    "code": "B211",
+    "name": "玄鋼神堡",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.38752052545155996,
+      0.39849624060150374,
+      0.645320197044335,
+      0.6255639097744361
+    ],
+    "frameBounds": [
+      0.20689655172413793,
+      0.1774436090225564,
+      0.8357963875205254,
+      0.8150375939849624
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 609,
+    "cellHeight": 665,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2436,
+    "packedHeight": 1330,
+    "nativeSource": "fx/native/fx_sword_adv4_B211.png",
+    "nativeSha256": "8b1716394f2f590bd5086817732d86349dd8753a87ccd4ae8aee3977c0033ae3",
+    "pngSha256": "d6b7da08e4bca60b65be98515bcd6b121c7c7e064075739eaf99f303c4af54a4",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 460,
+        "crossingPixels": 144,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 413,
+        "crossingPixels": 6,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 837,
+        "crossingPixels": 5,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1353,
+        "crossingPixels": 5,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 470,
+        "crossingPixels": 1,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 921,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1393,
+        "crossingPixels": 1,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 0,
+          "width": 428,
+          "height": 369
+        },
+        "left": 90,
+        "top": 117,
+        "soleSource": 222,
+        "footCenterSource": 222,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 410,
+          "top": 0,
+          "width": 439,
+          "height": 417
+        },
+        "left": 57,
+        "top": 117,
+        "soleSource": 222,
+        "footCenterSource": 255,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 817,
+          "top": 0,
+          "width": 520,
+          "height": 462
+        },
+        "left": 20,
+        "top": 117,
+        "soleSource": 222,
+        "footCenterSource": 292,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 1282,
+          "top": 0,
+          "width": 492,
+          "height": 528
+        },
+        "left": 42,
+        "top": 117,
+        "soleSource": 222,
+        "footCenterSource": 270,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 346,
+          "width": 463,
+          "height": 541
+        },
+        "left": 90,
+        "top": 20,
+        "soleSource": 319,
+        "footCenterSource": 222,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 415,
+          "top": 348,
+          "width": 505,
+          "height": 539
+        },
+        "left": 62,
+        "top": 22,
+        "soleSource": 317,
+        "footCenterSource": 250,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 894,
+          "top": 443,
+          "width": 492,
+          "height": 444
+        },
+        "left": 97,
+        "top": 117,
+        "soleSource": 222,
+        "footCenterSource": 215,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      },
+      {
+        "sourceRect": {
+          "left": 1333,
+          "top": 489,
+          "width": 441,
+          "height": 398
+        },
+        "left": 93,
+        "top": 163,
+        "soleSource": 176,
+        "footCenterSource": 219,
+        "footBaselineOutput": 339,
+        "footCenterOutput": 312
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          236,
+          265,
+          393,
+          416
+        ],
+        "pixelBounds": [
+          90,
+          117,
+          518,
+          486
+        ],
+        "transparent": 377783,
+        "opaque": 0,
+        "partial": 27202,
+        "edge": 0,
+        "sha256": "38a31ecc2ca2f25be876ee244b2a6ec13edde4b14b2b0608c767842ad960ce6e"
+      },
+      {
+        "frame": 2,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          201,
+          214,
+          423,
+          456
+        ],
+        "pixelBounds": [
+          57,
+          117,
+          496,
+          534
+        ],
+        "transparent": 347737,
+        "opaque": 0,
+        "partial": 57248,
+        "edge": 0,
+        "sha256": "d0cee9a93a7f767407b54e84b4d7f5ec483e0eda1ed9072aedde1f41a3d57024"
+      },
+      {
+        "frame": 3,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          130,
+          152,
+          493,
+          525
+        ],
+        "pixelBounds": [
+          20,
+          117,
+          540,
+          579
+        ],
+        "transparent": 280754,
+        "opaque": 0,
+        "partial": 124231,
+        "edge": 0,
+        "sha256": "23c016412284ee7f65e22e2bdf6aa54081b15d2388d7d5c8236db424f4d9fa90"
+      },
+      {
+        "frame": 4,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          127,
+          146,
+          505,
+          531
+        ],
+        "pixelBounds": [
+          42,
+          117,
+          534,
+          645
+        ],
+        "transparent": 293734,
+        "opaque": 0,
+        "partial": 111251,
+        "edge": 0,
+        "sha256": "50eb658ea9a705ca912843399e9dfa1dedd0e34b0e1befb7e89d20de54816427"
+      },
+      {
+        "frame": 5,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          126,
+          118,
+          509,
+          542
+        ],
+        "pixelBounds": [
+          90,
+          20,
+          553,
+          561
+        ],
+        "transparent": 279609,
+        "opaque": 0,
+        "partial": 125376,
+        "edge": 0,
+        "sha256": "9d4cab6b806b46e43b8cecf022960221e2d5eae795dada627d399379e430f173"
+      },
+      {
+        "frame": 6,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          135,
+          148,
+          503,
+          508
+        ],
+        "pixelBounds": [
+          62,
+          22,
+          567,
+          561
+        ],
+        "transparent": 265704,
+        "opaque": 1,
+        "partial": 139280,
+        "edge": 0,
+        "sha256": "54af8bc50cf3f12104002885fafd1a8e7655c470dd7728c28f8e9089fb10ef01"
+      },
+      {
+        "frame": 7,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          150,
+          201,
+          475,
+          498
+        ],
+        "pixelBounds": [
+          97,
+          117,
+          589,
+          561
+        ],
+        "transparent": 317792,
+        "opaque": 1,
+        "partial": 87192,
+        "edge": 0,
+        "sha256": "09822eedf97345a2af45d6da13e553389aa50af133a383e8202855be99cdb8c1"
+      },
+      {
+        "frame": 8,
+        "width": 609,
+        "height": 665,
+        "bounds": [
+          190,
+          281,
+          409,
+          441
+        ],
+        "pixelBounds": [
+          93,
+          163,
+          534,
+          561
+        ],
+        "transparent": 362127,
+        "opaque": 0,
+        "partial": 42858,
+        "edge": 0,
+        "sha256": "81dd6926f81a86fc01db82fb7cef209c8d692e412608109c63771b11ccd5c24a"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B212": {
+    "key": "B212",
+    "code": "B212",
+    "name": "永固鎮界",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3469721767594108,
+      0.3869565217391304,
+      0.5973813420621932,
+      0.6173913043478261
+    ],
+    "frameBounds": [
+      0.1342062193126023,
+      0.18115942028985507,
+      0.8150572831423896,
+      0.7768115942028986
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 611,
+    "cellHeight": 690,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2444,
+    "packedHeight": 1380,
+    "nativeSource": "fx/native/fx_sword_adv4_B212.png",
+    "nativeSha256": "b239b236469f0644304572214eca38e11abe7bd09ec8858adbb6b39e7246826b",
+    "pngSha256": "faa295f61fddfc11821d16afa670fa8df32f187db61be5131006c929f6fbb0dd",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 466,
+        "crossingPixels": 945,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 417,
+        "crossingPixels": 112,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 788,
+        "crossingPixels": 100,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1337,
+        "crossingPixels": 181,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 375,
+        "crossingPixels": 257,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 925,
+        "crossingPixels": 148,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1377,
+        "crossingPixels": 34,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 9,
+          "width": 425,
+          "height": 366
+        },
+        "left": 64,
+        "top": 133,
+        "soleSource": 213,
+        "footCenterSource": 222,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 399,
+          "top": 0,
+          "width": 474,
+          "height": 428
+        },
+        "left": 20,
+        "top": 124,
+        "soleSource": 222,
+        "footCenterSource": 266,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 845,
+          "top": 0,
+          "width": 511,
+          "height": 487
+        },
+        "left": 22,
+        "top": 124,
+        "soleSource": 222,
+        "footCenterSource": 264,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 1310,
+          "top": 0,
+          "width": 464,
+          "height": 546
+        },
+        "left": 44,
+        "top": 124,
+        "soleSource": 222,
+        "footCenterSource": 242,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 339,
+          "width": 468,
+          "height": 548
+        },
+        "left": 64,
+        "top": 20,
+        "soleSource": 326,
+        "footCenterSource": 222,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 426,
+          "top": 369,
+          "width": 523,
+          "height": 518
+        },
+        "left": 47,
+        "top": 50,
+        "soleSource": 296,
+        "footCenterSource": 239,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 892,
+          "top": 429,
+          "width": 522,
+          "height": 458
+        },
+        "left": 69,
+        "top": 110,
+        "soleSource": 236,
+        "footCenterSource": 217,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      },
+      {
+        "sourceRect": {
+          "left": 1356,
+          "top": 488,
+          "width": 418,
+          "height": 399
+        },
+        "left": 90,
+        "top": 169,
+        "soleSource": 177,
+        "footCenterSource": 196,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 286
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          212,
+          267,
+          365,
+          426
+        ],
+        "pixelBounds": [
+          64,
+          133,
+          489,
+          499
+        ],
+        "transparent": 346530,
+        "opaque": 0,
+        "partial": 75060,
+        "edge": 0,
+        "sha256": "2b9aaf768f2043fe88ee1a005e6b491c45f8a14fcb355d0d4514172ebc9755e4"
+      },
+      {
+        "frame": 2,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          160,
+          209,
+          411,
+          483
+        ],
+        "pixelBounds": [
+          20,
+          124,
+          494,
+          552
+        ],
+        "transparent": 315085,
+        "opaque": 0,
+        "partial": 106505,
+        "edge": 0,
+        "sha256": "ef1fc9b5e2bc0858f9501a9277ca02802080cacabc7fc2a9d42803f565ba2a74"
+      },
+      {
+        "frame": 3,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          96,
+          170,
+          496,
+          524
+        ],
+        "pixelBounds": [
+          22,
+          124,
+          533,
+          611
+        ],
+        "transparent": 251019,
+        "opaque": 0,
+        "partial": 170571,
+        "edge": 0,
+        "sha256": "57bef6d3cf25e1964f22f10b632e319d3e1b43ff36ec96409f8e6745f226a04e"
+      },
+      {
+        "frame": 4,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          98,
+          160,
+          477,
+          533
+        ],
+        "pixelBounds": [
+          44,
+          124,
+          508,
+          670
+        ],
+        "transparent": 262141,
+        "opaque": 0,
+        "partial": 159449,
+        "edge": 0,
+        "sha256": "2952035e8fcb27d9630a8c1536505c5603d8cb8c4f3024c2b37123d2280a383d"
+      },
+      {
+        "frame": 5,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          82,
+          125,
+          498,
+          536
+        ],
+        "pixelBounds": [
+          64,
+          20,
+          532,
+          568
+        ],
+        "transparent": 240190,
+        "opaque": 0,
+        "partial": 181400,
+        "edge": 0,
+        "sha256": "4e49d20ab9c755a28adb3cfc54f7e6123f4482f43bc6f4950d4610eb5d8450a4"
+      },
+      {
+        "frame": 6,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          98,
+          141,
+          476,
+          522
+        ],
+        "pixelBounds": [
+          47,
+          50,
+          570,
+          568
+        ],
+        "transparent": 224100,
+        "opaque": 5,
+        "partial": 197485,
+        "edge": 0,
+        "sha256": "254cbc5f1820b7cdedad287eb53898b035379e9b758072fd814b0762f18ab1cb"
+      },
+      {
+        "frame": 7,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          126,
+          192,
+          442,
+          504
+        ],
+        "pixelBounds": [
+          69,
+          110,
+          591,
+          568
+        ],
+        "transparent": 283062,
+        "opaque": 3,
+        "partial": 138525,
+        "edge": 0,
+        "sha256": "0e055c1310cad79ce6649b52d0a673fdc514493152de1396d3ce1729bff1bcd9"
+      },
+      {
+        "frame": 8,
+        "width": 611,
+        "height": 690,
+        "bounds": [
+          215,
+          261,
+          362,
+          406
+        ],
+        "pixelBounds": [
+          90,
+          169,
+          508,
+          568
+        ],
+        "transparent": 350678,
+        "opaque": 0,
+        "partial": 70912,
+        "edge": 0,
+        "sha256": "9bf425ab4f5ed62342cae360f4754feaa469f155d312efcc2945ea10172acb90"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B221": {
+    "key": "B221",
+    "code": "B221",
+    "name": "蒼雷神盾",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3618421052631579,
+      0.32827586206896553,
+      0.6365131578947368,
+      0.6124137931034482
+    ],
+    "frameBounds": [
+      0.1513157894736842,
+      0.16689655172413792,
+      0.8388157894736842,
+      0.7572413793103449
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 608,
+    "cellHeight": 725,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2432,
+    "packedHeight": 1450,
+    "nativeSource": "fx/native/fx_sword_adv4_B221.png",
+    "nativeSha256": "325b513842edd65a13e3d777fe02b1571d76b5660b1ffcecff408621d1dcb0f4",
+    "pngSha256": "9a45f79a8be3e994a21ae799e0d2b3cee7d6dcff8f51c6674cff81862e0c71aa",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 433,
+        "crossingPixels": 361,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 458,
+        "crossingPixels": 4,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 877,
+        "crossingPixels": 56,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1314,
+        "crossingPixels": 27,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 458,
+        "crossingPixels": 10,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 974,
+        "crossingPixels": 6,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1250,
+        "crossingPixels": 2,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 15,
+          "width": 410,
+          "height": 374
+        },
+        "left": 79,
+        "top": 139,
+        "soleSource": 207,
+        "footCenterSource": 222,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 384,
+          "top": 3,
+          "width": 491,
+          "height": 441
+        },
+        "left": 20,
+        "top": 127,
+        "soleSource": 219,
+        "footCenterSource": 281,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 868,
+          "top": 0,
+          "width": 455,
+          "height": 496
+        },
+        "left": 60,
+        "top": 124,
+        "soleSource": 222,
+        "footCenterSource": 241,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 1280,
+          "top": 0,
+          "width": 494,
+          "height": 581
+        },
+        "left": 29,
+        "top": 124,
+        "soleSource": 222,
+        "footCenterSource": 272,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 339,
+          "width": 470,
+          "height": 548
+        },
+        "left": 79,
+        "top": 20,
+        "soleSource": 326,
+        "footCenterSource": 222,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 440,
+          "top": 394,
+          "width": 512,
+          "height": 493
+        },
+        "left": 76,
+        "top": 75,
+        "soleSource": 271,
+        "footCenterSource": 225,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 910,
+          "top": 447,
+          "width": 467,
+          "height": 440
+        },
+        "left": 102,
+        "top": 128,
+        "soleSource": 218,
+        "footCenterSource": 199,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      },
+      {
+        "sourceRect": {
+          "left": 1364,
+          "top": 505,
+          "width": 400,
+          "height": 382
+        },
+        "left": 113,
+        "top": 186,
+        "soleSource": 160,
+        "footCenterSource": 188,
+        "footBaselineOutput": 346,
+        "footCenterOutput": 301
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          220,
+          238,
+          387,
+          444
+        ],
+        "pixelBounds": [
+          79,
+          139,
+          489,
+          513
+        ],
+        "transparent": 400765,
+        "opaque": 0,
+        "partial": 40035,
+        "edge": 0,
+        "sha256": "0cdbb24af67e0f1c77b1ee4050da8d5faf70eeb64cf5e23c9003822c7d3b6f3e"
+      },
+      {
+        "frame": 2,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          133,
+          180,
+          468,
+          511
+        ],
+        "pixelBounds": [
+          20,
+          127,
+          511,
+          568
+        ],
+        "transparent": 339330,
+        "opaque": 0,
+        "partial": 101470,
+        "edge": 0,
+        "sha256": "e590eb2c67a0cd0479f8b548d3a31e37043b96666b835619874271c419d0273b"
+      },
+      {
+        "frame": 3,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          108,
+          156,
+          488,
+          529
+        ],
+        "pixelBounds": [
+          60,
+          124,
+          515,
+          620
+        ],
+        "transparent": 304052,
+        "opaque": 0,
+        "partial": 136748,
+        "edge": 0,
+        "sha256": "60512d41e1f7fbb03e7c7c607fff28335b7552ecc6c1b916939288a2243a44ce"
+      },
+      {
+        "frame": 4,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          92,
+          147,
+          505,
+          547
+        ],
+        "pixelBounds": [
+          29,
+          124,
+          523,
+          705
+        ],
+        "transparent": 297859,
+        "opaque": 0,
+        "partial": 142941,
+        "edge": 0,
+        "sha256": "319f1bc395c50c60ddefb1ee4def7fa5e2fa5f6ff6e385357c2307b5e27b4749"
+      },
+      {
+        "frame": 5,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          94,
+          121,
+          510,
+          549
+        ],
+        "pixelBounds": [
+          79,
+          20,
+          549,
+          568
+        ],
+        "transparent": 275920,
+        "opaque": 0,
+        "partial": 164880,
+        "edge": 0,
+        "sha256": "ce48582e5183696e8f0b13381a614c7abb4d38a74df7dfdac49091562b2e22c7"
+      },
+      {
+        "frame": 6,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          114,
+          160,
+          494,
+          510
+        ],
+        "pixelBounds": [
+          76,
+          75,
+          588,
+          568
+        ],
+        "transparent": 299862,
+        "opaque": 0,
+        "partial": 140938,
+        "edge": 0,
+        "sha256": "f0a72835b9d700bf09dcdab590bcc2da0725681419c000fd4984cae6663acc23"
+      },
+      {
+        "frame": 7,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          183,
+          219,
+          428,
+          460
+        ],
+        "pixelBounds": [
+          102,
+          128,
+          569,
+          568
+        ],
+        "transparent": 369579,
+        "opaque": 0,
+        "partial": 71221,
+        "edge": 0,
+        "sha256": "b5fd34af58d02677aeee876279422986d8119494d46bfaeba2e847d089faef59"
+      },
+      {
+        "frame": 8,
+        "width": 608,
+        "height": 725,
+        "bounds": [
+          223,
+          263,
+          374,
+          427
+        ],
+        "pixelBounds": [
+          113,
+          186,
+          513,
+          568
+        ],
+        "transparent": 408501,
+        "opaque": 0,
+        "partial": 32299,
+        "edge": 0,
+        "sha256": "e6a49ec18d8085d4ac2f245af325ec501df2b04a8d29007cc6c2944bf39dde7d"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  },
+  "B222": {
+    "key": "B222",
+    "code": "B222",
+    "name": "風暴壁壘",
+    "cols": 4,
+    "rows": 2,
+    "frames": 8,
+    "firstFrame": 0,
+    "heightScale": 1,
+    "fig": [
+      0.3415384615384615,
+      0.371900826446281,
+      0.5707692307692308,
+      0.5991735537190083
+    ],
+    "frameBounds": [
+      0.12923076923076923,
+      0.174931129476584,
+      0.7907692307692308,
+      0.7741046831955923
+    ],
+    "preservePlacement": true,
+    "authoredEffects": true,
+    "useAsIdle": true,
+    "cellWidth": 650,
+    "cellHeight": 726,
+    "nativeWidth": 1774,
+    "nativeHeight": 887,
+    "packedWidth": 2600,
+    "packedHeight": 1452,
+    "nativeSource": "fx/native/fx_sword_adv4_B222.png",
+    "nativeSha256": "ba9df88e10329c8ccd751780296d91efe83f264145ebef5986d245e023766b51",
+    "pngSha256": "a58edc458bb952384f75c47413b78c9e9f672a300d79e1b01a8b4f4b2cd36b66",
+    "losslessWebP": true,
+    "visiblePixelEquality": true,
+    "translatedPixelEquality": true,
+    "upscaled": false,
+    "alphaPreserved": true,
+    "packingMethod": "grid-seeded solid components with all-alpha distance partition",
+    "gutters": [
+      {
+        "axis": "y",
+        "cut": 468,
+        "crossingPixels": 106,
+        "expected": 443.5,
+        "searchRange": [
+          364,
+          523
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 401,
+        "crossingPixels": 1,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 861,
+        "crossingPixels": 7,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 0,
+        "cut": 1318,
+        "crossingPixels": 24,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 433,
+        "crossingPixels": 38,
+        "expected": 443.5,
+        "searchRange": [
+          341,
+          546
+        ],
+        "safe": false
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 962,
+        "crossingPixels": 0,
+        "expected": 887,
+        "searchRange": [
+          785,
+          989
+        ],
+        "safe": true
+      },
+      {
+        "axis": "x",
+        "row": 1,
+        "cut": 1353,
+        "crossingPixels": 0,
+        "expected": 1330.5,
+        "searchRange": [
+          1228,
+          1433
+        ],
+        "safe": true
+      }
+    ],
+    "unsafeGutters": [],
+    "resolvedOverlappingColumnProjection": true,
+    "placements": [
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 9,
+          "width": 399,
+          "height": 362
+        },
+        "left": 75,
+        "top": 132,
+        "soleSource": 213,
+        "footCenterSource": 222,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 388,
+          "top": 0,
+          "width": 469,
+          "height": 451
+        },
+        "left": 20,
+        "top": 123,
+        "soleSource": 222,
+        "footCenterSource": 277,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 846,
+          "top": 0,
+          "width": 484,
+          "height": 500
+        },
+        "left": 34,
+        "top": 123,
+        "soleSource": 222,
+        "footCenterSource": 263,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 1313,
+          "top": 3,
+          "width": 458,
+          "height": 580
+        },
+        "left": 58,
+        "top": 126,
+        "soleSource": 219,
+        "footCenterSource": 239,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 0,
+          "top": 340,
+          "width": 468,
+          "height": 547
+        },
+        "left": 75,
+        "top": 20,
+        "soleSource": 325,
+        "footCenterSource": 222,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 436,
+          "top": 376,
+          "width": 562,
+          "height": 511
+        },
+        "left": 68,
+        "top": 56,
+        "soleSource": 289,
+        "footCenterSource": 229,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 949,
+          "top": 479,
+          "width": 474,
+          "height": 408
+        },
+        "left": 137,
+        "top": 159,
+        "soleSource": 186,
+        "footCenterSource": 160,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      },
+      {
+        "sourceRect": {
+          "left": 1356,
+          "top": 499,
+          "width": 418,
+          "height": 388
+        },
+        "left": 101,
+        "top": 179,
+        "soleSource": 166,
+        "footCenterSource": 196,
+        "footBaselineOutput": 345,
+        "footCenterOutput": 297
+      }
+    ],
+    "sourceEdgePixels": 0,
+    "frameMetrics": [
+      {
+        "frame": 1,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          222,
+          270,
+          371,
+          435
+        ],
+        "pixelBounds": [
+          75,
+          132,
+          474,
+          494
+        ],
+        "transparent": 448410,
+        "opaque": 0,
+        "partial": 23490,
+        "edge": 0,
+        "sha256": "0f219a66550d232b01e0fb9394622e6c359d6d56e6c75909b70e96dd97ffe110"
+      },
+      {
+        "frame": 2,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          133,
+          210,
+          445,
+          502
+        ],
+        "pixelBounds": [
+          20,
+          123,
+          489,
+          574
+        ],
+        "transparent": 414098,
+        "opaque": 6,
+        "partial": 57796,
+        "edge": 0,
+        "sha256": "7b477b3106f4b53317a8de280537cdee5abae2829d46a67820f9b605532cc081"
+      },
+      {
+        "frame": 3,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          88,
+          161,
+          504,
+          562
+        ],
+        "pixelBounds": [
+          34,
+          123,
+          518,
+          623
+        ],
+        "transparent": 355611,
+        "opaque": 2,
+        "partial": 116287,
+        "edge": 0,
+        "sha256": "4202141d9034588b9a0129eb5d8b76f4050dbd89ee0bcb02f1d92f83aac5c2c4"
+      },
+      {
+        "frame": 4,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          89,
+          178,
+          498,
+          541
+        ],
+        "pixelBounds": [
+          58,
+          126,
+          516,
+          706
+        ],
+        "transparent": 360792,
+        "opaque": 0,
+        "partial": 111108,
+        "edge": 0,
+        "sha256": "92199c574788d3b28e4c90d634ef8388168f8136c46cb49f0efe1a9a10aefebf"
+      },
+      {
+        "frame": 5,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          84,
+          127,
+          514,
+          549
+        ],
+        "pixelBounds": [
+          75,
+          20,
+          543,
+          567
+        ],
+        "transparent": 347037,
+        "opaque": 6,
+        "partial": 124857,
+        "edge": 0,
+        "sha256": "3b652eeb1e9cbe614dc638cff1011404acc8dba5326d0c733deaf518faabc4b7"
+      },
+      {
+        "frame": 6,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          98,
+          160,
+          500,
+          519
+        ],
+        "pixelBounds": [
+          68,
+          56,
+          630,
+          567
+        ],
+        "transparent": 356260,
+        "opaque": 7,
+        "partial": 115633,
+        "edge": 0,
+        "sha256": "01a537874a20ea790ccc3a76e4c10359c523b6e354261f64948dc58aa35676e3"
+      },
+      {
+        "frame": 7,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          202,
+          224,
+          441,
+          466
+        ],
+        "pixelBounds": [
+          137,
+          159,
+          611,
+          567
+        ],
+        "transparent": 430017,
+        "opaque": 18,
+        "partial": 41865,
+        "edge": 0,
+        "sha256": "c051f37b3a985678ac46367603ddb1a51386555356db0d1a088e41c113706723"
+      },
+      {
+        "frame": 8,
+        "width": 650,
+        "height": 726,
+        "bounds": [
+          229,
+          255,
+          374,
+          412
+        ],
+        "pixelBounds": [
+          101,
+          179,
+          519,
+          567
+        ],
+        "transparent": 443530,
+        "opaque": 0,
+        "partial": 28370,
+        "edge": 0,
+        "sha256": "ca2782f5c2c11aa402ec52c4e94907168f993096df62d7da8489cc3f90e7210c"
+      }
+    ],
+    "uniqueFrames": 8,
+    "edgeFrames": [],
+    "packVersion": "6-native-portrait-placement"
+  }
+}
