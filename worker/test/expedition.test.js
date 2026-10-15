@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';
+﻿import test from 'node:test';import assert from 'node:assert/strict';
 import {freshDb} from './d1-shim.js';import {T0} from './helpers.js';
 import * as P from '../src/services/player.js';import * as S from '../src/services/special.js';import * as G from '../src/services/party.js';
 import {loadPlayer} from '../src/db.js';import {computeStats} from '../src/game/stats.js';
@@ -48,6 +48,16 @@ test('real damage completes dungeon; reward and duplicate claim are atomic and i
  const env=await setup(),id=await team(env);const {p,now}=await win(env,id);assert.equal(p.status,'won');assert.equal((await loadPlayer(env.DB,'111')).char.party_id,null);
  const [a,b]=await Promise.all([G.reward(env,'111',{partyId:id,requestId:req()},now),G.reward(env,'111',{partyId:id,requestId:req()},now)]);
  assert.deepEqual(a.reward,b.reward);assert.equal((await loadPlayer(env.DB,'111')).inv.research_fragment,8);
+});
+test('no daily cap: every cleared dungeon run pays the full reward, and each run still pays only once',async()=>{
+  const env=await setup();let expected=0;
+  for(let i=0;i<4;i++){for(const tg of ['111','222','333']){const q=await loadPlayer(env.DB,tg),st=computeStats(q.char,q.equipment);await env.DB.prepare("UPDATE rpg_characters SET hp=?,mp=?,idle_state='fighting' WHERE tg_id=?").bind(st.maxHp,st.maxMp,tg).run();}const id=await team(env);const {now}=await win(env,id);const a=await G.reward(env,'111',{partyId:id,requestId:req()},now);const again=await G.reward(env,'111',{partyId:id,requestId:req()},now);assert.equal(a.reward.items.research_fragment,8);assert.deepEqual(again.reward,a.reward);expected+=8;assert.equal((await loadPlayer(env.DB,'111')).inv.research_fragment,expected);}
+});
+test('claimed runs are recorded per player and listed newest first with mode, floor and items',async()=>{
+  const env=await setup();const ids=[];
+  for(let i=0;i<3;i++){for(const tg of ['111','222','333']){const q=await loadPlayer(env.DB,tg),st=computeStats(q.char,q.equipment);await env.DB.prepare("UPDATE rpg_characters SET hp=?,mp=?,idle_state='fighting' WHERE tg_id=?").bind(st.maxHp,st.maxMp,tg).run();}const id=await team(env);const {now}=await win(env,id);await G.reward(env,'111',{partyId:id,requestId:req()},now+i*1000);ids.push(id);}
+  const l=await G.list(env,'111',T0+10);assert.equal(l.drops.length,3);assert.deepEqual(l.drops.map(d=>d.partyId),[...ids].reverse());for(const d of l.drops){assert.equal(d.mode,'dungeon');assert.equal(d.items.research_fragment,8);assert.ok(d.name&&d.at>0);}
+  assert.equal((await G.list(env,'222',T0+10)).drops.length,0);
 });
 test('third advancement accepts only a bound three-person trial item; boss mat cannot bypass',async()=>{
  const c={base_class:'sword',class_path:'B1',level:90};assert.throws(()=>advance(c,{mat_3:10},'1'));
