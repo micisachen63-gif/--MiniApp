@@ -1,0 +1,39 @@
+{
+  "status": "VERIFIED",
+  "repository": "https://github.com/micisachen63-gif/--MiniApp",
+  "sourceCommit": "2a68612d7bc6c800b4d83f2a50d5f755f4523d6e",
+  "productionVersion": "5f508cf1-9b1b-434d-b316-62fab64618e6",
+  "activePercentage": 100,
+  "verifiedAt": "2026-10-15T08:45:35.200Z",
+  "runtimeSHA256": {
+    "index.js": "58bbc076556cea1316ccd1be165e15430771cbd4f23da398343e538ae3ac1a28"
+  },
+  "publicFilesVerified": 125,
+  "protectedBindingsAndSchedulesVerified": true,
+  "noPlayerMutations": true,
+  "tests": {
+    "monster": 121,
+    "workerRelease": 111,
+    "rasterHashes": 216
+  },
+  "browser": {
+    "localRepresentativeScenes": 24,
+    "maps": 12,
+    "mobileViewport": "375x812",
+    "desktopViewport": "1280x900",
+    "production": {
+      "url": "https://elf-rpg-api.micisachen.workers.dev/monster-expansion-review?map=7&count=4&hero=archer_f&key=elite_x13_m07_elite_2",
+      "groupCount": 4,
+      "namesAndHealthBars": true,
+      "reattachmentAnimationResumed": true,
+      "secondaryBossHeightRatio": 1.2,
+      "screenshot": "production-group4.png"
+    }
+  },
+  "limitations": [
+    "Individual scene approval for every monster is not claimed; browser coverage is representative across all12 maps.",
+    "Some legacy wide silhouettes remain shorter than the hero under group width caps (e.g. raven0.96x, map12 devourer~0.92x). Redrawing their composition remains a follow-up.",
+    "The earlier full-suite run has79 baseline failures; current monster and required release suites pass."
+  ],
+  "releaseReceipt": "../deployment/elf-rpg-api.json"
+}
