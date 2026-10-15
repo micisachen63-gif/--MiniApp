@@ -371,8 +371,8 @@
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
     if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
-    if(kind==='item'&&key==='gacha_weapon')return 'art/v2/gear_wpn_forge_sword.webp';
-    if(kind==='item'&&key==='gacha_armor')return 'art/v2/gear_arm_forge_plate.webp';
+    if(kind==='item'&&key==='gacha_weapon')return 'art/ui/gacha-weapon-20261015.webp';
+    if(kind==='item'&&key==='gacha_armor')return 'art/ui/gacha-armor-20261015.webp';
     if(kind==='item'&&key==='gold')return 'art/ui/hud-coin-v2.webp';
     if(kind === 'item' && ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a','unbind'].includes(key)) return `art/items-scrolls-cutout-20261011/${key}.webp`;
     if (MODE === 'svg') return null;
@@ -1252,8 +1252,8 @@
   function gachaCards(type=null) {
     const rates=(S.shop.gachaRates||[]).map(r=>`${r.rarity==='legendary'?'紫色傳說':'紅色霸主'} ${r.pct}%`).join(' · ');
     return (S.shop.gacha||[]).filter(g=>!type||g.type===type).map(g=>{
-      const gear=S.shop.gear.find(e=>e.group===g.type&&e.tier===g.tier);
-      return `<div class="item"><div class="ic art">${gear?gearIcon({...gear,classReq:S.me.character.baseClass},''):''}</div><div class="mid"><div class="t">${esc(g.name)}</div><div class="d">購買後存入道具庫 · 開啟時依角色等級與職業決定</div><div class="d">${esc(rates)}</div><div class="price"><img class="currency-coin" src="art/ui/hud-coin-v2.webp" alt=""> ${fmt(g.price)} 金幣 / 顆</div></div><button class="btn sm" data-gacha="${g.type}" ${S.me.character.gold<g.price?'disabled':''}>購買轉蛋</button></div>`;
+
+      return `<div class="item gacha-item"><div class="ic art">${iconHtml('gacha_'+g.type,'')}</div><div class="mid"><div class="t">${esc(g.name)}</div><div class="d">購買後存入道具庫 · 開啟時依角色等級與職業決定</div><div class="d">${esc(rates)}</div><div class="price"><img class="currency-coin" src="art/ui/hud-coin-v2.webp" alt=""> ${fmt(g.price)} 金幣 / 顆</div></div><button class="btn sm" data-gacha="${g.type}" ${S.me.character.gold<g.price?'disabled':''}>購買轉蛋</button></div>`;
     }).join('');
   }
   function shopBody() {
