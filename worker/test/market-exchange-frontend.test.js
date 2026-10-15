@@ -1,3 +1,4 @@
+import {MONSTER_ART_REVISION} from '../src/game/monster-art-compatibility.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -84,7 +85,7 @@ test('the actual app market host generates a canonical UUID accepted and replaye
   await Player.createCharacter(env,{tgId:'790',name:'主機編號測試',gender:'m',baseClass:'sword'},T0);
   await env.DB.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES('790','scroll_w',3)").run();
   const window={},S={me:{character:{tgId:'790',gold:1000,revision:0}},shop:{},shopTab:'weapons'};let captured;
-  const api=async(action,body)=>{const response=await handle(new Request('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'790','X-Debug-Now':String(T0)},body:JSON.stringify(body)}),env);return {status:response.status,...await response.json()};};
+  const api=async(action,body)=>{const response=await handle(new Request('http://local/app/api/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':'790','X-Debug-Now':String(T0),'X-Monster-Art-Revision':MONSTER_ART_REVISION},body:JSON.stringify(body)}),env);return {status:response.status,...await response.json()};};
   const ctx=vm.createContext({window,S,crypto:globalThis.crypto,Uint8Array,api,esc,fmt:String,gearIcon(){},devTg:'790',tg:null,confirmSheet(){},toast(){},sheet(){},closeSheet(){},renderHud(){},refreshMe(){},localStorage:{getItem(){return null;},setItem(){},removeItem(){}}});
   vm.runInContext(code,ctx);window.RpgMarketExchange.mount=(_view,host)=>{captured=host;return {};};
   const idStart=app.indexOf('  const rid ='),idEnd=app.indexOf('  const haptic =',idStart),start=app.indexOf('  function mountMarket(view)'),end=app.indexOf('  function bindShop(view)',start);
@@ -103,4 +104,14 @@ test('market UUID fallback uses secure random bytes with UUID version/variant an
   assert.equal(window.RpgMarketExchange.requestId(),'ffffffff-ffff-4fff-bfff-ffffffffffff');assert.equal(fills,1);
   assert.match(app,/const rid = \(\) => \(crypto\.randomUUID \? crypto\.randomUUID\(\)\.replace\(\/-\/g, ''\)/);
   assert.match(app,/requestId:\(\)=>`guardian_\$\{crypto\.randomUUID\(\)\.replace\(\/-\/g,''\)\}`/);
+});
+
+test('equipment enhancement is prominent on listings, mine, candidate and confirmation; non-equipment has no badge',async()=>{
+ const reviews=[],enhanced={...gear('badge'),id:'listing-badge',enhance:12,price:5000,status:'active',canBuy:true,seller:{name:'旅者'}};
+ const h=setup({api:async action=>({items:action==='exchange/sellable'?[enhanced,book,angel]:[enhanced,{...gear('zero'),id:'zero',enhance:0},book,angel]}),confirm:async(...args)=>{reviews.push(args);return false;}});
+ h.open();await tick();assert.match(h.root.innerHTML,/exchange-enhance-badge" aria-label="強化 \+12">\+12/);assert.match(h.root.innerHTML,/exchange-enhance-title">\+12<\/span> 月桂劍/);assert.match(h.root.innerHTML,/aria-label="強化 \+0"/);assert.equal((h.root.innerHTML.match(/exchange-enhance-badge/g)||[]).length,2);
+ h.root.click('data-exchange-buy','listing-badge');await tick();assert.match(reviews[0][1],/aria-label="強化 \+12"/);
+ h.root.click('data-exchange-tab','mine');await tick();assert.match(h.root.innerHTML,/aria-label="強化 \+12"/);
+ h.root.click('data-exchange-tab','create');await tick();assert.match(h.root.innerHTML,/aria-label="強化 \+12"/);
+ h.root.click('data-exchange-pick','equip:badge');assert.equal((h.root.innerHTML.match(/aria-label="強化 \+12"/g)||[]).length,2);
 });
