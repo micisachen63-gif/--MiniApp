@@ -10,6 +10,8 @@
 
 ## 2026-10-15 審查修正分支
 
+2026-10-16 後續已修正既有帳號新增角色的通行證誤擋，並實作盜賊24個三／四轉專精。最新接手文件為 `docs/thief/ADVANCEMENT_AND_CREATION_HANDOVER.txt`，包含正式HMAC創角、收據重試、各模式戰鬥與UI驗證；下段上線後審查所列的高階缺口屬歷史狀態。
+
 2026-10-16 盜賊正式上線後核對與漏接修正見 `docs/thief/POST_RELEASE_AUDIT.txt`。本次補齊自動洗屬性攻擊目標及交易所職業／近戰天使篩選；盜賊三、四轉仍沿用二轉能力，勿將外觀完成誤認為玩法專精完成。發布狀態以最新 docs/deployment 收據為準。
 
 `codex/review-remediation` 修復交易部分取回道具遺失、統一完整測試、補 Bot 積壓／uncertain 核對與發布互斥，並加入現有三職業 72 條三四轉數值專精與成長樹真實數值。詳細範圍、驗證及低強度模型接手步驟見 `docs/class-combat/REVIEW_REMEDIATION_HANDOVER.txt`。完整資源累積／手動戰技與後期配隊副本仍屬另一期；人物／盜賊由其他視窗處理。此段不是發布收據，正式啟用仍以 docs/deployment 與即時 Cloudflare 為準。

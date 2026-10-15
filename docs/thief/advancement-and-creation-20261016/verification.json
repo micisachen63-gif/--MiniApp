@@ -1,0 +1,57 @@
+{
+  "status": "LOCAL_TESTS_AND_UI_PASSED",
+  "testedAt": "2026-10-15T20:23:34.479Z",
+  "implementationCommit": "92ab4a3",
+  "mergedArmoryRelease": "691066b",
+  "tests": {
+    "worker": 1004,
+    "bot": 77,
+    "failed": 0,
+    "skipped": 0,
+    "todo": 0,
+    "logSHA256": "3a1b206dd4af132a4abbf8a23751f8576b780010c80b216e4fa6789cd795f85a"
+  },
+  "creation": {
+    "productionHmacVerification": true,
+    "firstAdmissionPreserved": true,
+    "existingAccountWithoutPass": true,
+    "allFourClassesBothGenders": true,
+    "fourSlotLimit": true,
+    "forgedAccountRejected": true,
+    "atomicIdempotentReceipt": true,
+    "uncertainFrontendRetry": true
+  },
+  "advancement": {
+    "thirdRoutes": 8,
+    "fourthRoutes": 16,
+    "allClassAdvancedCoverage": 96,
+    "nativeMark": true,
+    "poisonPower": true,
+    "ownerPoisonBurst": true,
+    "penetration": true,
+    "nextHitWeakening": true,
+    "idle": true,
+    "pk": true,
+    "boss": true,
+    "party": true,
+    "unchangedNativeCadence": true,
+    "unchangedPoisonLimits": true,
+    "oldPartySnapshotsRetainPriorMechanics": true
+  },
+  "browser": {
+    "scope": "Actual complete Mini App and router in a fresh SQLite memory DB; production auth mode with synthetic HMAC identity only.",
+    "width": 375,
+    "createdThiefFromExistingAccount": true,
+    "selectedCreatedCharacter": true,
+    "advancedActualMana": 19,
+    "advancedPoisonCoefficient": 0.168,
+    "fullTreeNodes": 31,
+    "overflow": false,
+    "screenshots": [
+      "creation-flow-mobile.png",
+      "thief-advancement-mobile.png"
+    ]
+  },
+  "productionWritesInValidation": false,
+  "productionDeployment": "PENDING root deploy:worker and receipt"
+}

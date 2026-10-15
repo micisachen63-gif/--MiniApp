@@ -1,0 +1,725 @@
+{
+  "scope": "24 actual advanced thief routes; standard gear is a comparison fixture, not player stats",
+  "routes": [
+    {
+      "path": "A11",
+      "name": "夜幕處刑者",
+      "role": "要害追擊",
+      "skill": {
+        "name": "夜幕斷罪",
+        "cost": 19,
+        "mult": 3.276,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.13
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.29000000000000004,
+        "lifestealPct": 0.01
+      },
+      "effect": "要害追擊：標記目標原生傷害 +13%；爆擊率 +4%；攻擊吸血 +1%；原生技能倍率 ×1.04；基礎耗魔 ×1.06",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A12",
+      "name": "幽影追獵者",
+      "role": "幽影追獵",
+      "skill": {
+        "name": "幽影獵襲",
+        "cost": 18,
+        "mult": 3.15,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.19
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.25,
+        "mpEfficiencyPct": 0.03,
+        "skillHastePct": 0.04
+      },
+      "effect": "幽影追獵：標記目標原生傷害 +19%；魔力效率 +3%；特殊技能冷卻縮減 +4%；原生技能倍率 ×1；基礎耗魔 ×1.02",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 17,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A21",
+      "name": "蝕毒煉師",
+      "role": "蝕毒淬鍊",
+      "skill": {
+        "name": "蝕毒連刃",
+        "cost": 19,
+        "mult": 2.5,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonPower": 1.25
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.21
+      },
+      "effect": "蝕毒淬鍊：每層毒傷 0.15×ATK；持續傷害 +6%；原生技能倍率 ×1；基礎耗魔 ×1.04",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A22",
+      "name": "血棘獵手",
+      "role": "血棘收割",
+      "skill": {
+        "name": "血棘穿刺",
+        "cost": 19,
+        "mult": 2.575,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonBurst": 0.1
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.15,
+        "lifestealPct": 0.02
+      },
+      "effect": "血棘收割：自身三層毒刃時原生傷害 +10%；攻擊吸血 +2%；原生技能倍率 ×1.03；基礎耗魔 ×1.05",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 1
+      }
+    },
+    {
+      "path": "B11",
+      "name": "疾風刃使",
+      "role": "疾風穿心",
+      "skill": {
+        "name": "疾風刃旋",
+        "cost": 21,
+        "mult": 2.703,
+        "targets": 3,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.2
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.13
+      },
+      "effect": "疾風穿心：原生技能忽略 20% 防禦；爆擊率 +3%；原生技能倍率 ×1.02；基礎耗魔 ×1.04",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 21,
+        "targets": 3
+      }
+    },
+    {
+      "path": "B12",
+      "name": "星刃獵手",
+      "role": "星刃散華",
+      "skill": {
+        "name": "星芒追刃",
+        "cost": 22,
+        "mult": 2.597,
+        "targets": 4,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.12
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.1,
+        "mpEfficiencyPct": 0.025
+      },
+      "effect": "星刃散華：原生技能忽略 12% 防禦；魔力效率 +2.5%；原生技能倍率 ×0.98；基礎耗魔 ×1.1；原生目標 +1",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 21,
+        "targets": 4
+      }
+    },
+    {
+      "path": "B21",
+      "name": "鏡影舞者",
+      "role": "鏡影牽制",
+      "skill": {
+        "name": "鏡影刃舞",
+        "cost": 21,
+        "mult": 2.4,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.15
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "skillHastePct": 0.05
+      },
+      "effect": "鏡影牽制：敵方下一擊傷害 −15%；特殊技能冷卻縮減 +5%；原生技能倍率 ×1；基礎耗魔 ×1.03",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 21,
+        "targets": 2
+      }
+    },
+    {
+      "path": "B22",
+      "name": "暮光詭術師",
+      "role": "暮光突襲",
+      "skill": {
+        "name": "暮光幻襲",
+        "cost": 21,
+        "mult": 2.52,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.1,
+          "penetrate": 0.12
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "critPct": 0.025
+      },
+      "effect": "暮光突襲：原生技能忽略 12% 防禦；敵方下一擊傷害 −10%；爆擊率 +2.5%；原生技能倍率 ×1.05；基礎耗魔 ×1.07",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 21,
+        "targets": 2
+      }
+    },
+    {
+      "path": "A111",
+      "name": "冥夜裁決者",
+      "role": "要害追擊 · 極意",
+      "skill": {
+        "name": "冥夜裁決",
+        "cost": 20,
+        "mult": 3.3579,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.18
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.30000000000000004,
+        "lifestealPct": 0.0125
+      },
+      "effect": "要害追擊 · 極意：標記目標原生傷害 +18%；爆擊率 +5%；攻擊吸血 +1.25%；原生技能倍率 ×1.066；基礎耗魔 ×1.1024",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 20,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A112",
+      "name": "終焉斷刃",
+      "role": "要害追擊 · 永續",
+      "skill": {
+        "name": "終焉斷影",
+        "cost": 19,
+        "mult": 3.276,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.13
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.29000000000000004,
+        "lifestealPct": 0.02,
+        "mpEfficiencyPct": 0.04
+      },
+      "effect": "要害追擊 · 永續：標記目標原生傷害 +13%；爆擊率 +4%；攻擊吸血 +2%；魔力效率 +4%；原生技能倍率 ×1.04；基礎耗魔 ×1.0282",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 18,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A121",
+      "name": "虛影行者",
+      "role": "幽影追獵 · 極意",
+      "skill": {
+        "name": "虛影穿襲",
+        "cost": 19,
+        "mult": 3.2287,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.24
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.25,
+        "mpEfficiencyPct": 0.0375,
+        "skillHastePct": 0.05
+      },
+      "effect": "幽影追獵 · 極意：標記目標原生傷害 +24%；魔力效率 +3.75%；特殊技能冷卻縮減 +5%；原生技能倍率 ×1.025；基礎耗魔 ×1.0608",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 18,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A122",
+      "name": "無聲獵魂者",
+      "role": "幽影追獵 · 永續",
+      "skill": {
+        "name": "無聲獵魂",
+        "cost": 18,
+        "mult": 3.15,
+        "targets": 1,
+        "thiefRoute": "A1",
+        "thiefMechanics": {
+          "markBurst": 0.19
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.25,
+        "mpEfficiencyPct": 0.07,
+        "skillHastePct": 0.04,
+        "lifestealPct": 0.01
+      },
+      "effect": "幽影追獵 · 永續：標記目標原生傷害 +19%；魔力效率 +7%；特殊技能冷卻縮減 +4%；攻擊吸血 +1%；原生技能倍率 ×1；基礎耗魔 ×0.9894",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 17,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A211",
+      "name": "九首毒刃",
+      "role": "蝕毒淬鍊 · 極意",
+      "skill": {
+        "name": "九首蝕毒",
+        "cost": 19,
+        "mult": 2.5625,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonPower": 1.4
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.225
+      },
+      "effect": "蝕毒淬鍊 · 極意：每層毒傷 0.168×ATK；持續傷害 +7.5%；原生技能倍率 ×1.025；基礎耗魔 ×1.0816",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A212",
+      "name": "冥蛇使徒",
+      "role": "蝕毒淬鍊 · 永續",
+      "skill": {
+        "name": "冥蛇噬影",
+        "cost": 18,
+        "mult": 2.5,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonPower": 1.25
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.21,
+        "mpEfficiencyPct": 0.04,
+        "lifestealPct": 0.01
+      },
+      "effect": "蝕毒淬鍊 · 永續：每層毒傷 0.15×ATK；持續傷害 +6%；魔力效率 +4%；攻擊吸血 +1%；原生技能倍率 ×1；基礎耗魔 ×1.0088",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 17,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A221",
+      "name": "血棘君主",
+      "role": "血棘收割 · 極意",
+      "skill": {
+        "name": "血棘王刃",
+        "cost": 20,
+        "mult": 2.6395,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonBurst": 0.15
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.15,
+        "lifestealPct": 0.025
+      },
+      "effect": "血棘收割 · 極意：自身三層毒刃時原生傷害 +15%；攻擊吸血 +2.5%；原生技能倍率 ×1.0558；基礎耗魔 ×1.092",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 20,
+        "targets": 1
+      }
+    },
+    {
+      "path": "A222",
+      "name": "蝕魂收割者",
+      "role": "血棘收割 · 永續",
+      "skill": {
+        "name": "蝕魂收割",
+        "cost": 18,
+        "mult": 2.575,
+        "targets": 1,
+        "thiefRoute": "A2",
+        "thiefMechanics": {
+          "poisonBurst": 0.1
+        }
+      },
+      "passive": {
+        "text": "要害洞察：爆擊 +10%",
+        "critPct": 0.1,
+        "dotPct": 0.15,
+        "lifestealPct": 0.03,
+        "mpEfficiencyPct": 0.04
+      },
+      "effect": "血棘收割 · 永續：自身三層毒刃時原生傷害 +10%；攻擊吸血 +3%；魔力效率 +4%；原生技能倍率 ×1.03；基礎耗魔 ×1.0185",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 17,
+        "targets": 1
+      }
+    },
+    {
+      "path": "B111",
+      "name": "風暴千刃",
+      "role": "疾風穿心 · 極意",
+      "skill": {
+        "name": "風暴千刃",
+        "cost": 22,
+        "mult": 2.7706,
+        "targets": 3,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.25
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.1375
+      },
+      "effect": "疾風穿心 · 極意：原生技能忽略 25% 防禦；爆擊率 +3.75%；原生技能倍率 ×1.0455；基礎耗魔 ×1.0816",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 22,
+        "targets": 3
+      }
+    },
+    {
+      "path": "B112",
+      "name": "疾影穿梭者",
+      "role": "疾風穿心 · 永續",
+      "skill": {
+        "name": "疾影穿梭",
+        "cost": 20,
+        "mult": 2.703,
+        "targets": 3,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.2
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.13,
+        "mpEfficiencyPct": 0.04,
+        "lifestealPct": 0.01
+      },
+      "effect": "疾風穿心 · 永續：原生技能忽略 20% 防禦；爆擊率 +3%；魔力效率 +4%；攻擊吸血 +1%；原生技能倍率 ×1.02；基礎耗魔 ×1.0088",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 3
+      }
+    },
+    {
+      "path": "B121",
+      "name": "星隕刃使",
+      "role": "星刃散華 · 極意",
+      "skill": {
+        "name": "星隕刃雨",
+        "cost": 23,
+        "mult": 2.6619,
+        "targets": 4,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.17
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.1,
+        "mpEfficiencyPct": 0.0313
+      },
+      "effect": "星刃散華 · 極意：原生技能忽略 17% 防禦；魔力效率 +3.13%；原生技能倍率 ×1.0045；基礎耗魔 ×1.144；原生目標 +1",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 22,
+        "targets": 4
+      }
+    },
+    {
+      "path": "B122",
+      "name": "星軌追獵者",
+      "role": "星刃散華 · 永續",
+      "skill": {
+        "name": "星軌追獵",
+        "cost": 21,
+        "mult": 2.597,
+        "targets": 4,
+        "thiefRoute": "B1",
+        "thiefMechanics": {
+          "penetrate": 0.12
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.04,
+        "critPct": 0.1,
+        "mpEfficiencyPct": 0.065,
+        "lifestealPct": 0.01
+      },
+      "effect": "星刃散華 · 永續：原生技能忽略 12% 防禦；魔力效率 +6.5%；攻擊吸血 +1%；原生技能倍率 ×0.98；基礎耗魔 ×1.067；原生目標 +1",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 20,
+        "targets": 4
+      }
+    },
+    {
+      "path": "B211",
+      "name": "千面幻刃",
+      "role": "鏡影牽制 · 極意",
+      "skill": {
+        "name": "千面鏡殺",
+        "cost": 21,
+        "mult": 2.46,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.18
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "skillHastePct": 0.0625
+      },
+      "effect": "鏡影牽制 · 極意：敵方下一擊傷害 −18%；特殊技能冷卻縮減 +6.25%；原生技能倍率 ×1.025；基礎耗魔 ×1.0712",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 21,
+        "targets": 2
+      }
+    },
+    {
+      "path": "B212",
+      "name": "鏡界行者",
+      "role": "鏡影牽制 · 永續",
+      "skill": {
+        "name": "鏡界穿行",
+        "cost": 20,
+        "mult": 2.4,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.15
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "skillHastePct": 0.05,
+        "mpEfficiencyPct": 0.04,
+        "lifestealPct": 0.01
+      },
+      "effect": "鏡影牽制 · 永續：敵方下一擊傷害 −15%；特殊技能冷卻縮減 +5%；魔力效率 +4%；攻擊吸血 +1%；原生技能倍率 ×1；基礎耗魔 ×0.9991",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 19,
+        "targets": 2
+      }
+    },
+    {
+      "path": "B221",
+      "name": "暮光織影者",
+      "role": "暮光突襲 · 極意",
+      "skill": {
+        "name": "暮光織刃",
+        "cost": 22,
+        "mult": 2.5831,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.1,
+          "penetrate": 0.17
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "critPct": 0.0313
+      },
+      "effect": "暮光突襲 · 極意：原生技能忽略 17% 防禦；敵方下一擊傷害 −10%；爆擊率 +3.13%；原生技能倍率 ×1.0763；基礎耗魔 ×1.1128",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 22,
+        "targets": 2
+      }
+    },
+    {
+      "path": "B222",
+      "name": "黑月詭術師",
+      "role": "暮光突襲 · 永續",
+      "skill": {
+        "name": "黑月幻刃",
+        "cost": 21,
+        "mult": 2.52,
+        "targets": 2,
+        "thiefRoute": "B2",
+        "thiefMechanics": {
+          "weakening": 0.1,
+          "penetrate": 0.12
+        }
+      },
+      "passive": {
+        "text": "夜行身法：受傷 −4%",
+        "takenPct": -0.09,
+        "critPct": 0.025,
+        "mpEfficiencyPct": 0.04,
+        "lifestealPct": 0.01
+      },
+      "effect": "暮光突襲 · 永續：原生技能忽略 12% 防禦；敵方下一擊傷害 −10%；爆擊率 +2.5%；魔力效率 +4%；攻擊吸血 +1%；原生技能倍率 ×1.05；基礎耗魔 ×1.0379",
+      "standardLevel120": {
+        "atk": 380,
+        "hp": 2240,
+        "mp": 958,
+        "def": 181,
+        "cost": 20,
+        "targets": 2
+      }
+    }
+  ]
+}
