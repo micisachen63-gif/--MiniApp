@@ -3,6 +3,18 @@
 > 本檔案專為所有 AI 助理（CODEX、Antigravity、Claude Code、Cursor 等）設計。  
 > 任何 AI 載入此專案時，應優先閱讀本規範與 `AI_HANDOVER.md`。
 
+## 正式機與 GitHub 同步（使用者於 2026-10-15 指定）
+
+唯一開發來源為 `https://github.com/micisachen63-gif/--MiniApp`，本機工作目錄為此倉庫。先 fetch 最新 main，再在 `codex/` 分支實作；不可從舊營運自動化薄副本、歷史 candidate 或爆分監控快照直接部署覆蓋新功能。
+
+完成相關測試、提交並推送／合併 GitHub 後，從乾淨且等於 origin/main 的提交執行根目錄 `npm run deploy:worker` 或 `npm run deploy:bot`。流程會建置、執行既有服務測試、檢查正式版本未漂移、標記 Git commit、發布、核對實際 runtime/public 與健康狀態，並把版本對應紀錄提交推送至 `docs/deployment/`。只有最後 GitHub push 與線上驗證都成功，才可回報「已同步」。主分支 push 本身不會自動發布。
+
+`npm run sync:check` 是唯讀正式環境核對及本機 dry-run 建置，不發布、不更動玩家。先 `npm ci`；Wrangler 固定於根目錄 package-lock.json。核對腳本的 public 檢查範圍寫入收據，不得宣稱初次接管已重新下載驗證所有歷史二進位素材。UI 改動仍須自行完成相應畫面／動作驗收。
+
+正式版本、namespace 與 Git commit 的有效對應以 `docs/deployment/*.json` 和即時 Cloudflare 狀態為準；下方與其他歷史文件內固定版本號只作歷史參考。合法來源漂移要先合併、重驗，不能還原舊版讓檢查通過。保留完整 public、遠端秘密、DB／DO namespace、service bindings 與各服務 cron；不啟動歷史 bot/ 長輪詢，不順便跑 D1 migrations。
+
+部署工具異常退出或收據 push 失敗時，保留 `.release-sync/`，先用 `sync:check` 查明 live 狀態，禁止自動重部署。若正式版本正確，只補齊驗證紀錄並正常提交推送，不為了寫收據再發布一次。
+
 ## 正式環境與 GitHub 同步（使用者於 2026-10-15 明確要求）
 
 - 開發唯一來源為本倉庫 `https://github.com/micisachen63-gif/--MiniApp`。不得再從舊的「爆分監控／星穹旅誌」目錄或歷史快照修改、部署正式程式。
@@ -26,7 +38,7 @@
    - Telegram WebApp Mini App 前端（位於 `worker/public/`）
    - Cloudflare D1 資料庫：`elf-rpg` (ID: `bbfb81bb-c6bc-453f-948a-2dc38f4a6ec4`)
    - Durable Objects 協調器：`AutoEnhanceRunner`
-   - 目前線上正式版本：`49a27728-4b6a-4020-ba96-4b542165d332` @ 100%
+   - 目前線上正式版本：以 `docs/deployment/elf-rpg-api.json` 及即時 Cloudflare 狀態為準。
 
 2. **`cloud-bot/` (`star-journal-rpg-bot`)**：
    - Telegram 雲端機器人（Webhook 24h 駐留接收）

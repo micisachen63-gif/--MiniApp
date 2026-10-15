@@ -14,11 +14,10 @@ flowchart TD
         MINI_APP["Telegram WebApp (Mini App 遊戲介面)"]
     end
 
-    subgraph BotHost ["🤖 本機/伺服器 Telegram Bot (Node.js)"]
-        WATCHDOG["watchdog.mjs<br/>(守護程序 / 故障自愈)"]
-        SERVICE["service.mjs<br/>(長輪詢監聽 & 安全心跳)"]
-        BOT["bot.mjs<br/>(指令處理 / 社群互動)"]
-        FLOWS["flows/<br/>(組隊副本 / 決鬥 PK / 首領討伐 / 交易)"]
+    subgraph BotHost ["🤖 Cloudflare star-journal-rpg-bot"]
+        WEBHOOK["Telegram Webhook"]
+        BOT["BotCoordinator<br/>(去重 / 排程 / 通知)"]
+        FLOWS["adapter + WASM<br/>(組隊 / PK / 首領 / 圖卡)"]
     end
 
     subgraph CloudflareCloud ["☁️ Cloudflare 雲端邊緣運算 (elf-rpg-api)"]
@@ -29,12 +28,11 @@ flowchart TD
         ASSETS["Cloudflare Assets<br/>(前端靜態資源 & 全角色美術)"]
     end
 
-    TG_USER <-->|長輪詢 / 私訊互動| SERVICE
-    TG_GROUP <-->|社群首領戰 / 即時卡片| SERVICE
-    WATCHDOG -.->|心跳檢測| SERVICE
-    SERVICE --> BOT
+    TG_USER <-->|Webhook / 私訊互動| WEBHOOK
+    TG_GROUP <-->|社群首領戰 / 即時卡片| WEBHOOK
+    WEBHOOK --> BOT
     BOT --> FLOWS
-    FLOWS <-->|X-Service-Secret| WORKER
+    FLOWS <-->|RPG_API Service Binding| WORKER
 
     TG_USER <-->|initData 快速登入| MINI_APP
     MINI_APP <-->|RESTful API| WORKER
@@ -50,7 +48,8 @@ flowchart TD
 
 ```
 star-journal-rpg/
-├── bot/                     # Telegram 機器人服務（Node.js 長輪詢）
+├── cloud-bot/               # 正式雲端 Webhook / BotCoordinator / WASM
+├── bot/                     # 歷史長輪詢備份，不啟動
 │   ├── service.mjs          # 機器人啟動入口與服務管理
 │   ├── bot.mjs              # 訊息分發、群組指令、權限過濾
 │   ├── watchdog.mjs         # 看門狗進程（保證服務 7x24 不中斷）
@@ -85,20 +84,25 @@ star-journal-rpg/
 
 ## 🚀 快速上手 (Quick Start)
 
-### 1. Telegram Bot 本機啟動
-1. 進入 `bot/` 目錄。
-2. 複製設定檔：
-   - `copy telegram.local.example.json telegram.local.json`
-   - `copy rpg.local.example.json rpg.local.json`
-3. 填入您的 Telegram Bot Token 與群組 ID。
-4. 執行 `node service.mjs` 或雙擊 `watchdog.mjs` 啟動。
+正式服務已在 Cloudflare，`bot/` 僅供歷史參考。本倉庫為開發來源；先閱讀 [AGENTS.md](./AGENTS.md)。
 
-### 2. Cloudflare Worker 部署
-1. 進入 `worker/` 目錄。
-2. 複製設定檔：`copy wrangler.toml.example wrangler.toml`。
-3. 填入您的 Cloudflare `account_id` 與 D1 `database_id`。
-4. 部署資料庫：`npx wrangler d1 migrations apply elf-rpg --remote`。
-5. 部署 Worker：`npx wrangler deploy`。
+在專案根目錄安裝鎖定版本工具及登入，再執行唯讀核對：
+
+```bash
+npm ci
+npx wrangler login
+npm run sync:check
+```
+
+開發完成後，先測試、提交並推送／合併 GitHub main，再於乾淨的 main 發布修改的服務：
+
+```bash
+npm run deploy:worker
+# 若改到雲端 BOT，另執行：
+npm run deploy:bot
+```
+
+發布流程會核對提交與正式設定、執行服務測試、驗證線上程式／素材，並將 Git commit 和 Cloudflare 版本的對應紀錄推送至 [docs/deployment](./docs/deployment)。GitHub push 本身不會自動發布。不需為一般程式更新重跑 D1 migrations，遠端秘密維持在 Cloudflare。
 
 ---
 

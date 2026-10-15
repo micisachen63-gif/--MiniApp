@@ -56,16 +56,17 @@ npm run test:bot
 ```
 
 ### 2. 修改程式後如何推送到正式環境（部署上線）
-- **若修改了遊戲核心、數值或 Mini App 前端介面（在 `worker/`）**：
+- 先在根目錄 `npm ci`，完成測試，再將程式提交／合併並推送 GitHub main；保持工作目錄乾淨。`npm run sync:check` 可只讀核對正式機與 GitHub 程式，不會部署。
+- **若修改了遊戲核心、數值或 Mini App 前端介面（在 `worker/`），於根目錄執行**：
   ```bash
-  cd worker
-  npx wrangler deploy
+  npm run deploy:worker
   ```
-- **若修改了 Telegram 機器人回應或首領通知卡片（在 `cloud-bot/`）**：
+- **若修改了 Telegram 機器人回應或首領通知卡片（在 `cloud-bot/`），於根目錄執行**：
   ```bash
-  cd cloud-bot
-  npx wrangler deploy
+  npm run deploy:bot
   ```
+
+工具會核對遠端提交、建置並跑服務測試，檢查原正式設定後發布、驗證線上 runtime 與 public，最後提交推送 `docs/deployment/` 的版本對應紀錄。main 的 push 本身不會自動上線。若任一步驟失敗，先檢查 `.release-sync/` 的紀錄與正式版本，不要直接重跑部署；只有驗證及收據 push 都成功才算同步完成。新 UI／美術仍要先完成對應畫面驗收，不以雜湊核對取代視覺檢查。
 
 ---
 

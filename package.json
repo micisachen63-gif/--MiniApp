@@ -7,7 +7,13 @@
     "test:worker": "node --test worker/test/rules.test.js worker/test/api.test.js",
     "test:bot": "node --test cloud-bot/src/adapter/test/*.test.js",
     "test": "npm run test:worker && npm run test:bot",
-    "deploy:worker": "cd worker && npx wrangler deploy",
-    "deploy:bot": "cd cloud-bot && npx wrangler deploy"
+    "sync:check": "node scripts/release-sync.mjs check all",
+    "sync:check:worker": "node scripts/release-sync.mjs check worker",
+    "sync:check:bot": "node scripts/release-sync.mjs check bot",
+    "deploy:worker": "node scripts/release-sync.mjs deploy worker",
+    "deploy:bot": "node scripts/release-sync.mjs deploy bot"
+  },
+  "devDependencies": {
+    "wrangler": "4.148.0"
   }
 }
