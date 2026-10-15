@@ -34,6 +34,14 @@
   "backupSHA256": "53894ee5c080f7557c1f43b787961c9f532fd25b135e8a9c9c2085a4f2f9428a",
   "hostedProof": "hosted-d1-rehearsal.json",
   "migrationTracking": "0025_thief_empty_database.sql recorded",
-  "gameRelease": "pending",
+  "gameRelease": {
+    "status": "VERIFIED",
+    "workerVersion": "47d15052-5926-4213-8c6c-f4baf459e753",
+    "workerSourceCommit": "67ac216a4f6f3b00255243f2825aff5ee6a0627d",
+    "botVersion": "1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd",
+    "botSourceCommit": "a8411e54e2febe364915390cd1aaf02e31f1f90a",
+    "workerReceipt": "../deployment/elf-rpg-api.json",
+    "botReceipt": "../deployment/star-journal-rpg-bot.json"
+  },
   "migrationTrackingAttempts": 1
 }

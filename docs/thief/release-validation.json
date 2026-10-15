@@ -1,7 +1,7 @@
 {
   "status": "PASS",
   "releaseGateUnderFullTest": true,
-  "actualProductionGate": false,
+  "actualProductionGate": true,
   "workerTests": 971,
   "botTests": 77,
   "failures": 0,
@@ -12,6 +12,12 @@
   "equipment": "gear-art/readiness.json",
   "initializer": "initializer-hosted-json-guard.json",
   "productionDatabaseExpansion": "VERIFIED",
-  "productionDeployment": "pending",
-  "productionSchemaReceipt": "production-schema-release.json"
+  "productionDeployment": "VERIFIED",
+  "productionSchemaReceipt": "production-schema-release.json",
+  "workerVersion": "47d15052-5926-4213-8c6c-f4baf459e753",
+  "botVersion": "1c84ae44-a7b6-494f-8fc7-f2b3c3dd28cd",
+  "workerPublicFilesVerified": 962,
+  "botPublicFilesVerified": 4,
+  "temporaryCleanup": "temporary-resources-cleanup.json",
+  "completedAt": "2026-10-15T19:35:59.720Z"
 }

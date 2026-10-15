@@ -1,0 +1,74 @@
+{
+  "status": "VERIFIED",
+  "productionDatabaseDeleted": false,
+  "privateBackupsRetained": true,
+  "resources": [
+    {
+      "type": "temporary-worker",
+      "name": "star-journal-thief-schema-rehearsal-20261015",
+      "deleted": true
+    },
+    {
+      "type": "temporary-worker",
+      "name": "star-journal-thief-schema-release-20261016",
+      "deleted": true
+    },
+    {
+      "type": "isolated-clone-database",
+      "name": "elf-rpg-thief-rehearsal-20261015",
+      "id": "b5c6665a-c830-4b60-b451-3933851b07c9",
+      "deleted": true
+    }
+  ],
+  "transportRefs": [
+    {
+      "name": "codex/thief-asset-upload-20261016",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-final-asset-upload-20261016-0",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-asset-upload-20261016-0",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-asset-upload-20261016-1",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-asset-upload-20261016-2",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-asset-upload-20261016-3",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-h2-assets-20261016-1",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-small-pack-20261016-1",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-h2-assets-20261016-3",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-small-pack-20261016-3",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-h2-assets-20261016-final",
+      "deleted": true
+    },
+    {
+      "name": "codex/thief-small-pack-20261016-final",
+      "deleted": true
+    }
+  ],
+  "completedAt": "2026-10-15T19:34:31.183Z"
+}
