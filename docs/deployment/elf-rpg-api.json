@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "14ac23d7409af949df8060f93049260c858a7961",
+  "sourceCommit": "2f57bcec4dd3a205f018a4c7f7abaa56cb5e014a",
   "service": "elf-rpg-api",
-  "productionVersion": "3ec8d650-0296-4f14-af1f-e7a9e09f954e",
+  "productionVersion": "d63facb6-8fcf-4b72-9126-783d02ad82f8",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T11:25:09.700Z",
+  "verifiedAt": "2026-10-15T12:24:55.280Z",
   "runtimeSHA256": {
     "index.js": "eb8254fcbbd4524e7923efe4d0589e73e3e98acec61ac7f51eae2f19e415cb98"
   },
   "source": {
     "fileCount": 7180,
-    "sha256": "c5d3975d6e8a40f3b9e2a7f251092fc761e6e6104bda446ae35d468cf38b2d95",
+    "sha256": "6d4417845056d202bad456e60256ce030b177ac3f0a9cae6ded95cc4a93f6847",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -28103,7 +28103,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "69d5d1254481d85dc12fe2ad7605ac2782760978476e2acc303dc8c0e2aee37a"
+        "sha256": "915164c1d2f77fb541945af5a7132e503caf60c62f99dced19cb8ed77ee9813f"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -28167,11 +28167,11 @@
       },
       {
         "file": "worker/public/market-exchange.css",
-        "sha256": "554f6d0cb17bf554f4a336598f7fd6b945906fbcbb42c9629add4e7788db9018"
+        "sha256": "ee1259e4a60639d67f71a990f8c7c0b943b71412b9736ebf2e1c76f8a34b1391"
       },
       {
         "file": "worker/public/market-exchange.js",
-        "sha256": "e268818d645dbbaf902a284d193572f154eb4e0974a8c0d67077dcf10395b625"
+        "sha256": "c50028aa6298e4bfda4a10d3590ace3734d4194910c6d07b372a2a8f500a7fdd"
       },
       {
         "file": "worker/public/market-sell.css",
@@ -28737,18 +28737,13 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 133,
+    "verifiedCount": 127,
     "files": [
       "worker/public/app.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
       "worker/public/art/cards/equipment-20261011-r2/gear_wpn_titan_crossbow_relic.jpg",
       "worker/public/art/cards/equipment-20261011/gear_wpn_titan_elem_staff_relic.jpg",
-      "worker/public/art/guardian-cards-20261014/empty.mp4",
-      "worker/public/art/guardian-cards-20261014/loot.mp4",
-      "worker/public/art/guardian-cards-20261014/magic.mp4",
-      "worker/public/art/guardian-cards-20261014/melee.mp4",
-      "worker/public/art/guardian-cards-20261014/ranged.mp4",
       "worker/public/art/sword-adv1-clean-20261011/hero_adv1_sword_A_m.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -28769,7 +28764,6 @@
       "worker/public/elf-low-tier-weapon-fx.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
-      "worker/public/expedition/index.html",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -28877,7 +28871,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "3ec8d650-0296-4f14-af1f-e7a9e09f954e",
+        "version_id": "d63facb6-8fcf-4b72-9126-783d02ad82f8",
         "percentage": 100
       }
     ],
