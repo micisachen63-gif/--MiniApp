@@ -1,4 +1,35 @@
 /* Let long specialization descriptions breathe in a Telegram phone viewport. */
+body.greek.v2 #app #view .advanced-specializations .elf-node small {
+  grid-column:2;
+  line-height:1.75;
+  white-space:normal;
+}
+body.greek.v2 #app #view .advanced-specializations .elf-node .elf-rune {
+  grid-column:1;
+  grid-row:1 / span 10;
+  align-self:start;
+}
+body.greek.v2 #app #view .advanced-specializations .elf-node.locked { opacity:1; }
+body.greek.v2 #app #view .advanced-specializations .lineage-rules,
+body.greek.v2 #app #view .advanced-specializations .lineage-requirement {
+  color:#d2decc;
+  font-size:12px;
+  line-height:1.8;
+  margin:8px 0;
+}
+body.greek.v2 #app #view .advanced-specializations .elf-tier h4 { flex-wrap:wrap; }
+body.greek.v2 #app #view .lc-class-screen .branch {
+  color:#efe4ca;
+  background:linear-gradient(155deg,#28312e,#141a1c);
+}
+body.greek.v2 #app #view .lc-class-screen .branch .muted { color:#cbd0bf; }
+body.greek.v2 #app #view .lc-class-screen .branch .top > div { min-width:0; overflow-wrap:anywhere; }
+body.greek.v2.mythic #app #view .lc-class-screen .hero .info { color:#dce5e8; }
+@media (min-width:561px) {
+  body.greek.v2 #app #view .advanced-specializations .elf-tier .elf-nodes {
+    grid-template-columns:repeat(2,minmax(0,1fr));
+  }
+}
 @media (max-width:560px) {
   body.greek.v2 #app #view .advanced-specializations .elf-tier .elf-nodes {
     grid-template-columns:minmax(0,1fr);

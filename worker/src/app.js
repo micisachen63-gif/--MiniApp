@@ -15,6 +15,7 @@ import * as P from './services/player.js';
 import { history as exchangeHistory } from './services/market-exchange-history.js';
 import { activeCharacterId, listAccountCharacters, selectAccountCharacter } from './accounts.js';
 import {nodeFor} from './game/stats.js';
+import {lineageNodes} from './game/lineage.js';
 
 export const APP_ACTIONS = Object.freeze({
   'exchange/list':'/rpg/exchange/list','exchange/sellable':'/rpg/exchange/sellable','exchange/mine':'/rpg/exchange/mine',
@@ -77,6 +78,7 @@ export function metaView() {
     growth: { hp: c.hp, mp: c.mp, atk: c.atk, def: c.def }, releaseReady:c.releaseReady!==false,
     attackSpeedMultiplier:c.attackSpeedMultiplier??1,hitAttackMultiplier:c.hitAttackMultiplier??1,
     ...(k==='thief'?thief:{}),
+    lineageNodes: lineageNodes(k),
     branches: Object.fromEntries(Object.entries(c.branches).map(([b, x]) => [b, { name: x.name, line: x.line, skill: x.skill, passive: x.passive.text, blurb: x.blurb, weapon: WEAPON_KINDS[x.weapon]?.type }])),
   }]));
   const maps = Object.fromEntries(Object.entries(MAPS).map(([k, m]) => [k, { id: m.id, name: m.name, emoji: m.emoji, min: m.min, max: m.max, monsters: monsterPool(m.id).map(x=>x.name), elite: m.elite, boss: m.boss.name }]));

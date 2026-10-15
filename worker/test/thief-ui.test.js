@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import vm from 'node:vm';
+import {metaView} from '../src/app.js';
 import { THIEF_NODES, THIEF_PATHS } from '../src/game/thief-data.js';
 
 const publicRoot = new URL('../public/', import.meta.url);
@@ -60,10 +61,10 @@ test('lineage renders the authoritative 31 names, both genders and missing-art p
   const escape = value => String(value ?? '').replace(/[&<>"']/g, '');
   for (const gender of ['m','f']) {
     const requested=[];
-    const ctx={ window:{RpgThiefClass:helper}, S:{meta:{classes:{thief:metadata}}}, esc:escape,
+    const ctx={ window:{RpgThiefClass:helper}, S:{meta:metaView()}, esc:escape,
       lineagePortrait:key=>{requested.push(key);return null;} };
     vm.createContext(ctx);
-    vm.runInContext(appFunction('thiefPathPreview','  function classView()'),ctx);
+    vm.runInContext(app.slice(app.indexOf('  function lineageNumber('),app.indexOf('  function classView()')),ctx);
     const result=ctx.thiefPathPreview({gender,classPath:'',classTier:0});
     assert.equal((result.match(/class="elf-node /g)||[]).length,31);
     for (const node of Object.values(THIEF_NODES)) assert.ok(result.includes(node.name),node.name);
@@ -112,7 +113,7 @@ test('thief traits explain very high speed and fragility without inventing a mul
 });
 
 test('unready thief branch cards show a placeholder instead of requesting /null',()=>{
-  const ctx={S:{me:{character:{gender:'f'}}},esc:String,lineagePortrait:()=>null};vm.createContext(ctx);
+  const ctx={S:{me:{character:{gender:'f'}}},esc:String,lineageNumber:String,lineagePortrait:()=>null};vm.createContext(ctx);
   vm.runInContext(appFunction('branchCard','  const ELF_STAGES'),ctx);
   const html=ctx.branchCard('thief',{branch:'A',name:'刺客',skill:{name:'交錯刃擊',cost:8,mult:2.1},passive:'fixture'});
   assert.doesNotMatch(html,/<img|src="null"|src="undefined"/);assert.match(html,/刺客外觀製作中/);
