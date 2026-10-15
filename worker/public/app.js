@@ -518,7 +518,7 @@
     R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
     for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261011-fx2', 'olympus-unified.css?v=20261011-unified-1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
   }
-  const iconHtml = (k, fallback) => { const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${String(k).startsWith('blessed_scroll_')?'class="blessed-scroll-icon"':''} alt="${collectionArt?esc(itemName(k)):''}" loading="lazy">` : fallback; };
+  const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${String(k).startsWith('blessed_scroll_')?'class="blessed-scroll-icon"':''} alt="${collectionArt?esc(itemName(k)):''}" loading="lazy">` : fallback; };
   const gearIcon = (g, fallback) => { const src = artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy" decoding="async">` : fallback; };
   function characterPortrait(c){return artSrc('hero',heroKey(c.baseClass,c.gender,c.classPath));}
   function portraitHtml(id, cls, gender) { const c = S.me ? S.me.character : {}; const key = cls ? heroKey(cls, gender || c.gender) : myHeroKey(); const src = characterPortrait(cls?{baseClass:cls,gender:gender||c.gender,classPath:''}:c); return src ? `<img class="portrait" id="${id}" src="${src}" alt="">` : `<canvas class="portrait" id="${id}"></canvas>`; }
@@ -888,8 +888,8 @@
     if (!S.ledger) return '<div class="muted">載入中…</div>';
     if (!S.ledger.length) return '<div class="muted">還沒有紀錄</div>';
     return S.ledger.map((l) => { const d = new Date(l.created_at + 8 * 3600e3).toISOString().slice(5, 16).replace('T', ' ');
-      const parts = [l.gold_delta ? `💰${l.gold_delta > 0 ? '+' : ''}${fmt(l.gold_delta)}` : '', l.item && !String(l.item).startsWith('equip:') ? `${itemEmoji(l.item)}${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : ''].filter(Boolean).join(' ');
-      let note = l.note || ''; if (note.startsWith('{')) note = '';
+      const parts = [l.gold_delta ? `💰${l.gold_delta > 0 ? '+' : ''}${fmt(l.gold_delta)}` : '', l.item && String(l.item).startsWith('sigil:') ? `🪶 守護羽毛 ${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : l.item && !String(l.item).startsWith('equip:') ? `${itemEmoji(l.item)}${l.item_delta > 0 ? '+' : ''}${l.item_delta}` : ''].filter(Boolean).join(' ');
+      let note = l.note || ''; if (note.startsWith('{') || /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(note)) note = '';
       return `<div><span class="muted">${d}</span> ${esc(l.type)} ${parts} <span class="muted">${esc(note)}</span></div>`; }).join('');
   }
   function openGuardian(initialView='overview'){S.guardianInitialView=['overview','summon','inventory','fuse','guide'].includes(initialView)?initialView:'overview';S.tab='guardian';render();}
