@@ -1,6 +1,14 @@
 import {COLLECTION_BLESSINGS,collectionBlessingView} from './collection-blessings.js';
 import {MONSTER_DATA,MONSTER_RECIPES,MONSTER_ITEMS} from './monster-data.js';
 import {READY_MONSTER_KEYS} from './monster-readiness.js';
+import {mapForLevel} from './formulas.js';
+// Map boss core exchange: priced well above farming (a boss kill gives 1 core/day-capped), scaled by map.
+export const CORE_EXCHANGE=Object.freeze({goldPerMap:2000,fragmentsPerMap:15});
+export const coreExchangePrice=n=>({gold:CORE_EXCHANGE.goldPerMap*n,fragments:CORE_EXCHANGE.fragmentsPerMap*n});
+export function coreExchangeOffers(inv={},char={}) {
+  const reach=mapForLevel(char.level||1);
+  return MONSTER_RECIPES.filter(r=>r.mapId<=reach).map(r=>{const need=r.ingredients.find(x=>x.item===`hunt_${r.mapId}_core`);return need?{mapId:r.mapId,item:need.item,name:MONSTER_ITEMS[need.item]?.name||need.item,have:inv[need.item]||0,need:need.qty,owned:(inv[r.item]||0)>0,...coreExchangePrice(r.mapId)}:null;}).filter(Boolean);
+}
 const ready = new Set(READY_MONSTER_KEYS);
 const pools=new Map(), identities=new Map();
 for(const m of MONSTER_DATA){const key=`${m.mapId}:${m.role}`;if(!pools.has(key))pools.set(key,[]);pools.get(key).push(m);identities.set(`${key}:${m.name}`,m);}
@@ -56,4 +64,4 @@ export function refineOptions(inv) {
   }
   return out;
 }
-export function collectionView(inv,char={}) {const active=collectionBlessingView(char,inv);return {activeMapId:active?.mapId||0,activeBlessing:active,universal:true,unlocked:MONSTER_RECIPES.filter(r=>(inv[r.item]||0)>0).map(r=>({mapId:r.mapId,item:r.item,name:r.name,spell:r.spell})),recipes:MONSTER_RECIPES.map(r=>({...r,blessing:COLLECTION_BLESSINGS.find(x=>x.mapId===r.mapId),active:active?.mapId===r.mapId,owned:(inv[r.item]||0)>0,ingredients:r.ingredients.map(x=>({...x,have:inv[x.item]||0}))})),refineOptions:refineOptions(inv)};}
+export function collectionView(inv,char={}) {const active=collectionBlessingView(char,inv);return {coreExchange:coreExchangeOffers(inv,char),activeMapId:active?.mapId||0,activeBlessing:active,universal:true,unlocked:MONSTER_RECIPES.filter(r=>(inv[r.item]||0)>0).map(r=>({mapId:r.mapId,item:r.item,name:r.name,spell:r.spell})),recipes:MONSTER_RECIPES.map(r=>({...r,blessing:COLLECTION_BLESSINGS.find(x=>x.mapId===r.mapId),active:active?.mapId===r.mapId,owned:(inv[r.item]||0)>0,ingredients:r.ingredients.map(x=>({...x,have:inv[x.item]||0}))})),refineOptions:refineOptions(inv)};}

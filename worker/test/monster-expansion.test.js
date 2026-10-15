@@ -141,3 +141,17 @@ test('all180 advertised material identities match actual normal/sigil/core drops
  }
  assert.equal(MONSTER_DATA.filter(m=>m.role!=='normal').length,60);assert.equal(MAPS[3].boss.mat,'mat_1');assert.equal(MAPS[6].boss.mat,'mat_2');assert.equal(MAPS[9].boss.mat,'mat_3');assert.equal(MAPS[12].boss.mat,'mat_4');
 });
+
+test('map boss core exchange: gold or fragments, map-gated, idempotent ledger, bound and capped by need',()=>{
+  const mk=(level,inv={},gold=100000)=>({char:mkChar({level,gold}),inv:{...inv},equipment:[]});
+  const w=mk(35);const r=monsterExchange(w,{now:T0},{action:'core',map:3,pay:'gold',requestId:'core-req-0001'});
+  assert.equal(r.result.item,'hunt_3_core');assert.equal(w.inv.hunt_3_core,1);assert.equal(w.char.gold,100000-6000);assert.ok(r.ledger.some(l=>l.item==='hunt_3_core'&&l.item_delta===1&&l.gold_delta===-6000));
+  assert.throws(()=>monsterExchange(w,{now:T0},{action:'core',map:3,pay:'gold',requestId:'core-req-0002'}),e=>e.code==='enough');
+  const f=mk(35,{research_fragment:44});assert.throws(()=>monsterExchange(f,{now:T0},{action:'core',map:3,pay:'fragment',requestId:'core-req-0003'}),e=>e.code==='insufficient');
+  f.inv.research_fragment=45;monsterExchange(f,{now:T0},{action:'core',map:3,pay:'fragment',requestId:'core-req-0004'});assert.equal(f.inv.research_fragment,0);assert.equal(f.inv.hunt_3_core,1);assert.equal(f.char.gold,100000);
+  const low=mk(35);assert.throws(()=>monsterExchange(low,{now:T0},{action:'core',map:5,pay:'gold',requestId:'core-req-0005'}),e=>e.code==='level');assert.deepEqual(low.inv,{});
+  const owned=mk(35,{collection_3:1});assert.throws(()=>monsterExchange(owned,{now:T0},{action:'core',map:3,pay:'gold',requestId:'core-req-0006'}),e=>e.code==='owned');
+  const poor=mk(35,{},5999);assert.throws(()=>monsterExchange(poor,{now:T0},{action:'core',map:3,pay:'gold',requestId:'core-req-0007'}),e=>e.code==='gold');
+  for(const bad of [0,13,1.5,'x'])assert.throws(()=>monsterExchange(mk(120),{now:T0},{action:'core',map:bad,pay:'gold',requestId:'core-req-0008'}));
+  assert.equal(TRADE.tradeableItems.includes('hunt_3_core'),false);
+});
