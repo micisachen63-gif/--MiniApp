@@ -1216,6 +1216,8 @@
         <button class="btn ghost" data-a="reroll" ${e.inTrade?'disabled':''}>🎲 洗屬性<small>${e.affixes?.lines?.length||0}/${e.affixes?.slots||1} 條 · ${esc(e.affixes?.quality||'未鑑定')}</small></button>
         ${e.convertible ? '<button class="btn ghost" data-a="convert">🔄 轉換路線</button>' : ''}
         <button class="btn ghost" data-a="share" ${e.shareBlock ? 'disabled' : ''} title="${esc(e.shareBlock || '')}">📣 分享至群組</button>
+        <button class="btn ghost" data-a="trade" ${e.tradeBlock ? 'disabled' : ''} title="${esc(e.tradeBlock || '')}">🤝 交易${e.tradeBlock ? '<small>' + esc(e.tradeBlock) + '</small>' : ''}</button>
+        <button class="btn ghost" data-a="list" ${e.tradeBlock ? 'disabled' : ''} title="${esc(e.tradeBlock || '')}">🏷️ 掛賣到交易所${e.tradeBlock ? '<small>' + esc(e.tradeBlock) + '</small>' : ''}</button>
         ${e.bound ? `<button class="btn ghost" data-a="unbind" ${e.unbindBlock ? 'disabled' : ''} title="${esc(e.unbindBlock || '')}">🔓 解契（${S.me.inventory.unbind || 0}/${e.unbindCost}）</button>` : ''}
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-a="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-a="close">關閉</button>
@@ -1224,6 +1226,8 @@
       const a = b.dataset.a;
       if (a === 'close') return closeSheet();
       if (a === 'share') return shareItem(e);
+      if (a === 'trade') return tradeGear(e);
+      if (a === 'list') return listGear(e);
       if (a === 'unbind') return unbindItem(e);
       if (a === 'sell') return sellGearItem(e);
       if (a === 'equip') {
@@ -1729,10 +1733,20 @@
       <div class="menu">
         <button class="btn" data-m="share" ${sb ? 'disabled' : ''}>📣 分享至群組</button>${sb ? `<div class="why">${esc(sb)}</div>` : `<div class="why">${e.tradeBlock ? '穿戴與綁定裝備也能展示，夥伴可以按 👍 超讚。' : '分享照片與屬性，夥伴可按 🤝 我要交易／👍 超讚。'}</div>`}
         <button class="btn" data-m="trade" ${e.tradeBlock ? 'disabled' : ''}>🤝 交易</button>${e.tradeBlock ? `<div class="why">${esc(e.tradeBlock)}（請先卸下裝備／解契）</div>` : '<div class="why">輸入對方角色名稱，開啟交易視窗並先放入這件裝備</div>'}
+        <button class="btn ghost" data-m="list" ${e.tradeBlock ? 'disabled' : ''}>🏷️ 掛賣到交易所</button>
         ${e.bound ? `<button class="btn ghost" data-m="unbind" ${ub ? 'disabled' : ''}>🔓 解除綁定（需 ${e.unbindCost} 張・持有 ${have}）</button>${ub ? `<div class="why">${esc(ub)}</div>` : have < e.unbindCost ? '<div class="why">解契卷不夠 — 商店「📜 捲軸」500 金／張</div>' : ''}` : ''}
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-m="detail">🔍 詳細／強化</button><button class="btn ghost" data-m="x">關閉</button></div>`);
-    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+    c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'list') return listGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
+  }
+  function listGear(e) {
+    if (e.tradeBlock) return toast(e.tradeBlock, true);
+    const d = sheet(`<h2>🏷️ 掛賣 · ${esc(e.name)}</h2><div class="menu"><div class="why">設定售價（1–1,000,000 金幣），成交後扣除手續費入帳；掛賣期間這件裝備會被保管，可在交易所「我的掛單」撤回。</div><input id="gear-list-price" inputmode="numeric" placeholder="售價（金幣）" maxlength="7"><button class="btn" data-go>確認掛賣</button><button class="btn ghost" data-x>取消</button></div>`);
+    d.querySelector('[data-x]').onclick = closeSheet;
+    d.querySelector('[data-go]').onclick = async () => {
+      const price = Math.floor(Number(String(d.querySelector('#gear-list-price').value).replace(/[^\d]/g, '')) || 0); if (price < 1 || price > 1000000) return toast('售價需為 1–1,000,000 的整數', true);
+      try { await api('exchange/create', { characterId: String(S.me.character.tgId), equipId: e.id, price, requestId: window.RpgMarketExchange.requestId() }); closeSheet(); toast('已掛賣到交易所'); refreshMe(); } catch (err) { toast(err.message, true); }
+    };
   }
   function tradeGear(e) {
     if (e.tradeBlock) return toast(e.tradeBlock, true);
