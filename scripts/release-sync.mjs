@@ -7,6 +7,8 @@ import {spawnSync} from 'node:child_process';
 import {fileURLToPath} from 'node:url';
 import assert from 'node:assert/strict';
 import {assertKnownRelease} from './release-lock.mjs';
+import {isStaticAsset} from './static-assets.mjs';
+import {retryRead} from './read-only-network.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const REPO='https://github.com/micisachen63-gif/--MiniApp';
@@ -21,7 +23,19 @@ const git=(...args)=>run('git',args);
 const sorted=a=>[...a].sort((x,y)=>JSON.stringify(x).localeCompare(JSON.stringify(y)));
 async function save(file,value){await fs.mkdir(path.dirname(file),{recursive:true});await fs.writeFile(file,JSON.stringify(value,null,2)+'\n')}
 async function digest(file){const h=createHash('sha256'),handle=await fs.open(file);try{for await(const chunk of handle.createReadStream())h.update(chunk)}finally{await handle.close()}return h.digest('hex')}
-async function request(url,token){const target=new URL(url);assert.equal(target.protocol,'https:');if(token)assert.equal(target.hostname,'api.cloudflare.com');return new Promise((resolve,reject)=>{const req=https.get(target,{agent,family:4,headers:{accept:'*/*','accept-encoding':'identity',...(token?{Authorization:'Bearer '+token}:{})}},res=>{const chunks=[];res.on('data',b=>chunks.push(b));res.on('error',reject);res.on('end',()=>{clearTimeout(timer);resolve(new Response(Buffer.concat(chunks),{status:res.statusCode,headers:res.headers}))})});const timer=setTimeout(()=>req.destroy(new Error('Read-only request timed out')),90000);req.on('error',e=>{clearTimeout(timer);reject(e)})})}
+async function request(url,token){
+ const target=new URL(url);assert.equal(target.protocol,'https:');
+ if(token)assert.equal(target.hostname,'api.cloudflare.com');
+ return retryRead(()=>new Promise((resolve,reject)=>{
+  const req=https.get(target,{agent,family:4,headers:{accept:'*/*','accept-encoding':'identity',...(token?{Authorization:'Bearer '+token}:{})}},res=>{
+   const chunks=[];res.on('data',b=>chunks.push(b));res.on('error',reject);
+   res.on('end',()=>{clearTimeout(timer);resolve(new Response(Buffer.concat(chunks),{status:res.statusCode,headers:res.headers}));});
+  });
+  const timer=setTimeout(()=>req.destroy(Object.assign(new Error('Read-only request timed out'),{code:'ETIMEDOUT'})),90000);
+  req.on('error',e=>{clearTimeout(timer);reject(e);});
+ }));
+}
+
 async function credentials(){
  if(process.env.CLOUDFLARE_API_TOKEN)return process.env.CLOUDFLARE_API_TOKEN;
  // Wrangler owns credential storage/refresh, including OS keyrings and named profiles.
@@ -54,7 +68,7 @@ async function publicInventory(service){const prefix=service.dir+'/public/',trac
 async function build(service){await publicInventory(service);await fs.access(cli);const folder=path.join(WORK,service.name,'build-'+randomUUID());await fs.mkdir(folder,{recursive:true});const output=run(process.execPath,[cli,'deploy','--dry-run','--outdir',folder,'--config','wrangler.toml'],path.join(ROOT,service.dir));await fs.writeFile(path.join(WORK,service.name,'build.log'),output);const out={};for(const entry of await fs.readdir(folder)){if(entry.endsWith('.map')||entry==='README.md')continue;const file=path.join(folder,entry);if((await fs.stat(file)).isFile())out[entry]=await digest(file)}return out}
 async function publicRead(url){for(let i=0;i<4;i++){const r=await request(url);if([301,302,303,307,308].includes(r.status)){const next=new URL(r.headers.get('location'),url);assert.equal(next.origin,new URL(url).origin);url=next.href;continue}assert(r.ok,'Public GET failed '+new URL(url).pathname+' HTTP '+r.status);return Buffer.from(await r.arrayBuffer())}throw Error('Excessive public redirects')}
 async function assets(service,commit){
- const prefix=service.dir+'/public/',all=git('ls-files','-z','--',prefix).split('\0').filter(Boolean);let previous;
+ const prefix=service.dir+'/public/',all=git('ls-files','-z','--',prefix).split('\0').filter(Boolean).filter(isStaticAsset);let previous;
  try{previous=JSON.parse(await fs.readFile(path.join(ROOT,'docs/deployment',service.name+'.json')))}catch(e){if(e.code!=='ENOENT')throw e}
  const chosen=new Set(all.filter(f=>!f.slice(prefix.length).includes('/')&&/\.(?:js|css|json|html)$/.test(f)));for(const f of all.filter(f=>/\.(?:png|webp|jpg|wasm)$/.test(f)).filter((_,i)=>i%Math.max(1,Math.floor(all.length/4))===0).slice(0,4))chosen.add(f);
  if(previous?.sourceCommit){for(const file of git('diff','--name-only',previous.sourceCommit,commit,'--',prefix).split(/\r?\n/).filter(Boolean))if(all.includes(file))chosen.add(file)}

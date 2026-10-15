@@ -58,7 +58,7 @@
 
 驗證結果與舊測試的界線
 起始 4f49917 從根目錄跑完整 Worker：822 項，747 通過、75 失敗。
-本次最後驗證：Worker 852/852，Bot 69/69；沒有 skip／todo／失敗白名單。
+本次最後驗證：Worker 852/852，Bot 71/71；沒有 skip／todo／失敗白名單。
 Node 的 test 模擬 Cloudflare SQLite 與 HTTP，不等於正式負載壓測或真實 TG 實機全流程。
 5,050 組守恆測試是在真實 service + 記憶體 SQLite 執行，較原附件只重現兩條 SQL 更完整。
 Bot 額外驗證 burst、時間預算、重複 webhook、重啟 uncertain、原子人工結案與發布互斥。
