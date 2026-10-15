@@ -1,9 +1,9 @@
-no_bundle=true
+no_bundle=false
 account_id="48259a9f84c8307f8de8ceaf704b9f8f"
 keep_vars=true
 # 小精靈 RPG 掛機冒險 — Cloudflare Worker (P1 MVP). Separate from minigame-pet.
 name = "elf-rpg-api"
-main="backend/index.js"
+main="src/index.js"
 compatibility_date = "2025-09-01"
 
 # Telegram Mini App (static files). Unmatched paths (/health, /rpg/*, /app/api/*) fall through to the Worker.
