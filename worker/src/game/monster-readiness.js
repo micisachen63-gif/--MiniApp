@@ -37,6 +37,15 @@ export const READY_MONSTER_KEYS = Object.freeze([
   "elite_x13_m04_elite_1",
   "elite_x13_m04_elite_2",
   "boss_x13_m04_boss_secondary",
+  "mon_x13_m05_lost_priest",
+  "mon_x13_m05_bronze_spider",
+  "mon_x13_m05_venom_serpent_guard",
+  "mon_x13_m05_labyrinth_hound",
+  "mon_x13_m05_rune_stone_eye",
+  "mon_x13_m05_dualblade_minotaur",
+  "elite_x13_m05_elite_2",
+  "elite_x13_m05_elite_1",
+  "boss_x13_m05_boss_secondary",
   "mon_x13_m07_bone_archer",
   "mon_x13_m07_abyss_wraith",
   "mon_x13_m07_styx_naiad",
@@ -72,4 +81,4 @@ export const READY_MONSTER_KEYS = Object.freeze([
   "boss_x13_m12_boss_secondary"
 ]);
 // The release gate writes the approved full-catalogue content digest with READY keys.
-export const MONSTER_ART_REVISION = 'monster16-v2-94c86cb10b5fefb8';
+export const MONSTER_ART_REVISION = 'monster16-v2-467b11794c19addf';
