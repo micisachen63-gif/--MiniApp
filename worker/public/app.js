@@ -474,7 +474,7 @@
       return `art/v2/${kind === 'portrait' ? 'portrait' : 'hero'}_${safeKey}.webp?v=20261010-painted-restore`;
     }
     const refreshedArt = ['hero_sword_f', 'portrait_sword_f', 'hero_sword_f_attack', 'hero_sword_m', 'portrait_sword_m', 'hero_mage_m', 'portrait_mage_m', 'hero_sword_m_attack', 'hero_mage_m_attack', 'hero_archer_m', 'portrait_archer_m', 'hero_archer_m_attack', 'mon_gorgon', 'mon_gorgon_attack', 'hero_adv1_mage_A_f', 'portrait_adv1_mage_A_f', 'hero_adv1_mage_A_f_attack', 'hero_adv1_mage_A_m', 'portrait_adv1_mage_A_m', 'hero_adv1_mage_A_m_attack', 'hero_adv1_archer_A_m', 'portrait_adv1_archer_A_m', 'hero_adv1_archer_A_m_attack', 'hero_adv1_archer_B_m', 'portrait_adv1_archer_B_m', 'hero_adv1_archer_B_m_attack', 'hero_adv1_sword_A_f', 'hero_adv1_sword_A_m', 'hero_adv1_sword_B_f', 'hero_adv1_sword_B_m', 'hero_adv1_sword_A_f_attack', 'hero_adv1_sword_A_m_attack', 'hero_adv1_sword_B_f_attack', 'hero_adv1_sword_B_m_attack'];
-    if (expansion?.spec(f)) return `art/monster-expansion-20261013/${f}.webp?v=20261013-expansion1`;
+    if (expansion?.spec(f)) return `art/monster-expansion-20261013/${f}.webp?v=20261015-monster47`;
     if (cleanMonsterKeys.has((f || '').replace(/_attack$/, '')) || /^(mon_(olive_guardian|arcadia_nymph|pan_cub|laurel_treant)|elite_pan_warden|boss_(arcadia_goblin_chief|ancient_laurel))(_attack)?$/.test(f)) return `art/monsters-clean-20261011/${f}.png?v=20261011-clean-4`;
     if (kind === 'heroAnim' && /^hero_(adv[1-4]_)?mage_/.test(f || '')) return `art/mage/${f}.png?v=20261010-mage-anim-2`;
     // Disable all rotated paper-cutout attack sheets until genuinely animated painted frames exist.

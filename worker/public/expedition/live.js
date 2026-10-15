@@ -26,13 +26,14 @@ const cancelled=e=>['stale_response','request_cancelled'].includes(e.code);
 function pendingKey(action,b){const stable=Object.fromEntries(Object.entries(b).filter(([k])=>k!=='requestId').sort(([a],[z])=>a.localeCompare(z)));return `elfRpgExpeditionPending:${pinned}:${action}:${JSON.stringify(stable)}`;}
 function requestId(key){try{let id=localStorage.getItem(key);if(!id){id=crypto.randomUUID().replaceAll('-','');localStorage.setItem(key,id);}return id;}catch{return crypto.randomUUID().replaceAll('-','');}}
 function clearRequest(key){try{localStorage.removeItem(key);}catch{}}
+function artRevision(){try{return parent.RpgMonsterExpansion?.revision||parent.RpgMonsterExpansionArtRevision||'';}catch{return '';}}
 async function api(action,b={}){
  const read=window.RpgRequest.isRead(action),key=read?null:pendingKey(action,b);
  if(!read)stateEpoch++;
  const epoch=stateEpoch,controller=read?new AbortController():null;
  if(controller)readControllers.add(controller);
  try{
-  const {res,j}=await window.RpgRequest.request(action,{...b,selectedCharacterId:pinned,...(!read?{requestId:b.requestId||requestId(key)}:{})},{'Content-Type':'application/json','X-Telegram-Init-Data':init},{signal:controller?.signal});
+  const {res,j}=await window.RpgRequest.request(action,{...b,selectedCharacterId:pinned,...(!read?{requestId:b.requestId||requestId(key)}:{})},{'Content-Type':'application/json','X-Telegram-Init-Data':init,'X-Monster-Art-Revision':artRevision()},{signal:controller?.signal});
   if(read&&(!pageActive||epoch!==stateEpoch)){const e=Error('資料已由較新的操作更新。');e.code='stale_response';throw e;}
   if(!j?.ok){const e=Error(j?.message||'操作失敗');e.code=j?.error;e.status=res.status;throw e;}
   if(!read){stateEpoch++;clearRequest(key);}if(j.now)clockSkew=j.now-Date.now();return j;

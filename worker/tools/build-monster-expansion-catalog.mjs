@@ -28,6 +28,7 @@ if (isRelease) {
 }
 
 const catalog = [];
+const seenAtlas = new Map(), seenStill = new Map();
 for (const job of jobs) {
   const metaRaw = await _fs.readFile(`${base}/packed/${job.key}.json`, 'utf8');
   const meta = JSON.parse(metaRaw);
@@ -43,7 +44,13 @@ for (const job of jobs) {
     if (hash(atlasBuf) !== meta.technicalQA?.assetHash) {
       throw new Error(`Changed atlas hash for ${job.key}`);
     }
+    const atlasDigest = hash(atlasBuf);
+    if (seenAtlas.has(atlasDigest)) throw new Error(`Duplicate atlas image: ${job.key} == ${seenAtlas.get(atlasDigest)}`);
+    seenAtlas.set(atlasDigest, job.key);
     const stillBuf = await _fs.readFile(`public/art/monster-expansion-20261013/${job.key}.webp`);
+    const stillDigest = hash(stillBuf);
+    if (seenStill.has(stillDigest)) throw new Error(`Duplicate still image: ${job.key} == ${seenStill.get(stillDigest)}`);
+    seenStill.set(stillDigest, job.key);
     if (hash(stillBuf) !== meta.technicalQA?.stillHash) {
       throw new Error(`Changed still static hash for ${job.key}`);
     }

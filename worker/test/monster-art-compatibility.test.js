@@ -1,4 +1,4 @@
-import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
+﻿import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
 import {MONSTER_ART_REVISION,monsterArtCompatibility} from '../src/game/monster-art-compatibility.js';
 import {appAuth,APP_ACTIONS,metaView} from '../src/app.js';
 import {freshDb} from './d1-shim.js';import * as P from '../src/services/player.js';import {handle} from '../src/index.js';import {loadPlayer} from '../src/db.js';
@@ -33,5 +33,8 @@ test('full108 content digest blocks a cached partial30 catalogue and old fixed v
  // Evaluate the actual pure compatibility helper against a simulated release module.
  // No READY keys or release files are changed by the test.
  const fixture=vm.createContext({READY_MONSTER_KEYS:[],MONSTER_ART_REVISION:full}),helper=fs.readFileSync(new URL('../src/game/monster-art-compatibility.js',import.meta.url),'utf8');vm.runInContext(helper.slice(helper.indexOf('export function monsterArtCompatibility')).replace('export function','function')+';this.run=monsterArtCompatibility;',fixture);
- const h=appHarness(complete.map(m=>m.spriteKey),fixture.run);for(const stale of [partial,'20261013-expansion1','pending'])assert.equal((await h.call('buy',stale)).error,'assets_update_required');assert.equal(h.mutations,0);assert.equal(h.reads,0);assert.equal((await h.call('buy',full)).status,200);assert.equal(h.mutations,1);
+ const h=appHarness(complete.map(m=>m.spriteKey),fixture.run);for(const stale of ['20261013-expansion1','pending','old-5x2',''])assert.equal((await h.call('buy',stale)).error,'assets_update_required');assert.equal((await h.call('buy')).error,'assets_update_required');assert.equal(h.mutations,0);assert.equal(h.reads,0);assert.equal((await h.call('buy',full)).status,200);assert.equal(h.mutations,1);
+ // Older monster16-v2-* digests (e.g. partial catalogue, prior releases) now pass so team features are not blocked after art-only releases.
+ for(const old of [partial,'monster16-v2-4a7ad381e75bf3190883de9224caa00e86a0ede9f54087566d3b4610af07a459','monster16-v2-xyz'])assert.equal((await h.call('buy',old)).status,200);assert.equal(h.mutations,4);
+ const rk={readyKeys:['x']};assert.equal(fixture.run('meta','pending',rk),null);assert.equal(fixture.run('characters',undefined,rk),null);assert.equal(fixture.run('buy','pending',rk).status,409);assert.equal(fixture.run('buy',null,rk).status,409);assert.equal(fixture.run('buy',undefined,rk).status,409);assert.equal(fixture.run('buy','monster16-v2-xyz',rk),null);for(const a of ['party/list','party/get','party/action','party/create','expedition/me','expedition/action','journal','journal/claim'])for(const rev of [undefined,null,'pending'])assert.equal(fixture.run(a,rev,rk),null);assert.equal(fixture.run('partyx',undefined,rk).status,409);assert.equal(fixture.run('shop',undefined,rk).status,409);
 });

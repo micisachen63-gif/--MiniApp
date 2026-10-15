@@ -637,9 +637,10 @@
     async function monsterAttack(big = false) {
       const epoch=S.playEpoch;if (!S.mon) return; const hb = box(E.hImg), mb = box(E.mImg); const gap = Math.max(30, mb.x - (hb.x + hb.w * ((S.fig || [0, 0, 0.7])[2] * 0.85))); const mx = -Math.max(30, gap - (Number(S.me.character.mapId) === 3 ? 38 : 0));
       const spell = spellOf(S.mon); const mapOk = !!spell;
-      if (spell && mapOk && Math.random() < (big ? 0.5 : 0.38)) await monsterCast(spell, big);
+      const beh = String(window.RpgMonsterExpansion?.spec?.(S.mon.spriteKey || S.mon.name)?.behavior || S.mon.behavior || ''); const alwaysCast = /^(caster|flying|poison|summoner)$/.test(beh); const castP = alwaysCast ? 1 : ((big || S.mon.elite || S.mon.boss) ? 0.85 : 0.7);
+      if (spell && mapOk && (alwaysCast || Math.random() < castP)) await monsterCast(spell, big);
       else { jit(E.mAct); animateMonsterSheet('attack'); play(E.mAct, 'mlunge', { '--mx': `${mx}px` });
-        if(!await monsterEffect(/狼|犬|蛇|蟒|龍/.test(S.mon.name)?'bite':'claw',big,230))await wait(S.rm ? 80 : 230); }
+        if(!await monsterEffect(/狼|犬|蛇|蟒|龍/.test(S.mon.name)?'bite':'claw',big,360))await wait(S.rm ? 80 : 360); }
       checkScene(epoch); const p = heroPt(0.55, 0.3);
       flash(E.hAct, 'r'); play(E.hAct, 'hit'); await hitStop(big ? 90 : 45); burst(p.x, p.y, 6, ['#ff6b6b', '#ffd0d0'], { speed: 2 });
       if (big) shake();
