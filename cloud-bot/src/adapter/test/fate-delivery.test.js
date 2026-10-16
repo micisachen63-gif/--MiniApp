@@ -2,8 +2,8 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {createRpgFlow} from '../rpg-flow.js';
 const APP='https://elf-rpg-api.micisachen.workers.dev/',AT=Date.parse('2026-10-16T10:00:00+08:00');
-function setup({status,error,main=false}={}){
- let clock=AT,fail=error;const calls=[],sent=[],store={data:{rpg:{}},save(){}},event={lifeId:'life1',charId:'char1',accountId:'123456789',name:'星<燈>',index:0,age:18,title:'要把信送去哪裡？',text:'遠方有一封未寄出的信。',deadline:AT+90000};
+function setup({status,error,main=false,index=0}={}){
+ let clock=AT,fail=error;const calls=[],sent=[],store={data:{rpg:{}},save(){}},event={lifeId:'life1',charId:'char1',accountId:'123456789',name:'星<燈>',index,age:18,title:'要把信送去哪裡？',text:'遠方有一封未寄出的信。',deadline:AT+90000};
  const item={id:1,target:'group',kind:'fate_event',claimToken:'claim',payload:{...event,name:'STALE',accountId:'888',date:'1998-11-03',time:'10:30',place:'台北'}};
  const api={call:async(method,body)=>{sent.push({method,body});if(fail){const e=fail;fail=null;throw e;}return {message_id:71};}};
  const rpgApi={call:async(path,body)=>{calls.push({path,body});if(path==='/rpg/outbox/claim')return {items:[item]};if(path==='/rpg/fate/notification')return status||{ok:true,valid:true,night:false,pending:true,remainingMs:event.deadline-clock,payload:event};return {ok:true};}};
@@ -17,6 +17,8 @@ test('fate sends canonical illustrated event with account mention, live countdow
  await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);assert.ok(t.calls.some(c=>c.path==='/rpg/outbox/ack'));
 });
 test('main MiniApp fate card opens fate directly',async()=>{const t=setup({main:true});await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.reply_markup.inline_keyboard[0][0].url,'https://t.me/StarJournalRpgBot?startapp=fate');});
+
+test('v7 fourth through ninth decisions are actually delivered once; out-of-range notices are rejected',async()=>{for(const index of [3,5,8]){const t=setup({index});await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);assert.ok(t.store.data.rpg.fateCards['life1:'+index]);}const bad=setup({index:9});await bad.make().tick({forceOutbox:true});assert.equal(bad.sent.length,0);});
 test('answered, mismatched and expired fate events are acknowledged without sending',async()=>{
  for(const status of [{valid:false,night:false,pending:false},{valid:true,remainingMs:0,payload:{deadline:AT}},{valid:true,remainingMs:90000,payload:{deadline:AT-1,accountId:'123'}}]){const t=setup({status});await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,0);assert.ok(t.calls.some(c=>c.path==='/rpg/outbox/ack'));}
 });

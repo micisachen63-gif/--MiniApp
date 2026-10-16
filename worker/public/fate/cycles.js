@@ -3,6 +3,7 @@ import {EXTRA_CHOICES} from './choices-extra-v1.js';
 import {validLife} from './life.js';
 import {formalScenes,plannedContent} from './formal-events.js';
 import {hash as narrativeHash} from './world.js';
+import {replayDecisionLife} from './decision-engine-v7.js';
 // Original short story pools. V1 links retain their original scenes.
 const POOLS=[
  [SCENES[0],
@@ -16,8 +17,13 @@ const POOLS=[
  {tag:'第三幕 · 新月',title:'港口熄燈了，你願意留下嗎？',text:'新月之夜，港口的燈一盞盞熄滅。你的船就要離岸，手裡最後一盞星燈，能成為岸上的等待，也能成為海上的約定。',choices:[['留下，等最後一艘船','總有人需要知道，還有誰願意等。','你留在岸上，直到最後一艘晚歸的船看見星燈。'],['出航，把星燈傳下去','也許這一點光，能陪更多人走遠。','你讓星燈在船員手中傳遞，把同行的約定帶向下一片海。']]}],
 ];
 export function scenesFor(result){if(result.version>=4)return formalScenes(result);if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
-export function seedForNextLife(seed,entries=[],version=3){
+export function seedForNextLife(seed,entries=[],version=3,orbit=11){
  if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
+ if(version===7){
+  const past=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>r?.version===7);if(!past.length)return seed;
+  const seen=new Set(past.flatMap(p=>replayDecisionLife(p,{activeMs:7200000}).resolved.map(s=>s.id))),project=candidate=>replayDecisionLife({version:7,seed:candidate,orbit,answers:[],auto:[]},{activeMs:7200000}),baseline=project(seed).resolved.length;
+  let best=seed,score=Infinity;for(let i=0;i<16;i++){const candidate=i?narrativeHash('fate-v7-next:'+seed+':'+i).toString(16).padStart(8,'0'):seed,v=project(candidate);if(v.resolved.length<baseline)continue;const n=v.resolved.reduce((n,s)=>n+(seen.has(s.id)?1:0),0)/Math.max(1,v.resolved.length);if(n<score){score=n;best=candidate;}}return best;
+ }
  if(version>=4){
   const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>version===4?r?.version===4:r?.version>=4);
   if(!previous.length)return seed;
@@ -49,10 +55,12 @@ export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光�
 export function readSoul(value){
  let raw;try{raw=typeof value==='string'?JSON.parse(value):value}catch{return {entries:[]}};
  if(!Array.isArray(raw?.entries))return {entries:[]};const seen=new Set(),entries=[];
- for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=result.version===5?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
+ for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=[5,7].includes(result.version)?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
  const draft=validLife(raw?.draft);return draft?{entries,draft}:{entries};
 }
 export function rememberSoul(record,code,at=Date.now(),memories=[]){
- const r=readSoul(record);if(!decodeResult(code))return r;if(!r.entries.some(e=>e.code===code)&&r.entries.length<2000)r.entries.push({code,at,...(Array.isArray(memories)&&memories.length?{memories}:{})});return readSoul(r);
+ const r=readSoul(record),result=decodeResult(code);if(!result)return r;
+ if(result.version===7&&Array.isArray(memories)){const important=memories.filter(m=>['origin','choice','shared','relationship'].includes(m?.kind)),others=memories.filter(m=>!important.includes(m));memories=[...important,...others.slice(0,Math.max(0,32-important.length))].slice(0,32).map(m=>({...m,age:Math.floor(m.age)})).sort((a,b)=>a.age-b.age);}
+ if(!r.entries.some(e=>e.code===code)&&r.entries.length<2000)r.entries.push({code,at,...(Array.isArray(memories)&&memories.length?{memories}:{})});return readSoul(r);
 }
 export function soulMilestone(record){const count=readSoul(record).entries.length;return {count,current:[...SOUL_ACHIEVEMENTS].reverse().find(a=>count>=a.at)||null,next:SOUL_ACHIEVEMENTS.find(a=>count<a.at)||null};}

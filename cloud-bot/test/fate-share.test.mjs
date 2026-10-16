@@ -59,6 +59,7 @@ test('actual shared WASM renderer produces decodable 1080px JPEG for both format
  assert.ok(difference>100000,'visible zodiac paints a distinct crest, not the hidden wheel');
  const variable=cardDetails('f5b101101adeadbeef','post'),variableJpeg=await render(variable),decodedVariable=jpeg.decode(variableJpeg,{useTArray:true});
  assert.equal(variable.result.version,5);assert.ok(variableJpeg.length<5_000_000);assert.equal(decodedVariable.width,1080);assert.equal(decodedVariable.height,1350);assert.ok(new Set(decodedVariable.data.subarray(1080*200*4,1080*400*4)).size>150);
+ const dynamic=cardDetails('f7360000000000000000008bb8c13f5','post');assert.equal(dynamic.result.version,7);assert.match(cardIdentity(dynamic.result).identity,/男性/);const dynamicJpeg=await render(dynamic),dynamicPixels=jpeg.decode(dynamicJpeg,{useTArray:true});assert.ok(dynamicJpeg.length<5_000_000);assert.equal(dynamicPixels.width,1080);assert.equal(dynamicPixels.height,1350);
 });
 
 test('TG card metadata retains each public zodiac and incarnation while hidden code remains anonymous',()=>{
@@ -71,4 +72,10 @@ test('v5 variable-life JPEG routes and native preparation use the same public co
  const calls=[],handle=createFateShare({now:()=>now,telegramFetch:async(url,opts)=>{calls.push({url,body:JSON.parse(opts.body)});return Response.json({ok:true,result:{id:'v5-prepared',expiration_date:now/1000+3600}});},renderCard:async input=>{assert.equal(input.result.code,code);return new Uint8Array([255,216,255,217]);}});
  const photo=await handle(new Request(card.imageUrl),{});assert.equal(photo.status,200);assert.equal(photo.headers.get('content-type'),'image/jpeg');
  const prepared=await handle(request({code,format:'post',birthDate:'1900-01-01',guestAccountId:'987654321'}),{BOT_TOKEN:token});assert.equal(prepared.status,200);assert.equal(calls.length,1);assert.match(calls[0].url,/savePreparedInlineMessage$/);assert.equal(calls[0].body.user_id,123);assert.match(calls[0].body.result.photo_url,/f5b101101adeadbeef/);assert.doesNotMatch(JSON.stringify(calls[0].body),/1900-01-01|987654321/);
+});
+
+test('v7 variable-length life shares its gender, zodiac and actual ending through JPEG/native preparation without private data',async()=>{
+ const code='f7360000000000000000008bb8c13f5',card=cardDetails(code);assert.equal(card.result.version,7);assert.equal(card.result.answers.length,6);assert.equal(card.result.ending.terminalOutcome,'debt-rebuilding');assert.match(card.result.identity[0],/男性/);assert.equal(cardIdentity(card.result).crestId,'virgo');
+ const calls=[],handle=createFateShare({now:()=>now,telegramFetch:async(url,opts)=>{calls.push({url,body:JSON.parse(opts.body)});return Response.json({ok:true,result:{id:'v7-prepared',expiration_date:now/1000+3600}});},renderCard:async input=>{assert.equal(input.result.code,code);return new Uint8Array([255,216,255,217]);}});
+ assert.equal((await handle(new Request(card.imageUrl),{})).status,200);assert.equal((await handle(request({code,format:'post',birthDate:'1900-01-01',guestAccountId:'987654321'}),{BOT_TOKEN:token})).status,200);assert.equal(calls.length,1);assert.match(calls[0].url,/savePreparedInlineMessage$/);assert.match(calls[0].body.result.photo_url,/f7360000000000000000008bb8c13f5/);assert.doesNotMatch(JSON.stringify(calls[0].body),/1900-01-01|987654321/);
 });

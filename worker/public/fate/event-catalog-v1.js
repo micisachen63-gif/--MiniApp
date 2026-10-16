@@ -97,7 +97,7 @@ const AGES=[4,8,12,16,22,26,30,34,38,44,48,52,56,60,64,70,74,78,82,86,90];
 const phaseFor=age=>age<=12?'child':age<=26?'youth':age<=44?'adult':age<=60?'middle':age<=78?'late':'elder';
 const hash=s=>{let v=2166136261;for(const ch of s)v=Math.imul(v^ch.charCodeAt(0),16777619);return v>>>0;};
 export function narrativeEvents(life,now){
- if(life?.version===5)return formalEvents(life,now);
+ if(life?.version===5||life?.version===7)return formalEvents(life,now);
  const age=lifeAge(life,now),used=new Set(),recent=new Set(life.recentEventIds||[]),rows=[{id:'birth',age:0,text:ORBITS[life.orbit][2]}];
  for(const at of AGES){if(at>age)break;const phase=phaseFor(at),prefix=life.answers.slice(0,[18,40,66].filter(a=>a<at).length).join('');const pool=EVENTS.filter(e=>e.phase===phase&&!used.has(e.id));const fresh=pool.filter(e=>!recent.has(e.id)),pick=(fresh.length?fresh:pool).sort((a,b)=>hash(life.seed+at+prefix+a.id)-hash(life.seed+at+prefix+b.id))[0];used.add(pick.id);
   let text=pick.text;if(at===30&&life.answers.length)text='你重讀十八歲那頁：'+scenesFor(life)[0].choices[life.answers[0]][2]+'如今，你更懂得那次選擇的重量。';

@@ -576,7 +576,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     const p = item.payload || {};
     if(['fate_event','fate_social'].includes(item.kind)&&item.target==='group'){
       const social=item.kind==='fate_social';
-      if(social?!/^[A-Za-z0-9_-]{1,128}$/.test(p.eventId||''):typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>2)return;
+      if(social?!/^[A-Za-z0-9_-]{1,128}$/.test(p.eventId||''):typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>8)return;
       const key=social?`social:${p.eventId}`:`${p.lifeId}:${p.index}`,cards=st().fateCards??={};
       if(cards[key]?.messageId)return;
       if(cards[key])throw Error('命運旅章通知送達待核對：'+key);

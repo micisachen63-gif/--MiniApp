@@ -35,13 +35,13 @@ export function createSharedUI({client,onChange,notification=false,now=()=>Date.
   const state=sharedEventState(event,now()+offset);
   if(event.side==='guest'&&!event.characterMatches&&!terminal.has(event.status))card.append(el('p','fate-note',`這封來信寄給「${event.guestName}」。請返回冒險並切換至該角色，再開啟旅章回應。`));
   if(event.side==='guest'&&!terminal.has(event.status)&&event.characterMatches){for(const [answer,label] of event.choices.entries()){const b=btn(label,()=>act('fate/social/reply',{eventId:event.id,answer}),'fate-option');b.dataset.sharedAnswer='';b.disabled=busy||!state.canReply;card.append(b);}card.append(btn('這次交給故事續寫',()=>act('fate/social/decline',{eventId:event.id})));}
-  if(event.side==='owner'&&!terminal.has(event.status)){card.append(el('p','fate-note',`這一次，讓「${event.guestName}」決定自己的回應。你的三個人生抉擇仍由你選擇。`));if(event.canWithdraw)card.append(btn('收回這次邀請',()=>act('fate/social/withdraw',{eventId:event.id})));}
+  if(event.side==='owner'&&!terminal.has(event.status)){card.append(el('p','fate-note',`這一次，讓「${event.guestName}」決定自己的回應。你自己的人生抉擇仍由你選擇。`));if(event.canWithdraw)card.append(btn('收回這次邀請',()=>act('fate/social/withdraw',{eventId:event.id})));}
   const status=el('p','fate-shared-countdown');status.dataset.sharedCountdown='';status.setAttribute('role','status');card.append(status);parent.append(card);
  }
  function paint(root){for(const e of data?.events||[]){const card=[...root.querySelectorAll('[data-shared-event]')].find(c=>c.dataset.sharedEvent===e.id);if(!card)continue;const state=sharedEventState(e,now()+offset),status=card.querySelector('[data-shared-countdown]');
    if(status)status.textContent=e.outcome?'這段後續，已收進你們各自的相逢紀錄。':e.status==='answered'?`已回應 · ${e.choices[e.answer]||'這一頁已落筆'}。故事會在約定時刻接續。`:e.status==='declined'?'已交給故事自然續寫。':e.status==='withdrawn'?'來信已收回，這一世仍會繼續。':e.status==='auto'?'回應時間已過，命運已替這段相逢續寫。':e.status==='scheduled'?'星燈尚在路上，這段相逢會隨人生展開。':state.left<=0?'回應已截止，正在確認故事的下一頁…':state.night?'☾ 夜間暫停回應，06:00 接續。':`還有 ${Math.floor(Math.ceil(state.left/1000)/60)} 分 ${Math.ceil(state.left/1000)%60} 秒，留下你的回音。`;
    for(const b of card.querySelectorAll('[data-shared-answer]'))b.disabled=busy||!state.canReply;
   }}
- function renderInvite(p){const label=el('label','fate-check'),input=el('input');input.type='checkbox';input.checked=invite;input.onchange=()=>{invite=input.checked;};label.append(input,el('span','','這一世，邀請另一位旅人決定一段相逢'));p.append(label,el('p','fate-note','每世最多一條支線，來信會在群組標記你與對方。對方可略過；未回覆時故事自然續寫，不影響原本三個人生抉擇。'));}
+ function renderInvite(p){const label=el('label','fate-check'),input=el('input');input.type='checkbox';input.checked=invite;input.onchange=()=>{invite=input.checked;};label.append(input,el('span','','這一世，邀請另一位旅人決定一段相逢'));p.append(label,el('p','fate-note','每世最多一條支線，來信會在群組標記你與對方。對方可略過；未回覆時故事自然續寫，不影響你自己的人生抉擇。'));}
  return {render,sync,paint,renderInvite,get invite(){return invite;},resetInvite(){invite=false;}};
 }

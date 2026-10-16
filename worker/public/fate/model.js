@@ -2,6 +2,7 @@
 // A code contains cosmetic story indices and random entropy ONLY. Never encode DOB.
 import {endingForLife} from './ending-story.js';
 import {lifeTiming} from './timing-v5.js';
+import {replayDecisionLife} from './decision-engine-v7.js';
 export const ART='/art/fate-chapter-20261016/';
 export const ZODIAC=['摩羯','水瓶','雙魚','牡羊','金牛','雙子','巨蟹','獅子','處女','天秤','天蠍','射手'];
 export const ORBITS=[
@@ -37,10 +38,18 @@ export function validBirth(value,today=new Date()){
 }
 export function zodiacFor(month,day){const edges=[20,19,21,20,21,22,23,23,23,24,23,22];return day<edges[month-1]?month-1:month%12;}
 export function encodeResult({orbit,answers,zodiac=null,seed,version=1,auto=[]}){
+ if(version===7){const code=`f7${orbit.toString(36)}${answers.length}${answers.join('').padEnd(9,'0')}${auto.join('').padEnd(9,'0')}${zodiac===null?'x':zodiac.toString(36)}${seed}`;if(!decodeResult(code))throw Error('Invalid story');return code;}
  const code=`f${version}${orbit.toString(36)}${answers.join('')}${version>=3?auto.join(''):''}${zodiac===null?'x':zodiac.toString(36)}${seed}`;
  if(!decodeResult(code))throw Error('Invalid story');return code;
 }
 export function decodeResult(code){
+ if(typeof code==='string'&&code.startsWith('f7')){
+  if(!/^f7[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}$/.test(code))return null;
+  const count=Number(code[3]),answers=[...code.slice(4,13)].map(Number),auto=[...code.slice(13,22)].map(Number),zodiac=code[22]==='x'?null:parseInt(code[22],36),seed=code.slice(23),orbit=parseInt(code[2],36);
+  if(answers.slice(count).some(Boolean)||auto.slice(count).some(Boolean))return null;
+  const result={version:7,code,orbit,answers:answers.slice(0,count),auto:auto.slice(0,count),zodiac,seed,identity:ORBITS[orbit]};
+  try{const v=replayDecisionLife(result,{activeMs:7200000,autoFill:false});if(!v.completed||v.resolved.length!==count)return null;result.deathAge=v.profile.deathAge;result.gender=v.profile.gender;result.identity=[`${result.gender==='f'?'女性':'男性'} · ${ORBITS[orbit][0]}`,ORBITS[orbit][1],ORBITS[orbit][2]];result.endingIndex=Math.round(result.answers.reduce((a,b)=>a+b,0)/Math.max(1,count)*3);const formal=endingForLife(result);result.ending={...ENDINGS[result.endingIndex],...formal,body:formal.summary};return result;}catch{return null;}
+ }
  if(typeof code!=='string'||!/^(?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[345][0-9ab][01]{6}[0-9abx][a-f0-9]{8})$/.test(code))return null;
  const version=Number(code[1]),orbit=parseInt(code[2],36),answers=[...code.slice(3,6)].map(Number),z=version>=3?9:6,zodiac=code[z]==='x'?null:parseInt(code[z],36),ending=answers.reduce((a,b)=>a+b,0);
  const end=version>=3?{...ENDINGS[ending]}:version>=2&&ending===2?{...ENDINGS[ending],body:'你將星燈交到同伴手裡，沿途替彼此照亮下一步。多年後你才發現，真正留下來的，是那些願意與你一起走過黑夜的人。'}:ENDINGS[ending];

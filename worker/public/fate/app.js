@@ -5,6 +5,7 @@ import {renderLifeUI,paintLifeUI} from './life-ui.js';
 import {narrativeEvents} from './event-catalog-v1.js';
 import {formalEvents,plannedContent} from './formal-events.js';
 import {endingForLife} from './ending-story.js';
+import {endingTimeline} from './ending-timeline.js';
 import {createCloudClient} from './cloud-client.js';
 import {renderProfile,renderStartBirthFields} from './profile-ui.js';
 import {mountSharePanel} from './share-ui.js';
@@ -92,7 +93,7 @@ function renderIntro(p){
 }
 function renderResult(p){
  const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
- if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));for(const text of story.paragraphs)book.append(el('p','',text));book.append(el('p','fate-ending-summary',story.summary));p.append(book);}
+ if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));const timeline=el('ol','fate-ending-timeline');timeline.setAttribute('aria-label','這一生的重要歷程');for(const chapter of (story.chapters||endingTimeline({...storyLife,deathAge:result.deathAge},plannedContent(storyLife)))){const row=el('li'),head=el('header');head.append(el('b','',`${chapter.age} 歲`),el('span','',chapter.label));row.append(head,el('p','',chapter.text));timeline.append(row);}book.append(timeline);const prose=el('details','fate-ending-prose');prose.append(el('summary','','讀成一篇短篇故事'));for(const text of story.paragraphs)prose.append(el('p','',text));book.append(prose,el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
  const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
  const journal=el('details','fate-journal'),summary=el('summary','','翻閱這一生的選擇與紀事'),list=el('ol');const memories=record?.draft?lifeEvents(record.draft,record.draft.clockAt):result.version>=4?plannedContent(result):record?.memories||[];list.append(el('li','',memories.find(m=>m.age===0)?.text||result.identity[2]));appendMemories(list,result,memories);journal.append(summary,list);p.append(journal);
@@ -114,9 +115,9 @@ function startCycle(){
  const status=startStatus(startHistory,now);if(!status.allowed){const target=document.querySelector('.fate-error')||document.querySelector('.fate-panel');const m=note(status.night?'星穹已入夜，06:00 再開啟下一世。':'今日四段人生已寫滿，明天再開啟新的旅程。');m.setAttribute('role','status');target.append(m);return;}
  const previous=result||decodeResult(soul.entries.at(-1)?.code);let next=randomOrbit(zodiac);
  if(previous&&next===previous.orbit)next=(next+1+parseInt(newSeed().slice(0,2),16)%11)%12;
- orbit=next;seed=seedForNextLife(newSeed(),soul.entries,5);
+ orbit=next;seed=seedForNextLife(newSeed(),soul.entries,7,orbit);
  const identityZodiac=mode==='birthday'&&zodiac!==null?zodiac:generatedZodiac(seed);
- currentLife=createLife({version:5,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
+ currentLife=createLife({version:7,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
 }
 function persistLife(){if(embedded)return;if(currentLife)soul.draft=currentLife;storage.set('star-fate-guest-soul',JSON.stringify(soul));}
 function resumeLife(){if(embedded){currentLife=validLife(cloud?.active?.draft);if(currentLife){result=null;shared=false;stage='life';render();window.scrollTo(0,0)}return;}currentLife=validLife(soul.draft);if(!currentLife)return;result=null;shared=false;stage='life';tickLife(isPreview?currentLife.clockAt:Date.now());window.scrollTo(0,0);}
@@ -135,8 +136,8 @@ function renderLife(p){
  onDaily:openDaily,onArchive:()=>{stage='archive';render();window.scrollTo(0,0)},onClose:()=>{if(embedded)window.parent.postMessage({type:'star-fate-close'},location.origin)}});
 }
 function appendMemories(list,r,memories=[]){
- const rows=[...memories.filter(m=>m.age!==0&&m.kind!=='choice')],scenes=scenesFor(r);
- r.answers.forEach((a,i)=>rows.push({age:scenes[i].age||18+i*24,text:`${r.auto?.[i]?'命運代選 · ':'親自選擇 · '}${scenes[i].choices[a][2]}`}));
+ const rows=[...memories.filter(m=>m.age!==0&&(r.version===7||m.kind!=='choice'))],scenes=scenesFor(r);
+ if(r.version!==7)r.answers.forEach((a,i)=>rows.push({age:scenes[i].age||18+i*24,text:`${r.auto?.[i]?'命運代選 · ':'親自選擇 · '}${scenes[i].choices[a][2]}`}));
  rows.sort((a,b)=>a.age-b.age);for(const m of rows)list.append(el('li','',`${ageLabel(m.age)} · ${m.text}`));
 }
 function renderSoul(p){
@@ -212,8 +213,8 @@ async function syncCloud(full=false,initial=false){
  if(data.entries)soul.entries=[...data.entries].reverse();else if(data.last&&!soul.entries.some(e=>e.id===data.last.id))soul.entries.push(data.last);
  if(data.active){soul.draft=data.active.draft;currentLife=validLife(data.active.draft);if(initial&&!result&&stage==='intro')stage='life';}
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
- const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
- if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||oldMemories!==JSON.stringify(data.active?.draft?.sharedMemories)||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
+ const afterGate=data.active?advanceLife(cloudDisplayLife(),cloudNow()):null,after=afterGate?.available||false,renderedQuestion=document.querySelector('.fate-live-question'),questionChanged=stage==='life'&&(after?(!renderedQuestion||Number(renderedQuestion.dataset.choiceIndex)!==afterGate.index):!!renderedQuestion);
+ if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||oldMemories!==JSON.stringify(data.active?.draft?.sharedMemories)||before!==after||questionChanged){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
  if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('[data-shared-answer]:not(:disabled)')?.closest('.fate-shared-event')||document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }

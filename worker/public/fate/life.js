@@ -2,6 +2,7 @@ import {encodeResult,newSeed} from './model.js';
 import {validSocialCast} from './social-cast.js';
 import {sharedMemories} from './shared-story.js';
 import {lifeTiming,ageAtActive} from './timing-v5.js';
+import {replayDecisionLife,decisionProfile} from './decision-engine-v7.js';
 export const LIFE_MS=2*3600000;
 export const CHOICE_MS=90000;
 const DAY=86400000,OFFSET=8*3600000;
@@ -17,16 +18,24 @@ export function addActive(from,ms){
 }
 export function startStatus(starts,now){const used=(Array.isArray(starts)?starts:[]).filter(t=>Number.isSafeInteger(t)&&taipeiDay(t)===taipeiDay(now)).length;return {allowed:isOpenTime(now)&&used<4,night:!isOpenTime(now),used,limit:4};}
 export function lifeSchedule(startedAt,life){
+ if(life?.version===7){const v=replayDecisionLife({...life,auto:life.sources?.map(s=>s==='auto'?1:0)||life.auto},{activeMs:Math.min(LIFE_MS,activeBetween(startedAt,life.clockAt||startedAt)),autoFill:true});return v.scenes.length?v.scenes.map(s=>addActive(startedAt,s.openedMs)):[addActive(startedAt,LIFE_MS)];}
  return (lifeTiming(life)?.choiceOffsets||[1440000,3200000,5280000]).map(ms=>addActive(startedAt,ms));
 }
 export function validLife(raw){
- if(!raw||![3,4,5].includes(raw.version)||!Number.isSafeInteger(raw.startedAt)||raw.startedAt<1||raw.startedAt>4102444800000||!Number.isInteger(raw.orbit)||raw.orbit<0||raw.orbit>11||!(raw.zodiac===null||Number.isInteger(raw.zodiac)&&raw.zodiac>=0&&raw.zodiac<12)||!/^[a-f0-9]{8}$/.test(raw.seed)||!Array.isArray(raw.answers)||raw.answers.length>3||raw.answers.some(a=>a!==0&&a!==1)||!Array.isArray(raw.sources)||raw.sources.length!==raw.answers.length||raw.sources.some(s=>!['manual','auto'].includes(s)))return null;
+ if(!raw||![3,4,5,7].includes(raw.version)||!Number.isSafeInteger(raw.startedAt)||raw.startedAt<1||raw.startedAt>4102444800000||!Number.isInteger(raw.orbit)||raw.orbit<0||raw.orbit>11||!(raw.zodiac===null||Number.isInteger(raw.zodiac)&&raw.zodiac>=0&&raw.zodiac<12)||!/^[a-f0-9]{8}$/.test(raw.seed)||!Array.isArray(raw.answers)||raw.answers.length>(raw.version===7?9:3)||raw.answers.some(a=>a!==0&&a!==1)||!Array.isArray(raw.sources)||raw.sources.length!==raw.answers.length||raw.sources.some(s=>!['manual','auto'].includes(s)))return null;
  const socialCast=raw.version>=4?validSocialCast(raw.socialCast):null,shared=raw.version>=4?sharedMemories(raw.sharedMemories):[];
  return {version:raw.version,startedAt:raw.startedAt,orbit:raw.orbit,zodiac:raw.zodiac,seed:raw.seed,answers:[...raw.answers],sources:[...raw.sources],clockAt:Number.isSafeInteger(raw.clockAt)?Math.max(raw.startedAt,Math.min(addActive(raw.startedAt,LIFE_MS),raw.clockAt)):raw.startedAt,recentEventIds:Array.isArray(raw.recentEventIds)?raw.recentEventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(-96):[],eventIds:Array.isArray(raw.eventIds)?raw.eventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(0,32):[],...(socialCast?{socialCast}:{}),...(shared.length?{sharedMemories:shared}:{}),...(raw.version>=4&&Number.isInteger(raw.identityZodiac)&&raw.identityZodiac>=0&&raw.identityZodiac<12?{identityZodiac:raw.identityZodiac}:{})};
 }
 export function createLife({version=3,orbit,zodiac=null,seed=newSeed(),startedAt=Date.now()}){const d=validLife({version,orbit,zodiac,seed,startedAt,clockAt:startedAt,answers:[],sources:[]});if(!d||!isOpenTime(startedAt))throw Error('Invalid life or night start');return d;}
 export function advanceLife(raw,now){
  const d=validLife(raw);if(!d||!Number.isSafeInteger(now)||now<d.startedAt)throw Error('Invalid life clock');
+ if(d.version===7){
+  now=Math.max(now,d.clockAt);const elapsed=Math.min(LIFE_MS,activeBetween(d.startedAt,now)),v=replayDecisionLife({...d,auto:d.sources.map(s=>s==='auto'?1:0)},{activeMs:elapsed,autoFill:true}),endAt=addActive(d.startedAt,LIFE_MS);
+  d.answers=[...v.answers];d.sources=v.auto.map(a=>a?'auto':'manual');d.clockAt=Math.min(now,endAt);
+  const index=d.answers.length,slots=v.scenes.map(s=>addActive(d.startedAt,s.openedMs)),available=!!v.pending&&!v.pending.answered&&isOpenTime(now),completed=now>=endAt&&v.completed;
+  const night=!isOpenTime(now),nextAt=Math.max(addActive(d.startedAt,Math.min(LIFE_MS,v.nextAtMs??LIFE_MS)),night?addActive(now,0):0);
+  return {draft:d,slots,endAt,completed,code:completed?encodeResult({...d,auto:v.auto}):null,index,night,available,nextAt};
+ }
  now=Math.max(now,d.clockAt);const slots=lifeSchedule(d.startedAt,d),endAt=addActive(d.startedAt,LIFE_MS);let index=d.answers.length;
  while(index<3&&now>=addActive(slots[index],CHOICE_MS)){
   d.answers.push((parseInt(d.seed.slice(index%4*2,index%4*2+2),16)>>(index%7))&1);d.sources.push('auto');index++;
@@ -38,5 +47,5 @@ export function chooseLife(raw,answer,now,index){
  const v=advanceLife(raw,now);if(![0,1].includes(answer)||v.completed||!v.available||v.index!==index)throw Error('事件尚未開始，或已經由時間帶往下一頁。');
  v.draft.answers.push(answer);v.draft.sources.push('manual');return advanceLife(v.draft,now);
 }
-export function lifeAge(raw,now){return raw.version===5?Math.floor(ageAtActive(raw,activeBetween(raw.startedAt,now))):Math.min(90,Math.floor(activeBetween(raw.startedAt,now)/LIFE_MS*90));}
+export function lifeAge(raw,now){return raw.version===7?Math.floor(Math.min(LIFE_MS,activeBetween(raw.startedAt,now))/LIFE_MS*decisionProfile(raw.seed,raw.orbit).deathAge):raw.version===5?Math.floor(ageAtActive(raw,activeBetween(raw.startedAt,now))):Math.min(90,Math.floor(activeBetween(raw.startedAt,now)/LIFE_MS*90));}
 export function lifeGrowth(raw){const home=raw.answers.filter(a=>a===0).length,away=raw.answers.length-home;return {home,away,label:home===away?'仍在尋找自己的方向':home>away?'在守候中學會堅定':'在探索中學會勇敢'};}

@@ -1,7 +1,7 @@
 (() => {
  'use strict';
  const original=window.RpgInterface.compose;
- const valid=c=>typeof c==='string'&&/^f[1-5][a-f0-9x]{10,30}$/.test(c);
+ const valid=c=>typeof c==='string'&&/^f(?:[1-5][a-f0-9x]{10,30}|7[a-f0-9x]{29})$/.test(c);
  let overlay=null,frame=null,pinned=null,exit=null,opening=false;
  const entryParams=new URLSearchParams(location.search),incoming=entryParams.get('fate'),startParam=String(window.Telegram?.WebApp?.initDataUnsafe?.start_param||entryParams.get('screen')||entryParams.get('tgWebAppStartParam')||location.hash.replace(/^#/,'').split('&')[0]||'').replace(/^rpg_?/,''),autoOpen=startParam==='fate'||entryParams.has('fateEvent'),cache=new Map(),seen=new Set();
  const targetCharacter=entryParams.get('fateCharacter'),targetName=entryParams.get('fateCharacterName')?.slice(0,24)||'另一角色';

@@ -67,7 +67,7 @@ export async function start(env,tg,b,now){
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
   const past=(await db.prepare("SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 3").bind(String(tg)).all()).results||[];
   let zodiac=null,identityZodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');identityZodiac=zodiacFor(birth.month,birth.day);if(b.showSign!==false)zodiac=identityZodiac;}
-  const seed=seedForNextLife(newSeed(),past.reverse(),5),orbit=randomOrbit(zodiac),draft=createLife({version:5,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
+  const orbit=randomOrbit(zodiac),seed=seedForNextLife(newSeed(),past.reverse(),7,orbit),draft=createLife({version:7,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
   identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
   const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now,draft)[0])],result:{lifeId:id}};
@@ -115,8 +115,8 @@ export async function daily(env,tg,now,retry=0){
 
 export async function notification(env,b,now){
  const row=await env.DB.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(String(b.lifeId)).first();
- const invalid={ok:true,valid:false,night:false,pending:false,remainingMs:0};if(!row||row.status!=='active'||!Number.isInteger(b.index)||b.index<0||b.index>2)return invalid;
- const v=advanceLife(parse(row.state_json),now),deadline=addActive(v.slots[b.index],CHOICE_MS);
+ const invalid={ok:true,valid:false,night:false,pending:false,remainingMs:0};if(!row||row.status!=='active'||!Number.isInteger(b.index)||b.index<0||b.index>(parse(row.state_json)?.version===7?8:2))return invalid;
+ const v=advanceLife(parse(row.state_json),now);if(!Number.isSafeInteger(v.slots[b.index]))return invalid;const deadline=addActive(v.slots[b.index],CHOICE_MS);
  if(v.completed||v.index!==b.index||now<v.slots[b.index]||now>=deadline)return invalid;
  const c=await owner(env.DB,row.char_id),scene=scenesFor(v.draft)[b.index];
  return {ok:true,valid:v.available,night:v.night,pending:true,remainingMs:activeBetween(now,deadline),retryAt:v.night?addActive(now,0):now,payload:{lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:b.index,age:scene.age,title:scene.title,text:scene.text,deadline}};

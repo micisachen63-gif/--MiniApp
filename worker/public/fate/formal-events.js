@@ -8,6 +8,8 @@ import {lifeTiming,ageAtActive,narrativeTickAt} from './timing-v5.js';
 import {V5_MEMORIES} from './formal-days-v5.js';
 import {V5_CAREERS,V5_THREADS,V5_OBJECTS,V5_COMMUNITY,V5_REFLECTIONS} from './formal-catalog-v5.js';
 import {V5_CHOICE_VARIANTS} from './formal-choices-v5.js';
+import {replayDecisionLife} from './decision-engine-v7.js';
+import {plannedV7Content,profileV7} from './narrative-v7.js';
 
 export const NARRATIVE_VERSION=4;
 export const EVENT_INTERVAL_MS=30000;
@@ -49,6 +51,7 @@ const infancy=[
 ];
 
 export function formalScenes(life={}){
+ if(life.version===7)return replayDecisionLife({...life,auto:life.sources?.map(s=>s==='auto'?1:0)||life.auto},{activeMs:7200000,autoFill:true}).scenes;
  const seed=seedOf(life),pool=catalogues(life),career=pool.careers[byte(seed,0)%pool.careers.length],thread=pool.threads[byte(seed,1)%pool.threads.length],object=pool.objects[byte(seed,2)%pool.objects.length];
  const community={
   ferry:['渡口的下一程','碼頭準備改建，常走舊路的人與盼望新路的人，各有不能輕忽的生活。街坊希望有人願意長期聽完兩邊的聲音。'],
@@ -150,6 +153,7 @@ export function narrativeActiveBetween(from,to){
 }
 
 export function narrativeProfile(life={}){
+ if(life.version===7)return profileV7(life);
  const seed=seedOf(life),orbit=Number.isInteger(life.orbit)&&life.orbit>=0&&life.orbit<12?life.orbit:11;
  const pool=catalogues(life);
  const rank=(items,tag)=>[...items].sort((a,b)=>hash(seed+tag+a.id)-hash(seed+tag+b.id));
@@ -158,6 +162,7 @@ export function narrativeProfile(life={}){
 }
 
 export function plannedContent(life={},options={}){
+ if(life.version===7)return plannedV7Content(life,{activeMs:Number.isFinite(options.activeMs)?options.activeMs:(options.ticks??240)*30000});
  const profile=narrativeProfile(life),{seed,orbit,career}=profile;
  const timing=lifeTiming(life),isV5=!!timing;
  const limit=Math.max(0,Math.min(240,Number.isFinite(options.ticks)?Math.floor(options.ticks):240));
@@ -249,6 +254,7 @@ export function plannedContent(life={},options={}){
 }
 
 export function formalEvents(life,now=life?.clockAt){
+ if(life?.version===7&&validSeed(life.seed)&&Number.isFinite(life.startedAt))return plannedV7Content(life,{activeMs:Math.min(DURATION,narrativeActiveBetween(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt))});
  if(![4,5].includes(life?.version)||!validSeed(life.seed)||!Number.isFinite(life.startedAt))return [];
  const at=Math.max(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt);
  const elapsed=Math.min(DURATION,narrativeActiveBetween(life.startedAt,at)),ticks=life.version===5?narrativeTickAt(life,elapsed):Math.min(240,Math.floor(elapsed/EVENT_INTERVAL_MS));
