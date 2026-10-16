@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-16 命運旅章分享、啟程出生時間、四世星輝匣/真正100%必成卷、其他玩家暱稱社交鏈，接手與實測界線見 `docs/fate/SHARING_GIFTS_HANDOVER_20261016.txt`、`docs/fate/SOCIAL_CAST.txt`。iPhone/Android原生相簿/IG附圖必須實機驗收，不得將契約測試當實測。發布狀態仍以最新部署收據為準。
+
 2026-10-16 命運旅章第一期的正式人生、雲端旅誌、任務解鎖提醒、出生檔案、架空年鑑、
 手繪終章與TG事件通知已完成整合。規則、測試與低強度模型接手步驟見
 `docs/fate/FORMAL_HANDOVER.txt`、內容量測見 `docs/fate/NARRATIVE_V4.txt`。

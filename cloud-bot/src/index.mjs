@@ -1,9 +1,13 @@
 import {BotCoordinator} from './coordinator.mjs';
 import {webhookSecret,equalSecret} from './telegram-api.mjs';
+import {createFateShare} from './fate-share.js';
+import wasmModule from './renderer/deps/resvg.wasm';
+const fateShare=createFateShare({wasmModule});
 export {BotCoordinator};
 const reply=(body,status=200)=>new Response(JSON.stringify(body),{status,headers:{'content-type':'application/json','cache-control':'no-store'}});
 export default {
- async fetch(request,env){
+ async fetch(request,env,ctx){
+  const shared=await fateShare(request,env,ctx);if(shared)return shared;
   const url=new URL(request.url),bot=env.BOT_COORDINATOR.get(env.BOT_COORDINATOR.idFromName('StarJournalRpgBot-v1'));
   if(url.pathname==='/health'&&request.method==='GET')return bot.fetch('https://internal/status');
   if(url.pathname==='/telegram/webhook'&&request.method==='POST'){

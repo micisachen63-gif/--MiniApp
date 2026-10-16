@@ -1,4 +1,5 @@
 import {encodeResult,newSeed} from './model.js';
+import {validSocialCast} from './social-cast.js';
 export const LIFE_MS=2*3600000;
 export const CHOICE_MS=90000;
 const DAY=86400000,OFFSET=8*3600000;
@@ -18,7 +19,8 @@ export function lifeSchedule(startedAt){
 }
 export function validLife(raw){
  if(!raw||![3,4].includes(raw.version)||!Number.isSafeInteger(raw.startedAt)||raw.startedAt<1||raw.startedAt>4102444800000||!Number.isInteger(raw.orbit)||raw.orbit<0||raw.orbit>11||!(raw.zodiac===null||Number.isInteger(raw.zodiac)&&raw.zodiac>=0&&raw.zodiac<12)||!/^[a-f0-9]{8}$/.test(raw.seed)||!Array.isArray(raw.answers)||raw.answers.length>3||raw.answers.some(a=>a!==0&&a!==1)||!Array.isArray(raw.sources)||raw.sources.length!==raw.answers.length||raw.sources.some(s=>!['manual','auto'].includes(s)))return null;
- return {version:raw.version,startedAt:raw.startedAt,orbit:raw.orbit,zodiac:raw.zodiac,seed:raw.seed,answers:[...raw.answers],sources:[...raw.sources],clockAt:Number.isSafeInteger(raw.clockAt)?Math.max(raw.startedAt,Math.min(addActive(raw.startedAt,LIFE_MS),raw.clockAt)):raw.startedAt,recentEventIds:Array.isArray(raw.recentEventIds)?raw.recentEventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(-96):[],eventIds:Array.isArray(raw.eventIds)?raw.eventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(0,32):[]};
+ const socialCast=raw.version===4?validSocialCast(raw.socialCast):null;
+ return {version:raw.version,startedAt:raw.startedAt,orbit:raw.orbit,zodiac:raw.zodiac,seed:raw.seed,answers:[...raw.answers],sources:[...raw.sources],clockAt:Number.isSafeInteger(raw.clockAt)?Math.max(raw.startedAt,Math.min(addActive(raw.startedAt,LIFE_MS),raw.clockAt)):raw.startedAt,recentEventIds:Array.isArray(raw.recentEventIds)?raw.recentEventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(-96):[],eventIds:Array.isArray(raw.eventIds)?raw.eventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(0,32):[],...(socialCast?{socialCast}:{})};
 }
 export function createLife({version=3,orbit,zodiac=null,seed=newSeed(),startedAt=Date.now()}){const d=validLife({version,orbit,zodiac,seed,startedAt,clockAt:startedAt,answers:[],sources:[]});if(!d||!isOpenTime(startedAt))throw Error('Invalid life or night start');return d;}
 export function advanceLife(raw,now){

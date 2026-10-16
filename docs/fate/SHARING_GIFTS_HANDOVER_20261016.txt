@@ -1,0 +1,60 @@
+命運旅章：分享、出生時間、輪迴禮與社交暱稱接手文件（2026-10-16）
+
+先讀根目錄AGENTS.md與AI_HANDOVER.md。正式上線證據以docs/deployment/*.json為準。
+本次既有正式v4時鐘、241則人生、任務提醒規則保留。新增社交詳見SOCIAL_CAST.txt，禮盒後端詳見GIFTS_BACKEND.txt。
+
+一、使用者明確需求與本版實作
+- 啟程頁生日下直接顯示選填出生時間（時/分）、出生地40城市，自訂座標/時區僅選其他地點後出現。
+- 時間、地點可留白，仍可啟程。只有同意才以原UUID重試保存出生檔；訪客不保存帳號資料。
+- 角色能力卡新增正式完成輪迴世數；每4世可領四世星輝匣，可累積。訪客與匯入不計世數。
+- 明示獎池：5%星輝武器必成卷1，5%星輝防具必成卷1，90%普通武器卷2+防具卷2。
+- 必成卷真正100%成功/0%爆裝，仍遵守強化上限；必須明確選擇並單次確認，不自動補購、不進背景強化。
+- 背包禮盒與首頁星輝匣皆可進領取/開匣。雙擊、斷線、切角、重開都用伺服器收據保護。
+- 正式開世抽取他人公開暱稱至多3人，鄰居/旅伴/同行宿敵6章同名，終章回顧；自帳分身排除，NPC回退。
+
+二、分享架構與平台界線
+- share-model.js：所有文案/連結固定正式origin，localhost不流出。短碼僅外觀敘事，不帶生日/TG ID/他人暱稱。
+- share-ui.js：每個分享面板獨立PNG/File/objectURL，尺寸1080x1350與1080x1920。
+- 星座或尺寸變更立即失效舊PNG/準備訊息；延遲生成不能覆蓋新隱私設定。重繪保留同故事的星座勾選。
+- 無變化45秒同步不拆掉正在分享的圖片。外來碼不借用本人另一世cloud.last記憶。
+- 剪貼簿失敗展示手動複製textarea並保留圖片；分享取消不清圖；所有進度用語不假稱已存相簿。
+- TG SDK>=8原生圖片：父頁native-share-host.js保留initData，iframe只傳白名單action/code/format/UUID與固定char。
+- 父頁POST Bot /fate/share/prepare，驗證真HMAC與Origin；Bot只呼叫savePreparedInlineMessage，不sendMessage/sendPhoto。
+- 真正TG分享僅在第二次使用者點擊shareMessage後進原生選擇；只接受本父頁準備且未過期的id。
+- Bot /fate-card/<code>/<post|story>.jpg：重用既有resvg WASM/字體與原創終章畫，JPEG小於5MB、版本化快取、下載檔名。
+- 原生下載tg.downloadFile只回報接受請求；舊TG改PNG下載/長按/HTTPS原圖。
+- IG：系統WebShare files，可選IG時由玩家完成；無支援則儲存圖片+手動加入。網站無法保證直接開IG並自動附圖。
+- 脆：官方intent/post帶文案+正式連結；圖片另外加入，不會自動發佈。
+- TG連結：openTelegramLink/t.me/share/url，無原生圖片能力仍能選目的地分享連結。
+- 未呼叫付費GPT、未新建訂閱/CF資源，jpeg-js 0.4.4完整BSD-3-Clause聲明已附。原美術全部保留。
+
+三、驗證證據與明確未測範圍
+- 完整測試須重跑 npm test（Node24）；本版最後計數見部署記錄/測試log。
+- 本機隔離fixtures：scripts/preview-fate.mjs，9555，只有記憶體D1/HMAC假帳號，不連CF或Telegram。
+- 實際瀏覽器：出生時間14:35可填、台北可選；兩尺寸PNG真下載，關閉星座圖無星座。
+- 實際複製後貼上：正式https://elf-rpg-api.micisachen.workers.dev/fate/r/f43010001x9c61a7d2，不含localhost與星座。
+- 實際禮盒：4世→領1匣→可領0持有1→開匣普通卷各2→持有0，無重領入口。
+- 實際鍛造：選必成卷100%/0%/0%，拖曳出確認；取消持有3不變；再拖確認成功+1，持有2，普通卷不變。
+- 脆intent實際到登入頁，登入後草稿與附圖未驗證；不得把入口成功說成發文流程全通過。
+- iPhone/Android實機TG選單、相簿儲存、IG接收檔案尚未實機驗收。SDK8/舊版分支有契約測試，但不是手機實測。
+- 本機IAB WebShare回報交接成功，未見可檢視的OS選擇器；不可宣稱IG草稿附圖已驗證。
+- 本輪不實際發送任何TG分享，不發IG/脆貼文。
+- 私密截圖/log位置：營運自動化/fate-share-20261016（不提交玩家畫面或資料至Git）。
+
+四、低強度模型接手順序
+1. git fetch origin main，確認工作區與docs/deployment最新，不回放舊版本。
+2. npm ci，Node24，npm test。不得跳過失敗測試；不要跑所有D1 migration。
+3. 本次資料庫只需要0027_fate_gifts.sql：兩新增表與1索引。使用定向 d1 execute --remote --file，只一次，不動0025。
+4. 有程式改動先提交/push main，再從乾淨等於origin/main執行根npm run deploy:worker，然後deploy:bot。
+5. 發布後失敗先唯讀sync:check查明，不自動重發；保留.release-sync並補正確收據。
+6. 登入正式TG開旅章，完成一世→重讀→名帖→TG圖卡應出選單，取消即可；不要為了測試傳群。
+7. 用iPhone/Android分別檢查下載、長按儲存、WebShare取消與IG/脆手動附圖。必須註明實機結果，不能只模擬UA當實機。
+8. 若要公開短碼也顯其他玩家暱稱，需要另外的公開快照設計；目前匿名重建NPC為明確相容範圍。
+
+技術來源（契約核對）
+https://core.telegram.org/bots/webapps#sharing-content
+https://core.telegram.org/bots/webapps#downloading-files
+https://core.telegram.org/bots/api#savepreparedinlinemessage
+https://core.telegram.org/bots/api#inlinequeryresultphoto
+https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
+https://developers.facebook.com/docs/threads/threads-web-intents/

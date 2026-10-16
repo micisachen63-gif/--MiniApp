@@ -6,11 +6,13 @@ import {narrativeEvents} from './event-catalog-v1.js';
 import {formalEvents,plannedContent} from './formal-events.js';
 import {endingForLife} from './ending-story.js';
 import {createCloudClient} from './cloud-client.js';
-import {renderProfile} from './profile-ui.js';
+import {renderProfile,renderStartBirthFields} from './profile-ui.js';
+import {mountSharePanel} from './share-ui.js';
 const root=document.getElementById('fate'),qs=new URLSearchParams(location.search);
 const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v);return true}catch{return false}}};
 const pathResult=/^\/fate\/r\/([^/]+)$/.exec(location.pathname)?.[1],queryResult=qs.get('result');
-let shared=!!pathResult,result=decodeResult(pathResult||queryResult),mode='birthday',orbit=0,zodiac=null,showSign=true,answers=[],seed='',stage='intro',busy=false,media,previewUrl=null,cardFile=null;
+let shared=!!pathResult,result=decodeResult(pathResult||queryResult),mode='birthday',orbit=0,zodiac=null,showSign=true,answers=[],seed='',stage='intro',media;
+let sharePanel=null,startBirthState={},birthSaveRetry=null;const sharePrivacy=new Map();
 const embedded=window.parent!==window;
 const isPreview=!embedded&&['127.0.0.1','localhost','[::1]'].includes(location.hostname)&&qs.get('preview')==='1';
 let previewCompleted=0,birthDetail=null;
@@ -28,7 +30,7 @@ const lifeNow=()=>isPreview&&currentLife?currentLife.clockAt:Date.now();
 function el(tag,cls,text){const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e;}
 function button(text,fn,cls='fate-quiet'){const b=el('button',cls,text);b.type='button';b.onclick=fn;return b;}
 function note(text){return el('p','fate-note',text)}
-function dispose(){media?.pause();media?.removeAttribute('src');media?.load();media=null;if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;}cardFile=null;}
+function dispose(){media?.pause();media?.removeAttribute('src');media?.load();media=null;sharePanel?.dispose();sharePanel=null;}
 function setupMedia(bg){
  if(media){bg.append(media);if(!document.hidden)media.play().catch(()=>{});return;}
  if(matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData)return;
@@ -36,7 +38,7 @@ function setupMedia(bg){
  media.src=ART+'journey-loop.mp4';media.play().catch(()=>{});
 }
 function render(){
- const detailsOpen=[...root.querySelectorAll('details[open]>summary')].map(e=>e.textContent);if(media)media.remove();if(previewUrl){URL.revokeObjectURL(previewUrl);previewUrl=null;}cardFile=null;root.replaceChildren();const shell=el('div','fate-shell'+(stage==='scene'?' fate-story':'')+(result?' fate-result':''));
+ const detailsOpen=[...root.querySelectorAll('details[open]>summary')].map(e=>e.textContent);if(media)media.remove();sharePanel?.dispose();sharePanel=null;root.replaceChildren();const shell=el('div','fate-shell'+(stage==='scene'?' fate-story':'')+(result?' fate-result':''));
  if(result)shell.style.setProperty('--ending',result.ending.color);if(stage==='archive')shell.classList.add('fate-archive');if(stage==='life'||stage==='daily')shell.classList.add('fate-live');
  const bg=el('div','fate-media');bg.setAttribute('aria-hidden','true');shell.append(bg);setupMedia(bg);
  const top=el('header','fate-top');top.append(el('span','fate-brand','星穹旅誌 ✧'));
@@ -55,22 +57,25 @@ function render(){
 function renderIntro(p){
  p.append(el('span','fate-eyebrow','第一期 · 最後一盞星燈'),el('h2','','如果人生能重新啟程，\n你會把光留給誰？'));
  const modes=el('div','fate-mode');for(const [key,label] of [['birthday','以生日啟程'],['random','交給命運']]){const b=button(label,()=>{mode=key;render()},'fate-option');b.setAttribute('aria-pressed',String(mode===key));modes.append(b)}p.append(modes);
- let dateInput,signInput,timeInput,placeInput;
+ let dateInput,signInput,startFields;
  if(mode==='birthday'){
   const label=el('label','fate-field','出生年月日');label.htmlFor='fate-birth';dateInput=el('input','fate-date');dateInput.id='fate-birth';dateInput.type='date';dateInput.min='1900-01-01';const t=new Date();dateInput.max=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;dateInput.required=true;
   dateInput.value=birthDetail?.date||profileData?.birth?.date||'';
-  p.append(label,dateInput,note(embedded?'生日只供這次起點與星座標示，完整日期不存入人生或分享碼。若要保存供每日提醒使用，請到今日旅箋另行勾選同意。':'生日只用於這次起點與星座標示，在你的裝置處理，不上傳、不儲存完整生日。可使用虛構生日。'));
-  const detail=el('details','fate-birth-detail'),summary=el('summary','','補上出生時間與地點（選填）');detail.append(summary);
-  const timeLabel=el('label','fate-field','出生時間（當地鐘錶時間）');timeInput=el('input','fate-date');timeInput.type='time';timeInput.id='fate-birth-time';timeLabel.htmlFor=timeInput.id;
-  const placeLabel=el('label','fate-field','出生城市／國家');placeInput=el('input','fate-date');placeInput.type='text';placeInput.maxLength=60;placeInput.placeholder='例如：台灣・台北';placeInput.autocomplete='off';placeInput.id='fate-birth-place';placeLabel.htmlFor=placeInput.id;
-  if(!embedded)detail.append(timeLabel,timeInput,placeLabel,placeInput,note('不清楚可以留白，不會猜測出生時間。本預覽僅呈現資料填寫方式；完整命盤、歷史時區與每日計算尚未接入。這些欄位不會出現在分享圖。'));if(!embedded)p.append(detail);else p.append(button('出生時間與地點 · 自願保存至每日旅箋',openDaily));
+  p.append(label,dateInput,note('生日只供起點與星座；出生時間、地點可留白。不會將完整出生資料放進分享碼或圖卡。'));
+  dateInput.oninput=()=>{birthDetail={...birthDetail,date:dateInput.value};birthSaveRetry=null;};
+  startFields=renderStartBirthFields(p,{value:startBirthState,onChange:value=>{startBirthState=value;birthSaveRetry=null;}});
+  if(!embedded)p.append(note('訪客的時間與地點只留在此頁記憶中，未登入不會保存至帳號。'));
   const check=el('label','fate-check');signInput=el('input');signInput.type='checkbox';signInput.checked=showSign;signInput.onchange=()=>{showSign=signInput.checked};check.append(signInput,el('span','','分享時顯示星座（可以隨時關閉）'));p.append(check);
  }
  const error=el('div','fate-error');error.setAttribute('role','alert');p.append(error);
- p.append(button('展開我的旅章',()=>{
+ p.append(button('展開我的旅章',async()=>{
   const birth=mode==='birthday'?validBirth(dateInput.value):null;
   if(mode==='birthday'&&!birth){error.textContent='請選擇有效的出生日期，生日不能晚於今天。';dateInput.focus();return;}
-  birthDetail=birth?{date:dateInput.value,time:timeInput.value,place:placeInput.value.trim()}:null;
+  birthDetail=birth?{date:dateInput.value,...startFields.read()}:null;
+  if(embedded&&birth&&startFields.consented()){
+   const payload=JSON.stringify(birthDetail);if(!birthSaveRetry||birthSaveRetry.payload!==payload)birthSaveRetry={payload,id:crypto.randomUUID()};
+   const startButton=error.nextElementSibling;try{if(startButton)startButton.disabled=true;await client.request('fate/profile/save',{requestId:birthSaveRetry.id,consent:true,birth:birthDetail});birthSaveRetry=null;}catch(e){error.textContent=e.message+'；資料尚未保存，請重試。';return;}finally{if(startButton)startButton.disabled=false;}
+  }
   zodiac=birth?zodiacFor(birth.month,birth.day):null;startCycle();
  },'fate-primary'));
  const saved=embedded?decodeResult(cloud?.last?.code):decodeResult(storage.get('star-fate-last'));
@@ -79,27 +84,19 @@ function renderIntro(p){
  p.append(note('一世 2 小時 · 每天最多 4 世 · 06:00–24:00 成長，凌晨暫停。未回應會由命運代選；落款後需親自開啟下一世。只有本機預覽使用加速時鐘。'));
 }
 function renderResult(p){
- const record=soul.entries.find(e=>e.code===result.code)||cloud?.last;const storyLife=record?.code===result.code?record.draft:result;
+ const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
  if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));for(const text of story.paragraphs)book.append(el('p','',text));book.append(el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
  const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
  const journal=el('details','fate-journal'),summary=el('summary','','翻閱這一生的選擇與紀事'),list=el('ol');const memories=record?.draft?lifeEvents(record.draft,record.draft.clockAt):result.version>=4?plannedContent(result):record?.memories||[];list.append(el('li','',memories.find(m=>m.age===0)?.text||result.identity[2]));appendMemories(list,result,memories);journal.append(summary,list);p.append(journal);
  p.append(el('p','fate-quote',result.ending.question));
  const extras=el('div','fate-row');extras.append(button('今日旅箋',openDaily),button('靈魂旅誌',()=>{stage='archive';render();window.scrollTo(0,0)}));p.append(extras);
- const check=el('label','fate-check'),cb=el('input');cb.type='checkbox';cb.checked=result.zodiac!==null;cb.disabled=result.zodiac===null;cb.onchange=()=>{showSign=cb.checked;clearPreview();};check.append(cb,el('span','','分享圖片與連結顯示星座'));p.append(check);showSign=cb.checked;
- const selectLabel=el('label','fate-field','分享圖尺寸');selectLabel.htmlFor='fate-format';const format=el('select','fate-format');format.id='fate-format';for(const [v,t] of [['post','IG／Threads · 1080 × 1350'],['story','限時動態 · 1080 × 1920']]){const o=el('option','',t);o.value=v;format.append(o)}format.onchange=clearPreview;p.append(selectLabel,format);
- const preview=el('div');preview.id='fate-preview';p.append(preview);const status=el('p','fate-status');status.id='fate-status';status.setAttribute('role','status');p.append(status);
- p.append(button('製作我的旅人名帖',()=>makeCard(format.value,cb.checked),'fate-primary'));
- const actions=el('div','fate-row');actions.append(button('分享圖卡',shareCard),button('儲存圖片',saveCard),button('複製分享連結',async()=>{
-  const r=shareResult(cb.checked),text=shareText(r,cb.checked)+'\n'+publicUrl(r.code,location.origin);
-  try{await navigator.clipboard.writeText(text);status.textContent='旅章與連結已複製，貼到 Threads 或傳給朋友吧。'}catch{const box=el('textarea','fate-date');box.readOnly=true;box.value=text;preview.replaceChildren(box);box.select();status.textContent='請長按文字複製。'}
- }));p.append(actions);
+ sharePanel=mountSharePanel(p,{result,initialShow:sharePrivacy.has(result.code)?sharePrivacy.get(result.code):result.zodiac!==null,onPrivacyChange:value=>{sharePrivacy.set(result.code,value);if(sharePrivacy.size>64)sharePrivacy.delete(sharePrivacy.keys().next().value)},client});
  if(shared){p.append(button('走出自己的旅章',()=>reset(),'fate-primary'));}
  else if(embedded){p.append(button('將旅章收進目前角色',()=>{cloudMutation('fate/keep',{code:result.code})},'fate-primary'));p.append(note('正式完成的此世已由雲端保存。匯入或收藏分享故事只作紀念，不增加輪迴世數與成就。'));}
  else{const link=el('a','fate-primary',isPreview?'預覽創角銜接':'前往 TG，讓冒險繼續');link.href=isPreview?'/?fixture=444&preview=1&fate='+encodeURIComponent(result.code):telegramUrl(result.code);link.rel='noopener';p.append(link,note(isPreview?'正式版將前往專屬 TG BOT；此預覽以隔離帳號示範創角，不會修改正式玩家。':'加入遊戲專屬群組，再從 BOT 開啟遊戲創角。旅章只記錄故事，不提供戰力獎勵。'));}
  renderSoul(p);
  p.append(el('div','fate-life-divider','此生已落款 · 靈魂仍在旅途'),button('開啟下一趟輪迴',()=>startCycle(),'fate-primary'),el('p','fate-cycle-copy','換一個出身，遇見不同的人。\n每一世的選擇，都會成為這位英雄的靈魂記憶。'),button('重新設定起點',()=>reset(),'fate-subtle'));
- function clearPreview(){if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=null;cardFile=null;preview.replaceChildren();status.textContent='';}
 }
 function reset(){result=null;shared=false;answers=[];birthDetail=null;stage='intro';history.replaceState(null,'','/fate/'+(isPreview?'?preview=1':''));render();window.scrollTo(0,0)}
 function startCycle(){
@@ -176,33 +173,6 @@ function renderDaily(p){
  if(!isPreview)box.append(note('訪客可先體驗故事。從遊戲內開啟今日旅箋，即可查看帳號真正完成的同行任務與依序解鎖的提醒。'));
  p.append(box);
 }
-function shareResult(show){if(show||result.zodiac===null)return result;return decodeResult(encodeResult({...result,zodiac:null}));}
-async function makeCard(format,show){
- const status=document.getElementById('fate-status');if(busy)return;busy=true;status.textContent='正在為你描金、裝訂這頁旅章…';
- try{
-  const r=shareResult(show),canvas=document.createElement('canvas'),w=1080,h=format==='story'?1920:1350;canvas.width=w;canvas.height=h;const c=canvas.getContext('2d');
-  const image=new Image();image.src=r.version>=4?endingForLife(r).illustration:ART+'journey.webp';await image.decode();await document.fonts.ready;
-  c.fillStyle='#0a1425';c.fillRect(0,0,w,h);const ih=h*.65,scale=Math.max(w/image.width,ih/image.height);c.drawImage(image,(w-image.width*scale)/2,0,image.width*scale,image.height*scale);
-  const gradient=c.createLinearGradient(0,ih*.32,0,h*.8);gradient.addColorStop(0,'#0a142500');gradient.addColorStop(.5,'#0a1425dc');gradient.addColorStop(1,'#0a1425');c.fillStyle=gradient;c.fillRect(0,0,w,h);
-  const shade=c.createLinearGradient(0,0,0,245);shade.addColorStop(0,'#07111ed9');shade.addColorStop(1,'#07111e00');c.fillStyle=shade;c.fillRect(0,0,w,245);
-  c.strokeStyle='#c0a167';c.lineWidth=2;c.strokeRect(32,32,w-64,h-64);c.strokeStyle='#b69b5a66';c.strokeRect(44,44,w-88,h-88);
-  c.textAlign='center';c.fillStyle='#e4c58a';c.font='26px Georgia,"Microsoft JhengHei",serif';c.fillText('星 穹 旅 誌   ·   命 運 旅 章',w/2,111);
-  c.font='20px Georgia,serif';c.fillStyle='#d7dce2';c.fillText('THE LAST STAR LANTERN',w/2,152);
-  const y=format==='story'?1000:640;c.fillStyle='#cbd1d7';c.font='26px "Microsoft JhengHei",serif';c.fillText(`${show&&r.zodiac!==null?ZODIAC[r.zodiac]+'座 · ':''}${r.identity[0]}`,w/2,y);
-  c.fillStyle=r.ending.color;c.font='64px Georgia,"Microsoft JhengHei",serif';c.fillText(r.ending.title,w/2,y+110);
-  c.strokeStyle=r.ending.color;c.beginPath();c.moveTo(440,y+150);c.lineTo(640,y+150);c.stroke();
-  c.fillStyle='#f3e5ca';c.font='35px Georgia,"Microsoft JhengHei",serif';wrap(c,r.ending.quote,540,y+220,800,57);
-  c.fillStyle='#aebccf';c.font='26px "Microsoft JhengHei",sans-serif';wrap(c,r.ending.question,540,y+370,820,44);
-  c.fillStyle='#dfc994';c.font='25px "Microsoft JhengHei",sans-serif';c.fillText('你的故事，尚未寫定。',540,h-192);
-  c.fillStyle='#aab6c9';c.font='20px "Microsoft JhengHei",sans-serif';c.fillText('不用登入 · 一世流轉 · 遇見不同的自己',540,h-145);
-  c.font='16px "Microsoft JhengHei",sans-serif';c.fillText(publicUrl(r.code).replace('https://',''),540,h-103);c.font='14px Georgia,serif';c.fillText('Game Producer · ミカサ   |   原創遊戲故事，非現實命運預測',540,h-66);
-  const blob=await new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('輸出失敗')),'image/png'));cardFile=new File([blob],`星穹旅誌-${r.ending.title}-${format}.png`,{type:'image/png'});
-  if(previewUrl)URL.revokeObjectURL(previewUrl);previewUrl=URL.createObjectURL(blob);const img=el('img','fate-preview');img.src=previewUrl;img.alt=`${r.ending.title}分享名帖預覽`;document.getElementById('fate-preview').replaceChildren(img);status.textContent='名帖已完成。先看預覽，再分享或儲存。';
- }catch{status.textContent='圖卡暫時沒有完成，可重試或先複製旅章連結。'}finally{busy=false}
-}
-function wrap(c,text,x,y,max,line){let row='';for(const char of text){if(c.measureText(row+char).width>max){c.fillText(row,x,y);row=char;y+=line}else row+=char;}if(row)c.fillText(row,x,y)}
-async function shareCard(){const s=document.getElementById('fate-status');if(!cardFile){s.textContent='請先製作旅人名帖，確認預覽後再分享。';return}try{const data={files:[cardFile],title:'星穹旅誌 · 命運旅章'};if(navigator.canShare?.(data)){await navigator.share(data);s.textContent='已交給裝置的分享選單。'}else{s.textContent='此裝置未提供圖片分享選單，請先儲存圖片，再到 IG 或 Threads 上傳。'}}catch(e){if(e.name!=='AbortError')s.textContent='分享未完成，圖片仍在，請嘗試儲存。'}}
-function saveCard(){const s=document.getElementById('fate-status');if(!cardFile||!previewUrl){s.textContent='請先製作旅人名帖。';return}const a=el('a');a.href=previewUrl;a.download=cardFile.name;document.body.append(a);a.click();a.remove();s.textContent='已請裝置儲存圖片；若 TG 未提供下載，可長按上方名帖另存。'}
 document.addEventListener('visibilitychange',()=>{if(!media)return;if(document.hidden)media.pause();else media.play().catch(()=>{})});
 window.addEventListener('pagehide',dispose);
 if(result){stage='result';showSign=result.zodiac!==null;}
@@ -234,7 +204,7 @@ async function syncCloud(full=false,initial=false){
  if(data.active){soul.draft=data.active.draft;currentLife=validLife(data.active.draft);if(initial&&!result&&stage==='intro')stage='life';}
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
  const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
- if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after||stage==='result'&&oldId){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
+ if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }
 function cloudDisplayLife(){if(!cloud?.active)return currentLife;const d=cloud.active.draft;return {...d,clockAt:Math.max(d.clockAt,Math.min(cloudNow(),cloud.active.nextAt?cloud.active.nextAt-1:cloudNow()))};}

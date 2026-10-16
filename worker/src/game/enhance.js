@@ -7,13 +7,16 @@ import { GameError } from './classes.js';
 
 export const scrollFor = (item) => (item.slot === 'weapon' ? 'scroll_w' : 'scroll_a');
 export const blessedScrollFor = (item) => (item.slot === 'weapon' ? 'blessed_scroll_w' : 'blessed_scroll_a');
+export const guaranteedScrollFor = (item) => (item.slot === 'weapon' ? 'guaranteed_scroll_w' : 'guaranteed_scroll_a');
 export const scrollCost = (item) => Math.max(1, Number(item.tier) || 1);
 export const safeLimit = (item) => (item.slot === 'weapon' ? ENHANCE.safe.weapon : ENHANCE.safe.armor);
 /** odds for the NEXT attempt */
-export function enhanceOdds(item, blessed = false) {
+export function enhanceOdds(item, blessed = false, guaranteed = false) {
+  if (blessed && guaranteed) throw new GameError('scroll_mode', '祝福卷與必成卷只能擇一使用');
   const lvl = item.enhance_level || 0;
   if (lvl >= ENHANCE.max) return null;
   const safe = lvl < safeLimit(item);
+  if (guaranteed) return {success:1,nothing:0,break:0,safe,guaranteed:true};
   const success = (safe ? ENHANCE.safeSuccess : ENHANCE.overSuccess) + (blessed ? 0.10 : 0);
   const breaking = safe ? 0 : ENHANCE.overBreak;
   return { success, nothing: Math.max(0, 1 - success - breaking), break: breaking, safe, ...(blessed ? { blessed: true } : {}) };
@@ -24,10 +27,10 @@ function pay(inv, key, n) {
 }
 
 /** one attempt. result: success | nothing | break (item must then be deleted by the caller) */
-export function enhance(item, inv, rng, blessed = false) {
-  const odds = enhanceOdds(item, blessed); if (!odds) throw new GameError('max', `已經 +${ENHANCE.max}（上限）`);
-  const key = blessed ? blessedScrollFor(item) : scrollFor(item);
-  const used = pay(inv, key, blessed ? 1 : scrollCost(item)); const from = item.enhance_level || 0; const r = rng();
+export function enhance(item, inv, rng, blessed = false, guaranteed = false) {
+  const odds = enhanceOdds(item, blessed, guaranteed); if (!odds) throw new GameError('max', `已經 +${ENHANCE.max}（上限）`);
+  const key = guaranteed ? guaranteedScrollFor(item) : blessed ? blessedScrollFor(item) : scrollFor(item);
+  const used = pay(inv, key, blessed || guaranteed ? 1 : scrollCost(item)); const from = item.enhance_level || 0; const r = guaranteed ? 0 : rng();
   let result;
   if (r < odds.success) { result = 'success'; item.enhance_level = from + 1; }
   else if (r < odds.success + odds.break) result = 'break';

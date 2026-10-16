@@ -1,0 +1,58 @@
+四世星輝匣：後端接手說明（2026-10-16）
+
+正式發布狀態只看 docs/deployment 收據及即時 Cloudflare。本文件不是發布證明。
+
+規則
+- 每個角色各自以 rpg_fate_lives.status='complete' 累計；每滿4世可領1匣。
+- 開始中的人生、訪客預覽、公開分享碼、rpg_fate_memorials 匯入都不算。
+- 上一版已有的正式完成人生也符合條件；沒有重置既有玩家資料。
+- 一次最多補領25匣；更多累積仍保留，回傳 remaining，下一次可接續領取。
+- 尚未領取是權威可領額度；領取後入背包 fate_cycle_gift，開啟才消耗。
+- 每匣獎池：5% guaranteed_scroll_w×1、5% guaranteed_scroll_a×1、90% scroll_w×2 + scroll_a×2。
+- GIFT_POOL 單點配置；權重整數合計100，前端從 summary 讀取揭露，不能傳入獎品或機率。
+- 使用 crypto.getRandomValues，API客戶端不能注入 RNG；測試函式參數只供內部測試。
+
+服務 worker/src/services/fate-gifts.js
+- summary(env,charId) -> {ok,name,item,interval,completed,earned,claimable,unopened,opened,nextIn,pool}
+- claim(env,charId,{requestId},now) -> {ok,result:{claimed,giftIds,remaining},replayed?}
+- open(env,charId,{requestId,giftId?},now) -> {ok,result:{giftId,milestone,reward,items},replayed?}
+- 不傳 giftId 時選同角色尚未開啟的最低 milestone；重試相同 requestId 只回原結果，絕不開下一匣。
+- summary 不更動資料；route與主畫面整合由主代理負責。必須先經既有 MiniApp HMAC / selectedCharacterId 驗證再呼叫。
+
+安全及資料
+- 0027_fate_gifts.sql 僅新增 rpg_fate_gifts、rpg_fate_gift_operations 兩表及查詢索引。
+- 正式 migration 必須只套新0027，不能順便重跑所有歷史migration。
+- UNIQUE(char_id,milestone) 避免補領兩次。
+- 開匣 CAS status='claimed'、扣1匣、給獎、流水、角色rev增量、操作收據在同一D1 batch。
+- 缺匣或任何寫入失敗時整批回滾；角色rev增量讓舊 withPlayer 快照不能覆蓋背包變動。
+- 操作收據綁定帳號、角色、動作與排序後body雜湊。相同UUID不同動作/角色/body回409。
+- fate_cycle_gift 與兩種必成卷的 ITEMS.tradeable=false，TRADE 及交易所共用的清單會排除；無商店售價。
+
+真正100%強化
+- game/enhance.js 增加可選第五參數 guaranteed；enhanceOdds 第三參數同名。
+- services/player.js doEnhance 接受 {guaranteed:true}，與 blessed:true 互斥。
+- 根路由必須將 guaranteed:b.guaranteed===true 傳給 doEnhance。
+- 武器消耗 guaranteed_scroll_w×1；所有非武器裝備與飾品消耗 guaranteed_scroll_a×1。
+- 不骰 RNG，不會爆裝，一次升1級；原強化上限 ENHANCE.max 仍有效。
+- 缺卷不能金幣補購。普通/祝福強化即使持有必成卷，也不會自動消耗。
+- auto-enhance/start 明確拒絕 guaranteed，避免不支援旗標被默默忽略而花普通卷。UI選必成時只允許手動一次。
+- 必成卷名稱：星輝武器必成卷 / 星輝防具必成卷。
+
+驗證
+- Node24執行 worker/test/fate-gifts.test.js 與 guaranteed-scroll.test.js。
+- 覆蓋真兩小時×4正式完成、角色隔離、分享不算、25匣補領、門檻與機率邊界、不同UUID及相同UUID併發、回應遺失重播、原子回滾。
+- 九裝備部位與每個0至強化上限前一級都測100%成功、1張消耗、不呼叫RNG、不能越過上限、不能混祝福、不能誤用卷種。
+- 其他已驗：fate-service、enhance-notice、market-exchange-review、blessed-scroll、blessed-api、auto-enhance。
+- 已接 /app/api/fate/gifts/summary、claim、open；16項 gift 測試含真HMAC、防偽角色、過期角色畫面409、必填UUID、API重播與手動必成flag確實透傳；另12項 guaranteed 測試皆通過。
+- UI與正式發布驗收另由root記錄，不能把服務測試當作手機驗收。
+
+角色卡與領取介面
+- mythic-ui.js heroStats 在角色卡底部建立 data-fate-cycles，未取得伺服器資料時顯示「輪迴 · 載入中」，不能用本機紀錄充當正式0世。
+- fate-entry.js compose 使用正式 fate/me.completed 填數，並讀 fate/gifts/summary 顯示可領、持有、距下匣。
+- /fate/fate-gift-ui.js 動態載入；openFateGift(window.RpgFateHost) 可由角色卡或背包入口共用。
+- /fate/fate-gift-ui.css 由根 index 統一加link，JS不需script include。
+- 真實精美寶箱復用 /art/ui/command-collect-20261012.webp，非emoji；獎勵圖沿用已製作的普通/祝福黃邊卷軸，必成結果明示100%。
+- 領取和開一匣是分開的兩個按鈕。所有機率由伺服器summary.pool呈現，沒有前端獎池參數。
+- uncertain操作UUID分角色/動作留在記憶體與localStorage（沒有Token）；重試、關閉重開保持相同UUID，成功才清掉。
+- 角色在操作期間切換：請求前和回應後檢查角色，視窗400ms本機檢查禁舊操作，不增加網路輪詢。
+- 9項 UI /控制器測試見 fate-gift-ui.test.js，包含原生DOM模擬操作、重試與角色切換，以及真正執行首頁compose，確認只讀completed而非旅誌/匯入數；真手機視覺由root另外驗收。

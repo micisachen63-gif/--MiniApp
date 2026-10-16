@@ -363,7 +363,8 @@ export async function latestReport(db, tgId) {
 }
 
 /** 強化: one attempt; a break deletes the item. weapon +8 / armor & accessories +6 success or existing-level break → group announcement via outbox */
-export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, requestId, blessed = false }, rng = rngDefault()) {
+export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, requestId, blessed = false, guaranteed = false }, rng = rngDefault()) {
+  if(typeof blessed!=='boolean'||typeof guaranteed!=='boolean'||(blessed&&guaranteed))throw new GameError('scroll_mode','請選擇普通、祝福或必成其中一種強化卷');
   if(lockedEquipment.includes(itemId))throw new GameError('auto_active','這件裝備正在背景強化，請先停止強化',409);
   if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
   const i = work.equipment.findIndex((e) => e.id === itemId); if (i < 0) throw new GameError('not_found', '找不到這件裝備');
@@ -371,16 +372,16 @@ export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, reques
   if (item.trade_id) throw new GameError('in_trade', '交易中的裝備不能強化');
   // Buy any missing scrolls and enhance in the same player transaction. This avoids
   // a race between the old client-side buy-then-enhance pair of requests.
-  const key = blessed ? (item.slot === 'weapon' ? 'blessed_scroll_w' : 'blessed_scroll_a') : (item.slot === 'weapon' ? 'scroll_w' : 'scroll_a');
-  const need = blessed ? 1 : Math.max(1, Number(item.tier) || 1); const have = work.inv[key] || 0; const missing = Math.max(0, need - have);
-  if (blessed && missing) throw new GameError('no_scroll', `需要「${ITEMS[key].name}」×1（目前有 ${have}）`);
-  const goldCost = blessed ? 0 : missing * ITEMS[key].price;
+  const key = guaranteed ? (item.slot === 'weapon' ? 'guaranteed_scroll_w' : 'guaranteed_scroll_a') : blessed ? (item.slot === 'weapon' ? 'blessed_scroll_w' : 'blessed_scroll_a') : (item.slot === 'weapon' ? 'scroll_w' : 'scroll_a');
+  const need = blessed || guaranteed ? 1 : Math.max(1, Number(item.tier) || 1); const have = work.inv[key] || 0; const missing = Math.max(0, need - have);
+  if ((blessed || guaranteed) && missing) throw new GameError('no_scroll', `需要「${ITEMS[key].name}」×1（目前有 ${have}）`);
+  const goldCost = blessed || guaranteed ? 0 : missing * ITEMS[key].price;
   if ((work.char.gold || 0) < goldCost) throw new GameError('gold', `金幣不足：還需要 ${goldCost.toLocaleString()}（目前有 ${(work.char.gold || 0).toLocaleString()}）才能購買強化卷`);
   if (missing) {
     work.char.gold -= goldCost;
     work.inv[key] = have + missing;
   }
-  const r = enhance(item, work.inv, rng, blessed);
+  const r = enhance(item, work.inv, rng, blessed, guaranteed);
   if (r.result === 'break') work.equipment.splice(i, 1);
   const tg = String(work.char.tg_id); const eid = eventId('enhance', tg, requestId);
   const extra = [];
@@ -392,7 +393,7 @@ export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, reques
   if (r.result !== 'break') { const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp); }
   const ledger = [];
   if (missing) ledger.push({ event_id: eventId('buy-enhance-scroll', tg, requestId), tg_id: tg, type: '商店購買', gold_delta: -goldCost, item: key, item_delta: missing, note: `${ITEMS[key].name}（強化時補購）` });
-  ledger.push({ event_id: eid, tg_id: tg, type: blessed ? '祝福強化' : '強化', item: key, item_delta: -r.used[key], note: `${name} +${r.from}→${r.result === 'break' ? '爆裝' : `+${r.to}`}${blessed ? '（祝福成功率 +10%）' : ''}` });
+  ledger.push({ event_id: eid, tg_id: tg, type: guaranteed ? '星輝必成強化' : blessed ? '祝福強化' : '強化', item: key, item_delta: -r.used[key], note: `${name} +${r.from}→${r.result === 'break' ? '爆裝' : `+${r.to}`}${guaranteed ? '（100% 成功）' : blessed ? '（祝福成功率 +10%）' : ''}` });
   return { ledger, extra, result: { ...r, itemId, itemName: name, goldCost } };
 }
 /** 洗屬性: auto-buys missing scroll_r in the same transaction if gold allows */

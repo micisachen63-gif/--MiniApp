@@ -64,5 +64,32 @@
         "sha256": "66054e6ea10fe9c041d3c9a10b3d7ae1b44eefe6919a07c79c164a2321f19675"
       }
     ]
+  },
+  "share_jpeg_derivatives": {
+    "date": "2026-10-16",
+    "source": "Existing original fate-ending WebP artwork; format conversion only for Telegram InlineQueryResultPhoto JPEG contract. No new model service or subscription.",
+    "license": "Original commissioned game assets; jpeg-js 0.4.4 BSD-3-Clause notice in worker/public/fate/third-party-notices.txt",
+    "files": [
+      {
+        "file": "worker/public/art/fate-ending-20261016/atelier.jpg",
+        "bytes": 632015,
+        "sha256": "fd7f55c404e27d2a3a9bed62350411a2131c6e2421730f24c3e3fd563da5d34c"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/garden.jpg",
+        "bytes": 637622,
+        "sha256": "684a4799bc33c72257e932e21918ff6165942fff0afa5592e648d33a1e7a902a"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/harbor.jpg",
+        "bytes": 687154,
+        "sha256": "a181a3cb59d7474768c974365d1e66dd6f813565ac5e1db5cc207ec8a7bb4cfe"
+      },
+      {
+        "file": "worker/public/art/fate-ending-20261016/voyage.jpg",
+        "bytes": 620726,
+        "sha256": "33e884d93c5418393198977edc2443b91f02bd8aa84aaade0918464f1700b030"
+      }
+    ]
   }
 }

@@ -2,6 +2,7 @@ import {hash,worldYear,almanac,REGIONS} from './world.js';
 import {LEGACY_MEMORIES} from './formal-ambient-v4.js';
 import {CAREERS,THREADS,OBJECTS,NEW_MEMORIES} from './formal-catalog-v4.js';
 import {FURTHER_MEMORIES} from './formal-days-v4.js';
+import {socialThread,validSocialCast,SOCIAL_FICTION_NOTE} from './social-cast.js';
 
 export const NARRATIVE_VERSION=4;
 export const EVENT_INTERVAL_MS=30000;
@@ -130,7 +131,7 @@ export function narrativeProfile(life={}){
  const seed=seedOf(life),orbit=Number.isInteger(life.orbit)&&life.orbit>=0&&life.orbit<12?life.orbit:11;
  const rank=(items,tag)=>[...items].sort((a,b)=>hash(seed+tag+a.id)-hash(seed+tag+b.id));
  const primaryThread=THREADS[byte(seed,1)%THREADS.length],primaryObject=OBJECTS[byte(seed,2)%OBJECTS.length];
- return {seed,orbit,region:REGIONS[(byte(seed,3)+orbit)%REGIONS.length],career:CAREERS[byte(seed,0)%CAREERS.length],threads:[primaryThread,...rank(THREADS,'people').filter(t=>t!==primaryThread).slice(0,3)],objects:[primaryObject,...rank(OBJECTS,'objects').filter(o=>o!==primaryObject).slice(0,2)]};
+ return {seed,orbit,region:REGIONS[(byte(seed,3)+orbit)%REGIONS.length],career:CAREERS[byte(seed,0)%CAREERS.length],threads:[primaryThread,...rank(THREADS,'people').filter(t=>t!==primaryThread).slice(0,3)].map(thread=>socialThread(thread,life.socialCast)),objects:[primaryObject,...rank(OBJECTS,'objects').filter(o=>o!==primaryObject).slice(0,2)]};
 }
 
 export function plannedContent(life={},options={}){
@@ -139,7 +140,7 @@ export function plannedContent(life={},options={}){
  const answers=Array.isArray(life.answers)?life.answers.slice(0,3):[],used=new Set(),rows=[],state={energy:65,knowledge:15,wealth:36,bonds:24,reputation:10};
  const progress=new Map(),worldSeen=new Set(),scenes=formalScenes(life);
  const push=(id,age,text,kind,delta={},extra={})=>{if(used.has(id))throw Error('Duplicate narrative id '+id);used.add(id);for(const k of Object.keys(state))state[k]=clamp(state[k]+(delta[k]||0));rows.push({id,age,text,worldYear:worldYear(seed,age),kind,state:{...state},...extra});};
- push('v4-birth-'+orbit,0,`${origins[orbit]}這是架空的星曆${worldYear(seed)}年，家在${profile.region}；此世的生活餘裕與聲望只屬於故事，不增減實際RPG金幣或戰力。`,'birth');
+ push('v4-birth-'+orbit,0,`${origins[orbit]}這是架空的星曆${worldYear(seed)}年，家在${profile.region}；此世的生活餘裕與聲望只屬於故事，不增減實際RPG金幣或戰力。${validSocialCast(life.socialCast)?SOCIAL_FICTION_NOTE:''}`,'birth');
  // Schedule chain chapters in age order; all prerequisites are replayed, never inferred from the ending.
  const scheduled=new Map(RESOLVED_AGES.map(a=>[Math.ceil(a/.375),null]));
  const schedule=(tick,item)=>{while(scheduled.has(tick))tick++;if(tick<=240)scheduled.set(tick,item);};

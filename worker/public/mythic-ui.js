@@ -71,6 +71,7 @@
     const weapon = labels.find(([key]) => key === s.element)?.[1] || '無';
     detail.append(node('span', '', '武器屬攻：'+weapon+' +'+fmt(s.weaponElem||0)+' · 屬抗減傷上限 40%'), node('span', '', '受傷倍率 ×' + fmt(s.taken)));
     profile.append(stats, elements, detail);
+    const cycles=node('div','my-fate-cycles'),cycleText=node('span','','輪迴 · 載入中');cycleText.setAttribute('data-fate-cycles','');cycles.append(cycleText);profile.append(cycles);
     const identity = profile.querySelector('.cls');
     if (identity) {
       const level = identity.querySelector('.lv');

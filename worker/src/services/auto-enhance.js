@@ -23,6 +23,7 @@ const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_cha
 export const jobView=j=>j?{id:j.id,itemId:j.item_id,itemName:j.item_name,characterId:j.tg_id,ownerAccountId:j.owner,dismissed:!!j.notice_dismissed_at,target:j.target,blessed:!!j.blessed,status:j.status,reason:j.reason,level:j.level,attempts:j.attempts,spentGold:j.spent_gold,spentScrolls:j.spent_scrolls,updatedAt:j.updated_at,nextAt:j.next_at,intervalMs:INTERVAL_MS}:null;
 export async function view(env,tg){const owner=await ownerOf(env.DB,tg);return jobView(await env.DB.prepare("SELECT j.*,n.created_at AS notice_dismissed_at FROM rpg_auto_enhance j LEFT JOIN rpg_notice_dismissals n ON n.account_tg_id=j.owner AND n.kind='auto_enhance_end' AND n.ref_id=j.id WHERE j.owner=? ORDER BY CASE WHEN j.status='running' THEN 0 ELSE 1 END,j.created_at DESC,j.rowid DESC LIMIT 1").bind(owner).first());}
 export async function start(env,tg,b,now){
+ if(b.guaranteed!==undefined&&b.guaranteed!==false)throw new GameError('scroll_mode','星輝必成卷請於鍛造介面手動選用，不支援背景消耗');
  const db=env.DB, p=await loadPlayer(db,tg);if(!p)throw new GameError('no_character','還沒有角色');
  const owner=p.char.account_tg_id||String(tg),existing=await db.prepare("SELECT * FROM rpg_auto_enhance WHERE owner=? AND status='running'").bind(owner).first();
  if(existing){if(existing.item_id===String(b.itemId)&&existing.target===Number(b.target)&&existing.blessed===Number(b.blessed===true))return {ok:true,job:jobView(existing)};throw new GameError('auto_active','請先停止目前的背景強化');}

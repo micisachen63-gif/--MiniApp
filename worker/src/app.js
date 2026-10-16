@@ -18,6 +18,7 @@ import {nodeFor} from './game/stats.js';
 import {lineageNodes} from './game/lineage.js';
 
 export const APP_ACTIONS = Object.freeze({
+  'fate/gifts/summary':'/rpg/fate/gifts/summary','fate/gifts/claim':'/rpg/fate/gifts/claim','fate/gifts/open':'/rpg/fate/gifts/open',
   'fate/me':'/rpg/fate/me','fate/state':'/rpg/fate/state','fate/history':'/rpg/fate/history',
   'fate/start':'/rpg/fate/start','fate/choice':'/rpg/fate/choice','fate/keep':'/rpg/fate/keep',
   'fate/daily':'/rpg/fate/daily','fate/profile':'/rpg/fate/profile',
@@ -113,6 +114,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   let body = {};
   try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
   const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;
+  if(['fate/gifts/claim','fate/gifts/open'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/start','fate/choice','fate/keep','fate/profile/save','fate/profile/delete'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['guardian/summon','guardian/fuse','guardian/activate','guardian/lock','guardian/unbind','guardian/share','guardian/assist','guardian/shop/sell'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   const compatibility=monsterArtCompatibility(action,request.headers.get('X-Monster-Art-Revision'));

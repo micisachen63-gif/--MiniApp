@@ -36,7 +36,7 @@ test('daily task boundary uses Taipei midnight rather than the browser locale',(
 });
 test('public story OG is readable without login, DB access or player info, existing private API remains protected',async()=>{
  const env={SERVICE_SECRET:'fixture-only-long-enough',DB:new Proxy({},{get(){assert.fail('public page touched DB')}})},code=encodeResult(base);
- const r=await handle(new Request('https://fixture/fate/r/'+code),env);assert.equal(r.status,200);const html=await r.text();assert.match(html,/og:title/);assert.match(html,/織星同行者/);assert.match(html,/journey.*share|share.jpg/);assert.ok(!html.includes('tg_id'));assert.ok(!html.includes('fixture-only'));assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'self'/);
+ const r=await handle(new Request('https://fixture/fate/r/'+code),env);assert.equal(r.status,200);const html=await r.text();assert.match(html,/og:title/);assert.match(html,/織星同行者/);assert.ok(html.includes('https://star-journal-rpg-bot.micisachen.workers.dev/fate-card/'+code+'/post.jpg'));assert.match(html,/og:image:width[^>]+1080/);assert.match(html,/og:image:height[^>]+1350/);assert.ok(!html.includes('tg_id'));assert.ok(!html.includes('fixture-only'));assert.match(r.headers.get('content-security-policy'),/frame-ancestors 'self'/);
  assert.equal((await handle(new Request('https://fixture/fate/r/no'),env)).status,404);
  assert.equal(await(await handle(new Request('https://fixture/fate/r/no',{method:'HEAD'}),env)).text(),'');
  assert.equal((await handle(new Request('https://fixture/fate/r/'+code,{method:'POST'}),env)).status,405);

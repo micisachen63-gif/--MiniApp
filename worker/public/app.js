@@ -186,7 +186,7 @@
   const FAM = { sword: 'plate', archer: 'leather', mage: 'cloth', thief: 'leather' };
   const ARMOR_ART = { armor: { plate: 'arm_plate', leather: 'arm_leather', cloth: 'arm_robe' }, helmet: { plate: 'helm_plate', leather: 'helm_leather', cloth: 'helm_cloth' },
     gloves: { plate: 'gloves_plate', leather: 'gloves_leather', cloth: 'gloves_cloth' }, boots: { plate: 'boots_plate', leather: 'boots_leather', cloth: 'boots_cloth' } };
-  const ITEM_ART = (k) => (/^(red|blue)_\d$/.test(k) ? `item_potion_${k}` : { scroll_w: 'item_scroll_weapon', scroll_a: 'item_scroll_armor', blessed_scroll_w: 'item_scroll_blessed_weapon', blessed_scroll_a: 'item_scroll_blessed_armor', scroll_r: 'item_scroll_reroll', unbind: 'item_scroll_unbind', ward: 'item_guardian', gold: 'item_gold',
+  const ITEM_ART = (k) => (/^(red|blue)_\d$/.test(k) ? `item_potion_${k}` : { scroll_w: 'item_scroll_weapon', scroll_a: 'item_scroll_armor', blessed_scroll_w: 'item_scroll_blessed_weapon', blessed_scroll_a: 'item_scroll_blessed_armor', guaranteed_scroll_w: 'item_scroll_blessed_weapon', guaranteed_scroll_a: 'item_scroll_blessed_armor', scroll_r: 'item_scroll_reroll', unbind: 'item_scroll_unbind', ward: 'item_guardian', gold: 'item_gold',
     reselect_1: 'item_fate_book', reselect_2: 'item_fate_book', reselect_3: 'item_fate_book', mat_1: 'item_mat1', mat_2: 'item_mat2', mat_3: 'item_mat3', mat_4: 'item_mat4' }[k] || null);
   const GEAR_NAME_ART = {
     // T1 月桂階 (19 件全套)
@@ -370,6 +370,8 @@
   const myHeroKey = () => { const c = S.me ? S.me.character : {}; return heroKey(c.baseClass, c.gender, c.classPath); };
   const SINGLE_ELF4 = /^adv4_archer_(A11[12]|A12[12]|A21[12])_[fm]$/;
   function artFile(kind, key) {
+    if(kind==='item'&&key==='fate_cycle_gift')return '/art/ui/command-collect-20261012.webp';
+    if(kind==='item'&&/^guaranteed_scroll_[wa]$/.test(key))return `art/items-scrolls-cutout-20261011/${key.replace('guaranteed_','blessed_')}.webp`;
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
     if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
@@ -525,7 +527,7 @@
     R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
     for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261016-advanced-armory1', 'olympus-unified.css?v=20261016-create-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
   }
-  const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${String(k).startsWith('blessed_scroll_')?'class="blessed-scroll-icon"':''} alt="${collectionArt?esc(itemName(k)):''}" loading="lazy">` : fallback; };
+  const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${/^(blessed|guaranteed)_scroll_/.test(String(k))?'class="blessed-scroll-icon"':''} alt="${collectionArt||String(k).startsWith('guaranteed_scroll_')?esc(itemName(k)):''}" loading="lazy">${String(k).startsWith('guaranteed_scroll_')?'<small class="tc-legendary">必成100%</small>':''}` : fallback; };
   const gearIcon = (g, fallback) => { if(g?.slot==='weapon'&&g.classReq==='thief')fallback='🗡️'; const src = artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy" decoding="async">` : fallback; };
   function characterPortrait(c){return artSrc('hero',heroKey(c.baseClass,c.gender,c.classPath));}
   function portraitHtml(id, cls, gender) { const c = S.me ? S.me.character : {}; const key = cls ? heroKey(cls, gender || c.gender) : myHeroKey(); const src = characterPortrait(cls?{baseClass:cls,gender:gender||c.gender,classPath:''}:c); return src ? `<img class="portrait" id="${id}" src="${src}" alt="">` : `<canvas class="portrait" id="${id}"></canvas>`; }
@@ -582,7 +584,7 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
     try {
@@ -1018,18 +1020,24 @@
   let autoPollBusy=false,autoPollAt=0;
   setInterval(async()=>{const viewing=!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||!(S.backgroundJobs||[]).some(x=>x.job.status==='running')||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))void refreshMe({silent:true});}catch(_){}finally{autoPollBusy=false;}},3000);
   function forgeFailure(e,message,onReturn){const ov=$('#forge');if(!ov)return;window.RpgForgeRitual?.dispose?.();ov.classList.remove('charging','dragging','waiting');ov.querySelector('.fr-instruction')?.replaceChildren(document.createTextNode('本次操作已停止'));const box=ov.querySelector('.fg-box');if(!box){ov.hidden=true;$('#app').inert=false;return;}let buttons=ov.querySelector('.fg-b');if(!buttons){buttons=document.createElement('div');buttons.className='fg-b';box.append(buttons);}const text=ov.querySelector('.fg-r');if(text)text.textContent=message||S.forgeError||'操作未完成，請確認裝備狀態後再試。';buttons.innerHTML='<button class="btn ghost" data-forge-exit>返回裝備</button>';buttons.querySelector('button').onclick=()=>{ov.hidden=true;$('#app').inert=false;refreshMe();if(S.me?.equipment.some(x=>x.id===e.id)){if(onReturn)onReturn();else itemSheet(e.id);}};ov.querySelector('.fr-auto')?.setAttribute('hidden','');}
-  async function forge(e,kind,run,blessed=false,autoTarget=null){try{return await forgeRun(e,kind,run,blessed,autoTarget)}catch(err){forgeFailure(e,err.message);return null}}
-  async function forgeRun(e, kind, run, blessed = false, autoTarget = null) {
+  const guaranteedScrollKey=e=>e.slot==='weapon'||e.scroll==='scroll_w'?'guaranteed_scroll_w':'guaranteed_scroll_a';
+  async function forge(e,kind,run,blessed=false,autoTarget=null,guaranteed=false){try{return await forgeRun(e,kind,run,blessed,autoTarget,guaranteed)}catch(err){forgeFailure(e,err.message);return null}}
+  async function forgeRun(e, kind, run, blessed = false, autoTarget = null, guaranteed = false) {
     const session=++forgeSession;
     let ov = $('#forge'); if (!ov) { ov = document.createElement('div'); ov.id = 'forge'; document.body.appendChild(ov); }
     ov.className = `forge ${kind} charging`; ov.hidden = false;
     ov.innerHTML = `<div class="fg-box"><div class="fg-ring"></div><div class="fg-ic ic rar-${esc(e.rarity)}">${eqIcon(e)}${e.enhance ? `<em>+${e.enhance}</em>` : ''}</div>
       <div class="fg-t">${kind === 'enhance' ? `強化中… +${e.enhance} → +${e.enhance + 1}` : '洗屬性中…'}</div><div class="fg-r"></div><div class="fg-s"></div><div class="fg-b"></div></div>`;
-    if(kind==='enhance'&&window.RpgForgeRitual){const a=attemptCost(e,e.scroll);const key=blessed?e.blessedScroll:e.scroll;const summary=`${itemName(key)} ×${blessed?1:e.scrollCost} · 持有 ${S.me.inventory[key]||0}${!blessed&&a.miss?'\n缺卷補購 '+a.miss+' 張 · 扣金幣 '+fmt(a.gold):''}`;const ready=await window.RpgForgeRitual.prepare(ov,e,eqIcon(e),blessed,{summary,autoTarget,choose:true,ordinaryAffordable:a.ok,ordinaryHave:S.me.inventory[e.scroll]||0,blessedHave:S.me.inventory[e.blessedScroll]||0,ordinarySummary:`${itemName(e.scroll)} ×${e.scrollCost} · 持有 ${S.me.inventory[e.scroll]||0}${a.miss?'\n缺卷補購 '+a.miss+' 張 · 扣金幣 '+fmt(a.gold):''}`,blessedSummary:`${itemName(e.blessedScroll)} ×1 · 持有 ${S.me.inventory[e.blessedScroll]||0}`});if(session!==forgeSession)return null;if(ready?.ready){blessed=ready.blessed;autoTarget=ready.autoTarget||null;}if(!ready){ov.hidden=true;itemSheet(e.id);return null;}}
+    if(kind==='enhance'&&window.RpgForgeRitual){const a=attemptCost(e,e.scroll),key=guaranteed?guaranteedScrollKey(e):blessed?e.blessedScroll:e.scroll;
+      const summary=`${itemName(key)} ×${guaranteed||blessed?1:e.scrollCost} · 持有 ${S.me.inventory[key]||0}${guaranteed?'\n必成100% · 只使用一張，不啟動背景強化':!blessed&&a.miss?'\n缺卷補購 '+a.miss+' 張 · 扣金幣 '+fmt(a.gold):''}`;
+      const guaranteedKey=guaranteedScrollKey(e);
+      const ready=await window.RpgForgeRitual.prepare(ov,e,eqIcon(e),blessed,{summary,autoTarget:guaranteed?null:autoTarget,choose:true,guaranteed,guaranteedKey,guaranteedName:itemName(guaranteedKey),guaranteedHave:S.me.inventory[guaranteedKey]||0,guaranteedArt:artSrc('item',guaranteedKey),guaranteedSummary:`${itemName(guaranteedKey)} ×1 · 持有 ${S.me.inventory[guaranteedKey]||0}\n必成100% · 只使用一張，不啟動背景強化`,ordinaryAffordable:a.ok,ordinaryHave:S.me.inventory[e.scroll]||0,blessedHave:S.me.inventory[e.blessedScroll]||0,ordinarySummary:`${itemName(e.scroll)} ×${e.scrollCost} · 持有 ${S.me.inventory[e.scroll]||0}${a.miss?'\n缺卷補購 '+a.miss+' 張 · 扣金幣 '+fmt(a.gold):''}`,blessedSummary:`${itemName(e.blessedScroll)} ×1 · 持有 ${S.me.inventory[e.blessedScroll]||0}`});
+      if(session!==forgeSession)return null;if(ready?.ready){guaranteed=ready.guaranteed===true;blessed=!guaranteed&&ready.blessed;autoTarget=guaranteed?null:ready.autoTarget||null;}if(!ready){ov.hidden=true;itemSheet(e.id);return null;}}
+    if(guaranteed){blessed=false;autoTarget=null;}
     if(kind==='enhance'&&autoTarget)return startAuto(e,blessed,autoTarget);
     if(kind!=='enhance')haptic('light'); let spin = 0; const keys = Object.keys(ELEM);
     const iv = kind === 'reroll' ? setInterval(() => { const el = ov.querySelector('.fg-r'); if (el) el.textContent = ELEM[keys[spin++ % keys.length]]; }, 90) : 0;
-    const [j] = await Promise.all([kind==='enhance'?act('enhance',{itemId:e.id,...(blessed?{blessed:true}:{})}):run(), new Promise((r) => setTimeout(r, reducedMotion() ? 150 : 900))]); clearInterval(iv);
+    const [j] = await Promise.all([kind==='enhance'?act('enhance',{itemId:e.id,...(guaranteed?{guaranteed:true}:blessed?{blessed:true}:{})}):run(), new Promise((r) => setTimeout(r, reducedMotion() ? 150 : 900))]); clearInterval(iv);
     if(session!==forgeSession)return null;if (!j || !j.result) { forgeFailure(e);return null; }
     const r = j.result; ov.classList.remove('charging');
     const set = (cls, title, sub) => { ov.classList.add(cls); ov.querySelector('.fg-t').innerHTML = title; ov.querySelector('.fg-r').innerHTML = sub; };
@@ -1042,13 +1050,14 @@
       haptic(r.upgraded ? 'ok' : 'light'); if (r.upgraded) sparks(ov, ['#d7a6ff', '#ffc857', '#fff'], 24);
     }
     const ne = kind==='enhance'&&r.result==='break' ? null : S.me.equipment.find((x) => x.id === e.id);
-    const again = ne && blessed ? (ne.blessedEnhanceNext && (S.me.inventory[ne.blessedScroll]||0)>0 ? {ok:true,miss:0}:null) : ne && (kind === 'reroll' ? attemptCost(ne, 'scroll_r') : ne.enhanceNext ? attemptCost(ne, ne.scroll) : null);
-    const label = again && again.ok ? (again.miss ? `再一次 · 💰${fmt(again.gold)}` : '再一次') : '';
-    ov.querySelector('.fg-s').innerHTML = `<small class="muted">💰 ${fmt(S.me.character.gold)} · ${kind === 'reroll' ? `洗屬性捲 ${S.me.inventory.scroll_r || 0}` : `${itemName(blessed ? e.blessedScroll : e.scroll)} ${S.me.inventory[blessed ? e.blessedScroll : e.scroll] || 0}`}</small>`;
-    ov.querySelector('.fg-b').innerHTML = `${label ? `<button class="btn ${kind === 'enhance' && ne.enhanceNext && ne.enhanceNext.break ? 'red' : 'green'}" data-f="again">${label}</button>` : ''}<button class="btn ghost" data-f="done">完成</button>`;
+    const again = ne && guaranteed ? (ne.enhanceNext&&(S.me.inventory[guaranteedScrollKey(ne)]||0)>0?{ok:true,miss:0}:null) : ne && blessed ? (ne.blessedEnhanceNext && (S.me.inventory[ne.blessedScroll]||0)>0 ? {ok:true,miss:0}:null) : ne && (kind === 'reroll' ? attemptCost(ne, 'scroll_r') : ne.enhanceNext ? attemptCost(ne, ne.scroll) : null);
+    const label = again && again.ok ? (guaranteed?'再用一張必成卷':again.miss ? `再一次 · 💰${fmt(again.gold)}` : '再一次') : '';
+    const usedScroll=guaranteed?guaranteedScrollKey(e):blessed?e.blessedScroll:e.scroll;
+    ov.querySelector('.fg-s').innerHTML = `<small class="muted">💰 ${fmt(S.me.character.gold)} · ${kind === 'reroll' ? `洗屬性捲 ${S.me.inventory.scroll_r || 0}` : `${itemName(usedScroll)} ${S.me.inventory[usedScroll] || 0}${guaranteed?' · 必成100% · 單次完成':''}`}</small>`;
+    ov.querySelector('.fg-b').innerHTML = `${label ? `<button class="btn ${guaranteed?'gold':kind === 'enhance' && ne.enhanceNext && ne.enhanceNext.break ? 'red' : 'green'}" data-f="again">${label}</button>` : ''}<button class="btn ghost" data-f="done">完成</button>`;
     return new Promise((res) => {
       const autoPanel=ov.querySelector('.fr-auto');
-      if(kind==='enhance'&&autoPanel){
+      if(kind==='enhance'&&autoPanel&&!guaranteed){
         const check=autoPanel.querySelector('.fr-auto-check'),select=autoPanel.querySelector('.fr-auto-target'),start=autoPanel.querySelector('.fr-auto-start');
         const available=!!(ne&&ne.enhanceNext&&again?.ok);let starting=false;
         check.disabled=!available;select.disabled=!available;
@@ -1060,7 +1069,7 @@
         };
       }
       ov.querySelectorAll('[data-f]').forEach((b) => { b.onclick = () => { ov.hidden = true; res(b.dataset.f);
-      if (b.dataset.f === 'again' && ne) (kind === 'reroll' ? doReroll : blessed ? doBlessedEnhance : doEnhance)(ne); else if (ne) itemSheet(ne.id); }; }); });
+      if (b.dataset.f === 'again' && ne) (kind === 'reroll' ? doReroll : guaranteed ? doGuaranteedEnhance : blessed ? doBlessedEnhance : doEnhance)(ne); else if (ne) itemSheet(ne.id); }; }); });
   }
   function sparks(ov, cols, n) {
     if (reducedMotion()) return; const box = ov.querySelector('.fg-box');
@@ -1082,6 +1091,7 @@
     closeSheet();
     return forge(e, 'enhance', async () => act('enhance', { itemId: e.id, blessed: true }), true);
   }
+  async function doGuaranteedEnhance(e){const key=guaranteedScrollKey(e);if(!e.enhanceNext||!(S.me.inventory[key]>0))return toast(`需要${itemName(key)} ×1`,true);closeSheet();return forge(e,'enhance',null,false,null,true);}
   async function forgeAffixes(e,locked,price,missing,gold){try{return await forgeAffixesRun(e,locked,price,missing,gold)}catch(err){forgeFailure(e,err.message,()=>doReroll(e,locked));return null}}
   async function forgeAffixesRun(e,locked,price,missing,gold) {
     const session=++forgeSession;
@@ -1222,7 +1232,7 @@
       ${e.cannotEquip ? `<div class="warnbox">${esc(e.cannotEquip)}</div>` : ''}
       <div class="grid2">
         ${e.equipped ? '<button class="btn ghost" data-a="unequip">卸下</button>' : MULTI[e.slot] ? [1, 2].map((p) => `<button class="btn" data-a="equip" data-pos="${p}" ${e.cannotEquip ? 'disabled' : ''}>裝到 ${esc(slotLabel(e.slot, p))}</button>`).join('') : `<button class="btn" data-a="equip" ${e.cannotEquip ? 'disabled' : ''}>${e.grade === 'relic' && !e.bound ? '裝備（綁定）' : '裝備'}</button>`}
-        <button class="btn ${nx && nx.break ? 'red' : 'green'}" data-a="enhance" ${nx && (ac.ok || (inv[e.blessedScroll]||0)>0) ? '' : 'disabled'}>📜 強化<small>選擇普通／祝福卷軸</small></button>
+        <button class="btn ${nx && nx.break ? 'red' : 'green'}" data-a="enhance" ${nx && (ac.ok || (inv[e.blessedScroll]||0)>0 || (inv[guaranteedScrollKey(e)]||0)>0) ? '' : 'disabled'}>📜 強化<small>選擇強化卷軸</small></button>
         <button class="btn ghost" data-a="reroll" ${e.inTrade?'disabled':''}>🎲 洗屬性<small>${e.affixes?.lines?.length||0}/${e.affixes?.slots||1} 條 · ${esc(e.affixes?.quality||'未鑑定')}</small></button>
         ${e.convertible ? '<button class="btn ghost" data-a="convert">🔄 轉換路線</button>' : ''}
         <button class="btn ghost" data-a="share" ${e.shareBlock ? 'disabled' : ''} title="${esc(e.shareBlock || '')}">📣 分享至群組</button>
@@ -1771,6 +1781,7 @@
   // 技能書：查看/學習(遠征頁)、分享到群組(expedition/share)、交易(expedition/trade)；可交易道具：到交易視窗放入；首領資源：兌換。
   // 一般道具沒有「分享到群組」、「販售給商店」的伺服器功能（商店只收裝備、羽毛），所以不顯示。
   function invItemMenu(k) {
+    if(k==='fate_cycle_gift'){import('/fate/fate-gift-ui.js').then(m=>m.openFateGift(window.RpgFateHost)).catch(()=>toast('星輝匣暫未連上，請稍後重試',true));return;}
     const have = S.me.inventory[k] || 0, isBook = k.startsWith('book_'), skillId = isBook ? k.slice(5) : null;
     const tradeable = (S.meta.trade?.tradeableItems || []).includes(k), bossRes = k === 'boss_essence' || k === 'relic_fragment';
     const meta = S.meta.items[k] || {};

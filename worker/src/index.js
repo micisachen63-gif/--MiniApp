@@ -9,6 +9,7 @@ import {bossExchange} from './services/boss-exchange.js';
 import * as SP from './services/special.js';
 import * as PARTY from './services/party.js';
 import * as JOURNAL from './services/journal.js';
+import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
 import {isOpenTime as fateIsOpenTime} from '../public/fate/life.js';
 import * as GUARDIAN from './services/guardian-sigil.js';
@@ -88,6 +89,9 @@ const routes = {
   'POST /rpg/journal': (env,b,now)=>JOURNAL.view(env,tgOf(b),now),
   'POST /rpg/journal/enroll': (env,b,now)=>JOURNAL.enroll(env,tgOf(b),now),
   'POST /rpg/fate/me': (env,b,now)=>FATE.me(env,tgOf(b),now),
+  'POST /rpg/fate/gifts/summary': (env,b)=>FATE_GIFTS.summary(env,tgOf(b)),
+  'POST /rpg/fate/gifts/claim': (env,b,now)=>FATE_GIFTS.claim(env,tgOf(b),b,now),
+  'POST /rpg/fate/gifts/open': (env,b,now)=>FATE_GIFTS.open(env,tgOf(b),b,now),
   'POST /rpg/fate/state': (env,b,now)=>FATE.state(env,tgOf(b),now),
   'POST /rpg/fate/history': (env,b,now)=>FATE.history(env,tgOf(b),b,now),
   'POST /rpg/fate/start': (env,b,now)=>FATE.start(env,tgOf(b),b,now),
@@ -148,7 +152,7 @@ const routes = {
   'POST /rpg/advance': act((w, c, b) => P.doAdvance(w, c, { branch: String(b.branch), requestId: b.requestId })),
   'POST /rpg/reselect': act((w, c, b) => P.doReselect(w, c, { tier: Number(b.tier || 1), branch: String(b.branch), requestId: b.requestId })),
   'POST /rpg/convert': act((w, c, b) => P.doConvert(w, c, { itemId: String(b.itemId) })),
-  'POST /rpg/enhance': act((w, c, b) => P.doEnhance(w, c, { itemId: String(b.itemId), requestId: b.requestId, blessed: b.blessed === true })),
+  'POST /rpg/enhance': act((w, c, b) => P.doEnhance(w, c, { itemId: String(b.itemId), requestId: b.requestId, blessed: b.blessed === true, guaranteed:b.guaranteed===true })),
   'POST /rpg/reroll': act((w, c, b) => P.doReroll(w, c, { itemId: String(b.itemId), requestId: b.requestId,locks:b.locks||[] })),
   'POST /rpg/unbind': act((w, c, b) => P.doUnbind(w, c, { itemId: String(b.itemId), requestId: b.requestId })),
   // 小精靈 calls this after its isGroupMember check, right before showing the Mini App button to a player without a character

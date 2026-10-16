@@ -13,7 +13,7 @@ export function endingForLife(life={}){
  const rows=events.length?events:plannedContent(life,{ticks:0}),last=rows.at(-1);
  const memories=rows.filter(e=>e.kind==='memory'&&e.age>=3),early=one(memories.filter(e=>e.age<18),seed+'early');
  const work=rows.filter(e=>e.kind==='career'),object=rows.filter(e=>e.kind==='object'),objectFirst=object[0],objectLast=object.filter(e=>e.thread===objectFirst?.thread).at(-1);
- const relationships=rows.filter(e=>e.kind==='relationship'),person=one(profile.threads.filter(t=>relationships.some(e=>e.thread===t.id)),seed+'person'),relation=relationships.filter(e=>e.thread===person?.id);
+ const relationships=rows.filter(e=>e.kind==='relationship'),people=profile.threads.filter(t=>relationships.some(e=>e.thread===t.id)),socialPeople=people.filter(t=>t.actor),person=one(socialPeople.length?socialPeople:people,seed+'person'),relation=relationships.filter(e=>e.thread===person?.id);
  const world=one(rows.filter(e=>e.kind==='world'&&e.worldCause!=='metric'),seed+'world');
  const consequence=one(rows.filter(e=>e.kind==='consequence'),seed+'cost');
  const choices=rows.filter(e=>e.kind==='choice'),first=choices.find(e=>e.choiceIndex===0),middle=choices.find(e=>e.choiceIndex===1),final=choices.find(e=>e.choiceIndex===2);
