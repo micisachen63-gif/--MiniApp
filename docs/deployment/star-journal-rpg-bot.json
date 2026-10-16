@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "1bc16dd63451ba361d52a015f846ac90db5fdad4",
+  "sourceCommit": "bcb9348a929145031525d2829496035cb9458721",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "5cf66003-d0a7-43fa-a54a-33b8dd98c66c",
+  "productionVersion": "f5c4ca99-6fb5-4a87-853c-2adf67622399",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T05:05:32.400Z",
+  "verifiedAt": "2026-10-16T06:34:28.559Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "a13ae1c86f298767d8b9a9403351633b807cacfe4d28e2b96397643d7b08b001"
+    "index.js": "401ed811477efc478e44994ec0f50f659fe59fddc7f35206825c3d1336b3d9e5"
   },
   "source": {
     "fileCount": 250,
-    "sha256": "d0c867d190ceded67f1c5789bc6c25067a271140dfc8039ed1538f83c0f997c2",
+    "sha256": "0c55d7e664836805b8cab20e80dbf47fc520840c77cb7bd5d77844aadabb1010",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -880,7 +880,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/cloud-bot.js",
-        "sha256": "806c8d90ec40679f33026c115e346d84b07f3b9f259d27109685a1b44d1e7a48"
+        "sha256": "510a9fd8dd88614ecb2c8d029733f8fcd157848ffdf9659f91f52b6f74f963bd"
       },
       {
         "file": "cloud-bot/src/adapter/copy-regressions.mjs",
@@ -912,7 +912,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
-        "sha256": "4475d512f5afb9f812db78ef135e6099883684b6f3b60625ec86c413d9c67111"
+        "sha256": "594b8fc3ea1d7491a16ff3c666648afe1ca1d9bc3f60b66ace2156922bdcd206"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
@@ -940,7 +940,7 @@
       },
       {
         "file": "cloud-bot/src/fate-share.js",
-        "sha256": "a5cf8bc321ec194c439cd9d2c44354bc8d9eae4fda9c077145cc235fe0a7646e"
+        "sha256": "2370598ca2e004ccb7427265ab0576b82905f869839ccb4d3ae31ed650d8e865"
       },
       {
         "file": "cloud-bot/src/inbox.mjs",
@@ -1029,7 +1029,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "5cf66003-d0a7-43fa-a54a-33b8dd98c66c",
+        "version_id": "f5c4ca99-6fb5-4a87-853c-2adf67622399",
         "percentage": 100
       }
     ],
