@@ -15,6 +15,20 @@ import {seedForNextLife} from '../public/fate/cycles.js';
 const T=Date.parse('2026-10-16T06:00:00+08:00'),TOKEN='123456789:ISOLATED_COUNTRY_FIXTURE';
 
 for(const country of Object.keys(COUNTRY_METADATA_V9)){
+ test(country+' named colleagues begin only at actual employment and stop at its end',async()=>{
+  await ensureCountryPack(country);let colleagueRows=0;
+  const socialCast={v:1,people:[{thread:'rooftop',name:'驗收鄰居'},{thread:'rival',name:'驗收同行'},{thread:'letter',name:'驗收朋友'}]};
+  for(let i=0;i<100;i++){const raw={version:9,country,seed:(Math.imul(i+1,2654435761)>>>0).toString(16).padStart(8,'0'),orbit:i%12},run=replayCountryLife(raw),d={...raw,answers:run.answers,auto:run.auto,socialCast},rows=plannedContent(d).filter(r=>r.kind==='relationship');
+   assert.equal(new Set(rows.map(r=>r.text)).size,rows.length);for(const r of rows){assert.ok(r.actor.startsWith('驗收'));assert.doesNotMatch(r.text,/\{name\}/);if(r.role==='colleague'){colleagueRows++;assert.ok(r.age>=18&&r.state.workActive);assert.notEqual(r.state.careerId,'household-care');const first=run.resolved.find(s=>s.stateAfter.workActive&&s.stateAfter.careerId!=='household-care');assert.ok(first&&r.activeMs>first.atMs);const end=run.resolved.find(s=>s.atMs>first.atMs&&(!s.stateAfter.workActive||s.stateAfter.careerId!==first.stateAfter.careerId));if(end)assert.ok(r.activeMs<end.atMs);}}
+  }assert.ok(colleagueRows>0);
+ });
+ test(country+' six thousand causal runs reach all 48 authored job dilemmas and keep care unpaid',async()=>{
+  const pack=await ensureCountryPack(country),seen=new Set(),outcomes=new Set();let cares=0;
+  for(let i=0;i<6000;i++){const run=replayCountryLife({version:9,country,seed:(Math.imul(i+1,2654435761)>>>0).toString(16).padStart(8,'0'),orbit:i%12});outcomes.add(run.terminalOutcome);
+   for(const r of run.resolved){if(r.id.startsWith('job-'))seen.add(r.id);if(r.stateAfter.careerId==='household-care'){cares++;assert.equal(r.stateAfter.employed,false);assert.equal(r.stateAfter.ventureOpen,false);assert.ok(!['work-delivery','work-renewal','business-start','business-pressure'].includes(r.id));if(['career-entry','restart-entry'].includes(r.id))assert.ok(r.consequences.delta.money<=0);}}
+  }
+  assert.deepEqual([...seen].sort(),pack.careers.flatMap(c=>c.dilemmas.map(d=>'job-'+d.id)).sort());assert.ok(cares>0);assert.ok(outcomes.has('venture-builder')&&outcomes.has('debt-rebuilding')&&outcomes.has('family-care')&&outcomes.has('career-transition'));
+ });
  test(country+' signed start, variable decisions, public replay and recent-life diversity',async t=>{
   const pack=await ensureCountryPack(country),env={DB:freshDb(),BOT_TOKEN:TOKEN,ENVIRONMENT:'development',ALLOW_DEBUG_TIME:'true',GROUP_CHAT_ID:'-100TEST'};t.after(()=>env.DB.sqlite.close());
   const char=(await createCharacter(env,{tgId:'808',name:'國別驗收旅人',baseClass:'mage',gender:'f'},T)).char.tg_id,fields={auth_date:String(Math.floor(Date.now()/1000)),user:JSON.stringify({id:808,first_name:'隔離驗收'})},key=createHmac('sha256','WebAppData').update(TOKEN).digest(),init=new URLSearchParams({...fields,hash:createHmac('sha256',key).update(Object.keys(fields).sort().map(k=>k+'='+fields[k]).join('\n')).digest('hex')}).toString();

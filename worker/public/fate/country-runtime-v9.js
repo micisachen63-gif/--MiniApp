@@ -22,7 +22,7 @@ export function registerCountryPack(pack){
  check(pack.social?.length===24&&pack.social.every(s=>/^[a-z0-9-]{1,16}$/.test(s.id)&&s.chapters?.length===6&&s.chapters.every(t=>typeof t==='string'&&t.includes('{name}'))),'authored relationship chains');
  check(new Set(pack.families.map(f=>f.id)).size===4&&pack.families.every(f=>typeof f.label==='string'),'family IDs and labels');
  const dilemmaIds=pack.careers.flatMap(c=>c.dilemmas.map(d=>d.id));check(new Set(dilemmaIds).size===48,'career dilemma IDs must be unique across routes');
- check(new Set(pack.social.map(s=>s.id)).size===24&&pack.social.every(s=>typeof s.role==='string'&&typeof s.requiresCareer==='boolean'),'relationship IDs and work gates');
+ check(new Set(pack.social.map(s=>s.id)).size===24&&pack.social.every(s=>typeof s.role==='string'&&typeof s.requiresCareer==='boolean'&&(s.role!=='colleague'||s.requiresCareer)),'relationship IDs and work gates');
  const sharedIds=['moving','parcel','repair','market','umbrella','bookstore'];
  check(pack.shared?.length===6&&new Set(pack.shared.map(s=>s.id)).size===6&&pack.shared.every(s=>sharedIds.includes(s.id)&&typeof s.title==='string'&&typeof s.text==='string'&&s.choices?.length===2&&s.choices.every(o=>typeof o.label==='string'&&typeof o.outcome==='string')),'shared story set');
  check(pack.sources?.length>=3&&pack.sources.every(s=>typeof s.url==='string'&&s.url.startsWith('https://')),'official sources');

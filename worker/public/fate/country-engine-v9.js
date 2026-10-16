@@ -7,6 +7,10 @@ const integer=(seed,key,min,max)=>min+Math.floor(ratio(seed,key)*(max-min+1));
 const error=message=>{throw Error('v9 local life: '+message);};
 const option=(label,reason,outcome,flags={},delta={})=>({label,reason,outcome,flags,delta});
 const event=(id,ages,chance,requires,title,text,choices,extra={})=>({id,ages,chance,requires,title,text,choices,family:id,...extra});
+// Auto-play follows plausible continuity more often than abandoning every
+// preparation step. These are fictional narrative weights, not demographic data.
+const AUTO_FIRST=Object.freeze({'study-plan':.7,'study-practice':.75,'study-complete':.8,'career-practice':.84,'career-entry':.84,'career-restart':.7,'restart-practice':.8,'restart-entry':.8,'work-delivery':.8,'work-renewal':.75,'care-rearrange':.75,'business-start':.45,'family-care':.3,'close-relationship':.65,'shared-home':.65,'child-plan':.55,'second-child':.3});
+const automaticAnswer=(identity,ev)=>ratio(identity,'timeout:'+ev.id)<(AUTO_FIRST[ev.id]??.5)?0:1;
 export function countryProfile(seed,orbit=11,country){
  if(typeof seed!=='string'||!/^[a-f0-9]{8}$/.test(seed)||!Number.isInteger(orbit)||orbit<0||orbit>11)error('invalid identity');
  const pack=getCountryPack(country),key=country+':'+seed+':'+orbit,family=pack.families[integer(key,'family',0,3)],gender=ratio(key,'gender')<.5?'f':'m';
@@ -139,7 +143,7 @@ export function replayCountryLife(life,{activeMs=DURATION,autoFill=true}={}){
   if(!ready.length)break;const plan=ready[0],ev=plan.ev,deadline=plan.at+RESPONSE,current={id:ev.id,scenarioId:'v9-'+profile.country.toLowerCase()+'-'+ev.id,family:ev.family,index,title:ev.title,text:ev.text,choices:ev.choices.map(o=>[o.label,o.reason,o.outcome]),openedMs:plan.at,deadlineMs:deadline,age:Math.floor(plan.at/DURATION*profile.deathAge)};
   if(['career-entry','restart-entry'].includes(ev.id)&&(ev.id==='career-entry'?state.careerTarget:state.restartTarget)==='household-care'){current.title='家中的日常協調，你願意接下這一段嗎？';current.text='你和家人把需要協助的事、彼此意願與輪替方式放在一起談，確認能投入多少時間和用品。';current.choices[0]=['確認意願，接下這一段分工','會投入時間與用品，這是未受雇的家庭分工。','你和家人談妥意願與輪替安排，接下這一段家務協調。'];}
   scenes.push(current);if(plan.at>activeMs){nextScene=current;nextAtMs=plan.at;break;}seen.add(ev.id);
-  const submitted=index<supplied.length,timeout=integer(identity,'timeout:'+ev.id,0,1);if(submitted){if(bits[index]&&(activeMs<deadline||supplied[index]!==timeout))error('invalid automatic answer');consumed++;}
+  const submitted=index<supplied.length,timeout=automaticAnswer(identity,ev);if(submitted){if(bits[index]&&(activeMs<deadline||supplied[index]!==timeout))error('invalid automatic answer');consumed++;}
   if(activeMs<deadline){if(submitted){answers.push(supplied[index]);auto.push(bits[index]);}pending={...current,answered:submitted,...(submitted?{chosenAnswer:supplied[index]}:{}),remainingMs:deadline-activeMs,available:!submitted};nextScene=current;nextAtMs=submitted?deadline:current.openedMs;break;}
   if(!submitted&&!autoFill){pending={...current,answered:false,remainingMs:0,available:false,missingAnswer:true};nextScene=current;nextAtMs=deadline;break;}
   const answer=submitted?supplied[index]:timeout,source=submitted?(bits[index]?'auto':'manual'):'auto',result=apply(ev,answer,state,profile,identity,deadline,flagAt,unit);answers.push(answer);auto.push(source==='auto'?1:0);resolved.push({id:ev.id,index,family:ev.family,age:Math.floor(deadline/DURATION*profile.deathAge),atMs:deadline,deadlineMs:deadline,answer,source,outcome:result.text,text:result.text,consequences:result.consequences,stateAfter:result.stateAfter});lastResolved=deadline;lastId=ev.id;
