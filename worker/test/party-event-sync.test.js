@@ -55,3 +55,17 @@ test('floor-clear replay keeps defeated enemy identity separate from next floor'
  assert.equal(turn.final.floor,5);assert.equal(p.floor,5);assert.equal(turn.final.enemyHp,p.enemy.hp);assert.equal(turn.final.enemyMaxHp,p.enemy.maxHp);assert.notEqual(turn.final.enemyName,'第四層舊敵');
  assert.deepEqual(turn.final.members,p.members.map(({id,hp,maxHp,mp,maxMp})=>({id,hp,maxHp,mp,maxMp})));
 });
+for(const kind of ['dungeon','tower'])test(`${kind}: live MP threshold refills before skill selection and repeated views never double spend`,async()=>{
+ const {env,id}=await team(kind);
+ await env.DB.prepare("UPDATE rpg_characters SET auto_blue=1,special_json=? WHERE tg_id='111'").bind(JSON.stringify({autoBluePct:70})).run();
+ await env.DB.prepare("UPDATE rpg_inventory SET quantity=20 WHERE tg_id='111' AND item='blue_1'").run();
+ await env.DB.prepare("UPDATE rpg_characters SET auto_blue=0 WHERE tg_id='222'").run();
+ await edit(env,id,s=>{s.enemy.hp=s.enemy.maxHp=1000000;for(const a of s.actors){a.mp=0;a.maxMp=1000;a.special.learned=['skill_02_1'];a.special.loadout=['skill_02_1'];a.special.cooldowns={};}});
+ const result=await G.view(env,id,'111',T0+5001),turn=result.battleTurn;
+ const water=turn.events.find(e=>e.actorId==='111'&&e.used);assert.ok(water);assert.equal(water.used.blue_1,18);
+ assert.equal(turn.events.find(e=>e.actorId==='111'&&e.skillId).skillId,'skill_02_1');
+ assert.equal(turn.events.some(e=>e.actorId==='222'&&e.used),false);
+ const count=async()=> (await env.DB.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id='111' AND item='blue_1'").first()).quantity;
+ assert.equal(await count(),2);await G.view(env,id,'111',T0+5001);assert.equal(await count(),2);
+ const c=await loadPlayer(env.DB,'111');assert.equal(JSON.parse(c.char.special_json).autoBluePct,70);
+});
