@@ -808,7 +808,8 @@
       E.mon.classList.toggle('face-left', [1,3].includes(Number(c.mapId)) && !S.mon?.sheet?.includes('monsters-clean-20261011') && !S.monAtlas);
       E.mapname.textContent = town ? '🏛️ 城鎮' : (scene ? `${scene.emoji} ${scene.name}` : c.mapName);
       const si = o.stateInfo(me); E.status.textContent = si.text; E.status.className = `status ${si.cls}`;
-      if (accepted) { publishSettlement(report); S.queue.push({...report,combat:newRound?round:null}); }
+      // An accepted settlement always carries its own round: if the same round already arrived earlier via the idle feed (queued with zero totals, then cleared by cancelScene), replay it now so the real EXP/gold/drops attach to its kills.
+      if (accepted) { publishSettlement(report); S.queue.push({...report,combat:round&&round.mapId===c.mapId&&root.dataset.completedRound!==round.id?round:null}); }
       bars();syncGuardian();
       if (!S.running) loop();
       return true;
@@ -829,7 +830,7 @@
       checkScene();
       if(S.authoritative){
         if(ep.combat&&ep.combat.mapId===S.me.character.mapId)await playServerRound(ep.combat,ep.ticks,ep.totals);
-        else await spawnServerGroup(S.me.battle.idleCombat.enemies);
+        else{await spawnServerGroup(S.me.battle.idleCombat.enemies);if(ep.totals&&S.mon)showKillReward(monPt(.5,.4),{exp:ep.totals.exp,gold:ep.totals.gold,drops:ep.totals.drops});}
         for(const p of ep.pots)await potion(p.k,p.n);
         if(ep.levels)await levelUp(ep.levels);
         if(ep.death)await die(ep.death);
@@ -903,6 +904,8 @@
           const gap=slot-(performance.now()-hitStart);if(gap>0)await wait(gap);
         }
       }
+      // Summarized/oversized rounds (or totals with no matching kill event) have no per-kill hits to hang popups on: show the real totals once instead of nothing.
+      if(totals&&killNo===0&&S.mon)showKillReward(monPt(.5,.4),{exp:totals.exp,gold:totals.gold,drops:totals.drops});
       await spawnServerGroup(round.after);root.dataset.playingRound='';root.dataset.completedRound=round.id;
     }
     async function loop() {

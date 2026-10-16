@@ -71,3 +71,24 @@ test('gaps are filled with cosmetic swings that never change monster HP',async()
   const seen=new Set();for(let i=0;i<40;i++){await h.advance(100);seen.add(hp());}
   assert.ok(seen.size<=3);assert.deepEqual(h.errors,[]);
 });
+
+async function popups(steps,mutate){
+  const h=idleBattleHarness({reducedMotion:false}),round=killRound();if(mutate)mutate(round);
+  const made=[];const orig=h.document.createElement;h.document.createElement=t=>{const e=orig(t);made.push(e);return e;};
+  const me=idleMe({mapId:4,level:35});me.battle.idleCombat={enemies:round.after,round};
+  const rep=idleReport({combat:round,ticks:1,kills:2,elites:0,exp_gained:101,gold_gained:55,drops:{scroll:3},used:{}});
+  steps(h,me,rep);
+  for(let i=0;i<1400;i++)await h.advance(50);
+  assert.deepEqual(h.errors,[]);
+  return made.filter(e=>/\bfl\b/.test(e.className||'')).map(e=>e.textContent).filter(t=>!t.startsWith('−'));
+}
+
+test('round delivered by the idle feed first, report arriving later, still shows the real kill popups',async()=>{
+  const t=await popups((h,me,rep)=>{h.battle.sync(me,null);h.battle.sync(me,rep);});
+  assert.equal(t.filter(x=>/EXP/.test(x)).length,2);assert.ok(t.includes('+50 EXP'));assert.ok(t.some(x=>x.includes('強化卷軸')));
+});
+
+test('summarized round (no per-hit events) still shows the real totals once',async()=>{
+  const t=await popups((h,me,rep)=>h.battle.sync(me,rep),r=>{r.events=[];r.summarized=true;});
+  assert.deepEqual(t,['+101 EXP','+55 金幣','強化卷軸 ×3']);
+});
