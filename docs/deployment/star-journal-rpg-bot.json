@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "cbdd2eb8e5e6aa28d5aa4b98acde06aa5116e130",
+  "sourceCommit": "27f9a0490f753886f88da338a97b07e84eea479b",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "8f002a02-5808-47b0-9fac-da644f13f302",
+  "productionVersion": "49bb25ec-d57c-4380-9695-a825196d5c16",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T02:35:21.796Z",
+  "verifiedAt": "2026-10-16T03:57:09.473Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "38aabcb5d9b033ad3e2f0f5028c885018d7c4ba698f2337cb5cab110f048fbe4"
+    "index.js": "4bf92db786afe3156c4c159fcea278995adbd6b44280adaef333051fb6d93ccd"
   },
   "source": {
     "fileCount": 250,
-    "sha256": "238d8e7905616e1214d256c1b3791fea1c6b60a0ba34b9d556aabeb4bd90b83f",
+    "sha256": "22094dd4f783fd8c67777ed37677b6a34c6ca7c2540f28cd670caaa81663f0f2",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -912,7 +912,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
-        "sha256": "f21b04ed7be6c3e831c737edc7bf8865f8d1b4240ce34919ec2dbea44b102aae"
+        "sha256": "7261afb12455f450a459ca079769c3cf984a02e3840fe132832dba80c00d5d19"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
@@ -1029,7 +1029,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "8f002a02-5808-47b0-9fac-da644f13f302",
+        "version_id": "49bb25ec-d57c-4380-9695-a825196d5c16",
         "percentage": 100
       }
     ],
