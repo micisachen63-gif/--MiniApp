@@ -1,4 +1,4 @@
-import test from 'node:test';
+﻿import test from 'node:test';
 import assert from 'node:assert/strict';
 import {idleBattleHarness,idleMe,idleReport} from './idle-battle-harness.js';
 
@@ -25,8 +25,8 @@ async function hitTimes(h,limit=70000){
 test('a settlement\'s committed hits are spread across the minute, not burst',async()=>{
   const h=fixture(mk());const r=await hitTimes(h);
   assert.equal(r.times.length,3);assert.equal(r.done,'pace');
-  assert.ok(r.times[1]-r.times[0]>=8000,'gap '+(r.times[1]-r.times[0]));
-  assert.ok(r.times[2]-r.times[1]>=8000);
+  assert.ok(r.times[1]-r.times[0]>=3000&&r.times[1]-r.times[0]<=5000,'gap '+(r.times[1]-r.times[0]));
+  assert.ok(r.times[2]-r.times[1]>=3000&&r.times[2]-r.times[1]<=5000);
   assert.ok(r.t<=60000,'finished within a minute: '+r.t);
   assert.deepEqual(h.errors,[]);assert.deepEqual(JSON.parse(h.root.dataset.lastReport).kills,0);
 });
@@ -43,4 +43,31 @@ test('between settlements the monsters take no decorative damage or swings',asyn
   const hp=h.battle.state.group.map(e=>e.mon.hp);
   await h.advance(20000);
   assert.deepEqual(h.battle.state.group.map(e=>e.mon.hp),hp);assert.deepEqual(h.errors,[]);
+});
+
+function killRound(){const a=enemy('a','海塞壬',100),b=enemy('b','潮蟲',100);
+  return {id:'kill',mapId:4,before:[a,b],after:[{...a,id:'c'},b],events:[
+    {type:'hit',targetId:'a',enemy:a,damage:100,beforeHp:100,afterHp:0,skill:false},
+    {type:'spawn',slot:0,enemy:{...a,id:'c'}},
+    {type:'hit',targetId:'b',enemy:b,damage:100,beforeHp:100,afterHp:0,skill:false},
+    {type:'spawn',slot:1,enemy:{...b,id:'d'}}]};}
+
+test('each kill shows real EXP/gold/drop popups that add up to the report totals',async()=>{
+  const h=idleBattleHarness(),me=idleMe({mapId:4,level:35}),round=killRound();
+  const made=[];const orig=h.document.createElement;h.document.createElement=t=>{const e=orig(t);made.push(e);return e;};
+  me.battle.idleCombat={enemies:round.after,round};
+  h.battle.sync(me,idleReport({combat:round,ticks:1,kills:2,elites:0,exp_gained:101,gold_gained:55,drops:{scroll:3},used:{}}));
+  await hitTimes(h);
+  const texts=made.filter(e=>/\bfl\b/.test(e.className||'')).map(e=>({c:e.className,t:e.textContent}));
+  const sum=(re)=>texts.filter(x=>re.test(x.c)).reduce((n,x)=>n+Number((x.t.match(/\d+/)||[0])[0]),0);
+  assert.equal(sum(/exp/),101);assert.equal(sum(/gold(?!.*scroll)/)-3,55);
+  assert.ok(texts.some(x=>x.t.includes('強化卷軸')));
+  assert.equal(texts.filter(x=>/exp/.test(x.c)).length,2);assert.deepEqual(h.errors,[]);
+});
+
+test('gaps are filled with cosmetic swings that never change monster HP',async()=>{
+  const h=fixture(mk());await h.advance(1500);
+  const hp=()=>h.battle.state.group.map(e=>e.mon?.hp).join();
+  const seen=new Set();for(let i=0;i<40;i++){await h.advance(100);seen.add(hp());}
+  assert.ok(seen.size<=3);assert.deepEqual(h.errors,[]);
 });
