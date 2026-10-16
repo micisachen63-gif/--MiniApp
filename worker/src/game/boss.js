@@ -1,3 +1,4 @@
+import {needsBlue,blueTarget} from './auto-blue.js';
 import {combatActor,performThiefNativeStrikes,autoPartyAction,validateCast,castSpecial,saveSpecial,periodic,damageEnemy,receiveDamage,valueOf} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 import {monsterPool} from './monsters.js';
@@ -97,12 +98,13 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
   if(enemy.hp<beforeHp)actions.push({skillId:'periodic',label:'召喚／持續傷害',damage:beforeHp-enemy.hp,before:beforePeriodic,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   for(let i=0;i<BOSS.castsPerAttack&&enemy.hp>0;i++){
     const before={hp:a.hp,mp:a.mp,enemyHp:enemy.hp};
+    if(needsBlue(c,a.mp,s.maxMp,s.skill.cost)){const target=blueTarget(c,s.maxMp,s.skill.cost);let key;do{key=choosePotion(inv,'blue',mapTier);if(!key)break;drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
     const action=autoPartyAction(a,[a],enemy,now,{});let outcome,label;
     if(action.skillId!=='attack'){
       const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},x,action.skillId,now);
       outcome=castSpecial(a,[a],enemy,skill,a.id,now,rng,{});label=skill.name;
     }else{
-      if(a.mp<s.skill.cost&&c.auto_blue){let key;while(a.mp<s.skill.cost&&(key=choosePotion(inv,'blue',mapTier))){drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}}
+
       const cast=a.mp>=s.skill.cost,spentMp=cast?spendMana(a,s.skill.cost,rng):0;
       if(a.base==='thief'){
         outcome=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35),rng,variance:true,actionId:`${now}:${i}`});

@@ -1,3 +1,4 @@
+import {autoBluePct} from './game/auto-blue.js';
 import {monsterPool,monsterIdentity,collectionView} from './game/monsters.js';
 import {affixView,affixCost} from './game/affixes.js';
 // JSON views returned to 小精靈 (and later the Mini App).
@@ -42,7 +43,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
       className: node.name, classPath: char.class_path, classTier: tier, level: char.level, exp: char.exp, expNeed: Number.isFinite(need) ? need : null,
       expPct: Number.isFinite(need) ? Math.min(100, Math.floor((char.exp / need) * 1000) / 10) : 100, hp: char.hp, mp: char.mp, maxHp: s.maxHp, maxMp: s.maxMp,
-      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue,
+      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char),
       penaltiesToday: char.penalty_day && char.penalty_day === new Date(now + 8 * 3600e3).toISOString().slice(0, 10) ? char.penalties_today : 0,
       deathsTotal: char.deaths_total, bossDownUntil: char.boss_down_until && char.boss_down_until > now ? char.boss_down_until : null, lastReselectAt: char.last_reselect_at },
     stats: { ...guardianStatsView(s,char), attackSpeedMultiplier:s.attackSpeedMultiplier,hitAttackMultiplier:s.hitAttackMultiplier, weaponElem:s.weaponElem,elementResist:s.elementResist,elementResistance:s.elementResistance,def: s.def, maxHp: s.maxHp, maxMp: s.maxMp, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 10, standard: s.std, r: Math.round(s.r * 100) / 100, skill: s.skill, passive: node.passiveText, taken: Math.round(s.taken * 100) / 100, element: s.element },

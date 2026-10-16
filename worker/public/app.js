@@ -882,7 +882,8 @@
       <div class="row mt"><button class="btn" id="refill" ${me.refill.cost > 0 ? '' : 'disabled'}>${me.refill.cost > 0 ? `🧪 補滿 24 小時 · 💰${fmt(me.refill.cost)}` : '✅ 水量充足（24h）'}</button></div>
       ${c.level>=15?'<label class="guardian-refill-check"><input type="checkbox" id="refillGuardian" '+(me.guardianStoneSupply?'checked':'')+'> '+iconHtml('guardian_summon_stone','✦')+' 召喚石自動補給 · 持有 '+(me.guardianSupply?.stoneCount||0)+' 顆<span>用完自動購買 · 每顆 '+fmt(me.guardianSupply?.stoneGold||3000)+' 金幣</span></label>':''}
       <div class="mt muted">自動喝紅水：HP 低於或等於設定比例時使用</div><div class="seg" id="redSeg">${[30, 40, 50, 60, 70].map((v) => `<button data-v="${v}" class="${c.autoRedPct === v ? 'on' : ''}">${v}%</button>`).join('')}</div>
-      <div class="mt row" style="justify-content:space-between"><span class="muted" style="flex:1">自動喝藍水：開啟後使用技能，關閉則只用普攻</span><div class="seg" style="flex:none"><button id="blueTog" class="${c.autoBlue ? 'on' : ''}">${c.autoBlue ? '開' : '關'}</button></div></div>
+      <div class="mt row" style="justify-content:space-between"><span class="muted" style="flex:1">自動喝藍水：MP 低於或等於設定比例時使用</span><div class="seg" style="flex:none"><button id="blueTog" class="${c.autoBlue ? 'on' : ''}">${c.autoBlue ? '開' : '關'}</button></div></div>
+      <div class="seg" id="blueSeg">${[30,40,50,60,70].map(v=>`<button data-v="${v}" class="${(c.autoBluePct??50)===v?'on':''}" ${c.autoBlue?'':'disabled'}>${v}%</button>`).join('')}</div><div class="muted mt">技能 MP 不足時也會先補水；特殊技能仍依安全／強力模式與每日預算使用。</div>
     </div>
     <div class="card my-daily-blessing"><div class="blessing-heading"><h3>每日補給金</h3><small>${me.daily.firstWeek ? '首週加成 +50%' : '每天 00:00 重置'}</small></div><div class="blessing-reward"><span class="blessing-seal" aria-hidden="true"><img src="art/ui/hud-coin-v2.webp" alt=""></span><div><span class="blessing-caption">諸神賜予的遠征祝福</span><strong>${fmt(me.daily.total)} <small>金幣</small></strong><span class="blessing-note">${me.daily.bonus ? `包含首週額外 ${fmt(me.daily.bonus)} 金幣` : '每日領取，為下一場遠征做好準備'}</span></div></div>
       <button class="btn gold" id="daily" ${me.daily.claimed ? 'disabled' : ''}>${me.daily.claimed ? '今日祝福已領取' : '領取每日祝福'}<span aria-hidden="true">${me.daily.claimed ? '✓' : '→'}</span></button></div>
@@ -911,7 +912,8 @@
     const supplyToggle=$('#refillGuardian',view);if(supplyToggle)supplyToggle.onchange=async()=>{const checked=supplyToggle.checked;supplyToggle.disabled=true;try{await api('guardian/assist',{mode:'supply',autoBuy:checked,requestId:window.RpgGuardianHost.requestId()});await refreshMe();window.dispatchEvent(new Event('elf-skills-refresh'));toast(checked?'已允許召喚石用完自動購買，每顆3,000金幣':'已關閉召喚石自動購買，背包石頭用完就停止召喚');}catch(e){supplyToggle.checked=!checked;toast(e.message);}finally{supplyToggle.disabled=false;}};
     $('#refill', view).onclick = () => act('refill', {}, (j) => '已補水，花費 '+fmt(j.result?.cost)+' 金幣');
     view.querySelectorAll('#redSeg button').forEach((b) => { b.onclick = () => act('settings', { autoRedPct: Number(b.dataset.v) }, `HP ≤ ${b.dataset.v}% 自動喝紅水`); });
-    $('#blueTog', view).onclick = () => act('settings', { autoBlue: !S.me.character.autoBlue }, (j) => (j.character.autoBlue ? '已開啟自動藍水' : '已關閉自動藍水（只用普攻）'));
+    view.querySelectorAll('#blueSeg button').forEach(b=>{b.onclick=()=>act('settings',{autoBluePct:Number(b.dataset.v)},`MP ≤ ${b.dataset.v}% 自動喝藍水`);});
+    $('#blueTog', view).onclick = () => act('settings', { autoBlue: !S.me.character.autoBlue }, (j) => (j.character.autoBlue ? '已開啟自動藍水' : '已關閉自動藍水（MP 不足時改用普攻）'));
     view.querySelectorAll('[data-go]').forEach((b) => { b.onclick = () => { S.tab = b.dataset.go; render(); }; });
     bindTodo(view);
   }

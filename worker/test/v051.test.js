@@ -90,10 +90,10 @@ test('minute-by-minute settlements (app open) earn about the same gold as one lo
 });
 
 test('released supplied-idle economy preserves recorded gross gold and potion costs across classes and tiers',()=>{
-  // Recorded before this remediation. The old 1.8 armor-attempt promise predates
+  // Recorded with the default 50% proactive blue threshold (2026-10-16). The old 1.8 armor-attempt promise predates
   // native-skill MP consumption and was already false; keep the current economy
   // explicit instead of silently changing drop rates or potion prices to pass it.
-  const baseline=[[50,'sword',21215,898],[50,'archer',19041,803],[50,'mage',21215,891],[70,'sword',25773,962],[70,'archer',23132,816],[70,'mage',25773,900],[100,'sword',33424,1077],[100,'archer',29998,849],[100,'mage',33424,900]];
+  const baseline=[[50,'sword',21215,926],[50,'archer',19041,817],[50,'mage',21215,933],[70,'sword',25773,987],[70,'archer',23132,841],[70,'mage',25773,950],[100,'sword',33424,1119],[100,'archer',29998,891],[100,'mage',33424,984]];
   for(const [level,cls,gross,potions] of baseline){
     const c=mkChar({level,base_class:cls,class_path:'A'}),r=settleIdle(c,{red_2:1e6,blue_2:1e6,red_3:1e6,blue_3:1e6,red_4:1e6,blue_4:1e6},standardSet(cls,level),T0+6*H);
     const used=Object.entries(r.report.used).reduce((sum,[key,n])=>sum+(POTIONS[key]?.price||0)*n,0);

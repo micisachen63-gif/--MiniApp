@@ -1,3 +1,4 @@
+import {needsBlue,blueTarget} from './auto-blue.js';
 import {thiefPrimaryMechanics,applyThiefPrimary,triggerThiefCounter,nextThiefStrikeCount} from './thief-skills.js';
 import { SKILL_MAP,eligible,specialState,saveSpecial,castSpecial,combatActor,periodic,valueOf } from './special.js';
 import {mapForLevel} from './formulas.js';
@@ -19,7 +20,7 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
   if(!manual&&(!mode||mode==='lowHp'&&a.hp/a.maxHp>=.5||mode==='elite'&&Math.floor(now/60000)%33!==0))continue;
   if(['skill_17_2','skill_24_2'].includes(id))continue;
   // Safe mode spends current MP only. Strong mode consumes owned blue potions up to the daily replacement-cost limit.
-  if(a.mp<skill.mp&&x.mode==='strong'&&c.auto_blue){let key;while(a.mp<skill.mp&&(key=chooseBlue(inv,c.map_id))){const cost=potions[key].price||0;if((x.extraCost||0)+cost>(x.budget||0))break;use(key);x.extraCost=(x.extraCost||0)+cost;a.mp=Math.min(s.maxMp,a.mp+potions[key].heal);}}
+  if(needsBlue(c,a.mp,s.maxMp,skill.mp)&&x.mode==='strong'){const target=blueTarget(c,s.maxMp,skill.mp);let key;do{key=chooseBlue(inv,c.map_id);if(!key)break;const cost=potions[key].price||0;if((x.extraCost||0)+cost>(x.budget||0))break;use(key);x.extraCost=(x.extraCost||0)+cost;a.mp=Math.min(s.maxMp,a.mp+potions[key].heal);}while(a.mp<target);}
   if(a.mp<skill.mp)continue;selected=skill;break;
  }
  let damage=periodicDamage;

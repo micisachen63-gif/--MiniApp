@@ -1,3 +1,4 @@
+import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
 import { CLASSES, CLASS_KEYS, GENERAL_WEAPON, ITEMS, POTIONS, MAX_OPEN_MAP, RARITY_KEYS } from '../game/constants.js';
@@ -320,11 +321,12 @@ export function unequip(work, ctx, { slot = null, position = null, itemId = null
   const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp);
   return { result: { slot: item.slot, itemId: item.id } };
 }
-export function settings(work, ctx, { autoRedPct, autoBlue }) {
+export function settings(work, ctx, { autoRedPct, autoBlue, autoBluePct }) {
   if (autoRedPct != null) { const v = Number(autoRedPct); if (!Number.isInteger(v) || v < 20 || v > 80) throw new GameError('range', '喝紅水門檻要在 20–80%'); work.char.auto_red_pct = v; }
+  if (autoBluePct != null) { const v=Number(autoBluePct); if (!Number.isInteger(v)||v<20||v>80) throw new GameError('range','喝藍水門檻要在 20–80%'); let x; try{x=JSON.parse(work.char.special_json||'{}');}catch{x={};} work.char.special_json=JSON.stringify({...x,autoBluePct:v}); }
   if (autoBlue != null) work.char.auto_blue = autoBlue ? 1 : 0;
   autoResume(work.char, work.inv, idleStats(work.char, work.equipment.filter((e) => e.is_equipped)).maxHp);
-  return { result: { autoRedPct: work.char.auto_red_pct, autoBlue: !!work.char.auto_blue } };
+  return { result: { autoRedPct: work.char.auto_red_pct, autoBlue: !!work.char.auto_blue, autoBluePct:getAutoBluePct(work.char) } };
 }
 
 export function doAdvance(work, { now, db }, { branch, requestId }) {

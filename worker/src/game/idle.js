@@ -1,3 +1,4 @@
+import {needsBlue,blueTarget} from './auto-blue.js';
 import {chooseMonster,monsterMaterialPlan} from './monsters.js';
 import {guardianDamageMultiplier,guardianChance} from './guardian-effects.js';
 import {idleSpecial,idleThiefNative,prepareThiefIdleEncounter,clearThiefIdleNative,idleThiefStrikePlan} from './special-idle.js';
@@ -115,7 +116,7 @@ export function settleIdle(char, inventory, equipped, now) {
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
     const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map),use,potions:POTIONS,day,rng});
     let cast = !!special?.selected;
-    if (!special?.selected && c.mp < s.skill.cost && c.auto_blue) { let k; while (c.mp < s.skill.cost && (k = choosePotion(inv, 'blue', mapTier))) { use(k); c.mp = Math.min(s.maxMp, c.mp + POTIONS[k].heal); } }
+    if (!special?.selected && needsBlue(c,c.mp,s.maxMp,s.skill.cost)) { const target=blueTarget(c,s.maxMp,s.skill.cost); let k; do { k=choosePotion(inv,'blue',mapTier); if(!k)break; use(k); c.mp=Math.min(s.maxMp,c.mp+POTIONS[k].heal); } while(c.mp<target); }
     if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
     c.mp = Math.min(s.maxMp, c.mp + s.mpRegen);
     setState(cast ? 'fighting' : 'no_mp', t);
