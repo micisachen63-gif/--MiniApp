@@ -1,0 +1,47 @@
+FR／巴黎與蒙特勒伊 v9 在地內容包 — 2026-10-16
+
+資料交付範圍：法蘭西島的巴黎市，以及東側明確近郊蒙特勒伊（Montreuil，Seine-Saint-Denis）。不是全法國通用包；沒有把馬賽、普羅旺斯、其他近郊或海外地區換名塞入。市圖書館與蒙特勒伊公共服務分別按各自資訊確認。
+此作者未提交、推送或部署；資料存在不等於國家已正式開放。
+
+實際數量：
+日常1500條獨立寫入字串：child120／youth100／adult720／late420／any140。
+職涯12條，每條10章與4個兩選一抉擇：120章／48抉擇。
+中性人際長鏈24條，每條6章：144章，每句保留{name}；4條同事鏈需實際任職，家庭照顧不是受薪職場。
+雙人共同支線6篇，固定moving／parcel／repair／market／umbrella／bookstore；每個問題與結果保留兩位參與者。
+家境4種。起始money及delta.money均為EUR虛構生活帳整數，不是實際薪資、統計或跨國換算，不推導真實財富百分位。
+
+生活內容：巴黎地鐵出口與轉乘、巴士、塞納河岸書箱與船、聖馬丁運河、巴黎具名街區與公共花園、蒙特勒伊Croix de Chavaux市場、羅貝爾－德斯諾圖書館。食物與閱讀使用真實生活場景。幼年進館及交通由成人陪同。any以公共感官場景為主。成人晚年日常沒有直接建立個人工作、婚姻、子女、房屋、學位、用藥或疾病；這些需由真正狀態閘門決定。沒有固定日期節慶硬套每一日，也沒有捏造現實災難。
+
+教育與職涯界線：
+1. 16–18歲的接續義務依教育部官方說明處理，教育／培訓／就業及其他受承認方案需具體確認，不將暫停課程寫成所有義務消失。
+https://www.education.gouv.fr/l-obligation-de-formation-des-16-18-ans-306954
+2. CAP、bac professionnel與高等教育不是同一文憑。CFA／UFA加企業是交替培訓安排，需要合適企業、機構、條件與評核。開放活動、助手實作或查詢正式課程不自動完成學位或資格。
+https://www.onisep.fr/formation/apres-la-3-la-voie-professionnelle/apprentissage-se-former-en-alternance
+https://www.onisep.fr/vers-l-emploi/alternance/alternance-apprentissage-vos-questions-nos-reponses
+3. 食品助手按實際職務接受適當衛生訓練；商業餐飲的專項訓練及適用對象另有條件，未把14小時要求泛化給每名食品接待助手。咖啡館只做受訓的日間櫃臺與非酒精飲品，不默認完成酒類經營許可。
+https://entreprendre.service-public.gouv.fr/vosdroits/F32189
+4. 麵包糕點製作是需確認資格／認可的活動。這包不以販售或咖啡館助手冒稱完成boulanger-pâtissier資格，也沒有憑短課直接獨立開業。
+https://entreprendre.service-public.gouv.fr/vosdroits/F38497
+5. 初階書店銷售從書目查詢、接待和補貨累積。花店是受帶領的初階花材接待，CAP課程只做諮詢準備；未賦予未完成的正式文憑。
+https://www.onisep.fr/ressources/univers-metier/metiers/libraire
+https://www.onisep.fr/ressources/univers-metier/metiers/fleuriste
+https://www.onisep.fr/ressources/univers-formation/formations/lycees/cap-fleuriste
+6. 演出服裝助手做編號、交接與已受訓簡單工序；正式技術訓練可詢問DTMS等路線，查詢本身不授證。裝訂助手不接手未受訓的修復與機具操作，影院票務不兼任技術放映或保全。
+https://www.onisep.fr/ressources/univers-formation/formations/lycees/dtms-metiers-du-spectacle-option-techniques-de-l-habillage
+7. 市場經營涉及業者身分、位置與管理條件。角色受聘於既有已安排合法營運攤位；自營抉擇只做官方諮詢與預算草稿，不在故事中默認完成所有登記或許可。
+https://www.paris.fr/pages/exercer-sur-les-marches-alimentaires-3508
+https://www.montreuil.fr/la-ville/les-marches
+8. 家庭照顧是共同生活者自願協商的無薪角色，不預設配偶、子女或婚育狀態，可重新協商與退出。協會行政只做資訊及轉介，沒有擅自給法律、醫療或其他專業判斷。
+
+公共服務與地理來源（均2026-10-16官方查閱）：
+巴黎借閱館、專門館與各種服務有不同登記、權限及收費，未概括全部資料免費外借；兒童隨成人使用一般兒童區，未把專門館權限給所有年齡。
+https://www.paris.fr/pages/bibliotheques-infos-pratiques-2507
+蒙特勒伊的Robert Desnos圖書館獨立按當地服務確認。
+https://www.montreuil.fr/bibliotheque-robert-desnos
+RATP可及動線要查出發、到達、全段與當日電梯狀態。沒有全巴黎地鐵皆可及或一站有電梯就全程獨立通行的承諾；不固定即時票價。
+https://www.ratp.fr/aide-contact/questions/preparer-mon-trajet/information-trafic/gares-stations-accessibles
+https://www.ratp.fr/accessibilite/fauteuil-roulant
+
+檔案：worker/public/fate/country-packs-v9/fr.js及fr-*.js。
+專屬檢查：worker/test/fate-country-fr-v9.test.js。
+整合由root負責：教育與職涯狀態閘門、退出停止未來工作章、同事鏈、未答抉擇不洩後果、共享權限及雙方通知、圖像、正式發布與GitHub同步。此資料測試未宣稱上述端到端發布驗收已由作者完成。

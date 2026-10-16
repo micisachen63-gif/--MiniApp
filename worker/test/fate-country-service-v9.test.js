@@ -32,10 +32,16 @@ for(const country of Object.keys(COUNTRY_METADATA_V9)){
    assert.equal(new Set(rows.map(r=>r.text)).size,rows.length);for(const r of rows){assert.ok(r.actor.startsWith('驗收'));assert.doesNotMatch(r.text,/\{name\}/);if(r.role==='colleague'){colleagueRows++;assert.ok(r.age>=18&&r.state.workActive);assert.notEqual(r.state.careerId,'household-care');const first=run.resolved.find(s=>s.stateAfter.workActive&&s.stateAfter.careerId!=='household-care');assert.ok(first&&r.activeMs>first.atMs);const end=run.resolved.find(s=>s.atMs>first.atMs&&(!s.stateAfter.workActive||s.stateAfter.careerId!==first.stateAfter.careerId));if(end)assert.ok(r.activeMs<end.atMs);}}
   }assert.ok(colleagueRows>0);
  });
+ test(country+' a later job cannot rewrite already witnessed named memories',async()=>{
+  await ensureCountryPack(country);const socialCast={v:1,people:[{thread:'ferry',name:'驗收旅人'},{thread:'rooftop',name:'驗收鄰居'},{thread:'letter',name:'驗收朋友'}]};
+  for(let i=0;i<80;i++){const raw={version:9,country,seed:i.toString(16).padStart(8,'0'),orbit:i%12},complete=replayCountryLife(raw),full=plannedContent({...raw,answers:complete.answers,auto:complete.auto,socialCast});
+   for(const cut of [2400000,3346398,4800000]){const early=replayCountryLife(raw,{activeMs:cut}),before=plannedContent({...raw,answers:early.answers,auto:early.auto,socialCast},{activeMs:cut});assert.deepEqual(before,full.filter(r=>r.activeMs<=cut),'future employment must not select a different childhood relationship');}
+  }
+ });
  test(country+' six thousand causal runs reach all 48 authored job dilemmas and keep care unpaid',async()=>{
   const pack=await ensureCountryPack(country),seen=new Set(),outcomes=new Set();let cares=0;
   for(let i=0;i<6000;i++){const run=replayCountryLife({version:9,country,seed:(Math.imul(i+1,2654435761)>>>0).toString(16).padStart(8,'0'),orbit:i%12});outcomes.add(run.terminalOutcome);
-   for(const r of run.resolved){if(r.id.startsWith('job-'))seen.add(r.id);if(r.stateAfter.careerId==='household-care'){cares++;assert.equal(r.stateAfter.employed,false);assert.equal(r.stateAfter.ventureOpen,false);assert.ok(!['work-delivery','work-renewal','business-start','business-pressure'].includes(r.id));if(['career-entry','restart-entry'].includes(r.id))assert.ok(r.consequences.delta.money<=0);}}
+   let completedStudy=false,previous=null;for(const r of run.resolved){if(previous?.workActive&&r.stateAfter.workActive&&previous.careerId===r.stateAfter.careerId)assert.ok(r.stateAfter.careerStage>=previous.careerStage,'later ordinary work cannot lower an established career stage');previous=r.stateAfter;if(r.id.startsWith('job-'))seen.add(r.id);if(r.id==='study-complete'&&r.answer===0)completedStudy=true;if(completedStudy)assert.equal(r.stateAfter.education,'course-completed','ending work practice cannot erase a separately completed course');if(r.stateAfter.careerId==='household-care'){cares++;assert.equal(r.stateAfter.employed,false);assert.equal(r.stateAfter.ventureOpen,false);assert.ok(!['work-delivery','work-renewal','business-start','business-pressure'].includes(r.id));if(['career-entry','restart-entry'].includes(r.id))assert.ok(r.consequences.delta.money<=0);}}
   }
   assert.deepEqual([...seen].sort(),pack.careers.flatMap(c=>c.dilemmas.map(d=>'job-'+d.id)).sort());assert.ok(cares>0);assert.ok(outcomes.has('venture-builder')&&outcomes.has('debt-rebuilding')&&outcomes.has('family-care')&&outcomes.has('career-transition'));
  });

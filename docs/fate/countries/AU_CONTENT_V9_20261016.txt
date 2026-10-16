@@ -1,0 +1,22 @@
+AU v9 國別內容審核 — 2026-10-16
+
+限定新南威爾斯州雪梨都市生活。商業與市集只採City of Sydney地方政府區適用邏輯，不能用大雪梨地名就概括所有地方政府規則。日常有環形碼頭、海關大樓、中央車站、薩里山、海市場、皮爾蒙特、達令港、巴朗加魯、皇家植物園、朱鷺與港灣生活。公開人物只用中性虛構互動；沒有替真實玩家寫醜聞、債務、疾病、婚外關係或犯罪。
+
+實際量：1500獨立日常，child120/youth100/adult720/late420/any140；12職涯各10章及4兩分抉擇，共120章48情境；24人際鏈各6章；6雙人互動；4家境；1條當地教育課程路徑。用換行切分實際逐條文字，不用詞庫乘積或其他國家換地名產生。跨US/CA/TW原句檢查由自有測試執行。
+
+教育審核：NSW必須完成Year10，之後至17歲仍需依規定參與學校、核准教育訓練、符合條件的工作或其組合。未把未成年階段當可任意停學。職涯均18歲後開始，成年課程核對TAFE NSW具體課程及地點要求；enrol/application/register interest/waitlist是不同流程。有前置條件者需實際證明並經評估；USI等適用資料依課程窗口核對。單元完成只代表實際已完成內容，不自動取得完整資格、學位或另一課程錄取。
+
+職涯審核：咖啡前臺、戶外用品、園藝日常、文化場館、網站內容、聲音剪輯、自行車收件、出貨倉務、衣物修改、家庭照顧、非食品手作、港灣用品。家庭照顧是非薪職家務協調，應由共用引擎排除就業型同事鏈。園藝高處、特定機具/藥劑、車輛安全調整、船舶/航行安全及其他專門判斷都交由合適訓練與授權窗口，不因一般助理實作而授予資格。食品處理需符合任務的安全知識技能；Food Handler訓練不等於Food Safety Supervisor。非食品手作先確認場地與品項條件，設立市集主辦者的申請不是每位攤商通用許可。性別不限制職涯。
+
+所有家庭初值和選項金錢為AUD劇情假設，非真實薪資、匯率、資產分布或百分位。條件與金額供因果引擎模擬，不可稱真實統計。
+
+官方來源已於2026-10-16核對：
+1 https://education.nsw.gov.au/schooling/parents-and-carers/pathways-after-school/school-leaving-age — Year10後至17歲參與規則。
+2 https://www.tafensw.edu.au/study/enrol-apply/how-to — 課程、地點、申請、資料證明與註冊不同入口。
+3 https://transportnsw.info/travel-info/using-public-transport/accessible-travel/accessible-ferry-travel — 渡輪船體與碼頭區別；部分舊碼頭及潮位影響通行，不保證任何時刻可達。
+4 https://www.foodauthority.nsw.gov.au/training — 任務適用食品安全技能及多種訓練方式。
+5 https://www.cityofsydney.nsw.gov.au/business-support-funding — 各類地方商業、場地、市集及活動入口。
+6 https://www.cityofsydney.nsw.gov.au/libraries — 城市圖書館與公共資源。
+7 https://www.botanicgardens.org.au/royal-botanic-garden-sydney/plan-your-visit — 植物園入場、安全、天候與動線；不固定宣稱花期或即時開放。
+
+必要限制：本包僅內容資料，不修改runtime/UI/台灣v8、不新增DBschema、不提交或部署。worker/test/fate-country-au-v9.test.js為六項專屬結構與內容測試。公開碼重播、生命進程、代選分布與正式發布由root整合驗證。

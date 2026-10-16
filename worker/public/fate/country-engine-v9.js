@@ -39,7 +39,7 @@ function catalogue(profile){
  event('career-training',[18,31],1,[],'下一段生活，先靠近哪一種工作？','你核對工作內容、當地入門方式與可負擔的交通，把兩個真正想試的方向放在面前。',careers.map(c=>option('先準備'+c.label,'先完成能被檢查的練習，再接下能負責的工作。','你開始接觸'+c.label+'，問清要做哪些練習，也第一次認真想像自己站在那個位置的樣子。',{trainingStarted:true,careerTarget:c.id},{money:-unit,knowledge:5})),{minAgeByOptions:true}),
  event('career-practice',[20,49],1,['trainingStarted'],'第一次練習卡住了，要不要再試？','做過才知道，這段工作和想像不完全一樣。你需要決定是否接受具體回饋繼續練習。',[
   option('請人檢查，完成這一段實作','完成入門練習，仍需核對正式工作條件。','你把不懂的部分說清楚，接受可以檢查的回饋，完成這一段練習。',{practiceCompleted:true},{knowledge:10,money:-unit}),
-  option('停下這條路，先照顧眼前生活','把已做過的練習收好，這次先停在這裡。','你承認目前不適合繼續投入，保存做到哪裡的紀錄，先把時間和支出安頓。',{trainingStarted:false,trainingPaused:true,education:'paused'},{energy:10})],{afterYears:1}),
+  option('停下這條路，先照顧眼前生活','把已做過的練習收好，這次先停在這裡。','你承認目前不適合繼續投入，保存做到哪裡的紀錄，先把時間和支出安頓。',{trainingStarted:false,trainingPaused:true},{energy:10})],{afterYears:1}),
  event('career-entry',[21,58],1,['practiceCompleted'],'第一個能負責的工作機會來了。','有人願意讓你在明確分工和交接範圍內開始，也願意把報酬、時段和求助方式說清楚。',[
   option('核對條件，接受這次工作','只接下已完成準備且有權負責的部分。','你確認分工後接下工作，把不確定的部分交給能負責的人。',{workActive:true,employed:true,careerStage:1},{money:unit*3,reputation:6}),
   option('這次先不接，保留重新選擇的時間','沒有上工就不會有這條職涯的工作章。','你拒絕目前不適合的條件，把原因記下，沒有把尚未到職寫成一份工作。',{jobDeclined:true},{energy:5})],{afterYears:.7}),
@@ -107,6 +107,7 @@ function apply(ev,answer,state,profile,identity,atMs,flagAt,unit){
  if(ev.id==='restart-practice'&&answer===0)text+=' '+pack.careers.find(c=>c.id===state.restartTarget).practice;
  if(ev.id==='restart-entry'&&answer===0){const next=pack.careers.find(c=>c.id===state.restartTarget),care=next.id==='household-care';Object.assign(flags,{careerId:next.id,careerLabel:next.label,careerTransition:false,caregiver:care,employed:!care});if(care){delta.money=-unit;text='你和家人重新談妥能承擔的分工，從一段有輪替安排的家務協調開始。';}text+=' '+next.entry;}
  if(selected.risk){const failed=ratio(identity,ev.id+':risk')<.5;if(failed){Object.assign(flags,{ventureOpen:false,ventureFailed:true,workActive:false,repaymentActive:true});Object.assign(delta,{money:-unit*18,debt:unit*42,energy:-18});text='你承擔擴張後，回款沒有跟上成本，最後停止經營。能處分的設備已交接，留下的借款仍需要慢慢整理；時間往前走，沒有把失敗與責任一起抹掉。';}else{Object.assign(flags,{ventureSucceeded:true,careerStage:3});Object.assign(delta,{money:unit*110,debt:unit*4,energy:-12});text='你完成分批交付，也收回約定款項。扣除投入後，這段經營真的留下明顯餘裕；仍未結清的設備借款，也另外留在帳上。';}}
+ if(Number.isInteger(flags.careerStage)&&state.workActive&&flags.workActive!==false&&!['career-entry','restart-entry'].includes(ev.id))flags.careerStage=Math.max(state.careerStage,flags.careerStage);
  if(Object.hasOwn(flags,'workActive')&&!flags.workActive)Object.assign(flags,{careerId:null,careerLabel:null,careerStage:0,employed:false,selfEmployed:false,ventureOpen:false,...(flags.caregiver!==true?{caregiver:false}:{})});
  if(flags.caregiver)Object.assign(flags,{employed:false,selfEmployed:false});
  for(const [key,value]of Object.entries(flags)){state[key]=value;if(value!==false&&value!==null)flagAt[key]=atMs;else delete flagAt[key];}

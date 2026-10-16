@@ -56,7 +56,7 @@ export function plannedCountryContent(life,{activeMs}={}){
  // profession/relationship. Work-only chains require this life's current job.
  const people=validSocialCast(life.socialCast)?.people||[],usedChains=new Set();
  for(let i=0;i<people.length;i++){
-  const person=people[i],chains=pack.social.filter(c=>!usedChains.has(c.id)&&(!c.requiresCareer||run.resolved.some(r=>r.stateAfter.workActive&&r.stateAfter.careerId!=='household-care')));if(!chains.length)continue;
+  const person=people[i],chains=pack.social.filter(c=>!usedChains.has(c.id));if(!chains.length)continue;
   const chain=chains[mixed(life.seed+':chain:'+person.thread)%chains.length];usedChains.add(chain.id);
   const firstJob=chain.requiresCareer?run.resolved.find(r=>r.stateAfter.workActive&&r.stateAfter.careerId!=='household-care'):null;
   const base=firstJob?firstJob.atMs/DURATION*death+.2:7+mixed(life.seed+':meeting:'+person.thread)%14;
