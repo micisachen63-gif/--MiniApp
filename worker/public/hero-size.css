@@ -12,3 +12,7 @@
 .expedition-hero-portrait>.hero-character.hero-size-normalized{position:absolute!important;max-width:none!important;max-height:none!important;right:auto!important;bottom:auto!important;object-fit:fill;transform:none;opacity:1}
 @media(min-width:1440px){.expedition-hero-portrait{right:10%;width:290px;height:330px}}
 @media(max-width:720px){.expedition-hero-portrait{right:8px;width:152px;height:220px}}
+
+/* Decoration belongs to the fixed slot, never to the alpha-fitted bitmap. */
+body.greek.v2.mythic #view .branch .hero-fit-frame[data-slot="lineage"]{box-sizing:border-box;border:1px solid #bda57240;border-radius:8px;background:radial-gradient(ellipse at 50% 38%,#26384b,#0d1a2b);isolation:isolate}
+body.greek.v2.mythic #view .branch .hero-fit-frame[data-slot="lineage"]>img.lineage-portrait{border:0;border-radius:0;background:none;box-shadow:none;outline:0}
