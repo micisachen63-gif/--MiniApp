@@ -8,7 +8,7 @@
 - 已刪角色不在現存資料表，不會從舊分享、流水或快取補回。開世後改名不回寫既有故事。
 - 帳號／Telegram ID、username、頭像、出生資料都不進快照、不回傳敘事。
 - 快照僅 {v:1,people:[{thread,name}]} 存在本世 state_json；沒有額外migration或付費API。
-- 人名採實際公開角色暱稱，關係、年齡、職業與經歷屬虛構；出生紀事明確告知。
+- 人名採實際公開角色暱稱，關係、年齡、職業與經歷屬虛構；改放頁尾收合的「關於旅章」，出生紀事只顯示故事。
 - 沒候選、無適合人物、壞名字時沿用原NPC，不能把玩家指派為狗或無名亡者。
 
 延續敘事
@@ -35,4 +35,4 @@
 驗證
 - worker/test/fate-social.test.js 7項；搭配 fate-narrative、fate-service 合計32項通過。
 - 測他人帳號去重、自帳分身排除、刪除候選排除、空池NPC、client偽造不生效、改名後穩定、歷史/進度保持、六章同名、終章同名、舊世相容。
-- 實際renderLifeUI在innerHTML一用就拋錯的假DOM中渲染，確認textContent路徑與虛構聲明。
+- 實際renderLifeUI在innerHTML一用就拋錯的假DOM中渲染，確認textContent路徑；系統說明已移出故事正文。

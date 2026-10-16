@@ -95,7 +95,7 @@ export async function requestView(env, r, now = Date.now()) {
 export async function requestTrade(env, { tgId, shareId }, now) {
   const db = env.DB; const tg = String(tgId);
   const s = await shareView(env, shareId); if (!s) throw new GameError('not_found', '找不到這則分享', 404);
-  const me = await charOf(db, tg); if (!me) throw new GameError('no_character', '你還沒有角色，先私訊小精靈輸入 /rpg 創角', 404);
+  const me = await charOf(db, tg); if (!me) throw new GameError('no_character', '你還沒有角色，先私訊星穹旅誌輸入 /rpg 創角', 404);
   const owner = String(s.ownerTgId) === tg ? me : await charOf(db, s.ownerTgId);
   if (String(s.ownerTgId) === tg || (owner && String(owner.account_tg_id) === String(me.account_tg_id))) throw new GameError('self', '不能讓同一個 Telegram 帳號的角色互相交易 🙂');
   if(s.objectKind==='sigil'&&s.tradeBlockReason)throw new GameError('untradeable',s.tradeBlockReason,409);

@@ -74,7 +74,7 @@ test('the same fictional world year is shared and its actual numeric thresholds 
  }
  assert.ok(conditions.size>=7);
  const a=almanac(900);a.harvest=-999;assert.notEqual(almanac(900).harvest,-999);
- const birth=plannedContent(life())[0].text;assert.match(birth,/架空/);assert.match(birth,/不增減實際RPG金幣或戰力/);
+ const birth=plannedContent(life())[0].text;assert.match(birth,/星曆\d+年/);assert.doesNotMatch(birth,/不增減|不代表|RPG|全為虛構|改動對方角色/);
 });
 
 test('finite authored catalogue has varied multi-life content with measured repetition limits',()=>{

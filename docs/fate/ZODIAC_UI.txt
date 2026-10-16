@@ -15,7 +15,7 @@
 - public/fate/zodiac/*.svg 共13檔：12個原創奇幻星座圖騰與1個尚未指定的十二星環，總39KB。
 - 這些是原創神話裝飾幾何，不是真實天文星圖，SVG desc明確標示；不涉及付費圖像生成或遠端圖資。
 - app.js只新增helper/UI import及替換fate-sky內容；生日填寫、啟程、分享隱私由root另行接。
-- style.css末端獨立CSS；active/result手機圖騰118px，桌面144px，降低高度並保留背景主角空間。
+- style.css末端獨立CSS；active/result手機圖騰216px，桌面248px（2026-10-16依回饋放大），降低高度並保留背景主角空間。
 - 只有光暈opacity CSS緩變，沒有JS tick/repaint循環；prefers-reduced-motion關閉動畫。
 - 名稱與文案以textContent呈現，SVG固定白名單路徑，不插入用戶HTML。
 

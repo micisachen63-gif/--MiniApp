@@ -16,14 +16,13 @@ export function renderLifeUI(p,o){
  const progress=el('div','fate-life-progress');progress.append(el('span'));p.append(progress,el('p','fate-life-clock',''),el('p','fate-life-rule',`一世 2 小時 · 06:00–24:00 成長 · 今日 ${o.startedToday}／4 世`));
  if(o.preview){const controls=el('details','fate-demo-controls');controls.append(el('summary','','預覽時間控制 · 不影響正式機'));const row=el('div','fate-row');row.append(btn(o.running?'暫停預覽':'繼續預覽',o.onToggle),btn(v.available?'略過此抉擇':'跳至重要抉擇',()=>o.onClock(v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt)),btn('預覽此生落款',()=>o.onClock(v.endAt)));controls.append(row,el('p','fate-note','示意時鐘加速 ×60；重要抉擇時 ×6，約有 15 秒可選。正式一世仍是 2 小時。'));p.append(controls);}
  const toolbar=el('div','fate-life-toolbar');toolbar.append(el('span','fate-feed-label','此世紀事'),btn('今日旅箋',o.onDaily),btn('靈魂旅誌',o.onArchive));p.append(toolbar);
- const world=el('details','fate-world fate-journal');world.append(el('summary','','架空世界年鑑'),el('div','fate-world-data'));p.append(world);const stats=el('div','fate-life-stats');stats.setAttribute('aria-label','這位虛構角色的生活狀態');p.append(stats);
+ const world=el('details','fate-world fate-journal');world.append(el('summary','','星穹世界年鑑'),el('div','fate-world-data'));p.append(world);const stats=el('div','fate-life-stats');stats.setAttribute('aria-label','這位虛構角色的生活狀態');p.append(stats);
  const feed=el('div','fate-story-feed');feed.setAttribute('role','log');feed.setAttribute('aria-label','自動播放的此世紀事');feed.setAttribute('aria-live','polite');p.append(feed);
  const night=el('p','fate-night-note','☾ 星穹已入夜。時間暫停，06:00 再接續此世。');night.hidden=!v.night;p.append(night);
  if(v.available){const scene=scenes[v.index],question=el('section','fate-live-question');question.dataset.choiceIndex=String(v.index);question.append(el('small','fate-eyebrow',`${scene.age} 歲 · 一個選擇正等著你`),el('h2','',scene.title),el('p','',scene.text));
   for(let a=0;a<2;a++){const b=btn('',()=>o.onChoice(a,v.index),'fate-option');const copy=el('span');copy.append(el('strong','',scene.choices[a][0]),el('small','',scene.choices[a][1]));b.append(el('span','fate-num',a?'Ⅱ':'Ⅰ'),copy);question.append(b)}question.append(el('p','fate-choice-left',''));question.append(el('p','fate-note','沒有回應也會繼續，由系統代選並留下「命運代選」記憶。'));p.append(question);
  }
  if(o.preview){const tg=el('details','fate-journal');tg.append(el('summary','','TG 事件通知示意（未發送）'));const card=el('div','fate-tg-preview');card.append(el('small','','星穹旅誌 · 事件來信'),el('b','',`@帳號主人 · ${o.heroName||'你的角色'}`),el('p','',scenes[Math.min(v.index,2)].title));const actions=el('div','fate-row');actions.append(btn('回應事件',()=>{if(o.preview&&!v.available)o.onClock(v.nextAt);else p.querySelector('.fate-live-question')?.scrollIntoView({block:'center',behavior:'smooth'})}),btn('進入遊戲',o.onClose));card.append(actions);tg.append(card,el('p','fate-note','正式 BOT 排程尚未接入；此處只預覽提問、標記角色主人與進遊戲按鈕。'));p.append(tg);}
- p.append(el('p','fate-note','事件、年齡與靈魂特質屬於這位虛構角色，不是對玩家現實人生的預測。正式角色由雲端保存，訪客體驗保存在這台裝置。'));
  paintLifeUI(p,d,true);
 }
 export function paintLifeUI(p,d,force=false,authorityNow=d.clockAt){

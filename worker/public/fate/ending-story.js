@@ -22,7 +22,7 @@ export function endingForLife(life={}){
  const focus=life.answers?.[2]===1?'voyage':career.id==='garden'?'garden':['lamp','book','pot'].includes(career.id)?'atelier':'harbor';
  const titles={voyage:'紙頁以外，仍有海風',garden:'春天留在別人的手裡',atelier:'那些慢慢修好的日子',harbor:'潮水記得尋常的岸'};
  const paragraphs=[
-  `${rows[0].text.split('這是架空的')[0]}許多年以後，回看這一生，最先浮起的仍是這些聲音與氣味。它們沒有替你決定將來，只給了你一個可以開始的地方。星曆${worldYear(seed)}年的${profile.region}，因此從年鑑裡的名字，變成這冊旅誌最貼近掌心的一頁。`,
+  `${rows[0].text.split('星曆')[0]}許多年以後，回看這一生，最先浮起的仍是這些聲音與氣味。它們沒有替你決定將來，只給了你一個可以開始的地方。星曆${worldYear(seed)}年的${profile.region}，因此從年鑑裡的名字，變成這冊旅誌最貼近掌心的一頁。`,
   `${early?early.text:'最初的記憶還很輕，許多事都來不及取名字。'}${objectFirst?objectFirst.text:''}那時你未必懂得，一件東西為何值得留下。有時為了用途，有時，只因它替一段快要模糊的日子，保住了可以觸摸的邊緣。`,
   `${first?choiceProse(first):'關於往後方向的答覆，還沒有寫進這冊旅誌。'}${work.length?work[Math.min(2,work.length-1)].text:''}${work.length>7?work.at(-1).text:''}手藝沒有讓每個難題都變容易，卻讓你知道，做不好時仍能回來，把原因找出。這份笨拙而誠實的重來，後來比任何稱呼都更接近你。`,
   `${relation[0]?.text||'人與人的相遇尚未在紙上展開，空白仍留著可以坐下的位置。'}${relation.length>2?relation[Math.floor(relation.length/2)].text:''}${relation.length>1?relation.at(-1).text:''}有些關係並非一路順遂才留下，而是話語走偏時，仍有人願意多問一句。你記住的，正是那些沒有被結論草草收走的時刻。`,

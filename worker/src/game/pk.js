@@ -6,8 +6,8 @@ import { GameError } from './classes.js';
 
 /** eligibility for a challenge/accept between two characters (levels only; caps/cooldowns need the DB) */
 export function pkBlock(a, b) {
-  if (!a) return ['no_character', '你還沒有角色，私訊小精靈輸入 /rpg 開始冒險'];
-  if (!b) return ['no_target', '對方還沒有 RPG 角色（或找不到這個人）'];
+  if (!a) return ['no_character', '你還沒有角色，私訊星穹旅誌輸入 /rpg 開始冒險'];
+  if (!b) return ['no_target', '對方還沒有星穹旅誌角色（或找不到這個人）'];
   if (String(a.tg_id) === String(b.tg_id)) return ['self', '不能跟自己決鬥'];
   if (a.level < PK.minLevel) return ['level', `決鬥需要 Lv${PK.minLevel}（你 Lv${a.level}）`];
   if (b.level < PK.minLevel) return ['level', `對方要 Lv${PK.minLevel} 才能決鬥（對方 Lv${b.level}）`];

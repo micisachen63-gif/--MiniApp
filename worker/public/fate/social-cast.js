@@ -14,4 +14,3 @@ export function socialThread(thread,cast){
  const actor=validSocialCast(cast)?.people.find(p=>p.thread===thread.id),role=SOCIAL_ROLES[thread.id];if(!actor||!role)return thread;
  return {...thread,actor:actor.name,role:role.role,steps:thread.steps.map((text,index)=>{const renamed=text.split(role.npc).join('「'+actor.name+'」');return `${index===0?'在這一世，':''}${index===0&&thread.id==='rival'?renamed.replace('同行','同行宿敵'):renamed}`;})};
 }
-export const SOCIAL_FICTION_NOTE='此世的人物借用了其他旅人的公開角色暱稱，關係與經歷全為虛構，不代表玩家的現實生活，也不會向對方發送互動或改動對方角色。';

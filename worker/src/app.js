@@ -110,7 +110,7 @@ async function bossFor(env, tg, now) {
 export async function handleApp(request, env, url, { routes, json, fail, nowFor }) {
   if (request.method !== 'POST') return fail('method', 'POST only', 405);
   const auth = await appAuth(request, env);
-  if (auth.error) return fail(auth.error, auth.error === 'not_configured' ? 'Mini App 尚未設定' : '請從 Telegram 小精靈開啟遊戲', auth.status);
+  if (auth.error) return fail(auth.error, auth.error === 'not_configured' ? 'Mini App 尚未設定' : '請從 Telegram 星穹旅誌開啟遊戲', auth.status);
   let body = {};
   try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
   const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;

@@ -54,7 +54,7 @@ function render(){
  if(embedded&&!cloud){panel.append(note('正在連接這位英雄的靈魂旅誌…'));if(cloudError)showCloudError(panel);root.append(shell);return;}
  if(embedded&&cloudError)showCloudError(panel);
  if(stage==='archive')renderArchive(panel);else if(stage==='life')renderLife(panel);else if(stage==='daily'){renderDaily(panel);panel.append(button(currentLife?'回到正在展開的這一世':'回到旅章',()=>{stage=currentLife?'life':result?'result':'intro';render();window.scrollTo(0,0)}));}else if(result)renderResult(panel);else if(stage==='scene')renderScene(panel);else renderIntro(panel);
- const footer=el('footer','fate-footer');footer.id='fate-about';footer.append(el('div','','原創奇幻短篇 · 僅供遊戲趣味與生活靈感'),el('div','','不預測現實命運，不影響遊戲戰力與掉落'),el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
+ const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章以星穹世界為舞臺。人物關係與人生經歷為原創故事，偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
 }
 function renderIntro(p){
  p.append(el('span','fate-eyebrow','第一期 · 最後一盞星燈'),el('h2','','如果人生能重新啟程，\n你會把光留給誰？'));

@@ -17,7 +17,7 @@ import {createPkAnimationFlow} from './rpg-pk-animation-flow.js';
 // Callback prefix is "rpg:" (NOT "rp:": relay.js already uses rp:網頁版GPT and its /^r([ascgpm]):/ catch-all would also swallow rp:*).
 
 export const RPG_CALLBACK_RE = /^rpg:([a-zA-Z]{2})(?::([A-Za-z0-9_.-]{1,48}))?$/;
-const START_RE = /^(?:\/rpg(?:@([A-Za-z0-9_]+))?|\/start\s+rpg(?:boss|guardian|bag|shop|fate)?|⚔️ 冒險|⚔️ RPG 冒險)$/i;
+const START_RE = /^(?:\/rpg(?:@([A-Za-z0-9_]+))?|\/start\s+rpg(?:boss|guardian|bag|shop|fate)?|⚔️ 冒險|⚔️ 星穹旅誌 冒險|⚔️ RPG 冒險)$/i;
 const BOSS_START_RE = /^\/start\s+rpgboss$/i;
 const TRADE_START_RE = /^\/start\s+rpg(trade|req|pk)_([tqp][0-9a-f]{11})$/i;
 const TRADE_RE = /^\/(?:交易|trade)(?:@([A-Za-z0-9_]+))?(?:\s+[\s\S]*)?$/i;
@@ -395,7 +395,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       if (tm && (!tm[1] || tm[1].toLowerCase() === String(botUsername()).toLowerCase())) { await send(TRADE_HINT, { reply_to_message_id: msg.message_id, allow_sending_without_reply: true }, msg.chat.id); return { rpg: 'trade-hint' }; }
       const m = START_RE.exec(text); if (!m || (m[1] && m[1].toLowerCase() !== String(botUsername()).toLowerCase())) return null;
       const link = deepLink();
-      await send('⚔️ 星穹旅誌：創角、補水、商店、裝備都在遊戲畫面（私訊小精靈打開）。群組首領每小時整點（01:00～07:59 休息）出現在這裡！', link ? { reply_markup: { inline_keyboard: [[{ text: app.main && app.url ? '🎮 打開冒險' : '⚔️ 開始冒險（私訊）', url: link }]] } } : {}, msg.chat.id);
+      await send('⚔️ 星穹旅誌：創角、補水、商店、裝備都在遊戲畫面（私訊星穹旅誌打開）。群組首領每小時整點（01:00～07:59 休息）出現在這裡！', link ? { reply_markup: { inline_keyboard: [[{ text: app.main && app.url ? '🎮 打開冒險' : '⚔️ 開始冒險（私訊）', url: link }]] } } : {}, msg.chat.id);
       return { rpg: 'group-link' };
     }
     if (!inUserPrivate(msg.chat, msg.from)) return null;

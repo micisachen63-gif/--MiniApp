@@ -114,7 +114,7 @@ export async function withPlayer(env, tgId, now, fn = null, { source = 'player',
   const db = env.DB;
   for (let attempt = 1; ; attempt++) {
     const loaded = await loadPlayer(db, tgId, env);
-    if (!loaded) throw new GameError('no_character', '你還沒有角色，私訊小精靈輸入 /rpg 開始冒險', 404);
+    if (!loaded) throw new GameError('no_character', '你還沒有角色，私訊星穹旅誌輸入 /rpg 開始冒險', 404);
     const s = settleSelectedPlayer(loaded, now);
     const settledGear = [...(s.report.relics || []), ...(s.report.eliteGear || [])];
     const settled = { char: s.char, inv: s.inv, equipment: [...loaded.equipment.map((e) => ({ ...e })), ...settledGear.filter((r) => !loaded.equipment.some((e) => e.id === r.id))] };
