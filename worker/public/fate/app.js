@@ -214,7 +214,7 @@ async function syncCloud(full=false,initial=false){
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
  const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
  if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
- if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>document.querySelector('.fate-live-question,.fate-shared-event,.fate-last-choice,.fate-panel')?.scrollIntoView({block:'start',behavior:'instant'}));
+ if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }
 function cloudDisplayLife(){if(!cloud?.active)return currentLife;const d=cloud.active.draft;return {...d,clockAt:Math.max(d.clockAt,Math.min(cloudNow(),cloud.active.nextAt?cloud.active.nextAt-1:cloudNow()))};}

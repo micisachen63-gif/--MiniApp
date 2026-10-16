@@ -49,3 +49,11 @@ test('notification bootstrap waits for hero selection and opens Fate exactly onc
  vm.runInNewContext(source.slice(start,end),context);const view=new Node('section');window.RpgInterface.compose(view,{tab:'select'});window.RpgInterface.compose(view,{tab:'home'});assert.equal(queued.length,0);
  role='hero-1';window.RpgInterface.compose(view,{tab:'home'});window.RpgInterface.compose(view,{tab:'home'});assert.equal(queued.length,1);queued[0]();assert.equal(opened.length,1);
 });
+test('notification focuses the pending question before its ancestor panel, then uses shared or expired fallback in priority order',()=>{
+ const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8'),line=source.split('\n').find(l=>l.includes("if(initial&&qs.get('notification')==='1')requestAnimationFrame"));
+ const order=['.fate-live-question','.fate-shared-event','.fate-last-choice','.fate-panel'];
+ for(let first=0;first<order.length;first++){const focused=[],lookups=[],present=new Map(order.slice(first).map(selector=>[selector,{scrollIntoView:options=>focused.push({selector,options})}]));
+  vm.runInNewContext(line,{initial:true,qs:new URLSearchParams('?notification=1'),requestAnimationFrame:fn=>fn(),document:{querySelector:selector=>{lookups.push(selector);return present.get(selector)||null;}}});
+  assert.equal(focused.length,1);assert.equal(focused[0].selector,order[first]);assert.deepEqual(lookups,order.slice(0,first+1));assert.equal(focused[0].options.block,'start');
+ }
+});
