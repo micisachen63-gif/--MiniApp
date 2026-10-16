@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "c16c4c63ea76b19f2dc83722ee0bc2dc91ddaad3",
+  "sourceCommit": "3c19d147136dc435501c3557b2eb896c5369d26a",
   "service": "elf-rpg-api",
-  "productionVersion": "73ab824f-ceea-423c-89d4-ecd923fa1585",
+  "productionVersion": "01a52d68-5ebb-43a6-9f33-6ed85819945f",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T05:14:48.758Z",
+  "verifiedAt": "2026-10-16T05:19:14.138Z",
   "runtimeSHA256": {
     "index.js": "ddb10399c03d9c9a37d77ec2bb8aaf8d267cba44c005914ba2c4d293d3de9a0d"
   },
   "source": {
     "fileCount": 8829,
-    "sha256": "7d604f76e52094133e2cd20e8af2abb3464d5d7e74da0715c7d3be707d8d6992",
+    "sha256": "9b5bd9e8242d4a35a1f966d2d28064e90754dd1a4d7433b2acd49d533528b6d4",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -1975,7 +1975,7 @@
       },
       {
         "file": "worker/build.toml",
-        "sha256": "7e93538d684e64b58100363df48a45fab7962c697909ed6b8ce47bb2421e2d8c"
+        "sha256": "44d3e9d8deff906a6c278afa1673648afe5ae1a209aba4e4dfc898556c0b8079"
       },
       {
         "file": "worker/migrations/0001_init.sql",
@@ -2107,71 +2107,71 @@
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
-        "sha256": "d6e8165cc3a35699a5f7c85b990847bd5cf89255efd2c010cc4cd5ebdf75ccb8"
+        "sha256": "96a27d727d00b0d16c6dfe50fcc06c03d042a703d824ce7d18a5aefa95658a51"
       },
       {
         "file": "worker/public/app.js.backup-adv1-live-20261010",
-        "sha256": "78d67ea7d0f550a94e9d2c9a0d5473ae8ce0f34c10d2536915bc64ce6c1332a3"
+        "sha256": "c06fbe2c4069ef590018cc2c381da6c9edd2735c8463cd4d12680706a577db86"
       },
       {
         "file": "worker/public/app.js.backup-allclass-20261010",
-        "sha256": "b98d1b93e9d1f5933ec6c64921a23504f37eeb14489087cc3aeb1b6b18bdf282"
+        "sha256": "2f6d9537a8cbfc4b5ab5b9c7f7ef30656e6e52ff6c1ed19d05a06e184ba8ab41"
       },
       {
         "file": "worker/public/app.js.backup-before-mage-animations-20261010",
-        "sha256": "c00d6d3e0a3594e8de5a403d5cba28171a4351ec33e97c1ad9e049ba2958718e"
+        "sha256": "fe860b3296a21fc80d0908dd861babb8f9c758141f1ad4dc438d5e7d4a7ce745"
       },
       {
         "file": "worker/public/app.js.backup-before-mage-ui-20261010",
-        "sha256": "ffe1c2305a959d3e62691d68560808d55ce36e9adb046a0b79aa9a16f96a83ab"
+        "sha256": "c150a749be62bd8b7396780e2d5f19f155c48c6e398f9064335167ab4f30b898"
       },
       {
         "file": "worker/public/app.js.backup-before-original-elf-1791609947139",
-        "sha256": "e123cc00e94460470baed953ffca972ceba469555e2feb603740c8549122e5a9"
+        "sha256": "c04f6cfe066bfcdec22799624062dcbfe6c55796d7b7720e4b04b9cdfc5d3cb7"
       },
       {
         "file": "worker/public/app.js.backup-before-quality-restore-20261010",
-        "sha256": "ca2dc1feef6e057fdff44b46f8a837ebd9269a2ebca5f0f36656607d722dd5e4"
+        "sha256": "7c1f9282ee221e3712672f191531424a6cc59a680e5fd55bfcc4100a60264559"
       },
       {
         "file": "worker/public/app.js.backup-elf-all-animations-20261010",
-        "sha256": "1050c3fc84c7c6d40cbc0ef4e7d8c71e274cade9b9a022a338f088fbc51ba0d4"
+        "sha256": "d2a9fbae9d942f24bbaee7325611c2216b7c13b2359f593727b62d96e2b26535"
       },
       {
         "file": "worker/public/app.js.backup-elf-animation-20261010",
-        "sha256": "07d8a2467ea11f14e6d98d5c7854a49b69707b601211c09075fb0f27d41cd08e"
+        "sha256": "6b0b7098d131bb3420e6288463339df8412b2a61bc19d76dfc186f8e2e310814"
       },
       {
         "file": "worker/public/app.js.backup-elf-art-integration-20261010",
-        "sha256": "e0b0e36475ded760b34a5544ddafdaa23965595614a2270964317b3008d33cb4"
+        "sha256": "70607e4cc6b93648e28dcd05d61f4d13b61019c38c1b8f6d203f6ea50a2a3687"
       },
       {
         "file": "worker/public/app.js.backup-elf-full-tree-20261010",
-        "sha256": "975a611ba47855df40c41b7fea8064f121e39b156e948728b2cf528a73b35999"
+        "sha256": "8dc1695dec0515f4bba5990a6594803b14e125c5d3476ba09bdbadc6e712a7f0"
       },
       {
         "file": "worker/public/app.js.backup-elf-redesign-20261010",
-        "sha256": "679aa28f22f84ee7f698c30ed08ed4536ca2abeee705894ae10368d777b420d7"
+        "sha256": "613bf76ca3d46d24a274843ad65fe96b22b5626b2e8bfe44f30aec40499d4c24"
       },
       {
         "file": "worker/public/app.js.backup-zero-elf-2s-20261010",
-        "sha256": "364acb2953aa530bab4e32667e35bda7528a36d3c0de0c3912c210180d677fe4"
+        "sha256": "cdffac975e6351feef1a0de036be7bad1eabe6a61907b09e06e8db77bab4194d"
       },
       {
         "file": "worker/public/app.js.before-classic-classview-20261010",
-        "sha256": "c977e41f10182a058ffa870cd240c348adc7102f3153f237c10c3b3f156d2531"
+        "sha256": "67f44bfa52b4d074840040aaf14112afb70dcfbd3e008786551091ff02f692ff"
       },
       {
         "file": "worker/public/app.js.before-classic-ui-20261010",
-        "sha256": "47def0dedb90256a4de5a134f2ffa812660e5e49bc20dd9ae8540de16033e544"
+        "sha256": "c1e9bc444ce74a7c297273812ee09750e702c1c99c705014487e2b3a90c8dbf5"
       },
       {
         "file": "worker/public/app.js.before-elf-stage34-preview-20261010",
-        "sha256": "22d3e84baebe7a265379c34a953bf966711312be1f7335b65a058932b618a429"
+        "sha256": "64b63c359d69820ee8e541070c7c84264409490755c3e32a8dac7c66f44f2152"
       },
       {
         "file": "worker/public/app.js.uiux-backup-20261010-222829",
-        "sha256": "b782ba0525ea44ae5b0c5c4964031ae1567f6d8ad4bcd47a243e9af0a1f16073"
+        "sha256": "0fe6d6c4a34a9fdfc6cf2be6915abe95fb8fe073882c11bf8880812a5d132188"
       },
       {
         "file": "worker/public/armory-specializations.js",
@@ -2179,7 +2179,7 @@
       },
       {
         "file": "worker/public/art.js",
-        "sha256": "dfc3f56b75d2a14a7ae9189cfc1861f0a52a6a5280b98e16797b21e1a538cbe8"
+        "sha256": "a2eba976396e368dc6906e24ce2c3f3642b92f853e5b75e38feeafd37f8c35c6"
       },
       {
         "file": "worker/public/art/blessed-announcement-20261014/armor.png",
@@ -19171,7 +19171,7 @@
       },
       {
         "file": "worker/public/art/dungeons-20261011/manifest.json",
-        "sha256": "d2a683e8595aedcf7cf56aab0b593bce43b17c51af011f210116b91b3c7fef19"
+        "sha256": "97875245843202e4d838a99a7592de41e0de6c2ad5fc9c4586c8cb818dc76f90"
       },
       {
         "file": "worker/public/art/dungeons-20261011/oracle-background.webp",
@@ -19583,7 +19583,7 @@
       },
       {
         "file": "worker/public/art/elf-adv2-magic-20261013/manifest.json",
-        "sha256": "e5b4881a270d725b6635f720fbb1f0f6fdc4c3e815ec5343357cfbfc60f3dc28"
+        "sha256": "f312009783f5ae61dfd1065c47de170d778b9a25cd25eb42d38c423e856546af"
       },
       {
         "file": "worker/public/art/elf-adv2-skills-20261013/beasts.webp",
@@ -19607,7 +19607,7 @@
       },
       {
         "file": "worker/public/art/elf-adv2-skills-20261013/manifest.json",
-        "sha256": "8988227fb5fcc2830437cab212cfd499a2622bc2aac7cc3878c5aa99a1929cda"
+        "sha256": "94687dd4b05bee5b44f3fb27d35c5d634f56b7e793b1aa18f4f4ab0f45476755"
       },
       {
         "file": "worker/public/art/elf-adv2-skills-20261013/snipe.webp",
@@ -20011,7 +20011,7 @@
       },
       {
         "file": "worker/public/art/elf-adv3-magic-20261013/manifest.json",
-        "sha256": "8ea1373c0cd78170da84f77127adfbe3b826eac49747870630b320c342a34d97"
+        "sha256": "05962aa85b6469aaddd2ee89b09502a157197ce43d44d41c6a76fcb5690af997"
       },
       {
         "file": "worker/public/art/elf-adv4-attack-fx-20261013/archer_A111.webp",
@@ -20079,7 +20079,7 @@
       },
       {
         "file": "worker/public/art/elf-adv4-attack-fx-20261013/manifest.json",
-        "sha256": "08fe19d0af3c4a4677a7120d06daf63f76f29488230193cc419bac8095728b3a"
+        "sha256": "9d361da09c18a34876838c55d288897f7978cb2a0b6161d94e32b6addc8fa495"
       },
       {
         "file": "worker/public/art/elf-adv4-attack-fx-20261013/pet-beast.webp",
@@ -20095,7 +20095,7 @@
       },
       {
         "file": "worker/public/art/elf-adv4-attack-fx-20261013/source-manifest.json",
-        "sha256": "755950f038619946321af4ec30d72eb91fbe21332aa55e032ed55a07c6d6dda1"
+        "sha256": "c8f10137320ec4a915f02411ef77d381ac7d7e84743dff9f995e10698ef2b891"
       },
       {
         "file": "worker/public/art/elf-adv4-clean-20261011/hero_adv4_archer_A111_f.png",
@@ -20611,7 +20611,7 @@
       },
       {
         "file": "worker/public/art/elf-adv4-magic-20261013/manifest.json",
-        "sha256": "be7a93b33b2892e098a2730bb0a751d7b3296251a3d48dc39d0a8fbf5d245e2c"
+        "sha256": "bd6b496c1b5490f09d113b679dc3afbf89632f89056e44ebeeb715b625b5757a"
       },
       {
         "file": "worker/public/art/elf-adv4-single-20261011/hero_adv4_archer_A111_f.png",
@@ -22011,7 +22011,7 @@
       },
       {
         "file": "worker/public/art/guardian-sigil-20261013/manifest.json",
-        "sha256": "3c69793defa2a0ac061d98e7ea22376869ab253ab05cf48a86edcf75e8714295"
+        "sha256": "64dbd01bb1bb961c3933e2c5f25726c3f4e0165ca07999366a80628d7c7d1066"
       },
       {
         "file": "worker/public/art/guardian-sigil-20261013/melee-share.jpg",
@@ -24187,7 +24187,7 @@
       },
       {
         "file": "worker/public/art/hero-display-hd-20261011/manifest.json",
-        "sha256": "a57d07fe84fb6f9648b624c42bd8af5923f785a7d421cd51d58cfc3d0583854b"
+        "sha256": "5536649df41adcec2bf24f1015d8804e474daf98e1990e0dd4cafa4ea50b4cc2"
       },
       {
         "file": "worker/public/art/hero-display-hd-20261011/sword_f.webp",
@@ -24419,7 +24419,7 @@
       },
       {
         "file": "worker/public/art/mage-adv2-hd-20261012/manifest.json",
-        "sha256": "9329c7f2438f13423b9ee289f4a6ebf80452e17fe6f02fa0f73178d9e123d632"
+        "sha256": "6533fac274fec3c63ca253cf7610373642bd49131913ce71985eb6f765394173"
       },
       {
         "file": "worker/public/art/mage-zero-clean-20261010/hero_mage_f.png",
@@ -27339,7 +27339,7 @@
       },
       {
         "file": "worker/public/art/sword-adv2-hd-20261012/manifest.json",
-        "sha256": "b976512ca55c322e2ad7a79ec776ca497ff5a7e7bb50ffd09ec2c59886a24ec0"
+        "sha256": "61afe36f33fb5e9ef09f7e639d3c62d41fcb82e13c5036c2072e4f12b1d23a11"
       },
       {
         "file": "worker/public/art/sword-adv3-hd-20261012/hero_adv3_sword_A11_f.png",
@@ -27599,7 +27599,7 @@
       },
       {
         "file": "worker/public/art/sword-adv3-hd-20261012/manifest.json",
-        "sha256": "624f8425a655359011a7b09568395a787144f8551a820f97e62a120f4f3c49f6"
+        "sha256": "dedf9f1fd9483dbb3756b24b27b7e3773208b80fbfb062457624a845a50186f7"
       },
       {
         "file": "worker/public/art/sword-adv4-hd-20261012/hero_adv4_sword_A111_f.png",
@@ -28115,7 +28115,7 @@
       },
       {
         "file": "worker/public/art/sword-adv4-hd-20261012/manifest.json",
-        "sha256": "c0640cb946bda694a27ab48407df18d98e44aa6d582bd8199ebea7d85e7262fc"
+        "sha256": "a2c4579d9c0b969ebc8c4a8f9e2f89557b4aeaf61d01c5baff04cccaa93bec6c"
       },
       {
         "file": "worker/public/art/sword-adv4-magic-20261013/fx/fx_sword_adv4_A111.png",
@@ -28247,11 +28247,11 @@
       },
       {
         "file": "worker/public/art/sword-adv4-magic-20261013/fx/manifest.json",
-        "sha256": "4523f06ce9840e89aa55c17af9fc4034f425181d08e58580db85dc80c4c67597"
+        "sha256": "5c0059ed0784ecb5b89457191038a63260af4a9e471126491d97c068745bd485"
       },
       {
         "file": "worker/public/art/sword-adv4-magic-20261013/generation-plan.json",
-        "sha256": "9422043d25ddcbbabf751d049391ce30c36d6e5458788dc31bfedc9b03a90776"
+        "sha256": "134351cee1859e9563d10163b361ed27c3829a0ffc797ac508b639be49b1ba02"
       },
       {
         "file": "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A111_f.png",
@@ -28895,7 +28895,7 @@
       },
       {
         "file": "worker/public/art/sword-adv4-magic-20261013/manifest.json",
-        "sha256": "41e045d059f9e1b5e1a8dc35c63cf079df0869db1e0ebe279f9492384d811cf0"
+        "sha256": "4b0d9c3d77fbebd681a121610b246ea3d949eef7563e14bf8f7f65b51e1102d5"
       },
       {
         "file": "worker/public/art/sword-zero-clean-20261011/hero_sword_f.png",
@@ -31079,7 +31079,7 @@
       },
       {
         "file": "worker/public/art/ui/hero-fx-20261011/manifest.json",
-        "sha256": "b314d955b23b8d36595941a011ecfe8275b64966c6630bca3025547b719a383f"
+        "sha256": "1161c94b8b4e0c4240047f4663269d9d049b31626236d91cc62cf76c00c0ee12"
       },
       {
         "file": "worker/public/art/ui/hero-fx-20261011/spark.webp",
@@ -31383,11 +31383,11 @@
       },
       {
         "file": "worker/public/art/v2/elf-progression.json",
-        "sha256": "696e58e45b088ee5954d3eae093c381de9528b7f4822ae2644839d9ce0ed3012"
+        "sha256": "bfb377a1dafd1bcf15a4882a05a1a1abe205870dc2e33af3ca13dd84dd1ab503"
       },
       {
         "file": "worker/public/art/v2/elf-progression.json.backup-full-branch-tree-20261010",
-        "sha256": "5e9f3c9aa3350ceedbcd95cf6a1dc4e51dc59d73fe057f678484833f89fa3422"
+        "sha256": "41faf354c29ed1f62a2e7a6083f35bd633c021ac969433f462041022e19a6e63"
       },
       {
         "file": "worker/public/art/v2/elite_artemis_ranger.webp",
@@ -32847,11 +32847,11 @@
       },
       {
         "file": "worker/public/art/v2/heroes.json",
-        "sha256": "383e93833b8b4545e283a41ca545789bcd59e46cf86d5a984ad3907239021c22"
+        "sha256": "22c00d93f5ee353357b2ee6fc0cac02047a34ce0ef1a5855ceeffd8cc6c765eb"
       },
       {
         "file": "worker/public/art/v2/heroes.json.backup-before-mage-ui-20261010",
-        "sha256": "1c9987f5e5ff6f54e3aedebb46e51bd3d45030f264faa9c3327dbe61353fa529"
+        "sha256": "b590c48fb5b83584c9235d2fcf4331d017b04e66bd96299595de4eaef68ed784"
       },
       {
         "file": "worker/public/art/v2/item_fate_book.webp",
@@ -32939,11 +32939,11 @@
       },
       {
         "file": "worker/public/art/v2/mage-progression.json",
-        "sha256": "4095373f7e6f68542e5ae11008b07b1cdca63c941700a3b86bbf9fb3df0e7e1a"
+        "sha256": "70e9b2c6682e387232f02c972028a55c3d1e381ba30e1a8a798921c7f089b018"
       },
       {
         "file": "worker/public/art/v2/manifest.json",
-        "sha256": "c192cd3615a479a3cc01dc783228a6164adad3293e8b3b95d811b94a33cd4eed"
+        "sha256": "ed2a298569957e2ff096f95dadecdfda6dc0c3fe7134c341188cfd3d56b6267a"
       },
       {
         "file": "worker/public/art/v2/manifest.json.blessed-backup",
@@ -33343,15 +33343,15 @@
       },
       {
         "file": "worker/public/auto-reroll-ui.js",
-        "sha256": "0b6c897a7fa50917e85b412089d77d57914e57916b21252aafed12fbefa87ca0"
+        "sha256": "fa20bac633937ece39da767f150978f0229519b5091230be4bb48968a289a8a3"
       },
       {
         "file": "worker/public/background-workshop.css",
-        "sha256": "60db96f9614a53be8cad242fa490dad166b30b705a3ba8ae802aa400776da2b4"
+        "sha256": "edc81fa2c0fd25887bb2a95e40d850755f23fdf1d9af0ad4ec50cddeecdf474c"
       },
       {
         "file": "worker/public/background-workshop.js",
-        "sha256": "f81f8a7a1be5ee7c2ff40077e933e3b365779b4fa23b41fe09d83622ae90fe08"
+        "sha256": "677186dd241629c1728865f8df2589b0c85229e0e0bb07de98a9946c1cd436a4"
       },
       {
         "file": "worker/public/bag-icons.css",
@@ -33363,51 +33363,51 @@
       },
       {
         "file": "worker/public/battle.css.backup-20261010-elf-motion-2",
-        "sha256": "428d840a74afa24d5835c4cde3ebc8cfb8b77d84f8a3bdecb54d27ce8e8c81a7"
+        "sha256": "5e8abcb833cbbb554e936256e4308801b40391a4dcf246cfb81d1846f2305f0a"
       },
       {
         "file": "worker/public/battle.css.backup-allclass-20261010",
-        "sha256": "a1b167fc2e00cbb3a5fb20529517cda9cb924a6c82c54871c8766266180b053e"
+        "sha256": "538b17cea3d42c1e46d3836cf4d414d47e09099a778bfea12abe9737a702d6e6"
       },
       {
         "file": "worker/public/battle.css.motion-backup-20261010-112413",
-        "sha256": "b36e817948120863364600b4b93e8b1be64b340db670d65f6330b86d77bc0434"
+        "sha256": "eb2fd680676c4e085bc939b8325ce2e7c05133f1a62aa1610a282af54a392ddf"
       },
       {
         "file": "worker/public/battle.css.motion-backup-20261010032451",
-        "sha256": "b36e817948120863364600b4b93e8b1be64b340db670d65f6330b86d77bc0434"
+        "sha256": "eb2fd680676c4e085bc939b8325ce2e7c05133f1a62aa1610a282af54a392ddf"
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "54f69b91a321affdc6725804b092f12c1b8ec9d9a201840d25c83859a4399832"
+        "sha256": "b9908fe28d6a147e24ddedb2cd31257ea44bfe019676c4a91e95d7cda144c2be"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
-        "sha256": "f7f44e6e9c1e3ebcb404dd89d681aee6c282c6e4e813c082ea0182147ce4c689"
+        "sha256": "3cb7d5d6259c23190f34c13864f0b38c839c577077a86d5be78f2b514d8c54c4"
       },
       {
         "file": "worker/public/battle.js.backup-adv1-live-20261010",
-        "sha256": "1f71e2bdf2217a03f8d5b7fa61fe9b17c5f7631f237b691c14494220ff3cc021"
+        "sha256": "dce0c5751429f1a42ca892d2aee1968745cdc45092bd10a25cbe2bd6ecf039f2"
       },
       {
         "file": "worker/public/battle.js.backup-allclass-20261010",
-        "sha256": "0a67c03809d9e3672f525547a8e41e38885cb270b45ec0588909fa3028ea79ab"
+        "sha256": "9f49ad01d7b2ea4a7bea787dd4a8e8b8145660d43c8e32157af585a02c678fa6"
       },
       {
         "file": "worker/public/battle.js.backup-zero-elf-2s-20261010",
-        "sha256": "49e647350acdfaafda4406a5b31bfe53af5dc5d0906e073ce7e354bddb974112"
+        "sha256": "e43b308d4532565bea7cbf5c41d9f5c5264d0d52b58403151982ea48efa967d9"
       },
       {
         "file": "worker/public/battle.js.before-impact-fix-20261010",
-        "sha256": "d93282abb5e70efdee534e7ebde7bee27e5b170c19bde12d1bbdc8ce10de6384"
+        "sha256": "2f627ea2bfee343e250ec06285812566519c28c76005fc4727b785bafa5ecb31"
       },
       {
         "file": "worker/public/battle.js.motion-backup-20261010-112413",
-        "sha256": "06c07f8418ec8bd22ce6f2ffb45ebd25e1e37254c6c19082bc25abbd7185a245"
+        "sha256": "6827fe1797e749a2dcaa53407a44f24558368cb6d45e9917d4f88181d0866f1e"
       },
       {
         "file": "worker/public/battle.js.motion-backup-20261010032451",
-        "sha256": "06c07f8418ec8bd22ce6f2ffb45ebd25e1e37254c6c19082bc25abbd7185a245"
+        "sha256": "6827fe1797e749a2dcaa53407a44f24558368cb6d45e9917d4f88181d0866f1e"
       },
       {
         "file": "worker/public/boss-refresh-check.html",
@@ -33415,15 +33415,15 @@
       },
       {
         "file": "worker/public/boss-waiting.css",
-        "sha256": "fbb98e39e8cb166724186403ab4c1584d3cfb96c1c705e6e256aa3bb33101423"
+        "sha256": "13f8c86ec396f63a22e68e5860838fb12fc2c659e95e2a77187e58c800817089"
       },
       {
         "file": "worker/public/boss-waiting.js",
-        "sha256": "bf85e96c6c56aeb0faa3988eab3f5270bdda99ea9172ccd483b8d66cb279c35e"
+        "sha256": "0489a97f8c9d51f1d4e20406afd4b5e909f186de1fa24cc660953a8d82f57951"
       },
       {
         "file": "worker/public/branch-elf4-fx.js",
-        "sha256": "0c052cfacd6124539ff14b5be049ad21c1bcecf1a79744f3033c158f923c6589"
+        "sha256": "c25c16d6eda0a266e207cb8997ef21b7e1a001591ba48d318ef304eacb418de6"
       },
       {
         "file": "worker/public/cinematic-fx.js",
@@ -33435,15 +33435,15 @@
       },
       {
         "file": "worker/public/collection-ui.css",
-        "sha256": "994fd5649b721a2b9836f0ead65c52929e3edc2c39cbc365187debd544934c2a"
+        "sha256": "c8bbba56792441abd7ba3bca868397115b0e3a3c2b63aa3e61fda62a13ab0cd5"
       },
       {
         "file": "worker/public/collection-ui.js",
-        "sha256": "8b2ee86e023064de0eff8a72e74a69c748d7af41de48cccd88975d5cdca19a44"
+        "sha256": "a6166d6b1ba0d6ae9ac456481a450feef4df064b022e7666c4fe5827a8f4bebe"
       },
       {
         "file": "worker/public/connection-check.html",
-        "sha256": "fe9d250ba561c0d845f0bb202a2169a33155d57010ba7a324e6f8e02d37a25a6"
+        "sha256": "d74e5a53ec136145c6ecccb1a88233a6683fd7f31b562c69cb80ca95f4d58d52"
       },
       {
         "file": "worker/public/elf-adv1-art-review/index.html",
@@ -33451,7 +33451,7 @@
       },
       {
         "file": "worker/public/elf-adv2-skill-fx.js",
-        "sha256": "082ba070e9bfaafabb3bca7998d273e9173c9db5831c21f4142202dd6fc572c8"
+        "sha256": "94e97af02f6d7b2cf90e0864efcd6d73ebdf3cebf8d2869c1b24ec58ff34cad6"
       },
       {
         "file": "worker/public/elf-animation-review/archer_f_attack.png",
@@ -33467,7 +33467,7 @@
       },
       {
         "file": "worker/public/elf-low-tier-weapon-fx.js",
-        "sha256": "4d8e1fe9c4d5ebcca3ca4f9c78038ae2f4999e9e0bf6518d365ba6718960f91f"
+        "sha256": "a63b5b4dbc63a4d935ffc3825cc451cf4c114c427c03b44c37e8d1c0f05a8946"
       },
       {
         "file": "worker/public/elf-original-art-review/female-attack.png",
@@ -33483,15 +33483,15 @@
       },
       {
         "file": "worker/public/expedition-entry.css",
-        "sha256": "89e599d9dfcdac5f15c312674929bf9d172e8debaaaf504628b5b5b6bdcb3e66"
+        "sha256": "865541772aee4cc69d380cb169ea0d5a8ed65b3f7ab12cbd0332b860898aad3b"
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "c9f2099e7196c21f663ff1de9790fec0a7f3317e9fdba234938d6336f3a02408"
+        "sha256": "f1db0952fff2695050633b0713fd599c1ff79a798a294a0a839d4512d79b3c17"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
-        "sha256": "fc58c224ef34ae1cd51ad8259c54087bba6b9bb7bc5619b1507963bf92e620c2"
+        "sha256": "4517c908468e2df9462a989f556fe92d80e5df6864222cce70c32b76e8350b8a"
       },
       {
         "file": "worker/public/expedition/assets/existing/boss.webp",
@@ -33575,7 +33575,7 @@
       },
       {
         "file": "worker/public/expedition/assets/skills-painted-20261011/manifest.json",
-        "sha256": "6a47a199c75863fab8a3fcaef525cd6f5f129b7779b7273c58cc08803b15ef4d"
+        "sha256": "ac1372b50b9d19215c2e32a666225c97a3f54125b2ceeba535a414420a237e3d"
       },
       {
         "file": "worker/public/expedition/assets/skills-painted-20261011/skill_01_1.webp",
@@ -34035,11 +34035,11 @@
       },
       {
         "file": "worker/public/expedition/catalogue.js",
-        "sha256": "180f4a0099622d29b351b3b2cc42c2af55ba4ad6a37aefb0b278061db2b67bfc"
+        "sha256": "9e9843b0d688b8c029ecd6e75ed4397f3ebe077e14ec5ee1aeabab1bb319b33c"
       },
       {
         "file": "worker/public/expedition/combat-playback.css",
-        "sha256": "276c837abee4a71481db93fd32d92bc4e5dce9dd0befafdae6ec944acb391f80"
+        "sha256": "1d910fe6725d7c6a7063f9b2051709c971272b6c68a8dce1ff53e997052fb1c6"
       },
       {
         "file": "worker/public/expedition/combat-playback.js",
@@ -34051,7 +34051,7 @@
       },
       {
         "file": "worker/public/expedition/dungeon-art.js",
-        "sha256": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d"
+        "sha256": "5bdcf7d0ad27da7d73425b59b360ee8e1680e34ffadf63eeabed5a36ff800a02"
       },
       {
         "file": "worker/public/expedition/group-card.js",
@@ -34063,7 +34063,7 @@
       },
       {
         "file": "worker/public/expedition/hero-art.js",
-        "sha256": "274ade81756db36539db44ea98586e344e147f052992d4739e2ed34059296566"
+        "sha256": "71c7cd147117a6a611fd846eface0c0c34f9b21ebf9463140b815dc2f7fbc0f6"
       },
       {
         "file": "worker/public/expedition/index.html",
@@ -34075,7 +34075,7 @@
       },
       {
         "file": "worker/public/expedition/model.js",
-        "sha256": "e90e6304ef03ed9f15b785f8bcf48b59c16c30e840a0e1b3e9d0a64a345c4ebc"
+        "sha256": "cc81439ace786e5f120b804689f5c023ba2bbaf08284a8d37c6a4d7393ffe265"
       },
       {
         "file": "worker/public/expedition/party-tactics.js",
@@ -34119,7 +34119,7 @@
       },
       {
         "file": "worker/public/fate/daily.css",
-        "sha256": "2d68b82c84b98547e37e8f8b0f0b9ba26693e3fff4db6e23a7ccb7239c3ad303"
+        "sha256": "5918147acd2c3edce10f826bc487e4d4cebdacda71a81fd156bbbc694f7a696d"
       },
       {
         "file": "worker/public/fate/decision-engine-v7.js",
@@ -34239,7 +34239,7 @@
       },
       {
         "file": "worker/public/fate/shared-ui.js",
-        "sha256": "4d4c217f5ad47de047affdb0ce5955e698c0e250c3ed9dcfabf16038a6023c6a"
+        "sha256": "a552c09472bf2947e849e14e2a905f815d04600dbe007ade05624ce7ee459881"
       },
       {
         "file": "worker/public/fate/social-cast.js",
@@ -34351,15 +34351,15 @@
       },
       {
         "file": "worker/public/game-brand.css",
-        "sha256": "88bf3a00f51bc60636edaed8c953d9d0b2c458a955d4fd0e8ea5e9be7d486b59"
+        "sha256": "102f31c1788e598f18e5b534bba18871bfe9c8a4434a7fe65d81e392049e763a"
       },
       {
         "file": "worker/public/gear-names.js",
-        "sha256": "9fab6971b51234c26254b9a57e2b3535b46d79fd25d0a610b349d1c50dd40e5a"
+        "sha256": "e199f2909e8939496f4f5f0e6685e96a4811c8d986684686c4f411c1d402005c"
       },
       {
         "file": "worker/public/gear-names.json",
-        "sha256": "62d1264ef92655bcdd42e232bb929388942bd076c402670c72a8ff2dee9943a2"
+        "sha256": "2af0f74ddfa2c2dfdbe11d1cfba2100f01ce8a53a91ea24ac6dd151472b18288"
       },
       {
         "file": "worker/public/guardian-assist-widget.js",
@@ -34371,19 +34371,19 @@
       },
       {
         "file": "worker/public/guardian-fusion-batch.js",
-        "sha256": "186220c3c792b5a2b1faa6ed9b98899485cb4afac18b8b5e598f51d2b197942b"
+        "sha256": "7a7e3801def5b9a4dee6a5f4325e87366746377607acb1bf17273f1f3b4f3858"
       },
       {
         "file": "worker/public/guardian-fusion-ui.css",
-        "sha256": "770951523c2bf31c4f1cf239d9625d6abd9b3852d176fe08a7ad4048b308db75"
+        "sha256": "342067aac3921bed44a433f3d660febd0fa3e12f1a114a35f4f51d3f64d7b515"
       },
       {
         "file": "worker/public/guardian-fusion-ui.js",
-        "sha256": "a5ba6e85464d666e552ace7f10c8f8bcdb7728a211032a461e46cd3927e53d0b"
+        "sha256": "02eda31db27ceaa594b6d678edbdb24da70ef7ef0eeaeb2fe582aa3232f21c2c"
       },
       {
         "file": "worker/public/guardian-haptics.js",
-        "sha256": "bb8934461c5a2e0373312fea08c1bb322f516b644074e6823a2f8c6e26bc24c7"
+        "sha256": "b00fc8444a4f652f9cac3bd90349019912e8966a4e40cc0caec35759303fe615"
       },
       {
         "file": "worker/public/guardian-idle-fx.css",
@@ -34399,35 +34399,35 @@
       },
       {
         "file": "worker/public/guardian-presentation.js",
-        "sha256": "a93a1dd32d9e442cf5589600c097019868f883f69551e5c1c461867d41e91be2"
+        "sha256": "add9cd9588254f39311848e01b26a62aa53740f91ccbf736022c9744da8f076a"
       },
       {
         "file": "worker/public/guardian-pull.js",
-        "sha256": "b05a189c5f7001987c89db387c6ca4ae99030f3c377e9632ed3e380b20e33b36"
+        "sha256": "da6939e5a6115c1e808fe1e7764940cc0141de51a041b755a1f8a041514e4786"
       },
       {
         "file": "worker/public/guardian-ritual-ui.css",
-        "sha256": "4a559c841195128723af8895284eb37b3ee67f7b8b70886d84c2b267f53816db"
+        "sha256": "afb2f17876ac2553b8f70521c132aae212eaad3d2be31cd01fba7f703d5e9e18"
       },
       {
         "file": "worker/public/guardian-ritual.js",
-        "sha256": "a823438d8acfe10c2cac7e6aa7c540ef177c3af6c0a72c51358e494c7681eed1"
+        "sha256": "e7f32befdc6ad7f7778ca5fb6fb2e2610e406db78ee6e2927ede7571a180ad1a"
       },
       {
         "file": "worker/public/guardian-scene-media.js",
-        "sha256": "79bfd1a62ece160ff2a44a1b6143174e4a09c1a9373223391a96147326389f77"
+        "sha256": "541b75942ab521eaa24c143b935347c5c15a6e9a33f7b992fea04f9afc42b26d"
       },
       {
         "file": "worker/public/guardian-shop.css",
-        "sha256": "c9d87316b10daf6b934e2f55182b176dec7548df66c88e0f23b114472800c278"
+        "sha256": "f0252eefc58b5d5580109e5efd9d34b64f4552bb1658b733f1ebf1d2f205a014"
       },
       {
         "file": "worker/public/guardian-shop.js",
-        "sha256": "e0dd85dfc03fee67f5b95775ca889094600ff1ab134cea98546effa849b8638d"
+        "sha256": "d4ac09f85d82f2a3eae4ab2312a21224c77877f9aa839729c20f7e49966af78d"
       },
       {
         "file": "worker/public/guardian-sigil-contract.js",
-        "sha256": "b2902224a9ab717af6ad335b0d2cf6bc8f91e99399c751a95dcdc7000f70a7a3"
+        "sha256": "d2f7702fcadbe0e4855db409e8ef4ea5924ced907fe03862423ada14f4ed1e23"
       },
       {
         "file": "worker/public/guardian-sigil.css",
@@ -34439,11 +34439,11 @@
       },
       {
         "file": "worker/public/guardian-summon-gesture.js",
-        "sha256": "707c03d0740c854be02cba61d1b68e9e6b35539ad604e3f2b41baee872e449e5"
+        "sha256": "d18cae664d27ae8a8b0b729cf30ae8f04a8dbf823b31d353665333f7f676ba84"
       },
       {
         "file": "worker/public/guardian-worldtree.js",
-        "sha256": "1d7b70bed1faf6fa6f9c36aad8928ca8c4a7c456bb4db5ed7895bf1c61ab1660"
+        "sha256": "d8ce122992c641d85b082edb8b8f8355b75e7a91d9c4b4fd1a9d4160d76246e4"
       },
       {
         "file": "worker/public/hero-armory.css",
@@ -34451,11 +34451,11 @@
       },
       {
         "file": "worker/public/hero-art-actor-adapters.js",
-        "sha256": "aec72e04143098e29b6bc88f084eb43fef79c7ce3549841aafcdd3f718e819ba"
+        "sha256": "f6fa36bf2328cbd66692c1844d828c08db6c4b84533b8cc230a02418b063a187"
       },
       {
         "file": "worker/public/hero-art-registry-fx.js",
-        "sha256": "bf24f615278842d7ae738cda99cdc98e9acee415068d84d7a60836597f509c26"
+        "sha256": "9ea1f21d7bffdff1841067c20a04a816a09a04eed2b7fa0b5950bb833ca5f3b8"
       },
       {
         "file": "worker/public/hero-art-registry.js",
@@ -34467,7 +34467,7 @@
       },
       {
         "file": "worker/public/hero-display.css",
-        "sha256": "b69f830f541efd789d9ae8d8bb6ae2615ce6cf6c393b7f1f37d3f890a8a8e197"
+        "sha256": "2c5537ec9f2ca44c0be41fda54781976caef0cca4867bf3784203569ad33cf06"
       },
       {
         "file": "worker/public/hero-fx.css",
@@ -34491,75 +34491,75 @@
       },
       {
         "file": "worker/public/hero-size.css",
-        "sha256": "439f38d20d45e1ee987ab4fb8b9481e9a511cc1f106ca8f034e7676b2aaa64cc"
+        "sha256": "7efcd600b1830c9e1c70e56f59ea956fbf1ef7866e18abe6a61f12839a2829dd"
       },
       {
         "file": "worker/public/hero-size.js",
-        "sha256": "3ffaf7effdd9ae10abe123b58487bfda38597fe764c99aa1601271238fec4743"
+        "sha256": "23c025468023a89c9d6acb7c52c9f5efca57bd9cf2a5d49320bd37147c31f5d3"
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "e5af5fcc44861f2d8528dae29deaec68b227226894b7029180bb1ee76d4b321f"
+        "sha256": "8caaaa03d3936e6327e4dcb7999a7fc65dd1933388dae40b6295d69c73a1b267"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
-        "sha256": "f6f6cb9cde84132c66ed50eed7d90d0006cee586dc292ed2053df496af6afa14"
+        "sha256": "11ec14fa85d5beb5611abe81c82d5f37e3bd64f0291b00fffb3d1cf2939306cd"
       },
       {
         "file": "worker/public/index.html.backup-adv1-live-20261010",
-        "sha256": "ede5c5d11b1271be269c2a3c595124f415c6f92176f1e0950c9265c0f9a53baa"
+        "sha256": "13586bf1ae65f753ae6e3539759d9725e9bcbb03215ddef18febd43361398b62"
       },
       {
         "file": "worker/public/index.html.backup-before-original-elf-1791609947142",
-        "sha256": "20826da0bc70370fb17255401b7a6a49dc21fdb93028ba3a862c10b7a57ecc2c"
+        "sha256": "03096e87f1a6fe1ae751d66eb3bdb9a071bf96743a239cfd2a907efa346ab3cd"
       },
       {
         "file": "worker/public/index.html.backup-before-quality-restore-20261010",
-        "sha256": "75fdc397f558a8da75d593a50dd01b0baec34b8c577d7d0c81eba3950e40e477"
+        "sha256": "c9dd6914ab188fc85bba677baa81091734ae946555b77ae348b10072602dc376"
       },
       {
         "file": "worker/public/index.html.backup-zero-elf-2s-20261010",
-        "sha256": "d6720ce05aa222587b0719eb0d0e51b5ab09706b81a9c29a8fcae34541ae4c40"
+        "sha256": "b9021de2e89a08f0526d227fddf66f584031571aa36bb84a058eca1930c143bd"
       },
       {
         "file": "worker/public/index.html.before-classic-ui-20261010",
-        "sha256": "3595d343ae054c2edd9d0c892d73fa52133d51e4408894f6e8719f2efe95b1a6"
+        "sha256": "35adc108b4aa5888b65f003561b5c88ad80a89a7990ee275b205f70edaa292a5"
       },
       {
         "file": "worker/public/journal.css",
-        "sha256": "b05f5fdbcf248d5cb26865ac561e32a207a772c0708e983e37aa7efe35880796"
+        "sha256": "0f0a55ece226b5b3a1fbf29643010ed7c360e16260c347c514dc112b4701390c"
       },
       {
         "file": "worker/public/journal.js",
-        "sha256": "24b70fadfdaf5f4d9bd5fe16da58baa2d26ddd50c3fa74561616a491a5c5685e"
+        "sha256": "e15b0859c555277b35d2c3c63824bbb7baef6043e85370360b521b24315b2f78"
       },
       {
         "file": "worker/public/lineage-ui.css",
-        "sha256": "060f1dff1d6819c717ed3d253fce8b9890b485cb1b5cb7f903a2f7a386929ea8"
+        "sha256": "c93214f058f77701b8440d67cb0bba7b4757d920d95ac6cdcda5e769ff5a8288"
       },
       {
         "file": "worker/public/mage-actor-fx.js",
-        "sha256": "b5a9b260e860d3d43cde5b4c38298ac5a658e058496058b52ad3d8bf034c04c1"
+        "sha256": "c09a1aca0ea827a8eca8af1be0096fc87244f63ba79691e120b58374e6d44650"
       },
       {
         "file": "worker/public/map-motion.js",
-        "sha256": "5949d8982e06edda88ac4e9560f7d6444873080fd951507c1ef018ea9a329dbd"
+        "sha256": "6faf329db861623947863da8596075b6201d224a8eab0c68e404110cac6255ac"
       },
       {
         "file": "worker/public/map-video.js",
-        "sha256": "3c8eedb0074c9d494fe11b4ef24ca99dffff68380bb484f586dd3418c3800abc"
+        "sha256": "9cd6405bbeae42da21b156d961f71b32d13b1edc5cd168b0beeda1b892b8b9a2"
       },
       {
         "file": "worker/public/maps.js",
-        "sha256": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945"
+        "sha256": "f1bd121069ed1db8a88dae19f24a34535d7fbc81647f0c7004ae7f6e2f2c6480"
       },
       {
         "file": "worker/public/market-exchange-history.css",
-        "sha256": "550eedb6f9090fe2c581d60c102a23ab5af99b7fd196662c0f3f32d05269752c"
+        "sha256": "980f52552d2398334b97a49655b00eace4eed9f2dbe8b0b7df33388659f020ce"
       },
       {
         "file": "worker/public/market-exchange-history.js",
-        "sha256": "85c7a955b82c8181680819869441ec2ae842ce9974474a40ab4a1f4715ba56af"
+        "sha256": "6fbe4ee2b72461e5e32e1a0d37ef684ecd736005498f7d72e7dd6f238166f042"
       },
       {
         "file": "worker/public/market-exchange.css",
@@ -34571,11 +34571,11 @@
       },
       {
         "file": "worker/public/market-sell.css",
-        "sha256": "2bfde2e3c03f6d75fc783b13fc9ff5347e0fec173a0ef9da1519e50ecc7bb31c"
+        "sha256": "b857103032d40333225033830052cc6f435c12ed9c4a6b5128d9aa132c6087d1"
       },
       {
         "file": "worker/public/market-sell.js",
-        "sha256": "df5d1cfd143e9893e248b1ec1f7966329f8634808a5b09efdbba8b2020469979"
+        "sha256": "e6673175b345d17bc7adec71f8865d9164c68ee97bd432e960863f56b507dcd9"
       },
       {
         "file": "worker/public/monster-audit.html",
@@ -34583,15 +34583,15 @@
       },
       {
         "file": "worker/public/monster-baseline.html",
-        "sha256": "d0d13a74ec5aec93037015d017929ef5c771f1ef501a221571ed65f05fcd43a2"
+        "sha256": "cca02011b9ac106624f6a80465cf79424e0a81af5e0f9a97894f221a808f5038"
       },
       {
         "file": "worker/public/monster-boss-review.html",
-        "sha256": "f4b92ee243ed08f0ea21697596d1f51630184447094d33c027bda0d94f16f753"
+        "sha256": "bfe1cdf7e581e519f0cc43265d1a758b3830a2f690c185d555c2a6e5d6384a5c"
       },
       {
         "file": "worker/public/monster-catalog.js",
-        "sha256": "a4d0534705d2d619d2c587ff0fae0457316b1c79db5ec01fd276b1388558f32e"
+        "sha256": "9b650c528f649dccf9a7f77b277c3f20ddad3736efb52cc41ea46df633ab4c87"
       },
       {
         "file": "worker/public/monster-expansion-catalog.js",
@@ -34607,11 +34607,11 @@
       },
       {
         "file": "worker/public/monster-expansion.js",
-        "sha256": "4ced2ae24d355b47bc565cc7bdc1a300fc91f8bec90a1aec742fdc6887f2196c"
+        "sha256": "13c816e1ec2d420f4c03ae30a10df5a23edeafa0a3958f273ff3b4c6aa577b4a"
       },
       {
         "file": "worker/public/monster-group-review.html",
-        "sha256": "4ebd41bfbebcb3ae79474bb79ab49df78a683043da67d1faa2913e3b1f5105d9"
+        "sha256": "2c3b801d0f34d77cd0ac3c6b7242ad55de1e54541c542b2da9b06648af57c582"
       },
       {
         "file": "worker/public/monster-layout.json",
@@ -34623,11 +34623,11 @@
       },
       {
         "file": "worker/public/monster-review.html",
-        "sha256": "ee347fcb97ec2b851c05014862ba4212f31b85d4f9bc708ef518762ffbc0daa6"
+        "sha256": "cc60e70ddb3063acfdcc1f5f7a64d4706b6483124ac43b0c7777b8db37a03688"
       },
       {
         "file": "worker/public/mythic-ui.css",
-        "sha256": "0ced690250e6d7ed161c14f3ac7d08fe53428cd6d5e58629d09697dc3d851580"
+        "sha256": "881ef67dd2391983fc51f03b15cf3bffbd0f62a771573e08ebba2fededb98577"
       },
       {
         "file": "worker/public/mythic-ui.js",
@@ -34635,11 +34635,11 @@
       },
       {
         "file": "worker/public/olympus-luxury.css",
-        "sha256": "f6d8c76a1a60c43ee0d51a67e9394d62d41e688ef327518a5d59584308e38067"
+        "sha256": "b515d06f85120ac97241311f26656b65d255de437e5adf7499a288bde4e31cf3"
       },
       {
         "file": "worker/public/olympus-suite.css",
-        "sha256": "d62a617c32d54f0847911c1513f954e1bce3417b4a95b7d69bae3670e15b685f"
+        "sha256": "c51bd5a7e5f571c2476b3ebf6627883d0689a0bc39124289d1bb679c8f44ae5f"
       },
       {
         "file": "worker/public/olympus-unified.css",
@@ -34647,31 +34647,31 @@
       },
       {
         "file": "worker/public/operation-notices.js",
-        "sha256": "226aaa7d4aca395073ac484de0a7e7d52d6ac7f1d6363d90a22acda16b88c0e8"
+        "sha256": "19ac6bf419c12454667db04b81b088b51ef5b2f6ee39e6891683977b0cd1db72"
       },
       {
         "file": "worker/public/preview-boss-wait.html",
-        "sha256": "66c3d331105dcda1040635c8c670dcd16944d8d7d1e587cbf5c6f36f6badb450"
+        "sha256": "e73469378b7b37c9c5cb8ec79230217552c8d0784fdc9d754c110cc9bc55accf"
       },
       {
         "file": "worker/public/preview-cinematic-fx.html",
-        "sha256": "ebf6b5ba37fbac8062e05a02874c77e02d4c7d4d7dbd135d505eba883fc53024"
+        "sha256": "e57a174b468e8715bb4a1a3372fac2ec741894da1fcd30345dbecb6c31ee6fd6"
       },
       {
         "file": "worker/public/preview-elf-adv1-hd.html",
-        "sha256": "833311793392e1c4c1fddeddc123c9020cebd5b1c4ea9bc9a2bf49e9b93bffb1"
+        "sha256": "0f85f08ae4287dda300350ffd5327645c9ab4b13a0ee3294e74e34f5eb3cd7ed"
       },
       {
         "file": "worker/public/preview-elf-adv2-skills.html",
-        "sha256": "f605d520bc67f643a9e5979697192a1db883ac542ce161fff0a9f6aacae52053"
+        "sha256": "4f45bcf606977e150441ec90824c92a165b3021577777265968f02df2428e42c"
       },
       {
         "file": "worker/public/preview-elf-adv3-magic.html",
-        "sha256": "49020bc8cabb379d33c751941b654b3a5552b76a1c4cd7c44a3fad74ec49bd5d"
+        "sha256": "5fec0126a111e5630d5fc2165f1576f025413f18e59166e433d572c007413749"
       },
       {
         "file": "worker/public/preview-elf-adv4-magic.html",
-        "sha256": "1f53df86cae1562d2d26d1eda8246b2dd8fe7ab7e9b4c9a36eed8251adebacdd"
+        "sha256": "0b5e6e3bba85c398d28bd48ddf0e6e463a93b60c80dddc75f2fff41a39917ecf"
       },
       {
         "file": "worker/public/preview-elf-quality.html",
@@ -34679,35 +34679,35 @@
       },
       {
         "file": "worker/public/preview-hero-lavish-fx.html",
-        "sha256": "063c3a8a67cc65405993d8c904d60ffd0726b692c1c36268d8510f5450aff729"
+        "sha256": "69bdba1277ebe52ce03276d8d0308568821728aa071037c6a9b341078437e09c"
       },
       {
         "file": "worker/public/preview-interface.html",
-        "sha256": "a18eea07ad1cc17b9c4798d71bced9114000483279634c61023c5b53b1d4ea6e"
+        "sha256": "211030ac44452a8dbe73268ed644b744dea7c0a317066bc9b6e06a7904486714"
       },
       {
         "file": "worker/public/preview-mage-adv1-hd.html",
-        "sha256": "bc306b7754a157920e38a440ae1af2b9773af375e1f1e4f7b1b09570f158881c"
+        "sha256": "c7e82162ec0225ea1938abf81d0dc68c8da4469f5d798d88b90b726ed7e781c2"
       },
       {
         "file": "worker/public/preview-mage-adv2-hd.html",
-        "sha256": "21f9f9801ee04d6cb8a901e67c8522baa1ff9abef1a066f70c1d525f6462d53a"
+        "sha256": "08bdfa162d65a4d07e320ba6ad2988a0c556f3ba3245b43aa993fbaf3eccdc32"
       },
       {
         "file": "worker/public/preview-map-battle.html",
-        "sha256": "0876b9d53d837cf9832215dd159a00584142c2bc50701450c06d03a4d77aa82d"
+        "sha256": "e136c759034405a24b7ef6e73d84886342b308d01437b6a2408f8afef0f05ad2"
       },
       {
         "file": "worker/public/preview-map3.html",
-        "sha256": "a079fe3b8ee9780f148425bece3af10351d57356658a06471affcf82a38cca1d"
+        "sha256": "544576872f5968c42898aa93b5a760295e9f791ba48c0510978ed1bf6625aecd"
       },
       {
         "file": "worker/public/preview-maps.html",
-        "sha256": "efe28760ca926ab4ab103da62a5e57b9d9186d0ec4945746cb41d2a9f1aedbb0"
+        "sha256": "a27f850d10189a6aba9137dad734b90c40d88ea12d48d2d12dce5fe75c1459ce"
       },
       {
         "file": "worker/public/preview-monster-fx.html",
-        "sha256": "d0ec0be3584abd2169c010e4ed35d558b63c18b67c55e36190a05fd45339d4da"
+        "sha256": "ee24f509547e98025e95d40778ac10c279a5c0a37957a19121d71dee736e5403"
       },
       {
         "file": "worker/public/preview-single-elf4.html",
@@ -34715,27 +34715,27 @@
       },
       {
         "file": "worker/public/preview-skill-fx.html",
-        "sha256": "ebf6b5ba37fbac8062e05a02874c77e02d4c7d4d7dbd135d505eba883fc53024"
+        "sha256": "e57a174b468e8715bb4a1a3372fac2ec741894da1fcd30345dbecb6c31ee6fd6"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
-        "sha256": "43252702c1a22d508a47d8d50ea883ba596e87c09b78b5957181720878b70e64"
+        "sha256": "c7aab180151356d362de2b2cb429714f7b94a199412cf0b7da76a487d019820a"
       },
       {
         "file": "worker/public/preview-sword-adv3.html",
-        "sha256": "e7ba5502ece5ff66060deea2fdff841225be64bdbd71a72a3e7d6561d7a46f2d"
+        "sha256": "e0a3594fff424455f2b7ef015cf78a8f2fa38ffac47c8db968de897dc387d0a4"
       },
       {
         "file": "worker/public/preview-sword-adv4-magic.html",
-        "sha256": "96284d2a312a4b0f1980e7b59a3fae7033e0dfafce55356bacb097bc37eba17d"
+        "sha256": "5fdc183c1ea0a6e0e3234d6a7ee6e491e050a92c90f9a4bc9221580b91def5d6"
       },
       {
         "file": "worker/public/preview-sword-adv4.html",
-        "sha256": "0067cd292fd21201a3e14e9cd22eaf90d0c41dbc38f459b88772b1c6120fc6cd"
+        "sha256": "c17243940515883d890443892bf91eb86cd56729fb21247f99b6efa36ac4448d"
       },
       {
         "file": "worker/public/request-client.js",
-        "sha256": "48e6d5970695955da11bc5c615b4d26dab70119e676a054752e3b2569dbcb615"
+        "sha256": "7c0a52464a3a789acbe14bc2b8e3129588268c47d6958365bbbea4374acbca36"
       },
       {
         "file": "worker/public/skill-fx.js",
@@ -34747,7 +34747,7 @@
       },
       {
         "file": "worker/public/status-banner.css",
-        "sha256": "b16b512a7641907c02201796af6e1e4bb88476a5f5a8878cdcd240480f5e8f9a"
+        "sha256": "fa33046c6c46bb7d9769e04a7c521f3b9aac60c802357817a2a0d8e1b1d1d9f2"
       },
       {
         "file": "worker/public/styles.css",
@@ -34755,15 +34755,15 @@
       },
       {
         "file": "worker/public/styles.css.20261010-bag-slot-tabs.bak",
-        "sha256": "0e7f22d93269d8912d5327cd0fd707ee3ebda7061493f03399449740ab4ee6d8"
+        "sha256": "cc561627e5f09aa4b4f3f183697797eb0ccb6ba073ac56598f6747b4c12cdd3b"
       },
       {
         "file": "worker/public/styles.css.uiux-backup-20261010-222829",
-        "sha256": "b2f7acd5363392eaeb8d5256bc84dd106803c8e193a61098449689426d44cb22"
+        "sha256": "c407c233dce647945f5fd348da2524db1957d079b0d22e6e56c0493b1f2745b7"
       },
       {
         "file": "worker/public/sword-adv4-fx.js",
-        "sha256": "a667101bc5ab78f2f90a67a197bd4a7dbabc2c846db983e9beffaaac4136fd9e"
+        "sha256": "6c3f6e2ddfe01f18c1541498d15da3177159b0043587ee6b72b12fd50b009386"
       },
       {
         "file": "worker/public/sword-branch-fx.js",
@@ -34771,7 +34771,7 @@
       },
       {
         "file": "worker/public/sword-branch-manifest.json",
-        "sha256": "6b45cb5f17b7d2325612061d64fb1af17235746ad23cc13232499c177dda977e"
+        "sha256": "e1795d7ee5668c3af9d47017fee0342b43cfc2476515c4c0a74f967a47f1cff1"
       },
       {
         "file": "worker/public/telegram-media/boss-1.jpg",
@@ -34831,7 +34831,7 @@
       },
       {
         "file": "worker/public/theme-greek.css",
-        "sha256": "6c9d0937075468fd3085f9e5e25f8540a9f07944d6fbe2fc1bd76a837aed831f"
+        "sha256": "7c783d6b0e593d94b1257821c59e5c367a42c5313b563b90eb99227dd1b9cf17"
       },
       {
         "file": "worker/public/thief-class.js",
@@ -34847,7 +34847,7 @@
       },
       {
         "file": "worker/public/ui-refined.css",
-        "sha256": "41cc52a66dd230b1f6e1266d93ac8cca8e804eac81b28d4597b246685946d303"
+        "sha256": "68b07fc677e108dd6b8578208d17726feca9b3650146744f6e0b484999068813"
       },
       {
         "file": "worker/scripts/__pycache__/render-thief-gear-cards.cpython-312.pyc",
@@ -34967,7 +34967,7 @@
       },
       {
         "file": "worker/src/accounts.js",
-        "sha256": "0cf890994a09ae5910ae734b0e468ec083c2a5c0cd10c66e2ba6b74d4f5263a3"
+        "sha256": "2461b0e8f3a02d2673910f3aa25637204439a323246171e025410d249120a07f"
       },
       {
         "file": "worker/src/app.js",
@@ -34975,19 +34975,19 @@
       },
       {
         "file": "worker/src/app.js.20261010-gacha-v1.bak",
-        "sha256": "c6d29d3273d6e83a2369aa1149a649ab76988617f439efaa2ec6babd7b5263f3"
+        "sha256": "ef0575cd8f395061871a8f12c76a550c3b6e2bf2fb7b8e8360ebfe3637e5d01b"
       },
       {
         "file": "worker/src/auth.js",
-        "sha256": "a03f4f3343836bcae248086a6ce181655550d7fff52e665b0d05874e8113fddf"
+        "sha256": "09f480e7c37e14c5c611ec1547ecdb4d20fa22d986cebeb4f062ea16335cb4ff"
       },
       {
         "file": "worker/src/auto-enhance-runner.js",
-        "sha256": "4ab7a61a6c9e0f560902a2624d19db72e7a2fdd519579ca6636e2dc79e33e9fb"
+        "sha256": "06d236d1092e31fdabd7f8b93296b8cf33cf129dd80df01522814c75955b4c8c"
       },
       {
         "file": "worker/src/db.js",
-        "sha256": "24412922899349e163deded9c2de94df681a8c431c557ed080bc4808cbabc117"
+        "sha256": "554fa27f2884a996ddbd7c71bd34c12d73717b50e7d9af51745b493ed28b2102"
       },
       {
         "file": "worker/src/fate-public.js",
@@ -35011,7 +35011,7 @@
       },
       {
         "file": "worker/src/game/boss-economy.js",
-        "sha256": "482ee6c3e05b9a4ac706450a663815eb3cf26f786e3a5bc725ace16dd587cfd5"
+        "sha256": "9e180ac3887c65b069e8b8cd65af8bd6b7c6f85662cc79905ea0032b0230a045"
       },
       {
         "file": "worker/src/game/boss.js",
@@ -35023,7 +35023,7 @@
       },
       {
         "file": "worker/src/game/collection-blessings.js",
-        "sha256": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896"
+        "sha256": "e8fd3b03d1b1011b1e43c0072a2661b08af9f7a3c8e696e0191998628d2c650d"
       },
       {
         "file": "worker/src/game/combat-passives.js",
@@ -35035,23 +35035,23 @@
       },
       {
         "file": "worker/src/game/constants.js.backup-elf-redesign-20261010",
-        "sha256": "15dc3e0162e8dcb0549ab3c51b0ee030ce237d06f40fe03ff5986fcfa49b3f9f"
+        "sha256": "5c3038431c433a588b94bd784beb190d37c30a9e4e461cc2b4af3d2423864dbf"
       },
       {
         "file": "worker/src/game/daily.js",
-        "sha256": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc"
+        "sha256": "dedb9381dcea81153689806a641fd8cecaa73145c1edf7e810f2d92d8c4b56a4"
       },
       {
         "file": "worker/src/game/dungeon-art.js",
-        "sha256": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d"
+        "sha256": "5bdcf7d0ad27da7d73425b59b360ee8e1680e34ffadf63eeabed5a36ff800a02"
       },
       {
         "file": "worker/src/game/elements.js",
-        "sha256": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1"
+        "sha256": "c867f51c188093a4d15b8a66709303eeb7efa6ccadacb59060e43e510f4710d9"
       },
       {
         "file": "worker/src/game/elf-future.js",
-        "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+        "sha256": "6a2d4c26ab8c4a61a4b57d938d45db9a4f418e406698916a1e9180065c6b62f8"
       },
       {
         "file": "worker/src/game/enhance.js",
@@ -35071,7 +35071,7 @@
       },
       {
         "file": "worker/src/game/formulas.js",
-        "sha256": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62"
+        "sha256": "0d1bb21d765baa847b25ce666e6b895aa6593a7cf5b03642daf153a5efd346d8"
       },
       {
         "file": "worker/src/game/gear-art.js",
@@ -35079,11 +35079,11 @@
       },
       {
         "file": "worker/src/game/gear.js",
-        "sha256": "81b6a50e36e7ab61b888a24d9b1fc1d51f16b94acbec5deef4a2509b94a4b854"
+        "sha256": "2d6609646d0fe22f6a434de7832680e5e2a277be1ccb367b6e3cd1fd290985de"
       },
       {
         "file": "worker/src/game/guardian-assist.js",
-        "sha256": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c"
+        "sha256": "29deb456d32ac6b924147eec094d12a793d0c4e0d1b45585ee86594ce3d2e3ee"
       },
       {
         "file": "worker/src/game/guardian-effects.js",
@@ -35091,11 +35091,11 @@
       },
       {
         "file": "worker/src/game/guardian-sigil-config.js",
-        "sha256": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b"
+        "sha256": "c07570b50e6f0d53aff0d68707b27c1726126d2dbe1938e7bc5c0a0e44b0205a"
       },
       {
         "file": "worker/src/game/guardian-sigil-settings.json",
-        "sha256": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69"
+        "sha256": "ed2b95d4dc6af4ee970e431ff1107e4d052ade504f5f784e3f9ceb17125e8aa7"
       },
       {
         "file": "worker/src/game/idle-combat.js",
@@ -35111,19 +35111,19 @@
       },
       {
         "file": "worker/src/game/mage-fourth.js",
-        "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+        "sha256": "c7597b95f02b6cd5108782256e0ab7f0f45e342552e9416c5571591edec8dda6"
       },
       {
         "file": "worker/src/game/mage-future.js",
-        "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+        "sha256": "d4db84aaadfb6474bd30b8a1413ebb4ef98c155a66f4bc53e10a71380cb002e1"
       },
       {
         "file": "worker/src/game/monster-art-compatibility.js",
-        "sha256": "d98dd61c7d7281bcb5f3f4a55e46d8a45bc4ab1fca905471ebf35357b77a74de"
+        "sha256": "a5e7c7b81a96a03ffa02862762dd688010ad677a4474f01e2ca5f5e4bb25e3f6"
       },
       {
         "file": "worker/src/game/monster-data.js",
-        "sha256": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be"
+        "sha256": "c429e1bbe54260ff41ece25d0f76c7428e910b38d17a9b3ff27a89856c80e381"
       },
       {
         "file": "worker/src/game/monster-readiness.js",
@@ -35131,7 +35131,7 @@
       },
       {
         "file": "worker/src/game/monsters.js",
-        "sha256": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb"
+        "sha256": "81e639c10c6572ac53af4973b019656d2e6f5947cc4d2538efe775f75ae5d5d3"
       },
       {
         "file": "worker/src/game/party-roles.js",
@@ -35143,7 +35143,7 @@
       },
       {
         "file": "worker/src/game/rng.js",
-        "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+        "sha256": "2f2229a3a69e06b54fbc80f062aa6351a6b0f4fadb6d1effe864028996079970"
       },
       {
         "file": "worker/src/game/share.js",
@@ -35155,7 +35155,7 @@
       },
       {
         "file": "worker/src/game/shop.js.20261010-gacha-v1.bak",
-        "sha256": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5"
+        "sha256": "a551d3af94c4d425efadd7e5aeb148f8e18099bd0216c87273f538cf80142336"
       },
       {
         "file": "worker/src/game/special-data.js",
@@ -35191,11 +35191,11 @@
       },
       {
         "file": "worker/src/game/time.js",
-        "sha256": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6"
+        "sha256": "715199bc0053d0d1375ac69a0a43bf9c9ff1228f96f8b21ae431f3165f76fc3f"
       },
       {
         "file": "worker/src/game/trade.js",
-        "sha256": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17"
+        "sha256": "a79c77fe66208d7ff4d53395e3c5c18427b6b1d357cc92e8b37e9db7105996d7"
       },
       {
         "file": "worker/src/index.js",
@@ -35203,7 +35203,7 @@
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
-        "sha256": "fe05a8f330fdb60644d8dba204ad33663051657a09e54833c7f629436b6d21f9"
+        "sha256": "9b65e67c76d614d48df0acc2ea75f6ed6be049a1ec5f28fb5055b8eb33dd04ef"
       },
       {
         "file": "worker/src/services/auto-enhance.js",
@@ -35211,23 +35211,23 @@
       },
       {
         "file": "worker/src/services/auto-reroll.js",
-        "sha256": "951dcf7fa9b46064b43004a981860cbd6127551a03254233b5a79f24ed6254b8"
+        "sha256": "fec5ec1fbb9ad8337527b5841ea98b9acc387eb933c4bf7af0f93a19396ebcd8"
       },
       {
         "file": "worker/src/services/background-operations.js",
-        "sha256": "d9f494f359199f53e77fe8765d62f464a9a28b34ff70dd148d9b509c3d4ff2ee"
+        "sha256": "77d5693d337c43f7d6b2d86fbce646d661eef9b79f5ca606f842c75b4ec84f05"
       },
       {
         "file": "worker/src/services/boss-exchange.js",
-        "sha256": "d723670e2ed9fd04d41bf5b74828ebde1d8121d2c82d8644f43f472418902f17"
+        "sha256": "abba57c8c8ee743336923552ba26aa7dd2e8e4a6bdde8291127737662ad3720a"
       },
       {
         "file": "worker/src/services/boss.js",
-        "sha256": "df12c10ba4876e1639f8645e7171e9b95b28ba6746f876e6dea56aa920eb9e40"
+        "sha256": "819e9f1107df54e96fd39b36cf2845a1261ad9fc33b62d9e0c32a873958c8856"
       },
       {
         "file": "worker/src/services/collection-blessings.js",
-        "sha256": "299bd5cb1bca69328818ad69c1d863d9779641bf4752ac08a8b74fbd28a5d6ac"
+        "sha256": "05152bdad3287f52da4e12797892f4e7107f83619b8a26fec5af0c8b08e7eece"
       },
       {
         "file": "worker/src/services/fate-gifts.js",
@@ -35239,7 +35239,7 @@
       },
       {
         "file": "worker/src/services/fate-shared.js",
-        "sha256": "c311a4b7cbaa626339278b56cb4e229b61e74fd6414ad0ed8cfa2184a4fd6def"
+        "sha256": "f2698042de952edc49c8144cc8b223912efe2ea1bd9541682d69555bdfe5f10f"
       },
       {
         "file": "worker/src/services/fate-social.js",
@@ -35247,19 +35247,19 @@
       },
       {
         "file": "worker/src/services/fate.js",
-        "sha256": "a31ceddde84186e311525598c8e3fe168ae7a0c821ef94d0d52fdfee7db6d8e4"
+        "sha256": "9fac74aaa26c69cc071a3a12fbfa24b6d345f0fcc3441adb4566c35c58d271b2"
       },
       {
         "file": "worker/src/services/guardian-auto.js",
-        "sha256": "b0bc59e228ee8934ea26a411a8d94711e584de988f52f8052d63d2efc3962a1f"
+        "sha256": "2abc8159c64148d580e6275a33848f284de9d024a2514381b60a470514e83813"
       },
       {
         "file": "worker/src/services/guardian-shop.js",
-        "sha256": "6e953da6b41eaf0bf6ae1ff0769049b80c793eaf627e833d0461cea492bc11ce"
+        "sha256": "a6dda45875668dbaedc5df98a4ba449850489bc402a96b966f279b17775a4cfe"
       },
       {
         "file": "worker/src/services/guardian-sigil.js",
-        "sha256": "46aee8e985d4bef83a2810a4583cd5dcebe134eebfde9ae1d022d9ecb9defd31"
+        "sha256": "01a1784b5c8756f87b43d46e88d1c2e598a473d3ad6bf3da9e679277b8284b4c"
       },
       {
         "file": "worker/src/services/hero-hall.js",
@@ -35267,11 +35267,11 @@
       },
       {
         "file": "worker/src/services/journal.js",
-        "sha256": "febf79becd82c52d3add9bf041d5d1b580da9175200cc89f19646c51fa333040"
+        "sha256": "29ec492560937515a3ce652a4b74a9a13c9243ed73ed663810d1bc0eb9b18dba"
       },
       {
         "file": "worker/src/services/market-exchange-history.js",
-        "sha256": "bebcaad356e0435df915f68ef9de677068c4622a7556feb52fd169a7e4f098f8"
+        "sha256": "451029b821dcec88c19e93e352b141ff159741d3cf25bc225efea961b3425584"
       },
       {
         "file": "worker/src/services/market-exchange.js",
@@ -35279,11 +35279,11 @@
       },
       {
         "file": "worker/src/services/monster-exchange.js",
-        "sha256": "86d54a30fc841b3781f4ed35fac9f795a5456eeafda8d968cc92a45ab697be6b"
+        "sha256": "1da438740daa66e62c59194e5fe94c2d2dd5a0accfa473513f2bd43fea6f5711"
       },
       {
         "file": "worker/src/services/operation-notices.js",
-        "sha256": "9268de260671011ac6a8affe8adf37efb9782fc39b312394237a6a1037f70a8d"
+        "sha256": "8de8a3f5895ca5b8a5928f9af15885c4ffbce96193d51249fe99f3b74bbb8061"
       },
       {
         "file": "worker/src/services/party.js",
@@ -35299,7 +35299,7 @@
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
-        "sha256": "f26653754e8f0bf35a046a8394c453a705f798e03330ce9ad8c01662ef3f1cd8"
+        "sha256": "271c54c447ec71557d7a008d9b4927d5672cd91664c40e936733293fb2a9316c"
       },
       {
         "file": "worker/src/services/share.js",
@@ -35319,21 +35319,21 @@
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
-        "sha256": "fd7342b4a98667164a75b63b0c8b73a5434de613c70276fb7abc3448349f87ed"
+        "sha256": "0a75358c9991ef83d02601dd864164f393ccb1110a53803e7a8b08a5eb52efb3"
       },
       {
         "file": "worker/wrangler.toml",
-        "sha256": "7e93538d684e64b58100363df48a45fab7962c697909ed6b8ce47bb2421e2d8c"
+        "sha256": "44d3e9d8deff906a6c278afa1673648afe5ae1a209aba4e4dfc898556c0b8079"
       },
       {
         "file": "worker/wrangler.toml.example",
-        "sha256": "aebaac54089e464873fb4d3248c708ba9c21661a1ca69b8fbe5d6a063102fbd9"
+        "sha256": "690d664306dff0b615208396f122bb0a9c58881a9a76e2371a30c244bac91f3e"
       }
     ]
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 158,
+    "verifiedCount": 134,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -35342,10 +35342,6 @@
       "worker/public/art/blessed-announcement-20261014/armor.png",
       "worker/public/art/cards/equipment-20261011/gear_belt_cloudgate_legendary.jpg",
       "worker/public/art/cards/thief-gear-20261015/gear_wpn_styx_dagger_epic.jpg",
-      "worker/public/art/fate-taiwan-v8/river-memory.jpg",
-      "worker/public/art/fate-taiwan-v8/river-memory.webp",
-      "worker/public/art/fate-taiwan-v8/taipei-dusk.jpg",
-      "worker/public/art/fate-taiwan-v8/taipei-dusk.webp",
       "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A122_m_portrait.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -35368,26 +35364,6 @@
       "worker/public/expedition-entry.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
-      "worker/public/fate/app.js",
-      "worker/public/fate/cycles.js",
-      "worker/public/fate/decision-engine-v8.js",
-      "worker/public/fate/ending-story.js",
-      "worker/public/fate/formal-events.js",
-      "worker/public/fate/index.html",
-      "worker/public/fate/life-ui.js",
-      "worker/public/fate/life.js",
-      "worker/public/fate/locality-ui.js",
-      "worker/public/fate/model.js",
-      "worker/public/fate/narrative-v8.js",
-      "worker/public/fate/share-card-layout.js",
-      "worker/public/fate/share-model.js",
-      "worker/public/fate/share-ui.js",
-      "worker/public/fate/shared-story.js",
-      "worker/public/fate/style.css",
-      "worker/public/fate/taiwan-choices-v8.js",
-      "worker/public/fate/taiwan-content-v8.js",
-      "worker/public/fate/taiwan-days-extra-v8.js",
-      "worker/public/fate/taiwan-days-reserve-v8.js",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -35498,7 +35474,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "73ab824f-ceea-423c-89d4-ecd923fa1585",
+        "version_id": "01a52d68-5ebb-43a6-9f33-6ed85819945f",
         "percentage": 100
       }
     ],
