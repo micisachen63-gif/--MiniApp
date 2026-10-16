@@ -41,7 +41,7 @@ test('committed group hits highlight the actual monster at impact instead of the
     {type:'hit',targetId:'siren',enemy:enemies[0],damage:20,beforeHp:100,afterHp:80,skill:true,skillName:'群攻'}
   ]};
   const h=fixture(round,{reducedMotion:false}),seen=new Set();
-  for(let i=0;i<600&&!h.root.dataset.completedRound;i++){
+  for(let i=0;i<6000&&!h.root.dataset.completedRound;i++){
     await h.advance(10);const hit=h.root.dataset.lastHit&&JSON.parse(h.root.dataset.lastHit);
     if(!hit||seen.has(hit.id))continue;
     seen.add(hit.id);assert.deepEqual(highlighted(h),[hit.id]);sameCues(h);

@@ -528,6 +528,9 @@
     }
     async function heroAttack(hit, skill) {
       const epoch=S.playEpoch,c = S.me.character; const b = S.me.battle; const L = pfx();let impactCommitted=false;
+      // Cosmetic swings (no committed server hit) must never fire at an empty or dead target.
+      const targetGone=()=>{if(!hit.impact&&!(S.mon&&S.mon.hp>0&&E.mon.isConnected))throw cancelled;};
+      targetGone();
       const commitImpact=()=>{if(impactCommitted)return;checkScene(epoch);hit.impact?.();impactCommitted=true;};jit(E.hAct);
       if(!S.rm){
         // Sync already starts these loads. Await the same jobs before the first
@@ -566,6 +569,7 @@
         heroSheetAttack(duration);
         const draw = classAction('archer', duration, () => play(E.hAct, 'draw'));
         await wait(S.rm ? 0 : Math.round(duration * .60)); // full two-second animation, release at 60%
+        checkScene(epoch);targetGone();
         const from = heroPt(0.88, 0.4);
         if (window.RpgSkillFX) await skillEffect(from, target, duration * .40, skill);
         else if (skill && L.falcon) { falcon(target); await wait(160); await projectile(from, target, 200, 'bolt', arrowMagic); }
@@ -601,6 +605,7 @@
         const releaseProgram=S.heroSheet&&heroFrameProgram(S.heroSheet),releasePosition=releaseProgram?.sequence.indexOf(releaseIndex);
         const releaseMs=S.heroSheet?.releaseAtMs??(releasePosition>=0&&releaseProgram.weights?duration*releaseProgram.weights.slice(0,releasePosition).reduce((n,v)=>n+v,0)/releaseProgram.weights.reduce((n,v)=>n+v,0):Math.round(duration*.53));
           await wait(S.rm ? 0 : releaseMs);
+        checkScene(epoch);targetGone();
         play(E.hAct, 'cast');
         // Release after the forward cast begins, so the projectile visibly leaves with the staff thrust.
         await wait(S.rm || S.heroSheet?.durationsMs ? 0 : 70);
@@ -808,7 +813,7 @@
     async function playEpisode(ep) {
       checkScene();
       if(S.authoritative){
-        if(ep.combat&&ep.combat.mapId===S.me.character.mapId)await playServerRound(ep.combat);
+        if(ep.combat&&ep.combat.mapId===S.me.character.mapId)await playServerRound(ep.combat,ep.ticks);
         else await spawnServerGroup(S.me.battle.idleCombat.enemies);
         for(const p of ep.pots)await potion(p.k,p.n);
         if(ep.levels)await levelUp(ep.levels);
@@ -825,11 +830,13 @@
     }
     async function skirmish({ allowLocalSpawn = true } = {}) {
       checkScene();
+      if(paused()){await wait(500);return;}
       if(!S.group.length||!S.group.some(e=>e.mon?.hp>0)){
         if(!allowLocalSpawn)return;
         await spawnGroup();
       }
       applyTarget();
+      if(!(S.mon&&S.mon.hp>0)){await wait(400);return;}
       const casting=S.me.character.state==='fighting'&&Math.random()<.3;
       await groupAttack({},casting);saveEnemy();
       // Between settlements, keep motion vivid without inventing kills, resources or per-hit numbers.
@@ -842,7 +849,17 @@
       for(const enemy of enemies){addEnemy();await spawn(enemy.elite,enemy);saveEnemy();}
       focusEnemy(0);layoutGroup();renderTargets();
     }
-    async function playServerRound(round){
+    // Spread one settlement's committed hits across the minute until the next one,
+    // so the screen fights continuously instead of bursting and then idling.
+    const PACE_BUDGET_MS=50000,PACE_MIN_MS=900,PACE_MAX_MS=9000;
+    function paceSlot(round,ticks){
+      if(S.rm||ticks>5)return 0;
+      const hits=(round.events||[]).filter(e=>e.type!=='spawn'&&e.type!=='elite').length;
+      if(!hits)return 0;
+      return Math.max(PACE_MIN_MS,Math.min(PACE_MAX_MS,Math.round(PACE_BUDGET_MS/hits)));
+    }
+    async function playServerRound(round,ticks=0){
+      const slot=paceSlot(round,ticks);
       await spawnServerGroup(round.before);root.dataset.playingRound=round.id;
       for(const action of round.presentation?.monsterActions || []){
         if(action.cosmetic!==true||action.attackDirection!==-1)continue;
@@ -854,6 +871,7 @@
         if(event.type==='spawn'){focusEnemy(event.slot);await spawn(event.enemy.elite,event.enemy);saveEnemy();layoutGroup();renderTargets();continue;}
         if(event.type==='elite'){addEnemy();await spawn(true,event.enemy);saveEnemy();layoutGroup();renderTargets();if(event.enemy.spell)await monsterCast(event.enemy.spell,true);continue;}
         const index=S.group.findIndex(e=>e.mon?.id===event.targetId);if(index<0)continue;focusEnemy(index);
+        const hitStart=performance.now();
         // This is a committed server hit; its actual target owns the name highlight during playback.
         S.pendingTarget=null;renderTargets();
         await heroAttack({skillName:event.skillName,attackSpeedMultiplier:event.attackSpeedMultiplier||round.attackSpeedMultiplier,impact:()=>{
@@ -862,6 +880,7 @@
           root.dataset.lastHit=JSON.stringify({id:event.targetId,hp:event.afterHp,maxHp:S.mon.max,damage:event.damage});
         }},event.skill);
         if(event.afterHp===0)await killMonster({elite:event.enemy.elite});
+        if(slot){const gap=slot-(performance.now()-hitStart);if(gap>0)await wait(gap);}
       }
       await spawnServerGroup(round.after);root.dataset.playingRound='';root.dataset.completedRound=round.id;
     }
@@ -880,11 +899,8 @@
           if(S.authoritative){
             const enemies = S.me.battle?.idleCombat?.enemies;
             if(!S.group.length && enemies?.length) await spawnServerGroup(enemies);
-            if(S.group.some(e=>e.mon?.hp>0) && !S.queue.length){
-              await skirmish({ allowLocalSpawn: false });
-            } else {
-              await wait(800);
-            }
+            // Real combat only: between settlements the monsters stand idle instead of taking decorative swings that deal no damage.
+            await wait(800);
             continue;
           }
           await skirmish();
