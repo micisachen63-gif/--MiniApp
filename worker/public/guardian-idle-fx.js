@@ -51,12 +51,15 @@
   /** Fits the complete angel into the stage. Image proportions remain intact. */
   function placement(point,width,height) {
     const w = Math.max(1,Number(width)||1), h = Math.max(1,Number(height)||1);
-    const angelHeight = Math.min(154,Math.max(100,h*.276),Math.max(1,h-100));
-    const angelWidth = Math.min(angelHeight*.72,Math.max(1,w-16));
-    const cloudWidth = Math.min(156,Math.max(88,angelWidth*1.45),Math.max(1,w-16));
-    return {height:angelHeight,width:angelWidth,cloudWidth,cloudHeight:54,
-      left:Math.max(cloudWidth/2+8,Math.min(w-cloudWidth/2-8,Number(point?.x)||w*.25)),
-      top:Math.max(58,Math.min(h-angelHeight-48,(Number(point?.y)||h*.5)-angelHeight-38))};
+    const head=Math.max(0,Math.min(h,Number(point?.y)||h*.65));
+    // Keep clear of the collapsed BUFF (bottom 89px), hover and rotation.
+    const ceiling=104, gap=28, available=head-gap-ceiling;
+    const angelHeight=Math.max(1,Math.min(180,Math.max(120,h*.34),available));
+    const angelWidth=Math.min(angelHeight*.72,Math.max(1,w-16));
+    const cloudWidth=Math.min(156,Math.max(88,angelWidth*1.45),Math.max(1,w-16));
+    const top=Math.max(ceiling,head-angelHeight-gap);
+    return {height:angelHeight,width:angelWidth,cloudWidth,cloudHeight:40,hidden:available<60,
+      left:Math.max(cloudWidth/2+8,Math.min(w-cloudWidth/2-8,Number(point?.x)||w*.25)),top};
   }
 
   /** No network, timer, RAF or video decoder. The existing battle renderer
@@ -101,6 +104,7 @@
     function position(point,width,height) {
       if(disposed || !current?.visual || !root.isConnected)return;
       const p=placement(point,width,height);
+      projection.hidden=p.hidden||!current?.visual;
       projection.style.left=p.left+'px';projection.style.top=p.top+'px';
       projection.style.width=p.width+'px';projection.style.height=p.height+'px';
       projection.style.setProperty('--guardian-cloud-width',p.cloudWidth+'px');

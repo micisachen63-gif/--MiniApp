@@ -89,8 +89,8 @@ test('320/390/768 stage placement preserves the complete portrait within a scene
   const {api}=setup();
   for(const width of [320,390,768])for(const height of [236,440,980])for(const x of [-50,40,width+100]){
     const p=api.placement({x,y:height-180},width,height);
-    assert.ok(p.left-p.width/2>=7.99);assert.ok(p.left+p.width/2<=width-7.99);assert.ok(p.top>=58);assert.ok(p.top+p.height<=height-47.99);assert.ok(p.height>=100&&p.height<=154);
-    assert.ok(p.left-p.cloudWidth/2>=7.99);assert.ok(p.left+p.cloudWidth/2<=width-7.99);assert.ok(p.top+p.height-16+p.cloudHeight<=height-9.99);
+    assert.ok(p.left-p.width/2>=7.99);assert.ok(p.left+p.width/2<=width-7.99);assert.ok(p.top>=104);assert.ok(p.height>=1&&p.height<=180);if(!p.hidden)assert.ok(p.top+p.height<=height-180-28);
+    assert.ok(p.left-p.cloudWidth/2>=7.99);assert.ok(p.left+p.cloudWidth/2<=width-7.99);if(!p.hidden)assert.ok(p.top+p.height-16+p.cloudHeight<=height-180);
   }
 });
 
@@ -115,7 +115,7 @@ test('hidden/reduced-motion state and repeated snapshots use existing CSS only; 
   const {api,root}=setup(),handle=api.create(root);handle.update(snapshot(),{paused:true,reducedMotion:true});
   assert.equal(root.classList.contains('guardian-idle-paused'),true);assert.equal(root.classList.contains('guardian-idle-reduced-motion'),true);
   const image=root.children[1].images[0];handle.update(snapshot(),{paused:false,reducedMotion:false});assert.equal(root.children[1].images[0],image);
-  assert.equal(root.classList.contains('guardian-idle-paused'),false);handle.position({x:110,y:240},390,440);assert.equal(root.children[1].style.height,'121.44000000000001px');
+  assert.equal(root.classList.contains('guardian-idle-paused'),false);handle.position({x:110,y:240},390,440);assert.equal(root.children[1].style.height,'108px');
   root.isConnected=false;const before=root.children[1].style.left;handle.position({x:300,y:100},390,440);assert.equal(root.children[1].style.left,before);
   assert.doesNotMatch(read('guardian-idle-fx.js'),/<video|setInterval\s*\(|setTimeout\s*\(|requestAnimationFrame\s*\(|fetch\s*\(/);handle.cleanup();
 });
@@ -135,7 +135,7 @@ test('divine mist reaches the real hero head from the enlarged angel feet withou
   }
   for(const [width,height,y] of [[320,360,240],[390,440,300],[768,980,600]]){
     const p=api.placement({x:width/3,y},width,height);
-    assert.ok(Math.abs(p.top+p.height-16+p.cloudHeight-y)<1e-8,'Mist ends at the head anchor');
+    assert.ok(Math.abs(p.top+p.height-16+p.cloudHeight-(y-4))<1e-8,'Mist ends at the head anchor');
     assert.ok(p.top+p.height<y,'Angel feet stay above the head');
   }
   const css=read('guardian-idle-fx.css');
@@ -143,4 +143,19 @@ test('divine mist reaches the real hero head from the enlarged angel feet withou
   assert.match(css,/guardian-idle-paused \.guardian-idle-cloud/);
   assert.match(css,/guardian-idle-reduced-motion \.guardian-idle-cloud/);
   handle.cleanup();assert.equal(root.children.length,0);
+});
+test('all registered classes, genders and advancements keep angel clear of BUFF and character bounds',()=>{
+ const {api}=setup(),window={};vm.runInNewContext(read('hero-art-registry.js'),{window});const registry=window.RpgHeroArtRegistry;
+ const classes=new Set();let checked=0;
+ for(const key of registry.keys){const entry=registry.get(key);classes.add(entry.baseClass);
+  const figures=[entry.heroMeta?.fig,entry.animation?.frameFig,entry.animation?.frameBounds].filter(f=>Array.isArray(f)&&f.length===4&&f.every(Number.isFinite));
+  for(const [width,height] of [[320,360],[390,440],[744,380],[1024,640]])for(const fig of figures){
+   const figureHeight=Math.min(180,height*.3),head=height-figureHeight-10+figureHeight*fig[1];
+   const p=api.placement({x:width*.16,y:head},width,height);
+   if(!p.hidden){assert.ok(p.top-6>=98,key+' stays below BUFF even at hover peak');assert.ok(p.top+p.height+3<=head-24,key+' keeps rotation clear of silhouette');}
+   checked++;
+  }
+ }
+ assert.deepEqual([...classes].sort(),['archer','mage','sword','thief']);assert.ok(checked>1000);
+ assert.equal(api.placement({x:50,y:140},320,236).hidden,true,'compact scene hides projection instead of overlapping character');
 });
