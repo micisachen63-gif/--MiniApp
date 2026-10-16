@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "7877a4737fe3507e169f8991ddbcf5cf58e3af15",
+  "sourceCommit": "b65496551af93a1a51a30ada30ebd2b2270052a9",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "8b80de7f-cd04-476d-b5e0-17d8fb660f51",
+  "productionVersion": "317698b4-d3c3-4b51-b8e9-a868862d0f44",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T01:44:05.716Z",
+  "verifiedAt": "2026-10-16T02:13:19.796Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "20887abeb304d053dbd0e1aab2d5fb6a9eb13a9732bfebd87c8b3f35f484dedc"
+    "index.js": "8dd9d4ba7bf536c2b15a55a163251904156e687f902747ca87fad70a798ca734"
   },
   "source": {
-    "fileCount": 249,
-    "sha256": "27f8150edf8ab8ab76e4fd4995aba2de4e024c6fa89c873e9024c397de3a8273",
+    "fileCount": 250,
+    "sha256": "75f08b6d0b11048a936f88593a0c066c1a591078ccfa3dd6e755171ddbbb0997",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -868,7 +868,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/adapt.mjs",
-        "sha256": "390b5780d0f27713fe169dc1511cb3727316d91652f19e977202a304e8b8160e"
+        "sha256": "562d8df2e6f318175cd69384fabf2b8f9c7cd254c31952b7668d72c44a7b1e29"
       },
       {
         "file": "cloud-bot/src/adapter/adaptation-source.json",
@@ -912,7 +912,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
-        "sha256": "3b69deecbb831b5019c33186966fa1baf970bea6cffbe4a893f98ee0cec490b7"
+        "sha256": "dcaa24d354c48c4e6cd244981cced0c324a43cffc53d85a995b7a5c53f0bae55"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
@@ -932,7 +932,11 @@
       },
       {
         "file": "cloud-bot/src/coordinator.mjs",
-        "sha256": "3739a05b77ac9166ea92c5cae79d94198b4831473f0f32b62cb636ffbed34f88"
+        "sha256": "54976b011dbf6f93c7f2ef3e89fc03e7493398da15c85030c28eee9d76015e8a"
+      },
+      {
+        "file": "cloud-bot/src/fate-membership.mjs",
+        "sha256": "5fdf1fa4fa5a3688383000b2d3763b59972866877f0d3986a52d96c0d82ff5cc"
       },
       {
         "file": "cloud-bot/src/fate-share.js",
@@ -944,7 +948,7 @@
       },
       {
         "file": "cloud-bot/src/index.mjs",
-        "sha256": "436b0281f9b4cf03cd89f799a556c76ff6552c33af3f954d2bbc83f8ba9df401"
+        "sha256": "2e13623a1a3250b64cfabd37fe27def06ed0a3b5a1fb91bc95511aaf9fc45293"
       },
       {
         "file": "cloud-bot/src/renderer/INTEGRATION.txt",
@@ -1025,7 +1029,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "8b80de7f-cd04-476d-b5e0-17d8fb660f51",
+        "version_id": "317698b4-d3c3-4b51-b8e9-a868862d0f44",
         "percentage": 100
       }
     ],
