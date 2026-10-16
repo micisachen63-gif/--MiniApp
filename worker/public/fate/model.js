@@ -53,4 +53,4 @@ export function generatedZodiac(seed){return /^[a-f0-9]{8}$/.test(seed||'')?pars
 export function randomOrbit(zodiac=null){const b=new Uint32Array(2);crypto.getRandomValues(b);return zodiac!==null&&b[0]%2===0?zodiac:b[1]%12;}
 export function publicUrl(code,origin='https://elf-rpg-api.micisachen.workers.dev'){if(!decodeResult(code))throw Error('Invalid story');return `${origin}/fate/r/${code}`;}
 export function telegramUrl(code){if(!decodeResult(code))throw Error('Invalid story');return `https://t.me/StarJournalRpgBot?start=fate_${code}`;}
-export function shareText(result,includeZodiac=true){return `${includeZodiac&&result.zodiac!==null?ZODIAC[result.zodiac]+'座的我，':''}在星穹旅誌成為「${result.ending.title}」。\n「${result.ending.quote}」\n${result.ending.question}\n不用登入，讓人生隨時間展開，寫下你的命運旅章。`;}
+export function shareText(result,includeZodiac=true){return `這一世，我是「${includeZodiac&&result.zodiac!==null?ZODIAC[result.zodiac]+'座 · ':''}${result.identity[0]}」。\n在星穹旅誌，留下了《${result.ending.title}》。\n「${result.ending.quote}」\n${result.ending.question}\n不用登入，讓人生隨時間展開，寫下你的命運旅章。`;}

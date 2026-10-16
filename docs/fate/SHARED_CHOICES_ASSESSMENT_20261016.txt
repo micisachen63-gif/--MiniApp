@@ -1,0 +1,127 @@
+星穹旅誌｜命運旅章「雙人協作支線」可行性評估
+2026-10-16 · 僅設計評估，尚未實作／啟用
+
+結論
+可以做，而且能沿用目前 Worker、D1、Bot、outbox 與排程。建議先做「每世最多一條協作支線」，讓被邀請的真玩家決定自己在故事中的回應；原本18／40／66歲三個人生大抉擇仍由本人決定。
+目前暱稱人物只是虛構NPC快照，不能直接變成可操作的真人。需要新增私有參與者映射、雙方意願、群成員確認、通知配額與權威事件狀態，避免陌生人搶答、退群仍被@、兩個人生互相覆寫。
+本次只讀程式並新增本文件，沒有改遊戲程式、資料表、正式機或排程，沒有向任何玩家傳訊息。
+
+一、現況盤點（以本機目前程式碼為準）
+1. services/fate-social.js 在正式開世時，從現存角色表抽最多3個其他帳號公開暱稱，每帳號最多1個。自己的全部分身會排除。查詢最多96筆，沒有加入當前群成員／互動意願篩選。
+2. state_json.socialCast 只有 {v:1,people:[{thread,name}]}；帳號／角色身分去重後已丟棄。這是刻意的隱私邊界，不能倒過來以暱稱查出誰該答題；同名、改名、刪角都不應改變已發生的故事。
+3. public/fate/life.js 是兩個有效遊戲小時，台北06:00–24:00前進、凌晨暫停。三大抉擇現有回應期90有效秒；逾時自動代選。不能突然把它們交給別人，也不適合用90秒等待另一位玩家。
+4. services/fate.js 的進度以life.rev + rpg_guard做CAS；choice要求本人角色。rpg_fate_operations提供帳號、角色、動作、payload指紋及requestId收據。
+5. worker/src/app.js 驗Telegram initData HMAC，從帳號解出當前角色，忽略客戶端tgId；selectedCharacterId不符會409。這證明誰登入，並不證明他此刻仍在指定群組。
+6. Bot adapter/cloud-bot.js 已有getChatMember：正向快取30秒、同人查詢合併；錯誤不當成已通過。它主要服務BOT進入／創角流程，不是目前Fate暱稱抽樣的群資格來源。
+7. fate_event經outbox投遞前，Bot呼叫/rpg/fate/notification重新核對有效性與剩餘時間，再使用服務端accountId做tg://user提及。通知先寫Durable狀態再送Telegram；不確定送達會保留uncertain，不能因逾時直接重送。
+8. Game已有每分鐘FATE.sweep、Bot既有30秒alarm。outbox claim目前僅對kind=fate_event做凌晨靜默；新協作kind若直接加入，必須一併納入夜間規則。failOutbox的retry_after上限一小時、最多8次，不應用反覆失敗把六小時夜間拖過去。
+9. 四世星輝匣依每角色正式complete筆數計算。協作支線必須完全不改這個計數及禮物發放條件。
+
+二、建議玩法與授權邊界
+每世最多1條協作支線、邀請最多1位真人。其餘暱稱仍是虛構故事人物，不會因此被@，也沒有代替本人作人生決定的權限。
+
+範例：
+此世你與鄰居「白色毛衣」一起修好屋頂花園。一次風暴前，他準備離城。
+本人可先表態：「希望你留下共同守園」或「願意替你照看，讓你安心出發」。這是本人的期待，不能替對方選答案。
+被邀請者在遊戲裡看到：「你願意在這一世怎麼回應？」
+- 參與並選：留下，一起整理新的輪值。
+- 參與並選：出發，將沿途種子寄回來。
+- 這次略過：交給故事續寫，不扣資源、不顯示拒絕人際關係。
+只有被指定者的「參與並選」才決定支線回應；本人可以查看、表態或撤回尚未成立的授權，無法搶按對方的答案。勁敵也可用同一機制，例如選擇公開比試或交換草圖，保留溫和競爭。
+
+本人授權與對方意願要分開：
+- 本人在開世時清楚勾選「本世願意邀請其他旅人決定一條關係支線」，預設不勾，並知道不改三大人生抉擇。
+- 對方帳號先啟用「接受旅章協作邀請／允許群組提及」，預設關閉；收到這一件時仍可略過。
+- 不把遊玩遊戲、出現在NPC快照、擁有暱稱或完成任務，視為已同意真人互動。
+- 雙方都不會因略過少拿輪迴禮；不提供重複送邀請、付費強迫對方回應或扣資源懲罰。
+
+三、候選資格與不打擾規則
+1. 只抽已啟用協作及提及、近期有有效遊玩（建議24小時內）、目前仍在指定專屬群組的帳號。排除自己所有分身；同帳號不能用分身回應自己的邀請。
+2. 候選要綁真正帳號與一個當前可用的角色；不得用公開socialCast暱稱反查或靠前端傳來owner判斷。
+3. 組合候選時及真正通知前都需有效的群資格。正向快取最多30秒；對成員狀態未知、查詢逾時、退出、被踢、角色刪除者，直接放棄真人邀請，回NPC／自動支線，不阻擋主故事。
+4. 建議新增Fate提及總額度每帳每日4次，其中協作最多2次；跨全部角色合計。原有fate_event目前並沒有這個總額度，若採用全域限制，需一併整合原通知，不能只限制新kind卻宣稱所有@均已受控。額度耗盡時僅遊戲內呈現，不再群@。
+5. 一件雙人通知需要兩人都有可用提及額度；不應只檢查被邀請者。配額在建通知時原子預留，並發邀請不能各自看到還有額度而超發。
+6. 每帳號同時最多1件待回協作；同一對帳號當日最多1件，避免熟人或多分身反覆撞到同一人。
+7. 接受設定可隨時關閉；提供「今天不再邀請」及「這次略過」。關閉後撤銷未送出的邀請，不追問原因、不再次提醒。
+8. 退出群組立即失去真人協作資格；送出前／答題時再檢查。chat_member事件可讓私有快取失效，但仍不可只憑舊的正向快取承諾永遠在群。
+9. 一件支線最多1張群通知，同時提及兩位。沒有催促通知、逾時通知或另開一張結果@；結果在遊戲內顯示，必要時只編輯原訊息且不再次提及。
+
+四、時間與故事一致性
+- 回應期建議10分鐘「有效遊戲時間」；和人生一起在00:00–06:00暫停。
+- deadline=min(addActive(openAt,10分鐘), 此世endAt)。支線不得延長一世，也不等對方完成自己的輪迴。
+- 建議在此世有效第40分鐘左右開啟，避免快結束才發邀請。排程積壓到期限已過就不發通知，直接自動故事；跨午夜例如23:55開啟，可在06:05結束，但仍不能超過本世endAt。
+- 本人原三大抉擇照原規則獨立運作。協作不占用其answers[0..2]，不改其90秒時限。
+- 逾時未答、婉拒、退群、關閉設定、資格未知或無人可邀，採同一穩定seed的中性預設，不寫成對方現實拒絕本人。
+- 已播出的紀事不能被晚到答案重寫。開啟時是一段中性的等待；決策收據可立即顯示，但敘事後果在固定deadline章節之後生效。晚於deadline不再接受答案。
+- 支線只有一個ownerLife，指定方按答覆不會同時寫他自己的另一個人生。其他玩家本人旅章不中斷、不增減EXP／戰力／PK數據。
+- 完成一世前可收斂已到期支線；即使協作服務暫不可用，主生命時鐘仍可用確定的預設結局完成，不得為它扣住status=active或四世贈禮。
+
+五、資料設計（提案，沒有建立資料表）
+以當時最新migration下一序號新增，不預占號碼，不改寫歷史人生。
+
+1. rpg_fate_social_preferences
+   account_id PK、enabled、allow_mentions、quiet_until、active_at、rev、updated_at。
+   身分均為服務端私有；新設定明確說明協作與群提及範圍。
+2. rpg_fate_social_participants
+   opaque id、life_id UNIQUE、owner_account／owner_char、guest_account／guest_char、thread_key、公開暱稱快照、授權版本、群資格checked_at／status、取消原因。
+   這是權威私有映射。公開draft／分享碼只能有暱稱和虛構關係，禁止包含TG ID、帳號、對方角色ID或可反查的生涯ID。
+3. rpg_fate_social_choices
+   opaque event_id、participant_id、owner_wish、designated_side='guest'、opened_at、deadline_at、next_at、status、answer、source(manual/auto/declined)、resolved_at、rev、public_outcome_json。
+   UNIQUE(life_id)或同等約束保證一世最多1件；due partial index供cron只找待處理事件。
+4. rpg_fate_social_limits
+   (account_id,taipei_day) PK、mentions_reserved／invites_used，另以參與者查詢限制同對帳號與並行待辦。
+5. rpg_fate_social_operations
+   (account_id,request_id) PK、actor_char、event_id、payload_hash、result_json、created_at。
+   或安全抽出現有Fate收據工具共用；不能直接沿用「只有人生owner才可操作」的mutation授權而漏掉guest身分核對。
+
+群資格可以由現有Bot在同一Worker新增受service secret保護的內部查詢／同步端點，回Game私有快取；既有RPG_API只有Bot→Game，不能假設已存在反向binding。若需Game即時核資格，可設定固定既有Bot網址做受保護內部請求；不要讓client傳任意帳號／URL作通用查人代理。查不到就不成立真人事件，不讓主遊戲等無限重試。
+
+六、API、授權與競態
+建議App API：fate/social/preferences、preferences/save、inbox、event、authorize、wish、reply、decline／quiet。
+前端只送opaque事件ID、允許的選項、穩定requestId及selectedCharacterId；不送決策者account、TG ID、另一個人生ID、機率、期限或成果。
+
+每次操作順序：
+1. 現有Telegram HMAC驗證登入帳號，現有選角流程解析目前角色，selectedCharacterId過期立即409。
+2. 從私有participant找兩方；不在名單則404／403，不洩漏事件內容。當前角色須符合綁定角色；使用其他分身需先明確切角，不能自動把通知深連結當作切角授權。
+3. 驗settings、當前群資格、本人授權與deadline／夜間規則；夜間顯示暫停，不能在暫停期間偷送答案。
+4. owner可以wish／撤回未成立授權；guest才能reply決策。兩方都能view／回應自己允許的動作，非指定者無法用同一reply API決定結果。
+5. 同一account+requestId+event+action+角色+body hash收據重播；不同內容重用UUID回409。unknown回應只重試原UUID，不另開新操作。
+6. 使用event.rev/status CAS + guard；最終答案、可公開敘事結果、收據及必要owner-life revision在同一D1 batch。不得將兩個玩家的整份人物／人生快照一起覆寫。
+7. reply、逾時cron、退群撤銷、本人撤回與兩台裝置同時答題必須競爭同一終態。第一個合法終態生效，後到只讀結果；不再補扣配額／發通知／再寫故事。
+8. 假事件ID、另一人的深連結、偽造TG ID、舊角色快照、過期callback都不能代答。若群通知按鈕是callback，也需callback.from經服務端私有映射校驗；最簡一期建議只提供開遊戲按鈕，在HMAC頁面完成決策。
+
+七、群通知投遞與低流量
+- 一張圖卡示例：
+  「命運旅章｜屋頂花園的約定」
+  「星燈旅人，你把花園交到了哪一雙手裡？」
+  「白色毛衣，這一頁正等你回應。有效時間剩餘09:58；沒有回覆，故事也會自然向前。」
+  下方：「查看這一頁／進入遊戲」。實際提及由Bot取得經授權的真帳號產生，不能拼『@公開角色暱稱』假裝能通知本人。
+- Bot HTML顯示名要escape；前端故事用textContent。玩家公開暱稱可見，但ID只在私有服務與Telegram提及實作中使用，不進前端資料、公開API、分享圖或分享碼。
+- outbox用fate-social:{eventId}:invite唯一dedupe；寫入事件／預留配額／outbox在同一原子batch。
+- 投遞前呼叫新的私有notification校驗：事件尚待回、兩人仍有意願及群資格、owner life未結束、在時段內、deadline未到；回傳當前權威名稱、指定方與剩餘時間。不能信任排隊payload中的舊account或名字。
+- 新kind加入夜間claim排除及next_at安排，不靠每小時retry把夜晚重試額度耗盡。
+- 沿用現有Durable送達意圖去重：明確Telegram拒絕才可重新排；429照退避；unknown保留uncertain待核對，絕不另送文字版或改dedupe再送一次。
+- 明確未送達可以釋放預留提及配額；unknown仍占用，不可為了退費配額觸發重送。逾時失效通知ack／標記superseded，不再@。
+- 每分鐘現有Fate sweep按due index限量處理；Bot維持既有30秒alarm。UI只隨既有45秒同步、可見性恢復或使用者操作取狀態，不新增每秒網路輪詢、每玩家cron、常駐WebSocket或新Worker／D1／DO資源。
+
+八、預期異動檔案與驗證清單
+服務：新增 services/fate-social-choice.js、私有membership適配；修改fate-social.js候選資格、fate.js開始/進度/完成掛接、index.js路由與outbox新kind夜間規則、app.js API白名單及帳號/角色權限。
+敘事：life.js新增安全公開支線結果白名單，formal-events.js追加中性等待及固定期限後果；不改既有三大answers格式、不將私有participant物件塞draft。
+前端：life-ui.js的支線卡、可見待辦、兩方不同可用操作、設定/今天靜音；不增加持續高頻請求。
+Bot：adapter/rpg-flow.js新增kind與通知前校驗；adapter/cloud-bot.js群資格/成員變更失效；coordinator僅沿用既有alarm。若adapter檔為工具生成，實作時須遵守現有adapt來源及回歸流程，不能只改生成檔造成下次覆蓋。
+資料：上述新增表與索引採單獨可審migration，不自動重跑歷史migration，不搬遷真玩家資料。
+
+必要測試：
+- 自己分身／非opt-in／退群／刪角／過期群資格不入池；同帳號去重，資格查詢未知時安全回NPC。
+- 本人授權不等於對方接受；guest可略過、owner不能搶答、陌生人／偽造ID／深連結／選角過期拒絕；HMAC錯誤拒絕。
+- 同UUID回應遺失、雙裝置不同UUID、reply-vs-cron、撤回-vs-reply、退群-vs-notify全都只有一個終態。
+- 10有效分鐘／23:55跨夜／夜間禁止操作／deadline不超本世／排程晚到不補發；不改原90秒大抉擇。
+- 每帳跨角色@配額並發不超限，對帳號同日限制、同時待辦限制、明確拒送釋放與unknown保留配額。
+- stale outbox payload不能@錯人、通知去重及重啟uncertain、HTML escaping、public API/分享碼不含私有參與者欄位。
+- 未答／退群／Bot失敗仍準時完成人生，四世匣仍照正式complete累計；不改任何對方人生、金幣、PK或掉落。
+- 舊人生無新欄位照原文、已播出片段不被晚答重寫；同一結果每次重讀一致。
+- 真手機／TG Mini App查看、明確授權、guest代選、切角提示、婉拒和夜間顯示，測試不向真群發文。
+
+費用與發布界線
+不需要新增訂閱、付費模型或新的Cloudflare服務資源；但成員核對、D1讀寫、內部請求和Telegram投遞都會增加用量，不能保證任何人數下都零額外費用。以每世1支線、每日配額、due限量與現有排程控制增量，再用現有觀測核對；本次不做流量壓測。
+建議先完成小型可驗收版本再分段開啟，預設功能關閉。此評估不等同啟用授權或已完成實作，沒有發訊息、改DB或部署。

@@ -1,30 +1,35 @@
-import {ART,ZODIAC,decodeResult,encodeResult} from './model.js';
+import {ART,decodeResult,encodeResult} from './model.js';
 import {endingForLife} from './ending-story.js';
 import {shareDetails,telegramShareUrl,threadsShareUrl,createCardGuard} from './share-model.js';
+import {cardLayout,cardIdentity} from './share-card-layout.js';
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e};
 const button=(text,fn,cls='fate-quiet')=>{const b=el('button',cls,text);b.type='button';b.onclick=fn;return b};
 function wrap(c,text,x,y,max,line){let row='';for(const char of text){if(c.measureText(row+char).width>max){c.fillText(row,x,y);row=char;y+=line}else row+=char;}if(row)c.fillText(row,x,y)}
 export async function drawShareCard(r,format,{ImageType=Image,document:doc=document}={}){
- const canvas=doc.createElement('canvas'),w=1080,h=format==='story'?1920:1350;canvas.width=w;canvas.height=h;const c=canvas.getContext('2d');if(!c)throw Error('此裝置暫時無法繪製圖卡');
- const image=new ImageType();image.src=r.version>=4?endingForLife(r).illustration:ART+'journey.webp';await image.decode();await doc.fonts.ready;
- c.fillStyle='#0a1425';c.fillRect(0,0,w,h);const ih=h*.65,scale=Math.max(w/image.width,ih/image.height);c.drawImage(image,(w-image.width*scale)/2,0,image.width*scale,image.height*scale);
- const gradient=c.createLinearGradient(0,ih*.32,0,h*.8);gradient.addColorStop(0,'#0a142500');gradient.addColorStop(.5,'#0a1425dc');gradient.addColorStop(1,'#0a1425');c.fillStyle=gradient;c.fillRect(0,0,w,h);
- const shade=c.createLinearGradient(0,0,0,245);shade.addColorStop(0,'#07111ed9');shade.addColorStop(1,'#07111e00');c.fillStyle=shade;c.fillRect(0,0,w,245);
- c.strokeStyle='#c0a167';c.lineWidth=2;c.strokeRect(32,32,w-64,h-64);c.strokeStyle='#b69b5a66';c.strokeRect(44,44,w-88,h-88);
- c.textAlign='center';c.fillStyle='#e4c58a';c.font='26px Georgia,"Microsoft JhengHei",serif';c.fillText('星 穹 旅 誌   ·   命 運 旅 章',540,111);c.font='20px Georgia,serif';c.fillStyle='#d7dce2';c.fillText('THE LAST STAR LANTERN',540,152);
- const y=format==='story'?1000:640;c.fillStyle='#cbd1d7';c.font='26px "Microsoft JhengHei",serif';c.fillText(`${r.zodiac!==null?ZODIAC[r.zodiac]+'座 · ':''}${r.identity[0]}`,540,y);
- c.fillStyle=r.ending.color;c.font='64px Georgia,"Microsoft JhengHei",serif';c.fillText(r.ending.title,540,y+110);c.strokeStyle=r.ending.color;c.beginPath();c.moveTo(440,y+150);c.lineTo(640,y+150);c.stroke();
- c.fillStyle='#f3e5ca';c.font='35px Georgia,"Microsoft JhengHei",serif';wrap(c,r.ending.quote,540,y+220,800,57);c.fillStyle='#aebccf';c.font='26px "Microsoft JhengHei",sans-serif';wrap(c,r.ending.question,540,y+370,820,44);
- c.fillStyle='#dfc994';c.font='25px "Microsoft JhengHei",sans-serif';c.fillText('你的故事，尚未寫定。',540,h-192);c.fillStyle='#aab6c9';c.font='20px "Microsoft JhengHei",sans-serif';c.fillText('不用登入 · 一世流轉 · 遇見不同的自己',540,h-145);
- c.font='15px "Microsoft JhengHei",sans-serif';c.fillText(shareDetails(r.code).url.replace('https://',''),540,h-103,950);c.font='14px Georgia,serif';c.fillText('Game Producer · ミカサ   |   原創遊戲故事，非現實命運預測',540,h-66);
+ const layout=cardLayout(format),identity=cardIdentity(r),{width:w,height:h}=layout;
+ const canvas=doc.createElement('canvas');canvas.width=w;canvas.height=h;const c=canvas.getContext('2d');if(!c)throw Error('此裝置暫時無法繪製圖卡');
+ const art=new ImageType(),crest=new ImageType();art.src=r.version>=4?endingForLife(r).illustration:ART+'journey.webp';crest.src='/fate/zodiac/'+identity.crestId+'.svg';
+ await Promise.all([art.decode(),crest.decode(),doc.fonts.ready]);
+ c.fillStyle='#091322';c.fillRect(0,0,w,h);const scale=Math.max(w/art.width,layout.artHeight/art.height);c.drawImage(art,(w-art.width*scale)/2,0,art.width*scale,art.height*scale);
+ const shade=c.createLinearGradient(0,0,0,h);shade.addColorStop(0,'#07111ed9');shade.addColorStop(.16,'#07111e00');shade.addColorStop(.34,'#0a142552');shade.addColorStop(.56,'#0a1425ed');shade.addColorStop(.72,'#091322');shade.addColorStop(1,'#091322');c.fillStyle=shade;c.fillRect(0,0,w,h);
+ c.strokeStyle='#c8a76a';c.lineWidth=2;c.strokeRect(32,32,w-64,h-64);c.strokeStyle='#b69b5a66';c.lineWidth=1;c.strokeRect(44,44,w-88,h-88);
+ c.textAlign='center';c.fillStyle='#e9cd95';c.font='28px Georgia,"Microsoft JhengHei",serif';c.fillText('星 穹 旅 誌   ·   命 運 旅 章',540,111);c.fillStyle='#d1c3a9';c.font='18px Georgia,serif';c.fillText('THE LAST STAR LANTERN',540,153);
+ const seal=layout.crest,halo=c.createRadialGradient(540,seal.y+seal.size/2,10,540,seal.y+seal.size/2,seal.size*.65);halo.addColorStop(0,'#dfb96328');halo.addColorStop(1,'#dfb96300');c.fillStyle=halo;c.fillRect(190,seal.y-30,700,seal.size+60);c.drawImage(crest,seal.x,seal.y,seal.size,seal.size);
+ c.fillStyle='#f2d99f';c.font='44px Georgia,"Microsoft JhengHei",serif';c.fillText(identity.name,540,layout.signY);c.fillStyle='#b9a578';c.font='18px Georgia,serif';c.fillText(identity.latin,540,layout.latinY);
+ c.strokeStyle='#b99a5e88';c.beginPath();c.moveTo(238,layout.identityY-22);c.lineTo(335,layout.identityY-22);c.moveTo(745,layout.identityY-22);c.lineTo(842,layout.identityY-22);c.stroke();
+ c.fillStyle='#f5e5bd';c.font='58px Georgia,"Microsoft JhengHei",serif';c.fillText(identity.identity,540,layout.identityY);
+ c.fillStyle=r.ending.color;c.font='30px Georgia,"Microsoft JhengHei",serif';c.fillText(r.ending.title,540,layout.endingY);
+ c.fillStyle='#d9dbdc';c.font='31px Georgia,"Microsoft JhengHei",serif';wrap(c,'「'+r.ending.quote+'」',540,layout.quoteY,850,layout.quoteLine);
+ c.fillStyle='#edcf8d';c.font='27px "Microsoft JhengHei",serif';c.fillText('如果重啟一世，你會成為誰？',540,layout.invitationY);c.fillStyle='#8e9db3';c.font='15px "Microsoft JhengHei",sans-serif';c.fillText(shareDetails(r.code).url.replace('https://',''),540,layout.urlY,950);c.fillStyle='#b39d73';c.font='15px Georgia,serif';c.fillText('Game Producer · ミカサ',540,layout.creditY);
  return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('輸出失敗')),'image/png'));
 }
-export function mountSharePanel(p,{result,initialShow=true,onPrivacyChange=()=>{},client,draw=drawShareCard,host=window}){
+export function mountSharePanel(p,{result,initialShow=true,identityZodiac=null,onPrivacyChange=()=>{},client,draw=drawShareCard,host=window}){
  const guard=createCardGuard(),nav=host.navigator,urls=host.URL;let file=null,previewUrl=null,prepared=null,context=null,disposed=false,sharing=false,producing=false;
- const check=el('label','fate-check'),cb=el('input');cb.type='checkbox';cb.checked=initialShow&&result.zodiac!==null;cb.disabled=result.zodiac===null;check.append(cb,el('span','','分享圖片與連結顯示星座'));p.append(check);
+ const availableSign=Number.isInteger(result.zodiac)?result.zodiac:Number.isInteger(identityZodiac)&&identityZodiac>=0&&identityZodiac<12?identityZodiac:null;
+ const check=el('label','fate-check'),cb=el('input');cb.type='checkbox';cb.checked=initialShow&&availableSign!==null;cb.disabled=availableSign===null;check.append(cb,el('span','','分享圖片與連結顯示星座'));p.append(check);
  const label=el('label','fate-field','分享圖尺寸');label.htmlFor='fate-format';const format=el('select','fate-format');format.id='fate-format';for(const [v,t]of [['post','IG／Threads · 1080 × 1350'],['story','限時動態 · 1080 × 1920']]){const o=el('option','',t);o.value=v;format.append(o)}p.append(label,format);
  const preview=el('div');preview.id='fate-preview';const status=el('p','fate-status');status.id='fate-status';status.setAttribute('role','status');const fallback=el('div','fate-share-fallback');p.append(preview,status,fallback);
- const selected=()=>cb.checked||result.zodiac===null?result:decodeResult(encodeResult({...result,zodiac:null}));
+ const selected=()=>decodeResult(encodeResult({...result,zodiac:cb.checked?availableSign:null}));
  const details=()=>shareDetails(selected().code,format.value);
  const valid=token=>!disposed&&p.isConnected&&guard.current(token);
  const say=s=>{if(!disposed)status.textContent=s};

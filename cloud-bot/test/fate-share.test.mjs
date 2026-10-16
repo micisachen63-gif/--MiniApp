@@ -4,6 +4,8 @@ import {readFile} from 'node:fs/promises';
 import {createHmac} from 'node:crypto';
 import jpeg from 'jpeg-js';
 import {createFateShare,createCardRenderer,cardDetails,CARD_ORIGIN,GAME_ORIGIN} from '../src/fate-share.js';
+import {encodeResult} from '../../worker/public/fate/model.js';
+import {cardIdentity,cardLayout} from '../../worker/public/fate/share-card-layout.js';
 const code='f43010001x9c61a7d2',now=Date.UTC(2026,9,16,4),token='123456:offline-only-test-token';
 function init(user=123,at=now,secret=token){
  const params=new URLSearchParams({auth_date:String(Math.floor(at/1000)),user:JSON.stringify({id:user,first_name:'旅人'})});
@@ -46,8 +48,19 @@ test('JPEG GET/HEAD/OPTIONS expose download headers, deterministic cache and str
 });
 test('actual shared WASM renderer produces decodable 1080px JPEG for both formats under Telegram limit',async()=>{
  const module=await WebAssembly.compile(await readFile(new URL('../src/renderer/deps/resvg.wasm',import.meta.url)));
- const render=createCardRenderer({wasmModule:module,loadFont:()=>readFile(new URL('../public/fonts/NotoSansTC.ttf',import.meta.url)),loadIllustration:name=>readFile(new URL(`../../worker/public/art/fate-ending-20261016/${name}.jpg`,import.meta.url))});
+ const render=createCardRenderer({wasmModule:module,loadFont:()=>readFile(new URL('../public/fonts/NotoSansTC.ttf',import.meta.url)),loadCrest:id=>readFile(new URL(`../../worker/public/fate/zodiac/${id}.svg`,import.meta.url),'utf8'),loadIllustration:name=>readFile(new URL(`../../worker/public/art/fate-ending-20261016/${name}.jpg`,import.meta.url))});
+ let hidden;
  for(const format of ['post','story']){
-  const data=await render(cardDetails(code,format));assert.ok(data.length<5_000_000);assert.equal(data[0],255);assert.equal(data[1],216);const decoded=jpeg.decode(data,{useTArray:true});assert.equal(decoded.width,1080);assert.equal(decoded.height,format==='story'?1920:1350);assert.ok(new Set(decoded.data.subarray(0,100000)).size>100,'art is not an empty image');
+  const data=await render(cardDetails(code,format));assert.ok(data.length<5_000_000);assert.equal(data[0],255);assert.equal(data[1],216);const decoded=jpeg.decode(data,{useTArray:true});assert.equal(decoded.width,1080);assert.equal(decoded.height,format==='story'?1920:1350);assert.ok(new Set(decoded.data.subarray(1080*200*4,1080*400*4)).size>150,'art is not an empty image');
+  if(format==='post')hidden=decoded;
  }
+ const visible=jpeg.decode(await render(cardDetails(encodeResult({...cardDetails(code).result,zodiac:10}),'post')),{useTArray:true}),seal=cardLayout('post').crest;
+ let difference=0;for(let y=seal.y+80;y<seal.y+seal.size-80;y++)for(let x=seal.x+80;x<seal.x+seal.size-80;x++){const p=(y*1080+x)*4;difference+=Math.abs(visible.data[p]-hidden.data[p]);}
+ assert.ok(difference>100000,'visible zodiac paints a distinct crest, not the hidden wheel');
+});
+
+test('TG card metadata retains each public zodiac and incarnation while hidden code remains anonymous',()=>{
+ const base=cardDetails(code).result;
+ for(let zodiac=0;zodiac<12;zodiac++){const c=cardDetails(encodeResult({...base,zodiac}));assert.equal(c.result.zodiac,zodiac);assert.equal(cardIdentity(c.result).identity,base.identity[0]);assert.match(c.imageUrl,/20261016-zodiac2/);}
+ assert.equal(cardIdentity(base).hasSign,false);assert.equal(cardIdentity(base).crestId,'wheel');
 });

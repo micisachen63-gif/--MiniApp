@@ -6,6 +6,8 @@ import {decodeResult,encodeResult} from '../public/fate/model.js';
 import {shareDetails,telegramShareUrl,threadsShareUrl,validNative,CARD_ORIGIN} from '../public/fate/share-model.js';
 import {createNativeShareHost,nativeCapabilities} from '../public/fate/native-share-host.js';
 import {mountSharePanel} from '../public/fate/share-ui.js';
+import {cardLayout,cardIdentity} from '../public/fate/share-card-layout.js';
+import {ZODIAC_CRESTS} from '../public/fate/zodiac-sign.js';
 const code=encodeResult({version:4,orbit:3,answers:[0,1,0],auto:[0,0,1],zodiac:5,seed:'9c61a7d2'}),result=decodeResult(code),uuid='12345678-1234-1234-1234-123456789abc';
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
 class Element{
@@ -22,12 +24,30 @@ class Element{
  remove(){this.removed=true;if(this.parent)this.parent.children=this.parent.children.filter(c=>c!==this);}
  select(){this.selected=true;}
 }
-function ui({draw=async()=>new Blob(['offline-image']),client,navigator={}}={}){
+function ui({draw=async()=>new Blob(['offline-image']),client,navigator={},shareResult=result,identityZodiac=null,initialShow=true}={}){
  const document={createElement:tag=>new Element(tag),body:new Element('body')};globalThis.document=document;
  const revoked=[],opened=[],created=[];const host={document,File,navigator:{clipboard:{writeText:async()=>{}},...navigator},URL:{createObjectURL:blob=>{created.push(blob);return 'blob:offline-'+created.length;},revokeObjectURL:url=>revoked.push(url)},open:(...args)=>{opened.push(args);return {};}},panel=new Element('section');
- const privacy=[],share=mountSharePanel(panel,{result,draw,client,host,onPrivacyChange:value=>privacy.push(value)});
+ const privacy=[],share=mountSharePanel(panel,{result:shareResult,identityZodiac,initialShow,draw,client,host,onPrivacyChange:value=>privacy.push(value)});
  return {panel,host,share,privacy,revoked,created,opened,button:text=>panel.querySelectorAll('button').find(e=>e.textContent===text),status:()=>panel.querySelector('#fate-status').textContent};
 }
+
+test('all twelve share crests pair with incarnation identity; hidden zodiac never falls back to private data',()=>{
+ for(let zodiac=0;zodiac<12;zodiac++){
+  const r=decodeResult(encodeResult({...result,zodiac})),identity=cardIdentity(r);
+  assert.equal(identity.crestId,ZODIAC_CRESTS[zodiac].id);assert.equal(identity.name,ZODIAC_CRESTS[zodiac].name+'座');assert.equal(identity.identity,r.identity[0]);assert.equal(identity.hasSign,true);
+ }
+ const hidden=cardIdentity({...result,zodiac:null,identityZodiac:10});assert.equal(hidden.crestId,'wheel');assert.equal(hidden.hasSign,false);assert.equal(hidden.name,'此世星印');
+ for(const format of ['post','story']){const l=cardLayout(format);assert.equal(l.width,1080);assert.ok(l.crest.size>=320);assert.ok(l.crest.y+l.crest.size<l.signY);assert.ok(l.creditY<l.height-32);}
+ assert.throws(()=>cardLayout('huge'));
+});
+
+test('owner may explicitly opt a private life zodiac back into share, never before checking it',async()=>{
+ const hidden=decodeResult(encodeResult({...result,zodiac:null})),draws=[],f=ui({shareResult:hidden,identityZodiac:10,initialShow:false,draw:async r=>{draws.push(r);return new Blob(['image']);}}),check=f.panel.querySelector('input');
+ assert.equal(check.checked,false);assert.equal(check.disabled,false);await f.button('製作我的旅人名帖').click();assert.equal(draws[0].zodiac,null);assert.equal(decodeResult(draws[0].code).zodiac,null);
+ check.checked=true;check.onchange();assert.equal(f.share.getFile(),null);await f.button('製作我的旅人名帖').click();assert.equal(draws[1].zodiac,10);assert.equal(decodeResult(draws[1].code).zodiac,10);
+ check.checked=false;check.onchange();await f.button('製作我的旅人名帖').click();assert.equal(draws[2].zodiac,null);assert.deepEqual(f.privacy,[true,false]);
+ for(const invalid of [null,-1,12,'10']){const anonymous=ui({shareResult:hidden,identityZodiac:invalid});assert.equal(anonymous.panel.querySelector('input').disabled,true);}
+});
 test('share URLs are canonical on localhost, contain cosmetic code only, and native payloads bind action/role/UUID',()=>{
  const s=shareDetails(code);assert.match(s.url,/^https:\/\/elf-rpg-api\.micisachen\.workers\.dev\/fate\/r\//);assert.doesNotMatch(s.caption,/127\.0\.0\.1|localhost/);assert.match(s.imageUrl,/\/post\.jpg/);
  assert.equal(new URL(telegramShareUrl(code)).searchParams.get('url'),s.url);assert.equal(new URL(threadsShareUrl(code)).searchParams.get('url'),s.url);
@@ -82,7 +102,7 @@ test('native TG cancellations/download acceptance never claim saved album and fa
  const format=f.panel.querySelector('select');format.value='story';format.onchange();failure=true;await f.button('製作我的旅人名帖').click();await f.button('TG 圖卡').click();assert.match(f.status(),/失敗|無法|重試/);assert.doesNotMatch(f.status(),/已更新/);
 });
 test('result rerender restores each story privacy choice from bounded in-memory map',()=>{
- const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8'),line=source.split('\n').find(s=>s.includes('sharePanel=mountSharePanel(p,')),map=new Map(),mounted=[],context={p:{},result,sharePrivacy:map,client:null,mountSharePanel:(_,opts)=>{mounted.push(opts);return {};}};
+ const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8'),line=source.split('\n').find(s=>s.includes('sharePanel=mountSharePanel(p,')),map=new Map(),mounted=[],context={p:{},result,storyLife:result,sharePrivacy:map,client:null,mountSharePanel:(_,opts)=>{mounted.push(opts);return {};}};
  assert.match(source,/const sharePrivacy=new Map\(\)/);assert.doesNotMatch(line,/localStorage/);vm.createContext(context);vm.runInContext(line,context);assert.equal(mounted[0].initialShow,true);mounted[0].onPrivacyChange(false);vm.runInContext(line,context);assert.equal(mounted[1].initialShow,false);
  context.result=decodeResult(encodeResult({...result,seed:'deadbeef'}));vm.runInContext(line,context);assert.equal(mounted[2].initialShow,true);for(let i=0;i<70;i++){context.result={...result,code:String(i)};vm.runInContext(line,context);mounted.at(-1).onPrivacyChange(false);}assert.equal(map.size,64);
 });

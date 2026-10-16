@@ -1,0 +1,40 @@
+命運旅章｜星座與輪迴身分分享圖 接手與驗證（2026-10-16）
+
+本次範圍
+1. 分享圖使用大型金色星座徽章＋中文星座／英文名＋本世輪迴身分＋手繪終章場景與結語。
+2. 瀏覽器下載PNG為1080×1350及1080×1920；TG prepared photo／download／公開OG圖為同尺寸JPEG。
+3. share-card-layout.js提供兩條繪圖路徑共用的座標、尺寸與公開身分資料；瀏覽器drawShareCard載入既有SVG，Bot使用同一SVG內嵌resvg後輸出JPEG。沿用現有WASM及精美手繪素材，沒有新增付費模型或服務資源。
+4. 公開貼文文案改為「這一世，我是『星座 · 輪迴身分』」，終章標題另列。
+
+隱私（必須保留）
+- cardIdentity只讀公開result.zodiac，不讀私有identityZodiac。關閉分享星座時使用wheel.svg／「此世星印」，PNG、JPEG、短碼、文案與分享連結都不能帶入私有星座。
+- 玩家自己的雲端人生仍可透過identityZodiac把星座重新勾回；只有明確勾選才放入新的公開短碼。原本選擇隱藏者預設仍隱藏。
+- 不知道私有身分的公開短碼，若原碼隱藏星座，選框停用，不自行推算或揭露。
+- 改尺寸或星座會失效舊PNG／prepared id；非同步舊圖片不能覆蓋新隱私設定。
+
+關鍵檔案
+worker/public/fate/share-card-layout.js、share-ui.js、share-model.js、model.js、app.js
+worker/public/fate/index.html、worker/src/fate-public.js
+cloud-bot/src/fate-share.js
+Bot新增固定白名單SVG來源載入：既有RPG_API binding → /fate/zodiac/{id}.svg；禁止SVG外部資源／腳本。只快取13個靜態徽章，失敗可重試。
+圖片快取版本20261016-zodiac2；入口CSS／module版本20261016-zodiacshare4。以後改構圖須同步兩端圖片快取與公開OG。
+
+測試與實測
+完整 node scripts/run-tests.mjs all：Worker 1161 + Bot 95 = 1256，零失敗、零skip。
+18個分享相關測試通過，包括12星座對應、本世身分、隱藏不得私有回填、本人手動重新勾選、不同尺寸、真resvg WASM JPEG解碼與徽章像素差異。
+原有HMAC／origin／角色綁定／隱私競態／WebShare取消／TG失敗與下載措辭測試保留。
+電腦瀏覽器實際按製作→儲存：公開天蠍座post PNG、story PNG、關閉星座post PNG；逐張查看，徽章與身分清楚，無文字重疊。Bot真JPEG post已查看，沿用同一構圖。
+本機證據（不進Git）：C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016/
+zodiac-share-post.png、zodiac-share-story.png、zodiac-share-hidden.png、zodiac-bot-post.jpg、zodiac-bot-story.jpg、zodiac-tests.txt。
+不宣稱已實測iPhone／Android系統相簿或IG接圖；沒有實際發文、TG群發訊或修改任何正式玩家資料。
+
+發布
+先Worker（公開入口與靜態繪圖），再Bot（JPEG）；只能乾淨origin/main執行根npm run deploy:worker／deploy:bot。
+具體正式版本、commit與核對結果以docs/deployment兩份JSON及即時Cloudflare為準，勿把本文當發布收據。
+若部署後public快取雜湊暫時不一致，先read-only sync:check，不能為補收據重部署。
+
+雙人互動事件
+本次僅評估，未實作、未新增migration、未啟用、未發群通知。
+詳見SHARED_CHOICES_ASSESSMENT_20261016.txt：建議每世一段自願支線，由指定另一玩家做決策，10個有效分鐘逾時自然推進；主人的三大抉擇照舊。
+目前socialCast只存暱稱，無法可靠通知本人；必須新增私有參與者映射、雙方授權、群資格、正確帳號／角色驗證、原子決策與防重通知後才能上線。
+不可直接把公開暱稱拼成@帳號，也不可把TG ID塞入公開故事或分享碼。
