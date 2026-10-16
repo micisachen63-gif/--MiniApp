@@ -59,3 +59,18 @@ https://core.telegram.org/bots/api#savepreparedinlinemessage
 https://core.telegram.org/bots/api#inlinequeryresultphoto
 https://developer.mozilla.org/en-US/docs/Web/API/Navigator/share
 https://developers.facebook.com/docs/threads/threads-web-intents/
+
+五、正式封版核對（2026-10-16 09:14 台北）
+- 本批功能提交 c06f422e83b767d550d6b027a805050e47935b58。
+- Worker 5c0a6043-89d4-477a-992a-5a2097ea4317，Bot b293db35-828f-4802-b1e6-3a1de1cb46fe，各100%。
+- 完整發布測試：Worker1159 + Bot94 = 1253，全過/0跳過。
+- Worker第一次發布後 app.js 檢核讀到舊快取，沒有重發；唯讀sync:check:worker核對runtime與169public成功，bindings/crons與pending.before相同後補收據。
+- Bot根deploy:bot正常發布、4public/runtime核對及收據推送成功。
+- 正式JPEGpost1080x1350/423958bytes、story1080x1920/498781bytes，真實JPEG解碼成功。
+- 正式健康200、公開故事200、分享無驗證401、外站origin403、私人出生API401。
+- 0027定向套用、2新表/1索引確認；沒執行其他migration、沒重寫玩家、沒開舊本機BOT。
+- TG正式登入畫面確認角色卡輪迴0世/禮盒入口；帳號還沒有正式完成的人生，未為測試偽造完成/領獎。
+- TG連結分享從t.me→Open in Web，確實到目的地挑選；未選收件者、沒有送出。
+- 原生TG圖卡的真實authenticated準備/chooser仍待有正式結果時驗收。前後端契約及公開JPG線上檢查已完成，不能等同此驗收。
+- 正式星座預覽 https://elf-rpg-api.micisachen.workers.dev/fate/r/f43010001a9c61a7d2 ，無登入可看。
+- 機器可讀記錄：SHARING_RELEASE_20261016.json；即時正式對應仍以../deployment/*.json為準。

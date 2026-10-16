@@ -1,0 +1,65 @@
+{
+  "at": "2026-10-16T01:13:54.145Z",
+  "status": "VERIFIED",
+  "featureCommit": "c06f422e83b767d550d6b027a805050e47935b58",
+  "workerVersion": "5c0a6043-89d4-477a-992a-5a2097ea4317",
+  "botVersion": "b293db35-828f-4802-b1e6-3a1de1cb46fe",
+  "tests": {
+    "worker": 1159,
+    "bot": 94,
+    "failed": 0,
+    "skipped": 0
+  },
+  "checks": {
+    "workerHealth": 200,
+    "botHealth": 200,
+    "publicStory": 200,
+    "post": {
+      "status": 200,
+      "width": 1080,
+      "height": 1350,
+      "bytes": 423958
+    },
+    "story": {
+      "status": 200,
+      "width": 1080,
+      "height": 1920,
+      "bytes": 498781
+    },
+    "prepareWithoutAuth": 401,
+    "prepareForeignOrigin": 403,
+    "privateProfileProtected": 401
+  },
+  "schema": {
+    "migration": "0027_fate_gifts.sql",
+    "targetedOnly": true,
+    "newTables": 2,
+    "newIndexes": 1
+  },
+  "noLiveAwardOrDataRewrite": true,
+  "noPosting": true,
+  "unverified": [
+    "iPhone and Android physical cross-app share/download",
+    "Instagram received draft attachment",
+    "Threads signed-in draft",
+    "Telegram native authenticated prepared-message chooser"
+  ],
+  "manualBrowser": {
+    "birthTimeVisibleAndEditable": true,
+    "birthWithoutTimeStarts": true,
+    "privateZodiacSurvivesShareHidden": true,
+    "pngPostAndStoryDownloads": true,
+    "clipboardPasteCanonical": true,
+    "giftClaimOpenLocalFixture": true,
+    "guaranteedDragCancelThenOneSuccessLocalFixture": true,
+    "productionGameInTelegram": true,
+    "telegramLinkDestinationChooserOpenedNoRecipientSelected": true,
+    "threadsLoginPageOnly": true,
+    "iphoneAndroidPhysical": false
+  },
+  "releaseRecovery": {
+    "workerPublishedOnce": true,
+    "initialAssetVerification": "app.js cache mismatch",
+    "resolution": "read-only sync:check:worker passed runtime + 169 public files; protected bindings/crons matched pending.before; verified receipt committed without republish"
+  }
+}
