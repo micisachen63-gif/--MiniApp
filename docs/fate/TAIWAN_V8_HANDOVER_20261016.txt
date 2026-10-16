@@ -51,3 +51,8 @@ CARD_VERSION=20261016-taiwan8；公開shell、遊戲入口使用fate8a；發版�
 測試日誌與矩陣：本機營運自動化/fate-share-20261016/v8-all-tests-final.txt、v8-repeat-four-shelves.json、v8-matrix-1000.json。
 後續：使用者明確要求臺灣完成後接續其餘九國；不得把鎖定國家的規劃當作已上線功能。
 整合最新 main（保留另一視窗的戰鬥天使／隊伍MP調整）後，完整測試 Worker 1,353＋Bot 120＝1,473 全過，無skip。另補六類共同記憶與職涯ID歸檔回歸，避免故事完成後被archive格式過濾。手機360px內頁實看四近況、出身與過期事件狀態；最終教師例f8twb800000100000000000040000001d已完成PNG實際下載及檢視，沒有實際社群發文。
+
+正式發布驗證
+BOT：5cf66003-d0a7-43fa-a54a-33b8dd98c66c，來源1bc16dd63451，正式JPEG/入口核對通過。
+遊戲：73ab824f-ceea-423c-89d4-ecd923fa1585，來源c16c4c63ea76；100%流量、runtime等於發布前dry-run、158個相關public資源逐位元核對、health正常、D1/DO/Secrets雜湊/cron不變。
+首次發布後的public核對短暫讀到舊asset bytes；沒有重部署。依規範保留pending後以GET唯讀重新核對158資源與版本，全部相符才補收據。核對中GitHub已有另一視窗的9d0b4d9傳承圖片修補，先合併，發布來源仍忠實記c16c4c6，不把未發布的新提交冒稱已上線。
