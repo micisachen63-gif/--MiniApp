@@ -1,16 +1,18 @@
+import {ensureCountryCodes,COUNTRY_METADATA_V9} from '../../worker/public/fate/country-runtime-v9.js';
 import jpeg from 'jpeg-js';
 import {Resvg} from './renderer/deps/resvg.mjs';
 import {createRpgMediaRenderer} from './renderer/media.mjs';
 import {verifyInitData} from '../../worker/src/auth.js';
 import {decodeResult,publicUrl,shareText} from '../../worker/public/fate/model.js';
-import {cardLayout,cardIdentity,cardIdentityLines,TAIWAN_CARD_WEBP,TAIWAN_CARD_JPEG} from '../../worker/public/fate/share-card-layout.js';
+import {cardLayout,cardIdentity,cardIdentityLines,TAIWAN_CARD_WEBP,TAIWAN_CARD_JPEG,countryCardPath} from '../../worker/public/fate/share-card-layout.js';
 
 export const GAME_ORIGIN='https://elf-rpg-api.micisachen.workers.dev';
 export const CARD_ORIGIN='https://star-journal-rpg-bot.micisachen.workers.dev';
-export const CARD_VERSION='20261016-taiwan8';
+export const CARD_VERSION='20261016-countries9';
 const corsOrigins=new Set([GAME_ORIGIN,'https://web.telegram.org']);
 const illustrations=new Set(['harbor','voyage','atelier','garden']);
 export function illustrationPath(name){
+ if(/^country-(jp|kr|us|ca|gb|de|fr|au|in)$/.test(name))return countryCardPath(name.slice(8).toUpperCase(),'jpg');
  if(name==='taiwan-river')return TAIWAN_CARD_JPEG;
  if(illustrations.has(name))return `/art/fate-ending-20261016/${name}.jpg`;
  throw Error('Invalid illustration');
@@ -22,14 +24,14 @@ function lines(s,limit=24){const words=[...s],out=[];while(words.length)out.push
 export function cardDetails(code,format='post'){
  const result=decodeResult(code);if(!result||!['post','story'].includes(format))return null;
  const art=/\/([a-z]+)\.webp$/.exec(result.ending.illustration||'')?.[1];
- return {result,format,width:1080,height:format==='story'?1920:1350,illustration:result.version===8&&result.country==='TW'&&result.ending.illustration===TAIWAN_CARD_WEBP?'taiwan-river':illustrations.has(art)?art:'harbor',fileName:`star-journal-${code}-${format}.jpg`,imageUrl:`${CARD_ORIGIN}/fate-card/${code}/${format}.jpg?v=${CARD_VERSION}`};
+ return {result,format,width:1080,height:format==='story'?1920:1350,illustration:result.version===9?'country-'+result.country.toLowerCase():result.version===8&&result.country==='TW'&&result.ending.illustration===TAIWAN_CARD_WEBP?'taiwan-river':illustrations.has(art)?art:'harbor',fileName:`star-journal-${code}-${format}.jpg`,imageUrl:`${CARD_ORIGIN}/fate-card/${code}/${format}.jpg?v=${CARD_VERSION}`};
 }
 function crestFragment(source,seal){
  if(typeof source!=='string'||!source.startsWith('<svg ')||!source.endsWith('</svg>')||/<(?:script|foreignObject|image|use)\b|\bon[a-z]+\s*=|\bhref\s*=|<!DOCTYPE|<!ENTITY/i.test(source))throw Error('Invalid crest');
  return source.replace(/<svg[^>]*>/,`<svg x="${seal.x}" y="${seal.y}" width="${seal.size}" height="${seal.size}" viewBox="0 0 240 240">`).replaceAll('id="gold"','id="crest-gold"').replaceAll('url(#gold)','url(#crest-gold)').replaceAll('id="wash"','id="crest-wash"').replaceAll('url(#wash)','url(#crest-wash)');
 }
 export function cardSvg(card,art,crest){
- const {result:r}=card,l=cardLayout(card.format),i=cardIdentity(r),{width:w,height:h}=l,localized=r.version===8&&r.country==='TW',ornamentY=l.identityY-(localized?67:22);
+ const {result:r}=card,l=cardLayout(card.format),i=cardIdentity(r),{width:w,height:h}=l,localized=r.version===9||r.version===8&&r.country==='TW',ornamentY=l.identityY-(localized?67:22);
  const text=(s,y,size=30,fill='#ecdfc7')=>`<text x="540" y="${y}" text-anchor="middle" font-size="${size}" fill="${fill}">${xml(s)}</text>`;
  return `<svg xmlns="http://www.w3.org/2000/svg" width="${w}" height="${h}"><defs><linearGradient id="shade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#07111e" stop-opacity=".85"/><stop offset=".16" stop-color="#07111e" stop-opacity="0"/><stop offset=".34" stop-color="#0a1425" stop-opacity=".32"/><stop offset=".56" stop-color="#0a1425" stop-opacity=".93"/><stop offset=".72" stop-color="#091322"/><stop offset="1" stop-color="#091322"/></linearGradient><radialGradient id="seal-halo"><stop stop-color="#dfb963" stop-opacity=".16"/><stop offset="1" stop-color="#dfb963" stop-opacity="0"/></radialGradient></defs><rect width="1080" height="${h}" fill="#091322"/><image href="data:image/jpeg;base64,${base64(bytes(art))}" x="0" y="0" width="1080" height="${l.artHeight}" preserveAspectRatio="xMidYMid slice"/><rect width="1080" height="${h}" fill="url(#shade)"/><rect x="32" y="32" width="1016" height="${h-64}" stroke="#c8a76a" stroke-width="2" fill="none"/><rect x="44" y="44" width="992" height="${h-88}" stroke="#b69b5a" stroke-opacity=".4" fill="none"/><circle cx="540" cy="${l.crest.y+l.crest.size/2}" r="${l.crest.size*.65}" fill="url(#seal-halo)"/>${crestFragment(crest,l.crest)}<path d="M238 ${ornamentY}H335 M745 ${ornamentY}H842" stroke="#b99a5e" stroke-opacity=".55"/><g font-family="Noto Sans TC">${text('星 穹 旅 誌 · 命 運 旅 章',111,28,'#e9cd95')}${text('THE LAST STAR LANTERN',153,18,'#d1c3a9')}${text(i.name,l.signY,44,'#f2d99f')}${text(i.latin,l.latinY,18,'#b9a578')}${cardIdentityLines(r,l).map(line=>text(line.text,line.y,line.size,'#f5e5bd')).join('')}${text(r.ending.title,l.endingY,30,r.ending.color)}${lines('「'+r.ending.quote+'」',26).map((s,n)=>text(s,l.quoteY+n*l.quoteLine,31,'#d9dbdc')).join('')}${text('如果重啟一世，你會成為誰？',l.invitationY,27,'#edcf8d')}${text(publicUrl(r.code).replace('https://',''),l.urlY,15,'#8e9db3')}${text('Game Producer · ミカサ',l.creditY,15,'#b39d73')}</g></svg>`;
 }
@@ -66,7 +68,7 @@ export function createFateShare({wasmModule,renderCard,telegramFetch=fetch,now=(
   }
   if(match){
    if(!['GET','HEAD'].includes(request.method))return json({ok:false,error:'method'},405,{...headers,allow:'GET, HEAD, OPTIONS'});
-   const card=cardDetails(match[1],match[2]);if(!card)return json({ok:false,error:'invalid_story'},404,headers);
+   await ensureCountryCodes([match[1]]);const card=cardDetails(match[1],match[2]);if(!card)return json({ok:false,error:'invalid_story'},404,headers);
    const store=cache??globalThis.caches?.default,key=new Request(card.imageUrl);
    const hit=await store?.match(key);if(hit){const res=new Response(request.method==='HEAD'?null:hit.body,{status:hit.status,headers:hit.headers});for(const[k,v]of Object.entries(headers))res.headers.set(k,v);return res;}
    if(!renderer&&!renderCard)renderer=createCardRenderer({wasmModule,loadFont:async()=>{
@@ -87,7 +89,7 @@ export function createFateShare({wasmModule,renderCard,telegramFetch=fetch,now=(
   const user=await verifyInitData(init,env.BOT_TOKEN,now());if(!Number.isSafeInteger(user?.id)||user.id<=0)return json({ok:false,error:'unauthorized'},401,headers);
   if(Number(request.headers.get('content-length')||0)>4096)return json({ok:false,error:'body_too_large'},413,headers);
   let body;try{const raw=await boundedBody(request,4096);if(raw===null)return json({ok:false,error:'body_too_large'},413,headers);body=JSON.parse(raw);}catch{return json({ok:false,error:'bad_json'},400,headers);}
-  const card=cardDetails(body?.code,body?.format);if(!card)return json({ok:false,error:'invalid_story'},400,headers);
+  await ensureCountryCodes([body?.code]);const card=cardDetails(body?.code,body?.format);if(!card)return json({ok:false,error:'invalid_story'},400,headers);
   const k=`${user.id}:${card.result.code}:${card.format}`,old=prepared.get(k);
   if(old&&old.expirationDate*1000>now()+60000)return json(old,200,headers);
   try{

@@ -1,3 +1,6 @@
+import {getCountryPack,ensureCountryPack,COUNTRY_METADATA_V9} from '../../public/fate/country-runtime-v9.js';
+import {countryProfile} from '../../public/fate/country-engine-v9.js';
+import {hash as storyHash} from '../../public/fate/world.js';
 import {GameError} from '../game/classes.js';
 import {guardStmt,outboxStmt,classifyDbError} from '../db.js';
 import {addActive,activeBetween,isOpenTime,taipeiDay,LIFE_MS} from '../../public/fate/life.js';
@@ -38,8 +41,11 @@ const TW_KEYS={garden:'tw8_moving',harbor:'tw8_parcel',lamp:'tw8_repair',worksho
 function taiwanEdition(raw){try{const life=JSON.parse(raw);return life?.version===8&&life.country==='TW';}catch{return false;}}
 // DB storage retains the six original CHECK-constrained enum values. The
 // server-owned parent life's immutable edition chooses the authored dictionary.
-const authoredKey=row=>taiwanEdition(row.story_life_state)?TW_KEYS[row.story_key]:row.story_key;
-const storyFor=row=>TW_STORIES[authoredKey(row)]||STORIES[row.story_key]||STORIES.garden;
+const authoredKey=row=>countryEdition(row.story_life_state)?'v9_'+countryEdition(row.story_life_state).toLowerCase()+'_'+LOCAL_KEYS[row.story_key]:taiwanEdition(row.story_life_state)?TW_KEYS[row.story_key]:row.story_key;
+const LOCAL_KEYS={garden:'moving',harbor:'parcel',lamp:'repair',workshop:'market',map:'umbrella',book:'bookstore'};
+function countryEdition(raw){try{const d=JSON.parse(raw);return d.version===9&&Object.hasOwn(COUNTRY_METADATA_V9,d.country)?d.country:null;}catch{return null;}}
+function countryStory(row){const country=countryEdition(row.story_life_state);if(!country)return null;const authored=getCountryPack(country).shared.find(s=>s.id===LOCAL_KEYS[row.story_key]);if(!authored)throw Error('Missing local shared story');const fill=(text,o,g)=>text.replaceAll('{owner}',o).replaceAll('{guest}',g);return {title:authored.title,text:(o,g)=>fill(authored.text,o,g),choices:authored.choices.map(c=>c.label),endings:authored.choices.map(c=>(o,g)=>fill(c.outcome,o,g)),auto:(o,g)=>`${o}與${g}沒有在這次相逢期限內回應，先各自保留原來的安排；尚未做出的選擇不會被寫成已完成的承諾。`};}
+const storyFor=row=>countryStory(row)||TW_STORIES[authoredKey(row)]||STORIES[row.story_key]||STORIES.garden;
 const outcomeText=row=>{const story=storyFor(row);return (row.answer===0||row.answer===1?story.endings[row.answer]:story.auto)(row.owner_name,row.guest_name);};
 const pending=r=>r&&['scheduled','pending'].includes(r.status);
 const parse=s=>JSON.parse(s);
@@ -56,7 +62,8 @@ const allowed=(p,now)=>!!(p?.enabled&&p.allow_mentions&&p.quiet_until<=now);
 // other players' invitations remains a separate, default-off account setting.
 const ownerAllowed=(p,now)=>(p?.quiet_until||0)<=now;
 const prefView=(p,now)=>({enabled:!!p?.enabled,allowMentions:!!p?.allow_mentions,quietToday:(p?.quiet_until||0)>now,quietUntil:p?.quiet_until||0,rev:p?.rev||0});
-const rowFor=(db,id)=>db.prepare('SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.id=?').bind(String(id||'')).first();
+async function warmRow(row){const country=countryEdition(row?.story_life_state);if(country)await ensureCountryPack(country);return row;}
+const rowFor=async(db,id)=>warmRow(await db.prepare('SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.id=?').bind(String(id||'')).first());
 // Recheck DB authority inside the same transaction as invitation/answer writes.
 // Membership is external; bound-character ownership and consent are local and
 // must not race a deletion/reassignment after the last async eligibility read.
@@ -66,7 +73,10 @@ const authorityGuard=(db,row,now)=>db.prepare(`INSERT INTO rpg_guard(ok) SELECT 
  AND EXISTS(SELECT 1 FROM rpg_fate_social_preferences WHERE account_id=? AND enabled=1 AND allow_mentions=1 AND quiet_until<=?)
  AND COALESCE((SELECT quiet_until FROM rpg_fate_social_preferences WHERE account_id=?),0)<=?
  AND EXISTS(SELECT 1 FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active')
- )`).bind(row.owner_char,row.owner_account,row.guest_char,row.guest_account,row.guest_account,now,row.owner_account,now,row.life_id,row.owner_char,row.owner_account);
+ AND NOT EXISTS(SELECT 1 FROM rpg_fate_lives ol JOIN rpg_fate_lives gl ON gl.char_id=? AND gl.status='active' WHERE ol.id=?
+  AND (json_extract(ol.state_json,'$.version')=9 OR json_extract(gl.state_json,'$.version')=9)
+  AND (json_extract(ol.state_json,'$.version')<>9 OR json_extract(gl.state_json,'$.version')<>9 OR json_extract(ol.state_json,'$.country')<>json_extract(gl.state_json,'$.country')))
+ )`).bind(row.owner_char,row.owner_account,row.guest_char,row.guest_account,row.guest_account,now,row.owner_account,now,row.life_id,row.owner_char,row.owner_account,row.guest_char,row.life_id);
 async function memberSet(env,accounts){
  try{
   const value=typeof env.FATE_SOCIAL_MEMBERSHIP==='function'?await env.FATE_SOCIAL_MEMBERSHIP(accounts):await (async()=>{
@@ -79,12 +89,14 @@ async function memberSet(env,accounts){
 }
 async function memberships(env,accounts){const valid=await memberSet(env,accounts);return accounts.every(account=>valid.has(account));}
 async function localEligible(env,row,now){
- const [a,b,oc,gc,life]=await Promise.all([
+ const [a,b,oc,gc,life,guestLife]=await Promise.all([
   pref(env.DB,row.owner_account),pref(env.DB,row.guest_account),
   env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.owner_char).first(),
   env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.guest_char).first(),
-  env.DB.prepare('SELECT status FROM rpg_fate_lives WHERE id=?').bind(row.life_id).first()
+  env.DB.prepare('SELECT status,state_json FROM rpg_fate_lives WHERE id=?').bind(row.life_id).first(),
+  env.DB.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(row.guest_char).first()
  ]);
+ const origin=countryEdition(life?.state_json),guestCountry=countryEdition(guestLife?.state_json);if(guestLife&&(origin||guestCountry)&&origin!==guestCountry)return false;
  return ownerAllowed(a,now)&&allowed(b,now)&&oc&&gc&&String(oc.account)===row.owner_account&&String(gc.account)===row.guest_account&&life?.status==='active';
 }
 // An account can revoke consent or lose its bound character while Telegram is checked.
@@ -109,6 +121,7 @@ async function close(env,row,status,answer,source,now){
  return rowFor(env.DB,row.id);
 }
 async function progress(env,row,now){
+ await warmRow(row);
  if(!pending(row))return row;
  if(now>=row.deadline_at)return close(env,row,'auto',null,'auto',now);
  if(row.status==='scheduled'&&now>=row.opened_at){
@@ -154,15 +167,16 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
  if(!env.GROUP_CHAT_ID||!ownerAllowed(await pref(db,account),now))return {scheduled:false};
  const c=await actor(db,charId);if(c.account!==account)return {scheduled:false};
  const life=await db.prepare("SELECT id,state_json FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active'").bind(lifeId,String(charId),account).first();if(!life)return {scheduled:false};
- let stored;try{stored=JSON.parse(life.state_json);}catch{return {scheduled:false};}if(stored.version===8&&stored.country!=='TW')return {scheduled:false};
+ let stored;try{stored=JSON.parse(life.state_json);}catch{return {scheduled:false};}if(stored.version===8&&stored.country!=='TW')return {scheduled:false};if(stored.version===9){if(!Object.hasOwn(COUNTRY_METADATA_V9,stored.country))return {scheduled:false};await ensureCountryPack(stored.country);}
  const rows=(await db.prepare('SELECT p.account_id,c.tg_id,c.name FROM rpg_fate_social_preferences p JOIN rpg_accounts a ON a.account_tg_id=p.account_id JOIN rpg_characters c ON c.tg_id=a.active_char_id AND COALESCE(c.account_tg_id,c.tg_id)=p.account_id LEFT JOIN rpg_fate_social_locks l ON l.account_id=p.account_id WHERE p.account_id<>? AND p.enabled=1 AND p.allow_mentions=1 AND p.quiet_until<=? AND p.active_at>=? AND l.account_id IS NULL ORDER BY p.active_at DESC,p.account_id LIMIT 12').bind(account,now,now-DAY).all()).results||[];
- const open=addActive(draft.startedAt,40*MINUTE),deadline=Math.min(addActive(open,10*MINUTE),addActive(draft.startedAt,LIFE_MS)),day=taipeiDay(open);
+ let offset=40*MINUTE;if(stored.version===9){const death=countryProfile(stored.seed,stored.orbit,stored.country).deathAge,min=Math.ceil(18/death*LIFE_MS);offset=min+storyHash('v9-shared-open:'+stored.country+':'+stored.seed)%(100*MINUTE-min);}
+ const open=addActive(stored.startedAt,offset),deadline=Math.min(addActive(open,10*MINUTE),addActive(stored.startedAt,LIFE_MS)),day=taipeiDay(open);
  if(now>=deadline)return {scheduled:false};
  const recent=(await db.prepare('SELECT story_key FROM rpg_fate_social_choices WHERE owner_account=? ORDER BY opened_at DESC LIMIT 3').bind(account).all()).results||[];
- const catalog=stored.version===8?TW_KEYS:STORIES,pool=Object.keys(catalog).filter(k=>!recent.some(r=>r.story_key===k)),storyKey=pool[parseInt(draft.seed,16)%pool.length];
+ const catalog=[8,9].includes(stored.version)?TW_KEYS:STORIES,pool=Object.keys(catalog).filter(k=>!recent.some(r=>r.story_key===k)),storyKey=pool[parseInt(stored.seed,16)%pool.length];
  // One bounded lookup for the owner and three candidates, rather than serial
  // network waits per candidate. The Bot endpoint accepts at most four accounts.
- const candidates=rows.slice(0,3);if(!candidates.length)return {scheduled:false};
+ const nearby=await Promise.all(rows.map(async guest=>{const active=await db.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(String(guest.tg_id)).first(),guestCountry=countryEdition(active?.state_json),origin=stored.version===9?stored.country:null;return active&&(origin||guestCountry)&&origin!==guestCountry?null:guest;}));const candidates=nearby.filter(Boolean).slice(0,3);if(!candidates.length)return {scheduled:false};
  const validMembers=await memberSet(env,[account,...candidates.map(g=>String(g.account_id))]);
  if(!validMembers.has(account))return {scheduled:false};
  for(const guest of candidates){
@@ -210,12 +224,12 @@ export async function notification(env,b,now){
  if(!await eligible(env,r,now)){await close(env,r,'auto',null,'unavailable',now);return invalid;}
  const latest=await rowFor(env.DB,r.id);if(latest?.status!=='pending'||latest.rev!==r.rev)return invalid;
  const story=storyFor(r);
- return {ok:true,valid:true,night:false,pending:true,remainingMs:activeBetween(now,r.deadline_at),payload:{...(taiwanEdition(r.story_life_state)?{country:'TW'}:{}),eventId:r.id,ownerAccountId:r.owner_account,guestAccountId:r.guest_account,ownerName:r.owner_name,guestName:r.guest_name,title:story.title,text:story.text(r.owner_name,r.guest_name),choices:[...story.choices],deadline:r.deadline_at}};
+ return {ok:true,valid:true,night:false,pending:true,remainingMs:activeBetween(now,r.deadline_at),payload:{...(countryEdition(r.story_life_state)?{country:countryEdition(r.story_life_state)}:taiwanEdition(r.story_life_state)?{country:'TW'}:{}),eventId:r.id,ownerAccountId:r.owner_account,guestAccountId:r.guest_account,ownerName:r.owner_name,guestName:r.guest_name,title:story.title,text:story.text(r.owner_name,r.guest_name),choices:[...story.choices],deadline:r.deadline_at}};
 }
 export async function outcomes(env,lifeId,now){
- const life=await env.DB.prepare('SELECT char_id,account_id,started_at FROM rpg_fate_lives WHERE id=?').bind(String(lifeId)).first();if(!life)return [];
+ const life=await env.DB.prepare('SELECT char_id,account_id,started_at,state_json FROM rpg_fate_lives WHERE id=?').bind(String(lifeId)).first();if(!life)return [];
  const end=addActive(life.started_at,LIFE_MS),rows=(await env.DB.prepare(`SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.deadline_at<=? AND
   (s.life_id=? OR (s.guest_account=? AND s.guest_char=? AND s.status='answered' AND s.opened_at>=? AND s.deadline_at<=?))
   ORDER BY s.deadline_at,s.id LIMIT 8`).bind(now,String(lifeId),life.account_id,life.char_id,life.started_at,end).all()).results||[];
- const memories=[];for(const row of rows){const r=await progress(env,row,now);memories.push({id:'shared-'+authoredKey(r),at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
+ const memories=[];for(const row of rows){const local=countryEdition(row.story_life_state),current=countryEdition(life.state_json);if(row.life_id!==String(lifeId)&&(local||current)&&local!==current)continue;const r=await progress(env,row,now);memories.push({id:'shared-'+authoredKey(r),at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
 }

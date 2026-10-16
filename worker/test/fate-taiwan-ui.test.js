@@ -13,12 +13,12 @@ class Element{
 const copy=node=>[node.textContent,...node.children.map(copy)].join(' ');
 const app=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8');
 
-test('life country offers only the authored Taiwan pack and labels nine future countries without a false global lottery',()=>{
+test('life country presents ten explicit authored localities without a false global lottery',()=>{
  globalThis.document={createElement:tag=>new Element(tag)};const panel=new Element('section'),country=renderLifeCountry(panel),select=panel.all('select')[0];
  assert.equal(select.attributes['aria-label'],'這一世的出生地');assert.equal(select.children.length,10);
- assert.deepEqual(select.children.filter(item=>!item.disabled).map(item=>[item.value,item.textContent]),[['TW','台灣 · 台北／新北']]);
- assert.ok(select.children.slice(1).every(item=>item.disabled&&item.textContent.endsWith('製作中')));assert.equal(country.read(),'TW');
- select.value='US';assert.equal(country.read(),'TW','a manipulated selection cannot request an unpublished country');assert.doesNotMatch(copy(panel),/全球|機率/);
+ assert.deepEqual(select.children.filter(item=>!item.disabled).map(item=>item.value),['TW','JP','KR','US','CA','GB','DE','FR','AU','IN']);
+ assert.ok(select.children.slice(1).every(item=>!item.disabled&&!item.textContent.endsWith('製作中')));assert.equal(country.read(),'TW');
+ select.value='US';assert.equal(country.read(),'US');assert.doesNotMatch(copy(panel),/全球|機率/);
 });
 
 test('fictional Taiwan identity displays the generated city gender and family and leaves older lives untouched',()=>{
@@ -29,9 +29,9 @@ test('fictional Taiwan identity displays the generated city gender and family an
  assert.equal(observed.size,2);for(const version of [1,4,5,7]){const panel=new Element('section');assert.equal(renderLifeIdentity(panel,{version,seed:'deadbeef',orbit:11}),null);assert.equal(panel.children.length,0);}
 });
 
-test('embedded launch sends the fictional country separately and never sends private optional birthplace or birth time in start',()=>{
- let request;const start=app.slice(app.indexOf('function startCycle(){'),app.indexOf('\nfunction persistLife()',app.indexOf('function startCycle(){')));
- const ctx={embedded:true,cloud:{},mode:'birthday',birthDetail:{date:'1990-01-01',time:'08:35',placeId:'tokyo',sex:'f'},showSign:true,sharedUI:{invite:false},cloudMutation:(action,body)=>{request={action,body}}};vm.runInNewContext(start,ctx);ctx.startCycle();
+test('embedded launch sends the fictional country separately and never sends private optional birthplace or birth time in start',async()=>{
+ let request;const start=app.slice(app.indexOf('async function startCycle(){'),app.indexOf('\nfunction nextLifeIntro()',app.indexOf('async function startCycle(){')));
+ const ctx={startingLife:false,selectedCountry:'TW',ensureCountryPack:async()=>{},embedded:true,cloud:{},mode:'birthday',birthDetail:{date:'1990-01-01',time:'08:35',placeId:'tokyo',sex:'f'},showSign:true,sharedUI:{invite:false},cloudMutation:(action,body)=>{request={action,body}}};vm.runInNewContext(start,ctx);await ctx.startCycle();
  assert.equal(request.action,'fate/start');assert.equal(request.body.country,'TW');assert.equal(request.body.birthDate,'1990-01-01');assert.ok(!('time'in request.body));assert.ok(!('placeId'in request.body));assert.ok(!('sex'in request.body));assert.equal(request.body.mode,'birthday');
 });
 

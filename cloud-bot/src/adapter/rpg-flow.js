@@ -600,7 +600,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       // Only a definite rejection releases the key; uncertain sends stay available for operator inspection.
       cards[key]={at:now(),uncertain:true};save();
       try{
-        const art=app.url?new URL(event.country==='TW'?'/art/fate-taiwan-v8/taipei-dusk.jpg':'/art/fate-chapter-20261016/share.jpg',app.url):null;
+        const art=app.url?new URL(event.country==='TW'?'/art/fate-taiwan-v8/taipei-dusk.jpg':['JP','KR','US','CA','GB','DE','FR','AU','IN'].includes(event.country)?'/art/fate-countries-v9/'+event.country.toLowerCase()+'-memory.jpg':'/art/fate-chapter-20261016/share.jpg',app.url):null;
         const options={parse_mode:'HTML',reply_markup:{inline_keyboard:keyboard}};
         const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,chatId);
         const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認命運旅章通知');

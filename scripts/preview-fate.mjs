@@ -10,6 +10,7 @@ await P.createCharacter(env,{tgId:'222',name:'雲海旅伴',gender:'m',baseClass
 await P.createCharacter(env,{tgId:'555',name:'暮光鄰人',gender:'f',baseClass:'archer'},Date.now());
 const F=await import(pathToFileURL(root+'/worker/src/services/fate.js'));
 const socialScene=process.env.FATE_PREVIEW_SCENE;
+const fixtureCountry=process.env.FATE_PREVIEW_COUNTRY||'TW';
 let qaOffset=0;const qaNow=()=>Date.now()+qaOffset;
 if(socialScene==='shared'){env.ENVIRONMENT='development';env.ALLOW_DEBUG_TIME='true';}
 if(socialScene){env.FATE_SOCIAL_MEMBERSHIP=async accounts=>({ok:true,members:accounts.map(accountId=>({accountId,member:['111','222','555'].includes(accountId)}))});}
@@ -23,14 +24,15 @@ if(['shared','notification'].includes(socialScene)){
  const S=await import(pathToFileURL(root+'/worker/src/services/fate-shared.js'));
  await S.savePreferences(env,'222',{requestId:crypto.randomUUID(),enabled:true,allowMentions:true,consent:true},Date.now());
  const at=Date.now()-(socialScene==='shared'?40:24)*60000;
- const started=await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random',socialInvite:socialScene==='shared'},at);
- if(socialScene==='shared')await F.start(env,'222',{requestId:crypto.randomUUID(),mode:'random'},at-60000);
+ const started=await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random',country:fixtureCountry,socialInvite:socialScene==='shared'},at);
+ if(socialScene==='shared')await F.start(env,'222',{requestId:crypto.randomUUID(),mode:'random',country:fixtureCountry},at-60000);
  if(socialScene==='notification'){
   const {lifeTiming}=await import(pathToFileURL(root+'/worker/public/fate/timing-v5.js'));
   const row=await env.DB.prepare('SELECT state_json FROM rpg_fate_lives WHERE id=?').bind(started.result.lifeId).first(),draft=JSON.parse(row.state_json);
   const {replayDecisionLife}=await import(pathToFileURL(root+'/worker/public/fate/decision-engine-v7.js'));
   const {replayTaiwanLife}=await import(pathToFileURL(root+'/worker/public/fate/decision-engine-v8.js'));
-  const first=draft.version===8?replayTaiwanLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:draft.version===7?replayDecisionLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:lifeTiming(draft)?.choiceOffsets[0]||24*60000;draft.startedAt=Date.now()-first-1000;draft.clockAt=draft.startedAt;
+  const {replayCountryLife}=await import(pathToFileURL(root+'/worker/public/fate/country-engine-v9.js'));
+  const first=draft.version===9?replayCountryLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:draft.version===8?replayTaiwanLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:draft.version===7?replayDecisionLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:lifeTiming(draft)?.choiceOffsets[0]||24*60000;draft.startedAt=Date.now()-first-1000;draft.clockAt=draft.startedAt;
   await env.DB.prepare('UPDATE rpg_fate_lives SET state_json=?,started_at=?,next_at=? WHERE id=?').bind(JSON.stringify(draft),draft.startedAt,draft.startedAt+first,started.result.lifeId).run();
  }
  await F.state(env,fixtureChar,Date.now());await S.inbox(env,'222',Date.now());
@@ -39,7 +41,7 @@ function init(id){const f={auth_date:String(Math.floor(Date.now()/1000)),user:JS
 const base=path.resolve(root,'worker/public');
 http.createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://127.0.0.1');
- if(['shared','notification'].includes(socialScene)&&url.pathname==='/qa/mobile'){const code=url.searchParams.get('result'),src=/^(?:f7[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}|f8tw[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8})$/.test(code||'')?'/?fixture=111&fate='+code+'&tgWebAppStartParam=fate':'/?fixture='+ (socialScene==='shared'?'222':'111') +'&tgWebAppStartParam=fate';res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>390px 旅章驗收</title><style>body{margin:0;background:#111;color:#eee;font:14px sans-serif}p{text-align:center}iframe{display:block;margin:auto;border:1px solid #71613e;width:390px;height:844px}</style><p>390px 隔離帳號驗收 · 不連正式TG</p><iframe title="手機尺寸遊戲驗收" src="'+src+'"></iframe></html>');}
+ if(['shared','notification'].includes(socialScene)&&url.pathname==='/qa/mobile'){const code=url.searchParams.get('result'),src=/^(?:f7[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}|f8tw[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}|f9(?:jp|kr|us|ca|gb|de|fr|au|in)[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8})$/.test(code||'')?'/?fixture=111&fate='+code+'&tgWebAppStartParam=fate':'/?fixture='+ (socialScene==='shared'?'222':'111') +'&tgWebAppStartParam=fate';res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>390px 旅章驗收</title><style>body{margin:0;background:#111;color:#eee;font:14px sans-serif}p{text-align:center}iframe{display:block;margin:auto;border:1px solid #71613e;width:390px;height:844px}</style><p>390px 隔離帳號驗收 · 不連正式TG</p><iframe title="手機尺寸遊戲驗收" src="'+src+'"></iframe></html>');}
  if(socialScene==='shared'&&url.pathname==='/qa/advance'&&req.method==='POST'){qaOffset+=10*60000;res.writeHead(303,{location:'/qa/'});return res.end();}
  if(socialScene==='shared'&&url.pathname==='/qa/'){res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>雙人旅章隔離驗收</title><h1>雙人旅章隔離驗收</h1><p>僅本機假帳號，無正式TG通知、無正式資料庫。</p><form method="post" action="/qa/advance"><button>推進十分鐘，檢查共同後續</button></form><p><a href="/?fixture=111&tgWebAppStartParam=fate">查看發起旅人</a> · <a href="/?fixture=222&tgWebAppStartParam=fate">查看受邀旅人</a></p></html>');}
  if(url.pathname==='/share-qa/'){res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>分享文案貼上驗證</title><h1>隔離驗收：分享文案</h1><textarea aria-label="貼上檢查" rows="12" cols="80"></textarea><button onclick="navigator.clipboard.readText().then(v=>document.querySelector(\'textarea\').value=v).catch(e=>document.querySelector(\'p\').textContent=e.message)">讀取剛複製的文案</button><p>只讀取剪貼簿，不上傳或發文。</p></html>');}

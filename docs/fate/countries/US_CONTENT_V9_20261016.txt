@@ -1,0 +1,61 @@
+命運旅章 v9 美國內容包：加州洛杉磯市
+查核日：2026-10-16，Asia/Taipei
+狀態：資料包已完成；尚未接入 v9 因果引擎、尚未開放或發布。
+
+檔案
+worker/public/fate/country-packs-v9/us.js
+worker/public/fate/country-packs-v9/us-daily.js
+worker/test/fate-country-us-v9.test.js
+
+實際內容
+1500則獨立撰寫日常：child120、youth100、adult720、late420、any140。
+12職涯，每職10章、4組兩選抉擇，合計120章與48抉擇。
+24條安全真人暱稱關係鏈，每條6章，共144章。
+6組雙人故事：moving/parcel/repair/market/umbrella/bookstore。
+4種家境、1條社區學院課程與銜接教育敘述、6個官方來源。
+名字替換只用在人際關係／雙人故事；日常沒有主詞動詞乘積或改地名灌水。
+
+地域與取捨
+這是美國加利福尼亞州洛杉磯市都市包，不是全美共同生活規則。
+洛杉磯郡交通與近海只作能到訪的場景；不因到訪就說玩家住在另一個城市。
+不同語言與街區是城市的部分面貌，不把國籍直接當種族或家庭宗教。
+食品、氣候與文化場景不預設每戶都過某個節日，不虛構真實災難年表。
+沒有固定時薪、房租、匯率、全球百分位；USD金額僅是劇情資產與成本假設。
+成年日常不自行發放學位、職位、婚姻、子女、房產、診斷或藥物。
+
+教育查核
+UC Admissions Basic requirements：
+https://admission.universityofcalifornia.edu/admission-requirements/transfer-requirements/preparing-to-transfer/basic-requirements.html
+支持轉學申請須滿足可轉學分、課程組合、成績與主修準備；不是錄取保證。
+本文不把最低條件當作特定校系的實際錄取門檻。
+
+UC Admissions Cal-GETC：
+https://admission.universityofcalifornia.edu/admission-requirements/transfer-requirements/preparing-to-transfer/general-education-igetc/cal-getc/
+支持加州社區學院通識銜接路徑；不能把通識修讀當學士畢業或保證轉學。
+內容中的complete只代表完成實際選定的課程段落，沒有發放大學學位。
+加州教育部高中表格頁此次出現防機器人頁；未將未讀內容用作事實依據。
+
+城市日常來源
+LA Metro Ride Metro：https://www.metro.net/riding/
+支持郡內公車、軌道、TAP與行程資訊。沒有在故事硬寫即時票價與班次。
+Los Angeles Public Library分館：https://www.lapl.org/branches
+支持公共圖書館場景，不保證每個虛構日子有活動或開館。
+
+小型經營與工作邊界
+Los Angeles Bureau of Street Services Sidewalk Vending：
+https://streets.lacity.gov/resources/sidewalk-vending
+洛杉磯市街頭／公園販售需核對適用許可、商業登記與賣方許可；食品另有郡衛生許可。
+資料將完成適用條件寫進入職結果，不以一段練習自動取得任何地區經營權。
+不把洛杉磯市規則跨用全郡、全州或全美。
+
+California DIR Meal periods：
+https://www.dir.ca.gov/dlse/faq_mealperiods.htm
+該官方頁區分一般及影視產業等適用安排。故事只寫向負責窗口確認工作與休息，
+不把一套時數不加條件套用所有人物，不將劇情選項當勞權法律建議。
+
+必要接入條件
+職涯章節須current workActive；exit:true後停止該職涯章節，不能繼續交班或服務客人。
+12職涯皆不按性別禁入；需要特別資格的操作留在受指導／合適人員範圍。
+household-care是明確協商後家庭照顧，不是自動取得醫療資格或默認某性別負責。
+真人名字只進安全虛構關係；colleague鏈必須工作前置，不公開帳號或真實私事。
+雙人選擇仍需伺服器權限、通知與雙方結果保存驗收，本資料包未替代該機制。

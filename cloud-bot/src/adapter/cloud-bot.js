@@ -1,6 +1,7 @@
 import {createRpgFlow,RPG_CALLBACK_RE} from './rpg-flow.js';
 import {createOperationApi} from './operation-api.js';
 import {decodeResult} from '../../../worker/public/fate/model.js';
+import {ensureCountryCodes} from '../../../worker/public/fate/country-runtime-v9.js';
 
 export const commands=[{command:'start',description:'✨ 開始星穹旅誌'},{command:'rpg',description:'🎮 開啟冒險與角色'},{command:'group',description:'🌌 加入冒險者之庭'},{command:'help',description:'📖 冒險指引'},{command:'trade',description:'🤝 裝備交易指引'},{command:'duel',description:'⚔️ 挑戰群組玩家'}];
 export function createCloudBot({config,api,store,log=console,rpgApi,renderBattleAnimation,renderPartyCard,fetchImpl=globalThis.fetch,now=()=>Date.now(),outboxClaimLimit=2}){
@@ -40,7 +41,9 @@ export function createCloudBot({config,api,store,log=console,rpgApi,renderBattle
    if(start?.[1]&&start[1].toLowerCase()!==config.botUsername.toLowerCase())return;
    // Share/public-page decoding is authoritative for every immutable code
    // version; duplicating the codec regex here silently dropped newer lives.
-   const code=decodeResult((resume?.[1]||start?.[2])?.toLowerCase())?.code;
+   const requestedCode=(resume?.[1]||start?.[2])?.toLowerCase();
+   if(requestedCode?.startsWith('f9'))await ensureCountryCodes([requestedCode]);
+   const code=decodeResult(requestedCode)?.code;
    if(code){
     if(!await isGroupMember(user))return send('✧ 你的命運旅章已備妥\n\n先加入冒險者之庭，回來按「繼續旅程」，就能創建角色，讓這段故事在星穹延續。',{reply_markup:{inline_keyboard:[[{text:'🌌 加入冒險者之庭',url:config.inviteLink}],[{text:'✧ 已加入，繼續旅程',callback_data:'fate_resume:'+code}]]}},msg.chat.id);
     await rpgApi.call('/rpg/app/grant',{tgId:String(user.id)});

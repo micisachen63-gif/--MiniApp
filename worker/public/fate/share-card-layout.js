@@ -1,4 +1,5 @@
 import {ZODIAC_CRESTS} from './zodiac-sign.js';
+import {COUNTRY_METADATA_V9} from './country-runtime-v9.js';
 
 // Both browser PNG and Telegram JPEG use this composition. No private life data.
 export function cardLayout(format='post'){
@@ -19,6 +20,10 @@ export function cardIdentity(result){
 // have a separate location/gender line and a fitted occupation/origin line.
 export function cardIdentityLines(result,layout=cardLayout()){
  const identity=cardIdentity(result).identity;
+ if(result?.version===9&&Object.hasOwn(COUNTRY_METADATA_V9,result.country)){
+  const p=COUNTRY_METADATA_V9[result.country],parts=String(identity).split(/\s*[·・]\s*/),location=[p.name,parts[1],parts[0]].filter(Boolean).join(' · '),title=parts.slice(2).join(' · ')||'這一世的旅人',fit=(text,max)=>Math.min(max,Math.max(12,Math.floor(880/Math.max(1,[...text].length))));
+  return [{text:location,y:layout.identityY-31,size:fit(location,26)},{text:title,y:layout.identityY+17,size:fit(title,43)}];
+ }
  if(result?.version!==8||result.country!=='TW')return [{text:identity,y:layout.identityY,size:58}];
  const parts=String(identity).split(/\s*[·・]\s*/).filter(Boolean),gender=parts.find(part=>part==='女性'||part==='男性'),city=parts.find(part=>/[臺台]北|新北/.test(part)),details=parts.filter(part=>part!==gender&&part!==city&&part!=='臺灣'&&part!=='台灣');
  const location=['臺灣',city,gender].filter(Boolean).join(' · '),title=details.join(' · ')||'這一世的旅人';
@@ -28,3 +33,4 @@ export function cardIdentityLines(result,layout=cardLayout()){
 
 export const TAIWAN_CARD_WEBP='/art/fate-taiwan-v8/river-memory.webp';
 export const TAIWAN_CARD_JPEG='/art/fate-taiwan-v8/river-memory.jpg';
+export function countryCardPath(country,format='webp'){if(!Object.hasOwn(COUNTRY_METADATA_V9,country)||!['webp','jpg'].includes(format))throw Error('Invalid country illustration');return `/art/fate-countries-v9/${country.toLowerCase()}-memory.${format}`;}

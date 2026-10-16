@@ -1,3 +1,6 @@
+import {ensureCountryPack} from '../public/fate/country-runtime-v9.js';
+import {COUNTRY_METADATA_V9} from '../public/fate/country-runtime-v9.js';
+import {countryProfile} from '../public/fate/country-engine-v9.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshDb} from './d1-shim.js';
@@ -18,8 +21,9 @@ async function fixture(t){
  const db=env.DB.sqlite,one=(sql,...args)=>db.prepare(sql).get(...args),all=(sql,...args)=>db.prepare(sql).all(...args),run=(sql,...args)=>db.prepare(sql).run(...args);
  async function enable(id,now=T){return S.savePreferences(env,id,{enabled:true,allowMentions:true,consent:true,requestId:rid()},now)}
  let n=0;
- async function begin(id='101',now=T,version=4){
-  const lifeId='life-'+id+'-'+n++,draft=createLife({version,country:version===8?'TW':undefined,orbit:3,seed:'deadbeef',startedAt:now});
+ async function begin(id='101',now=T,version=4,country='JP'){
+  if(version===9)await ensureCountryPack(country);
+  const lifeId='life-'+id+'-'+n++,draft=createLife({version,country:version===8?'TW':version===9?country:undefined,orbit:3,seed:'deadbeef',startedAt:now});
   run("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)",lifeId,id,id,JSON.stringify(draft),now,now+24*M);
   return {lifeId,charId:id,accountId:id,name:'旅人'+id,draft};
  }
@@ -171,7 +175,7 @@ test('six authored branches have distinct choices and outcomes; the previous thr
 test('Taiwan shared invitations have six localized stories, designated reply and the same delayed memory in both lives',async t=>{
  const keys=new Set(),titles=new Set(),outcomes=new Set();
  for(let seed=0;seed<6;seed++)for(const answer of [0,1]){
-  const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,8),guest=await f.begin('202',T,8);owner.draft.seed=seed.toString(16).padStart(8,'0');
+  const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,8),guest=await f.begin('202',T,8);owner.draft.seed=seed.toString(16).padStart(8,'0');f.run('UPDATE rpg_fate_lives SET state_json=? WHERE id=?',JSON.stringify(owner.draft),owner.lifeId);
   assert.equal((await S.schedule(f.env,owner,T)).scheduled,true);const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',owner.lifeId);assert.match(row.story_key,/^(garden|harbor|lamp|workshop|map|book)$/);keys.add(row.story_key);assert.equal(row.deadline_at-row.opened_at,10*M);
   await S.sweep(f.env,row.opened_at);const notice=await S.notification(f.env,{eventId:row.id},row.opened_at);assert.equal(notice.valid,true);assert.equal(notice.payload.ownerAccountId,'101');assert.equal(notice.payload.guestAccountId,'202');assert.doesNotMatch(notice.payload.text,/星燈|燈塔|城邦|甲板|航海|燈油|海灣/);titles.add(notice.payload.title);
   const received=(await S.event(f.env,'202',{eventId:row.id},row.opened_at)).event;assert.equal(received.canReply,true);assert.equal(received.choices.length,2);assert.equal((await S.event(f.env,'101',{eventId:row.id},row.opened_at)).event.canReply,false);for(const id of ['101','202'])assert.equal((await S.inbox(f.env,id,row.opened_at)).events[0].title,notice.payload.title);
@@ -249,4 +253,21 @@ for(const stage of ['schedule','open','answer'])for(const mutation of ['guest-de
   assert.equal(f.one('SELECT status FROM rpg_fate_social_choices').status,'auto');assert.equal(f.one('SELECT answer FROM rpg_fate_social_choices').answer,null);
  }
  assert.equal(changed,true,'the authority mutation happened exactly at the transaction boundary');assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_locks').n,0);
+});
+
+for(const country of Object.keys(COUNTRY_METADATA_V9))test(country+' localized shared notice opens actual recipient options and preserves both stories after either answer',async t=>{
+ const openings=new Set(),keys=new Set(),outcomes=new Set();
+ for(let seed=0;seed<6;seed++)for(const answer of [0,1]){
+  const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,country),guest=await f.begin('202',T,9,country);owner.draft.seed=seed.toString(16).padStart(8,'0');f.run('UPDATE rpg_fate_lives SET state_json=? WHERE id=?',JSON.stringify(owner.draft),owner.lifeId);
+  assert.equal((await S.schedule(f.env,{...owner,draft:{...owner.draft,country:'TW',seed:'ffffffff'}},T)).scheduled,true,'server edition and seed come from the saved parent life');const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',owner.lifeId);keys.add(row.story_key);openings.add(row.opened_at);assert.ok((row.opened_at-T)/LIFE_MS*countryProfile(owner.draft.seed,3,country).deathAge>=18);assert.equal(row.deadline_at-row.opened_at,10*M);
+  await S.sweep(f.env,row.opened_at);const notice=await S.notification(f.env,{eventId:row.id},row.opened_at);assert.equal(notice.valid,true);assert.equal(notice.payload.country,country);assert.equal(notice.payload.guestAccountId,'202');const event=(await S.event(f.env,'202',{eventId:row.id},row.opened_at)).event;assert.equal(event.canReply,true);assert.equal(event.choices.length,2);assert.equal((await S.event(f.env,'101',{eventId:row.id},row.opened_at)).event.canReply,false);
+  const body={eventId:row.id,answer,requestId:rid()};assert.equal((await S.reply(f.env,'202',body,row.opened_at+1)).ok,true);assert.equal((await S.reply(f.env,'202',body,row.opened_at+2)).replayed,true);assert.deepEqual(await S.outcomes(f.env,owner.lifeId,row.deadline_at-1),[]);
+  const a=await S.outcomes(f.env,owner.lifeId,row.deadline_at),b=await S.outcomes(f.env,guest.lifeId,row.deadline_at);assert.equal(a.length,1);assert.deepEqual(a,b);assert.match(a[0].id,new RegExp('^shared-v9_'+country.toLowerCase()+'_'));assert.deepEqual(sharedMemories(a),a);outcomes.add(a[0].text);
+  for(const[l,memory]of[[owner,a],[guest,b]])assert.ok(formalEvents({...l.draft,clockAt:row.deadline_at,sharedMemories:memory},row.deadline_at).some(r=>r.kind==='shared'&&r.text===a[0].text));
+ }
+ assert.equal(keys.size,6);assert.equal(outcomes.size,12);assert.ok(openings.size>3,'shared invitations no longer all open forty minutes after start');
+});
+
+test('local shared invitations do not teleport an active player between country books',async t=>{
+ const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,'JP');await f.begin('202',T,9,'US');assert.equal((await S.schedule(f.env,owner,T)).scheduled,false);
 });

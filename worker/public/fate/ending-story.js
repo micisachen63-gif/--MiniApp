@@ -1,4 +1,5 @@
 import {endingV8} from './narrative-v8.js';
+import {endingCountryLife} from './country-narrative-v9.js';
 import {plannedContent,formalEvents,narrativeProfile,narrativeActiveBetween} from './formal-events.js';
 import {worldYear,hash} from './world.js';
 import {lifeTiming} from './timing-v5.js';
@@ -11,6 +12,7 @@ const one=(rows,tag)=>rows.length?rows[hash(tag)%rows.length]:null;
 // A local, deterministic literary composition from actual replayed chapters. No external model/API.
 // Descriptive bridges interpret memories; all concrete decisions and relationships come from the log.
 export function endingForLife(life={}){
+ if(life.version===9)return endingCountryLife(life);
  if(life.version===8)return endingV8(life);
  if(life.version===7)return endingV7(life);
  const profile=narrativeProfile(life),{seed,career}=profile,timing=lifeTiming(life),complete=life.answers?.length===3&&(!timing||!Number.isFinite(life.startedAt)||narrativeActiveBetween(life.startedAt,life.clockAt)>=7200000);

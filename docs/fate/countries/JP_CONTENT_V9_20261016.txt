@@ -1,0 +1,107 @@
+命運旅章 v9 日本內容包：東京都23區
+查核日期：2026-10-16 Asia/Taipei
+狀態：獨立資料包完成；未啟用。不是部署收據，不代表已上線或其餘國家完成。
+
+一、實際交付
+
+匯入入口：worker/public/fate/country-packs-v9/jp.js
+具名 export COUNTRY_PACK_JP，default 同一物件，遞迴凍結。
+分檔：jp-young.js、jp-adult-a.js、jp-adult-b.js、jp-adult-c.js、jp-late.js、
+jp-careers.js、jp-social.js。只有結構包裝 helper；沒有主詞／動詞／地名乘積生成。
+
+日常1500篇：child120、youth100、adult720、late420、any140。
+成年720由3個240篇檔案合併。全文唯一1500；與凍結臺灣1718篇及170章全文零重複。
+12職涯各10章、各4題二選一：共120職涯章、48抉擇、96個具體不同後果。
+24人際鏈各6章：144章，逐章 literal {name}，不冒用真實姓名或敏感事實。
+6共同故事：moving、parcel、repair、market、umbrella、bookstore；
+每題兩個後果均含 {owner}/{guest}，既有伺服器處理權限與實際受邀者。
+4家境：tight/ordinary/small-business/comfortable；全部 money 為虛構日圓起點。
+1份本地教育資料，完成的是所選課程，不自動授學位或法定資格。
+12筆第一手來源，記錄 checkedAt、supports；未使用真實薪資分位、匯率或收入模型。
+
+二、在地化範圍與文風
+
+日本包只代表東京都23區都市生活，不含多摩、伊豆／小笠原群島或其他都道府縣。
+商店街、喫茶、飯糰／豆腐／出汁、室內鞋與給食、地方回覽、車站轉乘、
+錢湯、區別清運、圖書館與公共空間等可見於日常，但不是每位居民必有的習慣。
+地名用於可選散步或短程會面，不設定玩家全住在同一處、不讓地名決定族群宗教。
+沒有以東京出生替代國籍、居留、福利、軍役或其他身分資格。
+節慶／花季多用舊照片或回憶，不在任意歲數強制當天正逢某個年度節日。
+災害文字是平日準備，沒有虛構某次真實東京災害發生於此世。
+
+成年／晚年／any日常不建立自己的工作、配偶、子女、租約、房產、學位、
+用藥與診斷。職務行為放在工作中的職涯章；同事鏈 requiresCareer=true。
+親友與鄰里交流為安全虛構情境，沒有犯罪、欠款、戀愛與疾病等真人指控。
+人際鏈包含不同偏好與安全協作，不能被解讀為引用真實玩家私生活。
+
+三、第一手資料與適用界線
+
+JP9-S1 文部科學省 School System：
+https://www.mext.go.jp/en/policy/education/overview/index.htm
+本次實際讀取2026-10-16。一般6-3-3-4架構、小學6年與初中3年，
+另有初中後高專、高中後專門學校、短大、大學等路線。不是所有人固定升學路徑。
+故事只完成課程；實際學位、職業資格與受聘必須各有後續引擎證據，不能由教育旁白授予。
+
+JP9-S2 東京都教育委員會學校接納與生活資訊文件：
+https://www.metro.tokyo.lg.jp/documents/d/tosei/74_03
+列學校用品、室內鞋、聯絡與校內生活資訊。用品依學校不同；兒童場景是具體故事，
+不宣稱每所學校使用完全相同的鞋袋、清單、給食或作息。
+
+JP9-S3 東京Metro手機使用問答，頁面更新2022-08-25：
+https://ssl.tokyometro.jp/support/faq_answer?faqno=OpenFAQ-000346&lang=ja
+使用車內避免通話等乘車禮儀。未列罰鍰、末班時間或把其規範擴張為全日本法律。
+
+JP9-S4 新宿區資源與垃圾收集日期，頁面更新2026-04-24：
+https://www.city.shinjuku.lg.jp/seikatsu/file09_01_00001.html
+支持地址／町名與類別不同時需查具體日程；沒有套用同一週幾到全東京都。
+新宿的詳細條件只作查核例子，不作全23區統一政策。
+
+JP9-S5 東京官方GO TOKYO商店街：
+https://www.gotokyo.org/jp/see-and-do/culture/local-market/index.html
+支持商店街與街區名稱、日常小店背景；故事不把觀光介紹當就業／族群／收入統計。
+JP9-S6 東京都「東京型錢湯」：
+https://www.toshiseibi.metro.tokyo.lg.jp/ryokuchi_keikan/kekan_kese/keikan/machinami_09/miryokuhasshin/tokyo-sento
+支持錢湯存在及先清潔等使用禮儀。是否前往由片段抽樣，不暗指全部居民固定入浴，
+不填統一價格、禁止條件或健康療效。設施差異由當次說明決定。
+
+JP9-S7 厚生勞動省：勞動條件明示FAQ：
+https://www.mhlw.go.jp/bunya/roudoukijun/faq_kijyunhou_4.html
+JP9-S8 勞動條件明示規則更新：
+https://www.mhlw.go.jp/stf/newpage_32105.html
+支持確認工作、報酬、工時、契約與變更資訊。沒有把原則寫成每個個案的完整法律結論，
+也沒有將抉擇中日圓變動標為法定薪資、調查收入或店家真實報價。
+
+JP9-S9 東京都防災日常備蓄：
+https://www.bousai.metro.tokyo.lg.jp/taisaku/topics/1031089/index.html
+支持平日使用與補充的備品思路。依情境查安全，不說所有房屋都應留在室內避難。
+JP9-S10 日本郵便地址範例：
+https://www.post.japanpost.jp/kids/doc/template_atena.pdf
+支持核對收寄件者姓名、地址與郵遞區號。未寫郵資、運送時間或不同郵件一體適用的規定。
+JP9-S11 GO TOKYO交通資訊，頁面更新2026-09-01：
+https://www.gotokyo.org/jp/plan/getting-around/index.html
+支持多種營運者與交通手段、IC等背景。未硬編指定列車時刻／票種適用範圍。
+JP9-S12 厚生勞動省地域包括支援中心：
+https://www.mhlw.go.jp/stf/seisakunitsuite/bunya/hukushi_kaigo/kaigo_koureisha/chiiki-houkatsu/
+支持家人有照顧需求時可找所在地正式諮詢。一般家庭分工與行政支援不會取得
+護理師、介護福祉士、介護支援專門員或其他法定專業資格。
+所有來源 checkedAt=2026-10-16；無明確發布年者不自行補年。
+
+四、整合者須處理的狀態
+
+1. 未通過root整體驗收前JP保持locked；本資料檔存在不等於開放國家選擇。
+2. 12職涯章僅目前該工作 workActive 時順序出現；離職選項 exit=true後不可再播工作章。
+3. household-care是未受雇家庭協調，不能自動給工資、employed旗標、公司同事鏈或商業擴張。
+   正向money僅可作減少支出的虛構帳務變動，不是家庭家務領薪資。
+4. 4條colleague鏈只對合適在職工作開放，且離職後新同事進展應停；既有記憶可保留。
+5. 24x6關係鏈由真人角色自願投影與伺服器權限機制提供，不在公開碼寫入私密真實資料。
+6. 教育完成、短期訓練與一般入職不是任何需資格專業職位的授權。
+7. 每篇日常固定分配四書架；不得用history去改公開碼已確定的故事。
+   pool容量通過59–103歲終年240節點的分phase驗算；不等同實際跨三世重複率已驗收。
+8. 未整合真實薪資、所得／資產分位數、JPY/TWD匯率。資料內錢只作原生幣別虛構帳務。
+
+五、獨立測試與驗證界線
+
+worker/test/fate-country-jp-v9.test.js：10項全過。
+涵蓋資料形狀、1500全文唯一、與臺灣逐字去重、日常前置、四書架容量、
+12x10職涯／48題、24x6人際／姓名佔位、6共同故事、教育資格與官方來源。
+尚未宣稱整合端私有／公開重播、通知雙方、手機畫面、分享圖片與正式發布已完成。

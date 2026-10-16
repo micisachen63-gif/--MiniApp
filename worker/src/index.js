@@ -1,3 +1,4 @@
+import {countryFromCode,ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
@@ -325,6 +326,7 @@ export async function runCron(env, now) {
 
 export async function handle(request, env) {
   const url = new URL(request.url);
+  const publicCode=/^\/fate\/r\/([^/]+)$/.exec(url.pathname)?.[1],publicCountry=countryFromCode(publicCode);if(publicCountry)await ensureCountryPack(publicCountry);
   const publicStory=fatePublic(request);if(publicStory)return publicStory;
   if (request.method === 'GET' && url.pathname === '/health') return json({ ok: true, service: 'elf-rpg-api' });
   if (url.pathname.startsWith('/app/api/')) {

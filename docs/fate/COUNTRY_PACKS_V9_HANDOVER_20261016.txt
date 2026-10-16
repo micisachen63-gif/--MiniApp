@@ -1,0 +1,46 @@
+星穹旅誌／命運旅章：九國在地人生 v9（開發中；不可當部署收據）
+日期：2026-10-16。使用者要求台灣完成後接續其餘國家。
+工作目錄 C:/Users/User/Documents/ChatGPT/star-journal-country-packs
+分支 codex/fate-country-packs-v9；正式來源 GitHub --MiniApp main。
+台灣 v8 已另行發布，配方與內容不可修改。v9 尚未發布，仍可在測試階段修正。
+
+本期範圍
+日本東京23區、韓國首爾、美國加州洛杉磯、加拿大安省多倫多、英國英格蘭倫敦、德國北威州科隆、法國巴黎、澳洲新州雪梨、印度卡納塔克邦班加羅爾都市區。
+這是每國明確城市／行政範圍的先行包，不是全國所有地區、族群與法規的完整模擬。
+每包目標 1500 原創日常（兒童120／青少年100／成年720／後期420／通用140），12職涯×10章／4條件抉擇，24×6安全暱稱人際鏈，6種雙人故事，4家境與當地教育路徑。
+原創手繪插畫9張均已生成，webp／JPEG 共18檔，見 V9_ART_PROMPTS_20261016.txt。
+各國真實文化／教育來源與核對日期寫在 pack.sources 和 docs/fate/countries/*_CONTENT_V9_20261016.txt。
+金額使用該國貨幣的虛構劇情帳，不是官方薪資、匯率、台幣換算、全球分位；這些統計校準需求未宣稱完成。
+
+架構與重播
+country-runtime-v9.js 小型 metadata＋明確懶載入；載入完成／資料完整才能開始該國人生。
+country-engine-v9.js 配方 v9-local-life-1：6～9抉擇、前因門檻、59～103不同終年、固定2小時有效時間、90秒選擇期限。
+家庭照顧為未受雇分工，不發薪、不自營、不套用公司同事故事。轉職／離職後不得繼續舊在職章節。
+country-narrative-v9.js 每30秒一則、每世240則不重複日常／職涯；四組內容避開同國前三世；終章按真實年齡列人生選擇與代表性日常。
+社交同事鏈從實際工作開始，離職／換工作即停止該同事鏈；安全公開暱稱不推定真實職業／戀愛／罪行。
+f9公開碼33字元：版本＋國碼＋orbit＋題數＋答案9位＋自動9位＋星座＋seed8位。
+只由碼重播，不能依隱藏歷史改結局；發布後本配方、資料順序與文本凍結，後續改版另編新版本。
+舊 v1～v8 不換版、不遷移、不改寫玩家資料。
+
+整合
+app/life/model/formal-events/cycles 等皆保留9版本明確分派；雲端、公共頁、Bot分享與 /start fate_ 接續創角須先暖載國別碼。
+開新一世先回出生地選擇，可跨國再啟程；私人生日／時間／地點與虛構人生出生地分開。
+分享 PNG 與 Telegram JPEG 共用版式；國家／城市／性別與職涯分兩行，保留大星座印記。cache revision 20261016-countries9。
+共同事件保留既有DB六種enum、無migration；依父人生國別取在地故事，18歲後至100分鐘間分散邀請；回覆期限10有效分鐘；完成後雙方同一截止點更新。
+雙方若都有進行中 v9 人生，國家必須相同；不同國／新版對舊版不邀請，防止故事瞬移。
+權限、指定受邀者、HMAC、CAS、防重、群組資格、到期代選仍由正式服務驗證。沒有對真實TG發測試訊息或發社群貼文。
+
+目前驗證（尚須最終九國完整測試）
+已完成 JP／US／GB／CA／DE 各自資料測試與5國整合20項全過（20261016 v9-five-country-integrations.txt）。
+內容子分支：taiwan_content_v8負責JP→KR→IN；taiwan_engine_v8負責US→CA→AU；taiwan_ui_v8負責GB→DE→FR。
+不可把待補國別的schema／圖片視為完整內容，不可跳過缺失測試就部署。
+測試外部資料夾 C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016
+本機隔離預覽9565，舊使用者9555須保留；預覽資料只用sqlite fixture，絕不碰正式玩家。
+最終需9國完整測試、6000因果模擬／1000全文重播每國、9×48抉擇可達、受邀兩選雙方更新、實際手機寬度畫面與PNG下載、真實WASM JPEG。
+沒有iPhone／Android實機，原生TG／IG／Threads最後送出不得宣稱實機完成；保持不發文。
+
+發布規則
+先fetch main整合其他視窗（守護天使／傳承畫面等）改動，完整Node24 npm test，提交並正常推送main。
+從乾淨且HEAD=origin/main執行根npm run deploy:bot與deploy:worker，保留共享release鎖與綁定／秘密／crons／public。
+若publish成功verify失敗，保留.release-sync，唯讀核對live版本／commit／資源並修收據，不盲目重發。
+最後部署版本與來源看docs/deployment/*.json和Cloudflare，不看此交接固定數字。

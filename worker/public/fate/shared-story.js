@@ -5,7 +5,7 @@ import {publicNickname} from './social-cast.js';
 export function sharedMemories(raw){
  if(!Array.isArray(raw))return [];
  return raw.slice(0,8).flatMap(m=>{
-  if(!m||!/^shared-(garden|harbor|lamp|workshop|map|book|tw8_(moving|parcel|repair|market|umbrella|bookstore))$/.test(m.id)||!Number.isSafeInteger(m.at)||m.at<1||![0,1,null].includes(m.answer)||!['manual','auto','decline','withdraw','unavailable'].includes(m.source)||typeof m.text!=='string'||m.text.length>600)return [];
+  if(!m||!/^shared-(garden|harbor|lamp|workshop|map|book|tw8_(moving|parcel|repair|market|umbrella|bookstore)|v9_(jp|kr|us|ca|gb|de|fr|au|in)_(moving|parcel|repair|market|umbrella|bookstore))$/.test(m.id)||!Number.isSafeInteger(m.at)||m.at<1||![0,1,null].includes(m.answer)||!['manual','auto','decline','withdraw','unavailable'].includes(m.source)||typeof m.text!=='string'||m.text.length>600)return [];
   const ownerName=publicNickname(m.ownerName),guestName=publicNickname(m.guestName);if(!ownerName||!guestName)return [];
   return [{id:m.id,at:m.at,ownerName,guestName,answer:m.answer,source:m.source,text:m.text}];
  });

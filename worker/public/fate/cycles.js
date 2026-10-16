@@ -1,4 +1,5 @@
 import {replayTaiwanLife} from './decision-engine-v8.js';
+import {replayCountryLife} from './country-engine-v9.js';
 import {SCENES,decodeResult} from './model.js';
 import {EXTRA_CHOICES} from './choices-extra-v1.js';
 import {validLife} from './life.js';
@@ -20,6 +21,12 @@ const POOLS=[
 export function scenesFor(result){if(result.version>=4)return formalScenes(result);if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
 export function seedForNextLife(seed,entries=[],version=3,orbit=11,country='TW'){
  if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
+ if(version===9){
+  const replay=seed=>replayCountryLife({version:9,country,seed,orbit}),past=entries.slice(-30).map(e=>decodeResult(e?.code)).filter(r=>r?.version===9&&r.country===country).slice(-3);if(!past.length){replay(seed);return seed;}
+  const usedShelves=new Set(past.map(p=>parseInt(p.seed.slice(6),16)&3)),available=[0,1,2,3].filter(s=>!usedShelves.has(s)),seen=new Set(past.flatMap(p=>replayCountryLife(p).resolved.map(row=>row.id))),careers=new Set(past.map(p=>replayCountryLife(p).state.careerId)),texts=new Set(past.flatMap(p=>plannedContent(p).filter(e=>e.kind==='memory').map(e=>e.text))),baseline=replay(seed).resolved.length,ranked=[];let fallback=null;
+  for(let i=0;i<64;i++){let candidate=i?narrativeHash('fate-v9-next:'+country+':'+seed+':'+i).toString(16).padStart(8,'0'):seed;const shelf=available[narrativeHash('v9-shelf:'+candidate)%available.length];candidate=candidate.slice(0,6)+((parseInt(candidate.slice(6),16)&252)|shelf).toString(16).padStart(2,'0');const run=replay(candidate),score=run.resolved.reduce((n,row)=>n+(seen.has(row.id)?1:0),0)/Math.max(1,run.resolved.length)+(careers.has(run.state.careerId)?.4:0),entry={candidate,run,score};if(!fallback||run.resolved.length>fallback.run.resolved.length)fallback=entry;if(run.resolved.length>=baseline)ranked.push(entry);}
+  if(!ranked.length)ranked.push(fallback);let best=seed,bestScore=Infinity;for(const entry of ranked.sort((a,b)=>a.score-b.score).slice(0,4)){const memories=plannedContent({version:9,country,seed:entry.candidate,orbit,answers:entry.run.answers,auto:entry.run.auto}).filter(e=>e.kind==='memory'),score=.35*entry.score+.65*memories.filter(row=>texts.has(row.text)).length/Math.max(1,memories.length);if(score<bestScore){best=entry.candidate;bestScore=score;}}return best;
+ }
  if(version===8){
   if(country!=='TW')throw Error('Country pack is not open');
   const past=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>r?.version===8);if(!past.length)return seed;
@@ -70,12 +77,12 @@ export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光�
 export function readSoul(value){
  let raw;try{raw=typeof value==='string'?JSON.parse(value):value}catch{return {entries:[]}};
  if(!Array.isArray(raw?.entries))return {entries:[]};const seen=new Set(),entries=[];
- for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=[5,7,8].includes(result.version)?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
+ for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=[5,7,8,9].includes(result.version)?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
  const draft=validLife(raw?.draft);return draft?{entries,draft}:{entries};
 }
 export function rememberSoul(record,code,at=Date.now(),memories=[]){
  const r=readSoul(record),result=decodeResult(code);if(!result)return r;
- if([7,8].includes(result.version)&&Array.isArray(memories)){const important=memories.filter(m=>['origin','choice','shared','relationship'].includes(m?.kind)),others=memories.filter(m=>!important.includes(m));memories=[...important,...others.slice(0,Math.max(0,32-important.length))].slice(0,32).map(m=>({...m,age:Math.floor(m.age)})).sort((a,b)=>a.age-b.age);}
+ if([7,8,9].includes(result.version)&&Array.isArray(memories)){const important=memories.filter(m=>['origin','choice','shared','relationship'].includes(m?.kind)),others=memories.filter(m=>!important.includes(m));memories=[...important,...others.slice(0,Math.max(0,32-important.length))].slice(0,32).map(m=>({...m,age:Math.floor(m.age)})).sort((a,b)=>a.age-b.age);}
  if(!r.entries.some(e=>e.code===code)&&r.entries.length<2000)r.entries.push({code,at,...(Array.isArray(memories)&&memories.length?{memories}:{})});return readSoul(r);
 }
 export function soulMilestone(record){const count=readSoul(record).entries.length;return {count,current:[...SOUL_ACHIEVEMENTS].reverse().find(a=>count>=a.at)||null,next:SOUL_ACHIEVEMENTS.find(a=>count<a.at)||null};}

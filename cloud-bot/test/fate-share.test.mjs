@@ -8,6 +8,8 @@ import {encodeResult} from '../../worker/public/fate/model.js';
 import {cardIdentity,cardLayout,TAIWAN_CARD_JPEG} from '../../worker/public/fate/share-card-layout.js';
 import {CARD_VERSION as BROWSER_CARD_VERSION} from '../../worker/public/fate/share-model.js';
 import {replayTaiwanLife} from '../../worker/public/fate/decision-engine-v8.js';
+import {COUNTRY_METADATA_V9,ensureCountryPack} from '../../worker/public/fate/country-runtime-v9.js';
+import {replayCountryLife} from '../../worker/public/fate/country-engine-v9.js';
 const code='f43010001x9c61a7d2',now=Date.UTC(2026,9,16,4),token='123456:offline-only-test-token';
 function init(user=123,at=now,secret=token){
  const params=new URLSearchParams({auth_date:String(Math.floor(at/1000)),user:JSON.stringify({id:user,first_name:'旅人'})});
@@ -16,6 +18,14 @@ function init(user=123,at=now,secret=token){
 }
 const request=(body={code,format:'post'},headers={})=>new Request(CARD_ORIGIN+'/fate/share/prepare',{method:'POST',headers:{Origin:GAME_ORIGIN,'content-type':'application/json','X-Telegram-Init-Data':init(),...headers},body:JSON.stringify(body)});
 function taiwanCode(){const life={version:8,country:'TW',seed:'deadbeef',orbit:3,answers:[],auto:[]},run=replayTaiwanLife(life,{activeMs:7200000,autoFill:true});return encodeResult({...life,answers:run.answers,auto:run.auto,zodiac:8});}
+
+for(const country of Object.keys(COUNTRY_METADATA_V9))test(country+' real illustrated JPEG and prepared Telegram share preserve country, sign and privacy',async()=>{
+ await ensureCountryPack(country);const raw={version:9,country,seed:'deadbeef',orbit:3},run=replayCountryLife(raw),code=encodeResult({...raw,answers:run.answers,auto:run.auto,zodiac:8}),module=await WebAssembly.compile(await readFile(new URL('../src/renderer/deps/resvg.wasm',import.meta.url)));
+ const render=createCardRenderer({wasmModule:module,loadFont:()=>readFile(new URL('../public/fonts/NotoSansTC.ttf',import.meta.url)),loadCrest:id=>readFile(new URL(`../../worker/public/fate/zodiac/${id}.svg`,import.meta.url),'utf8'),loadIllustration:name=>readFile(new URL(`../../worker/public${illustrationPath(name)}`,import.meta.url))});
+ for(const format of ['post','story']){const card=cardDetails(code,format);assert.equal(card.illustration,'country-'+country.toLowerCase());assert.equal(card.result.zodiac,8);assert.match(card.result.identity[0],new RegExp(COUNTRY_METADATA_V9[country].cityName));const data=await render(card),pixels=jpeg.decode(data,{useTArray:true});assert.equal(pixels.width,1080);assert.equal(pixels.height,format==='story'?1920:1350);assert.ok(data.length<5_000_000);assert.ok(new Set(pixels.data.subarray(1080*200*4,1080*400*4)).size>150);}
+ const calls=[],handle=createFateShare({now:()=>now,telegramFetch:async(url,opts)=>{calls.push({url,body:JSON.parse(opts.body)});return Response.json({ok:true,result:{id:'isolated-'+country,expiration_date:now/1000+3600}});}}),response=await handle(request({code,format:'story',birthDate:'1900-01-01',birthTime:'12:34',birthPlace:'PRIVATE_TEST_PLACE'}),{BOT_TOKEN:token});
+ assert.equal(response.status,200);assert.equal(calls.length,1);assert.match(calls[0].url,/savePreparedInlineMessage$/);assert.equal(calls[0].body.user_id,123);assert.match(calls[0].body.result.photo_url,new RegExp('/'+code+'/story.jpg'));assert.doesNotMatch(JSON.stringify(calls),/1900-01-01|12:34|PRIVATE_TEST_PLACE|sendPhoto|sendMessage/);
+});
 test('prepared TG photo uses the HMAC account, no chat-send API and no private birth data',async()=>{
  const calls=[],handle=createFateShare({now:()=>now,telegramFetch:async(url,opts)=>{calls.push({url,opts,body:JSON.parse(opts.body)});return Response.json({ok:true,result:{id:'offline-prepared',expiration_date:now/1000+3600}});}});
  const r=await handle(request({code,format:'story',tgId:999,birthDate:'1900-01-01'}),{BOT_TOKEN:token}),out=await r.json();
@@ -75,7 +85,7 @@ test('TG card metadata retains each public zodiac and incarnation while hidden c
 test('Taiwan JPEG asset path is explicitly whitelisted and shares a cache revision with browser native downloads',()=>{
  assert.equal(illustrationPath('taiwan-river'),TAIWAN_CARD_JPEG);assert.equal(illustrationPath('harbor'),'/art/fate-ending-20261016/harbor.jpg');
  for(const bad of ['https://evil.invalid/river-memory.jpg','../river-memory','river-memory','taiwan-river?url=evil','../../fonts/NotoSansTC.ttf'])assert.throws(()=>illustrationPath(bad),/Invalid illustration/);
- assert.equal(CARD_VERSION,BROWSER_CARD_VERSION);assert.equal(CARD_VERSION,'20261016-taiwan8');
+ assert.equal(CARD_VERSION,BROWSER_CARD_VERSION);assert.equal(CARD_VERSION,'20261016-countries9');
 });
 
 test('Taiwan JPEG SVG paints the same two fitted identity rows while legacy identities stay on one line',async()=>{

@@ -1,0 +1,42 @@
+DE／科隆 v9 在地內容包 — 2026-10-16
+
+這是資料作者交付，未由此分支提交、發布或宣布開放。
+範圍：德國北萊茵－西發利亞邦NRW的科隆市。萊茵河兩岸、舊城、道依茨、埃倫費爾德、尼佩斯、蘇爾茨、林登塔爾、米爾海姆等只在科隆市範圍使用。不把北威州教育條文套用巴伐利亞或其他邦。
+
+實際內容：
+1500則逐條寫入的日常：child120、youth100、adult720、late420、any140。
+12職涯，每條10章、4個兩選一抉擇，共120章與48抉擇。
+24條安全暱稱關係鏈，每條6章，共144章；4條同事鏈需要有效職涯，家庭照顧不應被引擎當作受薪職場。
+6條雙人共同事件：moving／parcel／repair／market／umbrella／bookstore。每個問題與兩個結果均保留owner和guest。
+4種家境的money及全部delta.money均是EUR劇情帳整數，並非實際薪資、財富統計或可換算獎勵。沒有跨國匯率或真實百分位。
+
+本地化的核心細節：KVB車站與轉乘、Stadtbahn路面聲、萊茵河貨船和橋影、科隆街區與河岸步道、路德維希博物館、公共圖書館、退瓶標示、街市與麵包店。每日內容不把節慶強塞進任意月份，也不預先建立玩家的工作、伴侶、子女、住房、學位或疾病。幼年進館與出行明確有成人陪同；any以感官公共場景為主，3歲也不會被派去獨立辦事。
+
+教育與資格核對（2026-10-16閱讀官方來源）：
+1. NRW Schulgesetz：全日制義務一般10個學年，但既有八年制Gymnasium有9學年例外；其後教育與培訓義務仍依具體路線確認。玩家文案不硬寫統一年數。
+https://recht.nrw.de/lrgv/gesetz/01082025-schulgesetz-fuer-das-land-nordrhein-westfalen-schulgesetz-nrw-schulg/
+2. Bundesagentur für Arbeit：雙軌職業培訓是企業與職業學校結合；學校型培訓另有路線。Dual Studium則涉及高等教育，不能從一般培訓推定學士。
+https://www.arbeitsagentur.de/bildung/einfach-erklaert/wege-in-die-ausbildung
+https://www.arbeitsagentur.de/bildung/studium/duales-studium
+3. 科隆市食品工作告知：是否需要IfSG第43條證明看實際接觸與工作活動；先完成適用的告知及店內衛生訓練。未把英國食品訓練制度照搬德國，亦不把證明當麵包師／Meister資格。費用、辦理時間與有效條件未寫死在劇情。
+https://www.stadt-koeln.de/service/produkte/00206/index.html
+https://www.stadt-koeln.de/mediaasset/content/pdf57/schulung_und_belehrung_-_merkblatt.pdf
+4. 科隆營業登記：新設、搬入或營業變更有正式申報。小生意角色受聘於已安排營運的攤位，自營抉擇只做官方諮詢與預算準備，不在資料裡默認完成所有許可。縫補、自行車是受訓助手，非逕自宣稱開業、Meister或安全檢查放行資格。
+https://www.stadt-koeln.de/service/produkte/00554/index.html
+5. IHK Köln的正式結業考核：助手實作與試讀不等於通過職業培訓考試。
+https://www.ihk.de/koeln/hauptnavigation/ausbildung/pruefungen/pruefungsergebnisse-der-abschlusspruefung-5015046
+6. KVB無障礙與站點：依站點、車輛及當日狀態確認，不宣稱全站通行，不硬編票價。
+https://www.kvb.koeln/service/barrierefreiheit.html
+https://www.kvb.koeln/haltestellen/index.html
+7. Umweltbundesamt包裝資訊：一次性／可重用及接受退還標示需分辨；不以單一押金概括各種容器。
+https://www.umweltbundesamt.de/themen/abfall-ressourcen/produktverantwortung-in-der-abfallwirtschaft/verpackungen/fragen-antworten-verpackungen-verpackungsabfaelle
+8. 科隆市圖書館：使用按服務及權限確認，未滿7歲由成人陪同。兒童內容依此安排。
+https://www.stadt-koeln.de/leben-in-koeln/stadtbibliothek/
+https://www.stadt-koeln.de/mediaasset/content/satzungen/benutzungs-und-entgeltordnung-stadtbibliothekt-koeln_2025-12-16.pdf
+9. Museum Ludwig參觀及無障礙資訊：場館背景與方向確認，不捏造固定免費時間或每一天都有的展覽。
+https://www.museum-ludwig.de/de/besuch
+https://www.museum-ludwig.de/de/besuch/informationen/barrierefreiheit
+
+檔案：worker/public/fate/country-packs-v9/de.js與de-*.js。
+作者測試：worker/test/fate-country-de-v9.test.js（Node24）。
+整合仍由root負責：出生／性別／教育狀態閘門、money帳、防未答後果洩漏、雙人權限與通知、分享圖片及正式部署。資料檔不等於以上功能已上線。

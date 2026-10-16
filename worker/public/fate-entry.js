@@ -1,7 +1,7 @@
 (() => {
  'use strict';
  const original=window.RpgInterface.compose;
- const valid=c=>typeof c==='string'&&/^f(?:[1-5][a-f0-9x]{10,30}|7[a-f0-9x]{29}|8tw[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8})$/.test(c);
+ const valid=c=>typeof c==='string'&&/^f(?:[1-5][a-f0-9x]{10,30}|7[a-f0-9x]{29}|(?:8tw|9(?:jp|kr|us|ca|gb|de|fr|au|in))[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8})$/.test(c);
  let overlay=null,frame=null,pinned=null,exit=null,opening=false;
  const entryParams=new URLSearchParams(location.search),incoming=entryParams.get('fate'),startParam=String(window.Telegram?.WebApp?.initDataUnsafe?.start_param||entryParams.get('screen')||entryParams.get('tgWebAppStartParam')||location.hash.replace(/^#/,'').split('&')[0]||'').replace(/^rpg_?/,''),autoOpen=startParam==='fate'||entryParams.has('fateEvent'),cache=new Map(),seen=new Set();
  const targetCharacter=entryParams.get('fateCharacter'),targetName=entryParams.get('fateCharacterName')?.slice(0,24)||'另一角色';
@@ -26,7 +26,7 @@
    if(String(window.RpgFateHost?.characterId())!==character){if(e.data?.type==='star-fate-rpc'&&protocol.validRpcId(e.data.id))reply({type:'star-fate-rpc-result',id:e.data.id,charId:character,error:'目前角色已改變，請返回冒險後重新開啟旅章。'});return;}
    if(e.data?.type==='star-fate-context'){reply({type:'star-fate-context-ready',charId:character,heroName:window.RpgFateHost?.characterName?.()||'',native:nativeHost.capabilities});return;}
    if(nativeModel.validNative(e.data,character)){
-    const {id,action,body}=e.data;try{const value=await nativeHost.act(action,body);if(String(window.RpgFateHost?.characterId())!==character)throw Error('目前角色已改變');reply({type:'star-fate-rpc-result',id,charId:character,value});}catch(error){reply({type:'star-fate-rpc-result',id,charId:character,error:String(error.message||'分享暫時無法完成').slice(0,180)});}return;
+    const {id,action,body}=e.data;try{if(typeof body?.code==='string'&&body.code.startsWith('f9'))await (await import('/fate/country-runtime-v9.js')).ensureCountryCodes([body.code]);const value=await nativeHost.act(action,body);if(String(window.RpgFateHost?.characterId())!==character)throw Error('目前角色已改變');reply({type:'star-fate-rpc-result',id,charId:character,value});}catch(error){reply({type:'star-fate-rpc-result',id,charId:character,error:String(error.message||'分享暫時無法完成').slice(0,180)});}return;
    }
    if(!protocol.validRpc(e.data,character))return;
    const {id,action,body}=e.data;

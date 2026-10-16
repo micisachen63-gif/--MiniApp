@@ -1,0 +1,91 @@
+韓國首爾內容包 v9 — 資料草稿與來源紀錄
+核對日期：2026-10-16；作者工作：JP/KR/IN 內容分支。
+狀態：資料模組與獨立測試完成，尚未由本分支啟用、部署或驗證正式通知。
+
+檔案與實際清點
+worker/public/fate/country-packs-v9/kr.js：COUNTRY_PACK_KR 及相同 default，遞迴凍結資料。
+kr-young.js：child 120 / youth 100 / any 140。
+kr-adult-a.js / kr-adult-b.js / kr-adult-c.js：各240；adult合計720。
+kr-late.js：late420。
+合計1500則獨立寫定日常，1500全字唯一；不是替換人物、地名產生句子乘積。
+kr-careers.js：12職涯，各10章、4抉擇；120章、48題、96個不同選項結果。
+kr-social.js：24條關係鏈各6章，共144章；6雙人事件、12結果。
+家庭4種虛構生活背景；教育1條課程路徑；官方來源10筆。
+worker/test/fate-country-kr-v9.test.js：10項通過。
+
+範圍
+只描述首爾特別市25區的現代架空都市人生。不是韓國全境概括，排除仁川及京畿道城市包。
+真實場景含望遠市場、漢江公共空間、清溪川、首爾林、鍾路、乙支路、西村、聖水等。
+不把一個國家等同單一宗教、民族、家庭價值；出生地不授予國籍、服役義務或社會福利資格。
+不使用固定歷史災害，不把節慶放在隨機月份；沒有固定車站出口、票價、營業時間與官方待遇設定。
+
+年齡與狀態
+child 6–12、youth 13–17、adult18–59、late60–110、any3–110；0–2嬰幼兒由主整合模組處理。
+any以可旁觀、安全簡單場景為主。成年/晚年日常不授予個人就業、伴侶、子女、學位、租約、病名與處方。
+偶有家人或朋友的中性互動，沒有推定自己婚育；晚年保留學習、偏好、行動與自主，不等同疾病或孤獨。
+同事章只在requiresCareer=true的4條關係鏈中；root須保留實際workActive與家務路線排除條件。
+職涯10章只能在該職涯仍workActive時按實際進度取用，exit=true後應停止後續該職涯章。
+household-care為未受雇的家庭生活協調，minAge21；所有抉擇money<=0，沒有自動薪水、主管、客人。
+root已確認此ID不設employed/工資收益，排除同事鏈與business expansion，請在通用v9引擎繼續沿用。
+其餘使用一般支援、服務或協作範圍，不直接授予教師、醫護、受保護技術執照等資格。
+培訓與入職用實際行為呈現；審核說明放本文件，避免玩家故事每章插入制度免責字句。
+
+金額與統計
+currency KRW。4個money為虛構故事起始可用預算，不是收入分布或真實家庭財富中位數。
+選項delta為虛構敘事帳目變化，不是法定時薪、個人年薪或投資報酬；本包沒有真實全球百分位或台幣FX。
+學習完成只記課程與實作，並非自動取得畢業證、學位或專業執照。
+
+來源與實際查核
+KR9-S1 韓國教育部 Education System Overview
+https://english.moe.go.kr/sub/infoRenewal.do?m=0301&page=0301&s=english
+頁載Source:2023 Education in Korea；六年小學、三年初中、三年高中，常見四年大學或二至三年專科；小學初中義務教育，第一學期三月，第二學期八月底。
+用途為教育結構與避免誤植日本四月學期；不把學制說明當個人錄取/畢業結果。
+
+KR9-S2 首爾市官方地鐵與交通設施入口
+https://english.seoul.go.kr/service/movement/public-transportation/2-subway/
+官方頁連向路線圖、站內無障礙、寄物等查詢。故事只做當次核對，沒有將目前票種/年齡優惠當永久人生權益。
+
+KR9-S3 首爾市巴士
+https://english.seoul.go.kr/policy/transportation/modes-of-transport/bus/
+支持巴士路線與不同服務類型，故事不設定固定車程、末班時刻或所有站牌相同。
+
+KR9-S4 首爾TOPIS
+https://topis.seoul.go.kr/eng/page/transInfo_1_1.jsp
+官方交通資訊含巴士分類、路線編號與交通卡背景；只用核對站名、方向與資訊的生活行為。
+
+KR9-S5 首爾觀光官方望遠市場
+https://english.visitseoul.net/shopping/Mangwon%20Market/ENP037950
+頁2021-06-28發布，2026-09-10更新。位於麻浦區，市場有多樣小吃，附近有望遠漢江公園。
+本包未硬寫店家價格、指定攤商、固定營業時間/出口，不能將觀光行銷文字當全體居民消費統計。
+
+KR9-S6 首爾觀光官方首爾林
+https://english.visitseoul.net/nature/seoul-forest/ENP001838
+頁址明列城東區聖水洞，含文化活動、教育與公共公園空間。各設施時間不同，故事要求看當次公告。
+未採用頁中第三方旅客評論作事實來源。
+
+KR9-S7 雇用勞動部：書面勞動條件FAQ
+https://www.moel.go.kr/faq/faqView.do?seqRepeat=169
+實讀條目「근로조건의 서면명시」；工資、約定工時、休假，定期/部分工時另涉及期間、工作地點/內容等書面事項。
+只用確認書面內容的通則，不給個案法律結論或將每種契約混為相同資格。
+
+KR9-S8 雇用勞動部標準勞動契約
+https://www.moel.go.kr/mainpop2.do
+實讀契約項目、工作場所/內容、工時與休息等官方說明，頁亦有2026最低工資資訊。
+本包刻意不引用數字薪資、罰則或福利計算；個案應另核最新適用條件。
+
+KR9-S9 首爾市2026減廢行動
+https://english.seoul.go.kr/seoul-effectively-reduces-daily-household-waste-by-29-tons-with-waste-reduction-campaign/
+2026-05-15公告，25區有各自資源循環措施；只支持分類與核對地區資訊的背景，不將報告數字套進角色日常成果。
+
+KR9-S10 首爾市2020廚餘分類說明
+https://english.seoul.go.kr/seoul-distributes-outline-of-food-waste-disposal-standard-in-ten-languages-for-foreign-residents/
+歷史資料，明示2020-04-16建議標準，骨/殼等不等於所有可進廚餘的食物。
+只用於「需辨認種類、查現場及所在地最新規則」，不直接發布2020操作指令為2026全面規定。
+
+測試紀錄
+命令：Node24 --test worker/test/fate-country-kr-v9.test.js
+結果：10 passed / 0 failed。
+涵蓋深凍結、精確1500與各phase數、全字唯一、對台灣1718日常與170職涯及日本1500/120零全字重用、個人狀態常見錯置防護、4書架59–103終年各240節點容量、12x10/4題、家務語義、24x6名稱占位、雙人雙方占位、來源與學制。
+文字全字唯一不等於語義永不重複；相近的生活主題會出現，root應以完整多世重播和玩家觀感繼續抽查，不聲稱8%或其他重複率已達標。
+未實測正式MiniApp、通知點入、雙人權限/到期、兩方持久化、公開分享或手機分享；那些屬root整合驗收。
+本分支沒有啟用KR、改runtime/UI、提交、推送或部署；現有台灣v8保持凍結。

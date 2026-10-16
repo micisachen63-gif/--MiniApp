@@ -1,3 +1,4 @@
+import {COUNTRY_METADATA_V9,ensureCountryPack,ensureCountryCodes} from '../../public/fate/country-runtime-v9.js';
 import {GameError} from '../game/classes.js';
 import {guardStmt,outboxStmt,classifyDbError} from '../db.js';
 import {taipeiDay} from '../game/time.js';
@@ -28,12 +29,12 @@ const activeRow=(db,tg)=>db.prepare("SELECT * FROM rpg_fate_lives WHERE char_id=
 const activeView=(row,now)=>row?{id:row.id,rev:row.rev,draft:advanceLife(parse(row.state_json),now).draft,nextAt:row.next_at}:null;
 async function progressRow(env,row,now){
  for(let attempt=0;attempt<4&&row?.status==='active';attempt++){
-  const d=parse(row.state_json),memories=await SHARED.outcomes(env,row.id,now),v=advanceLife(d,now),notify=v.available&&row.notified_index<v.index;
+  const d=parse(row.state_json);if(d.version===9)await ensureCountryPack(d.country);const memories=await SHARED.outcomes(env,row.id,now),v=advanceLife(d,now),notify=v.available&&row.notified_index<v.index;
   if(memories.length)v.draft.sharedMemories=memories;
   const next=v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt,changed=v.completed||v.draft.answers.length!==d.answers.length||notify||row.next_at<=now||JSON.stringify(v.draft.sharedMemories)!==JSON.stringify(d.sharedMemories);
   if(!changed)return row;
   const notified=notify?v.index:row.notified_index,db=env.DB,stmts=[db.prepare('UPDATE rpg_fate_lives SET state_json=?,status=?,completed_at=?,next_at=?,code=?,notified_index=?,rev=rev+1 WHERE id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.completed?'complete':'active',v.completed?v.endAt:null,next,v.code,notified,row.id,row.rev),guardStmt(db)];
-  if(notify&&isOpenTime(now)&&env.GROUP_CHAT_ID){const c=await owner(db,row.char_id),scene=scenesFor(d)[v.index];stmts.push(outboxStmt(db,{dedupe:`fate:${row.id}:${v.index}`,target:'group',kind:'fate_event',payload:{...(d.version===8?{country:'TW'}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:v.index,age:scene.age,title:scene.title,text:scene.text,deadline:next}},now));}
+  if(notify&&isOpenTime(now)&&env.GROUP_CHAT_ID){const c=await owner(db,row.char_id),scene=scenesFor(d)[v.index];stmts.push(outboxStmt(db,{dedupe:`fate:${row.id}:${v.index}`,target:'group',kind:'fate_event',payload:{...([8,9].includes(d.version)?{country:d.country}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:v.index,age:scene.age,title:scene.title,text:scene.text,deadline:next}},now));}
   try{await db.batch(stmts);return await db.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(row.id).first();}catch(e){if(classifyDbError(e)?.code!=='conflict'||attempt===3)throw e;row=await db.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(row.id).first();}
  }
  return row;
@@ -60,7 +61,7 @@ export async function history(env,tg,b,now){
  return {ok:true,entries:rows.slice(0,10).map(r=>({id:r.id,code:r.code,at:r.completed_at,draft:parse(r.state_json)})),next:rows.length>10?rows[9].started_at:null,memorials:memorials.map(r=>({code:r.code,at:r.created_at})),now};
 }
 export async function start(env,tg,b,now){
- if(b.country!==undefined&&b.country!=='TW')throw new GameError('fate_country','這個出生地仍在製作中，請選擇已開放的台灣。');
+ const country=b.country??'TW';if(country!=='TW'&&!Object.hasOwn(COUNTRY_METADATA_V9,country))throw new GameError('fate_country','請選擇已開放的出生地。');if(country!=='TW')await ensureCountryPack(country);const version=country==='TW'?8:9;
  await progressRow(env,await activeRow(env.DB,tg),now);
  const response=await mutation(env,tg,b,now,'start',async(c,db)=>{
   const existing=await activeRow(db,tg);if(existing)return {result:{lifeId:existing.id,already:true}};
@@ -68,7 +69,8 @@ export async function start(env,tg,b,now){
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
   const past=(await db.prepare("SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 3").bind(String(tg)).all()).results||[];
   let zodiac=null,identityZodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');identityZodiac=zodiacFor(birth.month,birth.day);if(b.showSign!==false)zodiac=identityZodiac;}
-  const orbit=randomOrbit(zodiac),seed=seedForNextLife(newSeed(),past.reverse(),8,orbit,'TW'),draft=createLife({version:8,country:'TW',orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
+  await ensureCountryCodes(past.map(e=>e.code));
+  const orbit=randomOrbit(zodiac),seed=seedForNextLife(newSeed(),past.reverse(),version,orbit,country),draft=createLife({version,country,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
   identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
   const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now,draft)[0])],result:{lifeId:id}};
@@ -89,7 +91,7 @@ export async function choose(env,tg,b,now){
   return {stmts:[db.prepare('UPDATE rpg_fate_lives SET state_json=?,next_at=?,rev=rev+1 WHERE id=? AND char_id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.nextAt,row.id,String(tg),row.rev),guardStmt(db)],result:{lifeId:row.id,index:b.index,answer:b.answer}};
  });
 }
-export async function keep(env,tg,b,now){if(!decodeResult(b.code))throw new GameError('fate_code','這張旅人來信無法辨識');return mutation(env,tg,b,now,'keep',async(c,db)=>({stmts:[db.prepare('INSERT OR IGNORE INTO rpg_fate_memorials(char_id,code,created_at) VALUES(?,?,?)').bind(String(tg),b.code,now)],result:{saved:true,countsAsLife:false}}));}
+export async function keep(env,tg,b,now){await ensureCountryCodes([b.code]);if(!decodeResult(b.code))throw new GameError('fate_code','這張旅人來信無法辨識');return mutation(env,tg,b,now,'keep',async(c,db)=>({stmts:[db.prepare('INSERT OR IGNORE INTO rpg_fate_memorials(char_id,code,created_at) VALUES(?,?,?)').bind(String(tg),b.code,now)],result:{saved:true,countsAsLife:false}}));}
 export async function profileView(env,tg,full=true){const c=await owner(env.DB,tg),r=await env.DB.prepare('SELECT * FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();return r?{saved:true,rev:r.rev,coverage:parse(r.chart_json)?.coverage,updatedAt:r.updated_at,...(full?{birth:parse(r.birth_json)}:{})}:{saved:false,rev:0,coverage:'inspiration'};}
 export async function saveProfile(env,tg,b,now){
  if(b.consent!==true)throw new GameError('birth_consent','請先同意將出生資料儲存於自己的帳號，供每日旅箋使用');
@@ -116,9 +118,9 @@ export async function daily(env,tg,now,retry=0){
 
 export async function notification(env,b,now){
  const row=await env.DB.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(String(b.lifeId)).first();
- const invalid={ok:true,valid:false,night:false,pending:false,remainingMs:0};if(!row||row.status!=='active'||!Number.isInteger(b.index)||b.index<0||b.index>([7,8].includes(parse(row.state_json)?.version)?8:2))return invalid;
- const v=advanceLife(parse(row.state_json),now);if(!Number.isSafeInteger(v.slots[b.index]))return invalid;const deadline=addActive(v.slots[b.index],CHOICE_MS);
+ const invalid={ok:true,valid:false,night:false,pending:false,remainingMs:0};if(!row||row.status!=='active'||!Number.isInteger(b.index)||b.index<0||b.index>([7,8,9].includes(parse(row.state_json)?.version)?8:2))return invalid;
+ const draft=parse(row.state_json);if(draft.version===9)await ensureCountryPack(draft.country);const v=advanceLife(draft,now);if(!Number.isSafeInteger(v.slots[b.index]))return invalid;const deadline=addActive(v.slots[b.index],CHOICE_MS);
  if(v.completed||v.index!==b.index||now<v.slots[b.index]||now>=deadline)return invalid;
  const c=await owner(env.DB,row.char_id),scene=scenesFor(v.draft)[b.index];
- return {ok:true,valid:v.available,night:v.night,pending:true,remainingMs:activeBetween(now,deadline),retryAt:v.night?addActive(now,0):now,payload:{...(v.draft.version===8?{country:'TW'}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:b.index,age:scene.age,title:scene.title,text:scene.text,deadline}};
+ return {ok:true,valid:v.available,night:v.night,pending:true,remainingMs:activeBetween(now,deadline),retryAt:v.night?addActive(now,0):now,payload:{...([8,9].includes(v.draft.version)?{country:v.draft.country}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:b.index,age:scene.age,title:scene.title,text:scene.text,deadline}};
 }

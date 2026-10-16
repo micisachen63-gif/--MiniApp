@@ -1,0 +1,22 @@
+CA v9 國別內容審核紀錄 — 2026-10-16
+
+範圍：加拿大安大略省多倫多市都市生活。不把多倫多市的商業規則套到其他城市，不以加拿大整體概括各省教育制度。日常可以觀察TTC街車、湖岸、公園、圖書館和市場；不宣稱即時班次、費用、活動開放或固定花期。
+
+內容實際數量：獨立存放日常1500則（child120/youth100/adult720/late420/any140）；12職涯各10章與4個實際兩分抉擇；24人際鏈各6章；6個雙人邀請；4家境；1條可暫停的課程銜接。日常為逐條撰寫，不以地名替換或詞庫笛卡兒積展開。公開玩家名字只進中性虛構關係，社交章節均保留{name}，雙人故事僅{owner}/{guest}。
+
+職涯：社區活動行政、學院窗口、軟體測試、雜貨門市、咖啡店前臺、包裹分揀、印刷排版、非食品手作試賣、展演前臺、旅宿接待、家庭協調、維修收件。家庭照顧為非薪職家庭路線，由共用引擎另處理就業狀態，不應派同事關係。所有職涯均不依性別限制。收件不等於具受管制專業資格；不獨立執行醫護、電氣或其他受管制維修。餐飲先確認雇主要求及適用食品訓練，手作販售另確認業務、場地與品項的適用規則，不把一個許可當全市通行。角色保持具體行動，制度說明集中於本文件與選擇前後果。
+
+金錢：家庭初值、選項金錢變動全部為遊戲內加幣CAD劇情假設，非真實薪資、匯率、生活成本、人口分布、百分位或理財建議。不得據此推出真實世界排行。
+
+教育：Ontario成人學習有多種學分/銜接/基礎技能方向。OSSD要求依入讀九年級年度及個別條件核對，不使用一組固定要求保證取得文憑。學院入學按具體課程、先修、資格、作品或面試要求另行確認；完成一段課程只產生該課程紀錄，並非自動取得學位、文憑或錄取。
+
+已核對官方來源（2026-10-16）：
+1 https://www.ontario.ca/page/adult-learning — 成人學習方向與窗口。
+2 https://www.ontario.ca/page/earning-your-high-school-diploma — OSSD要求按入讀年度等條件不同。
+3 https://www.georgebrown.ca/ask-george-brown/what-are-your-requirements-for-admission-1660591685262 — 當地學院課程各有條件，最低資格不保證錄取。
+4 https://www.ttc.ca/accessibility/Easier-access-on-the-TTC/Riding-the-Streetcar — 街車、站點與動線的實際差異，不宣稱每站均可同方式使用。
+5 https://tpl.ca/using-the-library/ — 圖書館使用與公共資源；具體活動依當時資訊。
+6 https://www.toronto.ca/business-economy/new-businesses-startups/business-regulations/ — 商業規則依業務和場地不同，另有聯邦、省、市層級要求。
+7 https://www.toronto.ca/explore-enjoy/parks-recreation/places-spaces/beaches-gardens-attractions/high-park/ — High Park自然與步道場景，花期不固定。
+
+驗證：worker/test/fate-country-ca-v9.test.js檢查精確數量、全1500唯一、與US/TW已存日常無相同句子、分齡禁止前提、12職涯/48選項情境結構、24安全人際鏈、雙人占位、來源範圍。整合因果、公開碼重播與部署由root負責；本文件不代表已發布。

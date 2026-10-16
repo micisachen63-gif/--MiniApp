@@ -3,6 +3,9 @@ import {createCloudBot,createRpgFlow,createOperationApi,commands} from '../index
 import {createPartyFlow} from '../rpg-party-flow.js';
 import {createPkAnimationFlow} from '../rpg-pk-animation-flow.js';
 const CHAT='-1004342516953',APP='https://elf-rpg-api.micisachen.workers.dev/';
+import {COUNTRY_METADATA_V9,ensureCountryPack} from '../../../../worker/public/fate/country-runtime-v9.js';
+import {replayCountryLife} from '../../../../worker/public/fate/country-engine-v9.js';
+import {encodeResult as encodeCountryResult} from '../../../../worker/public/fate/model.js';
 const logger={warn(){},info(){}};
 const store=()=>{const receipts=new Map();return {data:{rpg:{}},saves:0,save(){this.saves++;},operations:{get:k=>receipts.get(k),put:(k,v)=>receipts.set(k,structuredClone(v))},receipts};};
 function botFixture(){
@@ -10,6 +13,13 @@ function botFixture(){
  const bot=createCloudBot({config:{active:true,chatId:CHAT,botUsername:'StarJournalRpgBot',appUrl:APP,inviteLink:'https://t.me/example'},api,store:durable,log:logger,rpgApi:base,renderBattleAnimation:async()=>new Uint8Array([71,73,70]),renderPartyCard:async()=>new Uint8Array([137,80,78,71]),now:()=>100000});return {bot,durable,sent,calls};
 }
 test('cloud factory retains all six slash commands',()=>assert.deepEqual(commands.map(c=>c.command),['start','rpg','group','help','trade','duel']));
+for(const country of Object.keys(COUNTRY_METADATA_V9))test(country+' completed life survives private Telegram join gate and resume callback',async()=>{
+ await ensureCountryPack(country);const raw={version:9,country,seed:'deadbeef',orbit:3},run=replayCountryLife(raw),code=encodeCountryResult({...raw,answers:run.answers,auto:run.auto,zodiac:8});
+ const t=botFixture();await t.bot.handle({update_id:2200,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start fate_'+code}});
+ assert.deepEqual(t.calls,[{path:'/rpg/app/grant',body:{tgId:'7'}}]);
+ const url=new URL(t.sent.find(x=>x.method==='sendMessage').body.reply_markup.inline_keyboard[0][0].web_app.url);assert.equal(url.searchParams.get('fate'),code);assert.equal(url.searchParams.get('screen'),'fate');
+ await t.bot.handle({update_id:2201,callback_query:{id:'country-resume',from:{id:7},message:{chat:{id:7,type:'private'}},data:'fate_resume:'+code}});assert.equal(t.calls.length,2);assert.equal(t.calls[1].body.tgId,'7');
+});
 for(const version of [3,5])test('f'+version+' public prologue retains story across join gate, grants only verified member and keeps account ID',async()=>{
  const t=botFixture(),code=`f${version}b101101adeadbeef`;let member=false;
  const b=createCloudBot({config:{active:true,chatId:CHAT,botUsername:'StarJournalRpgBot',appUrl:APP,inviteLink:'https://t.me/example'},api:{async call(method,body){t.sent.push({method,body});return method==='getChatMember'?{status:member?'member':'left'}:{message_id:1};}},store:t.durable,log:logger,rpgApi:{async call(path,body){t.calls.push({path,body});return {ok:true}}},renderBattleAnimation:async()=>[],renderPartyCard:async()=>[]});
