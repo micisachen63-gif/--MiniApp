@@ -89,7 +89,7 @@ test('320/390/768 stage placement preserves the complete portrait within a scene
   const {api}=setup();
   for(const width of [320,390,768])for(const height of [236,440,980])for(const x of [-50,40,width+100]){
     const p=api.placement({x,y:height-180},width,height);
-    assert.ok(p.left-p.width/2>=7.99);assert.ok(p.left+p.width/2<=width-7.99);assert.ok(p.top>=104);assert.ok(p.height>=1&&p.height<=180);if(!p.hidden)assert.ok(p.top+p.height<=height-180-28);
+    assert.ok(p.left-p.width/2>=7.99);assert.ok(p.left+p.width/2<=width-7.99);assert.ok(p.top>=104);assert.ok(p.height>=1&&p.height<=210);if(!p.hidden)assert.ok(p.top+p.height<=height-180-12);
     assert.ok(p.left-p.cloudWidth/2>=7.99);assert.ok(p.left+p.cloudWidth/2<=width-7.99);if(!p.hidden)assert.ok(p.top+p.height-16+p.cloudHeight<=height-180);
   }
 });
@@ -115,7 +115,7 @@ test('hidden/reduced-motion state and repeated snapshots use existing CSS only; 
   const {api,root}=setup(),handle=api.create(root);handle.update(snapshot(),{paused:true,reducedMotion:true});
   assert.equal(root.classList.contains('guardian-idle-paused'),true);assert.equal(root.classList.contains('guardian-idle-reduced-motion'),true);
   const image=root.children[1].images[0];handle.update(snapshot(),{paused:false,reducedMotion:false});assert.equal(root.children[1].images[0],image);
-  assert.equal(root.classList.contains('guardian-idle-paused'),false);handle.position({x:110,y:240},390,440);assert.equal(root.children[1].style.height,'108px');
+  assert.equal(root.classList.contains('guardian-idle-paused'),false);handle.position({x:110,y:240},390,440);assert.equal(root.children[1].style.height,'116px');
   root.isConnected=false;const before=root.children[1].style.left;handle.position({x:300,y:100},390,440);assert.equal(root.children[1].style.left,before);
   assert.doesNotMatch(read('guardian-idle-fx.js'),/<video|setInterval\s*\(|setTimeout\s*\(|requestAnimationFrame\s*\(|fetch\s*\(/);handle.cleanup();
 });
@@ -123,7 +123,7 @@ test('hidden/reduced-motion state and repeated snapshots use existing CSS only; 
 test('battle delegates guardian motion to existing render/resize lifecycle and no longer starts a perpetual separate frame loop',()=>{
   const source=read('battle.js'),sync=source.slice(source.indexOf('function positionGuardian()'),source.indexOf('    const E ='));
   assert.match(sync,/RpgGuardianIdleFX\.create/);assert.match(sync,/document\.hidden\|\|!root\.isConnected/);assert.doesNotMatch(sync,/requestAnimationFrame|cancelAnimationFrame|guardianFrame/);
-  const css=read('guardian-idle-fx.css');assert.match(css,/prefers-reduced-motion:reduce/);assert.match(css,/animation-play-state:paused/);assert.match(css,/opacity:\.55/);assert.match(css,/object-fit:contain/);
+  const css=read('guardian-idle-fx.css');assert.match(css,/prefers-reduced-motion:reduce/);assert.match(css,/animation-play-state:paused/);assert.match(css,/opacity:\.78/);assert.match(css,/object-fit:contain/);
 });
 
 test('divine mist reaches the real hero head from the enlarged angel feet without a separate renderer or opaque panel',()=>{
@@ -152,7 +152,7 @@ test('all registered classes, genders and advancements keep angel clear of BUFF 
   for(const [width,height] of [[320,360],[390,440],[744,380],[1024,640]])for(const fig of figures){
    const figureHeight=Math.min(180,height*.3),head=height-figureHeight-10+figureHeight*fig[1];
    const p=api.placement({x:width*.16,y:head},width,height);
-   if(!p.hidden){assert.ok(p.top-6>=98,key+' stays below BUFF even at hover peak');assert.ok(p.top+p.height+3<=head-24,key+' keeps rotation clear of silhouette');}
+   if(!p.hidden){assert.ok(p.top-6>=98,key+' stays below BUFF even at hover peak');assert.ok(p.top+p.height+3<=head-8,key+' keeps rotation clear of silhouette');}
    checked++;
   }
  }

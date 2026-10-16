@@ -53,12 +53,12 @@
     const w = Math.max(1,Number(width)||1), h = Math.max(1,Number(height)||1);
     const head=Math.max(0,Math.min(h,Number(point?.y)||h*.65));
     // Keep clear of the collapsed BUFF (bottom 89px), hover and rotation.
-    const ceiling=104, gap=28, available=head-gap-ceiling;
-    const angelHeight=Math.max(1,Math.min(180,Math.max(120,h*.34),available));
+    const ceiling=112, gap=12, available=head-gap-ceiling;
+    const angelHeight=Math.max(1,Math.min(210,Math.max(154,h*.44),available));
     const angelWidth=Math.min(angelHeight*.72,Math.max(1,w-16));
     const cloudWidth=Math.min(156,Math.max(88,angelWidth*1.45),Math.max(1,w-16));
     const top=Math.max(ceiling,head-angelHeight-gap);
-    return {height:angelHeight,width:angelWidth,cloudWidth,cloudHeight:40,hidden:available<60,
+    return {height:angelHeight,width:angelWidth,cloudWidth,cloudHeight:24,hidden:available<60,
       left:Math.max(cloudWidth/2+8,Math.min(w-cloudWidth/2-8,Number(point?.x)||w*.25)),top};
   }
 
