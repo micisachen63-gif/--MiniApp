@@ -4,6 +4,8 @@ import {freshDb} from './d1-shim.js';
 import {createCharacter} from '../src/services/player.js';
 import * as S from '../src/services/fate-shared.js';
 import {createLife,addActive,LIFE_MS} from '../public/fate/life.js';
+import {formalEvents} from '../public/fate/formal-events.js';
+import {sharedMemories} from '../public/fate/shared-story.js';
 
 const at=s=>Date.parse(s+'+08:00'),T=at('2026-10-16T09:00:00'),M=60000;
 const rid=()=>crypto.randomUUID();
@@ -16,8 +18,8 @@ async function fixture(t){
  const db=env.DB.sqlite,one=(sql,...args)=>db.prepare(sql).get(...args),all=(sql,...args)=>db.prepare(sql).all(...args),run=(sql,...args)=>db.prepare(sql).run(...args);
  async function enable(id,now=T){return S.savePreferences(env,id,{enabled:true,allowMentions:true,consent:true,requestId:rid()},now)}
  let n=0;
- async function begin(id='101',now=T){
-  const lifeId='life-'+id+'-'+n++,draft=createLife({version:4,orbit:3,seed:'deadbeef',startedAt:now});
+ async function begin(id='101',now=T,version=4){
+  const lifeId='life-'+id+'-'+n++,draft=createLife({version,country:version===8?'TW':undefined,orbit:3,seed:'deadbeef',startedAt:now});
   run("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)",lifeId,id,id,JSON.stringify(draft),now,now+24*M);
   return {lifeId,charId:id,accountId:id,name:'旅人'+id,draft};
  }
@@ -163,6 +165,32 @@ test('six authored branches have distinct choices and outcomes; the previous thr
   const now=T+n*86400000;await f.enable('101',now);await f.enable('202',now);const life=await f.begin('101',now);await S.schedule(f.env,life,now);
   const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',life.lifeId);assert.ok(!keys.slice(-3).includes(row.story_key));keys.push(row.story_key);
   await S.withdraw(f.env,'101',{eventId:row.id,requestId:rid()},now+1);f.run("UPDATE rpg_fate_lives SET status='complete' WHERE id=?",life.lifeId);
+ }
+});
+
+test('Taiwan shared invitations have six localized stories, designated reply and the same delayed memory in both lives',async t=>{
+ const keys=new Set(),titles=new Set(),outcomes=new Set();
+ for(let seed=0;seed<6;seed++)for(const answer of [0,1]){
+  const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,8),guest=await f.begin('202',T,8);owner.draft.seed=seed.toString(16).padStart(8,'0');
+  assert.equal((await S.schedule(f.env,owner,T)).scheduled,true);const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',owner.lifeId);assert.match(row.story_key,/^(garden|harbor|lamp|workshop|map|book)$/);keys.add(row.story_key);assert.equal(row.deadline_at-row.opened_at,10*M);
+  await S.sweep(f.env,row.opened_at);const notice=await S.notification(f.env,{eventId:row.id},row.opened_at);assert.equal(notice.valid,true);assert.equal(notice.payload.ownerAccountId,'101');assert.equal(notice.payload.guestAccountId,'202');assert.doesNotMatch(notice.payload.text,/星燈|燈塔|城邦|甲板|航海|燈油|海灣/);titles.add(notice.payload.title);
+  const received=(await S.event(f.env,'202',{eventId:row.id},row.opened_at)).event;assert.equal(received.canReply,true);assert.equal(received.choices.length,2);assert.equal((await S.event(f.env,'101',{eventId:row.id},row.opened_at)).event.canReply,false);for(const id of ['101','202'])assert.equal((await S.inbox(f.env,id,row.opened_at)).events[0].title,notice.payload.title);
+  const replied=await S.reply(f.env,'202',{eventId:row.id,answer,requestId:rid()},row.opened_at+1);assert.equal(replied.result.event.title,received.title);assert.deepEqual(await S.outcomes(f.env,owner.lifeId,row.deadline_at-1),[]);assert.deepEqual(await S.outcomes(f.env,guest.lifeId,row.deadline_at-1),[]);
+  const a=await S.outcomes(f.env,owner.lifeId,row.deadline_at),b=await S.outcomes(f.env,guest.lifeId,row.deadline_at);assert.equal(a.length,1);assert.equal(b.length,1);assert.deepEqual(a,b);assert.match(a[0].id,/^shared-tw8_/);assert.equal(a[0].answer,answer);assert.equal(a[0].source,'manual');assert.ok(a[0].text.includes('旅人101'));assert.ok(a[0].text.includes('旅人202'));outcomes.add(a[0].text);assert.deepEqual(sharedMemories(a),a);
+  for(const[l,memory]of[[owner,a],[guest,b]]){const story=formalEvents({...l.draft,clockAt:row.deadline_at,sharedMemories:memory},row.deadline_at);assert.ok(story.some(event=>event.kind==='shared'&&event.text===a[0].text),'both life stories must retain the localized shared memory');}
+ }
+ assert.equal(keys.size,6);assert.equal(titles.size,6);assert.equal(outcomes.size,12);
+});
+
+test('Taiwan shared branches avoid the last three keys while unimplemented countries cannot schedule a fantasy fallback',async t=>{
+ const f=await fixture(t),keys=[];
+ for(let n=0;n<7;n++){const now=T+n*86400000;await f.enable('101',now);await f.enable('202',now);const life=await f.begin('101',now,8);assert.equal((await S.schedule(f.env,life,now)).scheduled,true);const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',life.lifeId);assert.match(row.story_key,/^(garden|harbor|lamp|workshop|map|book)$/);assert.ok(!keys.slice(-3).includes(row.story_key));keys.push(row.story_key);await S.withdraw(f.env,'101',{eventId:row.id,requestId:rid()},now+1);f.run("UPDATE rpg_fate_lives SET status='complete' WHERE id=?",life.lifeId);}
+ const unpublished=await f.begin('101',T+8*86400000,8);unpublished.draft.country='JP';f.run('UPDATE rpg_fate_lives SET state_json=? WHERE id=?',JSON.stringify(unpublished.draft),unpublished.lifeId);assert.equal((await S.schedule(f.env,unpublished,T+8*86400000)).scheduled,false);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_choices WHERE life_id=?',unpublished.lifeId).n,0);
+});
+
+test('localized shared story edition follows the stored parent life rather than supplied draft claims',async t=>{
+ for(const version of [4,8]){const f=await fixture(t);await f.enable('101');await f.enable('202');const life=await f.begin('101',T,version);const claimed={...life,draft:{...life.draft,version:version===8?4:8,country:version===8?undefined:'TW'}};assert.equal((await S.schedule(f.env,claimed,T)).scheduled,true);
+  const row=f.one('SELECT * FROM rpg_fate_social_choices'),event=(await S.event(f.env,'202',{eventId:row.id},row.opened_at)).event;assert.equal(event.title,version===8?'書店留言板的空白角落':'寄給未來的一頁');assert.ok(!Object.keys(event).some(key=>/story_life_state|state_json/.test(key)));
  }
 });
 

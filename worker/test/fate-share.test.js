@@ -5,8 +5,8 @@ import vm from 'node:vm';
 import {decodeResult,encodeResult} from '../public/fate/model.js';
 import {shareDetails,telegramShareUrl,threadsShareUrl,validNative,CARD_ORIGIN} from '../public/fate/share-model.js';
 import {createNativeShareHost,nativeCapabilities} from '../public/fate/native-share-host.js';
-import {mountSharePanel} from '../public/fate/share-ui.js';
-import {cardLayout,cardIdentity} from '../public/fate/share-card-layout.js';
+import {mountSharePanel,drawShareCard} from '../public/fate/share-ui.js';
+import {cardLayout,cardIdentity,cardIdentityLines,TAIWAN_CARD_WEBP} from '../public/fate/share-card-layout.js';
 import {ZODIAC_CRESTS} from '../public/fate/zodiac-sign.js';
 const code=encodeResult({version:4,orbit:3,answers:[0,1,0],auto:[0,0,1],zodiac:5,seed:'9c61a7d2'}),result=decodeResult(code),uuid='12345678-1234-1234-1234-123456789abc';
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
@@ -39,6 +39,20 @@ test('all twelve share crests pair with incarnation identity; hidden zodiac neve
  const hidden=cardIdentity({...result,zodiac:null,identityZodiac:10});assert.equal(hidden.crestId,'wheel');assert.equal(hidden.hasSign,false);assert.equal(hidden.name,'此世星印');
  for(const format of ['post','story']){const l=cardLayout(format);assert.equal(l.width,1080);assert.ok(l.crest.size>=320);assert.ok(l.crest.y+l.crest.size<l.signY);assert.ok(l.creditY<l.height-32);}
  assert.throws(()=>cardLayout('huge'));
+});
+
+test('Taiwan card identity has separate fitted location gender and life-path lines without changing old typography',()=>{
+ const localized={...result,version:8,country:'TW',identity:['女性 · 台北市 · 設計接案工作室經營者']};
+ for(const format of ['post','story']){const layout=cardLayout(format),lines=cardIdentityLines(localized,layout);assert.equal(lines.length,2);assert.equal(lines[0].text,'臺灣 · 台北市 · 女性');assert.equal(lines[1].text,'設計接案工作室經營者');assert.ok(lines[0].y>layout.latinY);assert.ok(lines[1].y<layout.endingY);assert.ok(lines[1].size<=43);assert.ok([...lines[1].text].length*lines[1].size<=880);assert.deepEqual(cardIdentityLines(result,layout),[{text:result.identity[0],y:layout.identityY,size:58}]);}
+ const long=cardIdentityLines({...localized,identity:['男性 · 新北市 · '+ '在地生活服務'.repeat(5)]});assert.ok([...long[1].text].length*long[1].size<=880);assert.match(long[0].text,/男性/);
+});
+
+test('actual browser PNG renderer loads Taiwan artwork and paints the two identity lines within card width',async()=>{
+ const imagePaths=[],texts=[],makeCanvas=()=>{const context={font:'',fillStyle:'',strokeStyle:'',lineWidth:0,textAlign:'',fillRect(){},strokeRect(){},beginPath(){},moveTo(){},lineTo(){},stroke(){},drawImage(){},createLinearGradient:()=>({addColorStop(){}}),createRadialGradient:()=>({addColorStop(){}}),measureText(text){return {width:[...text].length*parseInt(this.font)*.95}},fillText(text,x,y,maxWidth){texts.push({text,x,y,maxWidth,font:this.font})}};return {getContext:()=>context,toBlob:callback=>callback(new Blob(['offline-png'],{type:'image/png'}))};};
+ class ImageType{constructor(){this.width=1080;this.height=720;}set src(value){imagePaths.push(value)}async decode(){}}
+ const doc={createElement:tag=>{assert.equal(tag,'canvas');return makeCanvas()},fonts:{ready:Promise.resolve()}},localized={...result,version:8,country:'TW',identity:['女性 · 台北市 · 設計接案工作室經營者']};
+ const png=await drawShareCard(localized,'post',{ImageType,document:doc});assert.equal(png.type,'image/png');assert.equal(imagePaths[0],TAIWAN_CARD_WEBP);assert.ok(texts.some(row=>row.text==='臺灣 · 台北市 · 女性'&&row.maxWidth===880));assert.ok(texts.some(row=>row.text==='設計接案工作室經營者'&&row.maxWidth===880));assert.ok(!texts.some(row=>row.text===localized.identity[0]));
+ imagePaths.length=0;texts.length=0;await drawShareCard(result,'post',{ImageType,document:doc});assert.match(imagePaths[0],/fate-ending-20261016/);const legacy=texts.find(row=>row.text===result.identity[0]);assert.ok(legacy);assert.ok(legacy.font.startsWith('58px'));assert.equal(legacy.maxWidth,undefined);
 });
 
 test('owner may explicitly opt a private life zodiac back into share, never before checking it',async()=>{

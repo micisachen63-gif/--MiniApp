@@ -1,3 +1,5 @@
+import {replayTaiwanLife} from './decision-engine-v8.js';
+import {plannedV8Content,profileV8} from './narrative-v8.js';
 import {hash,worldYear,almanac,REGIONS} from './world.js';
 import {LEGACY_MEMORIES} from './formal-ambient-v4.js';
 import {CAREERS,THREADS,OBJECTS,NEW_MEMORIES} from './formal-catalog-v4.js';
@@ -51,6 +53,7 @@ const infancy=[
 ];
 
 export function formalScenes(life={}){
+ if(life.version===8)return replayTaiwanLife({...life,auto:life.sources?.map(s=>s==='auto'?1:0)||life.auto},{activeMs:7200000,autoFill:true}).scenes;
  if(life.version===7)return replayDecisionLife({...life,auto:life.sources?.map(s=>s==='auto'?1:0)||life.auto},{activeMs:7200000,autoFill:true}).scenes;
  const seed=seedOf(life),pool=catalogues(life),career=pool.careers[byte(seed,0)%pool.careers.length],thread=pool.threads[byte(seed,1)%pool.threads.length],object=pool.objects[byte(seed,2)%pool.objects.length];
  const community={
@@ -153,6 +156,7 @@ export function narrativeActiveBetween(from,to){
 }
 
 export function narrativeProfile(life={}){
+ if(life.version===8)return profileV8(life);
  if(life.version===7)return profileV7(life);
  const seed=seedOf(life),orbit=Number.isInteger(life.orbit)&&life.orbit>=0&&life.orbit<12?life.orbit:11;
  const pool=catalogues(life);
@@ -162,6 +166,7 @@ export function narrativeProfile(life={}){
 }
 
 export function plannedContent(life={},options={}){
+ if(life.version===8)return plannedV8Content(life,{activeMs:Number.isFinite(options.activeMs)?options.activeMs:(options.ticks??240)*30000});
  if(life.version===7)return plannedV7Content(life,{activeMs:Number.isFinite(options.activeMs)?options.activeMs:(options.ticks??240)*30000});
  const profile=narrativeProfile(life),{seed,orbit,career}=profile;
  const timing=lifeTiming(life),isV5=!!timing;
@@ -254,6 +259,7 @@ export function plannedContent(life={},options={}){
 }
 
 export function formalEvents(life,now=life?.clockAt){
+ if(life?.version===8&&validSeed(life.seed)&&Number.isFinite(life.startedAt))return plannedV8Content(life,{activeMs:Math.min(DURATION,narrativeActiveBetween(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt))});
  if(life?.version===7&&validSeed(life.seed)&&Number.isFinite(life.startedAt))return plannedV7Content(life,{activeMs:Math.min(DURATION,narrativeActiveBetween(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt))});
  if(![4,5].includes(life?.version)||!validSeed(life.seed)||!Number.isFinite(life.startedAt))return [];
  const at=Math.max(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt);

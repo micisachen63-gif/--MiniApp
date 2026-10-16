@@ -3,6 +3,7 @@
 import {endingForLife} from './ending-story.js';
 import {lifeTiming} from './timing-v5.js';
 import {replayDecisionLife} from './decision-engine-v7.js';
+import {replayTaiwanLife,taiwanProfile} from './decision-engine-v8.js';
 export const ART='/art/fate-chapter-20261016/';
 export const ZODIAC=['摩羯','水瓶','雙魚','牡羊','金牛','雙子','巨蟹','獅子','處女','天秤','天蠍','射手'];
 export const ORBITS=[
@@ -37,12 +38,20 @@ export function validBirth(value,today=new Date()){
  return {year:y,month:m,day:d};
 }
 export function zodiacFor(month,day){const edges=[20,19,21,20,21,22,23,23,23,24,23,22];return day<edges[month-1]?month-1:month%12;}
-export function encodeResult({orbit,answers,zodiac=null,seed,version=1,auto=[]}){
+export function encodeResult({orbit,answers,zodiac=null,seed,version=1,auto=[],country}){
+ if(version===8){if(country!=='TW')throw Error('Country pack is not open');const code=`f8tw${orbit.toString(36)}${answers.length}${answers.join('').padEnd(9,'0')}${auto.join('').padEnd(9,'0')}${zodiac===null?'x':zodiac.toString(36)}${seed}`;if(!decodeResult(code))throw Error('Invalid story');return code;}
  if(version===7){const code=`f7${orbit.toString(36)}${answers.length}${answers.join('').padEnd(9,'0')}${auto.join('').padEnd(9,'0')}${zodiac===null?'x':zodiac.toString(36)}${seed}`;if(!decodeResult(code))throw Error('Invalid story');return code;}
  const code=`f${version}${orbit.toString(36)}${answers.join('')}${version>=3?auto.join(''):''}${zodiac===null?'x':zodiac.toString(36)}${seed}`;
  if(!decodeResult(code))throw Error('Invalid story');return code;
 }
 export function decodeResult(code){
+ if(typeof code==='string'&&code.startsWith('f8')){
+  if(!/^f8tw[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}$/.test(code))return null;
+  const count=Number(code[5]),answers=[...code.slice(6,15)].map(Number),auto=[...code.slice(15,24)].map(Number),zodiac=code[24]==='x'?null:parseInt(code[24],36),seed=code.slice(25),orbit=parseInt(code[4],36);
+  if(answers.slice(count).some(Boolean)||auto.slice(count).some(Boolean))return null;
+  const result={version:8,country:'TW',code,orbit,answers:answers.slice(0,count),auto:auto.slice(0,count),zodiac,seed};
+  try{const run=replayTaiwanLife(result,{activeMs:7200000,autoFill:false});if(!run.completed||run.resolved.length!==count)return null;const p=taiwanProfile(seed,orbit,'TW');result.deathAge=p.deathAge;result.gender=p.gender;result.identity=[`${p.genderLabel} · ${p.cityName} · ${run.state.careerLabel||(p.gender==='f'?'都市之女':'都市之子')}`,`${p.countryName} · ${p.cityName}，${p.familyLabel}`,`這一世，你在${p.countryName}${p.cityName}出生。${p.familyText}`];result.endingIndex=0;const formal=endingForLife(result);result.ending={...ENDINGS[0],...formal,body:formal.summary};return result;}catch{return null;}
+ }
  if(typeof code==='string'&&code.startsWith('f7')){
   if(!/^f7[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8}$/.test(code))return null;
   const count=Number(code[3]),answers=[...code.slice(4,13)].map(Number),auto=[...code.slice(13,22)].map(Number),zodiac=code[22]==='x'?null:parseInt(code[22],36),seed=code.slice(23),orbit=parseInt(code[2],36);

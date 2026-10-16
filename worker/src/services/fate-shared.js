@@ -18,7 +18,28 @@ const STORIES={
  book:{title:'寄給未來的一頁',text:(o,g)=>`${o}與${g}在舊書中找到一張空白信紙。若留下一頁給多年後重讀，${g}會寫下什麼？`,choices:['寫下今天的小事，珍藏此刻的生活','寫下尚未完成的願望，等未來接續'],
   endings:[(o,g)=>`${g}寫下今天的麵包香與窗外的雨。${o}補上一行謝意，平凡的一天因此成了多年後仍能翻開的溫暖。`,(o,g)=>`${g}寫下還想去的遠方。${o}在旁畫了一顆星，多年後讀起，你們才發現那張信紙早已悄悄指引旅程。`],auto:(o,g)=>`${o}與${g}各在信紙上留下一行字，再把書輕輕合起。未來的某天，這一頁會替你們記得相遇。`}
 };
-const storyFor=row=>STORIES[row.story_key]||STORIES.garden;
+// Never edit the legacy dictionary: an already-scheduled invitation must keep
+// its original choices and outcome. New Taiwan lives use their own story keys.
+const TW_STORIES={
+ tw8_moving:{title:'公寓樓梯的搬家日',text:(o,g)=>`週末午後，${o}與${g}在雙北一棟公寓門口，遇到正為搬家紙箱發愁的鄰居。樓梯不寬，${g}想怎麼分工？`,choices:['先整理樓梯動線，再一起搬輕的紙箱','留在樓下清點標籤，幫忙把箱子送對樓層'],
+  endings:[(o,g)=>`${g}先把樓梯轉角空出來，${o}陪著把輕的紙箱一趟趟送上樓。鄰居記住了你們的名字，隔天在樓梯口留下一袋分裝好的餅乾。`,(o,g)=>`${g}在樓下核對箱子的樓層標籤，${o}幫忙招呼來往的人。原本差點送錯的相簿回到主人手裡，你們還收到一張手寫的謝卡。`],auto:(o,g)=>`搬家車離開前，${o}與${g}幫忙把散落的包裝紙收進回收袋。公寓門口恢復了通行，這個忙碌的下午留下一聲鄰居的謝謝。`},
+ tw8_parcel:{title:'超商櫃臺的小插曲',text:(o,g)=>`傍晚的超商裡，${o}與${g}發現待取包裹的標籤可能對不上，紙箱都還沒有拆開。店員正在確認，${g}會先怎麼做？`,choices:['把疑問告訴店員，留在櫃臺核對取件資料','先把未拆的包裹交回店員，改天確認後再來'],
+  endings:[(o,g)=>`${g}請店員重新核對取件資料，${o}一起等候。包裹交回正確的取件人時，對方連說了兩次謝謝，你們才笑著走出超商。`,(o,g)=>`${g}把未拆的包裹交回店員，${o}記下再確認的時間。隔天再見面時，店員已把標籤釐清，你們為這段小插曲各挑了一瓶茶。`],auto:(o,g)=>`${o}與${g}把未拆的包裹留在櫃臺，請店員確認後再通知。等候的片刻，變成你們往後經過超商時會想起的一次相逢。`},
+ tw8_repair:{title:'樓梯間的那盞燈',text:(o,g)=>`${o}與${g}在社區樓梯間看見忽明忽暗的照明。有人晚歸會經過這裡，${g}想先把這件事交給誰接手？`,choices:['向管理窗口報修，整理故障的樓層與時間','向社區窗口反映，請合格人員安排檢修'],
+  endings:[(o,g)=>`${g}整理好故障的樓層與時間，${o}把報修資訊交給管理窗口。燈修好的那天，你們特地繞回樓梯間，發現轉角終於不必摸黑。`,(o,g)=>`${g}請社區窗口安排合格人員檢修，${o}陪著確認公告。之後樓梯口多了一張維修完成的通知，你們約好往後遇到問題也先找對窗口。`],auto:(o,g)=>`${o}與${g}把故障位置寫清楚，交給社區窗口處理。轉角重新亮起時，你們知道那封反映沒有白送。`},
+ tw8_market:{title:'週末市集的一張空桌',text:(o,g)=>`河濱的週末公益市集臨時多出一張空桌，${o}與${g}被問到願不願意幫忙。募款規則已寫在現場公告上，${g}想怎麼讓這張桌子熱鬧起來？`,choices:['整理大家捐出的二手書，讓每一本找到新讀者','做一張清楚的攤位小地圖，幫逛市集的人找路'],
+  endings:[(o,g)=>`${g}按主題排好捐出的二手書，${o}幫忙貼上現場公告的價格。有人找到找了很久的那一本，離開前還回頭向你們揮手。`,(o,g)=>`${g}畫好公益市集的小地圖，${o}把飲水處與出入口標得清楚。傍晚收桌時，那張被指過無數次的紙，成了你們一起留下的紀念。`],auto:(o,g)=>`${o}與${g}先把公益市集的空桌擦乾淨，再協助收好公告與指示牌。傍晚的河風把紙角吹起，你們替逛市集的人留了最後一段方便。`},
+ tw8_umbrella:{title:'捷運出口的一場雨',text:(o,g)=>`午後雷陣雨突然落下，${o}與${g}停在雙北的捷運出口，手邊只有一把傘。下一段路不急，${g}想怎麼安排？`,choices:['在出口內等雨小一點，把沒聊完的話慢慢說完','沿有遮雨的路線走到公車站，把傘留給沒遮蔽的路段'],
+  endings:[(o,g)=>`${g}決定先等雨小，${o}陪著站在不擋通行的位置。你們從晚餐聊到常走的路，等到雨停才發現，原來平常錯過了這麼多小事。`,(o,g)=>`${g}找好有遮雨的路線，${o}一路留意來往行人。到了公車站，你們抖掉傘上的水，替這次沒有淋透的同行留下了一句玩笑。`],auto:(o,g)=>`${o}與${g}先在捷運出口等雨，讓趕路的人從旁邊通過。雨勢小下來時，你們各自道別，也記住了這場被迫慢下來的午後。`},
+ tw8_bookstore:{title:'書店留言板的空白角落',text:(o,g)=>`${o}與${g}走進巷內書店，店主邀請客人在公開留言板留一句話。角落還有一張空白紙卡，${g}想寫什麼？`,choices:['寫下今天遇見的一件好事，留給下一位讀者','推薦一本喜歡的書，邀請陌生人接著寫感想'],
+  endings:[(o,g)=>`${g}在紙卡上寫下今天遇見的一件好事，${o}補了一句謝謝。下次經過書店，你們發現旁邊多了好幾張回應，原來小小的善意也有人願意接話。`,(o,g)=>`${g}留下一本書的推薦，${o}寫下最想和人聊的那一頁。再來書店時，有讀者接著寫了不同的看法，你們多了一個願意回來看的角落。`],auto:(o,g)=>`${o}與${g}各留下一句適合公開分享的話，再把紙卡交給店主。紙卡旁的小燈亮起，這次走進巷內書店的記憶也留在了板上。`}
+};
+const TW_KEYS={garden:'tw8_moving',harbor:'tw8_parcel',lamp:'tw8_repair',workshop:'tw8_market',map:'tw8_umbrella',book:'tw8_bookstore'};
+function taiwanEdition(raw){try{const life=JSON.parse(raw);return life?.version===8&&life.country==='TW';}catch{return false;}}
+// DB storage retains the six original CHECK-constrained enum values. The
+// server-owned parent life's immutable edition chooses the authored dictionary.
+const authoredKey=row=>taiwanEdition(row.story_life_state)?TW_KEYS[row.story_key]:row.story_key;
+const storyFor=row=>TW_STORIES[authoredKey(row)]||STORIES[row.story_key]||STORIES.garden;
 const outcomeText=row=>{const story=storyFor(row);return (row.answer===0||row.answer===1?story.endings[row.answer]:story.auto)(row.owner_name,row.guest_name);};
 const pending=r=>r&&['scheduled','pending'].includes(r.status);
 const parse=s=>JSON.parse(s);
@@ -35,7 +56,7 @@ const allowed=(p,now)=>!!(p?.enabled&&p.allow_mentions&&p.quiet_until<=now);
 // other players' invitations remains a separate, default-off account setting.
 const ownerAllowed=(p,now)=>(p?.quiet_until||0)<=now;
 const prefView=(p,now)=>({enabled:!!p?.enabled,allowMentions:!!p?.allow_mentions,quietToday:(p?.quiet_until||0)>now,quietUntil:p?.quiet_until||0,rev:p?.rev||0});
-const rowFor=(db,id)=>db.prepare('SELECT * FROM rpg_fate_social_choices WHERE id=?').bind(String(id||'')).first();
+const rowFor=(db,id)=>db.prepare('SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.id=?').bind(String(id||'')).first();
 // Recheck DB authority inside the same transaction as invitation/answer writes.
 // Membership is external; bound-character ownership and consent are local and
 // must not race a deletion/reassignment after the last async eligibility read.
@@ -132,12 +153,13 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
  const db=env.DB,account=String(accountId),already=await db.prepare('SELECT id FROM rpg_fate_social_choices WHERE life_id=?').bind(lifeId).first();if(already)return {scheduled:true};
  if(!env.GROUP_CHAT_ID||!ownerAllowed(await pref(db,account),now))return {scheduled:false};
  const c=await actor(db,charId);if(c.account!==account)return {scheduled:false};
- const life=await db.prepare("SELECT id FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active'").bind(lifeId,String(charId),account).first();if(!life)return {scheduled:false};
+ const life=await db.prepare("SELECT id,state_json FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active'").bind(lifeId,String(charId),account).first();if(!life)return {scheduled:false};
+ let stored;try{stored=JSON.parse(life.state_json);}catch{return {scheduled:false};}if(stored.version===8&&stored.country!=='TW')return {scheduled:false};
  const rows=(await db.prepare('SELECT p.account_id,c.tg_id,c.name FROM rpg_fate_social_preferences p JOIN rpg_accounts a ON a.account_tg_id=p.account_id JOIN rpg_characters c ON c.tg_id=a.active_char_id AND COALESCE(c.account_tg_id,c.tg_id)=p.account_id LEFT JOIN rpg_fate_social_locks l ON l.account_id=p.account_id WHERE p.account_id<>? AND p.enabled=1 AND p.allow_mentions=1 AND p.quiet_until<=? AND p.active_at>=? AND l.account_id IS NULL ORDER BY p.active_at DESC,p.account_id LIMIT 12').bind(account,now,now-DAY).all()).results||[];
  const open=addActive(draft.startedAt,40*MINUTE),deadline=Math.min(addActive(open,10*MINUTE),addActive(draft.startedAt,LIFE_MS)),day=taipeiDay(open);
  if(now>=deadline)return {scheduled:false};
  const recent=(await db.prepare('SELECT story_key FROM rpg_fate_social_choices WHERE owner_account=? ORDER BY opened_at DESC LIMIT 3').bind(account).all()).results||[];
- const pool=Object.keys(STORIES).filter(k=>!recent.some(r=>r.story_key===k)),storyKey=pool[parseInt(draft.seed,16)%pool.length];
+ const catalog=stored.version===8?TW_KEYS:STORIES,pool=Object.keys(catalog).filter(k=>!recent.some(r=>r.story_key===k)),storyKey=pool[parseInt(draft.seed,16)%pool.length];
  // One bounded lookup for the owner and three candidates, rather than serial
  // network waits per candidate. The Bot endpoint accepts at most four accounts.
  const candidates=rows.slice(0,3);if(!candidates.length)return {scheduled:false};
@@ -156,10 +178,10 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
  }
  return {scheduled:false};
 }
-export async function sweep(env,now){const rows=(await env.DB.prepare("SELECT * FROM rpg_fate_social_choices WHERE status IN ('scheduled','pending') AND next_at<=? ORDER BY next_at LIMIT 40").bind(now).all()).results||[];for(const row of rows)await progress(env,row,now);return rows.length;}
+export async function sweep(env,now){const rows=(await env.DB.prepare("SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.status IN ('scheduled','pending') AND s.next_at<=? ORDER BY s.next_at LIMIT 40").bind(now).all()).results||[];for(const row of rows)await progress(env,row,now);return rows.length;}
 export async function inbox(env,tg,now){
  const c=await actor(env.DB,tg);await env.DB.prepare('UPDATE rpg_fate_social_preferences SET active_at=? WHERE account_id=?').bind(now,c.account).run();
- const rows=(await env.DB.prepare('SELECT * FROM rpg_fate_social_choices WHERE (owner_account=? OR guest_account=?) ORDER BY opened_at DESC LIMIT 8').bind(c.account,c.account).all()).results||[];
+ const rows=(await env.DB.prepare('SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE (s.owner_account=? OR s.guest_account=?) ORDER BY s.opened_at DESC LIMIT 8').bind(c.account,c.account).all()).results||[];
  const events=[];for(const row of rows)events.push(view(await progress(env,row,now),c,now));return {ok:true,events,preferences:prefView(await pref(env.DB,c.account),now),now};
 }
 async function authorized(env,c,id){const row=await rowFor(env.DB,id);if(!row||![row.owner_account,row.guest_account].includes(c.account))fail('not_found','找不到這頁共同旅章',404);return row;}
@@ -188,12 +210,12 @@ export async function notification(env,b,now){
  if(!await eligible(env,r,now)){await close(env,r,'auto',null,'unavailable',now);return invalid;}
  const latest=await rowFor(env.DB,r.id);if(latest?.status!=='pending'||latest.rev!==r.rev)return invalid;
  const story=storyFor(r);
- return {ok:true,valid:true,night:false,pending:true,remainingMs:activeBetween(now,r.deadline_at),payload:{eventId:r.id,ownerAccountId:r.owner_account,guestAccountId:r.guest_account,ownerName:r.owner_name,guestName:r.guest_name,title:story.title,text:story.text(r.owner_name,r.guest_name),choices:[...story.choices],deadline:r.deadline_at}};
+ return {ok:true,valid:true,night:false,pending:true,remainingMs:activeBetween(now,r.deadline_at),payload:{...(taiwanEdition(r.story_life_state)?{country:'TW'}:{}),eventId:r.id,ownerAccountId:r.owner_account,guestAccountId:r.guest_account,ownerName:r.owner_name,guestName:r.guest_name,title:story.title,text:story.text(r.owner_name,r.guest_name),choices:[...story.choices],deadline:r.deadline_at}};
 }
 export async function outcomes(env,lifeId,now){
  const life=await env.DB.prepare('SELECT char_id,account_id,started_at FROM rpg_fate_lives WHERE id=?').bind(String(lifeId)).first();if(!life)return [];
- const end=addActive(life.started_at,LIFE_MS),rows=(await env.DB.prepare(`SELECT * FROM rpg_fate_social_choices WHERE deadline_at<=? AND
-  (life_id=? OR (guest_account=? AND guest_char=? AND status='answered' AND opened_at>=? AND deadline_at<=?))
-  ORDER BY deadline_at,id LIMIT 8`).bind(now,String(lifeId),life.account_id,life.char_id,life.started_at,end).all()).results||[];
- const memories=[];for(const row of rows){const r=await progress(env,row,now);memories.push({id:'shared-'+r.story_key,at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
+ const end=addActive(life.started_at,LIFE_MS),rows=(await env.DB.prepare(`SELECT s.*,l.state_json story_life_state FROM rpg_fate_social_choices s LEFT JOIN rpg_fate_lives l ON l.id=s.life_id WHERE s.deadline_at<=? AND
+  (s.life_id=? OR (s.guest_account=? AND s.guest_char=? AND s.status='answered' AND s.opened_at>=? AND s.deadline_at<=?))
+  ORDER BY s.deadline_at,s.id LIMIT 8`).bind(now,String(lifeId),life.account_id,life.char_id,life.started_at,end).all()).results||[];
+ const memories=[];for(const row of rows){const r=await progress(env,row,now);memories.push({id:'shared-'+authoredKey(r),at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
 }

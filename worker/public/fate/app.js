@@ -12,6 +12,7 @@ import {mountSharePanel} from './share-ui.js';
 import {mountZodiacSky} from './zodiac-ui.js';
 import {zodiacHeroSource} from './zodiac-sign.js';
 import {createSharedUI} from './shared-ui.js';
+import {renderLifeCountry,renderLifeIdentity,lifeIdentity} from './locality-ui.js';
 const root=document.getElementById('fate'),qs=new URLSearchParams(location.search);
 const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v);return true}catch{return false}}};
 const pathResult=/^\/fate\/r\/([^/]+)$/.exec(location.pathname)?.[1],queryResult=qs.get('result');
@@ -37,6 +38,7 @@ function button(text,fn,cls='fate-quiet'){const b=el('button',cls,text);b.type='
 function note(text){return el('p','fate-note',text)}
 function dispose(){media?.pause();media?.removeAttribute('src');media?.load();media=null;sharePanel?.dispose();sharePanel=null;}
 function setupMedia(bg){
+ if((stage==='life'&&currentLife?.version===8)||(result?.version===8&&stage!=='intro')){media?.pause();bg.classList.add('fate-media-taiwan');bg.style.backgroundImage="url('/art/fate-taiwan-v8/taipei-dusk.webp')";return;}
  if(media){bg.append(media);if(!document.hidden)media.play().catch(()=>{});return;}
  if(matchMedia('(prefers-reduced-motion: reduce)').matches||navigator.connection?.saveData)return;
  media=el('video');media.muted=true;media.loop=true;media.playsInline=true;media.autoplay=true;media.preload='none';media.poster=ART+'journey.webp';bg.append(media);
@@ -58,16 +60,17 @@ function render(){
  if(embedded&&cloudError)showCloudError(panel);
  if(sharedUI)sharedUI.render(panel);
  if(stage==='archive')renderArchive(panel);else if(stage==='life')renderLife(panel);else if(stage==='daily'){renderDaily(panel);panel.append(button(currentLife?'回到正在展開的這一世':'回到旅章',()=>{stage=currentLife?'life':result?'result':'intro';render();window.scrollTo(0,0)}));}else if(result)renderResult(panel);else if(stage==='scene')renderScene(panel);else renderIntro(panel);
- const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章以星穹世界為舞臺。人物關係與人生經歷為原創故事，偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
+ const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章從不同出身展開原創人生。台灣篇走進真實街巷，故事與人物經歷皆為虛構；偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
 }
 function renderIntro(p){
  p.append(el('span','fate-eyebrow','第一期 · 最後一盞星燈'),el('h2','','如果人生能重新啟程，\n你會把光留給誰？'));
  const modes=el('div','fate-mode');for(const [key,label] of [['birthday','以生日啟程'],['random','交給命運']]){const b=button(label,()=>{mode=key;render()},'fate-option');b.setAttribute('aria-pressed',String(mode===key));modes.append(b)}p.append(modes);
+ renderLifeCountry(p);
  let dateInput,signInput,startFields;
  if(mode==='birthday'){
-  const label=el('label','fate-field','出生年月日');label.htmlFor='fate-birth';dateInput=el('input','fate-date');dateInput.id='fate-birth';dateInput.type='date';dateInput.min='1900-01-01';const t=new Date();dateInput.max=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;dateInput.required=true;
+  const label=el('label','fate-field','你的出生年月日 · 星座起點');label.htmlFor='fate-birth';dateInput=el('input','fate-date');dateInput.id='fate-birth';dateInput.type='date';dateInput.min='1900-01-01';const t=new Date();dateInput.max=`${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`;dateInput.required=true;
   dateInput.value=birthDetail?.date||profileData?.birth?.date||'';
-  p.append(label,dateInput,note('生日只供起點與星座；出生時間、地點可留白。不會將完整出生資料放進分享碼或圖卡。'));
+  p.append(label,dateInput,note('以下是你本人的出生檔案，與這一世的出生地、性別分開。生日供星座起點使用，時間與地點可留白；完整出生資料不會出現在分享碼或圖卡。'));
   dateInput.oninput=()=>{birthDetail={...birthDetail,date:dateInput.value};birthSaveRetry=null;};
   startFields=renderStartBirthFields(p,{value:startBirthState,onChange:value=>{startBirthState=value;birthSaveRetry=null;}});
   if(!embedded)p.append(note('訪客的時間與地點只留在此頁記憶中，未登入不會保存至帳號。'));
@@ -93,7 +96,8 @@ function renderIntro(p){
 }
 function renderResult(p){
  const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
- if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));const timeline=el('ol','fate-ending-timeline');timeline.setAttribute('aria-label','這一生的重要歷程');for(const chapter of (story.chapters||endingTimeline({...storyLife,deathAge:result.deathAge},plannedContent(storyLife)))){const row=el('li'),head=el('header');head.append(el('b','',`${chapter.age} 歲`),el('span','',chapter.label));row.append(head,el('p','',chapter.text));timeline.append(row);}book.append(timeline);const prose=el('details','fate-ending-prose');prose.append(el('summary','','讀成一篇短篇故事'));for(const text of story.paragraphs)prose.append(el('p','',text));book.append(prose,el('p','fate-ending-summary',story.summary));p.append(book);}
+ renderLifeIdentity(p,storyLife);
+ if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',storyLife.version===8?`${lifeIdentity(storyLife).place} · 此生終章`:`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));const timeline=el('ol','fate-ending-timeline');timeline.setAttribute('aria-label','這一生的重要歷程');for(const chapter of (story.chapters||endingTimeline({...storyLife,deathAge:result.deathAge},plannedContent(storyLife)))){const row=el('li'),head=el('header');head.append(el('b','',`${chapter.age} 歲`),el('span','',chapter.label));row.append(head,el('p','',chapter.text));timeline.append(row);}book.append(timeline);const prose=el('details','fate-ending-prose');prose.append(el('summary','','讀成一篇短篇故事'));for(const text of story.paragraphs)prose.append(el('p','',text));book.append(prose,el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
  const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
  const journal=el('details','fate-journal'),summary=el('summary','','翻閱這一生的選擇與紀事'),list=el('ol');const memories=record?.draft?lifeEvents(record.draft,record.draft.clockAt):result.version>=4?plannedContent(result):record?.memories||[];list.append(el('li','',memories.find(m=>m.age===0)?.text||result.identity[2]));appendMemories(list,result,memories);journal.append(summary,list);p.append(journal);
@@ -109,15 +113,15 @@ function renderResult(p){
 }
 function reset(){result=null;shared=false;answers=[];birthDetail=null;stage='intro';history.replaceState(null,'','/fate/'+(isPreview?'?preview=1':''));render();window.scrollTo(0,0)}
 function startCycle(){
- if(embedded){if(cloud?.active){resumeLife();return;}cloudMutation('fate/start',{mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign,...(sharedUI?.invite?{socialInvite:true}:{})});return;}
+ if(embedded){if(cloud?.active){resumeLife();return;}cloudMutation('fate/start',{country:'TW',mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign,...(sharedUI?.invite?{socialInvite:true}:{})});return;}
  if(soul.draft){resumeLife();return;}
  let now=Date.now();if(isPreview&&!startStatus([],now).allowed)now=Date.parse(taipeiDay(now)+'T10:00:00+08:00');
  const status=startStatus(startHistory,now);if(!status.allowed){const target=document.querySelector('.fate-error')||document.querySelector('.fate-panel');const m=note(status.night?'星穹已入夜，06:00 再開啟下一世。':'今日四段人生已寫滿，明天再開啟新的旅程。');m.setAttribute('role','status');target.append(m);return;}
  const previous=result||decodeResult(soul.entries.at(-1)?.code);let next=randomOrbit(zodiac);
  if(previous&&next===previous.orbit)next=(next+1+parseInt(newSeed().slice(0,2),16)%11)%12;
- orbit=next;seed=seedForNextLife(newSeed(),soul.entries,7,orbit);
+ orbit=next;seed=seedForNextLife(newSeed(),soul.entries,8,orbit,'TW');
  const identityZodiac=mode==='birthday'&&zodiac!==null?zodiac:generatedZodiac(seed);
- currentLife=createLife({version:7,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
+ currentLife=createLife({version:8,country:'TW',orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
 }
 function persistLife(){if(embedded)return;if(currentLife)soul.draft=currentLife;storage.set('star-fate-guest-soul',JSON.stringify(soul));}
 function resumeLife(){if(embedded){currentLife=validLife(cloud?.active?.draft);if(currentLife){result=null;shared=false;stage='life';render();window.scrollTo(0,0)}return;}currentLife=validLife(soul.draft);if(!currentLife)return;result=null;shared=false;stage='life';tickLife(isPreview?currentLife.clockAt:Date.now());window.scrollTo(0,0);}
@@ -136,8 +140,8 @@ function renderLife(p){
  onDaily:openDaily,onArchive:()=>{stage='archive';render();window.scrollTo(0,0)},onClose:()=>{if(embedded)window.parent.postMessage({type:'star-fate-close'},location.origin)}});
 }
 function appendMemories(list,r,memories=[]){
- const rows=[...memories.filter(m=>m.age!==0&&(r.version===7||m.kind!=='choice'))],scenes=scenesFor(r);
- if(r.version!==7)r.answers.forEach((a,i)=>rows.push({age:scenes[i].age||18+i*24,text:`${r.auto?.[i]?'命運代選 · ':'親自選擇 · '}${scenes[i].choices[a][2]}`}));
+ const rows=[...memories.filter(m=>m.age!==0&&(r.version>=7||m.kind!=='choice'))],scenes=scenesFor(r);
+ if(r.version<7)r.answers.forEach((a,i)=>rows.push({age:scenes[i].age||18+i*24,text:`${r.auto?.[i]?'命運代選 · ':'親自選擇 · '}${scenes[i].choices[a][2]}`}));
  rows.sort((a,b)=>a.age-b.age);for(const m of rows)list.append(el('li','',`${ageLabel(m.age)} · ${m.text}`));
 }
 function renderSoul(p){
@@ -149,7 +153,7 @@ function renderArchive(p){
  const m=soulMilestone(soul);p.append(el('span','fate-eyebrow','MEMORIES NEVER FADE'),el('h2','',heroName?`${heroName}的靈魂旅誌`:'靈魂走過的路'),el('p','',`已承載 ${m.count} 世記憶。每一段出身、選擇與告別，都是這位英雄的一部分。`));renderSoul(p);
  const badges=el('details','fate-journal');badges.append(el('summary','','輪迴紀念成就'));const list=el('ul');for(const a of SOUL_ACHIEVEMENTS)list.append(el('li','',`${m.count>=a.at?'✧':'○'} ${a.title} · 完成 ${a.at} 世`));badges.append(list);p.append(badges);
  const entries=soul.entries.map((e,i)=>({...e,number:i+1})).reverse().slice(0,archivePage*10);
- if(soul.draft){const live=soul.draft,scenes=scenesFor(live),card=el('article','fate-memory-card');card.append(el('small','',`第 ${soul.entries.length+1} 世 · 正在展開`),el('h3','',`${lifeAge(live,live.clockAt)} 歲 · ${ORBITS[live.orbit][0]}`));const steps=el('ol');live.answers.forEach((a,i)=>steps.append(el('li','',`${scenes[i].age} 歲 · ${live.sources[i]==='auto'?'命運代選':'親自選擇'} · ${scenes[i].choices[a][2]}`)));card.append(steps,button('回到正在展開的這一世',()=>resumeLife()));p.append(card);}
+ if(soul.draft){const live=soul.draft,scenes=scenesFor(live),card=el('article','fate-memory-card');card.append(el('small','',`第 ${soul.entries.length+1} 世 · 正在展開`),el('h3','',`${lifeAge(live,live.clockAt)} 歲 · ${lifeIdentity(live)?.place||ORBITS[live.orbit][0]}`));const steps=el('ol');live.answers.forEach((a,i)=>steps.append(el('li','',`${scenes[i].age} 歲 · ${live.sources[i]==='auto'?'命運代選':'親自選擇'} · ${scenes[i].choices[a][2]}`)));card.append(steps,button('回到正在展開的這一世',()=>resumeLife()));p.append(card);}
  if(!entries.length)p.append(el('p','fate-archive-empty','旅誌還是空白的。\n完整走過一生，第一段記憶就會留在這裡。'));
  for(const e of entries){
   const r=decodeResult(e.code),card=el('article','fate-memory-card');card.append(el('small','',`第 ${e.number} 世 · ${r.identity[0]}`),el('h3','',r.ending.title),el('p','',r.identity[2]));

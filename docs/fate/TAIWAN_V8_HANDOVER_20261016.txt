@@ -1,0 +1,52 @@
+命運旅章 v8｜台灣雙北先行包
+2026-10-16（Asia/Taipei）
+
+範圍
+這是臺北／新北的現代架空人生；國家、街景、生活制度以真實臺灣為背景，人物與經歷是原創。
+開局可選已開放的TW；日本、韓國、美國、加拿大、英國、德國、法國、澳洲、印度仍鎖定製作中。
+不把雙北稱為全臺各地在地化完成；未接入其餘國家。真實出生年月日時與地點仍是獨立且自願的帳號檔案，不決定本世國籍、性別、家境。
+原十國計畫的完整人際長鏈、全球統計校準／分位與同期排名是後續內容，不以本批小指標假裝完成。
+
+凍結與相容
+新人生version8/country TW，recipe v8-tw-metro-1。舊v1–v5、v7的catalog與故事重播不變；進行中的舊人生不換版。
+f8tw + orbit一位 + 回應數一位 + 九位答案 + 九位auto來源 + 星座一位 + 八位seed，長度33；country不藏在seed裡暴力抽取。
+decoder會嚴格重播、確認實際題數／auto預設／padding，不接受未完成人生或未開放國家。公開碼不含私人生日、出生地、TG ID與社交事件權限。
+v8發布後不可在同版本任意加／刪／改文案或hash排序，否則會改寫舊分享與已走過的人生；下次資料改版另立version。
+
+核心
+decision-engine-v8.js負責種子出身、16職涯、條件抉擇、資格／在職狀態與NTD劇情帳。
+narrative-v8.js只依截至有效時間的實際state取日常、職涯、姓名相逢及共同後續；每30有效秒一則，同一世全文與ID去重。
+家境有四種資源起點；男女皆可遇到所有合理職涯，夜間陪侍接待僅臺北許可場館與21歲以上產品門檻，並非全臺法律門檻宣稱。
+幼兒園教師有分開的修業／學位／資格考試／教育實習／取證受聘鏈。未完成者保留支援身分，不能只因年資改稱教師；離職或改照顧家庭保留資格但不保留任教中。
+工作、創業與借款是明確選擇與後果；倒閉／退出／離職停止工作章，不在80歲仍自動替失業角色寫交班。
+伴侶、婚姻與育兒需實際前因，沒有發生就不補寫。知識值不換算成學歷，沒有資料支持就不產生全球百分位。
+每世2個有效小時、06:00–24:00成長、夜間暫停、每天四世、落款後親自啟程；本人回應90有效秒，共同支線10有效分鐘。
+
+雙人與分享
+六篇在地共同支線：搬家、取錯包裹、修繕、市集、雨傘、書店。沿用DB既有六個story_key enum，JOIN已存owner life判斷TW edition；不用新增migration，也不相信client傳入的版別。
+shared-story.js固定白名單允許shared-tw8_*，所以同一截止後雙方進行中的故事都會保留後果。舊六篇架空支線維持原文字。
+前端PNG與BOT實際WASM JPEG共用兩行國家／城市／性別／職涯，v8只允許固定river-memory素材，不讀任意URL。
+CARD_VERSION=20261016-taiwan8；公開shell、遊戲入口使用fate8a；發版後以部署收據和即時Cloudflare為準。
+先deploy:bot支援f8與圖片，再deploy:worker開放新人生；發布中不做D1 migration、不發測試群通知、不啟動舊本機輪詢。
+
+美術
+使用imagegen內建工具生成，沒有付費API腳本或執行期生成呼叫。只做WebP／JPEG格式編碼，保留同一畫面。
+正式素材：worker/public/art/fate-taiwan-v8/taipei-dusk.webp、taipei-dusk.jpg、river-memory.webp、river-memory.jpg。
+原始PNG保留在Codex generated_images/01a12e4c-89eb-73b2-b084-161389ac30bc；項目引用的正式圖已放入Git倉庫。
+提示詞組：
+1. Use case: illustration-story. Create a production-quality hand-painted watercolor and ink illustration for the premium dark navy and antique gold Taiwanese RPG Star Journal, a fictional modern-life reincarnation chapter based in Taipei/New Taipei. A cinematic wide view from an ordinary Taipei rooftop at blue-hour dusk: layered midrise apartment buildings with small balconies and rooftop water tanks, distant hazy mountains, a softly lit riverside and an elevated metro in the far background, tiny warm street-level shops and scooter silhouettes after rain. Authentic everyday urban Taiwan, dignified and lived-in, not a tourism montage. Traditional watercolor pigment texture and fine pen linework on warm textured paper, restrained navy/indigo atmosphere and amber window light, intricate but calm premium illustrated book art, realistic architectural proportions. Wide landscape composition for game background and editorial card: open sky in upper third, visual detail in lower half. No text, no letters, no logos, no maps, no European architecture, no fantasy castles, no Chinese imperial palace, no giant moon, no character portrait. The image must be refined, beautiful, contemplative and shareable.
+2. Use case: illustration-story. Premium watercolor and ink storybook ending illustration for Star Journal, a fictional everyday life set in Taipei and New Taipei, Taiwan. Wide landscape image of a quiet riverside path in the Taipei basin at golden blue-hour: worn wooden bench in foreground with a closed clothbound journal, a thermos and small everyday canvas tote; one adult figure seen distantly from behind looking across the Tamsui River toward ordinary midrise apartments and the layered mountains of Guandu, warm lit apartment windows and gentle evening clouds reflected on water. Some subtle bicycle silhouettes far along the riverside, modern Taiwanese urban atmosphere. Mood is a long life remembered with tenderness, neither poverty nor luxury assumed, no stereotyped gender. Finely drawn architectural lines, painterly pigment blooms, rich indigo shadows and warm amber highlights on textured archival paper, gallery quality intricate environment, understated premium fantasy-game editorial illustration grounded in actual Taiwan. No legible text, no signage, no logos, no European architecture or Mediterranean castle, no imperial temples, no character portrait, no magic effects. Main narrative objects in lower left, clear luminous river through the center, edge-to-edge illustration with no UI frame. Landscape 3:2 visual composition.
+
+驗收與限制
+新測試覆蓋country gate、實際HMAC start／choice／重試／多於三題通知、f8公碼、夜間暫停、240句實際播放、無未取證教學、無失業後工作章、童年年齡及真雙人後果。
+瀏覽器使用9565隔離SQLite＋假TG HMAC，手機外框390／實際內頁360px。已實際點通知登入、看出身與可回事件、提交保存，以及PNG製作／下載；沒有向TG群或IG／Threads發文。
+這不是實體iPhone／Android原生分享驗收。正式發布前最後統計、跨世重複量測與版本號補記於下方，不宣稱永不重複或全球機率。
+
+最終整合量測（2026-10-16）
+日常1,718則＋幼年20則；16職涯170章；90個實寫條件抉擇（26核心含5個重啟／轉折，64職涯）。六篇共同支線。
+四組內容以seed低2bits固定，啟程選seed避開最近三世所用組；幼年共用。新世選擇seed後，重播不再讀歷史。
+1,000個分散seed完整人生矩陣：四組各250人，59～103歲終年均有樣本，共240,000個30秒節點，1,738句日常全部實際出現，同世無重複。重大題數2～9，條件不成立時不硬湊題。
+固定12連世樣本：第4～12世相對前三世全文日常重複平均2.60%，最高3.01%；這是樣本回歸量測，不是所有手選路徑／所有帳號的保證，更不表示主題不會相似。
+公開碼還原與原始實際內容逐項相同。6000引擎樣本可觸發64職涯抉擇；樣本量與內容數分開。
+測試日誌與矩陣：本機營運自動化/fate-share-20261016/v8-all-tests-final.txt、v8-repeat-four-shelves.json、v8-matrix-1000.json。
+後續：使用者明確要求臺灣完成後接續其餘九國；不得把鎖定國家的規劃當作已上線功能。

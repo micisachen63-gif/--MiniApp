@@ -41,3 +41,5 @@ test('delayed fate notification displays actual deadline remainder instead of re
 test('variable-lifespan fate notification preserves the actual age beyond ninety',async()=>{
  const t=setup();t.event.age=103;await t.make().tick({forceOutbox:true});assert.match(t.sent[0].body.caption,/103 歲/);assert.doesNotMatch(t.sent[0].body.caption,/90 歲/);
 });
+
+test('Taiwan event uses the canonical country art while retaining the live account and chosen-event link',async()=>{const t=setup();t.event.country='TW';await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.photo,APP+'art/fate-taiwan-v8/taipei-dusk.jpg');assert.match(t.sent[0].body.caption,/tg:\/\/user\?id=123456789/);assert.ok(t.sent[0].body.reply_markup.inline_keyboard[0][0].url.includes('fate'));});

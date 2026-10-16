@@ -68,3 +68,13 @@ test('separate encounters sharing a theme remain separate feed memories at their
  globalThis.document={createElement:tag=>new Element(tag)};const start=at('2026-10-16T06:00:00'),d=createLife({version:5,orbit:3,seed:'deadbeef',startedAt:start});d.clockAt=start+3600000;d.sharedMemories=[3000000,3300000].map((offset,i)=>({id:'shared-garden',at:start+offset,ownerName:'旅人甲',guestName:'旅人乙',answer:i,source:'manual',text:'共同花園的第'+i+'段記憶'}));
  const log=formalEvents(advanceLife(d,d.clockAt).draft,d.clockAt).filter(e=>e.kind==='shared');assert.equal(log.length,2);assert.equal(new Set(log.map(e=>e.id)).size,2);assert.deepEqual(log.map(e=>e.text),d.sharedMemories.map(e=>e.text));
 });
+
+test('Taiwan live life shows its generated identity with real-age questions and no fantasy almanac or bare score chips',()=>{
+ globalThis.document={createElement:tag=>new Element(tag)};const startedAt=at('2026-10-16T06:00:00'),raw=createLife({version:8,country:'TW',seed:'deadbeef',orbit:11,startedAt}),first=advanceLife(raw,startedAt).nextAt,draft=advanceLife(raw,first).draft,panel=new Element('section');
+ assert.equal(draft.version,8);assert.equal(draft.country,'TW');renderLifeUI(panel,{draft,soulCount:3,startedToday:1,preview:false,onChoice(){},onDaily(){},onArchive(){}});
+ const text=node=>[node.textContent,...node.children.map(text)].join(' ');assert.ok(panel.querySelector('.fate-local-identity'));assert.match(text(panel.querySelector('.fate-local-identity')),/[臺台]灣/);assert.match(text(panel.querySelector('.fate-local-identity')),/性別/);assert.match(text(panel.querySelector('.fate-local-identity')),/家境/);
+ assert.equal(panel.querySelector('.fate-world'),null);assert.equal(panel.querySelector('.fate-life-stats'),null);assert.equal(panel.querySelector('.fate-feed-year'),null);assert.doesNotMatch(text(panel),/星燈紀元|星曆|城邦|星穹世界年鑑/);
+ assert.ok(panel.querySelector('.fate-live-question'));assert.equal(panel.querySelector('.fate-live-question').children[0].textContent,`${scenesFor(draft)[0].age} 歲 · 一個選擇正等著你`);
+ const snapshot=structuredClone(draft);paintLifeUI(panel,draft,false,first+90000);assert.ok(panel.querySelectorAll('.fate-live-question button').every(button=>button.disabled));assert.deepEqual(draft,snapshot);
+ const legacy=fixture().panel;assert.ok(legacy.querySelector('.fate-world'));assert.ok(legacy.querySelector('.fate-life-stats'));assert.equal(legacy.querySelector('.fate-local-identity'),null);
+});
