@@ -685,9 +685,24 @@
       float(p.x, p.y, `使用 ${it.name || (red ? '紅水' : '藍水')} ×${o.fmt(n)}`, red ? 'heal' : 'mana');
       await wait(S.rm ? 300 : 650);
     }
-    async function killMonster(k) {
+    // Real settlement totals split across the kills shown, so popups always sum to the server report (no invented gains).
+    function rewardShares(t, n) {
+      n = Math.max(1, n | 0); const out = Array.from({ length: n }, () => ({ exp: 0, gold: 0, drops: {} }));
+      const split = (total, set) => { total = Math.max(0, Math.floor(Number(total) || 0)); let prev = 0; for (let i = 0; i < n; i++) { const cum = Math.floor(total * (i + 1) / n); set(out[i], cum - prev); prev = cum; } };
+      if (!t) return out;
+      split(t.exp, (r, v) => { r.exp = v; }); split(t.gold, (r, v) => { r.gold = v; });
+      for (const [k, c] of Object.entries(t.drops || {})) split(c, (r, v) => { if (v > 0) r.drops[k] = v; });
+      return out;
+    }
+    function showKillReward(at, r) {
+      if (!r) return; let y = at.y - 6; const x = at.x;
+      if (r.exp > 0) { float(x, y, `+${o.fmt(r.exp)} EXP`, 'exp'); y -= 20; }
+      if (r.gold > 0) { float(x, y, `+${o.fmt(r.gold)} 金幣`, 'gold'); y -= 20; }
+      for (const [k, n] of Object.entries(r.drops || {})) { if (n > 0) { float(x, y, `${o.items[k]?.name || k} ×${o.fmt(n)}`, 'gold'); y -= 20; } }
+    }
+    async function killMonster(k, reward) {
       checkScene();
-      const at = monPt(0.5, 0.5); animateMonsterSheet('death'); play(E.mAct, 'die'); burst(at.x, at.y + 10, 16, ['#d9c7a0', '#b49a6a', '#fff3c8'], { speed: 1.6, life: 0.7, size: 2.6, grav: -0.03, kind: 'dot' });
+      const at = monPt(0.5, 0.5); if (reward) showKillReward(at, reward); animateMonsterSheet('death'); play(E.mAct, 'die'); burst(at.x, at.y + 10, 16, ['#d9c7a0', '#b49a6a', '#fff3c8'], { speed: 1.6, life: 0.7, size: 2.6, grav: -0.03, kind: 'dot' });
       await wait(S.rm ? 150 : 330);
       // Representative defeat only; exact kills and gains stay together in the settlement summary.
       await wait(S.rm ? 250 : 520); E.mon.style.opacity = '0';if(E.mHud)E.mHud.hidden=true;E.mon.tabIndex=-1;E.mon.setAttribute('aria-hidden','true'); S.mon = null; saveEnemy();renderTargets(); await wait(250);
@@ -813,7 +828,7 @@
     async function playEpisode(ep) {
       checkScene();
       if(S.authoritative){
-        if(ep.combat&&ep.combat.mapId===S.me.character.mapId)await playServerRound(ep.combat,ep.ticks);
+        if(ep.combat&&ep.combat.mapId===S.me.character.mapId)await playServerRound(ep.combat,ep.ticks,ep.totals);
         else await spawnServerGroup(S.me.battle.idleCombat.enemies);
         for(const p of ep.pots)await potion(p.k,p.n);
         if(ep.levels)await levelUp(ep.levels);
@@ -821,8 +836,9 @@
         return;
       }
       // The server has a settlement total, not individual kill/attack records. Reprise a few scenes without distributing its totals into invented hits.
+      const fshares=rewardShares(ep.totals,ep.kills.length);let fk=0;
       for(let offset=0;offset<ep.kills.length;){const first=ep.kills[offset],size=first.elite?1:Math.min(groupSize(),ep.kills.length-offset);const batch=[];while(batch.length<size&&offset<ep.kills.length&&ep.kills[offset].elite===first.elite)batch.push(ep.kills[offset++]);await spawnGroup(batch.length,first.elite);
-        for(let j=0;j<batch.length;j++){focusEnemy(j);await groupAttack({},S.me.character.state==='fighting');focusEnemy(j);await killMonster(batch[j]);saveEnemy();}
+        for(let j=0;j<batch.length;j++){focusEnemy(j);await groupAttack({},S.me.character.state==='fighting');focusEnemy(j);await killMonster(batch[j],fshares[fk++]);saveEnemy();}
       }
       for (const p of ep.pots) await potion(p.k, p.n);
       if (ep.levels) await levelUp(ep.levels);
@@ -851,15 +867,16 @@
     }
     // Spread one settlement's committed hits across the minute until the next one,
     // so the screen fights continuously instead of bursting and then idling.
-    const PACE_BUDGET_MS=50000,PACE_MIN_MS=900,PACE_MAX_MS=9000;
+    const PACE_BUDGET_MS=50000,PACE_MIN_MS=900,PACE_MAX_MS=4500;
     function paceSlot(round,ticks){
       if(S.rm||ticks>5)return 0;
       const hits=(round.events||[]).filter(e=>e.type!=='spawn'&&e.type!=='elite').length;
       if(!hits)return 0;
       return Math.max(PACE_MIN_MS,Math.min(PACE_MAX_MS,Math.round(PACE_BUDGET_MS/hits)));
     }
-    async function playServerRound(round,ticks=0){
+    async function playServerRound(round,ticks=0,totals=null){
       const slot=paceSlot(round,ticks);
+      const shares=rewardShares(totals,(round.events||[]).filter(e=>e.type==='hit'&&e.afterHp===0).length);let killNo=0;
       await spawnServerGroup(round.before);root.dataset.playingRound=round.id;
       for(const action of round.presentation?.monsterActions || []){
         if(action.cosmetic!==true||action.attackDirection!==-1)continue;
@@ -879,8 +896,12 @@
           const point=monPt(.5,.4);float(point.x,point.y,`−${o.fmt(event.damage)}`,'damage');
           root.dataset.lastHit=JSON.stringify({id:event.targetId,hp:event.afterHp,maxHp:S.mon.max,damage:event.damage});
         }},event.skill);
-        if(event.afterHp===0)await killMonster({elite:event.enemy.elite});
-        if(slot){const gap=slot-(performance.now()-hitStart);if(gap>0)await wait(gap);}
+        if(event.afterHp===0)await killMonster({elite:event.enemy.elite},totals?shares[Math.min(killNo++,shares.length-1)]:null);
+        if(slot){
+          // Fill the gap with purely visual basic swings (no impact callback: no damage, no settlement change, no API calls).
+          while(slot-(performance.now()-hitStart)>1400&&S.mon&&S.mon.hp>0&&E.mon.isConnected){await groupAttack({},false);saveEnemy();await wait(350);}
+          const gap=slot-(performance.now()-hitStart);if(gap>0)await wait(gap);
+        }
       }
       await spawnServerGroup(round.after);root.dataset.playingRound='';root.dataset.completedRound=round.id;
     }
