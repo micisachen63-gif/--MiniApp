@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "3e2b413ff689d3681f4fd0873bf26f82d0c97a79",
+  "sourceCommit": "aee01f7bb286198adcc50b5e297489d92716c7f5",
   "service": "elf-rpg-api",
-  "productionVersion": "6b7a88e8-31b0-4df1-937c-06e4c61fb752",
+  "productionVersion": "77dfc1f2-4c5c-4968-aacd-b8f255012360",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T04:54:02.375Z",
+  "verifiedAt": "2026-10-16T05:06:39.426Z",
   "runtimeSHA256": {
     "index.js": "b20ebbe78e3adaf67387795db0448d76c896311df09e527d9da55ddf239b26b4"
   },
   "source": {
     "fileCount": 8818,
-    "sha256": "6dcb41d163c0afad6f94057c6f5deb3fc2280da88b289f73244479ccbb24765c",
+    "sha256": "b466cf34eed0a1663ddc23b08bc528e23aa4842e8866f3e8aa0d08e50a5558a8",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -33363,7 +33363,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "3ffa68c9c58af77039b11bd5ce4271480c2d7d1c457a5b33d1627bbea3ff12c2"
+        "sha256": "b9908fe28d6a147e24ddedb2cd31257ea44bfe019676c4a91e95d7cda144c2be"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -34343,11 +34343,11 @@
       },
       {
         "file": "worker/public/guardian-idle-fx.css",
-        "sha256": "21ba1dfe4bf28136e69b3fc6e560e28a05db69928d9d9c34a2165936fbd06c69"
+        "sha256": "f244d8cfe96ce37fb9072e54918373cb590d29b72f205d3a477a60088c4c1bde"
       },
       {
         "file": "worker/public/guardian-idle-fx.js",
-        "sha256": "15de4220ad3e9caa6f353acad5566905daf706b697e8053d2d711572f63f21d9"
+        "sha256": "591afef6ca1f39f712414892ca627f27035a7eb5e076609e565fedb322cc975a"
       },
       {
         "file": "worker/public/guardian-party.js",
@@ -34455,7 +34455,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "5588491884c3803dbb2436ae5d86cec25ca4918a14f9f41e8f5588eeec1fb68e"
+        "sha256": "48083dedb595840d3544756872185f1afcc47e296e01c9305bc5e76cc85f61df"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35430,7 +35430,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "6b7a88e8-31b0-4df1-937c-06e4c61fb752",
+        "version_id": "77dfc1f2-4c5c-4968-aacd-b8f255012360",
         "percentage": 100
       }
     ],
