@@ -4,6 +4,9 @@ import {createHmac} from 'node:crypto';
 import {freshDb} from './d1-shim.js';
 import {CurrentClientRequest} from './client-request.js';
 import * as F from '../src/services/fate.js';
+import * as SHARED from '../src/services/fate-shared.js';
+import {formalEvents} from '../public/fate/formal-events.js';
+import {endingForLife} from '../public/fate/ending-story.js';
 import {fateEvidence} from '../src/services/fate-quests.js';
 import {createCharacter} from '../src/services/player.js';
 import {handle} from '../src/index.js';
@@ -24,6 +27,33 @@ async function fixture(t){
  return {env,a,b,db,one,all,exec,api,svc};
 }
 const begin=(f,char,now=T,extra={})=>F.start(f.env,char,{requestId:rid(),mode:'random',...extra},now);
+
+test('real authenticated shared choice reaches only its designated character and becomes an immutable life memory at deadline',async t=>{
+ const f=await fixture(t);f.env.FATE_SOCIAL_MEMBERSHIP=async accounts=>({ok:true,members:accounts.map(accountId=>({accountId,member:true}))});
+ await SHARED.savePreferences(f.env,'202',{enabled:true,allowMentions:true,consent:true,requestId:rid()},T);
+ const requestId=rid(),body={requestId,mode:'random',socialInvite:true},start=await F.start(f.env,f.a,body,T);
+ await F.start(f.env,f.a,body,T+1000);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_choices').n,1);
+ const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',start.result.lifeId),open=row.opened_at,deadline=row.deadline_at;
+ const inbox=await f.api('fate/social/inbox',{},open,signed('202'));assert.equal(inbox.ok,true);const event=inbox.events[0];assert.equal(event.canReply,true);assert.equal(event.side,'guest');assert.doesNotMatch(JSON.stringify(event),/ownerAccount|guestAccount|owner_char|guest_char|life_id/);
+ assert.equal((await f.api('fate/social/event',{eventId:event.id},open,signed('303'))).status,404);
+ assert.equal((await f.api('fate/social/reply',{eventId:event.id,answer:0,requestId:rid()},open)).status,403);
+ const reply={eventId:event.id,answer:1,requestId:rid()};assert.equal((await f.api('fate/social/reply',reply,open+1,signed('202'))).ok,true);
+ assert.equal((await f.api('fate/social/reply',reply,open+2,signed('202'))).replayed,true);
+ assert.equal((await F.state(f.env,f.a,deadline-1)).active.draft.sharedMemories,undefined);
+ const life=(await F.state(f.env,f.a,deadline)).active.draft;assert.equal(life.sharedMemories.length,1);assert.equal(life.sharedMemories[0].answer,1);
+ const log=formalEvents(life,deadline);assert.equal(log.filter(e=>e.kind==='shared').length,1);assert.equal(formalEvents(life,deadline-1).filter(e=>e.kind==='shared').length,0);
+ assert.doesNotMatch(JSON.stringify(life.sharedMemories),new RegExp(event.id+'|owner_account|guest_account|life_id'));
+ const done=await F.state(f.env,f.a,T+LIFE_MS);assert.equal(done.completed,1);assert.equal(done.last.draft.sharedMemories[0].text,life.sharedMemories[0].text);assert.ok(endingForLife(done.last.draft).paragraphs.some(p=>p.includes(life.sharedMemories[0].text)));
+ assert.equal(decodeResult(done.last.code).sharedMemories,undefined,'public shortcode carries no private social history');
+ assert.equal((await F.history(f.env,f.a,{},T+LIFE_MS)).entries[0].draft.sharedMemories[0].text,life.sharedMemories[0].text);
+});
+
+test('time-limited Fate notices claim ahead of ordinary backlog and both Fate kinds remain unclaimed overnight',async t=>{
+ const f=await fixture(t);for(const [dedupe,kind]of [['ordinary','test'],['social','fate_social'],['choice','fate_event']])f.exec('INSERT INTO rpg_outbox(dedupe_key,target,kind,payload_json,created_at) VALUES(?,?,?,?,?)',dedupe,'group',kind,'{}',T);
+ const first=await f.svc('outbox/claim',{limit:1},T);assert.equal(first.items[0].kind,'fate_social');
+ const night=at('2026-10-17T01:00:00'),batch=await f.svc('outbox/claim',{limit:10},night);assert.deepEqual(batch.items.map(x=>x.kind),['test']);
+ assert.equal(f.one("SELECT claim_attempts FROM rpg_outbox WHERE dedupe_key='choice'").claim_attempts,0);
+});
 function boss(f,{id='boss',char=f.a,status='killed',damage=20,group=f.env.GROUP_CHAT_ID,time=T+1000,attackTime=time}={}){f.exec('INSERT INTO rpg_boss_instances(id,chat_id,map_id,name,base_hp,max_hp,hp,started_at,ends_at,status,settled_at) VALUES(?,?,1,?,100,100,0,?,?,?,?)',id,group,'首領測試',time-10000,time+10000,status,time);f.exec('INSERT INTO rpg_boss_attacks(boss_id,tg_id,win,damage,created_at) VALUES(?,?,0,?,?)',id,char,damage,attackTime);}
 // Evidence fixtures are committed server rows, not client flags or mocked service responses.
 function addParty(f,options={}){const id=options.id||rid(),char=options.char||f.a,time=options.time??T+2000,ids=[char,'202','303'].slice(0,options.members??3),state={actors:ids.map(id=>({id,manualActions:id===char?(options.manual??1):1})),trial:options.trial||false,journalWonAt:time,journalFloors:options.floors||[]};f.exec('INSERT INTO rpg_parties(id,leader_id,kind,status,state_json,created_at,updated_at,expires_at) VALUES(?,?,?,?,?,?,?,?)',id,char,options.kind||'dungeon',options.status||'won',JSON.stringify(state),time-1000,time,time+100000);ids.forEach((member,i)=>f.exec('INSERT INTO rpg_party_members(party_id,char_id,account_id,joined_at) VALUES(?,?,?,?)',id,member,i===0?'101':member,time));return id;}

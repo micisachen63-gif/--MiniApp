@@ -3,6 +3,7 @@ import {LEGACY_MEMORIES} from './formal-ambient-v4.js';
 import {CAREERS,THREADS,OBJECTS,NEW_MEMORIES} from './formal-catalog-v4.js';
 import {FURTHER_MEMORIES} from './formal-days-v4.js';
 import {socialThread} from './social-cast.js';
+import {sharedMemories} from './shared-story.js';
 
 export const NARRATIVE_VERSION=4;
 export const EVENT_INTERVAL_MS=30000;
@@ -200,6 +201,13 @@ export function plannedContent(life={},options={}){
   const ageEnergy=age>74?-1:age<18?1:0,roll=hash(seed+'state'+tick);
   push(pick.id,age,pick.text,'memory',{energy:ageEnergy+(roll%3)-1,knowledge:roll%4===0?1:0,bonds:roll%3===0?1:0,wealth:age>=18&&age<70?(roll%5===0?-2:roll%5===1?1:0):0});
  }
+ for(const m of sharedMemories(life.sharedMemories)){
+  const age=narrativeActiveBetween(life.startedAt,m.at)/DURATION*90;
+  if(m.at<life.startedAt||age>limit*.375||age>90)continue;
+  const state=[...rows].reverse().find(e=>e.age<=age)?.state;
+  rows.push({id:m.id,age,kind:'shared',thread:m.id,source:m.source,text:m.text,state:{...state},worldYear:worldYear(seed,age)});
+ }
+ rows.sort((a,b)=>a.age-b.age||a.id.localeCompare(b.id));
  return rows;
 }
 

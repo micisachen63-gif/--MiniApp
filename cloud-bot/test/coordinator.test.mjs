@@ -45,3 +45,23 @@ test('restart retains unknown updates, authenticated inspection exposes no paylo
  f.c.sql=actual;const r=await(await call(b)).json();assert.equal(r.ok,true);assert.equal(r.replayed,false);assert.equal((await call(b)).status,409);
  let sends=0;f.c.init=async()=>({handle:async()=>sends++,tick:async()=>{}});await f.c.alarm();assert.equal(sends,0);
 });
+test('outbox precedes inbox callbacks and full batches drain promptly without starving handled updates',async()=>{
+ const f=fixture();f.c.set('enabled',true);const order=[],options=[];let turns=0;
+ f.c.init=async()=>({async tick(value){order.push('tick');options.push(value);return {hasMore:++turns<3,nextWakeAt:Date.now()+30000};},async handle(){order.push('handle');}});
+ for(let id=1;id<=3;id++){
+  await f.c.fetch(request('receive',{update_id:id}));await f.storage.deleteAlarm();const at=Date.now();await f.c.alarm();
+  assert.deepEqual(order.slice(-2),['tick','handle']);
+  const wait=f.alarm()-at;assert.ok(wait>=(id<3?1000:10000)&&wait<=(id<3?1100:10100));
+ }
+ assert.deepEqual(options,[{forceOutbox:false},{forceOutbox:true},{forceOutbox:true}]);assert.equal(f.c.get('outboxDrain'),false);
+});
+test('idle coordinator honors bounded media wake without creating per-second steady polling',async()=>{
+ const f=fixture();f.c.set('enabled',true);f.c.init=async()=>({async tick(){return {hasMore:false,nextWakeAt:Date.now()+6000};}});
+ const at=Date.now();await f.c.alarm();assert.ok(f.alarm()>=at+6000&&f.alarm()<=Date.now()+6000);assert.equal(f.c.get('outboxDrain'),false);
+});
+test('outbox failure cannot starve player inbox commands or leave a fast retry loop',async()=>{
+ const f=fixture();f.c.set('enabled',true);f.c.set('outboxDrain',true);let handled=0;
+ await f.c.fetch(request('receive',{update_id:1}));await f.storage.deleteAlarm();
+ f.c.init=async()=>({async tick(){throw Object.assign(Error('fixture unavailable'),{code:'offline'});},async handle(){handled++;}});
+ const at=Date.now();await f.c.alarm();assert.equal(handled,1);assert.equal(f.c.get('outboxDrain'),false);assert.equal(f.c.get('lastError'),'offline');assert.ok(f.alarm()>=at+10000&&f.alarm()<=Date.now()+10000);
+});

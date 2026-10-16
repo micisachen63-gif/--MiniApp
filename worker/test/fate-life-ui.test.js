@@ -28,6 +28,11 @@ test('exact deadline disables clamped display immediately and never invents a ch
  const t=fixture(),deadline=at('2026-10-17T06:00:30');t.draft.clockAt=deadline-1;const snapshot=structuredClone(t.draft);
  paintLifeUI(t.panel,t.draft,false,deadline);assert.ok(t.buttons().every(b=>b.disabled));assert.match(t.panel.querySelector('.fate-choice-left').textContent,/已截止/);assert.deepEqual(t.draft,snapshot);assert.equal(t.draft.answers.length,0);assert.ok(t.panel.querySelector('.fate-story-feed').children.every(row=>!row.dataset.eventId.startsWith('choice-')));
 });
+test('a pending choice is ahead of the story feed and an expired notification shows its authoritative automatic response',()=>{
+ const t=fixture();assert.ok(t.panel.children.indexOf(t.panel.querySelector('.fate-live-question'))<t.panel.children.indexOf(t.panel.querySelector('.fate-story-feed')));
+ const draft=advanceLife(t.draft,at('2026-10-17T06:00:30')).draft,panel=new Element('section');renderLifeUI(panel,{draft,soulCount:0,startedToday:1,preview:false,onChoice(){},onDaily(){},onArchive(){}});
+ assert.equal(panel.querySelector('.fate-live-question'),null);const status=panel.querySelector('.fate-last-choice');assert.ok(status);assert.match(status.children[1].textContent,/90 秒回應時間已過/);assert.equal(draft.sources[0],'auto');
+});
 test('cloud painting requests boundary sync once while retaining the server draft and honoring in-flight mutation disable',()=>{
  const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8'),start=source.indexOf('function paintCloudLife(){'),end=source.indexOf('\nasync function openDaily',start),fn=source.slice(start,end),t=fixture();
  let clock=at('2026-10-17T06:00:30'),syncs=0;const calls=[],context={stage:'life',cloud:{active:{draft:t.draft}},document:{querySelector:()=>t.panel},cloudNow:()=>clock,advanceLife,cloudDisplayLife:()=>t.draft,paintLifeUI:(...args)=>calls.push(args),syncCloud:()=>syncs++,mutating:false};vm.createContext(context);vm.runInContext(fn,context);

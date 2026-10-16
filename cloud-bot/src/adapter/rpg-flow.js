@@ -362,8 +362,8 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
     if (app.url) {   // Mini App is the primary UI: short status + 🎮 button; the text menu stays one tap away
       const c = v.character; let state = STATE_TEXT[c.state] || c.state;
       if (c.state === 'gate') state += `（需要「${v.gate?.materialName}」）`;
-      const text = [`${c.emoji} ${c.name}｜${c.className} Lv${c.level}｜${c.mapName}`, state, screen === 'boss' ? '👹 點下方按鈕打開首領畫面' : '🎮 點下方按鈕打開冒險'].join('\n');
-      const m = await send(text, { reply_markup: { inline_keyboard: [[appBtn(screen === 'boss' ? '👹 打開首領畫面' : '🎮 打開冒險', screen)], [btn('📜 文字選單', 'me')]] } }, cid);
+      const text = [`${c.emoji} ${c.name}｜${c.className} Lv${c.level}｜${c.mapName}`, state, screen === 'fate' ? '✧ 點下方按鈕回到命運旅章，查看待回應的故事。' : screen === 'boss' ? '👹 點下方按鈕打開首領畫面' : '🎮 點下方按鈕打開冒險'].join('\n');
+      const m = await send(text, { reply_markup: { inline_keyboard: [[appBtn(screen === 'fate' ? '✧ 回應命運旅章' : screen === 'boss' ? '👹 打開首領畫面' : '🎮 打開冒險', screen)], [btn('📜 文字選單', 'me')]] } }, cid);
       return { rpg: 'app', screen: screen || 'home', id: m?.message_id };
     }
     const m = await send(mainText(v, note), { reply_markup: { inline_keyboard: mainKeyboard(v) } }, cid); return { rpg: 'main', id: m?.message_id };
@@ -574,23 +574,27 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
-    if(item.kind==='fate_event'&&item.target==='group'){
-      if(typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>2)return;
-      const key=`${p.lifeId}:${p.index}`,cards=st().fateCards??={};
+    if(['fate_event','fate_social'].includes(item.kind)&&item.target==='group'){
+      const social=item.kind==='fate_social';
+      if(social?!/^[A-Za-z0-9_-]{1,128}$/.test(p.eventId||''):typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>2)return;
+      const key=social?`social:${p.eventId}`:`${p.lifeId}:${p.index}`,cards=st().fateCards??={};
       if(cards[key]?.messageId)return;
       if(cards[key])throw Error('命運旅章通知送達待核對：'+key);
-      const check=await client.call('/rpg/fate/notification',{lifeId:p.lifeId,index:p.index});
+      const check=await client.call(social?'/rpg/fate/social/notification':'/rpg/fate/notification',social?{eventId:p.eventId}:{lifeId:p.lifeId,index:p.index});
       if(check?.night&&check?.pending||check?.valid===true&&new Date(now()+TPE).getUTCHours()<6){
         const retryAt=check.retryAt||Math.floor((now()+TPE)/86400000)*86400000-TPE+6*3600000;
         throw Object.assign(Error('命運旅章夜間靜默'),{definite:true,errorCode:429,parameters:{retry_after:Math.max(1,Math.ceil((retryAt-now())/1000))}});
       }
       if(check?.valid!==true)return;
       const event=check.payload,remaining=Math.min(Number(check.remainingMs),Number(event?.deadline)-now());
-      if(!Number.isFinite(remaining)||remaining<=0||!/^[1-9]\d{0,18}$/.test(String(event.accountId)))return;
+      if(!Number.isFinite(remaining)||remaining<=0)return;
+      const validAccount=value=>/^[1-9]\d{0,15}$/.test(String(value))&&Number.isSafeInteger(Number(value));
+      if(social?(check.pending!==true||event?.eventId!==p.eventId||!validAccount(event.ownerAccountId)||!validAccount(event.guestAccountId)||String(event.ownerAccountId)===String(event.guestAccountId)):!validAccount(event?.accountId))return;
       const name=html(String(event.name||'旅人').slice(0,40)),age=Math.max(0,Math.min(90,Math.floor(Number(event.age)||0)));
-      const caption=`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：<a href="tg://user?id=${event.accountId}">${name}</a>\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
+      const mention=(id,label)=>`<a href="tg://user?id=${id}">${html(String(label||'旅人').slice(0,40))}</a>`;
+      const caption=social?`✧ <b>命運旅章 · 交織命運</b>\n\n${mention(event.ownerAccountId,event.ownerName)} 與 ${mention(event.guestAccountId,event.guestName)}，在這一世相逢。\n\n<b>${html(String(event.title||'這一頁，等你來寫').slice(0,100))}</b>\n${html(String(event.text||'一段同行的故事，正等待受邀旅人回應。').slice(0,260))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒。\n請受邀旅人進入遊戲、切換至受邀角色選擇；沒有回覆，故事也會自然向前。`:`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：<a href="tg://user?id=${event.accountId}">${name}</a>\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
       const link=deepLink('fate'),home=deepLink();
-      const keyboard=[...(link?[[{text:'回應旅章',url:link}]]:[]),...(home?[[{text:'🎮 進入遊戲',url:home}]]:[])];
+      const keyboard=[...(link?[[{text:social?'✦ 查看交織命運':'回應旅章',url:link}]]:[]),...(home?[[{text:'🎮 進入遊戲',url:home}]]:[])];
       // Commit intent before Telegram: a lost response or process restart must not post the same life/index twice.
       // Only a definite rejection releases the key; uncertain sends stay available for operator inspection.
       cards[key]={at:now(),uncertain:true};save();
@@ -748,14 +752,13 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       const t = now(); const out = { delivered: 0 };
       if (forceOutbox || t - lastClaim >= outboxEveryMs) {
         lastClaim = t;timing().lastClaim=t;save();const slot = currentSlot(t);
-        const journalDate=new Date(t+8*3600e3).toISOString(),journalDay=journalDate.slice(0,10);
-        if(journalDate.slice(11,16)>='08:00'&&st().journalChecked!==journalDay){const r=await client.call('/rpg/journal/publish',{}).catch(e=>warn('journal publish',e));if(r?.ok){st().journalChecked=journalDay;save();}}
-        if (slot && st().spawnChecked !== slot) { const r = await client.call('/rpg/boss/spawn-due', {}).catch((e) => warn('spawn-due', e)); if (r) { st().spawnChecked = slot; save(); out.spawn = r.spawn; } }
-        await client.call('/rpg/party/tick',{}).catch(e=>warn('party tick',e));
         const ob = await client.call('/rpg/outbox/claim', { limit: Math.max(1,Math.min(20,Math.trunc(outboxClaimLimit)||2)) }).catch((e) => warn('outbox', e));
         out.claimed=ob?.items?.length||0;out.hasMore=out.claimed>=Math.max(1,Math.min(20,Math.trunc(outboxClaimLimit)||2));
         const deliveredIds = [];
-        for (const item of ob?.items || []) { try { await deliver(item); out.delivered += 1;
+        // UPDATE...RETURNING does not promise selection order. Put both story
+        // kinds ahead of costly battle/photo jobs within the claimed batch too.
+        const ordered=[...(ob?.items||[])].sort((a,b)=>Number(['fate_event','fate_social'].includes(b.kind))-Number(['fate_event','fate_social'].includes(a.kind)));
+        for (const item of ordered) { try { await deliver(item); out.delivered += 1;
           if(item.claimToken){try{await client.call('/rpg/outbox/ack',{ids:[item.id],claimToken:item.claimToken});}catch(error){warn('outbox item ack',error);deliveredIds.push(item.id);}}
         } catch (error) {
           warn(`deliver ${item.kind}`, error);
@@ -764,6 +767,15 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
         if (deliveredIds.length && ob?.items?.[0]?.claimToken) {
           try { await client.call('/rpg/outbox/ack', { ids: deliveredIds, claimToken: ob.items[0].claimToken }); }
           catch (error) { warn('outbox ack', error); }
+        }
+        // Fast backlog continuation must not multiply combat simulations or
+        // publication checks. Their established 30 s cadence stays independent.
+        if(t-(timing().lastMaintenance||0)>=outboxEveryMs){
+          timing().lastMaintenance=t;save();
+          const journalDate=new Date(t+8*3600e3).toISOString(),journalDay=journalDate.slice(0,10);
+          if(journalDate.slice(11,16)>='08:00'&&st().journalChecked!==journalDay){const r=await client.call('/rpg/journal/publish',{}).catch(e=>warn('journal publish',e));if(r?.ok){st().journalChecked=journalDay;save();}}
+          if (slot && st().spawnChecked !== slot) { const r = await client.call('/rpg/boss/spawn-due', {}).catch((e) => warn('spawn-due', e)); if (r) { st().spawnChecked = slot; save(); out.spawn = r.spawn; } }
+          await client.call('/rpg/party/tick',{}).catch(e=>warn('party tick',e));
         }
         for (const [id, c] of Object.entries(st().cards)) if (t - (c.lastEdit || 0) > 2 * 3600e3) { delete st().cards[id]; save(); }
         for (const [uid, d] of Object.entries(st().drafts)) if (t - (d.at || 0) > 24 * 3600e3) { delete st().drafts[uid]; save(); }

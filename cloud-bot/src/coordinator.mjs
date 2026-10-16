@@ -78,14 +78,23 @@ export class BotCoordinator {
  async alarm(){return this.exclusive(async()=>{
   if(!this.get('enabled',false))return;
   await this.state.storage.setAlarm(Date.now()+30000);
+  this.nextBotWake=null;
   try{
    const bot=await this.init();
+   // Deadline-bound story cards must not sit behind callback rendering. A full
+   // leased batch schedules a bounded continuation instead of another 30 s wait.
+   let tick,tickError;
+   try{tick=await bot.tick({forceOutbox:this.get('outboxDrain',false)});this.set('outboxDrain',tick?.hasMore===true);}
+   catch(error){tickError=error;this.set('outboxDrain',false);}
    await drainInbox(this.sql,bot);
-   await bot.tick();this.set('heartbeat',new Date().toISOString());this.set('lastError',null);
+   if(tickError)throw tickError;
+   this.set('heartbeat',new Date().toISOString());this.set('lastError',null);
+   if(Number.isFinite(tick?.nextWakeAt))this.nextBotWake=tick.nextWakeAt;
    if(Date.now()-this.get('lastPrune',0)>86400000){this.sql.exec("DELETE FROM inbox WHERE status='done' AND finished<?",Date.now()-7*86400000);this.sql.exec('DELETE FROM operations WHERE at<?',Date.now()-14*86400000);this.set('lastPrune',Date.now());}
   }catch(e){this.set('lastError',String(e.code||e.name||'unknown').slice(0,100));console.warn('Cloud bot cycle failed');}
   if(this.get('enabled',false)){
-   const desired=Date.now()+(inboxSummary(this.sql).queued?1000:10000),pending=await this.state.storage.getAlarm();
+   const at=Date.now(),backlog=inboxSummary(this.sql).queued||this.get('outboxDrain',false);
+   const desired=backlog?at+1000:Math.min(at+10000,Number.isFinite(this.nextBotWake)?Math.max(at+1000,this.nextBotWake):Infinity),pending=await this.state.storage.getAlarm();
    await this.state.storage.setAlarm(pending==null?desired:Math.min(desired,pending));
   }
  });}

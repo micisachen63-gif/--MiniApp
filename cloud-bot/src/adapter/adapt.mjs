@@ -4,6 +4,9 @@ import {dirname,join} from 'node:path';
 import {fileURLToPath} from 'node:url';
 import {createHash} from 'node:crypto';
 const root=dirname(fileURLToPath(import.meta.url));
+// This source adapter has been maintained directly in the canonical monorepo
+// since migration. Historical local sources omit Fate and later production fixes.
+throw Error('Historical adapter regeneration is retired. Edit canonical cloud-bot/src/adapter files and run the full BOT tests; do not overwrite them from old local sources.');
 const original='C:/Users/User/Documents/ChatGPT/爆分監控/src';
 const botPath='C:/Users/User/Documents/ChatGPT/星穹旅誌/bot.mjs';
 mkdirSync(root,{recursive:true});

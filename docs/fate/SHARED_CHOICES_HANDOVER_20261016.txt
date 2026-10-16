@@ -1,0 +1,54 @@
+星穹旅誌｜交織命運與通知入口修正 封版接手（2026-10-16）
+
+接手先讀
+AGENTS.md、AI_HANDOVER.md及docs/deployment/*.json。以即時Cloudflare與部署收據為準；不要從舊candidate部署、啟動本機長輪詢或再跑歷史migration。
+本文件取代SHARED_CHOICES_ASSESSMENT_20261016.txt的「未實作」狀態；評估書保留作設計歷史。實際規則以下方與程式為準。
+
+玩家流程
+1. 已登入遊戲→命運旅章→交織命運→相逢設定，明確開啟「接受其他旅人的支線邀請，並允許群組來信標記我」。預設關閉。
+2. 開啟自己新一世前，獨立勾選「這一世，邀請另一位旅人決定一段相逢」，這只授權該世邀請與雙方群組提及，不會順便開啟接受他人邀請。
+3. 在有效第40分鐘展開一件支線，指定受邀角色有10個有效分鐘決定兩個選項或略過；主人可撤回，不能替對方搶答。原本人三個18／40／66歲抉擇保持90秒，輪迴時鐘及獎勵不變。
+4. 六種原創支線：屋頂花園、渡口同行、星燈修繕、工坊草圖、地圖探路、寫給未來的信。依seed挑選並避開主人最近三種主題。
+5. 雙方群成員資格有效才有真人支線；沒有符合者，輪迴仍照常走。指定玩家已回覆時收據立即可見，故事後果固定到第50分鐘才寫入，避免重寫已播出的故事。
+6. 00:00–06:00暫停回應與通知，截止時間依有效時鐘順延；不超過本世結尾。未答、略過、撤回、撤銷同意或失去群資格皆採中性續寫，不懲罰獎勵、不表達現實人際拒絕。
+7. 受邀者暫時切換角色不抹掉事件，切回綁定角色即可答；刪角或角色帳號歸屬變動失去資格。各帳號同時最多一件未結支線，同一對玩家同日最多一次；新雙人通知每帳號每日最多兩次，取消後仍保守保留配額。沒有宣稱既有三大抉擇通知已加此配額。
+8. 今天安靜會取消自己雙方身分的待辦；關閉接受邀請只撤銷自己身為受邀者的待辦。新一世需重新勾選本世邀請。
+
+已修的使用者問題
+使用者點通知回掛機首頁。fate-entry.js原本只識別screen=fate，現在也識別Telegram initDataUnsafe.start_param、tgWebAppStartParam、rpgfate、hash入口，選角完成後只自動開啟一次旅章。
+通知入口攜帶notification=1；待答題目移到紀事feed前並定位，已截止顯示最近代選結果。
+查得當次白色毛衣事件09:45:08開始，09:46:10才投遞，09:46:38截止，收到時僅約28秒。沒有修改該真玩家答案或重置事件。
+已將Fate outbox排在戰鬥／照片工作之前；Bot先claim/deliver，再做日誌、首領生成、組隊模擬，coordinator先tick再接指令，滿批積壓用既有alarm短暫1秒接續。30秒維護時鐘獨立，不因排空而重跑組隊模擬。未改原90秒規則，不保證網路任何情況下零延遲。
+
+架構與檔案
+worker/src/services/fate-shared.js：私有候選、偏好、事件、收據、CAS、配額、通知前核對、固定deadline後果。
+worker/migrations/0028_fate_shared_choices.sql：6張新表與索引，只能新增，不重寫既有玩家。
+worker/src/services/fate.js：start提交後獨立安排邀請（同UUID重試可修補中斷），progress將安全後果寫入本人的draft；沒有對方整份人生覆寫。
+worker/src/index.js、app.js：HMAC App及service白名單、夜間claim與Fate優先、現有每分鐘sweep。
+worker/public/fate/shared-ui.js、app.js、bridge-protocol.js：來信、設定、每世勾選、穩定UUID重試。沿用45秒同步與一秒本機畫面倒數，不新增高頻網路輪詢。
+worker/public/fate/shared-story.js、life.js、formal-events.js、ending-story.js：白名單安全記憶、固定章節、個人終章故事；公開短碼不含真人支線／帳號／事件ID。
+cloud-bot/src/fate-membership.mjs：固定/internal/fate-membership，Bearer既有SERVICE_SECRET，最多4個正整數帳號，只查設定的群組，5秒timeout且不重試429；未知為非成員。Game透過固定既有Bot網址查詢，沒有新增反向binding或訂閱。
+cloud-bot/src/adapter/rpg-flow.js、coordinator.mjs：雙人HTML escape真帳號提及＋精美既有圖＋遊戲按鈕、夜間核對、持久送達意圖。未知送達不重發、不改dedupe、不另補文字。
+cloud-bot/src/adapter/adapt.mjs：歷史重新生成腳本已停用，防止用過期本機來源覆蓋目前正式adapter；後續直接修改canonical來源並跑完整測試。
+
+重要權限與一致性
+選項只收opaque eventId、answer、requestId、目前選定角色；帳號由HMAC／服務端角色取得，忽略前端tgId。
+綁定角色、帳號歸屬、guest同意、owner靜音、人生有效性在同一D1 transaction再次檢查；回答、逾時、撤回、刪角、撤銷同意競爭同一終態，不會雙答／雙通知／雙扣配額。
+操作UUID綁帳號＋角色＋action＋payload hash；失聯重試原UUID，換payload重用會409。
+私有event表保留帳號；給玩家的inbox不帶TG帳號／他人角色ID，只有opaque eventId及名稱。安全draft記憶重建成id=shared-{六主題}、at、名字、answer、source、text，不攤開原row。
+
+可重現驗證
+Node24，根npm ci；npm test完整Worker+Bot必須零失敗零skip，不挑檔跳過。
+Worker重點test/fate-shared.test.js（33個服務／交易競態案例）、fate-service.test.js（HMAC→指定guest→固定後果→終章→分享隱私），fate-shared-ui、fate-bridge、fate-life-ui。
+Bot重點fate-membership、adapter/test/fate-social-delivery、fate-delivery、coordinator。隔離測試不對真群發訊息。
+本機證據目錄 C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016/，不進Git。
+shared-integrated-before/after.png：真瀏覽器經實際App HMAC／iframe bridge及in-memory SQLite完成指定guest答覆。
+notification-fixed-before.png：TG啟動參數→選角→自動進旅章→待答90秒選項，實際點選後顯示親自回應。
+shared-mobile-preview.png：390px響應式無水平溢出，按鈕290×53px。不是實體iPhone／Android TG驗收。
+scripts/preview-fate.mjs保留純本機fixture，可 FATE_PREVIEW_PORT=9556 FATE_PREVIEW_SCENE=shared 啟動；開 http://127.0.0.1:9556/?fixture=222&tgWebAppStartParam=fate。場景notification用9557並在90秒內檢查。只綁127.0.0.1，假HMAC／假帳號／假會員核對，不連正式DB或TG。
+
+發布順序與禁止事項
+提交、push、合併GitHub後，primary乾淨origin/main執行必要新增0028單檔schema，再根npm run deploy:worker及deploy:bot；由根腳本保存binding/namespace/cron/secret並核對runtime/public。不要一口氣apply歷史migrations。
+若public快取雜湊暫時不一致，保留.release-sync並read-only sync:check，不為寫收據重部署。
+預設所有真玩家接受邀請為關閉；不代玩家開啟、不以真玩家建立測試人生、不發真測試群通知、不改抽卡/背包/角色/輪迴數據。
+沿用既有Cloudflare資源，無新訂閱或付費模型，未做流量壓測。額外會員核對與DB操作會使用現有額度，不承諾無限人數零成本。

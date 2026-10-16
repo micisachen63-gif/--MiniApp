@@ -10,6 +10,7 @@ import {renderProfile,renderStartBirthFields} from './profile-ui.js';
 import {mountSharePanel} from './share-ui.js';
 import {mountZodiacSky} from './zodiac-ui.js';
 import {zodiacHeroSource} from './zodiac-sign.js';
+import {createSharedUI} from './shared-ui.js';
 const root=document.getElementById('fate'),qs=new URLSearchParams(location.search);
 const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v);return true}catch{return false}}};
 const pathResult=/^\/fate\/r\/([^/]+)$/.exec(location.pathname)?.[1],queryResult=qs.get('result');
@@ -21,6 +22,7 @@ let previewCompleted=0,birthDetail=null;
 let soul=embedded?{entries:[]}:readSoul(storage.get('star-fate-guest-soul')),heroName='',archivePage=1;
 let currentLife=null,previewRunning=true;
 const client=embedded?createCloudClient():null;
+const sharedUI=embedded?createSharedUI({client,notification:qs.get('notification')==='1',onChange:()=>{if(cloud)render();}}):null;
 let cloud=null,dailyData=null,profileData=null,cloudOffset=0,lastSync=0,syncing=false,pendingFull=false,mutating=false,cloudError='',cloudRetry=null,profileNotice='';
 const cloudNow=()=>Date.now()+cloudOffset;
 const lifeEvents=(life,now)=>life.version>=4?formalEvents(life,now):narrativeEvents(life,now);
@@ -53,6 +55,7 @@ function render(){
  const panel=el('section','fate-panel');panel.setAttribute('aria-label',stage==='archive'?'靈魂旅誌':result?'旅章結果':stage==='life'?'此世紀事':stage==='daily'?'今日旅箋':'啟程設定');shell.append(panel);
  if(embedded&&!cloud){panel.append(note('正在連接這位英雄的靈魂旅誌…'));if(cloudError)showCloudError(panel);root.append(shell);return;}
  if(embedded&&cloudError)showCloudError(panel);
+ if(sharedUI)sharedUI.render(panel);
  if(stage==='archive')renderArchive(panel);else if(stage==='life')renderLife(panel);else if(stage==='daily'){renderDaily(panel);panel.append(button(currentLife?'回到正在展開的這一世':'回到旅章',()=>{stage=currentLife?'life':result?'result':'intro';render();window.scrollTo(0,0)}));}else if(result)renderResult(panel);else if(stage==='scene')renderScene(panel);else renderIntro(panel);
  const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章以星穹世界為舞臺。人物關係與人生經歷為原創故事，偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
 }
@@ -70,6 +73,7 @@ function renderIntro(p){
  }
  {const check=el('label','fate-check');signInput=el('input');signInput.type='checkbox';signInput.checked=showSign;signInput.onchange=()=>{showSign=signInput.checked};check.append(signInput,el('span','','分享時顯示星座（可以隨時關閉）'));p.append(check);
  }
+ sharedUI?.renderInvite(p);
  const error=el('div','fate-error');error.setAttribute('role','alert');p.append(error);
  p.append(button('展開我的旅章',async()=>{
   const birth=mode==='birthday'?validBirth(dateInput.value):null;
@@ -99,11 +103,12 @@ function renderResult(p){
  else if(embedded){p.append(button('將旅章收進目前角色',()=>{cloudMutation('fate/keep',{code:result.code})},'fate-primary'));p.append(note('正式完成的此世已由雲端保存。匯入或收藏分享故事只作紀念，不增加輪迴世數與成就。'));}
  else{const link=el('a','fate-primary',isPreview?'預覽創角銜接':'前往 TG，讓冒險繼續');link.href=isPreview?'/?fixture=444&preview=1&fate='+encodeURIComponent(result.code):telegramUrl(result.code);link.rel='noopener';p.append(link,note(isPreview?'正式版將前往專屬 TG BOT；此預覽以隔離帳號示範創角，不會修改正式玩家。':'加入遊戲專屬群組，再從 BOT 開啟遊戲創角。旅章只記錄故事，不提供戰力獎勵。'));}
  renderSoul(p);
+ sharedUI?.renderInvite(p);
  p.append(el('div','fate-life-divider','此生已落款 · 靈魂仍在旅途'),button('開啟下一趟輪迴',()=>startCycle(),'fate-primary'),el('p','fate-cycle-copy','換一個出身，遇見不同的人。\n每一世的選擇，都會成為這位英雄的靈魂記憶。'),button('重新設定起點',()=>reset(),'fate-subtle'));
 }
 function reset(){result=null;shared=false;answers=[];birthDetail=null;stage='intro';history.replaceState(null,'','/fate/'+(isPreview?'?preview=1':''));render();window.scrollTo(0,0)}
 function startCycle(){
- if(embedded){if(cloud?.active){resumeLife();return;}cloudMutation('fate/start',{mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign});return;}
+ if(embedded){if(cloud?.active){resumeLife();return;}cloudMutation('fate/start',{mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign,...(sharedUI?.invite?{socialInvite:true}:{})});return;}
  if(soul.draft){resumeLife();return;}
  let now=Date.now();if(isPreview&&!startStatus([],now).allowed)now=Date.parse(taipeiDay(now)+'T10:00:00+08:00');
  const status=startStatus(startHistory,now);if(!status.allowed){const target=document.querySelector('.fate-error')||document.querySelector('.fate-panel');const m=note(status.night?'星穹已入夜，06:00 再開啟下一世。':'今日四段人生已寫滿，明天再開啟新的旅程。');m.setAttribute('role','status');target.append(m);return;}
@@ -182,10 +187,10 @@ window.addEventListener('pagehide',dispose);
 if(result){stage='result';showSign=result.zodiac!==null;}
 if(qs.get('resume')==='1'){stage='intro';result=null;}if(qs.get('journal')==='1')stage='archive';
 if(!embedded&&qs.get('resume')==='1'&&soul.draft)resumeLife();else render();
-if(embedded)syncCloud(true,true);
+if(embedded){syncCloud(true,true);sharedUI.sync();}
 const lifeTimer=setInterval(()=>{
  if(document.hidden)return;
- if(embedded){if(cloud?.active){paintCloudLife();if(Date.now()-lastSync>=45000||(cloud.active.nextAt&&cloudNow()>=cloud.active.nextAt&&Date.now()-lastSync>=10000))syncCloud();}return;}
+ if(embedded){sharedUI.paint(root);if(cloud?.active)paintCloudLife();if(Date.now()-lastSync>=45000||(cloud?.active?.nextAt&&cloudNow()>=cloud.active.nextAt&&Date.now()-lastSync>=10000))syncCloud();return;}
  if(!currentLife)return;
  if(isPreview&&!previewRunning)return;
  const v=advanceLife(currentLife,currentLife.clockAt),at=isPreview?currentLife.clockAt+(v.available?6000:60000):Math.max(Date.now(),currentLife.clockAt);
@@ -197,11 +202,11 @@ function showCloudError(p){const box=el('div','fate-cloud-error');box.setAttribu
 async function cloudMutation(action,body){
  if(mutating)return;const requestId=body.requestId||crypto.randomUUID(),payload={...body,requestId};
  const run=async()=>{if(mutating)return;mutating=true;cloudError='';document.querySelectorAll('.fate-live-question button,.fate-primary').forEach(b=>b.disabled=true);
- try{await client.request(action,payload,requestId);cloudRetry=null;if(action==='fate/start'){result=null;stage='life';}await syncCloud(true);if(action==='fate/keep'){const s=document.getElementById('fate-status');if(s)s.textContent='已收藏這封旅人來信；正式輪迴成就不變。';}}
+ try{await client.request(action,payload,requestId);cloudRetry=null;if(action==='fate/start'){sharedUI.resetInvite();result=null;stage='life';}await syncCloud(true);if(action==='fate/keep'){const s=document.getElementById('fate-status');if(s)s.textContent='已收藏這封旅人來信；正式輪迴成就不變。';}}
  catch(error){cloudError=error.message;cloudRetry=run;render();}finally{mutating=false;document.querySelectorAll('.fate-live-question button,.fate-primary').forEach(b=>b.disabled=false);}};await run();
 }
 async function syncCloud(full=false,initial=false){
- if(!embedded)return;if(syncing){pendingFull=pendingFull||full;return;}syncing=true;lastSync=Date.now();
+ if(!embedded)return;if(syncing){pendingFull=pendingFull||full;return;}syncing=true;lastSync=Date.now();sharedUI?.sync();
  try{const data=await client.request(full?'fate/me':'fate/state');cloudOffset=data.now-Date.now();const old=cloud,oldId=old?.active?.id,oldAnswers=old?.active?.draft?.answers?.join(''),before=old?.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
  cloud={...cloud,...data};heroName=data.heroName||heroName;cloudError='';
  if(data.entries)soul.entries=[...data.entries].reverse();else if(data.last&&!soul.entries.some(e=>e.id===data.last.id))soul.entries.push(data.last);
@@ -209,6 +214,7 @@ async function syncCloud(full=false,initial=false){
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
  const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
  if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
+ if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>document.querySelector('.fate-live-question,.fate-shared-event,.fate-last-choice,.fate-panel')?.scrollIntoView({block:'start',behavior:'instant'}));
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }
 function cloudDisplayLife(){if(!cloud?.active)return currentLife;const d=cloud.active.draft;return {...d,clockAt:Math.max(d.clockAt,Math.min(cloudNow(),cloud.active.nextAt?cloud.active.nextAt-1:cloudNow()))};}
@@ -242,6 +248,7 @@ function renderCloudArchive(p){
  if(!soul.entries.length)p.append(note('完整走過一世後，第一段正式記憶便會留在這裡。'));
  if(cloud.next)p.append(button('再往前翻十世',async()=>{try{const data=await client.request('fate/history',{before:cloud.next});const ids=new Set(soul.entries.map(e=>e.id));soul.entries.unshift(...data.entries.filter(e=>!ids.has(e.id)).reverse());cloud.next=data.next;render();}catch(error){cloudError=error.message;render();}}));
  if(cloud.memorials?.length){const memories=el('details','fate-journal');memories.append(el('summary','','收藏的旅人來信 · 不計輪迴成就'));for(const e of cloud.memorials){const r=decodeResult(e.code);if(r)memories.append(button(r.ending.title,()=>{result=r;shared=true;stage='result';render();window.scrollTo(0,0)}));}p.append(memories);}
+ sharedUI?.renderInvite(p);
  p.append(button('開啟下一趟輪迴',startCycle,'fate-primary'));
 }
 document.addEventListener('visibilitychange',()=>{if(embedded&&!document.hidden){syncCloud();if(stage==='daily')openDaily();}});

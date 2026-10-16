@@ -8,6 +8,7 @@ import {natal} from '../game/fate-chart.js';
 import {makeReminders} from '../game/fate-reminders.js';
 import {fateEvidence} from './fate-quests.js';
 import {snapshotSocialCast} from './fate-social.js';
+import * as SHARED from './fate-shared.js';
 const parse=(s,fallback=null)=>{try{return JSON.parse(s)}catch{return fallback}};
 const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','selectedCharacterId','tgId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
@@ -27,8 +28,9 @@ const activeRow=(db,tg)=>db.prepare("SELECT * FROM rpg_fate_lives WHERE char_id=
 const activeView=(row,now)=>row?{id:row.id,rev:row.rev,draft:advanceLife(parse(row.state_json),now).draft,nextAt:row.next_at}:null;
 async function progressRow(env,row,now){
  for(let attempt=0;attempt<4&&row?.status==='active';attempt++){
-  const d=parse(row.state_json),v=advanceLife(d,now),notify=v.available&&row.notified_index<v.index;
-  const next=v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt,changed=v.completed||v.draft.answers.length!==d.answers.length||notify||row.next_at<=now;
+  const d=parse(row.state_json),memories=await SHARED.outcomes(env,row.id,now),v=advanceLife(d,now),notify=v.available&&row.notified_index<v.index;
+  if(memories.length)v.draft.sharedMemories=memories;
+  const next=v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt,changed=v.completed||v.draft.answers.length!==d.answers.length||notify||row.next_at<=now||JSON.stringify(v.draft.sharedMemories)!==JSON.stringify(d.sharedMemories);
   if(!changed)return row;
   const notified=notify?v.index:row.notified_index,db=env.DB,stmts=[db.prepare('UPDATE rpg_fate_lives SET state_json=?,status=?,completed_at=?,next_at=?,code=?,notified_index=?,rev=rev+1 WHERE id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.completed?'complete':'active',v.completed?v.endAt:null,next,v.code,notified,row.id,row.rev),guardStmt(db)];
   if(notify&&isOpenTime(now)&&env.GROUP_CHAT_ID){const c=await owner(db,row.char_id),scene=scenesFor(d)[v.index];stmts.push(outboxStmt(db,{dedupe:`fate:${row.id}:${v.index}`,target:'group',kind:'fate_event',payload:{lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:v.index,age:scene.age,title:scene.title,text:scene.text,deadline:next}},now));}
@@ -59,7 +61,7 @@ export async function history(env,tg,b,now){
 }
 export async function start(env,tg,b,now){
  await progressRow(env,await activeRow(env.DB,tg),now);
- return mutation(env,tg,b,now,'start',async(c,db)=>{
+ const response=await mutation(env,tg,b,now,'start',async(c,db)=>{
   const existing=await activeRow(db,tg);if(existing)return {result:{lifeId:existing.id,already:true}};
   if(!isOpenTime(now))throw new GameError('fate_night','星穹已入夜，06:00 再開啟下一世');
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
@@ -70,6 +72,14 @@ export async function start(env,tg,b,now){
   const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now)[0])],result:{lifeId:id}};
  });
+ // The life commits independently. A missing eligible partner or an unavailable
+ // membership service must never block a two-hour life or consume another start.
+ // Replaying the same start repairs an interrupted schedule via UNIQUE(life_id).
+ if(b.socialInvite===true){
+  const row=await env.DB.prepare("SELECT * FROM rpg_fate_lives WHERE id=? AND char_id=? AND status='active'").bind(response.result.lifeId,String(tg)).first();
+  if(row){const c=await owner(env.DB,tg);try{await SHARED.schedule(env,{lifeId:row.id,charId:String(tg),accountId:c.account,name:c.name,draft:parse(row.state_json)},now);}catch{console.warn('Fate shared invitation unavailable; life continues');}}
+ }
+ return response;
 }
 export async function choose(env,tg,b,now){
  return mutation(env,tg,b,now,'choice',async(c,db)=>{

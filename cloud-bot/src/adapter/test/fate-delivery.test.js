@@ -31,3 +31,8 @@ test('unknown Telegram delivery persists uncertainty and never sends fallback or
 test('definite Telegram rejection leaves event retryable under outbox backoff',async()=>{
  const t=setup({error:Object.assign(Error('rate limited'),{definite:true,errorCode:429,parameters:{retry_after:5}})});await t.make().tick({forceOutbox:true});assert.equal(t.store.data.rpg.fateCards['life1:0'],undefined);await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,2);assert.equal(t.store.data.rpg.fateCards['life1:0'].messageId,71);
 });
+test('delayed fate notification displays actual deadline remainder instead of restarting its 90-second choice',async()=>{
+ const t=setup({status:{ok:true,valid:true,night:false,pending:true,remainingMs:90000,payload:{lifeId:'life1',index:0,accountId:'123456789',name:'旅人',deadline:AT+90000}}});
+ t.clock(AT+62000);await t.make().tick({forceOutbox:true});assert.match(t.sent[0].body.caption,/剩餘 28 秒/);assert.ok(!/剩餘 90 秒/.test(t.sent[0].body.caption));
+ assert.ok(t.calls.findIndex(c=>c.path==='/rpg/fate/notification')<t.calls.findIndex(c=>c.path==='/rpg/party/tick'));
+});

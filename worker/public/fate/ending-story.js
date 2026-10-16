@@ -29,6 +29,7 @@ export function endingForLife(life={}){
   `${world?.text.replace(/這一年[^。]*。/,'')||'年鑑仍在繼續，旅誌尚未走到能讀懂它的地方。'}${choiceProse(middle)}${consequence?.text||''}城邦的變化進入家門，往往只是多等幾日、少買一樣東西。大世界因此有了日常的重量；你能做的，是在伸手可及的地方，認真回應一次。`,
   `${final?choiceProse(final):'最後如何交棒，仍要等這一世親自走到那裡。'}${legacy?.text||''}${objectLast&&objectLast!==objectFirst?objectLast.text:old?.text||''}有些遺憾仍是遺憾，沒有走過的路，也不必冒充抵達的遠方。但留下的這些，確實曾被你生活過。紙頁可以合起，屬於別人的明天仍然開著。`,
  ];
+ const shared=rows.find(e=>e.kind==='shared');if(shared)paragraphs.splice(4,0,shared.text+'有些路，並非只有自己的選擇留下痕跡。那一頁收到的回音，也成了你日後認得彼此的方式。');
  const auto=choices.filter(e=>e.source==='auto').length;
  const summary=complete?`在${profile.region}長大，成為${career.name}；${life.answers[1]===0?'把時間交給街坊的共同生活':'帶著手藝與外地人交換方法'}，最後${life.answers[2]===0?'留在身邊陪後輩慢慢學會':'把經驗公開交給更遠的讀者'}。`:'這一冊旅誌仍在展開，已發生的片刻正在慢慢接成一生。';
  return {illustration:ART+focus+'.webp',title:complete?titles[focus]:'尚未合上的旅誌',paragraphs,summary,stats:{...last.state,events:rows.length,career:work.length?career.name:null,relationships:new Set(relationships.map(e=>e.thread)).size,objects:new Set(object.map(e=>e.thread)).size,manualChoices:choices.length-auto,autoChoices:auto},worldYear:last.worldYear,quote:'願曾經認真生活過的片刻，也能替後來的人留一點光。',question:'若再走一世，你願意把時間留給什麼？',color:focus==='garden'?'#a8c9a0':focus==='voyage'?'#9cbde0':'#e3bd77'};
