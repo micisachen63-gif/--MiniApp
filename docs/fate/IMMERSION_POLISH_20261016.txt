@@ -14,3 +14,13 @@
 本機瀏覽器量測桌面圖騰248x248；折疊紀事不含不增減等聲明；頁尾關於可展開。
 沒有新增付費資源、沒有資料庫migration/玩家重寫；正式版本以../deployment/*.json為準。
 發布：需先GitHub main同步，再根npm run deploy:worker、deploy:bot，發布後核對收據。
+
+正式驗證：2026-10-16 09:31（台北）
+- 功能提交 c6a256084226（完整SHA以Git為準）。
+- Worker 9fbfc3c3-657b-4de0-a97a-75bd3018522b @100；Bot d11c073a-b4f1-4c14-9997-2d2e5bb86a6b @100。
+- Worker1159 / Bot94完整測試全過、0跳過；144前端檔/runtime及Bot4public/runtime核對成功。
+- Worker初檢group-card.js讀到舊快取，唯讀sync:check:worker再核對全通過，bindings/crons與pending.before一致後補收據；沒有重複發布。
+- 正式瀏覽器量測圖騰248x248、頁尾關於預設收合；故事紀事未包含系統聲明。
+- 正式group-card.js品牌、出生敘事與未登入401文案核對已更新；兩服務health 200。
+- 實測截圖/私密log：營運自動化/fate-share-20261016/immersion-*。
+- 本版沒有新資料庫操作、沒有改動玩家資料、沒有實際TG或社群發文。前版手機跨App分享實機界線維持原接手文件。
