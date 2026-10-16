@@ -3,6 +3,7 @@ const lines=text=>text.trim().split('\n').map(line=>line.trim()).filter(Boolean)
 const pick=(label,reason,outcome,delta={},exit=false)=>({label,reason,outcome,delta:{money:0,energy:0,bonds:0,reputation:0,...delta},exit});
 const dilemma=(id,title,text,a,b,minStage=1)=>({id,title,text,minStage,choices:[a,b]});
 const job=(id,label,practice,entry,chapters,dilemmas)=>({id,label,minAge:18,practice,entry,chapters:lines(chapters),dilemmas});
+const selfJob=(...args)=>({...job(...args),employmentMode:'self-employed'});
 export const COUNTRY_PACK_US={
 id:'US',name:'美國',cityId:'los-angeles',cityName:'洛杉磯',scope:'加利福尼亞州洛杉磯市都市生活；近海與洛杉磯郡交通僅作可到訪場景，不代表全美制度',currency:'USD',
 families:[
@@ -64,7 +65,7 @@ careers:[
  dilemma('us-sw-support','下班後的訊息逐漸變成無限待命。','原先的工作安排沒有涵蓋每晚支援。',pick('確認故障等級與回覆時段','可能少接工作，守住可持續安排。','你把回覆時段與真正事故的窗口說清楚，不再讓每則訊息都成為必須醒來的理由。',{money:-300,energy:12}),pick('和窗口談輪值與額外支援條件','增加交接與收入，仍需留出休息。','你確認輪值、權限和報酬，完成交接後才接受這段支援。',{money:700,energy:-7,bonds:6}),2),
  dilemma('us-sw-scope','想做的修正，比這次授權的更多。','你看見另一個可能的問題，但還沒有人確認影響。',pick('先留下問題，另開查核','當期改動較小，避免未驗證的連帶效果。','你把發現與未知分開記下，先完成已確認的修正。',{reputation:10}),pick('提出分段提案，等核准後再做','增加討論時間，讓下一步有實際範圍。','你整理可分段驗證的提案，確認核准與測試安排後才繼續。',{energy:-6,money:350}),2)
  ]),
- job('graphic-freelance','平面設計接案','你練習版面、字型與素材授權，先完成一份可核對的樣稿，再確認報價、修改與交付方式。','你以實際完成的作品承接小型委託，先說清授權與付款節點，沒有把試作直接算成穩定收入。',`
+ selfJob('graphic-freelance','平面設計接案','你練習版面、字型與素材授權，先完成一份可核對的樣稿，再確認報價、修改與交付方式。','你以實際完成的作品承接小型委託，先說清授權與付款節點，沒有把試作直接算成穩定收入。',`
 你把第一份需求重新整理，發現對方最在意的不是海報顏色。
 你先確認字型與圖片的使用條件，才排進可交付版本。
 你用小尺寸試印，找出螢幕上不容易看到的細字問題。
@@ -166,7 +167,7 @@ careers:[
  dilemma('us-ad-access','熟人要你順便查同事資料。','方便不是資料可以任意外流的理由。',pick('請他使用正式聯絡方式','可能被嫌不幫忙，界線仍清楚。','你提供正式聯絡方式，沒有帶出工作資料。',{reputation:11}),pick('經同意後只轉達必要訊息','多一次確認，保留當事人選擇。','你先確認當事人意願，只轉達同意的必要內容。',{energy:-3,bonds:9}),2),
  dilemma('us-ad-handover','你不在時，流程就一直停住。','大家習慣直接問你，真正的交接還沒建立。',pick('整理檔案與待辦，讓人試用','多一段準備，減少只有你能處理的事。','你把位置與步驟整理清楚，請接手者實際操作後再補缺口。',{reputation:12,energy:-6}),pick('和同事共同輪替一段流程','需要練習，讓知識不只留在一人手裡。','你和同事輪替處理，把卡住的地方當場確認。',{bonds:13,energy:-5}),2)
  ]),
- job('street-vendor','城市街頭小攤經營','你先核對洛杉磯市販售範圍、商業與賣方登記、場地規則；若賣食品另確認適用郡衛生許可，再練習備料、清潔與記帳。','你完成適用登記與許可、確認場地及設備安排後，小規模開始販售；不把洛杉磯市許可視為能在全郡任意設攤。',`
+ selfJob('street-vendor','城市街頭小攤經營','你先核對洛杉磯市販售範圍、商業與賣方登記、場地規則；若賣食品另確認適用郡衛生許可，再練習備料、清潔與記帳。','你完成適用登記與許可、確認場地及設備安排後，小規模開始販售；不把洛杉磯市許可視為能在全郡任意設攤。',`
 你先核對可用地點與許可，選擇真正能遵守規則的範圍。
 你把投入與可販售數量記清楚，沒有把第一天全押在理想人潮。
 你練習把收款與交付分開，讓手忙時仍能核對。

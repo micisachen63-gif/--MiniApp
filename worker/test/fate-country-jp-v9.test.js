@@ -152,3 +152,10 @@ test('primary-source records identify checked dates, scope and supported facts w
   const daily = Object.values(pack.daily).flat().join('\n');
   assert.doesNotMatch(daily, /星曆|城邦|感恩節|台北捷運|垃圾車音樂|全球前\d|同年代\d+%|保證月薪|20\d{2}年/);
 });
+
+test('JP employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['print-layout','craft-repair']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

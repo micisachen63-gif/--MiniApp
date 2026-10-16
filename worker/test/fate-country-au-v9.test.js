@@ -37,3 +37,10 @@ test('AU scoped education and seven primary sources do not award unearned qualif
  for(const key of ['name','description','startLabel','startOutcome','pauseOutcome','completeLabel','completeOutcome'])assert.equal(typeof pack.education[key],'string');assert.match(pack.education.description,/Year 10.*17歲/);assert.match(pack.education.description,/TAFE NSW/);assert.match(pack.education.completeOutcome,/完整資格.*全部要求/);
  assert.equal(pack.sources.length,7);assert.equal(new Set(pack.sources.map(s=>s.id)).size,7);for(const s of pack.sources){assert.equal(s.checkedAt,'2026-10-16');assert.ok(s.supports&&s.title);assert.match(s.url,/^https:\/\//);assert.match(new URL(s.url).hostname,/(?:nsw\.gov\.au|tafensw\.edu\.au|transportnsw\.info|botanicgardens\.org\.au)$/);}
 });
+
+test('AU employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['craft-trader']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

@@ -37,3 +37,10 @@ test('CA education does not promise OSSD or admission and seven primary sources 
  for(const k of ['name','description','startLabel','startOutcome','pauseOutcome','completeLabel','completeOutcome'])assert.equal(typeof pack.education[k],'string');assert.match(pack.education.description,/OSSD/);assert.match(pack.education.description,/不等於.*保證/);assert.match(pack.education.completeOutcome,/完整要求/);
  assert.equal(pack.sources.length,7);assert.equal(new Set(pack.sources.map(s=>s.id)).size,7);for(const s of pack.sources){assert.equal(s.checkedAt,'2026-10-16');assert.ok(s.supports&&s.title);assert.match(s.url,/^https:\/\//);assert.match(new URL(s.url).hostname,/(?:ontario\.ca|georgebrown\.ca|ttc\.ca|tpl\.ca|toronto\.ca)$/);}
 });
+
+test('CA employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['craft-market']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

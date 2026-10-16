@@ -139,3 +139,10 @@ test('education uses Korean school structure and sources are specific primary re
     assert.match(new URL(row.url).hostname, /(?:go\.kr|visitseoul\.net)$/);
   }
 });
+
+test('KR employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['comic-production']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

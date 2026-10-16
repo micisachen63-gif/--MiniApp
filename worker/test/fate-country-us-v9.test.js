@@ -45,3 +45,10 @@ test('US v9 education and scoped research sources do not award unearned degrees 
  assert.match(pack.education.description,/社區學院/);assert.match(pack.education.description,/不等於|不保證/);assert.match(pack.education.completeOutcome,/不|沒有/);
  assert.ok(pack.sources.length>=6);assert.equal(new Set(pack.sources.map(s=>s.id)).size,pack.sources.length);for(const source of pack.sources){assert.equal(source.checkedAt,'2026-10-16');assert.ok(source.title&&source.supports);assert.match(source.url,/^https:\/\//);assert.match(new URL(source.url).hostname,/(?:universityofcalifornia\.edu|metro\.net|lapl\.org|lacity\.gov|ca\.gov)$/);}
 });
+
+test('US employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['graphic-freelance','street-vendor']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

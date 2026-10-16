@@ -76,7 +76,11 @@ const authorityGuard=(db,row,now)=>db.prepare(`INSERT INTO rpg_guard(ok) SELECT 
  AND NOT EXISTS(SELECT 1 FROM rpg_fate_lives ol JOIN rpg_fate_lives gl ON gl.char_id=? AND gl.status='active' WHERE ol.id=?
   AND (json_extract(ol.state_json,'$.version')=9 OR json_extract(gl.state_json,'$.version')=9)
   AND (json_extract(ol.state_json,'$.version')<>9 OR json_extract(gl.state_json,'$.version')<>9 OR json_extract(ol.state_json,'$.country')<>json_extract(gl.state_json,'$.country')))
- )`).bind(row.owner_char,row.owner_account,row.guest_char,row.guest_account,row.guest_account,now,row.owner_account,now,row.life_id,row.owner_char,row.owner_account,row.guest_char,row.life_id);
+ AND NOT EXISTS(SELECT 1 FROM rpg_fate_lives gl WHERE gl.char_id=? AND gl.status='active' AND
+  (COALESCE(json_type(gl.state_json,'$.startedAt'),'')<>'integer' OR json_extract(gl.state_json,'$.startedAt')+7200000+
+   CASE WHEN (json_extract(gl.state_json,'$.startedAt')+28800000)%86400000>79200000 THEN 21600000 ELSE 0 END<?))
+ )`).bind(row.owner_char,row.owner_account,row.guest_char,row.guest_account,row.guest_account,now,row.owner_account,now,row.life_id,row.owner_char,row.owner_account,row.guest_char,row.life_id,row.guest_char,row.deadline_at);
+function coversDeadline(raw,deadline){try{const d=JSON.parse(raw);return Number.isSafeInteger(d.startedAt)&&addActive(d.startedAt,LIFE_MS)>=deadline;}catch{return false;}}
 async function memberSet(env,accounts){
  try{
   const value=typeof env.FATE_SOCIAL_MEMBERSHIP==='function'?await env.FATE_SOCIAL_MEMBERSHIP(accounts):await (async()=>{
@@ -97,6 +101,7 @@ async function localEligible(env,row,now){
   env.DB.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(row.guest_char).first()
  ]);
  const origin=countryEdition(life?.state_json),guestCountry=countryEdition(guestLife?.state_json);if(guestLife&&(origin||guestCountry)&&origin!==guestCountry)return false;
+ if(guestLife&&!coversDeadline(guestLife.state_json,row.deadline_at))return false;
  return ownerAllowed(a,now)&&allowed(b,now)&&oc&&gc&&String(oc.account)===row.owner_account&&String(gc.account)===row.guest_account&&life?.status==='active';
 }
 // An account can revoke consent or lose its bound character while Telegram is checked.
@@ -176,7 +181,7 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
  const catalog=[8,9].includes(stored.version)?TW_KEYS:STORIES,pool=Object.keys(catalog).filter(k=>!recent.some(r=>r.story_key===k)),storyKey=pool[parseInt(stored.seed,16)%pool.length];
  // One bounded lookup for the owner and three candidates, rather than serial
  // network waits per candidate. The Bot endpoint accepts at most four accounts.
- const nearby=await Promise.all(rows.map(async guest=>{const active=await db.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(String(guest.tg_id)).first(),guestCountry=countryEdition(active?.state_json),origin=stored.version===9?stored.country:null;return active&&(origin||guestCountry)&&origin!==guestCountry?null:guest;}));const candidates=nearby.filter(Boolean).slice(0,3);if(!candidates.length)return {scheduled:false};
+ const nearby=await Promise.all(rows.map(async guest=>{const active=await db.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(String(guest.tg_id)).first(),guestCountry=countryEdition(active?.state_json),origin=stored.version===9?stored.country:null;return active&&(((origin||guestCountry)&&origin!==guestCountry)||!coversDeadline(active.state_json,deadline))?null:guest;}));const candidates=nearby.filter(Boolean).slice(0,3);if(!candidates.length)return {scheduled:false};
  const validMembers=await memberSet(env,[account,...candidates.map(g=>String(g.account_id))]);
  if(!validMembers.has(account))return {scheduled:false};
  for(const guest of candidates){
@@ -187,7 +192,7 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
    db.prepare("INSERT INTO rpg_fate_social_choices(id,life_id,owner_account,owner_char,owner_name,guest_account,guest_char,guest_name,story_key,pair_key,day,opened_at,deadline_at,next_at,status) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?,?,'scheduled')").bind(id,lifeId,account,String(charId),publicNickname(name)||'星燈旅人',guestAccount,String(guest.tg_id),publicNickname(guest.name)||'同行旅人',storyKey,pair,day,open,deadline,open),
    db.prepare('INSERT INTO rpg_fate_social_locks(account_id,event_id) VALUES(?,?),(?,?)').bind(account,id,guestAccount,id),
    db.prepare('INSERT INTO rpg_fate_social_pairs(pair_key,day,event_id) VALUES(?,?,?)').bind(pair,day,id),
-   authorityGuard(db,{owner_char:String(charId),owner_account:account,guest_char:String(guest.tg_id),guest_account:guestAccount,life_id:lifeId},now)
+   authorityGuard(db,{owner_char:String(charId),owner_account:account,guest_char:String(guest.tg_id),guest_account:guestAccount,life_id:lifeId,deadline_at:deadline},now)
   ]);return {scheduled:true};}catch(e){if(classifyDbError(e)?.code==='conflict'||/UNIQUE constraint failed: rpg_fate_social_/.test(e.message))continue;throw e;}
  }
  return {scheduled:false};

@@ -1,6 +1,7 @@
 import {ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import {COUNTRY_METADATA_V9} from '../public/fate/country-runtime-v9.js';
 import {countryProfile} from '../public/fate/country-engine-v9.js';
+import {hash as storyHash} from '../public/fate/world.js';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {freshDb} from './d1-shim.js';
@@ -270,4 +271,80 @@ for(const country of Object.keys(COUNTRY_METADATA_V9))test(country+' localized s
 
 test('local shared invitations do not teleport an active player between country books',async t=>{
  const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,'JP');await f.begin('202',T,9,'US');assert.equal((await S.schedule(f.env,owner,T)).scheduled,false);
+});
+
+// Use the saved FR edition and the real randomized opening, so these regressions
+// cover the country path rather than relying on the legacy forty-minute slot.
+const countrySharedWindow=draft=>{
+ const death=countryProfile(draft.seed,draft.orbit,draft.country).deathAge,min=Math.ceil(18/death*LIFE_MS);
+ const offset=min+storyHash('v9-shared-open:'+draft.country+':'+draft.seed)%(100*M-min),open=addActive(draft.startedAt,offset);
+ return {open,deadline:Math.min(addActive(open,10*M),addActive(draft.startedAt,LIFE_MS))};
+};
+const retimeGuest=(f,life,startedAt)=>{
+ const draft={...life.draft,startedAt,clockAt:startedAt};
+ f.run('UPDATE rpg_fate_lives SET state_json=?,started_at=? WHERE id=?',JSON.stringify(draft),startedAt,life.lifeId);
+ return draft;
+};
+
+test('deadline coverage refuses a same-country guest whose life has only one minute left at opening',async t=>{
+ const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,'FR'),window=countrySharedWindow(owner.draft);
+ const guest=await f.begin('202',window.open-LIFE_MS+M,9,'FR');
+ assert.equal(addActive(guest.draft.startedAt,LIFE_MS),window.open+M);assert.ok(window.open+M<window.deadline);
+ assert.equal((await S.schedule(f.env,owner,T)).scheduled,false);
+ for(const table of ['rpg_fate_social_choices','rpg_fate_social_locks','rpg_fate_social_pairs','rpg_outbox'])assert.equal(f.one('SELECT COUNT(*) n FROM '+table).n,0);
+});
+
+for(const stage of ['open','answer'])test('deadline coverage closes an invitation when a too-short same-country life replaces the guest before '+stage,async t=>{
+ const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,'FR'),guest=await f.begin('202',T,9,'FR');
+ assert.equal((await S.schedule(f.env,owner,T)).scheduled,true);const row=f.one('SELECT * FROM rpg_fate_social_choices');
+ if(stage==='answer'){await S.sweep(f.env,row.opened_at);assert.equal(f.one('SELECT status FROM rpg_fate_social_choices').status,'pending');}
+ f.run("UPDATE rpg_fate_lives SET status='complete' WHERE id=?",guest.lifeId);
+ const replacement=await f.begin('202',row.opened_at-LIFE_MS+M,9,'FR');assert.ok(addActive(replacement.draft.startedAt,LIFE_MS)<row.deadline_at);
+ if(stage==='open')await S.sweep(f.env,row.opened_at);
+ else{const response=await S.reply(f.env,'202',{eventId:row.id,answer:1,requestId:rid()},row.opened_at+1);assert.equal(response.result.event.status,'auto');assert.equal(response.result.event.answer,null);}
+ const closed=f.one('SELECT status,answer,source FROM rpg_fate_social_choices');assert.equal(closed.status,'auto');assert.equal(closed.answer,null);assert.equal(closed.source,'unavailable');
+ assert.equal((await S.notification(f.env,{eventId:row.id},row.opened_at+2)).valid,false);
+ assert.equal(f.one('SELECT COUNT(*) n FROM rpg_outbox').n,stage==='answer'?1:0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_locks').n,0);
+});
+
+for(const stage of ['schedule','open','answer'])test('deadline coverage atomically rejects guest startedAt replacement at the '+stage+' commit boundary',async t=>{
+ const f=await fixture(t);await f.enable('101');await f.enable('202');const owner=await f.begin('101',T,9,'FR'),guest=await f.begin('202',T,9,'FR'),window=countrySharedWindow(owner.draft);
+ let row;if(stage!=='schedule'){assert.equal((await S.schedule(f.env,owner,T)).scheduled,true);row=f.one('SELECT * FROM rpg_fate_social_choices');if(stage==='answer')await S.sweep(f.env,row.opened_at);}
+ const original=f.env.DB.batch.bind(f.env.DB);t.after(()=>{f.env.DB.batch=original});let changed=false;
+ const prefix=stage==='schedule'?'INSERT INTO rpg_fate_social_choices':stage==='open'?"UPDATE rpg_fate_social_choices SET status='pending'":'UPDATE rpg_fate_social_choices SET status=?';
+ f.env.DB.batch=async stmts=>{
+  if(!changed&&stmts.some(stmt=>stmt.sql.startsWith(prefix))){changed=true;retimeGuest(f,guest,window.open-LIFE_MS+M);}
+  return original(stmts);
+ };
+ if(stage==='schedule'){
+  assert.equal((await S.schedule(f.env,owner,T)).scheduled,false);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_choices').n,0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_pairs').n,0);
+ }else if(stage==='open'){
+  await S.sweep(f.env,row.opened_at);assert.equal(f.one('SELECT status FROM rpg_fate_social_choices').status,'auto');assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_limits').n,0);
+ }else{
+  const body={eventId:row.id,answer:0,requestId:rid()},response=await S.reply(f.env,'202',body,row.opened_at+1);
+  assert.equal(response.result.event.status,'auto');assert.equal(response.result.event.answer,null);assert.equal((await S.reply(f.env,'202',body,row.opened_at+2)).replayed,true);
+  assert.equal(f.one('SELECT status FROM rpg_fate_social_choices').status,'auto');assert.equal(f.one('SELECT answer FROM rpg_fate_social_choices').answer,null);
+  const receipt=f.one('SELECT result_json FROM rpg_fate_social_operations WHERE request_id=?',body.requestId);assert.equal(JSON.parse(receipt.result_json).event.status,'auto');
+ }
+ assert.equal(changed,true,'replacement occurs after async eligibility reads and before the atomic write');
+ assert.equal(f.one('SELECT COUNT(*) n FROM rpg_outbox').n,stage==='answer'?1:0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_locks').n,0);
+});
+
+test('deadline coverage includes a 22:30 guest through 06:30 across the quiet night and updates both stories',async t=>{
+ const f=await fixture(t),ownerStart=at('2026-10-16T23:00:00'),guestStart=at('2026-10-16T22:30:00');await f.enable('101',ownerStart);await f.enable('202',ownerStart);
+ const owner=await f.begin('101',ownerStart,9,'FR'),guest=await f.begin('202',guestStart,9,'FR');assert.equal(addActive(guestStart,LIFE_MS),at('2026-10-17T06:30:00'));
+ assert.equal((await S.schedule(f.env,owner,ownerStart)).scheduled,true);const row=f.one('SELECT * FROM rpg_fate_social_choices');assert.ok(row.opened_at>=at('2026-10-17T06:00:00'));assert.ok(row.deadline_at<=at('2026-10-17T06:30:00'));
+ await S.sweep(f.env,row.opened_at);assert.equal((await S.notification(f.env,{eventId:row.id},row.opened_at)).valid,true);
+ const response=await S.reply(f.env,'202',{eventId:row.id,answer:1,requestId:rid()},row.opened_at+1);assert.equal(response.result.event.status,'answered');
+ assert.deepEqual(await S.outcomes(f.env,owner.lifeId,row.deadline_at-1),[]);assert.deepEqual(await S.outcomes(f.env,guest.lifeId,row.deadline_at-1),[]);
+ const a=await S.outcomes(f.env,owner.lifeId,row.deadline_at),b=await S.outcomes(f.env,guest.lifeId,row.deadline_at);assert.equal(a.length,1);assert.deepEqual(a,b);
+ for(const [life,memories]of[[owner,a],[guest,b]])assert.ok(formalEvents({...life.draft,clockAt:row.deadline_at,sharedMemories:memories},row.deadline_at).some(event=>event.kind==='shared'&&event.text===a[0].text));
+});
+
+test('deadline coverage does not add a quiet-night bonus to an exact 22:00 guest at the atomic guard',async t=>{
+ const f=await fixture(t),ownerStart=at('2026-10-16T23:00:00');await f.enable('101',ownerStart);await f.enable('202',ownerStart);
+ const owner=await f.begin('101',ownerStart,9,'FR'),guest=await f.begin('202',at('2026-10-16T22:30:00'),9,'FR');assert.equal(addActive(at('2026-10-16T22:00:00'),LIFE_MS),at('2026-10-17T00:00:00'));
+ const original=f.env.DB.batch.bind(f.env.DB);t.after(()=>{f.env.DB.batch=original});let changed=false;
+ f.env.DB.batch=async stmts=>{if(!changed&&stmts.some(stmt=>stmt.sql.startsWith('INSERT INTO rpg_fate_social_choices'))){changed=true;retimeGuest(f,guest,at('2026-10-16T22:00:00'));}return original(stmts)};
+ assert.equal((await S.schedule(f.env,owner,ownerStart)).scheduled,false);assert.equal(changed,true);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_choices').n,0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_social_locks').n,0);
 });

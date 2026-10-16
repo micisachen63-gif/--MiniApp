@@ -2,6 +2,7 @@ const rows = s => s.trim().split('\n').map(x => x.trim()).filter(Boolean);
 const o = (label, reason, outcome, money, energy, bonds, reputation, exit = false) => ({label, reason, outcome, delta: {money, energy, bonds, reputation}, exit});
 const d = (id, title, text, minStage, a, b) => ({id, title, text, minStage, choices: [a, b]});
 const c = (id, label, practice, entry, chapters, dilemmas, minAge = 18) => ({id, label, minAge, practice, entry, chapters: rows(chapters), dilemmas});
+const selfEmployed = (...args) => ({...c(...args), employmentMode: 'self-employed'});
 export const KR_CAREERS = [
   c('cafe-service', '街區咖啡館服務', '你在指導下練習點餐、杯具清潔與出杯核對，從一張清楚的訂單開始。', '你確認班表、報酬與服務範圍，完成店內訓練後，接下一段咖啡館工作。', `
 你從標記外帶杯開始，名字、品項與冷熱終於能一眼核對。
@@ -103,7 +104,7 @@ export const KR_CAREERS = [
       o('協商固定支援邊界', '繼續工作，減少臨時待命。', '你把支援範圍與輪替說清楚，工作仍有挑戰，休息卻終於能被預先安排。', -45000, 11, 2, 2),
       o('交接案例後離開專案', '結束這段職涯，保留成果。', '你把未解問題與操作記錄交好，最後一次確認版本，然後關上工作畫面。', -100000, 15, 0, 1, true)),
   ]),
-  c('comic-production', '數位漫畫製作協作', '你練習分層、檔案命名與素材授權，在指導下完成可修改的小段畫面。', '你整理作品練習並核對合作條件，從約定範圍的製作協作開始。', `
+  selfEmployed('comic-production', '數位漫畫製作協作', '你練習分層、檔案命名與素材授權，在指導下完成可修改的小段畫面。', '你整理作品練習並核對合作條件，從約定範圍的製作協作開始。', `
 你先把分層檔整理清楚，一個小修正終於不用重畫全部。
 你完成第一段背景練習，讓線條服從場景需要，而非只求漂亮。
 你依回饋調整人物與背景關係，空白也成了畫面節奏。

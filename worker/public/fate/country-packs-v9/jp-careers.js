@@ -3,6 +3,7 @@ const lines = value => value.trim().split('\n').map(s => s.trim()).filter(Boolea
 const option = ([label, reason, outcome, money, energy, bonds, reputation, exit = false]) => ({label, reason, outcome, delta: {money, energy, bonds, reputation}, exit});
 const d = (id, title, text, minStage, first, second) => ({id, title, text, minStage, choices: [option(first), option(second)]});
 const c = (id, label, practice, entry, text, dilemmas, minAge = 18) => ({id, label, minAge, practice, entry, chapters: lines(text), dilemmas});
+const selfEmployed = (...args) => ({...c(...args), employmentMode: 'self-employed'});
 export const JP_CAREERS = [
   c('neighborhood-cafe', '街區喫茶與餐飲服務',
     '你在店內受指導練習接單、清潔與餐點資訊確認，熱設備與不熟流程先由前輩帶著操作。',
@@ -112,7 +113,7 @@ export const JP_CAREERS = [
         ['重談範圍與時程後留下', '保留合作，停止無限加碼。', '你說清變更的成本，雙方重新確認內容，工作終於不再靠每晚多撐一點維持。', 18000, 6, 1, 4],
         ['交付既定部分並離開', '此職涯停止後續章節。', '你按約交清可完成部分，退出這段工作，將休息與下一步重新排回生活。', -40000, 14, 0, 2, true]),
     ]),
-  c('print-layout', '街區印刷與版面設計',
+  selfEmployed('print-layout', '街區印刷與版面設計',
     '你可經相關專門課程或作品練習字級、印製規格與素材授權；先做小樣，由負責人與委託方核對。',
     '你用實際樣稿完成合作確認，將交付格式、修改次數與付款條件寫清，開始小型設計支援。', `
 你從一張街角告示開始，先讓人看懂，再思考怎麼顯得漂亮。
@@ -139,7 +140,7 @@ export const JP_CAREERS = [
         ['重新確認費用與範圍', '可能少接一些需求，留下清楚合作。', '你列出新增內容，談妥費用後再做，雙方終於知道每一次修改意味著什麼。', 55000, -3, 1, 4],
         ['完成約定後結束這段接案', '退出職涯，停止後續交件。', '你交清原約定內容與授權資料，結束接案安排，沒有把疲倦留下成為無限期義務。', -18000, 12, 0, 2, true]),
     ]),
-  c('craft-repair', '生活工藝與非管制修補',
+  selfEmployed('craft-repair', '生活工藝與非管制修補',
     '你從材料、清潔、手工具安全與非管制小物修補練習；電氣、結構或其他需資格的工程另交專業人員。',
     '你在指導下完成可檢查的試件，確認承接範圍與責任後，從安全可勝任的小物修補開始。', `
 你先學辨認材料，知道看起來相近的表面不一定能用同一種方式處理。

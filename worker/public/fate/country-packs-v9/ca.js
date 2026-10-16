@@ -3,6 +3,7 @@ const lines=text=>text.trim().split('\n').map(t=>t.trim()).filter(Boolean);
 const option=(label,reason,outcome,delta={},exit=false)=>({label,reason,outcome,delta:{money:0,energy:0,bonds:0,reputation:0,...delta},exit});
 const issue=(id,title,text,a,b,minStage=1)=>({id,title,text,minStage,choices:[a,b]});
 const career=(id,label,practice,entry,chapters,dilemmas)=>({id,label,minAge:18,practice,entry,chapters:lines(chapters),dilemmas});
+const selfCareer=(...args)=>({...career(...args),employmentMode:'self-employed'});
 const social=(id,role,text,requiresCareer=false)=>({id,role,requiresCareer,chapters:lines(text)});
 const shared=(id,title,text,a,ao,b,bo)=>({id,title,text,choices:[{label:a,outcome:ao},{label:b,outcome:bo}]});
 export const COUNTRY_PACK_CA={id:'CA',name:'加拿大',cityId:'toronto',cityName:'多倫多',scope:'安大略省多倫多市都市生活；教育與地方規則不跨用全加拿大，湖岸與TTC均以實際適用範圍敘述',currency:'CAD',
@@ -129,7 +130,7 @@ careers:[
  issue('ca-pl-copy','收件資料帶有不需印出的個人資訊。','客戶可能沒注意檔案附帶的頁面。',option('先確認要印的頁碼','多問一次，避免不必要資料出現。','你請客戶明確圈選範圍，試印也只保留必要頁面。',{reputation:11}),option('請客戶提供整理後檔案','準備時間增加，交付範圍更清楚。','你暫停這筆收件，等新的檔案到齊再確認數量。',{energy:4,money:-80})),
  issue('ca-pl-cut','裁切前發現圖案貼近邊線。','直接切會讓重要內容受損。',option('停下請對方選擇調整','進度延後，避免替客戶猜。','你提供縮小與重排兩種校樣，按確認版本處理。',{energy:-6,reputation:12}),option('建議先做一份實體樣本','多一道成本，差異容易看懂。','你說明樣本費用並取得同意，讓對方拿在手裡比較。',{money:100,bonds:7}),2),
  issue('ca-pl-queue','兩筆急件都想先做。','設備只夠一筆先完成。',option('依已確認順序說清時間','可能少接急單，承諾一致。','你核對原定順序，讓後來的客戶選擇等待或另尋窗口。',{money:-220,reputation:10}),option('請主管協調可拆分工序','需要額外安排，不擅自保證。','主管確認後，你把可平行的收件與校樣先完成。',{energy:-7,bonds:9}),2)
- ]),career('craft-market','手作小量販售','你先練習小量製作、材料成本與展示方式，向多倫多市相關窗口核對商業登記、場地與品項適用條件，再估可承擔的試賣範圍。','你完成適用條件與場地確認，準備一批自己有把握交付的非食品手作品，以小量試賣開始接觸顧客。',`
+ ]),selfCareer('craft-market','手作小量販售','你先練習小量製作、材料成本與展示方式，向多倫多市相關窗口核對商業登記、場地與品項適用條件，再估可承擔的試賣範圍。','你完成適用條件與場地確認，準備一批自己有把握交付的非食品手作品，以小量試賣開始接觸顧客。',`
 你做出第一批同規格小物，成本記錄比成品還花時間。
 你把材料與工時分開估算，發現熱賣不一定能留下餘裕。
 你核對市場場地規定，展示架沒有擋到旁人的位置。

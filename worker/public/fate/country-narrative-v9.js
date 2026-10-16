@@ -58,11 +58,11 @@ export function plannedCountryContent(life,{activeMs}={}){
  for(let i=0;i<people.length;i++){
   const person=people[i],chains=pack.social.filter(c=>!usedChains.has(c.id));if(!chains.length)continue;
   const chain=chains[mixed(life.seed+':chain:'+person.thread)%chains.length];usedChains.add(chain.id);
-  const firstJob=chain.requiresCareer?run.resolved.find(r=>r.stateAfter.workActive&&r.stateAfter.careerId!=='household-care'):null;
+  const firstJob=chain.requiresCareer?run.resolved.find(r=>r.stateAfter.workActive&&r.stateAfter.employed===true):null;
   const base=firstJob?firstJob.atMs/DURATION*death+.2:7+mixed(life.seed+':meeting:'+person.thread)%14;
-  const jobEnd=firstJob?run.resolved.find(r=>r.atMs>firstJob.atMs&&(!r.stateAfter.workActive||r.stateAfter.careerId!==firstJob.stateAfter.careerId))?.atMs??DURATION:DURATION;
+  const jobEnd=firstJob?run.resolved.find(r=>r.atMs>firstJob.atMs&&(!r.stateAfter.workActive||!r.stateAfter.employed||r.stateAfter.careerId!==firstJob.stateAfter.careerId))?.atMs??DURATION:DURATION;
   for(let chapter=0;chapter<chain.chapters.length;chapter++){
-   const age=base+(death-base-2)*(chapter+.3)/chain.chapters.length,at=Math.floor(age/death*DURATION),state=stateAt(run,at);if(at>until||chain.requiresCareer&&(!firstJob||at>=jobEnd||!state.workActive||state.careerId!==firstJob.stateAfter.careerId))continue;
+   const age=base+(death-base-2)*(chapter+.3)/chain.chapters.length,at=Math.floor(age/death*DURATION),state=stateAt(run,at);if(at>until||chain.requiresCareer&&(!firstJob||at>=jobEnd||!state.workActive||!state.employed||state.careerId!==firstJob.stateAfter.careerId))continue;
    const text=chain.chapters[chapter].replaceAll('{name}',person.name);push('v9-person-'+i+'-'+chapter,at,text,'relationship',{thread:person.thread,actor:person.name,role:chain.role});
   }
  }

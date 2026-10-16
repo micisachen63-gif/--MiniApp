@@ -24,3 +24,10 @@ test('GB education is scoped to England, official sources are attributable and d
  const domains=['gov.uk','nationalcareers.service.gov.uk','food.gov.uk','hackney.gov.uk','tfl.gov.uk','royalparks.org.uk','southbankcentre.co.uk','londonmuseum.org.uk','bl.uk','jobs.nationaltheatre.org.uk'];for(const source of pack.sources){assert.ok(source.title&&source.supports);assert.equal(source.checkedAt,'2026-10-16');assert.equal(new URL(source.url).protocol,'https:');assert.ok(domains.some(domain=>new URL(source.url).hostname===domain||new URL(source.url).hostname.endsWith('.'+domain)));}
  assert.doesNotMatch([...pack.daily.adult,...pack.daily.late].join('\n'),/你(?:的)?(?:妻子|丈夫|配偶|孫子|孫女)|你(?:已|終於)?(?:結婚|生下|取得學位|罹患|退休了)|你下班|你的房貸|你的薪水/);
 });
+
+test('GB employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,['textile-mender']);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

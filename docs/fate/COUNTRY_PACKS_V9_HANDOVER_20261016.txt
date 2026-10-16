@@ -44,3 +44,13 @@ app/life/model/formal-events/cycles 等皆保留9版本明確分派；雲端、�
 從乾淨且HEAD=origin/main執行根npm run deploy:bot與deploy:worker，保留共享release鎖與綁定／秘密／crons／public。
 若publish成功verify失敗，保留.release-sync，唯讀核對live版本／commit／資源並修收據，不盲目重發。
 最後部署版本與來源看docs/deployment/*.json和Cloudflare，不看此交接固定數字。
+
+追加檢查點（v9尚未發布）
+八國JP/KR/US/CA/GB/DE/FR/AU均完整，IN完成日常後正在最後職涯與社交收尾。
+八國12000日常全字無跨國重複；八國24項因果整合回歸已通過（每國6000因果人生＋前綴重播及同事條件）。
+代選使用虛構的敘事延續權重，非人口統計；玩家選項與因果不受限制。
+審查修正：固定社交鏈避免任職後改寫童年、職訓停止不抹學業、在職stage不倒退、無工作不寫暫停原工作、自營metadata與無薪家務分開。
+受邀活動中的人生必須涵蓋共同deadline；schedule/open/answer均檢查，SQL transaction原子重驗（跨夜及22:00整邊界有8項回歸）。
+共同後續到達會主動同步人生；避免只更新相逢卡而等下一輪45秒輪詢。相同inbox不反覆刷新。
+本機韓國390px外框／360px旅章實測：真正受邀者見兩個選項，選完後發起者與受邀者紀事都含同一句共同後續；重新開啟仍保留。截圖v9-kr-owner-outcome.png／v9-kr-guest-persisted.png。
+仍需最終全部9國完整npm test、PNG下載與正式發布驗證；先前部分矩陣JSON屬發布前舊候選配方，請以最終紀錄為準。

@@ -38,3 +38,10 @@ test('FR official sources keep training, qualifications and actual private state
  assert.doesNotMatch([...pack.daily.adult,...pack.daily.late].join('\n'),/你(?:的)?(?:妻子|丈夫|配偶|孫子|孫女)|你(?:已|終於)?(?:結婚|生下|取得學位|罹患|退休了)|你下班|你的房貸|你的月薪|你租的房|你的孩子/);
  assert.doesNotMatch(JSON.stringify(pack),/全球前\d|超過全球\d|法定月薪|必定取得學位|每名助手都需14小時/);
 });
+
+test('FR employment modes distinguish authored independent work from hired assistants and unpaid household care',()=>{
+ const independent=pack.careers.filter(c=>c.employmentMode==='self-employed').map(c=>c.id);
+ assert.deepEqual(independent,[]);
+ for(const career of pack.careers){assert.ok(career.employmentMode===undefined||career.employmentMode==='self-employed');if(!independent.includes(career.id))assert.equal(career.employmentMode,undefined);}
+ assert.equal(pack.careers.find(c=>c.id==='household-care').employmentMode,undefined);
+});

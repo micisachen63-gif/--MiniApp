@@ -3,6 +3,7 @@ const lines=t=>t.trim().split('\n').map(x=>x.trim()).filter(Boolean);
 const c=(label,reason,outcome,delta={},exit=false)=>({label,reason,outcome,delta:{money:0,energy:0,bonds:0,reputation:0,...delta},exit});
 const q=(id,title,text,a,b,minStage=1)=>({id,title,text,minStage,choices:[a,b]});
 const job=(id,label,practice,entry,text,dilemmas)=>({id,label,minAge:18,practice,entry,chapters:lines(text),dilemmas});
+const selfJob=(...args)=>({...job(...args),employmentMode:'self-employed'});
 const relation=(id,role,text,requiresCareer=false)=>({id,role,requiresCareer,chapters:lines(text)});
 const joint=(id,title,text,a,ao,b,bo)=>({id,title,text,choices:[{label:a,outcome:ao},{label:b,outcome:bo}]});
 export const COUNTRY_PACK_AU={id:'AU',name:'澳洲',cityId:'sydney',cityName:'雪梨',scope:'新南威爾斯州雪梨都市生活；地方商業內容僅以City of Sydney地方政府區為界，教育僅用NSW路徑，渡輪逐碼頭查詢',currency:'AUD',
@@ -174,7 +175,7 @@ job('bicycle-desk','自行車用品與維修收件','你學習車型資料、配
  q('au-hc-voice','家人想替被照顧者直接決定一段行程。','當事人其實有不同偏好還沒說完。',c('先聽完本人想法','多花談話時間，選擇回到當事人。','你讓本人說清需要，再和家人討論實際能做到的安排。',{bonds:12,energy:-4}),c('先列出選項請本人挑','把抽象討論變得容易比較。','你整理交通、時間與支援差異，讓本人按偏好選擇。',{reputation:8,bonds:9})),
  q('au-hc-study','你想重新接回一段學習。','日常若完全不改，課程永遠排不進去。',c('先交接固定一段家務','有重新安排成本，也真正能開始。','你和家人完成分工，按確認時段參與課程。',{money:-270,energy:-2,reputation:8}),c('先試可分段的學習材料','暫不承諾整期，核對生活能否接上。','你保留可自行安排的練習，再約時間重看後續。',{energy:6,bonds:4}),2),
  q('au-hc-change','原有照顧方式已經不能持續。','你需要改變，不只是再忍幾天。',c('交接後退出主要協調','責任有人接續，自己找下一段生活。','你和家人核對新分工，交清必要資訊後結束主要協調。',{money:-380,energy:18,bonds:6},true),c('引入固定支援縮小範圍','多一筆支出，負擔不再全堆在你身上。','你確認支援條件，只保留自己能穩定承擔的部分。',{money:-680,energy:12,bonds:8}),2)
-]),job('craft-trader','非食品手作小量販售','你用小批材料練習製作、包裝與成本紀錄，先核對City of Sydney範圍內場地、主辦單位與品項適用要求，再估試賣可承擔的投入。','你完成適用條件與場地確認，以自己能穩定製作的非食品小物開始試賣，接單數量按實際材料和時間決定。',`
+]),selfJob('craft-trader','非食品手作小量販售','你用小批材料練習製作、包裝與成本紀錄，先核對City of Sydney範圍內場地、主辦單位與品項適用要求，再估試賣可承擔的投入。','你完成適用條件與場地確認，以自己能穩定製作的非食品小物開始試賣，接單數量按實際材料和時間決定。',`
 你做出第一批小物，發現同樣樣子也有不同耗時。
 你把材料費和展示支出分開，才看清實際投入。
 你確認場地給的位置，攤位不能只照自己的想像展開。
