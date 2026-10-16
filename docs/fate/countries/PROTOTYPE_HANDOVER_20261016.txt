@@ -1,0 +1,36 @@
+星穹旅誌｜未發布原型與十國規劃接手（2026-10-16）
+
+正式來源
+先讀canonical repo AGENTS.md、AI_HANDOVER.md、docs/deployment/*.json，fetch main。
+GitHub https://github.com/micisachen63-gif/--MiniApp
+canonical C:/Users/User/Documents/ChatGPT/star-journal-rpg
+原型工作樹 C:/Users/User/Documents/ChatGPT/star-journal-class-combat
+原型保存分支 codex/fate-real-life-prototype；基底173ff8c，尚未包含後來main MP藥水設定等更新，不可整包覆蓋正式。
+
+狀態
+十國方案是計畫，不是十國故事已完成。主規格COUNTRY_ROADMAP_20261016.txt優先；其餘三份國家分工文件含官方來源與缺口。
+v6/f6全球地理、指標、同期比較、real-life-careers與local-context都是WIP；未部署。
+v7 decision-engine獨立原型和整合盤點也屬開發中，未接線／未發布時不能說已修復正式三幕排程。
+已隔離準備正式補修為codex/fate-dual-followup的雙人事件及星座排版，見main DUAL_FOLLOWUP_20261016.txt及部署收據。
+
+重要原型檔
+geography-v1.js／build-fate-geography-v1.mjs：218國地理與人口凍結快照，但未接enabled國家gate，不能讓正式隨機抽到未完成國家。
+life-metrics-v1.js／metrics-ui.js/css：健康、學歷、淨資產、家庭模型，主畫面生活敘述＋折疊統計。真實統計與遊戲模擬口徑有說明，不能說命理或真實全球精確排名。
+real-life-careers-v1.js：16職涯×10篇通用原型，未接formal主引擎，仍含三段選擇結構，不能算完成v7。
+local-context-v1.js：臺灣108則日常與24年鑑反應原型，未接formal／未完整測試；其他國家notready。
+fate-peer.js／peer-ui.js：完成的v6人生同日去重實際玩家樣本；缺獨立同意設定，不能宣稱是TG群組排名，也不能當全球百分位。
+0029_fate_peer_completion.sql：僅索引，尚未套正式；其他修補部署不要順便套用。
+model/life/cycles/formal/service/app內v6分派只是原型；clock仍沿v5三幕recipe，尚不符使用者真正動態事件要求。
+
+最新待完成需求
+國家先選，再抽性別家境；臺灣內容先完整，其他九國依gate逐一開放。
+事件數量／次序／間隔／缺席都由seed與前因決定；年齡只限制合理範圍。保留兩有效小時、四世上限與夜間暫停。
+選擇要導向真正不同路線及結局，不只是微小分數或改最後一段：有前因、可理解風險的成功、失敗、轉型、穩定生活等，實際事件與數據都要分流。
+同一seed不同決策對照，檢查候選、工作/家庭狀態、金額與終章；沒有發生的事不捏造。固定seed同路線重播一致。
+正式v1–v5不可變，舊人生不改版本；新動態引擎需要新codec，不能把3答案直接原地改9。
+
+驗證界線
+原型有geography、metrics、career與peer專項測試，但未作為一個新正式版本完成全套與瀏覽器驗收，不具發布條件。
+先以新分支整合最新main，在隔離fixture完成HMAC→時鐘→回答／逾時→通知定位→雙方共享→終章／公開分享，再跑完整根npm test。
+不以真人建立測試輪迴，不改玩家存檔，不發真群測試通知；不新增付費模型或Cloudflare資源。
+根部署只接受乾淨origin/main且對應線上baseline，詳AGENTS；本原型分支不可直接部署。

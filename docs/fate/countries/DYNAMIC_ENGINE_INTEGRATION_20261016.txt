@@ -1,0 +1,146 @@
+星穹旅誌｜v7條件驅動人生引擎接線評估
+日期：2026-10-16（Asia/Taipei）
+性質：唯讀程式盤點＋實作建議；不是v7實作完成、測試或部署紀錄。
+盤點目錄：C:/Users/User/Documents/ChatGPT/star-journal-class-combat。
+本文行號為本次工作區快照定位提示；其他分支仍在編輯，接手應以函式名稱及rg重找。
+
+一、結論
+
+可以沿用現有D1 schema完成可變重大事件引擎，不需要只為「每世5–9件、順序與間隔不同」增加資料表。rpg_fate_lives.state_json能保存新版本草稿，code是無固定長度CHECK的TEXT，next_at／notified_index是通用INTEGER，rev及既有操作收據可繼續防重。真正的工作在於替換三幕假設遍布的引擎、編碼、介面、通知與重播契約，不能只把while(index<3)改成9。
+
+v5正式人生與f5公開碼必須維持逐字、逐時點重播。當前未發布的v6工作區仍是三幕時鐘，且有新地理／指標／在地內容正在接入；不應把這些>=5／===6分支直接一路推廣成v7。新增明確version===7 dispatcher，讓舊路徑原封不動。v6是否正式發布須另查最新部署收據，不以此工作區createLife({version:6})視為已上線。
+
+建議先交付可測的TW限定v7縱切（資格與家庭狀態真正驅動事件），驗收後才逐國開放。十國計劃仍維持planned／locked；引擎可支援十國不代表內容已完成。保留2有效小時、臺北06:00–24:00推進、每日最多4世、世終不自動開下一世。
+
+二、已找到的三幕硬編碼與必要改動
+
+A. 時鐘與草稿 worker/public/fate/life.js
+lifeSchedule（約19行）只有三個choiceOffsets／legacy固定時點。
+validLife（23–25行）限定版本3/4/5/6、answers.length<=3、答案只有0/1，且回傳白名單會丟棄任何新增v7欄位。
+advanceLife（29–35行）while(index<3)、available:index<3、nextAt:index<3；index等於answers.length，把「未來場景表已完整決定」當前提。
+chooseLife（37–39行）只認index，不認事件id；v7有候選失效／改序時，舊畫面的第3題不一定仍是同一題。
+lifeGrowth（42行）把所有答案0/1當守候／探索，對租屋、資格、照顧等選擇已不成立。
+接法：開頭dispatch v7至新的advanceDynamicLife／chooseDynamicLife／validDynamicLife。舊方法內部不泛化。共同activeBetween／addActive／startStatus可重用，但v7不能呼叫lifeSchedule去取得未來所有題目。
+
+B. 不可變v5時序 worker/public/fate/timing-v5.js
+lifeTiming（8–27行）seed→first/middle/final三個choiceAges／choiceOffsets，第一題只在17–22歲附近；eventOffsets共240段。
+v6目前刻意共用fate-clock-v5 seed recipe。v7若被加到[5,6]而沒另一套排程，只是題名不同、人生仍三幕。
+接法：新timing-v7.js只產生日常時鐘、年齡曲線／終年與獨立PRNG streams；重大題不能預先按年齡三分位列完。v5時鐘輸入、cache key、interval normalization、hash tag、catalog順序全部保留。
+
+C. 結果碼 worker/public/fate/model.js
+encodeResult（39–42行）直接answers.join與auto.join，decodeResult（44–49行）regex固定3答案＋3auto，slice(3,6)、slice(6,9)、zodiac固定9、seed固定尾段。
+ENDINGS由3個binary答案的總和索引0–3；v7直接塞9個答案會越界。version>=4終章及version>=5 deathAge也會走舊引擎。
+接法：decodeResult先判f7前綴，交新codec與replay；其餘舊regex、offset、ending生成不改。encodeResult同樣明確分派。公開碼只含虛構起點與選項，不含真實出生檔案、帳號或真人關係資料。
+
+D. 場景與避重 worker/public/fate/cycles.js
+scenesFor（18行）version>=4→formalScenes，預設回傳完整3題。
+seedForNextLife（21–38行）[0,1,2]分stage收scenarioId、for i<3、高nibble調3個seed byte避重；後段legacy也for i<3。
+接法：v7避重比對最近三世的「已觸發情境family／主題」，不比較固定stage。為保持公開碼可重播，歷史只能影響選定新seed或另存已編碼的初始variant；重播不得再查今天的歷史。首版可用有限候選seed本機抽樣，評估可觸發family重疊；上限固定，不做指數搜尋。不能在正式每次state請求重抽seed或用最近歷史隨機改題。
+
+E. 敘事核心 worker/public/fate/formal-events.js
+formalScenes約81–95行仍三題；TURN_AGES=[18,40,66]、RESOLVED_AGES是legacy常量。
+plannedContent約166行life.answers.slice(0,3)；resolvedTicks、scheduled三條career/commitment/legacy鏈；answers[0]決工作、[1]決街坊／交流、[2]決傳承。後果以a===0加情誼、a===1加見識，沒有職業資格／家庭責任語義。
+職涯10章均排在第1題deadline後，commitment6章第2題後、legacy4章第3題後；這是結構性三幕，不能靠多塞六個scene解決。
+接法：v7用事件ledger＋語義effects（credentialEarned、employmentChanged、careHours、cash／debt、educationProgress、relationshipFlags）；職涯後續以取得資格／在職／已離職等前因判定。不要再讀answers[2]當所有人的晚年價值觀。舊plannedContent固定保留；new replayDynamicContent供v7使用。
+
+F. v6在地職涯 worker/public/fate/real-life-careers-v1.js
+新增檔案也有FIRST／SECOND／THIRD、REAL_SCENARIO_FAMILIES三陣列、realScenes的[0,1,2].map、timing.choiceAges[stage]及以stage0選職涯pair。
+接法：可將已審閱且授權使用的文字拆為v7catalog素材，但不能直接借realScenes當動態引擎。每個情境需eligibility、前因、互斥、冷卻及effects；選「準備護理」不等於當場已註冊護理師。這份檔案當前正在編輯，須重讀最終內容。
+
+G. 終章 worker/public/fate/ending-story.js
+complete以answers.length===3；first/middle/final取choiceIndex0/1/2；插圖與結尾看answers[2]；summary看answers[1]與[2]。
+接法：v7終章只從實際ledger抽出教育、工作、照顧、人際、資產與重大轉折；是否完成看completed／activeMs，而不是答夠3題。插圖取實際主要人生主題，不讓某個位置答案固定代表遠行。不同題數都能結算，未發生的學位／子女／退休不補編。
+
+H. 前端 worker/public/fate/life-ui.js、app.js
+life-ui約21–24行for a<2、以scenes[v.index]顯示當題／最近答案；30行preview夾Math.min(index,2)。paintLifeUI重建每個答案的scene，未帶event id。
+app的appendMemories／renderArchive也靠scenes[i]；onChoice只傳index/answer；syncCloud只比answers.join；cloudDisplayLife以nextAt-1暫停敘事以防未確認自動答案；paintCloudLife比較gate.index與answers.length。
+接法：UI拿v7 authoritative pendingEvent，帶lifeId／decisionId／seq／optionId／requestId；結果以已解析ledger呈現。不要用scenesFor去猜當下題目或未來。同步比pendingEvent.id、rev與ledger cursor；客戶端可關閉過期按鈕，但不可自己把尚未確認答案寫入故事。preview與正式跑同一純引擎，只有時鐘來源不同。首版可維持每題2選項，但不可硬固定題數；若之後要3選項，必須一起升級codec位元配置與UI，不可直接沿用binary。
+
+I. 後端 worker/src/services/fate.js
+progressRow約32–38行以answers.length當index，scene=scenesFor(d)[index]；nextAt=slot+CHOICE_MS，notified_index為最後題號；start約72–75行指定version6並以lifeSchedule()[0]排第一次due。
+choose保留mutation收據與rev CAS，但只傳index。notification約120行明確拒index>2，並依slot重新算deadline。
+接法：progressRow使用v7 advance回傳nextDueActiveMs／pendingEvent及needsNotify，更新state_json＋next_at＋notified_index＋outbox同批CAS。start保存canonical初始身分／包版本，next_at指向下一次內部評估／重大事件時點；不能用fallback三個slot。notification驗證life／指定角色／穩定decisionId，重新算active deadline；失效題不發。v7可以保留seq0..8兼容索引欄位，但decisionId是必校驗條件。
+notified_index可保留：一生同時最多1個本人pending、seq單調增加、已發seq不回收，則單一INTEGER足夠。若改成多個平行本人pending、可回頭答或反覆替換同seq，這個欄位就不夠；首版不要引入該模式。
+
+J. BOT通知 cloud-bot/src/adapter/rpg-flow.js
+約579行p.index>2直接return，第4題以後即使worker正常也會靜默漏通知。key目前lifeId:index，通知前會重新呼叫/rpg/fate/notification；夜停／發送intent／不確定結果防重可保留。
+接法：v7驗證seq0..8與decisionId，key改v7:lifeId:decisionId（舊版本仍沿用舊key）；內部revalidation回傳最新合法事件，不能信outbox舊文案。本人重大題與雙人支線可共存，但通知與pending渲染優先級應清楚；不可為每30秒日常發群訊。5–9件設計帶來較多通知，需以自然間隔及合併入口控制，無需真人流量測試。
+
+K. 分享與入口
+worker/public/fate-entry.js約4行只認/^f[1-6][a-f0-9x]{10,30}$/，新codec即使decodeResult成功也會被這一層吞掉。
+cloud-bot/src/adapter/cloud-bot.js約38–39行/start與fate_resume只允許[a-z0-9]{1,48}，不要假設改model就全通。
+worker/public/fate/share-ui.js的selected會用encodeResult({...result,zodiac})重編碼；若codec未保留國家／初始身分／全決策，隱藏星座就會換人生。
+worker/src/fate-public.js、share-model.js、cloud-bot/src/fate-share.js皆共享decodeResult，但OG/JPEG版本快取與文字／圖卡要做新舊碼回歸。savePreparedInlineMessage photo.id目前fate-${code}-${format}，長碼會增加id長度，需把整體一起核算。
+接法：以一個canonical codec validator替代各處copy regex；新碼保持小寫英數可少改適配器，但仍要明確開f7及長度。不把「任意f7字串」視為有效。TG啟程連結、加群resume callback、WebApp、公開重讀、PNG/JPEG、星座隱私切換全走同一碼。
+
+L. 鄰接功能
+fate-peer.js目前只認version6且SQL json_extract(...version)=6，完成snapshot也只在===6；v7若要排行需新metrics schemaVersion或同口徑兼容，不能把不同模型的財富／健康當可直接排名。不可只改>=6卻不校準母體。
+fate-shared.js原有雙人支線有獨立排程／受邀權限與紀錄，不能把guest answer直接塞owner主線answers造成題數或自動旗標錯位。首版維持獨立private sharedMemories；若雙人結果之後能改變主線資格／金錢，必須額外把非個資的因果標記編入公開replay契約，否則公開故事與真實旅誌必分歧。
+fate-gifts以實際完成DB人生計數，應維持，不按公開code答案數給輪迴或禮盒。任何手工製造的f7 cosmetic code都不能取得完成／排行／禮物資格。
+
+三、v7建議狀態與純函式介面（不是已定API）
+
+state_json沿用原欄位容器，新增受嚴格白名單驗證的version7結構：
+version:7；engineRevision／catalogRevision／countryPackage；seed；orbit；identityZodiac／zodiac；startedAt／clockAt。
+initialContext：明確的虛構國家地區、故事性別、家庭資源／結構等有限enum。真實生日、時間、地點、帳號不進此物件。
+cursor：已處理的確定性內部tick；重大事件seq單調；usedFamilies及cooldowns可以重播推導，若存快取須可驗證。
+resolvedDecisions：最多9個，每個含seq、decisionId、scenarioFamily、openedActiveMs、deadlineActiveMs、answer(0/1)、source(manual/auto)、resolvedActiveMs。
+pendingDecision：最多1個，含相同穩定識別與可呈現選項。未出現的不提前保存為所有scene。
+worldState：完成教育、專業資格、就業、家庭責任、可動現金等語義狀態；可以作快取但不得接受client任意指定，重播應能算出一致值。
+
+核心介面建議：
+initialDynamicLife(validatedInput) → frozen initialContext及draft。
+advanceDynamicLife(draft, now) → {draft,pendingDecision,nextDueAt,completed,publicCode,changed}。
+chooseDynamicLife(draft,{decisionId,seq,answer},now) → 同一view。
+replayDynamicResult(publicPacket) → 全部合法events／finalMetrics／ending。
+dynamicStoryAt(draft, activeMs) → 只呈現已實際發生的敘事。
+
+必須是可跨browser／Worker／BOT執行的純ES module，PRNG以命名stream區隔（日常、機會、家庭、選項），新增一個日常抽樣不能把整個人生後續亂數流推偏。不能依Math.random、當下Date.now、DB回傳順序或物件key順序決定場景。CPU要有固定工作上限，兩小時離線回補不逐毫秒遍歷、不做無界while。現有240個日常tick可作有限回補上限，但不是每30秒必有重大抉擇。
+
+條件選題：每次機會評估先驗證country/age/credential/prerequisites/employment/family/cash，後加已發family避重、互斥及冷卻，再用seed stream挑候選。選項結果改語義狀態，後續可觸發池也因此改變，順序／數量自然不同。目標5–9不是硬保證每個年齡條件都得湊滿；條件不齊允許無重大題的普通紀事。只有出現題目才有pending，題間保留最小有效間隔，最後題deadline必須早於世終。
+
+四、可變答案儲存／公開碼方案
+
+推薦第一階段：二選項、最大9題、結果因果在固定事件deadline生效。
+玩家手動答題可立即得到已收回覆與結果文字；正式後續排程只在該題既定deadline處理effects。自動答與手動答遵守同一因果生效時點。因此公開重播不需編碼「玩家第幾毫秒點擊」，只有答案序列及manual/auto旗標即可重現。這不會固定整世事件時間；每題open仍由當時狀態／seed機會計算，只是同一題的生效規則可重現。
+已回覆但未到deadline需持續保存pending的resolved receipt，避免重開後又出同題；後續不可同時開另一題。UI文案要說清回覆已收到，不要顯示仍可答或把未來後果當已經發生。
+
+替代方案：若產品要求「早一分鐘答會改變之後人生」，就必須保存並編碼每題effective answer時點／tick，或把完整結果做public snapshot。只存9個answer bit不夠，不能宣稱能精確重播。先不要做這條較複雜路徑。
+
+可用自包含f7 packet，二進位欄位示意：
+engineConfig 8 bits；country/region registry 16 bits；seed 32 bits；orbit 4 bits＋公開zodiac 4 bits（15=no-show）；故事性別/家境/家庭等有限flags 8 bits；actualDecisionCount 4 bits＋保留4；answerMask 9 bits；autoMask 9 bits；錯字checksum 16 bits。總114 bits，補成15 bytes，base32固定24字元，加f7前綴＝26字元。這是容量證明，正式欄位與bit順序需先寫codec spec並凍結，不能即興上線。
+國家註冊表及engineConfig會鎖定catalog、統計基準與初始身分抽樣；未開放country id拒絕新起局，但已合法完成的舊碼仍應可解。答案欄位不用的尾bits強制0，count需與純重播實際情境數吻合，拒絕尾隨垃圾／超界／非canonical padding／不存在選項。checksum只防打錯，不是認證或反作弊。
+如此可在現有schema保存，並在現有BOT的48字元局部限制內；也不需公開D1查詢便能產OG與JPEG。Telegram官方目前start參數上限64字元、callback_data上限64 bytes，現有fate_與fate_resume:前綴也須計入；26字元code下各為31／38，足夠。官方來源（2026-10-16核對）：https://core.telegram.org/bots/features#deep-linking 、https://core.telegram.org/bots/api#inlinekeyboardbutton 。公開碼不是壓縮JSON，不塞所有文案、名字或通行token。
+若改3+選項、允許大於9題、編碼人工答題時點或雙人外部因果，重新估packet並升engineConfig／版本；不能偷偷佔用保留bits改舊解碼語義。
+
+五、schema沿用的邊界
+
+可以不migration：單一active life、最多1個本人pending、seq永不回收、固定最大9個答案；state_json保存v7、code保存26字元示意packet、next_at指向下一可推進點、notified_index追最後已排通知seq，現有operations與CAS防同時點擊。
+不能原封不動：validLife白名單與state sanitize、新code validator、完成判定、outbox revalidation都必須改；TEXT可存不代表程式會保留或讀得懂。
+需另評schema：一人同時多題／可回填舊選擇／任意長答案、跨玩家即時因果、按單一重大事件查詢的資料分析或可恢復任意內容revision。這些不應在這次首版順帶加入。所需新增表只可加法migration，不能改寫v5舊state_json或舊code。
+
+六、安全分段實作順序
+
+S0 凍結基線：保存正式main對應，產f1–f5代表碼與多種部分draft的文本／時鐘snapshot；核實v6尚未發布，保留其他分支修改。不要在多人未完成工作區直接部署。
+S1 先做v7 codec＋純state validator＋version dispatcher；新局入口維持關閉。測0..9答案、binary mask、錯碼、星座顯隱、legacy逐位元重播；編碼只處理cosmetic資料，不給獎勵。
+S2 TW有限縱切：至少6類有前因的情境，資格／現金／家庭互斥真的影響候選；純引擎支援機會排程、pending、deadline、auto、夜停與end。驗證同seed不同合法答案會改可觸發事件，而非只是換一段結果文字。這不是全部24情境作者完成。
+S3 保存／後端：接start/progress/choose/notification，保留requestId與CAS；對同一pending兩個裝置競答、送出後斷線重試、離線2小時、跨夜、終點前deadline做DB隔離測試。開始仍由測試fixture／preview明確啟用，不改正式版本預設。
+S4 UI／終章：pending view替掉scenes[index]；紀事／archive／ending／metrics都讀ledger，能展示5、6、7、8、9不同題數而不越界。正式client不自行決定auto，preview可跳下一個真正nextDueAt而不是跳三幕slot。
+S5 BOT與分享：移除index>2假設，入口/加群resume/OG/JPEG/PNG/星座隱私一起支援f7；跑受邀A/B通知進門、正確題、雙方旅誌更新的隔離整合，不發真人群測試。5–9本人事件不應搶掉雙人pending入口。
+S6 完整作者與國家gate：TW達240日常／100職涯章／至少24重大情境／人際及資格檢核才開；其他九國持續locked，不能為了十國選單而放通用外國故事。新的v7版本不可拿v5文本全量替換國名交差。
+S7 回歸／發布：完整worker與bot測試、舊碼snapshot一致、actual replay parity、手機布局及公開分享檢查。提交／GitHub合併，乾淨origin/main用根deploy scripts，收據／健康核對成功才宣告上線。純計劃文件無需部署。
+
+七、必要測試與不能混淆的驗收
+
+1. 同seed＋同初始context＋同選項，Worker／browser／BOT公開重播的event id／times／effects／終章完全一致。
+2. 只改一個合法選擇，後續候選／順序／間隔可改；已發生的前綴不能倒改。
+3. 至少1000個seed及多路線組合，重大題數確有差異，非固定3或每世都9；不能只有日期亂而內容順序仍永遠教育→照顧→退休。
+4. 未成年、未完成學位、未有執照者不得被自動推成合資格專業；成人夜間路線21+且當地條件核實才開。
+5. 回補無人在線人生時，所有逾期auto依原規則結算；不得因服務晚醒才把9題集中發群或把死亡推遲。
+6. 00–06不耗回應時間，06接續；每日4世以帳號計數；世終不自動進下一世；舊禮盒／成就不因題數增加而多算世數。
+7. 第4至9題實際走通知revalidation／去重測試；不只測第1題。指定角色與pending id不符要友善提示，不准答另一人題。
+8. 關閉／重開、角色切換、同帳號兩裝置、慢網答題成功但回應丟失，requestId重試只計一次；重複notification不發第二封。
+9. 星座取消勾選只改公開星座位元，不改country、家庭、題目、金額、事件及故事；分享code無DOB／時分／真地點／TG ID。
+10. 文本源與統計源要版本化，新增catalog必開新revision；v5/f5全部時鐘／情境／圖卡不變。
+
+盤點限制：這份報告只做靜態閱讀與文件編輯，沒有聲稱v7測試通過；尚未選定最終codec與時序政策。代碼正由其他分支編輯，接手實作前需重查現有檔與最新部署版本。可變題數引擎本身不必新增雲端資源，是否增加實際用量取決於現有排程／通知頻率；本報告沒有進行負載或費用測試。
