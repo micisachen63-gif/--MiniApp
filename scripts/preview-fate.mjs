@@ -35,7 +35,8 @@ if(['shared','notification'].includes(socialScene)){
   const first=draft.version===9?replayCountryLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:draft.version===8?replayTaiwanLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:draft.version===7?replayDecisionLife({...draft,auto:[]},{activeMs:0}).nextScene.openedMs:lifeTiming(draft)?.choiceOffsets[0]||24*60000;draft.startedAt=Date.now()-first-1000;draft.clockAt=draft.startedAt;
   await env.DB.prepare('UPDATE rpg_fate_lives SET state_json=?,started_at=?,next_at=? WHERE id=?').bind(JSON.stringify(draft),draft.startedAt,draft.startedAt+first,started.result.lifeId).run();
  }
- await F.state(env,fixtureChar,Date.now());await S.inbox(env,'222',Date.now());
+ if(socialScene==='shared'&&fixtureCountry!=='TW'){const event=await env.DB.prepare('SELECT opened_at FROM rpg_fate_social_choices WHERE life_id=?').bind(started.result.lifeId).first();if(event)qaOffset=event.opened_at+1000-Date.now();}
+ await F.state(env,fixtureChar,qaNow());await S.inbox(env,'222',qaNow());
 }
 function init(id){const f={auth_date:String(Math.floor(Date.now()/1000)),user:JSON.stringify({id:Number(id),first_name:'隔離驗收旅人'})},key=createHmac('sha256','WebAppData').update(TOKEN).digest(),dcs=Object.keys(f).sort().map(k=>k+'='+f[k]).join('\n');return new URLSearchParams({...f,hash:createHmac('sha256',key).update(dcs).digest('hex')}).toString();}
 const base=path.resolve(root,'worker/public');

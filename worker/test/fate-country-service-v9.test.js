@@ -14,6 +14,16 @@ import {plannedContent} from '../public/fate/formal-events.js';
 import {seedForNextLife} from '../public/fate/cycles.js';
 const T=Date.parse('2026-10-16T06:00:00+08:00'),TOKEN='123456789:ISOLATED_COUNTRY_FIXTURE';
 
+test('changing countries keeps all previous editions and avoids the last three same-country shelves across intervening lives',async t=>{
+ const env={DB:freshDb()},char=(await createCharacter(env,{tgId:'809',name:'跨國驗收旅人',baseClass:'mage',gender:'f'},T)).char.tg_id;t.after(()=>env.DB.sqlite.close());
+ const countries=['JP','US','TW','DE'],shelves=new Map();
+ for(let i=0;i<16;i++){const country=countries[i%4],at=T+Math.floor(i/4)*86400000+i%4*LIFE_MS;await F.start(env,char,{requestId:crypto.randomUUID(),country,mode:'random'},at);const state=await F.state(env,char,at+LIFE_MS),d=state.last.draft,result=decodeResult(state.last.code);assert.equal(result.country,country);assert.equal(result.version,country==='TW'?8:9);assert.equal(state.completed,i+1);
+  if(result.version===9){const recent=shelves.get(country)||[],shelf=parseInt(d.seed.slice(6),16)&3;assert.ok(recent.slice(-3).every(s=>s!==shelf),'intervening countries cannot erase same-country recent history');recent.push(shelf);shelves.set(country,recent);}
+ }
+ const history=await F.history(env,char,{},T+4*86400000);assert.equal(history.entries.length,10);assert.deepEqual(new Set(history.entries.map(e=>decodeResult(e.code).country)),new Set(countries));
+ await assert.rejects(F.start(env,char,{requestId:crypto.randomUUID(),country:'JP',mode:'random'},T+3*86400000+4*LIFE_MS),e=>e.code==='fate_limit');
+});
+
 for(const country of Object.keys(COUNTRY_METADATA_V9)){
  test(country+' named colleagues begin only at actual employment and stop at its end',async()=>{
   await ensureCountryPack(country);let colleagueRows=0;

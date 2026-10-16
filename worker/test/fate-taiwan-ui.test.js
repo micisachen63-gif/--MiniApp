@@ -43,6 +43,13 @@ test('v8 playback uses Taiwan dusk artwork while old lives retain their establis
  ctx.currentLife={version:7};const old=new Element('div');ctx.setupMedia(old);assert.equal(played,1);assert.equal(old.children[0],media);assert.equal(old.style.backgroundImage,undefined);
 });
 
+test('starting a country waits for its book and server response without submitting a second life',async()=>{
+ const start=app.slice(app.indexOf('async function startCycle(){'),app.indexOf('\nfunction nextLifeIntro()',app.indexOf('async function startCycle(){')));let release,calls=0;
+ const ctx={startingLife:false,selectedCountry:'TW',ensureCountryPack:async()=>{},embedded:true,cloud:{},mode:'random',birthDetail:null,showSign:true,sharedUI:{invite:false},cloudMutation:()=>{calls++;return new Promise(r=>release=r)}};vm.runInNewContext(start,ctx);
+ const first=ctx.startCycle();await ctx.startCycle();assert.equal(calls,1);assert.equal(ctx.startingLife,true);release();await first;assert.equal(ctx.startingLife,false);
+ let loaded;ctx.selectedCountry='JP';ctx.ensureCountryPack=()=>new Promise(r=>loaded=r);const second=ctx.startCycle();ctx.selectedCountry='US';loaded();await second;assert.equal(calls,1,'a changed selection must not start the previously loading country');assert.equal(ctx.startingLife,false);
+});
+
 test('Taiwan chronology retains authoritative consequence rows without adding old generic answer captions',()=>{
  const start=app.indexOf('function appendMemories('),end=app.indexOf('\nfunction renderSoul(',start),fn=app.slice(start,end);let sceneReads=0;
  const ctx={el:(tag,cls,text)=>{const n=new Element(tag);n.textContent=text||'';return n},ageLabel:age=>`${age} 歲`,scenesFor:()=>{sceneReads++;return [{age:18,choices:[['','','generic old answer']]}]}};vm.runInNewContext(fn,ctx);

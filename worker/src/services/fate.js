@@ -67,7 +67,7 @@ export async function start(env,tg,b,now){
   const existing=await activeRow(db,tg);if(existing)return {result:{lifeId:existing.id,already:true}};
   if(!isOpenTime(now))throw new GameError('fate_night','星穹已入夜，06:00 再開啟下一世');
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
-  const past=(await db.prepare("SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 3").bind(String(tg)).all()).results||[];
+  const past=(await db.prepare(`SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT ${version===9?30:3}`).bind(String(tg)).all()).results||[];
   let zodiac=null,identityZodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');identityZodiac=zodiacFor(birth.month,birth.day);if(b.showSign!==false)zodiac=identityZodiac;}
   await ensureCountryCodes(past.map(e=>e.code));
   const orbit=randomOrbit(zodiac),seed=seedForNextLife(newSeed(),past.reverse(),version,orbit,country),draft=createLife({version,country,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');

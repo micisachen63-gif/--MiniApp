@@ -64,7 +64,7 @@ function render(){
  if(embedded&&cloudError)showCloudError(panel);
  if(sharedUI)sharedUI.render(panel);
  if(stage==='archive')renderArchive(panel);else if(stage==='life')renderLife(panel);else if(stage==='daily'){renderDaily(panel);panel.append(button(currentLife?'回到正在展開的這一世':'回到旅章',()=>{stage=currentLife?'life':result?'result':'intro';render();window.scrollTo(0,0)}));}else if(result)renderResult(panel);else if(stage==='scene')renderScene(panel);else renderIntro(panel);
- const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章從不同出身展開原創人生。台灣篇走進真實街巷，故事與人物經歷皆為虛構；偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
+ const footer=el('footer','fate-footer');footer.id='fate-about';const about=el('details','fate-about-details');about.append(el('summary','','關於旅章'),el('p','','命運旅章從不同出身展開原創人生。各地篇章走進真實城市與街巷，故事與人物經歷皆為虛構；偶爾借用旅人的公開暱稱，譜寫不同的相逢。'),el('p','','此世的家計與聲望屬於故事，不會改變星穹旅誌角色的金幣、戰力與掉落。每日旅箋提供生活靈感，並非現實命運預測。'));footer.append(el('div','','每一世，都是靈魂留下的一束光。'),about,el('div','','Game Producer · ミカサ'));shell.append(footer);for(const d of shell.querySelectorAll('details'))if(detailsOpen.includes(d.querySelector('summary')?.textContent))d.open=true;root.append(shell);
 }
 function renderIntro(p){
  p.append(el('span','fate-eyebrow','第一期 · 最後一盞星燈'),el('h2','','如果人生能重新啟程，\n你會把光留給誰？'));
@@ -91,7 +91,7 @@ function renderIntro(p){
    const payload=JSON.stringify(birthDetail);if(!birthSaveRetry||birthSaveRetry.payload!==payload)birthSaveRetry={payload,id:crypto.randomUUID()};
    const startButton=error.nextElementSibling;try{if(startButton)startButton.disabled=true;await client.request('fate/profile/save',{requestId:birthSaveRetry.id,consent:true,birth:birthDetail});birthSaveRetry=null;}catch(e){error.textContent=e.message+'；資料尚未保存，請重試。';return;}finally{if(startButton)startButton.disabled=false;}
   }
-  zodiac=birth?zodiacFor(birth.month,birth.day):null;startCycle();
+  zodiac=birth?zodiacFor(birth.month,birth.day):null;const launchButton=error.nextElementSibling;if(launchButton){launchButton.disabled=true;launchButton.textContent='正在展開這一世…';}try{await startCycle();}finally{if(launchButton?.isConnected){launchButton.disabled=false;launchButton.textContent='展開我的旅章';}}
  },'fate-primary'));
  const saved=embedded?decodeResult(cloud?.last?.code):decodeResult(storage.get('star-fate-last'));
  if(saved)p.append(button('翻閱上次旅章',()=>{result=saved;shared=false;render()},'fate-subtle'));
@@ -120,7 +120,7 @@ async function startCycle(){
  if(startingLife)return;startingLife=true;const requestedCountry=selectedCountry;
  try{
  try{if(requestedCountry!=='TW')await ensureCountryPack(requestedCountry);if(requestedCountry!==selectedCountry)return;}catch{countryLoadError='故事尚未載入，請稍後再試。';render();return;}
- if(embedded){if(cloud?.active){resumeLife();return;}cloudMutation('fate/start',{country:selectedCountry,mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign,...(sharedUI?.invite?{socialInvite:true}:{})});return;}
+ if(embedded){if(cloud?.active){resumeLife();return;}await cloudMutation('fate/start',{country:requestedCountry,mode:mode==='birthday'&&(birthDetail?.date||profileData?.birth?.date||cloud?.profile?.saved)?'birthday':'random',birthDate:mode==='birthday'?birthDetail?.date:undefined,showSign,...(sharedUI?.invite?{socialInvite:true}:{})});return;}
  if(soul.draft){resumeLife();return;}
  let now=Date.now();if(isPreview&&!startStatus([],now).allowed)now=Date.parse(taipeiDay(now)+'T10:00:00+08:00');
  const status=startStatus(startHistory,now);if(!status.allowed){const target=document.querySelector('.fate-error')||document.querySelector('.fate-panel');const m=note(status.night?'星穹已入夜，06:00 再開啟下一世。':'今日四段人生已寫滿，明天再開啟新的旅程。');m.setAttribute('role','status');target.append(m);return;}
