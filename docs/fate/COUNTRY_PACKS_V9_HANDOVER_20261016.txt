@@ -46,7 +46,7 @@ PNG／TG JPEG共用版式：國家／城市／性別與職涯分兩行，保留�
 資料與引擎測試在worker/test/fate-country-*-v9.test.js；實際每國6000因果人生／1000全文＋公開碼重播、48抉擇可達、240日常唯一、45終年、同國近期四組輪替。
 每國80seed×3時點驗已見紀事前綴不被未來工作改寫；每國100seed檢查同事任職起訖。
 9國各6種共享×2選項，受邀者看選項、重送防重、雙方同截止點記憶一致；另含期限涵蓋、跨夜及權限競態回歸。
-完整npm test：Worker1492＋Bot139全過，無skip（v9-all-tests-final-repaired-fixture.txt）；之後補下一世選國UI回歸，該檔7/7通過，正式deploy會再跑完整Worker1493。
+完整npm test：Worker1492＋Bot139全過，無skip（v9-all-tests-final-repaired-fixture.txt）；之後補下一世選國UI回歸，該檔7/7通過；正式deploy再跑完整Worker1493全過，連同Bot139共1632項，無skip。
 最初完整測試抓到舊fixture只改caller seed卻沒更新DB；已改成把預設seed寫入隔離DB後，仍保留六篇／六結果的原斷言，未弱化檢查。
 全部外部證據 C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016
 九國資料清單 v9-nine-country-inventory.json；最終示例碼 v9-final-examples.json。
@@ -59,3 +59,12 @@ PNG／TG JPEG共用版式：國家／城市／性別與職涯分兩行，保留�
 共享release lock不可繞過。保留其他視窗守護天使／傳承等更新、完整public、綁定／秘密／crons，不啟動舊本機BOT，不改正式玩家或DB migration。
 若publish成功verify失敗，保留.release-sync並唯讀核對live／commit／assets；正式正確時只修收據，不盲目重發。
 正式版本與commit以 docs/deployment/star-journal-rpg-bot.json、elf-rpg-api.json及Cloudflare為準。不可拿本機9555／9565或舊候選版本當正式環境。
+
+七、已驗證正式發布（2026-10-16）
+BOT f5c4ca99-6fb5-4a87-853c-2adf67622399，source bcb9348a929145031525d2829496035cb9458721，100%。
+Worker d654a4ae-cfc4-470b-983a-347d63f9ed88，source a9fc99612aaa9b8e1bc9396b076ebca99f535c2c，100%。
+Worker最初verify讀到art.js舊LF快取；未重新發布。稍後相同URL已回正確完整bytes；在共享release鎖下以pending來源、live runtime雜湊、247資源、健康與不變綁定/crons完成唯讀驗證，再補正式收據。保留.release-sync原始紀錄。
+驗證紀錄 v9-recovered-verified.json、v9-recovery-readonly.txt、v9-deploy-worker.txt、v9-deploy-bot.txt、v9-production-readonly-smoke.json。
+正式公頁與1080×1350 JPEG HTTP200，JPEG441110bytes；BOT health lastCycleError=null/queued=0，Worker health ok。未發真實測試訊息或社群文。
+正式示例 https://elf-rpg-api.micisachen.workers.dev/fate/r/f9fr39000010000111111111800000000 ，畫面 v9-production-final.png。
+正式版本後續仍以最新部署收據與Cloudflare為準，不把本段固定數字當作永遠最新。
