@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "f66d55d0eeb113dc75c1301632565b34ed96fc5a",
+  "sourceCommit": "4543fbcc12f2b8aafdc3594e4793fb83ca41ae61",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "599669c7-374d-4404-a6e2-ebb47563db03",
+  "productionVersion": "b293db35-828f-4802-b1e6-3a1de1cb46fe",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-15T23:49:01.754Z",
+  "verifiedAt": "2026-10-16T01:13:09.176Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "89af219b8f988ed1703402dcb88e04c77c3fe877e0fcfccd8347d41d4328c3d7"
+    "index.js": "d574810de51fa9c9fd2f70d963bd6e0a4741e07a8bcd81d1471bcb1afe87c48f"
   },
   "source": {
-    "fileCount": 248,
-    "sha256": "1cb9f632934d35d7b5636acc4964dca040f3fac1a28acf7f4a96dee243c9bef5",
+    "fileCount": 249,
+    "sha256": "dcf095b39a66fffabace83d1d292c1656e3db987b1cfe2130cd3d6996813863a",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -935,12 +935,16 @@
         "sha256": "3739a05b77ac9166ea92c5cae79d94198b4831473f0f32b62cb636ffbed34f88"
       },
       {
+        "file": "cloud-bot/src/fate-share.js",
+        "sha256": "62fae3fa6c4e5b37c561168385f2f9e279ad9b46a7cb3115293f3891a511b91f"
+      },
+      {
         "file": "cloud-bot/src/inbox.mjs",
         "sha256": "1ea779c2025121caa417eb8e40c58344a745c1db9fa2031bd9df031e478a2983"
       },
       {
         "file": "cloud-bot/src/index.mjs",
-        "sha256": "12b1ef808f5d09dc27059fd2be40e6300e01f3e658d4e94eb155972bbe731f99"
+        "sha256": "436b0281f9b4cf03cd89f799a556c76ff6552c33af3f954d2bbc83f8ba9df401"
       },
       {
         "file": "cloud-bot/src/renderer/INTEGRATION.txt",
@@ -1021,7 +1025,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "599669c7-374d-4404-a6e2-ebb47563db03",
+        "version_id": "b293db35-828f-4802-b1e6-3a1de1cb46fe",
         "percentage": 100
       }
     ],
