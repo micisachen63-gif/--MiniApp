@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "dff2dd83f6477201f91bb06cf35e9365ace1449f",
+  "sourceCommit": "d03cd2a501122e34ba21318ddfb7365ea939d812",
   "service": "elf-rpg-api",
-  "productionVersion": "f24b3171-292d-46ed-a206-62e6798bce49",
+  "productionVersion": "edf679aa-6831-44f3-a99e-c00e2050eeb3",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T02:34:09.784Z",
+  "verifiedAt": "2026-10-16T02:56:34.902Z",
   "runtimeSHA256": {
-    "index.js": "fdc5081782fbc65ad035476d10729708208091ac0588ee3514d78c413be4381d"
+    "index.js": "089e5e1f85b0429edd0b6dcdb12c5fe6e8d0eca2c4b20e136a7bb31fabdac820"
   },
   "source": {
-    "fileCount": 8813,
-    "sha256": "86cb124e9b7c2b538b0d825d90ea5ffbd02597d853a1fb668ae9bf8adb23fd6f",
+    "fileCount": 8814,
+    "sha256": "d2e8d171e5f8374eca0c0a9fb40cf967ae76f4aaae136c1f8830a2c45341ebea",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2103,7 +2103,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "da582ec62c558fd06cfc60f8fb0f330e367025ce3d2117c6c1e4071a988c8931"
+        "sha256": "0f201637abebaa64531cfdcb77989cf00e9ce76e74cc0df3644605366b541290"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -34439,7 +34439,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "05a5760120b7ecc74cbce03ffa4c4ce6c1878c912913cb33a42618c30dea4022"
+        "sha256": "83358e4b572720a0b3cadc016a4ff0dc30f2b9db3df0ee8bc51b2168afc437ba"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -34942,6 +34942,10 @@
         "sha256": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d"
       },
       {
+        "file": "worker/src/game/auto-blue.js",
+        "sha256": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634"
+      },
+      {
         "file": "worker/src/game/auto-reroll-targets.js",
         "sha256": "084ad50aa7de901ecbe103eeb1e7cf8dfa05fc94ede8a346ff88b476de9a8fd3"
       },
@@ -34951,7 +34955,7 @@
       },
       {
         "file": "worker/src/game/boss.js",
-        "sha256": "5af9a95f79d8c3268dd019b18d0d38627227e58d409f8e7cf2a8bc8712994adb"
+        "sha256": "80b124512088eaf39ac56031a217d656b80cfb9ba20ed17c821ffb3a012cd0c5"
       },
       {
         "file": "worker/src/game/classes.js",
@@ -35039,7 +35043,7 @@
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "2b9c1ca1449340e6f94b9c8f400b22292420b7445279243e32d358e3c92356e8"
+        "sha256": "805603d82f54a9fcb840b4ec06a349863bb5d9b38a1ac1d7239bca1debd01764"
       },
       {
         "file": "worker/src/game/lineage.js",
@@ -35099,7 +35103,7 @@
       },
       {
         "file": "worker/src/game/special-idle.js",
-        "sha256": "23397b5ae15a7929d27aebc92cfd3127e16d07888e0fdd616c949dc4b07f40f0"
+        "sha256": "4e995cec32314a78fb67f482bbde4ca84e0219d6187b28ee3736021cb52d12a0"
       },
       {
         "file": "worker/src/game/special.js",
@@ -35231,7 +35235,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "13519215b2f6c20a8149a2c8e4ab9f492d1907b2a0b094883e1aafb98a2cbcaf"
+        "sha256": "27aed6a1f544f2006353b6b863e28d584f5a953d6a43d186a2b299078fe6c990"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -35251,7 +35255,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "a1b5b52c429cb0292f8bad29b4e04b68a851fcc7a128f2098165425b5bba6695"
+        "sha256": "c90d480790c0cd4473d8e9918d38b69b78dac4119c39ac28b7add60b4c036f86"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -35269,7 +35273,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 148,
+    "verifiedCount": 134,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -35300,20 +35304,6 @@
       "worker/public/expedition-entry.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
-      "worker/public/fate/app.js",
-      "worker/public/fate/cycles.js",
-      "worker/public/fate/ending-story.js",
-      "worker/public/fate/event-catalog-v1.js",
-      "worker/public/fate/formal-catalog-v5.js",
-      "worker/public/fate/formal-choices-v5.js",
-      "worker/public/fate/formal-days-v5.js",
-      "worker/public/fate/formal-events.js",
-      "worker/public/fate/index.html",
-      "worker/public/fate/life-ui.js",
-      "worker/public/fate/life.js",
-      "worker/public/fate/model.js",
-      "worker/public/fate/social-cast.js",
-      "worker/public/fate/timing-v5.js",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -35424,7 +35414,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "f24b3171-292d-46ed-a206-62e6798bce49",
+        "version_id": "edf679aa-6831-44f3-a99e-c00e2050eeb3",
         "percentage": 100
       }
     ],
