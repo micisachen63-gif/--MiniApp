@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "52cc3ec7e3ca135648613f03838e8ddc77ce3782",
+  "sourceCommit": "5b3ede54d22aeb50d425c5c3261e471c4781b3b1",
   "service": "elf-rpg-api",
-  "productionVersion": "937199d2-4c58-493c-ae2f-4f225cac2ffd",
+  "productionVersion": "706ab881-9735-4c64-bb55-559faa102687",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-16T03:25:34.960Z",
+  "verifiedAt": "2026-10-16T03:45:45.237Z",
   "runtimeSHA256": {
     "index.js": "60375a459c62bc935b7693324a9bcf888180a8ae7c976f060341974430ccd2c1"
   },
   "source": {
     "fileCount": 8814,
-    "sha256": "05f970977e648dd1ce917a5c23d8133f6bcf932d8dc414e912e4cd5ca7da938b",
+    "sha256": "205ebbd2c2b296699455b1db65687b29956613966e243f04258d4da46521fb3d",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -33363,7 +33363,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "661ccca78fbd6088c3d46af68787ca4244fa984e3a38bfb5c3a372e65f4f54a2"
+        "sha256": "f6a0df30dc42ee0902aa1f97fb5914b5a5102095c4c583bb99396b970e5ac330"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -34439,7 +34439,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "9c1b9988c6e25a9b9f241caa06d0b2de547790a706b80c364e50fd7a85dbe323"
+        "sha256": "8831f01034c31bad225a385dc5b09af2abdcf91c3c4ac1f267b72e62f3910a3e"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35273,7 +35273,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 141,
+    "verifiedCount": 134,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -35304,13 +35304,6 @@
       "worker/public/expedition-entry.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
-      "worker/public/fate/app.js",
-      "worker/public/fate/daily.css",
-      "worker/public/fate/ending-story.js",
-      "worker/public/fate/formal-events.js",
-      "worker/public/fate/index.html",
-      "worker/public/fate/shared-story.js",
-      "worker/public/fate/shared-ui.js",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -35421,7 +35414,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "937199d2-4c58-493c-ae2f-4f225cac2ffd",
+        "version_id": "706ab881-9735-4c64-bb55-559faa102687",
         "percentage": 100
       }
     ],
