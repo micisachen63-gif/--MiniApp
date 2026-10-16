@@ -590,7 +590,8 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       if(!Number.isFinite(remaining)||remaining<=0)return;
       const validAccount=value=>/^[1-9]\d{0,15}$/.test(String(value))&&Number.isSafeInteger(Number(value));
       if(social?(check.pending!==true||event?.eventId!==p.eventId||!validAccount(event.ownerAccountId)||!validAccount(event.guestAccountId)||String(event.ownerAccountId)===String(event.guestAccountId)):!validAccount(event?.accountId))return;
-      const name=html(String(event.name||'旅人').slice(0,40)),age=Math.max(0,Math.min(90,Math.floor(Number(event.age)||0)));
+      const ageValue=Number(event.age),age=Number.isSafeInteger(ageValue)&&ageValue>=0?ageValue:0;
+      const name=html(String(event.name||'旅人').slice(0,40));
       const mention=(id,label)=>`<a href="tg://user?id=${id}">${html(String(label||'旅人').slice(0,40))}</a>`;
       const caption=social?`✧ <b>命運旅章 · 交織命運</b>\n\n${mention(event.ownerAccountId,event.ownerName)} 與 ${mention(event.guestAccountId,event.guestName)}，在這一世相逢。\n\n<b>${html(String(event.title||'這一頁，等你來寫').slice(0,100))}</b>\n${html(String(event.text||'一段同行的故事，正等待受邀旅人回應。').slice(0,260))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒。\n請受邀旅人進入遊戲、切換至受邀角色選擇；沒有回覆，故事也會自然向前。`:`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：<a href="tg://user?id=${event.accountId}">${name}</a>\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
       const link=deepLink('fate'),home=deepLink();

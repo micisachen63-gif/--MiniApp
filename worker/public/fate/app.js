@@ -94,7 +94,7 @@ function renderResult(p){
  const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
  if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));for(const text of story.paragraphs)book.append(el('p','',text));book.append(el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
- const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
+ const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
  const journal=el('details','fate-journal'),summary=el('summary','','翻閱這一生的選擇與紀事'),list=el('ol');const memories=record?.draft?lifeEvents(record.draft,record.draft.clockAt):result.version>=4?plannedContent(result):record?.memories||[];list.append(el('li','',memories.find(m=>m.age===0)?.text||result.identity[2]));appendMemories(list,result,memories);journal.append(summary,list);p.append(journal);
  p.append(el('p','fate-quote',result.ending.question));
  const extras=el('div','fate-row');extras.append(button('今日旅箋',openDaily),button('靈魂旅誌',()=>{stage='archive';render();window.scrollTo(0,0)}));p.append(extras);
@@ -114,9 +114,9 @@ function startCycle(){
  const status=startStatus(startHistory,now);if(!status.allowed){const target=document.querySelector('.fate-error')||document.querySelector('.fate-panel');const m=note(status.night?'星穹已入夜，06:00 再開啟下一世。':'今日四段人生已寫滿，明天再開啟新的旅程。');m.setAttribute('role','status');target.append(m);return;}
  const previous=result||decodeResult(soul.entries.at(-1)?.code);let next=randomOrbit(zodiac);
  if(previous&&next===previous.orbit)next=(next+1+parseInt(newSeed().slice(0,2),16)%11)%12;
- orbit=next;seed=seedForNextLife(newSeed(),soul.entries,4);
+ orbit=next;seed=seedForNextLife(newSeed(),soul.entries,5);
  const identityZodiac=mode==='birthday'&&zodiac!==null?zodiac:generatedZodiac(seed);
- currentLife=createLife({version:4,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
+ currentLife=createLife({version:5,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
 }
 function persistLife(){if(embedded)return;if(currentLife)soul.draft=currentLife;storage.set('star-fate-guest-soul',JSON.stringify(soul));}
 function resumeLife(){if(embedded){currentLife=validLife(cloud?.active?.draft);if(currentLife){result=null;shared=false;stage='life';render();window.scrollTo(0,0)}return;}currentLife=validLife(soul.draft);if(!currentLife)return;result=null;shared=false;stage='life';tickLife(isPreview?currentLife.clockAt:Date.now());window.scrollTo(0,0);}

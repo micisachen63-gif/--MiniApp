@@ -1,5 +1,6 @@
 import {createRpgFlow,RPG_CALLBACK_RE} from './rpg-flow.js';
 import {createOperationApi} from './operation-api.js';
+import {decodeResult} from '../../../worker/public/fate/model.js';
 
 export const commands=[{command:'start',description:'✨ 開始星穹旅誌'},{command:'rpg',description:'🎮 開啟冒險與角色'},{command:'group',description:'🌌 加入冒險者之庭'},{command:'help',description:'📖 冒險指引'},{command:'trade',description:'🤝 裝備交易指引'},{command:'duel',description:'⚔️ 挑戰群組玩家'}];
 export function createCloudBot({config,api,store,log=console,rpgApi,renderBattleAnimation,renderPartyCard,fetchImpl=globalThis.fetch,now=()=>Date.now(),outboxClaimLimit=2}){
@@ -34,10 +35,12 @@ export function createCloudBot({config,api,store,log=console,rpgApi,renderBattle
   if(cq){try{await api.call('answerCallbackQuery',{callback_query_id:cq.id},{timeoutMs:3000,retries429:0})}catch(e){if(e.definite&&/query is too old|query ID is invalid/i.test(e.description||e.message)){log.warn('Expired callback ignored before game operation');return {ignored:'expired callback'}}log.warn('Callback acknowledgement unavailable: '+(e.name||'Error'))}}
   // Cosmetic public prologue: retain it across the membership gate. No DOB or reward token.
   if(privateChat(msg.chat,user)){
-   const start=/^\/start(?:@([A-Za-z0-9_]+))?\s+fate_((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[34][0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/i.exec(String(msg.text||'').trim());
-   const resume=/^fate_resume:((?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[34][0-9ab][01]{6}[0-9abx][a-f0-9]{8}))$/.exec(String(cq?.data||''));
+   const start=/^\/start(?:@([A-Za-z0-9_]+))?\s+fate_([a-z0-9]{1,48})$/i.exec(String(msg.text||'').trim());
+   const resume=/^fate_resume:([a-z0-9]{1,48})$/.exec(String(cq?.data||''));
    if(start?.[1]&&start[1].toLowerCase()!==config.botUsername.toLowerCase())return;
-   const code=(resume?.[1]||start?.[2])?.toLowerCase();
+   // Share/public-page decoding is authoritative for every immutable code
+   // version; duplicating the codec regex here silently dropped newer lives.
+   const code=decodeResult((resume?.[1]||start?.[2])?.toLowerCase())?.code;
    if(code){
     if(!await isGroupMember(user))return send('✧ 你的命運旅章已備妥\n\n先加入冒險者之庭，回來按「繼續旅程」，就能創建角色，讓這段故事在星穹延續。',{reply_markup:{inline_keyboard:[[{text:'🌌 加入冒險者之庭',url:config.inviteLink}],[{text:'✧ 已加入，繼續旅程',callback_data:'fate_resume:'+code}]]}},msg.chat.id);
     await rpgApi.call('/rpg/app/grant',{tgId:String(user.id)});

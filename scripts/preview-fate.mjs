@@ -21,7 +21,13 @@ if(['shared','notification'].includes(socialScene)){
  const S=await import(pathToFileURL(root+'/worker/src/services/fate-shared.js'));
  await S.savePreferences(env,'222',{requestId:crypto.randomUUID(),enabled:true,allowMentions:true,consent:true},Date.now());
  const at=Date.now()-(socialScene==='shared'?40:24)*60000;
- await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random',socialInvite:socialScene==='shared'},at);
+ const started=await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random',socialInvite:socialScene==='shared'},at);
+ if(socialScene==='notification'){
+  const {lifeTiming}=await import(pathToFileURL(root+'/worker/public/fate/timing-v5.js'));
+  const row=await env.DB.prepare('SELECT state_json FROM rpg_fate_lives WHERE id=?').bind(started.result.lifeId).first(),draft=JSON.parse(row.state_json);
+  const first=lifeTiming(draft)?.choiceOffsets[0]||24*60000;draft.startedAt=Date.now()-first-1000;draft.clockAt=draft.startedAt;
+  await env.DB.prepare('UPDATE rpg_fate_lives SET state_json=?,started_at=?,next_at=? WHERE id=?').bind(JSON.stringify(draft),draft.startedAt,draft.startedAt+first,started.result.lifeId).run();
+ }
  await F.state(env,fixtureChar,Date.now());await S.inbox(env,'222',Date.now());
 }
 function init(id){const f={auth_date:String(Math.floor(Date.now()/1000)),user:JSON.stringify({id:Number(id),first_name:'隔離驗收旅人'})},key=createHmac('sha256','WebAppData').update(TOKEN).digest(),dcs=Object.keys(f).sort().map(k=>k+'='+f[k]).join('\n');return new URLSearchParams({...f,hash:createHmac('sha256',key).update(dcs).digest('hex')}).toString();}

@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-16 命運旅章v5新增固定兩小時內的不同終年與事件時點、300則日常紀事、160篇連續故事及24組重大抉擇，保留舊v3／v4人生。新舊重播契約、驗證與接手見 `docs/fate/V5_TIMING_CONTENT_20261016.txt`；v5正式發布後不可原地改seed時序或擴／重排同版catalog，須以新版保護舊紀錄。
+
 2026-10-16「交織命運」已完成實作：六種雙人支線、獨立本世邀請／預設關閉的受邀設定、真人指定角色回覆、固定敘事後果、雙方群提及與防重；並修正通知停掛機首頁、待答定位及BOT積壓延遲。最新接手規則與驗證見 `docs/fate/SHARED_CHOICES_HANDOVER_20261016.txt`；下方僅評估段落屬歷史，正式發布仍以部署JSON及Cloudflare核對為準。
 
 2026-10-16 星座＋輪迴身分分享圖（PNG／TG JPEG）、勾選隱私與可重現驗證見 `docs/fate/ZODIAC_SHARE_20261016.txt`。雙人代選支線目前僅評估，未啟用；設計與權限／通知必要條件見 `docs/fate/SHARED_CHOICES_ASSESSMENT_20261016.txt`。

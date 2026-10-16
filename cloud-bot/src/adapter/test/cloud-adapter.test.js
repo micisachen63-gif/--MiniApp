@@ -10,8 +10,8 @@ function botFixture(){
  const bot=createCloudBot({config:{active:true,chatId:CHAT,botUsername:'StarJournalRpgBot',appUrl:APP,inviteLink:'https://t.me/example'},api,store:durable,log:logger,rpgApi:base,renderBattleAnimation:async()=>new Uint8Array([71,73,70]),renderPartyCard:async()=>new Uint8Array([137,80,78,71]),now:()=>100000});return {bot,durable,sent,calls};
 }
 test('cloud factory retains all six slash commands',()=>assert.deepEqual(commands.map(c=>c.command),['start','rpg','group','help','trade','duel']));
-test('fate public prologue retains story across join gate, grants only verified member and keeps account ID',async()=>{
- const t=botFixture(),code='f3b101101adeadbeef';let member=false;
+for(const version of [3,5])test('f'+version+' public prologue retains story across join gate, grants only verified member and keeps account ID',async()=>{
+ const t=botFixture(),code=`f${version}b101101adeadbeef`;let member=false;
  const b=createCloudBot({config:{active:true,chatId:CHAT,botUsername:'StarJournalRpgBot',appUrl:APP,inviteLink:'https://t.me/example'},api:{async call(method,body){t.sent.push({method,body});return method==='getChatMember'?{status:member?'member':'left'}:{message_id:1};}},store:t.durable,log:logger,rpgApi:{async call(path,body){t.calls.push({path,body});return {ok:true}}},renderBattleAnimation:async()=>[],renderPartyCard:async()=>[]});
  await b.handle({update_id:1200,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start fate_'+code}});assert.equal(t.calls.length,0);const message=t.sent.find(x=>x.method==='sendMessage');assert.equal(message.body.reply_markup.inline_keyboard[1][0].callback_data,'fate_resume:'+code);
  member=true;await b.handle({update_id:1201,callback_query:{id:'fate-join',from:{id:7},message:{chat:{id:7,type:'private'}},data:'fate_resume:'+code}});assert.deepEqual(t.calls,[{path:'/rpg/app/grant',body:{tgId:'7'}}]);const url=new URL(t.sent.filter(x=>x.method==='sendMessage').at(-1).body.reply_markup.inline_keyboard[0][0].web_app.url);assert.equal(url.searchParams.get('fate'),code);assert.equal(url.searchParams.get('screen'),'fate');
@@ -19,9 +19,12 @@ test('fate public prologue retains story across join gate, grants only verified 
 test('fate membership handoff cannot trigger from group or a different BOT suffix',async()=>{
  const t=botFixture();await t.bot.handle({update_id:1210,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start@OtherBot fate_f1b101adeadbeef'}});await t.bot.handle({update_id:1211,message:{chat:{id:CHAT,type:'supergroup'},from:{id:7},text:'/start fate_f1b101adeadbeef'}});assert.equal(t.calls.length,0);
 });
-test('formal f4 public story carries only its cosmetic code into the fate game screen',async()=>{
- const t=botFixture(),code='f4b101101adeadbeef';await t.bot.handle({update_id:1212,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start fate_'+code}});
+for(const version of [4,5])test('formal f'+version+' public story carries only its cosmetic code into the fate game screen',async()=>{
+ const t=botFixture(),code=`f${version}b101101adeadbeef`;await t.bot.handle({update_id:1212,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start fate_'+code}});
  const message=t.sent.find(x=>x.method==='sendMessage'),url=new URL(message.body.reply_markup.inline_keyboard[0][0].web_app.url);assert.equal(url.searchParams.get('fate'),code);assert.equal(url.searchParams.get('screen'),'fate');assert.deepEqual(t.calls,[{path:'/rpg/app/grant',body:{tgId:'7'}}]);
+});
+test('unsupported cosmetic code versions do not grant or enter a player account',async()=>{
+ const t=botFixture();await t.bot.handle({update_id:1213,message:{chat:{id:7,type:'private'},from:{id:7},text:'/start fate_f6b101101adeadbeef'}});assert.equal(t.calls.length,0);
 });
 for(const screen of ['bag','shop','guardian','boss','fate'])test('private start deep link '+screen+' preserves requested MiniApp screen',async()=>{const t=botFixture();await t.bot.handle({update_id:1,message:{chat:{id:7,type:'private'},from:{id:7,first_name:'旅者'},text:'/start rpg'+screen}});const m=t.sent.find(x=>x.method==='sendMessage');assert.equal(m.body.reply_markup.inline_keyboard[0][0].web_app.url,APP+'?screen='+screen);assert.ok(t.calls.some(c=>c.path==='/rpg/me'));});
 test('wrong group and wrong bot suffix do not execute RPG actions',async()=>{const t=botFixture();await t.bot.handle({update_id:2,message:{chat:{id:-999,type:'supergroup'},from:{id:7},text:'/rpg'}});await t.bot.handle({update_id:3,message:{chat:{id:7,type:'private'},from:{id:7},text:'/rpg@OtherBot'}});assert.equal(t.calls.length,0);});

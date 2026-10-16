@@ -15,20 +15,25 @@ const POOLS=[
  {tag:'第三幕 · 雪線',title:'雪停以前，最後一盞燈留在哪裡？',text:'大雪封住山路，你與同伴只剩一盞星燈。山下的旅人需要一個方向，而山脊另一頭，也有人等著你帶光抵達。',choices:[['放在回山下的路口','願每個折返的人，都有一個可辨認的方向。','你把星燈留在雪線路口，讓後來的人看得見回去的路。'],['與同伴帶過山脊','我們把光帶過去，再一起找回來的路。','你與同伴輪流提燈，走過山脊，讓光第一次抵達另一側。']]},
  {tag:'第三幕 · 新月',title:'港口熄燈了，你願意留下嗎？',text:'新月之夜，港口的燈一盞盞熄滅。你的船就要離岸，手裡最後一盞星燈，能成為岸上的等待，也能成為海上的約定。',choices:[['留下，等最後一艘船','總有人需要知道，還有誰願意等。','你留在岸上，直到最後一艘晚歸的船看見星燈。'],['出航，把星燈傳下去','也許這一點光，能陪更多人走遠。','你讓星燈在船員手中傳遞，把同行的約定帶向下一片海。']]}],
 ];
-export function scenesFor(result){if(result.version===4)return formalScenes(result);if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
+export function scenesFor(result){if(result.version>=4)return formalScenes(result);if(result.version===1)return SCENES;return POOLS.map((pool,i)=>{if(result.version>=3)pool=[...pool,...EXTRA_CHOICES[i]];const v=parseInt(result.seed.slice(i*2,i*2+2),16);return {...pool[v%pool.length],age:result.version===3?[18,40,66][i]:[18+v%7,30+v%13,55+v%19][i]};});}
 export function seedForNextLife(seed,entries=[],version=3){
  if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
- if(version===4){
-  const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>r?.version===4);
+ if(version>=4){
+  const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>version===4?r?.version===4:r?.version>=4);
   if(!previous.length)return seed;
-  const sceneSets=[0,1,2].map(i=>new Set(previous.map(p=>formalScenes(p)[i].id)));
-  const avoidScenes=candidate=>{for(let i=0;i<3;i++){let b=parseInt(candidate.slice(i*2,i*2+2),16);for(let n=0;n<256&&sceneSets[i].has(formalScenes({seed:candidate})[i].id);n++){b=(b+1)%256;candidate=candidate.slice(0,i*2)+b.toString(16).padStart(2,'0')+candidate.slice(i*2+2);}}return candidate;};
+  const sceneKey=scene=>version===5?scene.scenarioId||scene.id:scene.id;
+  const sceneSets=[0,1,2].map(i=>new Set(previous.map(p=>sceneKey(formalScenes(p)[i]))));
+  const avoidScenes=candidate=>{for(let i=0;i<3;i++){let b=parseInt(candidate.slice(i*2,i*2+2),16);for(let n=0;n<(version===5?16:256)&&sceneSets[i].has(sceneKey(formalScenes({seed:candidate,version})[i]));n++){b=(b+(version===5?16:1))%256;candidate=candidate.slice(0,i*2)+b.toString(16).padStart(2,'0')+candidate.slice(i*2+2);}}return candidate;};
   const previousRows=previous.flatMap(p=>plannedContent(p)),texts=new Set(previousRows.map(e=>e.text)),ids=new Set(previousRows.map(e=>e.id));
+  const usedShelves=new Set(previous.map(p=>parseInt(p.seed.slice(6,8),16)%4)),openShelves=[0,1,2,3].filter(s=>!usedShelves.has(s));
+  const shelf=version===5?openShelves[narrativeHash('fate-v5-shelf:'+seed)%openShelves.length]:null;
   // The next decisions do not yet exist. Score a projection using the most recent path;
   // only the selected seed is saved. Replay never consults history or this projection.
-  const projection=previous.at(-1),seenCandidates=new Set();let best=null,bestScore=Infinity;
-  for(let i=0;i<64;i++){
-   const candidate=avoidScenes(i===0?seed:narrativeHash('fate-v4-next:'+seed+':'+i).toString(16).padStart(8,'0'));
+  const projection={...previous.at(-1),version},seenCandidates=new Set();let best=null,bestScore=Infinity;
+  for(let i=0;i<(version===5?12:64);i++){
+   let candidate=i===0?seed:narrativeHash('fate-v'+version+'-next:'+seed+':'+i).toString(16).padStart(8,'0');
+   if(version===5)candidate=candidate.slice(0,6)+((parseInt(candidate.slice(6,8),16)&252)|shelf).toString(16).padStart(2,'0');
+   candidate=avoidScenes(candidate);
    if(seenCandidates.has(candidate))continue;seenCandidates.add(candidate);
    const score=plannedContent({...projection,seed:candidate}).reduce((n,e)=>n+(texts.has(e.text)?1000:0)+(ids.has(e.id)?1:0),0);
    if(score<bestScore){best=candidate;bestScore=score;}
@@ -44,7 +49,7 @@ export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光�
 export function readSoul(value){
  let raw;try{raw=typeof value==='string'?JSON.parse(value):value}catch{return {entries:[]}};
  if(!Array.isArray(raw?.entries))return {entries:[]};const seen=new Set(),entries=[];
- for(const e of raw.entries){if(!decodeResult(e?.code)||seen.has(e.code))continue;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=90&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
+ for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=result.version===5?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
  const draft=validLife(raw?.draft);return draft?{entries,draft}:{entries};
 }
 export function rememberSoul(record,code,at=Date.now(),memories=[]){

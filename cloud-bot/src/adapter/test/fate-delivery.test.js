@@ -36,3 +36,6 @@ test('delayed fate notification displays actual deadline remainder instead of re
  t.clock(AT+62000);await t.make().tick({forceOutbox:true});assert.match(t.sent[0].body.caption,/剩餘 28 秒/);assert.ok(!/剩餘 90 秒/.test(t.sent[0].body.caption));
  assert.ok(t.calls.findIndex(c=>c.path==='/rpg/fate/notification')<t.calls.findIndex(c=>c.path==='/rpg/party/tick'));
 });
+test('variable-lifespan fate notification preserves the actual age beyond ninety',async()=>{
+ const t=setup();t.event.age=103;await t.make().tick({forceOutbox:true});assert.match(t.sent[0].body.caption,/103 歲/);assert.doesNotMatch(t.sent[0].body.caption,/90 歲/);
+});

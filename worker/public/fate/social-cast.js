@@ -1,8 +1,10 @@
 // Only public character nicknames enter the fictional cast. Never an account / TG ID.
+import {V5_SOCIAL_ROLES} from './formal-catalog-v5.js';
 export const SOCIAL_ROLES=Object.freeze({
  ferry:{npc:'阿汀',role:'擺渡人'},rooftop:{npc:'禾梨',role:'鄰居'},theatre:{npc:'蘇陌',role:'戲臺夥伴'},
  brother:{npc:'小麥',role:'遠房親人'},weaver:{npc:'若竹',role:'織工好友'},stairs:{npc:'阿岑',role:'鄰居'},
  letter:{npc:'聞舟',role:'異鄉旅伴'},rival:{npc:'明硯',role:'同行宿敵'},bread:{npc:'月姨',role:'麵包店主人'},
+ ...V5_SOCIAL_ROLES,
 });
 export function publicNickname(value){if(typeof value!=='string')return null;const name=value.normalize('NFC').trim();return /^[\p{L}\p{N}_]{2,24}$/u.test(name)?name:null;}
 export function validSocialCast(raw){

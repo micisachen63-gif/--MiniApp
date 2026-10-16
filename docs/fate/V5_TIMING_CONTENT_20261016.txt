@@ -1,0 +1,53 @@
+星穹旅誌｜命運旅章 v5 時序與內容池 接手驗證（2026-10-16）
+
+使用者本次明確設定
+每世現實時長仍是兩個有效小時；死亡年齡與事件時點隨機。06:00–24:00成長，凌晨暫停，每帳每天最多四世，落款後須親自開下一世，全部保留。
+本版也補重大抉擇重複問題，不只將職業名稱換掉：每幕八組原創情境，共24組兩難與具體後果；避開最近三世同幕已出現的題型。
+
+版本與不可變規則
+新啟世使用version5，分享碼f5；已開始及已完成的v3／v4完全沿用原故事與時序。不能把既有draft改成5，不能重算真玩家已走過的事件。
+timing-v5.js由version＋8hex seed產生固定時序。新生命的終年通常65–104歲，約2%為55–64歲；事件間隔18–43有效秒，240段精確加總7200000ms，沒有最後一段補很長的誤差。
+三次大抉擇的年齡與現實時點依seed變化，第一場約17–22歲；每次仍90個有效秒，逾時自動續寫。人生最後依自己的終年落款，不再一律90歲。進行中畫面不揭示預定終年，完成後才顯示「此生 X 歲落款」。
+time profile凍結且有界快取，validLife不接受前端自行指定deathAge或時序陣列。重開、重試、不同裝置與公開短碼都得到同一份人生。
+重要：正式發布後，v5時序算法、seed對應的catalog順序／長度、抉擇題型與敘事規則都屬重播契約。後續新增／重排會影響seed取模時，必須另立v6，不能原地追加v5或改舊v4檔案造成歷史故事變化。
+
+內容真實盤點（不是笛卡兒積灌水）
+新增300則獨立生活紀事，child／youth／adult／middle／late／elder各50則，逐則約34–46字。池內無精確重複；比對四份舊事件來源也無精確重複。
+新增160篇連續故事：八種職涯×十章、八段人物關係×六章、八件重要物件×四章；另八組社區抉擇鋪陳、八段傳承反思。新增人物的48章都支援真玩家暱稱替換。
+v5可抽到16種職涯（160章）、20段人物鏈（120章）、16件物件鏈（64章），生活紀事池共804則。這些是各類別的實際條目數，不能直接相乘後宣稱有同數量的原創事件。
+重大抉擇是24組不同題型，每幕八組；另52個職涯／人物／物件情境主題可帶入，不將24×52宣稱原創題目數。
+保留有因果的順序：學藝後才有職涯章、選擇後才有承諾或傳承，答案具體回音進入紀事與終章。未做出的選擇不提前出現，重要場景不因重新整理變更。
+日常事件以實際時序、年齡與世界年鑑重播；兩小時內仍持續更新，並非每次操作才生長。
+
+實作入口
+worker/public/fate/timing-v5.js：lifeTiming、ageAtActive、narrativeTickAt、activeAtVirtualAge，純函式，不依賴網路、生日或當下隨機數。
+life.js：lifeSchedule(startedAt,life)讀新時序，未傳life或v3／v4走舊時序；lifeAge及跨夜effective time。
+model.js：f5 codec與完成後的deathAge；cycles.js：動態場景與避最近三世，v5固定12個候選及故事書架，v4原64候選保留。
+formal-events.js：v5專用新池、變動事件時點、真實年齡／世界年、抉擇截止後果；ending-story.js：個人完整人生與終年落款，未完成不得提前生成完整終章。
+formal-days-v5.js、formal-catalog-v5.js、formal-choices-v5.js：新增原創內容，不能再用模板組合數充當條目數。
+event-catalog-v1.js新增v5路由至正式敘事，其他版本維持原行為；social-cast.js新增八種可替換名字的關係。
+services/fate.js：新啟世version5及seedForNextLife5，next_at必須使用lifeSchedule(now,draft)，不能忘記傳入draft而回到固定舊時刻。
+fate/app.js、life-ui.js、fate-entry.js：f5、動態歲數、終年徽記、舊人生resume、通知選項優先定位。
+cloud-bot：f5入群續接、prepared／JPEG公開圖卡共用解碼器；通知可正確顯示超過90歲，不截斷。
+入口快取20261016-fate5a；既有JPEG圖卡版本20261016-zodiac2保留，f5本身是新的cache key，f4圖片版面不改。
+
+驗證與範例
+Node24，根npm ci及npm test，不跳過失敗檔案。重點fate-timing-v5.test.js、fate-catalog-v5.test.js、fate-choice-diversity.test.js、fate-service、fate-life-ui、fate-version4及Bot完整測試。
+1024種seed驗證18–43秒間隔、精確兩小時、年齡範圍、90秒截止、跨夜、前綴不改寫與歷史版本；256世驗證新職涯／人物／物件實際可抽到，非僅增加未使用匯出。
+本機純運算四次連續啟程最後約0／66／64／72ms量級，非雲端流量壓測。v5候選固定12，避免擴池後64次整世重播造成CPU飆升；後續需保留有界工作量。
+固定公開合成範例：f53010001adeadbeef終年66歲，抉擇21／31／50歲；f53010001a9c61a7d2終年95歲，抉擇22／38／69歲。這些不是任何玩家真實命盤資料。
+已在電腦瀏覽器實際看到兩個範例分別顯示66／95歲落款，並保留f5 TG創角接續連結；沒有發文或群發測試。
+本機證據不進Git：C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016/。
+v5-all-tests.txt、v5-ended-95.png；最終線上核對與發布數據以部署JSON及後續封版補記為準。
+最終完整測試v5-final-tests.txt：Worker1232＋Bot114＝1346，零失敗零skip。另以512個f1–f4公開碼及128份v4紀事對上一版原始碼逐字節比較相同。
+獨立審閱確認24題與人生方向一致；16職涯×20人物×16物件×24builders的122880次構建沒有缺欄位，48個選項標籤沒有重複。這是驗證次數，不是原創故事數。
+v5-notification-focused.png是本機實際TG啟動參數→選角→自動進旅章、直接捲到兩個可點選項與倒數的截圖；不是僅以程式locator替玩家手動捲動。
+
+交織命運／通知前一版
+詳見SHARED_CHOICES_HANDOVER_20261016.txt。新雙人支線40有效分鐘開啟、50分鐘敘事後果不變；v5將其正確換算為本世實際年齡。原有三大抉擇仍本人90秒，不與guest支線互相搶答。
+0028新增六張私有表已單檔套用核對；本v5不需要新migration，不重跑0028或歷史migration。
+先前一個純定位補丁發布遇Wrangler fetch failed；已以只讀deployments及sync:check核實正式Worker仍7a0face1 @100、runtime雜湊與既有73cb15d收據相同。沒有不明版本被覆蓋、沒有盲目重部署；本次為包含定位補丁的全新v5來源版本。
+
+部署與後續
+提交、push、合併GitHub後，primary乾淨origin/main根npm run deploy:worker／deploy:bot。保留binding／namespace／secret／cron，出錯先查live與.release-sync，不能直接重試發布。
+不使用新增付費模型／外部生成API／新服務資源，不發真實測試通知，不修改玩家現有生命、背包或受邀設定。

@@ -29,7 +29,7 @@ export function renderLifeUI(p,o){
 }
 export function paintLifeUI(p,d,force=false,authorityNow=d.clockAt){
  if(!p?.isConnected&&!force)return;
- const key=d.seed+':'+d.startedAt,v=advanceLife(d,d.clockAt),scenes=scenesFor(d),all=(d.version>=4?formalEvents(d,d.clockAt):narrativeEvents(d,d.clockAt)).filter(e=>e.kind!=='choice');
+ const key=d.version+':'+d.seed+':'+d.startedAt,v=advanceLife(d,d.clockAt),scenes=scenesFor(d),all=(d.version>=4?formalEvents(d,d.clockAt):narrativeEvents(d,d.clockAt)).filter(e=>e.kind!=='choice');
  d.answers.forEach((a,i)=>all.push({id:'choice-'+i,age:scenes[i].age,text:(d.sources[i]==='auto'?'命運代選 · ':'親自選擇 · ')+scenes[i].choices[a][2]}));all.sort((a,b)=>a.age-b.age||a.id.localeCompare(b.id));
  let player=players.get(key);if(!player){player={cursor:d.version>=4?Math.max(0,all.length-6):0,lastAt:0};players.set(key,player);if(players.size>20)players.delete(players.keys().next().value);}
  if(Date.now()-player.lastAt>=2800&&player.cursor<all.length-1){player.cursor++;player.lastAt=Date.now();}

@@ -2,8 +2,12 @@ import {hash,worldYear,almanac,REGIONS} from './world.js';
 import {LEGACY_MEMORIES} from './formal-ambient-v4.js';
 import {CAREERS,THREADS,OBJECTS,NEW_MEMORIES} from './formal-catalog-v4.js';
 import {FURTHER_MEMORIES} from './formal-days-v4.js';
-import {socialThread} from './social-cast.js';
+import {socialThread,SOCIAL_ROLES} from './social-cast.js';
 import {sharedMemories} from './shared-story.js';
+import {lifeTiming,ageAtActive,narrativeTickAt} from './timing-v5.js';
+import {V5_MEMORIES} from './formal-days-v5.js';
+import {V5_CAREERS,V5_THREADS,V5_OBJECTS,V5_COMMUNITY,V5_REFLECTIONS} from './formal-catalog-v5.js';
+import {V5_CHOICE_VARIANTS} from './formal-choices-v5.js';
 
 export const NARRATIVE_VERSION=4;
 export const EVENT_INTERVAL_MS=30000;
@@ -16,6 +20,10 @@ const byte=(seed,i)=>parseInt(seed.slice(i*2,i*2+2),16);
 const phases=['child','youth','adult','middle','late','elder'];
 const phaseFor=a=>a<12?'child':a<24?'youth':a<40?'adult':a<56?'middle':a<74?'late':'elder';
 const ambient=[...LEGACY_MEMORIES.map(e=>({...e,id:'v4-'+e.id})),...Object.entries(NEW_MEMORIES).flatMap(([phase,rows])=>rows.map((text,i)=>({id:`v4-new-${phase}-${i}`,phase,text}))),...Object.entries(FURTHER_MEMORIES).flatMap(([phase,rows])=>rows.map((text,i)=>({id:`v4-day-${phase}-${i}`,phase,text})))];
+const v5Ambient=[...ambient,...Object.entries(V5_MEMORIES).flatMap(([phase,rows])=>rows.map((text,i)=>({id:`v5-day-${phase}-${i}`,phase,text})))].map(e=>({...e,shelf:hash('v4-shelf:'+e.id)%4}));
+const v5ByPhase=Object.fromEntries(phases.map(phase=>[phase,v5Ambient.filter(e=>e.phase===phase)]));
+const v5Careers=[...CAREERS,...V5_CAREERS],v5Threads=[...THREADS,...V5_THREADS],v5Objects=[...OBJECTS,...V5_OBJECTS];
+const catalogues=life=>life?.version===5?{careers:v5Careers,threads:v5Threads,objects:v5Objects}:{careers:CAREERS,threads:THREADS,objects:OBJECTS};
 const origins=[
  '你出生在守夜人輪流照看的海岸，最早認得的是燈影在牆上緩慢搖動。',
  '你出生在鐘樓下的山城，一天的開始由鐘聲告知，一天的結束由家門裡的飯香告知。',
@@ -41,7 +49,7 @@ const infancy=[
 ];
 
 export function formalScenes(life={}){
- const seed=seedOf(life),career=CAREERS[byte(seed,0)%CAREERS.length],thread=THREADS[byte(seed,1)%THREADS.length],object=OBJECTS[byte(seed,2)%OBJECTS.length];
+ const seed=seedOf(life),pool=catalogues(life),career=pool.careers[byte(seed,0)%pool.careers.length],thread=pool.threads[byte(seed,1)%pool.threads.length],object=pool.objects[byte(seed,2)%pool.objects.length];
  const community={
   ferry:['渡口的下一程','碼頭準備改建，常走舊路的人與盼望新路的人，各有不能輕忽的生活。街坊希望有人願意長期聽完兩邊的聲音。'],
   rooftop:['屋頂的一點綠','街坊想讓屋頂與窗臺留住更多花草，住得近的人卻有不同顧慮，需要有人協調每一個小小的位置。'],
@@ -55,6 +63,7 @@ export function formalScenes(life={}){
   rival:['把分歧留在桌上','街坊幾場合作因分帳與署名不明而破局，大家想重訂共同規則，卻需要有人願意面對不討喜的細節。'],
   bread:['長桌上的下一餐','街坊想把臨時的互助餐桌固定下來，除了食材，也需要仔細分配採買、清潔與休息的時間。'],
   gardeners:['空地能長出什麼','一塊公共空地的用途仍未決定，種菜、歇腳與往來通行都有人需要，大家希望有人把想法完整收集。'],
+  ...(life.version===5?V5_COMMUNITY:{}),
  }[thread.id];
  const objectReflection={
   'brass-key':'無齒銅鑰匙曾讓你追問一扇不存在的門。到了安排交棒的時候，你知道留下答案與陪人學會發問，是兩種不同的工作。',
@@ -65,12 +74,24 @@ export function formalScenes(life={}){
   stone:'半透明河石曾讓你在用途與價值之間想了很久。如今要安排經驗的去處，你明白親自陪伴與公開記錄都需要認真的時間。',
   spoon:'缺角木匙記得笨拙的開頭。如今輪到別人開始，你想留在身邊慢慢示範，還是把開頭與失敗都寫清，讓更遠的人也能嘗試。',
   ticket:'舊市集票把一次相遇接回了後來的日子。安排交棒時，你想陪熟悉的人繼續工作，也看見未曾相識的人可能需要那些記錄。',
+  ...(life.version===5?V5_REFLECTIONS:{}),
  }[object.id];
- return [
+ const timing=lifeTiming({...life,seed});
+ if(timing){
+  const actualThread=socialThread(thread,life.socialCast),npc=SOCIAL_ROLES[thread.id]?.npc;
+  const actualCommunity=actualThread.actor&&npc?community.map(text=>text.split(npc).join('「'+actualThread.actor+'」')):community;
+  const context={career,thread:actualThread,object,community:actualCommunity,reflection:objectReflection};
+  return V5_CHOICE_VARIANTS.map((variants,i)=>{
+   const variant=variants[(byte(seed,i)>>4)%variants.length],scene=variant.build(context);
+   return {...scene,id:`v5-scene-${i}-${variant.id}`,scenarioId:`v5-${i}-${variant.id}`,age:timing.choiceAges[i]};
+  });
+ }
+ const scenes=[
   {id:`v4-scene-apprentice-${career.id}`,age:18,tag:'第一章 · 手藝與遠方',title:`成為${career.name}，從哪裡開始？`,text:`${career.place}願意收你為學徒，巡迴師傅也能傳授同一門手藝。你只能接受其中一份長期約定；兩條路都要從最笨拙的基本功開始。`,choices:[['留在本地學藝','在熟悉的街道，建立能長久往來的信任。',`你留在本地學習，開始了${career.name}的生涯，也答應把手藝留給街坊。`],['隨巡迴師傅學藝','在陌生的地方，學習不同的人怎樣生活。',`你隨巡迴師傅離開故鄉，開始了${career.name}的生涯，將陌生街道慢慢走成日常。`]]},
   {id:`v4-scene-time-${thread.id}`,age:40,tag:'第二章 · 有限的時間',title:`${community[0]}，或更遠的邀請？`,text:`${community[1]}同時，外地的手藝交流會也寄來邀請。你無法把兩份長期工作都做好，必須親自決定，把接下來的時間交給哪一邊。`,choices:[['承擔街坊的共同事務','少接幾份工作，與人一起把生活照料好。','你減少手上的工作，開始參與街坊事務，答應把聽見的意見帶回同一張桌上。'],['加入外地交流會','帶著手藝交換方法，也練習尊重差異。','你接受外地交流會的邀請，開始交換工作方法，承諾回來時留下可供人查閱的記錄。']]},
   {id:`v4-scene-legacy-${object.id}`,age:66,tag:'第三章 · 如何交棒',title:`${object.name}之後，經驗往哪裡去？`,text:objectReflection,choices:[['留在身邊慢慢教','讓接手的人能反覆問，也能走出自己的方法。','你留下固定的時間陪伴後輩，答應不把自己的習慣當成唯一正確的做法。'],['整理記錄公開送出','讓不曾見過面的人，也能接著嘗試。','你整理並公開自己的經驗記錄，標清已知與未知，讓遠方的人也能接著修正。']]},
  ];
+ return scenes;
 }
 
 // Independent reactions to the same immutable fictional year. Their consequences are narrative-only.
@@ -130,30 +151,45 @@ export function narrativeActiveBetween(from,to){
 
 export function narrativeProfile(life={}){
  const seed=seedOf(life),orbit=Number.isInteger(life.orbit)&&life.orbit>=0&&life.orbit<12?life.orbit:11;
+ const pool=catalogues(life);
  const rank=(items,tag)=>[...items].sort((a,b)=>hash(seed+tag+a.id)-hash(seed+tag+b.id));
- const primaryThread=THREADS[byte(seed,1)%THREADS.length],primaryObject=OBJECTS[byte(seed,2)%OBJECTS.length];
- return {seed,orbit,region:REGIONS[(byte(seed,3)+orbit)%REGIONS.length],career:CAREERS[byte(seed,0)%CAREERS.length],threads:[primaryThread,...rank(THREADS,'people').filter(t=>t!==primaryThread).slice(0,3)].map(thread=>socialThread(thread,life.socialCast)),objects:[primaryObject,...rank(OBJECTS,'objects').filter(o=>o!==primaryObject).slice(0,2)]};
+ const primaryThread=pool.threads[byte(seed,1)%pool.threads.length],primaryObject=pool.objects[byte(seed,2)%pool.objects.length];
+ return {seed,orbit,region:REGIONS[(byte(seed,3)+orbit)%REGIONS.length],career:pool.careers[byte(seed,0)%pool.careers.length],threads:[primaryThread,...rank(pool.threads,'people').filter(t=>t!==primaryThread).slice(0,3)].map(thread=>socialThread(thread,life.socialCast)),objects:[primaryObject,...rank(pool.objects,'objects').filter(o=>o!==primaryObject).slice(0,2)]};
 }
 
 export function plannedContent(life={},options={}){
  const profile=narrativeProfile(life),{seed,orbit,career}=profile;
+ const timing=lifeTiming(life),isV5=!!timing;
  const limit=Math.max(0,Math.min(240,Number.isFinite(options.ticks)?Math.floor(options.ticks):240));
  const answers=Array.isArray(life.answers)?life.answers.slice(0,3):[],used=new Set(),rows=[],state={energy:65,knowledge:15,wealth:36,bonds:24,reputation:10};
  const progress=new Map(),worldSeen=new Set(),scenes=formalScenes(life);
- const push=(id,age,text,kind,delta={},extra={})=>{if(used.has(id))throw Error('Duplicate narrative id '+id);used.add(id);for(const k of Object.keys(state))state[k]=clamp(state[k]+(delta[k]||0));rows.push({id,age,text,worldYear:worldYear(seed,age),kind,state:{...state},...extra});};
+ const push=(id,age,text,kind,delta={},extra={})=>{if(used.has(id))throw Error('Duplicate narrative id '+id);used.add(id);for(const k of Object.keys(state))state[k]=clamp(state[k]+(delta[k]||0));rows.push({id,age,text,worldYear:worldYear(seed,age),kind,state:{...state},...(isV5?{activeMs:Math.round(age/timing.deathAge*DURATION)}:{}),...extra});};
  push('v4-birth-'+orbit,0,`${origins[orbit]}星曆${worldYear(seed)}年，${profile.region}的風，翻開了你此生的第一頁。`,'birth');
  // Schedule chain chapters in age order; all prerequisites are replayed, never inferred from the ending.
- const scheduled=new Map(RESOLVED_AGES.map(a=>[Math.ceil(a/.375),null]));
+ const resolvedTicks=isV5?timing.choiceOffsets.map(at=>{const deadline=at+90000,tick=narrativeTickAt(life,deadline);return timing.eventOffsets[tick]<deadline?tick+1:tick;}):RESOLVED_AGES.map(a=>Math.ceil(a/.375));
+ const scheduled=new Map(resolvedTicks.map(tick=>[tick,null]));
  const schedule=(tick,item)=>{while(scheduled.has(tick))tick++;if(tick<=240)scheduled.set(tick,item);};
- profile.threads.forEach((thread,i)=>{const start=Math.max(2,Math.ceil(thread.min/.375))+i*2,end=Math.floor(thread.max/.375);thread.steps.forEach((text,j)=>schedule(Math.floor(start+(end-start)*j/5),{type:'relationship',thread,text,chapter:j}));});
- profile.objects.forEach((object,i)=>object.steps.forEach((text,j)=>schedule(14+i*7+j*52,{type:'object',object,text,chapter:j})));
- [52,66,81,97,117,135,153,171,201,225].forEach((tick,j)=>schedule(tick,{type:'career',text:career.steps[j],chapter:j}));
- [113,128,146,164,186,211].forEach((tick,j)=>schedule(tick,{type:'commitment',chapter:j}));
- [184,200,218,236].forEach((tick,j)=>schedule(tick,{type:'legacy',chapter:j}));
+ if(isV5){
+  // Reserve consequence chains after their own actual deadline. A late first
+  // apprenticeship must not silently skip its opening chapter and every sequel.
+  const spread=(start,end,count,fn)=>Array.from({length:count},(_,i)=>schedule(Math.round(start+(end-start)*i/(count-1)),fn(i)));
+  spread(resolvedTicks[0]+1,225,10,j=>({type:'career',text:career.steps[j],chapter:j}));
+  spread(resolvedTicks[1]+1,227,6,j=>({type:'commitment',chapter:j}));
+  spread(resolvedTicks[2]+1,236,4,j=>({type:'legacy',chapter:j}));
+  const tickForAge=age=>{const at=age/timing.deathAge*DURATION,tick=narrativeTickAt(life,at);return timing.eventOffsets[tick]<at?tick+1:tick;};
+  profile.threads.forEach((thread,i)=>{const start=Math.max(8,tickForAge(thread.min))+i*2,end=tickForAge(Math.min(thread.max,timing.deathAge-2));thread.steps.forEach((text,j)=>schedule(Math.round(start+(end-start)*j/5),{type:'relationship',thread,text,chapter:j}));});
+  profile.objects.forEach((object,i)=>object.steps.forEach((text,j)=>schedule(14+i*7+j*52,{type:'object',object,text,chapter:j})));
+ }else{
+  profile.threads.forEach((thread,i)=>{const start=Math.max(2,Math.ceil(thread.min/.375))+i*2,end=Math.floor(thread.max/.375);thread.steps.forEach((text,j)=>schedule(Math.floor(start+(end-start)*j/5),{type:'relationship',thread,text,chapter:j}));});
+  profile.objects.forEach((object,i)=>object.steps.forEach((text,j)=>schedule(14+i*7+j*52,{type:'object',object,text,chapter:j})));
+  [52,66,81,97,117,135,153,171,201,225].forEach((tick,j)=>schedule(tick,{type:'career',text:career.steps[j],chapter:j}));
+  [113,128,146,164,186,211].forEach((tick,j)=>schedule(tick,{type:'commitment',chapter:j}));
+  [184,200,218,236].forEach((tick,j)=>schedule(tick,{type:'legacy',chapter:j}));
+ }
  for(let tick=1;tick<=limit;tick++){
-  const age=tick*.375,w=almanac(worldYear(seed,age)),item=scheduled.get(tick),resolved=RESOLVED_AGES.map((a,i)=>age>=a&&[0,1].includes(answers[i]));
-  const choiceIndex=RESOLVED_AGES.findIndex(a=>Math.ceil(a/.375)===tick);
-  if(choiceIndex>=0&&resolved[choiceIndex]){const i=choiceIndex,a=answers[i],source=life.sources?.[i]||(life.auto?.[i]?'auto':'manual');push(`v4-choice-${i}-${a}`,age,scenes[i].choices[a][2]+(source==='auto'?'這一頁在期限到達時，由命運代你翻過。':'這一頁由你親自選定。'),'choice',a===0?{bonds:4,reputation:2,wealth:-1}:{knowledge:4,energy:-1}, {choiceIndex:i,answer:a,source});continue;}
+  const age=isV5?ageAtActive(life,timing.eventOffsets[tick]):tick*.375,w=almanac(worldYear(seed,age)),item=scheduled.get(tick),resolved=resolvedTicks.map((at,i)=>tick>=at&&[0,1].includes(answers[i]));
+  const choiceIndex=resolvedTicks.indexOf(tick);
+  if(choiceIndex>=0&&resolved[choiceIndex]){const i=choiceIndex,a=answers[i],scene=scenes[i],source=life.sources?.[i]||(life.auto?.[i]?'auto':'manual');push(isV5?`v5-choice-${scene.scenarioId.slice(3)}-${a}`:`v4-choice-${i}-${a}`,age,scene.choices[a][2]+(source==='auto'?'這一頁在期限到達時，由命運代你翻過。':'這一頁由你親自選定。'),'choice',a===0?{bonds:4,reputation:2,wealth:-1}:{knowledge:4,energy:-1}, {choiceIndex:i,answer:a,source,...(isV5?{scenarioId:scene.scenarioId}:{})});continue;}
   if(tick<=7){push('v4-infancy-'+tick,age,infancy[tick-1],'memory',{energy:1,bonds:1});continue;}
   if(item){
    const key=item.thread?.id||item.object?.id||(item.type==='career'?`career-${career.id}`:item.type==='commitment'?`commitment-${answers[1]}`:item.type==='legacy'?`legacy-${answers[2]}`:item.type),chapter=item.chapter,previous=progress.get(key)||0;
@@ -188,12 +224,12 @@ export function plannedContent(life={},options={}){
   if(age>=30&&state.reputation>=55&&!used.has('v4-trusted')){push('v4-trusted',age,'因為幾次把難處提早說清，同行請你協調一份共同委託。你先公布自己也有利益在其中，讓信任不必靠誰盲目相信。','consequence',{reputation:2,energy:-2},{stateCause:'reputation>=55'});continue;}
   if(age>=50&&state.knowledge>=70&&!used.has('v4-method-revision')){push('v4-method-revision',age,`多年學習${career.name}的經驗，讓你看出一份常用說明的漏洞。你公開修正，也把自己過去照做時的錯誤一併寫出。`,'consequence',{knowledge:2,reputation:3},{stateCause:'knowledge>=70'});continue;}
   if(age>=55&&state.energy<=30&&!used.has('v4-rest')){push('v4-rest',age,'連續奔忙讓你終於無法忽略疲憊，你減少安排，請人分擔一部分事，讓休息成為往後日程中真正的一項。','consequence',{energy:12,wealth:-2},{stateCause:'energy<=30'});continue;}
-  const phase=phaseFor(age),eligible=ambient.filter(e=>e.phase===phase&&!used.has(e.id));
+  const phase=phaseFor(age),memoryPool=isV5?v5Ambient:ambient,eligible=isV5?v5ByPhase[phase].filter(e=>!used.has(e.id)):memoryPool.filter(e=>e.phase===phase&&!used.has(e.id));
   // Adjacent life stages are a reserve only; the authored stage supply normally remains sufficient.
-  const reserve=eligible.length?eligible:ambient.filter(e=>!used.has(e.id)&&Math.abs(phases.indexOf(e.phase)-phases.indexOf(phase))<=1);
+  const reserve=eligible.length?eligible:memoryPool.filter(e=>!used.has(e.id)&&Math.abs(phases.indexOf(e.phase)-phases.indexOf(phase))<=1);
   // Four authored memory shelves spread a day's four lives across genuinely different prose.
   // The shelf is fully encoded by the seed; history is only used when selecting the next seed.
-  const shelf=byte(seed,3)%4,preferred=reserve.filter(e=>hash('v4-shelf:'+e.id)%4===shelf);
+  const shelf=byte(seed,3)%4,preferred=reserve.filter(e=>(isV5?e.shelf:hash('v4-shelf:'+e.id)%4)===shelf);
   const candidates=preferred.length?preferred:reserve;
   if(!candidates.length)throw Error('Narrative catalogue exhausted at '+age);
   const prefix=answers.filter((_,i)=>resolved[i]).join('');
@@ -202,20 +238,21 @@ export function plannedContent(life={},options={}){
   push(pick.id,age,pick.text,'memory',{energy:ageEnergy+(roll%3)-1,knowledge:roll%4===0?1:0,bonds:roll%3===0?1:0,wealth:age>=18&&age<70?(roll%5===0?-2:roll%5===1?1:0):0});
  }
  for(const m of sharedMemories(life.sharedMemories)){
-  const age=narrativeActiveBetween(life.startedAt,m.at)/DURATION*90;
-  if(m.at<life.startedAt||age>limit*.375||age>90)continue;
+  const elapsed=narrativeActiveBetween(life.startedAt,m.at),age=isV5?ageAtActive(life,elapsed):elapsed/DURATION*90;
+  const cutoff=isV5?(Number.isFinite(options.activeMs)?options.activeMs:timing.eventOffsets[limit]):limit*EVENT_INTERVAL_MS;
+  if(m.at<life.startedAt||elapsed>cutoff||elapsed>DURATION)continue;
   const state=[...rows].reverse().find(e=>e.age<=age)?.state;
-  rows.push({id:m.id,age,kind:'shared',thread:m.id,source:m.source,text:m.text,state:{...state},worldYear:worldYear(seed,age)});
+  rows.push({id:m.id,age,kind:'shared',thread:m.id,source:m.source,text:m.text,state:{...state},worldYear:worldYear(seed,age),...(isV5?{activeMs:elapsed}:{})});
  }
  rows.sort((a,b)=>a.age-b.age||a.id.localeCompare(b.id));
  return rows;
 }
 
 export function formalEvents(life,now=life?.clockAt){
- if(life?.version!==4||!validSeed(life.seed)||!Number.isFinite(life.startedAt))return [];
+ if(![4,5].includes(life?.version)||!validSeed(life.seed)||!Number.isFinite(life.startedAt))return [];
  const at=Math.max(life.startedAt,Number.isFinite(now)?now:life.clockAt||life.startedAt);
- const ticks=Math.min(240,Math.floor(narrativeActiveBetween(life.startedAt,at)/EVENT_INTERVAL_MS));
- return plannedContent(life,{ticks});
+ const elapsed=Math.min(DURATION,narrativeActiveBetween(life.startedAt,at)),ticks=life.version===5?narrativeTickAt(life,elapsed):Math.min(240,Math.floor(elapsed/EVENT_INTERVAL_MS));
+ return plannedContent(life,{ticks,...(life.version===5?{activeMs:elapsed}:{})});
 }
 
-export const contentInventory=()=>({ambient:ambient.length,infancy:infancy.length,careers:CAREERS.length,careerChapters:CAREERS.reduce((n,c)=>n+c.steps.length,0),relationshipChains:THREADS.length,relationshipChapters:THREADS.reduce((n,c)=>n+c.steps.length,0),objects:OBJECTS.length,objectChapters:OBJECTS.reduce((n,c)=>n+c.steps.length,0),worldReactions:Object.values(WORLD_REACTIONS).reduce((n,r)=>n+r.length,0),worldMetricEvents:8,commitmentChapters:civic.length+exchange.length,legacyChapters:legacyHome.length+legacyAway.length,originChapters:origins.length,choiceScenes:CAREERS.length+THREADS.length+OBJECTS.length});
+export function contentInventory({version=4}={}){const pool=catalogues({version}),topics=pool.careers.length+pool.threads.length+pool.objects.length,families=V5_CHOICE_VARIANTS.reduce((n,rows)=>n+rows.length,0);return {ambient:version===5?v5Ambient.length:ambient.length,infancy:infancy.length,careers:pool.careers.length,careerChapters:pool.careers.reduce((n,c)=>n+c.steps.length,0),relationshipChains:pool.threads.length,relationshipChapters:pool.threads.reduce((n,c)=>n+c.steps.length,0),objects:pool.objects.length,objectChapters:pool.objects.reduce((n,c)=>n+c.steps.length,0),worldReactions:Object.values(WORLD_REACTIONS).reduce((n,r)=>n+r.length,0),worldMetricEvents:8,commitmentChapters:civic.length+exchange.length,legacyChapters:legacyHome.length+legacyAway.length,originChapters:origins.length,choiceScenes:version===5?families:topics,...(version===5?{choiceFamilies:families,choiceContextTopics:topics,newAmbient:Object.values(V5_MEMORIES).reduce((n,rows)=>n+rows.length,0),newChainChapters:V5_CAREERS.reduce((n,c)=>n+c.steps.length,0)+V5_THREADS.reduce((n,c)=>n+c.steps.length,0)+V5_OBJECTS.reduce((n,c)=>n+c.steps.length,0)}:{})};}
