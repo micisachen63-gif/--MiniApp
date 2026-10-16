@@ -7,7 +7,7 @@ const life=(seed='deadbeef',extra={})=>({version:7,seed,orbit:3,answers:[],auto:
 function manualLife(seed,branch=()=>0){const d=life(seed);for(let i=0;i<=9;i++){const r=replayDecisionLife(d,{activeMs:DURATION,autoFill:false});if(r.completed)return d;assert.ok(r.pending?.missingAnswer);d.answers.push(branch(r.pending));d.auto.push(0);}throw Error('Too many decisions');}
 
 test('v7 has a finite authored daily pool and no unconditional career or qualification chain',()=>{
- const inventory=narrativeV7Inventory();assert.equal(inventory.memoryCount,270);assert.equal(inventory.endingThemes,8);assert.equal(inventory.intervalMs,30000);
+ const inventory=narrativeV7Inventory();assert.equal(inventory.newMemoryCount,270);assert.equal(inventory.reserveMemoryCount,397);assert.equal(inventory.memoryCount,667);assert.equal(inventory.endingThemes,8);assert.equal(inventory.intervalMs,30000);
  for(const version of [1,2,3,4,5,6]){assert.deepEqual(plannedV7Content({...life(),version}),[]);assert.equal(endingV7({...life(),version}),null);assert.equal(profileV7({...life(),version}),null);}
  const source=readFileSync(new URL('../public/fate/narrative-v7.js',import.meta.url),'utf8');assert.doesNotMatch(source,/from ['"].*(?:formal-events|model\.js|life\.js|cycles\.js|geography|life-metrics)/);assert.doesNotMatch(source,/answers\??\.\[[12]\]/);
 });

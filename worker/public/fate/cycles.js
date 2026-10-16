@@ -21,8 +21,11 @@ export function seedForNextLife(seed,entries=[],version=3,orbit=11){
  if(!/^[a-f0-9]{8}$/.test(seed))throw Error('Invalid seed');
  if(version===7){
   const past=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>r?.version===7);if(!past.length)return seed;
-  const seen=new Set(past.flatMap(p=>replayDecisionLife(p,{activeMs:7200000}).resolved.map(s=>s.id))),project=candidate=>replayDecisionLife({version:7,seed:candidate,orbit,answers:[],auto:[]},{activeMs:7200000}),baseline=project(seed).resolved.length;
-  let best=seed,score=Infinity;for(let i=0;i<16;i++){const candidate=i?narrativeHash('fate-v7-next:'+seed+':'+i).toString(16).padStart(8,'0'):seed,v=project(candidate);if(v.resolved.length<baseline)continue;const n=v.resolved.reduce((n,s)=>n+(seen.has(s.id)?1:0),0)/Math.max(1,v.resolved.length);if(n<score){score=n;best=candidate;}}return best;
+  const seen=new Set(past.flatMap(p=>replayDecisionLife(p,{activeMs:7200000}).resolved.map(s=>s.id))),seenText=new Set(past.flatMap(p=>plannedContent(p).filter(e=>e.kind==='memory').map(e=>e.text))),project=candidate=>replayDecisionLife({version:7,seed:candidate,orbit,answers:[],auto:[]},{activeMs:7200000}),baseline=project(seed).resolved.length;
+  const ranked=[];for(let i=0;i<16;i++){const candidate=i?narrativeHash('fate-v7-next:'+seed+':'+i).toString(16).padStart(8,'0'):seed,v=project(candidate);if(v.resolved.length>=baseline)ranked.push({candidate,v,choiceScore:v.resolved.reduce((n,s)=>n+(seen.has(s.id)?1:0),0)/Math.max(1,v.resolved.length)});}
+  // Only four promising candidates need the full prose replay. History chooses
+  // a seed at start; it is never an unencoded input to the public story itself.
+  let best=seed,score=Infinity;for(const {candidate,v,choiceScore} of ranked.sort((a,b)=>a.choiceScore-b.choiceScore).slice(0,4)){const memories=plannedContent({version:7,seed:candidate,orbit,answers:v.answers,auto:v.auto}).filter(e=>e.kind==='memory'),n=.65*choiceScore+.35*memories.reduce((n,e)=>n+(seenText.has(e.text)?1:0),0)/Math.max(1,memories.length);if(n<score){score=n;best=candidate;}}return best;
  }
  if(version>=4){
   const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>version===4?r?.version===4:r?.version>=4);

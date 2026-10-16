@@ -2,6 +2,7 @@ import {replayDecisionLife,DECISION_DURATION_MS} from './decision-engine-v7.js';
 import {hash,worldYear} from './world.js';
 import {sharedMemories} from './shared-story.js';
 import {validSocialCast,SOCIAL_ROLES} from './social-cast.js';
+import {eligibleV7MemoryReserve,memoryReserveInventory} from './v7-memory-reserve.js';
 
 // Version 7 presentation recipe 1. This module interprets the conditional event
 // ledger; it does not run legacy career chains or invent jobs from answer bits.
@@ -321,17 +322,17 @@ const birthGender=run=>run.profile.gender==='f'?'女孩':run.profile.gender==='m
 
 export function plannedV7Content(life,{activeMs}={}){
  if(life?.version!==7)return [];
- const until=elapsed(life,activeMs),run=replay(life,until),death=run.profile.deathAge,rows=[],used=new Set();
+ const until=elapsed(life,activeMs),run=replay(life,until),death=run.profile.deathAge,rows=[],used=new Set(),usedTexts=new Set();
  const push=(id,at,text,kind,extra={})=>rows.push({id,age:at/DURATION*death,activeMs:at,worldYear:worldYear(life.seed,at/DURATION*death),kind,text,state:stateAt(run,at),...extra});
  push('v7-origin',0,`${birthGender(run)?'這一世，你以'+birthGender(run)+'的身分出生。':''}尋常的聲音與光線靠近，你還不懂它們的名字，日子已經慢慢向前。`,'origin');
  for(let tick=1;tick*INTERVAL<=until;tick++){
-  const at=tick*INTERVAL,age=at/DURATION*death,key=phase(age),pool=memoryPools[key],eligible=pool.map((text,i)=>({id:`v7-day-${key}-${i}`,text})).filter(row=>!used.has(row.id));
+  const at=tick*INTERVAL,age=at/DURATION*death,key=phase(age),pool=memoryPools[key],current=stateAt(run,at),eligible=[...pool.map((text,i)=>({id:`v7-day-${key}-${i}`,text})),...eligibleV7MemoryReserve(age,current)].filter(row=>!used.has(row.id)&&!usedTexts.has(row.text));
   // Each life uses an authored line once. Reserve memories apply after infancy;
   // the infant shelf alone covers the shortest supported life-span window.
-  const candidates=eligible.length?eligible:COMMON.map((text,i)=>({id:`v7-day-common-${i}`,text})).filter(row=>!used.has(row.id));
+  const candidates=eligible.length?eligible:COMMON.map((text,i)=>({id:`v7-day-common-${i}`,text})).filter(row=>!used.has(row.id)&&!usedTexts.has(row.text));
   if(!candidates.length)throw new Error('v7 authored memory pool exhausted');
-  const current=stateAt(run,at),salt=life.seed+':'+tick+':'+contextId(current),chosen=candidates.reduce((a,b)=>hash(salt+':'+b.id)<hash(salt+':'+a.id)?b:a);
-  used.add(chosen.id);push(chosen.id,at,chosen.text,'memory');
+  const salt=life.seed+':'+tick+':'+contextId(current),chosen=candidates.reduce((a,b)=>hash(salt+':'+b.id)<hash(salt+':'+a.id)?b:a);
+  used.add(chosen.id);usedTexts.add(chosen.text);push(chosen.id,at,chosen.text,'memory');
  }
  for(const resolved of run.resolved){
   const at=eventTime(resolved);if(at>until)continue;
@@ -392,4 +393,4 @@ export function endingV7(life,{activeMs}={}){
   worldYear:last?.worldYear||worldYear(life.seed),color:theme.art==='garden'?'#a8c9a0':theme.art==='voyage'?'#9cbde0':'#e3bd77',terminalOutcome:outcome||null,endingFocus:run.endingFocus,tags:[...run.tags]};
 }
 
-export function narrativeV7Inventory(){return {memoryCount:Object.values(memoryPools).reduce((n,pool)=>n+pool.length,0),phaseMemoryCounts:Object.fromEntries(Object.entries(memoryPools).map(([key,pool])=>[key,pool.length])),endingThemes:Object.keys(ENDINGS).length,intervalMs:INTERVAL};}
+export function narrativeV7Inventory(){const reserve=memoryReserveInventory(),newMemoryCount=Object.values(memoryPools).reduce((n,pool)=>n+pool.length,0);return {memoryCount:newMemoryCount+reserve.uniqueReserve,newMemoryCount,reserveMemoryCount:reserve.uniqueReserve,phaseMemoryCounts:Object.fromEntries(Object.entries(memoryPools).map(([key,pool])=>[key,pool.length])),endingThemes:Object.keys(ENDINGS).length,intervalMs:INTERVAL};}
