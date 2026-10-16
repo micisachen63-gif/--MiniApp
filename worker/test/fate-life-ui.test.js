@@ -64,3 +64,7 @@ test('an event opening requests fresh server state immediately instead of waitin
  const context={stage:'life',cloud:{active:{draft:t.draft}},document:{querySelector:()=>t.panel},cloudNow:()=>clock,advanceLife,cloudDisplayLife:()=>t.draft,paintLifeUI(){},syncCloud:()=>syncs++,mutating:false};vm.createContext(context);vm.runInContext(source.slice(start,end),context);
  context.paintCloudLife();assert.equal(syncs,0);clock=at('2026-10-16T23:59:00');context.paintCloudLife();context.paintCloudLife();assert.equal(syncs,1);assert.deepEqual(t.draft.answers,[]);
 });
+test('separate encounters sharing a theme remain separate feed memories at their actual times',()=>{
+ globalThis.document={createElement:tag=>new Element(tag)};const start=at('2026-10-16T06:00:00'),d=createLife({version:5,orbit:3,seed:'deadbeef',startedAt:start});d.clockAt=start+3600000;d.sharedMemories=[3000000,3300000].map((offset,i)=>({id:'shared-garden',at:start+offset,ownerName:'旅人甲',guestName:'旅人乙',answer:i,source:'manual',text:'共同花園的第'+i+'段記憶'}));
+ const log=formalEvents(advanceLife(d,d.clockAt).draft,d.clockAt).filter(e=>e.kind==='shared');assert.equal(log.length,2);assert.equal(new Set(log.map(e=>e.id)).size,2);assert.deepEqual(log.map(e=>e.text),d.sharedMemories.map(e=>e.text));
+});

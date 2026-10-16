@@ -49,11 +49,30 @@ test('notification bootstrap waits for hero selection and opens Fate exactly onc
  vm.runInNewContext(source.slice(start,end),context);const view=new Node('section');window.RpgInterface.compose(view,{tab:'select'});window.RpgInterface.compose(view,{tab:'home'});assert.equal(queued.length,0);
  role='hero-1';window.RpgInterface.compose(view,{tab:'home'});window.RpgInterface.compose(view,{tab:'home'});assert.equal(queued.length,1);queued[0]();assert.equal(opened.length,1);
 });
-test('notification focuses the pending question before its ancestor panel, then uses shared or expired fallback in priority order',()=>{
+test('notification prioritizes an actionable guest reply over personal choices, then falls back to question or history',()=>{
  const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8'),line=source.split('\n').find(l=>l.includes("if(initial&&qs.get('notification')==='1')requestAnimationFrame"));
- const order=['.fate-live-question','.fate-shared-event','.fate-last-choice','.fate-panel'];
- for(let first=0;first<order.length;first++){const focused=[],lookups=[],present=new Map(order.slice(first).map(selector=>[selector,{scrollIntoView:options=>focused.push({selector,options})}]));
+ const order=['[data-shared-answer]:not(:disabled)','.fate-live-question','.fate-shared-event','.fate-last-choice','.fate-panel'];
+ for(let first=0;first<order.length;first++){const focused=[],lookups=[],present=new Map(order.slice(first).map(selector=>{const target={scrollIntoView:options=>focused.push({selector,options})};return [selector,{...target,closest:()=>target}];}));
   vm.runInNewContext(line,{initial:true,qs:new URLSearchParams('?notification=1'),requestAnimationFrame:fn=>fn(),document:{querySelector:selector=>{lookups.push(selector);return present.get(selector)||null;}}});
   assert.equal(focused.length,1);assert.equal(focused[0].selector,order[first]);assert.deepEqual(lookups,order.slice(0,first+1));assert.equal(focused[0].options.block,'start');
  }
+});
+
+test('simultaneous initial inbox requests await the same delayed result before notification positioning',async()=>{
+ let release,calls=0,changes=0;const response=new Promise(r=>release=r),ui=createSharedUI({client:{request:()=>{calls++;return response;}},document:{createElement:t=>new Node(t)},now:()=>time,onChange:()=>changes++});
+ const first=ui.sync(),second=ui.sync();assert.equal(first,second);assert.equal(calls,1);assert.equal(changes,0);
+ release({ok:true,events:[event],preferences:prefs,now:time});await second;const panel=new Node('section');ui.render(panel);assert.equal(panel.querySelectorAll('[data-shared-answer]').length,2);assert.equal(changes,1);
+ const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8');assert.ok(source.indexOf('if(initial)await sharedUI?.sync()')<source.indexOf("if(initial&&qs.get('notification')==='1')requestAnimationFrame"));
+});
+
+test('both participant views render the saved shared ending and stop promising a future continuation',async()=>{
+ for(const side of ['owner','guest']){const t=fixture([{...event,side,status:'answered',answer:1,canReply:false,outcome:'你們一起種下遠方帶回來的花。'}]);await t.ui.sync();const p=t.draw();assert.match(p.textContent,/你們一起種下遠方帶回來的花/);assert.match(p.textContent,/已收進你們各自的相逢紀錄/);assert.doesNotMatch(p.textContent,/故事會在約定時刻接續/);assert.equal(p.querySelectorAll('[data-shared-answer]').length,0);}
+});
+
+test('a reply arriving during an older inbox request fetches a fresh receipt before enabling further actions',async()=>{
+ let release,reads=0,answered=false;const stale=new Promise(r=>release=r),response=e=>({ok:true,events:[e],preferences:prefs,now:time});
+ const ui=createSharedUI({client:{request:async action=>{if(action==='fate/social/inbox'){reads++;if(reads===2)return stale;return response(answered?{...event,status:'answered',answer:1,canReply:false}:event);}answered=true;return {ok:true};}},document:{createElement:t=>new Node(t)},now:()=>time,uuid:()=>crypto.randomUUID(),onChange(){}});
+ await ui.sync();const before=new Node('section');ui.render(before);const inFlight=ui.sync(),mutation=before.querySelector('[data-shared-answer]').onclick();
+ await Promise.resolve();release(response(event));await inFlight;await mutation;
+ const after=new Node('section');ui.render(after);assert.equal(reads,3);assert.equal(after.querySelectorAll('[data-shared-answer]').length,0);assert.match(after.textContent,/已回應/);
 });

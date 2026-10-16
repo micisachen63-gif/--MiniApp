@@ -140,3 +140,30 @@ for(const mode of ['random','birthday'])for(const showSign of [true,false])test(
  assert.equal(decodeResult(done.last.code).zodiac,showSign?first.identityZodiac:null);
  assert.ok(!Object.hasOwn(decodeResult(done.last.code),'identityZodiac'));
 });
+
+for(const answer of [0,1])test(`shared answer ${answer} updates both participants' active lives and persistent encounter records without leaking to another role`,async t=>{
+ const f=await fixture(t);f.env.FATE_SOCIAL_MEMBERSHIP=async accounts=>({ok:true,members:accounts.map(accountId=>({accountId,member:true}))});
+ await SHARED.savePreferences(f.env,'202',{enabled:true,allowMentions:true,consent:true,requestId:rid()},T);
+ const ownerStart=await begin(f,f.a,T,{socialInvite:true}),guestStart=await begin(f,'202',T+60000);
+ const row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',ownerStart.result.lifeId),open=row.opened_at,end=row.deadline_at;
+ const pending=await f.api('fate/social/inbox',{},open,signed('202'));assert.equal(pending.events[0].canReply,true);assert.equal(pending.events[0].outcome,null);
+ assert.equal((await f.api('fate/social/reply',{eventId:row.id,answer,requestId:rid()},open+1,signed('202'))).ok,true);
+ const immediate=await SHARED.inbox(f.env,'202',open+2);assert.equal(immediate.events[0].answer,answer);assert.equal(immediate.events[0].outcome,null);
+ const a=(await F.state(f.env,f.a,end)).active.draft,b=(await F.state(f.env,'202',end)).active.draft;
+ assert.equal(a.sharedMemories.length,1);assert.deepEqual(a.sharedMemories,b.sharedMemories);assert.equal(b.sharedMemories[0].answer,answer);
+ for(const draft of [a,b]){assert.equal(formalEvents(draft,end).filter(e=>e.kind==='shared').length,1);assert.equal(formalEvents(draft,end-1).filter(e=>e.kind==='shared').length,0);}
+ const seenA=(await SHARED.inbox(f.env,f.a,end)).events[0],seenB=(await SHARED.inbox(f.env,'202',end)).events[0];assert.equal(seenA.outcome,seenB.outcome);assert.equal(seenA.outcome,a.sharedMemories[0].text);
+ assert.equal((await SHARED.inbox(f.env,'303',end)).events.length,0);
+ const doneA=await F.state(f.env,f.a,T+LIFE_MS),doneB=await F.state(f.env,'202',T+LIFE_MS+60000);
+ for(const done of [doneA,doneB]){assert.ok(endingForLife(done.last.draft).paragraphs.some(p=>p.includes(seenA.outcome)));assert.equal(decodeResult(done.last.code).sharedMemories,undefined);}
+ const later=end+3*86400000;assert.equal((await SHARED.inbox(f.env,'202',later)).events[0].outcome,seenA.outcome);
+ const guestNext=await begin(f,'202',later);const nextState=await F.state(f.env,'202',later+1000);assert.equal(nextState.active.id,guestNext.result.lifeId);assert.equal(nextState.active.draft.sharedMemories,undefined,'never inject a previous life encounter into a new life');
+});
+
+test('a guest without an active life still gets the shared ending, and a later life cannot import it',async t=>{
+ const f=await fixture(t);f.env.FATE_SOCIAL_MEMBERSHIP=async accounts=>({ok:true,members:accounts.map(accountId=>({accountId,member:true}))});
+ await SHARED.savePreferences(f.env,'202',{enabled:true,allowMentions:true,consent:true,requestId:rid()},T);const r=await begin(f,f.a,T,{socialInvite:true}),row=f.one('SELECT * FROM rpg_fate_social_choices WHERE life_id=?',r.result.lifeId);
+ await SHARED.inbox(f.env,'202',row.opened_at);await SHARED.reply(f.env,'202',{eventId:row.id,answer:0,requestId:rid()},row.opened_at+1);
+ assert.ok((await SHARED.inbox(f.env,'202',row.deadline_at)).events[0].outcome);
+ await begin(f,'202',row.deadline_at+1);assert.equal((await F.state(f.env,'202',row.deadline_at+2)).active.draft.sharedMemories,undefined);
+});

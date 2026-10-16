@@ -242,7 +242,7 @@ export function plannedContent(life={},options={}){
   const cutoff=isV5?(Number.isFinite(options.activeMs)?options.activeMs:timing.eventOffsets[limit]):limit*EVENT_INTERVAL_MS;
   if(m.at<life.startedAt||elapsed>cutoff||elapsed>DURATION)continue;
   const state=[...rows].reverse().find(e=>e.age<=age)?.state;
-  rows.push({id:m.id,age,kind:'shared',thread:m.id,source:m.source,text:m.text,state:{...state},worldYear:worldYear(seed,age),...(isV5?{activeMs:elapsed}:{})});
+  rows.push({id:m.id+'-'+m.at,age,kind:'shared',thread:m.id,source:m.source,text:m.text,state:{...state},worldYear:worldYear(seed,age),...(isV5?{activeMs:elapsed}:{})});
  }
  rows.sort((a,b)=>a.age-b.age||a.id.localeCompare(b.id));
  return rows;

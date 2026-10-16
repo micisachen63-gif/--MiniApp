@@ -50,8 +50,8 @@ function render(){
  top.append(button('靈魂旅誌',()=>{stage='archive';archivePage=1;render();window.scrollTo(0,0)}));
  top.append(button(embedded?'返回冒險':'關於旅章',()=>{if(embedded){window.parent.postMessage({type:'star-fate-close'},location.origin)}else{document.getElementById('fate-about')?.scrollIntoView({behavior:'smooth',block:'center'});}}));shell.append(top);
  if(isPreview){const strip=el('aside','fate-preview-strip');strip.append(el('b','','互動預覽 · 尚未發布'),el('span','','故事與圖卡可操作；命盤與任務判定尚未接入。'));shell.append(strip);}
- const mast=el('header','fate-masthead');mast.append(el('span','fate-eyebrow',stage==='archive'?'A SOUL THROUGH MANY LIVES':result?'A LIFE WRITTEN IN STARLIGHT':'THE LAST STAR LANTERN'),el('h1','',stage==='archive'?'靈魂旅誌':stage==='daily'?'今日旅箋':stage==='result'&&result?'命運，因你而不同':'命運旅章'),el('p','',stage==='archive'?'一位英雄，承載了許多沒有被遺忘的人生。':result?'這一生已落款，靈魂還記得。':stage==='life'?'時間會向前，而你決定如何被記得。':'每一次啟程，都讓靈魂多一段記憶。'));shell.append(mast);
- const sky=el('div','fate-sky');mountZodiacSky(sky,zodiacHeroSource({stage,currentLife,cloud,result,entries:soul.entries}));shell.append(sky);
+ const heading=el('div','fate-heading');const mast=el('header','fate-masthead');mast.append(el('span','fate-eyebrow',stage==='archive'?'A SOUL THROUGH MANY LIVES':result?'A LIFE WRITTEN IN STARLIGHT':'THE LAST STAR LANTERN'),el('h1','',stage==='archive'?'靈魂旅誌':stage==='daily'?'今日旅箋':stage==='result'&&result?'命運，因你而不同':'命運旅章'),el('p','',stage==='archive'?'一位英雄，承載了許多沒有被遺忘的人生。':result?'這一生已落款，靈魂還記得。':stage==='life'?'時間會向前，而你決定如何被記得。':'每一次啟程，都讓靈魂多一段記憶。'));heading.append(mast);
+ const sky=el('div','fate-sky');mountZodiacSky(sky,zodiacHeroSource({stage,currentLife,cloud,result,entries:soul.entries}));heading.append(sky);shell.append(heading);
  const panel=el('section','fate-panel');panel.setAttribute('aria-label',stage==='archive'?'靈魂旅誌':result?'旅章結果':stage==='life'?'此世紀事':stage==='daily'?'今日旅箋':'啟程設定');shell.append(panel);
  if(embedded&&!cloud){panel.append(note('正在連接這位英雄的靈魂旅誌…'));if(cloudError)showCloudError(panel);root.append(shell);return;}
  if(embedded&&cloudError)showCloudError(panel);
@@ -207,14 +207,14 @@ async function cloudMutation(action,body){
 }
 async function syncCloud(full=false,initial=false){
  if(!embedded)return;if(syncing){pendingFull=pendingFull||full;return;}syncing=true;lastSync=Date.now();sharedUI?.sync();
- try{const data=await client.request(full?'fate/me':'fate/state');cloudOffset=data.now-Date.now();const old=cloud,oldId=old?.active?.id,oldAnswers=old?.active?.draft?.answers?.join(''),before=old?.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
+ try{const data=await client.request(full?'fate/me':'fate/state');if(initial)await sharedUI?.sync();cloudOffset=data.now-Date.now();const old=cloud,oldId=old?.active?.id,oldAnswers=old?.active?.draft?.answers?.join(''),oldMemories=JSON.stringify(old?.active?.draft?.sharedMemories),before=old?.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
  cloud={...cloud,...data};heroName=data.heroName||heroName;cloudError='';
  if(data.entries)soul.entries=[...data.entries].reverse();else if(data.last&&!soul.entries.some(e=>e.id===data.last.id))soul.entries.push(data.last);
  if(data.active){soul.draft=data.active.draft;currentLife=validLife(data.active.draft);if(initial&&!result&&stage==='intro')stage='life';}
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
  const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
- if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
- if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
+ if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||oldMemories!==JSON.stringify(data.active?.draft?.sharedMemories)||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
+ if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('[data-shared-answer]:not(:disabled)')?.closest('.fate-shared-event')||document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }
 function cloudDisplayLife(){if(!cloud?.active)return currentLife;const d=cloud.active.draft;return {...d,clockAt:Math.max(d.clockAt,Math.min(cloudNow(),cloud.active.nextAt?cloud.active.nextAt-1:cloudNow()))};}
