@@ -1,5 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {fatePublic} from '../src/fate-public.js';
 import {createLife,advanceLife,chooseLife,lifeSchedule,lifeAge,addActive,LIFE_MS,CHOICE_MS} from '../public/fate/life.js';
 import {decodeResult,encodeResult,telegramUrl} from '../public/fate/model.js';
 import {replayDecisionLife,decisionProfile} from '../public/fate/decision-engine-v7.js';
@@ -8,6 +10,11 @@ import {endingTimeline} from '../public/fate/ending-timeline.js';
 import {rememberSoul,readSoul,seedForNextLife} from '../public/fate/cycles.js';
 const T=Date.parse('2026-10-16T06:00:00+08:00');
 const draft=(seed='1a2b3c4d',orbit=3)=>createLife({version:7,seed,orbit,zodiac:4,startedAt:T});
+
+test('public shared v7 pages use the same current interface cache tags as the game entry',async()=>{
+ const entry=readFileSync(new URL('../public/fate/index.html',import.meta.url),'utf8'),response=fatePublic(new Request('https://game.test/fate/r/f7360000000000000000008bb8c13f5')),html=await response.text();assert.equal(response.status,200);assert.match(html,/把欠下的日子/);
+ for(const name of ['style.css','daily.css','app.js']){const re=new RegExp('/fate/'+name.replace('.','\\.')+'\\?v=([^"<>]+)'),tag=entry.match(re)?.[1];assert.ok(tag);assert.equal(html.match(re)?.[1],tag,name+' public shares must not reuse a stale pre-v7 script URL');}
+});
 
 test('v7 life clocks have varying choice counts, ordering and intervals and finish at exactly two active hours',()=>{
  const counts=new Set(),firstTimes=new Set(),orders=new Set();
