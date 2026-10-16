@@ -69,6 +69,12 @@ test('both participant views render the saved shared ending and stop promising a
  for(const side of ['owner','guest']){const t=fixture([{...event,side,status:'answered',answer:1,canReply:false,outcome:'你們一起種下遠方帶回來的花。'}]);await t.ui.sync();const p=t.draw();assert.match(p.textContent,/你們一起種下遠方帶回來的花/);assert.match(p.textContent,/已收進你們各自的相逢紀錄/);assert.doesNotMatch(p.textContent,/故事會在約定時刻接續/);assert.equal(p.querySelectorAll('[data-shared-answer]').length,0);}
 });
 
+test('a newly arrived shared outcome requests one life refresh, unchanged inboxes do not loop',async()=>{
+ let outcome=false;const changes=[],ui=createSharedUI({client:{request:async()=>({ok:true,events:[outcome?{...event,status:'answered',answer:0,outcome:'共同選擇已在期限後寫進人生。'}:event],preferences:prefs,now:time})},now:()=>time,document:{createElement:t=>new Node(t)},onChange:value=>changes.push(value)});
+ await ui.sync();assert.equal(changes.at(-1).refreshLife,false);outcome=true;await ui.sync();assert.equal(changes.at(-1).refreshLife,true);assert.equal(changes.length,2);await ui.sync();assert.equal(changes.length,2);
+ const source=readFileSync(new URL('../public/fate/app.js',import.meta.url),'utf8');assert.match(source,/if\(change\?\.refreshLife\)syncCloud\(true\)/);
+});
+
 test('a reply arriving during an older inbox request fetches a fresh receipt before enabling further actions',async()=>{
  let release,reads=0,answered=false;const stale=new Promise(r=>release=r),response=e=>({ok:true,events:[e],preferences:prefs,now:time});
  const ui=createSharedUI({client:{request:async action=>{if(action==='fate/social/inbox'){reads++;if(reads===2)return stale;return response(answered?{...event,status:'answered',answer:1,canReply:false}:event);}answered=true;return {ok:true};}},document:{createElement:t=>new Node(t)},now:()=>time,uuid:()=>crypto.randomUUID(),onChange(){}});

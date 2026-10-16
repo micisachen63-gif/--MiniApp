@@ -27,7 +27,7 @@ let previewCompleted=0,birthDetail=null;
 let soul=embedded?{entries:[]}:readSoul(storage.get('star-fate-guest-soul')),heroName='',archivePage=1;
 let currentLife=null,previewRunning=true;
 const client=embedded?createCloudClient():null;
-const sharedUI=embedded?createSharedUI({client,notification:qs.get('notification')==='1',onChange:()=>{if(cloud)render();}}):null;
+const sharedUI=embedded?createSharedUI({client,notification:qs.get('notification')==='1',onChange:change=>{if(cloud){render();if(change?.refreshLife)syncCloud(true);}}}):null;
 let cloud=null,dailyData=null,profileData=null,cloudOffset=0,lastSync=0,syncing=false,pendingFull=false,mutating=false,cloudError='',cloudRetry=null,profileNotice='';
 const cloudNow=()=>Date.now()+cloudOffset;
 const lifeEvents=(life,now)=>life.version>=4?formalEvents(life,now):narrativeEvents(life,now);
