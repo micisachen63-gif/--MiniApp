@@ -6,6 +6,8 @@ const P=await import(pathToFileURL(root+'/worker/src/services/player.js'));
 const {handle}=await import(pathToFileURL(root+'/worker/src/index.js'));
 const TOKEN='12345:isolated-fate-fixture-only',env={DB:freshDb(),ENVIRONMENT:'production',BOT_TOKEN:TOKEN,GROUP_CHAT_ID:'-1004342516953'};
 await P.createCharacter(env,{tgId:'111',name:'星燈驗收旅人',gender:'m',baseClass:'mage'},Date.now());
+await P.createCharacter(env,{tgId:'222',name:'雲海旅伴',gender:'m',baseClass:'sword'},Date.now());
+await P.createCharacter(env,{tgId:'555',name:'暮光鄰人',gender:'f',baseClass:'archer'},Date.now());
 const F=await import(pathToFileURL(root+'/worker/src/services/fate.js'));
 const fixtureChar=(await env.DB.prepare('SELECT tg_id FROM rpg_characters WHERE account_tg_id=?').bind('111').first()).tg_id;
 for(let i=0;i<4;i++){const t=Date.parse('2026-10-15T06:00:00+08:00')+i*7200000;await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random'},t);await F.state(env,fixtureChar,t+7200000);}

@@ -8,7 +8,7 @@ import {fateEvidence} from '../src/services/fate-quests.js';
 import {createCharacter} from '../src/services/player.js';
 import {handle} from '../src/index.js';
 import {addActive,lifeSchedule,LIFE_MS,CHOICE_MS,lifeAge} from '../public/fate/life.js';
-import {encodeResult} from '../public/fate/model.js';
+import {encodeResult,decodeResult,generatedZodiac,zodiacFor} from '../public/fate/model.js';
 const TOKEN='123456789:FAKE_TEST_ONLY_FATE_TOKEN',SECRET='fate-test-service-secret';
 const at=s=>Date.parse(s+'+08:00'),T=at('2026-10-16T06:00:00'),rid=()=>crypto.randomUUID();
 const error=(code,status)=>e=>e.code===code&&(!status||e.status===status);
@@ -95,4 +95,14 @@ test('deleting a birth profile after daily reads its chart but before INSERT can
  assert.ok(JSON.parse(stored.notes_json).every(note=>note.kind==='生活靈感'));
  assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_profiles WHERE account_id=?','101').n,0);
  assert.equal((await F.profileView(f.env,f.a)).saved,false);
+});
+
+for(const mode of ['random','birthday'])for(const showSign of [true,false])test(`every ${mode} life keeps its identity zodiac while share visibility=${showSign} remains independent`,async t=>{
+ const f=await fixture(t);await begin(f,f.a,T,{mode,showSign,birthDate:'1990-10-24',identityZodiac:99});
+ const first=(await F.state(f.env,f.a,T)).active.draft;
+ assert.equal(first.identityZodiac,mode==='birthday'?zodiacFor(10,24):generatedZodiac(first.seed));
+ assert.equal(first.zodiac,showSign?first.identityZodiac:null);
+ const done=await F.state(f.env,f.a,T+LIFE_MS);assert.equal(done.last.draft.identityZodiac,first.identityZodiac);
+ assert.equal(decodeResult(done.last.code).zodiac,showSign?first.identityZodiac:null);
+ assert.ok(!Object.hasOwn(decodeResult(done.last.code),'identityZodiac'));
 });

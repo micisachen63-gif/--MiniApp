@@ -49,6 +49,7 @@ export function decodeResult(code){
  return result;
 }
 export function newSeed(){const b=new Uint8Array(4);crypto.getRandomValues(b);return [...b].map(v=>v.toString(16).padStart(2,'0')).join('');}
+export function generatedZodiac(seed){return /^[a-f0-9]{8}$/.test(seed||'')?parseInt(seed.slice(0,4),16)%12:0;}
 export function randomOrbit(zodiac=null){const b=new Uint32Array(2);crypto.getRandomValues(b);return zodiac!==null&&b[0]%2===0?zodiac:b[1]%12;}
 export function publicUrl(code,origin='https://elf-rpg-api.micisachen.workers.dev'){if(!decodeResult(code))throw Error('Invalid story');return `${origin}/fate/r/${code}`;}
 export function telegramUrl(code){if(!decodeResult(code))throw Error('Invalid story');return `https://t.me/StarJournalRpgBot?start=fate_${code}`;}

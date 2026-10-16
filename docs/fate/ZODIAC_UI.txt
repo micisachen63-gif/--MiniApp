@@ -1,0 +1,32 @@
+命運旅章：此世身份星座與金色星徽 UI（2026-10-16）
+
+正式發布狀態以部署收據為準；本文件不是上線證明。
+
+檔案與索引
+- public/fate/zodiac-sign.js 純helper：seedZodiac直接alias model.generatedZodiac，沒有第二套seed算法。
+- identitySign(life)優先有效 identityZodiac，再分享可見 zodiac，最後valid8hex seed生成穩定星徽。
+- 與既有生日、分享碼索引完全相同：0摩羯、1水瓶、2雙魚、3牡羊、4金牛、5雙子、6巨蟹、7獅子、8處女、9天秤、10天蠍、11射手。
+- 不以ZODIAC.index或從牡羊起算，避免全體錯三格。
+- zodiacHeroSource依目前stage取資料：intro/archive無指定星座；active取此世draft；result只取同code本人雲端draft，否則使用該公開result。
+- 外來匿名短碼沒有私有身份時標「此世星座圖騰」，不暗示它是原作者關閉分享的生日星座。
+
+視覺
+- public/fate/zodiac-ui.js mountZodiacSky(target,life) 取代原小金星；語義figure、金色星座圖騰、星線光點、中文名、拉丁名、副標。
+- public/fate/zodiac/*.svg 共13檔：12個原創奇幻星座圖騰與1個尚未指定的十二星環，總39KB。
+- 這些是原創神話裝飾幾何，不是真實天文星圖，SVG desc明確標示；不涉及付費圖像生成或遠端圖資。
+- app.js只新增helper/UI import及替換fate-sky內容；生日填寫、啟程、分享隱私由root另行接。
+- style.css末端獨立CSS；active/result手機圖騰118px，桌面144px，降低高度並保留背景主角空間。
+- 只有光暈opacity CSS緩變，沒有JS tick/repaint循環；prefers-reduced-motion關閉動畫。
+- 名稱與文案以textContent呈現，SVG固定白名單路徑，不插入用戶HTML。
+
+身份與隱私界線
+- root負責server/guest每世identityZodiac真實生成；生日由生日，random由generatedZodiac(seed)產生。
+- identityZodiac是私有life欄位；原zodiac保留為分享可見欄，使用者取消分享星座則null。
+- 公開短碼不得帶identityZodiac，UI不能把匿名分享的seed圖騰當作作者生日。
+- 選角或回看別世時，取同code的draft；不得用不相關cloud.last替代。
+
+測試
+- worker/test/fate-zodiac-ui.test.js 7項全過。
+- 逐一驗證12星對應生日索引、private/share/fallback優先、128seed穩定、本人/匿名hero來源、12SVG各異安全幾何與固定資產。
+- 實際DOM渲染12星與intro環、不使用innerHTML、reduced-motion及mobile尺寸規則。
+- 實機視覺由root統一驗收；單元測試不代表已完成手機實測。

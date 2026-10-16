@@ -91,5 +91,76 @@
         "sha256": "33e884d93c5418393198977edc2443b91f02bd8aa84aaade0918464f1700b030"
       }
     ]
+  },
+  "zodiac_ornaments": {
+    "source": "Original code-native SVG zodiac glyph ornaments, authored in repository; decorative fantasy seals, not an astronomical star atlas. No generated raster image required.",
+    "date": "2026-10-16",
+    "files": [
+      {
+        "file": "worker/public/fate/zodiac/aquarius.svg",
+        "bytes": 3082,
+        "sha256": "2bbe41e2b98d1d29b41b5cb21ae7e98138d67ccc39df83dc3dbf606de5b36062"
+      },
+      {
+        "file": "worker/public/fate/zodiac/aries.svg",
+        "bytes": 3071,
+        "sha256": "e67982a5f079eef91d4bc4ab6c53c611e37354bbbaa9b419dcf860c4378ff378"
+      },
+      {
+        "file": "worker/public/fate/zodiac/cancer.svg",
+        "bytes": 3119,
+        "sha256": "77051fdfa1d61ef46f803a922d8d6b06c5d1ad9110a03578fe18209916083b22"
+      },
+      {
+        "file": "worker/public/fate/zodiac/capricorn.svg",
+        "bytes": 3086,
+        "sha256": "fa887d2aeb59e5ae31a7c27b55c8a5f35664de31ad115d3418cb89b5118773ba"
+      },
+      {
+        "file": "worker/public/fate/zodiac/gemini.svg",
+        "bytes": 3059,
+        "sha256": "6ed7fb37f1fcee2ff2560978ac1382103cfb33f0c893422b9e9c619fb4b3375a"
+      },
+      {
+        "file": "worker/public/fate/zodiac/leo.svg",
+        "bytes": 3071,
+        "sha256": "29ceb2729293c5c0848f0d46e5efe18aab71b8923fb0713586aae67be76ff8bb"
+      },
+      {
+        "file": "worker/public/fate/zodiac/libra.svg",
+        "bytes": 3043,
+        "sha256": "6ed368ba4b4fe33551a8430590d421708fd1b828f447966eeb620d77ff1ed012"
+      },
+      {
+        "file": "worker/public/fate/zodiac/pisces.svg",
+        "bytes": 3043,
+        "sha256": "c00a2d65c309807615e17245500b9b4a4d9bde2d4bec8ce79c5755b5ac09c3ed"
+      },
+      {
+        "file": "worker/public/fate/zodiac/sagittarius.svg",
+        "bytes": 3016,
+        "sha256": "681deb53e7dba415429c7460c28dbe8b005f4b84494f1fb82634d176e477b653"
+      },
+      {
+        "file": "worker/public/fate/zodiac/scorpio.svg",
+        "bytes": 3138,
+        "sha256": "3c40d6cde73a5802587e2e198b0988da89da35fd56831e160e523f62851e5274"
+      },
+      {
+        "file": "worker/public/fate/zodiac/taurus.svg",
+        "bytes": 3020,
+        "sha256": "62aaa293fd7c843006fee16b12781ffd69e7bc72a1b8810ec29a82a76040e931"
+      },
+      {
+        "file": "worker/public/fate/zodiac/virgo.svg",
+        "bytes": 3169,
+        "sha256": "5a198db443af51ecea96d91220ab59f568005ebb791030abb66f3171b473955c"
+      },
+      {
+        "file": "worker/public/fate/zodiac/wheel.svg",
+        "bytes": 2401,
+        "sha256": "656249d580e3ff84e1f5de9e9c66b7cd7d3b120fd55b4f5d0a4983920d19d1d2"
+      }
+    ]
   }
 }

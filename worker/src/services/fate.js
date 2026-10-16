@@ -2,7 +2,7 @@ import {GameError} from '../game/classes.js';
 import {guardStmt,outboxStmt,classifyDbError} from '../db.js';
 import {taipeiDay} from '../game/time.js';
 import {createLife,advanceLife,chooseLife,lifeSchedule,CHOICE_MS,addActive,isOpenTime,activeBetween} from '../../public/fate/life.js';
-import {decodeResult,newSeed,randomOrbit,validBirth,zodiacFor} from '../../public/fate/model.js';
+import {decodeResult,newSeed,randomOrbit,validBirth,zodiacFor,generatedZodiac} from '../../public/fate/model.js';
 import {seedForNextLife,scenesFor,SOUL_ACHIEVEMENTS} from '../../public/fate/cycles.js';
 import {natal} from '../game/fate-chart.js';
 import {makeReminders} from '../game/fate-reminders.js';
@@ -64,8 +64,9 @@ export async function start(env,tg,b,now){
   if(!isOpenTime(now))throw new GameError('fate_night','星穹已入夜，06:00 再開啟下一世');
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
   const past=(await db.prepare("SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 3").bind(String(tg)).all()).results||[];
-  let zodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');if(b.showSign!==false)zodiac=zodiacFor(birth.month,birth.day);}
+  let zodiac=null,identityZodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');identityZodiac=zodiacFor(birth.month,birth.day);if(b.showSign!==false)zodiac=identityZodiac;}
   const seed=seedForNextLife(newSeed(),past.reverse(),4),orbit=randomOrbit(zodiac),draft=createLife({version:4,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
+  identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
   const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now)[0])],result:{lifeId:id}};
  });
