@@ -11,7 +11,7 @@ test('f4 cosmetic codec preserves all source bits, legacy f1/f2/f3 byte semantic
  const legacy=known.map(code=>structuredClone(decodeResult(code)));
  for(const code of known){const r=decodeResult(code);assert.equal(encodeResult(r),code);}
  for(let bits=0;bits<8;bits++){const auto=[bits>>2&1,bits>>1&1,bits&1],r=decodeResult(encodeResult({...base,answers:auto,auto,version:4}));assert.equal(r.code.length,18);assert.deepEqual(r.auto,auto);assert.equal(r.seed,base.seed);assert.equal(r.zodiac,null);assert.ok(('fate_resume:'+r.code).length<=64);assert.equal(encodeResult(r),r.code);}
- for(const code of ['f4b101xdeadbeef','f4b10120axdeadbeef','f6b101101xdeadbeef'])assert.equal(decodeResult(code),null);
+ for(const code of ['f4b101xdeadbeef','f4b10120axdeadbeef','f7b101101xdeadbeef'])assert.equal(decodeResult(code),null);
  known.forEach((code,i)=>assert.deepEqual(decodeResult(code),legacy[i]));
 });
 test('f4 retains two active hours, age90 and exact paused 90-second deadline with one-way authoritative choices',()=>{

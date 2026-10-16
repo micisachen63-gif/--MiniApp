@@ -9,6 +9,7 @@ import {makeReminders} from '../game/fate-reminders.js';
 import {fateEvidence} from './fate-quests.js';
 import {snapshotSocialCast} from './fate-social.js';
 import * as SHARED from './fate-shared.js';
+import {snapshot as peerSnapshot} from './fate-peer.js';
 const parse=(s,fallback=null)=>{try{return JSON.parse(s)}catch{return fallback}};
 const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','selectedCharacterId','tgId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
@@ -30,6 +31,7 @@ async function progressRow(env,row,now){
  for(let attempt=0;attempt<4&&row?.status==='active';attempt++){
   const d=parse(row.state_json),memories=await SHARED.outcomes(env,row.id,now),v=advanceLife(d,now),notify=v.available&&row.notified_index<v.index;
   if(memories.length)v.draft.sharedMemories=memories;
+  if(v.completed&&v.draft.version===6)v.draft.resultMetrics=peerSnapshot(v.draft);
   const next=v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt,changed=v.completed||v.draft.answers.length!==d.answers.length||notify||row.next_at<=now||JSON.stringify(v.draft.sharedMemories)!==JSON.stringify(d.sharedMemories);
   if(!changed)return row;
   const notified=notify?v.index:row.notified_index,db=env.DB,stmts=[db.prepare('UPDATE rpg_fate_lives SET state_json=?,status=?,completed_at=?,next_at=?,code=?,notified_index=?,rev=rev+1 WHERE id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.completed?'complete':'active',v.completed?v.endAt:null,next,v.code,notified,row.id,row.rev),guardStmt(db)];
@@ -67,7 +69,7 @@ export async function start(env,tg,b,now){
   const day=taipeiDay(now),starts=await db.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,day).first();if(starts?.count>=4)throw new GameError('fate_limit','今天已展開四世，明天再開啟新的旅程');
   const past=(await db.prepare("SELECT code FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 3").bind(String(tg)).all()).results||[];
   let zodiac=null,identityZodiac=null;if(b.mode==='birthday'){const profile=await db.prepare('SELECT birth_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),[year,month,date]=taipeiDay(now).split('-').map(Number),birth=validBirth(b.birthDate||parse(profile?.birth_json)?.date,{getFullYear:()=>year,getMonth:()=>month-1,getDate:()=>date});if(!birth)throw new GameError('birth_date','請先設定生日，或選擇交給命運');identityZodiac=zodiacFor(birth.month,birth.day);if(b.showSign!==false)zodiac=identityZodiac;}
-  const seed=seedForNextLife(newSeed(),past.reverse(),5),orbit=randomOrbit(zodiac),draft=createLife({version:5,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
+  const seed=seedForNextLife(newSeed(),past.reverse(),6),orbit=randomOrbit(zodiac),draft=createLife({version:6,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
   identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
   const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now,draft)[0])],result:{lifeId:id}};

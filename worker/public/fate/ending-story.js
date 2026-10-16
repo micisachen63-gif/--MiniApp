@@ -1,6 +1,7 @@
 import {plannedContent,formalEvents,narrativeProfile,narrativeActiveBetween} from './formal-events.js';
 import {worldYear,hash} from './world.js';
 import {lifeTiming} from './timing-v5.js';
+import {metricsForLife,metricPortrait} from './life-metrics-v1.js';
 
 const ART='/art/fate-ending-20261016/';
 const choiceProse=e=>e?.text.replace(/這一頁(?:在期限到達時，由命運代你翻過|由你親自選定)。$/,'')||'';
@@ -10,7 +11,7 @@ const one=(rows,tag)=>rows.length?rows[hash(tag)%rows.length]:null;
 // Descriptive bridges interpret memories; all concrete decisions and relationships come from the log.
 export function endingForLife(life={}){
  const profile=narrativeProfile(life),{seed,career}=profile,timing=lifeTiming(life),complete=life.answers?.length===3&&(!timing||!Number.isFinite(life.startedAt)||narrativeActiveBetween(life.startedAt,life.clockAt)>=7200000);
- const events=complete?plannedContent(life):(Number.isFinite(life.startedAt)?formalEvents({...life,version:life.version===5?5:4},life.clockAt):plannedContent(life,{ticks:0}));
+ const events=complete?plannedContent(life):(Number.isFinite(life.startedAt)?formalEvents({...life,version:life.version>=5?life.version:4},life.clockAt):plannedContent(life,{ticks:0}));
  const rows=events.length?events:plannedContent(life,{ticks:0}),last=rows.at(-1);
  const memories=rows.filter(e=>e.kind==='memory'&&e.age>=3),early=one(memories.filter(e=>e.age<18),seed+'early');
  const work=rows.filter(e=>e.kind==='career'),object=rows.filter(e=>e.kind==='object'),objectFirst=object[0],objectLast=object.filter(e=>e.thread===objectFirst?.thread).at(-1);
@@ -30,9 +31,12 @@ export function endingForLife(life={}){
   `${world?.text.replace(/這一年[^。]*。/,'')||'年鑑仍在繼續，旅誌尚未走到能讀懂它的地方。'}${choiceProse(middle)}${consequence?.text||''}城邦的變化進入家門，往往只是多等幾日、少買一樣東西。大世界因此有了日常的重量；你能做的，是在伸手可及的地方，認真回應一次。`,
   `${final?choiceProse(final):'最後如何交棒，仍要等這一世親自走到那裡。'}${legacy?.text||''}${objectLast&&objectLast!==objectFirst?objectLast.text:old?.text||''}有些遺憾仍是遺憾，沒有走過的路，也不必冒充抵達的遠方。但留下的這些，確實曾被你生活過。紙頁可以合起，屬於別人的明天仍然開著。`,
  ];
- const shared=rows.find(e=>e.kind==='shared');if(shared)paragraphs.splice(4,0,shared.text+'有些路，並非只有自己的選擇留下痕跡。那一頁收到的回音，也成了你日後認得彼此的方式。');
+ const shared=rows.filter(e=>e.kind==='shared');if(shared.length)paragraphs.splice(4,0,...shared.map(e=>e.text+'有些路，並非只有自己的選擇留下痕跡。那一頁收到的回音，也成了你日後認得彼此的方式。'));
+ const metrics=life.version===6?metricsForLife(life,rows,complete?timing.deathAge:last.age):null;
+ if(metrics){const school=rows.filter(e=>e.kind==='education').at(-1),family=rows.filter(e=>e.kind==='family');paragraphs.splice(paragraphs.length-1,0,`${school?.text||'求學的篇章還在展開。'}${family.length?family[0].text+(family.length>1?`這一世，你共同照料了${metrics.children}個孩子，每個人都留下不同的牽掛。`:''):'這一世尚沒有子女的記憶，照料與牽掛仍能以許多不同的方式留下。'}`);}
  if(timing&&complete)paragraphs.push(`星曆${worldYear(seed,timing.deathAge)}年，這一世在${timing.deathAge}歲合上了旅誌。那些親手修好的東西、認真回應過的人，仍在你留下的日常裡，接續下一段光。`);
  const auto=choices.filter(e=>e.source==='auto').length;
  const summary=complete?`在${profile.region}長大，成為${career.name}；${life.answers[1]===0?'把時間交給街坊的共同生活':'帶著手藝與外地人交換方法'}，最後${life.answers[2]===0?'留在身邊陪後輩慢慢學會':'把經驗公開交給更遠的讀者'}。`:'這一冊旅誌仍在展開，已發生的片刻正在慢慢接成一生。';
- return {illustration:ART+focus+'.webp',title:complete?titles[focus]:'尚未合上的旅誌',paragraphs,summary,stats:{...last.state,events:rows.length,career:work.length?career.name:null,relationships:new Set(relationships.map(e=>e.thread)).size,objects:new Set(object.map(e=>e.thread)).size,manualChoices:choices.length-auto,autoChoices:auto},worldYear:last.worldYear,quote:'願曾經認真生活過的片刻，也能替後來的人留一點光。',question:'若再走一世，你願意把時間留給什麼？',color:focus==='garden'?'#a8c9a0':focus==='voyage'?'#9cbde0':'#e3bd77'};
+ const portrait=metrics?metricPortrait(metrics):null;
+ return {illustration:ART+focus+'.webp',title:complete?titles[focus]:'尚未合上的旅誌',paragraphs,summary,stats:{...last.state,events:rows.length,career:work.length?career.name:null,relationships:new Set(relationships.map(e=>e.thread)).size,objects:new Set(object.map(e=>e.thread)).size,manualChoices:choices.length-auto,autoChoices:auto},worldYear:last.worldYear,quote:portrait?portrait.cards.find(c=>c.key==='wealth').status+'。這一生，你還留下了什麼？':'願曾經認真生活過的片刻，也能替後來的人留一點光。',question:portrait?portrait.question:'若再走一世，你願意把時間留給什麼？',...(metrics?{lifeMetrics:metrics,comparison:portrait.comparison}:{}),color:focus==='garden'?'#a8c9a0':focus==='voyage'?'#9cbde0':'#e3bd77'};
 }

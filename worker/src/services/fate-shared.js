@@ -19,6 +19,7 @@ const STORIES={
   endings:[(o,g)=>`${g}寫下今天的麵包香與窗外的雨。${o}補上一行謝意，平凡的一天因此成了多年後仍能翻開的溫暖。`,(o,g)=>`${g}寫下還想去的遠方。${o}在旁畫了一顆星，多年後讀起，你們才發現那張信紙早已悄悄指引旅程。`],auto:(o,g)=>`${o}與${g}各在信紙上留下一行字，再把書輕輕合起。未來的某天，這一頁會替你們記得相遇。`}
 };
 const storyFor=row=>STORIES[row.story_key]||STORIES.garden;
+const outcomeText=row=>{const story=storyFor(row);return (row.answer===0||row.answer===1?story.endings[row.answer]:story.auto)(row.owner_name,row.guest_name);};
 const pending=r=>r&&['scheduled','pending'].includes(r.status);
 const parse=s=>JSON.parse(s);
 const fail=(code,message,status=409)=>{throw new GameError(code,message,status)};
@@ -74,7 +75,8 @@ function view(row,c,now){
   text:story.text(row.owner_name,row.guest_name),choices:[...story.choices],status:row.status,
   opensAt:row.opened_at,deadline:row.deadline_at,remainingMs:activeBetween(now,row.deadline_at),night:!isOpenTime(now),
   canReply:bound&&side==='guest'&&row.status==='pending'&&now>=row.opened_at&&now<row.deadline_at&&isOpenTime(now),
-  canWithdraw:bound&&side==='owner'&&pending(row),answer:row.answer,source:row.source};
+  canWithdraw:bound&&side==='owner'&&pending(row),answer:row.answer,source:row.source,
+  outcome:now>=row.deadline_at&&!pending(row)?outcomeText(row):null};
 }
 const terminalStatements=(db,row,status,answer,source,now)=>[
  db.prepare("UPDATE rpg_fate_social_choices SET status=?,answer=?,source=?,resolved_at=?,next_at=deadline_at,rev=rev+1 WHERE id=? AND rev=? AND status IN ('scheduled','pending')").bind(status,answer,source,now,row.id,row.rev),guardStmt(db),
@@ -157,7 +159,7 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
 export async function sweep(env,now){const rows=(await env.DB.prepare("SELECT * FROM rpg_fate_social_choices WHERE status IN ('scheduled','pending') AND next_at<=? ORDER BY next_at LIMIT 40").bind(now).all()).results||[];for(const row of rows)await progress(env,row,now);return rows.length;}
 export async function inbox(env,tg,now){
  const c=await actor(env.DB,tg);await env.DB.prepare('UPDATE rpg_fate_social_preferences SET active_at=? WHERE account_id=?').bind(now,c.account).run();
- const rows=(await env.DB.prepare('SELECT * FROM rpg_fate_social_choices WHERE (owner_account=? OR guest_account=?) AND deadline_at>? ORDER BY opened_at DESC LIMIT 8').bind(c.account,c.account,now-DAY).all()).results||[];
+ const rows=(await env.DB.prepare('SELECT * FROM rpg_fate_social_choices WHERE (owner_account=? OR guest_account=?) ORDER BY opened_at DESC LIMIT 8').bind(c.account,c.account).all()).results||[];
  const events=[];for(const row of rows)events.push(view(await progress(env,row,now),c,now));return {ok:true,events,preferences:prefView(await pref(env.DB,c.account),now),now};
 }
 async function authorized(env,c,id){const row=await rowFor(env.DB,id);if(!row||![row.owner_account,row.guest_account].includes(c.account))fail('not_found','找不到這頁共同旅章',404);return row;}
@@ -189,7 +191,9 @@ export async function notification(env,b,now){
  return {ok:true,valid:true,night:false,pending:true,remainingMs:activeBetween(now,r.deadline_at),payload:{eventId:r.id,ownerAccountId:r.owner_account,guestAccountId:r.guest_account,ownerName:r.owner_name,guestName:r.guest_name,title:story.title,text:story.text(r.owner_name,r.guest_name),choices:[...story.choices],deadline:r.deadline_at}};
 }
 export async function outcomes(env,lifeId,now){
- const row=await env.DB.prepare('SELECT * FROM rpg_fate_social_choices WHERE life_id=? AND deadline_at<=?').bind(String(lifeId),now).first();if(!row)return [];
- const r=await progress(env,row,now),story=storyFor(r),text=(r.answer===0||r.answer===1?story.endings[r.answer]:story.auto)(r.owner_name,r.guest_name);
- return [{id:'shared-'+r.story_key,at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text}];
+ const life=await env.DB.prepare('SELECT char_id,account_id,started_at FROM rpg_fate_lives WHERE id=?').bind(String(lifeId)).first();if(!life)return [];
+ const end=addActive(life.started_at,LIFE_MS),rows=(await env.DB.prepare(`SELECT * FROM rpg_fate_social_choices WHERE deadline_at<=? AND
+  (life_id=? OR (guest_account=? AND guest_char=? AND status='answered' AND opened_at>=? AND deadline_at<=?))
+  ORDER BY deadline_at,id LIMIT 8`).bind(now,String(lifeId),life.account_id,life.char_id,life.started_at,end).all()).results||[];
+ const memories=[];for(const row of rows){const r=await progress(env,row,now);memories.push({id:'shared-'+r.story_key,at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
 }

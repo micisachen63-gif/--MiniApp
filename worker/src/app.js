@@ -22,7 +22,7 @@ export const APP_ACTIONS = Object.freeze({
   'fate/social/inbox':'/rpg/fate/social/inbox','fate/social/event':'/rpg/fate/social/event',
   'fate/social/reply':'/rpg/fate/social/reply','fate/social/decline':'/rpg/fate/social/decline','fate/social/withdraw':'/rpg/fate/social/withdraw',
   'fate/gifts/summary':'/rpg/fate/gifts/summary','fate/gifts/claim':'/rpg/fate/gifts/claim','fate/gifts/open':'/rpg/fate/gifts/open',
-  'fate/me':'/rpg/fate/me','fate/state':'/rpg/fate/state','fate/history':'/rpg/fate/history',
+  'fate/me':'/rpg/fate/me','fate/state':'/rpg/fate/state','fate/history':'/rpg/fate/history','fate/peers':'/rpg/fate/peers',
   'fate/start':'/rpg/fate/start','fate/choice':'/rpg/fate/choice','fate/keep':'/rpg/fate/keep',
   'fate/daily':'/rpg/fate/daily','fate/profile':'/rpg/fate/profile',
   'fate/profile/save':'/rpg/fate/profile/save','fate/profile/delete':'/rpg/fate/profile/delete',

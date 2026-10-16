@@ -41,7 +41,7 @@ test('f5 public codes reproduce the exact completed life and source bits without
   assert.equal(code.length,18);assert.equal(r.version,5);assert.equal(r.deathAge,lifeTiming(d).deathAge);assert.equal(encodeResult(r),code);assert.equal(r.ending.worldYear,worldYear(d.seed,r.deathAge));
   assert.ok(!/1990|accountId|choiceOffsets|eventOffsets/.test(JSON.stringify(r)));assert.deepEqual(decodeResult(code),r);
  }
- for(const code of ['f6b101101xdeadbeef','f5b101xdeadbeef','f5c101101xdeadbeef'])assert.equal(decodeResult(code),null);
+ for(const code of ['f7b101101xdeadbeef','f5b101xdeadbeef','f5c101101xdeadbeef'])assert.equal(decodeResult(code),null);
 });
 
 test('legacy v3/v4 life schedules, fixed ages and thirty-second records remain unchanged',()=>{

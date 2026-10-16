@@ -11,6 +11,9 @@ import {mountSharePanel} from './share-ui.js';
 import {mountZodiacSky} from './zodiac-ui.js';
 import {zodiacHeroSource} from './zodiac-sign.js';
 import {createSharedUI} from './shared-ui.js';
+import {renderMetrics} from './metrics-ui.js';
+import {birthGeography} from './geography-v1.js';
+import {mountPeerComparison} from './peer-ui.js';
 const root=document.getElementById('fate'),qs=new URLSearchParams(location.search);
 const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v);return true}catch{return false}}};
 const pathResult=/^\/fate\/r\/([^/]+)$/.exec(location.pathname)?.[1],queryResult=qs.get('result');
@@ -50,8 +53,8 @@ function render(){
  top.append(button('靈魂旅誌',()=>{stage='archive';archivePage=1;render();window.scrollTo(0,0)}));
  top.append(button(embedded?'返回冒險':'關於旅章',()=>{if(embedded){window.parent.postMessage({type:'star-fate-close'},location.origin)}else{document.getElementById('fate-about')?.scrollIntoView({behavior:'smooth',block:'center'});}}));shell.append(top);
  if(isPreview){const strip=el('aside','fate-preview-strip');strip.append(el('b','','互動預覽 · 尚未發布'),el('span','','故事與圖卡可操作；命盤與任務判定尚未接入。'));shell.append(strip);}
- const mast=el('header','fate-masthead');mast.append(el('span','fate-eyebrow',stage==='archive'?'A SOUL THROUGH MANY LIVES':result?'A LIFE WRITTEN IN STARLIGHT':'THE LAST STAR LANTERN'),el('h1','',stage==='archive'?'靈魂旅誌':stage==='daily'?'今日旅箋':stage==='result'&&result?'命運，因你而不同':'命運旅章'),el('p','',stage==='archive'?'一位英雄，承載了許多沒有被遺忘的人生。':result?'這一生已落款，靈魂還記得。':stage==='life'?'時間會向前，而你決定如何被記得。':'每一次啟程，都讓靈魂多一段記憶。'));shell.append(mast);
- const sky=el('div','fate-sky');mountZodiacSky(sky,zodiacHeroSource({stage,currentLife,cloud,result,entries:soul.entries}));shell.append(sky);
+ const heading=el('div','fate-heading');const mast=el('header','fate-masthead');mast.append(el('span','fate-eyebrow',stage==='archive'?'A SOUL THROUGH MANY LIVES':result?'A LIFE WRITTEN IN STARLIGHT':'THE LAST STAR LANTERN'),el('h1','',stage==='archive'?'靈魂旅誌':stage==='daily'?'今日旅箋':stage==='result'&&result?'命運，因你而不同':'命運旅章'),el('p','',stage==='archive'?'一位英雄，承載了許多沒有被遺忘的人生。':result?'這一生已落款，靈魂還記得。':stage==='life'?'時間會向前，而你決定如何被記得。':'每一次啟程，都讓靈魂多一段記憶。'));heading.append(mast);
+ const sky=el('div','fate-sky');mountZodiacSky(sky,zodiacHeroSource({stage,currentLife,cloud,result,entries:soul.entries}));heading.append(sky);shell.append(heading);
  const panel=el('section','fate-panel');panel.setAttribute('aria-label',stage==='archive'?'靈魂旅誌':result?'旅章結果':stage==='life'?'此世紀事':stage==='daily'?'今日旅箋':'啟程設定');shell.append(panel);
  if(embedded&&!cloud){panel.append(note('正在連接這位英雄的靈魂旅誌…'));if(cloudError)showCloudError(panel);root.append(shell);return;}
  if(embedded&&cloudError)showCloudError(panel);
@@ -94,8 +97,9 @@ function renderResult(p){
  const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
  if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));for(const text of story.paragraphs)book.append(el('p','',text));book.append(el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
- const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
+ const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.version===6)badges.append(el('span','',birthGeography(result.seed).name));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));
  const journal=el('details','fate-journal'),summary=el('summary','','翻閱這一生的選擇與紀事'),list=el('ol');const memories=record?.draft?lifeEvents(record.draft,record.draft.clockAt):result.version>=4?plannedContent(result):record?.memories||[];list.append(el('li','',memories.find(m=>m.age===0)?.text||result.identity[2]));appendMemories(list,result,memories);journal.append(summary,list);p.append(journal);
+ if(storyLife.version===6){const metrics=el('section','fate-life-stats');renderMetrics(metrics,storyLife,memories,result.deathAge);p.append(metrics);if(embedded&&record?.id)mountPeerComparison(p,{lifeId:record.id,client});}
  p.append(el('p','fate-quote',result.ending.question));
  const extras=el('div','fate-row');extras.append(button('今日旅箋',openDaily),button('靈魂旅誌',()=>{stage='archive';render();window.scrollTo(0,0)}));p.append(extras);
  sharePanel=mountSharePanel(p,{result,identityZodiac:storyLife?.identityZodiac??null,initialShow:sharePrivacy.has(result.code)?sharePrivacy.get(result.code):result.zodiac!==null,onPrivacyChange:value=>{sharePrivacy.set(result.code,value);if(sharePrivacy.size>64)sharePrivacy.delete(sharePrivacy.keys().next().value)},client});
@@ -116,7 +120,7 @@ function startCycle(){
  if(previous&&next===previous.orbit)next=(next+1+parseInt(newSeed().slice(0,2),16)%11)%12;
  orbit=next;seed=seedForNextLife(newSeed(),soul.entries,5);
  const identityZodiac=mode==='birthday'&&zodiac!==null?zodiac:generatedZodiac(seed);
- currentLife=createLife({version:5,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
+ currentLife=createLife({version:6,orbit,zodiac:showSign?identityZodiac:null,seed,startedAt:now});currentLife.identityZodiac=identityZodiac;currentLife.recentEventIds=soul.entries.slice(-3).flatMap(e=>(e.memories||[]).map(m=>m.id));startHistory.push(now);storage.set('star-fate-preview-starts',JSON.stringify(startHistory.slice(-32)));previewRunning=true;soul.draft=currentLife;persistLife();result=null;shared=false;answers=[];stage='life';render();window.scrollTo(0,0);
 }
 function persistLife(){if(embedded)return;if(currentLife)soul.draft=currentLife;storage.set('star-fate-guest-soul',JSON.stringify(soul));}
 function resumeLife(){if(embedded){currentLife=validLife(cloud?.active?.draft);if(currentLife){result=null;shared=false;stage='life';render();window.scrollTo(0,0)}return;}currentLife=validLife(soul.draft);if(!currentLife)return;result=null;shared=false;stage='life';tickLife(isPreview?currentLife.clockAt:Date.now());window.scrollTo(0,0);}
@@ -207,14 +211,14 @@ async function cloudMutation(action,body){
 }
 async function syncCloud(full=false,initial=false){
  if(!embedded)return;if(syncing){pendingFull=pendingFull||full;return;}syncing=true;lastSync=Date.now();sharedUI?.sync();
- try{const data=await client.request(full?'fate/me':'fate/state');cloudOffset=data.now-Date.now();const old=cloud,oldId=old?.active?.id,oldAnswers=old?.active?.draft?.answers?.join(''),before=old?.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
+ try{const data=await client.request(full?'fate/me':'fate/state');if(initial)await sharedUI?.sync();cloudOffset=data.now-Date.now();const old=cloud,oldId=old?.active?.id,oldAnswers=old?.active?.draft?.answers?.join(''),oldMemories=JSON.stringify(old?.active?.draft?.sharedMemories),before=old?.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
  cloud={...cloud,...data};heroName=data.heroName||heroName;cloudError='';
  if(data.entries)soul.entries=[...data.entries].reverse();else if(data.last&&!soul.entries.some(e=>e.id===data.last.id))soul.entries.push(data.last);
  if(data.active){soul.draft=data.active.draft;currentLife=validLife(data.active.draft);if(initial&&!result&&stage==='intro')stage='life';}
  else{delete soul.draft;currentLife=null;if(oldId&&data.last){result=decodeResult(data.last.code);shared=false;if(stage==='life')stage='result';}}
  const after=data.active?advanceLife(cloudDisplayLife(),cloudNow()).available:false;
- if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
- if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
+ if(initial||full||oldId!==data.active?.id||oldAnswers!==data.active?.draft?.answers?.join('')||oldMemories!==JSON.stringify(data.active?.draft?.sharedMemories)||before!==after){const y=window.scrollY;render();window.scrollTo(0,y);}else if(stage==='life')paintCloudLife();
+ if(initial&&qs.get('notification')==='1')requestAnimationFrame(()=>(document.querySelector('[data-shared-answer]:not(:disabled)')?.closest('.fate-shared-event')||document.querySelector('.fate-live-question')||document.querySelector('.fate-shared-event')||document.querySelector('.fate-last-choice')||document.querySelector('.fate-panel'))?.scrollIntoView({block:'start',behavior:'instant'}));
  }catch(error){cloudError=error.message;if(initial||!cloud)render();else if(!document.querySelector('.fate-cloud-error'))showCloudError(document.querySelector('.fate-panel'));}finally{syncing=false;if(pendingFull){pendingFull=false;syncCloud(true);}}
 }
 function cloudDisplayLife(){if(!cloud?.active)return currentLife;const d=cloud.active.draft;return {...d,clockAt:Math.max(d.clockAt,Math.min(cloudNow(),cloud.active.nextAt?cloud.active.nextAt-1:cloudNow()))};}

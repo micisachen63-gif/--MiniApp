@@ -41,12 +41,12 @@ export function encodeResult({orbit,answers,zodiac=null,seed,version=1,auto=[]})
  if(!decodeResult(code))throw Error('Invalid story');return code;
 }
 export function decodeResult(code){
- if(typeof code!=='string'||!/^(?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[345][0-9ab][01]{6}[0-9abx][a-f0-9]{8})$/.test(code))return null;
+ if(typeof code!=='string'||!/^(?:f[12][0-9ab][01]{3}[0-9abx][a-f0-9]{8}|f[3456][0-9ab][01]{6}[0-9abx][a-f0-9]{8})$/.test(code))return null;
  const version=Number(code[1]),orbit=parseInt(code[2],36),answers=[...code.slice(3,6)].map(Number),z=version>=3?9:6,zodiac=code[z]==='x'?null:parseInt(code[z],36),ending=answers.reduce((a,b)=>a+b,0);
  const end=version>=3?{...ENDINGS[ending]}:version>=2&&ending===2?{...ENDINGS[ending],body:'你將星燈交到同伴手裡，沿途替彼此照亮下一步。多年後你才發現，真正留下來的，是那些願意與你一起走過黑夜的人。'}:ENDINGS[ending];
  if(version>=3)end.body=['你把許多重要的片刻留給身邊的人。那些不起眼的守候，後來成了別人願意回來的理由；這一生，你也找到了願意安放星燈的地方。','你在熟悉的地方與未知的遠方之間，慢慢走出自己的步調。有些約定一直帶在身上，有些答案，是在回望時才終於明白。','你與許多人交換過方向，也曾替彼此照亮下一步。這一生最鮮明的記憶，不只關於抵達哪裡，更關於那些願意一起走過的人。','你一次次走向尚未明朗的道路，把疑問留在旅誌，把星光帶向下一個相遇。世界仍有許多空白，而這一生的每一步，都留下了屬於你的筆跡。'][ending];
  const result={version,code,orbit,answers,auto:version>=3?[...code.slice(6,9)].map(Number):answers.map(()=>0),zodiac,seed:code.slice(z+1),identity:ORBITS[orbit],ending:end,endingIndex:ending};
- if(version>=4){if(version===5)result.deathAge=lifeTiming(result).deathAge;const formal=endingForLife(result);result.ending={...end,...formal,body:formal.summary};}
+ if(version>=4){if(version>=5)result.deathAge=lifeTiming(result).deathAge;const formal=endingForLife(result);result.ending={...end,...formal,body:formal.summary};}
  return result;
 }
 export function newSeed(){const b=new Uint8Array(4);crypto.getRandomValues(b);return [...b].map(v=>v.toString(16).padStart(2,'0')).join('');}

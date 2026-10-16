@@ -12,6 +12,7 @@ import * as JOURNAL from './services/journal.js';
 import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
 import * as FATE_SHARED from './services/fate-shared.js';
+import * as FATE_PEER from './services/fate-peer.js';
 import {isOpenTime as fateIsOpenTime} from '../public/fate/life.js';
 import * as GUARDIAN from './services/guardian-sigil.js';
 import * as GUARDIAN_SHOP from './services/guardian-shop.js';
@@ -94,6 +95,7 @@ const routes = {
   'POST /rpg/fate/gifts/claim': (env,b,now)=>FATE_GIFTS.claim(env,tgOf(b),b,now),
   'POST /rpg/fate/gifts/open': (env,b,now)=>FATE_GIFTS.open(env,tgOf(b),b,now),
   'POST /rpg/fate/state': (env,b,now)=>FATE.state(env,tgOf(b),now),
+  'POST /rpg/fate/peers': (env,b,now)=>FATE_PEER.peers(env,tgOf(b),b,now),
   'POST /rpg/fate/history': (env,b,now)=>FATE.history(env,tgOf(b),b,now),
   'POST /rpg/fate/start': (env,b,now)=>FATE.start(env,tgOf(b),b,now),
   'POST /rpg/fate/choice': (env,b,now)=>FATE.choose(env,tgOf(b),b,now),

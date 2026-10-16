@@ -20,7 +20,7 @@ export function lifeSchedule(startedAt,life){
  return (lifeTiming(life)?.choiceOffsets||[1440000,3200000,5280000]).map(ms=>addActive(startedAt,ms));
 }
 export function validLife(raw){
- if(!raw||![3,4,5].includes(raw.version)||!Number.isSafeInteger(raw.startedAt)||raw.startedAt<1||raw.startedAt>4102444800000||!Number.isInteger(raw.orbit)||raw.orbit<0||raw.orbit>11||!(raw.zodiac===null||Number.isInteger(raw.zodiac)&&raw.zodiac>=0&&raw.zodiac<12)||!/^[a-f0-9]{8}$/.test(raw.seed)||!Array.isArray(raw.answers)||raw.answers.length>3||raw.answers.some(a=>a!==0&&a!==1)||!Array.isArray(raw.sources)||raw.sources.length!==raw.answers.length||raw.sources.some(s=>!['manual','auto'].includes(s)))return null;
+ if(!raw||![3,4,5,6].includes(raw.version)||!Number.isSafeInteger(raw.startedAt)||raw.startedAt<1||raw.startedAt>4102444800000||!Number.isInteger(raw.orbit)||raw.orbit<0||raw.orbit>11||!(raw.zodiac===null||Number.isInteger(raw.zodiac)&&raw.zodiac>=0&&raw.zodiac<12)||!/^[a-f0-9]{8}$/.test(raw.seed)||!Array.isArray(raw.answers)||raw.answers.length>3||raw.answers.some(a=>a!==0&&a!==1)||!Array.isArray(raw.sources)||raw.sources.length!==raw.answers.length||raw.sources.some(s=>!['manual','auto'].includes(s)))return null;
  const socialCast=raw.version>=4?validSocialCast(raw.socialCast):null,shared=raw.version>=4?sharedMemories(raw.sharedMemories):[];
  return {version:raw.version,startedAt:raw.startedAt,orbit:raw.orbit,zodiac:raw.zodiac,seed:raw.seed,answers:[...raw.answers],sources:[...raw.sources],clockAt:Number.isSafeInteger(raw.clockAt)?Math.max(raw.startedAt,Math.min(addActive(raw.startedAt,LIFE_MS),raw.clockAt)):raw.startedAt,recentEventIds:Array.isArray(raw.recentEventIds)?raw.recentEventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(-96):[],eventIds:Array.isArray(raw.eventIds)?raw.eventIds.filter(v=>typeof v==='string'&&/^[a-z0-9-]{1,32}$/.test(v)).slice(0,32):[],...(socialCast?{socialCast}:{}),...(shared.length?{sharedMemories:shared}:{}),...(raw.version>=4&&Number.isInteger(raw.identityZodiac)&&raw.identityZodiac>=0&&raw.identityZodiac<12?{identityZodiac:raw.identityZodiac}:{})};
 }
@@ -38,5 +38,5 @@ export function chooseLife(raw,answer,now,index){
  const v=advanceLife(raw,now);if(![0,1].includes(answer)||v.completed||!v.available||v.index!==index)throw Error('事件尚未開始，或已經由時間帶往下一頁。');
  v.draft.answers.push(answer);v.draft.sources.push('manual');return advanceLife(v.draft,now);
 }
-export function lifeAge(raw,now){return raw.version===5?Math.floor(ageAtActive(raw,activeBetween(raw.startedAt,now))):Math.min(90,Math.floor(activeBetween(raw.startedAt,now)/LIFE_MS*90));}
+export function lifeAge(raw,now){return raw.version>=5?Math.floor(ageAtActive(raw,activeBetween(raw.startedAt,now))):Math.min(90,Math.floor(activeBetween(raw.startedAt,now)/LIFE_MS*90));}
 export function lifeGrowth(raw){const home=raw.answers.filter(a=>a===0).length,away=raw.answers.length-home;return {home,away,label:home===away?'仍在尋找自己的方向':home>away?'在守候中學會堅定':'在探索中學會勇敢'};}

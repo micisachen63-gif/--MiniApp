@@ -57,8 +57,8 @@ test('actual shared WASM renderer produces decodable 1080px JPEG for both format
  const visible=jpeg.decode(await render(cardDetails(encodeResult({...cardDetails(code).result,zodiac:10}),'post')),{useTArray:true}),seal=cardLayout('post').crest;
  let difference=0;for(let y=seal.y+80;y<seal.y+seal.size-80;y++)for(let x=seal.x+80;x<seal.x+seal.size-80;x++){const p=(y*1080+x)*4;difference+=Math.abs(visible.data[p]-hidden.data[p]);}
  assert.ok(difference>100000,'visible zodiac paints a distinct crest, not the hidden wheel');
- const variable=cardDetails('f5b101101adeadbeef','post'),variableJpeg=await render(variable),decodedVariable=jpeg.decode(variableJpeg,{useTArray:true});
- assert.equal(variable.result.version,5);assert.ok(variableJpeg.length<5_000_000);assert.equal(decodedVariable.width,1080);assert.equal(decodedVariable.height,1350);assert.ok(new Set(decodedVariable.data.subarray(1080*200*4,1080*400*4)).size>150);
+ for(const version of [5,6]){const variable=cardDetails(`f${version}b101101adeadbeef`,'post'),variableJpeg=await render(variable),decodedVariable=jpeg.decode(variableJpeg,{useTArray:true});
+ assert.equal(variable.result.version,version);assert.ok(variableJpeg.length<5_000_000);assert.equal(decodedVariable.width,1080);assert.equal(decodedVariable.height,1350);assert.ok(new Set(decodedVariable.data.subarray(1080*200*4,1080*400*4)).size>150);}
 });
 
 test('TG card metadata retains each public zodiac and incarnation while hidden code remains anonymous',()=>{
@@ -66,9 +66,9 @@ test('TG card metadata retains each public zodiac and incarnation while hidden c
  for(let zodiac=0;zodiac<12;zodiac++){const c=cardDetails(encodeResult({...base,zodiac}));assert.equal(c.result.zodiac,zodiac);assert.equal(cardIdentity(c.result).identity,base.identity[0]);assert.match(c.imageUrl,/20261016-zodiac2/);}
  assert.equal(cardIdentity(base).hasSign,false);assert.equal(cardIdentity(base).crestId,'wheel');
 });
-test('v5 variable-life JPEG routes and native preparation use the same public codec without exposing player data',async()=>{
- const code='f5b101101adeadbeef',card=cardDetails(code);assert.equal(card.result.version,5);assert.equal(card.result.code,code);assert.equal(cardIdentity(card.result).crestId,'scorpio');
+for(const version of [5,6])test('v'+version+' variable-life JPEG routes and native preparation use the same public codec without exposing player data',async()=>{
+ const code=`f${version}b101101adeadbeef`,card=cardDetails(code);assert.equal(card.result.version,version);assert.equal(card.result.code,code);assert.equal(cardIdentity(card.result).crestId,'scorpio');
  const calls=[],handle=createFateShare({now:()=>now,telegramFetch:async(url,opts)=>{calls.push({url,body:JSON.parse(opts.body)});return Response.json({ok:true,result:{id:'v5-prepared',expiration_date:now/1000+3600}});},renderCard:async input=>{assert.equal(input.result.code,code);return new Uint8Array([255,216,255,217]);}});
  const photo=await handle(new Request(card.imageUrl),{});assert.equal(photo.status,200);assert.equal(photo.headers.get('content-type'),'image/jpeg');
- const prepared=await handle(request({code,format:'post',birthDate:'1900-01-01',guestAccountId:'987654321'}),{BOT_TOKEN:token});assert.equal(prepared.status,200);assert.equal(calls.length,1);assert.match(calls[0].url,/savePreparedInlineMessage$/);assert.equal(calls[0].body.user_id,123);assert.match(calls[0].body.result.photo_url,/f5b101101adeadbeef/);assert.doesNotMatch(JSON.stringify(calls[0].body),/1900-01-01|987654321/);
+ const prepared=await handle(request({code,format:'post',birthDate:'1900-01-01',guestAccountId:'987654321'}),{BOT_TOKEN:token});assert.equal(prepared.status,200);assert.equal(calls.length,1);assert.match(calls[0].url,/savePreparedInlineMessage$/);assert.equal(calls[0].body.user_id,123);assert.match(calls[0].body.result.photo_url,new RegExp(code));assert.doesNotMatch(JSON.stringify(calls[0].body),/1900-01-01|987654321/);
 });

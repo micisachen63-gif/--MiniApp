@@ -10,6 +10,8 @@ await P.createCharacter(env,{tgId:'222',name:'雲海旅伴',gender:'m',baseClass
 await P.createCharacter(env,{tgId:'555',name:'暮光鄰人',gender:'f',baseClass:'archer'},Date.now());
 const F=await import(pathToFileURL(root+'/worker/src/services/fate.js'));
 const socialScene=process.env.FATE_PREVIEW_SCENE;
+let qaOffset=0;const qaNow=()=>Date.now()+qaOffset;
+if(socialScene==='shared'){env.ENVIRONMENT='development';env.ALLOW_DEBUG_TIME='true';}
 if(socialScene){env.FATE_SOCIAL_MEMBERSHIP=async accounts=>({ok:true,members:accounts.map(accountId=>({accountId,member:['111','222','555'].includes(accountId)}))});}
 const fixtureChar=(await env.DB.prepare('SELECT tg_id FROM rpg_characters WHERE account_tg_id=?').bind('111').first()).tg_id;
 for(let i=0;i<4;i++){const t=Date.parse('2026-10-15T06:00:00+08:00')+i*7200000;await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random'},t);await F.state(env,fixtureChar,t+7200000);}
@@ -22,6 +24,7 @@ if(['shared','notification'].includes(socialScene)){
  await S.savePreferences(env,'222',{requestId:crypto.randomUUID(),enabled:true,allowMentions:true,consent:true},Date.now());
  const at=Date.now()-(socialScene==='shared'?40:24)*60000;
  const started=await F.start(env,fixtureChar,{requestId:crypto.randomUUID(),mode:'random',socialInvite:socialScene==='shared'},at);
+ if(socialScene==='shared')await F.start(env,'222',{requestId:crypto.randomUUID(),mode:'random'},at-60000);
  if(socialScene==='notification'){
   const {lifeTiming}=await import(pathToFileURL(root+'/worker/public/fate/timing-v5.js'));
   const row=await env.DB.prepare('SELECT state_json FROM rpg_fate_lives WHERE id=?').bind(started.result.lifeId).first(),draft=JSON.parse(row.state_json);
@@ -34,10 +37,14 @@ function init(id){const f={auth_date:String(Math.floor(Date.now()/1000)),user:JS
 const base=path.resolve(root,'worker/public');
 http.createServer(async(req,res)=>{try{
  const url=new URL(req.url,'http://127.0.0.1');
+ if(socialScene==='shared'&&url.pathname==='/qa/mobile'){res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>390px 雙人旅章驗收</title><style>body{margin:0;background:#111;color:#eee;font:14px sans-serif}p{text-align:center}iframe{display:block;margin:auto;border:1px solid #71613e;width:390px;height:844px}</style><p>390px 隔離帳號驗收 · 不連正式TG</p><iframe title="手機尺寸遊戲驗收" src="/?fixture=222&tgWebAppStartParam=fate"></iframe></html>');}
+ if(socialScene==='shared'&&url.pathname==='/qa/advance'&&req.method==='POST'){qaOffset+=10*60000;res.writeHead(303,{location:'/qa/'});return res.end();}
+ if(socialScene==='shared'&&url.pathname==='/qa/'){res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>雙人旅章隔離驗收</title><h1>雙人旅章隔離驗收</h1><p>僅本機假帳號，無正式TG通知、無正式資料庫。</p><form method="post" action="/qa/advance"><button>推進十分鐘，檢查共同後續</button></form><p><a href="/?fixture=111&tgWebAppStartParam=fate">查看發起旅人</a> · <a href="/?fixture=222&tgWebAppStartParam=fate">查看受邀旅人</a></p></html>');}
  if(url.pathname==='/share-qa/'){res.writeHead(200,{'content-type':'text/html;charset=utf-8'});return res.end('<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><title>分享文案貼上驗證</title><h1>隔離驗收：分享文案</h1><textarea aria-label="貼上檢查" rows="12" cols="80"></textarea><button onclick="navigator.clipboard.readText().then(v=>document.querySelector(\'textarea\').value=v).catch(e=>document.querySelector(\'p\').textContent=e.message)">讀取剛複製的文案</button><p>只讀取剪貼簿，不上傳或發文。</p></html>');}
  if(url.pathname.startsWith('/app/api/')||url.pathname.startsWith('/fate/r/')){
   const data=[];for await(const chunk of req)data.push(chunk);
   const options={method:req.method,headers:req.headers};if(req.method==='POST')options.body=Buffer.concat(data);
+  if(socialScene==='shared'){options.headers={...req.headers,'X-Debug-Now':String(qaNow())};if(url.pathname==='/app/api/fate/social/inbox')await new Promise(r=>setTimeout(r,800));}
   const response=await handle(new Request('https://fixture'+url.pathname,options),env);res.writeHead(response.status,Object.fromEntries(response.headers));return res.end(await response.text());
  }
  let rel=decodeURIComponent(url.pathname);if(rel.endsWith('/'))rel+='index.html';

@@ -5,7 +5,8 @@ const cache=new Map();
 const hash=s=>{let n=2166136261;for(const c of s)n=Math.imul(n^c.charCodeAt(0),16777619);return n>>>0;};
 const clamp=(n,lo,hi)=>Math.max(lo,Math.min(hi,n));
 export function lifeTiming(life){
- if(life?.version!==5||!/^[a-f0-9]{8}$/.test(life.seed||''))return null;
+ // v6 deliberately reuses the immutable v5 clock, while its story is versioned separately.
+ if(![5,6].includes(life?.version)||!/^[a-f0-9]{8}$/.test(life.seed||''))return null;
  const seed=life.seed;if(cache.has(seed))return cache.get(seed);
  const roll=tag=>hash('fate-clock-v5:'+seed+':'+tag);
  const deathAge=roll('short')%50===0?55+roll('short-age')%10:65+roll('age')%40;

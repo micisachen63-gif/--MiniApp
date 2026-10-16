@@ -21,18 +21,18 @@ export function seedForNextLife(seed,entries=[],version=3){
  if(version>=4){
   const previous=entries.slice(-3).map(e=>decodeResult(e?.code)).filter(r=>version===4?r?.version===4:r?.version>=4);
   if(!previous.length)return seed;
-  const sceneKey=scene=>version===5?scene.scenarioId||scene.id:scene.id;
+  const sceneKey=scene=>version>=5?scene.scenarioId||scene.id:scene.id;
   const sceneSets=[0,1,2].map(i=>new Set(previous.map(p=>sceneKey(formalScenes(p)[i]))));
-  const avoidScenes=candidate=>{for(let i=0;i<3;i++){let b=parseInt(candidate.slice(i*2,i*2+2),16);for(let n=0;n<(version===5?16:256)&&sceneSets[i].has(sceneKey(formalScenes({seed:candidate,version})[i]));n++){b=(b+(version===5?16:1))%256;candidate=candidate.slice(0,i*2)+b.toString(16).padStart(2,'0')+candidate.slice(i*2+2);}}return candidate;};
+  const avoidScenes=candidate=>{for(let i=0;i<3;i++){let b=parseInt(candidate.slice(i*2,i*2+2),16);for(let n=0;n<(version>=5?16:256)&&sceneSets[i].has(sceneKey(formalScenes({seed:candidate,version})[i]));n++){b=(b+(version>=5?16:1))%256;candidate=candidate.slice(0,i*2)+b.toString(16).padStart(2,'0')+candidate.slice(i*2+2);}}return candidate;};
   const previousRows=previous.flatMap(p=>plannedContent(p)),texts=new Set(previousRows.map(e=>e.text)),ids=new Set(previousRows.map(e=>e.id));
   const usedShelves=new Set(previous.map(p=>parseInt(p.seed.slice(6,8),16)%4)),openShelves=[0,1,2,3].filter(s=>!usedShelves.has(s));
-  const shelf=version===5?openShelves[narrativeHash('fate-v5-shelf:'+seed)%openShelves.length]:null;
+  const shelf=version>=5?openShelves[narrativeHash('fate-v'+version+'-shelf:'+seed)%openShelves.length]:null;
   // The next decisions do not yet exist. Score a projection using the most recent path;
   // only the selected seed is saved. Replay never consults history or this projection.
   const projection={...previous.at(-1),version},seenCandidates=new Set();let best=null,bestScore=Infinity;
-  for(let i=0;i<(version===5?12:64);i++){
+  for(let i=0;i<(version>=5?12:64);i++){
    let candidate=i===0?seed:narrativeHash('fate-v'+version+'-next:'+seed+':'+i).toString(16).padStart(8,'0');
-   if(version===5)candidate=candidate.slice(0,6)+((parseInt(candidate.slice(6,8),16)&252)|shelf).toString(16).padStart(2,'0');
+   if(version>=5)candidate=candidate.slice(0,6)+((parseInt(candidate.slice(6,8),16)&252)|shelf).toString(16).padStart(2,'0');
    candidate=avoidScenes(candidate);
    if(seenCandidates.has(candidate))continue;seenCandidates.add(candidate);
    const score=plannedContent({...projection,seed:candidate}).reduce((n,e)=>n+(texts.has(e.text)?1000:0)+(ids.has(e.id)?1:0),0);
@@ -49,7 +49,7 @@ export const SOUL_ACHIEVEMENTS=[{at:1,title:'初醒之魂'},{at:5,title:'拾光�
 export function readSoul(value){
  let raw;try{raw=typeof value==='string'?JSON.parse(value):value}catch{return {entries:[]}};
  if(!Array.isArray(raw?.entries))return {entries:[]};const seen=new Set(),entries=[];
- for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=result.version===5?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
+ for(const e of raw.entries){const result=decodeResult(e?.code);if(!result||seen.has(e.code))continue;const maxAge=result.version>=5?result.deathAge:90;seen.add(e.code);entries.push({code:e.code,at:Number.isSafeInteger(e.at)&&e.at>0?e.at:0,...(Array.isArray(e.memories)?{memories:e.memories.filter(m=>m&&Number.isInteger(m.age)&&m.age>=0&&m.age<=maxAge&&typeof m.text==='string'&&m.text.length<=400&&typeof m.id==='string'&&/^[a-z0-9-]{1,32}$/.test(m.id)).slice(0,32).map(m=>({id:m.id,age:m.age,text:m.text}))}:{})});if(entries.length>=2000)break;}
  const draft=validLife(raw?.draft);return draft?{entries,draft}:{entries};
 }
 export function rememberSoul(record,code,at=Date.now(),memories=[]){
