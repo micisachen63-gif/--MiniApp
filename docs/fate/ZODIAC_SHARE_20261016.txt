@@ -33,6 +33,14 @@ zodiac-share-post.png、zodiac-share-story.png、zodiac-share-hidden.png、zodia
 具體正式版本、commit與核對結果以docs/deployment兩份JSON及即時Cloudflare為準，勿把本文當發布收據。
 若部署後public快取雜湊暫時不一致，先read-only sync:check，不能為補收據重部署。
 
+本次正式核對已完成
+- 功能提交4c5a5f608261；Worker版本3c80b85f-7581-4d54-bab9-69540e64da97 @100，runtime及140個public檔案核對成功；收據提交7877a47。
+- Bot版本8b80de7f-cd04-476d-b5e0-17d8fb660f51 @100，runtime及4個public檔案核對成功；收據提交2f9a5a0。
+- 兩次根deploy流程皆回報PUBLISHED_AND_GITHUB_SYNCED；本次沒有重部署或手補收據。
+- 正式頁面瀏覽器實際製作並下載zodiac-production-post.png，已檢視；正式Bot JPEG公開post／story／隱藏星座post皆200，尺寸分別1080×1350、1080×1920、1080×1350，檔案均小於0.5MB，已解碼及查看。
+- 公開OG與入口cache版本正確；遊戲與BOT /health皆200，Bot lastCycleError=null、queued=0、uncertain=0（當次快照）。缺少登入憑證的prepare回401，沒有呼叫Telegram發訊。
+- 實測紀錄與圖在同證據目錄：zodiac-production-checks.json、zodiac-production-post.png、zodiac-production-visible-post.jpg、zodiac-production-visible-story.jpg、zodiac-production-hidden-post.jpg。這些是公開合成故事，非真玩家帳號資料。
+
 雙人互動事件
 本次僅評估，未實作、未新增migration、未啟用、未發群通知。
 詳見SHARED_CHOICES_ASSESSMENT_20261016.txt：建議每世一段自願支線，由指定另一玩家做決策，10個有效分鐘逾時自然推進；主人的三大抉擇照舊。
