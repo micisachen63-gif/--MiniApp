@@ -51,3 +51,14 @@ v5-notification-focused.png是本機實際TG啟動參數→選角→自動進旅
 部署與後續
 提交、push、合併GitHub後，primary乾淨origin/main根npm run deploy:worker／deploy:bot。保留binding／namespace／secret／cron，出錯先查live與.release-sync，不能直接重試發布。
 不使用新增付費模型／外部生成API／新服務資源，不發真實測試通知，不修改玩家現有生命、背包或受邀設定。
+
+最終正式封版（2026-10-16 10:35 台北時間）
+功能來源提交dff2dd83f647；兩服務部署腳本均完成PUBLISHED_AND_GITHUB_SYNCED。
+遊戲elf-rpg-api：f24b3171-292d-46ed-a206-62e6798bce49，100%流量；runtime及148個public檔核對完成，收據提交cbdd2eb。
+BOT star-journal-rpg-bot：8f002a02-5808-47b0-9fac-da644f13f302，100%流量；來源cbdd2eb，runtime及4個public檔核對完成，收據提交ee9e565。
+兩份正式收據在docs/deployment/；本節之後若只有封版文件提交，不應為此重新部署。
+02:35:56Z正式GET核對：兩個health均200；BOT雲端heartbeat正常、lastCycleError=null、queued=0、uncertain=0（當下快照）。兩個f5公開旅章頁200；正式瀏覽器看到95歲落款。
+正式JPEG實際下載解碼：95歲範例post1080×1350、story1080×1920；66歲範例post1080×1350，均200，圖片無缺圖或裁切。
+私有端點未授權測試回應：遊戲social/inbox 401、BOT membership 403、share/prepare 401。沒有向真群發送測試訊息。
+證據v5-production-checks.json、v5-deploy-worker.txt、v5-deploy-bot.txt及正式JPEG位於前述私有證據目錄；完整測試1346全過。手機僅響應式驗收，iPhone／Android原生TG分享器、IG附圖仍需實機，不得宣稱已測。
+使用者重新開啟遊戲後，新啟一世才使用v5；正在進行及舊存檔維持原樣，不幫玩家重開或改答案。

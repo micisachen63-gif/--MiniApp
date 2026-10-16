@@ -52,3 +52,10 @@ scripts/preview-fate.mjs保留純本機fixture，可 FATE_PREVIEW_PORT=9556 FATE
 若public快取雜湊暫時不一致，保留.release-sync並read-only sync:check，不為寫收據重部署。
 預設所有真玩家接受邀請為關閉；不代玩家開啟、不以真玩家建立測試人生、不發真測試群通知、不改抽卡/背包/角色/輪迴數據。
 沿用既有Cloudflare資源，無新訂閱或付費模型，未做流量壓測。額外會員核對與DB操作會使用現有額度，不承諾無限人數零成本。
+
+最終發布補記（2026-10-16）
+本功能與通知修復已包含在命運旅章v5正式來源dff2dd8。遊戲版本f24b3171-292d-46ed-a206-62e6798bce49、BOT版本8f002a02-5808-47b0-9fac-da644f13f302均100%，根部署流程核對成功並推送GitHub；部署收據提交cbdd2eb／ee9e565。
+0028已單檔套用並確認六張新增表存在，不再套用。本次最終全套測試Worker1232＋BOT114＝1346，零失敗、零skip。
+正式健康、圖片、公開旅章及未授權端點核對通過；真玩家接收邀請仍預設關閉，沒有代開、改現有人生或向真群發測試通知。
+最新通知定位截圖是v5-notification-focused.png：啟動參數→選角→自動進命運旅章，直接顯示待答題目、兩個選項與倒數。前述notification-fixed-before.png屬早期證據，以v5圖為準。
+時序、內容、正式探測與低強度模型維護注意事項，接續閱讀V5_TIMING_CONTENT_20261016.txt；後續版本以最新docs/deployment收據及即時Cloudflare為準。
