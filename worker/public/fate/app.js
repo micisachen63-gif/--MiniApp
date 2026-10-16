@@ -113,7 +113,7 @@ function renderResult(p){
  else{const link=el('a','fate-primary',isPreview?'預覽創角銜接':'前往 TG，讓冒險繼續');link.href=isPreview?'/?fixture=444&preview=1&fate='+encodeURIComponent(result.code):telegramUrl(result.code);link.rel='noopener';p.append(link,note(isPreview?'正式版將前往專屬 TG BOT；此預覽以隔離帳號示範創角，不會修改正式玩家。':'加入遊戲專屬群組，再從 BOT 開啟遊戲創角。旅章只記錄故事，不提供戰力獎勵。'));}
  renderSoul(p);
  sharedUI?.renderInvite(p);
- p.append(el('div','fate-life-divider','此生已落款 · 靈魂仍在旅途'),button('開啟下一趟輪迴',()=>startCycle(),'fate-primary'),el('p','fate-cycle-copy','換一個出身，遇見不同的人。\n每一世的選擇，都會成為這位英雄的靈魂記憶。'),button('重新設定起點',()=>reset(),'fate-subtle'));
+ p.append(el('div','fate-life-divider','此生已落款 · 靈魂仍在旅途'),button('開啟下一趟輪迴',nextLifeIntro,'fate-primary'),el('p','fate-cycle-copy','換一個出身，遇見不同的人。\n每一世的選擇，都會成為這位英雄的靈魂記憶。'),button('重新設定起點',()=>reset(),'fate-subtle'));
 }
 function reset(){result=null;shared=false;answers=[];birthDetail=null;stage='intro';history.replaceState(null,'','/fate/'+(isPreview?'?preview=1':''));render();window.scrollTo(0,0)}
 async function startCycle(){
@@ -169,7 +169,7 @@ function renderArchive(p){
   const timeline=el('details','fate-journal');timeline.append(el('summary','','展開此生的過程與記憶'));const steps=el('ol');appendMemories(steps,r,e.memories);steps.append(el('li','',`此生落款 · ${r.ending.body}`));timeline.append(steps);card.append(timeline,el('p','',`「${r.ending.quote}」`),button('翻閱這一世',()=>{result=r;shared=false;stage='result';render();window.scrollTo(0,0)}));p.append(card);
  }
  if(entries.length<soul.entries.length)p.append(button('再往前翻十世',()=>{archivePage++;render()},'fate-quiet'));
- p.append(button(result?'回到此生落款':'開始下一趟輪迴',()=>{if(result){stage='result';render();window.scrollTo(0,0)}else startCycle()},'fate-primary'));
+ p.append(button(result?'回到此生落款':'開始下一趟輪迴',()=>{if(result){stage='result';render();window.scrollTo(0,0)}else nextLifeIntro()},'fate-primary'));
 }
 function renderDaily(p){
  if(embedded){renderCloudDaily(p);return;}

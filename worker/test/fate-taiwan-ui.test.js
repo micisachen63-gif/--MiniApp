@@ -50,6 +50,12 @@ test('starting a country waits for its book and server response without submitti
  let loaded;ctx.selectedCountry='JP';ctx.ensureCountryPack=()=>new Promise(r=>loaded=r);const second=ctx.startCycle();ctx.selectedCountry='US';loaded();await second;assert.equal(calls,1,'a changed selection must not start the previously loading country');assert.equal(ctx.startingLife,false);
 });
 
+test('result and archive next-life actions return to country setup before submitting a new start',()=>{
+ assert.doesNotMatch(app,/button\('開啟下一趟輪迴',\(\)=>startCycle\(\)/);assert.equal([...app.matchAll(/button\('開啟下一趟輪迴',nextLifeIntro/g)].length,2);
+ const fn=app.slice(app.indexOf('function nextLifeIntro(){'),app.indexOf('\nfunction persistLife()',app.indexOf('function nextLifeIntro(){')));let renders=0,resumes=0;
+ const ctx={cloud:null,soul:{entries:[]},result:{country:'FR'},selectedCountry:'TW',shared:true,stage:'result',render:()=>renders++,resumeLife:()=>resumes++,window:{scrollTo(){}}};vm.runInNewContext(fn,ctx);ctx.nextLifeIntro();assert.equal(ctx.stage,'intro');assert.equal(ctx.selectedCountry,'FR');assert.equal(ctx.result,null);assert.equal(renders,1);ctx.soul.draft={};ctx.nextLifeIntro();assert.equal(resumes,1);
+});
+
 test('Taiwan chronology retains authoritative consequence rows without adding old generic answer captions',()=>{
  const start=app.indexOf('function appendMemories('),end=app.indexOf('\nfunction renderSoul(',start),fn=app.slice(start,end);let sceneReads=0;
  const ctx={el:(tag,cls,text)=>{const n=new Element(tag);n.textContent=text||'';return n},ageLabel:age=>`${age} 歲`,scenesFor:()=>{sceneReads++;return [{age:18,choices:[['','','generic old answer']]}]}};vm.runInNewContext(fn,ctx);

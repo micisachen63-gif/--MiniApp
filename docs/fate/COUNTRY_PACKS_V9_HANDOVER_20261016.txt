@@ -1,56 +1,61 @@
-星穹旅誌／命運旅章：九國在地人生 v9（開發中；不可當部署收據）
-日期：2026-10-16。使用者要求台灣完成後接續其餘國家。
-工作目錄 C:/Users/User/Documents/ChatGPT/star-journal-country-packs
-分支 codex/fate-country-packs-v9；正式來源 GitHub --MiniApp main。
-台灣 v8 已另行發布，配方與內容不可修改。v9 尚未發布，仍可在測試階段修正。
+星穹旅誌／命運旅章：九國在地人生 v9 接手總覽
+2026-10-16（Asia/Taipei）｜整合完成；正式是否發布一律查 docs/deployment/*.json 與 Cloudflare。
+唯一來源 https://github.com/micisachen63-gif/--MiniApp
+目前整合 worktree C:/Users/User/Documents/ChatGPT/star-journal-country-packs，branch codex/fate-country-packs-v9。
+台灣雙北v8已在前一版發布；本期接續其他九國，不改寫舊v1～v8人生。
 
-本期範圍
-日本東京23區、韓國首爾、美國加州洛杉磯、加拿大安省多倫多、英國英格蘭倫敦、德國北威州科隆、法國巴黎、澳洲新州雪梨、印度卡納塔克邦班加羅爾都市區。
-這是每國明確城市／行政範圍的先行包，不是全國所有地區、族群與法規的完整模擬。
-每包目標 1500 原創日常（兒童120／青少年100／成年720／後期420／通用140），12職涯×10章／4條件抉擇，24×6安全暱稱人際鏈，6種雙人故事，4家境與當地教育路徑。
-原創手繪插畫9張均已生成，webp／JPEG 共18檔，見 V9_ART_PROMPTS_20261016.txt。
-各國真實文化／教育來源與核對日期寫在 pack.sources 和 docs/fate/countries/*_CONTENT_V9_20261016.txt。
-金額使用該國貨幣的虛構劇情帳，不是官方薪資、匯率、台幣換算、全球分位；這些統計校準需求未宣稱完成。
+一、實際交付與界線
+JP東京23區；KR首爾25區；US加州洛杉磯市（郡交通等僅明確適用場景）；CA安省多倫多；GB英格蘭倫敦；DE北威州科隆；FR巴黎＋東側蒙特勒伊；AU新州雪梨（市府規則不泛化整個都會）；IN卡納塔克邦Bengaluru Urban。
+每國1500獨立日常（child120/youth100/adult720/late420/any140）、12職涯×10章／4專屬抉擇、24×6安全公開暱稱人際鏈、6雙人故事／12結果、4家境及當地教育路徑。
+共13500日常、108職涯／1080職涯章／432專屬抉擇、216人際鏈／1296章、54雙人故事；共用人生轉折另計，不以組合乘積灌事件數。
+9國13500日常全字unique；不表示語義永不相似，不宣稱玩家感受固定低於8%。
+官方來源及2026-10-16核對範圍見 country-packs-v9/* pack.sources 與本目錄 countries/*_CONTENT_V9_20261016.txt。單一城市先行包不等於全國所有地域、宗教、族群與法規完整模擬。
+各國貨幣為虛構劇情帳，不是國家平均薪資、匯率或真實全球排名。全球統計區間、台幣換算等需求仍待校準，不能冒稱已完成。
 
-架構與重播
-country-runtime-v9.js 小型 metadata＋明確懶載入；載入完成／資料完整才能開始該國人生。
-country-engine-v9.js 配方 v9-local-life-1：6～9抉擇、前因門檻、59～103不同終年、固定2小時有效時間、90秒選擇期限。
-家庭照顧為未受雇分工，不發薪、不自營、不套用公司同事故事。轉職／離職後不得繼續舊在職章節。
-country-narrative-v9.js 每30秒一則、每世240則不重複日常／職涯；四組內容避開同國前三世；終章按真實年齡列人生選擇與代表性日常。
-社交同事鏈從實際工作開始，離職／換工作即停止該同事鏈；安全公開暱稱不推定真實職業／戀愛／罪行。
-f9公開碼33字元：版本＋國碼＋orbit＋題數＋答案9位＋自動9位＋星座＋seed8位。
-只由碼重播，不能依隱藏歷史改結局；發布後本配方、資料順序與文本凍結，後續改版另編新版本。
-舊 v1～v8 不換版、不遷移、不改寫玩家資料。
+二、時鐘、因果、不可改寫契約
+一世固定2個有效小時、每天最多4次啟程、台北06:00–24:00成長、凌晨暫停、落款後玩家手動開新世。
+30秒一則、完整每世240則不重複日常／在職章。重大抉擇6～9上限、實際數量由條件決定；59～103終年與條件觸發時刻有不同。
+四個內容組避開同國前三世；新世起始才參照最多30筆近期歷史選seed，之後重播只靠公開碼，不參照隱藏歷史改結局。
+country-runtime-v9.js 使用小metadata＋明確國別懶載入；資料完整且暖載後才能創世、驗碼、公開頁、TG分享與創角接續。
+country-engine-v9.js 配方 v9-local-life-1。代選延續權重是遊戲敘事假設，非人口統計；玩家仍可手選另一條因果。
+學業完成不因職訓中止被抹掉；同一職涯stage不倒退；離職才清除在職狀態；職涯與公司同事章不提前出現。
+自營metadata employmentMode:'self-employed'：JP print-layout/craft-repair、KR comic-production、US graphic-freelance/street-vendor、CA craft-market、GB textile-mender、AU craft-trader。入行投入成本、selfEmployed/ventureOpen，不誤設受雇，不重複觸發一次開業；DE/FR/IN目前沒有明示自營entry。
+household-care是無薪家庭分工，不發薪、不自營、沒有公司同事。沒有原工作的人轉向家庭照顧，不寫「暫停原工作」。
+人際鏈先以seed固定選出，再按真實任職閘門顯示，避免成年就業後改寫早年紀事。同事需employed=true，離職／轉自營後該同事鏈停止。
+終章依實際事件年齡排列，補選真實日常代表回憶；不補造婚育、學位、資格、診斷或職業。
+f9碼33字元：版本＋國碼＋orbit＋題數＋答案9位＋自動9位＋星座＋seed8位。沒有生日、命盤、TG／帳號ID或其他玩家權限。
+發布後v9配方、文本、順序與codec全部凍結，新增或改演算法／內容另編版本。不可原地改寫歷史。
 
-整合
-app/life/model/formal-events/cycles 等皆保留9版本明確分派；雲端、公共頁、Bot分享與 /start fate_ 接續創角須先暖載國別碼。
-開新一世先回出生地選擇，可跨國再啟程；私人生日／時間／地點與虛構人生出生地分開。
-分享 PNG 與 Telegram JPEG 共用版式；國家／城市／性別與職涯分兩行，保留大星座印記。cache revision 20261016-countries9。
-共同事件保留既有DB六種enum、無migration；依父人生國別取在地故事，18歲後至100分鐘間分散邀請；回覆期限10有效分鐘；完成後雙方同一截止點更新。
-雙方若都有進行中 v9 人生，國家必須相同；不同國／新版對舊版不邀請，防止故事瞬移。
-權限、指定受邀者、HMAC、CAS、防重、群組資格、到期代選仍由正式服務驗證。沒有對真實TG發測試訊息或發社群貼文。
+三、雙人共同事件與入口
+保留既有DB六種enum，無migration；依父人生國別取在地故事。
+v9邀請在18歲後至100有效分鐘內分散觸發，10有效分鐘作答；不是固定第40分鐘。兩人都在進行中v9時需同國；v9對進行中舊版不邀請，防止瞬移。
+受邀者若有進行中人生，必須涵蓋共同deadline；schedule/open/answer均檢查，SQL同交易重驗；跨夜與22:00整結24:00邊界均有回歸。
+指定角色、帳號所有權、群組資格、同意／靜音、CAS與操作收據仍驗證。晚回、重送、切角、撤回不會重複更新。
+共同後續只在同一截止點寫出；相逢inbox新後續到達會主動同步人生，相同inbox不造成刷新迴圈。
+通知先選對角色再自動進旅章、定位可答選項。冷啟動BOT /start fate_f9... 及resume callback先暖載，再驗公開碼、過加入群組門檻並接創角。
+結果／旅誌的下一世按鈕先返回出生地設定，避免沿用上國直接開世；已在進行中的人生仍優先接續。非正式訪客不增加角色成就。
 
-目前驗證（尚須最終九國完整測試）
-已完成 JP／US／GB／CA／DE 各自資料測試與5國整合20項全過（20261016 v9-five-country-integrations.txt）。
-內容子分支：taiwan_content_v8負責JP→KR→IN；taiwan_engine_v8負責US→CA→AU；taiwan_ui_v8負責GB→DE→FR。
-不可把待補國別的schema／圖片視為完整內容，不可跳過缺失測試就部署。
-測試外部資料夾 C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016
-本機隔離預覽9565，舊使用者9555須保留；預覽資料只用sqlite fixture，絕不碰正式玩家。
-最終需9國完整測試、6000因果模擬／1000全文重播每國、9×48抉擇可達、受邀兩選雙方更新、實際手機寬度畫面與PNG下載、真實WASM JPEG。
-沒有iPhone／Android實機，原生TG／IG／Threads最後送出不得宣稱實機完成；保持不發文。
+四、美術與分享
+9張原創水彩／墨線城市記憶插畫，webp與JPEG共18檔，worker/public/art/fate-countries-v9。
+內建imagegen生成、Sharp只做格式編碼；原始路徑與完整提示見 countries/V9_ART_PROMPTS_20261016.txt。
+PNG／TG JPEG共用版式：國家／城市／性別與職涯分兩行，保留大星座圖騰。CARD_VERSION=20261016-countries9；entry tag=20261016-fate9a。
+尺寸1080×1350及1080×1920均實際下載；切尺寸後需先製作預覽，再儲存。限時動態不自動沿用舊尺寸名帖。
+無真實TG發訊息或IG/Threads發文。手機寬度瀏覽器驗收不是iPhone/Android原生TG與相簿／IG實機驗收，不得混稱。
 
-發布規則
-先fetch main整合其他視窗（守護天使／傳承畫面等）改動，完整Node24 npm test，提交並正常推送main。
-從乾淨且HEAD=origin/main執行根npm run deploy:bot與deploy:worker，保留共享release鎖與綁定／秘密／crons／public。
-若publish成功verify失敗，保留.release-sync，唯讀核對live版本／commit／資源並修收據，不盲目重發。
-最後部署版本與來源看docs/deployment/*.json和Cloudflare，不看此交接固定數字。
+五、驗收證據
+資料與引擎測試在worker/test/fate-country-*-v9.test.js；實際每國6000因果人生／1000全文＋公開碼重播、48抉擇可達、240日常唯一、45終年、同國近期四組輪替。
+每國80seed×3時點驗已見紀事前綴不被未來工作改寫；每國100seed檢查同事任職起訖。
+9國各6種共享×2選項，受邀者看選項、重送防重、雙方同截止點記憶一致；另含期限涵蓋、跨夜及權限競態回歸。
+完整npm test：Worker1492＋Bot139全過，無skip（v9-all-tests-final-repaired-fixture.txt）；之後補下一世選國UI回歸，該檔7/7通過，正式deploy會再跑完整Worker1493。
+最初完整測試抓到舊fixture只改caller seed卻沒更新DB；已改成把預設seed寫入隔離DB後，仍保留六篇／六結果的原斷言，未弱化檢查。
+全部外部證據 C:/Users/User/Documents/ChatGPT/營運自動化/fate-share-20261016
+九國資料清單 v9-nine-country-inventory.json；最終示例碼 v9-final-examples.json。
+實際手機390px外框／360px旅章：日本通知進選項；韓國受邀者作答、雙方紀事有同一句共同結果，重開仍保留。
+法國公開頁按實際年齡顯示完整歷程；新訪客結果→下一世設定→選IN→成功啟程班加羅爾，見v9-india-start-final.png。
+實際法國PNG在 C:/Users/User/Downloads/星穹旅誌-把一份工作，做成有人能放心的日常-post.png 與 -story.png，均已目視驗收。
 
-追加檢查點（v9尚未發布）
-八國JP/KR/US/CA/GB/DE/FR/AU均完整，IN完成日常後正在最後職涯與社交收尾。
-八國12000日常全字無跨國重複；八國24項因果整合回歸已通過（每國6000因果人生＋前綴重播及同事條件）。
-代選使用虛構的敘事延續權重，非人口統計；玩家選項與因果不受限制。
-審查修正：固定社交鏈避免任職後改寫童年、職訓停止不抹學業、在職stage不倒退、無工作不寫暫停原工作、自營metadata與無薪家務分開。
-受邀活動中的人生必須涵蓋共同deadline；schedule/open/answer均檢查，SQL transaction原子重驗（跨夜及22:00整邊界有8項回歸）。
-共同後續到達會主動同步人生；避免只更新相逢卡而等下一輪45秒輪詢。相同inbox不反覆刷新。
-本機韓國390px外框／360px旅章實測：真正受邀者見兩個選項，選完後發起者與受邀者紀事都含同一句共同後續；重新開啟仍保留。截圖v9-kr-owner-outcome.png／v9-kr-guest-persisted.png。
-仍需最終全部9國完整npm test、PNG下載與正式發布驗證；先前部分矩陣JSON屬發布前舊候選配方，請以最終紀錄為準。
+六、發布與接手
+先讀AGENTS.md；Node24.19.0，npm ci，fetch main整合其他視窗。完整測試後正常提交推main，從乾淨HEAD=origin/main執行根deploy:bot及deploy:worker。
+共享release lock不可繞過。保留其他視窗守護天使／傳承等更新、完整public、綁定／秘密／crons，不啟動舊本機BOT，不改正式玩家或DB migration。
+若publish成功verify失敗，保留.release-sync並唯讀核對live／commit／assets；正式正確時只修收據，不盲目重發。
+正式版本與commit以 docs/deployment/star-journal-rpg-bot.json、elf-rpg-api.json及Cloudflare為準。不可拿本機9555／9565或舊候選版本當正式環境。

@@ -160,6 +160,7 @@ test('six authored branches have distinct choices and outcomes; the previous thr
  const titles=new Set(),answers=new Set(),outcomes=new Set();
  for(let seed=0;seed<6;seed++){
   const f=await fixture(t);await f.enable('101');await f.enable('202');const life=await f.begin();life.draft.seed=seed.toString(16).padStart(8,'0');
+  f.run('UPDATE rpg_fate_lives SET state_json=? WHERE id=?',JSON.stringify(life.draft),life.lifeId);
   await S.schedule(f.env,life,T);const row=f.one('SELECT * FROM rpg_fate_social_choices'),v=(await S.event(f.env,'202',{eventId:row.id},row.opened_at)).event;
   titles.add(v.title);answers.add(v.choices.join('|'));await S.reply(f.env,'202',{eventId:row.id,answer:0,requestId:rid()},row.opened_at);
   outcomes.add((await S.outcomes(f.env,life.lifeId,row.deadline_at))[0].text);

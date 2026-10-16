@@ -1,0 +1,128 @@
+印度Bengaluru Urban內容包 v9 — 實際清點及來源
+核對日期2026-10-16。狀態：資料整包與獨立測試完成，是否啟用及正式發布由root整合驗收。
+
+清點與入口
+worker/public/fate/country-packs-v9/in.js：COUNTRY_PACK_IN，default為同物件，遞迴凍結。
+in-young.js：child120 / youth100 / any140。
+in-adult-a.js、in-adult-b.js、in-adult-c.js：各240，adult共720。
+in-late.js：late420。日常1500句全字唯一，沒有人物/地名代換句型乘積。
+in-careers.js：12職涯×10章＝120章；每職涯4題×2選項＝48題96結果。
+in-social.js：24關係鏈×6章＝144；6雙人支線×2結果＝12。
+4家庭背景、1教育支線、13筆官方來源。
+worker/test/fate-country-in-v9.test.js：10項通過。
+
+地方及文化範圍
+Karnataka州Bengaluru Urban都市包，cityId=bengaluru，cityName=班加羅爾，currency=INR。
+可選場景是市內公園、日常市場、早餐店、交通、學習、藝文與一般社會互動。
+卡本公園(Cubbon Park)、拉爾巴格(Lalbagh)、KR Market、VITM、Ranga Shankara都有具體官方出處。
+沒有把外圍Nandi Hills、其他州或其他印度城市當作本地街區；不宣稱本包代表全印度。
+Kannada及英文是都市互動可遇見的文字，不設定每位人物母語，更不把Hindi預設成全國共同母語。
+出生不自動決定宗教、種姓、飲食限制、婚配方式、國籍或行政待遇；未放強制全員宗教節慶。
+沒有固定年份真實災難、隨機月份硬播花展、單一家庭文化套全城市。
+Darshini/idli/dosa/filter coffee作可選飲食背景，並非所有居民都按同一方式吃早餐。
+
+年齡與前置
+child6–12 / youth13–17 / adult18–59 / late60–110 / any3–110。
+0–2由共用幼年模組供應；any是可旁觀/簡單安全互動，不把幼兒當獨自通勤或辦事的成年人。
+成年晚年日常未授予個人工作、伴侶、子女、租屋契約、學位、病名、處方；具體工作放在workActive職涯。
+社交名字是中性虛構投影，不替真人設定負債、私德、戀愛、疾病、家庭困境等敏感事實。
+20友人/鄰里鏈不需要就業；4同事鏈requiresCareer=true，root仍需排除household-care與未在職者。
+雙人六故事只有一般公開活動/市場/手作等互動，不賦予另一玩家婚育或負面行為。
+現場選擇後雙方持久化/到期/權限/通知定位須由root通用服務驗收，本資料測試未宣稱替代。
+
+12職涯與metadata
+technical-support 軟體使用與測試支援
+service-backoffice 客服與事務流程支援
+garment-finishing 衣物製作與整修協作
+neighborhood-retail 街區雜貨與生活零售
+parcel-coordination 貨件收件與路線行政（未授予駕駛/商業運輸資格）
+meal-prep-support 小餐飲備製協作（依單位訓練/要求，不自動授許可）
+activity-materials 學習活動材料與行政，21+（非正式教師/教保資格）
+clinic-records 一般門診行政協作，21+（非醫護處置）
+small-object-repair 生活小物修整與收件（不承作未確認的帶電/需授權項目）
+print-lettering 印製排版與文字協作
+visitor-frontdesk 旅宿與到訪接待
+household-care 家庭日常協調與照料，21+，未受雇/無薪。
+自營metadata名單：無。entry沒有明示自主接案、攤商開業或自營營業，故未標employmentMode:self-employed。
+一般協作視為單位範圍的支援；如root讓後續business事件分流，仍需按真實狀態取用章節。
+household-care不設employed/薪資，不進同事鏈或開店事件，所有抉擇money<=0，離開代表結束主要協調角色。
+12職涯exit=true後應停止本職涯後續章；不能只看年齡把10章自動播完。
+未完成州級資格研究前，不開放原計畫的正式護理/正式學前教師路線；本包採非專業行政支援，並未冒充已補齊資格。
+資格審核細節放此文件；故事用實際詢問、核對、受指導、轉交呈現，避免章節出戲。
+
+教育及金額
+印度教育政策2020的5+3+3+4是課程改革背景，不宣稱2026全州所有學校已同步同一校制。
+地方有PUC正式教育窗口；玩家探索實際機構課程，完成只記課程/實作，不自動取得學位或受保護資格。
+各學校、語言、學段與申請要求應逐一核對，不因國家包設定保證錄取/畢業。
+家境money是虛構起始可用預算，選項delta為虛構事件帳目；不是法定工資、實際年薪、城市資產中位數或投資保證。
+沒有全球百分位與新臺幣換匯，亦未拿全國GDP或家庭消費平均推算個人存款。
+
+實際官方來源與限制
+IN9-S1 Bengaluru Urban District — About District
+https://bengaluruurban.nic.in/en/aboutdistrict/
+實讀地方行政定位與Karnataka首府背景，只用研究範圍，不採頁中歷史人口作目前分布。
+
+IN9-S2 Bengaluru Urban District — Education
+https://bengaluruurban.nic.in/en/education/
+地方初等中等教育服務與教育項目。不能由項目存在推定每個家庭都有同一福利或上同類學校。
+
+IN9-S3 Bengaluru Urban District — Public Instruction Department
+https://bengaluruurban.nic.in/en/department/public-instruction-department/
+官方地方教育窗口包含DDPU/Pre University。用於教育路線名稱，不直接採單位電話或資格當遊戲資料。
+另查州政府Fiscal Policy Institute教育財政報告，敘述前十年學校與後兩年PUC，但其引用2018–19，故故事未鎖死所有校制。
+
+IN9-S4 印度教育部 NEP2020正式文件
+https://www.education.gov.in/sites/upload_files/mhrd/files/NEP_Final_English_0.pdf
+課程結構5+3+3+4、年齡階段及語言多樣性是政策方向，並非完成一段遊戲課程即可獲學位。
+Highlights網頁本次部分讀取失敗，依可讀取的正式PDF搜尋內容與原文資訊，不冒稱已核所有州2026實施細則。
+
+IN9-S5 BMRCL官方 Namma Metro
+https://english.bmrc.co.in/
+實讀官方路線/票務入口；網頁語系可能自動切換，未把單一查得票種條件永遠固化。
+不固定已通車線段、末班時間、票價、最低餘額或特殊資格，日常只核對現場與當次正式資訊。
+BMTC官方mybmtc.karnataka.gov.in/english本次工具讀取Internal Error；巴士只寫存在的城市一般候車/核對行為，不編造車號/票價/通車年代。
+
+IN9-S6 Karnataka Tourism — Bengaluru
+https://karnatakatourism.org/en/destinations/bengaluru
+實讀KR市場、卡本公園、拉爾巴格、darshini與idli/dosa/filter coffee等都市背景。
+未採其旅遊行銷性最高級說法作真實統計；不把外圍推薦景點混成日常出生街區。
+
+IN9-S7 Karnataka Tourism — Cubbon Park
+https://karnatakatourism.org/en/attractions/cubbon-park/
+公園、紅色Seshadri Iyer Memorial Hall/中央圖書館及綠地背景。頁內圖書館時間不同段落不一致，故文本未使用固定時間。
+沒有將頁內「人人都去過」式旅遊修辭寫成玩家必經事件。
+
+IN9-S8 Karnataka Tourism — Lalbagh
+https://karnatakatourism.org/en/attractions/lalbagh-botanical-garden/
+植物園、園藝與植物觀察。開放資訊部分敘述不一致，故不硬寫時間、免費時段與花展必出月份。
+
+IN9-S9 Bengaluru Urban District — Kannada and Culture
+https://bengaluruurban.nic.in/en/kannadaculture/
+實讀Ranga Shankara、Ravindra Kalakshetra、Chitrakala Parishath、音樂戲劇與公開文化項目背景。
+沒有把文化資源存在當自動受聘或正式藝術學歷，也未把官方活動列成所有人物必然參加。
+
+IN9-S10 VITM官方（NCSM/印度文化部所屬）
+https://vismuseum.gov.in/
+實讀官方搜尋內容的機構歸屬、引擎、電學、電子、太空展示與示範活動。後一次open部分Internal Error，保留可核官方結果，不改用第三方評論。
+未寫2026特定新裝置為所有輪迴永久存在，不鎖票價或開放時刻。
+
+IN9-S11 BBMP-SWM官方分類圖入口
+https://apps.bbmpgov.in/SWM/Home/Forms/PublicInformation.aspx?page=SEGREGATION
+實讀乾濕分類與官方圖示入口；地方組織正在不同網站以新架構呈現，實查GBA官方入口gba.karnataka.gov.in亦有當前資訊。
+KnowYourNewCorporation頁本次讀取錯誤，故不宣稱舊BBMP單一機關/收運日程適用全都市，故事寫「所在地最新規則」。
+
+IN9-S12 FSSAI Hygiene Requirements
+https://www.fssai.gov.in/inspection/hygiene-requirements
+官方搜尋可讀內容明示食品業登記/許可與Schedule4不同類別。部分直接open回傳空白，未據此捏造已全面核對地方營業許可。
+只用食品處理前訓練、衛生、來源與範圍確認；人物沒有完成一般學習就自動獲餐飲營業許可。
+
+IN9-S13 FSSAI FoSTaC
+https://fostac.fssai.gov.in/
+實讀正式培訓入口與實際課程安排，另查FSSAI About FoSTaC目前課程分類。歷史頁課數不同，故不固定課數/小時/證照取得。
+food safety supervisor、trainer、營業許可等不同事項不互相代換，本包沒有直接授予。
+
+驗證
+Node24 --test worker/test/fate-country-in-v9.test.js：10 passed / 0 failed。
+涵蓋精確1500與phase數、全字唯一、對TW1718+170及JP/KR日常/職涯零全字重用、常見個人狀態錯置、四書架59–103終年每世240節點容量、12職涯120章/48題、家庭照顧無薪、24安全關係/144占位、6雙人雙方結果、來源/教育範圍。
+全字唯一不等於玩家感受上永遠不重複；同類日常主題仍可能相近，應由root做多世實際重播和抽樣閱讀，不把1500直接說成任何保證重複率。
+本分支未修改共用runtime/UI/TW、未提交/推送/部署、未測正式TG通知或手機分享。實際發布與服務驗證由root統一處理。
