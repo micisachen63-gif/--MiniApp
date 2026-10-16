@@ -52,3 +52,10 @@ v6/f6的geography/metrics/peer/local-context/real-careers原型保存在codex/fa
 發布
 只從乾淨origin/main依根腳本發布。先deploy:bot（支援第4～9題及f7 JPEG），再deploy:worker（啟用新人生），最後核對兩份部署收據與健康、公開f7頁面／圖片。
 無新migration，保留Cloudflare綁定、namespace、cron、Secrets與現有玩家資料。失敗保留.release-sync，以sync:check查明，不盲目重發。
+
+正式發布補記（2026-10-16）
+BOT已發布49bb25ec-d57c-4380-9695-a825196d5c16，source 27f9a04；遊戲最終發布73fb6ab5-5eb2-49b5-9520-cb40c7818fb1，source f4ec1b5daf57，兩份收據已正常推送main。
+最終Worker發布流程完整測試1289項全通過；BOT上線前116項全通過，合計1405項。Worker驗證134個入口／代表素材／異動public檔，並非下載所有歷史美術資產。
+發布後唯讀GET：遊戲health、BOT health、f7公開頁、BOT f7 1080×1350 JPEG均200；公開HTML引用fate7a，JPEG檔頭與content-type正確。真瀏覽器重新載入正式f7頁，出生男孩、各歲數時間軸、男性分享身分均可見；短篇展開也含年齡。
+另一視窗8a804ff的戰鬥調整先發布88b746e4，因GitHub同時前進而未寫收據。本次先以凍結8a checkout、原pending runtime雜湊、Cloudflare唯讀狀態與134個public檔補齊正確收據，再走原根發布指令，未還原或覆蓋戰鬥功能。
+本次臨時驗收9561–9564已關閉；原9555預覽保留。正式預覽使用f7公開頁；新輪迴才用v7，舊人生不改寫。暫存驗證工具與圖片留在營運自動化/fate-share-20261016，不含憑證，不進Git。
