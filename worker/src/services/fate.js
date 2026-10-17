@@ -34,7 +34,7 @@ async function progressRow(env,row,now){
   const next=v.available?addActive(v.slots[v.index],CHOICE_MS):v.nextAt,changed=v.completed||v.draft.answers.length!==d.answers.length||notify||row.next_at<=now||JSON.stringify(v.draft.sharedMemories)!==JSON.stringify(d.sharedMemories);
   if(!changed)return row;
   const notified=notify?v.index:row.notified_index,db=env.DB,stmts=[db.prepare('UPDATE rpg_fate_lives SET state_json=?,status=?,completed_at=?,next_at=?,code=?,notified_index=?,rev=rev+1 WHERE id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.completed?'complete':'active',v.completed?v.endAt:null,next,v.code,notified,row.id,row.rev),guardStmt(db)];
-  if(notify&&isOpenTime(now)&&env.GROUP_CHAT_ID){const c=await owner(db,row.char_id),scene=scenesFor(d)[v.index];stmts.push(outboxStmt(db,{dedupe:`fate:${row.id}:${v.index}`,target:'group',kind:'fate_event',payload:{...([8,9].includes(d.version)?{country:d.country}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:v.index,age:scene.age,title:scene.title,text:scene.text,deadline:next}},now));}
+  if(notify&&isOpenTime(now)){const c=await owner(db,row.char_id),scene=scenesFor(d)[v.index];if(/^[1-9]\d{0,19}$/.test(c.account))stmts.push(outboxStmt(db,{dedupe:`fate:${row.id}:${v.index}`,target:'dm',tgId:c.account,kind:'fate_event',payload:{...([8,9].includes(d.version)?{country:d.country}:{}),lifeId:row.id,charId:row.char_id,accountId:c.account,name:c.name,index:v.index,age:scene.age,title:scene.title,text:scene.text,deadline:next}},now));}
   try{await db.batch(stmts);return await db.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(row.id).first();}catch(e){if(classifyDbError(e)?.code!=='conflict'||attempt===3)throw e;row=await db.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').bind(row.id).first();}
  }
  return row;
@@ -45,13 +45,15 @@ export async function sweep(env,now){
 }
 export async function state(env,tg,now){
  const c=await owner(env.DB,tg),row=await progressRow(env,await activeRow(env.DB,tg),now);
- const [starts,total,last]=await env.DB.batch([
+ const [starts,total,last,blocked]=await env.DB.batch([
   env.DB.prepare('SELECT count FROM rpg_fate_starts WHERE account_id=? AND day=?').bind(c.account,taipeiDay(now)),
   env.DB.prepare("SELECT COUNT(*) n FROM rpg_fate_lives WHERE char_id=? AND status='complete'").bind(String(tg)),
   env.DB.prepare("SELECT id,code,started_at,completed_at,state_json FROM rpg_fate_lives WHERE char_id=? AND status='complete' ORDER BY started_at DESC LIMIT 1").bind(String(tg)),
+  // Derived flag, no extra table: a recent private-message 403 means the user never pressed Start (uses the partial failed_at index).
+  env.DB.prepare("SELECT 1 AS blocked FROM rpg_outbox WHERE failed_at IS NOT NULL AND failed_at>? AND target='dm' AND tg_id=? AND last_error_code=403 AND COALESCE(last_error,'') NOT LIKE 'cleared:%' LIMIT 1").bind(now-30*86400000,c.account),
  ]);
  const count=total.results?.[0]?.n||0;
- return {ok:true,now,heroName:c.name,active:row?.status==='active'?activeView(row,now):null,completed:count,startedToday:starts.results?.[0]?.count||0,limit:4,night:!isOpenTime(now),milestone:[...SOUL_ACHIEVEMENTS].reverse().find(m=>count>=m.at)||null,last:last.results?.[0]?{id:last.results[0].id,code:last.results[0].code,at:last.results[0].completed_at,draft:parse(last.results[0].state_json)}:null};
+ return {ok:true,now,heroName:c.name,active:row?.status==='active'?activeView(row,now):null,completed:count,startedToday:starts.results?.[0]?.count||0,limit:4,night:!isOpenTime(now),dmBlocked:!!blocked.results?.length,milestone:[...SOUL_ACHIEVEMENTS].reverse().find(m=>count>=m.at)||null,last:last.results?.[0]?{id:last.results[0].id,code:last.results[0].code,at:last.results[0].completed_at,draft:parse(last.results[0].state_json)}:null};
 }
 export async function me(env,tg,now){return {...await state(env,tg,now),...await history(env,tg,{},now),profile:await profileView(env,tg,false)};}
 export async function history(env,tg,b,now){
@@ -63,6 +65,7 @@ export async function history(env,tg,b,now){
 export async function start(env,tg,b,now){
  const country=b.country??'TW';if(country!=='TW'&&!Object.hasOwn(COUNTRY_METADATA_V9,country))throw new GameError('fate_country','請選擇已開放的出生地。');if(country!=='TW')await ensureCountryPack(country);const version=country==='TW'?8:9;
  await progressRow(env,await activeRow(env.DB,tg),now);
+ const castSink=[];
  const response=await mutation(env,tg,b,now,'start',async(c,db)=>{
   const existing=await activeRow(db,tg);if(existing)return {result:{lifeId:existing.id,already:true}};
   if(!isOpenTime(now))throw new GameError('fate_night','星穹已入夜，06:00 再開啟下一世');
@@ -72,13 +75,14 @@ export async function start(env,tg,b,now){
   await ensureCountryCodes(past.map(e=>e.code));
   const orbit=randomOrbit(zodiac),seed=seedForNextLife(newSeed(),past.reverse(),version,orbit,country),draft=createLife({version,country,orbit,zodiac,seed,startedAt:now}),id=crypto.randomUUID().replaceAll('-','');
   identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
-  const socialCast=await snapshotSocialCast(db,c.account,draft);if(socialCast)draft.socialCast=socialCast;
+  const socialCast=await snapshotSocialCast(db,c.account,draft,castSink);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now,draft)[0])],result:{lifeId:id}};
  });
  // The life commits independently. A missing eligible partner or an unavailable
  // membership service must never block a two-hour life or consume another start.
  // Replaying the same start repairs an interrupted schedule via UNIQUE(life_id).
- if(b.socialInvite===true){
+ if(!response.replayed&&castSink.length){try{await SHARED.castNotice(env,{lifeId:response.result.lifeId,ownerName:(await owner(env.DB,tg)).name,people:castSink},now);}catch{console.warn('Fate cast notice unavailable; life continues');}}
+if(b.socialInvite===true){
   const row=await env.DB.prepare("SELECT * FROM rpg_fate_lives WHERE id=? AND char_id=? AND status='active'").bind(response.result.lifeId,String(tg)).first();
   if(row){const c=await owner(env.DB,tg);try{await SHARED.schedule(env,{lifeId:row.id,charId:String(tg),accountId:c.account,name:c.name,draft:parse(row.state_json)},now);}catch{console.warn('Fate shared invitation unavailable; life continues');}}
  }

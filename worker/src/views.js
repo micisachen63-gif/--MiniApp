@@ -75,7 +75,7 @@ export function bossView(boss, attackers = [], now = Date.now()) {
   if (!boss) return null;
   return { id: boss.id, mapId: boss.map_id, mapName: `${MAPS[boss.map_id].emoji} ${MAPS[boss.map_id].name}`, name: boss.name, ...monsterIdentity(boss.map_id,boss.name,'boss'), element: boss.element, elementName: ELEMENTS[boss.element]?.name, elementEmoji: ELEMENTS[boss.element]?.emoji,
     hp: boss.hp, maxHp: boss.max_hp, participants: boss.participants, status: boss.status, startedAt: boss.started_at, endsAt: boss.ends_at,
-    secondsLeft: Math.max(0, Math.round((boss.ends_at - now) / 1000)), material: ITEMS[MAPS[boss.map_id].boss.mat]?.name, collectionMaterial:monsterIdentity(boss.map_id,boss.name,'boss').material, attackWindowMinutes: BOSS.attackWindowMs / 60000,
+    secondsLeft: Math.max(0, Math.round((boss.ends_at - now) / 1000)), material: ITEMS[MAPS[boss.map_id].boss.mat]?.name, collectionMaterial:monsterIdentity(boss.map_id,boss.name,'boss').material,collectionMaterialName:ITEMS[monsterIdentity(boss.map_id,boss.name,'boss').material]?.name, attackWindowMinutes: BOSS.attackWindowMs / 60000,
     messageChatId: boss.message_chat_id, messageId: boss.message_id, result: boss.result_json ? JSON.parse(boss.result_json) : null,
     top: attackers.slice(0, 30).map((a) => ({ tgId: a.tg_id, name: a.name, damage: a.damage })) };
 }

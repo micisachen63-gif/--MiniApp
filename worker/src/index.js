@@ -208,6 +208,7 @@ const routes = {
   'POST /rpg/outbox/ack': (env, b, now) => ackOutbox(env, b, now),
   'POST /rpg/outbox/fail': (env, b, now) => failOutbox(env,b,now),
   'POST /rpg/outbox/status': (env, b, now) => outboxStatus(env,now),
+  'POST /rpg/notify/dm-reachable': (env, b) => clearDmBlock(env, tgOf(b)),
   'POST /rpg/admin/grant': adminGrant,
   'POST /rpg/dev/spawn-now': async (env, b, now) => { if (!devMode(env)) throw new GameError('forbidden', 'dev only', 403); return { ok: true, spawn: await B.spawnDue(env, now, { force: { tier: Number(b.tier) || 1 } }) }; },
   'POST /rpg/dev/cron': async (env, b, now) => { if (!devMode(env)) throw new GameError('forbidden', 'dev only', 403); return { ok: true, cron: await runCron(env, now) }; },
@@ -219,10 +220,10 @@ async function claimOutbox(env, now, limit) {
   // party_card is rendered from the party's current state, so older unclaimed cards of the same party are superseded by the newest one.
   await db.prepare(`UPDATE rpg_outbox SET delivered_at = ?, last_error = 'superseded' WHERE kind = 'party_card' AND delivered_at IS NULL AND failed_at IS NULL AND claimed_at IS NULL AND id < (SELECT MAX(o2.id) FROM rpg_outbox o2 WHERE o2.kind = 'party_card' AND o2.delivered_at IS NULL AND o2.failed_at IS NULL AND json_extract(o2.payload_json,'$.partyId') = json_extract(rpg_outbox.payload_json,'$.partyId'))`).bind(now).run();
   const rows = await db.prepare(`UPDATE rpg_outbox SET claimed_at = ?, claim_token = ?, claim_attempts = claim_attempts + 1
-    WHERE id IN (SELECT id FROM rpg_outbox WHERE delivered_at IS NULL AND failed_at IS NULL AND next_attempt_at <= ? AND (claimed_at IS NULL OR claimed_at <= ?) AND (?=1 OR kind NOT IN ('fate_event','fate_social')) ORDER BY CASE WHEN kind IN ('fate_event','fate_social') THEN 0 ELSE 1 END,id LIMIT ?)
+    WHERE id IN (SELECT id FROM rpg_outbox WHERE delivered_at IS NULL AND failed_at IS NULL AND next_attempt_at <= ? AND (claimed_at IS NULL OR claimed_at <= ?) AND (?=1 OR kind NOT IN ('fate_event','fate_social','fate_cast')) ORDER BY CASE WHEN kind IN ('fate_event','fate_social','fate_cast') THEN 0 ELSE 1 END,id LIMIT ?)
     RETURNING id, target, tg_id, kind, payload_json`).bind(now, claimToken, now, now - 60_000, fateIsOpenTime(now)?1:0, limit).all();
   const items = [];
-  for (const r of (rows.results || []).sort((a,b)=>Number(!['fate_event','fate_social'].includes(a.kind))-Number(!['fate_event','fate_social'].includes(b.kind))||a.id-b.id)) {
+  for (const r of (rows.results || []).sort((a,b)=>Number(!['fate_event','fate_social','fate_cast'].includes(a.kind))-Number(!['fate_event','fate_social','fate_cast'].includes(b.kind))||a.id-b.id)) {
     try {
     const payload = r.payload_json ? JSON.parse(r.payload_json) : {};
     if (payload.bossId) {
@@ -259,7 +260,14 @@ async function ackOutbox(env, body, now) {
   const {ids,token,marks} = outboxSelection(body,'outbox_ack');
   const result = await env.DB.prepare(`UPDATE rpg_outbox SET delivered_at = ?, claim_token = NULL
     WHERE delivered_at IS NULL AND failed_at IS NULL AND claim_token = ? AND id IN (${marks})`).bind(now, token, ...ids).run();
-  return { ok: true, delivered: result.meta?.changes || 0 };
+  const delivered = result.meta?.changes || 0;
+  // A delivered private message proves the user can be reached again: clear the derived 'start the bot' hint.
+  if (delivered) await env.DB.prepare(`UPDATE rpg_outbox SET last_error='cleared:'||COALESCE(last_error,'') WHERE failed_at IS NOT NULL AND target='dm' AND last_error_code=403 AND COALESCE(last_error,'') NOT LIKE 'cleared:%' AND tg_id IN (SELECT tg_id FROM rpg_outbox WHERE id IN (${marks}) AND target='dm')`).bind(...ids).run();
+  return { ok: true, delivered };
+}
+async function clearDmBlock(env, tg) {
+  const r = await env.DB.prepare("UPDATE rpg_outbox SET last_error='cleared:'||COALESCE(last_error,'') WHERE failed_at IS NOT NULL AND target='dm' AND last_error_code=403 AND COALESCE(last_error,'') NOT LIKE 'cleared:%' AND tg_id=?").bind(tg).run();
+  return { ok: true, cleared: r.meta?.changes || 0 };
 }
 async function failOutbox(env,body,now) {
   const {ids,token,marks} = outboxSelection(body,'outbox_fail');

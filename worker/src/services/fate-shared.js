@@ -4,7 +4,7 @@ import {hash as storyHash} from '../../public/fate/world.js';
 import {GameError} from '../game/classes.js';
 import {guardStmt,outboxStmt,classifyDbError} from '../db.js';
 import {addActive,activeBetween,isOpenTime,taipeiDay,LIFE_MS} from '../../public/fate/life.js';
-import {publicNickname} from '../../public/fate/social-cast.js';
+import {publicNickname,SOCIAL_ROLES} from '../../public/fate/social-cast.js';
 
 const MINUTE=60000,DAY=86400000;
 const STORIES={
@@ -237,4 +237,20 @@ export async function outcomes(env,lifeId,now){
   (s.life_id=? OR (s.guest_account=? AND s.guest_char=? AND s.status='answered' AND s.opened_at>=? AND s.deadline_at<=?))
   ORDER BY s.deadline_at,s.id LIMIT 8`).bind(now,String(lifeId),life.account_id,life.char_id,life.started_at,end).all()).results||[];
  const memories=[];for(const row of rows){const local=countryEdition(row.story_life_state),current=countryEdition(life.state_json);if(row.life_id!==String(lifeId)&&(local||current)&&local!==current)continue;const r=await progress(env,row,now);memories.push({id:'shared-'+authoredKey(r),at:r.deadline_at,ownerName:r.owner_name,guestName:r.guest_name,answer:r.answer,source:r.source,text:outcomeText(r)});}return memories;
+}
+
+// Another player's life borrowed this player's nickname as a cast member. Tag them in the group only when
+// they opted in to mentions (same switch, daily limit of 2, quiet day and Telegram membership as invitations).
+export async function castNotice(env,{lifeId,ownerName,people},now){
+ if(!env.GROUP_CHAT_ID||!isOpenTime(now)||!/^[A-Za-z0-9_-]{8,64}$/.test(String(lifeId||'')))return {sent:0};
+ const db=env.DB,day=taipeiDay(now),seen=new Set(),want=[];
+ for(const person of (people||[]).slice(0,3)){const account=String(person.account);if(seen.has(account)||!/^[1-9]\d{0,15}$/.test(account))continue;seen.add(account);if(allowed(await pref(db,account),now))want.push({...person,account});}
+ if(!want.length)return {sent:0};
+ const members=await memberSet(env,want.map(x=>x.account)),owner=publicNickname(ownerName)||'旅人';let sent=0;
+ for(const person of want){
+  if(!members.has(person.account)||!allowed(await pref(db,person.account),now))continue;
+  try{await db.batch([db.prepare('INSERT INTO rpg_fate_social_limits(account_id,day,mentions) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET mentions=mentions+1 WHERE mentions<2').bind(person.account,day),guardStmt(db),outboxStmt(db,{dedupe:`fate-cast:${lifeId}:${person.account}`,target:'group',kind:'fate_cast',payload:{lifeId,accountId:person.account,castName:person.name,ownerName:owner,thread:person.thread,role:SOCIAL_ROLES[person.thread]?.role||'同行旅人'}},now)]);sent++;}
+  catch(e){if(classifyDbError(e)?.code!=='conflict')throw e;}
+ }
+ return {sent};
 }

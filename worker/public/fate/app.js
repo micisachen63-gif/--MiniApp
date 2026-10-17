@@ -47,7 +47,9 @@ function setupMedia(bg){
  media=el('video');media.muted=true;media.loop=true;media.playsInline=true;media.autoplay=true;media.preload='none';media.poster=ART+'journey.webp';bg.append(media);
  media.src=ART+'journey-loop.mp4';media.play().catch(()=>{});
 }
-function render(){
+function paintDmHint(){document.querySelectorAll('.fate-dm-hint').forEach(n=>n.remove());if(cloud?.dmBlocked!==true)return;const panel=document.querySelector('.fate-panel');if(!panel)return;const box=el('p','fate-note fate-dm-hint','請先到機器人對話按「開始」才能收到私訊提醒。');box.append(' ',button('前往機器人',()=>{const url='https://t.me/StarJournalRpgBot?start=rpgfate',tg=window.Telegram?.WebApp;if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');}));panel.prepend(box);}
+function render(){renderCore();paintDmHint();}
+function renderCore(){
  const detailsOpen=[...root.querySelectorAll('details[open]>summary')].map(e=>e.textContent);if(media)media.remove();sharePanel?.dispose();sharePanel=null;root.replaceChildren();const shell=el('div','fate-shell'+(stage==='scene'?' fate-story':'')+(result?' fate-result':''));
  if(result)shell.style.setProperty('--ending',result.ending.color);if(stage==='archive')shell.classList.add('fate-archive');if(stage==='life'||stage==='daily')shell.classList.add('fate-live');
  const bg=el('div','fate-media');bg.setAttribute('aria-hidden','true');shell.append(bg);setupMedia(bg);

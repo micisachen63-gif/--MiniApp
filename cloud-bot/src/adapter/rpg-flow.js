@@ -120,7 +120,7 @@ export function pkText(p) {
 const SLOT_ICON = { weapon: '🗡️', helmet: '⛑️', armor: '🛡️', gloves: '🧤', boots: '👢', belt: '🎗️', undershirt: '👕', earring: '💎', ring: '💍' };
 const fmt = (n) => Number(n || 0).toLocaleString('en-US');
 const hm = (t) => new Date(t + TPE).toISOString().slice(11, 16);
-export const bossLootText=b=>`掉落：◆ 首領精華 ×${4+Math.max(1,Math.min(12,Number(b.mapId)||1))}（每帳號每日前四隻，需實際參戰）＋金幣＋首領裝備${b.material?`\n🏅 ${b.material}：需要的人每人 1 個`:''}\n✦ 額外機會：祝福卷軸、神話遺物`;
+export const bossLootText=b=>`掉落：◆ 首領精華 ×${4+Math.max(1,Math.min(12,Number(b.mapId)||1))}（每帳號每日前四隻，需實際參戰）＋金幣＋首領裝備${b.material?`\n🏅 ${b.material}：需要的人每人 1 個`:''}${b.collectionMaterialName?`\n🔮 ${b.collectionMaterialName}：用於地圖收藏製作`:''}\n✦ 額外機會：祝福卷軸、神話遺物`;
 const bar = (v, max, n = 10) => { const k = max > 0 ? Math.max(0, Math.min(n, Math.round((v / max) * n))) : 0; return '█'.repeat(k) + '░'.repeat(n - k); };
 const btn = (text, data) => ({ text, callback_data: `rpg:${data}` });
 
@@ -417,6 +417,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       await send(body, a ? { reply_markup: { inline_keyboard: [[a]] } } : {}, msg.chat.id); return { rpg: 'trade-link', kind };
     }
     const partyStart=/^\/start\s+rpgparty_(p[\da-f]{15})$/i.exec(text);if(partyStart)return showMain(msg.chat.id,msg.from,null,'',`party_${partyStart[1]}`);
+    if (START_RE.test(text)) { await client.call('/rpg/notify/dm-reachable',{tgId:String(msg.from.id)}).catch(()=>{}); }
     if (START_RE.test(text)) return showMain(msg.chat.id, msg.from, null, '', /^\/start\s+rpgfate$/i.test(text)?'fate':/^\/start\s+rpgguardian$/i.test(text)?'guardian':/^\/start\s+rpgbag$/i.test(text)?'bag':/^\/start\s+rpgshop$/i.test(text)?'shop':BOSS_START_RE.test(text) ? 'boss' : '');
     return null;
   }
@@ -574,7 +575,21 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
-    if(['fate_event','fate_social'].includes(item.kind)&&item.target==='group'){
+    const fateDm=item.kind==='fate_event'&&item.target==='dm'&&/^[1-9]\d{0,19}$/.test(String(item.tgId||''));
+    if(item.kind==='fate_cast'&&item.target==='group'){
+      if(!/^[A-Za-z0-9_-]{1,128}$/.test(p.lifeId||'')||!/^[1-9]\d{0,15}$/.test(String(p.accountId||'')))return;
+      const key=`cast:${p.lifeId}:${p.accountId}`,cards=st().fateCards??={};
+      if(cards[key]?.messageId)return;
+      if(cards[key])throw Error('命運旅章路過通知送達待核對：'+key);
+      if(new Date(now()+TPE).getUTCHours()<6){const retryAt=Math.floor((now()+TPE)/86400000)*86400000-TPE+6*3600000;throw Object.assign(Error('命運旅章夜間靜默'),{definite:true,errorCode:429,parameters:{retry_after:Math.max(1,Math.ceil((retryAt-now())/1000))}});}
+      const link=deepLink('fate'),keyboard=link?[[{text:'✦ 看看我的旅章',url:link}]]:[];
+      const caption=`✧ <b>命運旅章 · 路過的名字</b>\n\n<a href="tg://user?id=${p.accountId}">${html(String(p.castName||'旅人').slice(0,40))}</a>，你的名字出現在「${html(String(p.ownerName||'旅人').slice(0,40))}」這一世的旅章裡，成為了「${html(String(p.role||'同行旅人').slice(0,20))}」。\n\n這是一段虛構的故事，只借用了你的暱稱。`;
+      cards[key]={at:now(),uncertain:true};save();
+      try{const m=await send(caption,{parse_mode:'HTML',reply_markup:{inline_keyboard:keyboard}},chatId);const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認命運旅章路過通知');cards[key]={at:now(),messageId};save();}
+      catch(error){if(error?.definite===true){delete cards[key];save();}throw error;}
+      return;
+    }
+    if(['fate_event','fate_social'].includes(item.kind)&&(item.target==='group'||fateDm)){
       const social=item.kind==='fate_social';
       if(social?!/^[A-Za-z0-9_-]{1,128}$/.test(p.eventId||''):typeof p.lifeId!=='string'||!Number.isInteger(p.index)||p.index<0||p.index>8)return;
       const key=social?`social:${p.eventId}`:`${p.lifeId}:${p.index}`,cards=st().fateCards??={};
@@ -590,10 +605,11 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       if(!Number.isFinite(remaining)||remaining<=0)return;
       const validAccount=value=>/^[1-9]\d{0,15}$/.test(String(value))&&Number.isSafeInteger(Number(value));
       if(social?(check.pending!==true||event?.eventId!==p.eventId||!validAccount(event.ownerAccountId)||!validAccount(event.guestAccountId)||String(event.ownerAccountId)===String(event.guestAccountId)):!validAccount(event?.accountId))return;
+      if(fateDm&&String(item.tgId)!==String(event.accountId))return;
       const ageValue=Number(event.age),age=Number.isSafeInteger(ageValue)&&ageValue>=0?ageValue:0;
       const name=html(String(event.name||'旅人').slice(0,40));
       const mention=(id,label)=>`<a href="tg://user?id=${id}">${html(String(label||'旅人').slice(0,40))}</a>`;
-      const caption=social?`✧ <b>命運旅章 · 交織命運</b>\n\n${mention(event.ownerAccountId,event.ownerName)} 與 ${mention(event.guestAccountId,event.guestName)}，在這一世相逢。\n\n<b>${html(String(event.title||'這一頁，等你來寫').slice(0,100))}</b>\n${html(String(event.text||'一段同行的故事，正等待受邀旅人回應。').slice(0,260))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒。\n請受邀旅人進入遊戲、切換至受邀角色選擇；沒有回覆，故事也會自然向前。`:`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：<a href="tg://user?id=${event.accountId}">${name}</a>\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
+      const caption=social?`✧ <b>命運旅章 · 交織命運</b>\n\n${mention(event.ownerAccountId,event.ownerName)} 與 ${mention(event.guestAccountId,event.guestName)}，在這一世相逢。\n\n<b>${html(String(event.title||'這一頁，等你來寫').slice(0,100))}</b>\n${html(String(event.text||'一段同行的故事，正等待受邀旅人回應。').slice(0,260))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒。\n請受邀旅人進入遊戲、切換至受邀角色選擇；沒有回覆，故事也會自然向前。`:`✧ <b>命運旅章 · ${age} 歲</b>\n\n角色：${fateDm?name:`<a href="tg://user?id=${event.accountId}">${name}</a>`}\n你的故事正等一個回應。\n\n<b>${html(String(event.title||'下一頁，由你決定').slice(0,100))}</b>\n${html(String(event.text||'').slice(0,350))}\n\n⌛ 剩餘 ${Math.ceil(remaining/1000)} 秒可回應；逾時由命運續寫。\n開啟遊戲後，請切換至此角色回應旅章。`;
       const link=deepLink('fate'),home=deepLink();
       const keyboard=[...(link?[[{text:social?'✦ 查看交織命運':'回應旅章',url:link}]]:[]),...(home?[[{text:'🎮 進入遊戲',url:home}]]:[])];
       // Commit intent before Telegram: a lost response or process restart must not post the same life/index twice.
@@ -602,7 +618,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       try{
         const art=app.url?new URL(event.country==='TW'?'/art/fate-taiwan-v8/taipei-dusk.jpg':['JP','KR','US','CA','GB','DE','FR','AU','IN'].includes(event.country)?'/art/fate-countries-v9/'+event.country.toLowerCase()+'-memory.jpg':'/art/fate-chapter-20261016/share.jpg',app.url):null;
         const options={parse_mode:'HTML',reply_markup:{inline_keyboard:keyboard}};
-        const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,chatId);
+        const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:fateDm?item.tgId:chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,fateDm?item.tgId:chatId);
         const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認命運旅章通知');
         cards[key]={at:now(),messageId};save();
       }catch(error){if(error?.definite===true){delete cards[key];save();}throw error;}
@@ -627,10 +643,11 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       if (item.kind === 'boss_spawn' && p.boss) {
         if (st().cards[p.boss.id] || p.boss.messageId) return;
         const map=Math.max(1,Math.min(12,Math.trunc(Number(p.boss.mapId)||2)));
-        const photoUrl=typeof api.sendPhoto==='function'?photoReference('/telegram-media/boss-'+map+'.jpg'):null;
+        const sprite=/^boss_[a-z0-9_]{3,60}$/.test(String(p.boss.spriteKey||''))?p.boss.spriteKey:null,fallbackUrl=typeof api.sendPhoto==='function'?photoReference('/telegram-media/boss-'+map+'.jpg'):null;
+        const photoUrl=sprite&&fallbackUrl?photoReference('/telegram-media/boss/'+sprite+'.jpg'):fallbackUrl;
         const photo=Boolean(photoUrl);
         const m = photo
-          ? await sendCardPhoto({ chatId, photoUrl, mimeType: 'image/jpeg', fileName: `boss-${map}.jpg`, caption: bossCaption(p.boss), replyMarkup: { inline_keyboard: bossKeyboard(p.boss) } })
+          ? await (async()=>{const input=u=>({ chatId, photoUrl:u, mimeType: 'image/jpeg', fileName: `boss-${map}.jpg`, caption: bossCaption(p.boss), replyMarkup: { inline_keyboard: bossKeyboard(p.boss) } });try{return await sendCardPhoto(input(photoUrl));}catch(error){if(!fallbackUrl||photoUrl===fallbackUrl||!rejectedImage(error))throw error;warn('boss sprite image',error);return sendCardPhoto(input(fallbackUrl));}})()
           : await send(bossText(p.boss), { reply_markup: { inline_keyboard: bossKeyboard(p.boss) } }, chatId);
         if (m?.message_id) { st().cards[p.boss.id] = { chatId, messageId: m.message_id, photo, lastEdit: now() }; save(); await client.call('/rpg/boss/message', { bossId: p.boss.id, chatId, messageId: m.message_id }).catch((e) => warn('boss message', e)); }
         return;
@@ -758,7 +775,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
         const deliveredIds = [];
         // UPDATE...RETURNING does not promise selection order. Put both story
         // kinds ahead of costly battle/photo jobs within the claimed batch too.
-        const ordered=[...(ob?.items||[])].sort((a,b)=>Number(['fate_event','fate_social'].includes(b.kind))-Number(['fate_event','fate_social'].includes(a.kind)));
+        const ordered=[...(ob?.items||[])].sort((a,b)=>Number(['fate_event','fate_social','fate_cast'].includes(b.kind))-Number(['fate_event','fate_social','fate_cast'].includes(a.kind)));
         for (const item of ordered) { try { await deliver(item); out.delivered += 1;
           if(item.claimToken){try{await client.call('/rpg/outbox/ack',{ids:[item.id],claimToken:item.claimToken});}catch(error){warn('outbox item ack',error);deliveredIds.push(item.id);}}
         } catch (error) {
