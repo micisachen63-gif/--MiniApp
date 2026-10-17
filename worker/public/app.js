@@ -859,6 +859,10 @@
     const scene = window.RpgMaps && window.RpgMaps.get(c.level);
     const mapLabel = scene ? `${scene.emoji} ${scene.name}` : c.mapName;
     const red = sumKind('red'), blue = sumKind('blue');
+    const sp = me.supply || {}; const redKey = sp.redKey || 'red_1', blueKey = sp.blueKey || 'blue_1';
+    const redName = (S.meta.items[redKey] || {}).name || '紅水', blueName = (S.meta.items[blueKey] || {}).name || '藍水';
+    const redTier = (S.me.inventory || {})[redKey] || 0, blueTier = (S.me.inventory || {})[blueKey] || 0;
+    const redOther = Math.max(0, red - redTier), blueOther = Math.max(0, blue - blueTier);
     const g = me.gate; const r = S.lastReport;
     const used = r ? Object.entries(r.used || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${fmt(v)}`).join('、') : '';
     const drops = r ? Object.entries(r.drops || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${v}`).join('、') : '';
@@ -876,13 +880,13 @@
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
     ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>沒紅水了</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
-    <div class="card"><h3>🧪 補給 <small>自動喝紅水 ≤ ${c.autoRedPct}%</small></h3>
-      <div class="grid2"><div class="pot"><span class="ic">${iconHtml(`red_${Math.min(2, c.mapId)}`, '🧪')}</span><div><div class="n">${fmt(red)}</div><div class="h">紅水 · 約 ${me.supply.redHours} 小時</div></div></div>
-      <div class="pot"><span class="ic">${iconHtml(`blue_${Math.min(2, c.mapId)}`, '💙')}</span><div><div class="n">${fmt(blue)}</div><div class="h">藍水 · 約 ${me.supply.blueHours} 小時</div></div></div></div>
-      <div class="row mt"><button class="btn" id="refill" ${me.refill.cost > 0 ? '' : 'disabled'}>${me.refill.cost > 0 ? `🧪 補滿 24 小時 · 💰${fmt(me.refill.cost)}` : '✅ 水量充足（24h）'}</button></div>
+    <div class="card"><h3>🧪 補給 <small>自動喝${esc(redName)} ≤ ${c.autoRedPct}%</small></h3>
+      <div class="grid2"><div class="pot"><span class="ic">${iconHtml(redKey, '🧪')}</span><div><div class="n">${fmt(redTier)}</div><div class="h">${esc(redName)} · 約 ${me.supply.redHours} 小時${redOther ? `（另有其他階 ${fmt(redOther)} 瓶）` : ''}</div></div></div>
+      <div class="pot"><span class="ic">${iconHtml(blueKey, '💙')}</span><div><div class="n">${fmt(blueTier)}</div><div class="h">${esc(blueName)} · 約 ${me.supply.blueHours} 小時${blueOther ? `（另有其他階 ${fmt(blueOther)} 瓶）` : ''}</div></div></div></div>
+      <div class="row mt"><button class="btn" id="refill" ${me.refill.cost > 0 ? '' : 'disabled'}>${me.refill.cost > 0 ? `🧪 補滿 24 小時（${esc(redName)}／${esc(blueName)}）· 💰${fmt(me.refill.cost)}` : '✅ 水量充足（24h）'}</button></div>
       ${c.level>=15?'<label class="guardian-refill-check"><input type="checkbox" id="refillGuardian" '+(me.guardianStoneSupply?'checked':'')+'> '+iconHtml('guardian_summon_stone','✦')+' 召喚石自動補給 · 持有 '+(me.guardianSupply?.stoneCount||0)+' 顆<span>用完自動購買 · 每顆 '+fmt(me.guardianSupply?.stoneGold||3000)+' 金幣</span></label>':''}
-      <div class="mt muted">自動喝紅水：HP 低於或等於設定比例時使用</div><div class="seg" id="redSeg">${[30, 40, 50, 60, 70].map((v) => `<button data-v="${v}" class="${c.autoRedPct === v ? 'on' : ''}">${v}%</button>`).join('')}</div>
-      <div class="mt row" style="justify-content:space-between"><span class="muted" style="flex:1">自動喝藍水：MP 低於或等於設定比例時使用</span><div class="seg" style="flex:none"><button id="blueTog" class="${c.autoBlue ? 'on' : ''}">${c.autoBlue ? '開' : '關'}</button></div></div>
+      <div class="mt muted">自動喝${esc(redName)}：HP 低於或等於設定比例時使用</div><div class="seg" id="redSeg">${[30, 40, 50, 60, 70].map((v) => `<button data-v="${v}" class="${c.autoRedPct === v ? 'on' : ''}">${v}%</button>`).join('')}</div>
+      <div class="mt row" style="justify-content:space-between"><span class="muted" style="flex:1">自動喝${esc(blueName)}：MP 低於或等於設定比例時使用</span><div class="seg" style="flex:none"><button id="blueTog" class="${c.autoBlue ? 'on' : ''}">${c.autoBlue ? '開' : '關'}</button></div></div>
       <div class="seg" id="blueSeg">${[30,40,50,60,70].map(v=>`<button data-v="${v}" class="${(c.autoBluePct??50)===v?'on':''}" ${c.autoBlue?'':'disabled'}>${v}%</button>`).join('')}</div><div class="muted mt">技能 MP 不足時也會先補水；特殊技能仍依安全／強力模式與每日預算使用。</div>
     </div>
     <div class="card my-daily-blessing"><div class="blessing-heading"><h3>每日補給金</h3><small>${me.daily.firstWeek ? '首週加成 +50%' : '每天 00:00 重置'}</small></div><div class="blessing-reward"><span class="blessing-seal" aria-hidden="true"><img src="art/ui/hud-coin-v2.webp" alt=""></span><div><span class="blessing-caption">諸神賜予的遠征祝福</span><strong>${fmt(me.daily.total)} <small>金幣</small></strong><span class="blessing-note">${me.daily.bonus ? `包含首週額外 ${fmt(me.daily.bonus)} 金幣` : '每日領取，為下一場遠征做好準備'}</span></div></div>

@@ -224,18 +224,36 @@ export function settleIdle(char, inventory, equipped, now) {
   return { char: c, inv, report, events: out };
 }
 
-/** hours of potions left at the current consumption (for the menu) */
-export function supplyHours(char, inv, equipped) {
-  const s = idleStats(char, equipped); const mapTier = mapForLevel(char.level);
-  const healOf = (kind) => (kind === 'red' ? RED : BLUE).reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal * (POTIONS[k].tier <= mapTier ? 1 : 1), 0);
-  const hpPerTick = Math.max(0.01, s.hpLoss + IDLE.eliteChance * s.burst);
-  const mpPerTick = Math.max(0.01, s.skill.cost * (1 - (s.pct.freeCastPct || 0)) - s.mpRegen);
-  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, hpPerTick, mpPerTick };
+/** potion tier the character really drinks/buys: same rule as choosePotion */
+export const potionTierFor = (char) => Math.min(4, Math.ceil(mapForLevel(char.level) / 3));
+const SUPPLY_SIM_TICKS = 120;
+/** Measure real potion use by replaying the real settle loop on a throw-away copy with endless current-tier potions (no DB, no mutation). */
+function measureUse(char, equipped, pTier) {
+  if (char.party_id) return null;
+  try {
+    const red = `red_${pTier}`, blue = `blue_${pTier}`;
+    const c = { ...char };
+    const r = settleIdle(c, { [red]: 1e9, [blue]: 1e9 }, equipped, c.last_settle_at + SUPPLY_SIM_TICKS * TICK_MS);
+    if (!r.report.ticks || r.char.idle_state === 'gate') return null;
+    const used = r.report.used || {};
+    return { hp: (used[red] || 0) * POTIONS[red].heal / r.report.ticks, mp: (used[blue] || 0) * POTIONS[blue].heal / r.report.ticks };
+  } catch { return null; }
 }
-/** how many potions to cover `hours` of idle at the current consumption */
-export function refillPlan(char, inv, equipped, hours = 24) {
-  const { hpPerTick, mpPerTick } = supplyHours(char, inv, equipped);
-  const pTier = Math.min(4, Math.ceil(mapForLevel(char.level) / 3));
+/** hours of potions left at the current consumption (for the menu). opts.measure=false → formula only (cheap) */
+export function supplyHours(char, inv, equipped, opts = {}) {
+  const s = idleStats(char, equipped); const pTier = potionTierFor(char);
+  const healOf = (kind) => (kind === 'red' ? RED : BLUE).reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0);
+  let hpPerTick = Math.max(0.01, s.hpLoss + IDLE.eliteChance * s.burst);
+  let mpPerTick = Math.max(0.01, s.skill.cost * (1 - (s.pct.freeCastPct || 0)) - s.mpRegen);
+  // the formula ignores special skills, sustain and the potions the loop really drinks: trust the larger of formula and measured use
+  const m = opts.measure === false ? null : measureUse(char, equipped, pTier);
+  if (m) { hpPerTick = Math.max(hpPerTick, m.hp); mpPerTick = Math.max(mpPerTick, m.mp); }
+  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, hpPerTick, mpPerTick, tier: pTier, measured: !!m };
+}
+/** how many potions to cover `hours` of idle at the current consumption (buys the potions the character really drinks) */
+export function refillPlan(char, inv, equipped, hours = 24, sup = null) {
+  const { hpPerTick, mpPerTick } = sup || supplyHours(char, inv, equipped);
+  const pTier = potionTierFor(char);
   const red = `red_${pTier}`, blue = `blue_${pTier}`;
   const haveRed = RED.reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0); const haveBlue = BLUE.reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0);
   const needRed = Math.max(0, Math.ceil((hpPerTick * 60 * hours - haveRed) / POTIONS[red].heal));

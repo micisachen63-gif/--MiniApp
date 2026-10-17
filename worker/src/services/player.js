@@ -2,7 +2,7 @@ import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
 import { CLASSES, CLASS_KEYS, GENERAL_WEAPON, ITEMS, POTIONS, MAX_OPEN_MAP, RARITY_KEYS } from '../game/constants.js';
-import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours } from '../game/idle.js';
+import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours, potionTierFor } from '../game/idle.js';
 import { idleStats, computeStats } from '../game/stats.js';
 import { advance, reselect, GameError } from '../game/classes.js';
 import { checkItemPurchase, drawGacha } from '../game/shop.js';
@@ -79,7 +79,7 @@ function notifyStatements(db, char, events, now, { cron = false, inv = {}, equip
     if (e.type === 'gate') out.push(outboxStmt(db, { dedupe: `dm:${tg}:gate:${e.level}`, target: 'dm', tgId: tg, kind: 'gate', payload: e }, now));
   }
   if (char.idle_state === 'fighting' || char.idle_state === 'no_mp') {
-    const s = supplyHours(char, inv, equipment.filter((x) => x.is_equipped));
+    const s = supplyHours(char, inv, equipment.filter((x) => x.is_equipped), { measure: false });
     if (s.red < 1 || s.blue < 1) out.push(outboxStmt(db, { dedupe: `dm:${tg}:low:${day}`, target: 'dm', tgId: tg, kind: 'low_supply', payload: { redHours: s.red, blueHours: s.blue } }, now));
   }
   return out;
@@ -223,7 +223,7 @@ export async function buyItem(work, { now, db }, { item, qty, requestId }) {
 export function refill(work, { now }, { hours = 24, requestId }) {
   const equipped = work.equipment.filter((e) => e.is_equipped);
   const plan = refillPlan(work.char, work.inv, equipped, hours);
-  const pTier = Math.min(4, Math.ceil(mapForLevel(work.char.level) / 3));
+  const pTier = potionTierFor(work.char);
   let red = plan[`red_${pTier}`], blue = plan[`blue_${pTier}`]; let cost = plan.cost;
   if (cost === 0) throw new GameError('full', `水已經夠用 ${hours} 小時了`);
   if (cost > work.char.gold) { const k = work.char.gold / cost; red = Math.floor(red * k); blue = Math.floor(blue * k); cost = red * POTIONS[`red_${pTier}`].price + blue * POTIONS[`blue_${pTier}`].price; }
