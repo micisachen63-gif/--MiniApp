@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "3b74830fea795f608d249d1c5e3caf7672a51d37",
+  "sourceCommit": "b41563b435d39a9544902baaa9b9e3b3e033ba67",
   "service": "elf-rpg-api",
-  "productionVersion": "fe8eb402-497f-4863-9211-ceeefd2e04ee",
+  "productionVersion": "0700c0cf-2746-4d95-9986-d43b4371b612",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-17T11:46:41.383Z",
+  "verifiedAt": "2026-10-17T13:17:38.075Z",
   "runtimeSHA256": {
-    "index.js": "137200b4c0c23e45561064976c6da1cc6fe5d6474797fe6053d13c7eccd62056"
+    "index.js": "407be6f17dd0d47ff4e6d2d08ab4604a3e98b30a7992db572c3db586b4e07410"
   },
   "source": {
-    "fileCount": 8928,
-    "sha256": "135e3f9ce885b58cecea7a3c21f9c79d35aaa9fe52d1dd58ba4c098d9a8b6129",
+    "fileCount": 8952,
+    "sha256": "f8cfe1dcdb9ffe23dae14eb00a8526c034e5fc0644e15e0e01a91c3ad5a04f94",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -34171,7 +34171,7 @@
       },
       {
         "file": "worker/public/fate/app.js",
-        "sha256": "0f4c0c208d295e730f7ae26eb820c521c374e34d59a4fd1b385e838bdf630e91"
+        "sha256": "bdeebae37bebac46680fa855f820486b77486c4147290505ff1c7d6181ffa675"
       },
       {
         "file": "worker/public/fate/bridge-protocol.js",
@@ -34579,7 +34579,7 @@
       },
       {
         "file": "worker/public/fate/index.html",
-        "sha256": "4bb80fcd8efad914ab0bda9335cd5745b6427fbd49ea4a2b2f20297e8821a31d"
+        "sha256": "1fa01aa5a699a0e69212cdbd11cfd8625265b432083ebd48687c20dbe20e98dc"
       },
       {
         "file": "worker/public/fate/life-ui.js",
@@ -34895,7 +34895,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "3f0c8fd197b0cfaa35124a896e06c47cec4325a76f45a3f725afc8f3d2820144"
+        "sha256": "8d8ff22205abbcccb58517a515f604ff507914b214f3cea69c536805b59ac1fa"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35218,6 +35218,102 @@
         "sha256": "f443d74dbf3d0dee3f59e4bd90d1407264a9c6798e0b7403b4cb7e52a66307d3"
       },
       {
+        "file": "worker/public/telegram-media/boss/boss_aegean_leviathan.jpg",
+        "sha256": "965c53d50c424b2a025e7bd07910546623f87955a4a60b109e83b4104cc83143"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_ancient_laurel.jpg",
+        "sha256": "5b7c0f0ef545bba9b93c94819e80667f56108a3c328f96392962e5cd4af45f0e"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_arcadia_goblin_chief.jpg",
+        "sha256": "4aacc015c9c32a81696b8698dbae43bfebd8df5de7dbfe503000f69433520f08"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_cloud_gate_deity.jpg",
+        "sha256": "1456a99650638ef1facb4d0c5b318ebe87a58ef2ac07c75c19215ed60994e734"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_elysium_guardian_king.jpg",
+        "sha256": "9a55b769403eabcb8ca304364c42406ba3fb3374bfb56660af673621e9451f1a"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_frost_dragon_queen.jpg",
+        "sha256": "3abd73db6e99aa1e90c0e60243da85b113e55e0dd40c64a4fc3695e68e2c4bda"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_hundred_pillar_colossus.jpg",
+        "sha256": "0abbc9f11c11929ce46327ba0ac110fb025a284038e00950e6526f7b0e8adc6d"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_lava_colossus.jpg",
+        "sha256": "f443d74dbf3d0dee3f59e4bd90d1407264a9c6798e0b7403b4cb7e52a66307d3"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_minos_bull.jpg",
+        "sha256": "67076a65562a589bf005de9b9f7e9837bc45756f07746ce43e6713f0a7b8eea4"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_python_serpent.jpg",
+        "sha256": "2421d5d7592e1702f50e7000ed95c11a5ea7390a1ccb6fb64f317d7c31ec3a45"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_rotten_tree_king.jpg",
+        "sha256": "4a0bc0d1e749b1985964046522dff0c19c05347d625de396d0d16f9a766013dc"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_styx_ferryman.jpg",
+        "sha256": "754b4fa74565f02e2889699b2b53c16910a5d2482c5c17bd62b5adce6d3041ff"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m01_boss_secondary.jpg",
+        "sha256": "ca067c105a49dee3acc3c405880f51cde0e59cf6e5eb7403a98029d1592409ea"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m02_boss_secondary.jpg",
+        "sha256": "50e2264d980b66b7ef3093f0c69614e79543f77086d6045fc7d126e60c907ee3"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m03_boss_secondary.jpg",
+        "sha256": "2097782813c3902ab03f01267ab2e04e9b0a46487bee804e83a65c1eeab29b47"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m04_boss_secondary.jpg",
+        "sha256": "04571c8b1815674fa170b82bd20898c2505cab20333e6fcab606123609a9692e"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m05_boss_secondary.jpg",
+        "sha256": "e50adf1cea36a8d58ef2606ebe5cdd42c75ea02354113a09577b6e03a5dd1548"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m06_boss_secondary.jpg",
+        "sha256": "e80d38cabe989b56fdaf2e03577606320d2d3fd73c855c547e5c39a5a13bc80b"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m07_boss_secondary.jpg",
+        "sha256": "c32a06f60dcde3081f29d52afe7090957e666853cb213381c44a85f2cd3f0edd"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m08_boss_secondary.jpg",
+        "sha256": "9874fdaa106284e32b6e3cae7de460ec568a8184571b1f7e39471283b6aebbd4"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m09_boss_secondary.jpg",
+        "sha256": "7f677ef6c7437a76fe44a1e941211dc341ce4e8ace3286a5b4948894c8cd5759"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m10_boss_secondary.jpg",
+        "sha256": "646617ac0c6dc40c61cb2b61a2327917171f28bf8499c8596eaed8ad76fb0bac"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m11_boss_secondary.jpg",
+        "sha256": "e62a9f0a4053c0a8b010c6853afba79754fbe403f093f67fdde785b5562f0bcd"
+      },
+      {
+        "file": "worker/public/telegram-media/boss/boss_x13_m12_boss_secondary.jpg",
+        "sha256": "d5de9ece30ed12607e2d8aa47c281753746228bd36294e79f0f5fedf2b7310b3"
+      },
+      {
         "file": "worker/public/telegram-media/journal-cover-20261013.jpg",
         "sha256": "b7ec4f27a593ac83aa2eea16c3b583c253c3cd41938fc8c34b7b8d1163a796af"
       },
@@ -35387,7 +35483,7 @@
       },
       {
         "file": "worker/src/fate-public.js",
-        "sha256": "48e1b8ff9af5595754cdbc9a2f4dc8c1387e6e6c8b4be721cf43a3b55eefd0c3"
+        "sha256": "2555c9f882e926dea974eda7eb25537f43f0494a13e87128a0376b688ff3724b"
       },
       {
         "file": "worker/src/game/advanced-specializations.js",
@@ -35595,7 +35691,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "f1090c7168b06f5ffff46add3c3310ffcb9f9efffa9c8ec9f4da75814cc62984"
+        "sha256": "bde2f2817bef554b5521c1f4d54f82af1bd313e14a2e1e9b25e5deee6a333a65"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -35635,15 +35731,15 @@
       },
       {
         "file": "worker/src/services/fate-shared.js",
-        "sha256": "fcb8e562260a7aeee7d34b1ef9f626ff98cc4535a766c971e76b8ad356152d9c"
+        "sha256": "d76c71a1901e664fa39f0e962c772a52acbf3b7cd56ff8b01832281630590f2d"
       },
       {
         "file": "worker/src/services/fate-social.js",
-        "sha256": "c46a425e078551437da79bb4735ffb5e7ae3b8ea96c4ab0cf6726eed76d0b696"
+        "sha256": "ef47cb0291f3303bbcd16fc6c0dd310272e28bb23b5ab31a7c0418cadcd02aa1"
       },
       {
         "file": "worker/src/services/fate.js",
-        "sha256": "8cd0a1e20401f0d57a40a1915e15537ca3a75002efa97b0082dd264b2f9c28ae"
+        "sha256": "d2f20372ca1796467c0ee649ec85f884543c211df0211ddd4c400e51c67e19cb"
       },
       {
         "file": "worker/src/services/guardian-auto.js",
@@ -35711,7 +35807,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "2fe6b21b7e015d58e95c7d50d0afd6d512ea570c22cdd59ca6e1a43caffcff86"
+        "sha256": "3c51d475d66bfa3ecc976e9b4a8873ec11803237b7cfc35ef6477703b50984d1"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -35729,16 +35825,16 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 134,
+    "verifiedCount": 160,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_belt_labyrinth_legendary.jpg",
-      "worker/public/art/cards/wpn_crossbow_epic.jpg",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B112_f_attack.webp",
+      "worker/public/art/cards/equipment-20261011/gear_belt_laurel_legendary.jpg",
+      "worker/public/art/cards/wpn_greatsword_epic.jpg",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_f.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -35760,6 +35856,8 @@
       "worker/public/expedition-entry.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
+      "worker/public/fate/app.js",
+      "worker/public/fate/index.html",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -35860,6 +35958,30 @@
       "worker/public/sword-adv4-fx.js",
       "worker/public/sword-branch-fx.js",
       "worker/public/sword-branch-manifest.json",
+      "worker/public/telegram-media/boss/boss_aegean_leviathan.jpg",
+      "worker/public/telegram-media/boss/boss_ancient_laurel.jpg",
+      "worker/public/telegram-media/boss/boss_arcadia_goblin_chief.jpg",
+      "worker/public/telegram-media/boss/boss_cloud_gate_deity.jpg",
+      "worker/public/telegram-media/boss/boss_elysium_guardian_king.jpg",
+      "worker/public/telegram-media/boss/boss_frost_dragon_queen.jpg",
+      "worker/public/telegram-media/boss/boss_hundred_pillar_colossus.jpg",
+      "worker/public/telegram-media/boss/boss_lava_colossus.jpg",
+      "worker/public/telegram-media/boss/boss_minos_bull.jpg",
+      "worker/public/telegram-media/boss/boss_python_serpent.jpg",
+      "worker/public/telegram-media/boss/boss_rotten_tree_king.jpg",
+      "worker/public/telegram-media/boss/boss_styx_ferryman.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m01_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m02_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m03_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m04_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m05_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m06_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m07_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m08_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m09_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m10_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m11_boss_secondary.jpg",
+      "worker/public/telegram-media/boss/boss_x13_m12_boss_secondary.jpg",
       "worker/public/theme-greek.css",
       "worker/public/thief-class.js",
       "worker/public/thief-fx.js",
@@ -35870,7 +35992,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "fe8eb402-497f-4863-9211-ceeefd2e04ee",
+        "version_id": "0700c0cf-2746-4d95-9986-d43b4371b612",
         "percentage": 100
       }
     ],
