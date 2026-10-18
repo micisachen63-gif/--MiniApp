@@ -1,0 +1,37 @@
+{
+  "date": "2026-10-18T05:44:31.860Z",
+  "environments": [
+    "desktop browser",
+    "390x844 browser viewport"
+  ],
+  "syntheticAccountsOnly": true,
+  "actualWorkerHttp": {
+    "initialBalance": 500,
+    "offer": "star_ring_aura_moon",
+    "balanceAfter": 380,
+    "equippedThenReloaded": true
+  },
+  "screenshots": [
+    {
+      "file": ".release-sync/cosmetics-desktop.png",
+      "sha256": "139276a4c8c712a211f0ae1323b3cf858846a656556a17ceec78889230b53509"
+    },
+    {
+      "file": ".release-sync/cosmetics-mobile.png",
+      "sha256": "e802c26c4fedf145ccb0c50d9eec7a2d442a6ff3c38f788ce8b5f5f95bbb5255"
+    },
+    {
+      "file": ".release-sync/cosmetics-battle-mobile.png",
+      "sha256": "eacfb96c9cea7b96bf63ffbef2ecc4da9b32b5b79ec393c7aa07b0db766c410c"
+    },
+    {
+      "file": ".release-sync/cosmetics-real-http-equip.png",
+      "sha256": "b935c3cc38761910f54202173ae1993369b7d5b7183f736df1b1ca1411ac8915"
+    },
+    {
+      "file": ".release-sync/cosmetics-armory-final.png",
+      "sha256": "53225cadb2e0a6b6bfdc2452c0e5115d5eb40fa6f95f97cca9258a544606ae7c"
+    }
+  ],
+  "nativeMobileTelegram": "Not hardware tested"
+}

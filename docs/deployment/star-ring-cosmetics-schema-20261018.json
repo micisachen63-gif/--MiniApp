@@ -1,0 +1,22 @@
+{
+  "migration": "0030_star_ring_cosmetics.sql",
+  "sourceCommit": "6cb842b301dde2b3cc5238af12ac3630ca28b4a9",
+  "appliedAt": "2026-10-18T05:44:31.858Z",
+  "database": "elf-rpg",
+  "execution": "Explicit additive file only; recorded only0030 in migration ledger. No existing player/equipment DML.",
+  "ddlSHA256": "291928cebaa40ed0cde6d0736f814fb5d87c2263405a8d172f416b355166ed7a",
+  "bookmarkSavedBefore": true,
+  "bookmarkSHA256": "3c4ab50d8a31263803f8c4df080baf835b922467647c7d2af1145a760689e849",
+  "tables": [
+    "rpg_star_ring_cosmetic_operations",
+    "rpg_star_ring_cosmetics"
+  ],
+  "verification": {
+    "newRows": 0,
+    "foreignKeys": "clear",
+    "quickCheck": "ok",
+    "characterCountUnchanged": true,
+    "ledger": "0030_star_ring_cosmetics.sql",
+    "scope": "Aggregate live check; populated isolated DB test separately confirms all prior schemas and rows unchanged."
+  }
+}
