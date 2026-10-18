@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "migration": "0029_star_ring_expedition.sql",
+  "sourceCommit": "952d0930fa423705d9435441af98f9566532d2b0",
+  "appliedAt": "2026-10-18T03:23:08.548Z",
+  "database": "elf-rpg",
+  "execution": "Explicit additive migration file only; never migrations apply. Recorded only 0029 in d1_migrations.",
+  "ddlSHA256": "6cde70ae19c84d8f66c81db1681499030f732b7c11c3577d1774b3de4513c15c",
+  "timeTravelBookmark": {
+    "savedBefore": true,
+    "localPath": ".release-sync/star-ring-before-schema-bookmark.json",
+    "sha256": "18886b8a683eb1a3506a9818448144c2a1de17cbed81304f5aab6020f83ecbe2"
+  },
+  "tables": [
+    "rpg_star_ring_creations",
+    "rpg_star_ring_members",
+    "rpg_star_ring_operations",
+    "rpg_star_ring_purchases",
+    "rpg_star_ring_rewards",
+    "rpg_star_ring_runs",
+    "rpg_star_ring_starts"
+  ],
+  "verification": {
+    "sevenTables": true,
+    "newRows": 0,
+    "foreignKeyCheck": true,
+    "quickCheck": "ok",
+    "characterCountUnchanged": true,
+    "equipmentCountUnchanged": false,
+    "ledger": "0029_star_ring_expedition.sql"
+  },
+  "historicalGaps": "0026–0028 already exist in production schema but remain missing from the old ledger; intentionally not replayed."
+}
