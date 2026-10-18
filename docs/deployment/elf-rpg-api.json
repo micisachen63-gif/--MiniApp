@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "599b4648415787149653a92402674037ff1eae3f",
+  "sourceCommit": "a05d391152e426711d58264900c2d53aa33cf6a7",
   "service": "elf-rpg-api",
-  "productionVersion": "f181c877-3b61-4787-aff3-db4881d77a9c",
+  "productionVersion": "3eecd169-6d74-49e4-98b8-f96052939f75",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-18T05:48:06.344Z",
+  "verifiedAt": "2026-10-18T07:04:40.092Z",
   "runtimeSHA256": {
-    "index.js": "802f9b35bdcce473bba7452ca460f06696f77f34e35e253bfa1ca0d29725a027"
+    "index.js": "4ef05c2bb5731466d55847866cc913d51afcb89f26f40a29c34db0657cc05965"
   },
   "source": {
     "fileCount": 9068,
-    "sha256": "f9e52e1273da63f27e65ab9b00d76d23ae0be21def87200f52f4edb9e57b2f00",
+    "sha256": "c9ab597d28a8ff69c4299db34362946644d36a2a81419f6b092c3bcfac0802e4",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -33811,7 +33811,7 @@
       },
       {
         "file": "worker/public/auto-reroll-ui.js",
-        "sha256": "0b6c897a7fa50917e85b412089d77d57914e57916b21252aafed12fbefa87ca0"
+        "sha256": "d9d394fae8c8f51d530bfd96479600fe1cf017961d35768240d8ed57cb41c7d5"
       },
       {
         "file": "worker/public/background-workshop.css",
@@ -34535,7 +34535,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "bd2fc64439248e61c52ae74b04403ee95a6ab6bc593e45a771818284d39003ce"
+        "sha256": "e3866af2a51d6a15c82711f5556331fb2b3a830c598e7e3eb010809553bfc52e"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -35299,7 +35299,7 @@
       },
       {
         "file": "worker/public/hero-size.css",
-        "sha256": "7efcd600b1830c9e1c70e56f59ea956fbf1ef7866e18abe6a61f12839a2829dd"
+        "sha256": "328b6c1e7dfc1b9ce987b2761392bf5d30112479fe26cff5d59c03f74d079669"
       },
       {
         "file": "worker/public/hero-size.js",
@@ -35307,7 +35307,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "0e3cabe45dcf1b44ec401b727d4c0a703d6036936ee41ad0a53358d0c9f4d6dd"
+        "sha256": "4307431e9e99f0280ec654a921682b78d2c28f6a375d1f95b7f9f8ff415b5ba2"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35947,7 +35947,7 @@
       },
       {
         "file": "worker/src/game/auto-reroll-targets.js",
-        "sha256": "084ad50aa7de901ecbe103eeb1e7cf8dfa05fc94ede8a346ff88b476de9a8fd3"
+        "sha256": "1ff7898da118d73ec3acccce7c257971f9399a9ab32a11c6a5c737fc719f06c8"
       },
       {
         "file": "worker/src/game/boss-economy.js",
@@ -36289,7 +36289,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 157,
+    "verifiedCount": 144,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36298,18 +36298,6 @@
       "worker/public/art/blessed-announcement-20261014/armor.png",
       "worker/public/art/cards/equipment-20261011/gear_belt_sacred_supreme.jpg",
       "worker/public/art/collection-materials-20261014/hunt_11_2.webp",
-      "worker/public/art/star-ring-rewards-20261018/aura-dawn.webp",
-      "worker/public/art/star-ring-rewards-20261018/aura-eclipse.webp",
-      "worker/public/art/star-ring-rewards-20261018/aura-moon.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-accessory.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-armor.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-weapon-archer.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-weapon-mage.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-weapon-thief.webp",
-      "worker/public/art/star-ring-rewards-20261018/gear-weapon.webp",
-      "worker/public/art/star-ring-rewards-20261018/icon-dawn.webp",
-      "worker/public/art/star-ring-rewards-20261018/icon-eclipse.webp",
-      "worker/public/art/star-ring-rewards-20261018/icon-moon.webp",
       "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m_attack.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -36331,7 +36319,6 @@
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
       "worker/public/expedition/index.html",
-      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -36453,7 +36440,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "f181c877-3b61-4787-aff3-db4881d77a9c",
+        "version_id": "3eecd169-6d74-49e4-98b8-f96052939f75",
         "percentage": 100
       }
     ],
