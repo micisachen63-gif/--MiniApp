@@ -1,0 +1,6 @@
+所有角色縮圖邊框補修（2026-10-18）
+使用者首頁狀態卡(#pt)與傳承目前職業(#cpt)仍有金色上緣。前一次只處理lineage-portrait分支，漏掉portrait類別。
+瀏覽器重現：兩處alpha-fit後仍有1px border與背景／陰影。共用img.hero-size-normalized規則清除border/background/box-shadow/radius/outline；#pt/#cpt於decode前也清除，避免載入閃線。固定容器/卡片/裝備格與角色原圖、尺寸不變，filter與特效層保留。
+靜態CSS及遊戲動態主題CSS的真實載入順序，四職業248外觀×8種選擇器容器（首頁、目前職業、分支、成長樹、殿堂、檢視武裝、英雄武裝、技能遠征）共1984張，圖片全部完成normalizer且四邊border0/background none/shadow none。
+額外完整index.html/app.js與真實handle+D1測試資料庫，簽章TG登入/選角→首頁→傳承，390/1024兩寬度：圖片72x99及84x110維持，無pageerror，截圖確認金線消失。此為測試角色，未操作正式玩家。兩張使用者截圖均為網頁，非BOT分享圖；本次不改BOT renderer。
+更新主頁與技能遠征入口hero-size.css cache版本。完整服務測試由根目錄正式發布程序執行，最終版本見docs/deployment。
