@@ -16,8 +16,12 @@ export function targetConfig(char,item,b){
  const lines=affixLines(item),slots=affixSlots(item),all=[...locks,...typeLocks];if(new Set(all).size!==all.length||all.some(i=>i<0||i>=lines.length))throw new GameError('locks','請檢查鎖定詞條');if(locks.length>=slots)throw new GameError('locks','至少保留一條可重洗詞條');
  for(const i of typeLocks)if(!list.some(x=>x.key===lines[i].key))throw new GameError('locks','只能鎖定對目前角色有用的能力');
  const keys=selected.map(x=>x.key),fixed=all.map(i=>lines[i].key);if(keys.filter(k=>!fixed.includes(k)).length>slots-all.length)throw new GameError('target','詞條格數不足，請減少能力目標或解除鎖定');
- if(quality&&keys.some(k=>locks.some(i=>lines[i].key===k&&lines[i].score<QUALITY_SCORES[quality])))throw new GameError('target','目標能力的品質已固定；請改用「鎖定能力」才能繼續提升品質');
+ if(keys.length&&!quality&&keys.every(k=>locks.some(i=>lines[i].key===k)))throw new GameError('target','所選能力已完整鎖定；請設定其餘詞條的目標品質，或選擇其他未鎖定能力');
  const maxGold=b.maxGold==null||b.maxGold===''?null:Number(b.maxGold);if(maxGold!==null&&(!Number.isSafeInteger(maxGold)||maxGold<0))throw new GameError('budget','金幣上限無效');
  return {functions:selected.map(x=>x.id),keys,quality,locks:[...locks].sort((a,b)=>a-b),typeLocks:[...typeLocks].sort((a,b)=>a-b),maxGold};
 }
-export function targetReached(item,cfg){const lines=affixLines(item);if(lines.length!==affixSlots(item))return false;const score=cfg.quality?QUALITY_SCORES[cfg.quality]:0;if(cfg.keys.length)return cfg.keys.every(key=>lines.some(x=>x.key===key&&x.score>=score));const mutable=lines.filter((_,i)=>!cfg.locks.includes(i));return mutable.length>0&&mutable.every(x=>x.score>=score);}
+export function targetState(lines,slots,cfg){
+ const locks=cfg.locks||[],fixed=new Set(lines.filter((_,i)=>locks.includes(i)).map(x=>x.key)),keys=(cfg.keys||[]).filter(k=>!fixed.has(k)),mutable=lines.filter((_,i)=>!locks.includes(i)),score=cfg.quality?QUALITY_SCORES[cfg.quality]:0;
+ return {keys,mutableCount:slots-locks.length,needsQuality:!!cfg.keys?.length&&!keys.length&&!cfg.quality,reached:lines.length===slots&&mutable.length>0&&(keys.length?keys.every(key=>mutable.some(x=>x.key===key&&x.score>=score)):!!cfg.quality&&mutable.every(x=>x.score>=score))};
+}
+export function targetReached(item,cfg){return targetState(affixLines(item),affixSlots(item),cfg).reached;}
