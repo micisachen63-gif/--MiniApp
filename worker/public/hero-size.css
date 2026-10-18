@@ -16,3 +16,11 @@
 /* Decoration belongs to the fixed slot, never to the alpha-fitted bitmap. */
 body.greek.v2.mythic #view .branch .hero-fit-frame[data-slot="lineage"]{box-sizing:border-box;border:1px solid #bda57240;border-radius:8px;background:radial-gradient(ellipse at 50% 38%,#26384b,#0d1a2b);isolation:isolate}
 body.greek.v2.mythic #view .branch .hero-fit-frame[data-slot="lineage"]>img.lineage-portrait{border:0;border-radius:0;background:none;box-shadow:none;outline:0}
+
+/* Alpha-fit may move image edges inside the slot. Never paint decoration on that bitmap. */
+img.hero-size-normalized,
+body.greek.v2.mythic.olympus-suite #view img#pt.portrait,
+body.greek.v2.mythic.olympus-suite #view img#cpt.portrait{
+  border:0!important;border-radius:0!important;background:none!important;
+  box-shadow:none!important;outline:0!important;
+}
