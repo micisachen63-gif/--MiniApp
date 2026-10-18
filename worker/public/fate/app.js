@@ -12,7 +12,7 @@ import {mountSharePanel} from './share-ui.js';
 import {mountZodiacSky} from './zodiac-ui.js';
 import {zodiacHeroSource} from './zodiac-sign.js';
 import {createSharedUI} from './shared-ui.js';
-import {renderLifeCountry,renderLifeIdentity,lifeIdentity} from './locality-ui.js';
+import {renderLifeCountry,renderLifeIdentity,lifeIdentity,renderLifeStatus} from './locality-ui.js';
 import {ensureCountryPack,ensureCountryCodes} from './country-runtime-v9.js';
 const root=document.getElementById('fate'),qs=new URLSearchParams(location.search);
 const storage={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{localStorage.setItem(k,v);return true}catch{return false}}};
@@ -103,6 +103,7 @@ function renderIntro(p){
 function renderResult(p){
  const record=soul.entries.find(e=>e.code===result.code)||(cloud?.last?.code===result.code?cloud.last:null);const storyLife=record?.draft||result;
  renderLifeIdentity(p,storyLife);
+ renderLifeStatus(p,result);
  if(storyLife?.version>=4){const story=endingForLife(storyLife),book=el('article','fate-ending-story'),image=el('img','fate-ending-illustration');image.src=story.illustration;image.alt=story.title;image.loading='eager';book.append(image,el('span','fate-eyebrow',[8,9].includes(storyLife.version)?`${lifeIdentity(storyLife).place} · 此生終章`:`星燈紀元 ${story.worldYear} · 此生終章`),el('h2','',story.title));const timeline=el('ol','fate-ending-timeline');timeline.setAttribute('aria-label','這一生的重要歷程');for(const chapter of (story.chapters||endingTimeline({...storyLife,deathAge:result.deathAge},plannedContent(storyLife)))){const row=el('li'),head=el('header');head.append(el('b','',`${chapter.age} 歲`),el('span','',chapter.label));row.append(head,el('p','',chapter.text));timeline.append(row);}book.append(timeline);const prose=el('details','fate-ending-prose');prose.append(el('summary','','讀成一篇短篇故事'));for(const text of story.paragraphs)prose.append(el('p','',text));book.append(prose,el('p','fate-ending-summary',story.summary));p.append(book);}
  p.append(el('span','fate-eyebrow',shared?'一位旅人的故事':'你的命運旅章'),el('h2','fate-result-title',result.ending.title));
  const badges=el('div','fate-identity');badges.append(el('span','',result.identity[0]));if(result.zodiac!==null)badges.append(el('span','',ZODIAC[result.zodiac]+'座'));if(result.version>=5&&Number.isInteger(result.deathAge))badges.append(el('span','',`此生 ${result.deathAge} 歲落款`));p.append(badges,el('p','fate-quote',`「${result.ending.quote}」`),el('p','',result.ending.body));

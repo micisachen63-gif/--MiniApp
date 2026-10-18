@@ -1,0 +1,47 @@
+命運旅章：真實世界參照、台幣換算與生活狀態 — 2026-10-18
+
+使用者要求：全球真實統計比較、財富換算台幣；主畫面呈現有共鳴的狀態與話題，統計圖表點開再看。
+
+功能範圍
+- 既有台灣 v8 與九國 v9 的進行中人生、已完成終章及公開結果均支援，不變更人生引擎、公開編碼或歷史事件。
+- 四張生活卡顯示身心節奏、學習路線、財務餘裕、家庭關係的狀態描述，以及一個依故事事實選擇的討論問題。童年與成人語氣分開。
+- 單一原生 details 預設收起，點開查看原幣資產／債務／淨餘額、台幣、國際財富分組、年齡／壽命對照、教育完成率參照、子女數紀錄。
+- 統計對照只讀已確認的劇情狀態；截止前提交的選項不提早生效。進行中不顯示預定死亡年齡。展開狀態保留，內容依已確認人生進度更新。
+- PNG 貼文／限動、TG JPEG 與分享文案共用 resultComparison/cardConversation；保留大星座、在地插畫與身分。三行狀態加一個問題。v1–v7 保留舊分享內容。
+
+來源與固定版次
+worker/public/fate/world-comparison-data.js，COMPARISON_EDITION=20261018-world1。
+1. Federal Reserve H.10，2026-10-13 發布、採 2026-10-09 同一欄。
+https://www.federalreserve.gov/releases/h10/current/
+每美元外幣：TWD31.94、JPY158.34、KRW1342.13、CAD1.4269、INR96.73。
+每外幣美元：GBP1.3229、EUR1.1193、AUD0.6979。USD=1。
+外幣先轉 USD 再乘31.94。TWD恆等，不重複換算；方向與正負號有回歸測試。
+這是可重現的固定快照，沒有每次啟程查價，也沒有新增每日排程或收費API。H.10 current URL 日後會更新，查核時應對照此快照所載日期；後續改價請建立新參照版次，並升級 PNG/JPEG/cache 同步版本。
+
+2. UBS Global Wealth Report 2025，p.22（PDF第22頁，zero-based21），2024成人財富金字塔。
+https://www.ubs.com/content/dam/assets/wm/static/noindex/wm-germany/2024/doodownload/GWR-2025-FullReport.pdf
+<US$10k41.3%；US$10k–100k40.7%；US$100k–1m16.4%；>=US$1m1.6%。採p.22，未用p.31趨勢圖16.5%的四捨五入差異。
+56市場樣本，涵蓋約92%全球財富，不代表100%全人類。條長是分組人口占比，選中分組不是個人精確百分位。不做分組內插值；負淨值單獨標示，未滿20歲不定位成人分組。
+遊戲只有資產／負債劇情帳，沒有完整房產估值；使用帳面模擬淨值。這是故事尺度對照，不是現實財富評估，亦未以2026匯率把2024統計做通膨或購買力調整。
+
+3. WHO Global Health Observatory：2023全球出生時平均餘命73.3歲。
+https://www.who.int/data/gho/data/themes/mortality-and-global-health-estimates/ghe-life-expectancy-and-healthy-life-expectancy
+結算時對照終年與平均餘命；進行中僅顯示現在年齡。不是生存分布／死亡百分位，更不是診斷。遊戲energy不映射現實健康排名。
+
+4. UNESCO GEM Report2026 Access and equity，2024資料：全球25–34歲完成高等教育24%。
+https://www.unesco.org/reports/gem-report/en/2026-access-equity
+只呈現已明確標示年齡群的教育背景參照；不把見識、職訓、進修課程改成大學學位，也不給已完成整世人物虛構同齡學歷名次。
+
+子女數只呈現劇情事實；未用每名女性總生育率套成父母個人的子女數排名。群組排名、真實玩家資產及現實出生檔案均未納入；不查詢其他玩家個資。
+
+工程
+- life-comparison.js：純換算、分組、狀態／話題／結算共用模型；不含網路或玩家寫入。
+- life-statistics-ui.js：展開圖表、來源、日期與方法。
+- locality-ui.js：即時與終章皆可讀；不修改 replay。
+- model/share-card-layout/share-ui 與 cloud-bot/src/fate-share.js：PNG、JPEG、文案一致。
+- 各入口與 CARD_VERSION 更新20261018-world1；兩服務均有影響，需要分別依正常鎖定發布流程上線，以docs/deployment收據核對。
+
+驗收
+新增換匯方向／邊界／未知幣別／負債／年齡／學歷／十國同碼同結果／隱私／PNG文字及原生details保留測試。更新舊快取版本期望，未刪除舊故事與身分／權限檢查。
+本機瀏覽器實測390寬（375內寬）無橫向溢出，統計預設收合，法國EUR換算與分組；日本幼年不定位成人財富、不顯示死亡年齡。PNG1080x1350與1080x1920可產生、儲存；僅假資料與公開結果，未實際發送TG／IG／Threads訊息。
+發布測試與正式版本，以.release-sync日誌及docs/deployment/兩服務收據為準。

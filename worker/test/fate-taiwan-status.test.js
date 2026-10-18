@@ -5,7 +5,7 @@ import {taiwanLifeState,taiwanStatusCards,renderLifeStatus,paintLifeStatus} from
 const start=Date.parse('2026-10-16T06:00:00+08:00'),make=()=>createLife({version:8,country:'TW',orbit:11,seed:'deadbeef',startedAt:start});
 const card=(state,key)=>taiwanStatusCards(state).find(item=>item.key===key).text;
 class Element{
- constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.dataset={};this.attributes={};this.className='';this.textContent='';}
+ constructor(tag){this.tagName=tag.toUpperCase();this.children=[];this.dataset={};this.attributes={};this.style={};this.className='';this.textContent='';}
  append(...nodes){this.children.push(...nodes)}replaceChildren(...nodes){this.children=nodes}setAttribute(key,value){this.attributes[key]=value}
  matches(selector){return selector[0]==='.'?this.className.split(' ').includes(selector.slice(1)):this.tagName.toLowerCase()===selector}
  querySelectorAll(selector){return this.children.flatMap(node=>[...(node.matches(selector)?[node]:[]),...node.querySelectorAll(selector)])}querySelector(selector){return this.querySelectorAll(selector)[0]||null}
@@ -34,9 +34,9 @@ test('unwritten relationship state does not invent marriage or children and resp
 });
 
 test('Taiwan status paints four scene-based cards with a collapsible factual NTD ledger and keeps old lives unchanged',()=>{
- globalThis.document={createElement:tag=>new Element(tag)};const panel=new Element('section'),life=make(),state=taiwanLifeState(life);renderLifeStatus(panel,life);assert.equal(panel.querySelectorAll('.fate-status-card').length,4);const detail=panel.querySelector('details');assert.ok(!detail.open);assert.match(text(panel),/劇情帳/);assert.doesNotMatch(text(panel),/%|全球|百分位|月薪|第\s*\d+\s*名/);
+ globalThis.document={createElement:tag=>new Element(tag)};const panel=new Element('section'),life=make(),state=taiwanLifeState(life);renderLifeStatus(panel,life);assert.equal(panel.querySelectorAll('.fate-status-card').length,4);const detail=panel.querySelector('details');assert.ok(!detail.open);assert.match(text(panel),/此世金額與玩家現實財務/);assert.doesNotMatch(text(panel.querySelector('.fate-status-grid')),/%|全球|百分位|月薪|第\s*\d+\s*名/);assert.match(text(detail),/UBS|WHO|UNESCO/);assert.match(text(detail),/2024|2023/);
  assert.deepEqual(panel.querySelectorAll('dd').map(node=>node.textContent),[state.moneyNtd,state.debtNtd,state.moneyNtd-state.debtNtd].map(value=>'NT$ '+value.toLocaleString('zh-TW')));
- const open=advanceLife(life,start).nextAt,early={...life,clockAt:open+20000,answers:[0],sources:['manual']},before=text(panel);detail.open=true;paintLifeStatus(panel,early);assert.equal(text(panel),before);paintLifeStatus(panel,{...early,clockAt:addActive(open,90000)});assert.equal(detail.open,true);assert.notEqual(panel.querySelector('.fate-local-status').dataset.state,JSON.stringify(state));
+ const open=advanceLife(life,start).nextAt,early={...life,clockAt:open+20000,answers:[0],sources:['manual']},before=panel.querySelectorAll('dd').map(node=>node.textContent);detail.open=true;paintLifeStatus(panel,early);assert.deepEqual(panel.querySelectorAll('dd').map(node=>node.textContent),before);paintLifeStatus(panel,{...early,clockAt:addActive(open,90000)});assert.equal(detail.open,true);assert.notEqual(panel.querySelector('.fate-local-status').dataset.state,JSON.stringify(state));
  const old=new Element('section');assert.equal(renderLifeStatus(old,{...life,version:7}),null);paintLifeStatus(old,{...life,version:7});assert.equal(old.children.length,0);
  const finance=card({...state,moneyNtd:125000,debtNtd:85000},'finance');assert.match(finance,/NT\$ 125,000/);assert.match(finance,/NT\$ 85,000/);
 });

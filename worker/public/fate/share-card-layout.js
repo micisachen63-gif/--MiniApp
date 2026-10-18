@@ -1,5 +1,7 @@
 import {ZODIAC_CRESTS} from './zodiac-sign.js';
 import {COUNTRY_METADATA_V9} from './country-runtime-v9.js';
+import {resultComparison} from './life-comparison.js';
+export function cardConversation(result){const c=resultComparison(result);return c?{lines:c.shareLines,question:c.question}:null;}
 
 // Both browser PNG and Telegram JPEG use this composition. No private life data.
 export function cardLayout(format='post'){

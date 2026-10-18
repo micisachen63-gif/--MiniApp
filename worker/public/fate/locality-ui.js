@@ -1,7 +1,9 @@
 import {taiwanProfile,replayTaiwanLife} from './decision-engine-v8.js';
 import {countryProfile,replayCountryLife} from './country-engine-v9.js';
 import {COUNTRY_METADATA_V9} from './country-runtime-v9.js';
-import {activeBetween,LIFE_MS} from './life.js';
+import {activeBetween,LIFE_MS,lifeAge} from './life.js';
+import {compareLifeState,resultComparison,formatTwd} from './life-comparison.js';
+import {renderComparisonDetail,paintComparisonDetail} from './life-statistics-ui.js';
 
 const developing=[['JP','日本'],['KR','韓國'],['US','美國'],['CA','加拿大'],['GB','英國'],['DE','德國'],['FR','法國'],['AU','澳洲'],['IN','印度']];
 function el(tag,cls,text){const node=document.createElement(tag);if(cls)node.className=cls;if(text!==undefined)node.textContent=text;return node;}
@@ -34,6 +36,7 @@ const amount=(currency,value)=>currency&&currency!=='TWD'?currency+' '+Math.trun
 const ntd=value=>'NT$ '+Math.trunc(Number.isFinite(value)?value:0).toLocaleString('zh-TW');
 export function taiwanLifeState(life){
  if(![8,9].includes(life?.version))return null;
+ if(life.code&&!Number.isSafeInteger(life.startedAt))return resultComparison(life)?.state||null;
  const at=Number.isSafeInteger(life.clockAt)?life.clockAt:life.startedAt,activeMs=Math.max(0,Math.min(LIFE_MS,activeBetween(life.startedAt,at)));
  // A stale cloud draft cannot invent an unconfirmed timeout answer. Submitted
  // answers affect state only after their fixed deadline, exactly as in replay.
@@ -50,16 +53,25 @@ export function taiwanStatusCards(state){
  return [{key:'pace',label:'體力與節奏',text:pace},{key:'education',label:'求學路線',text:education},{key:'finance',label:'手邊餘裕',text:finance},{key:'family',label:'身邊的人',text:family}];
 }
 
+function statusModel(life){
+ if(life.code&&!Number.isSafeInteger(life.startedAt))return resultComparison(life);
+ const state=taiwanLifeState(life);return state?compareLifeState(state,{country:life.country||'TW',age:lifeAge(life,life.clockAt??life.startedAt)}):null;
+}
 export function renderLifeStatus(p,life){
  if(![8,9].includes(life?.version))return null;
- const box=el('section','fate-local-status');box.setAttribute('aria-label','這一世的生活近況');const grid=el('div','fate-status-grid');
- for(const card of taiwanStatusCards(taiwanLifeState(life))){const node=el('article','fate-status-card');node.dataset.statusKey=card.key;node.append(el('h3','',card.label),el('p','',card.text));grid.append(node);}box.append(grid);
- const detail=el('details','fate-status-ledger');detail.append(el('summary','','翻開此世的生活帳'),el('dl'));box.append(detail,el('p','fate-note','金額是這一世的劇情帳，與玩家現實財務及星穹旅誌金幣分開。'));p.append(box);paintLifeStatus(p,life);return box;
+ const model=statusModel(life);if(!model)return null;
+ const box=el('section','fate-local-status');box.setAttribute('aria-label','這一世的生活近況');box.append(el('small','fate-eyebrow','A LIFE BEYOND THE NUMBERS'));
+ const grid=el('div','fate-status-grid');
+ for(const card of taiwanStatusCards(model.state)){const node=el('article','fate-status-card');node.dataset.statusKey=card.key;node.append(el('h3','',card.label),el('strong','fate-status-title',''),el('p','',card.text));grid.append(node);}box.append(grid,el('p','fate-life-question',''));
+ renderComparisonDetail(box);p.append(box);paintLifeStatus(p,life);return box;
 }
-
 export function paintLifeStatus(p,life){
  if(![8,9].includes(life?.version))return;
- const box=p.querySelector('.fate-local-status');if(!box)return;const state=taiwanLifeState(life),signature=JSON.stringify(state);if(box.dataset.state===signature)return;box.dataset.state=signature;
- for(const card of taiwanStatusCards(state)){const node=[...box.querySelectorAll('.fate-status-card')].find(item=>item.dataset.statusKey===card.key);if(node)node.querySelector('p').textContent=card.text;}
- const money=Number.isFinite(state.moneyNtd??state.money)?(state.moneyNtd??state.money):0,debt=Number.isFinite(state.debtNtd??state.debt)?(state.debtNtd??state.debt):0,ledger=box.querySelector('dl');ledger.replaceChildren();for(const[label,value]of[['可用資產',money],['待還債務',debt],['資產減債務',money-debt]]){const row=el('div');row.append(el('dt','',label),el('dd','',amount(state.currency,value)));ledger.append(row);}
+ const box=p.querySelector('.fate-local-status');if(!box)return;const model=statusModel(life);if(!model)return;
+ const state=model.state,signature=JSON.stringify([state,model.age,model.completed,model.edition]);if(box.dataset.state===signature)return;box.dataset.state=signature;
+ const titles={pace:model.paceTitle,education:model.education.label,finance:model.financeTitle,family:model.familyTitle};
+ const learning=model.age<6?'在街角、餐桌和家人的聲音裡，你慢慢認識這個世界。':state.education==='course-completed'?'曾經卡住的練習，現在能自己完成；這段努力終於有了落點。':model.education.tertiary?'那些上課、熬夜和反覆練習的日子，留成一份真正走過的證明。':state.education==='paused'||state.trainingPaused?'書先闔上了，眼前的生活還得繼續照顧。':state.education==='studying'||state.trainingStarted?'日常的忙碌和桌上的筆記，還在爭同一段時間。':'方向還沒完全定下來，路也還能慢慢摸索。';
+ for(const card of taiwanStatusCards(state)){const node=[...box.querySelectorAll('.fate-status-card')].find(item=>item.dataset.statusKey===card.key);if(!node)continue;node.querySelector('strong').textContent=titles[card.key];node.querySelector('p').textContent=card.key==='finance'&&model.net?`${model.age<16?'家裡的生活帳結餘':'帳面淨餘額'}折合約 ${formatTwd(model.net.twd)}。`+(model.debt.native>0?`仍有約 ${formatTwd(model.debt.twd)} 的債務在慢慢整理。`:'每一筆留下的錢，都有自己的來處。'):card.key==='education'?learning:card.key==='family'&&model.age<16?'有人替你記得上下課、天氣和晚餐，世界從這些小事開始。':card.text;}
+ box.querySelector('.fate-life-question').textContent=model.question;
+ paintComparisonDetail(box.querySelector('.fate-statistics'),model);
 }
