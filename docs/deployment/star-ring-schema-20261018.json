@@ -27,7 +27,10 @@
     "quickCheck": "ok",
     "characterCountUnchanged": true,
     "equipmentCountUnchanged": false,
-    "ledger": "0029_star_ring_expedition.sql"
+    "ledger": "0029_star_ring_expedition.sql",
+    "equipmentRowsDeltaDuringLiveAudit": 2,
+    "equipmentRowsNotReduced": true,
+    "existingDataScope": "Only aggregate counts were observed on the live database. Equipment count changed between audit reads while the game remained live. This migration issues CREATE TABLE/INDEX only; no player/equipment DML was executed. Full row/schema preservation was separately verified against a populated isolated database."
   },
   "historicalGaps": "0026–0028 already exist in production schema but remain missing from the old ledger; intentionally not replayed."
 }
