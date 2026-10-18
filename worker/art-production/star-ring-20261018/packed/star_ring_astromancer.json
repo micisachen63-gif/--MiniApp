@@ -1,0 +1,432 @@
+{
+  "key": "star_ring_astromancer",
+  "name": "失序織星者",
+  "role": "elite",
+  "behavior": "caster",
+  "folder": "star-ring-20261018",
+  "still": "monster-12.webp",
+  "atlas": "monster-12_attack.webp",
+  "source": "art-production/star-ring-20261018/source/monster-12.png",
+  "sourceHash": "e25406d910262b1e164a890e1c547fc5b39e1bc3cf4af635bd4e6c77b22a4c71",
+  "stillHash": "b00a4cbec37639f7488c209c92fd613822e41c1b1bdbec6c8f2187622d6fbfa9",
+  "attackDirection": -1,
+  "cols": 4,
+  "rows": 4,
+  "frames": 16,
+  "cell": 512,
+  "ratio": 1,
+  "bodyHeight": 0.810546875,
+  "feet": 0.9375,
+  "frameBounds": [
+    [
+      0.14453125,
+      0.126953125,
+      0.853515625,
+      0.9375
+    ],
+    [
+      0.14453125,
+      0.150390625,
+      0.853515625,
+      0.9375
+    ],
+    [
+      0.125,
+      0.158203125,
+      0.875,
+      0.9375
+    ],
+    [
+      0.130859375,
+      0.130859375,
+      0.8671875,
+      0.9375
+    ],
+    [
+      0.109375,
+      0.203125,
+      0.888671875,
+      0.9375
+    ],
+    [
+      0.123046875,
+      0.203125,
+      0.875,
+      0.9375
+    ],
+    [
+      0.107421875,
+      0.23046875,
+      0.890625,
+      0.9375
+    ],
+    [
+      0.15234375,
+      0.259765625,
+      0.84765625,
+      0.9375
+    ],
+    [
+      0.1640625,
+      0.1875,
+      0.8359375,
+      0.9375
+    ],
+    [
+      0.0625,
+      0.212890625,
+      0.9375,
+      0.9375
+    ],
+    [
+      0.111328125,
+      0.203125,
+      0.888671875,
+      0.9375
+    ],
+    [
+      0.193359375,
+      0.20703125,
+      0.806640625,
+      0.9375
+    ],
+    [
+      0.12890625,
+      0.166015625,
+      0.869140625,
+      0.9375
+    ],
+    [
+      0.146484375,
+      0.1875,
+      0.853515625,
+      0.9375
+    ],
+    [
+      0.158203125,
+      0.20703125,
+      0.841796875,
+      0.9375
+    ],
+    [
+      0.150390625,
+      0.435546875,
+      0.84765625,
+      0.9375
+    ]
+  ],
+  "idle": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "move": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "attack": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "cast": [
+    12,
+    13
+  ],
+  "hurt": [
+    14
+  ],
+  "death": [
+    15
+  ],
+  "fps": {
+    "idle": 5,
+    "move": 8,
+    "attack": 8,
+    "cast": 6,
+    "hurt": 6,
+    "death": 1
+  },
+  "ready": true,
+  "qaApproved": true,
+  "sceneQAApproved": true,
+  "technicalQA": {
+    "pass": true,
+    "sourceHash": "e25406d910262b1e164a890e1c547fc5b39e1bc3cf4af635bd4e6c77b22a4c71",
+    "assetHash": "a7c1b1f826cf06a7e9673f492bd3edf8db20cc82a487aadda46ed4a5709c9382",
+    "stillHash": "b00a4cbec37639f7488c209c92fd613822e41c1b1bdbec6c8f2187622d6fbfa9",
+    "frames": 16,
+    "distinct": 16,
+    "minMargin": 32,
+    "frameHashes": [
+      "73c5fce330f736830e0d8ec062f7ded54a72afb77aa78313a86981eea4f32f72",
+      "74c306e7fa0e1a8c92b06b448b79b2bf98108db957287a4490d647b2a5def985",
+      "03902ed7ae3791b29d69ea922282e248bc9d9d21e3d2935b72dac36b3dee3a36",
+      "25c539f624c242355b5789ddea0dc91cd2fbb3103424dff77476ba6a3dbea404",
+      "bd15e0e6d284fae976d44e6fe6e5513e3c9e00b6ff2b45c3718d6064ad0c9e3d",
+      "f6125d9808bb2ed0d5a206d4f2337f9e9f997434f2598192055cfde1d9a0b4a1",
+      "a9e02f61d2c1e019989930e232e531b51f7094f54a1fcf0e44c61c7ac3dd177b",
+      "59735789bbf504a2fe66d837ba8af462b71b2cdfe12275c8295cc810510ff82e",
+      "e8dc09748c8ad4c3f8608f29123ebbd7efe66c08ac7550f1f0c07a8b5de289b9",
+      "677c07371375a1e427c728071e7d305183a01e2367e5fb5bb207a5f2dd81dd02",
+      "e92b5fd2ba48f749ef92be0697221a2f7cf0ed0f32bb110ee83291a546f2aee8",
+      "684068e71169c036a284441d5eef2748556379b5bd2bcd077c2196d9afd7cc3b",
+      "22a92481cf81c966613071fcbbe85a5129ec522d6c944c7b12961fec61927efb",
+      "50ce0bee24ab8d8be828ddf099e82c56665892e2585aaf84c518c63c53674592",
+      "04ccd94a6803eb853802d0db0fb4c4fc87948c117d6e1c23cd6e78dc39a4475c",
+      "03ac7113e89860fce193fb90d4ef441264447b5d86c1303d3f39e5a9da8d09db"
+    ],
+    "sourceFrameHashes": [
+      "db86c64bc6fc58b19cf72803ab6fb03f9feb819b419d917f90a8773c1d2bd551",
+      "c5529f5a97094bb16b9feda77d255f93af72ff1d0685d2064a30d5699ef5f43b",
+      "5e4b8a6f3456487acacd82174a927a3c30de5f239f40161c54ec1235e8012a38",
+      "951aaa4ba575ca4f620ef5e90b9e99251a79ae2396000b037715b56696357384",
+      "f3d425a89438b53729f329b8bf816d5a2991d9a136d117f53ca551b225c65597",
+      "deabf42aee185cf2b800910be1c6c9b568deafd003ecfeb50805236e406de0cd",
+      "2908801cd2de1a27c5f8d38d41797559972cc921bdadb24a4b7105bb16456b6d",
+      "aad88436b04e138aee7c63d1e4069033f6656053513941eabc10dc93887340d0",
+      "eaa9d75148b5ac22aab1ba0915b970c5701aac75c9b91b3cc27c2275a9fe0702",
+      "ad19f7da622f10ba933b74c21ba2b6bc4b7b12087560c4aa3596d7c7952cb71a",
+      "e12833d98c708a7581b99912c83ac7d179a65266f3c991297759ee87a80d0d76",
+      "f5f79344d87f5078b5be05d084b0f74455df0db27709c1846b0bc1b5775c18e0",
+      "b45d85461d048a79c0afc2c5e37d5738609d01cd056fcee135e4805b6c20d120",
+      "14d2924906b0688e1bb0d52b349bfad380715e3d1719081bde85440b155b9873",
+      "21ee36441ab341c423ddbab64ae161654c203a750127cae744e11912db2139ca",
+      "898cd3a4162f3f3dd22995c6494e7c1db611d0f07f09a86de54f62a6b51d7067"
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "sourceCellRects": [
+      {
+        "left": 0,
+        "top": 0,
+        "width": 326,
+        "height": 331
+      },
+      {
+        "left": 326,
+        "top": 0,
+        "width": 317,
+        "height": 331
+      },
+      {
+        "left": 643,
+        "top": 0,
+        "width": 304,
+        "height": 331
+      },
+      {
+        "left": 947,
+        "top": 0,
+        "width": 307,
+        "height": 331
+      },
+      {
+        "left": 0,
+        "top": 331,
+        "width": 340,
+        "height": 294
+      },
+      {
+        "left": 340,
+        "top": 331,
+        "width": 308,
+        "height": 294
+      },
+      {
+        "left": 648,
+        "top": 331,
+        "width": 317,
+        "height": 294
+      },
+      {
+        "left": 965,
+        "top": 331,
+        "width": 289,
+        "height": 294
+      },
+      {
+        "left": 0,
+        "top": 625,
+        "width": 306,
+        "height": 299
+      },
+      {
+        "left": 306,
+        "top": 625,
+        "width": 377,
+        "height": 299
+      },
+      {
+        "left": 683,
+        "top": 625,
+        "width": 314,
+        "height": 299
+      },
+      {
+        "left": 997,
+        "top": 625,
+        "width": 257,
+        "height": 299
+      },
+      {
+        "left": 0,
+        "top": 924,
+        "width": 370,
+        "height": 330
+      },
+      {
+        "left": 370,
+        "top": 924,
+        "width": 285,
+        "height": 330
+      },
+      {
+        "left": 655,
+        "top": 924,
+        "width": 298,
+        "height": 330
+      },
+      {
+        "left": 953,
+        "top": 924,
+        "width": 301,
+        "height": 330
+      }
+    ],
+    "sourcePoseBounds": [
+      {
+        "x": 35,
+        "y": 8,
+        "width": 283,
+        "height": 323,
+        "count": 47109
+      },
+      {
+        "x": 23,
+        "y": 17,
+        "width": 283,
+        "height": 314,
+        "count": 47023
+      },
+      {
+        "x": 5,
+        "y": 20,
+        "width": 299,
+        "height": 311,
+        "count": 44150
+      },
+      {
+        "x": 3,
+        "y": 8,
+        "width": 294,
+        "height": 322,
+        "count": 48998
+      },
+      {
+        "x": 18,
+        "y": 0,
+        "width": 311,
+        "height": 293,
+        "count": 41262
+      },
+      {
+        "x": 8,
+        "y": 1,
+        "width": 300,
+        "height": 293,
+        "count": 40659
+      },
+      {
+        "x": 0,
+        "y": 7,
+        "width": 312,
+        "height": 282,
+        "count": 41904
+      },
+      {
+        "x": 9,
+        "y": 11,
+        "width": 277,
+        "height": 270,
+        "count": 37900
+      },
+      {
+        "x": 38,
+        "y": 0,
+        "width": 268,
+        "height": 299,
+        "count": 40268
+      },
+      {
+        "x": 0,
+        "y": 0,
+        "width": 349,
+        "height": 289,
+        "count": 45804
+      },
+      {
+        "x": 0,
+        "y": 3,
+        "width": 310,
+        "height": 293,
+        "count": 40196
+      },
+      {
+        "x": 5,
+        "y": 2,
+        "width": 245,
+        "height": 291,
+        "count": 38614
+      },
+      {
+        "x": 34,
+        "y": 0,
+        "width": 295,
+        "height": 308,
+        "count": 44342
+      },
+      {
+        "x": 0,
+        "y": 3,
+        "width": 282,
+        "height": 299,
+        "count": 38790
+      },
+      {
+        "x": 23,
+        "y": 12,
+        "width": 273,
+        "height": 291,
+        "count": 42367
+      },
+      {
+        "x": 16,
+        "y": 91,
+        "width": 278,
+        "height": 200,
+        "count": 26699
+      }
+    ],
+    "normalizedSize": [
+      2048,
+      2048
+    ],
+    "packing": "Adaptive low-alpha grid separators and main-pose bounding rectangle crop; one common scale across16 distinct illustrated poses; centered512cell, baseline480. No duplicated, rotated or recolored frames."
+  },
+  "sceneQA": {
+    "sourceHash": "e25406d910262b1e164a890e1c547fc5b39e1bc3cf4af635bd4e6c77b22a4c71",
+    "assetHash": "a7c1b1f826cf06a7e9673f492bd3edf8db20cc82a487aadda46ed4a5709c9382",
+    "stillHash": "b00a4cbec37639f7488c209c92fd613822e41c1b1bdbec6c8f2187622d6fbfa9",
+    "desktop": true,
+    "mobile": true,
+    "verifiedAt": "2026-10-18T03:11:19.173Z",
+    "evidence": "docs/art/STAR_RING_SCENE_QA_20261018.json"
+  }
+}

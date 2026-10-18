@@ -1,0 +1,208 @@
+{
+  "schema": 1,
+  "date": "2026-10-18",
+  "scope": "New original maps 07–12 only",
+  "reference": "worker/public/art/star-ring-20261018/background.webp, inspected visually before generation; reference used for palette and finish, not copied into maps.",
+  "generationMode": "built-in image_gen, six separate distinct prompts",
+  "postProcessing": "Only format encoding to WebP; no generated scene edits, compositing or vector substitutes.",
+  "records": [
+    {
+      "map": 7,
+      "name": "縛月祭壇",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-bfc2989b-0a96-4c5d-ab30-229f1ff28b27.png",
+      "source": "art-production/maps/map-07-source.png",
+      "prompt": "art-production/maps/map-07-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: final premium RPG combat environment painting, landscape 1536 by 1024. Create map 07, 'Moonbound Altar', for Star Journal. A monumental ancient Greek moon sanctuary suspended over a midnight sea of clouds: an immense silver moon behind distant broken ivory colonnades, slender antique-gold chains hanging from the upper ruins and converging around a distant lunar altar, restrained blue-white moon energy in the architecture. Realistically painted luxury fantasy game key art, delicate oil-painting textures, fine aged stone and restrained celestial-gold ornament, sophisticated navy / antique gold / ivory palette; match an expensive Greek celestial fantasy RPG, not cartoon or flat illustration. Composition for five heroes fighting a monster: the bottom 43 percent is a broad EMPTY walkable marble combat terrace seen from a low side-on three-quarter game camera, uninterrupted central floor, perspective paving, subtle gold seams, plenty of room for feet at left and right. All large chains, altar and columns stay in the distant upper half or extreme edges, with breathing room in the central scene; floor does not slope steeply and has no central obstruction. Layered atmospheric depth, subtle moonlight rim lighting, cloud wisps and tiny stars suitable for later seamless-loop animation, crisp premium detail without chaotic clutter. No people, no humanoids, no angels, no creatures, no statues shaped like people, no text, no numbers, no UI, no logos, no watermark. One coherent environment image, not a collage or labeled map.",
+      "asset": "worker/public/art/star-ring-20261018/map-07.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "c899b32a88ccbe156dc6857676d4eba7d89945d398e51501ced7b67cad65ebf4",
+      "assetSha256": "0c818446eb32c1e6e626cf12f57839906f3c87413bbb2434762c7273e475d092",
+      "sourceBytes": 3108614,
+      "assetBytes": 475556,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    },
+    {
+      "map": 8,
+      "name": "蒼穹風脊",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-6795ed82-f0e1-41e0-bde6-181d5e0b62e9.png",
+      "source": "art-production/maps/map-08-source.png",
+      "prompt": "art-production/maps/map-08-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: final premium RPG combat environment illustration, wide landscape 1536 by 1024. Map 08 'Skywind Ridge'. A vast ancient Greek mountain pass ABOVE the clouds, a broad ivory-and-slate stone ridge terrace in the foreground, two flanking weathered pillars at the far edges, distant razorback floating mountains and broken arched bridges disappearing through bright silver-blue wind-clouds, a tall remote celestial watchtower on a far ridge at upper left. Strong natural wind visible through thin sweeping cloud ribbons, tiny loose pale petals and long faded navy banners far from the playable floor. The night sky opens into pale starlit dawn at the horizon; a restrained antique-gold glimmer on stone cornices. High-end realistically hand-painted oil-textured Greek celestial fantasy environment, navy / antique gold / ivory palette, immense airy scale, sophisticated painterly material detail, not cartoon, not photobashed UI. The lower 43 percent MUST be a broad EMPTY walkable level stone battle ledge spanning the full width, enough room for five heroes left and a large creature right; stable visible floor from low side-on three-quarter combat camera, gold-inlaid cracks and shallow wet reflections, absolutely no floor obstruction or giant central monument. All dramatic bridges, mountain peaks, flags and buildings remain distant in upper 55 percent. This must look distinct from a moon altar: open windswept alpine sky, asymmetric depth, cooler dawn wind. Suitable original still for later seamless-loop wind animation. No people, no creatures, no humanoid statues, no text, no UI, no numbers, no logos, no watermark. One coherent full environment, no panels or collage.",
+      "asset": "worker/public/art/star-ring-20261018/map-08.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "2a2876eea72d44f18aac71a2d4ebb0b32b1c174286cecf456d1e2b5e2c864a03",
+      "assetSha256": "9f99c052dc11c49be8507456a0fd5105f1da4a125848b525f73650903afbd0bb",
+      "sourceBytes": 3136345,
+      "assetBytes": 493160,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    },
+    {
+      "map": 9,
+      "name": "九曜獸域",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-5d119b6e-f211-4a6f-8752-67404011c81e.png",
+      "source": "art-production/maps/map-09-source.png",
+      "prompt": "art-production/maps/map-09-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: final premium Greek celestial fantasy RPG combat background, wide 1536 by 1024. Map 09 'Wilderness of the Nine Stars'. This must be a genuinely different natural wilderness environment, NOT another colonnade or marble palace: an immense quiet midnight highland of dark indigo grass and silver frost, scattered distant ancient standing stones with restrained antique-gold astrolabe rings, nine distinct bright star-like celestial lights arranged naturally at varied heights across the upper sky (not numerals or icons), a pale luminous nebula behind them, remote craggy mountains and a few windswept ivory-barked trees confined to far edges. Ancient Greek divine influence in a broken low circular observatory far in the distant upper background, subtle gold seams in stone, no central foreground monument. Realistically hand-painted premium oil-textured fantasy game art, finely detailed rock and cool grasses, luxurious navy / antique gold / ivory white palette, expressive quiet wilderness, no cartoon rendering. Composition: the bottom 43 percent is a wide EMPTY mostly level slate-and-packed-earth battle clearing spanning the full width with sparse low ground grass at the margins only; low side-on three-quarter combat camera, visually clear feet support for five heroes on left and a large enemy on right. Central floor is broad, uninterrupted and readable, with no boulders, roots, flowers, rubble piles or trees obstructing the playable area. Distant atmosphere layers and low drifting mist only behind the combat clearing, delicate moving starlight suitable for a subsequent seamless-loop video. Nine stars should glow elegantly, not blind the viewer. No living people, no animals, no monsters, no humanoid statues, no text, no digits, no UI, no labels, no logo, no watermark. One cohesive environment.",
+      "asset": "worker/public/art/star-ring-20261018/map-09.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "1dc7a8cfcebe978a6ce156dddc3fb7628d9d73e82ae290084a3ab4945c6367b3",
+      "assetSha256": "97e1a57252bf0647a84b827658352299fe2286f9da8857185a8a0c7ef66b7391",
+      "sourceBytes": 3567187,
+      "assetBytes": 578958,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    },
+    {
+      "map": 10,
+      "name": "黯曜潮汐",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-77a2a6cd-3794-4dd7-b056-ae7d810cd41e.png",
+      "source": "art-production/maps/map-10-source.png",
+      "prompt": "art-production/maps/map-10-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: original premium RPG combat background painting, landscape 1536 by 1024. Map 10 'Obsidian Astral Tide'. A mysterious midnight STAR OCEAN, dark navy water with restrained silver bioluminescent wave crests and reflected stars; distant half-submerged ancient Greek marble arches and a weathered antique-gold celestial lighthouse on a rocky island at far upper left; an immense quiet spiral nebula and thin eclipsed crescent above the horizon, distant ocean mist rolling between columns. This is an ocean environment, dramatically distinct from a mountain pass, forest or palace. Lower 43 percent is a broad EMPTY level wet obsidian-stone quayside battle terrace spanning the full width, subtle Greek gold-inlaid paving and shallow puddles reflecting the cold sky; waves remain behind its far edge and do not engulf or obscure the playable floor. Enough uninterrupted space for five heroes left and a large monster right; low side-on three-quarter game camera. Fine hand-painted realistic oil textures, richly detailed wet stone, aged ivory columns, premium navy / antique-gold / ivory aesthetic of a serious Greek celestial fantasy game. Atmospheric depth, restrained moonlit volumetric mist, no blinding bloom, no flashy neon. Sea spray may appear at far edges only, wide clear central combat floor. Suitable for a seamless-loop atmospheric sea-and-mist animation from this exact framing. No characters, no people, no angels, no monsters, no animals, no humanoid statues, no text, no symbols that read as writing, no labels, no UI, no logos, no watermark. One cohesive finished environment.",
+      "asset": "worker/public/art/star-ring-20261018/map-10.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "93e01b90f3a1c4bc27890ea2ed90003f38dd0c0339d195333881812aaaf64fc6",
+      "assetSha256": "1c5dbc9747e4e5f86a3000181bf2d5f2b4f41ee0ac06039864750918b0ed7053",
+      "sourceBytes": 3374903,
+      "assetBytes": 548110,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    },
+    {
+      "map": 11,
+      "name": "寂星王庭",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-b65991a0-454b-4a8a-ae86-319c4cc39ff7.png",
+      "source": "art-production/maps/map-11-source.png",
+      "prompt": "art-production/maps/map-11-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: final premium Greek celestial fantasy RPG battle environment illustration, wide landscape 1536 by 1024. Map 11 'Silent Astral Court'. An EMPTY immense ancient imperial court under a black-blue starry sky, a majestic ivory marble royal forum with elegant Corinthian galleries receding around the far back and sides, old antique-gold filigree on entablatures, very tall navy silk banners hanging still at the extreme edges, a distant empty elevated dais and abstract golden celestial crown-shaped architectural ornament in the upper center. An open oval oculus in the distant gallery frames the Milky Way; a few tiny floating motes and thin pale incense haze suggest profound silence. This is a silent royal courtyard / audience hall, not a moon sanctuary, wilderness or ocean. Richly realistic hand-painted oil-texture fantasy game art, expensive restrained architectural detail, navy / ivory / antique gold, regal and haunting rather than busy. Composition for battle: lower 43 percent is a broad EMPTY LEVEL polished ivory-and-navy marble court floor with extremely subtle golden geometric inlay, no throne, carpet, furniture, steps, sculpture or rubble in this foreground. Five heroes can stand across the left half and a large enemy on the right without their feet being obstructed. Low side-on three-quarter game camera. Grand architecture and distant empty dais remain exclusively in the upper half, far away from the camera. Cool starlight mixes with a few small warm gold braziers at remote side galleries, soft restrained reflected light, no blinding central beam. Must work as a static first frame for a later gentle seamless-loop atmosphere video. No humans, no characters, no angels, no monsters, no animals, no humanoid statues, no text, no writing, no numbers, no UI, no logos, no watermark. A single coherent premium environment.",
+      "asset": "worker/public/art/star-ring-20261018/map-11.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "898c45ae736528e313c6b29ee4d47d115a621570f18c78bb2a7752b17c4abf5b",
+      "assetSha256": "c03dd97cda25e0ee19a3d243189f31fac027d95a0f12ed00f89ed30c9eb90873",
+      "sourceBytes": 3106278,
+      "assetBytes": 492006,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    },
+    {
+      "map": 12,
+      "name": "星蝕終殿",
+      "tool": "image_gen.imagegen (built-in, no CLI/API key)",
+      "intent": "new original environment",
+      "generatedOriginal": "C:/Users/User/.codex/generated_images/01a14cb0-032c-7251-9b00-a8e59edb7c09/exec-ce1bdc49-e1d3-4560-ba52-c38761765424.png",
+      "source": "art-production/maps/map-12-source.png",
+      "prompt": "art-production/maps/map-12-prompt.txt",
+      "promptText": "Use case: stylized-concept. Asset type: final boss-hour combat environment for a premium Greek celestial fantasy RPG, wide landscape 1536 by 1024. Map 12 'Temple at the Final Eclipse'. An awe-inspiring immense ancient Greek temple at the end of a twelve-hour astral expedition. Beyond a colossal broken circular gateway at the distant upper center, a black solar eclipse floats against the starfield, a thin magnificent antique-gold corona around its dark disk, layered indigo cosmic clouds sweeping behind it. Towering ivory marble columns with intricate aged gold capitals frame the distant gate, immense fragments of celestial ring architecture suspended high above, isolated quiet golden braziers in remote side aisles. This must feel like the grand culmination, sacred, dangerous and beautiful, with deep atmospheric scale and finely resolved painterly craftsmanship. Restrained navy / antique gold / ivory palette, realistic hand-painted oil-textured luxury fantasy game art, crisp stone surface details, premium cinematic lighting without overexposed beams. Composition: lower 43 percent is a broad EMPTY LEVEL dark-indigo and ivory marble battle platform spanning the full frame, subtle radial gold inlay embedded FLAT into the paving, no obstructions, no stairs or raised altar across the foreground. There must be uninterrupted room for five heroes at left and a large final monster at right with fully visible grounded feet. Low side-on three-quarter combat camera. The eclipse, gateway and suspended architecture stay in the upper half; columns sit at the extreme edges, no vertical structure occupying the central fight lane. Delicate floating dust and softly breathing corona are suitable for later seamless-loop animation, camera must feel fixed. No characters, no people, no gods, no angels, no monsters, no animals, no humanoid statues, no text, no runic writing, no numbers, no UI, no logo, no watermark. One coherent environment, not a collage.",
+      "asset": "worker/public/art/star-ring-20261018/map-12.webp",
+      "width": 1536,
+      "height": 1024,
+      "sourceSha256": "a0093dc8fffa60997e1ef638f38da5c1f8a16d05109300b401c2deee0804e727",
+      "assetSha256": "2efa81465b60c3aad3b68847d76cab7f4e74849c72d774a04d53da3849e30a96",
+      "sourceBytes": 3267685,
+      "assetBytes": 531254,
+      "encoding": {
+        "format": "webp",
+        "quality": 90,
+        "effort": 6,
+        "resize": false,
+        "alpha": false
+      },
+      "visualQA": {
+        "reviewed": true,
+        "distinctEnvironment": true,
+        "premiumGreekCelestialStyle": true,
+        "openBattleFloor": true,
+        "noCharactersOrCreatures": true,
+        "noTextOrUI": true
+      },
+      "remainingQA": "Actual five-hero/twelve-species scene composition and GROK video QA owned by root; no video generation claimed here."
+    }
+  ]
+}

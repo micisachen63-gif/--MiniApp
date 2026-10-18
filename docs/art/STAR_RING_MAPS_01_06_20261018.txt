@@ -1,0 +1,46 @@
+星環遠征：前六張每小時場景原畫
+製作日期：2026-10-18
+工具：imagegen skill 的內建 image_gen；未使用 CLI、付費 API 金鑰或替代生圖模型。
+
+製作範圍
+01 星砂裂岸：星砂海岸、幽藍海浪、離岸碎裂星環。
+02 白曜浮階：雲海上的象牙白懸浮階梯與星門。
+03 裂環巨廊：破碎天文巨環、希臘柱廊與銀河。
+04 鏡月回廊：月光、鏡池、月形柱廊與開闊石台。
+05 銀針幽庭：銀白針葉樹、古金花亭、幽深月光庭園。
+06 琉璃晶瀑：琉璃水晶峽谷、層疊瀑布與乾燥石台。
+
+美術規格
+先目視檢查既有 worker/public/art/star-ring-20261018/background.webp，
+再以獨立場景提示詞生成新原畫，維持寫實手繪的希臘星空奇幻風格。
+共通色系為藏青星空、象牙白石材、古金；不同場景保留各自輪廓。
+所有原畫為 1536 × 1024 橫幅，實際像素尺寸已逐一驗證。
+下方約 35–40% 為空曠、可行走的戰鬥平面；無人物、怪物、文字或 UI。
+人工目視確認主景相異、地面連續，且沒有瀑布或池水阻斷戰場。
+
+原畫與提示詞
+art-production/maps/map-01-original.png 至 map-06-original.png
+art-production/maps/maps-01-06-prompts.json：六張完整提示詞與內建工具來源路徑。
+art-production/maps/maps-01-06-verification.json：各檔 SHA-256、來源／輸出尺寸與位元組數。
+保留內建工具在 .codex/generated_images 的原始輸出，另複製原始 PNG 進專案。
+
+遊戲靜態素材
+worker/public/art/star-ring-20261018/map-01.webp 至 map-06.webp
+最終 WebP 僅以 Sharp quality=90、effort=6 編碼，沒有裁切、縮放、繪改、調色或合成。
+最終檔案大小約 414–617 KB／張；未修改既有 background.webp 或其他代理的地圖。
+
+GROK 影片銜接
+供上傳的本機原始檔絕對路徑：
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-01-original.png
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-02-original.png
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-03-original.png
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-04-original.png
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-05-original.png
+C:/Users/User/Documents/ChatGPT/star-journal-pink-scroll/art-production/maps/map-06-original.png
+
+建議維持固定鏡頭與建築／地面幾何，只讓海浪、雲霧、微弱星光、
+水面反射、銀葉或瀑布自然緩動，避免新增人影、怪物、字幕、鏡頭推拉。
+影片由主流程實際透過 GROK 製作、下載與驗證後，再啟用對應可用素材清單。
+此份紀錄僅證明六張靜態原畫完成，不代表 GROK 影片已完成。
+
+本次未修改任何後端程式、未發送 TG 訊息、未執行資料庫遷移或部署。

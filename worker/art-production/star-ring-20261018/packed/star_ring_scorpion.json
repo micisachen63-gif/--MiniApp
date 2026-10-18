@@ -1,0 +1,318 @@
+{
+  "key": "star_ring_scorpion",
+  "name": "星砂晶螯蠍",
+  "role": "normal",
+  "behavior": "ambush",
+  "folder": "star-ring-20261018",
+  "still": "monster-01.webp",
+  "atlas": "monster-01_attack.webp",
+  "source": "art-production/star-ring-20261018/source/monster-01.png",
+  "sourceHash": "79c4e58736dcc7942f4989843bca3a92f6d89e6bae1458aab474d15b49327869",
+  "stillHash": "5a857f4e06457fcbefe56e61f615860a2a652c2d9f656d889df313c8dba3657d",
+  "attackDirection": -1,
+  "cols": 4,
+  "rows": 4,
+  "frames": 16,
+  "cell": 512,
+  "ratio": 1,
+  "bodyHeight": 0.7265625,
+  "feet": 0.9375,
+  "frameBounds": [
+    [
+      0.099609375,
+      0.2109375,
+      0.8984375,
+      0.9375
+    ],
+    [
+      0.103515625,
+      0.23828125,
+      0.89453125,
+      0.9375
+    ],
+    [
+      0.091796875,
+      0.140625,
+      0.90625,
+      0.9375
+    ],
+    [
+      0.11328125,
+      0.2421875,
+      0.884765625,
+      0.9375
+    ],
+    [
+      0.09375,
+      0.193359375,
+      0.904296875,
+      0.9375
+    ],
+    [
+      0.111328125,
+      0.244140625,
+      0.888671875,
+      0.9375
+    ],
+    [
+      0.087890625,
+      0.216796875,
+      0.912109375,
+      0.9375
+    ],
+    [
+      0.103515625,
+      0.20703125,
+      0.896484375,
+      0.9375
+    ],
+    [
+      0.107421875,
+      0.16796875,
+      0.892578125,
+      0.9375
+    ],
+    [
+      0.0625,
+      0.27734375,
+      0.9375,
+      0.9375
+    ],
+    [
+      0.0625,
+      0.18359375,
+      0.935546875,
+      0.9375
+    ],
+    [
+      0.107421875,
+      0.203125,
+      0.892578125,
+      0.9375
+    ],
+    [
+      0.08984375,
+      0.1484375,
+      0.91015625,
+      0.9375
+    ],
+    [
+      0.064453125,
+      0.1875,
+      0.93359375,
+      0.9375
+    ],
+    [
+      0.12890625,
+      0.208984375,
+      0.87109375,
+      0.9375
+    ],
+    [
+      0.08984375,
+      0.529296875,
+      0.91015625,
+      0.9375
+    ]
+  ],
+  "idle": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "move": [
+    4,
+    5,
+    6,
+    7
+  ],
+  "attack": [
+    8,
+    9,
+    10,
+    11
+  ],
+  "cast": [
+    12,
+    13
+  ],
+  "hurt": [
+    14
+  ],
+  "death": [
+    15
+  ],
+  "fps": {
+    "idle": 5,
+    "move": 8,
+    "attack": 8,
+    "cast": 6,
+    "hurt": 6,
+    "death": 1
+  },
+  "ready": true,
+  "qaApproved": true,
+  "sceneQAApproved": true,
+  "technicalQA": {
+    "pass": true,
+    "sourceHash": "79c4e58736dcc7942f4989843bca3a92f6d89e6bae1458aab474d15b49327869",
+    "assetHash": "4e9f6fe82396489acf09bd9d50f75fc8330020f612286007961e3de3dfca25e0",
+    "stillHash": "5a857f4e06457fcbefe56e61f615860a2a652c2d9f656d889df313c8dba3657d",
+    "frames": 16,
+    "distinct": 16,
+    "minMargin": 32,
+    "frameHashes": [
+      "65239076b9eb743c61cb35f2667dfccda4874f0c92dc898f508667264a59fe39",
+      "5127c5682c45c05453ab571bf02ec6beb31d54013eec4b5e6a33777f2077ff84",
+      "86bb8ae773cca78a194d2490eaaf583725ed3ce51b3c66456d3f23b789779099",
+      "adb8be895cbf4ba90d579c022e69b8d997100e2e466892a3c3350f6a4c425c20",
+      "343ad08aca3ef1894961e531ed22dc3f4f1d63c63533178923d12750cb29cc3a",
+      "b809fe56e27908c4b64368ab1cd4e00d7521058f4d70289d7a57bc3a05970901",
+      "0ccd0915e85aafcaaa491745b71eb0a51773663d6ab5a62878101aa22ed18f96",
+      "6fed80e7ea9d8927cfe61320c39cd5be71b0aa02726376b59df5e37492982186",
+      "974285c3f0d425ea42e4af8776cc026c298e374f1a4c70d9dbf969a33cc12fa1",
+      "4c9d148e9005353b61e9c1ea34cf674d55c7c5e38f38dfefff18d8ebd8e06c97",
+      "84491e07261f696da86ae53ecf1611c9e3b653c345dff0193808e33986720d07",
+      "e0d6efec0844277ecfe8761626e29983799fea668b6e6894842f97cf10fdf504",
+      "6113709ba6269d26a975373d650581be10d8e5385e56f946fc08f7b5efd6d3e9",
+      "7f0794105e60ec19e28e93e9e29e4b5c1db0f61068d7a8a322e93b6c4c7a7ff6",
+      "7c8b48976ed693003d7ddc019429e0ec00bfb2141d3c8f4ec46add2fb3e13ad5",
+      "dd3c054870b7c0d56a8855bbfd18437a24d77429a4f651aef1a71f23fcdc2ac2"
+    ],
+    "sourceFrameHashes": [
+      "a216e837e92409eb9d29298f9c61c3cbf25e36a34651f985a26b7b8523f26048",
+      "f8938424d710676419dadc9923a940b5c43f376e5b4fa4d7f4ad5db4b74c8e6c",
+      "75c385324252dce91d552aedac5a79344acf6c9427900a3507890a0cce0912df",
+      "de5026dfef6eeec9a44cad8e9760483f2b177e9a43bd0a6f3cb3fcd4365f6a3c",
+      "cbedb000c511c2dc6d0419d31bb5fff56d776f267630a4afee91273d5c9f1b31",
+      "e21531656cfc344563f878247e1659a495247d991d255b1e82b08d1e7c823d1d",
+      "e92fca39534cdae4fa57ce9f233a6d5883a4aa9a4c0431644dfbacc1603eb984",
+      "4f13d778d78e3733fc1e6c6a43f08427255eabbfa7029b73227d7116def4a2f6",
+      "ea9e9c1629ed39a6a8e71b0ea040f7e8015bd8275d21259c322758fe32695228",
+      "e0f6735d0651b77d356ff31c550e85e10f4a987feeb0841ea79c3ba0b0b5d447",
+      "45db3459fda5ef4a801ae77bf23e4c680c79f13bbebe0107346c6880ce9e3812",
+      "efad6cbdc69936bb0591f7699805f14b8f16813c36f3a008d9f0a1c46b79a02d",
+      "8611522e47dd2e868d7a95b2a05532d022f78a452dfa854b49b6e3f05860b2ea",
+      "acf483e5bee4e0bf16f492be6c6d029ed5c368ea6c6a6bdd6f9177875416ecfb",
+      "c5d70409bb97db86f15723e53a741abeaa92590947d69d0c58555bfb01b6ae56",
+      "a5ab11cd4b7010794688491e4ff48e066f2f9973dec3cfd53a5ba9516bba6a83"
+    ],
+    "sourceSize": [
+      1254,
+      1254
+    ],
+    "sourceCellRects": [
+      {
+        "left": 0,
+        "top": 0,
+        "width": 316,
+        "height": 342
+      },
+      {
+        "left": 316,
+        "top": 0,
+        "width": 311,
+        "height": 342
+      },
+      {
+        "left": 627,
+        "top": 0,
+        "width": 313,
+        "height": 342
+      },
+      {
+        "left": 940,
+        "top": 0,
+        "width": 314,
+        "height": 342
+      },
+      {
+        "left": 0,
+        "top": 342,
+        "width": 323,
+        "height": 291
+      },
+      {
+        "left": 323,
+        "top": 342,
+        "width": 304,
+        "height": 291
+      },
+      {
+        "left": 627,
+        "top": 342,
+        "width": 314,
+        "height": 291
+      },
+      {
+        "left": 941,
+        "top": 342,
+        "width": 313,
+        "height": 291
+      },
+      {
+        "left": 0,
+        "top": 633,
+        "width": 305,
+        "height": 289
+      },
+      {
+        "left": 305,
+        "top": 633,
+        "width": 323,
+        "height": 289
+      },
+      {
+        "left": 628,
+        "top": 633,
+        "width": 322,
+        "height": 289
+      },
+      {
+        "left": 950,
+        "top": 633,
+        "width": 304,
+        "height": 289
+      },
+      {
+        "left": 0,
+        "top": 922,
+        "width": 321,
+        "height": 332
+      },
+      {
+        "left": 321,
+        "top": 922,
+        "width": 328,
+        "height": 332
+      },
+      {
+        "left": 649,
+        "top": 922,
+        "width": 289,
+        "height": 332
+      },
+      {
+        "left": 938,
+        "top": 922,
+        "width": 316,
+        "height": 332
+      }
+    ],
+    "normalizedSize": [
+      2048,
+      2048
+    ],
+    "packing": "Each of16 original generated cell poses cropped to alpha bounds, common uniform scale, centered and baseline480 in512cell. No duplicated, rotated or recolored frames."
+  },
+  "sceneQA": {
+    "sourceHash": "79c4e58736dcc7942f4989843bca3a92f6d89e6bae1458aab474d15b49327869",
+    "assetHash": "4e9f6fe82396489acf09bd9d50f75fc8330020f612286007961e3de3dfca25e0",
+    "stillHash": "5a857f4e06457fcbefe56e61f615860a2a652c2d9f656d889df313c8dba3657d",
+    "desktop": true,
+    "mobile": true,
+    "verifiedAt": "2026-10-18T03:11:19.167Z",
+    "evidence": "docs/art/STAR_RING_SCENE_QA_20261018.json"
+  }
+}

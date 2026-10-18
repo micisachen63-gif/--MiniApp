@@ -1,0 +1,235 @@
+{
+  "schema": 1,
+  "productionDate": "2026-10-18",
+  "workflow": "Original image created first, then uploaded to GROK Imagine as the first-frame reference. Downloaded native 6-second landscape MP4; no substitute video generator. Runtime mute/loop/playsinline, static poster fallback. Scene QA is recorded separately.",
+  "videos": [
+    {
+      "hour": 1,
+      "name": "星砂裂岸",
+      "service": "GROK Imagine",
+      "postId": "b9c6a28c-015b-4eb4-a31e-11a34c95d12d",
+      "prompt": "Seamless 6-second ambient loop of this exact battle map. Locked camera, preserve all columns, architecture and open lower combat floor. Animate only gentle waves on the distant star-sand coast, slow mist and sparse golden motes. Match first/last frame, subtle motion only. No characters, monsters, objects, text, interface, zoom, cuts, flashes or moving camera. Premium painterly Greek celestial fantasy.",
+      "imageSource": "art-production/maps/map-01-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-01.webp",
+      "video": "worker/public/art/star-ring-20261018/map-01.mp4",
+      "sourceSHA256": "3ed5d7cb456262c6b26d739a5d7456ff96e3e1a671586de17b253331868ec45d",
+      "posterSHA256": "30faad08d4feac0fb01344be5d45096790785831655cd1e04fb2014c5c6aed4b",
+      "videoSHA256": "941cd355216c412e3eda0fa40bf373d5f0f50e3588d6f55932c2c214db0861c7",
+      "bytes": 6409174,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 2,
+      "name": "白曜浮階",
+      "service": "GROK Imagine",
+      "postId": "19762ae3-4605-40e1-84d0-8e1088658471",
+      "prompt": "Seamless 6-second ambient loop using this exact white marble floating staircase scene. Completely locked camera and unchanged architecture and clear lower combat floor. Only slow cloud drift below floating steps, a few soft star motes, gentle distant light breathing. Match first and last frame. No people, creatures, text, UI, moving stairs, camera motion, zoom, flashes or cuts. Elegant celestial Greek fantasy game background.",
+      "imageSource": "art-production/maps/map-02-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-02.webp",
+      "video": "worker/public/art/star-ring-20261018/map-02.mp4",
+      "sourceSHA256": "89a9662b19aa8be1f2957643f3dd06c6a9de5c8747b96091e43cfbae1d006fb0",
+      "posterSHA256": "ed4aabdfd1aa93348743e655b5a3b64222289ca290c523d237f4d770dc2ee81e",
+      "videoSHA256": "3226e8633be492f6d9af0d88abc4bd95e7aec1015b13b33cb7a840ec5f4d2b09",
+      "bytes": 5593375,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 3,
+      "name": "裂環巨廊",
+      "service": "GROK Imagine",
+      "postId": "230d80e0-dbf6-4a1f-bdc4-36a54b43dd5d",
+      "prompt": "A seamless 6-second ambient looping video from this exact ruined giant-ring colonnade image. Fixed tripod camera, preserve the stone battle floor, all columns and rings completely. Only a few drifting dust sparks and very subtle distant haze and starlight. First and last frames match. No characters, creatures, text, interfaces, crumbling, debris, cuts, zoom, camera movement or flashes. Keep combat floor empty.",
+      "imageSource": "art-production/maps/map-03-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-03.webp",
+      "video": "worker/public/art/star-ring-20261018/map-03.mp4",
+      "sourceSHA256": "34e3c5f861046323f4073a42383a630b09888ebed5730f3ed70d209b19ea503b",
+      "posterSHA256": "9dd455e53696a6c5b92df412d430484c3e6ed5af55b07fc09938958f34e79a4a",
+      "videoSHA256": "fe760ee25684bd299a2c4149ff99c3ddcc6dee87b284b72d134b6c2a7b7a4797",
+      "bytes": 5801250,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 4,
+      "name": "鏡月回廊",
+      "service": "GROK Imagine",
+      "postId": "ea1adaad-3665-4a1a-a433-33f2f0abd71f",
+      "prompt": "Create a seamless 6-second ambient loop from this exact moonlit mirror corridor. Locked camera, preserve all marble pillars, reflections and empty lower battle floor. Animate only faint silver mist, very gentle moon shimmer on mirror surfaces and a few star particles. First and last frames match. No people, monsters, added objects, text, UI, zoom, pan, cuts, flashing or architectural movement.",
+      "imageSource": "art-production/maps/map-04-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-04.webp",
+      "video": "worker/public/art/star-ring-20261018/map-04.mp4",
+      "sourceSHA256": "e1ada69b66ade170679f8c1955e475a87bd09bba2b9e9bf0dd28eb46eeeb82c6",
+      "posterSHA256": "f45b5cfcbeb06060c8c006ec20937e8d630eb997c997ed635f51e39a5366ee97",
+      "videoSHA256": "7da80c048e4de7dcfb64d78adfa1c43d7433231e7665108ab3c676f774a5ac65",
+      "bytes": 5184054,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 5,
+      "name": "銀針幽庭",
+      "service": "GROK Imagine",
+      "postId": "85ee0ab9-5684-4a6e-a032-99c5c7e3042b",
+      "prompt": "Create a seamless 6-second ambient looping scene from this exact silver celestial garden. Locked camera and immobile architecture, keep all empty foreground battle floor unobscured. Animate only gentle leaves, faint moonlit garden mist, soft firefly-like silver motes. First and final frames match. No creatures or people, spiderwebs in foreground, text, UI, camera pan or zoom, cuts or flashing. Preserve premium hand-painted Greek fantasy art.",
+      "imageSource": "art-production/maps/map-05-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-05.webp",
+      "video": "worker/public/art/star-ring-20261018/map-05.mp4",
+      "sourceSHA256": "5b8ad2141f4503259edab9782ba9d4f4ecd3d69c8d6bb1417f7c7d3226137c0c",
+      "posterSHA256": "733b9a7a92462f1f034f1185e43ac9b45ef233323de81c8a1e461fbef72abea3",
+      "videoSHA256": "abc3d51e45530567613f4e1ba7eb2731b201e2d0041cef3fb68cc2e0a89463df",
+      "bytes": 5257316,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 6,
+      "name": "琉璃晶瀑",
+      "service": "GROK Imagine",
+      "postId": "d6095dd9-c3b4-4f6e-88bc-4ba1486198a8",
+      "prompt": "Seamless 6-second loop of this exact crystal waterfall battle background. Locked camera and absolutely stable pillars, crystals, walkway and empty foreground battle floor. Only animate distant crystal waterfalls flowing gently, slow fine mist and sparse glimmer particles. Match first and last frames. No people, animals, monsters, text, UI, added foreground objects, camera pan, zoom, cuts or flashes. Premium Greek celestial fantasy.",
+      "imageSource": "art-production/maps/map-06-original.png",
+      "poster": "worker/public/art/star-ring-20261018/map-06.webp",
+      "video": "worker/public/art/star-ring-20261018/map-06.mp4",
+      "sourceSHA256": "de4ff618261a3f52835396c9e81e49b132f8343b2c21b29d017fab4e4cbadeae",
+      "posterSHA256": "82c86c5eaabe94952060c6b66d7f2ad29caac79662dba0d79e1a78ee721f2f89",
+      "videoSHA256": "2ffe6459d7a6148d48dc154949a4243ca03bbad58919d665984e017dbdd41b7a",
+      "bytes": 7424164,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 7,
+      "name": "縛月祭壇",
+      "service": "GROK Imagine",
+      "postId": "2cc92e24-e766-4ee8-982f-0ede5a7dc2e0",
+      "prompt": "Create a seamless 6-second ambient looping battle background from this exact image. Locked tripod camera: preserve all architecture, floor perspective and composition. Animate only very subtle silver moon mist, tiny floating gold motes and faint moonlight breathing. First and last frames match. No people, creatures, text, UI, cuts, zoom, camera movement, flashing lights or foreground objects. Keep the lower battle floor clear. Premium painterly celestial Greek fantasy game environment.",
+      "imageSource": "art-production/maps/map-07-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-07.webp",
+      "video": "worker/public/art/star-ring-20261018/map-07.mp4",
+      "sourceSHA256": "c899b32a88ccbe156dc6857676d4eba7d89945d398e51501ced7b67cad65ebf4",
+      "posterSHA256": "0c818446eb32c1e6e626cf12f57839906f3c87413bbb2434762c7273e475d092",
+      "videoSHA256": "66bc7a02e6f163dbfce13accdc639bd56d66319901a2f1da210e39d4fd24223e",
+      "bytes": 6384363,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 8,
+      "name": "蒼穹風脊",
+      "service": "GROK Imagine",
+      "postId": "cd13464f-5666-409f-b740-252377eaed76",
+      "prompt": "Create a seamless 6-second ambient looping battle background from this exact image. Completely fixed camera and unchanged architecture/floor/composition. Only animate soft drifting high mountain clouds, gentle flags and sparse golden motes. First and final frames match. No characters, monsters, text, UI, cuts, zoom, camera motion, flashes or objects on the open lower battle floor. Premium celestial Greek fantasy game.",
+      "imageSource": "art-production/maps/map-08-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-08.webp",
+      "video": "worker/public/art/star-ring-20261018/map-08.mp4",
+      "sourceSHA256": "2a2876eea72d44f18aac71a2d4ebb0b32b1c174286cecf456d1e2b5e2c864a03",
+      "posterSHA256": "9f99c052dc11c49be8507456a0fd5105f1da4a125848b525f73650903afbd0bb",
+      "videoSHA256": "da2535701b871e7c4385a952c989d1687764e0e10ba2789b207247a9f4216dec",
+      "bytes": 6863815,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 9,
+      "name": "九曜獸域",
+      "service": "GROK Imagine",
+      "postId": "c50d874d-6f83-4e5f-a1ba-06addb23faa8",
+      "prompt": "Seamless 6-second ambient looping game background from this exact nine-star wilderness scene. Locked camera, preserve all terrain and an unobscured lower battle floor. Only gentle drifting atmospheric haze, tiny gold star motes and subtle distant stars. First and last frames match. No beasts, characters, added foreground objects, text, UI, moving terrain, zoom, camera motion, cuts, flashes or lightning. Premium celestial Greek fantasy art.",
+      "imageSource": "art-production/maps/map-09-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-09.webp",
+      "video": "worker/public/art/star-ring-20261018/map-09.mp4",
+      "sourceSHA256": "1dc7a8cfcebe978a6ce156dddc3fb7628d9d73e82ae290084a3ab4945c6367b3",
+      "posterSHA256": "97e1a57252bf0647a84b827658352299fe2286f9da8857185a8a0c7ef66b7391",
+      "videoSHA256": "141637ac539e5d421ae2b30866524750c707d09acc1be7c439ea87d0d7c128a9",
+      "bytes": 8524451,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 10,
+      "name": "黯曜潮汐",
+      "service": "GROK Imagine",
+      "postId": "60e6b528-651b-4741-a53d-92a219f439ac",
+      "prompt": "Create a seamless 6-second ambient loop from this exact dark celestial tidal harbor image. Completely stationary camera, preserve obsidian pier, architecture, composition and empty lower combat floor. Only gently animate distant sea ripples, dim aurora and slow soft mist. Match first and final frames. No creatures, humans, foreground splashes, new objects, text, UI, cuts, camera movements, zoom or flashing.",
+      "imageSource": "art-production/maps/map-10-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-10.webp",
+      "video": "worker/public/art/star-ring-20261018/map-10.mp4",
+      "sourceSHA256": "93e01b90f3a1c4bc27890ea2ed90003f38dd0c0339d195333881812aaaf64fc6",
+      "posterSHA256": "1c5dbc9747e4e5f86a3000181bf2d5f2b4f41ee0ac06039864750918b0ed7053",
+      "videoSHA256": "0a713e95f53f9cdd94dd33f1f2e72d2806728466bd1528da6ebbf95f44c1ef79",
+      "bytes": 9339166,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 11,
+      "name": "寂星王庭",
+      "service": "GROK Imagine",
+      "postId": "93d2a85d-bfbe-4a4c-9330-b97ad14e2c60",
+      "prompt": "Seamless 6-second ambient loop from this exact silent celestial royal court painting. Completely locked camera, preserve every column, arch, throne and the clear lower battle floor. Only very faint soft nebula drift beyond arches and tiny floating gold dust, gentle starlight. Match first and final frames. No people, monsters, newly appearing props, text, UI, zoom, pan, cuts, flashing or changing architecture.",
+      "imageSource": "art-production/maps/map-11-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-11.webp",
+      "video": "worker/public/art/star-ring-20261018/map-11.mp4",
+      "sourceSHA256": "898c45ae736528e313c6b29ee4d47d115a621570f18c78bb2a7752b17c4abf5b",
+      "posterSHA256": "c03dd97cda25e0ee19a3d243189f31fac027d95a0f12ed00f89ed30c9eb90873",
+      "videoSHA256": "3098478885752f1131b68b5017641e3d3aa6bbd8c499a34b578e579371bd4652",
+      "bytes": 6175628,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    },
+    {
+      "hour": 12,
+      "name": "星蝕終殿",
+      "service": "GROK Imagine",
+      "postId": "e5859497-0eca-417c-99ba-7cf2f77ffaa1",
+      "prompt": "Seamless 6-second ambient loop from this exact grand eclipse temple final battle background. Completely locked camera, preserve every marble pillar, broken celestial ring and the clear lower combat platform. Animate only slow faint eclipse corona wisps, sparse golden ash and soft distant mist. First and final frames match. No monsters, people, text, interface, added objects, camera movements, zoom, cuts, lightning or flashing. Dark navy and antique-gold premium Greek fantasy.",
+      "imageSource": "art-production/maps/map-12-source.png",
+      "poster": "worker/public/art/star-ring-20261018/map-12.webp",
+      "video": "worker/public/art/star-ring-20261018/map-12.mp4",
+      "sourceSHA256": "a0093dc8fffa60997e1ef638f38da5c1f8a16d05109300b401c2deee0804e727",
+      "posterSHA256": "2efa81465b60c3aad3b68847d76cab7f4e74849c72d774a04d53da3849e30a96",
+      "videoSHA256": "2016a7f1d8306b777319d351bb86b8a9d6674a354ca5d7c14c4f1c02cd660a04",
+      "bytes": 7323024,
+      "nativeVideo": {
+        "width": 1168,
+        "height": 768,
+        "durationSeconds": 6.041667
+      }
+    }
+  ]
+}

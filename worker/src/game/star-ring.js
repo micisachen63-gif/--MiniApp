@@ -38,7 +38,7 @@ const original=(index)=>({...STAGES[index],artIndex:index+1,mechanic:ORIGINAL_ME
 export const HOURLY_ENCOUNTERS=[original(0),NEW_ENCOUNTERS[0],original(1),NEW_ENCOUNTERS[1],original(2),NEW_ENCOUNTERS[2],original(3),NEW_ENCOUNTERS[3],original(4),NEW_ENCOUNTERS[4],NEW_ENCOUNTERS[5],original(5)];
 // Add only real, downloaded and verified Grok files (e.g. 'map-01.mp4').
 // Missing videos deliberately expose null so mobile never requests fake media.
-export const AVAILABLE_SCENE_VIDEOS=Object.freeze([]);
+export const AVAILABLE_SCENE_VIDEOS=Object.freeze(["map-01.mp4","map-02.mp4","map-03.mp4","map-04.mp4","map-05.mp4","map-06.mp4","map-07.mp4","map-08.mp4","map-09.mp4","map-10.mp4","map-11.mp4","map-12.mp4"]);
 export const SCENES=['星砂裂岸','白曜浮階','裂環巨廊','鏡月回廊','銀針幽庭','琉璃晶瀑','縛月祭壇','蒼穹風脊','九曜獸域','黯曜潮汐','寂星王庭','星蝕終殿'].map((name,hourIndex)=>{
  const serial=String(hourIndex+1).padStart(2,'0'),video=`map-${serial}.mp4`;return {hourIndex,mapId:`star-ring-map-${serial}`,name,image:`/art/star-ring-20261018/map-${serial}.webp`,video:AVAILABLE_SCENE_VIDEOS.includes(video)?`/art/star-ring-20261018/${video}`:null};
 });

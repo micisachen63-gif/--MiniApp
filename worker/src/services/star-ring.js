@@ -123,7 +123,7 @@ async function advance(env,id,now){
   const s=p.state,due=Math.min(6,Math.max(0,Math.floor((now-s.startedAt)/Engine.STAGE_MS))),fresh=[];
   for(let i=s.results.length;i<due;i++){
    const result=Engine.simulateStage(s,i);s.results.push(result);fresh.push({index:i,result});
-   s.log.unshift({at:s.startedAt+(i+1)*Engine.STAGE_MS,text:`${Engine.STAGES[i].name}完成，評價 ${result.grade}；${result.defeated?'已擊退'+Engine.STAGES[i].enemyName:'整頓補給後繼續前行'}。`});
+   s.log.unshift({at:s.startedAt+(i+1)*Engine.STAGE_MS,text:`${Engine.STAGES[i].name}完成，評價 ${result.grade}；${i===5?'十二小時遠征結束，戰利品已結算':result.defeated?'已擊退'+Engine.STAGES[i].enemyName:'整頓補給後繼續前行'}。`});
    if(s.nextTactic){s.tactic=s.nextTactic;delete s.nextTactic;}s.stageTactics[i+1]=s.tactic;
   }
   if(!fresh.length)return;

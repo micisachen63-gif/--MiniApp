@@ -1,0 +1,584 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-10-18T03:11:19.182Z",
+  "manifestRevision": "star-ring16-v1-c3cea83d7900b549",
+  "scope": "Local browser desktop 1280x900 and mobile 390x844. Twelve distinct GROK videos decoded/playing, all twelve native monster atlases loaded, five actual hero images. Visual review confirmed clear formations after contain/FX correction; no horizontal overflow. iPhone/Android native Telegram hardware was not available.",
+  "screens": [
+    {
+      "hour": 1,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "星砂晶螯蠍",
+      "frame": "2",
+      "heading": "星砂裂岸",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-01.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.902556,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-01.png",
+      "screenshotSHA256": "d88bee509ef472bb427c61bd53d0c37a98f034f3fb1c77991dafdf09505eb211"
+    },
+    {
+      "hour": 1,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "星砂晶螯蠍",
+      "frame": "2",
+      "heading": "星砂裂岸",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-01.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.895426,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-01.png",
+      "screenshotSHA256": "26da2052904ce98316124e2e2f2324f6234b5b16d48f4d27fd203179757eff51"
+    },
+    {
+      "hour": 2,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "星帆銅羽鳥",
+      "frame": "1",
+      "heading": "白曜浮階",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-02.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.856687,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-02.png",
+      "screenshotSHA256": "6f3ad84defd5d7255843d11841fb3e5447110cc295374c988a501847a013e85e"
+    },
+    {
+      "hour": 2,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "星帆銅羽鳥",
+      "frame": "1",
+      "heading": "白曜浮階",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-02.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.883656,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-02.png",
+      "screenshotSHA256": "2728cf3629bdc9eac826394921964531c924e4e48c1ac48b2498a95a5088c340"
+    },
+    {
+      "hour": 3,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "裂環鑄衛",
+      "frame": "3",
+      "heading": "裂環巨廊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-03.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.857646,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-03.png",
+      "screenshotSHA256": "922bcae63b5d71c4bc77e7804975f781438bac875da6bb5d2203f5e60e24d3f6"
+    },
+    {
+      "hour": 3,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "裂環鑄衛",
+      "frame": "3",
+      "heading": "裂環巨廊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-03.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.900375,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-03.png",
+      "screenshotSHA256": "118ed72170ec6cd9f4a5447049dfe7468ad4fbf07fabf91fa58ae16e6442679c"
+    },
+    {
+      "hour": 4,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "空心星燈靈",
+      "frame": "3",
+      "heading": "鏡月回廊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-04.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.866984,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-04.png",
+      "screenshotSHA256": "d7c482a2639b3f93006556b2bd44bab84f9e98a635174f16d2e96ac1a81094d4"
+    },
+    {
+      "hour": 4,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "空心星燈靈",
+      "frame": "3",
+      "heading": "鏡月回廊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-04.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.873589,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-04.png",
+      "screenshotSHA256": "687dd54a5c34b750b814b7b9d734376a6f81728139ac9161b92928bf7543cb74"
+    },
+    {
+      "hour": 5,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "銀針鏡蛛",
+      "frame": "3",
+      "heading": "銀針幽庭",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-05.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.878368,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-05.png",
+      "screenshotSHA256": "daddd37449eafbd397192d8edd84565e473db638445294a0bb0b18cfb646ed3e"
+    },
+    {
+      "hour": 5,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "銀針鏡蛛",
+      "frame": "3",
+      "heading": "銀針幽庭",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-05.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.891364,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-05.png",
+      "screenshotSHA256": "d2e7dcd0c0e01f06ca06bb7f9e0516b5ac35a7cb638b9c7c9d4bb3aad905efec"
+    },
+    {
+      "hour": 6,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "晶瀑蛇鰻",
+      "frame": "2",
+      "heading": "琉璃晶瀑",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-06.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.772612,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-06.png",
+      "screenshotSHA256": "e4a4b744bfb6711a838d16cbafd9fcba3bebe814f878cd115226c97fbbf91a9b"
+    },
+    {
+      "hour": 6,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "晶瀑蛇鰻",
+      "frame": "3",
+      "heading": "琉璃晶瀑",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-06.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.921158,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-06.png",
+      "screenshotSHA256": "e4a725e4b77c7a7ffd14c821a3a8abd4556bd5bc83d6592f48d9491be921c24f"
+    },
+    {
+      "hour": 7,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "縛月哀歌者",
+      "frame": "3",
+      "heading": "縛月祭壇",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-07.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 1.652963,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-07.png",
+      "screenshotSHA256": "0cc40b1610be537479014e4e514b07c6e26b13f2c67d82f4e07d812254c41e44"
+    },
+    {
+      "hour": 7,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "縛月哀歌者",
+      "frame": "3",
+      "heading": "縛月祭壇",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-07.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 1.730287,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-07.png",
+      "screenshotSHA256": "923e9575161baab798fe6c956552dfbc2e6f3fbfaf4c6cc38decbdfe20f89ad4"
+    },
+    {
+      "hour": 8,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "逆風石翼獸",
+      "frame": "3",
+      "heading": "蒼穹風脊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-08.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 2.55278,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-08.png",
+      "screenshotSHA256": "f7f7a90a805091e19af3a1d39c5299c9250e8f3c6d3d66cf728a0955bce9cd5a"
+    },
+    {
+      "hour": 8,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "逆風石翼獸",
+      "frame": "3",
+      "heading": "蒼穹風脊",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-08.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 2.490359,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-08.png",
+      "screenshotSHA256": "0fa4a20e1b46c0ad52f4458dc11ed44ca54fb364d6e70fa3a3fd9b84450946c6"
+    },
+    {
+      "hour": 9,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "九曜棘冠獸",
+      "frame": "3",
+      "heading": "九曜獸域",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-09.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.870703,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-09.png",
+      "screenshotSHA256": "b34cf93eaf176ae9107b982aad8d14efda48e02d635462105abb9a1f21e0b5a0"
+    },
+    {
+      "hour": 9,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "九曜棘冠獸",
+      "frame": "3",
+      "heading": "九曜獸域",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-09.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.908985,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-09.png",
+      "screenshotSHA256": "6c4597f7121d47d4fcb3f37c1a9a6dc28f5cd5a651c0aa33e305988511acc268"
+    },
+    {
+      "hour": 10,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "潮汐深冠獸",
+      "frame": "3",
+      "heading": "黯曜潮汐",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-10.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.883685,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-10.png",
+      "screenshotSHA256": "13f1764dc6e0d01316b39889fb86e8ee73a0b520acb14509077abb534c172d78"
+    },
+    {
+      "hour": 10,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "潮汐深冠獸",
+      "frame": "3",
+      "heading": "黯曜潮汐",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-10.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.892109,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-10.png",
+      "screenshotSHA256": "5df0746fe8159c81008d68e31d6358e2a3a5121d0a2be161795f6baf5b6dcdb3"
+    },
+    {
+      "hour": 11,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "失序織星者",
+      "frame": "3",
+      "heading": "寂星王庭",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-11.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.89401,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-11.png",
+      "screenshotSHA256": "35ac1c15190cc4884275aad4fedf02a6516bdea6eb81688515c8207ee4f8db10"
+    },
+    {
+      "hour": 11,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "失序織星者",
+      "frame": "3",
+      "heading": "寂星王庭",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-11.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.920176,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-11.png",
+      "screenshotSHA256": "71bcfcc560acaa9025490e4a5d801c4c4676086f816769646d59ce031eb3432e"
+    },
+    {
+      "hour": 12,
+      "device": "desktop",
+      "atlas": "ready",
+      "enemy": "星蝕審判者",
+      "frame": "3",
+      "heading": "星蝕終殿",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-12.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.863013,
+          "width": 1168
+        }
+      ],
+      "viewport": 1280,
+      "width": 1265,
+      "screenshot": ".release-sync/star-ring-evidence/desktop-12.png",
+      "screenshotSHA256": "9f52f1fb27ce4b343cc82c91d69a8b5c17ce5d567de4bc6865a245ead2337817"
+    },
+    {
+      "hour": 12,
+      "device": "mobile",
+      "atlas": "ready",
+      "enemy": "星蝕審判者",
+      "frame": "3",
+      "heading": "星蝕終殿",
+      "heroes": 5,
+      "images": true,
+      "video": [
+        {
+          "duration": 6.041667,
+          "file": "map-12.mp4",
+          "height": 768,
+          "ready": 4,
+          "time": 0.868741,
+          "width": 1168
+        }
+      ],
+      "viewport": 390,
+      "width": 375,
+      "screenshot": ".release-sync/star-ring-evidence/mobile-12.png",
+      "screenshotSHA256": "1746dde6442f4eb27c788c380fcb0126e238569cdde047072c1cf0d346f8b7ea"
+    }
+  ]
+}
