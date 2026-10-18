@@ -1,0 +1,120 @@
+{
+  "date": "2026-10-18",
+  "generator": "builtin image_gen",
+  "assets": [
+    {
+      "name": "weapon",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-weapon.webp",
+      "bytes": 40190,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 229763,
+      "partialAlphaPixels": 31684,
+      "alphaBounds": {
+        "minX": 70,
+        "minY": 54,
+        "maxX": 457,
+        "maxY": 459
+      },
+      "edgeAlpha": 0,
+      "sha256": "ed56db6f43419a97a0e158d8ca88a8413853a4b09d51e9b60a4ea34a697ce73e",
+      "sourceSha256": "c6abd2a9bd47a2b7a42d416c434bafb9dff32e7947372c9fee47236524e74167"
+    },
+    {
+      "name": "armor",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-armor.webp",
+      "bytes": 72046,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 170376,
+      "partialAlphaPixels": 90833,
+      "alphaBounds": {
+        "minX": 40,
+        "minY": 47,
+        "maxX": 464,
+        "maxY": 468
+      },
+      "edgeAlpha": 0,
+      "sha256": "ca015dbe5805160a1906649fd1eeddee3c5d5be376ab594b032846154bfe25f2",
+      "sourceSha256": "95b2803c2e99a75b539975db7b47eda23e1d13057035006df791725d9140cad1"
+    },
+    {
+      "name": "accessory",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-accessory.webp",
+      "bytes": 69902,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 191492,
+      "partialAlphaPixels": 69082,
+      "alphaBounds": {
+        "minX": 54,
+        "minY": 54,
+        "maxX": 445,
+        "maxY": 456
+      },
+      "edgeAlpha": 0,
+      "sha256": "0d3795b3e93cbe85240fce54f5d200498c03ad986536ee0d6146c0805e1fdb46",
+      "sourceSha256": "c567f5ec63ef4c30f5c69455032c5c67bc17a14525a92d903c3a555bf8fffa7a"
+    },
+    {
+      "name": "weapon-mage",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-weapon-mage.webp",
+      "bytes": 34298,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 240165,
+      "partialAlphaPixels": 20877,
+      "alphaBounds": {
+        "minX": 54,
+        "minY": 49,
+        "maxX": 441,
+        "maxY": 466
+      },
+      "edgeAlpha": 0,
+      "sha256": "412f329d8aec21e3c86259de2097763aaedad922390334199880bf390419f84b",
+      "sourceSha256": "8089ca710f13e79a611f3bbd4d37a677b488107e65c11e3e7c169ad835a653ae"
+    },
+    {
+      "name": "weapon-archer",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-weapon-archer.webp",
+      "bytes": 37752,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 238616,
+      "partialAlphaPixels": 22296,
+      "alphaBounds": {
+        "minX": 99,
+        "minY": 43,
+        "maxX": 457,
+        "maxY": 462
+      },
+      "edgeAlpha": 0,
+      "sha256": "103f42b1282b5bc25fc694b729c3f014dc907b45b14d41526ea9353c3cbec83c",
+      "sourceSha256": "bc030c02549256ac39f4cf80307e783f5e757f3d9d64c2dc896100ca86c3ce02"
+    },
+    {
+      "name": "weapon-thief",
+      "path": "worker/public/art/star-ring-rewards-20261018/gear-weapon-thief.webp",
+      "bytes": 51594,
+      "width": 512,
+      "height": 512,
+      "hasAlpha": true,
+      "transparentPixels": 217849,
+      "partialAlphaPixels": 43013,
+      "alphaBounds": {
+        "minX": 40,
+        "minY": 48,
+        "maxX": 464,
+        "maxY": 446
+      },
+      "edgeAlpha": 0,
+      "sha256": "66fd75e6711289fdc15044fa07309d254d0320f59b4c876094dfacfb75f28677",
+      "sourceSha256": "27e4c751243638a0b8906552cafab1768addfdbb254ca1251416edfb526c35d7"
+    }
+  ]
+}

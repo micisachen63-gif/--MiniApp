@@ -1,0 +1,24 @@
+星環遠征：專屬外觀與裝備圖片補齊（2026-10-18）
+
+範圍
+1. 三種永久角色綁定足下光環：曙星之環60、月潮星紋120、星蝕王冠180枚星征徽記。
+2. 純視覺、同時一種，不佔裝備欄位，不增加戰力或掉落。購買不會自動穿戴，可先預覽再穿戴／卸下。
+3. 入口：神戰→星環遠征的星環專屬外觀，以及英雄殿堂→星環專屬外觀。
+4. 光環接至英雄武裝、掛機、英雄殿堂詳情、三人組隊、五人遠征；人物與守護天使原圖不替換。
+5. 新增四職業遠征武器圖（劍／法杖／弓／雙匕首）及防具、飾品類別圖；以持久化裝備source=star_ring判斷。這些是裝備欄位圖，不是六套全身換裝。
+6. 普通卷／祝福卷沿用現有正式圖。必成卷維持既有粉光圖；沒有把100%卷加入遠征普通掉落。
+
+資料契約
+game/star-ring-cosmetics.js 是三款目錄。永久解鎖表rpg_star_ring_cosmetics；穿戴狀態在special_json.starRingAura，原子rev鎖保護。0030只新增兩表，不能跑全部 migrations apply。
+star-ring/shop原子扣徽記、解鎖與收據，同款再次兌換不再扣款；star-ring/cosmetics列出目錄／owned／equipped／balance；star-ring/cosmetics/equip接cosmeticId或null與requestId。
+身分沿用簽章TG與selectedCharacterId防跨角；程式不相信body.tgId。前端為失敗重試保留requestId、鎖快速連點，切角／關閉後不套用晚到回應。
+三人戰鬥持久化special_json時，使用json_patch保留資料庫最新starRingAura（包括卸下），避免舊戰鬥快照裝回。
+
+美術與來源
+內建image_gen產出原始圖，原圖／完整提示在art-production/star-ring-rewards-20261018/。正式素材在worker/public/art/star-ring-rewards-20261018/。3張768×384透明光環、3張256×256圖示、6張512×512裝備圖；SHA與alpha QA在docs/art/STAR_RING_REWARDS_ART_20261018.json。
+預覽 /preview-star-ring-cosmetics.html 是獨立示意，不讀玩家／不扣真實資源；實際取得要在遊戲衣櫥兌換。/preview-star-ring.html 可看五人光環。
+
+驗收
+隔離SQLite與實際Worker HTTP走過：500徽記→購買月潮→380→穿戴→重新進入遊戲仍顯示穿戴中。防重、併發、餘額不足回滾、跨角、舊收據重播、純外觀不改數值、三人快照相容均有測試。
+桌機與390×844預覽、穿卸及五人戰場已目視；原生iPhone/Android Telegram尚未實機驗收。
+發布與完整測試結果以docs/deployment/elf-rpg-api.json及正式核對為準。本次不改BOT功能，不需重發BOT。

@@ -42,7 +42,10 @@
     const q = (s) => root.querySelector(s);
     const guardianBadge=document.createElement('div');guardianBadge.className='guardian-battle-head';guardianBadge.style.cssText='position:absolute;z-index:7;pointer-events:none;width:0;height:0';root.append(guardianBadge);let guardianVisualKey='',guardianVisual=null;
     function positionGuardian(){if(document.hidden||!root.isConnected)return;if(guardianVisual?.current?.visual){guardianVisual.position(heroPt(.5,0),root.clientWidth,root.clientHeight);}else if(guardianBadge.childElementCount){const point=heroPt(.5,0);guardianBadge.style.left=point.x+'px';guardianBadge.style.top=Math.max(66,point.y-4)+'px';}}
+    let auraNode=null,auraKey='';
+    function syncAura(){const aura=S.me?.character?.aura,key=window.RpgStarRingCosmetics?.key(aura)||'';if(key!==auraKey){auraNode?.remove();auraNode=null;auraKey=key;if(key){root.insertAdjacentHTML('beforeend',window.RpgStarRingCosmetics.markup(aura));auraNode=root.lastElementChild;}}if(auraNode&&S.me){const feet=heroPt(.5,1),left=heroPt(0,1),right=heroPt(1,1),w=Math.max(48,Math.min(210,Math.abs(right.x-left.x)*1.2));Object.assign(auraNode.style,{left:feet.x+'px',top:feet.y+'px',width:w+'px',height:w*.5+'px',bottom:'auto',transform:'translate(-50%,-50%)'});}}
     function syncGuardian(){
+      syncAura();
       if(!guardianVisual&&window.RpgGuardianIdleFX){guardianVisual=window.RpgGuardianIdleFX.create(root);guardianBadge.replaceChildren();guardianBadge.hidden=true;}
       if(guardianVisual){guardianVisual.update(S.me,{paused:document.hidden||!root.isConnected,reducedMotion:S.rm});positionGuardian();return;}
       const guardian=S.me?.guardian,key=guardian?`${S.me?.character?.tgId}:${guardian.id}:${guardian.quality}:${guardian.visual}:${guardian.artUrl}:${guardian.typeName}`:'';

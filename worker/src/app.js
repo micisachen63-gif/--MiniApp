@@ -46,6 +46,7 @@ export const APP_ACTIONS = Object.freeze({
   'party/list':'/rpg/party/list','party/create':'/rpg/party/create','party/action':'/rpg/party/action','party/reward':'/rpg/party/reward','party/get':'/rpg/party/get',
   'star-ring/list':'/rpg/star-ring/list','star-ring/me':'/rpg/star-ring/me','star-ring/get':'/rpg/star-ring/get',
   'star-ring/create':'/rpg/star-ring/create','star-ring/action':'/rpg/star-ring/action','star-ring/shop':'/rpg/star-ring/shop',
+  'star-ring/cosmetics':'/rpg/star-ring/cosmetics','star-ring/cosmetics/equip':'/rpg/star-ring/cosmetics/equip',
 
   'monster-exchange':'/rpg/monster-exchange',
   'collection/activate':'/rpg/collection/activate',

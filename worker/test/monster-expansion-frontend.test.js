@@ -79,8 +79,9 @@ test('committed cosmetic casts do not mutate HP/MP or issue combat API calls and
 });
 function collectionUiHarness(){
  const option={source:'hunt_12_core',target:'hunt_1_core',have:12,qty:3,gain:1},recipe={id:'collection-1',name:'收藏',gold:100,ingredients:[{item:'hunt_1_core',qty:1,have:0}]},S={me:{character:{tgId:'a'},collection:{recipes:[recipe],refineOptions:[option]}}},refine={dataset:{monsterRefine:'0'}},exchange={dataset:{monsterExchange:recipe.id}},confirm={},input={value:'1'},calls=[];let approve;
- const view={querySelector:()=>({insertAdjacentHTML(){}}),querySelectorAll:s=>s==='[data-monster-refine]'?[refine]:s==='[data-monster-exchange]'?[exchange]:[]},card={querySelector:s=>s==='#refine-count'?input:confirm};
- const ctx=vm.createContext({window:{RpgMonsterCatalog:[]},S,monsterCollectionView:()=>'',sheet:()=>card,$:()=>null,esc:String,itemName:String,fmt:String,act:async(...x)=>{calls.push(x);return {};},toast(){},closeSheet(){},confirmSheet:()=>new Promise(r=>approve=r)});
+ // This fixture mounts collection controls only; the optional wardrobe and full-body art are absent.
+ const view={querySelector:s=>['[data-cosmetic-open]','.hero-armory .fig'].includes(s)?null:{insertAdjacentHTML(){}},querySelectorAll:s=>s==='[data-monster-refine]'?[refine]:s==='[data-monster-exchange]'?[exchange]:[]},card={querySelector:s=>s==='#refine-count'?input:confirm};
+ const ctx=vm.createContext({window:{RpgMonsterCatalog:[]},S,openCosmeticWardrobe:()=>{throw Error('Wardrobe must not open from a collection-only fixture');},monsterCollectionView:()=>'',sheet:()=>card,$:()=>null,esc:String,itemName:String,fmt:String,act:async(...x)=>{calls.push(x);return {};},toast(){},closeSheet(){},confirmSheet:()=>new Promise(r=>approve=r)});
  vm.runInContext(app.slice(app.indexOf('  function bindBag('),app.indexOf('  /** empty slot'))+';this.bind=bindBag;',ctx);ctx.bind(view);return {S,refine,exchange,confirm,calls,approve:()=>approve(true)};
 }
 test('refine confirmation opened by character A must never consume character B materials after switching',async()=>{

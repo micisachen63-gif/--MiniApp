@@ -8,6 +8,7 @@ import {expPerTick} from './formulas.js';
 import {makeEliteGear} from './gear.js';
 import {GameError} from './classes.js';
 import {guardianChance} from './guardian-effects.js';
+import {COSMETICS,equippedAura} from './star-ring-cosmetics.js';
 
 // Never change v1 rules underneath an active twelve-hour snapshot. Future
 // balance changes must dispatch by engineVersion until all v1 runs have ended.
@@ -16,7 +17,7 @@ export const DURATION=12*3600000, STAGE_MS=2*3600000, BEAT_MS=30000, BEATS=STAGE
 export const HOUR_MS=3600000,HOUR_BEATS=HOUR_MS/BEAT_MS;
 export const TIERS=['初星征途','星砂巡路','銀針古道','縛月隘口','九曜邊境','裂環深境','寂星哨域','黯曜王庭','星蝕禁域'].map((name,i)=>({id:40+i*10,level:40+i*10,name,gearTier:4+i}));
 export const TACTICS=[{id:'steady',name:'穩健',description:'優先恢復與守護，降低負傷。'},{id:'balanced',name:'均衡',description:'兼顧突破與補給。'},{id:'deep',name:'深入',description:'更積極施放戰技，承受較強反擊。'}];
-export const SHOP=[{id:'reroll',name:'洗屬性卷 ×5',cost:5,item:'scroll_r',qty:5},{id:'weapon',name:'武器強化卷 ×4',cost:5,item:'scroll_w',qty:4},{id:'armor',name:'防具強化卷 ×4',cost:5,item:'scroll_a',qty:4},{id:'blessedWeapon',name:'祝福武器卷軸',cost:80,item:'blessed_scroll_w',qty:1},{id:'blessedArmor',name:'祝福防具卷軸',cost:80,item:'blessed_scroll_a',qty:1},{id:'gear',name:'本職業遠征裝備',cost:40,gear:true}];
+export const SHOP=[{id:'reroll',name:'洗屬性卷 ×5',cost:5,item:'scroll_r',qty:5},{id:'weapon',name:'武器強化卷 ×4',cost:5,item:'scroll_w',qty:4},{id:'armor',name:'防具強化卷 ×4',cost:5,item:'scroll_a',qty:4},{id:'blessedWeapon',name:'祝福武器卷軸',cost:80,item:'blessed_scroll_w',qty:1},{id:'blessedArmor',name:'祝福防具卷軸',cost:80,item:'blessed_scroll_a',qty:1},{id:'gear',name:'本職業遠征裝備',cost:40,gear:true},...COSMETICS.map(c=>({...c,cosmetic:c.id}))];
 export const STAGES=[
  {name:'星砂伏擊',enemyId:'star_ring_scorpion',enemyName:'星砂晶螯蠍',roles:['guard'],spell:'晶毒尾刺',behavior:'尾刺留下短暫晶毒；守護吸收傷害，支援可清除毒素。'},
  {name:'裂環重甲',enemyId:'star_ring_sentinel',enemyName:'裂環鑄衛',roles:['breach'],spell:'裂環震擊',behavior:'每波展開重甲護盾；破陣可摧毀額外護盾。'},
@@ -95,7 +96,7 @@ export function snapshot(player){
  // performance separately; damage-based multi-hit multipliers are not EXP multipliers.
  a.baselineExpPerMinute=Math.max(1,Math.round(expPerTick(c.level)*idle.g*idle.expFactor));
  a.standardAttack=standardStats(c.base_class,c.class_path,c.level).atk;
- a.equipment=equipped.map(e=>({...e}));a.roles=rolesOf(a);a.baseClass=c.base_class;a.classPath=c.class_path;a.gender=c.gender;a.departureAtk=a.atk;
+ a.equipment=equipped.map(e=>({...e}));a.roles=rolesOf(a);a.baseClass=c.base_class;a.classPath=c.class_path;a.gender=c.gender;a.departureAtk=a.atk;a.aura=equippedAura(c);
  return a;
 }
 function enemyFor(state,hourIndex,strength){

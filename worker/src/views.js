@@ -17,6 +17,7 @@ import {assistSupply} from './game/guardian-assist.js';
 import {guardianStatsView} from './game/guardian-effects.js';
 import {activeSettings} from './game/guardian-sigil-config.js';
 import { enhanceOdds, scrollFor, blessedScrollFor, scrollCost } from './game/enhance.js';
+import {equippedAura} from './game/star-ring-cosmetics.js';
 
 export function equipmentView(char, e) {
   const st = itemStat(e, char.base_class); const x = itemExtras({ ...e, affix_json: null }); const ms = mainStatOf(e.slot);   // extras shown without the relic affix (listed separately)
@@ -40,7 +41,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
   const gate = { atGate: atGate(char), gateLevel: gateLevel(char), canAdvance: canAdvanceNow(char), material: gateMat, materialName: ITEMS[gateMat]?.name, have: inv[gateMat] || 0 };
   const sup = supplyHours(char, inv, equipped);
   return {
-    character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
+    character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, aura:equippedAura(char), name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
       className: node.name, classPath: char.class_path, classTier: tier, level: char.level, exp: char.exp, expNeed: Number.isFinite(need) ? need : null,
       expPct: Number.isFinite(need) ? Math.min(100, Math.floor((char.exp / need) * 1000) / 10) : 100, hp: char.hp, mp: char.mp, maxHp: s.maxHp, maxMp: s.maxMp,
       mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char),

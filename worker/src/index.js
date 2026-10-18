@@ -10,6 +10,7 @@ import {bossExchange} from './services/boss-exchange.js';
 import * as SP from './services/special.js';
 import * as PARTY from './services/party.js';
 import * as STAR_RING from './services/star-ring.js';
+import * as STAR_RING_COSMETICS from './services/star-ring-cosmetics.js';
 import * as JOURNAL from './services/journal.js';
 import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
@@ -152,6 +153,8 @@ const routes = {
     return {ok:true,party:{...party,readonly:recipient!==active},now};
   },
   'POST /rpg/star-ring/shop': (env,b,now)=>STAR_RING.shop(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/cosmetics': (env,b)=>STAR_RING_COSMETICS.list(env,tgOf(b)),
+  'POST /rpg/star-ring/cosmetics/equip': (env,b,now)=>STAR_RING_COSMETICS.equip(env,tgOf(b),b,now),
   'POST /rpg/star-ring/tick': async(env,b,now)=>({ok:true,advanced:await STAR_RING.sweep(env,now)}),
   'POST /rpg/party/create': (env,b,now)=>PARTY.create(env,tgOf(b),b,now),
   'POST /rpg/party/action': (env,b,now)=>PARTY.action(env,tgOf(b),b,now),

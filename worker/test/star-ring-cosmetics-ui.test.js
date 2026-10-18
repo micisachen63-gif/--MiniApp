@@ -1,0 +1,39 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import vm from 'node:vm';
+import {readFileSync} from 'node:fs';
+const source=readFileSync(new URL('../public/star-ring-cosmetics.js',import.meta.url),'utf8');
+const ids=['star_ring_aura_dawn','star_ring_aura_moon','star_ring_aura_eclipse'];
+const catalogue=()=>ids.map((id,i)=>({id,name:['曙星之環','月潮星紋','星蝕王冠'][i],cost:[60,120,180][i],level:40,description:'遠征的星光'}));
+const state=(overrides={})=>({ok:true,catalog:catalogue(),owned:[],equipped:null,balance:200,...overrides});
+function setup(){const events=new Map(),storage=new Map();let sequence=0;const context=vm.createContext({Date,Math,console,crypto:{randomUUID:()=>String(++sequence)},sessionStorage:{getItem:k=>storage.get(k),setItem:(k,v)=>storage.set(k,v),removeItem:k=>storage.delete(k)}});vm.runInContext(source,context);const root={isConnected:true,innerHTML:'',contains:()=>true,addEventListener:(e,f)=>events.set(e,f),removeEventListener:e=>events.delete(e)};return {ui:context.RpgStarRingCosmetics,root,events,storage};}
+const flush=()=>new Promise(r=>setImmediate(r));
+const click=(s,dataset)=>s.events.get('click')({target:{closest:()=>({dataset,disabled:false})}});
+test('only catalog identities may draw an aura; forged URLs never enter style or item icons',()=>{const {ui}=setup();assert.equal(ui.markup({id:'../../secret',art:'https://bad.test/image'}),'');assert.equal(ui.art(ids[0]),'/art/star-ring-rewards-20261018/aura-dawn.webp');assert.match(ui.markup({id:ids[1],art:'javascript:alert(1)'}),/aura-moon.webp/);assert.doesNotMatch(ui.markup(ids[0],'<script>'),/<script>/);});
+test('authored expedition gear requires persisted source, with independent scroll art unchanged',()=>{const {ui}=setup();assert.equal(ui.gearArt({source:'star_ring',slot:'weapon'}),'/art/star-ring-rewards-20261018/gear-weapon.webp');for(const base of ['mage','archer','thief'])assert.match(ui.gearArt({source:'star_ring',slot:'weapon',classReq:base}),new RegExp('gear-weapon-'+base));assert.match(ui.gearArt({source:'star_ring',slot:'ring'}),/gear-accessory/);assert.match(ui.gearArt({source:'star_ring',slot:'gloves'}),/gear-armor/);assert.equal(ui.gearArt({name:'星征長劍',slot:'weapon'}),null);assert.equal(ui.itemArt('blessed_scroll_w'),'/art/items-scrolls-cutout-20261011/blessed_scroll_w.webp');});
+test('wardrobe displays actual character preview, exact prices and owned/equipped controls without another purchase',()=>{const {ui}=setup(),host={me:()=>({character:{name:'白色毛衣',level:55}}),actorArt:()=>'/art/real-hero.webp'},html=ui.render({data:state({owned:[ids[0]],equipped:catalogue()[0]}),preview:ids[1]},host);assert.match(html,/src="\/art\/real-hero.webp"/);assert.match(html,/aura-moon.webp/);assert.match(html,/120 枚星征徽記/);assert.match(html,/data-cosmetic-equip="none"/);assert.doesNotMatch(html,/data-cosmetic-buy="star_ring_aura_dawn"/);assert.match(html,/不增加戰鬥能力/);const unsafe=ui.render({data:state()}, {...host,actorArt:()=>'/art/../../private.webp'});assert.doesNotMatch(unsafe,/private.webp/);});
+test('preview is local-only, purchase and equip send separate server requests, then unequip sends null',async()=>{const s=setup(),calls=[];let owned=[],equipped=null;const host={me:()=>({character:{tgId:'1',level:55}}),api:async(path,body)=>{calls.push([path,body]);if(path==='star-ring/shop'){owned=[ids[0]];return {ok:true,cosmetics:state({owned,balance:140})};}if(path.endsWith('/equip')){equipped=body.cosmeticId?catalogue().find(a=>a.id===body.cosmeticId):null;}return state({owned,equipped,balance:owned.length?140:200});},refresh:async()=>{}};const stop=s.ui.mount(s.root,host);await flush();assert.equal(calls.length,1);click(s,{cosmeticPreview:ids[2]});assert.equal(calls.length,1);click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(calls[1][0],'star-ring/shop');assert.equal(calls[1][1].offerId,ids[0]);assert.match(s.root.innerHTML,/已永久解鎖/);click(s,{cosmeticEquip:ids[0]});await flush();assert.equal(calls[2][0],'star-ring/cosmetics/equip');assert.equal(calls[2][1].cosmeticId,ids[0]);assert.match(s.root.innerHTML,/穿戴中/);click(s,{cosmeticEquip:'none'});await flush();assert.equal(calls[3][1].cosmeticId,null);assert.doesNotMatch(s.root.innerHTML,/data-cosmetic-equip="none"/);stop();assert.equal(s.events.size,0);});
+test('network-uncertain purchase deliberately retries with the same receipt and suppresses rapid duplicate input',async()=>{const s=setup(),calls=[];let release;const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:'1',level:55}}),api:async(path,body)=>{if(path.endsWith('/cosmetics'))return state();calls.push(body);await new Promise(r=>release=r);throw Error('網路中斷');}});await flush();click(s,{cosmeticBuy:ids[0]});click(s,{cosmeticBuy:ids[0]});assert.equal(calls.length,1);release();await flush();click(s,{cosmeticBuy:ids[0]});assert.equal(calls.length,2);assert.equal(calls[0].requestId,calls[1].requestId);release();await flush();stop();});
+test('late responses after character switch or closed wardrobe cannot repaint or refresh another character',async()=>{for(const mode of ['switch','close']){const s=setup();let actor='1',release,refreshes=0;const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:actor,level:55}}),api:()=>new Promise(r=>release=r),refresh:()=>refreshes++});const old=s.root.innerHTML;if(mode==='switch')actor='2';else stop();release(state());await flush();assert.equal(s.root.innerHTML,old);assert.equal(refreshes,0);stop();}});
+test('contained image placement anchors the ring at actual feet and rejects unloaded images',()=>{const {ui}=setup(),container={getBoundingClientRect:()=>({left:10,top:10})},image={naturalWidth:100,naturalHeight:200,getBoundingClientRect:()=>({left:20,top:30,width:200,height:200})},p=ui.placement(image,container);assert.equal(p.left,110);assert.equal(p.width,120);assert.equal(p.top,208);assert.equal(ui.placement({...image,naturalWidth:0},container),null);});
+
+
+test('armory and short-party containment keeps the complete foot-ring above the stage edge while preview geometry stays unchanged',()=>{
+ const {ui}=setup(),container={getBoundingClientRect:()=>({left:0,top:0,width:180,height:200})},image={naturalWidth:200,naturalHeight:200,getBoundingClientRect:()=>({left:0,top:0,width:180,height:200})};
+ const preview=ui.placement(image,container),fitted=ui.placement(image,container,{contain:true});
+ assert.ok(preview.top+preview.height/2>200,'raw centered-foot preview would cross a clipped stage');
+ assert.ok(fitted.top+fitted.height/2<=196,'bottom sparkles remain within the four-pixel stage margin');
+ assert.ok(fitted.top-fitted.height/2>=4);assert.ok(fitted.left-fitted.width/2>=4);assert.ok(fitted.left+fitted.width/2<=176);
+ assert.ok(Math.abs(fitted.width/fitted.height-2)<1e-9,'authored 2:1 star-ring proportions stay intact');
+ assert.equal(ui.placement(image,container).top,preview.top,'opt-in stage containment never moves wardrobe previews');
+ const node={style:{}};ui.position(node,image,container,{contain:true});assert.equal(node.style.top,fitted.top+'px');
+});
+
+
+test('wide armory portrait bounds do not inflate the ring into a knee-high circle',()=>{
+ const {ui}=setup(),container={getBoundingClientRect:()=>({left:0,top:0,width:500,height:490})},image={naturalWidth:600,naturalHeight:600,getBoundingClientRect:()=>({left:0,top:0,width:500,height:490})};
+ const standard=ui.placement(image,container,{contain:true}),armory=ui.placement(image,container,{contain:true,maxWidthRatio:.52,maxHeightRatio:.6});
+ assert.ok(standard.width>armory.width*1.8,'test recreates the wide full-body portrait box');
+ assert.equal(armory.width,260);assert.equal(armory.height,130);assert.ok(armory.top>=420,'smaller aura stays beside the feet instead of being lifted toward knees');assert.ok(armory.top+armory.height/2<=486);
+ assert.equal(ui.placement(image,container).width,588,'wardrobe and five-player default sizing is unchanged');
+});

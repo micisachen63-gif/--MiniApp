@@ -1,6 +1,7 @@
 import {THIEF_MECHANICS,addThiefPoison,armThiefCounter,triggerThiefCounter,nextThiefStrikeCount,thiefPrimaryMechanics,applyThiefPrimary} from './thief-skills.js';
 import {elementalDamage} from './elements.js';
 import {guardianDamageMultiplier} from './guardian-effects.js';
+import {equippedAura} from './star-ring-cosmetics.js';
 import { SPECIAL_SKILLS } from './special-data.js';
 import { GameError } from './classes.js';
 import {combatPct,takenMultiplier,specialCost,spendMana,restoreOnAction} from './combat-passives.js';
@@ -130,7 +131,7 @@ export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,conte
  return {...result,healed:(result.healed||0)+sustain.healed,selfHealed:sustain.healed,spentMp};
 }
 export function combatActor(c,s,{id=c.tg_id,hp=c.hp??s.maxHp,mp=c.mp??s.maxMp}={}){
- return {id,name:c.name,base:c.base_class,path:c.class_path||'',level:c.level??s.level,guardian:c.guardian,
+ return {id,name:c.name,base:c.base_class,path:c.class_path||'',level:c.level??s.level,guardian:c.guardian,aura:equippedAura(c),
   collectionBlessing:s.collectionBlessing,maxHp:s.maxHp,maxMp:s.maxMp,hp:Math.min(s.maxHp,hp),mp:Math.min(s.maxMp,mp),
   atk:s.atk,def:s.def,taken:s.taken,attackSpeedMultiplier:s.attackSpeedMultiplier||1,skill:{...s.skill},element:s.element,weaponElem:s.weaponElem,elementResist:s.elementResist,
   crit:.05+(s.pct.critPct||0),affixPct:{...s.pct},special:structuredClone(specialState(c)),buffs:[],actions:0};

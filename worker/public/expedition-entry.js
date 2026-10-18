@@ -17,7 +17,7 @@
     bar.append(close, label);
     const frame = document.createElement('iframe');
     frame.title = '特殊技能、組隊副本與爬塔';
-    const frameUrl=new URL('/expedition/index.html',location.origin);frameUrl.searchParams.set('v','20261018-star-ring1');
+    const frameUrl=new URL('/expedition/index.html',location.origin);frameUrl.searchParams.set('v','20261018-cosmetics1');
     if(tab==='star-ring'){const query=new URLSearchParams(location.search);for(const k of ['ringParty','ringChar']){const value=query.get(k);if(value&&/^[A-Za-z0-9:_-]{1,100}$/.test(value))frameUrl.searchParams.set(k,value);}}
     if(tab==='star-ring'&&!frameUrl.searchParams.get('ringParty')){const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||'',match=/^ring_([0-9a-f]{32})$/.exec(start);if(match)frameUrl.searchParams.set('ringParty','ring:'+match[1]);}
     frameUrl.hash=tab;frame.src=frameUrl.href;
