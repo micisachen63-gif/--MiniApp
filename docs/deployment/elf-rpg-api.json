@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "5bab7dad58b31d8d4d4f525505f6b47efe97cfcc",
+  "sourceCommit": "ac642b981a82ded6828002bdcce62e0f80807f32",
   "service": "elf-rpg-api",
-  "productionVersion": "c75a306b-d8af-412a-a347-6c324b7df0d1",
+  "productionVersion": "cae2a302-3471-432e-a1ab-fc37bd525567",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-18T01:38:35.666Z",
+  "verifiedAt": "2026-10-18T03:29:34.950Z",
   "runtimeSHA256": {
-    "index.js": "660505027dbc5be4a72c2963c148e827df1a11a2a238fa9db618231d9d4afe74"
+    "index.js": "9fcd6c3c9e0a89c35192e2cb764a4a3d080365e8fa8cc5521b2e9b6a4c885756"
   },
   "source": {
-    "fileCount": 8958,
-    "sha256": "f2f1ea7d60cbd7f3351b557f3db68a4704dd9563457ebace631c58594513feac",
+    "fileCount": 9050,
+    "sha256": "0f4e53667eebfeeb76487303b5daae29e308965f41993d057a70c6528272611b",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -24,6 +24,130 @@
       {
         "file": "worker/art-production/build-armory-specializations.mjs",
         "sha256": "a3aa5bd67f816dc10131f7bc9dc52f50e952eeb5a10d1397c9271b623957d438"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/manifest.json",
+        "sha256": "e99c99d249d7d3d6bbade27339d1d707297c990139e40b7b3c791871b534faa6"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_astromancer.json",
+        "sha256": "1d41b29a6a6adf5cbf7913bcb046d9bc7b0f6efe9eb152173dcdd932818f981f"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_behemoth.json",
+        "sha256": "84fc861f7edd3f6039362bc95af1a743e1cc8cc6b9cbcba115e71ee76dcede3f"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_bird.json",
+        "sha256": "57a9493be34d17b8f2c018f780566dca7f3563c763ee6771a496c173f95f06df"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_gargoyle.json",
+        "sha256": "ef69f1baced632efc70396c2181df8fadcd45569594ac5ee1657138856fa3294"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_judge.json",
+        "sha256": "c1ec13f72afd5884ecad1cca5c7dabdf0fc1eb6a45bbd0dbb15c92d372a80be6"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_lament.json",
+        "sha256": "0c27ddb0159877d53e180c9f6ad8dd0942651edfa5840fe21857e1ee55da4a93"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_lantern.json",
+        "sha256": "0ce1dd427b6485b794b1afb0cfc9c6d5a2c7720b9ff99724d6017cf493f78f7d"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_scorpion.json",
+        "sha256": "7c3aa9c589be67afe3c284a68b842540725b0866a41dd166ce3f66cb1beb0186"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_sentinel.json",
+        "sha256": "1c79f685614a74ef7760e5e9422b83f2cf648dadabcaf92215ea0ae68eaa7d44"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_serpent.json",
+        "sha256": "14b775bfc7ae95c1f0470a2301a706666ccf1ed8a23a6f266dc87f0b8c676a5a"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_tide.json",
+        "sha256": "cf580a6f12e9aa5fd6f16b8220ca56bd2526442525856cd5eb91ee70f603373d"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/packed/star_ring_weaver.json",
+        "sha256": "96298eafb5ea5f1493e83a5b36f4ab954f425776f653f786b61787e989376e40"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-01.png",
+        "sha256": "79c4e58736dcc7942f4989843bca3a92f6d89e6bae1458aab474d15b49327869"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-02.png",
+        "sha256": "de50d7e5a4855ec742a7830c19f39335bf2fbffa9d9e1e4b09690eab3a319056"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-03.png",
+        "sha256": "e8a03b166797bf590bf3efcb1ab9d1812d23aadbba3113724eb7df628bdf5453"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-04.png",
+        "sha256": "4720a631e58df4dfe66462a8da10bf181429ea75f88a8b3c222fdb36b7aec670"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-05.png",
+        "sha256": "9eedb117a47d0945f6ac15761c4192e9730f646e1a0404f09c8e8d741a094836"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-06.png",
+        "sha256": "ab4aff1f3ca9ee53a2b35fb573c206aa8508daf40484840a6a90d2df9c602b84"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-07-still.png",
+        "sha256": "31c72207f6daeb28c9c0bf0b780fea88722cc99e8b55be190784e8b932acfeff"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-07.png",
+        "sha256": "9c0bc1b2ad18b5cd0ae6bc8c6d8a84f4b5f5c9dfebdb2582477ceef3165f1419"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-08-still.png",
+        "sha256": "ff46cc24c0b6cd98262c4d64742e575c2a7dc492e6b75f8155abf1a99ddf9342"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-08.png",
+        "sha256": "47baa4ed9e218d544627959fbe32b2c4983f18c2d5b3fe98ccbf19366308e7a9"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-09-still.png",
+        "sha256": "178d3ea0577871c7eb6c60feec117f56e950e30df041690f011db3d66572d838"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-09.png",
+        "sha256": "be2c5ee499b36676e30377fd9c701bfdc09448fd8a432913fb8fdfce87836394"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-10-still.png",
+        "sha256": "f7932e7b84d521a4792dd01d94607d927c89ca52349da3b3ccd48c2da73c1034"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-10.png",
+        "sha256": "f186264b3c7cefb84589e04e2bae156c20e68a7df95abf64f8716cb6d145c3a1"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-11-still.png",
+        "sha256": "bec180ee04743b06a983a13406ff787f22cb4bfbe5ffdc288fad8ef94d48c167"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-11.png",
+        "sha256": "c65f5a543074973b79e4a51d291f0056e3a3b4cbfa274a50a51ad33e92c218dc"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-12-still.png",
+        "sha256": "6166cb55966201b7f872a8b3152dbeff08772e2491c15c2c02cdcb6197242c22"
+      },
+      {
+        "file": "worker/art-production/star-ring-20261018/source/monster-12.png",
+        "sha256": "e25406d910262b1e164a890e1c547fc5b39e1bc3cf4af635bd4e6c77b22a4c71"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5-rejected-gutter.png",
@@ -2090,6 +2214,10 @@
         "sha256": "d3469973663cf6fd21a27814f806fea36151c731978ec88af69dc0efc5d718e1"
       },
       {
+        "file": "worker/migrations/0029_star_ring_expedition.sql",
+        "sha256": "6cde70ae19c84d8f66c81db1681499030f732b7c11c3577d1774b3de4513c15c"
+      },
+      {
         "file": "worker/package.json",
         "sha256": "bbb53110f9b005f39784c56e8305c8927566a8009a4d6587f8884fcd546bc2b8"
       },
@@ -2103,7 +2231,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "c7f753c62080c75af95d2314f9026ef06bd9394d783c397000d9ff6fef800f1a"
+        "sha256": "65000fc1ece3153088b294b14862002b12bb4dc24e5b562452f16607a30ba452"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -27258,6 +27386,214 @@
         "sha256": "1e2857c331210ed1a86c9e7c3489389dd3caf5d1bc9c81c219bf54b5dc16dea1"
       },
       {
+        "file": "worker/public/art/star-ring-20261018/background.jpg",
+        "sha256": "cf2b5316712c7b3a3ebefea886c9067d6cc2997ec8856f733642bdc20d3fb85b"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/background.webp",
+        "sha256": "c57b8d882c2b19df03c618ff389f6883ea96017a9071435bc358ff63482b29fe"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/manifest.json",
+        "sha256": "47660357555724ebfec6ea9ef2cfbd86982606a1dcc605e29ae288cee3992a7e"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-01.mp4",
+        "sha256": "941cd355216c412e3eda0fa40bf373d5f0f50e3588d6f55932c2c214db0861c7"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-01.webp",
+        "sha256": "30faad08d4feac0fb01344be5d45096790785831655cd1e04fb2014c5c6aed4b"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-02.mp4",
+        "sha256": "3226e8633be492f6d9af0d88abc4bd95e7aec1015b13b33cb7a840ec5f4d2b09"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-02.webp",
+        "sha256": "ed4aabdfd1aa93348743e655b5a3b64222289ca290c523d237f4d770dc2ee81e"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-03.mp4",
+        "sha256": "fe760ee25684bd299a2c4149ff99c3ddcc6dee87b284b72d134b6c2a7b7a4797"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-03.webp",
+        "sha256": "9dd455e53696a6c5b92df412d430484c3e6ed5af55b07fc09938958f34e79a4a"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-04.mp4",
+        "sha256": "7da80c048e4de7dcfb64d78adfa1c43d7433231e7665108ab3c676f774a5ac65"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-04.webp",
+        "sha256": "f45b5cfcbeb06060c8c006ec20937e8d630eb997c997ed635f51e39a5366ee97"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-05.mp4",
+        "sha256": "abc3d51e45530567613f4e1ba7eb2731b201e2d0041cef3fb68cc2e0a89463df"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-05.webp",
+        "sha256": "733b9a7a92462f1f034f1185e43ac9b45ef233323de81c8a1e461fbef72abea3"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-06.mp4",
+        "sha256": "2ffe6459d7a6148d48dc154949a4243ca03bbad58919d665984e017dbdd41b7a"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-06.webp",
+        "sha256": "82c86c5eaabe94952060c6b66d7f2ad29caac79662dba0d79e1a78ee721f2f89"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-07.mp4",
+        "sha256": "66bc7a02e6f163dbfce13accdc639bd56d66319901a2f1da210e39d4fd24223e"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-07.webp",
+        "sha256": "0c818446eb32c1e6e626cf12f57839906f3c87413bbb2434762c7273e475d092"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-08.mp4",
+        "sha256": "da2535701b871e7c4385a952c989d1687764e0e10ba2789b207247a9f4216dec"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-08.webp",
+        "sha256": "9f99c052dc11c49be8507456a0fd5105f1da4a125848b525f73650903afbd0bb"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-09.mp4",
+        "sha256": "141637ac539e5d421ae2b30866524750c707d09acc1be7c439ea87d0d7c128a9"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-09.webp",
+        "sha256": "97e1a57252bf0647a84b827658352299fe2286f9da8857185a8a0c7ef66b7391"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-10.mp4",
+        "sha256": "0a713e95f53f9cdd94dd33f1f2e72d2806728466bd1528da6ebbf95f44c1ef79"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-10.webp",
+        "sha256": "1c5dbc9747e4e5f86a3000181bf2d5f2b4f41ee0ac06039864750918b0ed7053"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-11.mp4",
+        "sha256": "3098478885752f1131b68b5017641e3d3aa6bbd8c499a34b578e579371bd4652"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-11.webp",
+        "sha256": "c03dd97cda25e0ee19a3d243189f31fac027d95a0f12ed00f89ed30c9eb90873"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-12.mp4",
+        "sha256": "2016a7f1d8306b777319d351bb86b8a9d6674a354ca5d7c14c4f1c02cd660a04"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/map-12.webp",
+        "sha256": "2efa81465b60c3aad3b68847d76cab7f4e74849c72d774a04d53da3849e30a96"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-01.webp",
+        "sha256": "5a857f4e06457fcbefe56e61f615860a2a652c2d9f656d889df313c8dba3657d"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-01_attack.webp",
+        "sha256": "4e9f6fe82396489acf09bd9d50f75fc8330020f612286007961e3de3dfca25e0"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-02.webp",
+        "sha256": "282af47189521c27ca6691d2ffae6634e2573419f339c7dcce578493f895f5f5"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-02_attack.webp",
+        "sha256": "e28629acca110fbccd8224802de543a40eb950116e546e92c7cd3d061f4e0a1b"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-03.webp",
+        "sha256": "7cbe39fae1c2fb955f9375a20b6b57365c450771d5d2c7733b086a2029ce699e"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-03_attack.webp",
+        "sha256": "4f186954f006a92d6e4b6f25b354cfdda8b253ade7b32ebc8ed6cc404e4fab10"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-04.webp",
+        "sha256": "d22702649eb7998325ea3b87ba8028510cf319f3857dfaa54721b4b0ee293456"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-04_attack.webp",
+        "sha256": "a3877b003df496f9f9637170fa7620a86ff93b3ec0021d6f20b7f329b61baaf4"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-05.webp",
+        "sha256": "a29089879892b21df14f77a8d0968ec536081c622c8f4ba70246167c3de004e2"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-05_attack.webp",
+        "sha256": "d8c9c02702fe482e20818d93f4533a98943a7cb00cf0baca9951ee2d37d36a0b"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-06.webp",
+        "sha256": "7f380f8df991c916e63c8b5d155d1f143399d2c14142b03f129cbd365b7c2775"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-06_attack.webp",
+        "sha256": "137ad6e53d79d79e876b9ca90fb8206eae66bb734bc188c4a21d47dd3196a8c6"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-07.webp",
+        "sha256": "f059a107b191ede9c350803778d6b96f7d0a6d1df05254e968263fc8c6ded329"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-07_attack.webp",
+        "sha256": "79541781746e2c2956d097c7b72ee65ceabf114b723021e9d3eaf9c99f80f4b1"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-08.webp",
+        "sha256": "95335ae46387cf7b3ffcfc6eaad72e25902193469fee53e435202c17d22dae5d"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-08_attack.webp",
+        "sha256": "6c84d46bd90d2c83d253b550224127ea7b6ec4d1f367aa8050fd66aa2977c255"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-09.webp",
+        "sha256": "fde7ec23f1b258a7c2eb3502b332914c2fd5e5b8a66ef8fdb282b510ddc8bf2e"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-09_attack.webp",
+        "sha256": "dfc5b47b5fb9fc6c199fd909ce019013af34af6c6811ef5bbb120123255180f3"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-10.webp",
+        "sha256": "903478efec62847a7ad514a122a420651f09cb0ece41253ad2679fa35f7353c6"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-10_attack.webp",
+        "sha256": "46eeba3e4487b1168bfe9002d5b7590e24f77be2eb67a0ae03a6e96181d2c3ea"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-11.webp",
+        "sha256": "022a9d2b2d7b447d4e86dd7b315af50b7c31c96843d0ccc895f779155df50bca"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-11_attack.webp",
+        "sha256": "e95794a832895d09f9565762679f639890865c969ac2888a97fdcf3a97a7ccdd"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-12.webp",
+        "sha256": "b00a4cbec37639f7488c209c92fd613822e41c1b1bdbec6c8f2187622d6fbfa9"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/monster-12_attack.webp",
+        "sha256": "a7c1b1f826cf06a7e9673f492bd3edf8db20cc82a487aadda46ed4a5709c9382"
+      },
+      {
+        "file": "worker/public/art/star-ring-20261018/star_ring_token.webp",
+        "sha256": "b6d70dcbb2db549bf0f07f728c3022aea72e73df89dcd0abd2c1fcf4b06a4ef2"
+      },
+      {
         "file": "worker/public/art/sword-adv1-clean-20261011/hero_adv1_sword_A_f.png",
         "sha256": "cd1e01cadbc23efed187643fcf999c988df2cf1091e4b3c65864a10d6057ed1a"
       },
@@ -33567,7 +33903,7 @@
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "c9f2099e7196c21f663ff1de9790fec0a7f3317e9fdba234938d6336f3a02408"
+        "sha256": "5284de01e7e6b3c19cab7a21ec4e28c3a1c2f1f836d273d281d44fca7795b704"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -34139,7 +34475,7 @@
       },
       {
         "file": "worker/public/expedition/hero-art-playback.js",
-        "sha256": "51100c82a5d46afd6960825fd8593fb4b5f289704cfb1d85601e7b8c98d351da"
+        "sha256": "e53e595932e385e76ab83768a4d5b779fa9b39fef3899ffa317011d3cc6da336"
       },
       {
         "file": "worker/public/expedition/hero-art.js",
@@ -34147,11 +34483,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "c130b29a61d747d322592e4b09cc9018852235726f3f6c345eabf9bc8415261b"
+        "sha256": "e7c3fff35cfa8cd723826a7e905b46f4890a7133a98bd676a6628192a7da34bc"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "2e3f9016e4afd06428e3dfc84444f91e508f8563825b543dabf9d30852eeebc1"
+        "sha256": "e68b996dc8e5bbcafc49cb64d196225b24136ac2165499bdf1e76baab36d1aa5"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -34159,7 +34495,7 @@
       },
       {
         "file": "worker/public/expedition/party-lobby.js",
-        "sha256": "d726b491d86cbdd329177057a9eee22ae7676fc2841192b7e8c594e37fa5d7d2"
+        "sha256": "ac2ed8e40baa2f9a1856232e63176e29d09f1ce4a9e5969a649685af40c82381"
       },
       {
         "file": "worker/public/expedition/party-tactics.js",
@@ -34763,11 +35099,11 @@
       },
       {
         "file": "worker/public/forge-ritual.css",
-        "sha256": "ae52c96e519ba12b83644d900960ed47381334ca23d05ed7a63c7c6c0ac3e099"
+        "sha256": "85e0bc5867eb5c2fc69a51a80e006d5e67f01111cd260bd899974804b10eba6a"
       },
       {
         "file": "worker/public/forge-ritual.js",
-        "sha256": "6bea7ee73cab71d2abf233bba5dae8702af0df7732fb26f0426451f5da33d4ff"
+        "sha256": "3efabd405295e8def28a6dbc701efb8d57b20292ded140d52c1ccbbd82aa2fa3"
       },
       {
         "file": "worker/public/game-brand.css",
@@ -34919,7 +35255,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "ddaff7eb5d62f3bcd804876671e32bce80fbfcc37abe1b92e355a5c2bf6e4fea"
+        "sha256": "eff655b542ff168a529c18f0375e4ef29d3438f5584c73212549432a8d185dda"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35138,6 +35474,10 @@
         "sha256": "ebf6b5ba37fbac8062e05a02874c77e02d4c7d4d7dbd135d505eba883fc53024"
       },
       {
+        "file": "worker/public/preview-star-ring.html",
+        "sha256": "31a21cbc46e2f8af7c2f9d95db2609ce2cccec46c3fde498108d502374e49c8b"
+      },
+      {
         "file": "worker/public/preview-sword-adv2.html",
         "sha256": "43252702c1a22d508a47d8d50ea883ba596e87c09b78b5957181720878b70e64"
       },
@@ -35155,7 +35495,7 @@
       },
       {
         "file": "worker/public/request-client.js",
-        "sha256": "a720f472fa2650d2b70a67428f02cd1e860d27045138b6c626a3135c9fcd3c05"
+        "sha256": "374a89e9a68a2bbdc66563f7d69d571696ce1911db9e959eff70eda30474e1bf"
       },
       {
         "file": "worker/public/skill-fx.js",
@@ -35164,6 +35504,26 @@
       {
         "file": "worker/public/special-skill-widgets.js",
         "sha256": "d8a2f10cd0bcacdef8220e43d818508c449e8fc7d3069538572ca3fd6229d46c"
+      },
+      {
+        "file": "worker/public/star-ring-heroes.js",
+        "sha256": "989764014e397a00a319916b05b6da68d04566f8188a2b34268913e184e54125"
+      },
+      {
+        "file": "worker/public/star-ring-monsters.js",
+        "sha256": "8df9da5060fbe0ca8b39a550e0d435dbae0b32de52b040669525a4d9ebe2f573"
+      },
+      {
+        "file": "worker/public/star-ring-scenery.js",
+        "sha256": "d8eea4d779a91741899233a3786b855bb919a19bca807bbfe72ed361250af12a"
+      },
+      {
+        "file": "worker/public/star-ring-ui.js",
+        "sha256": "577c78e5148ebebf56a31d7ed5149dcf5ebb1b9a6645ca1a83ba2325520cd34d"
+      },
+      {
+        "file": "worker/public/star-ring.css",
+        "sha256": "8f36e65cd3b150307b2c55f86f02b75f2523a35f8bc93273c786c6d9d1f7dcd9"
       },
       {
         "file": "worker/public/status-banner.css",
@@ -35483,11 +35843,11 @@
       },
       {
         "file": "worker/src/accounts.js",
-        "sha256": "0cf890994a09ae5910ae734b0e468ec083c2a5c0cd10c66e2ba6b74d4f5263a3"
+        "sha256": "aa0980555d8295165d8cdb3ebe4c9253fd307c1b995059c30de002032c947915"
       },
       {
         "file": "worker/src/app.js",
-        "sha256": "600bc476607bf441f8789aad92cddb952117f27b6f044e7d9f3fcd90425bd219"
+        "sha256": "3a0e9aee6189f63bfe56c9674f4471460cf6ccf9c82ad0bb5f80f3b07ad62505"
       },
       {
         "file": "worker/src/app.js.20261010-gacha-v1.bak",
@@ -35507,7 +35867,7 @@
       },
       {
         "file": "worker/src/fate-public.js",
-        "sha256": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6"
+        "sha256": "5453cce81fd25ca49a2d58d38ceeafb1524b1eaf64899f677df64be135dc88eb"
       },
       {
         "file": "worker/src/game/advanced-specializations.js",
@@ -35547,7 +35907,7 @@
       },
       {
         "file": "worker/src/game/constants.js",
-        "sha256": "23bd3b7f763b28ae482e520a7eac9facdad02024db496510cd014bf961c0f72f"
+        "sha256": "a2bc16ca18191b266daa075d7b7fe8c682d28ac604d656a3ec9c2ba6ece15c5d"
       },
       {
         "file": "worker/src/game/constants.js.backup-elf-redesign-20261010",
@@ -35686,6 +36046,10 @@
         "sha256": "2e2cd790bc7de9441a2c93bec2b1aaa935ed7a003bea4ff99e91b10033b8711b"
       },
       {
+        "file": "worker/src/game/star-ring.js",
+        "sha256": "a5e6f4360bd16a1f8fdff9481d24c9245764560574f4ce1a214550d924cb1996"
+      },
+      {
         "file": "worker/src/game/stats.js",
         "sha256": "fb88ad3ef13333bef9568733131c8500a462bda1e7dca94331ac360207d9eca7"
       },
@@ -35715,7 +36079,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "2e91817195ac0187b06668fbb20f97e591f8b97dc4de5aa693a31ad0b910cc94"
+        "sha256": "f2dd139bcd521802d8fb88d7773102047014a5f9e67de72d9dffe35a01821f18"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -35803,7 +36167,7 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "9dfedf2f278e3226d6faf1e60700a12a90df6828537b72b9502d3f240532ebca"
+        "sha256": "a3b9aa1ce8ab4390f407b2eb15b690ae6e1aa315e5c33fa0f84c2496c524dec6"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -35824,6 +36188,10 @@
       {
         "file": "worker/src/services/special.js",
         "sha256": "df65541eba95317a369df3a4d838cb3031a2b3b85f805797660122015aeaf772"
+      },
+      {
+        "file": "worker/src/services/star-ring.js",
+        "sha256": "d78b4161c0b9f0f5ff85a12a7615b9aa18bd1e4e338d864c516a8531258db18d"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -35849,16 +36217,68 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 138,
+    "verifiedCount": 195,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_belt_laurel_supreme.jpg",
-      "worker/public/art/cards/wpn_grimoire_advanced.jpg",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m.png",
+      "worker/public/art/cards/equipment-20261011/gear_belt_sacred_common.jpg",
+      "worker/public/art/cards/wpn_sword_shield_supreme.jpg",
+      "worker/public/art/star-ring-20261018/background.jpg",
+      "worker/public/art/star-ring-20261018/background.webp",
+      "worker/public/art/star-ring-20261018/manifest.json",
+      "worker/public/art/star-ring-20261018/map-01.mp4",
+      "worker/public/art/star-ring-20261018/map-01.webp",
+      "worker/public/art/star-ring-20261018/map-02.mp4",
+      "worker/public/art/star-ring-20261018/map-02.webp",
+      "worker/public/art/star-ring-20261018/map-03.mp4",
+      "worker/public/art/star-ring-20261018/map-03.webp",
+      "worker/public/art/star-ring-20261018/map-04.mp4",
+      "worker/public/art/star-ring-20261018/map-04.webp",
+      "worker/public/art/star-ring-20261018/map-05.mp4",
+      "worker/public/art/star-ring-20261018/map-05.webp",
+      "worker/public/art/star-ring-20261018/map-06.mp4",
+      "worker/public/art/star-ring-20261018/map-06.webp",
+      "worker/public/art/star-ring-20261018/map-07.mp4",
+      "worker/public/art/star-ring-20261018/map-07.webp",
+      "worker/public/art/star-ring-20261018/map-08.mp4",
+      "worker/public/art/star-ring-20261018/map-08.webp",
+      "worker/public/art/star-ring-20261018/map-09.mp4",
+      "worker/public/art/star-ring-20261018/map-09.webp",
+      "worker/public/art/star-ring-20261018/map-10.mp4",
+      "worker/public/art/star-ring-20261018/map-10.webp",
+      "worker/public/art/star-ring-20261018/map-11.mp4",
+      "worker/public/art/star-ring-20261018/map-11.webp",
+      "worker/public/art/star-ring-20261018/map-12.mp4",
+      "worker/public/art/star-ring-20261018/map-12.webp",
+      "worker/public/art/star-ring-20261018/monster-01.webp",
+      "worker/public/art/star-ring-20261018/monster-01_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-02.webp",
+      "worker/public/art/star-ring-20261018/monster-02_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-03.webp",
+      "worker/public/art/star-ring-20261018/monster-03_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-04.webp",
+      "worker/public/art/star-ring-20261018/monster-04_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-05.webp",
+      "worker/public/art/star-ring-20261018/monster-05_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-06.webp",
+      "worker/public/art/star-ring-20261018/monster-06_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-07.webp",
+      "worker/public/art/star-ring-20261018/monster-07_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-08.webp",
+      "worker/public/art/star-ring-20261018/monster-08_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-09.webp",
+      "worker/public/art/star-ring-20261018/monster-09_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-10.webp",
+      "worker/public/art/star-ring-20261018/monster-10_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-11.webp",
+      "worker/public/art/star-ring-20261018/monster-11_attack.webp",
+      "worker/public/art/star-ring-20261018/monster-12.webp",
+      "worker/public/art/star-ring-20261018/monster-12_attack.webp",
+      "worker/public/art/star-ring-20261018/star_ring_token.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m_attack.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -35878,10 +36298,9 @@
       "worker/public/elf-low-tier-weapon-fx.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/hero-art-playback.js",
       "worker/public/expedition/index.html",
       "worker/public/expedition/live.js",
-      "worker/public/expedition/party-lobby.js",
-      "worker/public/expedition/review.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -35972,6 +36391,7 @@
       "worker/public/preview-monster-fx.html",
       "worker/public/preview-single-elf4.html",
       "worker/public/preview-skill-fx.html",
+      "worker/public/preview-star-ring.html",
       "worker/public/preview-sword-adv2.html",
       "worker/public/preview-sword-adv3.html",
       "worker/public/preview-sword-adv4-magic.html",
@@ -35979,6 +36399,11 @@
       "worker/public/request-client.js",
       "worker/public/skill-fx.js",
       "worker/public/special-skill-widgets.js",
+      "worker/public/star-ring-heroes.js",
+      "worker/public/star-ring-monsters.js",
+      "worker/public/star-ring-scenery.js",
+      "worker/public/star-ring-ui.js",
+      "worker/public/star-ring.css",
       "worker/public/status-banner.css",
       "worker/public/styles.css",
       "worker/public/sword-adv4-fx.js",
@@ -35994,7 +36419,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "c75a306b-d8af-412a-a347-6c324b7df0d1",
+        "version_id": "cae2a302-3471-432e-a1ab-fc37bd525567",
         "percentage": 100
       }
     ],
