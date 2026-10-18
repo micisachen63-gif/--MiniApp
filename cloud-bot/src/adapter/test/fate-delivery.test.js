@@ -10,9 +10,9 @@ function setup({status,error,main=false,index=0}={}){
  const make=()=>createRpgFlow({api,rpgApi,send:async()=>assert.fail('photo notification fell back to text'),answer:async()=>{},chatId:'-100123',appUrl:APP,botUsername:()=>'StarJournalRpgBot',mainMiniApp:main,tgStore:store,log:{warn(){},info(){}},now:()=>clock,inGroup:()=>true,inUserPrivate:()=>false});
  return {make,calls,sent,store,event,clock:value=>{clock=value;}};
 }
-test('fate sends canonical illustrated event with account mention, live countdown and game links once across restart',async()=>{
+test('fate sends canonical illustrated private event, live countdown and game links once across restart',async()=>{
  const t=setup();await t.make().tick({forceOutbox:true});const photo=t.sent[0];assert.equal(photo.method,'sendPhoto');assert.equal(photo.body.photo,APP+'art/fate-chapter-20261016/share.jpg');
- assert.match(photo.body.caption,/tg:\/\/user\?id=123456789/);assert.match(photo.body.caption,/星&lt;燈&gt;/);assert.match(photo.body.caption,/18 歲/);assert.match(photo.body.caption,/剩餘 90 秒/);assert.ok(!/1998|10:30|台北|STALE|888/.test(photo.body.caption));
+ assert.equal(photo.body.chat_id,'123456789');assert.doesNotMatch(photo.body.caption,/tg:\/\/user/);assert.match(photo.body.caption,/星&lt;燈&gt;/);assert.match(photo.body.caption,/18 歲/);assert.match(photo.body.caption,/剩餘 90 秒/);assert.ok(!/1998|10:30|台北|STALE|888/.test(photo.body.caption));
  assert.deepEqual(photo.body.reply_markup.inline_keyboard.map(row=>row[0].url),['https://t.me/StarJournalRpgBot?start=rpgfate','https://t.me/StarJournalRpgBot?start=rpg']);
  await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);assert.ok(t.calls.some(c=>c.path==='/rpg/outbox/ack'));
 });
@@ -42,4 +42,4 @@ test('variable-lifespan fate notification preserves the actual age beyond ninety
  const t=setup();t.event.age=103;await t.make().tick({forceOutbox:true});assert.match(t.sent[0].body.caption,/103 歲/);assert.doesNotMatch(t.sent[0].body.caption,/90 歲/);
 });
 
-test('Taiwan event uses the canonical country art while retaining the live account and chosen-event link',async()=>{const t=setup();t.event.country='TW';await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.photo,APP+'art/fate-taiwan-v8/taipei-dusk.jpg');assert.match(t.sent[0].body.caption,/tg:\/\/user\?id=123456789/);assert.ok(t.sent[0].body.reply_markup.inline_keyboard[0][0].url.includes('fate'));});
+test('Taiwan event uses the canonical country art while retaining the live account and chosen-event link',async()=>{const t=setup();t.event.country='TW';await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.photo,APP+'art/fate-taiwan-v8/taipei-dusk.jpg');assert.equal(t.sent[0].body.chat_id,'123456789');assert.doesNotMatch(t.sent[0].body.caption,/tg:\/\/user/);assert.ok(t.sent[0].body.reply_markup.inline_keyboard[0][0].url.includes('fate'));});

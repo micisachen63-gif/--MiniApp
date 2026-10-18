@@ -22,8 +22,19 @@ test('a private notice for another account is dropped; 403 is reported as a perm
  const t=setup({id:1,target:'dm',tgId:'123456789',kind:'fate_event',claimToken:'c',payload:{lifeId:'life1',index:1}},{status:okStatus,failWith:e});await t.make().tick({forceOutbox:true});
  const failed=t.calls.find(c=>c.path==='/rpg/outbox/fail');assert.equal(failed.body.errorCode,403);assert.ok(!t.calls.some(c=>c.path==='/rpg/outbox/ack'));assert.equal(t.store.data.rpg.fateCards?.['life1:1'],undefined);
 });
-test('legacy queued group fate events still deliver with a mention',async()=>{
- const t=setup({id:1,target:'group',kind:'fate_event',claimToken:'c',payload:{lifeId:'life1',index:1}},{status:okStatus});await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.chat_id,CHAT);assert.match(t.sent[0].body.caption,/tg:\/\/user\?id=123456789/);
+test('legacy group-queued personal events go private to the canonical owner without a mention',async()=>{
+ const t=setup({id:1,target:'group',kind:'fate_event',claimToken:'c',payload:{lifeId:'life1',index:1}},{status:okStatus});await t.make().tick({forceOutbox:true});assert.equal(t.sent[0].body.chat_id,'123456789');assert.doesNotMatch(t.sent[0].body.caption,/tg:\/\/user/);
+});
+test('legacy personal queue cannot choose a private recipient from its stale payload or group destination',async()=>{
+ const t=setup({id:1,target:'group',tgId:'777',kind:'fate_event',claimToken:'c',payload:{lifeId:'life1',index:1,accountId:'888'}},{status:okStatus});
+ await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);assert.equal(t.sent[0].body.chat_id,'123456789');assert.equal(t.texts.length,0);
+ assert.doesNotMatch(t.sent[0].body.caption,/tg:\/\/user|888|777/);await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);
+});
+test('403 for an old group-queued personal notice never falls back to a group photo or text',async()=>{
+ const e=Object.assign(Error('Forbidden'),{definite:true,errorCode:403,description:'Forbidden: bot cannot initiate conversation'});
+ const t=setup({id:1,target:'group',kind:'fate_event',claimToken:'c',payload:{lifeId:'life1',index:1}},{status:okStatus,failWith:e});
+ await t.make().tick({forceOutbox:true});assert.equal(t.sent.length,1);assert.equal(t.sent[0].body.chat_id,'123456789');assert.equal(t.texts.length,0);
+ assert.equal(t.calls.find(c=>c.path==='/rpg/outbox/fail').body.errorCode,403);assert.ok(!t.calls.some(c=>c.path==='/rpg/outbox/ack'));
 });
 const cast={lifeId:'life-aaaa0001',accountId:'202',castName:'旅<人>',ownerName:'星燈',thread:'ferry',role:'擺渡人'};
 test('cast notice tags the player in the group once, quiet at night',async()=>{

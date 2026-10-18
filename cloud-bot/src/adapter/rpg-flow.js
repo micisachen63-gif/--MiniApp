@@ -575,7 +575,8 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
-    const fateDm=item.kind==='fate_event'&&item.target==='dm'&&/^[1-9]\d{0,19}$/.test(String(item.tgId||''));
+    // Personal events always go private, including rows queued before the DM migration.
+    const fateDm=item.kind==='fate_event'&&['dm','group'].includes(item.target);
     if(item.kind==='fate_cast'&&item.target==='group'){
       if(!/^[A-Za-z0-9_-]{1,128}$/.test(p.lifeId||'')||!/^[1-9]\d{0,15}$/.test(String(p.accountId||'')))return;
       const key=`cast:${p.lifeId}:${p.accountId}`,cards=st().fateCards??={};
@@ -605,7 +606,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       if(!Number.isFinite(remaining)||remaining<=0)return;
       const validAccount=value=>/^[1-9]\d{0,15}$/.test(String(value))&&Number.isSafeInteger(Number(value));
       if(social?(check.pending!==true||event?.eventId!==p.eventId||!validAccount(event.ownerAccountId)||!validAccount(event.guestAccountId)||String(event.ownerAccountId)===String(event.guestAccountId)):!validAccount(event?.accountId))return;
-      if(fateDm&&String(item.tgId)!==String(event.accountId))return;
+      if(fateDm&&item.target==='dm'&&String(item.tgId)!==String(event.accountId))return;
       const ageValue=Number(event.age),age=Number.isSafeInteger(ageValue)&&ageValue>=0?ageValue:0;
       const name=html(String(event.name||'旅人').slice(0,40));
       const mention=(id,label)=>`<a href="tg://user?id=${id}">${html(String(label||'旅人').slice(0,40))}</a>`;
@@ -618,7 +619,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       try{
         const art=app.url?new URL(event.country==='TW'?'/art/fate-taiwan-v8/taipei-dusk.jpg':['JP','KR','US','CA','GB','DE','FR','AU','IN'].includes(event.country)?'/art/fate-countries-v9/'+event.country.toLowerCase()+'-memory.jpg':'/art/fate-chapter-20261016/share.jpg',app.url):null;
         const options={parse_mode:'HTML',reply_markup:{inline_keyboard:keyboard}};
-        const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:fateDm?item.tgId:chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,fateDm?item.tgId:chatId);
+        const m=art?.protocol==='https:'?await api.call('sendPhoto',{chat_id:fateDm?String(event.accountId):chatId,photo:art.href,caption,...options},{retries429:0,timeoutMs:15000}):await send(caption,options,fateDm?String(event.accountId):chatId);
         const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認命運旅章通知');
         cards[key]={at:now(),messageId};save();
       }catch(error){if(error?.definite===true){delete cards[key];save();}throw error;}

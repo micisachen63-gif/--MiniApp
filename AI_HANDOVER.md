@@ -118,3 +118,8 @@
 ## 2026-10-18 命運旅章真實統計參照
 
 十國 v8/v9 的生活卡、預設收合圖表、原幣轉台幣、UBS/WHO/UNESCO來源與日期、PNG/TG圖卡/文案共用狀態已補齊。固定快照與方法限制詳見 `docs/fate/WORLD_COMPARISON_HANDOVER_20261018.txt`；勿將分組占比誤稱個人百分位。正式部署仍以兩服務收據為準。
+
+
+## 2026-10-18 命運旅章私訊分流補強
+
+一般fate_event連舊group佇列也只走私訊，重新核對權威帳號；403不回退群組。只有fate_social與fate_cast保留群組，詳見 `docs/fate/PRIVATE_NOTIFICATIONS_20261018.txt`。
