@@ -1,0 +1,7 @@
+組隊大廳（2026-10-18）
+技能與組隊冒險左側新增「組隊大廳」；進行中/已結束兩分頁。每頁20場，所有符合場次均可翻頁，不受舊招募20場/個人10場列表限制。
+進行中涵蓋招募、戰鬥（打寶/轉職試煉/爬塔）；詳情沿用正式戰鬥、準備、加入流程，戰鬥中供觀看，不允許中途加入。
+已結束僅近7天（含正好7天邊界），含成功、失敗、解散。明細從rpg_party_rewards讀各隊員已發放item數量，顯示技能名稱；缺紀錄不假造掉落。
+新場次結束在既有state_json記endedAt，後續領獎不延長7天；舊場次fallback updated_at。不刪歷史/獎勵、不改既有個人dropLog/historical入口、不做DBmigration。
+新增已驗證Telegram/selectedCharacter路由 party/hall、party/hall/get，request-client標為可重試讀取；不公開inventory/gold/account等私人欄位。
+驗證：完整worker1510通過；6項新測試涵蓋45隊分頁、加入、7天界線/舊紀錄存留、逐人真掉落、簽章/偽造tgId及HTML escape。手機390/桌面1024瀏覽器串接真實handle+D1測試資料庫：23活躍隊伍翻頁、近7天過濾、結束詳情、加入僅一次、回到列表、無pageerror/橫向溢出。未操作正式玩家或發送真實群訊息。

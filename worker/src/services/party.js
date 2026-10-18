@@ -41,7 +41,8 @@ function combatStmts(db,p,now){return p.state.actors.flatMap(a=>[
 ]);}
 async function mutate(env,id,tg,b,now,fn){const db=env.DB;for(let n=0;n<4;n++){
  const request=String(b.requestId||'');if(request){const old=await db.prepare('SELECT result_json FROM rpg_party_operations WHERE party_id=? AND char_id=? AND request_id=?').bind(String(id),tg,request).first();if(old)return JSON.parse(old.result_json);}
- const p=await load(db,id);let stmts=[];const result=await fn(p,stmts);
+ const p=await load(db,id),previousStatus=p.status;let stmts=[];const result=await fn(p,stmts);
+ if(['won','lost','ended'].includes(p.status)&&!['won','lost','ended'].includes(previousStatus)&&!p.state.endedAt)p.state.endedAt=now;
  stmts.unshift(updateStmt(db,p,now),guardStmt(db));if(!b.silent)stmts.push(cardStmt(db,p,now));
  if(request)stmts.push(db.prepare('INSERT INTO rpg_party_operations(party_id,char_id,request_id,result_json) VALUES(?,?,?,?)').bind(p.id,tg,request,JSON.stringify(result||{ok:true})));
  try{await db.batch(stmts);return result||{ok:true};}catch(e){const error=classifyDbError(e);if(error?.code==='conflict'&&n<3)continue;throw error||e;}
@@ -187,3 +188,26 @@ export async function setMessage(env,b){await env.DB.prepare('UPDATE rpg_parties
 
 
 
+
+// Public party directory: bound each page, but keep every matching party reachable.
+const HALL_DAYS=7*86400000;
+const endedTime=p=>Number(p.state.endedAt)||p.updated_at;
+export async function hall(env,tg,b,now){
+ await sweep(env,now,30);
+ const ended=b.tab==='ended',page=Math.max(1,Math.min(1000000,Math.floor(Number(b.page)||1))),size=20;
+ const where=ended?"status IN ('won','lost','ended') AND COALESCE(json_extract(state_json,'$.endedAt'),updated_at)>=?":"status IN ('lobby','combat') AND expires_at>?";
+ const cutoff=ended?now-HALL_DAYS:now;
+ const count=await env.DB.prepare('SELECT COUNT(*) AS total FROM rpg_parties WHERE '+where).bind(cutoff).first();
+ const total=count?.total||0,pages=Math.max(1,Math.ceil(total/size)),current=Math.min(page,pages);
+ const entries=await rows(env.DB,'SELECT id FROM rpg_parties WHERE '+where+' ORDER BY '+(ended?"COALESCE(json_extract(state_json,'$.endedAt'),updated_at) DESC":"created_at DESC")+',id DESC LIMIT ? OFFSET ?',cutoff,size,(current-1)*size);
+ const parties=await Promise.all(entries.map(async row=>{const p=await load(env.DB,row.id);return {id:p.id,name:p.state.name,kind:p.kind,status:p.status,level:p.state.level,floor:p.state.floor,round:p.state.round,createdAt:p.created_at,endedAt:ended?endedTime(p):null,deadline:p.state.deadline||p.expires_at,mine:p.members.some(m=>m.char_id===tg),members:p.members.map(m=>({id:m.char_id,name:m.name,level:m.level,base:m.base_class,classPath:m.class_path,gender:m.gender,leader:m.char_id===p.leader_id}))};}));
+ return {ok:true,tab:ended?'ended':'active',parties,total,page:current,pages,pageSize:size,retentionDays:7,now};
+}
+export async function hallGet(env,tg,b,now){
+ const id=String(b.partyId||'');let p=await load(env.DB,id);
+ if(['won','lost','ended'].includes(p.status)&&endedTime(p)<now-HALL_DAYS)throw new GameError('hall_expired','組隊大廳僅展示近7天；請回自己的打寶或爬塔分頁查看。',404);
+ const party=await view(env,id,tg,now);p=await load(env.DB,id);
+ const rewards=await rows(env.DB,'SELECT char_id,reward_json,created_at FROM rpg_party_rewards WHERE party_id=? ORDER BY char_id',id);
+ const drops=p.members.map(m=>{const r=rewards.find(x=>x.char_id===m.char_id);let items={};try{items=JSON.parse(r?.reward_json||'{}').items||{};}catch{}return {characterId:m.char_id,name:m.name,received:!!r,items:Object.fromEntries(Object.entries(items).filter(([k,n])=>typeof k==='string'&&Number.isSafeInteger(n)&&n>0)),at:r?.created_at||null};});
+ return {ok:true,party,endedAt:['won','lost','ended'].includes(p.status)?endedTime(p):null,drops,now};
+}
