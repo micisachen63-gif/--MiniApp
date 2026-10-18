@@ -1,0 +1,34 @@
+(() => {
+ 'use strict';
+ const BASE='/art/star-ring-20261018/', IDS=['star_ring_scorpion','star_ring_sentinel','star_ring_weaver','star_ring_lament','star_ring_behemoth','star_ring_judge','star_ring_bird','star_ring_lantern','star_ring_serpent','star_ring_gargoyle','star_ring_tide','star_ring_astromancer'];
+ const SEQUENCES={idle:[0,1,2,3],move:[4,5,6,7],attack:[8,9,10,11],cast:[12,13],hurt:[14],death:[15]}, images=new Map(), playback=new Map();let manifestPromise=null;
+ const value=(x,fallback=0)=>Number.isFinite(Number(x))?Number(x):fallback;
+ function metadata(raw,id){
+  const i=IDS.indexOf(id);if(i<0||!raw)return null;
+  const records=raw.monsters||raw.creatures||raw.assets||raw,entry=Array.isArray(records)?records.find(x=>x.id===id||x.key===id):records[id];if(!entry)return null;
+  const file=entry.atlas||entry.sheet||entry.src||entry.animation||(typeof entry.attack==='string'?entry.attack:null)||'monster-'+String(i+1).padStart(2,'0')+'_attack.webp',path=String(typeof file==='object'?file.file||file.path||'':file);
+  if(!/^(?:\/art\/star-ring-20261018\/)?monster-(?:0[1-9]|1[0-2])_attack\.webp$/.test(path))return null;
+  const cols=value(entry.cols||raw.cols,4),rows=value(entry.rows||raw.rows,4),frames=value(entry.frames||raw.frames,16);if(cols!==4||rows!==4||frames!==16)return null;
+  const validBounds=b=>Array.isArray(b)&&b.length===4&&b.every(x=>Number.isFinite(Number(x))&&x>=0&&x<=1)&&b[2]>b[0]&&b[3]>b[1];
+  let bounds=[0,0,1,1];const authored=entry.frameBounds;
+  if(authored!=null){if(Array.isArray(authored)&&Array.isArray(authored[0])){if(authored.length!==16||!authored.every(validBounds))return null;bounds=[Math.min(...authored.map(b=>b[0])),Math.min(...authored.map(b=>b[1])),Math.max(...authored.map(b=>b[2])),Math.max(...authored.map(b=>b[3]))];}else{if(!validBounds(authored))return null;bounds=authored;}}
+  const feet=value(entry.feet,.9375);if(feet<=0||feet>1)return null;
+  const animations={},rates={},fps=Math.min(15,Math.max(4,value(entry.fps||raw.fps,8)));
+  for(const [name,fallback]of Object.entries(SEQUENCES)){const a=entry.animations?.[name]||(Array.isArray(entry[name])?entry[name]:null)||raw.animations?.[name]||fallback;animations[name]=Array.isArray(a)&&a.length&&a.every(n=>Number.isInteger(n)&&n>=0&&n<16)?a:fallback;rates[name]=Math.min(15,Math.max(4,value(entry.fps?.[name]||raw.fps?.[name],fps)));}
+  return {id,src:path.startsWith('/')?path:BASE+path,cols,rows,frames,feet,frameBounds:bounds,animations,fps,rates};
+ }
+ async function manifest(){if(!manifestPromise)manifestPromise=fetch(BASE+'manifest.json').then(r=>{if(!r.ok)throw Error('manifest');return r.json();}).catch(()=>{manifestPromise=null;return null;});return manifestPromise;}
+ function loadImage(src){if(images.has(src))return images.get(src);const promise=new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>{images.delete(src);reject(Error('atlas'));};image.src=src;});images.set(src,promise);while(images.size>2)images.delete(images.keys().next().value);return promise;}
+ function beatSequence(battle){if(value(battle?.enemy?.hp)<=0)return ['death'];const events=battle?.events||[],boss=events.filter(e=>e.actorId==='boss'&&!e.wave),hit=events.some(e=>e.actorId!=='boss'&&value(e.damage)>0);const phases=[];if(events.some(e=>e.actorId==='system'&&/抵達/.test(e.label||''))||!events.length&&Number.isInteger(battle?.sequence)&&battle.sequence%120===0)phases.push('move');if(boss.length)phases.push(boss.some(e=>/蓄力|詠唱|施法/.test(e.label||''))?'cast':'attack');if(hit)phases.push('hurt');phases.push('idle');return phases;}
+ function frameAt(meta,phases,elapsed,reduced=false){if(reduced)return meta.animations[phases[0]==='death'?'death':'idle'][0];let remaining=Math.max(0,elapsed);for(const phase of phases){const frames=meta.animations[phase]||meta.animations.idle,fps=meta.rates?.[phase]||meta.fps,frame=Math.floor(remaining*fps/1000);if(phase==='idle')return frames[frame%frames.length];if(phase==='death')return frames[Math.min(frame,frames.length-1)];const repeat=phase==='hurt'?2:1,length=frames.length*repeat;if(frame<length)return frames[Math.min(frames.length-1,Math.floor(frame/repeat))];remaining-=length*1000/fps;}const frames=meta.animations.idle;return frames[Math.floor(remaining*(meta.rates?.idle||meta.fps)/1000)%frames.length];}
+ function draw(ctx,image,meta,frame,size=512){const cellW=image.naturalWidth/meta.cols,cellH=image.naturalHeight/meta.rows;if(!(cellW>0&&cellH>0))return;const [left,top,right,bottom]=meta.frameBounds,bw=(right-left)*cellW,bh=(Math.max(bottom,meta.feet)-top)*cellH,scale=Math.min(size*.94/bw,size*.94/bh),dx=(size-bw*scale)/2-left*cellW*scale,footY=Math.min(size*.96,size*.97-Math.max(0,bottom-meta.feet)*cellH*scale),dy=footY-meta.feet*cellH*scale;ctx.clearRect(0,0,size,size);ctx.drawImage(image,(frame%4)*cellW,Math.floor(frame/4)*cellH,cellW,cellH,dx,dy,cellW*scale,cellH*scale);}
+ function mount(node,battle){if(!node||!battle?.enemy)return ()=>{};let disposed=false,raf=0,canvas=null,meta=null,sheet=null,ctx=null,lastFrame=-1;const still=node.querySelector('img'),id=String(battle.enemy.id||''),media=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)'),clock=()=>globalThis.performance?.now?.()||Date.now(),phases=beatSequence(battle),key=id+':'+value(battle.sequence)+':'+phases.join(',');if(!playback.has(key))playback.set(key,clock());while(playback.size>12)playback.delete(playback.keys().next().value);const started=playback.get(key);
+  function paint(){if(disposed||!node.isConnected){stop();return;}if(document.hidden||!ctx)return;const frame=frameAt(meta,phases,clock()-started,media?.matches);if(frame!==lastFrame){draw(ctx,sheet,meta,frame);lastFrame=frame;canvas.dataset.frame=String(frame);}if(!media?.matches)raf=requestAnimationFrame(paint);}
+  function visibility(){cancelAnimationFrame(raf);if(!document.hidden)paint();}
+  function stop(){if(disposed)return;disposed=true;cancelAnimationFrame(raf);document.removeEventListener('visibilitychange',visibility);media?.removeEventListener?.('change',visibility);canvas?.remove();delete node.dataset.atlas;if(still)still.style.visibility='';}
+  document.addEventListener('visibilitychange',visibility);media?.addEventListener?.('change',visibility);
+  manifest().then(raw=>{if(disposed||!node.isConnected)return;meta=metadata(raw,id);return meta?loadImage(meta.src):null;}).then(image=>{if(!image||disposed||!node.isConnected)return;sheet=image;canvas=document.createElement('canvas');canvas.width=512;canvas.height=512;canvas.className='sr-monster-atlas';canvas.setAttribute('aria-hidden','true');ctx=canvas.getContext('2d');if(!ctx)return;node.append(canvas);node.dataset.atlas='ready';if(still)still.style.visibility='hidden';paint();}).catch(()=>{});
+  return stop;
+ }
+ globalThis.RpgStarRingMonsters={mount,metadata,beatSequence,frameAt,draw};
+})();

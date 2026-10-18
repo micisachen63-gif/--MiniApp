@@ -370,6 +370,7 @@
   const myHeroKey = () => { const c = S.me ? S.me.character : {}; return heroKey(c.baseClass, c.gender, c.classPath); };
   const SINGLE_ELF4 = /^adv4_archer_(A11[12]|A12[12]|A21[12])_[fm]$/;
   function artFile(kind, key) {
+    if(kind==='item'&&key==='star_ring_token')return '/art/star-ring-20261018/star_ring_token.webp';
     if(kind==='item'&&key==='fate_cycle_gift')return '/art/ui/command-collect-20261012.webp';
     if(kind==='item'&&/^guaranteed_scroll_[wa]$/.test(key))return `/art/items-scrolls-pink-20261018/${key}.webp`;
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
@@ -584,7 +585,7 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
     try {
@@ -1787,6 +1788,7 @@
   // 技能書：查看/學習(遠征頁)、分享到群組(expedition/share)、交易(expedition/trade)；可交易道具：到交易視窗放入；首領資源：兌換。
   // 一般道具沒有「分享到群組」、「販售給商店」的伺服器功能（商店只收裝備、羽毛），所以不顯示。
   function invItemMenu(k) {
+    if(k==='star_ring_token'){window.RpgExpeditionOpen?.('star-ring');return;}
     if(k==='fate_cycle_gift'){import('/fate/fate-gift-ui.js?v=20261018-pinkscroll2').then(m=>m.openFateGift(window.RpgFateHost)).catch(()=>toast('星輝匣暫未連上，請稍後重試',true));return;}
     const have = S.me.inventory[k] || 0, isBook = k.startsWith('book_'), skillId = isBook ? k.slice(5) : null;
     const tradeable = (S.meta.trade?.tradeableItems || []).includes(k), bossRes = k === 'boss_essence' || k === 'relic_fragment';
@@ -2035,7 +2037,8 @@
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
     const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
-    const want = tradeId || reqId || pkId ? 'trade' : { gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    const ringLink=/^ring_([0-9a-f]{32})$/.exec(spx);
+    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
     if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
@@ -2050,7 +2053,7 @@
     } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : esc(e.message)); }
   }
   window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,request:(action,body)=>api(action,body),refresh:()=>refreshMe()};
-  window.RpgExpeditionHost={characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await loadTrade(id);render();}};
+  window.RpgExpeditionHost={invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await loadTrade(id);render();}};
   boot();
 })();
 

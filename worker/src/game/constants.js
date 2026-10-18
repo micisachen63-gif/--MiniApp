@@ -153,6 +153,7 @@ export const POTIONS = Object.freeze({
   blue_4: { kind: 'blue', tier: 4, name: '賢者藥水', heal: 400, price: 42 },
 });
 export const ITEMS = Object.freeze({
+  star_ring_token:{kind:'bound',tradeable:false,name:'星征徽記',emoji:'✦',desc:'五人星環遠征通關獎勵，在神戰 → 組隊 → 星環遠征兌換成長補給與裝備。綁定角色，不可交易或販售。'},
   guardian_summon_stone:{kind:'bound',name:'天使召喚石',emoji:'✦',desc:'在掛機輔助選擇已有天使參戰；一顆支援24小時有效掛機戰鬥，不可交易。'},
   guardian_voucher:{kind:'boss_resource',name:'守護天使招喚憑證',emoji:'🪶',desc:'每帳號每日前四次有效首領參戰可得；每張精選召喚五次，不可交易。'},
   guardian_free_normal:{kind:'bound',name:'初見免費召喚次數',emoji:'✧',desc:'15級首次進入守護神系統贈送200次普通召喚，優先使用，不可交易。'},

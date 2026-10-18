@@ -4,18 +4,18 @@ import {playCombat,combatView,combatCursor} from './combat-playback.js?v=2026101
 import {heroArt} from './hero-art.js?v=20261014-art-6125dca91d72';
 import {dungeonTheme} from './dungeon-art.js?v=20261012-tower-roster1';
 import {catalogue as data} from './catalogue.js';
-import '../request-client.js?v=20261012-client-audit1';
+import '../request-client.js?v=20261018-star-ring1';
 let skills=data.skills;
 const $=s=>document.querySelector(s),esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const byId=id=>state?.skills?.find(s=>s.id===id)||skills.find(s=>s.id===id),icon=s=>`assets/skills-painted-20261011/${s.id}.webp`,base=s=>s.eligibleBase||({技術書:'sword',精靈水晶:'archer',魔法書:'mage'})[s.bookType];
 const hero=heroArt;
 let guardianPartyCleanup=null;let state=null,party=null,groupActive=null,drops=[],listing=[],dungeons=[],history=[],tab='skills',busy=false,filter='all',scope='own',search='',pinned=null,clockSkew=0;
-const initial=location.hash.slice(1);if(['skills','dungeons','tower','bag','rewards'].includes(initial))tab=initial;
+const initial=location.hash.slice(1);if(['skills','dungeons','tower','bag','rewards','star-ring'].includes(initial))tab=initial;
 if(initial==='trials')tab='dungeons';
 let reviewingParty=false;
 let partyId=initial.startsWith('party_')?initial.slice(6):null;
 let partyLinkPending=!!partyId;
-let init='';try{init=parent.Telegram?.WebApp?.initData||window.Telegram?.WebApp?.initData||'';}catch{}
+let init='',parentHost=null;try{init=parent.Telegram?.WebApp?.initData||window.Telegram?.WebApp?.initData||'';if(parent!==window&&parent.location.origin===location.origin)parentHost=parent.RpgExpeditionHost||null;}catch{}
 const now=()=>Date.now()+clockSkew;
 function toast(text){$('#toast').textContent=text;$('#toast').hidden=false;setTimeout(()=>$('#toast').hidden=true,3500);}
 function close(){$('#detail').close();}
@@ -42,7 +42,8 @@ async function api(action,b={}){
  const epoch=stateEpoch,controller=read?new AbortController():null;
  if(controller)readControllers.add(controller);
  try{
-  const {res,j}=await window.RpgRequest.request(action,{...b,selectedCharacterId:pinned,...(!read?{requestId:b.requestId||requestId(key)}:{})},{'Content-Type':'application/json','X-Telegram-Init-Data':init,'X-Monster-Art-Revision':artRevision()},{signal:controller?.signal});
+  const body={...b,selectedCharacterId:pinned,...(!read?{requestId:b.requestId||requestId(key)}:{})};
+  const {res,j}=parentHost?.request?{res:{status:200},j:await parentHost.request(action,body)}:await window.RpgRequest.request(action,body,{'Content-Type':'application/json','X-Telegram-Init-Data':init,'X-Monster-Art-Revision':artRevision()},{signal:controller?.signal});
   if(read&&(!pageActive||epoch!==stateEpoch)){const e=Error('資料已由較新的操作更新。');e.code='stale_response';throw e;}
   if(!j?.ok){const e=Error(j?.message||'操作失敗');e.code=j?.error;e.status=res.status;throw e;}
   if(!read){stateEpoch++;clearRequest(key);}if(j.now)clockSkew=j.now-Date.now();return j;
@@ -88,7 +89,8 @@ function towerView(){return `${header('每一層，都有你的夥伴。','三�
 function recent(kind){return `<div class="section-head"><h2>最近隊伍與待領戰利品</h2></div>${history.filter(p=>p.kind===kind).map(p=>`<div class="tower-banner"><div><b>${esc(p.name)}</b><p>${p.status==='won'?'已通關':p.status==='lost'?'挑戰失敗':'已結束'}${p.me?.rewarded?' · 已領寶':''}</p></div><button class="secondary" data-view-party="${p.id}">查看紀錄</button></div>`).join('')||'<p class="muted">完成一次冒險後會留下紀錄。</p>'}`;}
 function rewardView(){return `${header('討伐，累積英雄的底蘊。','每個 Telegram 帳號每日前四次有效討伐取得首領精華；只有實際造成傷害才計入。')}<div class="notice"><img class="resource-icon" src="/art/ui/item-boss_essence-20261012.webp" alt=""> 首領精華 ${state.inventory.boss_essence||0} · 🏺 遺物碎片 ${state.inventory.relic_fragment||0}<br>低階首領仍掉落一、二轉材料；三、四轉改從三人試煉取得證明。</div><div class="skill-grid">${Object.entries(state.bossExchanges||{}).map(([id,x])=>`<article class="skill-card"><span class="rarity">裝備養成</span><h3>${esc(x.name)}</h3><p class="skill-effect">${id==='relic'?'隨機部位、符合目前職業。裝備階數依角色等級；未穿戴可交易。':id==='fragment'?'累積 30 個，兌換一件本職業遺物。':'兌換後存入英雄道具庫。'}</p><div class="skill-card-bottom"><span>${x.cost} ${x.currency?'遺物碎片':'首領精華'}</span><button class="primary" data-exchange="${id}" ${(state.inventory[x.currency||'boss_essence']||0)<x.cost?'disabled':''}>兌換</button></div></article>`).join('')}</div>${(state.inventory.mat_3||0)+(state.inventory.mat_4||0)>0?'<section class="notice">舊材料回收：巨像之核 ×1 → 12 精華；女皇之鱗 ×1 → 16 精華。<button class="secondary" data-exchange="legacy">回收舊材料</button></section>':''}`;}
 function bagView(){const owned=skills.filter(s=>book(s));return `${header('寶物，將成為你的力量。','未使用的技術書、精靈水晶與魔法書都能交易；學習後永久綁定使用角色。',8)}<div class="notice">技能研究碎片：${state.inventory.research_fragment||0} · 在技能圖鑑兌換指定寶物。</div>${owned.map(s=>`<article class="bag-row"><img class="book-art" src="assets/items/${{技術書:'technical',精靈水晶:'crystal',魔法書:'magic'}[s.bookType]}.svg" alt="${s.bookType}"><div class="bag-info"><h3>${s.bookType} · ${s.name}</h3><p>${s.eligibleJob} · Lv.${s.level} · 數量 ${book(s)}</p></div><div class="buttons"><button class="primary" data-detail="${s.id}">查看／學習</button><button class="secondary" data-share="${s.id}">分享到群組</button><button class="secondary" data-trade="${s.id}">交易</button></div></article>`).join('')||'<div class="empty-state">背包還沒有技能寶物。與伙伴從 30 級職業秘藏開始探索。</div>'}`;}
-function render(){if(!state)return;if(combatFlight){renderQueued=true;return;}if(groupActive&&party?.id===groupActive.id&&!['lobby','combat'].includes(party.status))groupActive=null;$('#profile-button').innerHTML=`${esc(state.character.name)}<small>Lv.${state.character.level} · ${esc(state.character.className)}</small>`;$('#profile-button').disabled=true;guardianPartyCleanup?.();guardianPartyCleanup=null;$('#main').innerHTML=({skills:skillView,dungeons:dungeonView,tower:towerView,bag:bagView,rewards:rewardView}[tab])();document.querySelectorAll('#navigation [data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(party){const scene=document.querySelector('.battle-scene');if(scene){guardianPartyCleanup=mountPartyGuardians(scene,party);combatFlight=Promise.resolve(playCombat(scene,party)).catch(()=>{}).finally(()=>{combatFlight=null;if(renderQueued){renderQueued=false;render();}});}}}
+let ringCleanup=null,ringCharacter=null;
+function render(){if(!state)return;if(tab==='star-ring'){document.querySelectorAll('#navigation [data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));$('#profile-button').textContent=state.character.name+' · Lv.'+state.character.level;if(ringCleanup&&ringCharacter===state.character.tgId&&document.querySelector('[data-star-ring-root]'))return;ringCleanup?.();guardianPartyCleanup?.();guardianPartyCleanup=null;$('#main').innerHTML='<section data-star-ring-root></section>';ringCharacter=state.character.tgId;ringCleanup=window.RpgStarRingUI.mount($('#main').firstElementChild,{api,me:()=>parentHost?.me?parentHost.me():({character:state.character}),now,toast,initialPartyId:new URLSearchParams(location.search).get('ringParty'),expectedCharacterId:new URLSearchParams(location.search).get('ringChar'),refresh:()=>{try{return parent.RpgExpeditionHost?.refresh();}catch{return Promise.resolve();}},actorArt:hero,invite:p=>parentHost?.invite?.(p)});return;}ringCleanup?.();ringCleanup=null;ringCharacter=null;if(combatFlight){renderQueued=true;return;}if(groupActive&&party?.id===groupActive.id&&!['lobby','combat'].includes(party.status))groupActive=null;$('#profile-button').innerHTML=`${esc(state.character.name)}<small>Lv.${state.character.level} · ${esc(state.character.className)}</small>`;$('#profile-button').disabled=true;guardianPartyCleanup?.();guardianPartyCleanup=null;$('#main').innerHTML=({skills:skillView,dungeons:dungeonView,tower:towerView,bag:bagView,rewards:rewardView}[tab])();document.querySelectorAll('#navigation [data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));if(party){const scene=document.querySelector('.battle-scene');if(scene){guardianPartyCleanup=mountPartyGuardians(scene,party);combatFlight=Promise.resolve(playCombat(scene,party)).catch(()=>{}).finally(()=>{combatFlight=null;if(renderQueued){renderQueued=false;render();}});}}}
 function actionSheet(){const a=party?.me?.actor;if(!a||a.hp<=0)return toast('你已倒地，等待隊友復活');show(`<div class="kicker">第 ${party.round} 回合 · MP ${a.mp}／${a.maxMp}</div><h2>選擇我的戰術</h2><p class="muted">全員自動施放已裝備且魔力／冷卻允許的技能；治療與復活依隊友狀態施放，無合適技能時普攻。選擇技能或防禦可覆蓋本回合，下一回合恢復自動施放。</p><label>隊友目標<select id="target">${party.members.map(m=>`<option value="${m.id}">${esc(m.name)}${m.hp===0?'（倒地）':''}</option>`).join('')}</select></label><div class="buttons"><button class="primary" data-submit="attack">職業攻擊</button><button class="secondary" data-submit="defend">防禦 · 不耗魔</button></div>${roleActions(party)}${a.special.loadout.map(id=>{const s=byId(id),cd=Math.max(0,Math.ceil(((a.special.cooldowns[id]||0)-now())/1000));return `<div class="bag-row"><img class="skill-art" src="${icon(s)}" alt=""><div class="bag-info"><h3>${s.name}</h3><p>MP ${s.mp} · ${esc(s.effect)}</p></div><button class="primary" data-submit="${id}" ${a.mp<s.mp||cd?'disabled':''}>${cd?`冷卻 ${cd}s`:'選擇施放'}</button></div>`}).join('')}`);$('#target').value=state.character.tgId;}
 async function skillAction(b){const r=await api('expedition/action',b);state=r;render();return r;}
 document.addEventListener('click',async e=>{const b=e.target.closest('button');if(!b)return;if(b.hasAttribute('data-close'))return close();if(b.dataset.tab){partyLinkPending=false;tab=b.dataset.tab;render();window.scrollTo(0,0);return;}if(b.dataset.detail)return detail(b.dataset.detail);if(b.dataset.filter){filter=b.dataset.filter;render();return;}if(b.hasAttribute('data-learned')){filter='learned';render();return;}if(b.hasAttribute('data-actions'))return actionSheet();if(b.hasAttribute('data-advance')){show('<h2>選擇英雄傳承</h2><p class="detail-description">消耗一份綁定試煉證明，完成下一階轉職。</p><div class="buttons"><button class="primary" data-advance-branch="1">第一傳承路線</button><button class="secondary" data-advance-branch="2">第二傳承路線</button></div>');return;}
@@ -127,7 +129,7 @@ document.addEventListener('input',e=>{if(e.target.id==='skill-search'){search=e.
 $('#detail').addEventListener('click',e=>{if(e.target===$('#detail'))close();});
 setInterval(()=>document.querySelectorAll('[data-deadline]').forEach(e=>e.textContent=Math.max(0,Math.ceil((Number(e.dataset.deadline)-now())/1000))),1000);
 function poll(){
- if(!pageActive||document.hidden||busy||!state||$('#detail').open||refreshFlight)return Promise.resolve(null);
+ if(tab==='star-ring'||!pageActive||document.hidden||busy||!state||$('#detail').open||refreshFlight)return Promise.resolve(null);
  if(pollFlight)return pollFlight;
  if(party&&['won','lost','ended'].includes(party.status))return Promise.resolve(null);
  const epoch=stateEpoch,id=partyId||party?.id;
@@ -138,13 +140,13 @@ function poll(){
  }catch(e){if(!cancelled(e))toast(e.message);}finally{pollFlight=null;}})();return pollFlight;
 }
 let partyTimer,stateTimer;
-function startTimers(){partyTimer=setInterval(poll,5000);stateTimer=setInterval(()=>{if(pageActive&&!document.hidden&&!busy&&state&&!$('#detail').open&&!pollFlight)refresh(false).catch(e=>{if(!cancelled(e))toast(e.message);});},30000);}
+function startTimers(){partyTimer=setInterval(poll,5000);stateTimer=setInterval(()=>{if(tab!=='star-ring'&&pageActive&&!document.hidden&&!busy&&state&&!$('#detail').open&&!pollFlight)refresh(false).catch(e=>{if(!cancelled(e))toast(e.message);});},30000);}
 startTimers();
 function pauseReads(){stateEpoch++;for(const controller of readControllers)controller.abort();}
 document.addEventListener('visibilitychange',()=>{if(document.hidden)pauseReads();else if(pageActive&&state)refresh(true).catch(e=>{if(!cancelled(e))toast(e.message);});});
-window.addEventListener('pagehide',()=>{pageActive=false;pauseReads();clearInterval(partyTimer);clearInterval(stateTimer);});
+window.addEventListener('pagehide',()=>{ringCleanup?.();ringCleanup=null;pageActive=false;pauseReads();clearInterval(partyTimer);clearInterval(stateTimer);});
 window.addEventListener('pageshow',()=>{if(pageActive)return;pageActive=true;startTimers();if(state)refresh(true).catch(e=>{if(!cancelled(e))toast(e.message);});});
-async function boot(){const tag=document.querySelector('.preview-tag');tag.textContent='正式角色 · 即時連線';if(!init){$('#main').innerHTML='<div class="empty-state"><h1>請從 Telegram 星穹旅誌開啟</h1><p>在星穹旅誌的正式冒險頁，按「特殊技能」、「組隊副本」或「星穹爬塔」。此頁需要驗證 Telegram 身分。</p></div>';tag.textContent='尚未登入';return;}try{await refresh(true);}catch(e){$('#main').innerHTML=`<div class="empty-state"><h2>暫時無法載入</h2><p>${esc(e.message)}</p><button class="primary" onclick="location.reload()">重新載入</button></div>`;}}
+async function boot(){const tag=document.querySelector('.preview-tag');tag.textContent='正式角色 · 即時連線';if(!init&&!parentHost?.request){$('#main').innerHTML='<div class="empty-state"><h1>請從 Telegram 星穹旅誌開啟</h1><p>在星穹旅誌的正式冒險頁，按「特殊技能」、「組隊副本」或「星穹爬塔」。此頁需要驗證 Telegram 身分。</p></div>';tag.textContent='尚未登入';return;}try{await refresh(true);}catch(e){$('#main').innerHTML=`<div class="empty-state"><h2>暫時無法載入</h2><p>${esc(e.message)}</p><button class="primary" onclick="location.reload()">重新載入</button></div>`;}}
 boot();
 
 

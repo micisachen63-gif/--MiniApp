@@ -36,7 +36,7 @@ export async function selectAccountCharacter(env, accountTgId, charId, now) {
   const previous = await activeCharacterId(db, account);
   if (previous !== selected) {
     const party=await db.prepare('SELECT party_id FROM rpg_characters WHERE tg_id=?').bind(previous).first();
-    if(party?.party_id)throw new GameError('party','請先結束組隊戰鬥，再切換角色');
+    if(party?.party_id&&!String(party.party_id).startsWith('ring:'))throw new GameError('party','請先結束組隊戰鬥，再切換角色');
     // Settle the previously selected character through the exact switch time.
     if (await db.prepare('SELECT 1 FROM rpg_characters WHERE tg_id = ? AND account_tg_id = ?').bind(previous, account).first())
       await P.withPlayer(env, previous, now, null, { source: 'character-switch' });
@@ -45,16 +45,18 @@ export async function selectAccountCharacter(env, accountTgId, charId, now) {
   if (previous !== selected) {
     // The party check and active-character change must commit together. Bumping the old character's
     // revision also invalidates a party start that read it before this switch.
-    stmts.push(db.prepare('UPDATE rpg_characters SET rev=rev+1,updated_at=? WHERE tg_id=? AND account_tg_id=? AND party_id IS NULL').bind(now,previous,account),guardStmt(db));
+    // A long expedition uses an immutable departure snapshot and keeps running
+    // while its owner plays another character. Short live parties still lock switching.
+    stmts.push(db.prepare("UPDATE rpg_characters SET rev=rev+1,updated_at=? WHERE tg_id=? AND account_tg_id=? AND (party_id IS NULL OR party_id LIKE 'ring:%')").bind(now,previous,account),guardStmt(db));
     // Inactive time is never credited when the selected character is activated.
-    stmts.push(db.prepare('UPDATE rpg_characters SET last_settle_at=?,rev=rev+1,updated_at=? WHERE tg_id=? AND account_tg_id=? AND party_id IS NULL').bind(now,now,selected,account),guardStmt(db));
+    stmts.push(db.prepare("UPDATE rpg_characters SET last_settle_at=?,rev=rev+1,updated_at=? WHERE tg_id=? AND account_tg_id=? AND (party_id IS NULL OR party_id LIKE 'ring:%')").bind(now,now,selected,account),guardStmt(db));
   }
   stmts.push(db.prepare('UPDATE rpg_accounts SET active_char_id=?,updated_at=? WHERE account_tg_id=? AND active_char_id=?').bind(selected,now,account,previous),guardStmt(db));
   try { await db.batch(stmts); }
   catch (e) {
     const error=classifyDbError(e);
     if(error?.code==='conflict') {
-      const busy=await db.prepare('SELECT 1 FROM rpg_characters WHERE tg_id IN (?,?) AND party_id IS NOT NULL').bind(previous,selected).first();
+      const busy=await db.prepare("SELECT 1 FROM rpg_characters WHERE tg_id IN (?,?) AND party_id IS NOT NULL AND party_id NOT LIKE 'ring:%'").bind(previous,selected).first();
       if(busy)throw new GameError('party','隊伍已出發，請先結束組隊戰鬥，再切換角色',409);
       throw new GameError('character_changed','角色已在另一個視窗切換，請重新選角',409);
     }

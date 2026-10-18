@@ -575,6 +575,33 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
+    if(item.kind==='star_ring_complete'){
+      // Outbox persistence resolves the account owner; never fall back to the group.
+      if(item.target!=='dm'||!/^[1-9]\d{0,19}$/.test(String(item.tgId||'')))return;
+      const key=String(p.partyId||'')+':'+String(p.recipientCharId||item.tgId),cards=st().starRingCards??={};
+      if(cards[key]?.messageId)return;
+      if(cards[key])throw Error('星環遠征通知送達待核對：'+key);
+      const rewards=p.rewards||{},names={star_ring_token:'星征徽記',scroll_w:'武器強化卷',scroll_a:'防具強化卷',scroll_r:'洗屬性卷',blessed_scroll_w:'祝福武器卷',blessed_scroll_a:'祝福防具卷'};
+      const items=Object.entries(rewards.items||{}).filter(([,n])=>Number(n)>0).map(([id,n])=>(names[id]||'遠征素材')+' ×'+fmt(n));
+      const gear=Array.isArray(rewards.equipment)?rewards.equipment.length:Number(rewards.equipment)||0;
+      const caption=['✦ 星環遠征 · '+(p.ended?'返回營地':'凱旋戰報'),'',String(p.characterName||p.name||'冒險者')+'，你的隊伍已完成 '+Math.max(0,Math.min(6,Number(p.completedStages)||6))+'／6 階段。',
+        '經驗 +'+fmt(rewards.exp||0),...items,...(gear?['裝備 ×'+gear]:[]),'','戰利品已存入角色行囊，點下方查看本次遠征。'].join('\n').slice(0,1000);
+      const button=appBtn('查看遠征戰報','star-ring');
+      if(button?.web_app&&p.partyId){const url=new URL(button.web_app.url);url.searchParams.set('ringParty',String(p.partyId));url.searchParams.set('ringChar',String(p.recipientCharId||p.charId||''));button.web_app.url=url.href;}
+      const options={reply_markup:{inline_keyboard:button?[[button]]:[]}};
+      cards[key]={at:now(),pending:true};save();
+      try{
+        let m;
+        if(app.url){
+          try{m=await api.call('sendPhoto',{chat_id:String(item.tgId),photo:new URL('/art/star-ring-20261018/background.jpg',app.url).href,caption,...options},{retries429:0,timeoutMs:15000});}
+          catch(error){if(!rejectedImage(error))throw error;}
+        }
+        if(!m)m=await send(caption,options,String(item.tgId));
+        const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認星環遠征通知');
+        cards[key]={at:now(),messageId};for(const old of Object.keys(cards).sort((a,b)=>cards[a].at-cards[b].at).slice(0,Math.max(0,Object.keys(cards).length-128)))if(!cards[old].pending)delete cards[old];save();
+      }catch(error){if(error?.definite===true){delete cards[key];save();}throw error;}
+      return;
+    }
     // Personal events always go private, including rows queued before the DM migration.
     const fateDm=item.kind==='fate_event'&&['dm','group'].includes(item.target);
     if(item.kind==='fate_cast'&&item.target==='group'){

@@ -43,6 +43,8 @@ export const APP_ACTIONS = Object.freeze({
   'auto-enhance/start':'/rpg/auto-enhance/start','auto-enhance/stop':'/rpg/auto-enhance/stop','auto-enhance/status':'/rpg/auto-enhance/status',
   'expedition/me':'/rpg/expedition/me','expedition/action':'/rpg/expedition/action','expedition/share':'/rpg/expedition/share','expedition/trade':'/rpg/expedition/trade',
   'party/list':'/rpg/party/list','party/create':'/rpg/party/create','party/action':'/rpg/party/action','party/reward':'/rpg/party/reward','party/get':'/rpg/party/get',
+  'star-ring/list':'/rpg/star-ring/list','star-ring/me':'/rpg/star-ring/me','star-ring/get':'/rpg/star-ring/get',
+  'star-ring/create':'/rpg/star-ring/create','star-ring/action':'/rpg/star-ring/action','star-ring/shop':'/rpg/star-ring/shop',
 
   'monster-exchange':'/rpg/monster-exchange',
   'collection/activate':'/rpg/collection/activate',

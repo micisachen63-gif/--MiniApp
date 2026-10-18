@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const safeReads=new Set(['guardian/config','guardian/inventory','guardian/shop/list','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/get','trade/requests','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const safeReads=new Set(['guardian/config','guardian/inventory','guardian/shop/list','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/get','trade/requests','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function request(action,body,headers,{signal,timeoutMs=20000}={}){
     const safe=safeReads.has(action),attempts=safe?2:1;
     for(let attempt=0;attempt<attempts;attempt++){

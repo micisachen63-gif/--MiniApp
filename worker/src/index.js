@@ -9,6 +9,7 @@ import * as HALL from './services/hero-hall.js';
 import {bossExchange} from './services/boss-exchange.js';
 import * as SP from './services/special.js';
 import * as PARTY from './services/party.js';
+import * as STAR_RING from './services/star-ring.js';
 import * as JOURNAL from './services/journal.js';
 import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
@@ -134,6 +135,22 @@ const routes = {
   'POST /rpg/expedition/share': (env,b,now)=>SP.share(env,tgOf(b),b,now),
   'POST /rpg/expedition/trade': (env,b,now)=>SP.tradeBook(env,tgOf(b),b,now),
   'POST /rpg/party/list': (env,b,now)=>PARTY.list(env,tgOf(b),now),
+  'POST /rpg/star-ring/list': (env,b,now)=>STAR_RING.list(env,tgOf(b),now),
+  'POST /rpg/star-ring/me': (env,b,now)=>STAR_RING.me(env,tgOf(b),now),
+  'POST /rpg/star-ring/create': (env,b,now)=>STAR_RING.create(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/action': (env,b,now)=>STAR_RING.action(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/get': async(env,b,now)=>{
+    const active=tgOf(b),recipient=b.recipientCharId?String(b.recipientCharId):active;
+    if(recipient!==active){
+      const owned=await env.DB.prepare('SELECT tg_id FROM rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=(SELECT COALESCE(account_tg_id,tg_id) FROM rpg_characters WHERE tg_id=?)').bind(recipient,active).first();
+      if(!owned)throw new GameError('character_not_owned','找不到這個角色的遠征戰報',403);
+    }
+    const party=await STAR_RING.view(env,String(b.partyId),recipient,now);
+    if(b.recipientCharId&&!party.me)throw new GameError('member','這個角色沒有參加這趟遠征',403);
+    return {ok:true,party:{...party,readonly:recipient!==active},now};
+  },
+  'POST /rpg/star-ring/shop': (env,b,now)=>STAR_RING.shop(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/tick': async(env,b,now)=>({ok:true,advanced:await STAR_RING.sweep(env,now)}),
   'POST /rpg/party/create': (env,b,now)=>PARTY.create(env,tgOf(b),b,now),
   'POST /rpg/party/action': (env,b,now)=>PARTY.action(env,tgOf(b),b,now),
   'POST /rpg/party/reward': (env,b,now)=>PARTY.reward(env,tgOf(b),b,now),
@@ -233,7 +250,7 @@ async function claimOutbox(env, now, limit) {
     }
     if (payload.tradeId) payload.trade = await T.tradeView(env, String(payload.tradeId), null, now);
     if (payload.shareId) payload.share = await SH.shareView(env, String(payload.shareId));
-    if (payload.partyId) payload.party=await PARTY.view(env,String(payload.partyId),null,now);
+    if (payload.partyId) payload.party=String(payload.partyId).startsWith('ring:')?await STAR_RING.view(env,String(payload.partyId),null,now):await PARTY.view(env,String(payload.partyId),null,now);
     if (payload.pkId) payload.pk = await PK.pkView(env, String(payload.pkId), null, now);
     if(r.target==='dm'&&!payload.recipientCharId&&(payload.trade||payload.pk)){
       const sides=payload.trade||payload.pk;
@@ -368,6 +385,6 @@ function errorResponse(e, url) {
 
 export default {
   fetch: (request, env, ctx) => handle(request, {...env,autoRerollWake:id=>ctx?.waitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),guardianAutoWake:id=>ctx?.waitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),autoEnhanceWake:id=>ctx?.waitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message)))}),
-  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
+  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),STAR_RING.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
 };
 void equipmentView;
