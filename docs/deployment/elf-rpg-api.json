@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "9543410f9758efbf0794ea70cfdc57ca2f64194b",
+  "sourceCommit": "67c3d2602e657919711f4b8e2eee9c78c6ffc6e7",
   "service": "elf-rpg-api",
-  "productionVersion": "2b17912e-61ed-4b1b-a02c-a0a5b1767b1f",
+  "productionVersion": "736b676c-bb88-48ea-8a1b-82be0d8c7a33",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-18T01:14:39.569Z",
+  "verifiedAt": "2026-10-18T01:31:54.787Z",
   "runtimeSHA256": {
-    "index.js": "407be6f17dd0d47ff4e6d2d08ab4604a3e98b30a7992db572c3db586b4e07410"
+    "index.js": "4df73c1f8b06bbbfe4dfe99d6daa5d8afd6149fa649607ab57592d71fc48fe15"
   },
   "source": {
-    "fileCount": 8954,
-    "sha256": "1e45dd330ad923ba93d5b9814d83702d33749189bb0880659f1f40014c622297",
+    "fileCount": 8957,
+    "sha256": "f297472e766bd8a0efeb1a65edc973cd774924493eb31ac25e0aa940ec5d3d68",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -34179,7 +34179,7 @@
       },
       {
         "file": "worker/public/fate/app.js",
-        "sha256": "bdeebae37bebac46680fa855f820486b77486c4147290505ff1c7d6181ffa675"
+        "sha256": "30136cc08458b18736155afcae6d9971242e8f3027e865ce2fa4438062e2b385"
       },
       {
         "file": "worker/public/fate/bridge-protocol.js",
@@ -34587,7 +34587,15 @@
       },
       {
         "file": "worker/public/fate/index.html",
-        "sha256": "1fa01aa5a699a0e69212cdbd11cfd8625265b432083ebd48687c20dbe20e98dc"
+        "sha256": "8697f09fc0879904e2f82fe965862afedb9aff72a653e4ba2b33ca798dca852d"
+      },
+      {
+        "file": "worker/public/fate/life-comparison.js",
+        "sha256": "7b825f007c2300918c91e1361c0b3dca2c34985d23f0b80f4ecce6e66ed6d0e9"
+      },
+      {
+        "file": "worker/public/fate/life-statistics-ui.js",
+        "sha256": "b1f08fd2b15aa8332a175e674381446a232165ee77fb78a574ae6276e65a35c5"
       },
       {
         "file": "worker/public/fate/life-ui.js",
@@ -34599,11 +34607,11 @@
       },
       {
         "file": "worker/public/fate/locality-ui.js",
-        "sha256": "a7e54e8d826f1f7ea7e1daa2079746ce6a956b5b97412395e4b3227d6571a237"
+        "sha256": "3386a9b1b850db72dc60b31d953cfb71dbefaed57dad4156c02d4e0122110191"
       },
       {
         "file": "worker/public/fate/model.js",
-        "sha256": "e96dc6bb67c0f2348463e7c6abd42bdf89b8573f3020772f6d7aa872f3298851"
+        "sha256": "966d038e02dc9ef4483ec3bcc2fef903b313e9fae61774312e3ecb5981b36c3e"
       },
       {
         "file": "worker/public/fate/narrative-v7.js",
@@ -34627,15 +34635,15 @@
       },
       {
         "file": "worker/public/fate/share-card-layout.js",
-        "sha256": "b8b94a6968acb3585e2a94033113a398bc0e4059037f90846bbc7749cfd62f82"
+        "sha256": "c65697b5d3d3bd528b1b5944d77723fe7b2ea0a0bdd24d485fa4ca62d02ee2f2"
       },
       {
         "file": "worker/public/fate/share-model.js",
-        "sha256": "704a2f605141467e197be30a1a8825c35eed912ad3a245fa011f21846c64cf4f"
+        "sha256": "23a91a88709802ba621950a853ec83eb9222811e5aa5d1886c6685695d62d876"
       },
       {
         "file": "worker/public/fate/share-ui.js",
-        "sha256": "78c47df62453b87793a4663b3f191ffd0234f75944666f0166b19c1d59cc4c80"
+        "sha256": "f199b845ff4606e876a2c279240b3b98b58884e2886d1e62cf82eb5218b237ea"
       },
       {
         "file": "worker/public/fate/shared-story.js",
@@ -34651,7 +34659,7 @@
       },
       {
         "file": "worker/public/fate/style.css",
-        "sha256": "2213a12cfb3f097377b56eb32caa809a460954ae359da940babe8d07bedb746d"
+        "sha256": "e36c3a9bb2a175070d1af845fd8f2beeadf961a5e95ed9c86bef862ade84013b"
       },
       {
         "file": "worker/public/fate/taiwan-choices-v8.js",
@@ -34680,6 +34688,10 @@
       {
         "file": "worker/public/fate/v7-memory-reserve.js",
         "sha256": "befe24ae2a655dc4a6eedfa817c01225932c6d45b38f3bf4d25e1e39b92da19c"
+      },
+      {
+        "file": "worker/public/fate/world-comparison-data.js",
+        "sha256": "bbd2cba19cc224def726d5ec0ec62203087e2fc8e29fa6902cf9402eb29c0228"
       },
       {
         "file": "worker/public/fate/world.js",
@@ -35491,7 +35503,7 @@
       },
       {
         "file": "worker/src/fate-public.js",
-        "sha256": "2555c9f882e926dea974eda7eb25537f43f0494a13e87128a0376b688ff3724b"
+        "sha256": "5453cce81fd25ca49a2d58d38ceeafb1524b1eaf64899f677df64be135dc88eb"
       },
       {
         "file": "worker/src/game/advanced-specializations.js",
@@ -35833,18 +35845,16 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 137,
+    "verifiedCount": 145,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_belt_laurel_relic.jpg",
-      "worker/public/art/cards/wpn_greatsword_relic.jpg",
-      "worker/public/art/items-scrolls-pink-20261018/guaranteed_scroll_a.webp",
-      "worker/public/art/items-scrolls-pink-20261018/guaranteed_scroll_w.webp",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_f_attack.png",
+      "worker/public/art/cards/equipment-20261011/gear_belt_laurel_supreme.jpg",
+      "worker/public/art/cards/wpn_grimoire_advanced.jpg",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -35866,7 +35876,17 @@
       "worker/public/expedition-entry.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
-      "worker/public/fate/fate-gift-ui.js",
+      "worker/public/fate/app.js",
+      "worker/public/fate/index.html",
+      "worker/public/fate/life-comparison.js",
+      "worker/public/fate/life-statistics-ui.js",
+      "worker/public/fate/locality-ui.js",
+      "worker/public/fate/model.js",
+      "worker/public/fate/share-card-layout.js",
+      "worker/public/fate/share-model.js",
+      "worker/public/fate/share-ui.js",
+      "worker/public/fate/style.css",
+      "worker/public/fate/world-comparison-data.js",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -35977,7 +35997,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "2b17912e-61ed-4b1b-a02c-a0a5b1767b1f",
+        "version_id": "736b676c-bb88-48ea-8a1b-82be0d8c7a33",
         "percentage": 100
       }
     ],
