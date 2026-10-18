@@ -1,6 +1,6 @@
 import {decodeResult,publicUrl,shareText} from './model.js';
 export const CARD_ORIGIN='https://star-journal-rpg-bot.micisachen.workers.dev';
-export const CARD_VERSION='20261016-countries9';
+export const CARD_VERSION='20261018-world1';
 export function shareDetails(code,format='post'){
  const result=decodeResult(code);if(!result||!['post','story'].includes(format))throw Error('這頁旅章無法分享，請重新開啟。');
  const url=publicUrl(result.code),text=shareText(result);

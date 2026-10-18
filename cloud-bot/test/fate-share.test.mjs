@@ -10,6 +10,7 @@ import {CARD_VERSION as BROWSER_CARD_VERSION} from '../../worker/public/fate/sha
 import {replayTaiwanLife} from '../../worker/public/fate/decision-engine-v8.js';
 import {COUNTRY_METADATA_V9,ensureCountryPack} from '../../worker/public/fate/country-runtime-v9.js';
 import {replayCountryLife} from '../../worker/public/fate/country-engine-v9.js';
+import {resultComparison} from '../../worker/public/fate/life-comparison.js';
 const code='f43010001x9c61a7d2',now=Date.UTC(2026,9,16,4),token='123456:offline-only-test-token';
 function init(user=123,at=now,secret=token){
  const params=new URLSearchParams({auth_date:String(Math.floor(at/1000)),user:JSON.stringify({id:user,first_name:'旅人'})});
@@ -18,6 +19,15 @@ function init(user=123,at=now,secret=token){
 }
 const request=(body={code,format:'post'},headers={})=>new Request(CARD_ORIGIN+'/fate/share/prepare',{method:'POST',headers:{Origin:GAME_ORIGIN,'content-type':'application/json','X-Telegram-Init-Data':init(),...headers},body:JSON.stringify(body)});
 function taiwanCode(){const life={version:8,country:'TW',seed:'deadbeef',orbit:3,answers:[],auto:[]},run=replayTaiwanLife(life,{activeMs:7200000,autoFill:true});return encodeResult({...life,answers:run.answers,auto:run.auto,zodiac:8});}
+
+test('localized JPEG contains the same three life-status lines and discussion question as browser sharing',async()=>{
+ const crest=await readFile(new URL('../../worker/public/fate/zodiac/wheel.svg',import.meta.url),'utf8');
+ for(const format of ['post','story']){
+  const card=cardDetails(taiwanCode(),format),comparison=resultComparison(card.result),svg=cardSvg(card,new Uint8Array([255,216,255,217]),crest);
+  for(const line of comparison.shareLines)assert.ok(svg.includes(line));assert.ok(svg.includes(comparison.question));
+  assert.doesNotMatch(svg,/41\.3%|WHO|UNESCO|birthDate|birthTime/);
+ }
+});
 
 for(const country of Object.keys(COUNTRY_METADATA_V9))test(country+' real illustrated JPEG and prepared Telegram share preserve country, sign and privacy',async()=>{
  await ensureCountryPack(country);const raw={version:9,country,seed:'deadbeef',orbit:3},run=replayCountryLife(raw),code=encodeResult({...raw,answers:run.answers,auto:run.auto,zodiac:8}),module=await WebAssembly.compile(await readFile(new URL('../src/renderer/deps/resvg.wasm',import.meta.url)));
@@ -85,7 +95,7 @@ test('TG card metadata retains each public zodiac and incarnation while hidden c
 test('Taiwan JPEG asset path is explicitly whitelisted and shares a cache revision with browser native downloads',()=>{
  assert.equal(illustrationPath('taiwan-river'),TAIWAN_CARD_JPEG);assert.equal(illustrationPath('harbor'),'/art/fate-ending-20261016/harbor.jpg');
  for(const bad of ['https://evil.invalid/river-memory.jpg','../river-memory','river-memory','taiwan-river?url=evil','../../fonts/NotoSansTC.ttf'])assert.throws(()=>illustrationPath(bad),/Invalid illustration/);
- assert.equal(CARD_VERSION,BROWSER_CARD_VERSION);assert.equal(CARD_VERSION,'20261016-countries9');
+ assert.equal(CARD_VERSION,BROWSER_CARD_VERSION);assert.equal(CARD_VERSION,'20261018-world1');
 });
 
 test('Taiwan JPEG SVG paints the same two fitted identity rows while legacy identities stay on one line',async()=>{

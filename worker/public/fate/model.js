@@ -6,6 +6,7 @@ import {replayDecisionLife} from './decision-engine-v7.js';
 import {replayTaiwanLife,taiwanProfile} from './decision-engine-v8.js';
 import {replayCountryLife} from './country-engine-v9.js';
 import {countryFromCode} from './country-runtime-v9.js';
+import {resultComparison} from './life-comparison.js';
 export const ART='/art/fate-chapter-20261016/';
 export const ZODIAC=['摩羯','水瓶','雙魚','牡羊','金牛','雙子','巨蟹','獅子','處女','天秤','天蠍','射手'];
 export const ORBITS=[
@@ -81,4 +82,4 @@ export function generatedZodiac(seed){return /^[a-f0-9]{8}$/.test(seed||'')?pars
 export function randomOrbit(zodiac=null){const b=new Uint32Array(2);crypto.getRandomValues(b);return zodiac!==null&&b[0]%2===0?zodiac:b[1]%12;}
 export function publicUrl(code,origin='https://elf-rpg-api.micisachen.workers.dev'){if(!decodeResult(code))throw Error('Invalid story');return `${origin}/fate/r/${code}`;}
 export function telegramUrl(code){if(!decodeResult(code))throw Error('Invalid story');return `https://t.me/StarJournalRpgBot?start=fate_${code}`;}
-export function shareText(result,includeZodiac=true){return `這一世，我是「${includeZodiac&&result.zodiac!==null?ZODIAC[result.zodiac]+'座 · ':''}${result.identity[0]}」。\n在星穹旅誌，留下了《${result.ending.title}》。\n「${result.ending.quote}」\n${result.ending.question}\n不用登入，讓人生隨時間展開，寫下你的命運旅章。`;}
+export function shareText(result,includeZodiac=true){const comparison=resultComparison(result);if(comparison)return `這一世，我是「${includeZodiac&&result.zodiac!==null?ZODIAC[result.zodiac]+'座 · ':''}${result.identity[0]}」。\n${comparison.shareLines.join('\n')}\n${comparison.question}\n在星穹旅誌，走一段不一樣的人生。`;return `這一世，我是「${includeZodiac&&result.zodiac!==null?ZODIAC[result.zodiac]+'座 · ':''}${result.identity[0]}」。\n在星穹旅誌，留下了《${result.ending.title}》。\n「${result.ending.quote}」\n${result.ending.question}\n不用登入，讓人生隨時間展開，寫下你的命運旅章。`;}

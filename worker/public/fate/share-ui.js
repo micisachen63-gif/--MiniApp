@@ -1,7 +1,7 @@
 import {ART,decodeResult,encodeResult} from './model.js';
 import {endingForLife} from './ending-story.js';
 import {shareDetails,telegramShareUrl,threadsShareUrl,createCardGuard} from './share-model.js';
-import {cardLayout,cardIdentity,cardIdentityLines,TAIWAN_CARD_WEBP} from './share-card-layout.js';
+import {cardLayout,cardIdentity,cardIdentityLines,cardConversation,TAIWAN_CARD_WEBP} from './share-card-layout.js';
 const el=(tag,cls,text)=>{const e=document.createElement(tag);if(cls)e.className=cls;if(text!==undefined)e.textContent=text;return e};
 const button=(text,fn,cls='fate-quiet')=>{const b=el('button',cls,text);b.type='button';b.onclick=fn;return b};
 function wrap(c,text,x,y,max,line){let row='';for(const char of text){if(c.measureText(row+char).width>max){c.fillText(row,x,y);row=char;y+=line}else row+=char;}if(row)c.fillText(row,x,y)}
@@ -19,8 +19,8 @@ export async function drawShareCard(r,format,{ImageType=Image,document:doc=docum
  const localized=r.version===9||r.version===8&&r.country==='TW',ornamentY=layout.identityY-(localized?67:22);c.strokeStyle='#b99a5e88';c.beginPath();c.moveTo(238,ornamentY);c.lineTo(335,ornamentY);c.moveTo(745,ornamentY);c.lineTo(842,ornamentY);c.stroke();
  c.fillStyle='#f5e5bd';for(const line of cardIdentityLines(r,layout)){let size=line.size;c.font=`${size}px Georgia,"Microsoft JhengHei",serif`;if(localized)while(size>12&&c.measureText(line.text).width>880){size--;c.font=`${size}px Georgia,"Microsoft JhengHei",serif`;}if(localized)c.fillText(line.text,540,line.y,880);else c.fillText(line.text,540,line.y);}
  c.fillStyle=r.ending.color;c.font='30px Georgia,"Microsoft JhengHei",serif';c.fillText(r.ending.title,540,layout.endingY);
- c.fillStyle='#d9dbdc';c.font='31px Georgia,"Microsoft JhengHei",serif';wrap(c,'「'+r.ending.quote+'」',540,layout.quoteY,850,layout.quoteLine);
- c.fillStyle='#edcf8d';c.font='27px "Microsoft JhengHei",serif';c.fillText('如果重啟一世，你會成為誰？',540,layout.invitationY);c.fillStyle='#8e9db3';c.font='15px "Microsoft JhengHei",sans-serif';c.fillText(shareDetails(r.code).url.replace('https://',''),540,layout.urlY,950);c.fillStyle='#b39d73';c.font='15px Georgia,serif';c.fillText('Game Producer · ミカサ',540,layout.creditY);
+ const conversation=cardConversation(r);c.fillStyle='#d9dbdc';if(conversation){for(const [n,text]of conversation.lines.entries()){c.font=`${n===0?31:26}px Georgia,"Microsoft JhengHei",serif`;c.fillText(text,540,layout.quoteY+n*36,880);}}else{c.font='31px Georgia,"Microsoft JhengHei",serif';wrap(c,'「'+r.ending.quote+'」',540,layout.quoteY,850,layout.quoteLine);}
+ c.fillStyle='#edcf8d';c.font='27px "Microsoft JhengHei",serif';c.fillText(conversation?.question||'如果重啟一世，你會成為誰？',540,layout.invitationY,880);c.fillStyle='#8e9db3';c.font='15px "Microsoft JhengHei",sans-serif';c.fillText(shareDetails(r.code).url.replace('https://',''),540,layout.urlY,950);c.fillStyle='#b39d73';c.font='15px Georgia,serif';c.fillText('Game Producer · ミカサ',540,layout.creditY);
  return new Promise((resolve,reject)=>canvas.toBlob(b=>b?resolve(b):reject(Error('輸出失敗')),'image/png'));
 }
 export function mountSharePanel(p,{result,initialShow=true,identityZodiac=null,onPrivacyChange=()=>{},client,draw=drawShareCard,host=window}){

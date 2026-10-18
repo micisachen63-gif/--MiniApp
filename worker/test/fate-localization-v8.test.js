@@ -61,7 +61,7 @@ test('completion memories and public replay preserve every actual localized deci
 
 test('localized public shell and game use the same entry tags and the Taiwan card renderer version',async()=>{
  const code=advanceLife(draft(),T+LIFE_MS).code,html=await fatePublic(new Request('https://test/fate/r/'+code)).text(),entry=readFileSync(new URL('../public/fate/index.html',import.meta.url),'utf8');
- assert.match(html,/20261016-countries9/);for(const file of ['app.js','style.css','daily.css']){const re=new RegExp('/fate/'+file.replace('.','\\.')+'\\?v=([^"<>]+)');assert.equal(html.match(re)?.[1],entry.match(re)?.[1]);}assert.match(readFileSync(new URL('../public/fate-entry.js',import.meta.url),'utf8'),/8tw/);
+ assert.match(html,/20261018-world1/);for(const file of ['app.js','style.css','daily.css']){const re=new RegExp('/fate/'+file.replace('.','\\.')+'\\?v=([^"<>]+)');assert.equal(html.match(re)?.[1],entry.match(re)?.[1]);}assert.match(readFileSync(new URL('../public/fate-entry.js',import.meta.url),'utf8'),/8tw/);
 });
 
 test('actual signed API starts Taiwan lives, rejects locked country without quota, and persists later choices through completion',async t=>{
