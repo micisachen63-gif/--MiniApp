@@ -10,6 +10,8 @@ import {settleIdle} from '../src/game/idle.js';
 import {taipeiDay} from '../src/game/time.js';
 import {selectAccountCharacter} from '../src/accounts.js';
 import * as ShortParty from '../src/services/party.js';
+import {makeEliteGear} from '../src/game/gear.js';
+import {rngFor} from '../src/game/rng.js';
 const T=Date.parse('2026-10-18T08:00:00Z');
 const specs=['sword:B2','mage:A1','thief:A1','archer:B1','sword:A1'];
 async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,at=T}={}){
@@ -257,4 +259,26 @@ test('late offline twelve-hour settlement replays all twelve areas with no extra
  assert.equal(p.stages.flatMap(s=>s.result.encounters).length,12);assert.equal(new Set(p.stages.flatMap(s=>s.result.encounters).map(e=>e.enemyId)).size,12);
  assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);assert.equal(db.prepare("SELECT count(*) n FROM rpg_outbox WHERE kind='star_ring_complete'").get().n,5);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,5);
  const before=JSON.stringify(p.me.rewards);await R.sweep(env,T+E.DURATION+60000);const replay=await R.view(env,id,ids[0],T+E.DURATION+60000);assert.equal(JSON.stringify(replay.me.rewards),before);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+});
+test('gear-shop lottery uses private server entropy instead of a player-selected request ID, then replays its receipt',async t=>{
+ const{env,db,ids}=await fixture(t);db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'star_ring_token',80)").run(ids[0]);
+ const serverValues=['10000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000002'],body={offerId:'gear',requestId:'player-picked-quality-seed'};let calls=0;
+ const random=t.mock.method(globalThis.crypto,'randomUUID',()=>serverValues[calls++]);
+ const expected=makeEliteGear({id:'ringshop:'+serverValues[0],tgId:ids[0],cls:'sword',classPath:'B2',tier:9,rng:rngFor(serverValues[1]),now:T});expected.source='star_ring';expected.name=expected.name.replace(/^菁英/,'星征');
+ const bought=await R.shop(env,ids[0],body,T);assert.deepEqual(bought.equipment[0],expected);assert.equal(calls,2);
+ const replay=await R.shop(env,ids[0],body,T);assert.deepEqual(replay,bought);assert.equal(calls,2);assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='star_ring_token'").get(ids[0]).quantity,40);
+ random.mock.restore();
+});
+test('withdrawn lobby member may rejoin with another owned character without holding two seats',async t=>{
+ const{env,db,id,ids}=await fixture(t,{start:false});await R.action(env,ids[4],{partyId:id,action:'leave'},T);
+ const alt=(await P.createCharacter(env,{tgId:ids[4],name:'換角再回隊伍',baseClass:'mage',gender:'f',charSlot:2},T)).char.tg_id;
+ db.prepare("UPDATE rpg_characters SET level=90,class_path='A1' WHERE tg_id=?").run(alt);await selectAccountCharacter(env,ids[4],alt,T);
+ const joined=await R.action(env,alt,{partyId:id,action:'join'},T);assert.equal(joined.party.members.filter(m=>!m.left).length,5);assert.equal(joined.party.members.filter(m=>m.id===ids[4]).length,0);assert.equal(joined.party.me.id,alt);
+ assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_members WHERE run_id=? AND account_id=?').get(id,ids[4]).n,1);
+ await R.action(env,alt,{partyId:id,action:'ready'},T);assert.equal((await R.action(env,ids[0],{partyId:id,action:'start'},T)).party.status,'running');
+});
+test('a fully withdrawn expedition freezes progress at retreat instead of drifting to completion later',async t=>{
+ const{env,id,ids}=await fixture(t);for(const tg of ids)await R.action(env,tg,{partyId:id,action:'leave'},T+E.HOUR_MS);
+ const ended=await R.view(env,id,ids[0],T+E.HOUR_MS);assert.equal(ended.status,'ended');assert.equal(ended.completedStages,0);assert.equal(ended.progress,1/12);
+ const later=await R.view(env,id,ids[0],T+E.DURATION*2);assert.equal(later.status,'ended');assert.equal(later.progress,ended.progress);assert.equal(later.me.rewards.exp,0);
 });
