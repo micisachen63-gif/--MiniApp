@@ -108,3 +108,8 @@
 3. **規範約束**：
    - 除非使用者特別要求，否則嚴禁執行未經審查的 D1 破壞性 migration。
    - 遠端 Secrets (`BOT_TOKEN`, `SERVICE_SECRET`) 均已在 Cloudflare 雲端配置，`wrangler.toml` 設有 `keep_vars = true`，部署時會自動保留。
+
+
+## 2026-10-18 星輝必成卷專屬粉光圖
+
+100% 武器／防具卷新增透明粉光素材，背包、強化與輪迴禮開匣同步；祝福卷保留金光。詳見 `docs/art/GUARANTEED_SCROLL_PINK_20261018.txt`，正式版本以部署收據為準。

@@ -49,3 +49,11 @@ body.greek.v2.mythic.olympus-suite #sheet .forge-flow-sheet .reroll-cost:before,
 
 /* Freeze the art while dragging so the scroll ends exactly over the equipment. */
 #forge.ritual.dragging .fr-target .fg-ic img{animation:none;transform:none}
+
+/* Guaranteed scrolls retain their rose aura when switching scroll types. */
+#forge.ritual.guaranteed .fr-scroll:before{background:radial-gradient(ellipse,#ffadd670,#e54ea735 50%,transparent 74%);animation:fr-pink 2s ease-in-out infinite}
+#forge.ritual.guaranteed .fr-scroll img{filter:drop-shadow(0 0 12px #ff8ecb) drop-shadow(0 0 26px #e64f9b99)}
+#forge.ritual.guaranteed .fr-scroll span{color:#ffc2e2}
+#forge.ritual.guaranteed.dragging .fr-flow{filter:drop-shadow(0 0 10px #f278bdaa);opacity:1}
+@keyframes fr-pink{50%{filter:brightness(1.4) drop-shadow(0 0 12px #ff9dce);transform:scale(1.05)}}
+@media(prefers-reduced-motion:reduce){#forge.ritual.guaranteed .fr-scroll:before{animation:none}}

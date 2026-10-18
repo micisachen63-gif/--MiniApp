@@ -41,7 +41,7 @@
   const cycles=view.querySelector('[data-fate-cycles]'),cycleRow=cycles?.parentElement;
   const gift=document.createElement('button');gift.type='button';gift.className='my-fate-gift-button';gift.textContent='星輝匣';gift.setAttribute('aria-label','領取與開啟四世星輝匣');
   const giftNote=document.createElement('small');giftNote.className='my-fate-gift-note';giftNote.textContent='每四世 · 留一份星輝';
-  const showGift=async()=>{if(String(window.RpgFateHost?.characterId())!==String(id))return;try{const module=await import('/fate/fate-gift-ui.js');if(String(window.RpgFateHost?.characterId())===String(id))module.openFateGift(window.RpgFateHost);}catch{giftNote.textContent='星輝匣暫未連上，請稍後重試';}};
+  const showGift=async()=>{if(String(window.RpgFateHost?.characterId())!==String(id))return;try{const module=await import('/fate/fate-gift-ui.js?v=20261018-pinkscroll2');if(String(window.RpgFateHost?.characterId())===String(id))module.openFateGift(window.RpgFateHost);}catch{giftNote.textContent='星輝匣暫未連上，請稍後重試';}};
   gift.onclick=showGift;if(cycleRow)cycleRow.append(giftNote,gift);
   window.RpgFateHost.openGift=()=>{if(String(window.RpgFateHost?.characterId())===String(id))return showGift();};
   const card=document.createElement('section');card.className='fate-home-card';

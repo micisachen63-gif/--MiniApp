@@ -371,7 +371,7 @@
   const SINGLE_ELF4 = /^adv4_archer_(A11[12]|A12[12]|A21[12])_[fm]$/;
   function artFile(kind, key) {
     if(kind==='item'&&key==='fate_cycle_gift')return '/art/ui/command-collect-20261012.webp';
-    if(kind==='item'&&/^guaranteed_scroll_[wa]$/.test(key))return `art/items-scrolls-cutout-20261011/${key.replace('guaranteed_','blessed_')}.webp`;
+    if(kind==='item'&&/^guaranteed_scroll_[wa]$/.test(key))return `/art/items-scrolls-pink-20261018/${key}.webp`;
     if(kind==='item'&&['boss_essence','tower_fragment'].includes(key))return 'art/ui/item-'+key+'-20261012.webp';
     if(kind==='item'&&['guardian_voucher','research_fragment'].includes(key))return 'art/ui/item-'+key+'-20261015.webp';
     if(kind==='item'&&key==='guardian_summon_stone')return 'art/guardian-sigil-20261013/guardian-summon-stone.webp';
@@ -1787,7 +1787,7 @@
   // 技能書：查看/學習(遠征頁)、分享到群組(expedition/share)、交易(expedition/trade)；可交易道具：到交易視窗放入；首領資源：兌換。
   // 一般道具沒有「分享到群組」、「販售給商店」的伺服器功能（商店只收裝備、羽毛），所以不顯示。
   function invItemMenu(k) {
-    if(k==='fate_cycle_gift'){import('/fate/fate-gift-ui.js').then(m=>m.openFateGift(window.RpgFateHost)).catch(()=>toast('星輝匣暫未連上，請稍後重試',true));return;}
+    if(k==='fate_cycle_gift'){import('/fate/fate-gift-ui.js?v=20261018-pinkscroll2').then(m=>m.openFateGift(window.RpgFateHost)).catch(()=>toast('星輝匣暫未連上，請稍後重試',true));return;}
     const have = S.me.inventory[k] || 0, isBook = k.startsWith('book_'), skillId = isBook ? k.slice(5) : null;
     const tradeable = (S.meta.trade?.tradeableItems || []).includes(k), bossRes = k === 'boss_essence' || k === 'relic_fragment';
     const meta = S.meta.items[k] || {};

@@ -1,0 +1,16 @@
+星輝必成卷粉光美術 — 2026-10-18
+
+正式版本原先共用祝福卷軸的金光素材。本次新增兩張獨立透明 WebP：
+worker/public/art/items-scrolls-pink-20261018/guaranteed_scroll_w.webp
+worker/public/art/items-scrolls-pink-20261018/guaranteed_scroll_a.webp
+
+以 items-scrolls-cutout-20261011/blessed_scroll_w.webp 與 blessed_scroll_a.webp 為參考，使用內建 imagegen 分別編輯。保留羊皮紙、劍／盾、金屬紋飾，改成粉色魔法光。產圖後僅用 Sharp 縮放、留透明邊及編碼；512x512，保留 alpha。
+原始產圖：C:/Users/User/.codex/generated_images/01a12e4c-89eb-73b2-b084-161389ac30bc/exec-f5321797-4d7c-485c-95a1-cdb0f298e16c.png
+原始產圖：C:/Users/User/.codex/generated_images/01a12e4c-89eb-73b2-b084-161389ac30bc/exec-3894eaec-12c7-4c86-af53-0d51c642eef3.png
+
+套用：app.js 的 artFile 最前段（背包、道具詳細、強化 guaranteedArt）；fate-gift-ui.js 開匣獎勵。forge-ritual 的 guaranteed class 使用粉光，切換祝福／普通時移除，不影響原本金光。入口與動態匯入快取版本更新至 20261018-pinkscroll2。沒有改動掉率、數量、交易或強化規則。
+
+驗收：16 個既有強化／星輝匣 UI 測試通過，更新路徑預期與粉光 class 切換斷言；實際瀏覽器使用目前原始模組、隔離假資料驗收兩張圖、開箱含普通卷、武器／防具強化選卷與切換回金光祝福卷。沒有操作正式玩家的開匣或強化。
+正式發布與 GitHub 對應以 docs/deployment/elf-rpg-api.json 收據為準。
+
+原主工作目錄已有未提交的 v2 卡通粉光草稿與 app.js／manifest／index 改動；本次以獨立 codex/guaranteed-scroll-pink-20261018 worktree 作業，保留那些檔案不動。本次正式圖使用上列獨立目錄；不要把舊草稿的 app.js 改動整包覆蓋 main。
