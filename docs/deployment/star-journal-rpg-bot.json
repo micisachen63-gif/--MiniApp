@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "748ad69caf9fd53e3cd04018ade3ce70972e0b3d",
+  "sourceCommit": "64793d25159b124750775b620a83089cd172837d",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "08a621b9-9663-4980-bbf9-bb714c45810d",
+  "productionVersion": "df87bc3e-b4d0-43de-8859-98ba7b21d6d2",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-17T13:14:02.049Z",
+  "verifiedAt": "2026-10-18T01:27:38.783Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "8d16ac5b98af6940651af05da308eea6dabce2fa5555d3ca9cf3a68ec0c5b01c"
+    "index.js": "e319283839cce74a9f075e52018ac15dbdd8ab085fd38a937fe8b43d1d3152cc"
   },
   "source": {
     "fileCount": 250,
-    "sha256": "fa14b1178a9dddf96bfe0984e15f9bd7b8cdf658f63d3c9b07a8ef26f1e409fc",
+    "sha256": "79d0917b9634bce4101349490eeecb3aa239534fc7aeff83ce7d609804040fd7",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -20,7 +20,7 @@
       },
       {
         "file": "cloud-bot/public/fonts/NotoSansTC-OFL.txt",
-        "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+        "sha256": "e35ffdebb2225b49814c31889cbb3ce69cb3509e6a9f431edaba5e1a6de8cd15"
       },
       {
         "file": "cloud-bot/public/fonts/NotoSansTC.ttf",
@@ -672,7 +672,7 @@
       },
       {
         "file": "cloud-bot/public/rpg-party/characters/manifest.json",
-        "sha256": "7c73b7a91b1d01b2f2a3934a77e3c3654e45af7d81dc77eea05081a59af90e21"
+        "sha256": "7ae522fc8ec9492f7bfd44451678ec5ce214ceef816ecde3677cf13ffab9a5d1"
       },
       {
         "file": "cloud-bot/public/rpg-party/characters/sword_f.png",
@@ -684,7 +684,7 @@
       },
       {
         "file": "cloud-bot/public/rpg-party/dungeon-sources.json",
-        "sha256": "26b46bdd48f8ab85a71fcd9454a527c92e333be7ace2d609100c3e1a3cc3d450"
+        "sha256": "f344755159f41c55111ae2e9ea84655638d9dac7d72264eaa869422894cf14c5"
       },
       {
         "file": "cloud-bot/public/rpg-party/dungeons/forge-background.png",
@@ -696,7 +696,7 @@
       },
       {
         "file": "cloud-bot/public/rpg-party/dungeons/manifest.json",
-        "sha256": "97875245843202e4d838a99a7592de41e0de6c2ad5fc9c4586c8cb818dc76f90"
+        "sha256": "d2a683e8595aedcf7cf56aab0b593bce43b17c51af011f210116b91b3c7fef19"
       },
       {
         "file": "cloud-bot/public/rpg-party/dungeons/oracle-background.png",
@@ -872,11 +872,11 @@
       },
       {
         "file": "cloud-bot/src/adapter/adaptation-source.json",
-        "sha256": "bd8caf4631e3c30255e0bd1c27a57870703089d5f110ef95f773882a3c770a8a"
+        "sha256": "e0ccaab8b1c4ef6a2e981d2eead58a5ab0afa6540597f316953dc65a82831917"
       },
       {
         "file": "cloud-bot/src/adapter/battle-key.js",
-        "sha256": "1f6f643f5411ab47c83c27551c568474136c483f2d063cf6f907467954e99785"
+        "sha256": "69cb310199e1299cd34fdf8114ce40ece6c0db825b32be2819fad17254c7cf5b"
       },
       {
         "file": "cloud-bot/src/adapter/cloud-bot.js",
@@ -884,11 +884,11 @@
       },
       {
         "file": "cloud-bot/src/adapter/copy-regressions.mjs",
-        "sha256": "48c244e0f59ca842ad8bed8f2d96a781c01d2f64d75b004e2570e331fb9c5365"
+        "sha256": "740c3ece3f4f6ce3e3110cb862318961c8d537669a790aca506846fd8b664d5d"
       },
       {
         "file": "cloud-bot/src/adapter/index.mjs",
-        "sha256": "94ecf3a529f4dcd0d69488b63890b02b4f3d8c82ca8e6280190c786b3497dc52"
+        "sha256": "1f0546e9af11c72406e472e5ad5864c1884aa2762e8ccdcdc06481643a935360"
       },
       {
         "file": "cloud-bot/src/adapter/operation-api.js",
@@ -896,7 +896,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/package.json",
-        "sha256": "609158e6c5fbc237939fa3ddf7faab80ab690bdc0c8d584414a885130103c4e8"
+        "sha256": "4ae935ef906a8954168983d48aaca9acbb0d53232a095d20a32e0baf373b1dcd"
       },
       {
         "file": "cloud-bot/src/adapter/party-caption.js",
@@ -904,11 +904,11 @@
       },
       {
         "file": "cloud-bot/src/adapter/persistent-map.js",
-        "sha256": "e36956d3f5b661fc628aad30d28cd92f196e1864c409f8a441e0404f5f796d67"
+        "sha256": "249e96a88aaeaac8d972ad84f40b1bbb55b73d6c5bf0d58777b5ad90e5aeacb9"
       },
       {
         "file": "cloud-bot/src/adapter/record-verification.mjs",
-        "sha256": "af3d846e57e148c8557a242d5c0d15215761b20cb7c1f1ab568ed215c639a773"
+        "sha256": "8d1a16b706ad775469696806869c9a10b08629635e31c0b2cf1298063fbc3795"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
@@ -920,15 +920,15 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-pk-animation-flow.js",
-        "sha256": "15448a6f695e12606e9743eac5e190c397d75ab96931ea2fc2eeb261c49289e7"
+        "sha256": "6e7bb737fc3e565f4d09c00f684dfb409a78f6956a8702e5b9c54a771bc729f1"
       },
       {
         "file": "cloud-bot/src/adapter/verification.json",
-        "sha256": "5fa2542476e880e3f9dd352eaf2fae1d70406b1369b5003c489f8ffdfb5ede35"
+        "sha256": "bf64de7ef559f8b71b706f6fff583618845ba34a74bac28006d6bdf6f8c30e87"
       },
       {
         "file": "cloud-bot/src/adapter/接口與接手.txt",
-        "sha256": "099656b07afbce04fb173e781e1a212a3b80a57773c7f2a8546272ec30ef3f5c"
+        "sha256": "4172a70ae6f8b9ee6981f83b35d70d930e3b6fdee21b8e304aa8b5fcec1fade8"
       },
       {
         "file": "cloud-bot/src/coordinator.mjs",
@@ -940,7 +940,7 @@
       },
       {
         "file": "cloud-bot/src/fate-share.js",
-        "sha256": "007906060e7e12fd86cebf47d9fed3e8feefd9177f240c23bfdd57cfe345685c"
+        "sha256": "684d2737f05f0cad3b074cc20f19b69645e157b2bb32be299786e35daa2fb303"
       },
       {
         "file": "cloud-bot/src/inbox.mjs",
@@ -952,7 +952,7 @@
       },
       {
         "file": "cloud-bot/src/renderer/INTEGRATION.txt",
-        "sha256": "3883109a0f9924749e3bf4a3ceb7cb3506fb650dc9355f290ff81bb389d296f6"
+        "sha256": "ebfa83296901843911959e6a8a6864c714b8176293ab2e5a92f2169318d9d95b"
       },
       {
         "file": "cloud-bot/src/renderer/assets.mjs",
@@ -960,15 +960,15 @@
       },
       {
         "file": "cloud-bot/src/renderer/battle-core.mjs",
-        "sha256": "2fda188adcfb9ceed36d6ea38271b4d10677e58c6adde86d12bc6663529a9254"
+        "sha256": "ecb96a67b660af1cea648c256b2d445a0edfb65eac449093bf9ff433dcb649ce"
       },
       {
         "file": "cloud-bot/src/renderer/deps/GIFENC-LICENSE.txt",
-        "sha256": "47bc590c39d8ccccfc544875a9faebf44bafa828ef20315b396b5d0629f0cfd6"
+        "sha256": "cff57c5f665437cd814c370c161b276147bcb60c603ef86524f52bae696b3ff1"
       },
       {
         "file": "cloud-bot/src/renderer/deps/NotoSansTC-OFL.txt",
-        "sha256": "1c05c68c34f9708415aada51f17e1b0092d2cea709bf4a94cd38114f9e73d7d9"
+        "sha256": "e35ffdebb2225b49814c31889cbb3ce69cb3509e6a9f431edaba5e1a6de8cd15"
       },
       {
         "file": "cloud-bot/src/renderer/deps/NotoSansTC.ttf",
@@ -976,15 +976,15 @@
       },
       {
         "file": "cloud-bot/src/renderer/deps/RESVG-NOTICE.txt",
-        "sha256": "4e250a163f8e8fa6e0af368a1020e6120c284d28b704d0ae7b83abd63513465d"
+        "sha256": "e3415a02f7648e223680f7568fb88c6d90301eb131d638e9f3bab2aabed559d0"
       },
       {
         "file": "cloud-bot/src/renderer/deps/gifenc.mjs",
-        "sha256": "cec614f6b77348eb6ea6a64921bab65e72d5e7f839a097c8fda8fc883c3146f7"
+        "sha256": "fe5ce0498f3a8e55ba194f8b65cb889f6179160243f56e4e5e42207e47fd9c21"
       },
       {
         "file": "cloud-bot/src/renderer/deps/resvg.mjs",
-        "sha256": "da993744b95c13bff3becd73d93c871f8d0348de41e1610167958a7576e70517"
+        "sha256": "57818fcbbf62fb0167c04b954741156936bfb40e57ca72840ec773eb674ff6ba"
       },
       {
         "file": "cloud-bot/src/renderer/deps/resvg.wasm",
@@ -992,27 +992,27 @@
       },
       {
         "file": "cloud-bot/src/renderer/media.mjs",
-        "sha256": "e0d81a7d5f3a3fb4297d712f9b50f6b3b3ac5daffd5a7ea928724a887e5d77e6"
+        "sha256": "ee2b0c30d7b83fd989692a6b22ea582664bb2fc49f5c12dcf4ef8bf62a8b295e"
       },
       {
         "file": "cloud-bot/src/renderer/party-card.mjs",
-        "sha256": "6b3aa5c9772bdd6e9767005f2409f6038be57b525adf56282490bb3bde500e39"
+        "sha256": "10d1d7a81d49ce1910e50f6203dd62ccd93da6c7c034e4b2a14740132d1a951e"
       },
       {
         "file": "cloud-bot/src/smoke-fixture.mjs",
-        "sha256": "e63c1f3af30c38d85c36522751e428affbf45a235ad9b7f50b7271993573b6f8"
+        "sha256": "f3ccd77d9a1e9bfd2977faf5c9c8c54b30ad87ae74767a6d1814273f7b08f23a"
       },
       {
         "file": "cloud-bot/src/telegram-api.mjs",
-        "sha256": "541ab273560b9f539fd133b9a84c4c76ac0a74486bd9ae5d2de3f7a25c25feb9"
+        "sha256": "9ec9bc10674b9f3b1aabfde453c0b99c8c02e70624b5350a153d186c44f3fba8"
       },
       {
         "file": "cloud-bot/wrangler.toml",
-        "sha256": "00135548fdc910490a67b39ee30cb404c2bd70f5276c16bb669365564c55d849"
+        "sha256": "ce368cbd8df05cdf1242781546e6ed5b1d1b6940455938e923e0f3d8eac795ee"
       },
       {
         "file": "cloud-bot/wrangler.toml.example",
-        "sha256": "9059402170850c72fa009f10b79ace3856f82ca0ac1172813378e9bfb70501f3"
+        "sha256": "ad5d2732b98436187d9fdee78a4d6be91a2e091a5273b4d38aaddf15b7daa643"
       }
     ]
   },
@@ -1029,7 +1029,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "08a621b9-9663-4980-bbf9-bb714c45810d",
+        "version_id": "df87bc3e-b4d0-43de-8859-98ba7b21d6d2",
         "percentage": 100
       }
     ],
