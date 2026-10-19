@@ -37,12 +37,12 @@ function enemyFor(p){const a=p.state.actors;const atk=a.reduce((n,x)=>n+x.atk,0)
 const isBoss=p=>p.kind!=='tower'||p.state.floor%5===0;
 function updateStmt(db,p,now){return db.prepare('UPDATE rpg_parties SET status=?,state_json=?,rev=rev+1,updated_at=? WHERE id=? AND rev=?').bind(p.status,JSON.stringify(p.state),now,p.id,p.rev);}
 function cardStmt(db,p,now){return outboxStmt(db,{dedupe:`party:${p.id}:${p.rev+1}`,target:'group',kind:'party_card',payload:{partyId:p.id}},now);}
-function releaseStmts(db,p,now){return [db.prepare(`UPDATE rpg_characters SET party_id=${runningRingSql('rpg_characters.tg_id')},last_settle_at=MAX(last_settle_at,?),rev=rev+1,updated_at=? WHERE party_id=?`).bind(now,now,p.id),db.prepare('DELETE FROM rpg_party_presence WHERE party_id=?').bind(p.id),restoreRingPresenceStmt(db,p.id)];}
-function combatStmts(db,p,now){return p.state.actors.flatMap(a=>[
+function releaseStmts(db,p,now,settledAt=now){return [db.prepare(`UPDATE rpg_characters SET party_id=${runningRingSql('rpg_characters.tg_id')},last_settle_at=MAX(last_settle_at,?),rev=rev+1,updated_at=? WHERE party_id=?`).bind(settledAt,now,p.id),db.prepare('DELETE FROM rpg_party_presence WHERE party_id=?').bind(p.id),restoreRingPresenceStmt(db,p.id)];}
+function combatStmts(db,p,now,settledAt=now){return p.state.actors.flatMap(a=>[
  // Combat owns its snapshotted skill state, but wardrobe changes remain live.
  // JSON patch deliberately removes an old snapshot key when the current value
  // is absent (unequipped), and also preserves new auras on legacy snapshots.
- db.prepare("UPDATE rpg_characters SET hp=?,mp=?,special_json=json_patch(?,json_object('starRingAura',json_extract(special_json,'$.starRingAura'))),rev=rev+1,last_settle_at=?,updated_at=? WHERE tg_id=? AND party_id=?").bind(Math.max(1,a.hp),Math.max(0,a.mp),JSON.stringify(a.special),now,now,a.id,p.id),guardStmt(db)
+ db.prepare("UPDATE rpg_characters SET hp=?,mp=?,special_json=json_patch(?,json_object('starRingAura',json_extract(special_json,'$.starRingAura'))),rev=rev+1,last_settle_at=MAX(last_settle_at,?),updated_at=? WHERE tg_id=? AND party_id=?").bind(Math.max(1,a.hp),Math.max(0,a.mp),JSON.stringify(a.special),settledAt,now,a.id,p.id),guardStmt(db)
 ]);}
 async function mutate(env,id,tg,b,now,fn){const db=env.DB;for(let n=0;n<4;n++){
  const request=String(b.requestId||'');if(request){const old=await db.prepare('SELECT result_json FROM rpg_party_operations WHERE party_id=? AND char_id=? AND request_id=?').bind(String(id),tg,request).first();if(old)return JSON.parse(old.result_json);}
@@ -68,13 +68,14 @@ async function beginParty(env,p,stmts,now){const s=p.state;s.actors=[];
    for(const m of p.members){await P.withPlayer(env,m.char_id,now);const player=await loadPlayer(env.DB,m.char_id,env),c=player.char;admit(c,p);if(await env.DB.prepare('SELECT 1 FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NOT NULL LIMIT 1').bind(c.tg_id).first())throw new GameError('guardian_trade','請先完成守護天使交易再出發');if((c.party_id&&c.party_id!==await runningRingId(env.DB,m.char_id))||c.hp<=0||c.idle_state==='reviving')throw new GameError('down','有隊員倒地或仍在其他戰鬥');const active=await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(m.account_id).first();if(active?.active_char_id!==m.char_id)throw new GameError('changed','隊員已切換角色，請重新準備');const st=computeStats(c,player.equipment.filter(e=>e.is_equipped));s.actors.push(combatActor(c,st));stmts.push(env.DB.prepare(`UPDATE rpg_characters SET party_id=?,last_settle_at=?,rev=rev+1 WHERE tg_id=? AND rev=? AND (party_id IS NULL OR party_id=${runningRingSql('rpg_characters.tg_id')}) AND EXISTS(SELECT 1 FROM rpg_accounts WHERE account_tg_id=? AND active_char_id=?) AND EXISTS(SELECT 1 FROM rpg_party_presence WHERE char_id=rpg_characters.tg_id AND party_id=?)`).bind(p.id,now,c.tg_id,c.rev,m.account_id,m.char_id,p.id),guardStmt(env.DB));}
    if(s.roleRules)assertRoster(s.roleRules,s.actors);
    initCooperation(s,s.roleRules?encounterPlan(p.kind,s.dungeonId,s.floor):null);
-   p.status='combat';s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;s.enemy=enemyFor(p);if(s.cooperation){prepareMechanic(s,now);s.log.unshift('職責機制啟動：'+cooperationView(s).name+'；不同隊員分工，三回合內破解。');}s.log.unshift('三位英雄出發，戰鬥由伺服器結算。');stmts.push(env.DB.prepare('UPDATE rpg_parties SET expires_at=? WHERE id=?').bind(now+1800000,p.id));
+   p.status='combat';s.combatClockVersion=1;s.combatStartedAt=now;s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;s.enemy=enemyFor(p);if(s.cooperation){prepareMechanic(s,now);s.log.unshift('職責機制啟動：'+cooperationView(s).name+'；不同隊員分工，三回合內破解。');}s.log.unshift('三位英雄出發，戰鬥由伺服器結算。');stmts.push(env.DB.prepare('UPDATE rpg_parties SET expires_at=? WHERE id=?').bind(now+(p.kind==='tower'?10:1)*40*15000+60000,p.id));
 }
 export async function action(env,tg,b,now){const id=String(b.partyId||'');
  if(b.op==='join')await P.withPlayer(env,tg,now);
+ else if((await load(env.DB,id)).status==='combat')await advance(env,id,now);
  await mutate(env,id,tg,b,now,async(p,stmts)=>{
   const s=p.state;
-  if(p.expires_at<=now||['ended','lost','won'].includes(p.status))throw new GameError('closed','隊伍已結束或已過期');
+  if((p.status==='lobby'&&p.expires_at<=now)||['ended','lost','won'].includes(p.status))throw new GameError('closed','隊伍已結束或已過期');
   if(b.op==='join'){
    if(p.status!=='lobby')throw new GameError('started','隊伍已出發');if(p.members.length>=3)throw new GameError('full','隊伍已滿');
    if(p.members.some(m=>m.char_id===tg))return {ok:true};
@@ -100,10 +101,9 @@ export async function action(env,tg,b,now){const id=String(b.partyId||'');
    s.actions[tg]={skillId,targetId:String(b.targetId||tg),manual:true};s.log.unshift(`${a.name}已選擇戰術。`);
   }else throw new GameError('op','隊伍操作無效');s.log=s.log.slice(0,6);return {ok:true};
  });return {ok:true,party:await view(env,id,tg,now)};}
-async function advance(env,id,now){return mutate(env,id,'system',{silent:false},now,async(p,stmts)=>{
- const s=p.state;if(p.status!=='combat')return {ok:true};
- if(p.expires_at<=now){p.status='ended';s.log.unshift('冒險逾時，隊伍已結束。');stmts.push(...releaseStmts(env.DB,p,now));return {ok:true};}
- if(now<s.deadline)return {ok:true};
+// Resolve combat on its scheduled clock, never on the time a viewer or bot polls.
+// A whole catch-up uses one player snapshot and one guarded transaction per party.
+function combatRound(p,players,now){const s=p.state;
  const enemy=s.enemy;enemy.windup=s.round%3===0;enemy.interruptible=s.round%2===1;enemy.interrupted=false;prepareMechanic(s,now);
  // Keep a bounded replay in the same atomic party update; no per-hit database writes.
  const turnFloor=s.floor;
@@ -112,8 +112,7 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
  turn.before=snapshot();
  s.log=[];periodic(s.actors,enemy,now);if(enemy.hp<turn.before.enemyHp)turn.events.push({actorId:null,label:'召喚／持續傷害',damage:turn.before.enemyHp-enemy.hp,effect:'magic',after:snapshot()});
  for(const a of s.actors){if(a.hp<=0)continue;
-  const player=await loadPlayer(env.DB,a.id,env),c=player.char,used={};
-  stmts.push(env.DB.prepare('UPDATE rpg_characters SET updated_at=updated_at WHERE tg_id=? AND party_id=? AND rev=?').bind(a.id,p.id,c.rev),guardStmt(env.DB));
+  const player=players.get(a.id),c=player.char,used={};
   // Keep live preferences when persisting the encounter's skill cooldowns.
   for(const key of ['autoBluePct','autoRedPotion','autoBluePotion']){const prefs=specialState(c);if(Object.hasOwn(prefs,key))a.special[key]=prefs[key];else delete a.special[key];}
   const native=a.skill||nodeFor(a.base,a.path).skill;
@@ -124,7 +123,6 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
   else if(!['attack','defend'].includes(planned.skillId))try{required=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.maxMp,affixPct:a.affixPct},a.special,planned.skillId,now).mp;}catch{required=0;}
   else if(planned.skillId==='defend')required=0;
   if(enemy.hp>0&&needsBlue(c,a.mp,a.maxMp,required)){const target=blueTarget(c,a.maxMp,required);let key;do{key=choosePotion(player.inv,'blue',mapForLevel(c.level),c);if(!key)break;player.inv[key]--;used[key]=(used[key]||0)+1;a.mp=Math.min(a.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
-  for(const [key,count] of Object.entries(used))stmts.push(env.DB.prepare('UPDATE rpg_inventory SET quantity=quantity-? WHERE tg_id=? AND item=? AND quantity>=?').bind(count,a.id,key,count),guardStmt(env.DB));
   if(Object.keys(used).length){turn.events.push({actorId:a.id,label:'自動喝藍水',used,healedMp:a.mp-turn.before.members.find(m=>m.id===a.id).mp,after:snapshot()});s.log.push(a.name+'：自動喝藍水');}
   const action=s.actions[a.id]||automaticRoleAction(s,a)||autoPartyAction(a,s.actors,enemy,now,s);
   try{let result;if(action.skillId.startsWith('role_')){result=castRole(a,s,action.skillId,now);}
@@ -158,10 +156,36 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
  else if(s.round>=40){p.status='lost';s.log.push('首領狂暴，挑戰結束。');}
  else{s.round++;s.actions={};s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;if(s.cooperation){prepareMechanic(s,now);const next=cooperationView(s);s.log.unshift(next.complete?'機制全數破解，全力進攻！':`${next.name}：${next.roles.map(r=>({guard:'守護',breach:'破陣',aid:'支援',control:'壓制'})[r]).join('／')}${next.next?'；下一道機制於第 '+next.next.round+' 回合開始':''}`);}}
  if(p.status==='won')s.journalWonAt=now;
+ if(p.status!=='combat')s.endedAt=now;
  turn.after=snapshot();turn.final=snapshot(s.enemy,s.floor);turn.status=p.status;s.lastTurn=turn;s.turnSequence=turn.sequence;
  s.recentTurns=[...(s.recentTurns||[]),turn].slice(-5);
- stmts.push(...combatStmts(env.DB,p,now));if(p.status!=='combat')stmts.push(...releaseStmts(env.DB,p,now));return {ok:true};
-});}
+}
+async function advance(env,id,observedAt){
+ const current=await load(env.DB,id);
+ if(current.status!=='combat'||current.state.deadline>observedAt)return;
+ return mutate(env,id,'system',{silent:false},observedAt,async(p,stmts)=>{
+  const s=p.state;if(p.status!=='combat'||s.deadline>observedAt)return {ok:true};
+  const players=new Map();
+  for(const a of s.actors){
+   const player=await loadPlayer(env.DB,a.id,env);if(!player)throw new GameError('character','隊員角色不存在',409);
+   players.set(a.id,{...player,initialInv:{...player.inv}});
+   stmts.push(env.DB.prepare('UPDATE rpg_characters SET updated_at=updated_at WHERE tg_id=? AND party_id=? AND rev=?').bind(a.id,p.id,player.char.rev),guardStmt(env.DB));
+  }
+  // Forty rounds per floor, ten floors: finite even after a long scheduler outage.
+  // The legacy wall-clock expiry must not discard turns that were due before it.
+  for(let turns=0;p.status==='combat'&&s.deadline<=observedAt&&turns<400;turns++){
+   if(!Number.isFinite(s.deadline)){throw new GameError('clock','隊伍回合時間異常',409);}
+   const at=s.deadline;combatRound(p,players,at);
+  }
+  for(const [tg,player]of players)for(const[key,before]of Object.entries(player.initialInv)){
+   const spent=before-(player.inv[key]||0);if(spent>0)stmts.push(env.DB.prepare('UPDATE rpg_inventory SET quantity=quantity-? WHERE tg_id=? AND item=? AND quantity>=?').bind(spent,tg,key,spent),guardStmt(env.DB));
+  }
+  const settledAt=p.status==='combat'?observedAt:s.endedAt;
+  stmts.push(...combatStmts(env.DB,p,observedAt,settledAt));
+  if(p.status!=='combat')stmts.push(...releaseStmts(env.DB,p,observedAt,settledAt));
+  return {ok:true};
+ });
+}
 const granting=new Set();
 async function grantAll(env,p,now){if(granting.has(p.id))return false;granting.add(p.id);let n=0;try{const have=new Set((await rows(env.DB,'SELECT char_id FROM rpg_party_rewards WHERE party_id=?',p.id)).map(r=>r.char_id));for(const m of p.members){const a=p.state.actors.find(a=>a.id===m.char_id);if(have.has(m.char_id)||p.state.rewarded.includes(m.char_id)||!(a?.actions>0))continue;try{await reward(env,m.char_id,{partyId:p.id},now);n++;}catch(e){}}}finally{granting.delete(p.id);}return n>0;}
 export async function view(env,id,tg,now,sinceTurnId=null){
@@ -187,7 +211,15 @@ export async function reward(env,tg,b,now){
   stmts.push(db.prepare('INSERT INTO rpg_party_rewards(party_id,char_id,reward_json,created_at) VALUES(?,?,?,?)').bind(p.id,tg,JSON.stringify(reward),now),ledgerStmt(db,{event_id:`party-reward:${p.id}:${tg}`,tg_id:tg,type:p.state.trial?'轉職試煉獎勵':'組隊戰利品',note:JSON.stringify(reward.items)},now));p.state.rewarded.push(tg);return reward;
  });const row=await env.DB.prepare('SELECT reward_json FROM rpg_party_rewards WHERE party_id=? AND char_id=?').bind(id,tg).first();return {ok:true,reward:JSON.parse(row.reward_json),party:await view(env,id,tg,now)};
 }
-export async function sweep(env,now,limit=30){const due=await rows(env.DB,"SELECT id,status FROM rpg_parties WHERE (status='lobby' AND expires_at<=?) OR (status='combat' AND (expires_at<=? OR json_extract(state_json,'$.deadline')<=?)) LIMIT ?",now,now,now,limit);for(const row of due){if(row.status==='combat')await advance(env,row.id,now).catch(()=>null);else await mutate(env,row.id,'system',{},now,async(p,stmts)=>{if(p.status!=='lobby'||p.expires_at>now)return {ok:true};const ready=p.members.length===3&&p.members.every(m=>m.ready)&&new Set(p.members.map(m=>m.account_id)).size===3;if(ready){try{await beginParty(env,p,stmts,now);p.state.log.unshift('招募倒數結束，全員準備，自動出發。');return {ok:true};}catch(e){if(!['down','changed','level','trial','tower','no_character','party_roles'].includes(e.code))throw e;stmts.length=0;p.state.actors=[];p.state.log.unshift('自動出發失敗：'+e.message+'。請調整後重新組隊。');}}else p.state.log.unshift(p.members.length<3?'招募時間結束，人數不足，隊伍已解散。':'招募時間結束，未全員準備，隊伍已解散。');p.status='ended';stmts.push(...releaseStmts(env.DB,p,now));}).catch(()=>null);}return due.length;}
+export async function sweep(env,now,limit=6){
+ const due=await rows(env.DB,"SELECT id,status FROM rpg_parties p WHERE (status='lobby' AND expires_at<=?) OR (status='combat' AND json_extract(state_json,'$.deadline')<=?) OR (status='won' AND EXISTS(SELECT 1 FROM rpg_party_members m JOIN json_each(p.state_json,'$.actors') a ON json_extract(a.value,'$.id')=m.char_id LEFT JOIN rpg_party_rewards r ON r.party_id=m.party_id AND r.char_id=m.char_id WHERE m.party_id=p.id AND r.char_id IS NULL AND json_extract(a.value,'$.actions')>0)) ORDER BY COALESCE(json_extract(state_json,'$.deadline'),expires_at),id LIMIT ?",now,now,Math.max(1,Math.min(6,Number(limit)||6)));
+ for(const row of due)try{
+  if(row.status==='lobby'){await mutate(env,row.id,'system',{},now,async(p,stmts)=>{if(p.status!=='lobby'||p.expires_at>now)return {ok:true};const ready=p.members.length===3&&p.members.every(m=>m.ready)&&new Set(p.members.map(m=>m.account_id)).size===3;if(ready){try{await beginParty(env,p,stmts,now);p.state.log.unshift('招募倒數結束，全員準備，自動出發。');return {ok:true};}catch(e){if(!['down','changed','level','trial','tower','no_character','party_roles'].includes(e.code))throw e;stmts.length=0;p.state.actors=[];p.state.log.unshift('自動出發失敗：'+e.message+'。請調整後重新組隊。');}}else p.state.log.unshift(p.members.length<3?'招募時間結束，人數不足，隊伍已解散。':'招募時間結束，未全員準備，隊伍已解散。');p.status='ended';stmts.push(...releaseStmts(env.DB,p,now));});}
+  if(row.status!=='won')await advance(env,row.id,now);
+  const p=await load(env.DB,row.id);if(p.status==='won')await grantAll(env,p,now);
+ }catch(e){console.warn('party sweep',e.code||'internal');}
+ return due.length;
+}
 export async function setMessage(env,b){await env.DB.prepare('UPDATE rpg_parties SET chat_id=?,message_id=? WHERE id=?').bind(String(b.chatId),Number(b.messageId),String(b.partyId)).run();return {ok:true};}
 
 
@@ -200,7 +232,7 @@ const endedTime=p=>Number(p.state.endedAt)||p.updated_at;
 export async function hall(env,tg,b,now){
  await sweep(env,now,30);
  const ended=b.tab==='ended',page=Math.max(1,Math.min(1000000,Math.floor(Number(b.page)||1))),size=20;
- const where=ended?"status IN ('won','lost','ended') AND COALESCE(json_extract(state_json,'$.endedAt'),updated_at)>=?":"status IN ('lobby','combat') AND expires_at>?";
+ const where=ended?"status IN ('won','lost','ended') AND COALESCE(json_extract(state_json,'$.endedAt'),updated_at)>=?":"(status='combat' OR (status='lobby' AND expires_at>?))";
  const cutoff=ended?now-HALL_DAYS:now;
  const count=await env.DB.prepare('SELECT COUNT(*) AS total FROM rpg_parties WHERE '+where).bind(cutoff).first();
  const total=count?.total||0,pages=Math.max(1,Math.ceil(total/size)),current=Math.min(page,pages);

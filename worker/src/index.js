@@ -390,6 +390,6 @@ function errorResponse(e, url) {
 
 export default {
   fetch: (request, env, ctx) => handle(request, {...env,autoRerollWake:id=>ctx?.waitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),guardianAutoWake:id=>ctx?.waitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),autoEnhanceWake:id=>ctx?.waitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message)))}),
-  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),STAR_RING.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
+  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([PARTY.sweep(env,event.scheduledTime),AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),STAR_RING.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
 };
 void equipmentView;
