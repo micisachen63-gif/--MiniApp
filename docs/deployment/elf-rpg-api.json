@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "364c54d204bc411ed69057997c943b94e410a3c1",
+  "sourceCommit": "384689221465d3cf4114a26aea82d71f0c4075c7",
   "service": "elf-rpg-api",
-  "productionVersion": "04fe9db5-1166-4cf1-8202-7abca16593f9",
+  "productionVersion": "d5eef2e5-1a0d-4b59-9608-cf8c7a72f328",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T05:44:23.482Z",
+  "verifiedAt": "2026-10-19T06:28:44.960Z",
   "runtimeSHA256": {
-    "index.js": "fd47bb463264906bb0ed090fdb8fd9b026a7eb7cd791b99aa561f708f121342d"
+    "index.js": "390162e27dd22f78305f70103b2e72e05e8405c8ac92546de5f825769a6dde77"
   },
   "source": {
-    "fileCount": 9213,
-    "sha256": "23e254ff19085f3066b07659e0df26ea3c1096394273fc5d955dbd4de0fa7b62",
+    "fileCount": 9214,
+    "sha256": "b25d6be574d98e14051a9e833653eb2f27e4acef9c11f0d67737554b27f5b129",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2440,6 +2440,10 @@
       {
         "file": "worker/migrations/0030_star_ring_cosmetics.sql",
         "sha256": "291928cebaa40ed0cde6d0736f814fb5d87c2263405a8d172f416b355166ed7a"
+      },
+      {
+        "file": "worker/migrations/0031_star_ring_guardian_backpack.sql",
+        "sha256": "1706526e69573589387159119240f1c874886fcd44cbfd5cea54d3886e036346"
       },
       {
         "file": "worker/package.json",
@@ -36731,11 +36735,11 @@
       },
       {
         "file": "worker/src/services/auto-enhance.js",
-        "sha256": "5b7ce4d077816721da05902bb0a0785e3b219674c4966a4747acb3251d8e8126"
+        "sha256": "02d9672b129cbff3c32e2323c942fb7c2c4e4745dd797492910aa4e38378e3ee"
       },
       {
         "file": "worker/src/services/auto-reroll.js",
-        "sha256": "951dcf7fa9b46064b43004a981860cbd6127551a03254233b5a79f24ed6254b8"
+        "sha256": "eeb0fb79defcdccd95f4afb8832fb46bcddfbc972280ad8fed9b92ac7109db71"
       },
       {
         "file": "worker/src/services/background-operations.js",
@@ -36743,7 +36747,7 @@
       },
       {
         "file": "worker/src/services/boss-exchange.js",
-        "sha256": "d723670e2ed9fd04d41bf5b74828ebde1d8121d2c82d8644f43f472418902f17"
+        "sha256": "1c00edfec0205e44e5c567d609a9b03f09dadc5589c9214c4eaf37a7d13e86ae"
       },
       {
         "file": "worker/src/services/boss.js",
@@ -36779,11 +36783,11 @@
       },
       {
         "file": "worker/src/services/guardian-shop.js",
-        "sha256": "6e953da6b41eaf0bf6ae1ff0769049b80c793eaf627e833d0461cea492bc11ce"
+        "sha256": "8c0ad8c626b49ea8414961fbb30349e36cc20eeba3d3aed08c99194f3049b28d"
       },
       {
         "file": "worker/src/services/guardian-sigil.js",
-        "sha256": "46aee8e985d4bef83a2810a4583cd5dcebe134eebfde9ae1d022d9ecb9defd31"
+        "sha256": "b11bf18e57d619cc321f52df6da7704ba78752f61e322f909d904f39c1e0a091"
       },
       {
         "file": "worker/src/services/hero-hall.js",
@@ -36799,11 +36803,11 @@
       },
       {
         "file": "worker/src/services/market-exchange.js",
-        "sha256": "02b13c61d9f1240464fbc9d39fdc37afef4a181df0e1508852fde9e8485c414b"
+        "sha256": "a452c37a916e74ebd11c78f5198896cac587da208906bf55496d2da935c46583"
       },
       {
         "file": "worker/src/services/monster-exchange.js",
-        "sha256": "86d54a30fc841b3781f4ed35fac9f795a5456eeafda8d968cc92a45ab697be6b"
+        "sha256": "c31631edebb4032089a059b668401a31a324ee6b534442aa11eab7f581cee9f2"
       },
       {
         "file": "worker/src/services/operation-notices.js",
@@ -36811,7 +36815,7 @@
       },
       {
         "file": "worker/src/services/party-presence.js",
-        "sha256": "6dd3822d8a606e7ba9b26eb1b5d098f76eac51ea23d2278a2696af5ee2b20be1"
+        "sha256": "a24b45a68f3237ed2b3df8bad17bfd7822aed53574ac40b830025f1c513c66dc"
       },
       {
         "file": "worker/src/services/party.js",
@@ -36823,7 +36827,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "1ceff164d655f77ae21844bf7a7fa310ceaf3f1a79a7c46217104de33c8f9def"
+        "sha256": "13f47444a7ab37ff9c806a685bd860da1347b77db8eb74827a2ecedfc4f72301"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -36835,7 +36839,7 @@
       },
       {
         "file": "worker/src/services/special.js",
-        "sha256": "df65541eba95317a369df3a4d838cb3031a2b3b85f805797660122015aeaf772"
+        "sha256": "482fc688fc9bb670cc6e33ba74866f875875802719ec9824a6aee8ab5c774b8e"
       },
       {
         "file": "worker/src/services/star-ring-cosmetics.js",
@@ -36847,7 +36851,7 @@
       },
       {
         "file": "worker/src/services/trade.js",
-        "sha256": "536fd7b09ffc9889f1063fbe5fc90c42280cf343fd48dad29dd4f56cb83b7dbd"
+        "sha256": "b17aea371360184415c0682f3398886e0c18d4692f799ae04e763811b74a62bd"
       },
       {
         "file": "worker/src/views.js",
@@ -37022,7 +37026,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "04fe9db5-1166-4cf1-8202-7abca16593f9",
+        "version_id": "d5eef2e5-1a0d-4b59-9608-cf8c7a72f328",
         "percentage": 100
       }
     ],
