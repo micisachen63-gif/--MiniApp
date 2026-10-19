@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
+import vm from 'node:vm';
 import { fileURLToPath } from 'node:url';
 
 const v2Dir = fileURLToPath(new URL('../public/art/v2/', import.meta.url));
@@ -246,6 +247,8 @@ test('app.js 前端 GEAR_NAME_ART 映射完整性與遺物前綴容錯', () => {
     );
   }
 
-  // 驗證遺物與菁英前綴清理邏輯
-  assert.ok(appJs.includes('replace(/^(?:(?:遺物・|菁英))*/'), '必須包含連續前綴清理邏輯');
+  // Exercise the real cleaner rather than pinning one exact regex spelling.
+  const expression=appJs.match(/const cleanGearName = ([^\n]+);/);assert.ok(expression);
+  const clean=vm.runInNewContext('('+expression[1]+')');
+  for(const item of ALL_GEAR)for(const prefix of ['','遺物・','菁英','星征','遺物・菁英','星征菁英遺物・'])assert.equal(clean(prefix+item.name),item.name);
 });

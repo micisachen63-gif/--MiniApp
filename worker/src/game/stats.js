@@ -5,7 +5,7 @@ import { THIEF_NODES } from './thief-data.js';
 import {affixTotals} from './affixes.js';
 import {specializeNode} from './advanced-specializations.js';
 // Derived character stats (pure). Equipment rows use the D1 rpg_equipment shape.
-import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, RELIC, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
+import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, RELIC, STAR_RING_GEAR, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
 import { monsterPressure, mapForLevel } from './formulas.js';
 
 const parseBonus = (b) => (typeof b === 'string' ? (b ? JSON.parse(b) : {}) : (b || {}));
@@ -44,10 +44,10 @@ export function enhanceBonus(slot, level, tier = 1) {
  * Shared DEF pieces also use the wearer's armor-family defMult. */
 export function itemStat(item, wearerClass = null) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1;
-  const relic=item.grade==='relic';
+  const relic=item.grade==='relic',expedition=item.source==='star_ring'&&!relic?STAR_RING_GEAR.statMult:1;
   const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
-  return { main: Math.round((item.base_stat + enh) * mult * fam), elem: Math.round((item.element_stat || 0) * mult) };
+  return { main: Math.round((item.base_stat + enh) * mult * fam * expedition), elem: Math.round((item.element_stat || 0) * mult * expedition) };
 }
 /** what base_stat means for this slot: ATK (weapon, ring) / DEF (armor slots) / MP (earring) */
 export const mainStatOf = (slot) => (slot === 'weapon' ? 'atk' : SLOT_SPEC[slot]?.main || 'def');
@@ -56,7 +56,8 @@ const FLAT_KEYS = ['atk', 'def', 'hp', 'mp'];
 export function itemExtras(item) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
-  for (const [src, m] of [[parseBonus(item.bonus_json), mult], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
+  for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?STAR_RING_GEAR.statMult:1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
+    if(k==='starRingGearVersion')continue;
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;
   }
   return out;

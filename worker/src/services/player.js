@@ -1,6 +1,7 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
 import {runningRingId,canEnhanceInParty,requireBackpackAccess,backpackAccessStmt} from './party-presence.js';
 import {gearRarity} from '../game/gear-quality.js';
+import {repairOwnedStarRingGear} from './star-ring-gear.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
@@ -122,12 +123,13 @@ export async function withPlayer(env, tgId, now, fn = null, { source = 'player',
     const s = settleSelectedPlayer(loaded, now);
     const settledGear = [...(s.report.relics || []), ...(s.report.eliteGear || [])];
     const settled = { char: s.char, inv: s.inv, equipment: [...loaded.equipment.map((e) => ({ ...e })), ...settledGear.filter((r) => !loaded.equipment.some((e) => e.id === r.id))] };
+    const gearRepairs=await repairOwnedStarRingGear(db,settled);
     const work = clonePlayer(settled);
     let out = null, gameErr = null;
     if (fn) { try { const [locks,ringId]=await Promise.all([db.prepare("SELECT item_id FROM rpg_auto_enhance WHERE tg_id=? AND status='running' UNION SELECT item_id FROM rpg_auto_reroll WHERE tg_id=? AND status='running'").bind(String(tgId),String(tgId)).all(),work.char.party_id?runningRingId(db,tgId):null]);const ctx={now,db,report:s.report,events:s.events,lockedEquipment:(locks.results||[]).map(x=>x.item_id),runningExpeditionId:ringId};out=(await fn(work,ctx))||{};if(ctx.backpackAccess)out.extra=[backpackAccessStmt(db,tgId),...(out.extra||[])]; } catch (e) { if (e instanceof GameError) gameErr = e; else throw e; } }
     const final = gameErr ? settled : work;
     const extra = [...reportStatements(db, tgId, s.report, now), ...notifyStatements(db, final.char, s.events, now, { cron: source === 'cron', inv: final.inv, equipment: final.equipment }), ...relicStatements(db, final.char, s.events, now, final.equipment), ...(gameErr ? [] : out?.extra || [])];
-    const ledger = gameErr ? [] : out?.ledger || [];
+    const ledger = [...gearRepairs,...(gameErr ? [] : out?.ledger || [])];
     try {
       if (playerChanged(loaded,final) || ledger.length || extra.length) {
         await db.batch(persistStatements(db, loaded, final, { ledger, extra, batchEquipmentDeletes: !gameErr && out?.batchEquipmentDeletes === true }, now));

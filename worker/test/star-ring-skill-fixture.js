@@ -9,7 +9,7 @@ import {computeStats} from '../src/game/stats.js';
 import {SPECIAL_SKILLS,eligible,specialState} from '../src/game/special.js';
 
 export const NOW=Date.parse('2026-10-19T08:00:00+08:00');
-export async function skillExpedition({version=3,prepare=null}={}){
+export async function skillExpedition({version=3,prepare=null,runTier=80}={}){
  const env={DB:freshDb(),ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',ALLOW_DEBUG_TIME:'true'},db=env.DB.sqlite,ids=['8711','8712','8713','8714','8715'];let choices;
  for(const [i,tgId] of ids.entries()){
   await P.createCharacter(env,{tgId,name:'技能驗收'+i,baseClass:['sword','mage','archer','thief','sword'][i],gender:'m'},NOW);
@@ -23,7 +23,7 @@ export async function skillExpedition({version=3,prepare=null}={}){
  if(choices.length<5)throw Error('Fixture needs five eligible skills');
  db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,1)').run(ids[0],'book_'+choices[4]);
  if(prepare)await prepare({env,db,ids,choices});
- const id=(await R.create(env,ids[0],{tier:80},NOW)).party.id;
+ const id=(await R.create(env,ids[0],{tier:runTier},NOW)).party.id;
  const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);state.engineVersion=version;
  db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
  for(const who of ids.slice(1))await R.action(env,who,{partyId:id,action:'join'},NOW);

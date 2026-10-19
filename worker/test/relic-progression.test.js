@@ -52,7 +52,7 @@ test('all newly generated relics are legendary or supreme; even explicit forced 
 
 test('legacy rarity resolution, SQL filters and full stats agree without rewriting historical rows',()=>{
  const db=new DatabaseSync(':memory:');try{
-  const statement=db.prepare('SELECT '+gearRaritySql('t')+' quality FROM (SELECT ? grade,? element_tier) t');
+  const statement=db.prepare('SELECT '+gearRaritySql('t')+" quality FROM (SELECT ? grade,? element_tier,'shop' source) t");
   for(const grade of ['normal','relic'])for(const rarity of Object.keys(RARITIES)){
    const row={...gear('sword','helmet',7),grade,element_tier:rarity},raw=structuredClone(row),expected=grade==='relic'&&rarity!=='supreme'?'legendary':rarity;
    assert.equal(gearRarity(row),expected);assert.equal(statement.get(grade,rarity).quality,expected);

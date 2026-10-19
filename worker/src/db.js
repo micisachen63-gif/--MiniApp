@@ -5,7 +5,7 @@ import {activeSettings} from './game/guardian-sigil-config.js';
 
 const CHAR_FIELDS = ['collection_active_map', 'guardian_draw_remainder', 'idle_combat_json', 'special_json', 'party_id', 'level', 'exp', 'hp', 'mp', 'map_id', 'idle_state', 'state_until', 'class_path', 'pending_tier', 'auto_red_pct', 'auto_blue',
   'last_settle_at', 'last_daily_gold_day', 'penalty_day', 'penalties_today', 'drop_day', 'drops_today', 'deaths_total', 'last_reselect_at', 'boss_down_until'];
-const EQUIP_MUTABLE = ['affixes_json', 'is_equipped', 'kind', 'branch_req', 'name', 'bonus_json', 'convert_token', 'enhance_level', 'element', 'element_stat', 'element_tier', 'bound'];
+const EQUIP_MUTABLE = ['tier','level_req','base_stat','affixes_json', 'is_equipped', 'kind', 'branch_req', 'name', 'bonus_json', 'convert_token', 'enhance_level', 'element', 'element_stat', 'element_tier', 'bound'];
 const EQUIP_COLS = ['affixes_json', 'id', 'tg_id', 'slot', 'kind', 'class_req', 'branch_req', 'tier', 'level_req', 'name', 'source', 'base_stat', 'bonus_json', 'element', 'element_stat', 'element_tier', 'enhance_level', 'is_equipped', 'convert_token', 'created_at', 'grade', 'affix_json', 'bound', 'trade_id'];
 
 /** bump a player's rev so a concurrent withPlayer batch (loaded before this change) fails its optimistic lock and retries */
