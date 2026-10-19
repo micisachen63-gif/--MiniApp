@@ -6,6 +6,46 @@ async function short(f,at,{kind='dungeon',leader=0,start=true}={}){const who=f.i
 async function finish(f,id,at){let p=await G.view(f.env,id,f.ids[0],at);for(let i=0;i<410&&p.status==='combat';i++)p=await G.view(f.env,id,f.ids[0],p.deadline+1);assert.equal(p.status,'won');return p;}
 const row=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').get(tg);
 const presence=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_party_presence WHERE char_id=?').get(tg);
+for(const kind of ['dungeon','tower'])test(`full twelve-hour expedition while repeatedly playing ${kind}: all six combats and thirty reward receipts match an isolated expedition exactly`,async t=>{
+ const f=await fixture(t),control=await fixture(t),shortRewards={},initial=await loadPlayer(f.env.DB,f.ids[0]);
+ const stored=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json);
+ stored.seed='parallel-full-run-'+kind;
+ for(const run of [f,control])run.db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(stored),run.id);
+ for(let stage=0;stage<6;stage++){
+  const due=T+(stage+1)*E.STAGE_MS,id=await short(f,due-60000,{kind});
+  const before=await R.view(f.env,f.id,f.ids[0],due-60000),during=await R.view(f.env,f.id,f.ids[0],due-30000);
+  const standalone=await R.view(control.env,control.id,control.ids[0],due-30000);
+  assert.ok(during.battle.sequence>before.battle.sequence,'background combat advances while the foreground party is in combat');
+  assert.deepEqual(during.battle,standalone.battle,'foreground play cannot alter background damage, waves, enemies or actions');
+  const liveBefore=row(f),shortBefore=f.db.prepare('SELECT state_json FROM rpg_parties WHERE id=?').get(id).state_json;
+  const tick=await R.sweep(f.env,due);assert.deepEqual(tick.errors,[]);
+  await R.sweep(control.env,due);
+  assert.equal(row(f).hp,liveBefore.hp);assert.equal(row(f).mp,liveBefore.mp);
+  assert.equal(row(f).special_json,liveBefore.special_json);assert.equal(row(f).party_id,id);
+  assert.equal(presence(f).party_id,id);
+  assert.equal(f.db.prepare('SELECT state_json FROM rpg_parties WHERE id=?').get(id).state_json,shortBefore);
+  const a=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json),b=JSON.parse(control.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(control.id).state_json);
+  assert.deepEqual(a.results,b.results,'all stage combat outcomes remain identical');assert.deepEqual(a.actors,stored.actors);
+  const readRewards=run=>run.db.prepare('SELECT char_id,stage,reward_json FROM rpg_star_ring_rewards WHERE run_id=? ORDER BY char_id,stage').all(run.id);
+  assert.deepEqual(readRewards(f),readRewards(control),'EXP, normal loot, rank bonuses and equipment remain identical');
+  assert.equal(readRewards(f).length,5*(stage+1));
+  const done=await finish(f,id,due+1);assert.ok(done.me.reward);
+  for(const[k,v]of Object.entries(done.me.reward.items||{}))shortRewards[k]=(shortRewards[k]||0)+v;
+  assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_party_rewards').get().n,3*(stage+1));
+  const ring=await R.view(f.env,f.id,f.ids[0],due+1000);
+  assert.equal(ring.completedStages,stage+1);assert.equal(ring.status,stage===5?'complete':'running');
+  assert.equal(row(f).party_id,stage===5?null:f.id);
+  assert.equal(presence(f)?.party_id,stage===5?undefined:f.id);
+ }
+ const done=await R.view(f.env,f.id,f.ids[0],T+E.DURATION+2000),banked=await loadPlayer(f.env.DB,f.ids[0]);
+ for(const key of new Set([...Object.keys(initial.inv),...Object.keys(done.me.rewards.items),...Object.keys(shortRewards),...Object.keys(banked.inv)]))assert.equal(banked.inv[key]||0,(initial.inv[key]||0)+(done.me.rewards.items[key]||0)+(shortRewards[key]||0),'both modes add their own items exactly once: '+key);
+ assert.deepEqual(banked.equipment.filter(e=>e.source==='star_ring').map(e=>e.id).sort(),done.me.rewards.equipment.map(e=>e.id).sort());
+ assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_ledger WHERE event_id LIKE ?').get('star-ring:'+f.id+':%').n,30);
+ await R.sweep(f.env,T+E.DURATION+60000);await G.sweep(f.env,T+E.DURATION+60000);
+ assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+ assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_party_rewards').get().n,18);
+ assert.deepEqual((await R.view(f.env,f.id,f.ids[0],T+E.DURATION+60001)).me.rewards,done.me.rewards);
+});
 for(const version of [1,2,3])for(const kind of ['dungeon','tower'])test(`published v${version} running expedition permits the SAME three characters to create, join, finish ${kind} without replacing its snapshot`,async t=>{const f=await fixture(t,{version}),before=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json),at=T+1000,id=await short(f,at,{kind});for(const tg of f.ids.slice(0,3)){assert.equal(row(f,tg).party_id,id);assert.equal(presence(f,tg).party_id,id);}const list=await G.list(f.env,f.ids[0],at);assert.equal(list.active.id,id);assert.equal(list.starRingId,f.id);assert.equal((await R.me(f.env,f.ids[0],at)).active.id,f.id);await assert.rejects(G.create(f.env,f.ids[0],{kind:'tower'},at),e=>e.code==='party');const done=await finish(f,id,at);assert.ok(done.me.reward);for(const tg of f.ids.slice(0,3)){assert.equal(row(f,tg).party_id,f.id);assert.equal(presence(f,tg).party_id,f.id);assert.equal(presence(f,tg).account_id,'ring:'+tg);}const after=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json);assert.deepEqual(after.actors,before.actors);assert.equal(after.engineVersion,version);assert.equal(after.results.length,0);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,5);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_party_rewards WHERE party_id=?').get(id).n,3);assert.equal(settleIdle(row(f),{},[],T+E.HOUR_MS).report.exp_gained,0);});
 test('unstarted expedition lobby cannot lend its seat; failed creation cannot damage either team',async t=>{const f=await fixture(t,{start:false}),before=JSON.stringify(presence(f));await assert.rejects(G.create(f.env,f.ids[0],{dungeonId:'pillar'},T+1),e=>e.code==='party');assert.equal(JSON.stringify(presence(f)),before);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_parties').get().n,0);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,0);});
 test('checkpoint during foreground combat awards EXP/items once without healing, changing live cooldowns, clearing the short lock or modifying either combat snapshot',async t=>{const f=await fixture(t),at=T+E.STAGE_MS-1000,id=await short(f,at);f.db.prepare('UPDATE rpg_characters SET exp=?,hp=123,mp=45 WHERE tg_id=?').run(expToNext(80)-1,f.ids[0]);const shortBefore=f.db.prepare('SELECT state_json FROM rpg_parties WHERE id=?').get(id).state_json,before=row(f);const ring=await R.view(f.env,f.id,f.ids[0],T+E.STAGE_MS);const after=row(f);assert.ok(after.level>before.level);assert.equal(after.hp,123);assert.equal(after.mp,45);assert.equal(after.special_json,before.special_json);assert.equal(after.party_id,id);assert.equal(presence(f).party_id,id);assert.equal(f.db.prepare('SELECT state_json FROM rpg_parties WHERE id=?').get(id).state_json,shortBefore);assert.equal(ring.completedStages,1);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,5);const exp=after.exp;await R.sweep(f.env,T+E.STAGE_MS+1);assert.equal(row(f).exp,exp);assert.equal((await P.withPlayer(f.env,f.ids[0],T+E.STAGE_MS+2)).report.exp_gained,0);await finish(f,id,T+E.STAGE_MS+3);assert.equal(row(f).party_id,f.id);assert.ok((await R.me(f.env,f.ids[0],T+E.STAGE_MS+4)).active);});
