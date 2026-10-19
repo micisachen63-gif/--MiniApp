@@ -80,6 +80,7 @@ export function classifyDbError(error) {
 }
 function classifyRaw(error) {
   const m = String(error?.message || error);
+  if (/UNIQUE constraint failed: rpg_party_presence\./.test(m)) return new GameError('party','目前已有打寶、爬塔或招募隊伍，請先完成或離隊',409);
   if (/exchange_guardian_locked/.test(m)) return new GameError('in_exchange','這位守護天使已在交易所保管，請先取回',409);
   if (/exchange_equipment_locked/.test(m)) return new GameError('in_exchange','這件裝備已在交易所保管，請先取回',409);
   if (/guardian_party_locked/.test(m)) return new GameError('party','請先完成組隊冒險，再調整或交易守護天使',409);

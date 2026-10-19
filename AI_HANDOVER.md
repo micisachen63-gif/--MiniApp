@@ -1,5 +1,8 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 同角色可於已啟程的星環遠征期間參加打寶／爬塔：running遠征暫借前景presence，短隊結束／離隊／逾時後原子恢復仍有效遠征。遠征結算保留前景HP/MP/party_id，完成／撤退不清掉另一場短隊；兩邊清單可並存，普通掛機仍暫停。v1/v2/v3既有隊伍即時適用，無migration、不重置、不變獎勵配方。接手讀docs/STAR_RING_PARALLEL_PARTY_20261019.txt；僅Worker發布，版本看收據。
+
+
 2026-10-19 星環遠征v3：新建隊伍增加實際擊倒菁英／首領獵賞（最高額外144分鐘基準經驗、6普通卷、12綁定星冕核心、1低機率直接必成卷）。60核心自選武器／防具必成卷；v1/v2隊伍維持原收益，36組v2戰鬥與全員收益hash保護，原combat/loot RNG不變。核心原創alpha圖、雙幣兌換、待入袋／已入袋、BOT私人完成獎勵名稱已接齊。接手讀 docs/STAR_RING_RANK_REWARDS_20261019.txt 及經濟量測JSON；不跑migration、不重置玩家。正式發布看兩服務收據。
 
 

@@ -1,3 +1,4 @@
+import {runningRingId} from './party-presence.js';
 import * as Engine from '../game/star-ring.js';
 import * as Player from './player.js';
 import {loadPlayer,clonePlayer,persistStatements,guardStmt,outboxStmt,classifyDbError} from '../db.js';
@@ -15,8 +16,8 @@ const rows=async(db,sql,...args)=>(await db.prepare(sql).bind(...args).all()).re
 const parse=JSON.parse;
 // Long expeditions reserve the character, not every character on its account.
 // Member.account_id remains the real owner so five distinct players are still
-// mandatory within a run. Shared presence.char_id UNIQUE prevents any overlap
-// with short parties; numeric Telegram owners cannot collide with this prefix.
+// mandatory within a run. Running expeditions may lend their live slot to a
+// short party; membership remains the background expedition authority.
 const presenceKey=tg=>`ring:${tg}`;
 // A projection contains no writes or entitlement decisions. Reuse the exact
 // server beat among teammates polling the same isolate; any action/checkpoint
@@ -49,7 +50,7 @@ async function daily(db,tg,now){const day=taipeiDay(now),used=!!await db.prepare
 function addTotal(total,r){total.exp+=r.exp;for(const[k,v]of Object.entries(r.items))total.items[k]=(total.items[k]||0)+v;total.equipment.push(...r.equipment);if(r.bonus){total.bonus??={exp:0,expMinutes:0,eliteKills:0,bossKills:0};for(const k of Object.keys(total.bonus))total.bonus[k]+=r.bonus[k]||0;}return total;}
 async function rewards(db,id,tg){const all=await rows(db,'SELECT reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? ORDER BY stage',id,String(tg));return all.reduce((total,row)=>addTotal(total,parse(row.reward_json)),{exp:0,items:{},equipment:[]});}
 const catalog={tiers:Engine.TIERS,tactics:Engine.TACTICS,shop:Engine.SHOP,scenes:Engine.SCENES,duration:Engine.DURATION,stageMs:Engine.STAGE_MS,hourMs:Engine.HOUR_MS};
-export async function list(env,tg,now){await sweep(env,now,6);const db=env.DB,presence=await db.prepare('SELECT party_id FROM rpg_party_presence WHERE char_id=?').bind(String(tg)).first();const open=await rows(db,"SELECT id FROM rpg_star_ring_runs WHERE status='lobby' AND expires_at>? ORDER BY created_at DESC LIMIT 20",now),history=await rows(db,"SELECT r.id FROM rpg_star_ring_runs r JOIN rpg_star_ring_members m ON m.run_id=r.id WHERE m.char_id=? AND (r.status IN('complete','ended') OR m.left_at IS NOT NULL) ORDER BY r.updated_at DESC LIMIT 8",String(tg));const active=presence?.party_id?.startsWith('ring:')?await view(env,presence.party_id,tg,now):null;return {ok:true,...catalog,active,parties:await Promise.all(open.map(x=>view(env,x.id,tg,now))),history:await Promise.all(history.map(x=>view(env,x.id,tg,now))),daily:await daily(db,tg,now),now};}
+export async function list(env,tg,now){await sweep(env,now,6);const db=env.DB,presence=await db.prepare('SELECT party_id FROM rpg_party_presence WHERE char_id=?').bind(String(tg)).first();const open=await rows(db,"SELECT id FROM rpg_star_ring_runs WHERE status='lobby' AND expires_at>? ORDER BY created_at DESC LIMIT 20",now),history=await rows(db,"SELECT r.id FROM rpg_star_ring_runs r JOIN rpg_star_ring_members m ON m.run_id=r.id WHERE m.char_id=? AND (r.status IN('complete','ended') OR m.left_at IS NOT NULL) ORDER BY r.updated_at DESC LIMIT 8",String(tg));const ringId=await runningRingId(db,tg)||(presence?.party_id?.startsWith('ring:')?presence.party_id:null);const active=ringId?await view(env,ringId,tg,now):null;return {ok:true,...catalog,active,parties:await Promise.all(open.map(x=>view(env,x.id,tg,now))),history:await Promise.all(history.map(x=>view(env,x.id,tg,now))),daily:await daily(db,tg,now),now};}
 export const me=list;
 export async function create(env,tg,b,now){
  await sweep(env,now,6);const request=validRequest(b),tier=Number(b.tier??40),difficulty=b.difficulty??'normal',tactic=b.tactic??'balanced',config=JSON.stringify({tier,difficulty,tactic});
@@ -134,17 +135,17 @@ async function advance(env,id,now){
   if(!fresh.length)return;
   for(const m of p.members.filter(m=>m.left_at==null)){
    const before=await loadPlayer(env.DB,m.char_id,env);if(!before)continue;
-   if(before.char.party_id!==p.id)throw new GameError('conflict','角色遠征狀態剛更新',409);
+   const foreground=before.char.party_id!==p.id;if(foreground){const short=await env.DB.prepare("SELECT 1 FROM rpg_parties sp JOIN rpg_party_members sm ON sm.party_id=sp.id WHERE sp.id=? AND sm.char_id=? AND sp.status='combat'").bind(before.char.party_id||'',m.char_id).first();if(!short)throw new GameError('conflict','角色遠征狀態剛更新',409);}
    const after=clonePlayer(before),actor=s.actors.find(a=>a.id===m.char_id),entries=[],total=await rewards(env.DB,p.id,m.char_id);
    for(const f of fresh){
     const old=await env.DB.prepare('SELECT 1 FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? AND stage=?').bind(p.id,m.char_id,f.index).first();if(old)continue;
     const r=Engine.stageReward(s,actor,f.index,f.result);after.char.exp+=r.exp;addTotal(total,r);
-    applyExp(after.char,level=>computeStats(after.char,actor.equipment,level));
+    const liveHp=after.char.hp,liveMp=after.char.mp;applyExp(after.char,level=>computeStats(after.char,actor.equipment,level));if(foreground){after.char.hp=liveHp;after.char.mp=liveMp;}
     for(const[k,v]of Object.entries(r.items))after.inv[k]=(after.inv[k]||0)+v;
     after.equipment.push(...r.equipment);entries.push({event_id:`star-ring:${p.id}:${m.char_id}:${f.index}`,tg_id:m.char_id,type:'星環遠征',exp_delta:r.exp,note:JSON.stringify({stage:f.index,grade:r.grade,items:r.items,...(r.bonus?{bonus:r.bonus}:{})})});
     extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_rewards(run_id,char_id,stage,reward_json,created_at) VALUES(?,?,?,?,?)').bind(p.id,m.char_id,f.index,JSON.stringify(r),now));
    }
-   if(due===6){after.char.party_id=null;after.char.last_settle_at=s.endsAt;extra.push(env.DB.prepare('DELETE FROM rpg_party_presence WHERE char_id=? AND party_id=?').bind(m.char_id,p.id),outboxStmt(env.DB,{dedupe:`star-ring-complete:${p.id}:${m.char_id}`,target:'dm',tgId:m.char_id,kind:'star_ring_complete',payload:{partyId:p.id,name:s.name,charId:m.char_id,characterName:actor.name,tier:s.tier,completedStages:6,grades:s.results.map(r=>r.grade),grade:s.results.every(r=>r.grade==='S')?'S':s.results.some(r=>r.grade==='B')?'B':'A',rewards:total}},now));}
+   if(due===6){if(!foreground)after.char.party_id=null;after.char.last_settle_at=foreground?Math.max(after.char.last_settle_at,s.endsAt):s.endsAt;extra.push(env.DB.prepare('DELETE FROM rpg_party_presence WHERE char_id=? AND party_id=?').bind(m.char_id,p.id),outboxStmt(env.DB,{dedupe:`star-ring-complete:${p.id}:${m.char_id}`,target:'dm',tgId:m.char_id,kind:'star_ring_complete',payload:{partyId:p.id,name:s.name,charId:m.char_id,characterName:actor.name,tier:s.tier,completedStages:6,grades:s.results.map(r=>r.grade),grade:s.results.every(r=>r.grade==='S')?'S':s.results.some(r=>r.grade==='B')?'B':'A',rewards:total}},now));}
    extra.push(...persistStatements(env.DB,before,after,{ledger:entries},now));
   }
   s.log=s.log.slice(0,30);p.next_at=s.startedAt+(s.results.length+1)*Engine.STAGE_MS;
@@ -160,7 +161,7 @@ export async function view(env,id,tg,now){await advance(env,id,now);const p=awai
  const spawn=isRunning&&b?.enemy?.hp===0?{wave:b.waves+1,previousHp:0,...(Engine.usesPools(s)?{previousId:b.enemy.id,previousName:b.enemy.name}: {})}:null;
  const shown=spawn?Engine.nextWaveEnemy(s,b):b?.enemy;
  const mine=p.members.find(m=>m.char_id===String(tg)),runningProgress=s.startedAt?Math.min(1,Math.max(0,(Math.min(p.status==='ended'?(s.endedAt||p.updated_at):now,s.endsAt)-s.startedAt)/Engine.DURATION)):0;
- return {id:p.id,name:s.name,status:p.status,leaderId:p.leader_id,tier:s.tier,level:s.tier,difficulty:s.difficulty,tactic:s.tactic,nextTactic:s.nextTactic||null,rev:p.rev,createdAt:p.created_at,expiresAt:p.expires_at,startedAt:s.startedAt||null,endsAt:s.endsAt||null,stageIndex:index,completedStages:s.results.length,hourIndex,hourEndsAt:scene.endsAt,scene,scenes:Engine.SCENES.map((d,i)=>s.startedAt?Engine.sceneFor(s,i):{...d,startsAt:null,endsAt:null}),progress:p.status==='complete'?1:runningProgress,nextAt:p.next_at,serverNow:now,
+ return {parallelActivities:true,id:p.id,name:s.name,status:p.status,leaderId:p.leader_id,tier:s.tier,level:s.tier,difficulty:s.difficulty,tactic:s.tactic,nextTactic:s.nextTactic||null,rev:p.rev,createdAt:p.created_at,expiresAt:p.expires_at,startedAt:s.startedAt||null,endsAt:s.endsAt||null,stageIndex:index,completedStages:s.results.length,hourIndex,hourEndsAt:scene.endsAt,scene,scenes:Engine.SCENES.map((d,i)=>s.startedAt?Engine.sceneFor(s,i):{...d,startsAt:null,endsAt:null}),progress:p.status==='complete'?1:runningProgress,nextAt:p.next_at,serverNow:now,
   stages:Engine.STAGES.map((d,i)=>({...d,roles:Engine.stageRoles(s.tier,i),index:i,startsAt:s.startedAt? s.startedAt+i*Engine.STAGE_MS:null,endsAt:s.startedAt? s.startedAt+(i+1)*Engine.STAGE_MS:null,status:s.results[i]?'complete':isRunning&&i===index?'active':'pending',result:s.results[i]?{grade:s.results[i].grade,defeated:s.results[i].defeated,expHours:s.results[i].expHours,coverage:s.results[i].coverage,encounters:s.results[i].encounters}:null})),
   members,battle:b?{stageIndex:index,hourIndex,scene,spawn,enemy:{id:shown.id,name:shown.name,hp:shown.hp,maxHp:shown.maxHp,shield:shown.shield,windup:shown.windup,interrupted:shown.interrupted,spell:shown.spell,behavior:shown.behavior,counterRoles:shown.counterRoles,artIndex:shown.artIndex,artUrl:shown.artUrl,...(shown.rank?{rank:shown.rank}: {})},members,sequence:b.sequence,events:b.events,coverage:b.coverage,waves:b.waves,objective:b.objective,encounters:b.encounters,...(Engine.usesPools(s)?{sightings:b.sightings,encounterSerial:b.poolSerial}: {})}:null,log:s.log,engineVersion:s.engineVersion||1,rankRewards:Engine.hasRankRewards(s)?Engine.RANK_REWARDS:null,pendingRankReward:isRunning&&Engine.hasRankRewards(s)&&mine?.left_at==null&&s.actors.some(a=>a.id===String(tg))?Engine.rankReward(s,s.actors.find(a=>a.id===String(tg)),index,b):null,me:mine?{id:String(tg),leader:p.leader_id===String(tg),ready:!!mine.ready,left:mine.left_at!=null,rewards:await rewards(env.DB,p.id,tg)}:null,roleCoverage:Engine.coverage(members.filter(m=>!m.left).map(m=>({...m,path:m.classPath}))),rewardsPreview:{expHours:[18,24],tokens:s.difficulty==='advanced'?[11,12]:[10,11],extraEquipmentChance:s.difficulty==='advanced'?{S:.6,A:.25,B:0}:{S:.35,A:0,B:0},guardianLootBonus:true}};
 }
