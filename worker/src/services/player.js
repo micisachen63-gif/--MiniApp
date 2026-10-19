@@ -304,7 +304,7 @@ export async function sellGearBatch(work, { db, lockedEquipment = [] }, { itemId
 
 /** equip: earrings/rings take position 1 or 2 (requested, else the first free one, else replace #1). Equipping binds the item. */
 export function equip(work, ctx, { itemId, position = null }) {
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
+  requireBackpackAccess(work.char,ctx);
   const item = work.equipment.find((e) => e.id === itemId); if (!item) throw new GameError('not_found', '找不到這件裝備');
   const why = canEquip(work.char, item); if (why) throw new GameError('cannot_equip', why);
   let pos; try { pos = equipPosition(work.equipment, item, position); } catch { throw new GameError('position', `${SLOT_NAMES[item.slot]}只有 ${capacity(item.slot)} 個欄位`); }
@@ -315,7 +315,7 @@ export function equip(work, ctx, { itemId, position = null }) {
 }
 /** unequip by itemId, or by slot (+ position for earring/ring; default: the item in position 1, else 2) */
 export function unequip(work, ctx, { slot = null, position = null, itemId = null }) {
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
+  requireBackpackAccess(work.char,ctx);
   let item = null;
   if (itemId) item = work.equipment.find((e) => e.id === itemId && e.is_equipped);
   else {

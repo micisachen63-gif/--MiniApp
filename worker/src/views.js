@@ -24,6 +24,7 @@ export function equipmentView(char, e) {
   const st = itemStat(e, char.base_class); const x = itemExtras({ ...e, affix_json: null }); const ms = mainStatOf(e.slot);   // extras shown without the relic affix (listed separately)
   return { id: e.id, slot: e.slot, slotName: SLOT_NAMES[e.slot], position: e.is_equipped || 0, name: e.name, tier: e.tier, rarity: e.element_tier, rarityName: RARITIES[e.element_tier]?.name,
     affixes:affixView(e,char.class_path,char.base_class),rerollCost:affixCost(e),rerollPrices:Array.from({length:affixView(e).slots},(_,n)=>({locks:n,scrolls:Math.max(1,e.tier)*[1,2,4,7,11][n],fee:Math.max(1,e.tier)*30*(n+1)**2})),grade: e.grade || 'normal', gradeName: e.grade === 'relic' ? '遺物' : null, affix: e.affix_json ? JSON.parse(e.affix_json) : null,
+    relicProtection:e.grade==='relic'?'遺物主屬性至少採傳說倍率；強化加成提高25%':null,
     element: e.element, elementName: ELEMENTS[e.element]?.name, stat: st.main, elemStat: st.elem, statName: { atk: 'ATK', def: 'DEF', mp: 'MP', hp: 'HP' }[ms],
     extras: x.flat, pct: x.pct, kind: e.kind, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業',
     enhance: e.enhance_level, equipped: !!e.is_equipped, branchReq: e.branch_req, levelReq: e.level_req, source: e.source,

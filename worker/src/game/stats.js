@@ -4,7 +4,7 @@ import { THIEF_NODES } from './thief-data.js';
 import {affixTotals} from './affixes.js';
 import {specializeNode} from './advanced-specializations.js';
 // Derived character stats (pure). Equipment rows use the D1 rpg_equipment shape.
-import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
+import { CLASSES, BRANCHES2, ARMOR_FAMILIES, RARITIES, RELIC, WEAPON_ATK, ARMOR_DEF, GENERAL_WEAPON, IDLE, MAPS, SLOT_SPEC, SHARED_SLOTS, SLOTS } from './constants.js';
 import { monsterPressure, mapForLevel } from './formulas.js';
 
 const parseBonus = (b) => (typeof b === 'string' ? (b ? JSON.parse(b) : {}) : (b || {}));
@@ -39,12 +39,14 @@ export function enhanceBonus(slot, level, tier = 1) {
   const tierScale = [1, 3, 6, 10][Math.max(0, Math.min(3, Math.floor(Number(tier) || 1) - 1))];
   return b * tierScale;
 }
-/** main stat (+enhance) x rarity; shared DEF pieces (belt/undershirt) x the wearer's armor-family defMult */
+/** Main (+enhance) x rarity; relics protect main rarity and enhance returns.
+ * Shared DEF pieces also use the wearer's armor-family defMult. */
 export function itemStat(item, wearerClass = null) {
   const mult = RARITIES[item.element_tier]?.mult ?? 1;
-  const enh = enhanceBonus(item.slot, item.enhance_level, item.tier);
+  const relic=item.grade==='relic',mainMult=relic?Math.max(mult,RARITIES[RELIC.mainRarityFloor].mult):mult;
+  const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
-  return { main: Math.round((item.base_stat + enh) * mult * fam), elem: Math.round((item.element_stat || 0) * mult) };
+  return { main: Math.round((item.base_stat + enh) * mainMult * fam), elem: Math.round((item.element_stat || 0) * mult) };
 }
 /** what base_stat means for this slot: ATK (weapon, ring) / DEF (armor slots) / MP (earring) */
 export const mainStatOf = (slot) => (slot === 'weapon' ? 'atk' : SLOT_SPEC[slot]?.main || 'def');
