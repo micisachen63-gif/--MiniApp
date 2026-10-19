@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "e5695311d65ee39171e8b5f22b521abd94a1b5fa",
+  "sourceCommit": "f088a00bb86455a625c48bf9b5aa1ae97a0952d5",
   "service": "elf-rpg-api",
-  "productionVersion": "35ea0d95-b4ec-41ae-aab2-c3bd1dc30c35",
+  "productionVersion": "a04de840-3350-4269-9b94-59ab816e26a0",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T02:11:00.017Z",
+  "verifiedAt": "2026-10-19T03:06:03.331Z",
   "runtimeSHA256": {
-    "index.js": "b0771bcda8e5e424557bdd53bf6ff230fb046fc095da99a517cd4567860c340d"
+    "index.js": "5f95413f2421d4b1b0b14634331808421a05eb83ae0da630b08e4b5b87ac3bb1"
   },
   "source": {
-    "fileCount": 9079,
-    "sha256": "90af5b707e9958d5e18ade4f4af51d8191d562e57907d66beeb441c2c64a6a47",
+    "fileCount": 9207,
+    "sha256": "e74080f45ab67d0d1ad188578160f1a7412c670cd5160b376977275569d58894",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -148,6 +148,218 @@
       {
         "file": "worker/art-production/star-ring-20261018/source/monster-12.png",
         "sha256": "e25406d910262b1e164a890e1c547fc5b39e1bc3cf4af635bd4e6c77b22a4c71"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/README.txt",
+        "sha256": "4e9865d0e36ae3a0e6eabad9bcd75f876b9027cb8b2d89a28af6a94ef28ef56a"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/manifest.json",
+        "sha256": "66abd024c8fba5c1fdb985a1e86d314b1520973df4a1a17f7eefe9642f3d5f75"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/all-stills.png",
+        "sha256": "a2d4a37d7e9e3e00e988a3ab3ca2035a60c77df9bce4097bb8c70165446a8ff7"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-01-elite-poses.png",
+        "sha256": "3f48dd30ce06493de1de6d6865ae8c0f822c283a1e86fa943ceacc14e1737675"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-01-normal-a-poses.png",
+        "sha256": "a7a367f9bf1af63bd6257c5857559f52aa62d41c474436b3d048e0a829b94ba6"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-01-normal-b-poses.png",
+        "sha256": "20f8e6b4c422045b38355b0c2307e8c03e237f39744ee1b8a7cf9c003d6f1272"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-02-elite-poses.png",
+        "sha256": "d408fb515edac4b4317b867477f36b8e7220e217dfb17c6cbdce67048fc377dc"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-02-normal-a-poses.png",
+        "sha256": "534175bf9c15ad1f8dd704a4ff5cb93964638401d3fd7b46059c62211eb7d333"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-02-normal-b-poses.png",
+        "sha256": "ac715e16772e59643242eefef105f3168874c9f3e0767a7e8dfc85f15773041a"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-03-elite-poses.png",
+        "sha256": "e0c44b52ec7942b9b71f044675876bbcf3662ccfa7baa197ae9a32eaf569cf15"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-03-normal-a-poses.png",
+        "sha256": "35ad36f7d704ac37d3b1c95e83c2dbb1e265ebded65b9c158096467534b31d0e"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-03-normal-b-poses.png",
+        "sha256": "7bcedaa473b8ac328c01f1ba958bb544fa181ff3e618102842dd8e5918d0aa83"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-04-elite-poses.png",
+        "sha256": "c1bba672f16dcf945180d6bcf793425ab0220f8a099e01a454ecf527d979f1de"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-04-normal-a-poses.png",
+        "sha256": "f7f17964a886b6bb761ae87d209162e41d8f42f7f01f0425013f1ea5faa6e718"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/map-04-normal-b-poses.png",
+        "sha256": "775ea51e0cf2d351376731333b63487b00f640691aa5b7d83b53ff6df214bde7"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-01-elite.png",
+        "sha256": "c98f4bcd5b07a0fc9e1eb3ff11c76f5d20a7bf0d4f34d58d3d68fc6417b696cf"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-01-normal-a.png",
+        "sha256": "5ad2338f31f5b4c6e066faa887a3fd65805c24688f74a4e285bcf6adad5acff4"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-01-normal-b.png",
+        "sha256": "311fee3f3911bffe622df11fe36aec90f29123e1c947f6825e72fc6492e5b4ee"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-02-elite.png",
+        "sha256": "a05800b815e79a9072639ba2a5dd41d39ac5ab3c1ca1fee0fafed6c71565bb79"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-02-normal-a.png",
+        "sha256": "914153af601b9de6ef6f024fd3edd3ee8c647fa053b947bd0f77cc1faf2f4095"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-02-normal-b.png",
+        "sha256": "fa90365fada1dc2b372a61e205c727ce7893c307b6aa08f54246ca55df3ad7ad"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-03-elite.png",
+        "sha256": "c5161eefe40e85c3acd00a07c36ffdb385486abd07377d41b1c10b7b57eb55f5"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-03-normal-a.png",
+        "sha256": "bcc8fb7f3ff06539770ffb9c7a6eb73bb6b13285531eefba3e136988f888c9f0"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-03-normal-b.png",
+        "sha256": "0fb6f0023a37fc6f26a7e6613bad6ded6feafb1ba295ed198c648aea4d0da926"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-04-elite.png",
+        "sha256": "0081fccfc4fa183fe9c98b7fcbd3e74d2e2bb4a784ef7d73463fea324c652d39"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-04-normal-a.png",
+        "sha256": "0081f07cd076d8841a1edd378431fbdd89770657e9645b61ad4fcbc23bde5f05"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/source/map-04-normal-b.png",
+        "sha256": "a2d67ba027d27ce70236083667b992e4a11ed467469e37d7bf7944cbf6687e86"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/manifest.json",
+        "sha256": "49cf2e2b8b2f38d0ebfdef65ebf04f55283de329f02b0b8a01b966d8f2756b9d"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-05-elite.png",
+        "sha256": "1801f31758b722bb187650d44aa268d3545eff4958091a15f0af910975985db9"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-05-normal-a.png",
+        "sha256": "b5c6dd3af7eb1a77c028b16e6742478e832449460900ee126b60cac877dac337"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-05-normal-b.png",
+        "sha256": "7d82955c3d5dd0eb11950c793958fc486cf2391eb00a5bcae5e7aba5d39b1a46"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-06-elite.png",
+        "sha256": "90aa7f56da73313150d4b44eba0ed136a4153e7d18961ca6e5d0662ce7e8bbfc"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-06-normal-a.png",
+        "sha256": "bcfce012937dd8d1ed03a5d6ca6466611ea631f45551835f40826d7f3a38c9aa"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-06-normal-b.png",
+        "sha256": "d73b37167cc12828648b0935b6d789016c488e23a6e7f2f326d9d9ca96d578ea"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-07-elite.png",
+        "sha256": "ebeaa5d36b4f15f5ca3713db180878a2986bacbd75e43ee7feb6ed8364a764e7"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-07-normal-a.png",
+        "sha256": "097e013c87bbad329396090966b700c3139161e422adc609686831327889388b"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-07-normal-b.png",
+        "sha256": "0db56eb8d344ff8ae72f1ec8f1e9c470d0eb2958f69cf6def0ba9a008bc30f9d"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-08-elite.png",
+        "sha256": "1de8c153d8830d3c662e80ce9b5cf24902cbcbcd72d29ae73a1db9121aa68ca0"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-08-normal-a.png",
+        "sha256": "69f4a36433c49845879c78b719781125ec07f8b777016c8653d0b51d06b0f7b2"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-08-normal-b.png",
+        "sha256": "3c5ac1ed2faecd7b6e30cfbd728c7be59f2de83aad091ef48d1f22a35b6a6494"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/manifest.json",
+        "sha256": "2ae2bef52a754ddbc77968344e98564811feb768c7891ecfca28b5df14d50845"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-09-elite.png",
+        "sha256": "375e0c3e38193c5d03533fd3c9dfd6b04f7d18f826738e82399a79fbff283f0c"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-09-normal-a.png",
+        "sha256": "941cb7371feba2e520e3d59194ff5388a3cf8b3e23ce3c5fc195b8e06186e7a9"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-09-normal-b.png",
+        "sha256": "860cb01097dc8fe5bcad2992756e1728244eec55959d80f8c423bff2b953a427"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-10-elite.png",
+        "sha256": "e1c9eff1efcc042878977a9ee5e5b8b660c6097429cc4b7c3db455822b150e29"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-10-normal-a.png",
+        "sha256": "a17937f2b8b286e026a90b865e981e6fb1be93f95a9ada3a4a500a839dbd4bdc"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-10-normal-b.png",
+        "sha256": "ea8ad103d1f5a3034966c01f4bafaf284c2516abc7aa0a540a1dd00b226a6bb7"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-11-elite.png",
+        "sha256": "2f01d03defa6005cf8f8773377fecc2df1b7cfcf557758ee415ccffd1386f5af"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-11-normal-a.png",
+        "sha256": "463a0b7cf370daa9c8c0a50a2066a7095dfeb23cba60f06d77030e3b793b3934"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-11-normal-b.png",
+        "sha256": "76222884be664a9a472aac06c02ddac73c6d5b1d69833b9775cb2b28eb261af1"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-12-elite.png",
+        "sha256": "bdb7a77a01c4137466f83449b0cd6d210547781edd5fc528de7048300295253e"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-12-normal-a.png",
+        "sha256": "3902a5baf59d72310bb79b3471d82f4c9882ac030cf1f985ea16f4e3f032b8a9"
+      },
+      {
+        "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-12-normal-b.png",
+        "sha256": "4444f1763badd0b035b1ff594ad636e5d715ff1a3135bcae2de6f650bdb3724c"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5-rejected-gutter.png",
@@ -27630,6 +27842,302 @@
         "sha256": "b6d70dcbb2db549bf0f07f728c3022aea72e73df89dcd0abd2c1fcf4b06a4ef2"
       },
       {
+        "file": "worker/public/art/star-ring-pools-20261019/catalog.json",
+        "sha256": "3b2404713860bc92ab1d836e09e59baa8f2bce2411df381b4aaa194478920608"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/manifest.json",
+        "sha256": "e0c32149d3bb9cd9fc60c3e257d64f37c1f4e2e189d53429498ce9a15ad9369e"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-elite.webp",
+        "sha256": "a5622bd215516b985f6ae8fef483d3675a69a6e2e838dfb37197f273c1857b70"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-elite_attack.webp",
+        "sha256": "83e3b4ebd3c1a46c23eec5b97ce5abdd2eb8ae0305235c376a4dd39757bde529"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-normal-a.webp",
+        "sha256": "e873df85f46cb49cdd13e1679893663ce81cc1d62dc9a4b9f1c7dce9f2031f7a"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-normal-a_attack.webp",
+        "sha256": "f23b450c8385f3924d3820bee598b666e7636bb9b950d0a20c8b4fb942da233d"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-normal-b.webp",
+        "sha256": "2900fc86adbe7408df934ee0e3d0b6c52fc14db310872cd70f21f79dfb79cabc"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-01-normal-b_attack.webp",
+        "sha256": "562c129bc22b483a91db32c2f1bca4d6b2bca9a8372d5285197ab3adf5a018e5"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-elite.webp",
+        "sha256": "85635d947c4468c10abe0c47c9c14c8d3a7801eea2dddf49d43b1372962a6fd8"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-elite_attack.webp",
+        "sha256": "104307cf945e77ad9877cace88994444c8374310bb374871c1e0c761deeef484"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-normal-a.webp",
+        "sha256": "ecbe3a2017e5293ed47db4178f0d929781a9a330ad68b68dec8a5cf80fd30513"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-normal-a_attack.webp",
+        "sha256": "d345b73a90f9731c1efa30b10b72f402ff0885a1858c8acc6c10d5060b99da02"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-normal-b.webp",
+        "sha256": "046e1f61e5754b1e8bce2d8d3812af68cb80bcb611894e1cd8c0ae8a3ff1ad83"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-02-normal-b_attack.webp",
+        "sha256": "cf0192803644b56de054a455e2f1f2aab15d35f70c4fba45b0d7556f995d0c88"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-elite.webp",
+        "sha256": "8ca0a90acf091a0ea136c23df3ae1f56f14bd4283dc4ecf2610853d4c6bd1738"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-elite_attack.webp",
+        "sha256": "ed42c6be259e7d62eda20415668516dbd82b99fe1ebe4b789100862e191a9a59"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-normal-a.webp",
+        "sha256": "214f737d903e6352301e039a41ebd91bf85504da1505ede24a11d9b8be72a10f"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-normal-a_attack.webp",
+        "sha256": "99b08926f0a80d13fd04151ca568bd4a797b07b44e2b801dd7cb1e5ad1026066"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-normal-b.webp",
+        "sha256": "27a1dbe1d250c6b72cf415666d034ee498339a2d5eee5ec03744bf239e86ea9b"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-03-normal-b_attack.webp",
+        "sha256": "27a917f0219b1007572cee3e8f09b6fa7da25448e799869d25a5e11c5829e0dc"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-elite.webp",
+        "sha256": "b558ddee2af4003c0d4eee3d0ba7fb93de7c7e9b65120c3c09a2d98fb7e85437"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-elite_attack.webp",
+        "sha256": "f0331b717190e657c3eddf517b66a14c28c920320dcb6e42d0c8ed87494ae498"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-normal-a.webp",
+        "sha256": "19518a07792821c2f5a58db18829567f5d0f2dada9810817e9703932d1247eac"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-normal-a_attack.webp",
+        "sha256": "57bde74055640413ead1412820667838bf0526c5f34020ffd4f8063f03e58897"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-normal-b.webp",
+        "sha256": "f92b36564282a8b16932d241b530b1ea4bfe824ecc968f2098e72ea43f229a84"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-04-normal-b_attack.webp",
+        "sha256": "637cf388e7bd740f3b87c2cc29d5daa3a62ceac02fdf25618f9a4146a66a2919"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-elite.webp",
+        "sha256": "0fa4b3a06f718995e5ce02efa094863f864028b26c7cd840021702c3a8f3e572"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-elite_attack.webp",
+        "sha256": "9fa535fce06b84c9eba5077c3e74edd3131812b9ce14f66dcc4ad0514223bdca"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-normal-a.webp",
+        "sha256": "de96742116b14af8260e677ab15a227b6270e98e16c409c4157c991a1f3f5d81"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-normal-a_attack.webp",
+        "sha256": "349e43d353e34f409936ecb7a494d3bbf5824368b7f65488ddedb45bb29c398d"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-normal-b.webp",
+        "sha256": "3fc79c7097564421c00a6b0dbf6e3e08b06f70430888e410615a73929e8c5292"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-05-normal-b_attack.webp",
+        "sha256": "ec5ab0731b8c94365004592bd1ad7c31bfee0d08fcedf8d596c6925aa787121d"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-elite.webp",
+        "sha256": "d97824370db64dc6d147cad840f30f65a7bb58a05783de5f54c0065d049d9f10"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-elite_attack.webp",
+        "sha256": "72a2a97cfa071df34b2f8089d228d2b1a18cac1d908c495667a69c5d5d15fdb8"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-normal-a.webp",
+        "sha256": "4a1a2b42d03b5a90ebc547708f10bee1d805690191e54083c58d2ccb4f124dd5"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-normal-a_attack.webp",
+        "sha256": "cc4493d8288d882d4908b14e598ee741141da8a313a784f12c10a255f0c1782d"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-normal-b.webp",
+        "sha256": "beec9a6b9be95537859ff8ff9a0ab7b2cb1854cb362350c159d94bfe9cafd13d"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-06-normal-b_attack.webp",
+        "sha256": "3628a93e094f7f7d612ac7f373b95dd9d419674337ee9538b081994c54f3f992"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-elite.webp",
+        "sha256": "59bd79ee998b1fcc76aab1dbc315a7c650f85d4ced74b4089627300a17147f59"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-elite_attack.webp",
+        "sha256": "47d03d18dd67c2c207a940151f63cb5093a666122b00388fe076a48459134e4b"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-normal-a.webp",
+        "sha256": "4a003d27c2dc457c066bac6c90cbb2355fba25d9a76392eb7a7192810dd661c0"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-normal-a_attack.webp",
+        "sha256": "bdd1f439df0b4231012e3251531b2033cd3e196d7768361bebf54617fcd8a526"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-normal-b.webp",
+        "sha256": "7b9d21cb4a1baf1bd65f0cc16782e41dff5125fc0fe3a1c30eee98e7bdff6316"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-07-normal-b_attack.webp",
+        "sha256": "2d1d10e5b9d252808ec947f1b5a2580c79d33ab7a653ae0df9e40021594a3397"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-elite.webp",
+        "sha256": "1875d53e6ff63bed55cfbfe55a7642833aa8a29b3c49c9d961a4e8cce2cb7832"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-elite_attack.webp",
+        "sha256": "efe95e603defa5498df6be4314b7399a80ff661461cd58932c52182709e30cbc"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-normal-a.webp",
+        "sha256": "ccb0433fb1f7affd631d6e5fe6f94d673190518b489f6c4d07c0b1701453f1b8"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-normal-a_attack.webp",
+        "sha256": "977defdeb40b18076fa119139bd610b994f22ceed9adf65604bc7d8454c8c7a3"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-normal-b.webp",
+        "sha256": "e9c5944be2f605d22355be9e8254770d224e05d3c6b0b0de95cc0fdb73622165"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-08-normal-b_attack.webp",
+        "sha256": "c7c48060624189aa551588845fed985ca1af236ccbc8561b93245cdc8267024b"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-elite.webp",
+        "sha256": "4bf39f98f803c7e18afe54ad4e981387b631fe3c2873ebbe95a3d972d70c19d5"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-elite_attack.webp",
+        "sha256": "37023622e659954801a3a4825c3f5083a6e499a36f3ca321e0cc1fce2ecdb644"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-normal-a.webp",
+        "sha256": "78f85c9359f780835698f42689b150f994bf595037578f6fee23d2cf6dc0010f"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-normal-a_attack.webp",
+        "sha256": "de9d45449479080e4fff2b504fd57e64b34c4552ac232cfbc20877f612e152d6"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-normal-b.webp",
+        "sha256": "c6d2f207de0e4486d1cf86695b7cb815c0e7a0d0faf0eac73ac54ff37209f6cc"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-09-normal-b_attack.webp",
+        "sha256": "f02c07f0b8a7c00694335a1845dd17d7efabaa861a4db12597bd98d931130b3e"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-elite.webp",
+        "sha256": "729f34c3a5819ff1fb8bb3b5c94b5e4d5b2cb9e6504aa87260ade60bfdba510c"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-elite_attack.webp",
+        "sha256": "af70852a4361da370532d6f2257c73b5ad666e9116ccf51b4234edcdfb21c02c"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-normal-a.webp",
+        "sha256": "c3468f1f2a49d4de0eb956d026c175cce0cbd745a8e120a994422c8c792ff064"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-normal-a_attack.webp",
+        "sha256": "ef45b07e1a8ff530f4fac5d69f6ee74b9b8cac30f956b396a186d3b4742de429"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-normal-b.webp",
+        "sha256": "dd3fb77abcbbda705b02efcebc3b22f2dacccdc8ac0535e60609b54bb628829c"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-10-normal-b_attack.webp",
+        "sha256": "145f827b7a7bb8599dd743f89183e54c0cdf0603e96ba8d9068c58220228a4a3"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-elite.webp",
+        "sha256": "135a6baaf687752da3d099c9f6f8b124b3e860d27c0433a8f4bca827a48b23e1"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-elite_attack.webp",
+        "sha256": "a3a280a87d3035b7bd1343bc63d560f1954eedbeb914043c7f49236f5a8ff731"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-normal-a.webp",
+        "sha256": "54f4875677ae7bbb9992331f873ed4d745ed8e0ef627b3d77af226480a1bd240"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-normal-a_attack.webp",
+        "sha256": "6ea90bbaaaef79ef5350757c02376731d25f0b6e580bed6a3479207e9b30f9de"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-normal-b.webp",
+        "sha256": "97cf6d947ebe68a15cb215e04cf44aec2027e00ff1aa9049ec7abd91c2a3c14e"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-11-normal-b_attack.webp",
+        "sha256": "f5cf540392937297411ad496670c7b8b30aca648e612a98b11cfd69dfffa9a5f"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-elite.webp",
+        "sha256": "336685023ee4733b6260d2b2f1654432626c17667fba5b7a660d00b147ef2b97"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-elite_attack.webp",
+        "sha256": "94316b7ee8696860b2da96bc611af82f781230fb3fc8420f3da1b32c75fa019e"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-normal-a.webp",
+        "sha256": "eb4b883e5dfe27985cc1cbd0625cc5a90bed3067a17a14a0a6a8d5dea92384fe"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-normal-a_attack.webp",
+        "sha256": "c655fafa864b4b0edada7f4c08be238aefdc96eee5f6ae97496f95963b94b7ed"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-normal-b.webp",
+        "sha256": "72266ad039830e121bbf97fc2b5c90bfe223e401b0b34696afd64c38e5822e25"
+      },
+      {
+        "file": "worker/public/art/star-ring-pools-20261019/map-12-normal-b_attack.webp",
+        "sha256": "278c3bfe0c087156c2fea6a70db4e430c117029a16995414b984d00a9ad35d16"
+      },
+      {
         "file": "worker/public/art/star-ring-rewards-20261018/aura-dawn.webp",
         "sha256": "494ff10bc4149b4e22bae084abf61f33995f1542fce6d42661df5293145f2f0b"
       },
@@ -34571,7 +35079,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "6aa3cec31fe1e5a53c4d9f2ef750f360d94fb20be2fff1c88fe54dfad57af377"
+        "sha256": "0fbf82ddae2d7c84ef3ba9bbf20624803650fe4cc3551f69ee37ce24559fa2dc"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -35571,7 +36079,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "574b161e8323372fb81ffb642fc62e15ad63b4ac7c7dd369ea6f3d3408f0836e"
+        "sha256": "8e12244abe9be48d02ebc85832c34c847eb424e7914e8c8a233d5a4db53f3086"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -35611,11 +36119,11 @@
       },
       {
         "file": "worker/public/star-ring-heroes.js",
-        "sha256": "85997c4dff8bfef75e877b82f1a1f6c150e6e5949ee056d2f850f42fb15ef9de"
+        "sha256": "0c86098985a25bb7471cff41e7dc32ba30012407469e10af8a3fc14cb50c2e5d"
       },
       {
         "file": "worker/public/star-ring-monsters.js",
-        "sha256": "33a07fcac21dd471c55e1d5ee96ac851ca4ad59c960f1777c5dee39f11568ee4"
+        "sha256": "e765b941a8e7aed853c49c42c83eceb978f67c8ee1b432d298c21779ea46c479"
       },
       {
         "file": "worker/public/star-ring-scenery.js",
@@ -35623,11 +36131,11 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "76d180001b9aa827b988c94b14fde8d601c892c010493b9850587c90d16ddca4"
+        "sha256": "0d293910ba8961046fb05caded05a0b2b6a25d293f3933ae024fdf733dea4b18"
       },
       {
         "file": "worker/public/star-ring.css",
-        "sha256": "8f36e65cd3b150307b2c55f86f02b75f2523a35f8bc93273c786c6d9d1f7dcd9"
+        "sha256": "2221a3bbeb7c304dcec244eaf3af67a1de11b32ac2810ac3dd788fa79f3ed4f0"
       },
       {
         "file": "worker/public/status-banner.css",
@@ -36158,8 +36666,12 @@
         "sha256": "01a28be90c230e46ac75550fedb209b55615091ce56bedcd5189acd07bc017dd"
       },
       {
+        "file": "worker/src/game/star-ring-pools.js",
+        "sha256": "39ae312b74229872e5ec355c70f4512026ae2a9124130275845c0c824e404673"
+      },
+      {
         "file": "worker/src/game/star-ring.js",
-        "sha256": "3488abac2892c889ed246a36026b41ce3621e6979fc0ed374d7ac46896ff90bc"
+        "sha256": "ea7c28b27fa050062331255663f1aa200a52ced96fc9dcbed5111f3156e9c173"
       },
       {
         "file": "worker/src/game/stats.js",
@@ -36307,7 +36819,7 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "f12caac87343f7af68ba092700f2a7f5c6fbe2ad9f8f798e8030cf5fd4b79c4b"
+        "sha256": "53aa64bd8bf44b752b26ea5aa326ee1118c491b43013bde581dc6fc786b7522e"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -36333,16 +36845,90 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 147,
+    "verifiedCount": 220,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_belt_styx_epic.jpg",
-      "worker/public/art/collection-materials-20261014/hunt_12_3.webp",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m_portrait.png",
+      "worker/public/art/cards/equipment-20261011/gear_boots_athena_leather_epic.jpg",
+      "worker/public/art/collection-materials-20261014/hunt_7_core.webp",
+      "worker/public/art/star-ring-pools-20261019/catalog.json",
+      "worker/public/art/star-ring-pools-20261019/manifest.json",
+      "worker/public/art/star-ring-pools-20261019/map-01-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-01-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-01-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-01-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-01-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-01-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-02-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-03-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-04-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-05-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-06-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-07-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-08-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-09-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-10-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-11-normal-b_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-elite.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-elite_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-normal-a.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-normal-a_attack.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-normal-b.webp",
+      "worker/public/art/star-ring-pools-20261019/map-12-normal-b_attack.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B121_f.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -36363,7 +36949,6 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
-      "worker/public/expedition/hero-art-playback.js",
       "worker/public/expedition/index.html",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
@@ -36487,7 +37072,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "35ea0d95-b4ec-41ae-aab2-c3bd1dc30c35",
+        "version_id": "a04de840-3350-4269-9b94-59ab816e26a0",
         "percentage": 100
       }
     ],
