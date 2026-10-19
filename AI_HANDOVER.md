@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 技能保留追加補驗：新增12個真通關流程（遠征v1–v3×打寶／爬塔×兩種結束順序），實際施放新技能，通關後再改配置、讀舊戰報／重試領獎及遠征完成都不回寫舊配置；新學技能、自動條件、合法新冷卻與towerBest保留，30份遠征收益對照一致。只增測試／文件，不需部署；合入後sync:check核對正式機即可。詳docs/STAR_RING_SKILL_PERSISTENCE_VERIFICATION_20261019.txt。
+
 2026-10-19 遠征技能配置放寬：expedition/action 的 loadout／auto 允許本人真實running遠征沿用背包存取驗證與原子guard；學習仍可，前景打寶／爬塔及施放／天使settings限制保留。當趟v1–v3 actor快照不變，新配置用於新開戰鬥且不被結算覆蓋。新增16項回歸含三版本完整12h／30份收益JSON對照、真新打寶爬塔配置、提交競爭與資格保護；390／1280px隔離正式iframe實際操作通過。詳docs/STAR_RING_SKILL_CONFIGURATION_20261019.txt；僅Worker、無migration，正式發布看deployment-records。
 
 2026-10-19 第三輪複查補修：雙人交易守護羽毛選取器增加40筆游標「載入更多」與原頁重試，固定角色／epoch／交易代數／面板身分，防晚回應及舊按鈕污染；星輝匣將fn狀態讀取納入失敗後收據恢復，僅相同帳號／操作編號／內容指紋回原結果，不吞真正錯誤。新增30項回歸，完整Worker1827／BOT163通過；隔離完整MiniApp390／1280px分頁、斷線重試及第81張真託管驗收。詳docs/TRADE_PAGES_GIFT_REPLAY_20261019.txt；僅Worker，無migration或BOT改動，發布看deployment-records。
