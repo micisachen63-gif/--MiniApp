@@ -15,7 +15,7 @@ sweep通關立即呼叫既有grantAll，並查找已通關但尚未入袋的有�
 驗證
 新增worker/test/party-offline-clock.test.js 14項，連同party與star-ring-parallel-party共62項通過：
 5秒／15秒每30秒背景tick與準時在線逐字比對；普通／職責副本與十層塔兩小時無任何view也通關，結果／真實終止時間／角色離隊時間／獎勵完全相同；未來回合不提前；過期手動選擇拒絕；多次喝水、冷卻一致；注入角色rev衝突後整批回滾不重扣；未入袋通關自動重試；瀏覽器返回與兩個sweep同時到達不重打重領；40回合正常狂暴失敗；招募背景出發；實際Worker每分鐘scheduled在無BOT／瀏覽器情況下直接通關並發獎；六隊D1與圖卡數量上界。
-既有v1/v2/v3遠征並行、六次完整12小時對照、互不覆蓋HP/MP/presence、前景結束／撤退、收益hash與角色技能測試保留。原combat-expiry測試更新成delayed-combat-sweep：排程晚到應補戰通關並發三份獎勵，不再期待零獎勵逾時。
+既有v1/v2/v3遠征並行、六次完整12小時對照、互不覆蓋HP/MP/presence、前景結束／撤退、收益hash與角色技能測試保留。動畫與盜賊技能驗收改在真正deadline取得第一個已結算回合，保留原傷害／MP／技能／交易斷言；另將expedition的舊牆鐘逾時測試改驗證延遲後照樣通關發獎與釋放席位。原combat-expiry測試更新成delayed-combat-sweep：排程晚到應補戰通關並發三份獎勵，不再期待零獎勵逾時。
 以上為隔離D1記憶體資料庫與注入時間的真服務整合測試，不修改正式玩家或發Telegram測試訊息。完整Worker服務測試由根deploy:worker執行，不跳過檔案。
 
 發布

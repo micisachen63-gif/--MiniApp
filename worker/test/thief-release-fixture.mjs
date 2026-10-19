@@ -74,7 +74,8 @@ if(!releaseReady){
   for(let i=0;i<40;i++){
    p=await Party.view(env,partyId,'111',now);if(p.status!=='combat')break;
    for(const tg of ['111','222','333'])await Party.action(env,tg,{partyId,op:'submit',skillId:i===0&&tg==='111'?book.id:'attack',round:p.round,requestId:request()},now);
-   now+=30000;
+   // Inspect the selected skill's actual resolved round; a late poll may now catch up several.
+   now=p.deadline;
    const after=await Party.view(env,partyId,'111',now);
    if(i===0){event=after.battleTurn.events.find(e=>e.actorId==='111');assert.equal(event.skillId,book.id);assert.equal(event.spentMp,book.mp);assert.ok(Number.isFinite(event.damage));}
   }
