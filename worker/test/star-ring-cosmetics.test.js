@@ -81,7 +81,7 @@ test('parallel equip operations are serialized by character revision and do not 
 test('existing scroll/gear shop remains usable and never manufactures cosmetic inventory items',async t=>{
  const {env,tg}=await fixture(t);const scroll=await buy(env,tg,'weapon','old-scroll');assert.equal(scroll.items.scroll_w,4);
  const gear=await buy(env,tg,'gear','old-gear');assert.equal(gear.equipment[0].source,'star_ring');
- const list=await R.shop(env,tg,{},T);assert.equal(list.offers.length,9);assert.equal(list.balance,955);assert.equal(list.cosmetics.equipped,null);
+ const list=await R.shop(env,tg,{},T);assert.equal(list.offers.filter(o=>!o.currency).length,9);assert.equal(list.offers.filter(o=>o.currency==='star_ring_core').length,2);assert.equal(list.balance,955);assert.equal(list.cosmetics.equipped,null);
 });
 test('main player, hero hall and expedition skill views expose the same equipped catalog object',async t=>{
  const {env,tg}=await fixture(t);await buy(env,tg,eclipse,'b');await wear(env,tg,eclipse,'w');

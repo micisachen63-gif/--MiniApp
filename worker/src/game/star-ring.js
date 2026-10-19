@@ -10,15 +10,18 @@ import {GameError} from './classes.js';
 import {guardianChance} from './guardian-effects.js';
 import {COSMETICS,equippedAura} from './star-ring-cosmetics.js';
 import {mapPool,selectEncounter,encounterSchedule} from './star-ring-pools.js';
+import {CORE,RANK_REWARDS,hasRankRewards,rankReward} from './star-ring-rank-rewards.js';
+export {CORE,RANK_REWARDS,hasRankRewards,rankReward} from './star-ring-rank-rewards.js';
 
-// Never change v1 rules underneath an active twelve-hour snapshot. Future
-// balance changes must dispatch by engineVersion until all v1 runs have ended.
-export const ENGINE_VERSION=2;
+// v1 and v2 retain their published combat/reward rules. v3 only adds a defeat
+// ledger and rank rewards; it never rewrites an existing twelve-hour snapshot.
+export const ENGINE_VERSION=3;
 export const DURATION=12*3600000, STAGE_MS=2*3600000, BEAT_MS=30000, BEATS=STAGE_MS/BEAT_MS;
 export const HOUR_MS=3600000,HOUR_BEATS=HOUR_MS/BEAT_MS;
 export const TIERS=['初星征途','星砂巡路','銀針古道','縛月隘口','九曜邊境','裂環深境','寂星哨域','黯曜王庭','星蝕禁域'].map((name,i)=>({id:40+i*10,level:40+i*10,name,gearTier:4+i}));
 export const TACTICS=[{id:'steady',name:'穩健',description:'優先恢復與守護，降低負傷。'},{id:'balanced',name:'均衡',description:'兼顧突破與補給。'},{id:'deep',name:'深入',description:'更積極施放戰技，承受較強反擊。'}];
 export const SHOP=[{id:'reroll',name:'洗屬性卷 ×5',cost:5,item:'scroll_r',qty:5},{id:'weapon',name:'武器強化卷 ×4',cost:5,item:'scroll_w',qty:4},{id:'armor',name:'防具強化卷 ×4',cost:5,item:'scroll_a',qty:4},{id:'blessedWeapon',name:'祝福武器卷軸',cost:80,item:'blessed_scroll_w',qty:1},{id:'blessedArmor',name:'祝福防具卷軸',cost:80,item:'blessed_scroll_a',qty:1},{id:'gear',name:'本職業遠征裝備',cost:40,gear:true},...COSMETICS.map(c=>({...c,cosmetic:c.id}))];
+SHOP.push(...['w','a'].map((slot,i)=>({id:'core-'+slot,name:['星輝武器必成卷','星輝防具必成卷'][i],currency:CORE,cost:RANK_REWARDS.coreCost,item:'guaranteed_scroll_'+slot,qty:1})));
 export const STAGES=[
  {name:'星砂伏擊',enemyId:'star_ring_scorpion',enemyName:'星砂晶螯蠍',roles:['guard'],spell:'晶毒尾刺',behavior:'尾刺留下短暫晶毒；守護吸收傷害，支援可清除毒素。'},
  {name:'裂環重甲',enemyId:'star_ring_sentinel',enemyName:'裂環鑄衛',roles:['breach'],spell:'裂環震擊',behavior:'每波展開重甲護盾；破陣可摧毀額外護盾。'},
@@ -105,7 +108,7 @@ function enemyFor(state,hourIndex,strength){
  const maxHp=Math.max(100,Math.round(strength*(state.difficulty==='advanced'?17:14)*(1+index*.04)));
  return {id:def.enemyId,name:def.enemyName,spell:def.spell,behavior:def.behavior,mechanic:def.mechanic,counterRoles:encounterRoles(state.tier,hourIndex),artIndex:def.artIndex,artUrl:`/art/star-ring-20261018/monster-${String(def.artIndex).padStart(2,'0')}.webp`,level:state.tier,maxHp,hp:maxHp,def:state.tier*1.3,element:hourIndex%2?'dark':'earth',buffs:[],dots:[],shield:['shield','hollow','tide','unravel'].includes(def.mechanic)?Math.round(maxHp*(def.mechanic==='hollow'?.22:.18)):0,windup:false,interruptible:true};
 }
-export const usesPools=state=>state.engineVersion===2;
+export const usesPools=state=>[2,3].includes(state.engineVersion);
 export const encounterPool=hourIndex=>mapPool(hourIndex,HOURLY_ENCOUNTERS);
 function pooledEnemy(state,hourIndex,strength,def){
  const base=enemyFor(state,hourIndex,strength),maxHp=Math.max(100,Math.round(base.maxHp*({normal:.88,elite:1.18,boss:1.7})[def.rank]));
@@ -168,7 +171,7 @@ function monsterAttack(b,beat,at,pressure,tactic,missing,events){
 }
 /** Project exactly the same combat steps used by checkpoint settlement; projections never write rewards. */
 export function simulateStage(state,index,beats=BEATS){
- if(state.engineVersion!=null&&![1,2].includes(state.engineVersion))throw new GameError('engine_version','這趟遠征需要對應版本的戰鬥引擎',409);
+ if(state.engineVersion!=null&&![1,2,3].includes(state.engineVersion))throw new GameError('engine_version','這趟遠征需要對應版本的戰鬥引擎',409);
  const initial=index?state.results[index-1]?.actors:state.actors;
  const stageStart=state.startedAt+index*STAGE_MS;
  const active=(initial||state.actors).filter(a=>!state.departed?.[a.id]||state.departed[a.id]>stageStart);
@@ -226,7 +229,7 @@ export function simulateStage(state,index,beats=BEATS){
    events.push({actorId:a.id,skillId:action.skillId,label:result.label||a.skill?.name||'戰技',damage:result.damage||0,healed:result.healed||0,...(result.restoredMp?{restoredMp:result.restoredMp}:{}),...(result.cleansed?{cleansed:result.cleansed}:{}),...(result.shieldBroken?{shieldBroken:result.shieldBroken}:{})});
   }
   monsterAttack(b,localBeat,at,pressure,tactic,currentMatch.missing.length,events);
-  if(b.enemy.hp<=0){b.waves++;if(b.waves>=b.objective)resolvedBeat??=beat;events.push({actorId:'boss',label:`已擊退第 ${b.waves} 波`,wave:b.waves});}
+  if(b.enemy.hp<=0){b.waves++;if(b.waves>=b.objective)resolvedBeat??=beat;events.push({actorId:'boss',label:`已擊退第 ${b.waves} 波`,wave:b.waves});if(hasRankRewards(state)&&b.enemy.rank!=='normal')(b.defeats??=[]).push({hourIndex:b.hourIndex,serial:b.poolSerial,id:b.enemy.id,name:b.enemy.name,rank:b.enemy.rank,at});}
   b.events=events;b.actors.forEach(a=>{a.buffs=a.buffs.filter(x=>x.until>at&&(x.uses==null||x.uses>0));});
  }
  // Exactly at the one-hour boundary show the new place/foe without inventing
@@ -249,6 +252,10 @@ export function stageReward(state,actor,index,result){
   const extraChance=state.difficulty==='advanced'?(result.grade==='S'?.6:result.grade==='A'?.25:0):result.grade==='S'?.35:0;
   if(extraChance>0&&rng()<guardianChance(extraChance,actor))equipment.push(makeEliteGear({id:`ringgear:${state.id}:${actor.id}:1`,tgId:actor.id,cls:actor.base,classPath:actor.path,tier,rng,now:state.endsAt}));
   equipment.forEach(e=>{e.source='star_ring';e.name=e.name.replace(/^菁英/,'星征');});
+ }
+ if(hasRankRewards(state)){
+  const bonus=rankReward(state,actor,index,result);for(const[k,v]of Object.entries(bonus.items))items[k]=(items[k]||0)+v;
+  return {exp:exp+bonus.exp,baseExp:exp,bonus,items,equipment,grade:result.grade,expHours:result.expHours};
  }
  return {exp,items,equipment,grade:result.grade,expHours:result.expHours};
 }

@@ -24,7 +24,7 @@ async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,a
  const created=await R.create(env,ids[0],{tier,difficulty},at),id=created.party.id;
  // Historical suites deliberately replay a pre-update lobby. New pool suites
  // below pass v2 and exercise the unmodified current creation version.
- if(engineVersion===1){const old=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);old.engineVersion=1;db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(old),id);}
+ if(engineVersion!==E.ENGINE_VERSION){const old=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);old.engineVersion=engineVersion;db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(old),id);}
  for(const tg of ids.slice(1))await R.action(env,tg,{partyId:id,action:'join'},at);
  for(const tg of ids)await R.action(env,tg,{partyId:id,action:'ready'},at);
  if(start)await R.action(env,ids[0],{partyId:id,action:'start'},at);
@@ -321,4 +321,35 @@ test('a fully withdrawn expedition freezes progress at retreat instead of drifti
  const{env,id,ids}=await fixture(t);for(const tg of ids)await R.action(env,tg,{partyId:id,action:'leave'},T+E.HOUR_MS);
  const ended=await R.view(env,id,ids[0],T+E.HOUR_MS);assert.equal(ended.status,'ended');assert.equal(ended.completedStages,0);assert.equal(ended.progress,1/12);
  const later=await R.view(env,id,ids[0],T+E.DURATION*2);assert.equal(later.status,'ended');assert.equal(later.progress,ended.progress);assert.equal(later.me.rewards.exp,0);
+});
+
+test('v3 actual kills settle EXP, personal drops and boss cores atomically; full offline catchup equals staged online polling and replay grants nothing twice',async t=>{
+ const{env,db,id,ids}=await fixture(t,{engineVersion:3});
+ const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.equal(state.engineVersion,3);
+ state.actors=state.actors.map(a=>({...a,atk:1e7,departureAtk:1e7}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
+ const expected=structuredClone(state),actor=expected.actors[0],earned={exp:0,core:0,bonusExp:0};
+ for(let i=0;i<6;i++){const r=E.simulateStage(expected,i);expected.results.push(r);expected.stageTactics[i+1]=expected.tactic;const reward=E.stageReward(expected,actor,i,r);earned.exp+=reward.exp;earned.bonusExp+=reward.bonus.exp;earned.core+=reward.items.star_ring_core||0;}
+ const before=await R.view(env,id,ids[0],T+E.HOUR_MS);assert.ok(before.pendingRankReward.bossKills>0);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,0);assert.equal(before.me.rewards.exp,0);
+ const completed=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(completed.me.rewards.exp,earned.exp);assert.equal(completed.me.rewards.bonus.exp,earned.bonusExp);assert.equal(completed.me.rewards.items.star_ring_core,12);assert.equal(earned.core,12);assert.equal(completed.pendingRankReward,null);
+ const saved=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.deepEqual(saved.results,JSON.parse(JSON.stringify(expected.results)));assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+ const inv=JSON.stringify(db.prepare('SELECT * FROM rpg_inventory WHERE tg_id=? ORDER BY item').all(ids[0]));await Promise.all([R.sweep(env,T+E.DURATION+1000),R.sweep(env,T+E.DURATION+1000)]);assert.equal(JSON.stringify(db.prepare('SELECT * FROM rpg_inventory WHERE tg_id=? ORDER BY item').all(ids[0])),inv);assert.equal(db.prepare("SELECT count(*) n FROM rpg_outbox WHERE kind='star_ring_complete'").get().n,5);
+ const payload=JSON.parse(db.prepare("SELECT payload_json FROM rpg_outbox WHERE kind='star_ring_complete' LIMIT 1").get().payload_json);assert.equal(payload.rewards.items.star_ring_core,12);assert.ok(payload.rewards.bonus.exp>0);
+});
+
+test('v3 hourly polls cannot award before checkpoint; stage-at-a-time catchup matches a full twelve-hour private expected replay',async t=>{
+ const{env,db,id,ids}=await fixture(t,{engineVersion:3,tier:40,classes:['sword:A','mage:A','thief:A','archer:B','sword:B']});const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);let expectedExp=0,expectedCore=0;
+ for(let i=0;i<6;i++){for(const beat of [0,37,119,120,239]){const v=await R.view(env,id,ids[0],T+i*E.STAGE_MS+beat*E.BEAT_MS);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,i*5);assert.deepEqual(v.pendingRankReward,E.rankReward(state,state.actors[0],i,E.simulateStage(state,i,beat)));}const result=E.simulateStage(state,i);state.results.push(result);state.stageTactics[i+1]=state.tactic;const reward=E.stageReward(state,state.actors[0],i,result);expectedExp+=reward.exp;expectedCore+=reward.items.star_ring_core||0;const v=await R.view(env,id,ids[0],T+(i+1)*E.STAGE_MS);assert.equal(v.me.rewards.exp,expectedExp);assert.equal(v.me.rewards.items.star_ring_core||0,expectedCore);}
+ assert.deepEqual(JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json).results,JSON.parse(JSON.stringify(state.results)));
+});
+
+test('core redemption uses only bound cores and a retry-safe private receipt; competing purchases cannot overspend',async t=>{
+ const{env,db,ids}=await fixture(t,{engineVersion:3,start:false});const tg=ids[0];db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'star_ring_token',100)").run(tg);await assert.rejects(R.shop(env,tg,{offerId:'core-w',requestId:'none'},T),e=>e.code==='currency');assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='star_ring_token'").get(tg).quantity,100);
+ db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'star_ring_core',60)").run(tg);const info=await R.shop(env,tg,{},T);assert.equal(info.balances.star_ring_core,60);assert.equal(info.balance,100);
+ const body={offerId:'core-w',requestId:'one-core-buy'};const out=await Promise.allSettled([R.shop(env,tg,body,T),R.shop(env,tg,body,T),R.shop(env,tg,{offerId:'core-a',requestId:'competing-core-buy'},T)]);assert.ok(out.some(x=>x.status==='fulfilled'));const count=k=>db.prepare('SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item=?').get(tg,k)?.quantity||0;assert.equal(count('star_ring_core'),0);assert.equal(count('star_ring_token'),100);assert.equal(count('guaranteed_scroll_w')+count('guaranteed_scroll_a'),1);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_purchases WHERE char_id=?').get(tg).n,1);
+ const receipt=db.prepare('SELECT request_id,reward_json FROM rpg_star_ring_purchases WHERE char_id=?').get(tg),r=JSON.parse(receipt.reward_json);await R.shop(env,tg,{offerId:r.offerId,requestId:receipt.request_id},T);assert.equal(count('guaranteed_scroll_w')+count('guaranteed_scroll_a'),1);await assert.rejects(R.shop(env,tg,{offerId:r.offerId==='core-w'?'core-a':'core-w',requestId:receipt.request_id},T),e=>e.code==='request');
+});
+
+test('v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores',async t=>{
+ const{env,db,id,ids}=await fixture(t,{engineVersion:3});const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);state.actors=state.actors.map(a=>({...a,atk:1e7,departureAtk:1e7}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
+ const at=T+E.HOUR_MS;assert.ok((await R.view(env,id,ids[0],at)).pendingRankReward.bossKills>0);await R.action(env,ids[0],{partyId:id,action:'leave'},at);await assert.rejects(R.create(env,ids[0],{tier:90},at+1),e=>e.code==='daily');const v=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(v.pendingRankReward,null);assert.equal(v.me.rewards.exp,0);assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='star_ring_core'").get(ids[0]),undefined);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards WHERE char_id=?').get(ids[0]).n,0);
 });

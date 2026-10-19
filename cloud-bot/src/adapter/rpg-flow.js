@@ -584,7 +584,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       const key=String(p.partyId||'')+':'+String(p.recipientCharId||item.tgId),cards=st().starRingCards??={};
       if(cards[key]?.messageId)return;
       if(cards[key])throw Error('星環遠征通知送達待核對：'+key);
-      const rewards=p.rewards||{},names={star_ring_token:'星征徽記',scroll_w:'武器強化卷',scroll_a:'防具強化卷',scroll_r:'洗屬性卷',blessed_scroll_w:'祝福武器卷',blessed_scroll_a:'祝福防具卷'};
+      const rewards=p.rewards||{},names={star_ring_core:'星冕核心',guaranteed_scroll_w:'星輝武器必成卷（100%）',guaranteed_scroll_a:'星輝防具必成卷（100%）',star_ring_token:'星征徽記',scroll_w:'武器強化卷',scroll_a:'防具強化卷',scroll_r:'洗屬性卷',blessed_scroll_w:'祝福武器卷',blessed_scroll_a:'祝福防具卷'};
       const items=Object.entries(rewards.items||{}).filter(([,n])=>Number(n)>0).map(([id,n])=>(names[id]||'遠征素材')+' ×'+fmt(n));
       const gear=Array.isArray(rewards.equipment)?rewards.equipment.length:Number(rewards.equipment)||0;
       const caption=['✦ 星環遠征 · '+(p.ended?'返回營地':'凱旋戰報'),'',String(p.characterName||p.name||'冒險者')+'，你的隊伍已完成 '+Math.max(0,Math.min(6,Number(p.completedStages)||6))+'／6 階段。',

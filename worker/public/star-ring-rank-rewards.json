@@ -1,0 +1,34 @@
+{
+  "engineVersion": 3,
+  "policy": {
+    "eliteMinutes": 2,
+    "bossMinutes": 8,
+    "elitePerHour": 2,
+    "bossPerHour": 1,
+    "eliteScrollChance": 0.2,
+    "eliteScrollCap": 6,
+    "bossLuckyChance": 0.003,
+    "bossLuckyAdvancedChance": 0.005,
+    "bossLuckyCap": 1,
+    "coreCost": 60,
+    "maxBonusMinutes": 144
+  },
+  "coreOffers": [
+    {
+      "id": "core-w",
+      "name": "星輝武器必成卷",
+      "currency": "star_ring_core",
+      "cost": 60,
+      "item": "guaranteed_scroll_w",
+      "qty": 1
+    },
+    {
+      "id": "core-a",
+      "name": "星輝防具必成卷",
+      "currency": "star_ring_core",
+      "cost": 60,
+      "item": "guaranteed_scroll_a",
+      "qty": 1
+    }
+  ]
+}

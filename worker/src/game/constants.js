@@ -154,6 +154,7 @@ export const POTIONS = Object.freeze({
 });
 export const ITEMS = Object.freeze({
   star_ring_token:{kind:'bound',tradeable:false,name:'星征徽記',emoji:'✦',desc:'五人星環遠征通關獎勵，在神戰 → 組隊 → 星環遠征兌換成長補給與裝備。綁定角色，不可交易或販售。'},
+  star_ring_core:{kind:'bound',tradeable:false,name:'星冕核心',emoji:'✧',desc:'星環遠征首領專屬戰利品，每張地圖首次擊退首領必得 1 枚。60 枚可在遠征補給所自選武器或防具100%強化必成卷。綁定角色，不可交易或販售。'},
   guardian_summon_stone:{kind:'bound',name:'天使召喚石',emoji:'✦',desc:'在掛機輔助選擇已有天使參戰；一顆支援24小時有效掛機戰鬥，不可交易。'},
   guardian_voucher:{kind:'boss_resource',name:'守護天使招喚憑證',emoji:'🪶',desc:'每帳號每日前四次有效首領參戰可得；每張精選召喚五次，不可交易。'},
   guardian_free_normal:{kind:'bound',name:'初見免費召喚次數',emoji:'✧',desc:'15級首次進入守護神系統贈送200次普通召喚，優先使用，不可交易。'},
@@ -172,8 +173,8 @@ export const ITEMS = Object.freeze({
   scroll_a: { kind: 'scroll', name: '防具強化捲', emoji: '📜', price: 50, desc: '防具（盔甲／頭盔／手套／長靴／腰帶／內衣）與耳環、戒指強化 1 次（每次消耗張數＝T）' },
   blessed_scroll_w: { kind: 'scroll', name: '受祝福的武器強化卷軸', emoji: '✨', desc: '武器強化成功率增加 10 個百分點；每次消耗 1 張，不改變爆裝率。菁英怪／群組首領掉落，可交易，不在商店出售。' },
   blessed_scroll_a: { kind: 'scroll', name: '受祝福的防具強化卷軸', emoji: '✨', desc: '防具與飾品強化成功率增加 10 個百分點；每次消耗 1 張，不改變爆裝率。菁英怪／群組首領掉落，可交易，不在商店出售。' },
-  guaranteed_scroll_w: {kind:'scroll',tradeable:false,name:'星輝武器必成卷',emoji:'✦',desc:'手動選用後消耗 1 張，武器本次強化必定成功且不會爆裝；仍受強化等級上限限制。四世星輝匣限定，不可交易或販售。'},
-  guaranteed_scroll_a: {kind:'scroll',tradeable:false,name:'星輝防具必成卷',emoji:'✦',desc:'手動選用後消耗 1 張，防具或飾品本次強化必定成功且不會爆裝；仍受強化等級上限限制。四世星輝匣限定，不可交易或販售。'},
+  guaranteed_scroll_w: {kind:'scroll',tradeable:false,name:'星輝武器必成卷',emoji:'✦',desc:'手動選用後消耗 1 張，武器本次強化必定成功且不會爆裝；仍受強化等級上限限制。四世星輝匣或星環遠征首領獎勵，不可交易或販售。'},
+  guaranteed_scroll_a: {kind:'scroll',tradeable:false,name:'星輝防具必成卷',emoji:'✦',desc:'手動選用後消耗 1 張，防具或飾品本次強化必定成功且不會爆裝；仍受強化等級上限限制。四世星輝匣或星環遠征首領獎勵，不可交易或販售。'},
   fate_cycle_gift: {kind:'fate_gift',tradeable:false,name:'四世星輝匣',emoji:'✧',desc:'每完成 4 次正式輪迴可領取。開啟：5% 星輝武器必成卷、5% 星輝防具必成卷、90% 普通武器與防具強化卷各 2 張。不可交易或販售。'},
   scroll_r: { kind: 'scroll', name: '洗屬性捲', emoji: '🎲', price: 60, desc: '重洗能力詞條；保留裝備品階與元素，可鎖定詞條，費用隨鎖定條數增加' },
   unbind: { kind: 'scroll', name: '赫密士解契卷', emoji: '🔓', price: 500, desc: '解除裝備綁定（未穿戴的綁定裝備；張數依裝備階、品階、遺物、強化而定）→ 可再交易、分享' },

@@ -1,5 +1,8 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 星環遠征v3：新建隊伍增加實際擊倒菁英／首領獵賞（最高額外144分鐘基準經驗、6普通卷、12綁定星冕核心、1低機率直接必成卷）。60核心自選武器／防具必成卷；v1/v2隊伍維持原收益，36組v2戰鬥與全員收益hash保護，原combat/loot RNG不變。核心原創alpha圖、雙幣兌換、待入袋／已入袋、BOT私人完成獎勵名稱已接齊。接手讀 docs/STAR_RING_RANK_REWARDS_20261019.txt 及經濟量測JSON；不跑migration、不重置玩家。正式發布看兩服務收據。
+
+
 2026-10-19 星環遠征v2擴充48個身份：每圖2普通／1菁英／1既有首領、36隻新原創16姿勢alpha怪，伺服器獨立seed依波數／時間選種，離線及線上同源；v1歷史36個完整階段hash保持一致。新建隊伍用v2，既有隊伍維持v1，無migration、無重設次數／收益。前端rank／已遇清單、舊敵倒地→新敵進場，並補每小時system-only換圖時英雄不停播。接手讀docs/STAR_RING_MONSTER_POOLS_20261019.txt；美術／像素／桌手機驗收在docs/art/STAR_RING_POOL_*，正式發布看Worker收據。
 
 2026-10-19 星環戰鬥顯示補修：五人／魔物持續播放交戰演出，首beat不再空等，擊倒接下一波進場；server view提供spawn投影，保留v1模擬、RNG、收益與存檔。終章不重生，隱藏／減少動態停播；原20秒同步不變。詳docs/STAR_RING_COMBAT_PLAYBACK_20261019.txt，發布看Worker收據。

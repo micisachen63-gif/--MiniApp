@@ -42,3 +42,11 @@
 .sr-sightings ol{list-style:none;padding:0;margin:12px 0 0;display:grid;gap:8px}
 .sr-sightings li{display:flex;align-items:center;gap:5px;min-width:0;padding:6px 0;border-bottom:1px solid #dec08516}
 .sr-sightings li b{font-size:13px;font-weight:500}.sr-sightings li small{margin-left:auto;color:#9ba7b6;font-variant-numeric:tabular-nums}
+.sr-rank-rewards .sr-section-head img{width:84px;height:84px;object-fit:contain;filter:drop-shadow(0 0 12px #a18ce444)}
+.sr-rank-reward-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:12px 0 18px}
+.sr-rank-reward-grid article{padding:16px;background:linear-gradient(140deg,#27304799,#111d30);border:1px solid #bda56b55;border-radius:6px}
+.sr-rank-reward-grid b{color:#edcf94;font-size:17px}.sr-rank-reward-grid p{color:#f4e7ca;line-height:1.7}.sr-rank-reward-grid small{display:block;color:#adbbcc;line-height:1.8}
+.sr-rank-rewards details{color:#b9c5d4;line-height:1.9;font-size:13px}.sr-rank-rewards summary{cursor:pointer;color:#dcc18b}
+.sr-rank-pending{padding:14px;margin-bottom:16px;background:#8e79b31c;border-left:2px solid #c5a7e7;color:#e5d3ef;line-height:1.8}
+.sr-bonus-earned{color:#d7b9ed!important;line-height:1.8}.sr-core-offer{border-color:#a58aca!important;background:linear-gradient(140deg,#34254088,#152336)!important}
+@media(max-width:640px){.sr-rank-reward-grid{grid-template-columns:1fr;gap:10px}.sr-rank-reward-grid article{padding:14px}.sr-rank-rewards .sr-section-head img{width:68px;height:68px}.sr-rank-pending{font-size:13px}}
