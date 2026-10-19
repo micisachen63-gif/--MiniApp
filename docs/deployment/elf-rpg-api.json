@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "4d60857de951397b9acf9f9b5e07b8c9466a22ee",
+  "sourceCommit": "df0cdaa36bb45b972b2065826b7bdf525a552ab8",
   "service": "elf-rpg-api",
-  "productionVersion": "922714a8-12dd-49f8-a249-d9351f4502c5",
+  "productionVersion": "e29910b7-548a-4779-84f0-894707f77d6f",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T03:29:05.953Z",
+  "verifiedAt": "2026-10-19T03:48:28.187Z",
   "runtimeSHA256": {
-    "index.js": "3b542b6586c124629a72ca5af8f847406d4b338552faaacce5d87c52666078d4"
+    "index.js": "fe16897da71522ddf3a558a9f48ce57bd6a9239b235965b28de364654983faf9"
   },
   "source": {
-    "fileCount": 9212,
-    "sha256": "864657cf341d547e39173ef22967d3ac606c52c4810ccdadda16fe7d7dbf5bdf",
+    "fileCount": 9213,
+    "sha256": "f713dddb65e022c612222edc80ffa3a46f4361ee55c0ca7479fe06aff23b2928",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35091,11 +35091,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "5f89e15d943181e71473b0d36aedb131cf195fb116e0e8e7ce4c83a4afe53c63"
+        "sha256": "3d9e539d40dc06b9f61a921769efb0bc6b4f4c3d3263502ead704a425742b1d3"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "175b8fb06be55a266899f5c096fd1f90efd5116349c30016d03114344810769a"
+        "sha256": "bf68d0d997d1f57f9e16a36f25fad456bf7073cd5ab6070d0c15cc99b55dae9d"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -35111,7 +35111,7 @@
       },
       {
         "file": "worker/public/expedition/review.css",
-        "sha256": "0a32941a983c75ec1c675c96ffc26255bf9f50ceecdd11ae271341e5800aea59"
+        "sha256": "509c6f5670e1123b4150305b84704098705f783cd1a188f59bf1cc95b5696d43"
       },
       {
         "file": "worker/public/expedition/review.js",
@@ -36091,7 +36091,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "a335c817df1a5937f2ee9ab7a4ba8c5ee1c215de4a4ad82ca1c94bc90bee5fba"
+        "sha256": "20906ead837aa4b89289371ce036071043d48c249cd6bd452502d1db83c7b422"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -36147,11 +36147,11 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "13311cf5ef5abba5680cd4ed691425da5a320338f8d99b5fad0ac43464cf1c2b"
+        "sha256": "1c517743e91d30155384efc74f8bff0362d6d41061ce0a15257ab9c8d25c2bb0"
       },
       {
         "file": "worker/public/star-ring.css",
-        "sha256": "b541bb7149f6dd2d86ff578ffedfcb99a1c73fae690970d7d131d228cc6607ec"
+        "sha256": "9c3d9c7312b8f3431ebcbb1680fb625d23b29a2cac38147b96369ad8114619b2"
       },
       {
         "file": "worker/public/status-banner.css",
@@ -36491,7 +36491,7 @@
       },
       {
         "file": "worker/src/db.js",
-        "sha256": "24412922899349e163deded9c2de94df681a8c431c557ed080bc4808cbabc117"
+        "sha256": "07d633342e8955df59e1020ffcb770104b054e84c7666b0e9afcfe050708d512"
       },
       {
         "file": "worker/src/fate-public.js",
@@ -36810,8 +36810,12 @@
         "sha256": "9268de260671011ac6a8affe8adf37efb9782fc39b312394237a6a1037f70a8d"
       },
       {
+        "file": "worker/src/services/party-presence.js",
+        "sha256": "18cd386b16875156c2e0e0e9f123b3c8c4da00e38c2d30a83de364e5dac3bde3"
+      },
+      {
         "file": "worker/src/services/party.js",
-        "sha256": "8cfc8aa9a0f63279ee0ab44ddcc43b2576dd904632b264ecf95f1937a59c3212"
+        "sha256": "e7780df544834d0d2c3dbc532b5e6df3b99d4b238bdb69ccc9af48c3e990c730"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -36839,7 +36843,7 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "c5c953d9a833eee60212e1c24e6993bf2593a0705d7a23dfe18250edf75f868a"
+        "sha256": "097e494e1f09e432efe9ee27b0ee4f4d883dec3c472cb64a3dd021d6f8fd735e"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -36865,7 +36869,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 148,
+    "verifiedCount": 149,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36874,7 +36878,6 @@
       "worker/public/art/blessed-announcement-20261014/armor.png",
       "worker/public/art/cards/equipment-20261011/gear_boots_athena_leather_legendary.jpg",
       "worker/public/art/collection-materials-20261014/hunt_8_1.webp",
-      "worker/public/art/star-ring-rank-rewards-20261019/star-ring-core.webp",
       "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B121_f_attack.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -36897,6 +36900,8 @@
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
       "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
+      "worker/public/expedition/review.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -37020,7 +37025,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "922714a8-12dd-49f8-a249-d9351f4502c5",
+        "version_id": "e29910b7-548a-4779-84f0-894707f77d6f",
         "percentage": 100
       }
     ],
