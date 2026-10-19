@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "b2e18fb090cde9fb996e49f4e1d5bc74de14f5a6",
+  "sourceCommit": "e5695311d65ee39171e8b5f22b521abd94a1b5fa",
   "service": "elf-rpg-api",
-  "productionVersion": "e7169c8d-371c-49a1-a73a-647b62d30b2e",
+  "productionVersion": "35ea0d95-b4ec-41ae-aab2-c3bd1dc30c35",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T01:13:17.506Z",
+  "verifiedAt": "2026-10-19T02:11:00.017Z",
   "runtimeSHA256": {
-    "index.js": "922ec01b8f7d3a2b04e8d263c03688ac68c24546d0e7d923096f6c0e1d23cf37"
+    "index.js": "b0771bcda8e5e424557bdd53bf6ff230fb046fc095da99a517cd4567860c340d"
   },
   "source": {
     "fileCount": 9079,
-    "sha256": "39a3e41927848991f3c0f3193fcf01797685e8cb2859f2065d595fa67ffbf218",
+    "sha256": "90af5b707e9958d5e18ade4f4af51d8191d562e57907d66beeb441c2c64a6a47",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -34563,7 +34563,7 @@
       },
       {
         "file": "worker/public/expedition/hero-art-playback.js",
-        "sha256": "e53e595932e385e76ab83768a4d5b779fa9b39fef3899ffa317011d3cc6da336"
+        "sha256": "eb0b2aec9f60bc4528751a494645b1a58e7c2edf37b957e3dcd3103aa216ce69"
       },
       {
         "file": "worker/public/expedition/hero-art.js",
@@ -34571,7 +34571,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "761c91ef1926c5caf0d20198d169008ad508cfeda407b298f3515f1260e2d686"
+        "sha256": "6aa3cec31fe1e5a53c4d9f2ef750f360d94fb20be2fff1c88fe54dfad57af377"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -35571,7 +35571,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "ae34ae3a2b66993ca57c63042b2e1a5cf480647730cf74472a913ea06f054ec5"
+        "sha256": "574b161e8323372fb81ffb642fc62e15ad63b4ac7c7dd369ea6f3d3408f0836e"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -35611,11 +35611,11 @@
       },
       {
         "file": "worker/public/star-ring-heroes.js",
-        "sha256": "989764014e397a00a319916b05b6da68d04566f8188a2b34268913e184e54125"
+        "sha256": "85997c4dff8bfef75e877b82f1a1f6c150e6e5949ee056d2f850f42fb15ef9de"
       },
       {
         "file": "worker/public/star-ring-monsters.js",
-        "sha256": "8df9da5060fbe0ca8b39a550e0d435dbae0b32de52b040669525a4d9ebe2f573"
+        "sha256": "33a07fcac21dd471c55e1d5ee96ac851ca4ad59c960f1777c5dee39f11568ee4"
       },
       {
         "file": "worker/public/star-ring-scenery.js",
@@ -36307,7 +36307,7 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "d5d7104233c411e1f23b01b1260538b9c8772ce90141dd4d56f319ba9876e8cd"
+        "sha256": "f12caac87343f7af68ba092700f2a7f5c6fbe2ad9f8f798e8030cf5fd4b79c4b"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -36333,7 +36333,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 145,
+    "verifiedCount": 147,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36363,6 +36363,8 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/hero-art-playback.js",
+      "worker/public/expedition/index.html",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -36485,7 +36487,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "e7169c8d-371c-49a1-a73a-647b62d30b2e",
+        "version_id": "35ea0d95-b4ec-41ae-aab2-c3bd1dc30c35",
         "percentage": 100
       }
     ],
