@@ -137,8 +137,8 @@ export async function fuse(env,charId,input={},now=Date.now()){
 }
 export async function activate(env,charId,input={},now=Date.now()){
  const itemId=input.itemId==null?null:String(input.itemId);
- return execute(env,charId,input,'activate',{itemId},now,async(work)=>{
-  if(work.char.party_id)bad('party','請先結束組隊戰鬥');
+ return execute(env,charId,input,'activate',{itemId},now,async(work,cfg,rng,op,ctx)=>{
+  requireBackpackAccess(work.char,ctx);
   const x=specialState(work.char);if(x.guardianAssist&&x.guardianAssist.itemId!==itemId){delete x.guardianAssist;saveSpecial(work.char,x);}
   const statements=[env.DB.prepare('UPDATE rpg_guardian_sigils SET active=0,rev=rev+1,updated_at=? WHERE char_id=? AND active=1').bind(now,String(charId))];let row=null;
   if(itemId){row=await env.DB.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=? AND char_id=?').bind(itemId,String(charId)).first();if(!row||row.trade_id||row.exchange_id)bad('not_found','羽毛不存在或在交易中');statements.push(env.DB.prepare('UPDATE rpg_guardian_sigils SET active=1,bound=1,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND trade_id IS NULL AND exchange_id IS NULL').bind(now,itemId,String(charId)),guardStmt(env.DB));}
@@ -150,7 +150,7 @@ export async function assist(env,charId,input={},now=Date.now()){
  if(!['start','select','stop','renew','continuation','supply','buy'].includes(mode)||!Number.isSafeInteger(quantity)||quantity<1||quantity>10)bad('assist','召喚設定無效');
  if(mode==='continuation'&&typeof input.autoRenew!=='boolean')bad('assist','請選擇是否續召');
  return execute(env,charId,input,'assist',{mode,itemId,quantity,autoRenew,autoBuy},now,async(work,cfg,rng,op,ctx)=>{
-  if(mode==='buy')requireBackpackAccess(work.char,ctx);else if(work.char.party_id)bad('party','請先結束組隊戰鬥，再調整掛機輔助');
+  requireBackpackAccess(work.char,ctx);
   const x=specialState(work.char),statements=[];let consumed={gold:0,vouchers:0,credits:0},row=null,resumed=false,replacedRemainingBattles=0;
   if(mode==='buy'){
    consumed.gold=cfg.assist.stoneGold*quantity;if(work.char.gold<consumed.gold)bad('gold','金幣不足');

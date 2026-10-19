@@ -46,9 +46,9 @@ for(const mode of ['finished','foreground'])test(`skill edit rechecks ${mode} ra
  f.env.DB.batch=async stmts=>{if(!fired&&stmts.some(s=>s.sql.startsWith('INSERT INTO rpg_guard(ok) SELECT NULL'))){fired=true;if(mode==='finished')f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);else await shortParty(f,'dungeon',NOW+1000);}return batch(stmts);};
  const r=await f.api({op:'loadout',loadout:[]});assert.equal(fired,true);assert.notEqual(r.status,200);assert.deepEqual(special(f),before);
 });
-test('manual casting and guardian/supply settings retain their original party locks',async t=>{
+test('manual casting and cancellation retain their original party locks',async t=>{
  const f=await fixture(t),before=special(f);
- for(const body of [{op:'cast',skillId:f.choices[0]},{op:'settings',mode:'safe',budget:0,guardianId:''}])assert.equal((await f.api(body)).j.error,'party');
+ for(const body of [{op:'cast',skillId:f.choices[0]},{op:'cancel'}])assert.equal((await f.api(body)).j.error,'party');
  assert.deepEqual(special(f),before);
 });
 for(const version of [1,2,3])test(`v${version} changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration`,async t=>{

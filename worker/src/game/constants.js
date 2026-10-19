@@ -269,7 +269,7 @@ export const ARMOR_PRICE = Object.freeze({
 
 // ---- 遺物級 relic gear (v0.4): never sold; ×1.25 of the same-tier shop item (main + flat stats) + 1 random affix ----------
 export const RELIC = Object.freeze({
-  statMult: 1.25, prefix: '遺物・', rarityFloor: 'advanced',
+  statMult: 1.25, prefix: '遺物・', rarityFloor: 'legendary', enhanceMult: 1.25,
   eliteChance: 0.005,          // per elite kill (= survived elite ambush) in idle
   eliteDailyCap: 1,            // per Taipei day
   bossChance: 0.35,            // per group-boss kill: 35% chance of exactly 1 relic (ミカサ 2026-10-08: keep relics rare)

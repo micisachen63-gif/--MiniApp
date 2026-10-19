@@ -16,7 +16,7 @@ export async function view(env,tg,now){const r=await P.withPlayer(env,tg,now);re
 export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>specialCost(s,pct)),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
 export async function action(env,tg,b,now){
  const r=await P.withPlayer(env,tg,now,async(w,ctx)=>{
-  const {db}=ctx;if(['redeem','learn','loadout','auto'].includes(b.op))requireBackpackAccess(w.char,ctx);else if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整技能配置');
+  const {db}=ctx;if(['redeem','learn','loadout','auto','settings'].includes(b.op))requireBackpackAccess(w.char,ctx);else if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整技能配置');
   const x=specialState(w.char),id=String(b.skillId||''),s=SKILL_MAP[id],extra=[];
   if(b.op==='learn'){
    if(!eligible(w.char,s))throw new GameError('skill','此角色的職業、轉職或等級不符合學習資格');

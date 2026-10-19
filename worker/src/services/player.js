@@ -1,5 +1,6 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
 import {runningRingId,canEnhanceInParty,requireBackpackAccess,backpackAccessStmt} from './party-presence.js';
+import {gearRarity} from '../game/gear-quality.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
@@ -304,7 +305,7 @@ export async function sellGearBatch(work, { db, lockedEquipment = [] }, { itemId
 
 /** equip: earrings/rings take position 1 or 2 (requested, else the first free one, else replace #1). Equipping binds the item. */
 export function equip(work, ctx, { itemId, position = null }) {
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
+  requireBackpackAccess(work.char,ctx);
   const item = work.equipment.find((e) => e.id === itemId); if (!item) throw new GameError('not_found', '找不到這件裝備');
   const why = canEquip(work.char, item); if (why) throw new GameError('cannot_equip', why);
   let pos; try { pos = equipPosition(work.equipment, item, position); } catch { throw new GameError('position', `${SLOT_NAMES[item.slot]}只有 ${capacity(item.slot)} 個欄位`); }
@@ -315,7 +316,7 @@ export function equip(work, ctx, { itemId, position = null }) {
 }
 /** unequip by itemId, or by slot (+ position for earring/ring; default: the item in position 1, else 2) */
 export function unequip(work, ctx, { slot = null, position = null, itemId = null }) {
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
+  requireBackpackAccess(work.char,ctx);
   let item = null;
   if (itemId) item = work.equipment.find((e) => e.id === itemId && e.is_equipped);
   else {
@@ -400,7 +401,7 @@ export function doEnhance(work, ctx, { itemId, requestId, blessed = false, guara
   if (r.announce && r.result === 'success') {
     extra.push(...shareStmts(db, { owner: tg, ownerChar: work.char, equip: item, kind: 'enhance', context: { itemName: name, from: r.from, to: r.to }, now }).stmts);
   } else if (r.announce) {
-    extra.push(outboxStmt(db, { dedupe: `enh:${eid}`, target: 'group', kind: 'enhance', payload: { tgId: tg, name: work.char.name, item: name, result: r.result, from: r.from, to: r.to, rarity: RARITIES[item.element_tier]?.name } }, now));
+    extra.push(outboxStmt(db, { dedupe: `enh:${eid}`, target: 'group', kind: 'enhance', payload: { tgId: tg, name: work.char.name, item: name, result: r.result, from: r.from, to: r.to, rarity: RARITIES[gearRarity(item)]?.name } }, now));
   }
   if (r.result !== 'break'&&!work.char.party_id) { const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp); }
   const ledger = [];

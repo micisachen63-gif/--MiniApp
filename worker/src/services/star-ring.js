@@ -140,7 +140,9 @@ async function advance(env,id,now){
    for(const f of fresh){
     const old=await env.DB.prepare('SELECT 1 FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? AND stage=?').bind(p.id,m.char_id,f.index).first();if(old)continue;
     const r=Engine.stageReward(s,actor,f.index,f.result);after.char.exp+=r.exp;addTotal(total,r);
-    const liveHp=after.char.hp,liveMp=after.char.mp;applyExp(after.char,level=>computeStats(after.char,actor.equipment,level));if(foreground){after.char.hp=liveHp;after.char.mp=liveMp;}
+    // Rewards/combat use the departure actor; level-up healing belongs to the
+    // live character, whose equipment may have changed during the expedition.
+    const liveHp=after.char.hp,liveMp=after.char.mp;applyExp(after.char,level=>computeStats(after.char,after.equipment.filter(e=>e.is_equipped),level));if(foreground){after.char.hp=liveHp;after.char.mp=liveMp;}
     for(const[k,v]of Object.entries(r.items))after.inv[k]=(after.inv[k]||0)+v;
     after.equipment.push(...r.equipment);entries.push({event_id:`star-ring:${p.id}:${m.char_id}:${f.index}`,tg_id:m.char_id,type:'星環遠征',exp_delta:r.exp,note:JSON.stringify({stage:f.index,grade:r.grade,items:r.items,...(r.bonus?{bonus:r.bonus}:{})})});
     extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_rewards(run_id,char_id,stage,reward_json,created_at) VALUES(?,?,?,?,?)').bind(p.id,m.char_id,f.index,JSON.stringify(r),now));
