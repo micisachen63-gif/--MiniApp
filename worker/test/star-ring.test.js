@@ -51,6 +51,18 @@ test('server projection deterministic; same beats become checkpoint state and re
  assert.equal(v.completedStages,1);assert.equal(v.me.rewards.exp,Math.round(state.actors[0].baselineExpPerMinute*60*full.expHours));
  const committed=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json).results[0];assert.deepEqual(committed,JSON.parse(JSON.stringify(full)));
 });
+
+test('a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards',async t=>{
+ const{env,db,id,ids}=await fixture(t),saved=db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json,state=JSON.parse(saved);
+ let beat=1,result;for(;beat<40;beat++){result=E.simulateStage(state,0,beat);if(result.enemy.hp===0)break;}
+ assert.ok(beat<40,'fixture defeats a wave');const p=await R.view(env,id,ids[0],T+beat*E.BEAT_MS);
+ assert.equal(p.battle.spawn.wave,result.waves+1);assert.equal(p.battle.spawn.previousHp,0);
+ assert.equal(p.battle.enemy.hp,result.enemy.maxHp);assert.equal(p.battle.waves,result.waves);
+ assert.deepEqual(p.battle.events,result.events);assert.equal(p.me.rewards.exp,0);
+ const again=await R.view(env,id,ids[0],T+beat*E.BEAT_MS+100);assert.deepEqual(again.battle.spawn,p.battle.spawn);
+ assert.equal(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json,saved);
+ assert.equal(db.prepare('SELECT COUNT(*) n FROM rpg_star_ring_rewards').get().n,0);
+});
 test('offline twelve-hour catchup grants six stages once and canonical private completion once',async t=>{
  const{env,db,id,ids}=await fixture(t);const p=await R.view(env,id,ids[0],T+E.DURATION+1);assert.equal(p.status,'complete');assert.equal(p.completedStages,6);
  assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
@@ -248,7 +260,9 @@ test('all twelve exact hourly boundaries switch scene, species and art while rew
  for(let stage=0;stage<6;stage++){
   for(let half=0;half<2;half++){
    const hour=stage*2+half,projection=E.simulateStage(offline,stage,half*E.HOUR_BEATS+17),actual=snapshots[hour].battle;
-   assert.equal(actual.hourIndex,hour);assert.deepEqual(actual.events,projection.events);assert.equal(actual.waves,projection.waves);assert.equal(actual.enemy.hp,projection.enemy.hp);assert.deepEqual(actual.members.map(m=>m.hp),projection.actors.map(a=>a.hp));
+   assert.equal(actual.hourIndex,hour);assert.deepEqual(actual.events,projection.events);assert.equal(actual.waves,projection.waves);
+   if(projection.enemy.hp===0){assert.equal(actual.spawn.previousHp,0);assert.equal(actual.spawn.wave,projection.waves+1);assert.equal(actual.enemy.hp,projection.enemy.maxHp);}else{assert.equal(actual.spawn,null);assert.equal(actual.enemy.hp,projection.enemy.hp);}
+   assert.deepEqual(actual.members.map(m=>m.hp),projection.actors.map(a=>a.hp));
   }
   const result=E.simulateStage(offline,stage);assert.equal(result.encounters.length,2);assert.equal(result.encounters.reduce((n,a)=>n+a.waves,0),result.waves);assert.deepEqual(result.encounters.map(e=>e.hourIndex),[stage*2,stage*2+1]);offline.results.push(result);offline.stageTactics[stage+1]=offline.tactic;
  }
