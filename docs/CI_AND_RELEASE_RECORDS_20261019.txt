@@ -1,0 +1,45 @@
+2026-10-19 CI、主分支必要檢查與發布收據
+
+費用與正式機邊界
+本倉庫是公開倉庫。CI 只用標準 ubuntu-24.04 GitHub-hosted runner，不使用大型 runner、
+付費服務、artifact 上傳或套件快取。CI 權限 contents:read，不使用 CF／TG 秘密、
+不登入 Cloudflare、不執行部署或 migrations、不發 TG 訊息。合入 main 也不會自動發布。
+本次只改開發工具／文件／GitHub 設定，Worker 與 BOT 正式版本不必且不得因此重發。
+
+必要檢查
+.github/workflows/ci.yml 在 pull_request、main push、手動觸發時使用固定 Node24.19.0，
+根目錄 npm ci 與 npm test，完整包含 Worker .test.js、BOT adapter .test.js 和 test .test.mjs。
+工作名稱固定「Worker and BOT tests」，不可任意改名而未同步分支保護。
+全部 PR 都執行，不用 paths skip 或 continue-on-error 假成功；新提交取消同 PR 舊執行。
+Actions 固定完整 commit SHA、checkout fetch-depth1／不留 Git credential，每個 job 限20分鐘。
+main 規則：必須 PR，該必要檢查通過，合併前與 base 同步，管理員也不能繞過，
+禁止 force push／刪除；不強迫另一名人工 reviewer，避免單人維護無法合併。
+未拿到 GitHub 成功執行與儲存後規則證據，不可只憑 YAML 宣稱必要檢查已生效。
+
+收據位置
+origin/main = 遊戲原始碼，PR／CI 保護。
+origin/deployment-records = 專用收據分支，只有 README.md 和兩份 docs/deployment/*.json。
+第一次 npm run receipts:init 僅複製 main 既有 VERIFIED JSON，沒有 CF API 或程式發布，
+之後 init 遇到已存在分支不覆寫。保留原驗證時間／sourceCommit／productionVersion。
+收據分支採 parent commit 追加歷史與非強制 fast-forward push，不允許部署此分支。
+main 內既有 JSON 保留為切換前快照；讀者先看同目錄 README，再讀遠端收據分支。
+
+發布與恢復
+1. 原始碼開 codex/ 分支→PR→必要檢查通過→合入 main。
+2. 本地 fetch／合入 main，工作區乾淨且 HEAD=origin/main，才執行 deploy:worker 或 deploy:bot。
+3. 原正式版本／bindings／crons 以收據分支資料核對；保留跨 worktree 共用發布鎖。
+4. 建置／完整服務測試／發布／runtime與public驗證後，收據直接追加專用紀錄分支。
+   不修改工作區、HEAD 或 main，不需要主分支 bypass、GitHub App 新秘密或自動合併權限。
+5. 只有紀錄遠端核對完成才輸出 PUBLISHED_AND_GITHUB_SYNCED。
+6. 收據 push 失敗，不可重新 deploy。先 sync:check，再 receipts:record:worker／bot。
+   record 模式只 GET 正式狀態、local dry-run、runtime／public驗證與收據 push；不發布程式。
+   完成後輸出 RECEIPT_RECORDED_AND_GITHUB_SYNCED。
+
+同服務收據若被另一個發布改過，補寫會拒絕覆蓋；不同服務同時更新會刷新再保留另一份。
+相同收據重試具冪等性；拒收非 VERIFIED、版本不一致、錯服務、非 main 歷史 source。
+專用分支應禁止強推／刪除，但不要求原始碼CI，因為它不含可部署程式碼。
+
+驗證
+deployment-records.test.mjs 使用暫存 local bare Git：初始化、main拒絕直接推送時收據仍可
+追加、兩服務併發、防同服務覆寫、重試、推送失敗恢復、錯誤收據／source拒絕。
+正式設置驗收以 GitHub PR／Actions 執行及分支規則為準；沒有為測工具消耗玩家道具。

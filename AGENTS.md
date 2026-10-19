@@ -7,15 +7,15 @@
 
 唯一開發來源為 `https://github.com/micisachen63-gif/--MiniApp`，本機工作目錄為此倉庫。先 fetch 最新 main，再在 `codex/` 分支實作；不可從舊營運自動化薄副本、歷史 candidate 或爆分監控快照直接部署覆蓋新功能。
 
-完成相關測試、提交並推送／合併 GitHub 後，從乾淨且等於 origin/main 的提交執行根目錄 `npm run deploy:worker` 或 `npm run deploy:bot`。流程會建置、執行既有服務測試、檢查正式版本未漂移、標記 Git commit、發布、核對實際 runtime/public 與健康狀態，並把版本對應紀錄提交推送至 `docs/deployment/`。只有最後 GitHub push 與線上驗證都成功，才可回報「已同步」。主分支 push 本身不會自動發布。
+原始碼必須經 PR 與 GitHub 必要檢查「Worker and BOT tests」合入 main；不得直接 push main 或繞過保護。完成相關測試、合併後，從乾淨且等於 origin/main 的提交執行根目錄 `npm run deploy:worker` 或 `npm run deploy:bot`。流程會建置、執行既有服務測試、檢查正式版本未漂移、標記 Git commit、發布、核對實際 runtime/public 與健康狀態，並把版本對應紀錄追加至 origin/deployment-records 的 `docs/deployment/`。只有收據 push 與線上驗證都成功，才可回報「已同步」。CI 與主分支合併均不會自動部署。
 
 使用 Node 24（驗證版本 24.19.0）及根目錄 npm ci。根目錄／子目錄 npm test 已統一為完整測試；不得為了部署跳過失敗檔案。deploy 指令會在共享 Git common dir 建立 rpg-release.lock，跨 worktree／服務防止同時發布。鎖未釋放時先檢查 owner.json、執行程序及 .release-sync 與正式版本，不能自動刪鎖或繞過 scripts/deploy-locked.mjs。
 
 `npm run sync:check` 是唯讀正式環境核對及本機 dry-run 建置，不發布、不更動玩家。先 `npm ci`；Wrangler 固定於根目錄 package-lock.json。核對腳本的 public 檢查範圍寫入收據，不得宣稱初次接管已重新下載驗證所有歷史二進位素材。UI 改動仍須自行完成相應畫面／動作驗收。
 
-正式版本、namespace 與 Git commit 的有效對應以 `docs/deployment/*.json` 和即時 Cloudflare 狀態為準；下方與其他歷史文件內固定版本號只作歷史參考。合法來源漂移要先合併、重驗，不能還原舊版讓檢查通過。保留完整 public、遠端秘密、DB／DO namespace、service bindings 與各服務 cron；不啟動歷史 bot/ 長輪詢，不順便跑 D1 migrations。
+正式版本、namespace 與 Git commit 的有效對應以 origin/deployment-records 分支的 `docs/deployment/*.json` 和即時 Cloudflare 狀態為準；main 內同名 JSON 是切換前的歷史快照，不能作為未來發布基準。先 fetch deployment-records，用 `git show origin/deployment-records:docs/deployment/elf-rpg-api.json` 或 BOT 同名檔讀取；不要 checkout 或部署收據分支。詳見 docs/CI_AND_RELEASE_RECORDS_20261019.txt。合法來源漂移要先合併、重驗，不能還原舊版讓檢查通過。保留完整 public、遠端秘密、DB／DO namespace、service bindings 與各服務 cron；不啟動歷史 bot/ 長輪詢，不順便跑 D1 migrations。
 
-部署工具異常退出或收據 push 失敗時，保留 `.release-sync/`，先用 `sync:check` 查明 live 狀態，禁止自動重部署。若正式版本正確，只補齊驗證紀錄並正常提交推送，不為了寫收據再發布一次。
+部署工具異常退出或收據 push 失敗時，保留 `.release-sync/`，先用 `sync:check` 查明 live 狀態，禁止自動重部署。若正式版本正確，使用 `npm run receipts:record:worker` 或 `npm run receipts:record:bot` 重新唯讀驗證並補齊收據；這兩個指令不發布 Worker。禁止為了寫收據再部署一次。
 
 多人協作時，開工先確認 origin、分支、工作區與遠端提交。保留其他人的未提交修改；有分歧先整合，禁止強推、硬重置或整包覆蓋。若有其他開發中的修改，使用已提交內容的獨立乾淨 checkout/worktree 發布；分支採 codex/ 前綴。只部署本次受影響的服務。
 
