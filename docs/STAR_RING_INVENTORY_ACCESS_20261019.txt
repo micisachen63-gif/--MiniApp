@@ -48,3 +48,8 @@ thief-empty-database 的 fresh schema 契約明列本次兩個 trigger 的精確
 不刪除或跳過原有完整結構驗證。star-ring-market 舊測試更新為遠征天使可上架／取回。
 正式發布前需完整 Worker/BOT 測試及 GitHub CI，合入 main；線上只做 schema／runtime
 唯讀核對，不操作正式玩家天使、交易、金幣或發群訊息做測試。
+
+CI 補修：合併後主分支執行捕捉到既有 fate-gifts 並行測試假設第一個 SHA-256 請求必勝，
+第二個合法先提交時會誤判。補修僅在測試中讓兩筆都到達 commit，再分別控制兩種勝出
+順序；比對相同回覆、一次 replay、一份消耗、唯一操作收據及真實得獎入庫。未改遊戲
+禮盒機率／程式，不為測試變更重新部署。後續以最新主分支 CI 成功結果為準。
