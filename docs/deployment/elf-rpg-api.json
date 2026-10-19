@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "a3adb24be6e2706fead5c55223dcb1ed572b1c6d",
+  "sourceCommit": "7c3bb344569ac078cddaffda14b6ce97ba2a162c",
   "service": "elf-rpg-api",
-  "productionVersion": "ffaea05c-7f58-403b-b705-47d35b91b5ae",
+  "productionVersion": "f137f22d-eb79-48f6-9937-25842cfee8d1",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T07:50:20.543Z",
+  "verifiedAt": "2026-10-19T08:27:22.292Z",
   "runtimeSHA256": {
-    "index.js": "88e6ecc5d3a73c95193e01eb7381e2e917eb5d35cdf6e88d050808d4c9fe774b"
+    "index.js": "6b4faec999c1fb38310e175e7d1f798315921dc01fe024fae893f7af1fc5367f"
   },
   "source": {
     "fileCount": 9214,
-    "sha256": "6f534ce17156e5e0c8192a8be88a6de5925c3298245a2ad5c391690778cbb3e6",
+    "sha256": "ec93ced0d5627946a4eb7c221f0b16bcdf30ac9363a4a885fa10dcdddbb8a437",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35095,11 +35095,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "30a6dd4ced1a784bca604d02b7ad5c624134dbe8095a1ccdfba7e8271c43b41a"
+        "sha256": "53a2533dec1b366b21f7736f499a95c3a03966b6efb3db5092de86e06d78875e"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "ecee2573e1904d20ac3262908f806cec47b3f98d32453b28c3274d1e60cfffa2"
+        "sha256": "de85db67d97b8934ad08ec8d0c8d2b8796cac608ecf7d9e74913458a1e330256"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36839,7 +36839,7 @@
       },
       {
         "file": "worker/src/services/special.js",
-        "sha256": "482fc688fc9bb670cc6e33ba74866f875875802719ec9824a6aee8ab5c774b8e"
+        "sha256": "091c5d46bf69852cfaebe7e50fb267431f8391db4782a8fd4f9a96e23299a86e"
       },
       {
         "file": "worker/src/services/star-ring-cosmetics.js",
@@ -36873,7 +36873,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 146,
+    "verifiedCount": 148,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36903,6 +36903,8 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -37026,7 +37028,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "ffaea05c-7f58-403b-b705-47d35b91b5ae",
+        "version_id": "f137f22d-eb79-48f6-9937-25842cfee8d1",
         "percentage": 100
       }
     ],
