@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "df0cdaa36bb45b972b2065826b7bdf525a552ab8",
+  "sourceCommit": "20b6492913e22cc0aa61f8e67aeed00dbdaf0861",
   "service": "elf-rpg-api",
-  "productionVersion": "e29910b7-548a-4779-84f0-894707f77d6f",
+  "productionVersion": "52a1db05-a218-4611-9ea6-8b413cded295",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T03:48:28.187Z",
+  "verifiedAt": "2026-10-19T04:01:00.862Z",
   "runtimeSHA256": {
     "index.js": "fe16897da71522ddf3a558a9f48ce57bd6a9239b235965b28de364654983faf9"
   },
   "source": {
     "fileCount": 9213,
-    "sha256": "f713dddb65e022c612222edc80ffa3a46f4361ee55c0ca7479fe06aff23b2928",
+    "sha256": "07ccb2ae4724ec0a91c981cd09c6a9b91eb15a8a2b2c1efa28ae20db07632291",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35091,11 +35091,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "3d9e539d40dc06b9f61a921769efb0bc6b4f4c3d3263502ead704a425742b1d3"
+        "sha256": "30a6dd4ced1a784bca604d02b7ad5c624134dbe8095a1ccdfba7e8271c43b41a"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "bf68d0d997d1f57f9e16a36f25fad456bf7073cd5ab6070d0c15cc99b55dae9d"
+        "sha256": "ecee2573e1904d20ac3262908f806cec47b3f98d32453b28c3274d1e60cfffa2"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36091,7 +36091,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "20906ead837aa4b89289371ce036071043d48c249cd6bd452502d1db83c7b422"
+        "sha256": "b1f866100200f9feac363be005b50d411b2812dae42046a936f0eb03f34c3c71"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -36147,11 +36147,11 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "1c517743e91d30155384efc74f8bff0362d6d41061ce0a15257ab9c8d25c2bb0"
+        "sha256": "8c90fc1b5886165122f9ec6cc1fbe0bf974c29751028cd580a0428bde49ee355"
       },
       {
         "file": "worker/public/star-ring.css",
-        "sha256": "9c3d9c7312b8f3431ebcbb1680fb625d23b29a2cac38147b96369ad8114619b2"
+        "sha256": "7556ccbbef42e33c68312a3214139ca86ec699f1f6d4fdc097c612290e60e4d2"
       },
       {
         "file": "worker/public/status-banner.css",
@@ -36869,7 +36869,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 149,
+    "verifiedCount": 148,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36901,7 +36901,6 @@
       "worker/public/expedition-entry.js",
       "worker/public/expedition/index.html",
       "worker/public/expedition/live.js",
-      "worker/public/expedition/review.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -37025,7 +37024,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "e29910b7-548a-4779-84f0-894707f77d6f",
+        "version_id": "52a1db05-a218-4611-9ea6-8b413cded295",
         "percentage": 100
       }
     ],
