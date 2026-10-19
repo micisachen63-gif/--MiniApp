@@ -1,0 +1,31 @@
+2026-10-19 遠征中改技能→打寶／爬塔通關→遠征結束的配置保留補驗
+
+本次針對已發布的7c3bb344569ac078cddaffda14b6ce97ba2a162c補驗，不修改產品程式。
+之前的技能回歸已驗證新短隊使用新配置，但用「結束隊伍」釋放前景鎖；這次新增
+真正打完首領／十層爬塔到won的流程，不直接設勝利、不用end取代通關。
+
+新增 worker/test/star-ring-skill-persistence.test.js，共12個隔離情境：
+遠征v1／v2／v3 × 打寶／爬塔 × 短隊先通關／遠征在短隊戰鬥中先結束。
+每個情境都使用正式MiniApp技能API與真實D1 shim／Party／Ring服務，依實際回合deadline推進。
+
+驗收內容
+1. 出發時保留遠征配置A；遠征期間學會原快照沒有的新技能，換成配置B、設定施放條件。
+2. 建立及開始真打寶／爬塔，新actor的learned、loadout、auto等於角色的B。
+3. 送出實際技能戰術，跑一個真回合，確認replacement skillId出現在事件內並寫入新冷卻。
+4. 跑完打寶首領或十層爬塔到won，獎勵真入袋；角色仍是B，冷卻等於本場最終actor，
+   不會回到遠征出發時的舊值。爬塔紀錄towerBest=10也保留。
+5. 通關後再改成配置C，確保C同時不同於舊遠征A及剛通關的短隊B。
+6. 重開舊短隊戰報、重試舊獎勵，不得把B寫回C。
+7. 遠征完成六階段後，C的learned／loadout／auto／冷卻／爬塔紀錄全部仍保留。
+   若遠征先完成，前景短隊的party_id及HP／MP不動，短隊仍能真正通關。
+8. 重複sweep、舊戰報、舊領獎仍不覆蓋C；每趟遠征恰有30份、每支短隊恰有3份獎勵收據。
+9. 再開一支新的同模式短隊，出發actor確實採用C。
+10. 與未更換技能的獨立遠征對照，全部actors、六階段戰鬥結果與30份reward_json完全一致。
+
+範圍與發布
+12個新增情境在Node24隔離環境全數通過；完整CI由PR必要檢查執行。
+只新增測試與交接文件，原技能限制／獎勵／機率／資料庫／美術皆未更動，不需重發Worker或BOT。
+合入main後用根目錄sync:check唯讀核對正式runtime、公用入口、bindings與排程仍與最新原始碼一致。
+實際部署sourceCommit仍應維持7c3bb34，權威收據在origin/deployment-records，不能為此改寫成測試提交。
+本次沒有在正式玩家／正式D1／Telegram執行測試遊玩，也沒有做實體手機TG驗收。
+本機證據：忽略目錄.release-sync/ring-skill-persistence-target.log；CI證據看對應PR與Actions。
