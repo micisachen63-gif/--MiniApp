@@ -370,6 +370,7 @@
   const myHeroKey = () => { const c = S.me ? S.me.character : {}; return heroKey(c.baseClass, c.gender, c.classPath); };
   const SINGLE_ELF4 = /^adv4_archer_(A11[12]|A12[12]|A21[12])_[fm]$/;
   function artFile(kind, key) {
+    if(kind==='item'&&/^(red|blue)_[1-4]$/.test(key))return `art/potions-20261019/${key}.webp`;
     if(kind==='item'&&key==='star_ring_token')return '/art/star-ring-20261018/star_ring_token.webp';
     if(kind==='item'&&key==='fate_cycle_gift')return '/art/ui/command-collect-20261012.webp';
     if(kind==='item'&&/^guaranteed_scroll_[wa]$/.test(key))return `/art/items-scrolls-pink-20261018/${key}.webp`;
@@ -859,6 +860,10 @@
       default: return { cls: '', text: c.state };
     }
   }
+  function potionChoiceHtml(kind,key,name,count,hours,other){
+    const c=S.me.character,field=kind==='red'?'autoRedPotion':'autoBluePotion',label=kind==='red'?'生命藥水':'魔力藥水',stat=kind==='red'?'HP':'MP',options=S.me.supply?.[kind+'Options']||[];
+    return `<div class="pot supply-choice"><div class="supply-choice-top"><span class="ic">${iconHtml(key,'🧪')}</span><div class="supply-choice-info"><span class="supply-choice-label">${label}</span><div class="n">${fmt(count)} <small>瓶</small></div><div class="h">${esc(name)} · ${stat} +${fmt(S.meta.items[key]?.heal||0)}</div></div></div><label class="supply-choice-select">自動飲用種類<select data-potion-kind="${kind}" aria-label="${label}種類"><option value="auto" ${c[field]==='auto'||!c[field]?'selected':''}>自動選擇（依等級與庫存）</option>${options.map(p=>`<option value="${p.key}" ${c[field]===p.key?'selected':''} ${!p.unlocked&&!p.count?'disabled':''}>${esc(p.name)} · ${stat} +${p.heal} · 持有 ${fmt(p.count)}${!p.unlocked&&!p.count?'（尚未解鎖）':''}</option>`).join('')}</select></label><div class="h supply-choice-hours">預估約 ${hours} 小時${other?` · 其他種類 ${fmt(other)} 瓶`:''}</div></div>`;
+  }
   function homeView() {
     const me = S.me, c = me.character, st = me.stats, si = stateInfo(me);
     const scene = window.RpgMaps && window.RpgMaps.get(c.level);
@@ -884,10 +889,10 @@
     </div></div>
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
-    ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>沒紅水了</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
+    ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>目前選用的生命藥水已用完</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
     <div class="card"><h3>🧪 補給 <small>自動喝${esc(redName)} ≤ ${c.autoRedPct}%</small></h3>
-      <div class="grid2"><div class="pot"><span class="ic">${iconHtml(redKey, '🧪')}</span><div><div class="n">${fmt(redTier)}</div><div class="h">${esc(redName)} · 約 ${me.supply.redHours} 小時${redOther ? `（另有其他階 ${fmt(redOther)} 瓶）` : ''}</div></div></div>
-      <div class="pot"><span class="ic">${iconHtml(blueKey, '💙')}</span><div><div class="n">${fmt(blueTier)}</div><div class="h">${esc(blueName)} · 約 ${me.supply.blueHours} 小時${blueOther ? `（另有其他階 ${fmt(blueOther)} 瓶）` : ''}</div></div></div></div>
+      <div class="grid2 supply-choices">${potionChoiceHtml('red',redKey,redName,redTier,me.supply.redHours,redOther)}${potionChoiceHtml('blue',blueKey,blueName,blueTier,me.supply.blueHours,blueOther)}</div>
+      <p class="muted supply-choice-note">指定種類後只會喝該藥水；用完請補給或切換種類。補滿 24 小時會購買目前所選藥水。</p>
       <div class="row mt"><button class="btn" id="refill" ${me.refill.cost > 0 ? '' : 'disabled'}>${me.refill.cost > 0 ? `🧪 補滿 24 小時（${esc(redName)}／${esc(blueName)}）· 💰${fmt(me.refill.cost)}` : '✅ 水量充足（24h）'}</button></div>
       ${c.level>=15?'<label class="guardian-refill-check"><input type="checkbox" id="refillGuardian" '+(me.guardianStoneSupply?'checked':'')+'> '+iconHtml('guardian_summon_stone','✦')+' 召喚石自動補給 · 持有 '+(me.guardianSupply?.stoneCount||0)+' 顆<span>用完自動購買 · 每顆 '+fmt(me.guardianSupply?.stoneGold||3000)+' 金幣</span></label>':''}
       <div class="mt muted">自動喝${esc(redName)}：HP 低於或等於設定比例時使用</div><div class="seg" id="redSeg">${[30, 40, 50, 60, 70].map((v) => `<button data-v="${v}" class="${c.autoRedPct === v ? 'on' : ''}">${v}%</button>`).join('')}</div>
@@ -919,6 +924,7 @@
     drawPortrait($('#pt', view), heroOpts({}));
     if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
     const supplyToggle=$('#refillGuardian',view);if(supplyToggle)supplyToggle.onchange=async()=>{const checked=supplyToggle.checked;supplyToggle.disabled=true;try{await api('guardian/assist',{mode:'supply',autoBuy:checked,requestId:window.RpgGuardianHost.requestId()});await refreshMe();window.dispatchEvent(new Event('elf-skills-refresh'));toast(checked?'已允許召喚石用完自動購買，每顆3,000金幣':'已關閉召喚石自動購買，背包石頭用完就停止召喚');}catch(e){supplyToggle.checked=!checked;toast(e.message);}finally{supplyToggle.disabled=false;}};
+    view.querySelectorAll('[data-potion-kind]').forEach(select=>{select.onchange=async()=>{const field=select.dataset.potionKind==='red'?'autoRedPotion':'autoBluePotion',value=select.value;select.disabled=true;try{const j=await act('settings',{[field]:value},value==='auto'?'已改為自動選擇藥水':'已設定自動飲用：'+itemName(value));if(!j){select.value=S.me.character[field]||'auto';select.disabled=false;}}catch{select.value=S.me.character[field]||'auto';select.disabled=false;}};});
     $('#refill', view).onclick = () => act('refill', {}, (j) => '已補水，花費 '+fmt(j.result?.cost)+' 金幣');
     view.querySelectorAll('#redSeg button').forEach((b) => { b.onclick = () => act('settings', { autoRedPct: Number(b.dataset.v) }, `HP ≤ ${b.dataset.v}% 自動喝紅水`); });
     view.querySelectorAll('#blueSeg button').forEach(b=>{b.onclick=()=>act('settings',{autoBluePct:Number(b.dataset.v)},`MP ≤ ${b.dataset.v}% 自動喝藍水`);});
@@ -968,7 +974,7 @@
     else if(t.k==='go:boss')src='art/ui/command-boss_time-20261012.webp';
     else if(t.k==='go:trade')src='art/ui/command-trade-20261012.webp';
     else if(t.k==='go:class')src='art/ui/item-boss_essence-20261012.webp';
-    else if(t.k==='refill')src='art/v2/item_potion_red_1.webp';
+    else if(t.k==='refill')src='art/potions-20261019/red_1.webp';
     else if(t.k.startsWith('item:')){const e=S.me.equipment.find(x=>x.id===t.k.slice(5));src='art/items-scrolls-cutout-20261011/'+(t.b==='洗'?'scroll_r':e?.scroll||'scroll_w')+'.webp';}
     return '<img class="command-icon" src="'+src+'" alt="" aria-hidden="true" decoding="async">';
   }

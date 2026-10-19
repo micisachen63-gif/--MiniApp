@@ -1,8 +1,9 @@
+import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
 import { CLASSES, CLASS_KEYS, GENERAL_WEAPON, ITEMS, POTIONS, MAX_OPEN_MAP, RARITY_KEYS } from '../game/constants.js';
-import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours, potionTierFor } from '../game/idle.js';
+import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours } from '../game/idle.js';
 import { idleStats, computeStats } from '../game/stats.js';
 import { advance, reselect, GameError } from '../game/classes.js';
 import { checkItemPurchase, drawGacha } from '../game/shop.js';
@@ -219,20 +220,21 @@ export async function buyItem(work, { now, db }, { item, qty, requestId }) {
     extra: ITEMS[item]?.dailyBuy ? [counterStmt(db, work.char.tg_id, day, `buy:${item}`, qty)] : [], result: { item, qty, total, state: work.char.idle_state } };
 }
 
-/** 一鍵補滿: buy current-tier red/blue for 24h (scaled down if gold is short) */
+/** Buy the selected HP/MP potions for 24h (scaled down if gold is short). */
 export function refill(work, { now }, { hours = 24, requestId }) {
   const equipped = work.equipment.filter((e) => e.is_equipped);
   const plan = refillPlan(work.char, work.inv, equipped, hours);
-  const pTier = potionTierFor(work.char);
-  let red = plan[`red_${pTier}`], blue = plan[`blue_${pTier}`]; let cost = plan.cost;
+  const redKey=potionKeyFor(work.char,'red'),blueKey=potionKeyFor(work.char,'blue');
+  for(const key of [redKey,blueKey])if(plan[key]>0&&POTIONS[key].tier>potionTierFor(work.char))throw new GameError('not_sold','所選藥水尚未解鎖購買，請改選已解鎖的藥水');
+  let red = plan[redKey], blue = plan[blueKey]; let cost = plan.cost;
   if (cost === 0) throw new GameError('full', `水已經夠用 ${hours} 小時了`);
-  if (cost > work.char.gold) { const k = work.char.gold / cost; red = Math.floor(red * k); blue = Math.floor(blue * k); cost = red * POTIONS[`red_${pTier}`].price + blue * POTIONS[`blue_${pTier}`].price; }
+  if (cost > work.char.gold) { const k = work.char.gold / cost; red = Math.floor(red * k); blue = Math.floor(blue * k); cost = red * POTIONS[redKey].price + blue * POTIONS[blueKey].price; }
   if (red + blue === 0) throw new GameError('gold', '金幣不足，先領每日補給金吧');
-  work.char.gold -= cost; work.inv[`red_${pTier}`] = (work.inv[`red_${pTier}`] || 0) + red; work.inv[`blue_${pTier}`] = (work.inv[`blue_${pTier}`] || 0) + blue;
+  work.char.gold -= cost; work.inv[redKey] = (work.inv[redKey] || 0) + red; work.inv[blueKey] = (work.inv[blueKey] || 0) + blue;
   autoResume(work.char, work.inv, idleStats(work.char, equipped).maxHp);
   const ledger = [];
-  if (red) ledger.push({ event_id: eventId('refill-red', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '一鍵補水', gold_delta: -red * POTIONS[`red_${pTier}`].price, item: `red_${pTier}`, item_delta: red });
-  if (blue) ledger.push({ event_id: eventId('refill-blue', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '一鍵補水', gold_delta: -blue * POTIONS[`blue_${pTier}`].price, item: `blue_${pTier}`, item_delta: blue });
+  if (red) ledger.push({ event_id: eventId('refill-red', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '一鍵補水', gold_delta: -red * POTIONS[redKey].price, item: redKey, item_delta: red });
+  if (blue) ledger.push({ event_id: eventId('refill-blue', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '一鍵補水', gold_delta: -blue * POTIONS[blueKey].price, item: blueKey, item_delta: blue });
   return { ledger, result: { red, blue, cost, partial: cost < plan.cost, state: work.char.idle_state } };
 }
 
@@ -321,12 +323,13 @@ export function unequip(work, ctx, { slot = null, position = null, itemId = null
   const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp);
   return { result: { slot: item.slot, itemId: item.id } };
 }
-export function settings(work, ctx, { autoRedPct, autoBlue, autoBluePct }) {
+export function settings(work, ctx, { autoRedPct, autoBlue, autoBluePct, autoRedPotion, autoBluePotion }) {
   if (autoRedPct != null) { const v = Number(autoRedPct); if (!Number.isInteger(v) || v < 20 || v > 80) throw new GameError('range', '喝紅水門檻要在 20–80%'); work.char.auto_red_pct = v; }
   if (autoBluePct != null) { const v=Number(autoBluePct); if (!Number.isInteger(v)||v<20||v>80) throw new GameError('range','喝藍水門檻要在 20–80%'); let x; try{x=JSON.parse(work.char.special_json||'{}');}catch{x={};} work.char.special_json=JSON.stringify({...x,autoBluePct:v}); }
+  for(const [field,kind,value] of [['autoRedPotion','red',autoRedPotion],['autoBluePotion','blue',autoBluePotion]]){if(value===undefined)continue;if(value!=='auto'&&(!Object.hasOwn(POTIONS,value)||POTIONS[value].kind!==kind))throw new GameError('potion','請選擇正確的藥水種類');if(value!=='auto'&&POTIONS[value].tier>potionTierFor(work.char)&&!(work.inv[value]>0))throw new GameError('potion','這種藥水尚未解鎖，且背包中沒有庫存');let x;try{x=JSON.parse(work.char.special_json||'{}');}catch{x={};}work.char.special_json=JSON.stringify({...x,[field]:value});}
   if (autoBlue != null) work.char.auto_blue = autoBlue ? 1 : 0;
   autoResume(work.char, work.inv, idleStats(work.char, work.equipment.filter((e) => e.is_equipped)).maxHp);
-  return { result: { autoRedPct: work.char.auto_red_pct, autoBlue: !!work.char.auto_blue, autoBluePct:getAutoBluePct(work.char) } };
+  return { result: { autoRedPct: work.char.auto_red_pct, autoBlue: !!work.char.auto_blue, autoBluePct:getAutoBluePct(work.char),autoRedPotion:potionPreference(work.char,'red'),autoBluePotion:potionPreference(work.char,'blue') } };
 }
 
 export function doAdvance(work, { now, db }, { branch, requestId }) {

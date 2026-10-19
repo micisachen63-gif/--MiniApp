@@ -69,3 +69,16 @@ for(const kind of ['dungeon','tower'])test(`${kind}: live MP threshold refills b
  assert.equal(await count(),2);await G.view(env,id,'111',T0+5001);assert.equal(await count(),2);
  const c=await loadPlayer(env.DB,'111');assert.equal(JSON.parse(c.char.special_json).autoBluePct,70);
 });
+
+for(const kind of ['dungeon','tower'])test(`${kind}: live potion choice overrides the encounter snapshot without losing settings or double spending`,async()=>{
+ const {env,id}=await team(kind);
+ await env.DB.prepare("UPDATE rpg_characters SET auto_blue=1,special_json=? WHERE tg_id='111'").bind(JSON.stringify({autoBluePct:70,autoBluePotion:'blue_2',autoRedPotion:'red_1'})).run();
+ await env.DB.prepare("UPDATE rpg_inventory SET quantity=100 WHERE tg_id='111' AND item='blue_1'").run();
+ await env.DB.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES('111','blue_2',20) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=20").run();
+ await edit(env,id,s=>{s.enemy.hp=s.enemy.maxHp=1000000;for(const a of s.actors){a.mp=0;a.maxMp=1000;a.special.learned=['skill_02_1'];a.special.loadout=['skill_02_1'];a.special.cooldowns={};a.special.autoBluePotion='blue_1';}});
+ const r=await G.view(env,id,'111',T0+5001),water=r.battleTurn.events.find(e=>e.actorId==='111'&&e.used);
+ assert.equal(water.used.blue_2,7);assert.equal(water.used.blue_1,undefined);assert.equal(r.battleTurn.events.find(e=>e.actorId==='111'&&e.skillId).skillId,'skill_02_1');
+ const count=async()=> (await env.DB.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id='111' AND item='blue_2'").first()).quantity;
+ assert.equal(await count(),13);await G.view(env,id,'111',T0+5001);assert.equal(await count(),13);
+ const p=await loadPlayer(env.DB,'111'),prefs=JSON.parse(p.char.special_json);assert.equal(prefs.autoBluePotion,'blue_2');assert.equal(prefs.autoRedPotion,'red_1');assert.equal(prefs.autoBluePct,70);assert.equal(p.inv.blue_1,100);
+});

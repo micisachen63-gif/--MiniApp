@@ -1,0 +1,65 @@
+藥水種類選擇與全階圖示 — 2026-10-19
+
+補給與策略現在可分別選擇生命、魔力藥水，顯示圖示、HP/MP 回復量、
+持有數與可用時間。預設「自動選擇」保留原本依等級及庫存挑選的規則。
+指定種類則只消耗該種類，用完不會偷偷改喝其他階；缺魔仍依既有機制
+改用普攻。原本的 HP/MP 比例、自動藍水開關與特殊技能每日預算不變。
+選擇儲存於各角色 special_json，不需 migration。
+
+掛機原生／特殊技能、群組首領、組隊副本及爬塔的藍水消耗已接入共用
+選擇器。組隊戰鬥每回合載入最新角色偏好，保存冷卻時保留選擇。
+補滿 24 小時、庫存時間估算與不足金幣的部分購買也跟隨所選種類。
+未解鎖且未持有的種類不可選；已有的高階藥水可喝，但不繞過購買解鎖。
+
+八款 512x512 透明 WebP 成品：
+worker/public/art/potions-20261019/red_1.webp — 紅色藥水：紅色圓瓶／日輪吊牌
+worker/public/art/potions-20261019/red_2.webp — 橙色藥水：橙色六角瓶／雙耳
+worker/public/art/potions-20261019/red_3.webp — 白色藥水：珍珠白長瓶／羽翼
+worker/public/art/potions-20261019/red_4.webp — 濃縮體力：緋紅切面瓶／紅寶石冠
+worker/public/art/potions-20261019/blue_1.webp — 藍色藥水：天藍梨形瓶／月牙吊牌
+worker/public/art/potions-20261019/blue_2.webp — 精神藥水：青綠方形長瓶／銀色雙耳
+worker/public/art/potions-20261019/blue_3.webp — 高級精神：鈷藍菱形瓶／金色月冠
+worker/public/art/potions-20261019/blue_4.webp — 賢者藥水：紫色雙耳瓶／星儀瓶蓋
+
+使用內建 imagegen；每張獨立生成。共同最終提示詞：
+Use case: stylized-concept. Asset type: premium Greek mythology MMORPG
+inventory item icon. Create ONE isolated potion bottle: [variant below].
+Hand-painted realistic AAA fantasy game item art with refined weathered
+antique metal, precise glass refraction, strong recognizable silhouette,
+clean edges and controlled studio highlights. Three-quarter front view,
+entire bottle centered and fully visible, fills 82% of a square canvas with
+safe margins. Transparent background, no pedestal, no frame, no UI, no
+lettering, no numbers, no watermark, no cast shadow outside the bottle,
+no detached particles. Should remain legible at 48 pixels. This is one of
+a coherent eight-icon family; professional dark navy and antique gold
+game UI compatibility. Different silhouette and stated liquid color
+are essential.
+
+Variants:
+red_1: basic health potion; slim short round-bottom glass vial, restrained
+bronze neck ring, clearly deep RUBY RED liquid, simple cork, tiny sun medallion
+red_2: improved health potion; wide squat hexagonal flask with broad shoulders,
+rich AMBER ORANGE liquid, two bronze handles at neck, small amber gem
+red_3: greater health potion; tall elegant teardrop amphora bottle, luminous
+PEARL WHITE milky elixir, silver and antique gold wing collar, pearl at stopper
+red_4: concentrated vitality potion; powerful compact angular crystal decanter
+with an ornate gold crown stopper and heavy gold foot, vivid CRIMSON MAGENTA
+elixir, ruby center jewel
+blue_1: basic mana potion; small pear-shaped glass vial, vivid SKY BLUE cyan
+elixir, bronze cork cap with a tiny crescent charm
+blue_2: spirit potion; tall rectangular cut-glass bottle with stepped shoulders,
+luminous TURQUOISE TEAL elixir, silver wrapped neck with curled handles
+blue_3: greater spirit potion; wide faceted diamond-shaped crystal flask,
+glowing deep COBALT BLUE elixir, golden crescent stopper and sapphire centerpiece
+blue_4: sage potion; imposing ornate curved amphora with twin gold handles,
+luminous VIOLET PURPLE elixir with a few internal stars, elaborate gold
+celestial armillary stopper
+
+驗證：
+- 藥水選擇／補給／自動藍水／組隊戰況 20 項通過。
+- 真實 app + Worker handlers + 隔離記憶體 D1，390 與 1024 px：
+  選擇經設定 API 儲存，重載／重選角色後保留；頁面無水平溢出。
+  商店六款當前等級藥水使用不同的新圖；購買後道具庫亦使用新圖。
+  補給、商店、背包圖片皆成功載入，無 browser page error。
+- 各新圖保留真正透明 alpha；歷史 v2 圖檔完整保留。
+- 正式發布由根目錄部署流程重跑完整 Worker 測試並核對 runtime/public。

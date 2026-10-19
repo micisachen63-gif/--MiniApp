@@ -114,7 +114,7 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
   const player=await loadPlayer(env.DB,a.id,env),c=player.char,used={};
   stmts.push(env.DB.prepare('UPDATE rpg_characters SET updated_at=updated_at WHERE tg_id=? AND party_id=? AND rev=?').bind(a.id,p.id,c.rev),guardStmt(env.DB));
   // Keep live preferences when persisting the encounter's skill cooldowns.
-  if(Object.hasOwn(specialState(c),'autoBluePct'))a.special.autoBluePct=specialState(c).autoBluePct;
+  for(const key of ['autoBluePct','autoRedPotion','autoBluePotion']){const prefs=specialState(c);if(Object.hasOwn(prefs,key))a.special[key]=prefs[key];else delete a.special[key];}
   const native=a.skill||nodeFor(a.base,a.path).skill;
   const projected={...a,mp:a.maxMp};
   const planned=s.actions[a.id]||automaticRoleAction({...s,actors:s.actors.map(x=>x.id===a.id?projected:x)},projected)||autoPartyAction(projected,s.actors,enemy,now,s);
@@ -122,7 +122,7 @@ async function advance(env,id,now){return mutate(env,id,'system',{silent:false},
   if(planned.skillId.startsWith('role_'))required=roleSkills(a).find(x=>x.id===planned.skillId)?.mp||0;
   else if(!['attack','defend'].includes(planned.skillId))try{required=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.maxMp,affixPct:a.affixPct},a.special,planned.skillId,now).mp;}catch{required=0;}
   else if(planned.skillId==='defend')required=0;
-  if(enemy.hp>0&&needsBlue(c,a.mp,a.maxMp,required)){const target=blueTarget(c,a.maxMp,required);let key;do{key=choosePotion(player.inv,'blue',mapForLevel(c.level));if(!key)break;player.inv[key]--;used[key]=(used[key]||0)+1;a.mp=Math.min(a.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
+  if(enemy.hp>0&&needsBlue(c,a.mp,a.maxMp,required)){const target=blueTarget(c,a.maxMp,required);let key;do{key=choosePotion(player.inv,'blue',mapForLevel(c.level),c);if(!key)break;player.inv[key]--;used[key]=(used[key]||0)+1;a.mp=Math.min(a.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
   for(const [key,count] of Object.entries(used))stmts.push(env.DB.prepare('UPDATE rpg_inventory SET quantity=quantity-? WHERE tg_id=? AND item=? AND quantity>=?').bind(count,a.id,key,count),guardStmt(env.DB));
   if(Object.keys(used).length){turn.events.push({actorId:a.id,label:'自動喝藍水',used,healedMp:a.mp-turn.before.members.find(m=>m.id===a.id).mp,after:snapshot()});s.log.push(a.name+'：自動喝藍水');}
   const action=s.actions[a.id]||automaticRoleAction(s,a)||autoPartyAction(a,s.actors,enemy,now,s);

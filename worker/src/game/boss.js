@@ -98,7 +98,7 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
   if(enemy.hp<beforeHp)actions.push({skillId:'periodic',label:'召喚／持續傷害',damage:beforeHp-enemy.hp,before:beforePeriodic,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   for(let i=0;i<BOSS.castsPerAttack&&enemy.hp>0;i++){
     const before={hp:a.hp,mp:a.mp,enemyHp:enemy.hp};
-    if(needsBlue(c,a.mp,s.maxMp,s.skill.cost)){const target=blueTarget(c,s.maxMp,s.skill.cost);let key;do{key=choosePotion(inv,'blue',mapTier);if(!key)break;drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
+    if(needsBlue(c,a.mp,s.maxMp,s.skill.cost)){const target=blueTarget(c,s.maxMp,s.skill.cost);let key;do{key=choosePotion(inv,'blue',mapTier,c);if(!key)break;drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
     const action=autoPartyAction(a,[a],enemy,now,{});let outcome,label;
     if(action.skillId!=='attack'){
       const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},x,action.skillId,now);
@@ -125,7 +125,7 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
   const r=Math.min(2,Math.max(.3,s.r??1));
   const counter=enemy.hp>0&&!enemy.interrupted?receiveDamage(a,BOSS.counterHpPct*s.maxHp/r*(1-valueOf(enemy,'enemyNextReduce',now)),[a],enemy,now,{defApplied:true}):0;
   if(a.base==='thief')for(const b of enemy.buffs)if(b.type==='enemyNextReduce'&&b.uses>0)b.uses--;
-  {let key;while(a.hp<(c.auto_red_pct/100)*s.maxHp&&(key=choosePotion(inv,'red',mapTier))){drink(key);a.hp=Math.min(s.maxHp,a.hp+POTIONS[key].heal);}}
+  {let key;while(a.hp<(c.auto_red_pct/100)*s.maxHp&&(key=choosePotion(inv,'red',mapTier,c))){drink(key);a.hp=Math.min(s.maxHp,a.hp+POTIONS[key].heal);}}
   const downed=a.hp<=0;if(downed){a.hp=1;c.boss_down_until=now+BOSS.downMs;}
   a.atk=originalAtk;c.hp=a.hp;c.mp=a.mp;
   x.bossCombat={id:encounterId,...(a.base==='thief'?{thiefAttackCarry:a.thiefAttackCarry||0}:{}),buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon,enemy:{buffs:enemy.buffs,dots:enemy.dots}};saveSpecial(c,x);

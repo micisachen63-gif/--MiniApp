@@ -1,3 +1,4 @@
+import {potionPreference,potionOptions} from './game/potion-choice.js';
 import {autoBluePct} from './game/auto-blue.js';
 import {monsterPool,monsterIdentity,collectionView} from './game/monsters.js';
 import {affixView,affixCost} from './game/affixes.js';
@@ -44,7 +45,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, aura:equippedAura(char), name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
       className: node.name, classPath: char.class_path, classTier: tier, level: char.level, exp: char.exp, expNeed: Number.isFinite(need) ? need : null,
       expPct: Number.isFinite(need) ? Math.min(100, Math.floor((char.exp / need) * 1000) / 10) : 100, hp: char.hp, mp: char.mp, maxHp: s.maxHp, maxMp: s.maxMp,
-      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char),
+      mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char), autoRedPotion:potionPreference(char,'red'), autoBluePotion:potionPreference(char,'blue'),
       penaltiesToday: char.penalty_day && char.penalty_day === new Date(now + 8 * 3600e3).toISOString().slice(0, 10) ? char.penalties_today : 0,
       deathsTotal: char.deaths_total, bossDownUntil: char.boss_down_until && char.boss_down_until > now ? char.boss_down_until : null, lastReselectAt: char.last_reselect_at },
     stats: { ...guardianStatsView(s,char), attackSpeedMultiplier:s.attackSpeedMultiplier,hitAttackMultiplier:s.hitAttackMultiplier, weaponElem:s.weaponElem,elementResist:s.elementResist,elementResistance:s.elementResistance,def: s.def, maxHp: s.maxHp, maxMp: s.maxMp, crit: Math.round((0.05 + (s.pct.critPct || 0)) * 1000) / 10, standard: s.std, r: Math.round(s.r * 100) / 100, skill: s.skill, passive: node.passiveText, taken: Math.round(s.taken * 100) / 100, element: s.element },
@@ -56,7 +57,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     inventory: inv,
     collection:collectionView(inv,char),
     ...(compact?{compact:true}:{equipment: equipment.map((e) => equipmentView(char, e))}),
-    supply: { redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey: `red_${sup.tier}`, blueKey: `blue_${sup.tier}`, redTierCount: inv[`red_${sup.tier}`] || 0, blueTierCount: inv[`blue_${sup.tier}`] || 0 },
+    supply: { redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey:sup.redKey, blueKey:sup.blueKey, redTierCount:inv[sup.redKey]||0, blueTierCount:inv[sup.blueKey]||0, redOptions:potionOptions(char,inv,'red'), blueOptions:potionOptions(char,inv,'blue') },
     refill: refillPlan(char, inv, equipped, 24, sup),
     daily: dailyGoldFor(char, now),
     gate,

@@ -1,3 +1,5 @@
+import {potionPreference,potionKeyFor,potionStock,potionHealing,potionTierFor} from './potion-choice.js';
+export {potionTierFor} from './potion-choice.js';
 import {needsBlue,blueTarget} from './auto-blue.js';
 import {chooseMonster,monsterMaterialPlan} from './monsters.js';
 import {guardianDamageMultiplier,guardianChance} from './guardian-effects.js';
@@ -21,7 +23,9 @@ const RED = potionKeys('red'), BLUE = potionKeys('blue');
 export const countKind = (inv, kind) => (kind === 'red' ? RED : BLUE).reduce((n, k) => n + (inv[k] || 0), 0);
 
 /** best potion to drink: highest tier ≤ map potion tier, else the lowest higher tier */
-export function choosePotion(inv, kind, mapTier) {
+export function choosePotion(inv, kind, mapTier, char=null) {
+  const preferred=potionPreference(char,kind);
+  if(preferred!=='auto')return (inv[preferred]||0)>0?preferred:null;
   const keys = kind === 'red' ? RED : BLUE;
   const pTier = Math.min(4, Math.ceil(mapTier / 3));
   const lower = keys.filter((k) => POTIONS[k].tier <= pTier && (inv[k] || 0) > 0);
@@ -54,9 +58,9 @@ export function applyExp(c, statsFor) {
 
 /** after restocking / advancing: leave town automatically when possible (no manual "continue") */
 export function autoResume(c, inv, maxHp) {
-  if (c.idle_state === 'town_no_red' && countKind(inv, 'red') > 0) { c.idle_state = 'fighting'; return true; }
-  if (c.idle_state === 'gate' && !atGate(c)) { c.idle_state = (countKind(inv, 'red') > 0 || c.hp > IDLE.townHpPct * maxHp) ? 'fighting' : 'town_no_red'; return true; }
-  if (c.idle_state === 'no_mp' && countKind(inv, 'blue') > 0) { c.idle_state = 'fighting'; return true; }
+  if (c.idle_state === 'town_no_red' && potionStock(c, inv, 'red') > 0) { c.idle_state = 'fighting'; return true; }
+  if (c.idle_state === 'gate' && !atGate(c)) { c.idle_state = (potionStock(c, inv, 'red') > 0 || c.hp > IDLE.townHpPct * maxHp) ? 'fighting' : 'town_no_red'; return true; }
+  if (c.idle_state === 'no_mp' && potionStock(c, inv, 'blue') > 0) { c.idle_state = 'fighting'; return true; }
   return false;
 }
 
@@ -107,16 +111,16 @@ export function settleIdle(char, inventory, equipped, now) {
     if (atGate(c)) { setState('gate', t, { level: c.level }); townRegen(); continue; }
     if (c.idle_state === 'gate') c.idle_state = 'fighting';
     if (c.idle_state === 'reviving') { if (t < c.state_until) { townRegen(); continue; } c.state_until = null; c.idle_state = 'fighting'; }
-    if (c.idle_state === 'town_no_red') { if (countKind(inv, 'red') === 0) { townRegen(); continue; } c.idle_state = 'fighting'; }
+    if (c.idle_state === 'town_no_red') { if (potionStock(c, inv, 'red') === 0) { townRegen(); continue; } c.idle_state = 'fighting'; }
 
     const combat=combatState?.mapId===mapTier?combatState:idleCombatState({...c,idle_combat_json:combatState?null:c.idle_combat_json});combatState=combat;
     const thiefTarget=prepareThiefIdleEncounter(c,combat);
     beginAssistBattle(c,inv,use,price=>{report.guardianStonesBought=(report.guardianStonesBought||0)+1;report.guardianStoneGoldSpent=(report.guardianStoneGoldSpent||0)+price;});
     const guardianActor=idleGuardianActor(c);
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
-    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map),use,potions:POTIONS,day,rng});
+    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map,c),use,potions:POTIONS,day,rng});
     let cast = !!special?.selected;
-    if (!special?.selected && needsBlue(c,c.mp,s.maxMp,s.skill.cost)) { const target=blueTarget(c,s.maxMp,s.skill.cost); let k; do { k=choosePotion(inv,'blue',mapTier); if(!k)break; use(k); c.mp=Math.min(s.maxMp,c.mp+POTIONS[k].heal); } while(c.mp<target); }
+    if (!special?.selected && needsBlue(c,c.mp,s.maxMp,s.skill.cost)) { const target=blueTarget(c,s.maxMp,s.skill.cost); let k; do { k=choosePotion(inv,'blue',mapTier,c); if(!k)break; use(k); c.mp=Math.min(s.maxMp,c.mp+POTIONS[k].heal); } while(c.mp<target); }
     if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
     c.mp = Math.min(s.maxMp, c.mp + s.mpRegen);
     setState(cast ? 'fighting' : 'no_mp', t);
@@ -134,7 +138,7 @@ export function settleIdle(char, inventory, equipped, now) {
     const sustain=restoreOnAction(recovery,damage,{cast});c.hp=recovery.hp;
 
     // HP: monster pressure, auto red
-    const autoRed = () => { let k; while (c.hp < (c.auto_red_pct / 100) * s.maxHp && (k = choosePotion(inv, 'red', mapTier))) { use(k); c.hp = Math.min(s.maxHp, c.hp + POTIONS[k].heal); } };
+    const autoRed = () => { let k; while (c.hp < (c.auto_red_pct / 100) * s.maxHp && (k = choosePotion(inv, 'red', mapTier,c))) { use(k); c.hp = Math.min(s.maxHp, c.hp + POTIONS[k].heal); } };
     c.hp = Math.min(s.maxHp, c.hp - (special?.hpLoss ?? s.hpLoss)*(thiefNative.lossMultiplier??1)); autoRed();
 
     const eliteMonster=chooseMonster(mapTier,'elite',Math.floor(t/TICK_MS));
@@ -207,7 +211,7 @@ export function settleIdle(char, inventory, equipped, now) {
     }
     report.levels_gained += applyExp(c, statsFor);
 
-    if (c.hp <= IDLE.townHpPct * statsFor(c.level).maxHp && countKind(inv, 'red') === 0) setState('town_no_red', t);
+    if (c.hp <= IDLE.townHpPct * statsFor(c.level).maxHp && potionStock(c, inv, 'red') === 0) setState('town_no_red', t);
     if (atGate(c)) setState('gate', t, { level: c.level });
   }
   c.hp = Math.max(1, Math.round(c.hp)); c.mp = Math.max(0, Math.round(c.mp));
@@ -225,13 +229,13 @@ export function settleIdle(char, inventory, equipped, now) {
 }
 
 /** potion tier the character really drinks/buys: same rule as choosePotion */
-export const potionTierFor = (char) => Math.min(4, Math.ceil(mapForLevel(char.level) / 3));
+
 const SUPPLY_SIM_TICKS = 120;
 /** Measure real potion use by replaying the real settle loop on a throw-away copy with endless current-tier potions (no DB, no mutation). */
-function measureUse(char, equipped, pTier) {
+function measureUse(char, equipped) {
   if (char.party_id) return null;
   try {
-    const red = `red_${pTier}`, blue = `blue_${pTier}`;
+    const red = potionKeyFor(char,'red'), blue = potionKeyFor(char,'blue');
     const c = { ...char };
     const r = settleIdle(c, { [red]: 1e9, [blue]: 1e9 }, equipped, c.last_settle_at + SUPPLY_SIM_TICKS * TICK_MS);
     if (!r.report.ticks || r.char.idle_state === 'gate') return null;
@@ -242,20 +246,20 @@ function measureUse(char, equipped, pTier) {
 /** hours of potions left at the current consumption (for the menu). opts.measure=false → formula only (cheap) */
 export function supplyHours(char, inv, equipped, opts = {}) {
   const s = idleStats(char, equipped); const pTier = potionTierFor(char);
-  const healOf = (kind) => (kind === 'red' ? RED : BLUE).reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0);
+  const healOf = kind => potionHealing(char,inv,kind);
   let hpPerTick = Math.max(0.01, s.hpLoss + IDLE.eliteChance * s.burst);
   let mpPerTick = Math.max(0.01, s.skill.cost * (1 - (s.pct.freeCastPct || 0)) - s.mpRegen);
   // the formula ignores special skills, sustain and the potions the loop really drinks: trust the larger of formula and measured use
-  const m = opts.measure === false ? null : measureUse(char, equipped, pTier);
+  const m = opts.measure === false ? null : measureUse(char, equipped);
   if (m) { hpPerTick = Math.max(hpPerTick, m.hp); mpPerTick = Math.max(mpPerTick, m.mp); }
-  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, hpPerTick, mpPerTick, tier: pTier, measured: !!m };
+  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, hpPerTick, mpPerTick, tier: pTier, redKey:potionKeyFor(char,'red'), blueKey:potionKeyFor(char,'blue'), measured: !!m };
 }
 /** how many potions to cover `hours` of idle at the current consumption (buys the potions the character really drinks) */
 export function refillPlan(char, inv, equipped, hours = 24, sup = null) {
   const { hpPerTick, mpPerTick } = sup || supplyHours(char, inv, equipped);
   const pTier = potionTierFor(char);
-  const red = `red_${pTier}`, blue = `blue_${pTier}`;
-  const haveRed = RED.reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0); const haveBlue = BLUE.reduce((n, k) => n + (inv[k] || 0) * POTIONS[k].heal, 0);
+  const red = potionKeyFor(char,'red'), blue = potionKeyFor(char,'blue');
+  const haveRed = potionHealing(char,inv,'red'), haveBlue = potionHealing(char,inv,'blue');
   const needRed = Math.max(0, Math.ceil((hpPerTick * 60 * hours - haveRed) / POTIONS[red].heal));
   const needBlue = Math.max(0, Math.ceil((mpPerTick * 60 * hours - haveBlue) / POTIONS[blue].heal));
   return { [red]: needRed, [blue]: needBlue, cost: needRed * POTIONS[red].price + needBlue * POTIONS[blue].price };

@@ -1,0 +1,9 @@
+body.greek.v2.mythic.olympus-suite #app #view .pot.supply-choice{display:block;min-width:0;padding:14px;background:linear-gradient(135deg,#23354b,#111c2e);border:1px solid #a98b5366}
+.supply-choice-top{display:flex;align-items:center;gap:12px;min-width:0}
+body.greek.v2.mythic.olympus-suite #app #view .supply-choice .ic{width:72px;height:82px;flex:none;background:none;border:0;box-shadow:none}
+body.greek.v2.mythic.olympus-suite #app #view .supply-choice .ic img{width:100%;height:100%;object-fit:contain;filter:drop-shadow(0 5px 6px #0008)}
+.supply-choice-info{min-width:0}.supply-choice-label{font-size:12px;letter-spacing:.12em;color:#eed6a1}.supply-choice .n small{font-size:12px;color:#c6cfdb;font-weight:400}
+.supply-choice-select{display:block;margin-top:12px;font-size:12px;color:#cbd6e7;line-height:1.6}
+body.greek.v2.mythic.olympus-suite #app #view .supply-choice select{display:block;width:100%;min-width:0;min-height:44px;margin:5px 0 8px;padding:9px 28px 9px 10px;border:1px solid #b59a64;border-radius:3px;background:#0d192b;color:#f4e7c9;font:inherit;font-size:14px;color-scheme:dark;box-shadow:inset 0 1px #ffffff0c}
+.supply-choice select:focus-visible{outline:2px solid #f3d594;outline-offset:3px}.supply-choice-hours{line-height:1.6}.supply-choice-note{line-height:1.7;margin:12px 0 0}
+@media(max-width:520px){#view .supply-choices{grid-template-columns:minmax(0,1fr)}body.greek.v2.mythic.olympus-suite #app #view .pot.supply-choice{padding:12px}.supply-choice-top{gap:10px}}
