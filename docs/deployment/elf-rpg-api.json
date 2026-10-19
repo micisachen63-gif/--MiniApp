@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "4bb059a94de62afd105a2a718caf67b6bb73e6bb",
+  "sourceCommit": "2f9e19fa62f2f745263a2910b80ac5eda1c66b3e",
   "service": "elf-rpg-api",
-  "productionVersion": "d90660e7-02e5-4dec-ae4e-e7fe52ecb488",
+  "productionVersion": "e747c5c3-dabc-4a9e-96c5-4a56b813746d",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T00:44:28.732Z",
+  "verifiedAt": "2026-10-19T01:05:42.102Z",
   "runtimeSHA256": {
-    "index.js": "4ef05c2bb5731466d55847866cc913d51afcb89f26f40a29c34db0657cc05965"
+    "index.js": "7a6782740fa215177f272f465f7128569317a2094f1bce9004606803ae5b39df"
   },
   "source": {
-    "fileCount": 9069,
-    "sha256": "6127d90cb0899373cf5b6777b3c2ab7080cf50450c981535817dbe9da125bfe8",
+    "fileCount": 9079,
+    "sha256": "b5682cdd424142a3ac58d90dcf39b56c1ea87126c8d9bd1ba88ceb42800d63fd",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2235,7 +2235,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "b721448b235637ca6bb7854f5ee42f3d2695868507e563a013206cb54b69ef0d"
+        "sha256": "f6523126129cb31b59881eb62f3565b5ae3e323411c30821d8aab91915fc49a1"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -27318,6 +27318,38 @@
         "sha256": "741d3e267272d15147fb1cb177fb01409855312ebca37ff8b77c9e0fa0c96a07"
       },
       {
+        "file": "worker/public/art/potions-20261019/blue_1.webp",
+        "sha256": "b2c0f31e8db96c88c61820ba04690245eec7a8662858afdd3707cc5795e4a42c"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/blue_2.webp",
+        "sha256": "a0ac988686078d31c3113598f90946cf7240144687f12346b5160a644c9cdf40"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/blue_3.webp",
+        "sha256": "31354a74481e5c6e2f5dfd28171ee1a0be9f21e979277a67d88a4962ebd41d92"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/blue_4.webp",
+        "sha256": "c2b28d2e0394af99a9d2b3fe3ea52e68254c5da6bf79577048fc3e1fcad20b20"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/red_1.webp",
+        "sha256": "8dd820b1e5699f8a92107273dccc97c07fc69a45a58fe4f827c9afcd207331cb"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/red_2.webp",
+        "sha256": "7c1271d4da0e44c8b9b51d75f1b4166d2beb63558ce75b952ede51c1e87369fd"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/red_3.webp",
+        "sha256": "fa240cf8fc5e0a92995e69a5e85d5c36da1f43ec2205a398ca1355756726c169"
+      },
+      {
+        "file": "worker/public/art/potions-20261019/red_4.webp",
+        "sha256": "301781cf43951cf3e6394a22f3bd7ae05f89ec2b794f8b343718d4a86741d88c"
+      },
+      {
         "file": "worker/public/art/skill-fx-cinematic-20261011/atlas-clean.png",
         "sha256": "01386ec423eec5e0d412aa167b20c1978c677316ccf188591a20174d73c26a8e"
       },
@@ -35311,7 +35343,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "aedd6ea1b1259cdad33d95bce1487bf2336006c65fc24201d1f5d46be7096a8c"
+        "sha256": "850b8ce759108e8b1ab6a843ab21f79d7e465ee53f169b96dccbe945f37a55cd"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -35460,6 +35492,10 @@
       {
         "file": "worker/public/operation-notices.js",
         "sha256": "226aaa7d4aca395073ac484de0a7e7d52d6ac7f1d6363d90a22acda16b88c0e8"
+      },
+      {
+        "file": "worker/public/potion-choice.css",
+        "sha256": "7f4537af271901b76706f764aaee277c787a1f4e4da037f7e5c63c64c59b6b81"
       },
       {
         "file": "worker/public/preview-boss-wait.html",
@@ -35959,7 +35995,7 @@
       },
       {
         "file": "worker/src/game/boss.js",
-        "sha256": "80b124512088eaf39ac56031a217d656b80cfb9ba20ed17c821ffb3a012cd0c5"
+        "sha256": "d8c6e9843089a41ac2c356ae28a121c2ed3eeb7a874c496db3acf50d5c01949b"
       },
       {
         "file": "worker/src/game/classes.js",
@@ -36047,7 +36083,7 @@
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "382af6bcad2aedd86c3739df9b2ee08c2272bfb4b6036a96161dea1c87d10eb3"
+        "sha256": "3b7afd2d81fc32a3ae817e88cea8e6142b2f58785a95c953799b1b0bedabc284"
       },
       {
         "file": "worker/src/game/lineage.js",
@@ -36084,6 +36120,10 @@
       {
         "file": "worker/src/game/pk.js",
         "sha256": "35bdf38a4631bf59415dc350177fb8b5082e93da8528d4bbc845f185dfd35c3b"
+      },
+      {
+        "file": "worker/src/game/potion-choice.js",
+        "sha256": "a12f7e321a003e58532e18c3930299aa0a52b41a87b652d2246a7d3518f66a1d"
       },
       {
         "file": "worker/src/game/rng.js",
@@ -36239,7 +36279,7 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "be0140d6d818e5ef74453e9f7a2d45f15a9fa2e1095ee3e0a4d880f301a989f0"
+        "sha256": "8cfc8aa9a0f63279ee0ab44ddcc43b2576dd904632b264ecf95f1937a59c3212"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -36247,7 +36287,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "f3f9c9eeb252fa7dac7ad228b8cab4d751decc1b42e709f13737b806b0d16ae5"
+        "sha256": "19d2f3386c2bff4262b09e281b4b0c9ee8010d209968a1f7b8a528bd7d09d3d8"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -36275,7 +36315,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "a40da55f4e7f44e9df42c0c7f5e6c5625a671199380b1e3760fd4730d6907f9b"
+        "sha256": "179b1308c58406422c25fef892dcb15883f0dabadfaf5ce478cbcb0bd1db03e9"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -36293,16 +36333,24 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 144,
+    "verifiedCount": 153,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_belt_sacred_supreme.jpg",
-      "worker/public/art/collection-materials-20261014/hunt_11_2.webp",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m_attack.webp",
+      "worker/public/art/cards/equipment-20261011/gear_belt_styx_epic.jpg",
+      "worker/public/art/collection-materials-20261014/hunt_12_3.webp",
+      "worker/public/art/potions-20261019/blue_1.webp",
+      "worker/public/art/potions-20261019/blue_2.webp",
+      "worker/public/art/potions-20261019/blue_3.webp",
+      "worker/public/art/potions-20261019/blue_4.webp",
+      "worker/public/art/potions-20261019/red_1.webp",
+      "worker/public/art/potions-20261019/red_2.webp",
+      "worker/public/art/potions-20261019/red_3.webp",
+      "worker/public/art/potions-20261019/red_4.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B122_m_portrait.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -36396,6 +36444,7 @@
       "worker/public/olympus-suite.css",
       "worker/public/olympus-unified.css",
       "worker/public/operation-notices.js",
+      "worker/public/potion-choice.css",
       "worker/public/preview-boss-wait.html",
       "worker/public/preview-cinematic-fx.html",
       "worker/public/preview-elf-adv1-hd.html",
@@ -36444,7 +36493,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "d90660e7-02e5-4dec-ae4e-e7fe52ecb488",
+        "version_id": "e747c5c3-dabc-4a9e-96c5-4a56b813746d",
         "percentage": 100
       }
     ],
