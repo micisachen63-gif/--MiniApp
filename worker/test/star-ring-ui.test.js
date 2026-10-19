@@ -9,6 +9,23 @@ const party=()=>({id:'ring:1',name:'星砂巡路',status:'running',tier:90,tacti
 
 test('v2 ranked monsters use their own new art and expose only encountered species in a collapsible history',()=>{const {ui}=setup(),p=party();p.battle.enemy={...p.battle.enemy,id:'sr2_05_e',name:'織庭蛛后',rank:'elite',artUrl:'/art/star-ring-pools-20261019/map-05-elite.webp'};p.battle.sightings=[{id:'sr2_05_a',name:'銀絲螳螂',rank:'normal',at:1},{id:'sr2_05_e',name:'織庭蛛后',rank:'elite',at:2}];const html=ui.render({party:p});assert.match(html,/sr-rank-elite/);assert.match(html,/map-05-elite.webp/);assert.match(html,/沿途魔物 · 2 種已遭遇/);assert.match(html,/銀絲螳螂/);assert.equal(ui.enemyArt({...p.battle.enemy,artUrl:'https://bad.invalid/x.webp'}), '');assert.equal(ui.enemyArt({...p.battle.enemy,artUrl:'/art/star-ring-pools-20261019/map-06-elite.webp'}), '');});
 const flush=()=>new Promise(resolve=>setImmediate(resolve));
+test('activity shortcuts preserve the exact viewed run and readonly recipient without team mutations',async()=>{
+ for(const readonly of [false,true]){
+  const s=setup(),p={...party(),id:'ring:finished',readonly,status:readonly?'complete':'running'},calls=[],navigation=[];
+  const stop=s.ui.mount(s.root,{initialPartyId:p.id,expectedCharacterId:'second-owned',me:()=>({character:{tgId:'active'}}),api:async(a,b)=>{calls.push(a);return {ok:true,party:p};},navigate:(target,context)=>navigation.push([target,{...context}])});
+  await flush();assert.ok(s.root.innerHTML.indexOf('data-sr-navigate="dungeons"')<s.root.innerHTML.indexOf('aria-label="遠征戰場"'));
+  for(const target of ['dungeons','tower','invalid'])s.events.get('click')({target:{closest:()=>({dataset:{srNavigate:target}})}});
+  assert.deepEqual(navigation,[['dungeons',{partyId:p.id,expectedCharacterId:'second-owned'}],['tower',{partyId:p.id,expectedCharacterId:'second-owned'}]]);
+  assert.deepEqual(calls,['star-ring/get']);stop();
+ }
+});
+test('shortcuts do not navigate from an obsolete character view or during a pending write',async()=>{
+ const s=setup();let id='1',navigation=0,resolveWrite;const p=party();
+ const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:id}}),api:async a=>a==='star-ring/list'?{ok:true,active:p}:new Promise(r=>resolveWrite=r),navigate:()=>navigation++});
+ await flush();const click=dataset=>s.events.get('click')({target:{closest:()=>({dataset})}});
+ click({srTactic:'deep'});click({srNavigate:'tower'});assert.equal(navigation,0);
+ resolveWrite({ok:true,party:p});await flush();id='2';click({srNavigate:'dungeons'});assert.equal(navigation,0);stop();
+});
 test('duration clamps negative times and retains twelve-hour clock; bars reject invalid/out-of-range values',()=>{const {ui}=setup();assert.equal(ui.formatDuration(43200000),'12:00:00');assert.equal(ui.formatDuration(-4),'00:00:00');assert.equal(ui.percentage(200,100),100);assert.equal(ui.percentage(-1,100),0);assert.equal(ui.percentage(NaN,0),0);});
 test('actual server events and member identities render without invented damage, and all enemy art is dedicated',()=>{const {ui}=setup(),p=party(),html=ui.render({party:p},{actorArt:()=>'/art/hero_test.png'},Date.now());assert.match(html,/白色毛衣 · 月光箭，造成 57 傷害/);assert.match(html,/星砂晶螯蠍 · 反擊，造成 12 傷害/);assert.match(html,/width:90%/);assert.match(html,/星征徽記/);assert.match(html,/洗屬性卷/);assert.ok(html.indexOf('新的紀錄')<html.indexOf('較早的紀錄'));for(let i=0;i<6;i++)assert.equal(ui.enemyArt(null,i),`/art/star-ring-20261018/monster-0${i+1}.webp`);assert.doesNotMatch(html,/monster_goblin|boss_goblin/);});
 test('untrusted names, logs and art URLs cannot inject markup or external images',()=>{const {ui}=setup(),p=party();p.members[0].name='<img onerror=alert(1)>';p.battle.members=p.members;p.log=[{text:'<script>bad()</script>'}];const html=ui.render({party:p},{actorArt:()=> 'javascript:alert(1)'});assert.match(html,/&lt;img onerror=alert\(1\)&gt;/);assert.doesNotMatch(html,/<script>|src="javascript|<img onerror/);assert.match(html,/&lt;script&gt;/);assert.doesNotMatch(ui.render({party:p},{actorArt:()=> '/art/../../secret.png'}),/secret.png/);});

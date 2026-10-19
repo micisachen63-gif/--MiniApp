@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 遠征頁新增打寶／爬塔快捷鍵，兩頁可一鍵返回同一遠征戰況（含唯讀通知角色與已結束戰報）；保留前景短隊、換角色清除回程、舊讀取失效化。桌機／手機尺寸隔離API實際往返驗收完成。詳docs/STAR_RING_SHORTCUTS_20261019.txt；僅Worker、無migration，正式版本看收據。
+
 2026-10-19 同角色可於已啟程的星環遠征期間參加打寶／爬塔：running遠征暫借前景presence，短隊結束／離隊／逾時後原子恢復仍有效遠征。遠征結算保留前景HP/MP/party_id，完成／撤退不清掉另一場短隊；兩邊清單可並存，普通掛機仍暫停。v1/v2/v3既有隊伍即時適用，無migration、不重置、不變獎勵配方。接手讀docs/STAR_RING_PARALLEL_PARTY_20261019.txt；僅Worker發布，版本看收據。
 
 

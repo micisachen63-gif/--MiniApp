@@ -10,15 +10,15 @@ const list=()=>({ok:true,parties:[],history:[],dungeons:[],active:null,groupActi
 const party=id=>({id,status:'combat',round:1,me:{},members:[]});
 const response=j=>({status:200,json:async()=>j});
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
-function setup(fetcher,{hash='#tower'}={}){
+function setup(fetcher,{hash='#tower',search=''}={}){
   const calls=[],storage=new Map(),timers=[],listeners=new Map(),windowListeners=new Map();
   let uuid=0,renders=0;
   const detail={open:false,addEventListener(){},close(){this.open=false;}};
   const document={hidden:false,querySelector:s=>s==='#detail'?detail:{addEventListener(){},textContent:'',hidden:false},querySelectorAll:()=>[],addEventListener:(event,fn)=>listeners.set(event,fn)};
   const window={addEventListener:(event,fn)=>windowListeners.set(event,fn),scrollTo(){}};
-  const ctx=vm.createContext({window,document,parent:{Telegram:{WebApp:{initData:'fixture-auth'}}},location:{hash,origin:'https://fixture.invalid'},data:{skills:[]},heroArt(){},playCombat(){},combatView:p=>p,combatCursor:()=>null,dungeonTheme(){},AbortController,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},crypto:{randomUUID:()=>`uuid-${++uuid}`},setTimeout:(fn,ms)=>{timers.push({fn,ms});return timers.length},clearTimeout(){},setInterval:()=>1,clearInterval(){},fetch:async(url,options)=>{const body=JSON.parse(options.body),action=url.slice('/app/api/'.length),call={action,body,options};calls.push(call);return await fetcher(call);},Date,Promise,JSON});
+  const ctx=vm.createContext({window,document,parent:{Telegram:{WebApp:{initData:'fixture-auth'}}},URLSearchParams,location:{hash,search,origin:'https://fixture.invalid'},data:{skills:[]},heroArt(){},playCombat(){},combatView:p=>p,combatCursor:()=>null,dungeonTheme(){},AbortController,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},crypto:{randomUUID:()=>`uuid-${++uuid}`},setTimeout:(fn,ms)=>{timers.push({fn,ms});return timers.length},clearTimeout(){},setInterval:()=>1,clearInterval(){},fetch:async(url,options)=>{const body=JSON.parse(options.body),action=url.slice('/app/api/'.length),call={action,body,options};calls.push(call);return await fetcher(call);},Date,Promise,JSON});
   vm.runInContext(requestSource,ctx);
-  vm.runInContext(liveSource+`\nrender=()=>{this.renderCount=(this.renderCount||0)+1;};toast=()=>{};this.h={api,refresh,poll,set:(s,p=null,id=null)=>{state=s;pinned=s?.character?.tgId||null;party=p;partyId=id;},select:(p,id)=>{party=p;partyId=id;},state:()=>state,party:()=>party,tab:()=>tab};`,ctx);
+  vm.runInContext(liveSource+`\nrender=()=>{this.renderCount=(this.renderCount||0)+1;};toast=()=>{};this.h={api,refresh,poll,navigateActivity,ringDestination,backgroundRingNotice,set:(s,p=null,id=null)=>{state=s;pinned=s?.character?.tgId||null;party=p;partyId=id;},select:(p,id)=>{party=p;partyId=id;},state:()=>state,party:()=>party,tab:()=>tab};`,ctx);
   return {h:ctx.h,ctx,calls,storage,timers,listeners,windowListeners,document,request:window.RpgRequest.request};
 }
 
@@ -28,6 +28,40 @@ test('a stale round closes and refreshes tactics without resubmitting the old ch
  vm.runInContext('actionSheet=()=>{this.tacticsShown=(this.tacticsShown||0)+1;};',s.ctx);
  const button={dataset:{submit:'normal'},disabled:false,isConnected:true,hasAttribute:()=>false};await s.listeners.get('click')({target:{closest:()=>button}});
  assert.equal(s.calls.filter(c=>c.action==='party/action').length,1);assert.equal(s.calls[0].body.round,1);assert.equal(s.h.party().round,2);assert.equal(s.document.querySelector('#detail').open,false);assert.equal(s.ctx.tacticsShown,1);
+});
+test('shortcuts round-trip to the exact expedition and keep the active dungeon or tower selected',async()=>{
+ for(const kind of ['dungeon','tower']){
+  const foreground={...party('short:1'),kind};
+  const s=setup(c=>response(c.action==='expedition/me'?snapshot(100):c.action==='party/list'?{...list(),starRingId:'ring:active'}:{ok:true,party:foreground}),{hash:'#star-ring'});
+  s.h.set(snapshot(100),foreground,foreground.id);
+  await s.h.navigateActivity(kind==='tower'?'tower':'dungeons',{partyId:'ring:exact',expectedCharacterId:'other-owned'});
+  assert.equal(s.h.party().id,foreground.id);assert.equal(s.h.ringDestination().partyId,'ring:exact');
+  assert.match(s.h.backgroundRingNotice(),/返回遠征戰況/);
+  await s.h.navigateActivity('star-ring');assert.equal(s.h.tab(),'star-ring');
+  assert.equal(s.h.party().id,foreground.id);assert.equal(s.h.ringDestination().expectedCharacterId,'other-owned');
+  assert.ok(s.calls.every(c=>['expedition/me','party/list','party/get'].includes(c.action)));
+ }
+});
+test('finished expedition remains reachable and character changes clear the saved return destination',async()=>{
+ const s=setup(c=>response(c.action==='party/list'?list():snapshot(100)),{hash:'#star-ring',search:'?ringParty=ring%3Alink&ringChar=second-owned'});
+ s.h.set(snapshot(100));assert.equal(s.h.ringDestination().partyId,'ring:link');
+ await s.h.navigateActivity('dungeons',{partyId:'ring:finished',expectedCharacterId:'second-owned'});
+ assert.match(s.h.backgroundRingNotice(),/遠征戰報隨時可看/);assert.equal(s.h.ringDestination().partyId,'ring:finished');
+ s.h.set({...snapshot(100),character:{tgId:'222'}});
+ assert.equal(s.h.ringDestination().partyId,null);assert.equal(s.h.ringDestination().expectedCharacterId,null);assert.equal(s.h.backgroundRingNotice(),'');
+});
+test('switching activities invalidates an old party read before it can overwrite the current view',async()=>{
+ let release;const foreground={...party('p1'),kind:'dungeon'};
+ const s=setup(c=>c.action==='party/get'?new Promise(r=>release=r):response(c.action==='party/list'?list():snapshot(100)));
+ s.h.set(snapshot(100),foreground,'p1');const pending=s.h.poll();
+ await s.h.navigateActivity('star-ring');release(response({ok:true,party:{...foreground,round:99}}));await pending;
+ assert.equal(s.h.tab(),'star-ring');assert.equal(s.h.party().round,1);
+});
+test('a refresh after the short party ends does not pull the player out of the expedition report',async()=>{
+ const ended={...party('short:ended'),kind:'dungeon',status:'ended'};
+ const s=setup(c=>response(c.action==='expedition/me'?snapshot(100):c.action==='party/list'?list():{ok:true,party:ended}),{hash:'#star-ring'});
+ s.h.set(snapshot(100),ended,ended.id);await s.h.refresh(true);
+ assert.equal(s.h.tab(),'star-ring');assert.equal(s.h.party().id,ended.id);
 });
 test('expedition polling has one request in flight on a slow connection',async()=>{
   let resolve;
