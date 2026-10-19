@@ -2,7 +2,7 @@ import test from 'node:test';import assert from 'node:assert/strict';import fs f
 const app=fs.readFileSync(new URL('../public/app.js',import.meta.url),'utf8');
 function harness(){
  const S={me:{character:{tgId:'111',revision:1,state:'fighting'}},session:{kills:0,exp:0,gold:0,ticks:0}},reports=[];
- const ctx=vm.createContext({S,BATTLE:{sync:(j,r)=>reports.push(r)},autoBanner(){},resetFight(){}});
+ const ctx=vm.createContext({S,equipmentSync:null,scheduleEquipmentSync(){},BATTLE:{sync:(j,r)=>reports.push(r)},autoBanner(){},resetFight(){}});
  vm.runInContext(app.slice(app.indexOf('  const idleReportWindows'),app.indexOf('  async function act('))+';this.absorb=absorb;',ctx);
  return {S,reports,absorb:ctx.absorb};
 }
