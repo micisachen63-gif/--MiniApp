@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 遠征技能配置放寬：expedition/action 的 loadout／auto 允許本人真實running遠征沿用背包存取驗證與原子guard；學習仍可，前景打寶／爬塔及施放／天使settings限制保留。當趟v1–v3 actor快照不變，新配置用於新開戰鬥且不被結算覆蓋。新增16項回歸含三版本完整12h／30份收益JSON對照、真新打寶爬塔配置、提交競爭與資格保護；390／1280px隔離正式iframe實際操作通過。詳docs/STAR_RING_SKILL_CONFIGURATION_20261019.txt；僅Worker、無migration，正式發布看deployment-records。
+
 2026-10-19 第三輪複查補修：雙人交易守護羽毛選取器增加40筆游標「載入更多」與原頁重試，固定角色／epoch／交易代數／面板身分，防晚回應及舊按鈕污染；星輝匣將fn狀態讀取納入失敗後收據恢復，僅相同帳號／操作編號／內容指紋回原結果，不吞真正錯誤。新增30項回歸，完整Worker1827／BOT163通過；隔離完整MiniApp390／1280px分頁、斷線重試及第81張真託管驗收。詳docs/TRADE_PAGES_GIFT_REPLAY_20261019.txt；僅Worker，無migration或BOT改動，發布看deployment-records。
 
 2026-10-19 遠征背包全盤修正：天使合成／回收／解綁、交易所三類物品完整買賣取回、雙人天使全流程、手動／自動洗屬性、材料與技能書兌換／學習／分享均支援真實running遠征。保留穿戴／啟用／託管／綁定交易保護；使用者確認綁定天使仍可合成及商店回收。必要0031只替換兩個舊guardian party trigger，不重建表、不盲跑歷史migration；先查正式trigger與帳本再精準套用。27項新回歸含全部舊資料保留、12h戰鬥及30份獎勵一致；接手先讀docs/STAR_RING_INVENTORY_ACCESS_20261019.txt。僅Worker發布，正式狀態看deployment-records與即時schema。

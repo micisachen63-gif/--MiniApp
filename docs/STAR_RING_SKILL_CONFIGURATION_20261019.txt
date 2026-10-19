@@ -1,0 +1,38 @@
+2026-10-19 星環遠征期間開放更換技能
+
+使用者確認：當趟遠征使用出發時的快照，開放更換角色技能不應影響結算。
+本次只放寬 expedition/action 的 loadout 與 auto，沿用既有 requireBackpackAccess：
+角色閒置或本人參加的真實 running 星環遠征可編輯；前景打寶／爬塔戰鬥、假 partyId、
+已離隊／已結束而仍殘留的遠征狀態仍拒絕。withPlayer 的 rev 與提交時 SQL 檢查繼續生效。
+
+可使用：已學技能放入／移出三格快捷欄、ready／elite／lowHp／manual 自動施放條件。
+原本的技能書學習及兌換保持可用。不改原生轉職技能、資格、三格上限、手動專用技能限制。
+技能移出快捷欄會清除該招自動條件，原冷卻時間繼續保留，不能藉換欄重置冷卻。
+手動施放／掛機補水與召喚天使 settings／cancel 保留原組隊限制，沒有順便更動戰鬥中配置。
+
+目前正在跑的 v1／v2／v3 遠征直接適用，不必重開隊伍；不修改 state.actors、seed、
+結果或獎勵公式。角色儲存的新 learned／loadout／auto 不寫回遠征 actor，遠征結算也不
+把舊技能覆蓋回角色。新的打寶／爬塔、下趟遠征出發時才讀新配置。
+技能頁在本人僅跑遠征時顯示上述生效說明；前景短隊戰鬥時不誤顯示可編輯。
+live.js 快取版本更新。僅 Worker 改動，沒有 migration、BOT 部署或新增費用。
+
+驗證
+新增16項 Node24回歸。原版先執行同組測試，16項中8項失敗，修正後全數通過。
+- v1／v2／v3 各自完整換欄、全部自動條件、新學習；HP／MP／金幣／presence與出發快照不變。
+- 超過三格、重複、未學／不存在、未裝備卻指定auto與無效mode繼續拒絕。
+- 新開真實打寶與爬塔的 actor 讀新技能與auto；戰鬥中兩種編輯皆拒絕；結束後恢復可編輯。
+- 假membership／離隊／結束／前景隊伍限制，以及提交前遠征結束／真實打寶啟程的競爭保護。
+- 每個engine版本與未改技能的對照隊走完12小時；六個階段前反覆改配置，所有戰鬥結果與
+  30份獎勵JSON完全一致，背包與帳本只入袋一次，結束後仍保留新配置。
+完整root npm test與PR必要CI須通過，再從乾淨origin/main執行根目錄deploy:worker。
+完整通過數及實際正式版本以發布日誌、Actions和origin/deployment-records收據為準。
+完整測試另外發現既有reroll回歸先做隨機手動洗，卻假設接著auto一定running；手動洗若
+已達SS，正確行為是直接ended。該排程測試現明確重設為未鑑定的未達標詞條再開始auto，
+保留必須實際執行排程、HP／MP／快照不變的斷言。既有已達標零花費停止測試仍保留。
+只是固定隔離測試起點，不改遊戲機率／自動洗判斷，也不跳過／放寬失敗斷言。
+
+畫面動作：隔離D1＋正式expedition iframe＋真MiniApp API，在Chrome390／1280px實際
+點移除、查看新技能／放入、改自動施放為菁英條件、學習新技能；DB確認配置保存、原遠征
+state及live HP／MP不變，無水平溢出或pageerror。手機尺寸瀏覽器驗收不等於實體手機TG。
+忽略目錄證據：.release-sync/ring-skills-browser-results.json、ring-skills-390.png、
+ring-skills-1280.png，沒有對正式玩家或Telegram群組送測試操作。

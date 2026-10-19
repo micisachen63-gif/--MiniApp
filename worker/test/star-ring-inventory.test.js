@@ -75,6 +75,9 @@ test('guardian lock, unbind and stone purchase affect only unused inventory',asy
 });
 test('manual and scheduled automatic reroll preserve current HP MP and departure stats',async t=>{
  const f=await fixture(t),before=state(f);f.db.prepare('UPDATE rpg_characters SET hp=123,mp=45 WHERE tg_id=?').run(ids[0]);ok(await f.api('reroll',{itemId:'inventory-bag'}));
+ // The preceding manual roll can legitimately reach SS. This regression must
+ // exercise a scheduled attempt, so start that phase below target explicitly.
+ f.db.prepare("UPDATE rpg_equipment SET affixes_json='[]' WHERE id='inventory-bag'").run();
  const j=ok(await f.api('auto-reroll/start',{itemId:'inventory-bag',functions:['attack'],quality:'SS',maxGold:1000000})).job;assert.equal(j.status,'running');assert.equal(await Auto.step(f.env,j.id,now+2,()=>.01),true);assert.ok((await Auto.view(f.env,ids[0])).attempts>0);await Auto.stop(f.env,ids[0],{jobId:j.id},now+3);assert.equal(character(f).hp,123);assert.equal(character(f).mp,45);assert.deepEqual(state(f),before);
 });
 test('material crafting, refining, boss exchange and skillbook redemption remain available during expedition',async t=>{
