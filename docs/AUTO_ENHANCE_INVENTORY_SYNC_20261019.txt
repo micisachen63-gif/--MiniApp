@@ -1,0 +1,21 @@
+Auto enhancement inventory synchronization — 2026-10-19
+
+Background status previously advanced character revision and gold while retaining
+the last equipment array. Completion refresh depended on one poll seeing the
+running-to-ended transition, and could be skipped or rejected as an older read.
+
+Track inventory invalidation per character for enhancement and reroll job changes.
+Refresh full equipment on attempts, completion, stop and notice dismissal. Keep
+pending synchronization alive after terminal jobs and transient read failures.
+Fence responses by request generation and the background balance revision.
+Refresh an open equipment detail sheet when its item changes; close it if removed.
+Poll active inventory views every three seconds while background work runs.
+
+Verification:
+- Equipment synchronization and request coalescing tests: 14 passed.
+- Real application + actual Worker handlers with an isolated in-memory D1:
+  390 px and 1024 px; successful +5 to +6 reflected without reload, manual stop
+  returned control, genuine destruction removed equipment and closed its detail.
+  Both cases recovered after two intentionally failed full inventory reads.
+  No browser page errors. No real player data or Telegram messages were used.
+- Root Worker deployment runs the full Worker suite before publication.

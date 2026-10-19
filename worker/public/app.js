@@ -551,11 +551,15 @@
 
   const S = { meta: null, me: null, characters: [], choosing: true, creating: false, pendingTab: 'home', shop: null, boss: null, ledger: null, tab: 'home', shopTab: 'weapon', skew: 0, lastReport: null,
     session: { kills: 0, exp: 0, gold: 0, ticks: 0 }, create: { step: 0, name: '', cls: null, gender: null, slot: null }, busy: false, armorSlot: 'all', trades: null, trade: null, tradeTimer: 0 };
+  const equipmentSync=window.RpgEquipmentLiveSync?.create();
+  let equipmentSyncQueued=false;
+  function scheduleEquipmentSync(){if(equipmentSyncQueued||!equipmentSync?.pending(S.me?.character?.tgId))return;equipmentSyncQueued=true;Promise.resolve().then(()=>{equipmentSyncQueued=false;if(!document.hidden&&equipmentSync.pending(S.me?.character?.tgId))void refreshMe({silent:true,full:true});});}
+  function reconcileEquipmentSheet(){const card=$('.sheet-card'),id=card?.dataset.equipmentId,forge=$('#forge');if(!id||$('#sheet').hidden||(forge&&!forge.hidden))return;const item=S.me?.equipment.find(e=>e.id===id);if(item){if(card.dataset.equipmentVersion!==JSON.stringify(item))itemSheet(id);}else{closeSheet();delete card.dataset.equipmentId;toast('這件裝備已不在神器庫，畫面已同步。');}}
   const operationNotices=window.RpgOperationNotices?.create({api,owner:()=>String(tg?.initDataUnsafe?.user?.id||devTg||'')});
   const autoNotice=j=>({kind:'auto_enhance_end',refId:j.id,ownerAccountId:j.ownerAccountId,dismissed:j.dismissed});
   const backgroundWorkshop=window.RpgBackgroundWorkshop?.create({gate:operationNotices,onOpen:n=>{void openBackground(n).catch(e=>toast(e.message,true));},onDismiss:()=>{void syncBackground().catch(()=>{});}});
-  function setBackground(jobs){S.backgroundJobs=jobs||[];for(const[kind,key]of [['auto_enhance_end','autoEnhance'],['auto_reroll_end','autoReroll'],['guardian_auto','guardianAuto']]){const own=S.backgroundJobs.filter(x=>x.kind===kind),current=own.find(x=>x.job.status==='running')||own.at(-1);S[key]=current?.job||null;}backgroundWorkshop?.render(S.backgroundJobs);guardianController?.update({autoJob:S.guardianAuto});window.RpgAutoRerollUI?.updateJob(S.autoReroll);}
-  async function syncBackground(){const epoch=S.apiEpoch||0,r=await api('background/status');if(epoch===(S.apiEpoch||0)){setBackground(r.jobs);if(r.balance&&String(r.balance.characterId)===String(S.me?.character?.tgId)&&r.balance.revision>=S.me.character.revision){S.me.character.gold=r.balance.gold;S.me.character.revision=r.balance.revision;renderHud();if(r.balance.guardianBalances)guardianController?.update({balances:r.balance.guardianBalances,revision:r.balance.revision,characterId:r.balance.characterId});}void operationNotices?.flush();}return r;}
+  function setBackground(jobs,actor=S.me?.character?.tgId){equipmentSync?.observe(jobs,null,actor);S.backgroundJobs=jobs||[];for(const[kind,key]of [['auto_enhance_end','autoEnhance'],['auto_reroll_end','autoReroll'],['guardian_auto','guardianAuto']]){const own=S.backgroundJobs.filter(x=>x.kind===kind),current=own.find(x=>x.job.status==='running')||own.at(-1);S[key]=current?.job||null;}backgroundWorkshop?.render(S.backgroundJobs);guardianController?.update({autoJob:S.guardianAuto});window.RpgAutoRerollUI?.updateJob(S.autoReroll);scheduleEquipmentSync();}
+  async function syncBackground(){const epoch=S.apiEpoch||0,r=await api('background/status');if(epoch===(S.apiEpoch||0)){setBackground(r.jobs);equipmentSync?.observe(r.jobs,r.balance,S.me?.character?.tgId);if(r.balance&&String(r.balance.characterId)===String(S.me?.character?.tgId)&&r.balance.revision>=S.me.character.revision){S.me.character.gold=r.balance.gold;S.me.character.revision=r.balance.revision;renderHud();if(r.balance.guardianBalances)guardianController?.update({balances:r.balance.guardianBalances,revision:r.balance.revision,characterId:r.balance.characterId});}void operationNotices?.flush();if(equipmentSync?.pending(S.me?.character?.tgId))await refreshMe({silent:true,full:true});}return r;}
   async function openBackground(n){if(n.kind==='auto_enhance_end'){S.autoEnhance=n.job;autoPanel();}else if(n.kind==='auto_reroll_end')showRerollJob(n.job);else{if(String(n.job.characterId)!==String(S.me?.character?.tgId)){absorb(await api('select',{charId:n.job.characterId}),true);S.choosing=false;}openGuardian('inventory');}}
   function rerollNotice(j){return {kind:'auto_reroll_end',refId:j.id,ownerAccountId:j.ownerAccountId};}
   function showRerollJob(job){S.autoReroll=job;window.RpgAutoRerollUI.showJob(job,{sheet,closeSheet,api,onError:m=>toast(m,true),onDismiss:j=>{backgroundWorkshop.dismiss(rerollNotice(j));void refreshMe({silent:true});},onUpdate:j=>{S.autoReroll=j;S.backgroundJobs=(S.backgroundJobs||[]).map(n=>n.refId===j.id?{...n,job:j}:n);backgroundWorkshop.render(S.backgroundJobs);void syncBackground().catch(()=>{});}});}
@@ -620,20 +624,20 @@
     if (idleReportWindows.size > 20) idleReportWindows.delete(idleReportWindows.keys().next().value);
     return true;
   }
-  function absorb(j,allowCharacterSwitch=false) {
+  function absorb(j,allowCharacterSwitch=false,equipmentTicket) {
     if(!allowCharacterSwitch&&j?.character&&S.me?.character&&S.me.character.tgId!==j.character.tgId)return j;
     if(j?.character&&S.me?.character?.tgId===j.character.tgId&&Number(j.character.revision)<Number(S.me.character.revision))return j;
     if(j?.compact&&j.character)j={...S.me,...j,equipment:S.me?.equipment||[]};
     if(j&&'guardianAuto' in j)setGuardianAuto(j.guardianAuto);
     if(j&&'autoEnhance' in j){S.autoEnhance=j.autoEnhance;autoBanner();operationNotices?.flush();}
-    if(j&&'backgroundJobs' in j)setBackground(j.backgroundJobs);
+    if(j&&'backgroundJobs' in j)setBackground(j.backgroundJobs,j.character?.tgId||S.me?.character?.tgId);
     if (j && j.character) {
       if(S.me?.character&&S.me.character.tgId!==j.character.tgId){S.bossPersonalActor=null;if(S.boss)S.boss={...S.boss,me:undefined};}
       if (S.me?.character && S.me.character.tgId !== j.character.tgId) { S.lastReport=null;S.pending=null;S.session={kills:0,exp:0,gold:0,ticks:0};resetFight(); }
       const acceptedReport = !!j.report?.ticks && acceptIdleReport(j.character.tgId,j.report);
       if (BATTLE) BATTLE.sync(j, acceptedReport ? j.report : null);
       if (acceptedReport) { S.lastReport = j.report; { const r = j.report; const P = S.pending || (S.pending = { ticks: 0, kills: 0, gold_gained: 0, elites: 0, drops: {} }); P.ticks += r.ticks || 0; P.kills += r.kills || 0; P.gold_gained += r.gold_gained || 0; P.elites += r.elites || 0; for (const [k, v] of Object.entries(r.drops || {})) P.drops[k] = (P.drops[k] || 0) + v; } S.session.kills += j.report.kills || 0; S.session.exp += (j.report.exp_gained || 0) - (j.report.exp_lost || 0); S.session.gold += j.report.gold_gained || 0; S.session.ticks += j.report.ticks || 0; }
-      const prevState = S.me && S.me.character.state; S.me = j;
+      const prevState = S.me && S.me.character.state; S.me = j;equipmentSync?.accept(j,equipmentTicket);scheduleEquipmentSync();
       if (prevState && prevState !== j.character.state) resetFight();
     }
     if (j && j.shop) S.shop = j.shop;
@@ -666,7 +670,7 @@
     if (sheetPlaybackCancel) { sheetPlaybackCancel(); sheetPlaybackCancel = null; }
     const s = $('#sheet'), card = $('.sheet-card', s);
     if (s.hidden) sheetReturnFocus = document.activeElement;
-    card.classList.remove('forge-flow-sheet'); card.innerHTML = html; card.setAttribute('role', 'dialog'); card.setAttribute('aria-modal', 'true');
+    delete card.dataset.equipmentId;delete card.dataset.equipmentVersion;card.classList.remove('forge-flow-sheet'); card.innerHTML = html; card.setAttribute('role', 'dialog'); card.setAttribute('aria-modal', 'true');
     window.RpgInterface?.composeSheet(card);
     card.setAttribute('aria-label', (card.querySelector('h2')?.textContent || '遊戲操作').trim());
     card.tabIndex = -1; card.scrollTop=0; s.hidden = false; $('#app').inert = true; card.querySelectorAll('img').forEach(img=>{img.loading='eager';img.fetchPriority='high';});
@@ -1019,13 +1023,13 @@
   function guardianAutoBanner(){const old=$('#guardian-auto-banner');if(old)old.hidden=true;backgroundWorkshop?.render(S.backgroundJobs||[]);}
   function autoPanel(){const j=S.autoEnhance;if(!j)return;window.RpgForgeRitual?.dispose?.();let ov=$('#forge');if(!ov){ov=document.createElement('div');ov.id='forge';document.body.append(ov);}ov.className='forge enhance';ov.hidden=false;$('#app').inert=true;
     ov.innerHTML=`<div class="fg-box"><div class="fg-t">${j.status==='running'?'🔨 背景淬鍊中':autoReasons[j.reason]||'淬鍊結束'}</div><div class="fg-r"><b class="big">${j.status==='running'?'+'+j.level+' → +'+j.target:'+'+j.level}</b><p>${esc(j.itemName)}</p></div><div class="fg-s" aria-live="polite">已強化 ${j.attempts} 次<br>卷軸 ${j.spentScrolls} 張 · 補購金幣 ${fmt(j.spentGold)}<p class="muted">${j.status==='running'?'關閉遊戲也會繼續；約每 3 秒強化一次。結束後由 BOT 私訊通知。':'本次淬鍊已結束，可返回查看最新裝備。'}</p></div><div class="fg-b"><button class="btn ghost" data-auto-back>返回冒險</button>${j.status==='running'?'<button class="btn red" data-auto-stop>停止強化</button>':'<button class="btn gold" data-auto-done>完成</button>'}</div></div>`;
-    const close=()=>{if(j.status!=='running'){S.dismissAuto=j.id;backgroundWorkshop?.dismiss(autoNotice(j));autoBanner();}ov.hidden=true;$('#app').inert=false;refreshMe({silent:true});};ov.querySelector('[data-auto-back]').onclick=close;
+    const close=()=>{if(j.status!=='running'){S.dismissAuto=j.id;backgroundWorkshop?.dismiss(autoNotice(j));autoBanner();}ov.hidden=true;$('#app').inert=false;void refreshMe({silent:true,full:true});};ov.querySelector('[data-auto-back]').onclick=close;
     const done=ov.querySelector('[data-auto-done]');if(done)done.onclick=()=>{S.dismissAuto=j.id;autoBanner();close();};
     const stop=ov.querySelector('[data-auto-stop]');if(stop)stop.onclick=async()=>{stop.disabled=true;try{S.autoEnhance=(await api('auto-enhance/stop',{jobId:j.id})).job;autoBanner();autoPanel();}catch(e){toast(e.message,true);stop.disabled=false;}};
   }
   async function startAuto(e,blessed,target){const j=await api('auto-enhance/start',{itemId:e.id,blessed,target});S.autoEnhance=j.job;S.dismissAuto=null;await syncBackground().catch(()=>{});autoPanel();return j;}
   let autoPollBusy=false,autoPollAt=0;
-  setInterval(async()=>{const viewing=!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||!(S.backgroundJobs||[]).some(x=>x.job.status==='running')||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))void refreshMe({silent:true});}catch(_){}finally{autoPollBusy=false;}},3000);
+  setInterval(async()=>{const viewing=equipmentSync?.pending(S.me?.character?.tgId)||S.tab==='bag'||!!$('.sheet-card')?.dataset.equipmentId||!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')||window.RpgAutoRerollUI?.viewing()||S.tab==='guardian'&&!S.choosing&&!S.creating&&S.guardianAuto?.status==='running';if(document.hidden||!S.me||autoPollBusy||!((S.backgroundJobs||[]).some(x=>x.job.status==='running')||equipmentSync?.pending(S.me.character.tgId))||Date.now()-autoPollAt<(viewing?3000:12000))return;autoPollBusy=true;autoPollAt=Date.now();const before=(S.backgroundJobs||[]).filter(x=>x.job.status==='running').map(x=>x.refId);try{await syncBackground();if(!$('#forge')?.hidden&&$('#forge')?.querySelector('[data-auto-back]')&&S.autoEnhance)autoPanel();if(before.some(id=>!S.backgroundJobs.some(x=>x.refId===id&&x.job.status==='running')))await refreshMe({silent:true,full:true});}catch(_){}finally{autoPollBusy=false;}},3000);
   function forgeFailure(e,message,onReturn){const ov=$('#forge');if(!ov)return;window.RpgForgeRitual?.dispose?.();ov.classList.remove('charging','dragging','waiting');ov.querySelector('.fr-instruction')?.replaceChildren(document.createTextNode('本次操作已停止'));const box=ov.querySelector('.fg-box');if(!box){ov.hidden=true;$('#app').inert=false;return;}let buttons=ov.querySelector('.fg-b');if(!buttons){buttons=document.createElement('div');buttons.className='fg-b';box.append(buttons);}const text=ov.querySelector('.fg-r');if(text)text.textContent=message||S.forgeError||'操作未完成，請確認裝備狀態後再試。';buttons.innerHTML='<button class="btn ghost" data-forge-exit>返回裝備</button>';buttons.querySelector('button').onclick=()=>{ov.hidden=true;$('#app').inert=false;refreshMe();if(S.me?.equipment.some(x=>x.id===e.id)){if(onReturn)onReturn();else itemSheet(e.id);}};ov.querySelector('.fr-auto')?.setAttribute('hidden','');}
   const guaranteedScrollKey=e=>e.slot==='weapon'||e.scroll==='scroll_w'?'guaranteed_scroll_w':'guaranteed_scroll_a';
   async function forge(e,kind,run,blessed=false,autoTarget=null,guaranteed=false){try{return await forgeRun(e,kind,run,blessed,autoTarget,guaranteed)}catch(err){forgeFailure(e,err.message);return null}}
@@ -1251,6 +1255,7 @@
         ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-a="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-a="close">關閉</button>
       </div>${e.shareBlock ? `<div class="muted mt">📣 不能分享：${esc(e.shareBlock)}${e.bound && !e.equipped ? '（可用 🔓 赫密士解契卷解除綁定）' : ''}</div>` : ''}`);
+    c.dataset.equipmentId=id;c.dataset.equipmentVersion=JSON.stringify(e);
     c.querySelectorAll('[data-a]').forEach((b) => { b.onclick = async () => {
       const a = b.dataset.a;
       if (a === 'close') return closeSheet();
@@ -2002,9 +2007,10 @@
   let refreshFlight=null;
   let refreshEpoch=0,refreshFull=false;
   function refreshMe({silent=false,full=S.tab==='bag'}={}) {
+    full=full||!!equipmentSync?.pending(S.me?.character?.tgId);
     if(refreshFlight)return refreshEpoch===(S.apiEpoch||0)&&(!full||refreshFull)?refreshFlight:refreshFlight.then(()=>refreshMe({silent,full}));
-    const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0;refreshEpoch=epoch;refreshFull=full;
-    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j);render();return j;}catch(e){if(!silent&&e.code!=='no_character')toast(e.message,true);return null;}finally{refreshFlight=null;}})();
+    const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0,equipmentTicket=equipmentSync?.begin(selected);refreshEpoch=epoch;refreshFull=full;
+    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();return j;}catch(e){if(!silent&&e.code!=='no_character')toast(e.message,true);return null;}finally{refreshFlight=null;}})();
     return refreshFlight;
   }
   async function loadShop(force) {const actor=String(S.me?.character?.tgId||''),epoch=S.apiEpoch||0;if(S.shop&&!force&&shopForActor===actor)return;try{const result=await api('shop');if(String(S.me?.character?.tgId||'')!==actor||epoch!==(S.apiEpoch||0))return;absorb(result);shopForActor=actor;if(S.tab==='shop')render();}catch(e){if(String(S.me?.character?.tgId||'')===actor)toast(e.message,true);}}
