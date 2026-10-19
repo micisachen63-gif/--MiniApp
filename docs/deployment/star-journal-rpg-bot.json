@@ -1,0 +1,1081 @@
+{
+  "status": "VERIFIED",
+  "repository": "https://github.com/micisachen63-gif/--MiniApp",
+  "sourceCommit": "a0d9d2d6451af720644cf266198a707fb1188e41",
+  "service": "star-journal-rpg-bot",
+  "productionVersion": "d85cbffc-04bd-4d8c-8ff7-d8597a2a0548",
+  "activePercentage": 100,
+  "verifiedAt": "2026-10-19T03:25:16.442Z",
+  "runtimeSHA256": {
+    "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
+    "index.js": "f1d6c6926b61dd32e50439fb8c32e2818f4191ca04078e4e903dd3b309f72caf"
+  },
+  "source": {
+    "fileCount": 251,
+    "sha256": "b6efa14591ed97b9b64c1b3e02d1292c85da690c831bc8b74cc05b7b9fea72f0",
+    "files": [
+      {
+        "file": "cloud-bot/package.json",
+        "sha256": "9f45e969689d6e6ce0b77b0761476288b4d77f014dae4e1f2d3b91be40844378"
+      },
+      {
+        "file": "cloud-bot/public/fonts/NotoSansTC-OFL.txt",
+        "sha256": "e35ffdebb2225b49814c31889cbb3ce69cb3509e6a9f431edaba5e1a6de8cd15"
+      },
+      {
+        "file": "cloud-bot/public/fonts/NotoSansTC.ttf",
+        "sha256": "f23d5d45c76fe29c624166ff63b6762afef1b23ba17d8bb665c23c9e3f8cdb4e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-1.png",
+        "sha256": "f875dbb505a0be6629ee283a3c4509c7f85268189736c2c079d9d1df2239dc5d"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-10.png",
+        "sha256": "b3ca3406e1d8a2a938a995ccb42960a15cf731fe2ae722818c4861e22fc32df4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-11.png",
+        "sha256": "c05b8eb8a65aa269a869d35bdc6a6a7d0eaff25240b97302f1f4a38a537e0228"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-12.png",
+        "sha256": "add83c10b2b9c264cbf988c9f6719be9f9c762999e3bbc38f92b9de365ae20a5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-2.png",
+        "sha256": "8d22977a5c20eee8753919a8636d0cecff8d48ed4e8cd24748763adfae9f59ba"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-3.png",
+        "sha256": "1e5fa1b3893435a180636fee98cfb7351bc3272e1695ad1f1106cf029a002e22"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-4.png",
+        "sha256": "97d2807ee1f13c1dbdaacce9e7c3742504632f950725094c77ed23060afc47a4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-5.png",
+        "sha256": "a71f36a2da38067303079437df70b0fc502fd69ea88e046b9f9bf9a3b8b439f7"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-6.png",
+        "sha256": "a159eaa8365e1ccea749c0aa72e8b120e041101d532b46b16fe9874811c6f2b5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-7.png",
+        "sha256": "adf3b2f20ef75fe5237c350d081b30ccdf41896bc2ff59fa321b31626dc6635a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-8.png",
+        "sha256": "505e20f4efdb0c989f56b3d957a92314f14be988cfcab2ce78bdd989c1dc5626"
+      },
+      {
+        "file": "cloud-bot/public/rpg-boss/boss-9.png",
+        "sha256": "8f94ae9c8a5c3cc758278d5a2b21a88813fa32cd3ac4579084e454d8f822ad4c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/boss.png",
+        "sha256": "5803f8234ba6edb8396ad13b09e8cd87524e12c5da4cb74f979e9ef213a66ff8"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_archer_A_f.png",
+        "sha256": "5868528f620d905eef5146b0d809fa5db209b159df264311d077e5342b2a0be4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_archer_A_m.png",
+        "sha256": "6c2adbe0e7172c8a176d16abccc6d82767e5ab4c9db4d8d207ed2013f9b0c54e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_archer_B_f.png",
+        "sha256": "1eb01d24c1f6a9a9404e2f030b888f1efb091c2f12c13445807f7f53a7874266"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_archer_B_m.png",
+        "sha256": "c16bb255806dcd84968914f681bd1c0214d6568dc412151d16a33b84ee932828"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_mage_A_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_mage_A_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_mage_B_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_mage_B_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_sword_A_f.png",
+        "sha256": "0acd3ec1c0c2ca5792de8149796d1071141d07c9e1e4b026da9a41a3ad83cb01"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_sword_A_m.png",
+        "sha256": "654a06ea3fad56199ee3788797781d5bf9b35cd319a4817bc34e98da2963c1b4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_sword_B_f.png",
+        "sha256": "a04d6dc9591dd3e0c3dfa616b9dd4c56c4af680313ec1ddb873b0aa813cc6464"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv1_sword_B_m.png",
+        "sha256": "0d3640d9502f93a1c57f292c466b80f8dc1933f72306d1a6f79af1d2bf210371"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_A1_f.png",
+        "sha256": "b71cfe54c63acdfc25356f2c6036b1cd67494a79c4dc34a8eddf13b2ebe5d9dd"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_A1_m.png",
+        "sha256": "ed099d0cc391f746ee560069502618805f535037696084ea6119d9e84c30d224"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_A2_f.png",
+        "sha256": "e3cedc83fc24814e904e543e5250277eac72eb72cb56a906ccd92495664f0d50"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_A2_m.png",
+        "sha256": "bd8ec60fb248f6efa7e65a89502a8a8e9b055f54d2a8ab220baadb438b457775"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_B1_f.png",
+        "sha256": "d5d016fc2cebf2e1e2f3ad755537005c41af18eea192403e04b62086e03b1fe7"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_B1_m.png",
+        "sha256": "a85ce02b57c6ed0afd4652d659ca1049d410db1fbcf38f7a748aa5e8b04fcf77"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_B2_f.png",
+        "sha256": "e3c7a1a4b85b2856a21c2f5c4c6fddd213bd67bda4c0c113af7fab8cf8897ad0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_archer_B2_m.png",
+        "sha256": "cd0f5b760778e8c439595bf6fd931b7d2f341ed941edb971ee8f2684479bd08c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_A1_f.png",
+        "sha256": "6929abf1707e20616c40636ac5ae054be67793732dce66327ad1bcf707c7ede0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_A1_m.png",
+        "sha256": "f2d0318274f0eb6055814ccb9c5fa4f0cfad217eca6a4d057daf596a2d76c502"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_A2_f.png",
+        "sha256": "29beccf5d981bae7f497c5f95efc87a74b6cb725146a134edf8e1c77258288c5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_A2_m.png",
+        "sha256": "cd35d79f8690ad696eac1c4ca6cd4365d1746304365ffbe868599d7135a42b8a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_B1_f.png",
+        "sha256": "1464128882232595a4bd6aa07a673763e2f0e0b64d37c6f281618853e38f9070"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_B1_m.png",
+        "sha256": "84782f3484b369ff9fad015567741923c8ff3b4fe21c5d40e1be678b41fd85e1"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_B2_f.png",
+        "sha256": "da1cb097abfd104f8622f2fa8a3da7a49c61008360832b998faa3cba7a9c7ced"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_mage_B2_m.png",
+        "sha256": "861a61b4f91e08593927e403aba6d449f74cbf2ab8b8db893a1b04e072bf8b33"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_A1_f.png",
+        "sha256": "f3def76922fcd6d735715e672b2590ee84de235e38107603eb89ffca76156328"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_A1_m.png",
+        "sha256": "87b67e5a3935988c446f73fcf57ad1fd2bae01d2199d0ff5eceb1d57f3c89cf5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_A2_f.png",
+        "sha256": "8009abc77689beaadfd6d5e618b5276e4605d271750e0b8322d78f773fba8ddf"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_A2_m.png",
+        "sha256": "e58ae1903350866ac660f53f53f85cddd7980b21203aafef27b005289d84b089"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_B1_f.png",
+        "sha256": "0f21680c78900b6c3fc53fa69ccb2cbb311fe134b2aee1e7e7cc3f7c9435ea51"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_B1_m.png",
+        "sha256": "6940e19cf68c4146737a256309fe0b9690dae30d65f932aa4f9d8013181b3ba2"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_B2_f.png",
+        "sha256": "51b1b8030dd14eb3ac5536eceedd970f63394d247278b5f7e60e002781eb9f2e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv2_sword_B2_m.png",
+        "sha256": "a58c9c1ae622e6cb9c6d4798a239c04d9a6ec238b2524f9a7596f3d9dbd41992"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A11_f.png",
+        "sha256": "49cbd65f47a7bf79df44ac05a27a16fa5ae8f0ef0aa421ff64bca486daa8dacd"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A11_m.png",
+        "sha256": "135e7cf378617978406c0651aff1d4d8b8eb52446daada67055b3040a5cf1a73"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A12_f.png",
+        "sha256": "c40898182c08b265b15e040268727c5f25adda001ec9200bd2356c898fd2937a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A12_m.png",
+        "sha256": "b7731f128ebf4e11b8a61f51699a095d730c1cd30e2197f7d5dfbd740dd0f29f"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A21_f.png",
+        "sha256": "84814e20d5c9a634d1fa1fea87daa895fffcf63325d929651bb70452c393aabd"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A21_m.png",
+        "sha256": "1f00fcda7f686d2abcd0f04c094bfb97d1e0904de97fc882747afdfce052f8b4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A22_f.png",
+        "sha256": "e04f1bd2c06148f52adbfe9c00176a51d9808756733d39930ab1dfeb53e57515"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_A22_m.png",
+        "sha256": "bd67377c020fabaaa423730fa1400f03cce3badb30978593df55a899916cb0d0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B11_f.png",
+        "sha256": "545a74824383569606c3dda1e860ff9ce670ad2a81fb5f838f64006ac0440abe"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B11_m.png",
+        "sha256": "7168c2735be2661777ec827d749ea0f9ea3c84589afc07bb60ccec2ef09486fb"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B12_f.png",
+        "sha256": "c2cab1cc2b6cccae1bd816fbc8a7bf3580c1e5a5d8b7661e8b2c0ab536629bf5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B12_m.png",
+        "sha256": "ce31abc8407819cbac6d30d33d6acea44bbf26e5a0eb173082dafab8f4cf2273"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B21_f.png",
+        "sha256": "e3f8b1a889a1deb506d55d30743ff1a01d2336352b8317ecaf727595ec13be51"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B21_m.png",
+        "sha256": "dcdb99450dda63ec6a8ca67a1c2d68666607a97fef3fa3c1fbac0ec4fef7515a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B22_f.png",
+        "sha256": "48e74af35349be8e10569d0c0e7a171c4bb71409b3b2bccdc70e2d978b9624d4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_archer_B22_m.png",
+        "sha256": "438e19806b0c9bee5fb3331231486a063ea3ce0ea7f3b5b349c2a9bdbf13b6a9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A11_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A11_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A12_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A12_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A21_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A21_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A22_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_A22_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B11_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B11_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B12_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B12_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B21_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B21_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B22_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv3_mage_B22_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A111_f.png",
+        "sha256": "793bbe4cd8f24d85f3dd94639275beab6fcc6a05084bb9c6dc730409d14b5848"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A111_m.png",
+        "sha256": "bbc0289d1e7facf19c8549d1e422960645bbc273af0e5dc2aab86c9dfd430424"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A112_f.png",
+        "sha256": "f06e10557d2f2ff6cdd024ce745b64bfc02e34d918b5f1944465b80b2515bf7d"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A112_m.png",
+        "sha256": "bc563bc703d425e6e2ba688f9d67843d9fe0217061ad89711f2f753b149c27a0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A121_f.png",
+        "sha256": "2bdb45022c14160e416ec91bfd89fbcb6bb7540bb7adbc375e0adf87752f2698"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A121_m.png",
+        "sha256": "d3892dc01bd2d2c92f0c74f8398effc633840e6bc01fb33f437f23218fa694a6"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A122_f.png",
+        "sha256": "3fd55388eac7798a4fce82673499081e831361b2d9597cef761bca15b02b8ffc"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A122_m.png",
+        "sha256": "33f3a62368a632c196e38b33b3466f1fa23adcb3d4b8fdc49f2c0aaaeabb9ff0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A211_f.png",
+        "sha256": "913ea82c4544cf5e490e4a7af23126fae1744bbab5456581969ee89081b7ce45"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A211_m.png",
+        "sha256": "735b36b1cd1837cb3ff4a128de662b56602325603b07b4f675c0dea05d8475cc"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A212_f.png",
+        "sha256": "b2e7f960f32bb220bdf7fa2e42078f1bd16915453a276e7ba6409f3c4fb7f770"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A212_m.png",
+        "sha256": "c2cfdc0341486e23f8d19a818fea55d27915495f18d788c701119809b6a860da"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A221_f.png",
+        "sha256": "41df2a18cf4b5e4680848d757cde0050c76ea4b79a139db5db7dc09755d85f22"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A221_m.png",
+        "sha256": "f554c9a4ef51df6abd687b0d2c0d445c78c67c99f0ea95ad1e28be94e4d834d6"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A222_f.png",
+        "sha256": "e6f5ddbcfa28a6425260040c1b21095941a343b177f831a6d9c6af17524f6878"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_A222_m.png",
+        "sha256": "8c27057963d2a965cd95af31148bc9167691940a0edf2e47f4ccdb61fc3a5869"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B111_f.png",
+        "sha256": "d0970803c5a37b125c928d633a3631a70ca5ff3e812e3690c59e31dfc17a25de"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B111_m.png",
+        "sha256": "5b4831ea8af45055a271b778f467eb2b08aac0fc552f9c2b2405312273353f0a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B112_f.png",
+        "sha256": "fa277010f6ce9b1aa55bc7b1139486712de7f93417a8c2b2d91084598012f8cb"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B112_m.png",
+        "sha256": "b8092bc8a822a876546aededa5d90e71b134d3e4e343b5c35a7608043598248e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B121_f.png",
+        "sha256": "7279fb70776f849e6465c9a3ee67117de4f580c9e9556e1b3049c7f948744937"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B121_m.png",
+        "sha256": "3d516121149aa1e1510ac3d9a5df2c7d1493bff97671cda04ccad8a7b286381f"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B122_f.png",
+        "sha256": "2b4ba51053430134bd8d2250a3035252e2664d43d6e25aba0557292b5c52c126"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B122_m.png",
+        "sha256": "5be26bf82702f670920d97631c9df3ca3b7ece786b27728fd2783b878c603b9b"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B211_f.png",
+        "sha256": "a83cb6aa412fdd3a507aff3f610b4b59707225b3bd16f915b70977ebd6135589"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B211_m.png",
+        "sha256": "988f0423ee7d7e641780f37b23bd0443c67902452c0706c9b6d13ea3229b2be5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B212_f.png",
+        "sha256": "e53b572f205b46008385af5c6fda784fc14364804c3218c9801a0d65428a3f90"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B212_m.png",
+        "sha256": "acff20bf9f16b4199d8a980c45bdb8afeaea1a98ac20729d6aac38ad9401e294"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B221_f.png",
+        "sha256": "afd64436ef5cf7679f8bb15f9a15eb54f57403df7733ae3cc264c602bec82122"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B221_m.png",
+        "sha256": "d6acd32611fa403a891e9c702205027e676b041602fd2f75e8050ccef48af52f"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B222_f.png",
+        "sha256": "a8613f9a8edd8242d0cd82bb8eadc0df46facda569d23b3194a6c61d4fea3d38"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_archer_B222_m.png",
+        "sha256": "cdd82b1cd55ef63cdf03b6557ac51fef01b007d1673ede98b6e4f92018a7e43b"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A111_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A111_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A112_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A112_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A121_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A121_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A122_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A122_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A211_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A211_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A212_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A212_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A221_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A221_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A222_f.png",
+        "sha256": "e2265d49f90c9a15c85d2416509e81fd61545fbb04d2accc924a17b565efb063"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_A222_m.png",
+        "sha256": "c0ef6c077a0e202c389ac04d6c1ff2d643792485905e131e60c2da13444e8003"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B111_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B111_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B112_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B112_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B121_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B121_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B122_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B122_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B211_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B211_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B212_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B212_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B221_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B221_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B222_f.png",
+        "sha256": "ee40655de61b3b8f579bb4b018c4b87d9c8249d24b77cd0379fc09c8d9b425d5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/adv4_mage_B222_m.png",
+        "sha256": "c6bbcf3249e49d470f9c284f5e5651bccd673d06d679c4d7005c680f0f08a4f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/archer_f.png",
+        "sha256": "bba7c882373dc0d84b08a2e3486ee5f983791f3eb1b7d109b7b0873203fc7858"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/archer_m.png",
+        "sha256": "09e44dfe9d09ddde44ab6c981325636ec461039e48542a4abf40b92ad648d683"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_1.png",
+        "sha256": "1991a14c4b9aa7fef4e772b3b2e4ea543d0851ba89960f3c502903227f135b1d"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_10.png",
+        "sha256": "527184ad20125ee70dd81ee2f620165cd977bae78bf11446d374f175ca436c10"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_11.png",
+        "sha256": "6ca903cb2176062aac86a36457a0b1b3b6138089f3995a8014ae107dedcd2cd2"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_12.png",
+        "sha256": "b50828aacce057f18cc50ad9180e88a227bc7a2d4a6a99eb221b6fba6db6aaab"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_2.png",
+        "sha256": "ee08649e6220c46a9ac1ce09a7a9ca96cb140c4d5c1fa98b5703ad9d755cfc30"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_3.png",
+        "sha256": "7f0b68f6030a157bdf762605d7732ecdb96f40855e160f9e03c76e87e7bcd421"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_4.png",
+        "sha256": "fcd498829a0bb8e1217872a66174dfab88f004b6294318336934281c366d1113"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_5.png",
+        "sha256": "df002962557f5c650ba9a9d29cbf444d4d6e64a4af373db3b45f6bff2fae023a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_6.png",
+        "sha256": "bb192fd53c4152f6243cd5fc7440fdc8618edd7c6b522a90d59ad109685b9a06"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_7.png",
+        "sha256": "e566c47fc0b651b910135706e8ba553df2cf431e619e8887602a6e8b727a8ddf"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_8.png",
+        "sha256": "8ce4ecb0b13920c75ae9615deb8a2f5568c4d1dfb59d4326f11f57c5cf45992e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/boss_9.png",
+        "sha256": "b24ad2b1bf204b71ea935401a91bb400f1c0c0bfd3c9c1b30f3444d3330c5968"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/mage_f.png",
+        "sha256": "eb48c65fdbf1463bb69989c08ebd0aa2fe787d9fa5e31574a7c0430e3cfec7ba"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/mage_m.png",
+        "sha256": "25dea00a5b12906c3cff3dce186c02c510de3fc5e9254b858e0746f6efaefd41"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/manifest.json",
+        "sha256": "7ae522fc8ec9492f7bfd44451678ec5ce214ceef816ecde3677cf13ffab9a5d1"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/sword_f.png",
+        "sha256": "21dc4cb6238361be17208ef3afd613ca88ab63f3ddb33ef1093ce2ca9a54b156"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/characters/sword_m.png",
+        "sha256": "48e3db9bf17b023a87cbff360101f6188728dc6a6a6332a85926675297d05ec0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeon-sources.json",
+        "sha256": "f344755159f41c55111ae2e9ea84655638d9dac7d72264eaa869422894cf14c5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/forge-background.png",
+        "sha256": "6835cd1ff69ea9522eb9ab12ef73567d548efe08e2314deda4579c60aa1c9673"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/forge-boss.png",
+        "sha256": "3be02265ebc66da6e65753b6064db66abccfa8780b39a4d6eb108c3e3b849d7b"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/manifest.json",
+        "sha256": "d2a683e8595aedcf7cf56aab0b593bce43b17c51af011f210116b91b3c7fef19"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/oracle-background.png",
+        "sha256": "2eb8f76d80b03ba732bbeef367f6c31a379a80b32441e55fcf7fce7aafe91613"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/oracle-boss.png",
+        "sha256": "c71437ecf191e393d72491d3686840734390ecb739a5466ea8c14825e91a16f7"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/forge-background.png",
+        "sha256": "a7371a038310d12be34d503ca09dc581b3b8571c44dfcdc53874599293fc75f3"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/forge-boss.png",
+        "sha256": "e5f463ec0ea85f79bb814b61b42139d6008d6bb02399a94db76caab83cc5e93e"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/oracle-background.png",
+        "sha256": "2bdae02a0dc7a456d7142adeffa7493299b956e67a7eded9796e717a482ca50d"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/oracle-boss.png",
+        "sha256": "c860628d972d2073388b65346e8a010a6b9e4215e0ebd294e9208cd8433b3c62"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/river-background.png",
+        "sha256": "8ddc0dab4286a0ebdb4e84496ad653bd42a1caec7576212365ffd967034f9d01"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/river-boss.png",
+        "sha256": "eda73357b3aac5669fd31dc4c710a5569bb21a4f38b5c5c0923b88ae282ed0fb"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/stars-background.png",
+        "sha256": "e85f149b296b570db12ce12049d7f1041c9a9be5f16d8a734dd14dbb1161ed9c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/stars-boss.png",
+        "sha256": "9333658d66835bbccf837a0fd2357621320d81086a57e24a2e899cb8c20b38f7"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/titan-background.png",
+        "sha256": "832652cb5e12a20c42f711a6395fb4511a3a290f005f4b01793e628be04b2064"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/titan-boss.png",
+        "sha256": "ede79ed597038752abf69ea784ca34abc927a5c62614bf95d30a41a7827b29f9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/trial3-background.png",
+        "sha256": "cf183ad5d8aab50d95d8ab87d94540a4f2cf78ae4d156778e038b6cca5661b9d"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/trial3-boss.png",
+        "sha256": "eb1e0c39e94e59b14bad7e54de891d2f296d1ebc3794837a6bde839ad01f476a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/trial4-background.png",
+        "sha256": "24f92ba3a07988e5ba4f3ebf88ba4554d72f934358af54f3218b44791040da90"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/originals/trial4-boss.png",
+        "sha256": "ce46e8397e39e2bfbdba281f12af0ab7872ffb69320f3ba038aebc5823570e0b"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/river-background.png",
+        "sha256": "4f4dc5eb1a3910b3754ad2947544f8029db43166a7f737fa865d440c0544ccd5"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/river-boss.png",
+        "sha256": "1e250fff022cfc6aca76dd4fad7ec3681ba2e690d676661b7918d0c4af1f2892"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/stars-background.png",
+        "sha256": "175ae4459a64beb23dae711020b7bb51b771e5e592d8e9f8389e132f74e00c46"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/stars-boss.png",
+        "sha256": "38b681429bf4fc5eaffc975ad8afdffa578e4d4f5bafd0355120917475635f77"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/titan-background.png",
+        "sha256": "97b66c65ffcb5bf3ad7a2b8853e69889a5203d4a3ca007510e085a73d4cb4843"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/titan-boss.png",
+        "sha256": "65485c021e08499da91515213b663f7919feade22918da42edc74d6cac897254"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/trial3-background.png",
+        "sha256": "a5725aff3500a757b7c2053ff0058fe41f39f3f11e87f9fe81e429ad2959c2e4"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/trial3-boss.png",
+        "sha256": "33e7249cbb9ed40b44443fe2197db31a16b958b70908977ede9d6e94a36def1f"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/trial4-background.png",
+        "sha256": "c35f54af4f25ba61093a9e8ace78a481f843719fd4532d41ab20a36ee6005282"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/dungeons/trial4-boss.png",
+        "sha256": "999349290b1bb8df21a1e45a741b8a8b2a23d1fdb2dd134ef413726d4103262c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/elf.png",
+        "sha256": "d1440b19f54ea8a73d834dd4b3b2abd3943da6646b79a5950b8a2d3ed4f8d6fe"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/knight.png",
+        "sha256": "8bc63ec3190e4f8f37f95ed6a43a69787de381602b70477bd172907731f1753b"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/leviathan.png",
+        "sha256": "de239232cf79ad350c6a20cf405770fb41d6c7cb7d3cd6cf069c805712f0e25c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/mage.png",
+        "sha256": "9aef55e2d5e82f0746cf0822ad856cd61df06c28eb6c31f4e0888cec5c7d3463"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map01.png",
+        "sha256": "40c31e8c698de610088c212b8d70dbbf67d620467dfa97ac0b7772110d22b86a"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map02.png",
+        "sha256": "cc2eadf0586d5f2a5e982ca646494e2dd362f5f3f55ad4d9ba41372c63152a86"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map03.png",
+        "sha256": "13de9c386a64ef74bf4cceba51a5fda6988b258d84353b350d2145bc80613eb0"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map04.png",
+        "sha256": "e32582d5e3682fb8b8b365c4beb40d1636aeed80e017d638c9053747fbc81ead"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map05.png",
+        "sha256": "e6c8be578944bd60e25e9ea5279e0ce50cd65646ed4ce9946df236faab8cf022"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map06.png",
+        "sha256": "a4d86c1924c153e08e7b07a728dd28303a4bccac9c8d9351a8d5393d7cc0b6f6"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map07.png",
+        "sha256": "d49fcb2a8da66ce4a033f513ba33ea6126488f0e4c7246cd707f288333714e1c"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map08.png",
+        "sha256": "672c0fc97032f073584e96fcce324e92583bbd84e19d5ee0ce74023389f619e8"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map09.png",
+        "sha256": "987d098ea0878eff7b53d1cc10b1f48210274da388ca01450cbc648084f8d033"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map10.png",
+        "sha256": "dea43143788ba3eff1e9e0282cb5926ea9ddca30c81a5218b210d68e5d6f7fac"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map11.png",
+        "sha256": "05f351f6106b80d0a59bbf4fb53eb56c8b63244a5830c8d66b0a7f0a91a695d9"
+      },
+      {
+        "file": "cloud-bot/public/rpg-party/map12.png",
+        "sha256": "8d5d93556bec1a219169925a7c7c0c0677e9eb9211938eb7c6c2b6e1913cc912"
+      },
+      {
+        "file": "cloud-bot/src/adapter/adapt.mjs",
+        "sha256": "562d8df2e6f318175cd69384fabf2b8f9c7cd254c31952b7668d72c44a7b1e29"
+      },
+      {
+        "file": "cloud-bot/src/adapter/adaptation-source.json",
+        "sha256": "e0ccaab8b1c4ef6a2e981d2eead58a5ab0afa6540597f316953dc65a82831917"
+      },
+      {
+        "file": "cloud-bot/src/adapter/battle-key.js",
+        "sha256": "69cb310199e1299cd34fdf8114ce40ece6c0db825b32be2819fad17254c7cf5b"
+      },
+      {
+        "file": "cloud-bot/src/adapter/cloud-bot.js",
+        "sha256": "510a9fd8dd88614ecb2c8d029733f8fcd157848ffdf9659f91f52b6f74f963bd"
+      },
+      {
+        "file": "cloud-bot/src/adapter/copy-regressions.mjs",
+        "sha256": "740c3ece3f4f6ce3e3110cb862318961c8d537669a790aca506846fd8b664d5d"
+      },
+      {
+        "file": "cloud-bot/src/adapter/index.mjs",
+        "sha256": "1f0546e9af11c72406e472e5ad5864c1884aa2762e8ccdcdc06481643a935360"
+      },
+      {
+        "file": "cloud-bot/src/adapter/operation-api.js",
+        "sha256": "db136ba5fa332422376679fa2be15bfd94ba9aebf2814f367ba4957ac1dfca71"
+      },
+      {
+        "file": "cloud-bot/src/adapter/package.json",
+        "sha256": "4ae935ef906a8954168983d48aaca9acbb0d53232a095d20a32e0baf373b1dcd"
+      },
+      {
+        "file": "cloud-bot/src/adapter/party-caption.js",
+        "sha256": "9b5ff3c4ec3dd874e615b65d242a69f02f61c528afc79e0bb79b6053a21e1bc6"
+      },
+      {
+        "file": "cloud-bot/src/adapter/persistent-map.js",
+        "sha256": "249e96a88aaeaac8d972ad84f40b1bbb55b73d6c5bf0d58777b5ad90e5aeacb9"
+      },
+      {
+        "file": "cloud-bot/src/adapter/record-verification.mjs",
+        "sha256": "8d1a16b706ad775469696806869c9a10b08629635e31c0b2cf1298063fbc3795"
+      },
+      {
+        "file": "cloud-bot/src/adapter/rpg-flow.js",
+        "sha256": "c07520f8107aff9393e732752ad890073980f2aede05cf62694106937355c953"
+      },
+      {
+        "file": "cloud-bot/src/adapter/rpg-party-flow.js",
+        "sha256": "bab9239a3afb24e7e52756a9c06fb156b892320210bde96646d5b797db3b3d31"
+      },
+      {
+        "file": "cloud-bot/src/adapter/rpg-pk-animation-flow.js",
+        "sha256": "6e7bb737fc3e565f4d09c00f684dfb409a78f6956a8702e5b9c54a771bc729f1"
+      },
+      {
+        "file": "cloud-bot/src/adapter/star-ring-recruit.js",
+        "sha256": "dc4cb06cae163c539195e540a88a158f1ca4bca3899cb3f8eaca0057e2b2ab28"
+      },
+      {
+        "file": "cloud-bot/src/adapter/verification.json",
+        "sha256": "bf64de7ef559f8b71b706f6fff583618845ba34a74bac28006d6bdf6f8c30e87"
+      },
+      {
+        "file": "cloud-bot/src/adapter/接口與接手.txt",
+        "sha256": "4172a70ae6f8b9ee6981f83b35d70d930e3b6fdee21b8e304aa8b5fcec1fade8"
+      },
+      {
+        "file": "cloud-bot/src/coordinator.mjs",
+        "sha256": "54976b011dbf6f93c7f2ef3e89fc03e7493398da15c85030c28eee9d76015e8a"
+      },
+      {
+        "file": "cloud-bot/src/fate-membership.mjs",
+        "sha256": "5fdf1fa4fa5a3688383000b2d3763b59972866877f0d3986a52d96c0d82ff5cc"
+      },
+      {
+        "file": "cloud-bot/src/fate-share.js",
+        "sha256": "684d2737f05f0cad3b074cc20f19b69645e157b2bb32be299786e35daa2fb303"
+      },
+      {
+        "file": "cloud-bot/src/inbox.mjs",
+        "sha256": "1ea779c2025121caa417eb8e40c58344a745c1db9fa2031bd9df031e478a2983"
+      },
+      {
+        "file": "cloud-bot/src/index.mjs",
+        "sha256": "2e13623a1a3250b64cfabd37fe27def06ed0a3b5a1fb91bc95511aaf9fc45293"
+      },
+      {
+        "file": "cloud-bot/src/renderer/INTEGRATION.txt",
+        "sha256": "ebfa83296901843911959e6a8a6864c714b8176293ab2e5a92f2169318d9d95b"
+      },
+      {
+        "file": "cloud-bot/src/renderer/assets.mjs",
+        "sha256": "b846143e408e7279847cc05b429f0e840202cedde54366f9170a668624f8b2c2"
+      },
+      {
+        "file": "cloud-bot/src/renderer/battle-core.mjs",
+        "sha256": "ecb96a67b660af1cea648c256b2d445a0edfb65eac449093bf9ff433dcb649ce"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/GIFENC-LICENSE.txt",
+        "sha256": "cff57c5f665437cd814c370c161b276147bcb60c603ef86524f52bae696b3ff1"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/NotoSansTC-OFL.txt",
+        "sha256": "e35ffdebb2225b49814c31889cbb3ce69cb3509e6a9f431edaba5e1a6de8cd15"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/NotoSansTC.ttf",
+        "sha256": "f23d5d45c76fe29c624166ff63b6762afef1b23ba17d8bb665c23c9e3f8cdb4e"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/RESVG-NOTICE.txt",
+        "sha256": "e3415a02f7648e223680f7568fb88c6d90301eb131d638e9f3bab2aabed559d0"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/gifenc.mjs",
+        "sha256": "fe5ce0498f3a8e55ba194f8b65cb889f6179160243f56e4e5e42207e47fd9c21"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/resvg.mjs",
+        "sha256": "57818fcbbf62fb0167c04b954741156936bfb40e57ca72840ec773eb674ff6ba"
+      },
+      {
+        "file": "cloud-bot/src/renderer/deps/resvg.wasm",
+        "sha256": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70"
+      },
+      {
+        "file": "cloud-bot/src/renderer/media.mjs",
+        "sha256": "ee2b0c30d7b83fd989692a6b22ea582664bb2fc49f5c12dcf4ef8bf62a8b295e"
+      },
+      {
+        "file": "cloud-bot/src/renderer/party-card.mjs",
+        "sha256": "10d1d7a81d49ce1910e50f6203dd62ccd93da6c7c034e4b2a14740132d1a951e"
+      },
+      {
+        "file": "cloud-bot/src/smoke-fixture.mjs",
+        "sha256": "f3ccd77d9a1e9bfd2977faf5c9c8c54b30ad87ae74767a6d1814273f7b08f23a"
+      },
+      {
+        "file": "cloud-bot/src/telegram-api.mjs",
+        "sha256": "9ec9bc10674b9f3b1aabfde453c0b99c8c02e70624b5350a153d186c44f3fba8"
+      },
+      {
+        "file": "cloud-bot/wrangler.toml",
+        "sha256": "ce368cbd8df05cdf1242781546e6ed5b1d1b6940455938e923e0f3d8eac795ee"
+      },
+      {
+        "file": "cloud-bot/wrangler.toml.example",
+        "sha256": "ad5d2732b98436187d9fdee78a4d6be91a2e091a5273b4d38aaddf15b7daa643"
+      }
+    ]
+  },
+  "assets": {
+    "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
+    "verifiedCount": 4,
+    "files": [
+      "cloud-bot/public/rpg-boss/boss-1.png",
+      "cloud-bot/public/rpg-party/characters/adv3_archer_A21_f.png",
+      "cloud-bot/public/rpg-party/characters/adv4_archer_B211_m.png",
+      "cloud-bot/public/rpg-party/characters/mage_f.png"
+    ]
+  },
+  "protectedState": {
+    "versions": [
+      {
+        "version_id": "d85cbffc-04bd-4d8c-8ff7-d8597a2a0548",
+        "percentage": 100
+      }
+    ],
+    "bindings": [
+      {
+        "class_name": "BotCoordinator",
+        "name": "BOT_COORDINATOR",
+        "namespace_id": "d6123aa66aa54790a49f70857e634127",
+        "type": "durable_object_namespace"
+      },
+      {
+        "environment": "production",
+        "name": "RPG_API",
+        "service": "elf-rpg-api",
+        "type": "service"
+      },
+      {
+        "name": "ASSETS",
+        "type": "assets"
+      },
+      {
+        "name": "BOT_TOKEN",
+        "type": "secret_text"
+      },
+      {
+        "name": "GROUP_CHAT_ID",
+        "type": "plain_text",
+        "valueSHA256": "180f0e7a94ffe563db742bbc402dbbd9852e78a3e4cb574ae029a5b5589b3f78"
+      },
+      {
+        "name": "INVITE_LINK",
+        "type": "plain_text",
+        "valueSHA256": "6d43fb4e12c1ec3472189173d2083677a210eb770564d99783f380c7fd2981b7"
+      },
+      {
+        "name": "SERVICE_SECRET",
+        "type": "secret_text"
+      }
+    ],
+    "crons": [
+      "* * * * *"
+    ]
+  },
+  "noPlayerMutations": true
+}
