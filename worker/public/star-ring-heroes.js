@@ -3,8 +3,9 @@
  let modulePromise=null;const receipts=new Map();
  const alive=m=>m&&!m.left&&!(Number(m.maxHp)>0&&Number(m.hp)<=0);
  function eligibleEvents(p){const b=p?.battle;if(!b||['complete','ended'].includes(p.status))return [];const members=b.members||p.members||[];let events=b.events||[];
-  // While the first authoritative beat is pending, show combat poses only. No damage/HP/reward is predicted.
-  if(!events.length&&p.status==='running'&&Number(b.enemy?.hp)>0)events=members.filter(alive).map(m=>({actorId:m.id,skillId:'attack',cosmetic:true,presentationOnly:true}));
+  // The first beat and hourly arrivals may contain only a system notice.
+  // Keep combat poses moving without predicting damage, HP or rewards.
+  if(events.every(e=>e.actorId==='system')&&p.status==='running'&&Number(b.enemy?.hp)>0)events=members.filter(alive).map(m=>({actorId:m.id,skillId:'attack',cosmetic:true,presentationOnly:true}));
   return events.map((event,index)=>({event,index,member:members.find(m=>String(m.id)===String(event.actorId))})).filter(x=>x.event.actorId!=='boss'&&typeof x.event.skillId==='string'&&alive(x.member));}
  function load(){if(!modulePromise)modulePromise=import('/expedition/hero-art-playback.js?v=20261019-combat-loop1').catch(e=>{modulePromise=null;throw e;});return modulePromise;}
  function mount(scene,party,{playback}={}){

@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 星環遠征v2擴充48個身份：每圖2普通／1菁英／1既有首領、36隻新原創16姿勢alpha怪，伺服器獨立seed依波數／時間選種，離線及線上同源；v1歷史36個完整階段hash保持一致。新建隊伍用v2，既有隊伍維持v1，無migration、無重設次數／收益。前端rank／已遇清單、舊敵倒地→新敵進場，並補每小時system-only換圖時英雄不停播。接手讀docs/STAR_RING_MONSTER_POOLS_20261019.txt；美術／像素／桌手機驗收在docs/art/STAR_RING_POOL_*，正式發布看Worker收據。
+
 2026-10-19 星環戰鬥顯示補修：五人／魔物持續播放交戰演出，首beat不再空等，擊倒接下一波進場；server view提供spawn投影，保留v1模擬、RNG、收益與存檔。終章不重生，隱藏／減少動態停播；原20秒同步不變。詳docs/STAR_RING_COMBAT_PLAYBACK_20261019.txt，發布看Worker收據。
 
 2026-10-19 星環遠征補上群組招募圖卡：建立／狀態變更以原子outbox排程，同房間更新原卡、合併待送版本、準確ring deep link、圖片拒絕fallback與不確定結果防重。原先只有完成DM，沒有開隊通知。先BOT後Worker發布，保留藥水設定；無migration。詳docs/STAR_RING_RECRUIT_NOTICE_20261019.txt，版本看兩服務收據。

@@ -9,10 +9,11 @@ import {makeEliteGear} from './gear.js';
 import {GameError} from './classes.js';
 import {guardianChance} from './guardian-effects.js';
 import {COSMETICS,equippedAura} from './star-ring-cosmetics.js';
+import {mapPool,selectEncounter,encounterSchedule} from './star-ring-pools.js';
 
 // Never change v1 rules underneath an active twelve-hour snapshot. Future
 // balance changes must dispatch by engineVersion until all v1 runs have ended.
-export const ENGINE_VERSION=1;
+export const ENGINE_VERSION=2;
 export const DURATION=12*3600000, STAGE_MS=2*3600000, BEAT_MS=30000, BEATS=STAGE_MS/BEAT_MS;
 export const HOUR_MS=3600000,HOUR_BEATS=HOUR_MS/BEAT_MS;
 export const TIERS=['初星征途','星砂巡路','銀針古道','縛月隘口','九曜邊境','裂環深境','寂星哨域','黯曜王庭','星蝕禁域'].map((name,i)=>({id:40+i*10,level:40+i*10,name,gearTier:4+i}));
@@ -104,21 +105,51 @@ function enemyFor(state,hourIndex,strength){
  const maxHp=Math.max(100,Math.round(strength*(state.difficulty==='advanced'?17:14)*(1+index*.04)));
  return {id:def.enemyId,name:def.enemyName,spell:def.spell,behavior:def.behavior,mechanic:def.mechanic,counterRoles:encounterRoles(state.tier,hourIndex),artIndex:def.artIndex,artUrl:`/art/star-ring-20261018/monster-${String(def.artIndex).padStart(2,'0')}.webp`,level:state.tier,maxHp,hp:maxHp,def:state.tier*1.3,element:hourIndex%2?'dark':'earth',buffs:[],dots:[],shield:['shield','hollow','tide','unravel'].includes(def.mechanic)?Math.round(maxHp*(def.mechanic==='hollow'?.22:.18)):0,windup:false,interruptible:true};
 }
+export const usesPools=state=>state.engineVersion===2;
+export const encounterPool=hourIndex=>mapPool(hourIndex,HOURLY_ENCOUNTERS);
+function pooledEnemy(state,hourIndex,strength,def){
+ const base=enemyFor(state,hourIndex,strength),maxHp=Math.max(100,Math.round(base.maxHp*({normal:.88,elite:1.18,boss:1.7})[def.rank]));
+ const roles=def.rank==='boss'?encounterRoles(state.tier,hourIndex):def.rank==='elite'?[...new Set([...encounterRoles(state.tier,hourIndex),...def.roles])]:def.roles;
+ return {...base,id:def.enemyId,name:def.enemyName,rank:def.rank,mechanic:def.mechanic,spell:def.spell,behavior:def.behavior,
+  basicAttack:def.basicAttack||null,counterRoles:state.tier<=60&&def.rank!=='boss'?roles.slice(0,2):roles,
+  artIndex:def.artIndex||null,artUrl:def.artUrl||base.artUrl,maxHp,hp:maxHp,shield:['shield','hollow','tide','unravel'].includes(def.mechanic)?Math.round(maxHp*(def.mechanic==='hollow'?.22:.18)):0};
+}
+function spawnPooled(b,state,localBeat=0){
+ const seen=b.poolSeen??={elite:false,boss:false},wave=b.waves-b.hourStartWave;
+ const def=selectEncounter(state,b.hourIndex,wave,seen,localBeat,HOURLY_ENCOUNTERS,b.enemy?.id);
+ if(def.rank!=='normal')seen[def.rank]=true;
+ b.enemy=pooledEnemy(state,b.hourIndex,b.strength,def);
+ b.poolSerial=(b.poolSerial||0)+1;
+ (b.sightings??=[]).push({hourIndex:b.hourIndex,at:state.startedAt+b.hourIndex*HOUR_MS+localBeat*BEAT_MS,id:def.enemyId,name:def.enemyName,rank:def.rank,wave:b.waves+1});
+}
+function pooledDue(b,state,localBeat){
+ const plan=encounterSchedule(state.seed,b.hourIndex);
+ return !b.poolSeen?.boss&&localBeat>=plan.bossBeat||!b.poolSeen?.elite&&localBeat>=plan.eliteBeat;
+}
+// Used both by the battle step and its next-wave presentation. No damage/loot
+// RNG is touched and the original dead combat snapshot remains immutable.
+export function nextWaveEnemy(state,b){
+ if(!usesPools(state))return {...b.enemy,hp:b.enemy.maxHp,buffs:[],dots:[],shield:['shield','hollow','tide','unravel'].includes(b.enemy.mechanic)?Math.round(b.enemy.maxHp*(b.enemy.mechanic==='hollow'?.22:.18)):0,windup:false,interrupted:false};
+ const copy=structuredClone(b),localBeat=b.sequence%HOUR_BEATS;
+ spawnPooled(copy,state,localBeat);return copy.enemy;
+}
 function initBattle(state,index,actors){
  const strength=actors.reduce((n,a)=>n+(a.standardAttack||a.atk),0),hourIndex=index*2;
- return {stageIndex:index,hourIndex,scene:sceneFor(state,hourIndex),enemy:enemyFor(state,hourIndex,strength),actors:structuredClone(actors).map(a=>{const{equipment,...combat}=a;return {...combat,hp:Math.max(a.hp,a.maxHp*.45),mp:a.maxMp,buffs:[],debuffs:[],roleCooldowns:{}};}),events:[],sequence:index*BEATS,contribution:{},round:1,waves:0,objective:(state.difficulty==='advanced'?34:30)+index*2,encounters:[],roleFailures:[],strength,hourStartWave:0};
+ const b={stageIndex:index,hourIndex,scene:sceneFor(state,hourIndex),enemy:enemyFor(state,hourIndex,strength),actors:structuredClone(actors).map(a=>{const{equipment,...combat}=a;return {...combat,hp:Math.max(a.hp,a.maxHp*.45),mp:a.maxMp,buffs:[],debuffs:[],roleCooldowns:{}};}),events:[],sequence:index*BEATS,contribution:{},round:1,waves:0,objective:(state.difficulty==='advanced'?34:30)+index*2,encounters:[],roleFailures:[],strength,hourStartWave:0};
+ if(usesPools(state)){b.enemy=null;spawnPooled(b,state);}return b;
 }
 function finishArea(b,state){
  if(b.encounters.some(e=>e.hourIndex===b.hourIndex))return;
- b.encounters.push({hourIndex:b.hourIndex,scene:b.scene,enemyId:b.enemy.id,enemyName:b.enemy.name,artIndex:b.enemy.artIndex,waves:b.waves-b.hourStartWave,endsAt:state.startedAt+(b.hourIndex+1)*HOUR_MS});
+ b.encounters.push({hourIndex:b.hourIndex,scene:b.scene,enemyId:b.enemy.id,enemyName:b.enemy.name,artIndex:b.enemy.artIndex,waves:b.waves-b.hourStartWave,endsAt:state.startedAt+(b.hourIndex+1)*HOUR_MS,...(usesPools(state)?{enemies:b.sightings.filter(e=>e.hourIndex===b.hourIndex)}:{})});
 }
 function nextArea(b,state,hourIndex){
  finishArea(b,state);b.hourIndex=hourIndex;b.scene=sceneFor(state,hourIndex);b.enemy=enemyFor(state,hourIndex,b.strength);b.hourStartWave=b.waves;
+ if(usesPools(state)){b.poolSeen={elite:false,boss:false};b.enemy=null;spawnPooled(b,state);}
 }
 function monsterAttack(b,beat,at,pressure,tactic,missing,events){
  const e=b.enemy;if(e.hp<=0)return;
  if(e.interrupted){events.push({actorId:'boss',label:`${e.spell}已被打斷`,interrupted:true});return;}
- const factor=(tactic==='deep'?1.18:tactic==='steady'?.8:1)*(1+missing*.2),front=b.actors.filter(a=>a.hp>0).slice().sort((a,c)=>c.maxHp-a.maxHp)[0];
+ const factor=(tactic==='deep'?1.18:tactic==='steady'?.8:1)*(1+missing*.2)*(e.rank?({normal:.85,elite:1.1,boss:1.3})[e.rank]:1),front=b.actors.filter(a=>a.hp>0).slice().sort((a,c)=>c.maxHp-a.maxHp)[0];
  const mechanic=e.mechanic,weakest=b.actors.filter(a=>a.hp>0).slice().sort((a,c)=>a.hp/a.maxHp-c.hp/c.maxHp)[0];
  const heavy=e.windup?({song:3.2,curse:2.8,cleave:2.2,swoop:2.4,gust:2.1,torrent:1.9,tide:2.1,unravel:2.4})[mechanic]||2:1;
  if(['curse','unravel'].includes(mechanic)&&e.windup)for(const a of b.actors){a.debuffs=(a.debuffs||[]).filter(d=>d.type!=='party-curse');a.debuffs.push({type:'party-curse',source:'star-ring',until:at+120000});events.push({actorId:'boss',targetId:a.id,label:mechanic==='curse'?'星蝕咒印':'星線束縛',status:'party-curse'});}
@@ -127,7 +158,7 @@ function monsterAttack(b,beat,at,pressure,tactic,missing,events){
   const cleave=mechanic==='cleave'?(a.id===front?.id?1.6:1.05):mechanic==='swoop'&&e.windup?(a.id===weakest?.id?1.8:.55):1;
   const curse=(a.debuffs||[]).some(d=>d.type==='party-curse'&&d.until>at)?1.25:1,chill=(a.debuffs||[]).some(d=>d.type==='ring-chill'&&d.until>at)?1.15:1;
   const damage=receiveDamage(a,pressure*factor*heavy*cleave*curse*chill*(1-valueOf(e,'enemyNextReduce',at)),b.actors,e,at);
-  events.push({actorId:'boss',targetId:a.id,label:e.windup?e.spell:({venom:'晶螯突刺',shield:'鑄衛槌擊',drain:'銀針穿刺',song:'哀歌殘響',cleave:'棘冠撕咬',curse:'審判斬擊',swoop:'銅羽散射',hollow:'星燈灼光',torrent:'晶鰻尾擊',gust:'石翼拍擊',tide:'深冠衝撞',unravel:'星線切割'})[mechanic],damage});
+  events.push({actorId:'boss',targetId:a.id,label:e.windup?e.spell:e.basicAttack||({venom:'晶螯突刺',shield:'鑄衛槌擊',drain:'銀針穿刺',song:'哀歌殘響',cleave:'棘冠撕咬',curse:'審判斬擊',swoop:'銅羽散射',hollow:'星燈灼光',torrent:'晶鰻尾擊',gust:'石翼拍擊',tide:'深冠衝撞',unravel:'星線切割'})[mechanic],damage});
   if(mechanic==='venom'&&e.windup&&a.hp>0){a.debuffs=(a.debuffs||[]).filter(d=>d.type!=='ring-venom');a.debuffs.push({type:'ring-venom',until:at+90000});events.push({actorId:'boss',targetId:a.id,label:'晶毒附著',status:'ring-venom'});}
   if((mechanic==='drain'&&beat%6===5||mechanic==='torrent'&&e.windup)&&a.hp>0){const lost=Math.min(a.mp,Math.ceil(a.maxMp*(mechanic==='torrent'?.15:.2)));a.mp-=lost;events.push({actorId:'boss',targetId:a.id,label:e.spell,drainedMp:lost});}
   if(['torrent','tide'].includes(mechanic)&&e.windup&&a.hp>0){a.debuffs=(a.debuffs||[]).filter(d=>d.type!=='ring-chill');a.debuffs.push({type:'ring-chill',until:at+90000});events.push({actorId:'boss',targetId:a.id,label:'濕寒侵襲',status:'ring-chill'});}
@@ -137,7 +168,7 @@ function monsterAttack(b,beat,at,pressure,tactic,missing,events){
 }
 /** Project exactly the same combat steps used by checkpoint settlement; projections never write rewards. */
 export function simulateStage(state,index,beats=BEATS){
- if(state.engineVersion!=null&&state.engineVersion!==ENGINE_VERSION)throw new GameError('engine_version','這趟遠征需要對應版本的戰鬥引擎',409);
+ if(state.engineVersion!=null&&![1,2].includes(state.engineVersion))throw new GameError('engine_version','這趟遠征需要對應版本的戰鬥引擎',409);
  const initial=index?state.results[index-1]?.actors:state.actors;
  const stageStart=state.startedAt+index*STAGE_MS;
  const active=(initial||state.actors).filter(a=>!state.departed?.[a.id]||state.departed[a.id]>stageStart);
@@ -151,13 +182,19 @@ export function simulateStage(state,index,beats=BEATS){
   b.actors=b.actors.filter(a=>!state.departed?.[a.id]||state.departed[a.id]>at);
   const hourIndex=index*2+Math.floor(beat/HOUR_BEATS);
   if(hourIndex!==b.hourIndex)nextArea(b,state,hourIndex);
-  const required=encounterRoles(state.tier,hourIndex),def=HOURLY_ENCOUNTERS[hourIndex],localBeat=beat%HOUR_BEATS;
+  const localBeat=beat%HOUR_BEATS,arrival=[];
+  if(usesPools(state)&&(b.enemy.hp<=0||pooledDue(b,state,localBeat))){
+   const defeated=b.enemy.hp<=0,previous={id:b.enemy.id,name:b.enemy.name};spawnPooled(b,state,localBeat);
+   arrival.push({actorId:'system',label:`${defeated?'下一波':'前方魔物退開，'}${({normal:'普通魔物',elite:'菁英',boss:'首領'})[b.enemy.rank]}「${b.enemy.name}」現身`,arrival:true,enemyId:b.enemy.id,previousId:previous.id});
+   if(defeated)for(const a of b.actors){a.hp=Math.min(a.maxHp,a.hp+a.maxHp*.02);a.mp=Math.min(a.maxMp,a.mp+a.maxMp*.04);}
+  }
+  const required=usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,hourIndex),def=usesPools(state)?{mechanic:b.enemy.mechanic}:HOURLY_ENCOUNTERS[hourIndex];
   const currentMatch=coverage(b.actors,required);
   b.roleFailures=[...new Set([...b.roleFailures,...currentMatch.missing])];
   b.enemy.damageBudget=state.difficulty==='advanced'&&currentMatch.missing.length?0:Infinity;
   b.enemy.windup=encounterWindup(def,localBeat);b.enemy.interrupted=false;b.enemy.interruptible=true;
   if(b.enemy.hp<=0){b.enemy.hp=b.enemy.maxHp;b.enemy.buffs=[];b.enemy.dots=[];b.enemy.shield=['shield','hollow','tide','unravel'].includes(b.enemy.mechanic)?Math.round(b.enemy.maxHp*(b.enemy.mechanic==='hollow'?.22:.18)):0;for(const a of b.actors){a.hp=Math.min(a.maxHp,a.hp+a.maxHp*.02);a.mp=Math.min(a.maxMp,a.mp+a.maxMp*.04);}}
-  const events=[];periodic(b.actors,b.enemy,at);
+  const events=arrival;periodic(b.actors,b.enemy,at);
   for(const a of b.actors){a.debuffs=(a.debuffs||[]).filter(d=>d.until>at);if(a.debuffs.some(d=>d.type==='ring-venom')){const damage=receiveDamage(a,a.maxHp*.025,b.actors,b.enemy,at,{elementApplied:true,defApplied:true});events.push({actorId:'boss',targetId:a.id,label:'晶毒侵蝕',damage,status:'ring-venom'});}}
   for(const a of b.actors){
    if(a.hp<=0){a.hp=Math.ceil(a.maxHp*.3);a.mp=Math.ceil(a.maxMp*.25);a.wounds=(a.wounds||0)+1;events.push({actorId:a.id,label:'補給救援',healed:a.hp});continue;}
@@ -196,7 +233,7 @@ export function simulateStage(state,index,beats=BEATS){
  // its first combat action. Both online projections and offline replay use it.
  if(steps===HOUR_BEATS){nextArea(b,state,index*2+1);b.events=[{actorId:'system',label:`隊伍抵達${b.scene.name}`}];}
  if(steps===BEATS)finishArea(b,state);
- const finalMatch=coverage(b.actors,encounterRoles(state.tier,b.hourIndex));
+ const finalMatch=coverage(b.actors,usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,b.hourIndex));
  finalMatch.missing=[...new Set([...b.roleFailures,...finalMatch.missing])];
  const defeated=b.waves>=b.objective,grade=defeated&&!finalMatch.missing.length?(resolvedBeat!=null&&resolvedBeat<BEATS*.65?'S':'A'):'B';
  delete b.enemy.damageBudget;

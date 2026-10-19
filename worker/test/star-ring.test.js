@@ -14,7 +14,7 @@ import {makeEliteGear} from '../src/game/gear.js';
 import {rngFor} from '../src/game/rng.js';
 const T=Date.parse('2026-10-18T08:00:00Z');
 const specs=['sword:B2','mage:A1','thief:A1','archer:B1','sword:A1'];
-async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,at=T}={}){
+async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,at=T,engineVersion=1}={}){
  const env={DB:freshDb()},db=env.DB.sqlite;t.after(()=>db.close());const ids=classes.map((_,i)=>String(1000+i));
  for(let i=0;i<ids.length;i++){
   const[baseClass,path]=classes[i].split(':');await P.createCharacter(env,{tgId:ids[i],name:'遠征旅人'+i,baseClass,gender:'f'},at);
@@ -22,11 +22,37 @@ async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,a
   const st=computeStats((await loadPlayer(env.DB,ids[i])).char,[]);db.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').run(st.maxHp,st.maxMp,ids[i]);
  }
  const created=await R.create(env,ids[0],{tier,difficulty},at),id=created.party.id;
+ // Historical suites deliberately replay a pre-update lobby. New pool suites
+ // below pass v2 and exercise the unmodified current creation version.
+ if(engineVersion===1){const old=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);old.engineVersion=1;db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(old),id);}
  for(const tg of ids.slice(1))await R.action(env,tg,{partyId:id,action:'join'},at);
  for(const tg of ids)await R.action(env,tg,{partyId:id,action:'ready'},at);
  if(start)await R.action(env,ids[0],{partyId:id,action:'start'},at);
  return {env,db,id,ids,at};
 }
+
+test('new expeditions use v2 pools; a defeated species projects the exact next authored species while settlement remains server-only',async t=>{
+ const{env,db,id,ids}=await fixture(t,{engineVersion:2});
+ const s=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.equal(s.engineVersion,2);
+ s.actors=s.actors.map(a=>({...a,atk:1e7,departureAtk:1e7}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(s),id);
+ const first=await R.view(env,id,ids[0],T+E.BEAT_MS),raw=E.simulateStage(s,0,1),next=E.nextWaveEnemy(s,raw);
+ assert.equal(raw.enemy.hp,0);assert.notEqual(next.id,raw.enemy.id);assert.equal(first.battle.enemy.id,next.id);assert.equal(first.battle.enemy.hp,next.maxHp);assert.equal(first.battle.spawn.previousId,raw.enemy.id);assert.equal(first.battle.enemy.rank,'normal');assert.equal(first.battle.sightings[0].id,raw.enemy.id);
+ const previous=JSON.stringify(first.battle);assert.equal(JSON.stringify((await R.view(env,id,ids[0],T+E.BEAT_MS)).battle),previous);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,0);
+ const secondRaw=E.simulateStage(s,0,2);assert.equal(secondRaw.enemy.id,next.id);
+ const completed=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(completed.completedStages,6);assert.equal(completed.battle.spawn,null);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,5);assert.equal(db.prepare("SELECT count(*) n FROM rpg_outbox WHERE kind='star_ring_complete'").get().n,5);
+ const all=completed.stages.flatMap(x=>x.result.encounters).flatMap(x=>x.enemies);assert.equal(new Set(all.filter(x=>x.rank==='boss').map(x=>x.id)).size,12);
+ await R.sweep(env,T+E.DURATION+60000);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+});
+
+test('v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants',async t=>{
+ const{env,db,id,ids}=await fixture(t,{engineVersion:2,tier:40,classes:['sword:A','mage:A','thief:A','archer:B','sword:B']});
+ const offline=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);
+ for(let stage=0;stage<6;stage++){
+  for(const beat of [0,37,119,120,177,239]){const p=await R.view(env,id,ids[0],T+stage*E.STAGE_MS+beat*E.BEAT_MS),b=E.simulateStage(offline,stage,beat);assert.deepEqual(p.battle.sightings,b.sightings);assert.deepEqual(p.battle.events,b.events);assert.equal(p.battle.enemy.id,b.enemy.hp===0?E.nextWaveEnemy(offline,b).id:b.enemy.id);}
+  offline.results.push(E.simulateStage(offline,stage));offline.stageTactics[stage+1]=offline.tactic;
+ }
+ await R.view(env,id,ids[0],T+E.DURATION);const committed=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.deepEqual(committed.results,JSON.parse(JSON.stringify(offline.results)));assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+});
 test('five accounts depart once per character Taipei date; lobby does not consume quota',async t=>{
  const{env,db,id,ids}=await fixture(t,{start:false});assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,0);
  assert.equal((await R.me(env,ids[0],T)).daily.used,false);

@@ -1,0 +1,810 @@
+{
+  "schema": 1,
+  "engineVersion": 2,
+  "maps": [
+    {
+      "hourIndex": 0,
+      "monsters": [
+        {
+          "enemyId": "sr2_01_a",
+          "enemyName": "碎潮寄居蟹",
+          "hourIndex": 0,
+          "rank": "normal",
+          "mechanic": "shield",
+          "spell": "碎潮殼盾",
+          "basicAttack": "螯足拍擊",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-01-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-01-normal-a_attack.webp",
+          "behavior": "普通魔物施放「碎潮殼盾」；破陣破盾。"
+        },
+        {
+          "enemyId": "sr2_01_b",
+          "enemyName": "星礫沙蜥",
+          "hourIndex": 0,
+          "rank": "normal",
+          "mechanic": "venom",
+          "spell": "星礫毒息",
+          "basicAttack": "砂尾橫掃",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-01-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-01-normal-b_attack.webp",
+          "behavior": "普通魔物施放「星礫毒息」；支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "sr2_01_e",
+          "enemyName": "岸礁破浪者",
+          "hourIndex": 0,
+          "rank": "elite",
+          "mechanic": "cleave",
+          "spell": "破浪重鉗",
+          "basicAttack": "礁鉗撞擊",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-01-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-01-elite_attack.webp",
+          "behavior": "菁英魔物施放「破浪重鉗」；守護承傷。"
+        },
+        {
+          "name": "星砂伏擊",
+          "enemyId": "star_ring_scorpion",
+          "enemyName": "星砂晶螯蠍",
+          "roles": [
+            "guard"
+          ],
+          "spell": "晶毒尾刺",
+          "behavior": "尾刺留下短暫晶毒；守護吸收傷害，支援可清除毒素。",
+          "artIndex": 1,
+          "mechanic": "venom",
+          "originalStage": 0,
+          "rank": "boss",
+          "hourIndex": 0,
+          "artUrl": "/art/star-ring-20261018/monster-01.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 1,
+      "monsters": [
+        {
+          "enemyId": "sr2_02_a",
+          "enemyName": "白曜風隼",
+          "hourIndex": 1,
+          "rank": "normal",
+          "mechanic": "swoop",
+          "spell": "白曜俯衝",
+          "basicAttack": "風羽啄擊",
+          "roles": [
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-02-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-02-normal-a_attack.webp",
+          "behavior": "普通魔物施放「白曜俯衝」；壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_02_b",
+          "enemyName": "浮階晶蛾",
+          "hourIndex": 1,
+          "rank": "normal",
+          "mechanic": "hollow",
+          "spell": "晶翅折光",
+          "basicAttack": "粉晶飛散",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-02-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-02-normal-b_attack.webp",
+          "behavior": "普通魔物施放「晶翅折光」；破陣破盾。"
+        },
+        {
+          "enemyId": "sr2_02_e",
+          "enemyName": "曦穹雙翼獸",
+          "hourIndex": 1,
+          "rank": "elite",
+          "mechanic": "gust",
+          "spell": "雙翼風暴",
+          "basicAttack": "曦爪撲擊",
+          "roles": [
+            "guard",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-02-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-02-elite_attack.webp",
+          "behavior": "菁英魔物施放「雙翼風暴」；守護承傷、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "star_ring_bird",
+          "enemyName": "星帆銅羽鳥",
+          "artIndex": 7,
+          "mechanic": "swoop",
+          "roles": [
+            "control"
+          ],
+          "spell": "銅羽掠空",
+          "behavior": "俯衝鎖定狀態最弱的旅人；壓制可以打斷整次俯衝。",
+          "rank": "boss",
+          "hourIndex": 1,
+          "artUrl": "/art/star-ring-20261018/monster-07.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 2,
+      "monsters": [
+        {
+          "enemyId": "sr2_03_a",
+          "enemyName": "碎齒巡械",
+          "hourIndex": 2,
+          "rank": "normal",
+          "mechanic": "shield",
+          "spell": "巡械護殼",
+          "basicAttack": "碎齒切割",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-03-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-03-normal-a_attack.webp",
+          "behavior": "普通魔物施放「巡械護殼」；破陣破盾。"
+        },
+        {
+          "enemyId": "sr2_03_b",
+          "enemyName": "銅環弩偶",
+          "hourIndex": 2,
+          "rank": "normal",
+          "mechanic": "cleave",
+          "spell": "銅弩齊射",
+          "basicAttack": "弩臂撞擊",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-03-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-03-normal-b_attack.webp",
+          "behavior": "普通魔物施放「銅弩齊射」；守護承傷。"
+        },
+        {
+          "enemyId": "sr2_03_e",
+          "enemyName": "斷輪重裝者",
+          "hourIndex": 2,
+          "rank": "elite",
+          "mechanic": "shield",
+          "spell": "重裝堡壘",
+          "basicAttack": "斷輪衝撞",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-03-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-03-elite_attack.webp",
+          "behavior": "菁英魔物施放「重裝堡壘」；破陣破盾。"
+        },
+        {
+          "name": "裂環重甲",
+          "enemyId": "star_ring_sentinel",
+          "enemyName": "裂環鑄衛",
+          "roles": [
+            "breach"
+          ],
+          "spell": "裂環震擊",
+          "behavior": "每波展開重甲護盾；破陣可摧毀額外護盾。",
+          "artIndex": 2,
+          "mechanic": "shield",
+          "originalStage": 1,
+          "rank": "boss",
+          "hourIndex": 2,
+          "artUrl": "/art/star-ring-20261018/monster-02.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 3,
+      "monsters": [
+        {
+          "enemyId": "sr2_04_a",
+          "enemyName": "月鏡蝶",
+          "hourIndex": 3,
+          "rank": "normal",
+          "mechanic": "hollow",
+          "spell": "月鏡幻光",
+          "basicAttack": "鏡翅切風",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-04-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-04-normal-a_attack.webp",
+          "behavior": "普通魔物施放「月鏡幻光」；破陣破盾。"
+        },
+        {
+          "enemyId": "sr2_04_b",
+          "enemyName": "映影狐",
+          "hourIndex": 3,
+          "rank": "normal",
+          "mechanic": "song",
+          "spell": "映影月鳴",
+          "basicAttack": "狐爪掠擊",
+          "roles": [
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-04-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-04-normal-b_attack.webp",
+          "behavior": "普通魔物施放「映影月鳴」；壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_04_e",
+          "enemyName": "雙面鏡侍",
+          "hourIndex": 3,
+          "rank": "elite",
+          "mechanic": "unravel",
+          "spell": "雙鏡束縛",
+          "basicAttack": "鏡刃穿刺",
+          "roles": [
+            "guard",
+            "breach",
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-04-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-04-elite_attack.webp",
+          "behavior": "菁英魔物施放「雙鏡束縛」；守護承傷、破陣破盾、支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "star_ring_lantern",
+          "enemyName": "空心星燈靈",
+          "artIndex": 8,
+          "mechanic": "hollow",
+          "roles": [
+            "breach"
+          ],
+          "spell": "空心折光",
+          "behavior": "星燈以折光護盾遮蔽本體；破陣摧毀護盾並打開攻擊窗口。",
+          "rank": "boss",
+          "hourIndex": 3,
+          "artUrl": "/art/star-ring-20261018/monster-08.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 4,
+      "monsters": [
+        {
+          "enemyId": "sr2_05_a",
+          "enemyName": "銀絲螳螂",
+          "hourIndex": 4,
+          "rank": "normal",
+          "mechanic": "drain",
+          "spell": "銀絲汲能",
+          "basicAttack": "鎌臂斬擊",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-05-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-05-normal-a_attack.webp",
+          "behavior": "普通魔物施放「銀絲汲能」；支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "sr2_05_b",
+          "enemyName": "夜露瓢甲",
+          "hourIndex": 4,
+          "rank": "normal",
+          "mechanic": "venom",
+          "spell": "夜露毒霧",
+          "basicAttack": "甲角撞擊",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-05-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-05-normal-b_attack.webp",
+          "behavior": "普通魔物施放「夜露毒霧」；支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "sr2_05_e",
+          "enemyName": "織庭蛛后",
+          "hourIndex": 4,
+          "rank": "elite",
+          "mechanic": "drain",
+          "spell": "織庭奪魔",
+          "basicAttack": "蛛足貫刺",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-05-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-05-elite_attack.webp",
+          "behavior": "菁英魔物施放「織庭奪魔」；支援恢復與解除異常。"
+        },
+        {
+          "name": "銀針網障",
+          "enemyId": "star_ring_weaver",
+          "enemyName": "銀針鏡蛛",
+          "roles": [
+            "aid"
+          ],
+          "spell": "銀針汲能",
+          "behavior": "蛛網抽走全隊魔力；支援戰技同時協助補充魔力。",
+          "artIndex": 3,
+          "mechanic": "drain",
+          "originalStage": 2,
+          "rank": "boss",
+          "hourIndex": 4,
+          "artUrl": "/art/star-ring-20261018/monster-03.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 5,
+      "monsters": [
+        {
+          "enemyId": "sr2_06_a",
+          "enemyName": "琉璃水母",
+          "hourIndex": 5,
+          "rank": "normal",
+          "mechanic": "torrent",
+          "spell": "琉璃寒潮",
+          "basicAttack": "水母電觸",
+          "roles": [
+            "aid",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-06-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-06-normal-a_attack.webp",
+          "behavior": "普通魔物施放「琉璃寒潮」；支援恢復與解除異常、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_06_b",
+          "enemyName": "晶鰭躍魚",
+          "hourIndex": 5,
+          "rank": "normal",
+          "mechanic": "swoop",
+          "spell": "晶鰭掠水",
+          "basicAttack": "飛鰭切擊",
+          "roles": [
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-06-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-06-normal-b_attack.webp",
+          "behavior": "普通魔物施放「晶鰭掠水」；壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_06_e",
+          "enemyName": "瀑心角螺",
+          "hourIndex": 5,
+          "rank": "elite",
+          "mechanic": "tide",
+          "spell": "瀑心護潮",
+          "basicAttack": "螺角撞擊",
+          "roles": [
+            "aid",
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-06-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-06-elite_attack.webp",
+          "behavior": "菁英魔物施放「瀑心護潮」；支援恢復與解除異常、破陣破盾。"
+        },
+        {
+          "enemyId": "star_ring_serpent",
+          "enemyName": "晶瀑蛇鰻",
+          "artIndex": 9,
+          "mechanic": "torrent",
+          "roles": [
+            "aid",
+            "control"
+          ],
+          "spell": "晶瀑奔流",
+          "behavior": "奔流吸走魔力並留下晶寒；壓制打斷奔流，支援解寒與補充魔力。",
+          "rank": "boss",
+          "hourIndex": 5,
+          "artUrl": "/art/star-ring-20261018/monster-09.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 6,
+      "monsters": [
+        {
+          "enemyId": "sr2_07_a",
+          "enemyName": "殘月紙靈",
+          "hourIndex": 6,
+          "rank": "normal",
+          "mechanic": "song",
+          "spell": "紙頁哀鳴",
+          "basicAttack": "月紙割痕",
+          "roles": [
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-07-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-07-normal-a_attack.webp",
+          "behavior": "普通魔物施放「紙頁哀鳴」；壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_07_b",
+          "enemyName": "鎖鏈燭使",
+          "hourIndex": 6,
+          "rank": "normal",
+          "mechanic": "curse",
+          "spell": "燭影咒印",
+          "basicAttack": "鎖鏈抽擊",
+          "roles": [
+            "aid",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-07-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-07-normal-b_attack.webp",
+          "behavior": "普通魔物施放「燭影咒印」；支援恢復與解除異常、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_07_e",
+          "enemyName": "沉鐘守墓者",
+          "hourIndex": 6,
+          "rank": "elite",
+          "mechanic": "shield",
+          "spell": "沉鐘護障",
+          "basicAttack": "鐘錘震擊",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-07-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-07-elite_attack.webp",
+          "behavior": "菁英魔物施放「沉鐘護障」；破陣破盾。"
+        },
+        {
+          "name": "縛月詠唱",
+          "enemyId": "star_ring_lament",
+          "enemyName": "縛月哀歌者",
+          "roles": [
+            "control"
+          ],
+          "spell": "縛月安魂曲",
+          "behavior": "頻繁詠唱高傷安魂曲；壓制可中斷整次施法。",
+          "artIndex": 4,
+          "mechanic": "song",
+          "originalStage": 3,
+          "rank": "boss",
+          "hourIndex": 6,
+          "artUrl": "/art/star-ring-20261018/monster-04.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 7,
+      "monsters": [
+        {
+          "enemyId": "sr2_08_a",
+          "enemyName": "風脊岩羊",
+          "hourIndex": 7,
+          "rank": "normal",
+          "mechanic": "cleave",
+          "spell": "岩角衝鋒",
+          "basicAttack": "羊角頂擊",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-08-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-08-normal-a_attack.webp",
+          "behavior": "普通魔物施放「岩角衝鋒」；守護承傷。"
+        },
+        {
+          "enemyId": "sr2_08_b",
+          "enemyName": "裂風翼蛇",
+          "hourIndex": 7,
+          "rank": "normal",
+          "mechanic": "gust",
+          "spell": "裂風雙襲",
+          "basicAttack": "翼蛇噬咬",
+          "roles": [
+            "guard",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-08-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-08-normal-b_attack.webp",
+          "behavior": "普通魔物施放「裂風雙襲」；守護承傷、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_08_e",
+          "enemyName": "暴風鷹衛",
+          "hourIndex": 7,
+          "rank": "elite",
+          "mechanic": "gust",
+          "spell": "暴風羽陣",
+          "basicAttack": "鐵羽掠擊",
+          "roles": [
+            "guard",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-08-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-08-elite_attack.webp",
+          "behavior": "菁英魔物施放「暴風羽陣」；守護承傷、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "star_ring_gargoyle",
+          "enemyName": "逆風石翼獸",
+          "artIndex": 10,
+          "mechanic": "gust",
+          "roles": [
+            "guard",
+            "control"
+          ],
+          "spell": "逆風石翼",
+          "behavior": "逆風連擊捲向全隊；守護承受衝擊，壓制可使石翼失衡。",
+          "rank": "boss",
+          "hourIndex": 7,
+          "artUrl": "/art/star-ring-20261018/monster-10.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 8,
+      "monsters": [
+        {
+          "enemyId": "sr2_09_a",
+          "enemyName": "曜角幼犀",
+          "hourIndex": 8,
+          "rank": "normal",
+          "mechanic": "cleave",
+          "spell": "曜角踐踏",
+          "basicAttack": "犀角撞擊",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-09-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-09-normal-a_attack.webp",
+          "behavior": "普通魔物施放「曜角踐踏」；守護承傷。"
+        },
+        {
+          "enemyId": "sr2_09_b",
+          "enemyName": "金棘獵犬",
+          "hourIndex": 8,
+          "rank": "normal",
+          "mechanic": "cleave",
+          "spell": "金棘追獵",
+          "basicAttack": "獵犬撕咬",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-09-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-09-normal-b_attack.webp",
+          "behavior": "普通魔物施放「金棘追獵」；守護承傷。"
+        },
+        {
+          "enemyId": "sr2_09_e",
+          "enemyName": "星冠巨熊",
+          "hourIndex": 8,
+          "rank": "elite",
+          "mechanic": "shield",
+          "spell": "星冠護甲",
+          "basicAttack": "熊掌震擊",
+          "roles": [
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-09-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-09-elite_attack.webp",
+          "behavior": "菁英魔物施放「星冠護甲」；破陣破盾。"
+        },
+        {
+          "name": "九曜獸域",
+          "enemyId": "star_ring_behemoth",
+          "enemyName": "九曜棘冠獸",
+          "roles": [
+            "guard",
+            "breach",
+            "aid"
+          ],
+          "spell": "九曜橫掃",
+          "behavior": "對前衛重擊並橫掃全隊；守護護盾降低連帶傷害。",
+          "artIndex": 5,
+          "mechanic": "cleave",
+          "originalStage": 4,
+          "rank": "boss",
+          "hourIndex": 8,
+          "artUrl": "/art/star-ring-20261018/monster-05.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 9,
+      "monsters": [
+        {
+          "enemyId": "sr2_10_a",
+          "enemyName": "墨潮鰩",
+          "hourIndex": 9,
+          "rank": "normal",
+          "mechanic": "tide",
+          "spell": "墨潮護幕",
+          "basicAttack": "鰩尾抽擊",
+          "roles": [
+            "aid",
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-10-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-10-normal-a_attack.webp",
+          "behavior": "普通魔物施放「墨潮護幕」；支援恢復與解除異常、破陣破盾。"
+        },
+        {
+          "enemyId": "sr2_10_b",
+          "enemyName": "黯礁海馬",
+          "hourIndex": 9,
+          "rank": "normal",
+          "mechanic": "torrent",
+          "spell": "黯礁寒流",
+          "basicAttack": "螺尾敲擊",
+          "roles": [
+            "aid",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-10-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-10-normal-b_attack.webp",
+          "behavior": "普通魔物施放「黯礁寒流」；支援恢復與解除異常、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_10_e",
+          "enemyName": "深淵鉗皇",
+          "hourIndex": 9,
+          "rank": "elite",
+          "mechanic": "tide",
+          "spell": "深淵甲潮",
+          "basicAttack": "皇鉗斬擊",
+          "roles": [
+            "aid",
+            "breach"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-10-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-10-elite_attack.webp",
+          "behavior": "菁英魔物施放「深淵甲潮」；支援恢復與解除異常、破陣破盾。"
+        },
+        {
+          "enemyId": "star_ring_tide",
+          "enemyName": "潮汐深冠獸",
+          "artIndex": 11,
+          "mechanic": "tide",
+          "roles": [
+            "aid",
+            "breach"
+          ],
+          "spell": "深冠潮湧",
+          "behavior": "潮汐護殼與濕寒交替覆蓋；破陣打開護殼，支援移除濕寒。",
+          "rank": "boss",
+          "hourIndex": 9,
+          "artUrl": "/art/star-ring-20261018/monster-11.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 10,
+      "monsters": [
+        {
+          "enemyId": "sr2_11_a",
+          "enemyName": "寂星書妖",
+          "hourIndex": 10,
+          "rank": "normal",
+          "mechanic": "drain",
+          "spell": "寂星封頁",
+          "basicAttack": "書翼拍擊",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-11-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-11-normal-a_attack.webp",
+          "behavior": "普通魔物施放「寂星封頁」；支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "sr2_11_b",
+          "enemyName": "斷弦琴靈",
+          "hourIndex": 10,
+          "rank": "normal",
+          "mechanic": "song",
+          "spell": "斷弦殘響",
+          "basicAttack": "琴弦割擊",
+          "roles": [
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-11-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-11-normal-b_attack.webp",
+          "behavior": "普通魔物施放「斷弦殘響」；壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_11_e",
+          "enemyName": "王庭司儀",
+          "hourIndex": 10,
+          "rank": "elite",
+          "mechanic": "unravel",
+          "spell": "王庭禁令",
+          "basicAttack": "雙杖交擊",
+          "roles": [
+            "guard",
+            "breach",
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-11-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-11-elite_attack.webp",
+          "behavior": "菁英魔物施放「王庭禁令」；守護承傷、破陣破盾、支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "star_ring_astromancer",
+          "enemyName": "失序織星者",
+          "artIndex": 12,
+          "mechanic": "unravel",
+          "roles": [
+            "guard",
+            "breach",
+            "aid"
+          ],
+          "spell": "失序星線",
+          "behavior": "星線交織護盾與咒印；守護、破陣與支援共同維持戰線。",
+          "rank": "boss",
+          "hourIndex": 10,
+          "artUrl": "/art/star-ring-20261018/monster-12.webp"
+        }
+      ]
+    },
+    {
+      "hourIndex": 11,
+      "monsters": [
+        {
+          "enemyId": "sr2_12_a",
+          "enemyName": "蝕晶飛蝠",
+          "hourIndex": 11,
+          "rank": "normal",
+          "mechanic": "venom",
+          "spell": "蝕晶毒音",
+          "basicAttack": "晶翼噬咬",
+          "roles": [
+            "aid"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-12-normal-a.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-12-normal-a_attack.webp",
+          "behavior": "普通魔物施放「蝕晶毒音」；支援恢復與解除異常。"
+        },
+        {
+          "enemyId": "sr2_12_b",
+          "enemyName": "灰燼星骸",
+          "hourIndex": 11,
+          "rank": "normal",
+          "mechanic": "curse",
+          "spell": "灰燼咒痕",
+          "basicAttack": "星骸重擊",
+          "roles": [
+            "aid",
+            "control"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-12-normal-b.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-12-normal-b_attack.webp",
+          "behavior": "普通魔物施放「灰燼咒痕」；支援恢復與解除異常、壓制打斷蓄力。"
+        },
+        {
+          "enemyId": "sr2_12_e",
+          "enemyName": "終殿執刑獸",
+          "hourIndex": 11,
+          "rank": "elite",
+          "mechanic": "cleave",
+          "spell": "終殿斷刃",
+          "basicAttack": "前刃劈斬",
+          "roles": [
+            "guard"
+          ],
+          "artUrl": "/art/star-ring-pools-20261019/map-12-elite.webp",
+          "atlasUrl": "/art/star-ring-pools-20261019/map-12-elite_attack.webp",
+          "behavior": "菁英魔物施放「終殿斷刃」；守護承傷。"
+        },
+        {
+          "name": "星蝕審判",
+          "enemyId": "star_ring_judge",
+          "enemyName": "星蝕審判者",
+          "roles": [
+            "guard",
+            "breach",
+            "aid",
+            "control"
+          ],
+          "spell": "星蝕審判",
+          "behavior": "詠唱施加短暫咒印並引爆星蝕；壓制打斷、支援解咒、守護承傷、破陣突破。",
+          "artIndex": 6,
+          "mechanic": "curse",
+          "originalStage": 5,
+          "rank": "boss",
+          "hourIndex": 11,
+          "artUrl": "/art/star-ring-20261018/monster-06.webp"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,5216 @@
+{
+  "schema": 1,
+  "revision": "star-ring-pools-20261019-maps-09-12",
+  "monsters": [
+    {
+      "key": "sr2_09_a",
+      "name": "曜角幼犀",
+      "role": "normal",
+      "hourIndex": 8,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-09-normal-a.webp",
+      "atlas": "map-09-normal-a_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.1875,
+          0.498046875,
+          0.8125,
+          0.9375
+        ],
+        [
+          0.19921875,
+          0.388671875,
+          0.798828125,
+          0.9375
+        ],
+        [
+          0.185546875,
+          0.490234375,
+          0.814453125,
+          0.9375
+        ],
+        [
+          0.1953125,
+          0.462890625,
+          0.8046875,
+          0.9375
+        ],
+        [
+          0.177734375,
+          0.494140625,
+          0.8203125,
+          0.9375
+        ],
+        [
+          0.181640625,
+          0.498046875,
+          0.818359375,
+          0.9375
+        ],
+        [
+          0.185546875,
+          0.501953125,
+          0.814453125,
+          0.9375
+        ],
+        [
+          0.18359375,
+          0.51953125,
+          0.81640625,
+          0.9375
+        ],
+        [
+          0.20703125,
+          0.51953125,
+          0.79296875,
+          0.9375
+        ],
+        [
+          0.142578125,
+          0.521484375,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.513671875,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.1953125,
+          0.478515625,
+          0.802734375,
+          0.9375
+        ],
+        [
+          0.15234375,
+          0.509765625,
+          0.845703125,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.521484375,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.208984375,
+          0.4296875,
+          0.7890625,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.59375,
+          0.84765625,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-09-normal-a.png",
+      "sourceHash": "941cb7371feba2e520e3d59194ff5388a3cf8b3e23ce3c5fc195b8e06186e7a9",
+      "stillHash": "78f85c9359f780835698f42689b150f994bf595037578f6fee23d2cf6dc0010f",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH RHINO VERY SMALL, only CENTRAL 55% width and height of each square cell; leave at least 22% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of every cell. NO crossing gutters, NO clipped body or horns or tail, NO adjacent poses touching. Subject: original young sturdy navy-blue celestial rhinoceros with two short ivory horns, antique Greek gold shoulder plates, subtle constellation hide. Premium realistic handpainted Greek celestial fantasy, navy ivory ancientgold, LEFT facing 3/4 in ALL frames. Same scale consistent feet. Row1 four distinct breathing idle poses; row2 four true walking articulated-leg cycle; row3 windup headlowering, horn charge LEFT, followthrough, recover; row4 compact horn magic gather, magic release LEFT contained, recoil hurt, entire collapsed dead rhino. NO ground/environment/text/grid/letters/labels. TRUE TRANSPARENT ALPHA PNG negative space. No fake copied/scaled/rotated frames. The 16 monsters must be SMALL and isolated with broad transparent space between.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-d7e4afc1-a34b-4da6-a3fc-8023ab695495.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.439453125,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "941cb7371feba2e520e3d59194ff5388a3cf8b3e23ce3c5fc195b8e06186e7a9",
+        "assetHash": "de9d45449479080e4fff2b504fd57e64b34c4552ac232cfbc20877f612e152d6",
+        "stillHash": "78f85c9359f780835698f42689b150f994bf595037578f6fee23d2cf6dc0010f",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "9f8289952e5defd5c76985f651b14e2c90638fef1822d488d540def26639768d",
+          "0753dd2cda840da9331929411228a90efc2980e2f80455a34f3bc3ac60cd5edc",
+          "e2cb41e5e1f825d3b4d2eb1efc3b61d9ae1f3c0bdcc48f82864e35cd941f9115",
+          "910fce0f769dc81b864e10a9bdd1b7bb1c518a3e9c08c40624fb9df9846562b0",
+          "b4323203d027f5fd463f8b24a8de6012a39efd0f08dd93f8d5259800c1012778",
+          "7af6f0cb65d2492ec78d99ee9c98b4072dd38d98ad4bf080cc21f2b31c707a07",
+          "b27c8fbfce138ebb0e7866b533408b9c96b4ee66af7ed81538595f1586ad18a8",
+          "2c5e53ec2fc76c02231e48cd4b2fcc35c1075010155a26b4418b50d1b106d05b",
+          "de2b30a9f7af3c27550d3606fd7a5b7e91dd1c259155ba33b96bd35078e9b7a5",
+          "124fb3bff049fb976c806f8930cbdf41f34c3fc71cacc4eb352d30dbf2ea93cc",
+          "e6dba36eacdf7bfd5eb79aa439f8bddb722ea5627a6dbfd7974fc732e9fd918a",
+          "d76ef9015b0412a444e8fc5344f72a593abad1de8dcc1b764d778dfc9fc7af74",
+          "f36b1da762e060bc8262b354e93f1a7000a1a34021d0f6f4302667bdc502d0b4",
+          "2382bcfbcaf8d64a87f083cef9ebbbbd2c6d537acfb57d0e10d759232f43603d",
+          "678fe146f8c84b8a922814aeef0f5320ae96c92a8992402f0fcfacbc50b543a0",
+          "624670daf5b23ada660c7deb58f160e5baa237840748b5cd9d3ecbd133e59a76"
+        ],
+        "sourceFrameHashes": [
+          "c6cd81c2bcd232c6da85102637cb13678a5c3196e3cec483bce0f5da90b8f120",
+          "c03a42617f7900381fe5fd6ef5ad96f9c3e72dd0709b8030719d9599a5022466",
+          "cd479bdf99e404f41258cf66ec9737e0af7e617d27d1d9986f6856f0040c0936",
+          "6e23b4678f50b45c5cdeb2d630d5f499fe2c4db6fa2b9f368cfbb472444977d2",
+          "0d78c589a9d57cb6bdcde5b186d3edeb92223ec1e2cab0058cb052a89afd5fbe",
+          "d1bd7563afc9c767a14f229d0fdb5410ec5a9fc91185ddc424c95895c546ea4e",
+          "91fabc039d62c073a93084bffa0a09f14f27aa159790b6eb069d8c23c418c1b4",
+          "5cf7bc92c9185ef0c8237e5a374acaf887047d223cb7eef98dc122909092244b",
+          "726676c0cadeb30e53e14c3b7a927fa8e28770b86cadec5e92da4c1da62ccac4",
+          "91e3f43139b52c78566d83e95f6d81ff15d04cb9c7673ab03d6097f016346a49",
+          "4fc07170d4bc0aeb93bf1235a9d61f5375a2fcafc69c83bd187e48c5d164c931",
+          "3ad4a56435c04698fe8c16e3f41ad01c9cc0402499105a2e6ecf95331f07c738",
+          "0afb7090f692ec334536c9675eef928af2f0fc0c3be4c3678127adeac587b877",
+          "42f349a9f47732c32eb3ccf9f516c942a48e2fa666a9cc4eae8c8412e82c124e",
+          "878a66ba87e4a94126678113a921bb813e0042b333da248fb76d46737ef45b33",
+          "0381ede835d27a4bc28b3c31236949dc3225abddd5e6d28065d9275c3917e42f"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 324
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 314,
+            "height": 324
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 313,
+            "height": 324
+          },
+          {
+            "left": 940,
+            "top": 0,
+            "width": 314,
+            "height": 324
+          },
+          {
+            "left": 0,
+            "top": 324,
+            "width": 313,
+            "height": 303
+          },
+          {
+            "left": 313,
+            "top": 324,
+            "width": 314,
+            "height": 303
+          },
+          {
+            "left": 627,
+            "top": 324,
+            "width": 314,
+            "height": 303
+          },
+          {
+            "left": 941,
+            "top": 324,
+            "width": 313,
+            "height": 303
+          },
+          {
+            "left": 0,
+            "top": 627,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 314,
+            "top": 627,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 627,
+            "top": 627,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 940,
+            "top": 627,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 0,
+            "top": 940,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 940,
+            "width": 346,
+            "height": 314
+          },
+          {
+            "left": 659,
+            "top": 940,
+            "width": 282,
+            "height": 314
+          },
+          {
+            "left": 941,
+            "top": 940,
+            "width": 313,
+            "height": 314
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 57,
+            "y": 143,
+            "width": 242,
+            "height": 170,
+            "count": 22944
+          },
+          {
+            "x": 51,
+            "y": 101,
+            "width": 232,
+            "height": 213,
+            "count": 23981
+          },
+          {
+            "x": 32,
+            "y": 141,
+            "width": 244,
+            "height": 173,
+            "count": 23240
+          },
+          {
+            "x": 37,
+            "y": 131,
+            "width": 236,
+            "height": 184,
+            "count": 22155
+          },
+          {
+            "x": 53,
+            "y": 103,
+            "width": 249,
+            "height": 172,
+            "count": 24088
+          },
+          {
+            "x": 46,
+            "y": 102,
+            "width": 247,
+            "height": 170,
+            "count": 22730
+          },
+          {
+            "x": 32,
+            "y": 100,
+            "width": 244,
+            "height": 169,
+            "count": 23221
+          },
+          {
+            "x": 27,
+            "y": 100,
+            "width": 245,
+            "height": 162,
+            "count": 21773
+          },
+          {
+            "x": 56,
+            "y": 83,
+            "width": 227,
+            "height": 162,
+            "count": 22399
+          },
+          {
+            "x": 21,
+            "y": 85,
+            "width": 277,
+            "height": 161,
+            "count": 25162
+          },
+          {
+            "x": 21,
+            "y": 82,
+            "width": 271,
+            "height": 164,
+            "count": 24451
+          },
+          {
+            "x": 35,
+            "y": 71,
+            "width": 235,
+            "height": 178,
+            "count": 22787
+          },
+          {
+            "x": 42,
+            "y": 52,
+            "width": 269,
+            "height": 166,
+            "count": 29265
+          },
+          {
+            "x": 7,
+            "y": 56,
+            "width": 339,
+            "height": 161,
+            "count": 31691
+          },
+          {
+            "x": 46,
+            "y": 22,
+            "width": 225,
+            "height": 197,
+            "count": 23487
+          },
+          {
+            "x": 19,
+            "y": 84,
+            "width": 270,
+            "height": 133,
+            "count": 20722
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "941cb7371feba2e520e3d59194ff5388a3cf8b3e23ce3c5fc195b8e06186e7a9",
+        "assetHash": "de9d45449479080e4fff2b504fd57e64b34c4552ac232cfbc20877f612e152d6",
+        "stillHash": "78f85c9359f780835698f42689b150f994bf595037578f6fee23d2cf6dc0010f",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_09_b",
+      "name": "金棘獵犬",
+      "role": "normal",
+      "hourIndex": 8,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-09-normal-b.webp",
+      "atlas": "map-09-normal-b_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.134765625,
+          0.298828125,
+          0.865234375,
+          0.9375
+        ],
+        [
+          0.099609375,
+          0.373046875,
+          0.8984375,
+          0.9375
+        ],
+        [
+          0.099609375,
+          0.302734375,
+          0.8984375,
+          0.9375
+        ],
+        [
+          0.115234375,
+          0.380859375,
+          0.8828125,
+          0.9375
+        ],
+        [
+          0.099609375,
+          0.365234375,
+          0.900390625,
+          0.9375
+        ],
+        [
+          0.07421875,
+          0.396484375,
+          0.923828125,
+          0.9375
+        ],
+        [
+          0.08203125,
+          0.359375,
+          0.916015625,
+          0.9375
+        ],
+        [
+          0.11328125,
+          0.361328125,
+          0.88671875,
+          0.9375
+        ],
+        [
+          0.095703125,
+          0.4609375,
+          0.904296875,
+          0.9375
+        ],
+        [
+          0.0859375,
+          0.33984375,
+          0.912109375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.431640625,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.126953125,
+          0.330078125,
+          0.873046875,
+          0.9375
+        ],
+        [
+          0.08984375,
+          0.26953125,
+          0.91015625,
+          0.9375
+        ],
+        [
+          0.07421875,
+          0.25390625,
+          0.923828125,
+          0.9375
+        ],
+        [
+          0.1328125,
+          0.30859375,
+          0.865234375,
+          0.9375
+        ],
+        [
+          0.08984375,
+          0.55859375,
+          0.908203125,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-09-normal-b.png",
+      "sourceHash": "860cb01097dc8fe5bcad2992756e1728244eec55959d80f8c423bff2b953a427",
+      "stillHash": "c6d2f207de0e4486d1cf86695b7cb815c0e7a0d0faf0eac73ac54ff37209f6cc",
+      "prompt": "Use case stylized-concept. ONE production animation atlas for 星穹旅誌: square PNG exactly 4 columns by 4 rows=16 fullbody action poses of ONE consistent creature. GENUINE TRANSPARENT ALPHA, no background/ground/checkerboard/grid/labels/text. Premium highly detailed HAND-PAINTED REALISTIC Greek celestial fantasy, physical texture, navy ivory antique gold, never cartoon. Threequarter LEFT facing in every pose. All full subjects and all tips must fit in own cell with ample transparent padding. SAME scale/feet baseline across frames. Sixteen real different illustrated poses, never rotated/scaled/copied fake animation. Row1 four breathing idle poses; row2 four alternating walking gait poses; row3 8 windup,9 strike LEFT,10 followthrough,11 recover; row4 12 cast gather,13 cast release LEFT,14 recoil hurt,15 fullbody death collapse. Creature: 金棘獵犬, original lean powerful midnight-blue hunting hound with a ridge of sharp antique-gold thorns down its mane and back, ivory fang tips, long tail, Greek gold engraved collar. No human armor, no wings, no horns. Idle changing neck and tail; gait alternating four legs; attack stalking crouch then jaws lunging LEFT; cast tight gold spines flare; death prone on side. Visibly distinct from rhino or bear.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-7a285c90-4221-4343-ba73-172806738d10.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.638671875,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "860cb01097dc8fe5bcad2992756e1728244eec55959d80f8c423bff2b953a427",
+        "assetHash": "f02c07f0b8a7c00694335a1845dd17d7efabaa861a4db12597bd98d931130b3e",
+        "stillHash": "c6d2f207de0e4486d1cf86695b7cb815c0e7a0d0faf0eac73ac54ff37209f6cc",
+        "sourceSize": [
+          1402,
+          1122
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "738ff2ca5bbe5125eef63ad0d63e01c7826b3aa1ca21019bddcf30c9f17926c8",
+          "f5237466110d20907946d645603a31858be46315547abb8542910c51931ed7b4",
+          "daf09e4e9950247e8013520fb1c132861f36c7d6532a89a28f6906fdf9d65e72",
+          "bd536d68b603dab4823d026da46bda403bc77e404ea3de04e12fa297be8e7467",
+          "e20881205de5f4639be181a40f1a6185d1bb5e1a1b94184d10d9876edad9ce9e",
+          "a93b374df6e682d5017942f17d2bdc030e21f9f10472136714553f9652c8fbcd",
+          "0243d5279139ee9caf39c92ba596767156045fe2a9bbd1fd52d95cde5b7a9a67",
+          "c1170d77bf23cd0f7ec02528039f1c3a11358f5b70de030e834ff871c2f026d6",
+          "e787faa49cf2d1a2790336cc58ce0cc8a6d8d1af14c50eb9ce2293dd5f86ea17",
+          "29cc2eda7d43b6dd1c16a4f9bdf63f2c674b25b149d1b55d35d58a28365a1e31",
+          "9aa00384c6a4fb3d07b95ed6d8193a27089922f8ef65a5ec1ef0817d3b1eb5b1",
+          "68f82981d62d6b6a3d03d7f338d9b987bdd8a242619e9aaf933cbdabc571b8d1",
+          "c407bb97533f00826a03105cda7064ccbcc9ca485f159594c7f218df3e1ddc69",
+          "cd8672e32e8c0a269cf3624a0522fb341e146c84c211da68985c79a75d41af45",
+          "181b4ef68ba839e25dc228a13562ce715aeabe59f8ac76425edff2647361fa7b",
+          "e680cc4d31d26bcaafc946483cbc5435c48cd4fcdcce777cacf49741cf8362e3"
+        ],
+        "sourceFrameHashes": [
+          "b985aebcfde4419f53d78c0a654f846b6c7798e98d661be777fa7e3e1c7ca39d",
+          "35e99fa5fd4193828f0b2b9c99e8750c24b0567636bfcebf3aea6cfbe78e0789",
+          "6d3c0d7a490c694209b8054b7d59ff04f6460827adf8f64bbec34c61802f4bf6",
+          "e7a15abbf2fe937fb18038160eb00dee69f608d0d8252beab841e2d3afd48721",
+          "3af940a0a1593a84c6146219abe1bcf2057032cde891cf82428f79f21aec865c",
+          "56d5299e7d08bca164f124e5e0111c99660f76e4906acd5b9c0cb29f07fe7849",
+          "936e572306e82bef49eca600959a00bb40e11f4b010dd338b0828c8a0b6caf3d",
+          "ba3d67f93d332648e9e06bfb188048673a1c2b73e906b4d213f604ae462a8005",
+          "9583ab1d0e833018fd43e0bcab9c60b1acefbfdeaf4f0305101d5ea0bac33d11",
+          "3a418dbb6255ec4aeb3aa3cdfe520f52738a1e0b529d75147e4d05e8603d1b35",
+          "b8bf52717313f4b71ea7b0a1cdaf6bce089cd715b020b106f9a09db9d1986ed2",
+          "be8487f1ac8027977acf017fcbd66222c71b5f47a2cce24315a77c6c4280eb57",
+          "22474ed67e3397e4020b32c5576120dd9a4bf9ba0bb983b7fecfbaa05aa6fc18",
+          "1926b901d55e42ae91cae95e1eb13d91165b8e5913a9ac72e6c82b1cdedc9183",
+          "9c54068f810f58ec53ee961b5a96bea4d76fd497615869ff69fa97a6c1a10d28",
+          "ad081fdbed45e56e4571a3703ffdce30a9df9751d1759d3f0585b5fb69121d57"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 347,
+            "height": 288
+          },
+          {
+            "left": 347,
+            "top": 0,
+            "width": 354,
+            "height": 288
+          },
+          {
+            "left": 701,
+            "top": 0,
+            "width": 351,
+            "height": 288
+          },
+          {
+            "left": 1052,
+            "top": 0,
+            "width": 350,
+            "height": 288
+          },
+          {
+            "left": 0,
+            "top": 288,
+            "width": 347,
+            "height": 265
+          },
+          {
+            "left": 347,
+            "top": 288,
+            "width": 368,
+            "height": 265
+          },
+          {
+            "left": 715,
+            "top": 288,
+            "width": 356,
+            "height": 265
+          },
+          {
+            "left": 1071,
+            "top": 288,
+            "width": 331,
+            "height": 265
+          },
+          {
+            "left": 0,
+            "top": 553,
+            "width": 353,
+            "height": 261
+          },
+          {
+            "left": 353,
+            "top": 553,
+            "width": 358,
+            "height": 261
+          },
+          {
+            "left": 711,
+            "top": 553,
+            "width": 373,
+            "height": 261
+          },
+          {
+            "left": 1084,
+            "top": 553,
+            "width": 318,
+            "height": 261
+          },
+          {
+            "left": 0,
+            "top": 814,
+            "width": 363,
+            "height": 308
+          },
+          {
+            "left": 363,
+            "top": 814,
+            "width": 366,
+            "height": 308
+          },
+          {
+            "left": 729,
+            "top": 814,
+            "width": 324,
+            "height": 308
+          },
+          {
+            "left": 1053,
+            "top": 814,
+            "width": 349,
+            "height": 308
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 27,
+            "y": 9,
+            "width": 308,
+            "height": 269,
+            "count": 32831
+          },
+          {
+            "x": 12,
+            "y": 40,
+            "width": 337,
+            "height": 238,
+            "count": 34219
+          },
+          {
+            "x": 13,
+            "y": 15,
+            "width": 337,
+            "height": 268,
+            "count": 35165
+          },
+          {
+            "x": 20,
+            "y": 42,
+            "width": 324,
+            "height": 235,
+            "count": 33216
+          },
+          {
+            "x": 7,
+            "y": 12,
+            "width": 338,
+            "height": 241,
+            "count": 32849
+          },
+          {
+            "x": 3,
+            "y": 16,
+            "width": 358,
+            "height": 228,
+            "count": 33932
+          },
+          {
+            "x": 4,
+            "y": 10,
+            "width": 352,
+            "height": 244,
+            "count": 33636
+          },
+          {
+            "x": 0,
+            "y": 10,
+            "width": 326,
+            "height": 243,
+            "count": 31628
+          },
+          {
+            "x": 11,
+            "y": 53,
+            "width": 341,
+            "height": 201,
+            "count": 35818
+          },
+          {
+            "x": 5,
+            "y": 6,
+            "width": 348,
+            "height": 252,
+            "count": 35301
+          },
+          {
+            "x": 1,
+            "y": 40,
+            "width": 369,
+            "height": 213,
+            "count": 34463
+          },
+          {
+            "x": 1,
+            "y": 5,
+            "width": 315,
+            "height": 256,
+            "count": 34530
+          },
+          {
+            "x": 14,
+            "y": 6,
+            "width": 346,
+            "height": 282,
+            "count": 53968
+          },
+          {
+            "x": 7,
+            "y": 0,
+            "width": 358,
+            "height": 288,
+            "count": 46701
+          },
+          {
+            "x": 15,
+            "y": 12,
+            "width": 309,
+            "height": 265,
+            "count": 31820
+          },
+          {
+            "x": 0,
+            "y": 112,
+            "width": 345,
+            "height": 160,
+            "count": 32830
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "860cb01097dc8fe5bcad2992756e1728244eec55959d80f8c423bff2b953a427",
+        "assetHash": "f02c07f0b8a7c00694335a1845dd17d7efabaa861a4db12597bd98d931130b3e",
+        "stillHash": "c6d2f207de0e4486d1cf86695b7cb815c0e7a0d0faf0eac73ac54ff37209f6cc",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_09_e",
+      "name": "星冠巨熊",
+      "role": "elite",
+      "hourIndex": 8,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-09-elite.webp",
+      "atlas": "map-09-elite_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.181640625,
+          0.46484375,
+          0.81640625,
+          0.9375
+        ],
+        [
+          0.171875,
+          0.474609375,
+          0.828125,
+          0.9375
+        ],
+        [
+          0.169921875,
+          0.462890625,
+          0.828125,
+          0.9375
+        ],
+        [
+          0.181640625,
+          0.466796875,
+          0.81640625,
+          0.9375
+        ],
+        [
+          0.171875,
+          0.4765625,
+          0.828125,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.478515625,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.15625,
+          0.48828125,
+          0.841796875,
+          0.9375
+        ],
+        [
+          0.1484375,
+          0.490234375,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.22265625,
+          0.4140625,
+          0.77734375,
+          0.9375
+        ],
+        [
+          0.09375,
+          0.43359375,
+          0.904296875,
+          0.9375
+        ],
+        [
+          0.087890625,
+          0.49609375,
+          0.91015625,
+          0.9375
+        ],
+        [
+          0.166015625,
+          0.51171875,
+          0.83203125,
+          0.9375
+        ],
+        [
+          0.158203125,
+          0.4296875,
+          0.841796875,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.419921875,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.15625,
+          0.42578125,
+          0.841796875,
+          0.9375
+        ],
+        [
+          0.12109375,
+          0.66015625,
+          0.87890625,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-09-elite.png",
+      "sourceHash": "375e0c3e38193c5d03533fd3c9dfd6b04f7d18f826738e82399a79fbff283f0c",
+      "stillHash": "4bf39f98f803c7e18afe54ad4e981387b631fe3c2873ebbe95a3d972d70c19d5",
+      "prompt": "Use case stylized-concept. ONE production animation atlas for 星穹旅誌: square PNG exactly 4 columns by 4 rows=16 fullbody action poses of ONE consistent creature. GENUINE TRANSPARENT ALPHA, no background/ground/checkerboard/grid/labels/text. Premium highly detailed HAND-PAINTED REALISTIC Greek celestial fantasy, physical texture, navy ivory antique gold, never cartoon. Threequarter LEFT facing in every pose. All full subjects and all tips must fit in own cell with ample transparent padding. SAME scale/feet baseline across frames. Sixteen real different illustrated poses, never rotated/scaled/copied fake animation. Row1 four breathing idle poses; row2 four alternating walking gait poses; row3 8 windup,9 strike LEFT,10 followthrough,11 recover; row4 12 cast gather,13 cast release LEFT,14 recoil hurt,15 fullbody death collapse. Creature: 星冠巨熊, enormous original midnight navy bear wearing a cracked ivory ceremonial face mask and short antique-gold crown, dense fur, gold forearm cuffs, massive natural paws. Quadrupedal fierce bear, no human body, not cartoon. Idle breathing paws and head, walking real bear gait, attack rears then slams BOTH paws toward LEFT, cast crown and paws small starlight, hurt staggers, final death lies fully collapsed with crown. Entire large bear and raised forelimbs fit each cell. Superb detailed physically textured gold/ivory/fur.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-f4842e3e-f1c1-4ac2-bce6-928c705a7eda.png",
+      "repairPrompt": "Edit supplied star crown bear animation atlas. Preserve all sixteen different real illustrated bear poses, navy fur, ivory mask and antique gold crown/cuffs, four by four layout. REMOVE every backdrop and all ground from every cell. Output REAL TRANSPARENT ALPHA PNG; absolutely no gradient, grey, brown, black, checkerboard background. Negative space around all 16 bears must be alpha zero. No added scenery or labels. Keep entire bear and compact gold magic, strong wide transparent gutters in each cell. Premium realistic handpainted game asset.",
+      "repairReference": "C:/Users/User/.codex/generated_images/01a151f0-4893-70c0-a25c-3a21e840b1fc/exec-9f3509cc-c79b-4121-8220-4bdedc8bb262.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.47265625,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "375e0c3e38193c5d03533fd3c9dfd6b04f7d18f826738e82399a79fbff283f0c",
+        "assetHash": "37023622e659954801a3a4825c3f5083a6e499a36f3ca321e0cc1fce2ecdb644",
+        "stillHash": "4bf39f98f803c7e18afe54ad4e981387b631fe3c2873ebbe95a3d972d70c19d5",
+        "sourceSize": [
+          1536,
+          1024
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "ac991cf73292614a1bb5325bfee475ba186b3afc2fde51ae437666ce4e5a378d",
+          "618cf879a2129ccbd6e75184a6c66d90b85279601f3a05eba0d19691a4c922f6",
+          "648ab9f009a1358c73e54df9f830df5eb721ba5688d77333c351a0932767b499",
+          "b0f9aaaebb6ce2e69bec06ba658fe8a98d5eec1941e2f30863697b38654a45aa",
+          "df27bec45d4b0136aa9274566f4184fcd6e774c022862e95581c10eeaa43c662",
+          "b76cad81cbe7806f9a8a8fac2aad4ff225ea2a346207e98ef663f0d445df8785",
+          "6eca6bf3e5667c40bd33e74038e28c129e4aaf4ab47c98ad8567aef088c34b77",
+          "c8a80b1419609559de632e337f40ea44eb0973736209b53058dff77d96e4f221",
+          "4e780648cbe856a14a1fde72533c651953eceef51380ba9aee172393d1bac614",
+          "ab916f50576e55312fcd1efd095871ec0a54829072c10e9af5b0e797f52fdf7d",
+          "0f2e07f4fd255b755aef4f187d8b5cdd4992f5513841c93b257c05070a4b79d6",
+          "15be5e9928d2e277078408e216afa3e766b49c36be1bb97285cd25aa4d38c4a2",
+          "ab05a478c54fe42a435f43bb61ae85437596ef172ac5c6e487868810cb1da273",
+          "a8fd818b0c3a606bbe7f7b37062a41f17057a25954568801488e327058bbf6c6",
+          "46dd4163210d12d6b106ee1af7e93aa6caf3f87a0b39453992f0ef7672074e36",
+          "060027e90206a782f5607063c19122fe6f208278406f4774502f990870c17946"
+        ],
+        "sourceFrameHashes": [
+          "ec25c5c27e1fe45b0bf03cd28d51385eb67049b7f10b8df2d222b33f844c37cb",
+          "f6b435ed7ff3c3b486e80c7a5b55ec59db78e273f9faf7df9af6a778a0d24f5a",
+          "7ff3c043c483453b5c43b2fa7a32f3f1f9d9c44888cb842c0a28660335d4cd6f",
+          "8038b2e7cdf11b8dd61a3057c998e6c524549df9687ebe3ee2d2c74a43f80962",
+          "01abbc21830bc6238a71e18ac35f2ae4458de565f2a79fd8be021ab59a87fdc0",
+          "24deb3f069ff95ff38323b5286775f4d81dcdf16fbae065529ef4274d21ecbda",
+          "005dd80db9f2f360a0170aee3ed888682fc7719105e38897d3fea5649999aa06",
+          "7a99d4a8184f4157ab70f269f37bac5337d91910bc4f8bb5e5b585119b9cbfd5",
+          "419c6dfd9e1693faffd78330b6eea29850e97a3f0dbe6591e07e27d2b312d912",
+          "b5fefcf1f7dc1c99cbe11c366b0f030749a541f1cc87be3d4fe55d2c5cd58106",
+          "c1ec20fa947cb91ce35589dcac7c950ac012e945f77ca318b60ce539a08ce019",
+          "8b1730588870d386d54eec732a17002be752787f764239e9d88e5920e4b5533a",
+          "bbf331bcadc8d0d46cdd75260bfb16373bc0b7f1a9fd0f093656bb81a64baf16",
+          "a6d5dc6dea5e54ed235a99f20fcf918485f54d6c2527750f41ce1f632b1b87b5",
+          "7eb208f0f9db1570c913944e56812e8ab8f250f27c9142d38a8cc2d133e6df4d",
+          "ef8f0e32f1eb794e8241f95324c08dc2c206148f1a4c0d18574c3f6bc36490d5"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 384,
+            "height": 246
+          },
+          {
+            "left": 384,
+            "top": 0,
+            "width": 384,
+            "height": 246
+          },
+          {
+            "left": 768,
+            "top": 0,
+            "width": 384,
+            "height": 246
+          },
+          {
+            "left": 1152,
+            "top": 0,
+            "width": 384,
+            "height": 246
+          },
+          {
+            "left": 0,
+            "top": 246,
+            "width": 384,
+            "height": 234
+          },
+          {
+            "left": 384,
+            "top": 246,
+            "width": 384,
+            "height": 234
+          },
+          {
+            "left": 768,
+            "top": 246,
+            "width": 384,
+            "height": 234
+          },
+          {
+            "left": 1152,
+            "top": 246,
+            "width": 384,
+            "height": 234
+          },
+          {
+            "left": 0,
+            "top": 480,
+            "width": 352,
+            "height": 265
+          },
+          {
+            "left": 352,
+            "top": 480,
+            "width": 416,
+            "height": 265
+          },
+          {
+            "left": 768,
+            "top": 480,
+            "width": 416,
+            "height": 265
+          },
+          {
+            "left": 1184,
+            "top": 480,
+            "width": 352,
+            "height": 265
+          },
+          {
+            "left": 0,
+            "top": 745,
+            "width": 359,
+            "height": 279
+          },
+          {
+            "left": 359,
+            "top": 745,
+            "width": 443,
+            "height": 279
+          },
+          {
+            "left": 802,
+            "top": 745,
+            "width": 347,
+            "height": 279
+          },
+          {
+            "left": 1149,
+            "top": 745,
+            "width": 387,
+            "height": 279
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 46,
+            "y": 4,
+            "width": 321,
+            "height": 239,
+            "count": 53978
+          },
+          {
+            "x": 27,
+            "y": 9,
+            "width": 332,
+            "height": 234,
+            "count": 55145
+          },
+          {
+            "x": 33,
+            "y": 3,
+            "width": 333,
+            "height": 240,
+            "count": 54785
+          },
+          {
+            "x": 34,
+            "y": 5,
+            "width": 321,
+            "height": 238,
+            "count": 54680
+          },
+          {
+            "x": 43,
+            "y": 1,
+            "width": 332,
+            "height": 233,
+            "count": 51715
+          },
+          {
+            "x": 25,
+            "y": 2,
+            "width": 354,
+            "height": 232,
+            "count": 54242
+          },
+          {
+            "x": 21,
+            "y": 7,
+            "width": 347,
+            "height": 227,
+            "count": 53536
+          },
+          {
+            "x": 11,
+            "y": 8,
+            "width": 355,
+            "height": 226,
+            "count": 53484
+          },
+          {
+            "x": 56,
+            "y": 0,
+            "width": 281,
+            "height": 265,
+            "count": 46581
+          },
+          {
+            "x": 6,
+            "y": 9,
+            "width": 410,
+            "height": 255,
+            "count": 68597
+          },
+          {
+            "x": 0,
+            "y": 35,
+            "width": 416,
+            "height": 223,
+            "count": 61159
+          },
+          {
+            "x": 0,
+            "y": 40,
+            "width": 337,
+            "height": 216,
+            "count": 47623
+          },
+          {
+            "x": 13,
+            "y": 0,
+            "width": 346,
+            "height": 257,
+            "count": 59458
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "width": 443,
+            "height": 262,
+            "count": 76967
+          },
+          {
+            "x": 0,
+            "y": 0,
+            "width": 347,
+            "height": 259,
+            "count": 52426
+          },
+          {
+            "x": 0,
+            "y": 100,
+            "width": 384,
+            "height": 140,
+            "count": 36096
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "375e0c3e38193c5d03533fd3c9dfd6b04f7d18f826738e82399a79fbff283f0c",
+        "assetHash": "37023622e659954801a3a4825c3f5083a6e499a36f3ca321e0cc1fce2ecdb644",
+        "stillHash": "4bf39f98f803c7e18afe54ad4e981387b631fe3c2873ebbe95a3d972d70c19d5",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_10_a",
+      "name": "墨潮鰩",
+      "role": "normal",
+      "hourIndex": 9,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-10-normal-a.webp",
+      "atlas": "map-10-normal-a_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.134765625,
+          0.53125,
+          0.86328125,
+          0.9375
+        ],
+        [
+          0.103515625,
+          0.60546875,
+          0.896484375,
+          0.9375
+        ],
+        [
+          0.123046875,
+          0.53125,
+          0.876953125,
+          0.9375
+        ],
+        [
+          0.119140625,
+          0.51171875,
+          0.87890625,
+          0.9375
+        ],
+        [
+          0.12890625,
+          0.341796875,
+          0.87109375,
+          0.9375
+        ],
+        [
+          0.142578125,
+          0.43359375,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.09765625,
+          0.408203125,
+          0.900390625,
+          0.9375
+        ],
+        [
+          0.1484375,
+          0.408203125,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.1328125,
+          0.462890625,
+          0.8671875,
+          0.9375
+        ],
+        [
+          0.064453125,
+          0.52734375,
+          0.935546875,
+          0.9375
+        ],
+        [
+          0.111328125,
+          0.38671875,
+          0.88671875,
+          0.9375
+        ],
+        [
+          0.119140625,
+          0.578125,
+          0.87890625,
+          0.9375
+        ],
+        [
+          0.138671875,
+          0.40234375,
+          0.859375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.396484375,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.212890625,
+          0.478515625,
+          0.787109375,
+          0.9375
+        ],
+        [
+          0.083984375,
+          0.697265625,
+          0.9140625,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-10-normal-a.png",
+      "sourceHash": "a17937f2b8b286e026a90b865e981e6fb1be93f95a9ada3a4a500a839dbd4bdc",
+      "stillHash": "c3468f1f2a49d4de0eb956d026c175cce0cbd745a8e120a994422c8c792ff064",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 墨潮鰩, original celestial ocean manta ray, flat broad black-blue leathery body, two curved cephalic horns and slender trailing tail, delicate antique-gold constellation lines along wings and ivory underside. No legs, not bird, not humanoid. Side-threequarter LEFT head, wings articulate through sixteen poses. Idle gentle wing breathing; movement full up/down undulating wingstroke; attack winds wings back then lunges left with head; cast tight navy gold ripples; hurt curls back; death lies with wings folded/tail loose. No water or floor. Draw small in center65% each cell with wide gutters and no effect crossing cell.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-8d6b38ef-5fa5-4a83-9a99-75667c110550.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.40625,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "a17937f2b8b286e026a90b865e981e6fb1be93f95a9ada3a4a500a839dbd4bdc",
+        "assetHash": "ef45b07e1a8ff530f4fac5d69f6ee74b9b8cac30f956b396a186d3b4742de429",
+        "stillHash": "c3468f1f2a49d4de0eb956d026c175cce0cbd745a8e120a994422c8c792ff064",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "7997033ccbea9400cf83041cfd5e3e77024ffc258b4afcd5e1e04225195145c6",
+          "5297adf7b9ca9ba7d18c68caa167dd5a73856075c50454087911f6164ca7565c",
+          "593ddf669c604067858f1bbfe882546457cd3d16d7a04c5231de041a7dab3562",
+          "5e2194c6b1ef1bcbd2c347b04603b40c3abe52db018a8229af0d1e17654b490a",
+          "b99fa0b73700846ee4c0336239668b1e3a299eeb6e7bb9760d4ac3eec615b1a9",
+          "6829602352e787714f4c42094c26e342b04f20d65a48c988e68672014d254de4",
+          "0033b505ce19188c7712e144870fcc2b9e052c9913488499a2d795eec8a65a8d",
+          "9f587a7f01aee2c28876464bc524de1e5805edba47c497a8cb5c8afbb1f9d494",
+          "15f1e12acfa31d51b9a5e0cb0085617dafd1a1f232cb097227acff617eea6acd",
+          "d92b48c7afd99de2923cadb47e72359dd378073b6d8628a86e85b8cf8ddee36e",
+          "5a8ce036ce633a5a7164cd57a593fe64c59eabae77487f790ec94a28ae449639",
+          "894106ce7cddff28fd9f5f57f854b548cc1f976e1d4a2eaf9fd613c299d33e4d",
+          "b3739b23281e2e2d08efaa5037ed73dd16ba68404640ba708a0630bd2be24b37",
+          "9038c38f5bb2eefc667734f173d88d63b5fc66c18e694de492bc28af6fee3848",
+          "8a4596934bf4c8dde0681e2ca1b11c7d99a21586d35fbee53c2d26a68fad0107",
+          "56a3c118fbd1c5baef0bd763a656523299378a4d4104580df6b81728e5a07c63"
+        ],
+        "sourceFrameHashes": [
+          "3a8496dbbc874f92a81fa72ac9b37a14b5fb320e03b9dd90a95447f290526cbe",
+          "3635475860b154dff339afa992b5768e990c95fd4115c15d8e3c6ddf489bd6f8",
+          "9562b0c6249bb3b91f7b0fd5b731ea1c7794c9590ca67c0e3dcd8d8da65d0f46",
+          "b2cd09f8fdbcef3ff57aa3c7f5e653fc520c564cae0c344edae0c20297e685f3",
+          "fc91afb3bca8959863c5bc61984b428c4f51af274a3d8ab35a3047f75a4fe5e4",
+          "07312ecffca591ae5e0c88cdec13205bb61f6b2b7987c50b6a8ab651039ea64d",
+          "a84560a292bd03e668afa76a1c882ba7bd17c9b012d1deff369cfa9be2df815b",
+          "8aac963fc951983a8cc73e4cb81c1715501dc7fd994c2a88f6ee010e8ca299c0",
+          "3689d34891a50e5f6563c6adac753fe2ba7e558ab230626686bcf51b81c4ef92",
+          "16311f9d16896ccae816ee2b6cc707817a56026d5eb62d7fd8e9e1bc5b307c56",
+          "70c80f0df4657a4f4696c86bf6feac9eecb5cb2a9abbcdbaf82d8f8122c35f02",
+          "127ec2a0beb92c0c4a7bb35e0b13e9efcb05d0c11820441b4509020818e1b696",
+          "323e98579d7e14308c6d662a7741c3b82225c2fda93f582800d06e2f68df43cc",
+          "4fdc1b4585c60839402f4aa13f535dd6c0d813eacdf207ee9dd07f486dcb8f36",
+          "89ed8262d73f510db565cd3ec70a2371a5d74aa7b2a22f3d76d18217e632e2c3",
+          "57bb9a0866910f111c1ed7100a26dcd22f0d3823ff9cbba466bae6ec85f2b107"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 312,
+            "height": 317
+          },
+          {
+            "left": 312,
+            "top": 0,
+            "width": 319,
+            "height": 317
+          },
+          {
+            "left": 631,
+            "top": 0,
+            "width": 309,
+            "height": 317
+          },
+          {
+            "left": 940,
+            "top": 0,
+            "width": 314,
+            "height": 317
+          },
+          {
+            "left": 0,
+            "top": 317,
+            "width": 313,
+            "height": 310
+          },
+          {
+            "left": 313,
+            "top": 317,
+            "width": 314,
+            "height": 310
+          },
+          {
+            "left": 627,
+            "top": 317,
+            "width": 314,
+            "height": 310
+          },
+          {
+            "left": 941,
+            "top": 317,
+            "width": 313,
+            "height": 310
+          },
+          {
+            "left": 0,
+            "top": 627,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 313,
+            "top": 627,
+            "width": 316,
+            "height": 313
+          },
+          {
+            "left": 629,
+            "top": 627,
+            "width": 311,
+            "height": 313
+          },
+          {
+            "left": 940,
+            "top": 627,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 0,
+            "top": 940,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 940,
+            "width": 316,
+            "height": 314
+          },
+          {
+            "left": 629,
+            "top": 940,
+            "width": 311,
+            "height": 314
+          },
+          {
+            "left": 940,
+            "top": 940,
+            "width": 314,
+            "height": 314
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 55,
+            "y": 113,
+            "width": 240,
+            "height": 134,
+            "count": 11729
+          },
+          {
+            "x": 46,
+            "y": 142,
+            "width": 261,
+            "height": 109,
+            "count": 10846
+          },
+          {
+            "x": 40,
+            "y": 119,
+            "width": 248,
+            "height": 134,
+            "count": 11757
+          },
+          {
+            "x": 43,
+            "y": 119,
+            "width": 250,
+            "height": 140,
+            "count": 11291
+          },
+          {
+            "x": 56,
+            "y": 74,
+            "width": 244,
+            "height": 196,
+            "count": 13861
+          },
+          {
+            "x": 58,
+            "y": 76,
+            "width": 235,
+            "height": 166,
+            "count": 11122
+          },
+          {
+            "x": 38,
+            "y": 95,
+            "width": 264,
+            "height": 174,
+            "count": 13297
+          },
+          {
+            "x": 43,
+            "y": 83,
+            "width": 231,
+            "height": 174,
+            "count": 10878
+          },
+          {
+            "x": 61,
+            "y": 63,
+            "width": 242,
+            "height": 156,
+            "count": 12949
+          },
+          {
+            "x": 21,
+            "y": 80,
+            "width": 287,
+            "height": 135,
+            "count": 15605
+          },
+          {
+            "x": 51,
+            "y": 57,
+            "width": 255,
+            "height": 181,
+            "count": 18065
+          },
+          {
+            "x": 40,
+            "y": 124,
+            "width": 250,
+            "height": 118,
+            "count": 9416
+          },
+          {
+            "x": 60,
+            "y": 33,
+            "width": 237,
+            "height": 176,
+            "count": 15972
+          },
+          {
+            "x": 24,
+            "y": 43,
+            "width": 288,
+            "height": 178,
+            "count": 16696
+          },
+          {
+            "x": 60,
+            "y": 57,
+            "width": 189,
+            "height": 151,
+            "count": 16120
+          },
+          {
+            "x": 19,
+            "y": 114,
+            "width": 273,
+            "height": 79,
+            "count": 10881
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "a17937f2b8b286e026a90b865e981e6fb1be93f95a9ada3a4a500a839dbd4bdc",
+        "assetHash": "ef45b07e1a8ff530f4fac5d69f6ee74b9b8cac30f956b396a186d3b4742de429",
+        "stillHash": "c3468f1f2a49d4de0eb956d026c175cce0cbd745a8e120a994422c8c792ff064",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_10_b",
+      "name": "黯礁海馬",
+      "role": "normal",
+      "hourIndex": 9,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-10-normal-b.webp",
+      "atlas": "map-10-normal-b_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.265625,
+          0.193359375,
+          0.732421875,
+          0.9375
+        ],
+        [
+          0.251953125,
+          0.19140625,
+          0.74609375,
+          0.9375
+        ],
+        [
+          0.2734375,
+          0.16015625,
+          0.7265625,
+          0.9375
+        ],
+        [
+          0.248046875,
+          0.193359375,
+          0.751953125,
+          0.9375
+        ],
+        [
+          0.1171875,
+          0.26171875,
+          0.880859375,
+          0.9375
+        ],
+        [
+          0.123046875,
+          0.330078125,
+          0.876953125,
+          0.9375
+        ],
+        [
+          0.115234375,
+          0.302734375,
+          0.884765625,
+          0.9375
+        ],
+        [
+          0.083984375,
+          0.330078125,
+          0.916015625,
+          0.9375
+        ],
+        [
+          0.25390625,
+          0.19140625,
+          0.744140625,
+          0.9375
+        ],
+        [
+          0.099609375,
+          0.26953125,
+          0.900390625,
+          0.9375
+        ],
+        [
+          0.08203125,
+          0.3125,
+          0.916015625,
+          0.9375
+        ],
+        [
+          0.236328125,
+          0.23828125,
+          0.763671875,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.16015625,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.181640625,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.236328125,
+          0.322265625,
+          0.763671875,
+          0.9375
+        ],
+        [
+          0.08203125,
+          0.521484375,
+          0.916015625,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-10-normal-b.png",
+      "sourceHash": "ea8ad103d1f5a3034966c01f4bafaf284c2516abc7aa0a540a1dd00b226a6bb7",
+      "stillHash": "dd3fb77abcbbda705b02efcebc3b22f2dacccdc8ac0535e60609b54bb628829c",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 黯礁海馬, original large navy-blue armored seahorse with TWO curled spiral lower tails, long narrow horse snout pointing LEFT, small ivory coral crown and antique-gold segmented fin ridges, tiny fanlike pectoral fins. Elegant realistic seahorse anatomy, no horse legs or human limbs. Four idle tail and fin variations, four swimming tail curls, attack snout recoils then thrusts LEFT, cast compact gold bubbles left, hurt curls back, death full seahorse collapsed with relaxed two spiral tails. Every tailtip inside its cell. Draw each SMALL central65% with large transparent gutters. No water/scenery.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-894589e9-1ba0-4be9-a9aa-735279a48f38.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.744140625,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "ea8ad103d1f5a3034966c01f4bafaf284c2516abc7aa0a540a1dd00b226a6bb7",
+        "assetHash": "145f827b7a7bb8599dd743f89183e54c0cdf0603e96ba8d9068c58220228a4a3",
+        "stillHash": "dd3fb77abcbbda705b02efcebc3b22f2dacccdc8ac0535e60609b54bb628829c",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "b41fc55a51098e3e478f6a568173036f3f076a68fbc1a7838900e2091a2e9e52",
+          "1a539c180f9c6c1d78e9efb9fa3a81cae814cadec897f492bcfccadb0c9b5262",
+          "c0eea8898d0b3ed91ebb21a02d5b926178db527f82b17459cb5cda30a058473a",
+          "8a5fb8a265e1538057315c17c0cf095f17bb73e57a817a97b0a5987857f07c09",
+          "efda23a206d9a186009e0337abe62c03b3afc4edb401e9d22b0453e5eb43e1fe",
+          "2f28349c0297fd27bb80aaaf9bc046dce80dcd3578a6e1f357bd9747a5ddef0a",
+          "ca493a9e8b55b921c127c227dd5aa372ba03ef9cf675e0c07a880dfaa231bcaf",
+          "9cba3fdc436644d05c4cf943d05ce500ff89827ce0e023387e254344e8e9ab31",
+          "238342e9eeb763d02604cf453fc3739b7de773a0343f3965f27cd3294b2331ff",
+          "eb4f387985f94c0299029d73d2daf84f8b0a276ea0c1537bc334b88152511564",
+          "bec7817dc695aba3c10f129bbbf1e955cbc5e8abb6bb12e55a4b8653fef1ad56",
+          "9f3b10021b2d5d235b357daf92f4496452d0f65852ece4cf9070840a87c3f7c4",
+          "933a6c9bab10857b9c4eee4c38694665192588f4e7fb61f0b88875617ea6ed82",
+          "3260a441e21b6ee99f7ea4783950d1e02a24a9555a83d2816e1b3aeada4a09eb",
+          "da9d4d0614841ffba6bf7403f3577200dc48ff1c4afdba95ff05cf4b09160f0d",
+          "cb876ebb5b74072df61dd2e23d99a018c93bdde7d85c10683da06a1d4d5dd010"
+        ],
+        "sourceFrameHashes": [
+          "ce6ef91dd81a15368e9a416aad973b405e3298021709e1955932d9aa53ee7cd6",
+          "5b124bfd054ab7ff6aa971144deab6637c22bf8e675777ee5b98b0203890763d",
+          "4d995bb77a6e1f99b3350293f51c63c6d90bda9b07ac339785016ddf686ec7a4",
+          "b9cc08e5fdcc015a4b280eb806b1b4d03f9c5bea690fccf7b1ce82c81c54249c",
+          "0003313383a140cc7f6f2c32cd123c64f2456cbc99f255db74f763c2c728557c",
+          "84b75737e4d58f306053f23f73dc7b47e273987be6c743b9453904b7b10d7261",
+          "ff5674223799a605ebce4011d01b3321cf7007a941fd6c9de6886c59b0828ca5",
+          "18df0155fac55e05203658d40e740ea4e64e535b6c70f551dac45425b4036527",
+          "f5726ff5fc0a7d0b909920bc296b6a0008df465d1437bef408c019c6b117069d",
+          "4aa974e8e076357d23322de22e6ef91350a0715131c5229602d1d6732718c43f",
+          "7edd7db093bf115d5ed23680b62c47babf55ba8ea40c26e1cf926f0591fdee41",
+          "1e7edb8a229db6c89d9b3448bb7f4abc05757b88a649d74b0faa2430222a1bd7",
+          "40a20432234c440f7fbc4cb3a86a7c97ea1d9cf21b878cd486a0b2fa3defdcf8",
+          "cae3bfab7c06694a6e5a5834248e894e11c343e0c453b097006074b368d92ef3",
+          "474ff03473e20af6221e862b68b1dc9d7523ff70838bf54159e612c4f8e78843",
+          "b51ea2c351899a343c664a69189beb5d90c998de0a86028dd83b7d741abfe62c"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 314,
+            "height": 316
+          },
+          {
+            "left": 314,
+            "top": 0,
+            "width": 313,
+            "height": 316
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 314,
+            "height": 316
+          },
+          {
+            "left": 941,
+            "top": 0,
+            "width": 313,
+            "height": 316
+          },
+          {
+            "left": 0,
+            "top": 316,
+            "width": 313,
+            "height": 311
+          },
+          {
+            "left": 313,
+            "top": 316,
+            "width": 314,
+            "height": 311
+          },
+          {
+            "left": 627,
+            "top": 316,
+            "width": 314,
+            "height": 311
+          },
+          {
+            "left": 941,
+            "top": 316,
+            "width": 313,
+            "height": 311
+          },
+          {
+            "left": 0,
+            "top": 627,
+            "width": 313,
+            "height": 317
+          },
+          {
+            "left": 313,
+            "top": 627,
+            "width": 312,
+            "height": 317
+          },
+          {
+            "left": 625,
+            "top": 627,
+            "width": 315,
+            "height": 317
+          },
+          {
+            "left": 940,
+            "top": 627,
+            "width": 314,
+            "height": 317
+          },
+          {
+            "left": 0,
+            "top": 944,
+            "width": 313,
+            "height": 310
+          },
+          {
+            "left": 313,
+            "top": 944,
+            "width": 312,
+            "height": 310
+          },
+          {
+            "left": 625,
+            "top": 944,
+            "width": 316,
+            "height": 310
+          },
+          {
+            "left": 941,
+            "top": 944,
+            "width": 313,
+            "height": 310
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 90,
+            "y": 59,
+            "width": 138,
+            "height": 220,
+            "count": 13648
+          },
+          {
+            "x": 89,
+            "y": 57,
+            "width": 146,
+            "height": 221,
+            "count": 14174
+          },
+          {
+            "x": 102,
+            "y": 51,
+            "width": 134,
+            "height": 230,
+            "count": 14399
+          },
+          {
+            "x": 82,
+            "y": 61,
+            "width": 149,
+            "height": 220,
+            "count": 14478
+          },
+          {
+            "x": 57,
+            "y": 54,
+            "width": 226,
+            "height": 200,
+            "count": 15366
+          },
+          {
+            "x": 58,
+            "y": 46,
+            "width": 223,
+            "height": 180,
+            "count": 16032
+          },
+          {
+            "x": 32,
+            "y": 57,
+            "width": 228,
+            "height": 188,
+            "count": 14265
+          },
+          {
+            "x": 34,
+            "y": 66,
+            "width": 246,
+            "height": 180,
+            "count": 14761
+          },
+          {
+            "x": 86,
+            "y": 36,
+            "width": 145,
+            "height": 221,
+            "count": 14755
+          },
+          {
+            "x": 16,
+            "y": 53,
+            "width": 237,
+            "height": 198,
+            "count": 16208
+          },
+          {
+            "x": 36,
+            "y": 55,
+            "width": 247,
+            "height": 185,
+            "count": 17177
+          },
+          {
+            "x": 90,
+            "y": 44,
+            "width": 156,
+            "height": 207,
+            "count": 14827
+          },
+          {
+            "x": 64,
+            "y": 9,
+            "width": 207,
+            "height": 230,
+            "count": 19144
+          },
+          {
+            "x": 23,
+            "y": 8,
+            "width": 259,
+            "height": 224,
+            "count": 19240
+          },
+          {
+            "x": 92,
+            "y": 40,
+            "width": 156,
+            "height": 182,
+            "count": 15188
+          },
+          {
+            "x": 29,
+            "y": 88,
+            "width": 247,
+            "height": 123,
+            "count": 14786
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "ea8ad103d1f5a3034966c01f4bafaf284c2516abc7aa0a540a1dd00b226a6bb7",
+        "assetHash": "145f827b7a7bb8599dd743f89183e54c0cdf0603e96ba8d9068c58220228a4a3",
+        "stillHash": "dd3fb77abcbbda705b02efcebc3b22f2dacccdc8ac0535e60609b54bb628829c",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_10_e",
+      "name": "深淵鉗皇",
+      "role": "elite",
+      "hourIndex": 9,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-10-elite.webp",
+      "atlas": "map-10-elite_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.107421875,
+          0.36328125,
+          0.890625,
+          0.9375
+        ],
+        [
+          0.109375,
+          0.33203125,
+          0.890625,
+          0.9375
+        ],
+        [
+          0.125,
+          0.318359375,
+          0.875,
+          0.9375
+        ],
+        [
+          0.109375,
+          0.359375,
+          0.890625,
+          0.9375
+        ],
+        [
+          0.1015625,
+          0.33984375,
+          0.8984375,
+          0.9375
+        ],
+        [
+          0.111328125,
+          0.306640625,
+          0.888671875,
+          0.9375
+        ],
+        [
+          0.099609375,
+          0.3125,
+          0.900390625,
+          0.9375
+        ],
+        [
+          0.103515625,
+          0.30078125,
+          0.89453125,
+          0.9375
+        ],
+        [
+          0.09765625,
+          0.154296875,
+          0.900390625,
+          0.9375
+        ],
+        [
+          0.10546875,
+          0.25390625,
+          0.89453125,
+          0.9375
+        ],
+        [
+          0.078125,
+          0.318359375,
+          0.919921875,
+          0.9375
+        ],
+        [
+          0.095703125,
+          0.384765625,
+          0.904296875,
+          0.9375
+        ],
+        [
+          0.1015625,
+          0.248046875,
+          0.8984375,
+          0.9375
+        ],
+        [
+          0.087890625,
+          0.248046875,
+          0.91015625,
+          0.9375
+        ],
+        [
+          0.140625,
+          0.291015625,
+          0.859375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.537109375,
+          0.9375,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-10-elite.png",
+      "sourceHash": "e1c9eff1efcc042878977a9ee5e5b8b660c6097429cc4b7c3db455822b150e29",
+      "stillHash": "729f34c3a5819ff1fb8bb3b5c94b5e4d5b2cb9e6504aa87260ade60bfdba510c",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 深淵鉗皇, original royal abyssal LOBSTER not scorpion. Broad navy-blue segmented crustacean carapace with antique Greek gold details, two enormous asymmetric pincer claws, many thin walking legs, ivory eye stalks, flattened folded lobster tail FAN low behind. NO arched scorpion stinger. Powerful elite with massive claws. Idle claw breathing, walking alternating many legs, attack raises one claw then chops and crushes LEFT, casting close compact gold blue current between claws, hurt recoils, death curled on side with both pincers lowered. Full antennae and claws fit central65% own cell, no environment/water.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-bac879cf-2971-4d5b-a974-31d65956423a.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.57421875,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "e1c9eff1efcc042878977a9ee5e5b8b660c6097429cc4b7c3db455822b150e29",
+        "assetHash": "af70852a4361da370532d6f2257c73b5ad666e9116ccf51b4234edcdfb21c02c",
+        "stillHash": "729f34c3a5819ff1fb8bb3b5c94b5e4d5b2cb9e6504aa87260ade60bfdba510c",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "fa772bddf4fbf4a8e4e0d9db087cafab6a3bbec1f68a02616f00cf0e49b7123e",
+          "7d04eebd02493da90f3bc639dc1f13d4c654ab71da872336a853394ff4072bc5",
+          "313b0b11b27f2eada775497d127dc5c880ed45cf0553a91d753964ba36eb85bd",
+          "01d6f7027f2578e533f804532ea2ae4aac6bc3df3d019578335a938e13c17f96",
+          "74983e3b18daf1e84e667bd70f08f47e6e420478bd07d7a4929ca9327c762ef4",
+          "e765a52184e3b80811203263b2ff95f7b5a292befc583e2625448a4836b86190",
+          "6704dcd4602536de9f093dcef5b88016bcd0eea4b1ac896b65b4cfb1fb87130f",
+          "60f44da081695f5a4c86f5f78abdf33b17c8ada48de5621ae81820b75476c072",
+          "8cf3e45f21af9c06765023bd436c645aff2c0b05b8799cd9cc236edfaecdf686",
+          "6bf31509eada5e078deeeefacde496ef314cd66212129177ece80bbb16ddb6da",
+          "77b834da5b25981d02855cacc4cee8185b315c653174d4a60df6ea7fc0fae627",
+          "73753783768db4847821b164dc35621ee074504be0c1debba7ddfdd02248ae32",
+          "e29a79fea8cf28942f5083dfde151c7d2e7319f5fdd8988d8d8f018c9182f679",
+          "0e323254c165003631c296323e33916f5e4c92b2126778df58cb6c22831a417f",
+          "c0a58466839d71c0826359608ccd628735aedf76ec03e4e60793826a3bddae1d",
+          "8922bd16f2271229b8cc44003cf335dda15d579e694c448b801626d9be1acd3f"
+        ],
+        "sourceFrameHashes": [
+          "3efb86c31747a4fe308dd83cacad5d6023dbebd6a48b8bf82e3db53eba76042b",
+          "8208d06959a0c2b3acb8bfec1622cb3b0971b8a481b65885b3a224236f3883e8",
+          "a1e10602dafa3bdb59b9ab9a85f1098081a31436869c9611fbdc66ecf605a054",
+          "79b92a62389b79edc958ea9c586bbe811f575952b9bbbc437b1801ae483ac725",
+          "069a96051a641d459788d778bd1ef57dcf9f9aeea507dd000c339b8264162c1b",
+          "f92eddaad8fa84845d997ae7f85bd0aef6447e243e2e4329dc44d2bd7f2ad6a7",
+          "79d34d2a5464019ed52afe22ff1ad448d1c259310d34fcf2050a311e16e4f5d1",
+          "42df280cc12a51fd821141f398cbc7b9df368dbd0f179735297910404b82b777",
+          "ae8eab1a5381660cc17b7345458d1296c1a2a3d760a217b1bcee67444368ae14",
+          "0f287cefa1a43ce9ddc6d9464b6201a17a2988555fba21c674958862db8002f7",
+          "a721ab2b2f0fbf27c2ec17af50588d79bd5a30d27a86c6e3573a567e0adad765",
+          "4e864e18f85811cdcf21370b26481ae091eab36a200ae260ebe742d7a5afffb9",
+          "bd9c56f3937d37e6028ba3f4d9d73e4a4e492df3c3540990887d1a59fffcb5bb",
+          "3cab478bdd2ffba1a7ac84d7a7fb2e538ef0febb1660332d7a37c376851473d6",
+          "244a0bbfe5cd39ffce5720695d9dcd8fd6f38bebf4db5f98a53f730cf4e4b309",
+          "1acc911ebe699b94f791263198c00e96dc7c897fe35a011ce0704202a74c5477"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 940,
+            "top": 0,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 0,
+            "top": 314,
+            "width": 313,
+            "height": 309
+          },
+          {
+            "left": 313,
+            "top": 314,
+            "width": 314,
+            "height": 309
+          },
+          {
+            "left": 627,
+            "top": 314,
+            "width": 313,
+            "height": 309
+          },
+          {
+            "left": 940,
+            "top": 314,
+            "width": 314,
+            "height": 309
+          },
+          {
+            "left": 0,
+            "top": 623,
+            "width": 313,
+            "height": 320
+          },
+          {
+            "left": 313,
+            "top": 623,
+            "width": 306,
+            "height": 320
+          },
+          {
+            "left": 619,
+            "top": 623,
+            "width": 321,
+            "height": 320
+          },
+          {
+            "left": 940,
+            "top": 623,
+            "width": 314,
+            "height": 320
+          },
+          {
+            "left": 0,
+            "top": 943,
+            "width": 313,
+            "height": 311
+          },
+          {
+            "left": 313,
+            "top": 943,
+            "width": 316,
+            "height": 311
+          },
+          {
+            "left": 629,
+            "top": 943,
+            "width": 291,
+            "height": 311
+          },
+          {
+            "left": 920,
+            "top": 943,
+            "width": 334,
+            "height": 311
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 25,
+            "y": 70,
+            "width": 282,
+            "height": 207,
+            "count": 27743
+          },
+          {
+            "x": 25,
+            "y": 61,
+            "width": 281,
+            "height": 218,
+            "count": 25215
+          },
+          {
+            "x": 27,
+            "y": 57,
+            "width": 270,
+            "height": 223,
+            "count": 25793
+          },
+          {
+            "x": 14,
+            "y": 73,
+            "width": 281,
+            "height": 208,
+            "count": 26216
+          },
+          {
+            "x": 23,
+            "y": 42,
+            "width": 287,
+            "height": 215,
+            "count": 24180
+          },
+          {
+            "x": 21,
+            "y": 30,
+            "width": 280,
+            "height": 227,
+            "count": 24729
+          },
+          {
+            "x": 17,
+            "y": 32,
+            "width": 288,
+            "height": 225,
+            "count": 26037
+          },
+          {
+            "x": 13,
+            "y": 29,
+            "width": 285,
+            "height": 229,
+            "count": 25265
+          },
+          {
+            "x": 18,
+            "y": 2,
+            "width": 289,
+            "height": 282,
+            "count": 30504
+          },
+          {
+            "x": 14,
+            "y": 28,
+            "width": 284,
+            "height": 246,
+            "count": 35146
+          },
+          {
+            "x": 8,
+            "y": 55,
+            "width": 303,
+            "height": 223,
+            "count": 31750
+          },
+          {
+            "x": 10,
+            "y": 69,
+            "width": 291,
+            "height": 199,
+            "count": 24903
+          },
+          {
+            "x": 24,
+            "y": 17,
+            "width": 287,
+            "height": 248,
+            "count": 32710
+          },
+          {
+            "x": 12,
+            "y": 13,
+            "width": 296,
+            "height": 248,
+            "count": 33440
+          },
+          {
+            "x": 22,
+            "y": 31,
+            "width": 259,
+            "height": 233,
+            "count": 26174
+          },
+          {
+            "x": 1,
+            "y": 113,
+            "width": 315,
+            "height": 144,
+            "count": 24125
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "e1c9eff1efcc042878977a9ee5e5b8b660c6097429cc4b7c3db455822b150e29",
+        "assetHash": "af70852a4361da370532d6f2257c73b5ad666e9116ccf51b4234edcdfb21c02c",
+        "stillHash": "729f34c3a5819ff1fb8bb3b5c94b5e4d5b2cb9e6504aa87260ade60bfdba510c",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_11_a",
+      "name": "寂星書妖",
+      "role": "normal",
+      "hourIndex": 10,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-11-normal-a.webp",
+      "atlas": "map-11-normal-a_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.189453125,
+          0.47265625,
+          0.810546875,
+          0.9375
+        ],
+        [
+          0.1796875,
+          0.4453125,
+          0.818359375,
+          0.9375
+        ],
+        [
+          0.205078125,
+          0.4765625,
+          0.79296875,
+          0.9375
+        ],
+        [
+          0.201171875,
+          0.462890625,
+          0.796875,
+          0.9375
+        ],
+        [
+          0.216796875,
+          0.392578125,
+          0.783203125,
+          0.9375
+        ],
+        [
+          0.140625,
+          0.484375,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.201171875,
+          0.515625,
+          0.798828125,
+          0.9375
+        ],
+        [
+          0.2265625,
+          0.486328125,
+          0.771484375,
+          0.9375
+        ],
+        [
+          0.244140625,
+          0.521484375,
+          0.755859375,
+          0.9375
+        ],
+        [
+          0.095703125,
+          0.42578125,
+          0.904296875,
+          0.9375
+        ],
+        [
+          0.138671875,
+          0.515625,
+          0.861328125,
+          0.9375
+        ],
+        [
+          0.21484375,
+          0.451171875,
+          0.78515625,
+          0.9375
+        ],
+        [
+          0.1484375,
+          0.41796875,
+          0.8515625,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.39453125,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.25390625,
+          0.521484375,
+          0.744140625,
+          0.9375
+        ],
+        [
+          0.16015625,
+          0.650390625,
+          0.83984375,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-11-normal-a.png",
+      "sourceHash": "463a0b7cf370daa9c8c0a50a2066a7095dfeb23cba60f06d77030e3b793b3934",
+      "stillHash": "54f4875677ae7bbb9992331f873ed4d745ed8e0ef627b3d77af226480a1bd240",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 寂星書妖, original animated ancient Greek spellbook creature. Thick midnight-blue leather book, carved antique-gold corners and clasps, warm ivory pages, FOUR small layered parchment feather wings sprouting from sides, ornate gold constellation seals (symbols only NO readable letters). No face or limbs, NOT bird or humanoid. LEFT facing open book with spine RIGHT. Idle flutter pages and small wings; movement four full different wing strokes; attack shuts/opens jaws of book then snaps LEFT; cast pages open and tiny compact gold runes/stars left; hurt crumples wings; death fallen closed book wings limp. Entire book and wing tips INSIDE own cell central65%.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-ab5b231a-3a4e-4af8-8d0f-356d3b80206b.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.46484375,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "463a0b7cf370daa9c8c0a50a2066a7095dfeb23cba60f06d77030e3b793b3934",
+        "assetHash": "6ea90bbaaaef79ef5350757c02376731d25f0b6e580bed6a3479207e9b30f9de",
+        "stillHash": "54f4875677ae7bbb9992331f873ed4d745ed8e0ef627b3d77af226480a1bd240",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "851bff98da6777edf0f3ac4426ec9948d992473213051e691ef6e1e96f5802c7",
+          "2a2419521ed84ac0662aca591c47138fa976e2a6c7bce302d9aaf91cf03857aa",
+          "f24c780d1c95e22f13ab96bb6f268b67221b7bf8afa87e8488d59c2c1b2d5124",
+          "8f96050a0bb262df80dcd865b368767e81b4b0e704fbebd91a4ffdaa9b28d5e5",
+          "c33faae63ca830c9ae6cc3f7ae9d6a4bdfc27bdb00790d8915bac4f011888fe2",
+          "bd60457a6b4e5407c5668d393abce77fe46bc85b96813db8b9a0bac8c6004fa7",
+          "6eeb81855da4e1d3d707dbd54934f829e7da08b2eb8c1155266ae6fd0194e82f",
+          "cab5cd24e44e952c061044aacbd62e3cb5415a51c5d189ebd1e3d573cdb2fab0",
+          "a50247c63c2fe3af90ff7d3b95933620b2d09a5a098e77924ef12bf7adc6adb1",
+          "dca30b16fe66afff99f4cfa34fa840c0084644cf370c61a524a7edcf90f91da6",
+          "1c7d3f38d8d34257d04c615b1749b65ae3b846402724b9f9c5fbfc2ccee881c3",
+          "ac3f0ffc215bb62002684debece0f4467541bd6a39aeabf498aed96c6e577366",
+          "c72326f6af092f47dffd8b520ba3ac24343f8d7a17aa74000e21b94a73bfacdf",
+          "1ae09498a2cc3803b7b7093bebaa64b35e0416cce740c2dbdd05e418a615428f",
+          "4974e07322b2c3897e596f2b6ab3996585719c0abdf5af128b33e606b69861d1",
+          "b2f3612844eb78e4575eb3568f124c518525fd32fb99f10c0c151d1da16d5c42"
+        ],
+        "sourceFrameHashes": [
+          "d5e746529fb92d7f8351e96bd0bf56639d6d530999fa28cdc14c085c1e261bba",
+          "b34375dc7578a6aab6b692e6578040355f1e49f1e70326bccc94ec3ffcc913d2",
+          "33ed1f8fffc3f5142606c88b949e7255f70addde9d13de8d4c94667a1c39e5b2",
+          "1232e875843989f076cfba3d75c1441e9bb184c123c12c27461dd15f47ebf8c4",
+          "fca88cf9600a6d4d040b6a4e58d222c7fb52ac739773dd8126b8bf926bf52a90",
+          "fa5d8f9de63d7a17f0b0bec081af8a068ede76205d620307c6789010d29d1ef7",
+          "1e7405131ed89dc22c9f866e6217036b2ca71cd2d9d9599272a7467222bb24a3",
+          "80919d1b6fb244b4b24aabdb54b73d2d22b0a33005b2fa61451163b1ad9bde6b",
+          "8bf8f58325d8e7a0cca92055459bef0f89498364879f408bea7c216af1d879a9",
+          "e673af656b178d17ff0a3a04f7d79c732bbd69d00f82a8b8ea5c7227cdb68dfd",
+          "29924f5914e9f3ff116a3e9c8ab1108940e96e752a884675ce2dcc9c4d51ae85",
+          "e043b6b46adece9de0367d6707f1e9935eda216b9e01989ddc33c5e9b42fd82d",
+          "4d5533238ec99498129f8fbd9e571c3e29513ac1e5f8af59e6e4b368cc27c27c",
+          "f4bdfc961a07a144a272c34e9811227c28cfae998452463b0fa4a67e5095b859",
+          "e01e507383d6291b11566b88831217133883d6b78045da4f25073295bf2cb5dd",
+          "2294c3a8f35915febda797b70246c9f9cab42a63c16e7e0e7d8702b6a1301817"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 318
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 314,
+            "height": 318
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 314,
+            "height": 318
+          },
+          {
+            "left": 941,
+            "top": 0,
+            "width": 313,
+            "height": 318
+          },
+          {
+            "left": 0,
+            "top": 318,
+            "width": 313,
+            "height": 307
+          },
+          {
+            "left": 313,
+            "top": 318,
+            "width": 320,
+            "height": 307
+          },
+          {
+            "left": 633,
+            "top": 318,
+            "width": 307,
+            "height": 307
+          },
+          {
+            "left": 940,
+            "top": 318,
+            "width": 314,
+            "height": 307
+          },
+          {
+            "left": 0,
+            "top": 625,
+            "width": 311,
+            "height": 305
+          },
+          {
+            "left": 311,
+            "top": 625,
+            "width": 336,
+            "height": 305
+          },
+          {
+            "left": 647,
+            "top": 625,
+            "width": 314,
+            "height": 305
+          },
+          {
+            "left": 961,
+            "top": 625,
+            "width": 293,
+            "height": 305
+          },
+          {
+            "left": 0,
+            "top": 930,
+            "width": 313,
+            "height": 324
+          },
+          {
+            "left": 313,
+            "top": 930,
+            "width": 352,
+            "height": 324
+          },
+          {
+            "left": 665,
+            "top": 930,
+            "width": 275,
+            "height": 324
+          },
+          {
+            "left": 940,
+            "top": 930,
+            "width": 314,
+            "height": 324
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 49,
+            "y": 88,
+            "width": 245,
+            "height": 183,
+            "count": 22512
+          },
+          {
+            "x": 39,
+            "y": 79,
+            "width": 252,
+            "height": 194,
+            "count": 22539
+          },
+          {
+            "x": 50,
+            "y": 94,
+            "width": 232,
+            "height": 182,
+            "count": 21668
+          },
+          {
+            "x": 58,
+            "y": 89,
+            "width": 235,
+            "height": 187,
+            "count": 22168
+          },
+          {
+            "x": 59,
+            "y": 61,
+            "width": 223,
+            "height": 215,
+            "count": 24916
+          },
+          {
+            "x": 33,
+            "y": 99,
+            "width": 283,
+            "height": 179,
+            "count": 23014
+          },
+          {
+            "x": 48,
+            "y": 107,
+            "width": 236,
+            "height": 166,
+            "count": 21901
+          },
+          {
+            "x": 63,
+            "y": 97,
+            "width": 215,
+            "height": 178,
+            "count": 21643
+          },
+          {
+            "x": 54,
+            "y": 93,
+            "width": 202,
+            "height": 164,
+            "count": 18189
+          },
+          {
+            "x": 14,
+            "y": 66,
+            "width": 319,
+            "height": 202,
+            "count": 33437
+          },
+          {
+            "x": 27,
+            "y": 100,
+            "width": 285,
+            "height": 166,
+            "count": 22818
+          },
+          {
+            "x": 51,
+            "y": 88,
+            "width": 225,
+            "height": 192,
+            "count": 21265
+          },
+          {
+            "x": 21,
+            "y": 50,
+            "width": 277,
+            "height": 205,
+            "count": 31780
+          },
+          {
+            "x": 6,
+            "y": 40,
+            "width": 345,
+            "height": 214,
+            "count": 33802
+          },
+          {
+            "x": 26,
+            "y": 93,
+            "width": 193,
+            "height": 164,
+            "count": 17018
+          },
+          {
+            "x": 35,
+            "y": 131,
+            "width": 268,
+            "height": 113,
+            "count": 16530
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "463a0b7cf370daa9c8c0a50a2066a7095dfeb23cba60f06d77030e3b793b3934",
+        "assetHash": "6ea90bbaaaef79ef5350757c02376731d25f0b6e580bed6a3479207e9b30f9de",
+        "stillHash": "54f4875677ae7bbb9992331f873ed4d745ed8e0ef627b3d77af226480a1bd240",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_11_b",
+      "name": "斷弦琴靈",
+      "role": "normal",
+      "hourIndex": 10,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-11-normal-b.webp",
+      "atlas": "map-11-normal-b_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.140625,
+          0.29296875,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.111328125,
+          0.337890625,
+          0.88671875,
+          0.9375
+        ],
+        [
+          0.14453125,
+          0.3359375,
+          0.85546875,
+          0.9375
+        ],
+        [
+          0.1796875,
+          0.337890625,
+          0.8203125,
+          0.9375
+        ],
+        [
+          0.083984375,
+          0.330078125,
+          0.9140625,
+          0.9375
+        ],
+        [
+          0.1640625,
+          0.310546875,
+          0.8359375,
+          0.9375
+        ],
+        [
+          0.169921875,
+          0.283203125,
+          0.828125,
+          0.9375
+        ],
+        [
+          0.123046875,
+          0.27734375,
+          0.875,
+          0.9375
+        ],
+        [
+          0.1171875,
+          0.318359375,
+          0.8828125,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.330078125,
+          0.935546875,
+          0.9375
+        ],
+        [
+          0.080078125,
+          0.310546875,
+          0.91796875,
+          0.9375
+        ],
+        [
+          0.16796875,
+          0.33203125,
+          0.83203125,
+          0.9375
+        ],
+        [
+          0.140625,
+          0.328125,
+          0.859375,
+          0.9375
+        ],
+        [
+          0.072265625,
+          0.3515625,
+          0.927734375,
+          0.9375
+        ],
+        [
+          0.154296875,
+          0.3046875,
+          0.845703125,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.544921875,
+          0.9375,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-11-normal-b.png",
+      "sourceHash": "76222884be664a9a472aac06c02ddac73c6d5b1d69833b9775cb2b28eb261af1",
+      "stillHash": "97cf6d947ebe68a15cb215e04cf44aec2027e00ff1aa9049ec7abd91c2a3c14e",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 斷弦琴靈, original haunted ancient GREEK SEVEN-STRING LYRE instrument creature, ivory carved U-shaped body with antique-gold scroll arms, midnight-blue cloth streamers and several snapped gold strings curling free. Two ethereal small gold gauntlet hands pluck strings, NO human torso/head/legs. Clear lyre silhouette threequarter toward LEFT. Idle streamers and hands change; movement gliding cloth/arms; attack hand pulls lyre and slashes a loose string LEFT; cast hands strum small tightly contained gold sound arcs; hurt frame tips back with strings bent; death instrument lies tilted with hands and streamers slack. Entire lyre and curls/arms stay in cell central65%, full body not cropped.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-70a85c43-aaed-4824-a025-5d65bd7ce1a8.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.64453125,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "76222884be664a9a472aac06c02ddac73c6d5b1d69833b9775cb2b28eb261af1",
+        "assetHash": "f5cf540392937297411ad496670c7b8b30aca648e612a98b11cfd69dfffa9a5f",
+        "stillHash": "97cf6d947ebe68a15cb215e04cf44aec2027e00ff1aa9049ec7abd91c2a3c14e",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "5b7dfb19dc9308209c17632b0bbdd741a77868c52a62746fa956d63ff4a6c6d8",
+          "3c059bd19a52f2e1ce127d919d092c1ffa6a04cb5fe1abedfdc185bf7b08f6c2",
+          "7d7df9ae819cfbcbc8a280e8f0f250b11601c9f2055909b9a9c60a6b42174993",
+          "3dffb54a6ff6d9d471412a67ad3c553621615aee84ac7d5cf8a61123bda2056c",
+          "c7adeab29c01328bd73fbca992fbf9da992954e01e98ccf91cd70548e322418d",
+          "911e06a2a5818b1268a90cc6301eb4af955ad9fcdc9a59d3cd47db0cc1674b8a",
+          "6d6c627c2aeff844c6042043d3449a58cfdd6e2d6635c292185c23c90455c5ca",
+          "ec030bc714d12755234a608d0b661f113a265b2080f2661cfec5ac70d783c136",
+          "8633fd5efe19a6105c8d73f65380e4fd827c4edb67d170b54728e7a82c4830b0",
+          "a9d6b75c87b5cf7dd22a4347d855d369069a28d07942c82b4a7c74d38fb77e7c",
+          "251a6e42c62bd5f8e741062c3214e8346716432e9b29b2542cc32818ac127daf",
+          "201369fb83eaee52289b5491b1ca0195b83bcf61ac7c591a3fa4e40e8698fcfa",
+          "191f1d8fe6b8a5e244da685a32bd503a0be9894d6329e05d3258cc8be3569890",
+          "af4210afa5d79e0a6c0b5c25fa3f576011195871882c7b2683c6def4e1c36efb",
+          "dc7f65906500c2352122127b8b0bafc9506b9442aee2dd951b8ce54f70c35f09",
+          "cdb5ecd82bce710142ae15e9c5bf03fd22d64d902a5f429b36d4c0cf2ea8e2c7"
+        ],
+        "sourceFrameHashes": [
+          "45df8d2605a45fd96bc4865a4c9327e5606878c821998d4854747680500428c7",
+          "4202f765844bc2ead66d934a8aa8c1a2b4a7f0b786caa8c4ba79bd27b68d9025",
+          "e70a81583e114dddfe3c98b6f09d0a7b2180650b12998957262d5dee71f0ff47",
+          "efcf5b42163594c4bbb838a7e7eea35981d22f65b16dcbf439a2429ff694b15b",
+          "8791b7f43bcde025399e7bacdd31d15fde2022e8577144401c3422af33ad9da8",
+          "78af4d5738a4d3454bbcaf07e6ca5a43da3b83b8f987fb0215f8b6b6c14ad168",
+          "c03db7c31b982e637ae690f4c6f20e7a572960ccdefaef8679f0caf9c4f1711f",
+          "a8e256e1d68083a7164d84b2204ec5ae49ea8a7fd060cabe38878b9ca991d517",
+          "86953d7bfc2054af9e7fad1e1554babf7e001ae176dab8a1a48a2bb6cb36ad89",
+          "77a7ae727aadf26303d60ca7389769af16d8aabde34e91cf03df59f8fbbeb816",
+          "f7039a11a35658c672947b4f71c8715a1dd6b3c17605c544a90d65f5f860a5b0",
+          "323c018e82f86553883cdadc7b6dbaae61361582f3b844ea2f8dc09b96c746dd",
+          "a6b2bc0dd3dde25cabdbbbefa1e8c1ac88b22f17fec7ccd6f0b3191182eb5b5f",
+          "249521f11186ffc76c5c21b48eb9e991e04c6bc08ea5199f4e203504039b13ae",
+          "77ea2a0fe860015ee59168c52b87d8211299192df5a01e725f2aca3de8606b67",
+          "391094789d07e139900686a3a6d80e71cded8689e69a0f7674410192b3315c96"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 317,
+            "height": 314
+          },
+          {
+            "left": 630,
+            "top": 0,
+            "width": 311,
+            "height": 314
+          },
+          {
+            "left": 941,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 0,
+            "top": 314,
+            "width": 325,
+            "height": 311
+          },
+          {
+            "left": 325,
+            "top": 314,
+            "width": 302,
+            "height": 311
+          },
+          {
+            "left": 627,
+            "top": 314,
+            "width": 314,
+            "height": 311
+          },
+          {
+            "left": 941,
+            "top": 314,
+            "width": 313,
+            "height": 311
+          },
+          {
+            "left": 0,
+            "top": 625,
+            "width": 313,
+            "height": 312
+          },
+          {
+            "left": 313,
+            "top": 625,
+            "width": 320,
+            "height": 312
+          },
+          {
+            "left": 633,
+            "top": 625,
+            "width": 318,
+            "height": 312
+          },
+          {
+            "left": 951,
+            "top": 625,
+            "width": 303,
+            "height": 312
+          },
+          {
+            "left": 0,
+            "top": 937,
+            "width": 313,
+            "height": 317
+          },
+          {
+            "left": 313,
+            "top": 937,
+            "width": 320,
+            "height": 317
+          },
+          {
+            "left": 633,
+            "top": 937,
+            "width": 306,
+            "height": 317
+          },
+          {
+            "left": 939,
+            "top": 937,
+            "width": 315,
+            "height": 317
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 48,
+            "y": 69,
+            "width": 257,
+            "height": 231,
+            "count": 26683
+          },
+          {
+            "x": 37,
+            "y": 69,
+            "width": 278,
+            "height": 215,
+            "count": 26680
+          },
+          {
+            "x": 48,
+            "y": 70,
+            "width": 255,
+            "height": 216,
+            "count": 26827
+          },
+          {
+            "x": 63,
+            "y": 71,
+            "width": 230,
+            "height": 215,
+            "count": 26487
+          },
+          {
+            "x": 18,
+            "y": 62,
+            "width": 298,
+            "height": 218,
+            "count": 27316
+          },
+          {
+            "x": 40,
+            "y": 65,
+            "width": 241,
+            "height": 225,
+            "count": 25280
+          },
+          {
+            "x": 55,
+            "y": 49,
+            "width": 236,
+            "height": 235,
+            "count": 26492
+          },
+          {
+            "x": 22,
+            "y": 51,
+            "width": 270,
+            "height": 237,
+            "count": 24869
+          },
+          {
+            "x": 27,
+            "y": 56,
+            "width": 275,
+            "height": 222,
+            "count": 24840
+          },
+          {
+            "x": 6,
+            "y": 54,
+            "width": 313,
+            "height": 218,
+            "count": 28314
+          },
+          {
+            "x": 8,
+            "y": 51,
+            "width": 301,
+            "height": 225,
+            "count": 23864
+          },
+          {
+            "x": 46,
+            "y": 59,
+            "width": 238,
+            "height": 217,
+            "count": 23846
+          },
+          {
+            "x": 46,
+            "y": 55,
+            "width": 258,
+            "height": 219,
+            "count": 27697
+          },
+          {
+            "x": 11,
+            "y": 56,
+            "width": 307,
+            "height": 210,
+            "count": 32339
+          },
+          {
+            "x": 46,
+            "y": 46,
+            "width": 248,
+            "height": 227,
+            "count": 28837
+          },
+          {
+            "x": 1,
+            "y": 140,
+            "width": 314,
+            "height": 141,
+            "count": 23679
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "76222884be664a9a472aac06c02ddac73c6d5b1d69833b9775cb2b28eb261af1",
+        "assetHash": "f5cf540392937297411ad496670c7b8b30aca648e612a98b11cfd69dfffa9a5f",
+        "stillHash": "97cf6d947ebe68a15cb215e04cf44aec2027e00ff1aa9049ec7abd91c2a3c14e",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_11_e",
+      "name": "王庭司儀",
+      "role": "elite",
+      "hourIndex": 10,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-11-elite.webp",
+      "atlas": "map-11-elite_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.26171875,
+          0.287109375,
+          0.736328125,
+          0.9375
+        ],
+        [
+          0.259765625,
+          0.275390625,
+          0.73828125,
+          0.9375
+        ],
+        [
+          0.255859375,
+          0.27734375,
+          0.744140625,
+          0.9375
+        ],
+        [
+          0.26953125,
+          0.279296875,
+          0.728515625,
+          0.9375
+        ],
+        [
+          0.25,
+          0.28515625,
+          0.748046875,
+          0.9375
+        ],
+        [
+          0.228515625,
+          0.291015625,
+          0.771484375,
+          0.9375
+        ],
+        [
+          0.201171875,
+          0.287109375,
+          0.798828125,
+          0.9375
+        ],
+        [
+          0.244140625,
+          0.298828125,
+          0.755859375,
+          0.9375
+        ],
+        [
+          0.201171875,
+          0.326171875,
+          0.796875,
+          0.9375
+        ],
+        [
+          0.09765625,
+          0.314453125,
+          0.90234375,
+          0.9375
+        ],
+        [
+          0.08984375,
+          0.3203125,
+          0.908203125,
+          0.9375
+        ],
+        [
+          0.2421875,
+          0.3046875,
+          0.7578125,
+          0.9375
+        ],
+        [
+          0.18359375,
+          0.26171875,
+          0.814453125,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.291015625,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.224609375,
+          0.33984375,
+          0.7734375,
+          0.9375
+        ],
+        [
+          0.16796875,
+          0.51953125,
+          0.830078125,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-11-elite.png",
+      "sourceHash": "2f01d03defa6005cf8f8773377fecc2df1b7cfcf557758ee415ccffd1386f5af",
+      "stillHash": "135a6baaf687752da3d099c9f6f8b124b3e860d27c0433a8f4bca827a48b23e1",
+      "prompt": "Use case stylized-concept. Create ONE square 2048x2048 transparent 4-column4-row production sprite atlas, 16 fullbody true different poses. CRITICAL: draw EACH creature VERY SMALL, only CENTRAL 50% width and height of each square cell; leave at least25% EMPTY TRANSPARENT GUTTERS ON ALL FOUR SIDES of EVERY cell. NO crossing gutters, NO clipped body/tips, NO adjacent poses touching. SAME SCALE. Premium realistic highly detailed HANDPAINTED Greek celestial fantasy navy/ivory/antiquegold, LEFT-facing threequarter ALL frames. Row1 four distinct idle breathing, Row2 four actual articulated moving poses, Row3 windup/strike LEFT/followthrough/recover, Row4 cast gather/cast release/hurt/death collapsed. Effects must be TINY compact near body, not arcs covering entirecell. No ground/environment/text/grid/labels. TRUE transparent alpha PNG. No copied/rotated/scaled fake animation. Subject has wide EMPTY space between each pose. Creature: 王庭司儀, original imposing ceremonial masked elite royal officiant, tall slender TWO-armed figure wearing featureless ivory theatre mask with gold Greek brow and modest laurel crest, flowing midnight-navy brocade robes and ivory layered pleats, holds TWO slender antique-gold ceremonial staves. Exactly two arms and two staves, no wings/scythe/corona. Detailed realistic drapery and carved metal. LEFT-facing. Idle small hand/robe movements, walking real footstep+cloth, attack draws one staff back then sweeps/touches LEFT, cast crosses two staves then releases compact ivory-gold magic LEFT, hurt stagger, death kneeling robes collapsed staves low. Full staves and feet fit central65% each cell, no scenery.",
+      "generationOriginal": "C:\\Users\\User\\.codex\\generated_images\\01a151f0-4893-70c0-a25c-3a21e840b1fc\\exec-0b855eae-b17b-43a0-87b1-8a6149926d30.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.650390625,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "2f01d03defa6005cf8f8773377fecc2df1b7cfcf557758ee415ccffd1386f5af",
+        "assetHash": "a3a280a87d3035b7bd1343bc63d560f1954eedbeb914043c7f49236f5a8ff731",
+        "stillHash": "135a6baaf687752da3d099c9f6f8b124b3e860d27c0433a8f4bca827a48b23e1",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "f9fce6a08c29d4abac8f3337c1817f6feec89571142b4a900cfd441f18b5baaa",
+          "9d99b62bbfd2663c51341f6dd3aca8cac36a2e14ed196c2b1549a500f5e8c9b9",
+          "cbdb2228fc8745eb526c2a4b48903524640adcfb313a3243a8cf380dfda66a95",
+          "bcf75c0dc4c3c3bc771860b6488aa11cb24f2e333f2f6f2bd9bae306c53831a8",
+          "42010b5e001a7c08f0c5b4b2e3c0a6a3c316bda554195a4a5947310984958b82",
+          "4566367222d50834fd301826b8e29199523ee41b44990a2b18245913528c00f1",
+          "480228b9bcdfa543b09b7be2158944c3cf87b84a9f0c712d0a4a23a2792bb0b1",
+          "5f6d420f21e5198c409200a25c0e6230dbb2fdcf9a0caa5dfd20568ae073ae96",
+          "6dfb4ec56a8552d2ce8c0b2d0db1ad10efbaac4fb80bdccc81828f86d26af45a",
+          "29d4ccb99bd952cfbad9853c3d39e9b1afad3d1b66cbe13c3fe1d278b5925b09",
+          "c0afb93845e75fb6ad4acaae0ed3c51f13e423d22ecccc8d8c95a983ffea7466",
+          "b38bc0b982558f74ac1beedab83756b25e8a06d43daedbf197db38d86a014ed1",
+          "a8ba2dca6908307dd1392616f5e4bfbd0ff15e6dda7a6336d25130c5a5115190",
+          "476625c9a360bc422a9d52b85bf43f274f7e15417888811022ff6dfb1eb4e9e0",
+          "492117c8efb56d15138a010588017c6eb473ac37d4760309ffe4e236f61e4053",
+          "b223baea3fe42236165ec1a0ccd32522c0aeb385ce8d7766e6c45773cc7e7481"
+        ],
+        "sourceFrameHashes": [
+          "359921770c67d33d89b30fccb376c75884fab568a5a2fb8851d3e6a58a02aedd",
+          "878e14513c1a29ff9b1d0b0cd22fabe90dfb5530d411f1ef995ad3385f18d349",
+          "6be7eb1444b5c5f7d56005ecbf4fdf67b1829ff44e443b05ce5040337389173b",
+          "50f017c40d586e5d73b6e7b2d8d8ad6928f36080271914556e3d5228d25523e8",
+          "26872d24f2ec842bf31795f97364faf936c77a162d0ade013e9ad2b2dd437b7a",
+          "72869c53f2cc76eb55dafd03b277b41095bffe56b7eebfb986663dd2d6abfd6c",
+          "03a68d2f047a859fd4f8e01b2c4e860d531eb1d5f227e2fa12c8af3905242087",
+          "31715d13eeb1f9a4d73138736ffeeb5ee996098240b0231ce878b06c7c067d37",
+          "069307521d4f357b9949e0c5a2b1f1ac8944b5dc0c3e31f97666a79992a8450f",
+          "42854fca74eb85b49cc8326464af823ce30742180c9bba4392c183153c2132d0",
+          "65345820d532633e4cf5128ec814a593aae3aaff3a1bf5bd50dc49595c74c74d",
+          "8dbb149e4499520eaaebee5ca6719c3691a807dd46d1470d4f62dc524171d958",
+          "006eb373ff5aa06aba5178d57b5a5ac4227758f86399e08213db8b9a0e15c15c",
+          "e5657785ee4fe33f5d018738427f2ed99239b74a8b85016d55dd60481eebe2fe",
+          "7ac3158ffffaa18ba6b3ea56f7452eeef58a088f29437ea171ab568fb18a6401",
+          "92ac2d2818e7fa1b0c739abc6f4f8bc6ad9e5e03cf7266da511bf742fc6d0c17"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 316
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 314,
+            "height": 316
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 313,
+            "height": 316
+          },
+          {
+            "left": 940,
+            "top": 0,
+            "width": 314,
+            "height": 316
+          },
+          {
+            "left": 0,
+            "top": 316,
+            "width": 314,
+            "height": 315
+          },
+          {
+            "left": 314,
+            "top": 316,
+            "width": 313,
+            "height": 315
+          },
+          {
+            "left": 627,
+            "top": 316,
+            "width": 313,
+            "height": 315
+          },
+          {
+            "left": 940,
+            "top": 316,
+            "width": 314,
+            "height": 315
+          },
+          {
+            "left": 0,
+            "top": 631,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 631,
+            "width": 316,
+            "height": 314
+          },
+          {
+            "left": 629,
+            "top": 631,
+            "width": 328,
+            "height": 314
+          },
+          {
+            "left": 957,
+            "top": 631,
+            "width": 297,
+            "height": 314
+          },
+          {
+            "left": 0,
+            "top": 945,
+            "width": 313,
+            "height": 309
+          },
+          {
+            "left": 313,
+            "top": 945,
+            "width": 334,
+            "height": 309
+          },
+          {
+            "left": 647,
+            "top": 945,
+            "width": 294,
+            "height": 309
+          },
+          {
+            "left": 941,
+            "top": 945,
+            "width": 313,
+            "height": 309
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 81,
+            "y": 52,
+            "width": 175,
+            "height": 239,
+            "count": 22317
+          },
+          {
+            "x": 78,
+            "y": 47,
+            "width": 176,
+            "height": 244,
+            "count": 21935
+          },
+          {
+            "x": 77,
+            "y": 48,
+            "width": 180,
+            "height": 243,
+            "count": 22635
+          },
+          {
+            "x": 80,
+            "y": 49,
+            "width": 169,
+            "height": 242,
+            "count": 21448
+          },
+          {
+            "x": 87,
+            "y": 49,
+            "width": 183,
+            "height": 240,
+            "count": 24036
+          },
+          {
+            "x": 80,
+            "y": 48,
+            "width": 200,
+            "height": 238,
+            "count": 23821
+          },
+          {
+            "x": 87,
+            "y": 50,
+            "width": 220,
+            "height": 239,
+            "count": 25324
+          },
+          {
+            "x": 86,
+            "y": 50,
+            "width": 188,
+            "height": 235,
+            "count": 23015
+          },
+          {
+            "x": 90,
+            "y": 41,
+            "width": 219,
+            "height": 225,
+            "count": 28205
+          },
+          {
+            "x": 15,
+            "y": 38,
+            "width": 296,
+            "height": 229,
+            "count": 31351
+          },
+          {
+            "x": 23,
+            "y": 38,
+            "width": 301,
+            "height": 227,
+            "count": 31777
+          },
+          {
+            "x": 75,
+            "y": 38,
+            "width": 190,
+            "height": 233,
+            "count": 22306
+          },
+          {
+            "x": 63,
+            "y": 8,
+            "width": 232,
+            "height": 249,
+            "count": 27559
+          },
+          {
+            "x": 8,
+            "y": 20,
+            "width": 322,
+            "height": 238,
+            "count": 30748
+          },
+          {
+            "x": 67,
+            "y": 36,
+            "width": 202,
+            "height": 220,
+            "count": 24423
+          },
+          {
+            "x": 41,
+            "y": 101,
+            "width": 244,
+            "height": 154,
+            "count": 18143
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "2f01d03defa6005cf8f8773377fecc2df1b7cfcf557758ee415ccffd1386f5af",
+        "assetHash": "a3a280a87d3035b7bd1343bc63d560f1954eedbeb914043c7f49236f5a8ff731",
+        "stillHash": "135a6baaf687752da3d099c9f6f8b124b3e860d27c0433a8f4bca827a48b23e1",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_12_a",
+      "name": "蝕晶飛蝠",
+      "role": "normal",
+      "hourIndex": 11,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-12-normal-a.webp",
+      "atlas": "map-12-normal-a_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.17578125,
+          0.390625,
+          0.822265625,
+          0.9375
+        ],
+        [
+          0.1796875,
+          0.400390625,
+          0.8203125,
+          0.9375
+        ],
+        [
+          0.203125,
+          0.400390625,
+          0.796875,
+          0.9375
+        ],
+        [
+          0.162109375,
+          0.427734375,
+          0.837890625,
+          0.9375
+        ],
+        [
+          0.1875,
+          0.330078125,
+          0.810546875,
+          0.9375
+        ],
+        [
+          0.154296875,
+          0.423828125,
+          0.84375,
+          0.9375
+        ],
+        [
+          0.130859375,
+          0.486328125,
+          0.8671875,
+          0.9375
+        ],
+        [
+          0.15234375,
+          0.328125,
+          0.845703125,
+          0.9375
+        ],
+        [
+          0.142578125,
+          0.39453125,
+          0.85546875,
+          0.9375
+        ],
+        [
+          0.072265625,
+          0.361328125,
+          0.927734375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.337890625,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.166015625,
+          0.37109375,
+          0.83203125,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.404296875,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.140625,
+          0.37109375,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.1796875,
+          0.443359375,
+          0.8203125,
+          0.9375
+        ],
+        [
+          0.076171875,
+          0.60546875,
+          0.921875,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-12-normal-a.png",
+      "sourceHash": "3902a5baf59d72310bb79b3471d82f4c9882ac030cf1f985ea16f4e3f032b8a9",
+      "stillHash": "eb4b883e5dfe27985cc1cbd0625cc5a90bed3067a17a14a0a6a8d5dea92384fe",
+      "prompt": "Use case: stylized-concept. Create a NEW production TRANSPARENT sprite animation atlas of 蝕晶飛蝠; supplied image is IDENTITY AND PAINT STYLE REFERENCE ONLY. Recompose all16 new poses MUCH SMALLER than reference. Critical layout: EXACT4columns×4rows, SIXTEEN equal square cells; every fullbody lies strictly in CENTRAL50% of its cell. Leave the outer25% on ALLFOURSIDES completely EMPTY transparent alpha. No effects, limbs, wingtip or pixel may enter this safetygutter. Small wingextension: bat wings stay partlyfolded to remain compact; NO broad outwardspread. SAME original midnightpurple crystalline bat with ivory fangs, amethyst wing spars, tiny gold seams, realisticpremium handpainted Greek celestial gameart. All3/4 LEFTfacing. Row1 fouridle breathingposes with smallwingchanges; row2 fourcompact wingstroke locomotionposes; row3 windup, divebiteLEFT, clawsnapLEFT, recover; row4 tiny violetcharge IN mouth, release tinyviolet crystal AT mouthLEFT, flinchfoldedwing, deadcollapsed foldedwings. All16 actual distinct illustrated articulatedposes notrotations/copies/scales. NO long beams, NO flight trails, NO looseparticles or shadows. True alpha ZERO emptyspace, no background color, no labels text gridlines or scenery. Very wide clean gutters paramount; never enlarge creature to fill cell.",
+      "generationOriginal": "C:/Users/User/.codex/generated_images/01a151ef-cdd8-7e51-b204-f16647953c84/exec-36b42333-9718-4a3f-be80-b0c491506d65.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.546875,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "3902a5baf59d72310bb79b3471d82f4c9882ac030cf1f985ea16f4e3f032b8a9",
+        "assetHash": "c655fafa864b4b0edada7f4c08be238aefdc96eee5f6ae97496f95963b94b7ed",
+        "stillHash": "eb4b883e5dfe27985cc1cbd0625cc5a90bed3067a17a14a0a6a8d5dea92384fe",
+        "sourceSize": [
+          1536,
+          1024
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "586685292fe3836ffe1308e0dfc64651f3eda22fdb95b33adfe448d70bf6006a",
+          "2b62dcd5557716846bf791beda5ee12c00968930b83459044a8b90e714ad7827",
+          "e169e5414fbe3eb849b2751ed0c2955ddcc44abf71832d7976ee32585c73079d",
+          "0af4cd565311257afed16104fb16b7fe446e0e9fcd8ba1d483b0e8760a5ea2ae",
+          "95c5b83b8a92820ea5bf06b926df74048dcc08f0780996590237a2fac3a6919b",
+          "3fe2bfa532e0af86466adaa4cdb1da153af1dbecd59390962ee090611ead69b5",
+          "55943c6c50d92048c48965096a31076914b4f6faa5bed64f4fb25fb894922d20",
+          "365e2e86d9948b5db037fca10d02da68696fce4d5c4dde2de5e61ddbdbc7ae57",
+          "041cd641757a4621c623db4337183b4764a8400167c5c6c0d91dfeb078e83487",
+          "6d081a9a2f9e0712c84ad6e0c42fd8c3153877b6d2d8297b684a129bf94aac9c",
+          "bcaf66cf4ffdc82ee4dea42f76b2a9dc1e1da9889974f17aefd172a544c59e1f",
+          "22b8edccc7a0ef61c4de3fb8ed8e44bdd27682ec4414172aa81c4d89dbe3e7bc",
+          "67614f63d0201ecf9eb3b36e2a6589c0876aa1d588a676ebf9656551ab117c06",
+          "89e749bfdd43a7c8afda761352beff46d8d6129f394e8557cad92e0aae82c546",
+          "c243c21ce8f12185fc1420f754d1e39cc2fcc9296e8b72ecfc4c3aed60c40c6f",
+          "88e46e55bad139704268c751efc5675031bcf4ecc65ea3fd86ac3124316cda6e"
+        ],
+        "sourceFrameHashes": [
+          "d94679dbec18e49207b6dfda9a74154f7796d1da3c9a3f26c66808ace4e7698c",
+          "a3be0120d4f7c08551a81a9308db1c511cacca59315f1201bf9aea38e5e96d12",
+          "b2e060d82ff84b9ee6aeb8ac8a7ed002262f74d1ddf67e942dbfeede63f5a486",
+          "b731edea1b984b34b737d870e1f8a885e57be5396de8acc5a15279fd677e3ffb",
+          "ae581d540e310cf34ff3dda2e95da93eef38a7dbe23248a629f8c5d14409c916",
+          "d41fdbcb3caf2912d3ee63d3d3ed6c4d1788178e93d9a42d802bd79aecdc90b5",
+          "ac9b18b1a013eb29870388667d9a7b1d0f9b35d82d5d27d8a787ae08bc7da15d",
+          "631be74e7500980ac9108b778871f0cd26f0e3d6cc4174561d85ec66e8a53dd5",
+          "ec4401d3bedd43068d536abedccd5c7190a99947d9fae9372129767dcc5b5b81",
+          "a72ef967bd950acf4c0c566720967dee18a94f2c0ab24f3658c833505d72e9ac",
+          "a869b81f256355d5f5f12417456c597f558929d83ddb8b620bbe4c917c05e6e8",
+          "3b06ca791476b6b3306b2ca5245029a5502a48491ae9c15c1e4e4130c52d6d80",
+          "bffdc3ffbda59444b1571ebd2d18fade45ec3f16ff2c2f88a11134c4916e7282",
+          "7ac145d450051be7bdd4c348d3cc2e8f6ae0d9797a0b7fb6a2a20d4e6e1c685e",
+          "e07632a7eabcc01c60ebfab55297e4731a7b702b736579ba66b422dd8ff8d462",
+          "a4260d89326c4932e0086c7c513c151c11ceb74c93ee09ab4d8982b34adfa98d"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 384,
+            "height": 262
+          },
+          {
+            "left": 384,
+            "top": 0,
+            "width": 384,
+            "height": 262
+          },
+          {
+            "left": 768,
+            "top": 0,
+            "width": 384,
+            "height": 262
+          },
+          {
+            "left": 1152,
+            "top": 0,
+            "width": 384,
+            "height": 262
+          },
+          {
+            "left": 0,
+            "top": 262,
+            "width": 384,
+            "height": 250
+          },
+          {
+            "left": 384,
+            "top": 262,
+            "width": 384,
+            "height": 250
+          },
+          {
+            "left": 768,
+            "top": 262,
+            "width": 384,
+            "height": 250
+          },
+          {
+            "left": 1152,
+            "top": 262,
+            "width": 384,
+            "height": 250
+          },
+          {
+            "left": 0,
+            "top": 512,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 384,
+            "top": 512,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 768,
+            "top": 512,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 1152,
+            "top": 512,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 0,
+            "top": 768,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 384,
+            "top": 768,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 768,
+            "top": 768,
+            "width": 384,
+            "height": 256
+          },
+          {
+            "left": 1152,
+            "top": 768,
+            "width": 384,
+            "height": 256
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 122,
+            "y": 95,
+            "width": 195,
+            "height": 165,
+            "count": 18328
+          },
+          {
+            "x": 123,
+            "y": 95,
+            "width": 193,
+            "height": 162,
+            "count": 18424
+          },
+          {
+            "x": 111,
+            "y": 98,
+            "width": 179,
+            "height": 162,
+            "count": 17546
+          },
+          {
+            "x": 73,
+            "y": 106,
+            "width": 204,
+            "height": 154,
+            "count": 17420
+          },
+          {
+            "x": 111,
+            "y": 41,
+            "width": 188,
+            "height": 183,
+            "count": 19211
+          },
+          {
+            "x": 126,
+            "y": 79,
+            "width": 208,
+            "height": 155,
+            "count": 20280
+          },
+          {
+            "x": 101,
+            "y": 98,
+            "width": 222,
+            "height": 136,
+            "count": 17628
+          },
+          {
+            "x": 90,
+            "y": 45,
+            "width": 209,
+            "height": 184,
+            "count": 21312
+          },
+          {
+            "x": 109,
+            "y": 49,
+            "width": 215,
+            "height": 164,
+            "count": 21787
+          },
+          {
+            "x": 100,
+            "y": 45,
+            "width": 258,
+            "height": 174,
+            "count": 23349
+          },
+          {
+            "x": 69,
+            "y": 39,
+            "width": 264,
+            "height": 181,
+            "count": 24587
+          },
+          {
+            "x": 99,
+            "y": 49,
+            "width": 201,
+            "height": 171,
+            "count": 19586
+          },
+          {
+            "x": 123,
+            "y": 31,
+            "width": 211,
+            "height": 161,
+            "count": 19974
+          },
+          {
+            "x": 129,
+            "y": 18,
+            "width": 216,
+            "height": 171,
+            "count": 21684
+          },
+          {
+            "x": 114,
+            "y": 44,
+            "width": 193,
+            "height": 149,
+            "count": 18140
+          },
+          {
+            "x": 58,
+            "y": 90,
+            "width": 255,
+            "height": 100,
+            "count": 16589
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "3902a5baf59d72310bb79b3471d82f4c9882ac030cf1f985ea16f4e3f032b8a9",
+        "assetHash": "c655fafa864b4b0edada7f4c08be238aefdc96eee5f6ae97496f95963b94b7ed",
+        "stillHash": "eb4b883e5dfe27985cc1cbd0625cc5a90bed3067a17a14a0a6a8d5dea92384fe",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_12_b",
+      "name": "灰燼星骸",
+      "role": "normal",
+      "hourIndex": 11,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-12-normal-b.webp",
+      "atlas": "map-12-normal-b_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.1640625,
+          0.23046875,
+          0.8359375,
+          0.9375
+        ],
+        [
+          0.146484375,
+          0.23828125,
+          0.853515625,
+          0.9375
+        ],
+        [
+          0.150390625,
+          0.23828125,
+          0.849609375,
+          0.9375
+        ],
+        [
+          0.146484375,
+          0.24609375,
+          0.853515625,
+          0.9375
+        ],
+        [
+          0.1015625,
+          0.1953125,
+          0.896484375,
+          0.9375
+        ],
+        [
+          0.1015625,
+          0.189453125,
+          0.896484375,
+          0.9375
+        ],
+        [
+          0.087890625,
+          0.203125,
+          0.91015625,
+          0.9375
+        ],
+        [
+          0.140625,
+          0.1953125,
+          0.857421875,
+          0.9375
+        ],
+        [
+          0.119140625,
+          0.220703125,
+          0.880859375,
+          0.9375
+        ],
+        [
+          0.078125,
+          0.23046875,
+          0.921875,
+          0.9375
+        ],
+        [
+          0.10546875,
+          0.259765625,
+          0.892578125,
+          0.9375
+        ],
+        [
+          0.15234375,
+          0.220703125,
+          0.84765625,
+          0.9375
+        ],
+        [
+          0.130859375,
+          0.2421875,
+          0.869140625,
+          0.9375
+        ],
+        [
+          0.14453125,
+          0.224609375,
+          0.853515625,
+          0.9375
+        ],
+        [
+          0.1953125,
+          0.287109375,
+          0.802734375,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.537109375,
+          0.9375,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-12-normal-b.png",
+      "sourceHash": "4444f1763badd0b035b1ff594ad636e5d715ff1a3135bcae2de6f650bdb3724c",
+      "stillHash": "72266ad039830e121bbf97fc2b5c90bfe223e401b0b34696afd64c38e5822e25",
+      "prompt": "Use case: stylized-concept. Create a NEW production TRANSPARENT sprite animation atlas of 灰燼星骸; supplied image is IDENTITY AND PAINT STYLE REFERENCE ONLY. Recompose all16 new poses MUCH SMALLER than reference. Critical layout: EXACT4columns×4rows, SIXTEEN equal square cells; every fullbody lies strictly in CENTRAL50% of its cell. Leave outer25% on ALLFOURSIDES completely EMPTYtransparentalpha. No effects, claws, debris or pixel may enter safetygutter. SAME original alienrock meteorhusk: obsidiannavy hunched compacttorso, two stone reversejointlegs, two short clawarms, ivoryrib plates enclosing violetstarcore, wedgeheadLEFT, antiquegold fissures. Premiumrealistic handpainted Greek celestial fantasy. All3/4LEFT. Row1 fouridle smallshouldermotions, row2 fourreallegwalkposes, row3 shortarmwindup, compactLEFTclawswipe close tobody, followthrough, recovery; row4 tinycorelight, tinyorbbetweenhandsLEFT, flinch, entirehuskdeadfoldedlow. All16 actual distinct drawn articulatedposes no rotation/duplication. NO sweeparcs, NO bigauras, NObeams, NOtrails, NO looseparticles. TruealphaZERO emptyspace, no backgroundcolor/floor/shadow/text/gridlines/scenery. Wide clear spacing paramount, doNOT enlarge tofillcell.",
+      "generationOriginal": "C:/Users/User/.codex/generated_images/01a151ef-cdd8-7e51-b204-f16647953c84/exec-e7f8f8d7-2d53-4dab-ba35-0f1d2379bfb9.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.70703125,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "4444f1763badd0b035b1ff594ad636e5d715ff1a3135bcae2de6f650bdb3724c",
+        "assetHash": "278c3bfe0c087156c2fea6a70db4e430c117029a16995414b984d00a9ad35d16",
+        "stillHash": "72266ad039830e121bbf97fc2b5c90bfe223e401b0b34696afd64c38e5822e25",
+        "sourceSize": [
+          1402,
+          1122
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "110cdf69558861e6602f84d5c092e9c5ec84eb4d0850999e6638b7368d96b194",
+          "5b368f048fc6f6d29f83b1f223c825cde09d4b8dc7524e8bebbdfecf7c3b3128",
+          "b1c361965f719ed921e4695286cfc754b3e8ef181964694e5559090f045cd1d8",
+          "ea81537a189ecf8c9366c778164cdd1052ff329883d2d87041d27788364b1ef5",
+          "afcf4ab35864115da83c870df580de08d74e55668bc61eaea282b0335e1f8eac",
+          "c7c2a3d167f40c9d13832e4604b231aae88283c2a0256462d333999b0836e6aa",
+          "02816b486cae7643941275e91db11afac9dced04b4d57eaf23690f2bcb5f05f4",
+          "ddd21fdfb91e62a10b1a9b821112dfd3cfa54898ebd98729c13afdf23e3bd167",
+          "c6089a44c8f6da3ee15a41438368a7e8e2faec53a34c1d04932669175c587354",
+          "8b27fd7998a457e370506232b4c136d233f79aa50e560800bc9c103376fc9fcb",
+          "7df02533cc54dfd1b3b95a6d34dea669eb077365f6ea5de2e83c134de54d5609",
+          "938fbf5b2720ad75fa87e71e85e60b40616e112940e636f7b34a0add300cdcff",
+          "38ea9695c09e1338f823da352091a0a0703c5f10cdf84653bd0f9179b7e0142e",
+          "b51bf2d53388c8d1cbcca227baffd6aab1c3f249bc1fd3c1d29f85038fb942fc",
+          "a0b3d50e51338417288979d2fdce3a762daeeda6a27806493ced4b95f61e6c5c",
+          "64a2c426446866b5c8199bdda42be72f90772d7afcab8ad66d8d53f3aa6c67bb"
+        ],
+        "sourceFrameHashes": [
+          "39097ce0ba47e164b2c0ee3f113f7c21b8ef61f959d99bc1a59f5e72bfc578d9",
+          "dbe530ae192411c4cfa8bb28ee96573df5f5ec48c8b79a0192514e82f4347c40",
+          "d24b75f0af33583265b37df22b94241b45848c85568dd8e81ddb18071dad9d23",
+          "2ac5267b86c9fe66459eeecea2a13356fbddae8b7159efca6a47a2000790f0a3",
+          "0ed09b665130307396342b61f1e58dbeee045c34e50af23ba96f594c860487ec",
+          "b86c18b08343a1107f61f250d3e1a675383e2d894b954a7db64ad0e9fe064245",
+          "80d3332ed9d94d06420728ab0571bf9038c95dc261f24e71d7a2c0d515a06e0a",
+          "ec62e5d79e8f904de7475a3808609c8928c439e90a8123aa75a8778e76129c6f",
+          "057870ddfbe285ea8b6e1151553e8d9f6d2fadd6bfd46adf6c1c50d3f6b76302",
+          "25293c0301fa3bcd8e56d8a225f88be79804ce6b17485089cdbc22cdf2c80604",
+          "cd3e44f21d7118e82c6acab44cb8e7be4445f6bae32f9673e5b00269ebe945d0",
+          "b550b2a033fa806a4b81ab21d58a3405a84464fa5dbe2b68ae20155223a116bd",
+          "9f61f05126215984c28000365c47cae767935615581a75a414aaa28c8c05ebf1",
+          "a8a75104362d5fa7a95b3dfc1c19c2975057e256bf5bfc4ba4d9b71870cfda41",
+          "ce5d7317ab76f9224245b98da0f5d7f04bcca52f50929bc8d7a0e4fb9daadfe4",
+          "80aee84594222d1b802f672024d163a5b4dda36393964b2de040c5e45b305d56"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 350,
+            "height": 295
+          },
+          {
+            "left": 350,
+            "top": 0,
+            "width": 351,
+            "height": 295
+          },
+          {
+            "left": 701,
+            "top": 0,
+            "width": 351,
+            "height": 295
+          },
+          {
+            "left": 1052,
+            "top": 0,
+            "width": 350,
+            "height": 295
+          },
+          {
+            "left": 0,
+            "top": 295,
+            "width": 350,
+            "height": 271
+          },
+          {
+            "left": 350,
+            "top": 295,
+            "width": 351,
+            "height": 271
+          },
+          {
+            "left": 701,
+            "top": 295,
+            "width": 350,
+            "height": 271
+          },
+          {
+            "left": 1051,
+            "top": 295,
+            "width": 351,
+            "height": 271
+          },
+          {
+            "left": 0,
+            "top": 566,
+            "width": 350,
+            "height": 276
+          },
+          {
+            "left": 350,
+            "top": 566,
+            "width": 351,
+            "height": 276
+          },
+          {
+            "left": 701,
+            "top": 566,
+            "width": 350,
+            "height": 276
+          },
+          {
+            "left": 1051,
+            "top": 566,
+            "width": 351,
+            "height": 276
+          },
+          {
+            "left": 0,
+            "top": 842,
+            "width": 350,
+            "height": 280
+          },
+          {
+            "left": 350,
+            "top": 842,
+            "width": 351,
+            "height": 280
+          },
+          {
+            "left": 701,
+            "top": 842,
+            "width": 351,
+            "height": 280
+          },
+          {
+            "left": 1052,
+            "top": 842,
+            "width": 350,
+            "height": 280
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 112,
+            "y": 92,
+            "width": 191,
+            "height": 201,
+            "count": 20285
+          },
+          {
+            "x": 85,
+            "y": 94,
+            "width": 201,
+            "height": 199,
+            "count": 20467
+          },
+          {
+            "x": 68,
+            "y": 93,
+            "width": 199,
+            "height": 199,
+            "count": 20238
+          },
+          {
+            "x": 52,
+            "y": 96,
+            "width": 201,
+            "height": 197,
+            "count": 20443
+          },
+          {
+            "x": 102,
+            "y": 48,
+            "width": 226,
+            "height": 211,
+            "count": 22035
+          },
+          {
+            "x": 89,
+            "y": 46,
+            "width": 226,
+            "height": 213,
+            "count": 21516
+          },
+          {
+            "x": 67,
+            "y": 50,
+            "width": 234,
+            "height": 209,
+            "count": 22015
+          },
+          {
+            "x": 50,
+            "y": 48,
+            "width": 204,
+            "height": 211,
+            "count": 20980
+          },
+          {
+            "x": 116,
+            "y": 46,
+            "width": 217,
+            "height": 204,
+            "count": 23314
+          },
+          {
+            "x": 76,
+            "y": 49,
+            "width": 240,
+            "height": 201,
+            "count": 22771
+          },
+          {
+            "x": 79,
+            "y": 56,
+            "width": 224,
+            "height": 193,
+            "count": 21943
+          },
+          {
+            "x": 69,
+            "y": 45,
+            "width": 198,
+            "height": 204,
+            "count": 21958
+          },
+          {
+            "x": 123,
+            "y": 30,
+            "width": 210,
+            "height": 198,
+            "count": 20508
+          },
+          {
+            "x": 99,
+            "y": 24,
+            "width": 202,
+            "height": 203,
+            "count": 20091
+          },
+          {
+            "x": 95,
+            "y": 43,
+            "width": 173,
+            "height": 185,
+            "count": 19132
+          },
+          {
+            "x": 45,
+            "y": 107,
+            "width": 249,
+            "height": 114,
+            "count": 18015
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "4444f1763badd0b035b1ff594ad636e5d715ff1a3135bcae2de6f650bdb3724c",
+        "assetHash": "278c3bfe0c087156c2fea6a70db4e430c117029a16995414b984d00a9ad35d16",
+        "stillHash": "72266ad039830e121bbf97fc2b5c90bfe223e401b0b34696afd64c38e5822e25",
+        "desktop": false,
+        "mobile": false
+      }
+    },
+    {
+      "key": "sr2_12_e",
+      "name": "終殿執刑獸",
+      "role": "elite",
+      "hourIndex": 11,
+      "folder": "star-ring-pools-20261019",
+      "still": "map-12-elite.webp",
+      "atlas": "map-12-elite_attack.webp",
+      "cols": 4,
+      "rows": 4,
+      "frames": 16,
+      "cell": 512,
+      "ratio": 1,
+      "attackDirection": -1,
+      "feet": 0.9375,
+      "frameBounds": [
+        [
+          0.203125,
+          0.4140625,
+          0.794921875,
+          0.9375
+        ],
+        [
+          0.205078125,
+          0.40625,
+          0.79296875,
+          0.9375
+        ],
+        [
+          0.20703125,
+          0.416015625,
+          0.79296875,
+          0.9375
+        ],
+        [
+          0.21875,
+          0.4296875,
+          0.78125,
+          0.9375
+        ],
+        [
+          0.19921875,
+          0.39453125,
+          0.80078125,
+          0.9375
+        ],
+        [
+          0.15625,
+          0.41015625,
+          0.841796875,
+          0.9375
+        ],
+        [
+          0.1640625,
+          0.396484375,
+          0.8359375,
+          0.9375
+        ],
+        [
+          0.18359375,
+          0.400390625,
+          0.814453125,
+          0.9375
+        ],
+        [
+          0.166015625,
+          0.431640625,
+          0.83203125,
+          0.9375
+        ],
+        [
+          0.0625,
+          0.431640625,
+          0.9375,
+          0.9375
+        ],
+        [
+          0.154296875,
+          0.4765625,
+          0.845703125,
+          0.9375
+        ],
+        [
+          0.189453125,
+          0.404296875,
+          0.810546875,
+          0.9375
+        ],
+        [
+          0.18359375,
+          0.421875,
+          0.814453125,
+          0.9375
+        ],
+        [
+          0.17578125,
+          0.40625,
+          0.822265625,
+          0.9375
+        ],
+        [
+          0.1328125,
+          0.419921875,
+          0.8671875,
+          0.9375
+        ],
+        [
+          0.078125,
+          0.638671875,
+          0.921875,
+          0.9375
+        ]
+      ],
+      "source": "art-production/star-ring-pools-20261019/maps-09-12/source/map-12-elite.png",
+      "sourceHash": "bdb7a77a01c4137466f83449b0cd6d210547781edd5fc528de7048300295253e",
+      "stillHash": "336685023ee4733b6260d2b2f1654432626c17667fba5b7a660d00b147ef2b97",
+      "prompt": "A square transparent PNG animation spritesheet with 4columns by4rows. Sixteen very SMALL isolated monsters. Each sprite ONLY100pixelswide inside a roughly300pixelcell. HUGE emptytransparent gutters of at least80pixels on all4sides of eachcell. Do NOT make a contactposter filledwithlargecreatures. Original 終殿執刑獸: navy obsidian low alien quadruped with TWO short curved ivory bladeforelimbs, compactlionlike torso, shortstronghindlegs, narrow ivorymasked head, segmentedtail curled tightly UP against flank, goldGreekfiligree. Detailed realistic handpainted premium celestialfantasy. LEFTfacing3quarter. Sixteen actual distinct fullbody drawings: row1 fouridle breathingposes;row2 fourarticulatedwalkingsteps;row3 bladepulledback/SHORTleftslash/followthrough/recover;row4 tinyvioletlightbetweenblades/smallpinlightatleftblade/hurt/deadcollapsed. Keep blades SHORT and tailcurled soeverypose is COMPACT. No effects extendingbeyondbody, no trails, no extraobjects. FULL alpha transparency allnegative space, no background floor shadows text gridlines numbers or watermark. The central50percent of eachcellcontainswholecreature; surrounding25percentoneachsidemust be entirelyempty.",
+      "generationOriginal": "C:/Users/User/.codex/generated_images/01a151ef-cdd8-7e51-b204-f16647953c84/exec-737a19de-e91f-44d8-a3ac-b9d2c55ef53a.png",
+      "generationMode": "built-in image_gen original 16-pose sheet; preserved genuine alpha",
+      "idle": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "move": [
+        4,
+        5,
+        6,
+        7
+      ],
+      "attack": [
+        8,
+        9,
+        10,
+        11
+      ],
+      "cast": [
+        12,
+        13
+      ],
+      "hurt": [
+        14
+      ],
+      "death": [
+        15
+      ],
+      "fps": {
+        "idle": 5,
+        "move": 8,
+        "attack": 8,
+        "cast": 6,
+        "hurt": 6,
+        "death": 1
+      },
+      "bodyHeight": 0.5234375,
+      "ready": false,
+      "qaApproved": false,
+      "sceneQAApproved": false,
+      "technicalQA": {
+        "pass": true,
+        "sourceHash": "bdb7a77a01c4137466f83449b0cd6d210547781edd5fc528de7048300295253e",
+        "assetHash": "94316b7ee8696860b2da96bc611af82f781230fb3fc8420f3da1b32c75fa019e",
+        "stillHash": "336685023ee4733b6260d2b2f1654432626c17667fba5b7a660d00b147ef2b97",
+        "sourceSize": [
+          1254,
+          1254
+        ],
+        "normalizedSize": [
+          2048,
+          2048
+        ],
+        "frames": 16,
+        "distinct": 16,
+        "minMargin": 32,
+        "frameHashes": [
+          "a10c49129eb7034d34323502cf09e5e4fddc3eeb1a8463d00a6720ebc67416b5",
+          "eba82462476ff654866d2b8c9daa7385862340b837c77e7f762935a494823ec5",
+          "5b43f71b8bde35dace1dd92cdc8ca4a8cbaea0453efab4dca09c69e7508f9900",
+          "9ed75d5c763ccbfeaae557a0893741f160a8e05ce42a4740d876e0dd4028e43e",
+          "951fa8a13e6c1effcfbb4375ae61530a982388eb088860b8fb16f78cd5a86754",
+          "cf7fa990c9dd14c82c80286ca32605618fa0038fcb848b5fa724bd3f99119293",
+          "dcab5b1b9666c6b4f6b739b7028adb6b50191559cb10843581622e4bafd21b2d",
+          "4ad61656673d50b1b0592caadc50473e187a0d5610416db46473405c03652770",
+          "456fc69aed1e6a7077d849d2a17945b6f5a786e8e5f3b18330e7309d59823878",
+          "126c583e9e976e8f10fc642e05d72b69cafbf229cee388d03619f2371a8de241",
+          "88ab7078ca8c4d68060eb6a743ff58001b6bd7cd54f0f65adc0d80f22038127b",
+          "66dfc950f99b9b0a8685205b794f77819379f5d575eb9b50ffaeb0ac9e94b93a",
+          "61fd2dcf8b42efe4742adeef8ca3f8b8e0cf1e0f077e334d4f99f6d6572ec600",
+          "036d46e97b6d640d074955b52051f78e3fbd00b1bd0e45dab6551644d1fe9f4f",
+          "37254d92475c426c3359338f48e9e08af7e87f7e5a81b6ec43a50e945763949a",
+          "bceb622ca4ed46cc2777c23d345c7cb91b4f288739bcb311f618045835237918"
+        ],
+        "sourceFrameHashes": [
+          "c74fe729de3d7d434bc65b6bf2c62fc0806f2691ff1a26a2ae90823304507ad1",
+          "d86acc6bd9020b1216c58ae12239af264b95f40f31f51456a9bbf066bd7db2f4",
+          "5871cb63917d26d724db9ef883862fdb3d625a9dc4a0afac45f177154bd6db95",
+          "939072162a2f10b1f6d0027cc1325ef80d5c4409641d3497241feb65d833349c",
+          "aaeb7067b1112c6ae3eead2f3c71d2aeb01eaac19f202d726e76e95c974c9ac5",
+          "18cab67c4d0a04f8e018f724876f061500c36132633648c3e2642ad57ab35ede",
+          "eb1cd67849ad8184d84fd8282acbe5195c5a046ddd6e11241b6796a8acec294f",
+          "554042afa1efeb451d4fb105c54ae72c60d136fa5bf892340dda70836e4114b9",
+          "726a62fbeb70a42815c8e57b8453bdd68b5da1336182f535283eb95c2101b159",
+          "d5196e8f71632174759bf1941349563d4d71396d4b63c46cb3c8c06ab827bcfc",
+          "d4c21dd8e75710144f995aa0f89e0e49116b7c40438df29db6844aea1fe7c883",
+          "083a814fa9d198435f8ebd12ca763a7e4c0894495827b6cc960d64c451fbd23a",
+          "43cae0b409ca74a0b1ea79b6dbdec2c2e630dbfb6f6f267d6e83b671e429ed40",
+          "b9da5daf57e6070add8aa2659117c69ca96e89d4edb02c51d07c576a3d050a6c",
+          "b4bf7f5fff0034fff88d6cd136ee7984fc3d9a0a4eee831369289682cddfe466",
+          "5a8ebf385389611f241e00ddc42b83624e0bed982ed703d3646625ab3fe7c700"
+        ],
+        "sourceCellRects": [
+          {
+            "left": 0,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 313,
+            "top": 0,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 627,
+            "top": 0,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 941,
+            "top": 0,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 0,
+            "top": 314,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 313,
+            "top": 314,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 627,
+            "top": 314,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 941,
+            "top": 314,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 0,
+            "top": 627,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 313,
+            "top": 627,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 627,
+            "top": 627,
+            "width": 313,
+            "height": 313
+          },
+          {
+            "left": 940,
+            "top": 627,
+            "width": 314,
+            "height": 313
+          },
+          {
+            "left": 0,
+            "top": 940,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 314,
+            "top": 940,
+            "width": 313,
+            "height": 314
+          },
+          {
+            "left": 627,
+            "top": 940,
+            "width": 314,
+            "height": 314
+          },
+          {
+            "left": 941,
+            "top": 940,
+            "width": 313,
+            "height": 314
+          }
+        ],
+        "sourcePoseBounds": [
+          {
+            "x": 77,
+            "y": 81,
+            "width": 184,
+            "height": 163,
+            "count": 17594
+          },
+          {
+            "x": 78,
+            "y": 79,
+            "width": 183,
+            "height": 165,
+            "count": 17347
+          },
+          {
+            "x": 76,
+            "y": 83,
+            "width": 182,
+            "height": 162,
+            "count": 17400
+          },
+          {
+            "x": 79,
+            "y": 88,
+            "width": 175,
+            "height": 158,
+            "count": 17060
+          },
+          {
+            "x": 76,
+            "y": 75,
+            "width": 187,
+            "height": 169,
+            "count": 18803
+          },
+          {
+            "x": 54,
+            "y": 80,
+            "width": 213,
+            "height": 164,
+            "count": 18944
+          },
+          {
+            "x": 57,
+            "y": 83,
+            "width": 209,
+            "height": 168,
+            "count": 20363
+          },
+          {
+            "x": 61,
+            "y": 78,
+            "width": 196,
+            "height": 167,
+            "count": 18981
+          },
+          {
+            "x": 66,
+            "y": 82,
+            "width": 207,
+            "height": 157,
+            "count": 18735
+          },
+          {
+            "x": 23,
+            "y": 82,
+            "width": 272,
+            "height": 157,
+            "count": 20345
+          },
+          {
+            "x": 64,
+            "y": 96,
+            "width": 215,
+            "height": 143,
+            "count": 18528
+          },
+          {
+            "x": 70,
+            "y": 78,
+            "width": 193,
+            "height": 166,
+            "count": 18313
+          },
+          {
+            "x": 68,
+            "y": 75,
+            "width": 196,
+            "height": 160,
+            "count": 18900
+          },
+          {
+            "x": 62,
+            "y": 77,
+            "width": 201,
+            "height": 165,
+            "count": 18176
+          },
+          {
+            "x": 47,
+            "y": 74,
+            "width": 228,
+            "height": 161,
+            "count": 21279
+          },
+          {
+            "x": 21,
+            "y": 132,
+            "width": 262,
+            "height": 93,
+            "count": 16061
+          }
+        ],
+        "hasAlpha": true,
+        "packing": "Adaptive low-alpha grid separators and main-pose bounding crop, common scale, centered 512 cells, baseline 480; no duplicate or transformed pseudo-frames, no background removal."
+      },
+      "sceneQA": {
+        "sourceHash": "bdb7a77a01c4137466f83449b0cd6d210547781edd5fc528de7048300295253e",
+        "assetHash": "94316b7ee8696860b2da96bc611af82f781230fb3fc8420f3da1b32c75fa019e",
+        "stillHash": "336685023ee4733b6260d2b2f1654432626c17667fba5b7a660d00b147ef2b97",
+        "desktop": false,
+        "mobile": false
+      }
+    }
+  ]
+}
