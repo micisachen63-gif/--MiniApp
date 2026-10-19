@@ -12,6 +12,9 @@
     "sync:check:bot": "node scripts/release-sync.mjs check bot",
     "deploy:worker": "node scripts/deploy-locked.mjs worker",
     "deploy:bot": "node scripts/deploy-locked.mjs bot",
+    "receipts:init": "node scripts/deployment-records.mjs init",
+    "receipts:record:worker": "node scripts/deploy-locked.mjs worker record",
+    "receipts:record:bot": "node scripts/deploy-locked.mjs bot record",
     "test:monsters": "node --test worker/test/monster-*.test.js",
     "monster:check": "node worker/tools/refresh-monster-catalog.mjs --check",
     "monster:review": "cd worker && node tools/build-monster-review-data.mjs"

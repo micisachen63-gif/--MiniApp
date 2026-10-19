@@ -9,6 +9,7 @@ import assert from 'node:assert/strict';
 import {assertKnownRelease} from './release-lock.mjs';
 import {isStaticAsset} from './static-assets.mjs';
 import {retryRead} from './read-only-network.mjs';
+import {readDeploymentRecords,appendDeploymentReceipt} from './deployment-records.mjs';
 
 const ROOT=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'..');
 const REPO='https://github.com/micisachen63-gif/--MiniApp';
@@ -18,6 +19,7 @@ const sha=b=>createHash('sha256').update(b).digest('hex');
 const WORK=path.join(ROOT,'.release-sync');
 const agent=new https.Agent({keepAlive:true,maxSockets:4});
 const cli=process.env.RPG_WRANGLER_CLI||path.join(ROOT,'node_modules/wrangler/bin/wrangler.js');
+let deploymentRecords;
 function run(command,args,cwd=ROOT){const r=spawnSync(command,args,{cwd,windowsHide:true,encoding:'utf8',maxBuffer:32e6});assert.equal(r.status,0,`${command} ${args.join(' ')} failed\n${r.stderr||r.stdout||r.error?.message}`);return r.stdout.trim()}
 const git=(...args)=>run('git',args);
 const sorted=a=>[...a].sort((x,y)=>JSON.stringify(x).localeCompare(JSON.stringify(y)));
@@ -69,7 +71,7 @@ async function build(service){await publicInventory(service);await fs.access(cli
 async function publicRead(url){for(let i=0;i<4;i++){const r=await request(url);if([301,302,303,307,308].includes(r.status)){const next=new URL(r.headers.get('location'),url);assert.equal(next.origin,new URL(url).origin);url=next.href;continue}assert(r.ok,'Public GET failed '+new URL(url).pathname+' HTTP '+r.status);return Buffer.from(await r.arrayBuffer())}throw Error('Excessive public redirects')}
 async function assets(service,commit){
  const prefix=service.dir+'/public/',all=git('ls-files','-z','--',prefix).split('\0').filter(Boolean).filter(isStaticAsset);let previous;
- try{previous=JSON.parse(await fs.readFile(path.join(ROOT,'docs/deployment',service.name+'.json')))}catch(e){if(e.code!=='ENOENT')throw e}
+ previous=deploymentRecords.receipts[service.name];
  const chosen=new Set(all.filter(f=>!f.slice(prefix.length).includes('/')&&/\.(?:js|css|json|html)$/.test(f)));for(const f of all.filter(f=>/\.(?:png|webp|jpg|wasm)$/.test(f)).filter((_,i)=>i%Math.max(1,Math.floor(all.length/4))===0).slice(0,4))chosen.add(f);
  if(previous?.sourceCommit){for(const file of git('diff','--name-only',previous.sourceCommit,commit,'--',prefix).split(/\r?\n/).filter(Boolean))if(all.includes(file))chosen.add(file)}
  const queue=[...chosen],verified=[];await Promise.all(Array.from({length:4},async()=>{for(;;){const file=queue.shift();if(!file)return;const actual=sha(await publicRead(`https://${service.name}.micisachen.workers.dev/${file.slice(prefix.length)}?sync=${commit}`));assert.equal(actual,await digest(path.join(ROOT,file)),'Live asset differs: '+file);verified.push(file)}}));return {scope:'Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.',verifiedCount:verified.length,files:verified.sort()};
@@ -78,8 +80,8 @@ async function verify(service,commit,built,before){const token=await credentials
  const runtime=await modules(service,token);assert.deepEqual(runtime,built,'Live runtime differs from GitHub build; inspect the newer release, never overwrite it to make a check pass');const verifiedAssets=await assets(service,commit);const health=JSON.parse((await publicRead(`https://${service.name}.micisachen.workers.dev/health`)).toString());assert.equal(health.ok,true);assert.deepEqual((await state(service,token)).versions,live.versions,'Concurrent publication during verification');assert.equal(git('rev-parse','HEAD'),commit);assert.equal(git('status','--porcelain'),'','Source changed during verification');
  const report={status:'VERIFIED',repository:REPO,sourceCommit:commit,service:service.name,productionVersion:live.versions[0].version_id,activePercentage:100,verifiedAt:new Date().toISOString(),runtimeSHA256:runtime,source:await source(service),assets:verifiedAssets,protectedState:live,noPlayerMutations:true};assert.equal(ready(),commit,'GitHub advanced during verification');await save(path.join(WORK,service.name,'verified.json'),report);console.log(`${service.name}: VERIFIED ${report.productionVersion} @100, GitHub ${commit.slice(0,12)}, ${verifiedAssets.verifiedCount} public files`);return report;
 }
-async function main(){const [mode='check',target='all']=process.argv.slice(2);assert(['check','deploy'].includes(mode),'Use check or deploy');assert(['all','worker','bot'].includes(target),'Use worker, bot, or all');assert(mode!=='deploy'||target!=='all','Deploy one service at a time');const commit=ready();
- for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials());if(mode==='deploy')assertKnownRelease(JSON.parse(await fs.readFile(path.join(ROOT,'docs/deployment',service.name+'.json'),'utf8')),before);const built=await build(service);assert.equal(ready(),commit);
+async function main(){const [mode='check',target='all']=process.argv.slice(2);assert(['check','deploy','record'].includes(mode),'Use check, deploy or record');assert(['all','worker','bot'].includes(target),'Use worker, bot, or all');assert(mode==='check'||target!=='all','Publish or record one service at a time');const commit=ready();deploymentRecords=readDeploymentRecords(ROOT);
+ for(const key of target==='all'?['worker','bot']:[target]){const service=SERVICES[key],before=await state(service,await credentials());if(mode==='deploy')assertKnownRelease(deploymentRecords.receipts[service.name],before);const built=await build(service);assert.equal(ready(),commit);
   if(mode==='deploy'){
    const npm=process.env.npm_execpath;assert(npm,'Use npm run deploy:worker or npm run deploy:bot');console.log(run(process.execPath,[npm,'run',service.test]));assert.equal(ready(),commit);assert.deepEqual(await state(service,await credentials()),before,'Concurrent production change');
    await save(path.join(WORK,service.name,'pending.json'),{sourceCommit:commit,before,built,startedAt:new Date().toISOString()});
@@ -87,8 +89,8 @@ async function main(){const [mode='check',target='all']=process.argv.slice(2);as
    // never retry an uncertain publication automatically.
    const result=spawnSync(process.execPath,[cli,'deploy','--config','wrangler.toml','--tag','git-'+commit.slice(0,12),'--message',REPO+'/commit/'+commit],{cwd:path.join(ROOT,service.dir),windowsHide:true,encoding:'utf8',maxBuffer:32e6}),output=(result.stdout||'')+'\n'+(result.stderr||'');await fs.writeFile(path.join(WORK,service.name,'deploy.log'),output);assert.equal(result.status,0,'Deployment failed/uncertain: inspect live state and deploy.log; do not blindly retry');assert(output.includes('Current Version ID:'),'No version receipt: inspect live state');
   }
-  const report=await verify(service,commit,built,mode==='deploy'?before:null);
-  if(mode==='deploy'){const receipt='docs/deployment/'+service.name+'.json';await save(path.join(ROOT,receipt),report);git('add','--',receipt);git('commit','-m',`Record ${service.name} release ${report.productionVersion}`);git('push','origin','HEAD:main');assert.equal(git('rev-parse','HEAD'),git('ls-remote','origin','refs/heads/main').split(/\s+/)[0]);console.log('PUBLISHED_AND_GITHUB_SYNCED')}
+  const report=await verify(service,commit,built,mode==='deploy'||mode==='record'?before:null);
+  if(mode==='deploy'||mode==='record'){const receipt=appendDeploymentReceipt(ROOT,service.name,report,deploymentRecords);assert.equal(ready(),commit);console.log(`Verified receipt: ${receipt.url}`);console.log(mode==='deploy'?'PUBLISHED_AND_GITHUB_SYNCED':'RECEIPT_RECORDED_AND_GITHUB_SYNCED')}
  }
 }
 main().catch(error=>{console.error(error.message);process.exitCode=1}).finally(()=>agent.destroy());
