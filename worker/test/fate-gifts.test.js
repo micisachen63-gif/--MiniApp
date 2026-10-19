@@ -45,6 +45,52 @@ test('simultaneous retries replay either committed winner without drawing a seco
  }
 });
 test('failed inventory consumption rolls back gift status, reward, ledger and receipt together',async t=>{const f=await fixture(t);f.add(4);const id=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds[0];f.exec('UPDATE rpg_inventory SET quantity=0 WHERE tg_id=? AND item=?',f.a,G.GIFT_ITEM);const b={requestId:rid(),giftId:id},ledgers=f.one('SELECT COUNT(*) n FROM rpg_ledger').n;await assert.rejects(G.open(f.env,f.a,b,T,()=>0));assert.equal(f.one('SELECT status FROM rpg_fate_gifts WHERE id=?',id).status,'claimed');assert.equal(qty(f,'guaranteed_scroll_w'),0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_ledger').n,ledgers);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_gift_operations WHERE request_id=?',b.requestId).n,0);});
+
+// Pause AFTER the initial receipt read, BEFORE open() reads any gift. This is
+// earlier than the batch/commit race above and must work even for the last box.
+function pauseFirstReceipt(db){
+ const prepare=db.prepare.bind(db);let paused=false,resume,arrive;
+ const reached=new Promise(r=>arrive=r),gate=new Promise(r=>resume=r);
+ db.prepare=sql=>{
+  const stmt=prepare(sql);if(!sql.startsWith('SELECT payload_hash,result_json FROM rpg_fate_gift_operations'))return stmt;
+  const bind=stmt.bind.bind(stmt);stmt.bind=(...params)=>{
+   const bound=bind(...params),first=bound.first.bind(bound);
+   bound.first=async()=>{const row=await first();if(!paused){paused=true;arrive();await gate;}return row;};return bound;
+  };return stmt;
+ };
+ return {reached,resume:()=>resume()};
+}
+for(const explicit of [false,true])for(const boxes of [1,3])test(`receipt-read overlap replays the same open: explicit=${explicit}, boxes=${boxes}`,async t=>{
+ const f=await fixture(t);f.add(boxes*4);const ids=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds;
+ const body={requestId:rid(),...(explicit?{giftId:ids[0]}:{})},pause=pauseFirstReceipt(f.env.DB);
+ let losingDraws=0;const pending=G.open(f.env,f.a,body,T+1,()=>{losingDraws++;return 0;});
+ await pause.reached;
+ let winner;try{winner=await G.open(f.env,f.a,body,T+2,()=>.5);}finally{pause.resume();}
+ const replay=await pending;assert.equal(replay.replayed,true);assert.deepEqual(replay.result,winner.result);
+ if(boxes===1)assert.equal(losingDraws,0,'empty gift lookup must recover without drawing');
+ assert.equal(qty(f,G.GIFT_ITEM),boxes-1);assert.equal(qty(f,'guaranteed_scroll_w'),0);assert.equal(qty(f,'scroll_w'),2);assert.equal(qty(f,'scroll_a'),2);
+ assert.equal(f.one("SELECT COUNT(*) n FROM rpg_fate_gifts WHERE status='opened'").n,1);
+ assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_gift_operations WHERE request_id=?',body.requestId).n,1);
+ assert.equal(f.one("SELECT COUNT(*) n FROM rpg_ledger WHERE type='開啟輪迴禮'").n,1);
+ assert.equal(f.one("SELECT COUNT(*) n FROM rpg_ledger WHERE type='星輝匣獎勵'").n,2);
+ const disconnectedRetry=await G.open(f.env,f.a,body,T+3,()=>{throw Error('must not draw on retry');});assert.deepEqual(disconnectedRetry.result,winner.result);
+});
+for(const variant of ['payload','character','request'])test(`receipt recovery preserves ${variant} isolation during the read gap`,async t=>{
+ const f=await fixture(t);f.add(4);f.add(4,f.b);await G.claim(f.env,f.a,{requestId:rid()},T);await G.claim(f.env,f.b,{requestId:rid()},T);
+ const body={requestId:rid()},pause=pauseFirstReceipt(f.env.DB);
+ const pending=G.open(f.env,variant==='character'?f.b:f.a,body,T,()=>0);
+ // Attach rejection handling before releasing the barrier.
+ const observed=pending.then(value=>({value}),error=>({error}));await pause.reached;
+ try{await G.open(f.env,f.a,{...body,...(variant==='payload'?{extra:1}:variant==='request'?{requestId:rid()}:{})},T,()=>.5);}finally{pause.resume();}
+ const {error}=await observed;assert.equal(error?.code,variant==='request'?'fate_no_gift':'request_changed');
+ assert.equal(qty(f,G.GIFT_ITEM),0);assert.equal(qty(f,G.GIFT_ITEM,f.b),1);assert.equal(qty(f,'guaranteed_scroll_w',f.b),0);
+});
+test('a committed batch with a lost acknowledgement returns its receipt; a real read error without one stays an error',async t=>{
+ const f=await fixture(t);f.add(4);await G.claim(f.env,f.a,{requestId:rid()},T);
+ const batch=f.env.DB.batch.bind(f.env.DB);f.env.DB.batch=async stmts=>{await batch(stmts);throw Error('acknowledgement lost');};
+ const b={requestId:rid()},opened=await G.open(f.env,f.a,b,T,()=>.5);assert.equal(opened.replayed,true);assert.equal(qty(f,G.GIFT_ITEM),0);assert.equal(qty(f,'scroll_w'),2);
+ f.env.DB.batch=batch;await assert.rejects(G.open(f.env,f.a,{requestId:rid()},T),e=>e.code==='fate_no_gift');
+});
 test('claim batches stay bounded and retain all remaining earned gifts',async t=>{const f=await fixture(t);f.add(108);const a=await G.claim(f.env,f.a,{requestId:rid()},T);assert.equal(a.result.claimed,25);assert.equal(a.result.remaining,2);const b=await G.claim(f.env,f.a,{requestId:rid()},T);assert.equal(b.result.claimed,2);assert.equal(qty(f,G.GIFT_ITEM),27);});
 const TOKEN='123456789:FAKE_FATE_GIFT_TEST_TOKEN';
 function initData(id){const fields={auth_date:String(Math.floor(Date.now()/1000)),user:JSON.stringify({id:Number(id),first_name:'星輝測試'})},key=createHmac('sha256','WebAppData').update(TOKEN).digest();return new URLSearchParams({...fields,hash:createHmac('sha256',key).update(Object.keys(fields).sort().map(k=>`${k}=${fields[k]}`).join('\n')).digest('hex')}).toString();}
