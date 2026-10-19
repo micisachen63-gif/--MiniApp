@@ -20,7 +20,30 @@ test('published gift pool boundaries are exactly 5% weapon, 5% armor and 90% two
 for(const [roll,item]of [[0,'guaranteed_scroll_w'],[.05,'guaranteed_scroll_a'],[.5,'scroll_w']])test(`opening atomically consumes one gift and grants ${item} exactly once, with ledger and replay`,async t=>{const f=await fixture(t);f.add(4);const id=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds[0],b={requestId:rid(),giftId:id},before=qty(f,item),r=await G.open(f.env,f.a,b,T+1,()=>roll);assert.equal(qty(f,G.GIFT_ITEM),0);assert.equal(qty(f,item)-before,item==='scroll_w'?2:1);assert.equal((await G.summary(f.env,f.a)).opened,1);const replay=await G.open(f.env,f.a,b,T+2,()=>{throw new Error('must not redraw')});assert.deepEqual(replay.result,r.result);assert.equal(replay.replayed,true);assert.equal(qty(f,item)-before,item==='scroll_w'?2:1);await assert.rejects(G.open(f.env,f.a,{requestId:rid(),giftId:id},T+3),e=>e.code==='fate_no_gift');assert.equal(f.one("SELECT COUNT(*) n FROM rpg_ledger WHERE type='開啟輪迴禮'").n,1);assert.equal(f.one("SELECT COUNT(*) n FROM rpg_ledger WHERE type='星輝匣獎勵'").n,item==='scroll_w'?2:1);});
 test('a foreign character cannot open another character gift and the client cannot select a reward',async t=>{const f=await fixture(t);f.add(4);const id=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds[0];await assert.rejects(G.open(f.env,f.b,{requestId:rid(),giftId:id},T),e=>e.code==='fate_no_gift');const r=await G.open(f.env,f.a,{requestId:rid(),giftId:id,reward:'guaranteed_scroll_w',chance:1},T,()=>.5);assert.deepEqual(r.result.items,{scroll_w:2,scroll_a:2});});
 test('concurrent opening of one gift never creates two rewards or consumes another gift',async t=>{const f=await fixture(t);f.add(8);const id=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds[0],r=await Promise.allSettled([G.open(f.env,f.a,{requestId:rid(),giftId:id},T,()=>0),G.open(f.env,f.a,{requestId:rid(),giftId:id},T,()=>0)]);assert.equal(r.filter(x=>x.status==='fulfilled').length,1);assert.equal(qty(f,G.GIFT_ITEM),1);assert.equal(qty(f,'guaranteed_scroll_w'),1);assert.equal((await G.summary(f.env,f.a)).opened,1);});
-test('simultaneous retries with the same open request replay the winning award instead of drawing a second accumulated gift',async t=>{const f=await fixture(t);f.add(8);await G.claim(f.env,f.a,{requestId:rid()},T);const b={requestId:rid()},r=await Promise.all([G.open(f.env,f.a,b,T,()=>0),G.open(f.env,f.a,b,T,()=>.5)]);assert.deepEqual(r[0].result,r[1].result);assert.equal(r.filter(x=>x.replayed).length,1);assert.equal(qty(f,G.GIFT_ITEM),1);assert.equal(qty(f,'guaranteed_scroll_w'),1);assert.equal(qty(f,'scroll_w'),0);});
+test('simultaneous retries replay either committed winner without drawing a second accumulated gift',async t=>{
+ for(const winner of ['weapon','scrolls']){
+  const f=await fixture(t);f.add(8);await G.claim(f.env,f.a,{requestId:rid()},T);
+  // SHA-256 requests may finish in either order on different runtimes. Force
+  // both transactions to reach commit, then exercise each legitimate winner.
+  const batch=f.env.DB.batch.bind(f.env.DB);let arrivals=0,releaseBoth,releaseLoser;
+  const both=new Promise(resolve=>releaseBoth=resolve),committed=new Promise(resolve=>releaseLoser=resolve);
+  f.env.DB.batch=async stmts=>{
+   const update=stmts.find(s=>s.sql.startsWith("UPDATE rpg_fate_gifts SET status='opened'"));
+   if(!update)return batch(stmts);
+   const award=Object.hasOwn(JSON.parse(update.params[0]),'guaranteed_scroll_w')?'weapon':'scrolls';
+   if(++arrivals===2)releaseBoth();await both;
+   if(award!==winner)await committed;
+   try{return await batch(stmts);}finally{if(award===winner)releaseLoser();}
+  };
+  const b={requestId:rid()},r=await Promise.all([G.open(f.env,f.a,b,T,()=>0),G.open(f.env,f.a,b,T,()=>.5)]);
+  assert.equal(arrivals,2);assert.deepEqual(r[0].result,r[1].result);assert.equal(r[0].result.reward,winner);
+  assert.equal(r.filter(x=>x.replayed).length,1);assert.equal(qty(f,G.GIFT_ITEM),1);
+  assert.equal(qty(f,'guaranteed_scroll_w'),winner==='weapon'?1:0);
+  assert.equal(qty(f,'scroll_w'),winner==='scrolls'?2:0);assert.equal(qty(f,'scroll_a'),winner==='scrolls'?2:0);
+  assert.equal(f.one("SELECT COUNT(*) n FROM rpg_fate_gifts WHERE status='opened'").n,1);
+  assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_gift_operations WHERE request_id=?',b.requestId).n,1);
+ }
+});
 test('failed inventory consumption rolls back gift status, reward, ledger and receipt together',async t=>{const f=await fixture(t);f.add(4);const id=(await G.claim(f.env,f.a,{requestId:rid()},T)).result.giftIds[0];f.exec('UPDATE rpg_inventory SET quantity=0 WHERE tg_id=? AND item=?',f.a,G.GIFT_ITEM);const b={requestId:rid(),giftId:id},ledgers=f.one('SELECT COUNT(*) n FROM rpg_ledger').n;await assert.rejects(G.open(f.env,f.a,b,T,()=>0));assert.equal(f.one('SELECT status FROM rpg_fate_gifts WHERE id=?',id).status,'claimed');assert.equal(qty(f,'guaranteed_scroll_w'),0);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_ledger').n,ledgers);assert.equal(f.one('SELECT COUNT(*) n FROM rpg_fate_gift_operations WHERE request_id=?',b.requestId).n,0);});
 test('claim batches stay bounded and retain all remaining earned gifts',async t=>{const f=await fixture(t);f.add(108);const a=await G.claim(f.env,f.a,{requestId:rid()},T);assert.equal(a.result.claimed,25);assert.equal(a.result.remaining,2);const b=await G.claim(f.env,f.a,{requestId:rid()},T);assert.equal(b.result.claimed,2);assert.equal(qty(f,G.GIFT_ITEM),27);});
 const TOKEN='123456789:FAKE_FATE_GIFT_TEST_TOKEN';
