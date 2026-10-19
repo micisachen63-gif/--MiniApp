@@ -1344,21 +1344,24 @@
     const owner=String(S.me?.character?.tgId||'');if(!owner)return;
     window.RpgGuardianShop.open({actor:()=>String(S.me?.character?.tgId||''),api,sheet,close:closeSheet,onSold:async result=>{await refreshMe({silent:true,full:true});if(String(S.me?.character?.tgId)!==owner)return;renderHud();if(guardianController){const next=await window.RpgGuardianHost.state();if(String(S.me?.character?.tgId)===owner)guardianController.update({state:next});}toast('已出售 '+result.count+' 位天使，獲得 '+fmt(result.gold)+' 金幣');}},{itemId,quality});
   }
+  function openGachaPurchase(type) {
+    const actor=S.me.character.tgId,g=S.shop.gacha.find(x=>x.type===type);if(!g)return;
+    const affordable=()=>Math.max(0,Math.min(9999,Math.floor((S.me?.character?.gold||0)/g.price)));
+    if(!affordable())return toast('金幣不足',true);
+    const c=sheet(`<h2>${esc(g.name)}</h2><p>每顆 ${fmt(g.price)} 金幣 · 購買後存入道具庫</p><label>購買數量<input class="name-in" data-gacha-qty type="number" inputmode="numeric" min="1" max="${affordable()}" step="1" value="1"></label><div class="row mt">${[1,10,100].map(q=>`<button class="btn sm ghost" data-gacha-count="${q}" ${q>affordable()?'disabled':''}>${q} 顆</button>`).join('')}<button class="btn sm ghost" data-gacha-count="max">最多可買</button></div><p data-gacha-total aria-live="polite"></p><p class="muted">開啟時依角色當下等級、職業決定裝備。<br>紫色傳說 85% · 紅色霸主 15%</p><div class="grid2"><button class="btn ghost" data-gacha-cancel>取消</button><button class="btn gold" data-gacha-buy>確認購買</button></div>`);
+    const input=c.querySelector('[data-gacha-qty]'),buy=c.querySelector('[data-gacha-buy]');let pending=false;
+    const update=()=>{const qty=Number(input.value),valid=input.value.trim()!==''&&Number.isSafeInteger(qty)&&qty>=1&&qty<=affordable();c.querySelector('[data-gacha-total]').textContent=valid?`購買 ${fmt(qty)} 顆 · 總計 ${fmt(g.price*qty)} 金幣`:`請輸入 1 至 ${fmt(affordable())} 的整數數量`;buy.disabled=pending||!valid;};
+    input.oninput=update;c.querySelectorAll('[data-gacha-count]').forEach(b=>b.onclick=()=>{if(pending)return;input.value=String(b.dataset.gachaCount==='max'?affordable():b.dataset.gachaCount);update();});
+    c.querySelector('[data-gacha-cancel]').onclick=()=>{if(!pending)closeSheet();};
+    buy.onclick=async()=>{if(pending||buy.disabled||actor!==S.me?.character?.tgId)return;const qty=Number(input.value);pending=true;input.disabled=true;update();try{const j=await act('gacha',{type:g.type,qty});if(j?.result&&actor===S.me?.character?.tgId){closeSheet();toast(`已購買 ${g.name} ×${fmt(j.result.quantity)}，請到英雄的道具庫開啟`);}}finally{pending=false;input.disabled=false;update();}};
+    update();
+  }
   function bindShop(view) {
     if (S.shopTab === 'sell') window.RpgMarketSell.bind(view, {esc,fmt,gearIcon,confirmSheet,toast,detail:itemSheet,openGuardians:()=>openGuardianShop(),getState:()=>({me:S.me,autoEnhance:S.autoEnhance}),sell:async itemIds=>{
       const result=await act('sell-gear-batch',{itemIds},j=>`已販售 ${j.result.count} 件裝備，獲得 ${fmt(j.result.gold)} 金幣`);
       if(!result)await refreshMe({silent:true,full:true});return result;
     }});
-    view.querySelectorAll('[data-gacha]').forEach(button=>{button.onclick=async()=>{
-      if(button.disabled)return;button.disabled=true;
-      const actor=S.me.character.tgId,g=S.shop.gacha.find(x=>x.type===button.dataset.gacha);
-      try{
-        if(!await confirmSheet(esc(g.name),`花費 ${fmt(g.price)} 金幣購買 1 顆存入道具背包？<br>開啟時依角色當下等級、職業決定裝備。<br>紫色傳說 85% · 紅色霸主 15%`,'購買轉蛋'))return;
-        if(actor!==S.me?.character?.tgId)return;
-        const j=await act('gacha',{type:g.type});
-        if(j?.result){toast('已購買 '+g.name+'，請到英雄的道具庫開啟');}
-      }finally{button.disabled=false;}
-    };});
+    view.querySelectorAll('[data-gacha]').forEach(button=>{button.onclick=()=>openGachaPurchase(button.dataset.gacha);});
     view.querySelectorAll('[data-st]').forEach((b) => { b.onclick = () => { S.shopTab = b.dataset.st; updateShopSurface(true); }; });
     view.querySelectorAll('[data-af]').forEach((b) => { b.onclick = () => { S.armorSlot = b.dataset.af; updateShopSurface(true); }; });
     view.querySelectorAll('[data-buy]').forEach((b) => { b.onclick = () => act('buy', { item: b.dataset.buy, qty: Number(b.dataset.q) }, `🛒 購買 ${itemName(b.dataset.buy)} ×${b.dataset.q}`).then((j) => { if (j) loadShop(true); }); });

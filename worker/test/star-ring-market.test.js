@@ -1,0 +1,45 @@
+import test from 'node:test';import assert from 'node:assert/strict';
+import {freshDb} from './d1-shim.js';import {CurrentClientRequest} from './client-request.js';import {handle} from '../src/index.js';import * as P from '../src/services/player.js';import * as R from '../src/services/star-ring.js';import * as E from '../src/game/star-ring.js';import * as X from '../src/services/market-exchange.js';import * as A from '../src/services/auto-enhance.js';import * as G from '../src/services/guardian-sigil.js';import * as Party from '../src/services/party.js';import {makeGear} from '../src/game/gear.js';import {insertEquipStmt,loadPlayer} from '../src/db.js';import {computeStats} from '../src/game/stats.js';
+const now=Date.parse('2026-10-19T00:00:00Z'),ids=['8811','8812','8813','8814','8815'],buyer='8899';
+async function fixture(t,version=3){
+ const env={DB:freshDb(),ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',ALLOW_DEBUG_TIME:'true'},db=env.DB.sqlite;t.after(()=>db.close());
+ for(const[i,tgId]of [...ids,buyer].entries()){await P.createCharacter(env,{tgId,name:'掛賣旅人'+i,baseClass:['sword','mage','archer','thief','sword','sword'][i],gender:'m'},now);db.prepare("UPDATE rpg_characters SET level=80,class_path='A1',gold=10000000 WHERE tg_id=?").run(tgId);const p=await loadPlayer(env.DB,tgId),s=computeStats(p.char,p.equipment.filter(e=>e.is_equipped));db.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').run(s.maxHp,s.maxMp,tgId);}
+ await G.ensureWelcome(env,ids[0],now);const summon=await G.summon(env,ids[0],{pool:'normal',count:1,requestId:'ring-market-guardian'},now),guardianId=summon.operation.results[0].id;
+ await insertEquipStmt(env.DB,{...makeGear({id:'ring-market-bag',tgId:ids[0],cls:'sword',slot:'helmet',tier:3,rng:()=>.5,source:'shop',now}),is_equipped:0,bound:0}).run();
+ db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'scroll_w',100) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=100").run(ids[0]);
+ const id=(await R.create(env,ids[0],{tier:80},now)).party.id,s=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);s.engineVersion=version;db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(s),id);
+ for(const tg of ids.slice(1))await R.action(env,tg,{partyId:id,action:'join'},now);for(const tg of ids)await R.action(env,tg,{partyId:id,action:'ready'},now);await R.action(env,ids[0],{partyId:id,action:'start'},now);
+ const api=async(action,body={},tg=ids[0])=>{const res=await handle(new CurrentClientRequest('https://local/app/api/exchange/'+action,{method:'POST',headers:{'Content-Type':'application/json','X-Dev-Tg-Id':tg,'X-Debug-Now':String(now+1)},body:JSON.stringify({characterId:tg,requestId:crypto.randomUUID(),...body})}),env);return {status:res.status,j:await res.json()};};
+ return {env,db,id,guardianId,api};
+}
+const state=f=>JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json),char=f=>f.db.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').get(ids[0]);
+for(const version of [1,2,3])test(`v${version} running expedition permits equipment and item listings, withdrawal and buyer settlement without changing departure stats`,async t=>{
+ const f=await fixture(t,version),before=state(f),c=char(f);
+ const op={equipId:'ring-market-bag',qty:1,price:101,requestId:crypto.randomUUID()},r=await f.api('create',op);assert.equal(r.status,200,JSON.stringify(r.j));const listingId=r.j.result.listingId;assert.equal((await f.api('create',op)).j.result.listingId,listingId);
+ assert.equal((await f.api('buy',{listingId},buyer)).status,200);assert.equal(char(f).gold,c.gold+95);assert.equal(f.db.prepare("SELECT tg_id FROM rpg_equipment WHERE id='ring-market-bag'").get().tg_id,buyer);
+ const stack=await f.api('create',{item:'scroll_w',qty:10,price:100});assert.equal(stack.status,200);assert.equal((await f.api('cancel',{listingId:stack.j.result.listingId})).status,200);assert.equal((await loadPlayer(f.env.DB,ids[0])).inv.scroll_w,100);
+ assert.deepEqual(state(f),before);assert.equal(char(f).hp,c.hp);assert.equal(char(f).mp,c.mp);assert.equal(char(f).party_id,f.id);
+});
+test('guardian trading retains its original combat protection while backpack equipment and stack items are allowed',async t=>{
+ const f=await fixture(t),before=state(f),candidate=await X.sellable(f.env,ids[0],{filters:{category:'guardian'}});assert.ok(!candidate.items.some(i=>i.guardianId===f.guardianId));
+ const a=await f.api('create',{guardianId:f.guardianId,price:100});assert.equal(a.j.error,'party');assert.equal(f.db.prepare('SELECT exchange_id FROM rpg_guardian_sigils WHERE id=?').get(f.guardianId).exchange_id,null);assert.deepEqual(state(f),before);
+});
+test('equipped, bound, already escrowed and background-enhancing gear cannot be listed during expedition',async t=>{
+ const f=await fixture(t),before=state(f),equipped=(await loadPlayer(f.env.DB,ids[0])).equipment.find(e=>e.is_equipped).id;
+ assert.equal((await f.api('create',{equipId:equipped,price:100})).j.error,'untradeable');f.db.prepare("UPDATE rpg_equipment SET bound=1 WHERE id='ring-market-bag'").run();assert.equal((await f.api('create',{equipId:'ring-market-bag',price:100})).j.error,'untradeable');f.db.prepare("UPDATE rpg_equipment SET bound=0 WHERE id='ring-market-bag'").run();
+ const job=(await A.start(f.env,ids[0],{itemId:'ring-market-bag',target:3},now)).job;assert.equal((await f.api('create',{equipId:'ring-market-bag',price:100})).j.error,'auto_active');await A.stop(f.env,ids[0],{jobId:job.id},now+1);
+ const sale=await f.api('create',{equipId:'ring-market-bag',price:100});assert.equal(sale.status,200);assert.equal((await f.api('create',{equipId:'ring-market-bag',price:100})).j.error,'untradeable');assert.deepEqual(state(f),before);
+});
+for(const mode of ['fake-marker','left-member','finished','foreground'])test(`${mode} cannot bypass listing locks`,async t=>{
+ const f=await fixture(t);if(mode==='fake-marker')f.db.prepare("UPDATE rpg_characters SET party_id='ring:fake' WHERE tg_id=?").run(ids[0]);else if(mode==='left-member')f.db.prepare('UPDATE rpg_star_ring_members SET left_at=? WHERE run_id=? AND char_id=?').run(now,f.id,ids[0]);else if(mode==='finished')f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);else{const p=(await Party.create(f.env,ids[0],{kind:'dungeon',dungeonId:'pillar'},now)).party.id;for(const tg of ids.slice(1,3))await Party.action(f.env,tg,{partyId:p,op:'join'},now);for(const tg of ids.slice(0,3))await Party.action(f.env,tg,{partyId:p,op:'ready'},now);await Party.action(f.env,ids[0],{partyId:p,op:'start'},now);}
+ const before=state(f),r=await f.api('create',{item:'scroll_w',qty:10,price:100,runningExpeditionId:f.id});assert.equal(r.j.error,'party');assert.equal(f.db.prepare('SELECT COUNT(*) n FROM rpg_exchange_listings').get().n,0);assert.equal((await loadPlayer(f.env.DB,ids[0])).inv.scroll_w,100);assert.deepEqual(state(f),before);
+});
+test('atomic listing guard rejects a run ending between permission lookup and commit',async t=>{
+ const f=await fixture(t),batch=f.env.DB.batch.bind(f.env.DB);let fired=false;f.env.DB.batch=async stmts=>{if(!fired&&stmts.some(s=>s.sql.includes('INSERT INTO rpg_exchange_listings'))){fired=true;f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);}return batch(stmts);};const r=await f.api('create',{item:'scroll_w',qty:10,price:100});assert.equal(fired,true);assert.equal(r.j.error,'conflict');assert.equal((await loadPlayer(f.env.DB,ids[0])).inv.scroll_w,100);assert.equal(f.db.prepare('SELECT COUNT(*) n FROM rpg_exchange_operations').get().n,0);
+});
+test('listing and settlement during a checkpoint preserve all twelve-hour battle results and thirty reward receipts',async t=>{
+ const f=await fixture(t),control=await fixture(t),s=state(f);s.seed='market-does-not-change-expedition';for(const x of [f,control])x.db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(s),x.id);
+ const sold=await f.api('create',{equipId:'ring-market-bag',price:101});assert.equal(sold.status,200);const body={listingId:sold.j.result.listingId,requestId:crypto.randomUUID()};const outcomes=await Promise.allSettled([f.api('buy',body,buyer),R.sweep(f.env,now+E.STAGE_MS)]);for(const x of outcomes)if(x.status==='rejected')assert.equal(x.reason.code,'conflict');
+ const paid=await f.api('buy',body,buyer);assert.equal(paid.status,200,JSON.stringify(paid.j));assert.equal(f.db.prepare("SELECT tg_id FROM rpg_equipment WHERE id='ring-market-bag'").get().tg_id,buyer);await R.sweep(f.env,now+E.DURATION);await R.sweep(control.env,now+E.DURATION);
+ assert.deepEqual(state(f).actors,s.actors);assert.deepEqual(state(f).results,state(control).results);const rewards=x=>x.db.prepare('SELECT char_id,stage,reward_json FROM rpg_star_ring_rewards WHERE run_id=? ORDER BY char_id,stage').all(x.id);assert.equal(rewards(f).length,30);assert.deepEqual(rewards(f),rewards(control));assert.equal(char(f).gold,char(control).gold+95);
+});

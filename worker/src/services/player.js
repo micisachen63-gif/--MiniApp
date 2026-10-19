@@ -248,12 +248,15 @@ export function buyGear(work, { now }, { code, requestId }, rng = rngDefault()) 
 }
 
 /** Purchase a sealed capsule; opening is a separate inventory transaction. */
-export function buyGacha(work,{now},{type,requestId}){
+export function buyGacha(work,{now},{type,qty=1,requestId}){
   if(type!=='weapon'&&type!=='armor')throw new GameError('gacha_type','轉蛋類型無效');
+  if(!Number.isSafeInteger(qty)||qty<1||qty>9999)throw new GameError('qty','數量須為 1 至 9,999 的整數');
   const price=type==='weapon'?10000:5000,key='gacha_'+type;
-  if(work.char.gold<price)throw new GameError('gold',`金幣不足（需要 ${price.toLocaleString()}）`);
-  work.char.gold-=price;work.inv[key]=(work.inv[key]||0)+1;
-  return {ledger:[{event_id:eventId('gacha',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'購買轉蛋',gold_delta:-price,item:key,item_delta:1}],result:{itemKey:key,price,type,quantity:1}};
+  const total=price*qty,quantity=(work.inv[key]||0)+qty;
+  if(!Number.isSafeInteger(quantity))throw new GameError('qty','轉蛋持有數量已達上限');
+  if(work.char.gold<total)throw new GameError('gold',`金幣不足（需要 ${total.toLocaleString()}）`);
+  work.char.gold-=total;work.inv[key]=quantity;
+  return {ledger:[{event_id:eventId('gacha',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'購買轉蛋',gold_delta:-total,item:key,item_delta:qty}],result:{itemKey:key,price,total,type,quantity:qty}};
 }
 /** Consume one capsule and use the opening character's current level and class. */
 export function openGacha(work,{now,db},{type,requestId},rng=rngDefault()){

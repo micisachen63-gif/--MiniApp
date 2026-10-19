@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 轉蛋新增qty（1..9999、舊客戶端預設1），數量／總價視窗及原子整批購買；遠征中允許未穿戴未綁定背包裝備與可交易道具掛賣，實際membership及提交SQL guard雙重驗證、當趟快照／戰力／收益不變。守護天使及前景短隊原限制保留。新增17項回歸、完整Mini App隔離遠征角色手機尺寸購買／入庫／上架驗收；讀docs/GACHA_BULK_RING_MARKET_20261019.txt。僅Worker，無migration／BOT改動，正式版本看最新收據。
+
 2026-10-19 遠征期間開放未穿戴、未交易背包裝備的手動／自動強化，真實running membership驗證、當趟快照／戰力／12h全部收益不變；穿戴及前景短戰限制保留。交易另修主動開窗漏接、雙方完整重鑄／遺物／附加屬性、最終確認offerRev及成交歷史快照。新增20+5項回歸、隔離雙人桌機／手機尺寸流程驗收；接手讀docs/STAR_RING_BACKPACK_ENHANCE_20261019.txt、docs/TRADE_WINDOW_FIX_20261019.txt。僅Worker、無migration／BOT改動，正式版本與完整測試看部署收據；CI／按需載入／素材保存仍為後續項目。
 
 2026-10-19 打寶／爬塔改用原定deadline補齊5/15秒回合，不因離線排程30秒節奏逐回合延後或舊30分鐘牆鐘逾時；每分鐘Worker獨立sweep直接發獎、缺獎重試，整隊多回合原子保存／一次扣藍水／圖卡合併。新增14項離在線對照、技能／喝水／跨層／併發／排程測試，相關62項通過，無migration／BOT改動。接手讀docs/PARTY_OFFLINE_CLOCK_20261019.txt，正式版本看收據。

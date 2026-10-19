@@ -8,6 +8,7 @@ import { classifyDbError, guardStmt, invDeltaStmt, ledgerStmt } from '../db.js';
 import { sigilView } from './guardian-sigil.js';
 import { guardianEffect } from '../game/guardian-effects.js';
 import { QUALITY_ORDER, QUALITY_NAMES, TYPE_NAMES } from '../game/guardian-sigil-config.js';
+import {runningRingSql,runningRingId,canManageBackpackInParty} from './party-presence.js';
 
 // This exception is local to the exchange: completed collection badges and the
 // original person-to-person trade rules remain bound and unchanged.
@@ -52,6 +53,7 @@ function exchangeItem(key) {
 }
 const ownerOf = c => String(c.account_tg_id||c.tg_id);
 const balance = c => ({characterId:String(c.tg_id),gold:c.gold,revision:c.rev});
+async function canListBackpack(db,c){return canManageBackpackInParty(c,c.party_id?await runningRingId(db,c.tg_id):null);}
 async function response(db,c,result) { return {ok:true,result,balance:balance(await actor(db,c.tg_id))}; }
 const GUARDIAN_CLASSES=Object.freeze({melee:'sword',ranged:'archer',magic:'mage',loot:'any'});
 const meta = () => ({...EXCHANGE,categories:CATEGORY,qualities:Object.fromEntries([...Object.entries(RARITIES).map(([k,v])=>[k,v.name]),...BOOK_QUALITIES.map(x=>[x,x]),...QUALITY_ORDER.map((q,i)=>[q,QUALITY_NAMES[i]])]),guardianQualities:Object.fromEntries(QUALITY_ORDER.map((q,i)=>[q,QUALITY_NAMES[i]])),guardianTypes:TYPE_NAMES});
@@ -176,8 +178,9 @@ async function replay(db,c,id,action,payload) {
   return JSON.parse(old.result_json);
 }
 const receipt=(db,c,id,action,payload,result,now)=>db.prepare('INSERT INTO rpg_exchange_operations(account_tg_id,request_id,char_id,action,payload_json,result_json,created_at) VALUES(?,?,?,?,?,?,?)').bind(ownerOf(c),id,String(c.tg_id),action,JSON.stringify(payload),JSON.stringify(result),now);
-function revisionStmt(db,c,now,delta=0,{active=false,party=false}={}) {
-  return db.prepare(`UPDATE rpg_characters SET gold=gold+?,rev=rev+1,updated_at=? WHERE tg_id=? AND rev=? AND gold+? BETWEEN 0 AND 9007199254740991 ${party?'AND party_id IS NULL':''} ${active?'AND EXISTS(SELECT 1 FROM rpg_accounts a WHERE a.account_tg_id=rpg_characters.account_tg_id AND a.active_char_id=rpg_characters.tg_id)':''}`).bind(delta,now,String(c.tg_id),c.rev,delta);
+function revisionStmt(db,c,now,delta=0,{active=false,party=false,allowExpedition=false}={}) {
+  const partyGuard=!party?'':allowExpedition?'AND (party_id IS NULL OR party_id='+runningRingSql('rpg_characters.tg_id')+')':'AND party_id IS NULL';
+  return db.prepare(`UPDATE rpg_characters SET gold=gold+?,rev=rev+1,updated_at=? WHERE tg_id=? AND rev=? AND gold+? BETWEEN 0 AND 9007199254740991 ${partyGuard} ${active?'AND EXISTS(SELECT 1 FROM rpg_accounts a WHERE a.account_tg_id=rpg_characters.account_tg_id AND a.active_char_id=rpg_characters.tg_id)':''}`).bind(delta,now,String(c.tg_id),c.rev,delta);
 }
 async function write(db,c,id,action,payload,stmts,result,now) {
   try { await db.batch([...stmts,receipt(db,c,id,action,payload,result,now)]); }
@@ -200,7 +203,7 @@ export async function create(env,tg,b,now=Date.now()) {
   const payload={kind,ref,qty,price,characterId:identifier(b.characterId)},old=await replay(db,c,id,'create',payload);if(old)return response(db,c,old);
   expectedActor(c,b);
   if(c.active_char_id&&c.active_char_id!==String(tg))fail('character_changed','角色已切換，請重新選角',409);
-  if(c.party_id)fail('party','請先完成組隊冒險，再上架道具',409);
+  if((kind==='guardian'&&c.party_id)||!await canListBackpack(db,c))fail('party','請先完成組隊冒險，再上架道具；星環遠征期間可上架未穿戴、未綁定的背包裝備與可交易道具',409);
   let snapshot,info;
   if(kind==='equip') {
     snapshot=await db.prepare('SELECT * FROM rpg_equipment WHERE id=? AND tg_id=?').bind(ref,String(tg)).first();
@@ -219,7 +222,7 @@ export async function create(env,tg,b,now=Date.now()) {
   }
   const listingId=crypto.randomUUID(),fee=feeFor(price),row={id:listingId,seller_account:ownerOf(c),seller_char:String(tg),kind,ref,qty,price,fee,status:'active',snapshot_json:JSON.stringify(snapshot),seller_name:c.name,created_at:now,updated_at:now};
   const result={action:'create',listingId,listing:listingView(row,c,env),price,fee,netGold:price-fee,qty};
-  const stmts=[revisionStmt(db,c,now,0,{active:true,party:true}),guardStmt(db),
+  const stmts=[revisionStmt(db,c,now,0,{active:true,party:true,allowExpedition:kind!=='guardian'}),guardStmt(db),
     db.prepare("INSERT INTO rpg_exchange_listings(id,seller_account,seller_char,kind,ref,qty,price,fee,category,class_req,tier,quality,enhance,snapshot_json,status,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,'active',?,? WHERE (SELECT COUNT(*) FROM rpg_exchange_listings WHERE seller_account=? AND status='active')<?").bind(listingId,ownerOf(c),String(tg),kind,ref,qty,price,fee,info.category,info.classReq,info.tier,info.quality,info.enhance,JSON.stringify(snapshot),now,now,ownerOf(c),EXCHANGE.maxActive),guardStmt(db)];
   if(kind==='equip')stmts.push(db.prepare('UPDATE rpg_equipment SET trade_id=? WHERE id=? AND tg_id=? AND is_equipped=0 AND bound=0 AND trade_id IS NULL').bind(escrow(listingId),ref,String(tg)),guardStmt(db));
   else if(kind==='guardian')stmts.push(db.prepare('UPDATE rpg_guardian_sigils SET exchange_id=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL AND rev=?').bind(listingId,now,ref,String(tg),snapshot.rev),guardStmt(db));
