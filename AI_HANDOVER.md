@@ -1,5 +1,8 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 遠征背包全盤修正：天使合成／回收／解綁、交易所三類物品完整買賣取回、雙人天使全流程、手動／自動洗屬性、材料與技能書兌換／學習／分享均支援真實running遠征。保留穿戴／啟用／託管／綁定交易保護；使用者確認綁定天使仍可合成及商店回收。必要0031只替換兩個舊guardian party trigger，不重建表、不盲跑歷史migration；先查正式trigger與帳本再精準套用。27項新回歸含全部舊資料保留、12h戰鬥及30份獎勵一致；接手先讀docs/STAR_RING_INVENTORY_ACCESS_20261019.txt。僅Worker發布，正式狀態看deployment-records與即時schema。
+
+
 2026-10-19 CI與發布工具交接：原始碼走PR及「Worker and BOT tests」必要檢查合入main，不可直接push／繞過；CI只測試、不自動部署。正式收據權威位置改為origin/deployment-records:docs/deployment/*.json，main同名檔保留歷史快照，不再回寫。發布／sync:check讀專用分支，補收據用receipts:record:worker／bot，禁止為了收據重發正式機。先讀AGENTS.md及docs/CI_AND_RELEASE_RECORDS_20261019.txt；本次開發工具改動不需部署遊戲／BOT。
 
 2026-10-19 轉蛋新增qty（1..9999、舊客戶端預設1），數量／總價視窗及原子整批購買；遠征中允許未穿戴未綁定背包裝備與可交易道具掛賣，實際membership及提交SQL guard雙重驗證、當趟快照／戰力／收益不變。守護天使及前景短隊原限制保留。新增17項回歸、完整Mini App隔離遠征角色手機尺寸購買／入庫／上架驗收；讀docs/GACHA_BULK_RING_MARKET_20261019.txt。僅Worker，無migration／BOT改動，正式版本看最新收據。

@@ -1,3 +1,4 @@
+import {runningRingId,canManageBackpackInParty,backpackAccessStmt} from './party-presence.js';
 // 交易 (v0.5): a window opens only from a share request (services/share.js acceptRequest). Initiator a = the owner/sharer
 // (top slots), acceptor b = the requester (bottom). Each side places items/gold (escrowed immediately), presses 鎖定
 // (irreversible; a locked side can't add/remove), and once BOTH are locked each presses OK → atomic swap.
@@ -126,7 +127,7 @@ export async function openTradeStmts(env, { aTg, bTg, origin = 'share', shareId 
     db.prepare('UPDATE rpg_equipment SET trade_id = ? WHERE id = ? AND tg_id = ? AND trade_id IS NULL AND is_equipped = 0 AND bound = 0').bind(id, preEquip.id, a), guardStmt(db),
     db.prepare("INSERT INTO rpg_trade_items (trade_id,side,kind,ref,qty,snapshot_json) VALUES (?,'a','equip',?,1,?)").bind(id, preEquip.id, JSON.stringify(preEquip)),
     logStmt(db, id, a, 'add', { equip: preEquip.id, name: preEquip.name, pre: true }, now), bumpRevStmt(db, a, now));
-  if(preSigil){await checkSigil(db,preSigil,a,o);stmts.push(
+  if(preSigil){const guards=await checkSigil(db,preSigil,a,o);stmts.push(...guards,
     db.prepare('UPDATE rpg_guardian_sigils SET trade_id=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL').bind(id,now,preSigil.id,a),guardStmt(db),
     db.prepare("INSERT INTO rpg_trade_items(trade_id,side,kind,ref,qty,snapshot_json) VALUES(?,'a','sigil',?,1,?)").bind(id,preSigil.id,JSON.stringify(preSigil)),logStmt(db,id,a,'add',{sigil:preSigil.id,pre:true},now));}
   if(preItem) {
@@ -163,8 +164,10 @@ export async function setGold(env, { tgId, tradeId, gold, requestId = null }, no
 async function checkSigil(db,row,tg,other){
  if(!row||row.char_id!==tg)throw new GameError('not_found','找不到你的守護羽毛');
  if(row.bound||row.active||row.locked||row.trade_id||row.exchange_id)throw new GameError('protected','請先解除啟用、綁定、鎖定或交易保管');
- const players=(await db.prepare('SELECT level,party_id FROM rpg_characters WHERE tg_id IN (?,?)').bind(tg,other).all()).results||[];
- if(players.length!==2||players.some(c=>c.level<15||c.party_id))throw new GameError('guardian_level','雙方須達15級且不在組隊戰鬥中');
+ const players=(await db.prepare('SELECT tg_id,level,party_id FROM rpg_characters WHERE tg_id IN (?,?)').bind(tg,other).all()).results||[];
+ if(players.length!==2||players.some(c=>c.level<15))throw new GameError('guardian_level','守護天使交易雙方須達15級');
+ for(const c of players)if(!canManageBackpackInParty(c,c.party_id?await runningRingId(db,c.tg_id):null))throw new GameError('guardian_level','請先完成目前的組隊戰鬥；星環遠征期間可交易未召喚、未綁定的天使');
+ return players.map(c=>backpackAccessStmt(db,c.tg_id,15));
 }
 /** add a line: { equipId } or { item, qty } */
 export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = null, item = null, qty = 1, requestId = null }, now) {
@@ -173,8 +176,8 @@ export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = nu
     const s = sideOf(t, tg); notLocked(t, s); if (t.lines.filter((l) => l.side === s).length >= TRADE.maxLines && !(item && t.lines.some((l) => l.side === s && l.ref === item))) throw new GameError('too_many_lines', `每人最多放 ${TRADE.maxLines} 項`);
     const base = [changed(db, t, now), guardStmt(db), bumpRevStmt(db, tg, now)];
     if (sigilId) {
-      const row=await db.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=?').bind(String(sigilId)).first();await checkSigil(db,row,tg,t[otherSide(s)+'_tg']);
-      return {stmts:[...base,db.prepare('UPDATE rpg_guardian_sigils SET trade_id=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL').bind(t.id,now,row.id,tg),guardStmt(db),db.prepare("INSERT INTO rpg_trade_items(trade_id,side,kind,ref,qty,snapshot_json) VALUES(?,?,'sigil',?,1,?)").bind(t.id,s,row.id,JSON.stringify(row)),logStmt(db,t.id,tg,'add',{sigil:row.id},now)],result:{added:row.id}};
+      const row=await db.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=?').bind(String(sigilId)).first();const guards=await checkSigil(db,row,tg,t[otherSide(s)+'_tg']);
+      return {stmts:[...base,...guards,db.prepare('UPDATE rpg_guardian_sigils SET trade_id=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL').bind(t.id,now,row.id,tg),guardStmt(db),db.prepare("INSERT INTO rpg_trade_items(trade_id,side,kind,ref,qty,snapshot_json) VALUES(?,?,'sigil',?,1,?)").bind(t.id,s,row.id,JSON.stringify(row)),logStmt(db,t.id,tg,'add',{sigil:row.id},now)],result:{added:row.id}};
     }
     if (equipId) {
       const e = await db.prepare('SELECT * FROM rpg_equipment WHERE id = ?').bind(String(equipId)).first(); checkEquipLine(e, tg);
@@ -257,12 +260,12 @@ function endNotes(db, t, status, now) {
   return out;
 }
 function settleStatements(db, t, now) {
-  const out = [];
+  const out = t.lines.some(l=>l.kind==='sigil')?[backpackAccessStmt(db,t.a_tg,15),backpackAccessStmt(db,t.b_tg,15)]:[];
   for (const s of ['a', 'b']) {
     const from = t[`${s}_tg`]; const to = t[`${otherSide(s)}_tg`];
     for (const l of t.lines.filter((x) => x.side === s)) {
       if(l.kind==='sigil'){
-        out.push(db.prepare('UPDATE rpg_guardian_sigils SET char_id=?,trade_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND trade_id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND party_id IS NULL AND level>=15)').bind(to,now,l.ref,t.id,from,to),guardStmt(db),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+from+':give:'+l.ref,tg_id:from,type:'交易交出守護羽毛',item:'sigil:'+l.ref,item_delta:-1,note:t.id},now),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+to+':get:'+l.ref,tg_id:to,type:'交易獲得守護羽毛',item:'sigil:'+l.ref,item_delta:1,note:t.id},now));
+        out.push(db.prepare('UPDATE rpg_guardian_sigils SET char_id=?,trade_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND trade_id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND level>=15)').bind(to,now,l.ref,t.id,from,to),guardStmt(db),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+from+':give:'+l.ref,tg_id:from,type:'交易交出守護羽毛',item:'sigil:'+l.ref,item_delta:-1,note:t.id},now),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+to+':get:'+l.ref,tg_id:to,type:'交易獲得守護羽毛',item:'sigil:'+l.ref,item_delta:1,note:t.id},now));
       } else if (l.kind === 'equip') {
         out.push(db.prepare('UPDATE rpg_equipment SET tg_id = ?, trade_id = NULL, is_equipped = 0 WHERE id = ? AND trade_id = ? AND tg_id = ?').bind(to, l.ref, t.id, from), guardStmt(db),
           ledgerStmt(db, { event_id: `trade:${t.id}:done:${from}:give:${l.ref}`, tg_id: from, type: '交易交出裝備', item: `equip:${l.ref}`, item_delta: -1, note: t.id }, now),

@@ -16,16 +16,20 @@ const snapshot = db => ({
   sequence: db.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all(),
 });
 
-test('normal fresh initialization preserves every definition except the three widened class CHECKs', () => {
+test('fresh initialization preserves historical definitions except explicit class CHECK and expedition guardian migrations', () => {
   const historical = repositorySchemaDatabase(), current = freshDb().sqlite;
   try {
     const before = schemaRows(historical), plan = buildThiefSchemaCandidate(historical);
     assert.deepEqual(plan.createOrder, tables);
+    const guardianMigration=readFileSync(new URL('../migrations/0031_star_ring_guardian_backpack.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    const guardianTriggers=new Map([...guardianMigration.matchAll(/CREATE TRIGGER (guardian_sigil_party_\w+)[\s\S]*?END;/g)].map(m=>[m[1],m[0].slice(0,-1)]));
+    assert.equal(guardianTriggers.size,2);
     const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
-      ? { ...row, sql: plan.tablePlans.find(table => table.table === row.name).afterSQL } : row);
+      ? { ...row, sql: plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
     // independent Fate tables/indexes; 0029 adds isolated expedition tables.
-    // star-ring migration tests additionally compare every old row and schema object.
+    // 0031 deliberately replaces only two blanket guardian party locks. Its
+    // populated migration test separately verifies every row and other schema object.
     assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')), expected);
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);

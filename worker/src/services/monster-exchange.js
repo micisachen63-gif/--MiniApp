@@ -1,10 +1,11 @@
+import {requireBackpackAccess} from './party-presence.js';
 import {MONSTER_RECIPES,materialPair,coreExchangePrice} from '../game/monsters.js';
 import {MONSTER_ITEMS} from '../game/monster-data.js';
 import {mapForLevel} from '../game/formulas.js';
 import {GameError} from '../game/classes.js';
 export function monsterExchange(work,ctx,b) {
   const request=String(b.requestId||'');if(!/^(?:app:)?[\w-]{8,80}$/.test(request))throw new GameError('request','缺少有效操作編號');
-  if(work.char.party_id)throw new GameError('party','請先完成組隊冒險再製作');
+  requireBackpackAccess(work.char,ctx);
   if(b.action==='refine'||b.refineTarget!=null){
     const source=String(b.sourceItem||''),target=String(b.refineTarget||'');
     const count=Number(b.count??b.refineCount??1);

@@ -1,7 +1,7 @@
 import {GameError} from '../game/classes.js';
 import {loadPlayer,clonePlayer,persistStatements,guardStmt,outboxStmt} from '../db.js';
 import {doEnhance,withPlayer} from './player.js';
-import {runningRingId,canEnhanceInParty} from './party-presence.js';
+import {runningRingId,canEnhanceInParty,backpackAccessStmt} from './party-presence.js';
 export const INTERVAL_MS=3000;
 
 // Only the scroll used this round, target equipment and equipped gear are needed for an attempt.
@@ -37,6 +37,7 @@ export async function start(env,tg,b,now){
  doEnhance(clonePlayer(p),{db,now,runningExpeditionId},{itemId:item.id,requestId:'validate',blessed:b.blessed===true},()=>.99);
  const id=crypto.randomUUID();
  await db.batch([
+ ...(p.char.party_id?[backpackAccessStmt(db,tg)]:[]),
  db.prepare('UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=? AND rev=?').bind(String(tg),p.char.rev),guardStmt(db),
  db.prepare("INSERT INTO rpg_auto_enhance(id,owner,tg_id,item_id,item_name,target,blessed,status,level,next_at,created_at,updated_at) VALUES(?,?,?,?,?,?,?,'running',?,?,?,?)").bind(id,owner,String(tg),item.id,item.name,target,Number(b.blessed===true),item.enhance_level||0,now,now,now)
  ]);return {ok:true,job:await view(env,tg)};
@@ -58,7 +59,7 @@ export async function step(env,id,now,rng){
  if(!p)reason='missing';else{
  const item=work.equipment.find(e=>e.id===j.item_id);
  if(!item)reason='missing';else if(item.enhance_level>=j.target)reason='target';else{
- try{const runningExpeditionId=work.char.party_id?await runningRingId(db,j.tg_id):null;out=doEnhance(work,{db,now,runningExpeditionId},{itemId:j.item_id,requestId:'auto:'+j.id+':'+j.rev,blessed:!!j.blessed},rng);
+ try{const runningExpeditionId=work.char.party_id?await runningRingId(db,j.tg_id):null;out=doEnhance(work,{db,now,runningExpeditionId},{itemId:j.item_id,requestId:'auto:'+j.id+':'+j.rev,blessed:!!j.blessed},rng);if(work.char.party_id)out.extra=[backpackAccessStmt(db,j.tg_id),...(out.extra||[])];
  j.attempts++;j.spent_gold+=out.result.goldCost;j.spent_scrolls+=Object.values(out.result.used).reduce((a,b)=>a+b,0);j.level=out.result.to;
  if(out.result.result==='break')reason='break';else if(j.level>=j.target)reason='target';
  }catch(e){if(!(e instanceof GameError))throw e;reason=e.code==='gold'||e.code==='no_scroll'?'resources':e.code==='party'?'party':'busy';work=clonePlayer(p);}

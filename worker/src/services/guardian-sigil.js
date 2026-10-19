@@ -1,3 +1,4 @@
+import {requireBackpackAccess} from './party-presence.js';
 import {publicConfig,activeSettings,QUALITY_ORDER,TYPE_NAMES,QUALITY_NAMES,TYPES,creditQuote} from '../game/guardian-sigil-config.js';
 import {GameError} from '../game/classes.js';
 import {withPlayer,shortId} from './player.js';
@@ -45,10 +46,10 @@ async function execute(env,charId,input,action,payload,now,fn){
  if(input.configVersion&&input.configVersion!==cfg.configVersion)bad('config_changed','召喚規則已更新，請重新確認',409);
  const operationId='g'+shortId(),operationSeed=seed();let result;
  try{
-  await withPlayer(env,char,now,async(work)=>{
+  await withPlayer(env,char,now,async(work,ctx)=>{
    if(work.char.level<cfg.limits.unlockLevel)bad('guardian_level','守護神系統於15級開放',403);
    const previous=await receipt(env.DB,char,request);if(previous){result=resolveReceipt(previous,fingerprint);return {};}
-   const rng=mulberry32(operationSeed),out=await fn(work,cfg,rng,operationId),account=String(work.char.account_tg_id||char);
+   const rng=mulberry32(operationSeed),out=await fn(work,cfg,rng,operationId,ctx),account=String(work.char.account_tg_id||char);
    result={operationId,requestId:request,charId:char,action,status:'committed',configVersion:cfg.configVersion,consumed:out.consumed||{gold:0,vouchers:0,credits:0},results:out.results||[],createdAt:now,...out.details};
    // The legacy SQL enum groups support under activation; the immutable JSON
    // receipt and fingerprint retain its distinct assist action and exact mode.
@@ -118,8 +119,8 @@ async function performSummon(env,charId,input={},now=Date.now(),autoJob=null){
 export async function fuse(env,charId,input={},now=Date.now()){
  const ids=input.itemIds;if(!Array.isArray(ids)||![4,6].includes(ids.length)||ids.some(id=>typeof id!=='string'||!id)||new Set(ids).size!==ids.length)bad('materials','需選取四或六張不重複羽毛');
  const primaryId=String(input.primaryId||ids[0]);if(!ids.includes(primaryId))bad('primary','主羽毛不在素材中');
- return execute(env,charId,input,'fuse',{itemIds:[...ids].sort(),primaryId},now,async(work,cfg,rng,op)=>{
-  if(work.char.party_id)bad('party','組隊戰鬥中不可合成');
+ return execute(env,charId,input,'fuse',{itemIds:[...ids].sort(),primaryId},now,async(work,cfg,rng,op,ctx)=>{
+  requireBackpackAccess(work.char,ctx);
   const rows=await queryAll(env.DB,`SELECT * FROM rpg_guardian_sigils WHERE char_id=? AND id IN (${ids.map(()=>'?').join(',')})`,String(charId),...ids);
   if(rows.length!==ids.length)bad('materials','找不到全部素材');const primary=rows.find(r=>r.id===primaryId),rank=primary.quality;
   if(rank>=8||rows.some(r=>r.quality!==rank)||ids.length!==cfg.upgradeMaterials[rank-1])bad('materials','素材品質或張數不正確');
@@ -148,8 +149,8 @@ export async function assist(env,charId,input={},now=Date.now()){
  const mode=String(input.mode||''),itemId=String(input.itemId||''),quantity=Number(input.quantity||1),autoRenew=input.autoRenew===true,autoBuy=input.autoBuy===true;
  if(!['start','select','stop','renew','continuation','supply','buy'].includes(mode)||!Number.isSafeInteger(quantity)||quantity<1||quantity>10)bad('assist','召喚設定無效');
  if(mode==='continuation'&&typeof input.autoRenew!=='boolean')bad('assist','請選擇是否續召');
- return execute(env,charId,input,'assist',{mode,itemId,quantity,autoRenew,autoBuy},now,async(work,cfg)=>{
-  if(work.char.party_id)bad('party','請先結束組隊戰鬥，再調整掛機輔助');
+ return execute(env,charId,input,'assist',{mode,itemId,quantity,autoRenew,autoBuy},now,async(work,cfg,rng,op,ctx)=>{
+  if(mode==='buy')requireBackpackAccess(work.char,ctx);else if(work.char.party_id)bad('party','請先結束組隊戰鬥，再調整掛機輔助');
   const x=specialState(work.char),statements=[];let consumed={gold:0,vouchers:0,credits:0},row=null,resumed=false,replacedRemainingBattles=0;
   if(mode==='buy'){
    consumed.gold=cfg.assist.stoneGold*quantity;if(work.char.gold<consumed.gold)bad('gold','金幣不足');
@@ -177,11 +178,11 @@ export async function assist(env,charId,input={},now=Date.now()){
 }
 export async function lock(env,charId,input={},now=Date.now()){
  const itemId=String(input.itemId||''),locked=input.locked===true;
- return execute(env,charId,input,'lock',{itemId,locked},now,async(work)=>{if(work.char.party_id)bad('party','組隊戰鬥中不可變更');const statement=env.DB.prepare('UPDATE rpg_guardian_sigils SET locked=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND trade_id IS NULL AND exchange_id IS NULL').bind(locked?1:0,now,itemId,String(charId));return {statements:[statement,guardStmt(env.DB)]};});
+ return execute(env,charId,input,'lock',{itemId,locked},now,async(work,cfg,rng,op,ctx)=>{requireBackpackAccess(work.char,ctx);const statement=env.DB.prepare('UPDATE rpg_guardian_sigils SET locked=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND trade_id IS NULL AND exchange_id IS NULL').bind(locked?1:0,now,itemId,String(charId));return {statements:[statement,guardStmt(env.DB)]};});
 }
 export async function unbind(env,charId,input={},now=Date.now()){
- const itemId=String(input.itemId||'');return execute(env,charId,input,'unbind',{itemId},now,async(work,cfg)=>{
-  if(work.char.party_id)bad('party','請先結束組隊戰鬥');const row=await env.DB.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=? AND char_id=?').bind(itemId,String(charId)).first();
+ const itemId=String(input.itemId||'');return execute(env,charId,input,'unbind',{itemId},now,async(work,cfg,rng,op,ctx)=>{
+  requireBackpackAccess(work.char,ctx);const row=await env.DB.prepare('SELECT * FROM rpg_guardian_sigils WHERE id=? AND char_id=?').bind(itemId,String(charId)).first();
   if(!row||!row.bound||row.active||row.locked||row.trade_id||row.exchange_id)bad('protected','請先解除啟用、鎖定及交易狀態');
   const cost=cfg.unbindScrolls[row.quality-1];if((work.inv.unbind||0)<cost)bad('insufficient',`需要 ${cost} 張赫密士解契卷`);work.inv.unbind-=cost;
   return {statements:[env.DB.prepare('UPDATE rpg_guardian_sigils SET bound=0,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=1 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL').bind(now,itemId,String(charId)),guardStmt(env.DB)],results:[sigilView({...row,bound:0})],details:{usedUnbindScrolls:cost}};

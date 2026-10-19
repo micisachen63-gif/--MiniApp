@@ -1,3 +1,4 @@
+import {requireBackpackAccess} from './party-presence.js';
 import {BOSS_EXCHANGES} from '../game/boss-economy.js';
 import {GameError} from '../game/classes.js';
 import {makeGear} from '../game/gear.js';
@@ -5,7 +6,7 @@ import {SLOTS,CLASSES,GENERAL_WEAPON,MAX_OPEN_MAP} from '../game/constants.js';
 import {mapForLevel} from '../game/formulas.js';
 import {mulberry32} from '../game/rng.js';
 export function bossExchange(work,ctx,b){
- if(work.char.party_id)throw new GameError('party','請先完成組隊冒險再兌換');
+ requireBackpackAccess(work.char,ctx);
  const request=String(b.requestId||'');if(!/^(?:app:)?[\w-]{8,80}$/.test(request))throw new GameError('request','缺少有效操作編號');
  const tg=String(work.char.tg_id),ledger=[],result={items:{}};
  const record=(item,delta,note)=>ledger.push({event_id:`boss-exchange:${tg}:${request}:${item}`,tg_id:tg,type:'首領精華兌換',item,item_delta:delta,note});
