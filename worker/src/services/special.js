@@ -1,3 +1,4 @@
+import {requireBackpackAccess} from './party-presence.js';
 import {BOSS_EXCHANGES} from '../game/boss-economy.js';
 import * as P from './player.js';
 import * as T from './trade.js';
@@ -14,8 +15,8 @@ async function fullState(env,p,now){const rows=(await env.DB.prepare('SELECT * F
 export async function view(env,tg,now){const r=await P.withPlayer(env,tg,now);return fullState(env,r.player,now);}
 export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>specialCost(s,pct)),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
 export async function action(env,tg,b,now){
- const r=await P.withPlayer(env,tg,now,async(w,{db})=>{
-  if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整或學習技能');
+ const r=await P.withPlayer(env,tg,now,async(w,ctx)=>{
+  const {db}=ctx;if(['redeem','learn'].includes(b.op))requireBackpackAccess(w.char,ctx);else if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整技能配置');
   const x=specialState(w.char),id=String(b.skillId||''),s=SKILL_MAP[id],extra=[];
   if(b.op==='learn'){
    if(!eligible(w.char,s))throw new GameError('skill','此角色的職業、轉職或等級不符合學習資格');
@@ -57,8 +58,8 @@ export async function action(env,tg,b,now){
  });return {...await fullState(env,r.player,now),result:r.result};
 }
 export async function share(env,tg,b,now){
- const r=await P.withPlayer(env,tg,now,(w,{db})=>{
-  if(w.char.party_id)throw new GameError('party','請在組隊戰鬥結束後分享寶物');
+ const r=await P.withPlayer(env,tg,now,(w,ctx)=>{
+  const {db}=ctx;requireBackpackAccess(w.char,ctx);
   const s=SKILL_MAP[b.skillId];if(!s||!(w.inv[`book_${s.id}`]>0))throw new GameError('book','沒有可分享的學習道具');
   const x=specialState(w.char);if(x.shareAt&&now-x.shareAt<60000)throw new GameError('cooldown','技能寶物分享每分鐘一次');x.shareAt=now;saveSpecial(w.char,x);
   return {extra:[outboxStmt(db,{dedupe:`book:${tg}:${b.requestId}`,target:'group',kind:'skill_book',payload:{ownerId:tg,name:w.char.name,skill:s}},now)]};

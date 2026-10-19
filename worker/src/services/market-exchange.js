@@ -156,7 +156,7 @@ export async function sellable(env,tg,b={}) {
   if(f.enhanceMin!==null){gearWhere.push('e.enhance_level>=?');gearParams.push(f.enhanceMin);}
   if(f.enhanceMax!==null){gearWhere.push('e.enhance_level<=?');gearParams.push(f.enhanceMax);}
   const guardianWhere=['g.char_id=?','g.bound=0','g.active=0','g.locked=0','g.trade_id IS NULL','g.exchange_id IS NULL'],guardianParams=[String(tg)];
-  if(c.level<15||c.party_id||(f.category!=='all'&&f.category!=='guardian')||f.tier!==null||f.enhanceMin!==null||f.enhanceMax!==null)guardianWhere.push('0');
+  if(c.level<15||!await canListBackpack(db,c)||(f.category!=='all'&&f.category!=='guardian')||f.tier!==null||f.enhanceMin!==null||f.enhanceMax!==null)guardianWhere.push('0');
   const guardianClass="CASE g.type WHEN 'melee' THEN 'sword' WHEN 'ranged' THEN 'archer' WHEN 'magic' THEN 'mage' ELSE 'any' END";
   if(f.classReq!=='all'){guardianWhere.push(f.classReq==='any'?`${guardianClass}=?`:`${guardianClass} IN (?,'any')`);guardianParams.push(f.classReq==='thief'?'sword':f.classReq);}
   if(f.quality!=='all'){guardianWhere.push('g.quality=?');guardianParams.push(QUALITY_ORDER.indexOf(f.quality)+1);}
@@ -203,7 +203,7 @@ export async function create(env,tg,b,now=Date.now()) {
   const payload={kind,ref,qty,price,characterId:identifier(b.characterId)},old=await replay(db,c,id,'create',payload);if(old)return response(db,c,old);
   expectedActor(c,b);
   if(c.active_char_id&&c.active_char_id!==String(tg))fail('character_changed','角色已切換，請重新選角',409);
-  if((kind==='guardian'&&c.party_id)||!await canListBackpack(db,c))fail('party','請先完成組隊冒險，再上架道具；星環遠征期間可上架未穿戴、未綁定的背包裝備與可交易道具',409);
+  if(!await canListBackpack(db,c))fail('party','請先完成組隊冒險，再上架道具；星環遠征期間可上架未穿戴、未召喚、未綁定的背包物品',409);
   let snapshot,info;
   if(kind==='equip') {
     snapshot=await db.prepare('SELECT * FROM rpg_equipment WHERE id=? AND tg_id=?').bind(ref,String(tg)).first();
@@ -222,7 +222,7 @@ export async function create(env,tg,b,now=Date.now()) {
   }
   const listingId=crypto.randomUUID(),fee=feeFor(price),row={id:listingId,seller_account:ownerOf(c),seller_char:String(tg),kind,ref,qty,price,fee,status:'active',snapshot_json:JSON.stringify(snapshot),seller_name:c.name,created_at:now,updated_at:now};
   const result={action:'create',listingId,listing:listingView(row,c,env),price,fee,netGold:price-fee,qty};
-  const stmts=[revisionStmt(db,c,now,0,{active:true,party:true,allowExpedition:kind!=='guardian'}),guardStmt(db),
+  const stmts=[revisionStmt(db,c,now,0,{active:true,party:true,allowExpedition:true}),guardStmt(db),
     db.prepare("INSERT INTO rpg_exchange_listings(id,seller_account,seller_char,kind,ref,qty,price,fee,category,class_req,tier,quality,enhance,snapshot_json,status,created_at,updated_at) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,'active',?,? WHERE (SELECT COUNT(*) FROM rpg_exchange_listings WHERE seller_account=? AND status='active')<?").bind(listingId,ownerOf(c),String(tg),kind,ref,qty,price,fee,info.category,info.classReq,info.tier,info.quality,info.enhance,JSON.stringify(snapshot),now,now,ownerOf(c),EXCHANGE.maxActive),guardStmt(db)];
   if(kind==='equip')stmts.push(db.prepare('UPDATE rpg_equipment SET trade_id=? WHERE id=? AND tg_id=? AND is_equipped=0 AND bound=0 AND trade_id IS NULL').bind(escrow(listingId),ref,String(tg)),guardStmt(db));
   else if(kind==='guardian')stmts.push(db.prepare('UPDATE rpg_guardian_sigils SET exchange_id=?,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND exchange_id IS NULL AND rev=?').bind(listingId,now,ref,String(tg),snapshot.rev),guardStmt(db));
@@ -240,10 +240,10 @@ export async function cancel(env,tg,b,now=Date.now()) {
   if(row.seller_account!==ownerOf(c))fail('not_owned','只能撤下自己帳號的上架',403);
   if(row.status!=='active')fail('closed','這筆上架已成交或撤下',409);
   const seller=await actor(db,row.seller_char),closed={...row,status:'cancelled',updated_at:now};
-  if(row.kind==='guardian'&&(seller.party_id||c.party_id))fail('party','請先完成組隊冒險，再取回守護天使',409);
+  if(row.kind==='guardian'&&(!await canListBackpack(db,seller)||!await canListBackpack(db,c)))fail('party','請先完成組隊冒險，再取回守護天使',409);
   const result={action:'cancel',listingId,listing:listingView(closed,c,env),price:row.price,fee:0,netGold:0,qty:row.qty,returnedCharacterId:row.seller_char};
-  const stmts=[db.prepare("UPDATE rpg_exchange_listings SET status='cancelled',rev=rev+1,closed_at=?,updated_at=? WHERE id=? AND rev=? AND status='active'").bind(now,now,listingId,row.rev),guardStmt(db),revisionStmt(db,seller,now,0,{active:String(seller.tg_id)===String(c.tg_id),party:row.kind==='guardian'}),guardStmt(db)];
-  if(String(seller.tg_id)!==String(c.tg_id))stmts.push(revisionStmt(db,c,now,0,{active:true,party:row.kind==='guardian'}),guardStmt(db));
+  const stmts=[db.prepare("UPDATE rpg_exchange_listings SET status='cancelled',rev=rev+1,closed_at=?,updated_at=? WHERE id=? AND rev=? AND status='active'").bind(now,now,listingId,row.rev),guardStmt(db),revisionStmt(db,seller,now,0,{active:String(seller.tg_id)===String(c.tg_id),party:row.kind==='guardian',allowExpedition:true}),guardStmt(db)];
+  if(String(seller.tg_id)!==String(c.tg_id))stmts.push(revisionStmt(db,c,now,0,{active:true,party:row.kind==='guardian',allowExpedition:true}),guardStmt(db));
   if(row.kind==='equip')stmts.push(db.prepare('UPDATE rpg_equipment SET trade_id=NULL WHERE id=? AND tg_id=? AND trade_id=?').bind(row.ref,row.seller_char,escrow(listingId)),guardStmt(db));
   else if(row.kind==='guardian')stmts.push(db.prepare('UPDATE rpg_guardian_sigils SET exchange_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND exchange_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL').bind(now,row.ref,row.seller_char,listingId),guardStmt(db));
   else stmts.push(invDeltaStmt(db,row.seller_char,row.ref,row.qty));
@@ -259,16 +259,16 @@ export async function buy(env,tg,b,now=Date.now()) {
   if(row.seller_account===ownerOf(c))fail('self_trade','不能購買自己帳號上架的道具',409);
   if(row.status!=='active')fail('closed','這筆道具已被購買或撤下，請重新整理',409);
   if(c.active_char_id&&c.active_char_id!==String(tg))fail('character_changed','角色已切換，請重新選角',409);
-  if(c.party_id)fail('party','請先完成組隊冒險，再購買道具',409);
+  if(!await canListBackpack(db,c))fail('party','請先完成目前的組隊戰鬥，再購買道具',409);
   if(c.gold<row.price)fail('gold','金幣不足');
   const seller=await actor(db,row.seller_char),net=row.price-row.fee;
   if(row.kind==='guardian'&&(c.level<15||seller.level<15))fail('guardian_level','守護天使交易雙方須達15級',403);
-  if(row.kind==='guardian'&&seller.party_id)fail('party','刊登天使的旅者正在組隊冒險，請等冒險結束再購買',409);
+  if(row.kind==='guardian'&&!await canListBackpack(db,seller))fail('party','刊登天使的旅者正在組隊冒險，請等冒險結束再購買',409);
   const result={action:'buy',listingId,listing:listingView({...row,status:'sold',updated_at:now},c,env),price:row.price,fee:row.fee,netGold:net,qty:row.qty};
   const stmts=[db.prepare("UPDATE rpg_exchange_listings SET status='sold',buyer_char=?,rev=rev+1,closed_at=?,updated_at=? WHERE id=? AND rev=? AND status='active'").bind(String(tg),now,now,listingId,row.rev),guardStmt(db),
-    revisionStmt(db,c,now,-row.price,{active:true,party:true}),guardStmt(db),revisionStmt(db,seller,now,net,{party:row.kind==='guardian'}),guardStmt(db)];
+    revisionStmt(db,c,now,-row.price,{active:true,party:true,allowExpedition:true}),guardStmt(db),revisionStmt(db,seller,now,net,{party:row.kind==='guardian',allowExpedition:true}),guardStmt(db)];
   if(row.kind==='equip')stmts.push(db.prepare('UPDATE rpg_equipment SET tg_id=?,trade_id=NULL,is_equipped=0 WHERE id=? AND tg_id=? AND trade_id=? AND bound=0 AND is_equipped=0').bind(String(tg),row.ref,row.seller_char,escrow(listingId)),guardStmt(db));
-  else if(row.kind==='guardian')stmts.push(db.prepare('UPDATE rpg_guardian_sigils SET char_id=?,exchange_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND exchange_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND level>=15 AND party_id IS NULL)').bind(String(tg),now,row.ref,row.seller_char,listingId,String(tg)),guardStmt(db));
+  else if(row.kind==='guardian')stmts.push(db.prepare(`UPDATE rpg_guardian_sigils SET char_id=?,exchange_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND exchange_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND level>=15 AND (party_id IS NULL OR party_id=${runningRingSql('rpg_characters.tg_id')}))`).bind(String(tg),now,row.ref,row.seller_char,listingId,String(tg)),guardStmt(db));
   else stmts.push(invDeltaStmt(db,String(tg),row.ref,row.qty));
   const item=row.kind==='equip'?'equip:'+row.ref:row.kind==='guardian'?'sigil:'+row.ref:row.ref;
   stmts.push(ledgerStmt(db,{event_id:`exchange:${listingId}:buy`,tg_id:tg,type:'交易所購買',gold_delta:-row.price,item,item_delta:row.qty,note:listingId},now),

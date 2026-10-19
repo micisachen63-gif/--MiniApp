@@ -1,5 +1,5 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
-import {runningRingId,canEnhanceInParty} from './party-presence.js';
+import {runningRingId,canEnhanceInParty,requireBackpackAccess,backpackAccessStmt} from './party-presence.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
@@ -123,7 +123,7 @@ export async function withPlayer(env, tgId, now, fn = null, { source = 'player',
     const settled = { char: s.char, inv: s.inv, equipment: [...loaded.equipment.map((e) => ({ ...e })), ...settledGear.filter((r) => !loaded.equipment.some((e) => e.id === r.id))] };
     const work = clonePlayer(settled);
     let out = null, gameErr = null;
-    if (fn) { try { const [locks,ringId]=await Promise.all([db.prepare("SELECT item_id FROM rpg_auto_enhance WHERE tg_id=? AND status='running' UNION SELECT item_id FROM rpg_auto_reroll WHERE tg_id=? AND status='running'").bind(String(tgId),String(tgId)).all(),work.char.party_id?runningRingId(db,tgId):null]);out = (await fn(work, { now, db, report: s.report, events: s.events,lockedEquipment:(locks.results||[]).map(x=>x.item_id),runningExpeditionId:ringId })) || {}; } catch (e) { if (e instanceof GameError) gameErr = e; else throw e; } }
+    if (fn) { try { const [locks,ringId]=await Promise.all([db.prepare("SELECT item_id FROM rpg_auto_enhance WHERE tg_id=? AND status='running' UNION SELECT item_id FROM rpg_auto_reroll WHERE tg_id=? AND status='running'").bind(String(tgId),String(tgId)).all(),work.char.party_id?runningRingId(db,tgId):null]);const ctx={now,db,report:s.report,events:s.events,lockedEquipment:(locks.results||[]).map(x=>x.item_id),runningExpeditionId:ringId};out=(await fn(work,ctx))||{};if(ctx.backpackAccess)out.extra=[backpackAccessStmt(db,tgId),...(out.extra||[])]; } catch (e) { if (e instanceof GameError) gameErr = e; else throw e; } }
     const final = gameErr ? settled : work;
     const extra = [...reportStatements(db, tgId, s.report, now), ...notifyStatements(db, final.char, s.events, now, { cron: source === 'cron', inv: final.inv, equipment: final.equipment }), ...relicStatements(db, final.char, s.events, now, final.equipment), ...(gameErr ? [] : out?.extra || [])];
     const ledger = gameErr ? [] : out?.ledger || [];
@@ -354,10 +354,11 @@ export function doReselect(work, { now, db }, { tier, branch, requestId }) {
     result: r };
 }
 export function doConvert(work, ctx, { itemId }) {
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
   const i = work.equipment.findIndex((e) => e.id === itemId); if (i < 0) throw new GameError('not_found', '找不到這件裝備');
   const item = work.equipment[i];
   if (item.trade_id) throw new GameError('in_trade', '交易中的裝備不能轉換');
+  if(!canEnhanceInParty(work.char,item,ctx.runningExpeditionId))throw new GameError('party','組隊期間不能轉換穿戴中的裝備');
+  requireBackpackAccess(work.char,ctx);
   if (!item.branch_req || item.branch_req === String(work.char.class_path || '')[0]) throw new GameError('not_needed', '這件武器不需要轉換');
   const next = convertWeapon(item); if (!next) throw new GameError('no_token', '這件武器的免費轉換已經用過了');
   work.equipment[i] = next; return { result: { item: next } };
@@ -372,13 +373,15 @@ export async function latestReport(db, tgId) {
 }
 
 /** 強化: one attempt; a break deletes the item. weapon +8 / armor & accessories +6 success or existing-level break → group announcement via outbox */
-export function doEnhance(work, { now, db,lockedEquipment=[],runningExpeditionId=null }, { itemId, requestId, blessed = false, guaranteed = false }, rng = rngDefault()) {
+export function doEnhance(work, ctx, { itemId, requestId, blessed = false, guaranteed = false }, rng = rngDefault()) {
+  const {now,db,lockedEquipment=[],runningExpeditionId=null}=ctx;
   if(typeof blessed!=='boolean'||typeof guaranteed!=='boolean'||(blessed&&guaranteed))throw new GameError('scroll_mode','請選擇普通、祝福或必成其中一種強化卷');
   if(lockedEquipment.includes(itemId))throw new GameError('auto_active','這件裝備正在背景強化，請先停止強化',409);
   const i = work.equipment.findIndex((e) => e.id === itemId); if (i < 0) throw new GameError('not_found', '找不到這件裝備');
   const item = work.equipment[i]; const name = item.name;
   if (item.trade_id) throw new GameError('in_trade', '交易中的裝備不能強化');
   if(!canEnhanceInParty(work.char,item,runningExpeditionId))throw new GameError('party','遠征期間只能強化未穿戴、未交易的背包裝備；其他組隊戰鬥請先結束');
+  requireBackpackAccess(work.char,ctx);
   // Buy any missing scrolls and enhance in the same player transaction. This avoids
   // a race between the old client-side buy-then-enhance pair of requests.
   const key = guaranteed ? (item.slot === 'weapon' ? 'guaranteed_scroll_w' : 'guaranteed_scroll_a') : blessed ? (item.slot === 'weapon' ? 'blessed_scroll_w' : 'blessed_scroll_a') : (item.slot === 'weapon' ? 'scroll_w' : 'scroll_a');
@@ -406,11 +409,13 @@ export function doEnhance(work, { now, db,lockedEquipment=[],runningExpeditionId
   return { ledger, extra, result: { ...r, itemId, itemName: name, goldCost } };
 }
 /** 洗屬性: auto-buys missing scroll_r in the same transaction if gold allows */
-export function doReroll(work, { now,lockedEquipment=[] }, { itemId, requestId, locks=[],typeLocks=[] }, rng = rngDefault()) {
+export function doReroll(work, ctx, { itemId, requestId, locks=[],typeLocks=[] }, rng = rngDefault()) {
+  const {now,lockedEquipment=[]}=ctx;
   if(lockedEquipment.includes(itemId))throw new GameError('auto_active','這件裝備正在背景強化，請先停止強化',409);
   const item = work.equipment.find((e) => e.id === itemId); if (!item) throw new GameError('not_found', '找不到這件裝備');
   if (item.trade_id) throw new GameError('in_trade', '交易中的裝備不能洗屬性');
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後重洗裝備');
+  if(!canEnhanceInParty(work.char,item,ctx.runningExpeditionId))throw new GameError('party','遠征期間只能重洗未穿戴、未交易的背包裝備');
+  requireBackpackAccess(work.char,ctx);
   const cost=affixCost(item,locks,typeLocks);const key = 'scroll_r';
   const need = cost.scrolls; const have = work.inv[key] || 0; const missing = Math.max(0, need - have);
   const goldCost = cost.fee + missing * ITEMS[key].price;
@@ -419,7 +424,7 @@ export function doReroll(work, { now,lockedEquipment=[] }, { itemId, requestId, 
     work.inv[key] = have + missing;
   }
   work.char.gold-=goldCost;
-  const r = reroll(item, work.inv, rng,locks,typeLocks);const st=idleStats(work.char,work.equipment);work.char.hp=Math.min(work.char.hp,st.maxHp);work.char.mp=Math.min(work.char.mp,st.maxMp); const tg = String(work.char.tg_id); const eid = eventId('reroll', tg, requestId);
+  const r = reroll(item, work.inv, rng,locks,typeLocks);if(!work.char.party_id){const st=idleStats(work.char,work.equipment);work.char.hp=Math.min(work.char.hp,st.maxHp);work.char.mp=Math.min(work.char.mp,st.maxMp);} const tg = String(work.char.tg_id); const eid = eventId('reroll', tg, requestId);
   const ledger = [];
   if (missing) ledger.push({ event_id: eventId('buy-reroll-scroll', tg, requestId), tg_id: tg, type: '商店購買', gold_delta: -missing*ITEMS[key].price, item: key, item_delta: missing, note: `${ITEMS[key].name}（洗屬性時補購）` });
   ledger.push({ event_id: eid, tg_id: tg, type: '洗屬性', gold_delta:-cost.fee,item: key, item_delta: -r.used[key], note: `${item.name} 詞條${r.before.quality}→${r.after.quality}；鎖定${cost.locks.length+cost.typeLocks.length}條` });

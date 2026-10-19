@@ -20,9 +20,9 @@ for(const version of [1,2,3])test(`v${version} running expedition permits equipm
  const stack=await f.api('create',{item:'scroll_w',qty:10,price:100});assert.equal(stack.status,200);assert.equal((await f.api('cancel',{listingId:stack.j.result.listingId})).status,200);assert.equal((await loadPlayer(f.env.DB,ids[0])).inv.scroll_w,100);
  assert.deepEqual(state(f),before);assert.equal(char(f).hp,c.hp);assert.equal(char(f).mp,c.mp);assert.equal(char(f).party_id,f.id);
 });
-test('guardian trading retains its original combat protection while backpack equipment and stack items are allowed',async t=>{
- const f=await fixture(t),before=state(f),candidate=await X.sellable(f.env,ids[0],{filters:{category:'guardian'}});assert.ok(!candidate.items.some(i=>i.guardianId===f.guardianId));
- const a=await f.api('create',{guardianId:f.guardianId,price:100});assert.equal(a.j.error,'party');assert.equal(f.db.prepare('SELECT exchange_id FROM rpg_guardian_sigils WHERE id=?').get(f.guardianId).exchange_id,null);assert.deepEqual(state(f),before);
+test('unused guardian can be listed and withdrawn during an expedition',async t=>{
+ const f=await fixture(t),before=state(f),candidate=await X.sellable(f.env,ids[0],{filters:{category:'guardian'}});assert.ok(candidate.items.some(i=>i.guardianId===f.guardianId));
+ const a=await f.api('create',{guardianId:f.guardianId,price:100});assert.equal(a.status,200,JSON.stringify(a.j));assert.equal((await f.api('cancel',{listingId:a.j.result.listingId})).status,200);assert.equal(f.db.prepare('SELECT exchange_id FROM rpg_guardian_sigils WHERE id=?').get(f.guardianId).exchange_id,null);assert.deepEqual(state(f),before);
 });
 test('equipped, bound, already escrowed and background-enhancing gear cannot be listed during expedition',async t=>{
  const f=await fixture(t),before=state(f),equipped=(await loadPlayer(f.env.DB,ids[0])).equipment.find(e=>e.is_equipped).id;
