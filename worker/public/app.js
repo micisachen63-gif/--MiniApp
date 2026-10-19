@@ -346,7 +346,7 @@
     '熔爐赤銅戒': 'gear_ring_forge',
   };
   Object.assign(GEAR_NAME_ART, window.RpgGearNames || {});
-  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英))*/, '').trim();
+  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
   /** gear row/offer → icon file: specific named item if present, else fallback to weapon kind / armor family / shared slot */
   const GEAR_ART = (g) => {
     if (!g) return null;
@@ -1240,7 +1240,7 @@
           ${clsTag(e)}
           ${rarTag(e)}
           ${e.grade === 'relic' ? '<span class="relictag">神話遺物</span>' : ''}
-          ${e.source === 'boss' ? '<span class="chip">👑 首領裝</span>' : e.source === 'elite' ? '<span class="chip">⚔️ 菁英掉落</span>' : ''}
+          ${e.source === 'boss' ? '<span class="chip">👑 首領裝</span>' : e.source === 'elite' ? '<span class="chip">⚔️ 菁英掉落</span>' : e.source === 'star_ring' ? '<span class="chip">✦ 星征裝備</span>' : ''}
         </div>
         <h2 class="showcase-title tc-${esc(e.rarity)}">${e.enhance ? `+${e.enhance} ` : ''}${esc(e.name)}</h2>
         <div class="showcase-sub">${esc(e.type || '')} · ${esc(e.slotName)} · 需求 Lv.${e.levelReq}</div>
@@ -1251,6 +1251,7 @@
       ${e.affixes?.lines?.length?'<div class="card affix-list"><b>能力詞條 · '+esc(e.affixes.quality)+'</b>'+e.affixes.lines.map(x=>'<div>'+esc(x.name)+' +'+(x.value*100).toFixed(2)+'% · '+esc(x.quality)+(x.recommended?' ⭐':'')+'</div>').join('')+'</div>':''}
       ${e.cannotEquip ? `<div class="warnbox">${esc(e.cannotEquip)}</div>` : ''}
       ${e.relicProtection?`<p class="relictxt">${esc(e.relicProtection)}</p>`:''}
+      ${e.expeditionProtection?`<p class="relictxt">${esc(e.expeditionProtection)}</p>`:''}
       <p class="dim">星環遠征沿用出發配置；途中換裝用於之後新開的戰鬥。</p>
       <div class="grid2">
         ${e.equipped ? '<button class="btn ghost" data-a="unequip">卸下</button>' : MULTI[e.slot] ? [1, 2].map((p) => `<button class="btn" data-a="equip" data-pos="${p}" ${e.cannotEquip ? 'disabled' : ''}>裝到 ${esc(slotLabel(e.slot, p))}</button>`).join('') : `<button class="btn" data-a="equip" ${e.cannotEquip ? 'disabled' : ''}>${e.grade === 'relic' && !e.bound ? '裝備（綁定）' : '裝備'}</button>`}

@@ -95,12 +95,12 @@ export function makeRelic({ id, tgId, tier, rng, now, source }) {
 }
 
 /** Class-usable, tradeable equipment dropped by a surviving elite. */
-export function makeEliteGear({ id, tgId, cls, classPath = '', tier, rng, now }) {
+export function makeEliteGear({ id, tgId, cls, classPath = '', tier, rng, now, rarityFloor='advanced' }) {
   const slot = pick(rng, SLOTS);
   const kind = slot === 'weapon'
     ? pick(rng, Object.entries(WEAPON_KINDS).filter(([, w]) => w.cls === cls && w.names[tier] && (!w.branch || w.branch === String(classPath || '')[0])).map(([k]) => k))
     : isShared(slot) ? slot : ARMOR_FAMILIES[cls].key;
-  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source: 'elite', rarityFloor: 'advanced', prefix: '菁英' });
+  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source: 'elite', rarityFloor, prefix: '菁英' });
 }
 
 export function canEquip(char, item) {
@@ -142,6 +142,7 @@ export function tradeBlock(item) {
 export function convertWeapon(item) {
   const to = COUNTERPART_WEAPON[item.kind]; if (!to || !item.convert_token) return null;
   const w = WEAPON_KINDS[to];
-  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify(w.bonus), convert_token: 0, is_equipped: 0 };
+  const previous=JSON.parse(item.bonus_json||'{}');
+  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{})}), convert_token: 0, is_equipped: 0 };
 }
 export { CLASS_ARMOR_SLOTS };

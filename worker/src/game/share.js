@@ -16,12 +16,16 @@ export const CARD_ART = [...Object.values(WPN), ...Object.values(ARMOR_ART).flat
 export function gearArt(e) {
   // Missing or invalid thief art must never masquerade as a sword/plate fallback.
   if (isThiefClassGear(e)) return thiefGearArt(e)?.artId || null;
-  const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英))*/, '').trim();
+  const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
   if (gearNames[name]) return gearNames[name];
   const classReq = e.class_req ?? e.classReq;
   if (e.slot === 'weapon') return WPN[e.kind] || 'wpn_sword';
   if (ARMOR_ART[e.slot]) return ARMOR_ART[e.slot][FAM[classReq]] || ARMOR_ART[e.slot].plate;
   return ['belt', 'undershirt', 'earring', 'ring'].includes(e.slot) ? e.slot : 'wpn_sword';
+}
+export function gearIconSrc(e){
+ if(isThiefClassGear(e))return thiefGearArt(e)?'/'+thiefGearArt(e).iconSrc:null;
+ const art=gearArt(e);return art?'/art/v2/'+art+'.webp':null;
 }
 /** composed item-card JPG (art/cards, built by art-gen/cards.py): painted art + rarity frame + rarity label */
 export const cardPhoto = (e) => {

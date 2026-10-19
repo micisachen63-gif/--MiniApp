@@ -116,7 +116,7 @@ function filterSQL(f,alias='l') {
     parts.push(`(${alias}.class_req IN (?,'any') OR (${alias}.kind='guardian' AND ${alias}.class_req='sword'))`);params.push(f.classReq);
   }else if(f.classReq!=='all'){parts.push(f.classReq==='any'?`${alias}.class_req=?`:`${alias}.class_req IN (?,'any')`);params.push(f.classReq);}
   if(f.tier!==null){parts.push(`${alias}.tier=?`);params.push(f.tier);}
-  if(f.quality!=='all'){parts.push(`CASE WHEN ${alias}.kind='equip' AND json_extract(${alias}.snapshot_json,'$.grade')='relic' AND ${alias}.quality IN ('common','advanced','epic') THEN 'legendary' ELSE ${alias}.quality END=?`);params.push(f.quality);}
+  if(f.quality!=='all'){parts.push(`CASE WHEN ${alias}.kind='equip' AND (json_extract(${alias}.snapshot_json,'$.grade')='relic' OR json_extract(${alias}.snapshot_json,'$.source')='star_ring') AND ${alias}.quality IN ('common','advanced','epic') THEN 'legendary' ELSE ${alias}.quality END=?`);params.push(f.quality);}
   if(f.enhanceMin!==null){parts.push(`${alias}.enhance>=?`);params.push(f.enhanceMin);}
   if(f.enhanceMax!==null){parts.push(`${alias}.enhance<=?`);params.push(f.enhanceMax);}
   return {parts,params};

@@ -1,0 +1,62 @@
+星環遠征裝備階級、強度與圖片修正 — 2026-10-20
+
+問題
+原獎勵取Engine.TIERS[state.tier].gearTier，高等角色參加40遠征仍拿T4。
+裝備僅把一般makeEliteGear的名稱改為星征，沒有數值收益；背包把全部防具覆蓋成胸甲、
+共用裝備覆蓋成墜飾，名稱前綴星征也未經canonical gear-name mapping移除，TG卡片亦失真。
+
+現在規則
+未結算的終階裝備使用角色「本次最後階段EXP入帳後」的等級，mapForLevel=ceil(level/10)，
+上限T12。例Lv55→T6、Lv75→T8，角色80升81後給T9，仍符合等級需求。
+新製造與兌換都走makeStarRingGear：本職業／合法分支、最低傳說、正常的對應Tier詞條格數。
+與同Tier、同稀有度、同基底值的普通裝比較，主屬性含強化、元素值與固定flat副屬性+15%，
+四捨五入誤差除外。百分比詞條不疊乘，不改普通裝；source=star_ring不可再套給relic雙加成。
+稀有度／SQL市場篩選含已託管低品質舊裝，沿用gearRarity保底；遺物原規則維持。
+STAT policy在constants.STAR_RING_GEAR，version1、floor legendary、statMult1.15。
+
+已開始遠征可直接適用，不用重開。保留已發布v1/v2/v3純Engine重播與golden，service僅
+重製尚未提交的裝備：原掉落件數／裝備ID、其他EXP／卷軸／核心／徽記均不變，裝備用獨立
+personal seed+version確定生成。當趟actors、戰鬥結果、原收益RNG流與完成通知次數不變。
+已提交的獎勵JSON與舊戰報不改寫；duplicate sweep/view不可重新抽裝或發獎。
+
+既有錯階裝備：一次性補正
+在角色原有withPlayer原子流程中處理已持有、未託管且未被背景任務鎖定的舊星征裝。
+以這次處理的角色等級補到對應Tier；若原Tier更高絕不降級。保留所有權／綁定／穿戴位置／
+強化級數／元素種類與所有原詞條key、score，按新Tier提升固定值與元素值；補足原本因
+低Tier少給的詞條格，使用item-id的固定修復seed，不消耗卷軸或金幣。
+bonus_json.starRingGearVersion=1是持久版本標記，使用者看不到這個內部欄位；stats的
+itemExtras會排除它，不可把它當百分比顯示。武器路線轉換保留此標記，避免再次升階。
+每件唯一ledger star-ring-gear-v1:<item-id>，與裝備修正同batch；後續角色再升級不會
+讓這件裝備自動跟著升階。新增裝備生成時即寫version1，不走舊裝補正。
+交易託管及背景強化／洗屬性running或processing期間完全跳過；前景打寶／爬塔中也跳過。
+歸還背包、背景作業停止或前景戰結束後，下次讀取角色再處理。真遠征期間可正常補正，
+不改其出發快照。沒有刪裝、補發新裝、重置角色或任務；沒有schema migration。
+db.EQUIP_MUTABLE增加tier／level_req／base_stat以原有char.rev optimistic鎖安全保存；
+與交易託管／新背景作業的提交競爭會重讀並延期，不會修改已凍結的offer或重複發修復帳。
+
+圖片
+移除RpgStarRingCosmetics.gearArt對所有部位的泛用覆蓋；保留其API回null，讓主背包使用
+既有完整class／slot／tier canonical圖。server share及browser cleanGearName都移除星征。
+四職業分支武器、盔甲／頭盔／手套／鞋與四種共用部位均核對真實WebP及分享JPEG路徑。
+使用既有對應部位高品質美術，不把胸甲當鞋或手套，也不假稱新增了整套專屬素材。
+遠征結算頁新增equipmentArt，逐件顯示實際圖、名稱與Tier，不再把裝備總數全畫成劍。
+公開catalog不再把入場Tier的gearTier誤當獎勵；rewardsPreview明示recipient_after_exp。
+裝備詳情加星征標記與強度說明，主頁與expedition相關快取版本已更新。
+
+驗證
+26項新增Node24測試：四職業全部等級邊界／slot／強化數值，所有tier真實裝備圖與JPEG；
+v1–v3×逐段／離線六套12h Lv80參加Lv40遠征流程確認T8、30份收據防重、原戰鬥及其他
+獎勵完全保留；終階EXP先升級；已穿舊裝、詞條／強化保存、只修一次／不會往後再升階；
+雙讀競爭／交易入庫競爭／背景任務競爭、託管／前景暫緩、舊戰報與完成通知保留、
+武器轉換保留版本、較高Tier的轉手裝不降級。
+既有Lv50測試改核對實際結算後level，兌換私有entropy測試採新裝備配方，保留不受玩家
+requestId選種與同request重送不重抽的斷言；原v2歷史golden及所有舊收益測試不刪除。
+本機完整npm test與PR必要CI仍須通過後，由乾淨origin/main用根deploy:worker發布。
+正式服務／來源／完整通過數看origin/deployment-records收據及Actions，不以本文宣稱發布。
+
+UI：隔離D1＋完整正式MiniApp＋真API，390／1280px各13件四職業與共用部位，讀取後
+T4→T6（角色55）／+7／傳說；逐件圖片URL對應canonical且naturalWidth>0，開真裝備詳情，
+看到15%與星征標記，無水平溢出或pageerror，原遠征state完全不變。已看兩種尺寸鞋圖。
+這是桌機Chrome手機尺寸，不是iPhone／Android原生TG實測。
+忽略目錄QA：.release-sync/ring-gear-browser-results.json、ring-gear-boots-390/1280.png。
+不觸發正式玩家測試／TG訊息，不改BOT，不新增付費服務。

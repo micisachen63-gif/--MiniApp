@@ -11,6 +11,8 @@ import {taipeiDay} from '../src/game/time.js';
 import {selectAccountCharacter} from '../src/accounts.js';
 import * as ShortParty from '../src/services/party.js';
 import {makeEliteGear} from '../src/game/gear.js';
+import {makeStarRingGear} from '../src/game/star-ring-gear.js';
+import {mapForLevel} from '../src/game/formulas.js';
 import {rngFor} from '../src/game/rng.js';
 const T=Date.parse('2026-10-18T08:00:00Z');
 const specs=['sword:B2','mage:A1','thief:A1','archer:B1','sword:A1'];
@@ -172,7 +174,7 @@ test('Lv50 foundation roles work at their true level without unlocking high-leve
  const{env,db,id,ids}=await fixture(t,{tier:50,classes:['sword:A','mage:A','thief:A','archer:A','sword:B'],difficulty:'advanced'});
  const s=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json),b=E.simulateStage(s,0,1);
  assert.ok(b.events.some(x=>x.skillId==='role_guard'));assert.ok(b.actors.every(a=>a.level===50));assert.ok(b.actors.every(a=>a.path.length===1));
- const out=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(out.status,'complete');assert.ok(out.me.rewards.equipment.every(e=>e.tier===5));
+ const out=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(out.status,'complete');const liveLevel=db.prepare('SELECT level FROM rpg_characters WHERE tg_id=?').get(ids[0]).level;assert.ok(out.me.rewards.equipment.every(e=>e.tier===mapForLevel(liveLevel)));
  const mage={...s.actors[1],hp:10,mp:s.actors[1].maxMp},enemy={hp:10000,maxHp:10000,def:1,buffs:[],dots:[],windup:true,interruptible:true};
  const team={actors:[mage],enemy,round:1,cooperation:{}};const heal=E.castExpeditionRole(mage,team,'aid',T);assert.ok(heal.healed>0);assert.equal(mage.level,50);
  await assert.rejects(async()=>E.castExpeditionRole(mage,team,'breach',T),e=>e.code==='role');
@@ -304,7 +306,7 @@ test('gear-shop lottery uses private server entropy instead of a player-selected
  const{env,db,ids}=await fixture(t);db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'star_ring_token',80)").run(ids[0]);
  const serverValues=['10000000-0000-4000-8000-000000000001','10000000-0000-4000-8000-000000000002'],body={offerId:'gear',requestId:'player-picked-quality-seed'};let calls=0;
  const random=t.mock.method(globalThis.crypto,'randomUUID',()=>serverValues[calls++]);
- const expected=makeEliteGear({id:'ringshop:'+serverValues[0],tgId:ids[0],cls:'sword',classPath:'B2',tier:9,rng:rngFor(serverValues[1]),now:T});expected.source='star_ring';expected.name=expected.name.replace(/^菁英/,'星征');
+ const expected=makeStarRingGear({id:'ringshop:'+serverValues[0],tgId:ids[0],cls:'sword',classPath:'B2',level:90,rng:rngFor(serverValues[1]),now:T});
  const bought=await R.shop(env,ids[0],body,T);assert.deepEqual(bought.equipment[0],expected);assert.equal(calls,2);
  const replay=await R.shop(env,ids[0],body,T);assert.deepEqual(replay,bought);assert.equal(calls,2);assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='star_ring_token'").get(ids[0]).quantity,40);
  random.mock.restore();

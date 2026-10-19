@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-20 星征裝備修正：service終階依角色EXP入帳後等級產裝，最低傳說、同條件普通裝主屬性含強化／元素／flat副屬性+15%；原v1–v3戰鬥／掉落件數與其他收益不變。舊星征裝於withPlayer原子一次補正，保留強化與原詞條key/score，補足Tier詞條格；bonus_json.starRingGearVersion與唯一ledger防再次升階，轉武器保留標記。託管／背景作業／前景短戰延後，無migration。移除泛用胸甲／墜飾覆蓋，背包、TG圖與結算逐件圖用正確職業部位Tier。26新測試、390／1280px各13件真UI驗收。接手讀docs/STAR_RING_GEAR_FIX_20261020.txt；僅Worker發布，正式狀態看deployment-records。
+
 2026-10-19 遠征換裝／天使配置放寬：equip／unequip、永久啟用與召喚設定（含舊settings入口）允許真實running遠征，新開打寶／爬塔採目前配置，原遠征快照不變；回血升級改用live穿戴上限。0032僅精準替換guardian update trigger，保留active轉移／刪除與託管保護，禁止盲跑歷史migration。遺物最低傳說品質（新生成與舊裝含完整屬性／所有交易顯示及篩選）、強化加成+25%；gearRarity解析舊row，不覆寫託管／歷史；普通裝／掉率／詞條不變；截圖410／256對照改410／526。新增26遠征＋15遺物測試、390／1280px完整UI驗收；接手讀docs/STAR_RING_CONFIGURATION_RELICS_20261019.txt。僅Worker，正式發布看deployment-records。
 
 2026-10-19 技能保留追加補驗：新增12個真通關流程（遠征v1–v3×打寶／爬塔×兩種結束順序），實際施放新技能，通關後再改配置、讀舊戰報／重試領獎及遠征完成都不回寫舊配置；新學技能、自動條件、合法新冷卻與towerBest保留，30份遠征收益對照一致。只增測試／文件，不需部署；合入後sync:check核對正式機即可。詳docs/STAR_RING_SKILL_PERSISTENCE_VERIFICATION_20261019.txt。
