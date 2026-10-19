@@ -1,5 +1,6 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
 import {runningRingId,canEnhanceInParty,requireBackpackAccess,backpackAccessStmt} from './party-presence.js';
+import {gearRarity} from '../game/gear-quality.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
@@ -400,7 +401,7 @@ export function doEnhance(work, ctx, { itemId, requestId, blessed = false, guara
   if (r.announce && r.result === 'success') {
     extra.push(...shareStmts(db, { owner: tg, ownerChar: work.char, equip: item, kind: 'enhance', context: { itemName: name, from: r.from, to: r.to }, now }).stmts);
   } else if (r.announce) {
-    extra.push(outboxStmt(db, { dedupe: `enh:${eid}`, target: 'group', kind: 'enhance', payload: { tgId: tg, name: work.char.name, item: name, result: r.result, from: r.from, to: r.to, rarity: RARITIES[item.element_tier]?.name } }, now));
+    extra.push(outboxStmt(db, { dedupe: `enh:${eid}`, target: 'group', kind: 'enhance', payload: { tgId: tg, name: work.char.name, item: name, result: r.result, from: r.from, to: r.to, rarity: RARITIES[gearRarity(item)]?.name } }, now));
   }
   if (r.result !== 'break'&&!work.char.party_id) { const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp); }
   const ledger = [];

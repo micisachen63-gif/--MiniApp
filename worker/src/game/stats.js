@@ -1,4 +1,5 @@
 import {collectionBlessing} from './collection-blessings.js';
+import {gearRarity} from './gear-quality.js';
 import {resistanceRate} from './elements.js';
 import { THIEF_NODES } from './thief-data.js';
 import {affixTotals} from './affixes.js';
@@ -42,18 +43,18 @@ export function enhanceBonus(slot, level, tier = 1) {
 /** Main (+enhance) x rarity; relics protect main rarity and enhance returns.
  * Shared DEF pieces also use the wearer's armor-family defMult. */
 export function itemStat(item, wearerClass = null) {
-  const mult = RARITIES[item.element_tier]?.mult ?? 1;
-  const relic=item.grade==='relic',mainMult=relic?Math.max(mult,RARITIES[RELIC.mainRarityFloor].mult):mult;
+  const mult = RARITIES[gearRarity(item)]?.mult ?? 1;
+  const relic=item.grade==='relic';
   const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
-  return { main: Math.round((item.base_stat + enh) * mainMult * fam), elem: Math.round((item.element_stat || 0) * mult) };
+  return { main: Math.round((item.base_stat + enh) * mult * fam), elem: Math.round((item.element_stat || 0) * mult) };
 }
 /** what base_stat means for this slot: ATK (weapon, ring) / DEF (armor slots) / MP (earring) */
 export const mainStatOf = (slot) => (slot === 'weapon' ? 'atk' : SLOT_SPEC[slot]?.main || 'def');
 const FLAT_KEYS = ['atk', 'def', 'hp', 'mp'];
 /** flat secondaries (bonus_json) + relic affix (flat values rarity-scaled) */
 export function itemExtras(item) {
-  const mult = RARITIES[item.element_tier]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
+  const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
   for (const [src, m] of [[parseBonus(item.bonus_json), mult], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;

@@ -1,4 +1,5 @@
 import {rollAffixes} from './affixes.js';
+import {gearRarity} from './gear-quality.js';
 // Shop / boss / relic gear (pure). Returns rows in the D1 rpg_equipment shape (v0.4: + grade, affix_json, bound, trade_id).
 import { WEAPON_KINDS, ARMOR_FAMILIES, WEAPON_ATK, ARMOR_DEF, WEAPON_PRICE, BRANCH_WEAPON_PRICE_MULT, ARMOR_PRICE, TIER_PREFIX, TIER_LEVEL_REQ,
   RARITIES, RARITY_KEYS, ELEMENT_KEYS, SLOTS, SLOT_NAMES, MAX_OPEN_MAP, COUNTERPART_WEAPON, SLOT_SPEC, SLOT_CAPACITY, CLASS_ARMOR_SLOTS, SHARED_SLOTS,
@@ -58,7 +59,7 @@ export function rollAffix(rng, tier) {
 /** generate an equipment row. source: shop | boss | starter | relic_boss | relic_elite */
 export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = 'shop', rarityFloor = null, bonusPct = 0, prefix = '', forceRarity = null, relic = false }) {
   if (!SLOTS.includes(slot)) throw new Error(`unknown slot ${slot}`);
-  const element = pick(rng, ELEMENT_KEYS); const rarity = forceRarity || rollRarity(rng, relic ? RELIC.rarityFloor : rarityFloor);
+  const element = pick(rng, ELEMENT_KEYS); const rarity = gearRarity({grade:relic?'relic':'normal',element_tier:forceRarity || rollRarity(rng, relic ? RELIC.rarityFloor : rarityFloor)});
   const mult = (1 + bonusPct) * (relic ? RELIC.statMult : 1);
   let name, base, bonus = {}, classReq = cls, branchReq = null;
   if (slot === 'weapon') {

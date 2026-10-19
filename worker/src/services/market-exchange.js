@@ -4,6 +4,7 @@ import { SKILL_MAP, baseOf } from '../game/special.js';
 import { GameError } from '../game/classes.js';
 import { checkEquipLine } from '../game/trade.js';
 import { equipmentView } from '../views.js';
+import {gearRarity,gearRaritySql} from '../game/gear-quality.js';
 import { classifyDbError, guardStmt, invDeltaStmt, ledgerStmt } from '../db.js';
 import { sigilView } from './guardian-sigil.js';
 import { guardianEffect } from '../game/guardian-effects.js';
@@ -68,7 +69,7 @@ function itemInfo(item) {
 }
 function equipmentInfo(c,e) {
   return {kind:'equip',equipId:e.id,item:null,name:e.name,emoji:'⚔️',desc:null,art:equipmentView(c,e).art,equipment:equipmentView(c,e),
-    category:'equipment',classReq:e.class_req,tier:e.tier,quality:e.element_tier,qualityName:RARITIES[e.element_tier]?.name||e.element_tier,enhance:e.enhance_level};
+    category:'equipment',classReq:e.class_req,tier:e.tier,quality:gearRarity(e),qualityName:RARITIES[gearRarity(e)]?.name||gearRarity(e),enhance:e.enhance_level};
 }
 function guardianInfo(env,row) {
   const guardian={...sigilView(row),...guardianEffect(row,env)};
@@ -115,7 +116,7 @@ function filterSQL(f,alias='l') {
     parts.push(`(${alias}.class_req IN (?,'any') OR (${alias}.kind='guardian' AND ${alias}.class_req='sword'))`);params.push(f.classReq);
   }else if(f.classReq!=='all'){parts.push(f.classReq==='any'?`${alias}.class_req=?`:`${alias}.class_req IN (?,'any')`);params.push(f.classReq);}
   if(f.tier!==null){parts.push(`${alias}.tier=?`);params.push(f.tier);}
-  if(f.quality!=='all'){parts.push(`${alias}.quality=?`);params.push(f.quality);}
+  if(f.quality!=='all'){parts.push(`CASE WHEN ${alias}.kind='equip' AND json_extract(${alias}.snapshot_json,'$.grade')='relic' AND ${alias}.quality IN ('common','advanced','epic') THEN 'legendary' ELSE ${alias}.quality END=?`);params.push(f.quality);}
   if(f.enhanceMin!==null){parts.push(`${alias}.enhance>=?`);params.push(f.enhanceMin);}
   if(f.enhanceMax!==null){parts.push(`${alias}.enhance<=?`);params.push(f.enhanceMax);}
   return {parts,params};
@@ -152,7 +153,7 @@ export async function sellable(env,tg,b={}) {
   if(f.category!=='all'&&f.category!=='equipment')gearWhere.push('0');
   if(f.classReq!=='all'){gearWhere.push(f.classReq==='any'?'e.class_req=?':"e.class_req IN (?,'any')");gearParams.push(f.classReq);}
   if(f.tier!==null){gearWhere.push('e.tier=?');gearParams.push(f.tier);}
-  if(f.quality!=='all'){gearWhere.push('e.element_tier=?');gearParams.push(f.quality);}
+  if(f.quality!=='all'){gearWhere.push(gearRaritySql('e')+'=?');gearParams.push(f.quality);}
   if(f.enhanceMin!==null){gearWhere.push('e.enhance_level>=?');gearParams.push(f.enhanceMin);}
   if(f.enhanceMax!==null){gearWhere.push('e.enhance_level<=?');gearParams.push(f.enhanceMax);}
   const guardianWhere=['g.char_id=?','g.bound=0','g.active=0','g.locked=0','g.trade_id IS NULL','g.exchange_id IS NULL'],guardianParams=[String(tg)];
@@ -168,7 +169,7 @@ export async function sellable(env,tg,b={}) {
   const byId=new Map(gear.map(e=>[e.id,e])),guardianById=new Map(guardians.map(g=>[g.id,g]));
   // The indexed candidate and detail reads can straddle another device's sale,
   // equip or trade. Omit vanished/newly locked gear instead of rendering undefined.
-  const available=page.filter(r=>r.kind==='equip'?(()=>{const e=byId.get(r.ref);return e&&!e.is_equipped&&!e.bound&&!e.trade_id&&e.source!=='starter'&&matchInfo({category:'equipment',classReq:e.class_req,tier:e.tier,quality:e.element_tier,enhance:e.enhance_level},f);})():r.kind==='guardian'?(()=>{const g=guardianById.get(r.ref);return g&&!g.bound&&!g.active&&!g.locked&&!g.trade_id&&!g.exchange_id&&matchInfo(guardianInfo(env,g),f);})():true);
+  const available=page.filter(r=>r.kind==='equip'?(()=>{const e=byId.get(r.ref);return e&&!e.is_equipped&&!e.bound&&!e.trade_id&&e.source!=='starter'&&matchInfo({category:'equipment',classReq:e.class_req,tier:e.tier,quality:gearRarity(e),enhance:e.enhance_level},f);})():r.kind==='guardian'?(()=>{const g=guardianById.get(r.ref);return g&&!g.bound&&!g.active&&!g.locked&&!g.trade_id&&!g.exchange_id&&matchInfo(guardianInfo(env,g),f);})():true);
   return {ok:true,items:available.map(r=>({...r.kind==='equip'?equipmentInfo(c,byId.get(r.ref)):r.kind==='guardian'?guardianInfo(env,guardianById.get(r.ref)):itemInfo(r.ref),qty:r.qty})),nextCursor:rows.length>30?`${page[29].kind}:${page[29].ref}`:null,filters:f,meta:meta(),balance:balance(c)};
 }
 async function replay(db,c,id,action,payload) {

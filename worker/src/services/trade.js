@@ -12,6 +12,7 @@ import {affixView} from '../game/affixes.js';
 import { GameError } from '../game/classes.js';
 import { tradeTax, netGold, checkGold, checkItemLine, checkEquipLine, sideOf, otherSide } from '../game/trade.js';
 import { itemStat, itemExtras, mainStatOf } from '../game/stats.js';
+import {gearRarity} from '../game/gear-quality.js';
 import { guardStmt, bumpRevStmt, ledgerStmt, invDeltaStmt, invDeltaStmts, outboxStmt, classifyDbError } from '../db.js';
 
 const newId = () => `t${crypto.randomUUID().replace(/-/g, '').slice(0, 11)}`;
@@ -64,7 +65,8 @@ export async function tradeView(env, id, viewer = null, now = Date.now()) {
     if(l.kind==='sigil'){const row=sigilMap.get(l.ref)||JSON.parse(l.snapshot_json||'{}'),v=sigilView(row);return {...v,kind:'sigil',ref:l.ref,qty:1,name:v.qualityName+'・'+v.typeName,artUrl:'/art/guardian-sigil-20261013/'+v.type+'.webp'};}
     if (l.kind === 'item') return { kind: 'item', ref: l.ref, qty: l.qty, name: ITEMS[l.ref]?.name || l.ref, emoji: ITEMS[l.ref]?.emoji };
     const e = (t.status==='open'?eqMap.get(l.ref):null) || JSON.parse(l.snapshot_json || '{}'); const st = e.base_stat != null ? itemStat(e) : { main: null };const extras=itemExtras({...e,affix_json:null});
-    return { kind: 'equip', ref: l.ref, qty: 1, name: e.name, slot: e.slot, wkind: e.kind, slotName: SLOT_NAMES[e.slot], tier: e.tier, grade: e.grade || 'normal', rarity: e.element_tier, rarityName: RARITIES[e.element_tier]?.name,
+    const rarity=gearRarity(e);
+    return { kind: 'equip', ref: l.ref, qty: 1, name: e.name, slot: e.slot, wkind: e.kind, slotName: SLOT_NAMES[e.slot], tier: e.tier, grade: e.grade || 'normal', rarity, rarityName: RARITIES[rarity]?.name,
       enhance: e.enhance_level || 0, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業', stat: st.main, statName: mainStatOf(e.slot).toUpperCase(), affix: e.affix_json ? JSON.parse(e.affix_json) : null,
       affixes:affixView(e),element:e.element,elementName:ELEMENTS[e.element]?.name,elemStat:st.elem||0,extras:extras.flat,pct:extras.pct,levelReq:e.level_req,branchReq:e.branch_req };
   };

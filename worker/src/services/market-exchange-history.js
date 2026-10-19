@@ -31,7 +31,7 @@ function snapshotItem(row,char) {
       equipment.stat=Number(raw.base_stat)||0;equipment.statName='基礎 '+view.statName;
       equipment.elemStat=Number(raw.element_stat)||0;equipment.elementName=view.elementName?'基礎 '+view.elementName:null;
       equipment.affixes={lines:(view.affixes?.lines||[]).map(line=>({name:text(line.name),value:Number(line.value)||0,quality:text(line.quality)}))};
-      return {...fallback,name:text(raw.name,'珍藏裝備'),quality:raw.element_tier,qualityName:RARITIES[raw.element_tier]?.name||null,tier:raw.tier,enhance:raw.enhance_level,equipment,art:view.art,snapshotAvailable:true};
+      return {...fallback,name:text(raw.name,'珍藏裝備'),quality:view.rarity,qualityName:view.rarityName||null,tier:raw.tier,enhance:raw.enhance_level,equipment,art:view.art,snapshotAvailable:true};
     }
     if(row.kind==='guardian') {
       if(raw.id!==row.ref||!Object.hasOwn(TYPE_NAMES,raw.type)||!Number.isInteger(raw.quality)||raw.quality<1||raw.quality>8)return fallback;
