@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "fa2154663052e54593defe3bb21c127d4d3599d8",
+  "sourceCommit": "e391d72e5bfdab4a001a8c374d6e197e43205b16",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "249633ea-28e7-4558-8155-dd8e129dc9dc",
+  "productionVersion": "ba6dfa7c-d160-4c17-9ac6-2e6a217550e2",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-18T03:31:36.717Z",
+  "verifiedAt": "2026-10-19T01:09:11.378Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "b9a8844bc9f77c5b524e466b7a17096a82356cb0e2af5ba3a41969005f4390d9"
+    "index.js": "f4ca67ba950fec713991abd7329a952b94a39f6344bc7aac8cf1417280556ec7"
   },
   "source": {
-    "fileCount": 250,
-    "sha256": "115e7c1bbc1613056d43ff49dbe18557d29f1be9010a3196fc53a4f53a48bef4",
+    "fileCount": 251,
+    "sha256": "deb0db3ab5d4315ba5457440586de376c3d5620a5d6e87fb3815bc05db1c3208",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -912,7 +912,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
-        "sha256": "994f30e1a8468a8e0bfc147195f6c50aa9093907cf401b4b54bc90ac33ff9e09"
+        "sha256": "7646bd2a014cfb6b90331052f419738cc31bcc62aa813a9bf224144aa483263f"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
@@ -921,6 +921,10 @@
       {
         "file": "cloud-bot/src/adapter/rpg-pk-animation-flow.js",
         "sha256": "6e7bb737fc3e565f4d09c00f684dfb409a78f6956a8702e5b9c54a771bc729f1"
+      },
+      {
+        "file": "cloud-bot/src/adapter/star-ring-recruit.js",
+        "sha256": "dc4cb06cae163c539195e540a88a158f1ca4bca3899cb3f8eaca0057e2b2ab28"
       },
       {
         "file": "cloud-bot/src/adapter/verification.json",
@@ -1029,7 +1033,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "249633ea-28e7-4558-8155-dd8e129dc9dc",
+        "version_id": "ba6dfa7c-d160-4c17-9ac6-2e6a217550e2",
         "percentage": 100
       }
     ],
