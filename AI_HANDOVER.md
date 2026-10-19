@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 星環遠征補上群組招募圖卡：建立／狀態變更以原子outbox排程，同房間更新原卡、合併待送版本、準確ring deep link、圖片拒絕fallback與不確定結果防重。原先只有完成DM，沒有開隊通知。先BOT後Worker發布，保留藥水設定；無migration。詳docs/STAR_RING_RECRUIT_NOTICE_20261019.txt，版本看兩服務收據。
+
 2026-10-18 三款遠征足下光環新增地面旋轉：曙星32秒順轉、月潮38秒逆轉、星蝕28秒順轉，衣櫥與戰場共用，保持足下定位，減少動態時停轉。驗收與接手見docs/art/STAR_RING_AURA_ROTATION_20261018.txt；僅前端CSS與快取版本，無DB／BOT改動，正式版本看收據。
 
 2026-10-18 自動洗屬性修正：完整鎖定且已達標的能力不再讓剩餘詞條誤判完成；所選能力都已鎖住時，依設定品質判斷剩餘每條。種類鎖仍會洗品質；費用／預算不變。接手讀docs/AUTO_REROLL_LOCKS_FIX_20261018.txt；無migration或BOT改動，發布看正式收據。

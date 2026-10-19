@@ -1,0 +1,13 @@
+星環遠征群組招募通知補修（2026-10-19）
+
+問題：遠征create只寫房間、成員與presence，沒有建立招募outbox；BOT只處理star_ring_complete私人完成通知。因此開隊成功也不會出現群組招募。正式唯讀查核時已有兩間ended房間、無star_ring通知。未重開舊房、未變更玩家或每日額度。
+
+修正：建立房間同一D1 batch新增star_ring_recruit群組outbox，dedupe依房間及revision。mutate同批排入新版本；claim將同類同房間尚未領取的舊版本合併，payload沿用STAR_RING.view讀當前狀況。
+BOT使用原創星環背景JPEG，顯示等級、難度、12小時、隊長、五人名單、準備狀態與尚缺人數。按鈕為群組合法的t.me/<bot>?startapp=ring_<32hex>網址，與既有手動邀請及expedition-entry.js的房間路由一致；由登入的Mini App決定角色及入隊資格，不以群組callback直接加入。
+同一房間只新發一張圖卡，之後加入、準備、出發、結束等revision修改原訊息。不把每次隊伍變化變成新貼文。未送出的已結束／過期招募直接略過，不補發失效邀請。完成戰報仍私訊，不變更原規則。
+圖片遭Telegram明確拒絕時改送文字保留入口；403或不確定傳送結果不可直接重發文字。送出前存pending，成功存messageId；遺失回應或重啟後不重發，保留待核對。通知讀取／傳送重試沿用既有租約、ACK、退避與失敗處理。
+
+測試：新增Worker三案例（原子建立／操作重播與失敗回滾、claim合併並讀最新成員、取消不扣每日額度）；新增BOT五案例（圖卡與準確deep link、重啟去重、更新原卡、過期／非法目的地略過、圖片明確拒絕與不確定回應）。相關18項測試通過，含既有完成DM和outbox退避。發布腳本另執行完整兩服務測試。
+驗證界線：使用隔離D1與模擬Telegram API確認發送目的地、內容、按鈕、更新及去重；沒有在真群組額外發測試貼文。正式版本以docs/deployment兩服務收據及即時狀態為準。
+
+發布順序：先BOT（能識別新kind），再Worker（開始產生新kind），都從等於origin/main的乾淨提交執行根npm run deploy:bot / deploy:worker。保留其他同時上版的藥水選擇功能。無schema或migration。

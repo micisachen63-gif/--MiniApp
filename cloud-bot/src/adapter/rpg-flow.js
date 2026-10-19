@@ -1,5 +1,6 @@
 import {persistentMap,synchronousSave} from './persistent-map.js';
 import {createPartyFlow} from './rpg-party-flow.js';
+import {createStarRingRecruitFlow} from './star-ring-recruit.js';
 import {createPkAnimationFlow} from './rpg-pk-animation-flow.js';
 // ⚔️ 星穹旅誌 — Telegram adapter for 小精靈 (life role). All game rules/state live in the elf-rpg-api Worker;
 // this module only renders menus, forwards button presses (X-Service-Secret), and delivers the Worker's outbox
@@ -141,6 +142,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   const appBtn = (text, screen = '') => (app.url ? { text, web_app: { url: screen ? `${app.url}?screen=${screen}` : app.url } } : null);
   const popup = async (cq, text, alert = true) => { try { await api.call('answerCallbackQuery', { callback_query_id: cq.id, text: String(text).slice(0, 190), show_alert: alert }); } catch (error) { warn('answer', error); } };
   const partyFlow=createPartyFlow({api,client,send,popup,st,save,chatId,deepLink,appBtn,now,warn,animationRenderer,renderPartyCard});
+  const starRingRecruit=createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,appUrl:app.url,now,rejectedImage});
   const editMsg = async (cid, mid, text, keyboard = []) => {
     try { await api.call('editMessageText', { chat_id: cid, message_id: mid, text: text.slice(0, 4096), reply_markup: { inline_keyboard: keyboard } }); }
     catch (error) { if (/not modified/i.test(String(error?.description || error?.message))) return; warn('edit', error); throw error; }
@@ -575,6 +577,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   }
   async function deliver(item) {
     const p = item.payload || {};
+    if(await starRingRecruit.deliver(item))return;
     if(item.kind==='star_ring_complete'){
       // Outbox persistence resolves the account owner; never fall back to the group.
       if(item.target!=='dm'||!/^[1-9]\d{0,19}$/.test(String(item.tgId||'')))return;
@@ -828,6 +831,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
         for (const [id, c] of Object.entries(st().scards)) if (t - (c.at || c.lastEdit || 0) > 7 * 24 * 3600e3) { delete st().scards[id]; save(); }
         for (const [id, c] of Object.entries(st().pcards)) if (t - (c.at || 0) > 3600e3) { delete st().pcards[id]; save(); }
         for (const [id, c] of Object.entries(st().fateCards||{})) if (t - c.at > 7*86400000) { delete st().fateCards[id]; save(); }
+        for (const [id, c] of Object.entries(st().starRingRecruitCards||{})) if (!c.pending&&t-c.at>7*86400000) { delete st().starRingRecruitCards[id]; save(); }
       }
       for (const id of [...dirty.keys()]) {
         const c = st().cards[id]; if (!c || now() - (c.lastEdit || 0) < editThrottleMs) continue;

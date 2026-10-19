@@ -31,6 +31,7 @@ function projected(p,index,beats,now){
  return battle;
 }
 const failure=e=>classifyDbError(e)||(/rpg_party_presence/.test(String(e))?new GameError('party','此角色已有組隊，請先完成或離隊',409):/rpg_star_ring_starts/.test(String(e))?new GameError('daily','這個角色今日已出發過',409):e);
+const recruitCard=(db,id,rev,now)=>outboxStmt(db,{dedupe:`star-ring-card:${id}:${rev}`,target:'group',kind:'star_ring_recruit',payload:{partyId:id}},now);
 const validRequest=b=>{const id=String(b.requestId||'');if(id.length>100)throw new GameError('request','操作編號過長');return id;};
 async function load(db,id){const p=await db.prepare('SELECT * FROM rpg_star_ring_runs WHERE id=?').bind(String(id)).first();if(!p)throw new GameError('star_ring','找不到這趟星環遠征',404);p.state=parse(p.state_json);p.members=await rows(db,'SELECT m.*,c.name,c.level,c.base_class,c.class_path,c.gender,c.special_json FROM rpg_star_ring_members m JOIN rpg_characters c ON c.tg_id=m.char_id WHERE m.run_id=? ORDER BY m.joined_at,m.char_id',p.id);return p;}
 const member=(p,tg)=>{const m=p.members.find(m=>m.char_id===String(tg));if(!m||m.left_at!=null)throw new GameError('member','你不在這支遠征隊伍中',403);return m;};
@@ -39,7 +40,7 @@ async function mutate(env,id,tg,b,now,fn){for(let attempt=0;attempt<5;attempt++)
  const db=env.DB,request=validRequest(b),p=await load(db,id),op=String(b.action||'system');
  if(request){const old=await db.prepare('SELECT operation FROM rpg_star_ring_operations WHERE run_id=? AND char_id=? AND request_id=?').bind(p.id,String(tg),request).first();if(old){if(old.operation!==op)throw new GameError('request','操作編號已用於其他動作',409);return;}}
  const extra=[];await fn(p,extra);
- const stmts=[db.prepare('UPDATE rpg_star_ring_runs SET status=?,leader_id=?,state_json=?,rev=rev+1,updated_at=?,next_at=? WHERE id=? AND rev=?').bind(p.status,p.leader_id,JSON.stringify(p.state),now,p.next_at,p.id,p.rev),guardStmt(db),...extra];
+ const stmts=[db.prepare('UPDATE rpg_star_ring_runs SET status=?,leader_id=?,state_json=?,rev=rev+1,updated_at=?,next_at=? WHERE id=? AND rev=?').bind(p.status,p.leader_id,JSON.stringify(p.state),now,p.next_at,p.id,p.rev),guardStmt(db),...extra,recruitCard(db,p.id,p.rev+1,now)];
  if(request)stmts.push(db.prepare('INSERT INTO rpg_star_ring_operations(run_id,char_id,request_id,operation,created_at) VALUES(?,?,?,?,?)').bind(p.id,String(tg),request,op,now));
  try{await db.batch(stmts);return;}catch(e){const f=failure(e);if(f.code==='conflict'&&attempt<4)continue;throw f;}
  }throw new GameError('conflict','遠征狀況正在更新，請重試',409);}
@@ -61,6 +62,7 @@ export async function create(env,tg,b,now){
   db.prepare("INSERT INTO rpg_star_ring_runs(id,leader_id,status,state_json,created_at,updated_at,expires_at,next_at) VALUES(?,?,'lobby',?,?,?,?,?)").bind(id,String(tg),JSON.stringify(state),now,now,now+1800000,now+1800000),
   db.prepare('INSERT INTO rpg_star_ring_members(run_id,char_id,account_id,joined_at) VALUES(?,?,?,?)').bind(id,String(tg),String(c.account_tg_id||tg),now),
   db.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(presenceKey(tg),id,String(tg)),
+  recruitCard(db,id,0,now),
   ...(request?[db.prepare('INSERT INTO rpg_star_ring_creations(char_id,request_id,run_id,config_json,created_at) VALUES(?,?,?,?,?)').bind(String(tg),request,id,config,now)]:[])
  ]);}catch(e){if(request){const old=await env.DB.prepare('SELECT run_id,config_json FROM rpg_star_ring_creations WHERE char_id=? AND request_id=?').bind(String(tg),request).first();if(old&&old.config_json===config)return {ok:true,party:await view(env,old.run_id,tg,now)};}throw failure(e);}return {ok:true,party:await view(env,id,tg,now)};
 }
