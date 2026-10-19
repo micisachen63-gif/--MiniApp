@@ -16,12 +16,24 @@ async function hash(value){return [...new Uint8Array(await crypto.subtle.digest(
 async function mutate(env,tg,b,now,kind,fn){
  if(typeof b.requestId!=='string'||!/^[A-Za-z0-9:_-]{6,90}$/.test(b.requestId))throw new GameError('request','需要有效的操作編號');
  const db=env.DB,c=await owner(db,tg),fingerprint=await hash({kind,char:c.char,body:canonical(b)});
- for(let n=0;n<5;n++){
+ const replay=async()=>{
   const old=await db.prepare('SELECT payload_hash,result_json FROM rpg_fate_gift_operations WHERE account_id=? AND request_id=?').bind(c.account,b.requestId).first();
   if(old){if(old.payload_hash!==fingerprint)throw new GameError('request_changed','操作內容已變更，請更新畫面再試',409);return {ok:true,result:JSON.parse(old.result_json),replayed:true};}
-  const {stmts,result}=await fn(c,db);
-  stmts.push(db.prepare('INSERT INTO rpg_fate_gift_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,fingerprint,JSON.stringify(result),now));
-  try{await db.batch(stmts);return {ok:true,result};}catch(e){if(n<4&&(classifyDbError(e)?.code==='conflict'||/UNIQUE constraint failed: rpg_fate_gift/.test(String(e.message))))continue;throw classifyDbError(e)||e;}
+  return null;
+ };
+ for(let n=0;n<5;n++){
+  const old=await replay();if(old)return old;
+  try{
+   const {stmts,result}=await fn(c,db);
+   stmts.push(db.prepare('INSERT INTO rpg_fate_gift_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,fingerprint,JSON.stringify(result),now));
+   await db.batch(stmts);return {ok:true,result};
+  }catch(e){
+   // Another identical request may commit after our receipt read but before
+   // even the gift lookup. Recover read failures and lost commit replies too.
+   const committed=await replay();if(committed)return committed;
+   if(n<4&&(classifyDbError(e)?.code==='conflict'||/UNIQUE constraint failed: rpg_fate_gift/.test(String(e.message))))continue;
+   throw classifyDbError(e)||e;
+  }
  }
  throw new GameError('conflict','星輝匣正在同步，請稍後再試',409);
 }

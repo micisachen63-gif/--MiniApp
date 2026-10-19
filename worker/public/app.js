@@ -1692,11 +1692,38 @@
     view.querySelectorAll('[data-rm]').forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); const [kind, ref] = b.dataset.rm.split(':'); tradeCall('remove', kind === 'equip' ? { tradeId: t.id, equipId: ref } : kind==='sigil'?{tradeId:t.id,sigilId:ref}:{ tradeId: t.id, item: ref }); }; });
     view.querySelectorAll('[data-tadd]').forEach((b) => { b.onclick = () => tradeAddSheet(b.dataset.tadd); });
   }
+  function tradeSigilSheet(t) {
+    const actor=String(S.me.character.tgId),tradeId=t.id,epoch=S.apiEpoch||0,selection=tradeSelection;
+    const c=sheet('<h2>放入守護羽毛</h2><div data-guardian-trade-picker><div data-guardian-trade-list></div><p class="muted" data-guardian-trade-status role="status" aria-live="polite"></p><button type="button" class="btn ghost" data-guardian-trade-more>載入更多</button></div><button class="btn ghost mt" data-x>關閉</button>');
+    const panel=c.querySelector('[data-guardian-trade-picker]'),list=panel.querySelector('[data-guardian-trade-list]'),status=panel.querySelector('[data-guardian-trade-status]'),more=panel.querySelector('[data-guardian-trade-more]');
+    // sheet() reuses the same connected card. Pin its child panel as well as
+    // actor/epoch/selection so late success, errors and old buttons are inert.
+    const current=()=>c.isConnected&&panel.isConnected&&!$('#sheet').hidden&&c.querySelector('[data-guardian-trade-picker]')===panel&&actor===String(S.me?.character?.tgId)&&epoch===(S.apiEpoch||0)&&selection===tradeSelection&&S.trade?.id===tradeId&&S.trade.status==='open';
+    let cursor=null,loaded=false,loading=false,count=0;const seen=new Set();
+    async function loadPage(){
+      if(!current()||loading||loaded&&!cursor)return;
+      loading=true;more.disabled=true;more.hidden=false;more.textContent='載入中…';status.textContent=loaded?'正在載入下一頁…':'正在讀取守護背包…';status.setAttribute('role','status');
+      try{
+        const {state}=await api('guardian/inventory',cursor?{cursor}:{});if(!current())return;
+        const items=state.inventory.items.filter(item=>!item.bound&&!item.active&&!item.locked&&!item.inTrade&&!seen.has(item.id));
+        items.forEach(item=>seen.add(item.id));count+=items.length;
+        list.insertAdjacentHTML('beforeend',items.map(item=>'<button type="button" class="item" data-guardian-trade="'+esc(item.id)+'">'+guardianTradeIcon(item)+'<span>'+esc(window.RpgGuardianContract.QUALITY_NAMES[item.quality])+'色 · '+esc(window.RpgGuardianContract.TYPE_NAMES[item.type])+'</span></button>').join(''));
+        list.querySelectorAll('[data-guardian-trade]').forEach(button=>button.onclick=()=>{if(!current())return;closeSheet();void tradeCall('add',{tradeId,sigilId:button.dataset.guardianTrade});});
+        cursor=state.inventory.nextCursor||null;loaded=true;
+        status.textContent=count?'已找到 '+count+' 張可交易羽毛。'+(cursor?'還有下一頁可查看。':'已讀取完畢。'):cursor?'已讀取的頁面沒有可交易羽毛，請載入更多查看後續頁面。':'沒有可交易羽毛：須未綁定、未啟用、未鎖定且不在交易中。';
+        more.hidden=!cursor;more.textContent='載入更多';
+      }catch(error){
+        if(!current())return;
+        status.textContent='讀取失敗：'+error.message+'。已載入的羽毛仍可選擇。';status.setAttribute('role','alert');more.textContent='重試載入';more.hidden=false;
+      }finally{loading=false;if(current())more.disabled=false;}
+    }
+    c.querySelector('[data-x]').onclick=closeSheet;more.onclick=loadPage;void loadPage();
+  }
   function tradeAddSheet(kind) {
     const t = S.trade; if (!t) return;
     if (kind === 'pick') { const c = sheet('<h2>＋ 放入</h2><div class="grid2"><button class="btn" data-k="equip">⚔️ 裝備</button><button class="btn" data-k="item">🎒 道具</button><button class="btn" data-k="sigil">🪶 守護羽毛</button><button class="btn gold" data-k="gold">💰 金幣</button><button class="btn ghost" data-k="x">關閉</button></div>');
       c.querySelectorAll('[data-k]').forEach((b) => { b.onclick = () => (b.dataset.k === 'x' ? closeSheet() : tradeAddSheet(b.dataset.k)); }); return; }
-    if(kind==='sigil'){const actor=String(S.me.character.tgId),tradeId=t.id;const c=sheet('<h2>放入守護羽毛</h2><p data-guardian-trade-list>載入中…</p><button class="btn ghost" data-x>關閉</button>');c.querySelector('[data-x]').onclick=closeSheet;api('guardian/inventory').then(({state})=>{if(!c.isConnected||actor!==String(S.me?.character?.tgId)||S.trade?.id!==tradeId)return;const list=state.inventory.items.filter(item=>!item.bound&&!item.active&&!item.locked&&!item.inTrade);c.querySelector('[data-guardian-trade-list]').outerHTML='<div>'+list.map(item=>'<button type="button" class="item" data-guardian-trade="'+esc(item.id)+'">'+guardianTradeIcon(item)+'<span>'+esc(window.RpgGuardianContract.QUALITY_NAMES[item.quality])+'色 · '+esc(window.RpgGuardianContract.TYPE_NAMES[item.type])+'</span></button>').join('')+(state.inventory.nextCursor?'<p>更多羽毛可先於守護背包解鎖、解綁或移出保護狀態。</p>':'')+(list.length?'':'<p>沒有可交易羽毛：須未綁定、未啟用、未鎖定且不在交易中。</p>')+'</div>';c.querySelectorAll('[data-guardian-trade]').forEach(button=>button.onclick=()=>{if(actor!==String(S.me?.character?.tgId)||S.trade?.id!==tradeId)return;closeSheet();void tradeCall('add',{tradeId,sigilId:button.dataset.guardianTrade});});}).catch(error=>{if(c.isConnected)c.querySelector('[data-guardian-trade-list]').textContent=error.message;});return;}
+    if(kind==='sigil'){tradeSigilSheet(t);return;}
     if (kind === 'gold') {
       const mine = tradeSide(t)[0]; const c = sheet(`<h2>💰 放入金幣</h2><div class="muted">你有 💰${fmt(S.me.character.gold + mine.gold)}（含已放入 ${fmt(mine.gold)}）。對方實收扣 ${Math.round((S.meta.trade?.taxPct || 0.05) * 100)}% 稅。</div>
         <input class="name-in mt" id="tg" inputmode="numeric" value="${mine.gold || ''}" placeholder="0"><div class="muted mt" id="tgnet"></div><div class="row mt"><button class="btn ghost" data-x>取消</button><button class="btn gold" id="tgo">設定</button></div>`);

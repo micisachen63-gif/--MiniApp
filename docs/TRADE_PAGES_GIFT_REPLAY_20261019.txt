@@ -1,0 +1,48 @@
+2026-10-19 原始碼複查第三輪：守護羽毛交易分頁／星輝匣收據恢復
+
+來源與邊界
+從 origin/main d2080f03711410e2129b6939d77ba74b803acb35 修正使用者報告的兩個局部缺陷。
+未調整道具、機率、獎勵、交易限制或經濟數值；無 migration、BOT 或付費服務改動。
+正式發布狀態以 origin/deployment-records:docs/deployment/elf-rpg-api.json 和即時 Worker 為準。
+只部署 Worker；必須先經 PR 與必要 CI 合入 main，再使用根目錄 deploy:worker。
+
+羽毛選取器
+tradeAddSheet('sigil') 呼叫 tradeSigilSheet，仍使用原 guardian/inventory 的40筆游標頁。
+初次只抓一頁；有 nextCursor 就顯示「載入更多」，每次點擊只讀一頁，不預抓整個背包。
+本頁全受保護時清楚表示尚有後頁，全部讀完仍無可選物品才顯示無可交易羽毛。
+追加清單保留已有 DOM、按 id 去重，讀取失敗保留 cursor／已有項目並提供「重試載入」。
+載入中的按鈕不可重複發出請求；讀清單本身不提交交易。選定後仍走原 trade/add 及後端保護。
+保留 bound／active／locked／inTrade 篩選，後者同時包含雙人交易和交易所託管。
+舊回應與舊按鈕必須通過角色、apiEpoch、交易選取代數、tradeId、open 狀態及本次面板驗證。
+注意 sheet() 重用同一張 connected card，不能只驗 c.isConnected；本次固定其 child panel 身分，
+並檢查 sheet 隱藏狀態。換角色／換交易／關閉／開其他視窗後的成功和錯誤均不得污染新畫面。
+最後一頁的 more 按鈕另加 scoped [hidden] CSS，避免 .btn display 覆蓋瀏覽器的 hidden。
+app.js 與 styles.css 均更新快取版本。
+
+星輝匣
+mutate() 的 try/catch 現在同時涵蓋 fn() 狀態讀取與原子 batch。
+失敗時重新查同帳號／requestId 收據，必須核對 kind＋角色＋canonical payload 的 fingerprint；
+吻合才返回已提交 result，replayed=true。相同編號不同內容或不同角色仍回 request_changed。
+沒有收據時仍拋真正錯誤；既有有界 conflict 重試、原子扣盒／獎勵／帳本／收據一起回滾保留。
+不換 requestId、不補發、不把沒有盒子捏造成成功。已提交但回應丟失也可直接恢復原收據。
+
+自動測試
+新增30項，完整 Node24 root npm test：Worker1827、BOT163，共1990，零失敗／skip／todo。
+原版服務上先執行新增禮盒測試：24項中5項失敗，確認不是只補會通過現有實作的斷言。
+修正後 fate-gifts 24項與 trade-sigil-pagination 22項全部通過。
+分頁測試以真實40筆 D1／MiniApp API 接上 production app.js 選取邏輯：41／80／81張、
+前40綁定／第41可交易、最後一張加入真交易託管、重複頁去重、各種保護、HTML escaping、
+首／後頁重試、並行點擊、保留 DOM 及載入中選既有卡。14種晚回應情境覆蓋成功／失敗
+乘以角色／epoch／交易／選取代數／關閉／重用面板／交易結束；舊按鈕也不得提交。
+禮盒測試刻意暫停在「首次查無收據」後，讓另一請求完整提交，再恢復讀禮盒：有／無giftId、
+最後一盒／累積三盒四種情況均回同一結果。另驗不同payload／角色／request隔離、lost ack。
+斷線後同操作重送不再扣盒；完整背包、opened row、操作收據與獎勵／消耗帳本只各提交一次。
+既有 batch 競爭的兩種勝者與完整回滾測試繼續執行，未跳過／弱化既有測試。
+
+畫面與真實動作驗收範圍
+隔離記憶體 D1＋完整 MiniApp＋桌機 Chrome headless，390px／1280px 兩種尺寸，81張且
+前40張綁定：實際點載入更多、模擬連續503耗盡read retry、重試到第二頁、第三頁、41張
+可選卡、無重複／保留先前節點、最後按鈕消失、無水平溢出、零pageerror；桌機再實際
+點第81張並確認真 trade/add 的託管列。沒有正式帳號、正式 D1 或 TG 訊息 mutation。
+畫面證據留在忽略目錄 .release-sync/review3-browser-results.json、review3-trade-390.png、
+review3-trade-1280.png。這是手機尺寸的桌機瀏覽器驗收，並非實體 iPhone／Android TG 實測。
