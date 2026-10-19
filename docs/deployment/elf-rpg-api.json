@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "384689221465d3cf4114a26aea82d71f0c4075c7",
+  "sourceCommit": "a3adb24be6e2706fead5c55223dcb1ed572b1c6d",
   "service": "elf-rpg-api",
-  "productionVersion": "d5eef2e5-1a0d-4b59-9608-cf8c7a72f328",
+  "productionVersion": "ffaea05c-7f58-403b-b705-47d35b91b5ae",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T06:28:44.960Z",
+  "verifiedAt": "2026-10-19T07:50:20.543Z",
   "runtimeSHA256": {
-    "index.js": "390162e27dd22f78305f70103b2e72e05e8405c8ac92546de5f825769a6dde77"
+    "index.js": "88e6ecc5d3a73c95193e01eb7381e2e917eb5d35cdf6e88d050808d4c9fe774b"
   },
   "source": {
     "fileCount": 9214,
-    "sha256": "b25d6be574d98e14051a9e833653eb2f27e4acef9c11f0d67737554b27f5b129",
+    "sha256": "6f534ce17156e5e0c8192a8be88a6de5925c3298245a2ad5c391690778cbb3e6",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2459,7 +2459,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "f881a97261a653314ddd52a9389f914e3401ece62e1123ea68518bfd757715b2"
+        "sha256": "4c1a3a028c997788585c3dca0412444aaa5c286a74957b08c7fb64d1d580a414"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -35867,7 +35867,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "8998626c0783499bf42f5d6a63620bc5052e087aba9f12d65a91e231ba6914f6"
+        "sha256": "2dcef641f8084c33f608fbb18d498f4625036e344bc79a30f6c96548f058dc7c"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -36163,7 +36163,7 @@
       },
       {
         "file": "worker/public/styles.css",
-        "sha256": "f0a423f8a64732da9133f5c80680096fa75dd6945335e0f014edc21536af7d52"
+        "sha256": "462134dce78250dff34506626241e02d877da0169b696ff9f30803c31d419469"
       },
       {
         "file": "worker/public/styles.css.20261010-bag-slot-tabs.bak",
@@ -36759,7 +36759,7 @@
       },
       {
         "file": "worker/src/services/fate-gifts.js",
-        "sha256": "d1af6a03c5b0177ce960091650d0bd9c11a1ab0870d53cc6d37083b7b147ed3a"
+        "sha256": "58316e9391d9d779f0d47e50b3e7e2ed9a1c26605875006e3581a1f696f164a4"
       },
       {
         "file": "worker/src/services/fate-quests.js",
@@ -37026,7 +37026,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "d5eef2e5-1a0d-4b59-9608-cf8c7a72f328",
+        "version_id": "ffaea05c-7f58-403b-b705-47d35b91b5ae",
         "percentage": 100
       }
     ],
