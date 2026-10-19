@@ -1,0 +1,25 @@
+2026-10-19 遠征中背包強化
+
+範圍
+真實 running 星環遠征的參加角色，可以手動／背景自動強化未穿戴、未交易的背包裝備。
+包含未綁定與綁定裝備；強化不新增綁定。普通、祝福、手動必成卷維持原規則／費用。
+遠征採啟程時不可變的角色／裝備快照，本次不改引擎、戰力、seed、收益、次數或版本。
+已出發 v1/v2/v3 隊伍直接適用，無 migration、不必重開隊。
+
+保護
+party-presence.js 共用可否強化判斷；withPlayer 查實際 membership + running run，
+伺服器 context 傳入 doEnhance。auto-enhance start 及每個 step 都重新驗證。
+不能只看 ring: 字串；偽造 request 欄位、已離隊、已結束都不能放行。
+穿戴中、交易／掛賣中裝備及另一個前景打寶／爬塔戰鬥仍保持原限制。
+遠征期間背包強化不重算／夾限角色 HP、MP；不會以此改遠征當趟快照。
+沿用樂觀 rev／原子背包及流水保存，不改背景排程／通知／缺卷補購流程。
+
+驗證
+新增 star-ring-backpack-enhance.test.js 20 項：v1/v2/v3、武器／防具三種卷、
+實際 API 與防重扣、背景連續強化／缺卷補購／爆裝／出發前既存 job、
+禁止穿戴／交易／假標記／前景戰鬥，及完整 12h／30 份收益與無強化對照完全一致。
+遠征 checkpoint 與背景強化併發後，當趟 actors/results/reward_json 保持一致、升級背包保留。
+與 auto-enhance、必成／祝福卷、前景並行、既有 UI state 等相關 76 項通過。
+正式完整測試結果與版本以本次 docs/deployment/elf-rpg-api.json 收據為準。
+
+只部署遊戲 Worker；BOT、DB schema、遠端 secrets 均不變。未操作正式玩家道具。

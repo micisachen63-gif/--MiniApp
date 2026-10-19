@@ -6,10 +6,11 @@
 // move gets rev+1 so a concurrent idle/menu batch for that player retries on fresh data. Ledger event_ids are unique per
 // trade + version, so retries/double clicks can't duplicate anything. Gold can't go negative (guarded UPDATE + CHECK).
 import {sigilView} from './guardian-sigil.js';
-import { TRADE, ITEMS, SLOT_NAMES, RARITIES, CLASSES } from '../game/constants.js';
+import { TRADE, ITEMS, SLOT_NAMES, RARITIES, CLASSES, ELEMENTS } from '../game/constants.js';
+import {affixView} from '../game/affixes.js';
 import { GameError } from '../game/classes.js';
 import { tradeTax, netGold, checkGold, checkItemLine, checkEquipLine, sideOf, otherSide } from '../game/trade.js';
-import { itemStat, mainStatOf } from '../game/stats.js';
+import { itemStat, itemExtras, mainStatOf } from '../game/stats.js';
 import { guardStmt, bumpRevStmt, ledgerStmt, invDeltaStmt, invDeltaStmts, outboxStmt, classifyDbError } from '../db.js';
 
 const newId = () => `t${crypto.randomUUID().replace(/-/g, '').slice(0, 11)}`;
@@ -61,9 +62,10 @@ export async function tradeView(env, id, viewer = null, now = Date.now()) {
   const line = (l) => {
     if(l.kind==='sigil'){const row=sigilMap.get(l.ref)||JSON.parse(l.snapshot_json||'{}'),v=sigilView(row);return {...v,kind:'sigil',ref:l.ref,qty:1,name:v.qualityName+'・'+v.typeName,artUrl:'/art/guardian-sigil-20261013/'+v.type+'.webp'};}
     if (l.kind === 'item') return { kind: 'item', ref: l.ref, qty: l.qty, name: ITEMS[l.ref]?.name || l.ref, emoji: ITEMS[l.ref]?.emoji };
-    const e = eqMap.get(l.ref) || JSON.parse(l.snapshot_json || '{}'); const st = e.base_stat != null ? itemStat(e) : { main: null };
+    const e = (t.status==='open'?eqMap.get(l.ref):null) || JSON.parse(l.snapshot_json || '{}'); const st = e.base_stat != null ? itemStat(e) : { main: null };const extras=itemExtras({...e,affix_json:null});
     return { kind: 'equip', ref: l.ref, qty: 1, name: e.name, slot: e.slot, wkind: e.kind, slotName: SLOT_NAMES[e.slot], tier: e.tier, grade: e.grade || 'normal', rarity: e.element_tier, rarityName: RARITIES[e.element_tier]?.name,
-      enhance: e.enhance_level || 0, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業', stat: st.main, statName: mainStatOf(e.slot).toUpperCase(), affix: e.affix_json ? JSON.parse(e.affix_json) : null };
+      enhance: e.enhance_level || 0, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業', stat: st.main, statName: mainStatOf(e.slot).toUpperCase(), affix: e.affix_json ? JSON.parse(e.affix_json) : null,
+      affixes:affixView(e),element:e.element,elementName:ELEMENTS[e.element]?.name,elemStat:st.elem||0,extras:extras.flat,pct:extras.pct,levelReq:e.level_req,branchReq:e.branch_req };
   };
   const side = (s, c) => ({ tgId: t[`${s}_tg`], name: c?.name || '?', username: c?.tg_username || null, gold: t[`${s}_gold`], goldNet: netGold(t[`${s}_gold`]), tax: tradeTax(t[`${s}_gold`]),
     locked: !!t[`${s}_lock`], ok: !!t[`${s}_ok`], lines: t.lines.filter((l) => l.side === s).map(line) });

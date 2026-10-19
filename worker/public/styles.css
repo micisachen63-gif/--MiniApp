@@ -240,3 +240,11 @@ body .sheet-card h2.mh.tc-common,body.greek .sheet-card h2.mh.tc-common,body .sh
 /* Four available classes retain readable cards on narrow phones. */
 .pick3.pick4{grid-template-columns:repeat(2,minmax(0,1fr))}
 @media(min-width:560px){.pick3.pick4{grid-template-columns:repeat(4,minmax(0,1fr))}}
+
+/* The offer and both confirmations use the same untruncated equipment details. */
+.trade-gear-detail{margin-top:10px;padding:10px 12px;text-align:left;border:1px solid var(--line);border-radius:8px;background:rgba(9,19,32,.65);font-size:13px;line-height:1.7;overflow-wrap:anywhere}
+.trade-gear-detail>b{display:block;color:var(--gold)}
+.trade-affix-heading{margin-top:6px;color:var(--gold)}
+.trade-affix-line{display:flex;justify-content:space-between;gap:12px}
+.trade-affix-line strong{color:var(--gold);flex-shrink:0}
+.trade-confirm-side{padding:6px 0 12px}.trade-confirm-side h4{margin:4px 0}

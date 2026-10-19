@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-19 遠征期間開放未穿戴、未交易背包裝備的手動／自動強化，真實running membership驗證、當趟快照／戰力／12h全部收益不變；穿戴及前景短戰限制保留。交易另修主動開窗漏接、雙方完整重鑄／遺物／附加屬性、最終確認offerRev及成交歷史快照。新增20+5項回歸、隔離雙人桌機／手機尺寸流程驗收；接手讀docs/STAR_RING_BACKPACK_ENHANCE_20261019.txt、docs/TRADE_WINDOW_FIX_20261019.txt。僅Worker、無migration／BOT改動，正式版本與完整測試看部署收據；CI／按需載入／素材保存仍為後續項目。
+
 2026-10-19 打寶／爬塔改用原定deadline補齊5/15秒回合，不因離線排程30秒節奏逐回合延後或舊30分鐘牆鐘逾時；每分鐘Worker獨立sweep直接發獎、缺獎重試，整隊多回合原子保存／一次扣藍水／圖卡合併。新增14項離在線對照、技能／喝水／跨層／併發／排程測試，相關62項通過，無migration／BOT改動。接手讀docs/PARTY_OFFLINE_CLOCK_20261019.txt，正式版本看收據。
 
 2026-10-19 並行補驗：打寶／爬塔各六次前景戰鬥跨完整12h，逐段與單獨遠征比對戰鬥與全部獎勵完全一致；背包加總、防重、前景HP/MP/state/presence保護均通過。共63相關測試、正式runtime與排程唯讀核對完成，僅新增測試／文件、不重發。見docs/STAR_RING_PARALLEL_VERIFICATION_20261019.txt。

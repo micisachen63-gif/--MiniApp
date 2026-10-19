@@ -1535,6 +1535,16 @@
   const PHASE = { placing: '放置中', one_locked: '一方已鎖定', ready: '雙方已鎖定 · 等 OK', ok_wait: '等對方按 OK', done: '✅ 交易完成', cancelled: '✕ 已取消（已退回）', expired: '⌛ 太久沒動作，已退回' };
   const tradeSide = (t) => (t.me === 'b' ? [t.b, t.a] : [t.a, t.b]);
   const SLOTS = 6;
+  function tradeGearDetailsHtml(l) {
+    if(l.kind!=='equip')return '';
+    const legacy=Object.entries(l.affix||{}).map(([k,v])=>esc(fmtBonus(k,v))).join(' · ');
+    const bonus=Object.entries(l.extras||{}).concat(Object.entries(l.pct||{})).filter(([,v])=>v).map(([k,v])=>esc(fmtBonus(k,v))).join(' · ');
+    const aff=l.affixes;
+    return `<article class="trade-gear-detail"><b>+${Number(l.enhance)||0} ${esc(l.name)}</b><div>${esc(l.className||'全職業')} · ${esc(l.slotName)} · T${l.tier} · ${l.grade==='relic'?'遺物 · ':''}${esc(l.rarityName)} · ${esc(l.statName)} ${fmt(l.stat)}</div>${l.levelReq?`<div>需求 Lv.${Number(l.levelReq)}${l.branchReq?' · 分支 '+esc(l.branchReq):''}</div>`:''}${l.elementName?`<div>${esc(l.elementName)} +${fmt(l.elemStat||0)}</div>`:''}${bonus?`<div>裝備加成：${bonus}</div>`:''}${legacy?`<div>遺物能力：${legacy}</div>`:''}<div class="trade-affix-heading">能力詞條 · ${esc(aff?.quality||'未鑑定')}（${aff?.lines?.length||0}/${aff?.slots||0}）</div>${aff?.lines?.length?aff.lines.map(x=>`<div class="trade-affix-line"><span>${esc(x.name)} +${(Number(x.value)*100).toFixed(2)}%</span><strong>${esc(x.quality)}</strong></div>`).join(''):'<div class="muted">尚無重鑄詞條</div>'}</article>`;
+  }
+  function tradeConfirmSideHtml(x) {
+    return `<section class="trade-confirm-side"><h4>${esc(x.name)}</h4>${x.lines.map(l=>l.kind==='equip'?tradeGearDetailsHtml(l):`<div>${esc(l.name)} ×${fmt(l.qty||1)}</div>`).join('')||'<div>沒有物品</div>'}<div>金幣 ${fmt(x.gold)} · 對方實收 ${fmt(x.goldNet)}（稅 ${fmt(x.tax)}）</div></section>`;
+  }
   function tradeLineHtml(l, mine) {
     const ic = l.kind==='sigil' ? guardianTradeIcon(l) : l.kind === 'equip' ? gearIcon({ ...l, kind: l.wkind }, SLOT_EMOJI[l.slot]) : iconHtml(l.ref, l.emoji || '📦');
     const d = l.kind==='sigil' ? `${esc(l.qualityName||window.RpgGuardianContract.QUALITY_NAMES[l.quality])}色守護羽毛` : l.kind === 'equip' ? `${esc(l.slotName)} · T${l.tier} · ${l.statName} ${fmt(l.stat)} · ${esc(l.grade === 'relic' ? '遺物' : l.rarityName)}` : `×${fmt(l.qty)}`;
@@ -1545,7 +1555,7 @@
     const canEdit = isMe && open && !x.locked; const cells = x.lines.map((l) => tradeLineHtml(l, canEdit));
     for (let i = cells.length; i < SLOTS; i++) cells.push(`<div class="tslot${canEdit && i === x.lines.length ? ' add" data-tadd="pick' : ''}">${canEdit && i === x.lines.length ? '<span class="ph">＋</span>' : ''}</div>`);
     return `<div class="tpanel ${x.locked ? 'locked' : ''} ${x.ok ? 'ok' : ''} ${isMe ? 'mine' : ''}"><h4><span class="role">${role}</span> ${esc(x.name)}${isMe ? '（我）' : ''}<span class="flags">${x.locked ? '<span class="chip lock">🔒 已鎖定</span>' : '<span class="chip">放置中</span>'}${x.ok ? '<span class="chip ok">✅ OK</span>' : ''}</span></h4>
-      <div class="tslots">${cells.join('')}</div>
+      <div class="tslots">${cells.join('')}</div><div class="trade-gear-details">${x.lines.map(tradeGearDetailsHtml).join('')}</div>
       <div class="tgold">💰 ${fmt(x.gold)}${x.gold ? ` <small>→ 對方實收 ${fmt(x.goldNet)}（稅 ${fmt(x.tax)}）</small>` : ''}${canEdit ? ' <button class="btn sm ghost" data-tadd="gold">設定金幣</button>' : ''}</div>
       ${canEdit ? '<div class="row mt"><button class="btn sm ghost" data-tadd="equip">＋裝備</button><button class="btn sm ghost" data-tadd="item">＋道具</button><button class="btn sm ghost" data-tadd="sigil">＋守護羽毛</button></div>' : ''}</div>`;
   }
@@ -1631,8 +1641,15 @@
     const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0;tradeListEpoch=epoch;
     tradeListFlight=(async()=>{try { const [j, r] = await Promise.all([api('trade/list'), api('trade/requests')]);if(selected!==S.me?.character?.tgId||epoch!==(S.apiEpoch||0))return; S.trades = { open: j.open, history: j.history }; S.reqs = { incoming: r.incoming, outgoing: r.outgoing }; if (S.tab === 'trade' && !S.trade && $('#sheet').hidden) render(); } catch (e) { toast(e.message, true); }finally{tradeListFlight=null;}})();return tradeListFlight;
   }
-  function loadTrade(id, review = false) {
-    if(review)tradeSelection++;else if(S.trade?.id!==id)return Promise.resolve(null);
+  function selectTrade(id) {
+    tradeSelection++;S.trade=null;S._lastTab=null;
+    return fetchTrade(id,true);
+  }
+  function loadTrade(id) {
+    if(S.trade?.id!==id)return Promise.resolve(null);
+    return fetchTrade(id,false);
+  }
+  function fetchTrade(id, review) {
     const selection=tradeSelection,selected=S.me?.character?.tgId,epoch=S.apiEpoch||0;
     if(tradeFlight?.id===id&&tradeFlight.selection===selection&&tradeFlight.epoch===epoch)return tradeFlight.promise;
     const current=()=>selection===tradeSelection&&selected===S.me?.character?.tgId&&epoch===(S.apiEpoch||0)&&(review||S.trade?.id===id);
@@ -1655,7 +1672,7 @@
     view.querySelectorAll('[data-soc]').forEach((b) => { b.onclick = () => { S.social = b.dataset.soc;if(S.social==='hall'){S.hallClass='all';S.hallPage=1;} render(); if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); }; });
     if(S.social==='hall'){window.RpgHeroHallUI.bind(view,{onFilter:value=>{S.hallClass=value;S.hallPage=1;render();},onPage:value=>{S.hallPage=value;render();document.querySelector('.hero-hall')?.scrollIntoView({block:'start'});},onInspect:inspectHero});return;}
     if (S.social === 'pk') return bindPk(view);
-    view.querySelectorAll('[data-trade],[data-otrade]').forEach((el) => { el.onclick = () => { S.trade = null; S._lastTab = null; window.scrollTo(0, 0); loadTrade(el.dataset.trade || el.dataset.otrade, true); }; });
+    view.querySelectorAll('[data-trade],[data-otrade]').forEach((el) => { el.onclick = () => { S.trade = null; S._lastTab = null; window.scrollTo(0, 0); selectTrade(el.dataset.trade || el.dataset.otrade); }; });
     view.querySelectorAll('[data-racc]').forEach((b) => { b.onclick = async () => { if (S.busy) return; S.busy = true;
       try { const j = await api('trade/accept', { reqId: b.dataset.racc }); S.trade = j.trade; S.social = 'trade'; S._lastTab = null; window.scrollTo(0, 0); toast('🤝 交易視窗已開啟，操作按鈕在視窗上方'); haptic('ok'); refreshMe(); render(); } catch (e) { toast(e.message, true); loadTrades(); } finally { S.busy = false; } }; });
     view.querySelectorAll('[data-rrej]').forEach((b) => { b.onclick = async () => { if (!(await confirmSheet('婉拒交易請求', '對方會收到婉拒通知。', '婉拒'))) return; try { await api('trade/reject', { reqId: b.dataset.rrej }); toast('已婉拒'); refreshMe(); loadTrades(); } catch (e) { toast(e.message, true); } }; });
@@ -1664,10 +1681,10 @@
     if (!S.trade) return;
     const t = S.trade; loadTradeLog(t.id);
     const lk = $('#tlock', view); if (lk) lk.onclick = async () => { const [mine] = tradeSide(t);
-      if (await confirmSheet('🔒 鎖定交易內容', `你要給：${mine.lines.map((l) => esc(l.name) + (l.kind === 'item' ? `×${l.qty}` : '')).join('、') || '（不放東西）'}${mine.gold ? ` + 💰${fmt(mine.gold)}` : ''}<br><span class="muted">鎖定後這一邊不能再加減；要改只能取消交易。</span>`, '鎖定')) tradeCall('lock', { tradeId: t.id }, '🔒 已鎖定'); };
+      if (await confirmSheet('🔒 鎖定交易內容', `${tradeConfirmSideHtml(mine)}<p class="muted">鎖定後這一邊不能再加減；要改只能取消交易。</p>`, '鎖定')) tradeCall('lock', { tradeId: t.id }, '🔒 已鎖定'); };
     const ok = $('#tok', view); if (ok) ok.onclick = async () => { const [mine, theirs] = tradeSide(t);
-      if (await confirmSheet('✅ 按 OK 成交', `你給：${mine.lines.length} 項${mine.gold ? ` + 💰${fmt(mine.gold)}` : ''}<br>你收：${theirs.lines.length} 項${theirs.gold ? ` + 💰${fmt(theirs.goldNet)}（已扣稅）` : ''}<br><span class="muted">兩邊都按 OK 立即成交，無法還原。</span>`, 'OK')) {
-        const j = await tradeCall('confirm', { tradeId: t.id }); if (j && j.result && j.result.done) { toast('🎉 交易完成！'); haptic('ok'); } } };
+      if (await confirmSheet('✅ 按 OK 成交', `<h3>你要給</h3>${tradeConfirmSideHtml(mine)}<h3>你會收到</h3>${tradeConfirmSideHtml(theirs)}<p class="muted">兩邊都按 OK 立即成交，無法還原。</p>`, 'OK')) {
+        const j = await tradeCall('confirm', { tradeId: t.id, offerRev:t.offerRev }); if (j && j.result && j.result.done) { toast('🎉 交易完成！'); haptic('ok'); } } };
     const cc = $('#tcancel', view); if (cc) cc.onclick = async () => { if (await confirmSheet('✕ 取消交易', '取消後雙方的物品與金幣都會退回。', '取消交易', true)) tradeCall('cancel', { tradeId: t.id }, '交易已取消，物品已退回'); };
     view.querySelectorAll('[data-rm]').forEach((b) => { b.onclick = (ev) => { ev.stopPropagation(); const [kind, ref] = b.dataset.rm.split(':'); tradeCall('remove', kind === 'equip' ? { tradeId: t.id, equipId: ref } : kind==='sigil'?{tradeId:t.id,sigilId:ref}:{ tradeId: t.id, item: ref }); }; });
     view.querySelectorAll('[data-tadd]').forEach((b) => { b.onclick = () => tradeAddSheet(b.dataset.tadd); });
@@ -1836,7 +1853,8 @@
         d.querySelector('[data-x]').onclick = closeSheet;
         d.querySelector('[data-go]').onclick = async () => {
           const name = d.querySelector('#bk-trade-name').value.trim(); if (!name) return toast('請輸入對方角色名稱', true);
-          try { const r = await api('expedition/trade', { skillId, target: { name }, requestId: reqId() }); closeSheet(); S.tab = 'trade'; S.social = 'trade'; await loadTrade(r.tradeId); render(); toast('已建立交易視窗'); } catch (e) { toast(e.message, true); }
+          const actor=S.me.character.tgId,button=d.querySelector('[data-go]');if(button.disabled)return;button.disabled=true;
+          try { const r = await api('expedition/trade', { skillId, target: { name }, requestId: reqId() }); if(actor!==S.me?.character?.tgId)return;closeSheet(); S.tab = 'trade'; S.social = 'trade'; const opened=await selectTrade(r.tradeId);if(!opened)await loadTrades();render();toast(opened?'已建立交易視窗':'交易已建立，可從交易清單重新開啟'); } catch (e) { toast(e.message, true); }finally{button.disabled=false;}
         };
       }
     }; });
@@ -1870,7 +1888,8 @@
     d.querySelector('[data-x]').onclick = closeSheet;
     d.querySelector('[data-go]').onclick = async () => {
       const name = d.querySelector('#gear-trade-name').value.trim(); if (!name) return toast('請輸入對方角色名稱', true);
-      try { const r = await api('trade/open', { equipId: e.id, target: { name }, requestId: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2) }); closeSheet(); S.tab = 'trade'; S.social = 'trade'; await loadTrade(r.tradeId); render(); refreshMe(); toast('已建立交易，裝備已放入'); } catch (err) { toast(err.message, true); }
+      const actor=S.me.character.tgId,button=d.querySelector('[data-go]');if(button.disabled)return;button.disabled=true;
+      try { const r = await api('trade/open', { equipId: e.id, target: { name }, requestId: crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2) }); if(actor!==S.me?.character?.tgId)return;closeSheet(); S.tab = 'trade'; S.social = 'trade'; const opened=await selectTrade(r.tradeId);if(!opened)await loadTrades(); render(); refreshMe(); toast(opened?'已建立交易，裝備已放入':'交易已建立，可從交易清單重新開啟'); } catch (err) { toast(err.message, true); }finally{button.disabled=false;}
     };
   }
   async function shareItem(e) {
@@ -2074,7 +2093,7 @@
     const close=()=>{stop();dialog.close();dialog.remove();};dialog.querySelector('.sr-cosmetic-close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});dialog.showModal();
   }
   window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,request:(action,body)=>api(action,body),refresh:()=>refreshMe()};
-  window.RpgExpeditionHost={invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await loadTrade(id);render();}};
+  window.RpgExpeditionHost={invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:()=>refreshMe(),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
   boot();
 })();
 

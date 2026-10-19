@@ -1,0 +1,39 @@
+2026-10-19 交易開窗與完整屬性
+
+確認問題
+目前 main 的 loadTrade 預設只更新 S.trade.id，背包 tradeGear／技能書交易／
+RpgExpeditionHost.openTrade 卻用這條背景入口開新窗，確實會跳過 trade/get。
+tradeView 原本只有 affix_json（遺物），也缺重鑄 affixes_json 多條能力。
+
+修正
+selectTrade 明確選新交易並提升 selection；loadTrade 僅輪詢目前視窗。
+共同 fetchTrade 保留角色、apiEpoch、selection 的過期回應保護。
+裝備、技能書、交易列表／已接受請求及外部開窗都走選取入口。
+新建裝備／技能書交易擋重複點擊；建立後讀取失敗時仍可從交易清單找回已託管物品，
+不錯報視窗成功、不自動重開交易。建立期間換角色，不把舊交易選到新角色。
+
+交易資料補上 affixView 的全部重鑄詞條、名稱、品質與數值，元素及基礎附加加成。
+雙方交易面板在物品格下方直接列完整詳情；鎖定與最後確認共用同一份詳情，
+最終確認顯示雙方物品及金幣／稅額，並帶 offerRev；沒有截斷或只顯示總分。
+關閉交易後使用原託管快照，買方後續強化／洗詞條／出售不改寫成交歷史。
+原裝備欄位、交易規則／費用／託管／防重／通知均保留。
+
+驗證
+新增 trade-window-regression.test.js 5 項，以實際 handle + 隔離 D1 與 app.js 真函式
+走背包建立→託管→GET→渲染，測背景不選錯窗、雙方鎖定／成交、已結束快照、
+讀取失敗回復、換角色與 HTML 轉義；交易相關 26 項通過。
+桌機及 375×812 瀏覽器尺寸：使用完整 Mini App 與隔離 D1、兩名測試角色，
+從背包更多→交易→輸入姓名→新窗→各自鎖定→兩邊完整確認→成交→乙背包／甲歷史。
+三條詞條（SS/S/A、4.23%/2.12%/1.11%）、遺物與裝備加成全部可見，無水平溢出。
+手機只驗證瀏覽器尺寸，未宣稱實機 Telegram iPhone/Android WebView 測試。
+畫面記錄在本機忽略目錄 .release-sync/trade-mobile-confirm.png，無真實玩家交易或 TG 發訊。
+
+架構審查：後續建議，這次不改
+本次來源確實沒有 .github/workflows，根目錄 npm test／部署前完整測試不等於 GitHub
+合併必過的獨立關卡；後續可加 Node24 npm ci + npm test，再由 repo 規則設 required check。
+需先核對 Actions 既有額度／費用要求，不順便開付費服務或自動正式部署。
+app.js 與多個 script 仍有載入／狀態維護成本；先做實際 WebView 量測，再逐步按需載入。
+備份與原始美術應另訂保存／部署策略；不清洗 Git 歷史、不批量刪除素材或 *.bak。
+外部報告的 4.3GiB 未重新向 GitHub 查證，勿當成本次獨立量測結果。
+
+只部署 Worker。無 migration、BOT／secrets 改動；正式版本和完整測試以部署收據為準。

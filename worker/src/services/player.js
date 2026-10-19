@@ -1,4 +1,5 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
+import {runningRingId,canEnhanceInParty} from './party-presence.js';
 import {autoBluePct as getAutoBluePct} from '../game/auto-blue.js';
 import {affixCost} from '../game/affixes.js';
 // Player actions: every action = load → settle idle to now → apply → persist ONE atomic batch.
@@ -122,7 +123,7 @@ export async function withPlayer(env, tgId, now, fn = null, { source = 'player',
     const settled = { char: s.char, inv: s.inv, equipment: [...loaded.equipment.map((e) => ({ ...e })), ...settledGear.filter((r) => !loaded.equipment.some((e) => e.id === r.id))] };
     const work = clonePlayer(settled);
     let out = null, gameErr = null;
-    if (fn) { try { const locks=await db.prepare("SELECT item_id FROM rpg_auto_enhance WHERE tg_id=? AND status='running' UNION SELECT item_id FROM rpg_auto_reroll WHERE tg_id=? AND status='running'").bind(String(tgId),String(tgId)).all();out = (await fn(work, { now, db, report: s.report, events: s.events,lockedEquipment:(locks.results||[]).map(x=>x.item_id) })) || {}; } catch (e) { if (e instanceof GameError) gameErr = e; else throw e; } }
+    if (fn) { try { const [locks,ringId]=await Promise.all([db.prepare("SELECT item_id FROM rpg_auto_enhance WHERE tg_id=? AND status='running' UNION SELECT item_id FROM rpg_auto_reroll WHERE tg_id=? AND status='running'").bind(String(tgId),String(tgId)).all(),work.char.party_id?runningRingId(db,tgId):null]);out = (await fn(work, { now, db, report: s.report, events: s.events,lockedEquipment:(locks.results||[]).map(x=>x.item_id),runningExpeditionId:ringId })) || {}; } catch (e) { if (e instanceof GameError) gameErr = e; else throw e; } }
     const final = gameErr ? settled : work;
     const extra = [...reportStatements(db, tgId, s.report, now), ...notifyStatements(db, final.char, s.events, now, { cron: source === 'cron', inv: final.inv, equipment: final.equipment }), ...relicStatements(db, final.char, s.events, now, final.equipment), ...(gameErr ? [] : out?.extra || [])];
     const ledger = gameErr ? [] : out?.ledger || [];
@@ -368,13 +369,13 @@ export async function latestReport(db, tgId) {
 }
 
 /** 強化: one attempt; a break deletes the item. weapon +8 / armor & accessories +6 success or existing-level break → group announcement via outbox */
-export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, requestId, blessed = false, guaranteed = false }, rng = rngDefault()) {
+export function doEnhance(work, { now, db,lockedEquipment=[],runningExpeditionId=null }, { itemId, requestId, blessed = false, guaranteed = false }, rng = rngDefault()) {
   if(typeof blessed!=='boolean'||typeof guaranteed!=='boolean'||(blessed&&guaranteed))throw new GameError('scroll_mode','請選擇普通、祝福或必成其中一種強化卷');
   if(lockedEquipment.includes(itemId))throw new GameError('auto_active','這件裝備正在背景強化，請先停止強化',409);
-  if(work.char.party_id)throw new GameError('party','請在組隊戰鬥結束後變更裝備');
   const i = work.equipment.findIndex((e) => e.id === itemId); if (i < 0) throw new GameError('not_found', '找不到這件裝備');
   const item = work.equipment[i]; const name = item.name;
   if (item.trade_id) throw new GameError('in_trade', '交易中的裝備不能強化');
+  if(!canEnhanceInParty(work.char,item,runningExpeditionId))throw new GameError('party','遠征期間只能強化未穿戴、未交易的背包裝備；其他組隊戰鬥請先結束');
   // Buy any missing scrolls and enhance in the same player transaction. This avoids
   // a race between the old client-side buy-then-enhance pair of requests.
   const key = guaranteed ? (item.slot === 'weapon' ? 'guaranteed_scroll_w' : 'guaranteed_scroll_a') : blessed ? (item.slot === 'weapon' ? 'blessed_scroll_w' : 'blessed_scroll_a') : (item.slot === 'weapon' ? 'scroll_w' : 'scroll_a');
@@ -395,7 +396,7 @@ export function doEnhance(work, { now, db,lockedEquipment=[] }, { itemId, reques
   } else if (r.announce) {
     extra.push(outboxStmt(db, { dedupe: `enh:${eid}`, target: 'group', kind: 'enhance', payload: { tgId: tg, name: work.char.name, item: name, result: r.result, from: r.from, to: r.to, rarity: RARITIES[item.element_tier]?.name } }, now));
   }
-  if (r.result !== 'break') { const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp); }
+  if (r.result !== 'break'&&!work.char.party_id) { const s = idleStats(work.char, work.equipment.filter((e) => e.is_equipped)); work.char.hp = Math.min(work.char.hp, s.maxHp); work.char.mp = Math.min(work.char.mp, s.maxMp); }
   const ledger = [];
   if (missing) ledger.push({ event_id: eventId('buy-enhance-scroll', tg, requestId), tg_id: tg, type: '商店購買', gold_delta: -goldCost, item: key, item_delta: missing, note: `${ITEMS[key].name}（強化時補購）` });
   ledger.push({ event_id: eid, tg_id: tg, type: guaranteed ? '星輝必成強化' : blessed ? '祝福強化' : '強化', item: key, item_delta: -r.used[key], note: `${name} +${r.from}→${r.result === 'break' ? '爆裝' : `+${r.to}`}${guaranteed ? '（100% 成功）' : blessed ? '（祝福成功率 +10%）' : ''}` });

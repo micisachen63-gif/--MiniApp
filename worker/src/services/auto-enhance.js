@@ -1,6 +1,7 @@
 import {GameError} from '../game/classes.js';
 import {loadPlayer,clonePlayer,persistStatements,guardStmt,outboxStmt} from '../db.js';
 import {doEnhance,withPlayer} from './player.js';
+import {runningRingId,canEnhanceInParty} from './party-presence.js';
 export const INTERVAL_MS=3000;
 
 // Only the scroll used this round, target equipment and equipped gear are needed for an attempt.
@@ -30,9 +31,10 @@ export async function start(env,tg,b,now){
  const item=p.equipment.find(e=>e.id===String(b.itemId)),target=Number(b.target);
  if(!item)throw new GameError('not_found','找不到這件裝備');
  if(!Number.isInteger(target)||target<=item.enhance_level||target>15)throw new GameError('target','請選擇高於目前強化值的目標，上限 +15');
- if(item.trade_id||p.char.party_id)throw new GameError('busy','請先結束交易或組隊戰鬥');
+ const runningExpeditionId=p.char.party_id?await runningRingId(db,tg):null;
+ if(item.trade_id||!canEnhanceInParty(p.char,item,runningExpeditionId))throw new GameError('busy','遠征期間只能強化未穿戴、未交易的背包裝備；其他組隊戰鬥請先結束');
  // Validate affordability with the real enhancement rules, without committing a trial roll.
- doEnhance(clonePlayer(p),{db,now},{itemId:item.id,requestId:'validate',blessed:b.blessed===true},()=>.99);
+ doEnhance(clonePlayer(p),{db,now,runningExpeditionId},{itemId:item.id,requestId:'validate',blessed:b.blessed===true},()=>.99);
  const id=crypto.randomUUID();
  await db.batch([
  db.prepare('UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=? AND rev=?').bind(String(tg),p.char.rev),guardStmt(db),
@@ -56,7 +58,7 @@ export async function step(env,id,now,rng){
  if(!p)reason='missing';else{
  const item=work.equipment.find(e=>e.id===j.item_id);
  if(!item)reason='missing';else if(item.enhance_level>=j.target)reason='target';else{
- try{out=doEnhance(work,{db,now},{itemId:j.item_id,requestId:'auto:'+j.id+':'+j.rev,blessed:!!j.blessed},rng);
+ try{const runningExpeditionId=work.char.party_id?await runningRingId(db,j.tg_id):null;out=doEnhance(work,{db,now,runningExpeditionId},{itemId:j.item_id,requestId:'auto:'+j.id+':'+j.rev,blessed:!!j.blessed},rng);
  j.attempts++;j.spent_gold+=out.result.goldCost;j.spent_scrolls+=Object.values(out.result.used).reduce((a,b)=>a+b,0);j.level=out.result.to;
  if(out.result.result==='break')reason='break';else if(j.level>=j.target)reason='target';
  }catch(e){if(!(e instanceof GameError))throw e;reason=e.code==='gold'||e.code==='no_scroll'?'resources':e.code==='party'?'party':'busy';work=clonePlayer(p);}
