@@ -1,0 +1,31 @@
+管理後台 Telegram 私訊登入補修／必成卷標籤
+
+現象：使用者從後台按驗證只看到 BOT，未進 MiniApp，原 startapp 路徑不可靠。
+改用普通 /start admin_<43字元base64url>；公開的是32byte challenge，私密 verifier
+只留原瀏覽器記憶體。BOT 私聊顯示同一8碼與批准按鈕，無須創角或開遊戲。
+若桌面連結沒有傳入參數，可從後台展開備援，複製同一 /start 指令貼進私人 BOT。
+備援複製、選取與開啟會啟動同一核對輪詢；不換 verifier、不延長本次期限。
+
+開始核對與批准均查即時 Telegram 群組管理資格；批准由 BOT service binding
+傳實際 callback 使用者，Worker 再查一次 live getChatMember。新 internal route
+只接受原 service-secret，不信任公開 header、角色ID、請求自報role或群組訊息。
+原有可選 ADMIN_TG_IDS、一次性challenge、過期、防重與同源安全Cookie/CSRF不變。
+保留 signed MiniApp 舊批准入口。只操作管理登入表，不動角色、隊伍、獎勵或結算。
+無 schema/secrets/bindings 變更；0033 已安裝，不得再跑 migration。
+
+必成卷原 <small> 繼承背包圖示48px字級且撐開圖框。改用明確10px標籤，
+在背包圖示角落呈現「必成 100%」，保留粉光卷軸圖及原有數量／道具名稱。
+更新 app/styles/bag-icons 快取版本，不改成功率或道具資料。
+使用者指定道具名稱為「必過的武器強化卷」「必過的防具強化卷」；統一
+metadata、遠征兌換／掉落、BOT通知及輪迴禮結果名稱，保留既有item key與庫存。
+
+驗證：新增 Worker 7項配對、5項登入UI及 BOT 33項回歸。完整suite與發布數字
+以 CI／deployment-records 收據為準。隔離真 Worker+D1+實際 BOT adapter+瀏覽器，
+390/1280px走通普通連結、剪貼簿拒絕的手動指令、私聊核對、批准、原瀏覽器
+redeem及重新整理session；無MiniApp initData、無遊戲角色、無發獎與真TG訊息。
+必成卷以實際MiniApp+隔離API於390/1280px驗收10px、圖框內及無水平溢出。
+尚未聲稱親自在使用者原生 Telegram 手機或桌面程式點擊成功。
+
+發布順序：PR必過 Worker and BOT tests 合main後，乾淨main先 deploy:bot，
+再 deploy:worker。兩服務需 canonical deployment-records 收據及live核對皆成功。
+無須付費服務、新工具費用、資料庫重置或正式玩家測試獎勵。

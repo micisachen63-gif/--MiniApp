@@ -21,7 +21,7 @@ export const HOUR_MS=3600000,HOUR_BEATS=HOUR_MS/BEAT_MS;
 export const TIERS=['初星征途','星砂巡路','銀針古道','縛月隘口','九曜邊境','裂環深境','寂星哨域','黯曜王庭','星蝕禁域'].map((name,i)=>({id:40+i*10,level:40+i*10,name,gearTier:4+i}));
 export const TACTICS=[{id:'steady',name:'穩健',description:'優先恢復與守護，降低負傷。'},{id:'balanced',name:'均衡',description:'兼顧突破與補給。'},{id:'deep',name:'深入',description:'更積極施放戰技，承受較強反擊。'}];
 export const SHOP=[{id:'reroll',name:'洗屬性卷 ×5',cost:5,item:'scroll_r',qty:5},{id:'weapon',name:'武器強化卷 ×4',cost:5,item:'scroll_w',qty:4},{id:'armor',name:'防具強化卷 ×4',cost:5,item:'scroll_a',qty:4},{id:'blessedWeapon',name:'祝福武器卷軸',cost:80,item:'blessed_scroll_w',qty:1},{id:'blessedArmor',name:'祝福防具卷軸',cost:80,item:'blessed_scroll_a',qty:1},{id:'gear',name:'本職業遠征裝備',cost:40,gear:true},...COSMETICS.map(c=>({...c,cosmetic:c.id}))];
-SHOP.push(...['w','a'].map((slot,i)=>({id:'core-'+slot,name:['星輝武器必成卷','星輝防具必成卷'][i],currency:CORE,cost:RANK_REWARDS.coreCost,item:'guaranteed_scroll_'+slot,qty:1})));
+SHOP.push(...['w','a'].map((slot,i)=>({id:'core-'+slot,name:['必過的武器強化卷','必過的防具強化卷'][i],currency:CORE,cost:RANK_REWARDS.coreCost,item:'guaranteed_scroll_'+slot,qty:1})));
 export const STAGES=[
  {name:'星砂伏擊',enemyId:'star_ring_scorpion',enemyName:'星砂晶螯蠍',roles:['guard'],spell:'晶毒尾刺',behavior:'尾刺留下短暫晶毒；守護吸收傷害，支援可清除毒素。'},
  {name:'裂環重甲',enemyId:'star_ring_sentinel',enemyName:'裂環鑄衛',roles:['breach'],spell:'裂環震擊',behavior:'每波展開重甲護盾；破陣可摧毀額外護盾。'},

@@ -3,6 +3,7 @@ import {guardStmt} from '../db.js';
 import * as AUTH from './auth.js';
 import * as DATA from './data.js';
 import * as GRANTS from './grants.js';
+import {approvePair} from './pairing.js';
 const headers={'content-type':'application/json; charset=utf-8','cache-control':'no-store','x-content-type-options':'nosniff','x-frame-options':'DENY','referrer-policy':'no-referrer','x-robots-tag':'noindex, nofollow'};
 const json=(body,status=200,extra={})=>new Response(JSON.stringify({ok:true,...body}),{status,headers:{...headers,...extra}});
 const publicAdmin=({id,name,role,csrf,expiresAt})=>({id,name,role,csrf,expiresAt});
@@ -29,11 +30,7 @@ export async function handleAdmin(request,env,now=Date.now()){
   if(action==='login/approve'){
    if(!/^[0-9a-f]{64}$/.test(b.challenge||''))throw new GameError('challenge','登入代碼無效');
    const admin=await AUTH.telegramAdmin(request,env,now);
-   // Replayed approvals never extend the code's life or change its approving identity.
-   await env.DB.prepare('INSERT OR IGNORE INTO rpg_admin_login_approvals(challenge,admin_tg_id,created_at,expires_at) VALUES(?,?,?,?)').bind(b.challenge,admin.id,now,now+300000).run();
-   const row=await env.DB.prepare('SELECT admin_tg_id,expires_at,used_at FROM rpg_admin_login_approvals WHERE challenge=?').bind(b.challenge).first();
-   if(row.admin_tg_id!==admin.id||row.expires_at<=now||row.used_at!==null)throw new GameError('challenge','這組登入代碼已失效，請在瀏覽器重新開始',409);
-   return json({approved:true});
+   return json(await approvePair(env,admin,b.challenge,now));
   }
   if(action==='login/redeem'){
    if(!/^[0-9a-f]{64}$/.test(b.verifier||''))throw new GameError('challenge','登入代碼無效');

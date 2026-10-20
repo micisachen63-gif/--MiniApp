@@ -11,7 +11,7 @@ function setup({target='dm',error=null,recipient='123456789'}={}){
 test('long expedition completion privately sends original art, rewards and a direct battle-screen button only once',async()=>{
  const h=setup();await h.flow.tick({forceOutbox:true});assert.equal(h.photos.length,1);
  const {body}=h.photos[0];assert.equal(body.chat_id,'123456789');assert.match(body.photo,/star-ring-20261018\/background.jpg$/);
- assert.match(body.caption,/白色毛衣/);assert.match(body.caption,/12,000/);assert.match(body.caption,/星征徽記 ×12/);assert.match(body.caption,/裝備 ×1/);assert.match(body.caption,/星冕核心 ×12/);assert.match(body.caption,/星輝武器必成卷（100%） ×1/);assert.match(body.caption,/星輝防具必成卷（100%） ×1/);
+ assert.match(body.caption,/白色毛衣/);assert.match(body.caption,/12,000/);assert.match(body.caption,/星征徽記 ×12/);assert.match(body.caption,/裝備 ×1/);assert.match(body.caption,/星冕核心 ×12/);assert.match(body.caption,/必過的武器強化卷（100%） ×1/);assert.match(body.caption,/必過的防具強化卷（100%） ×1/);
  const link=new URL(body.reply_markup.inline_keyboard[0][0].web_app.url);assert.equal(link.searchParams.get('screen'),'star-ring');assert.equal(link.searchParams.get('ringParty'),'ring:test');assert.equal(link.searchParams.get('ringChar'),'hero-two');
  await h.flow.tick({forceOutbox:true});assert.equal(h.photos.length,1);assert.equal(h.texts.length,0);assert.ok(h.calls.some(c=>c.path==='/rpg/outbox/ack'));
 });
