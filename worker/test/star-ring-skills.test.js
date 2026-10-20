@@ -43,7 +43,7 @@ for(const mode of ['fake','left','finished','foreground'])test(`${mode} membersh
 });
 for(const mode of ['finished','foreground'])test(`skill edit rechecks ${mode} race inside the atomic commit`,async t=>{
  const f=await fixture(t),before=special(f),batch=f.env.DB.batch.bind(f.env.DB);let fired=false;
- f.env.DB.batch=async stmts=>{if(!fired&&stmts.some(s=>s.sql.startsWith('INSERT INTO rpg_guard(ok) SELECT NULL'))){fired=true;if(mode==='finished')f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);else await shortParty(f,'dungeon',NOW+1000);}return batch(stmts);};
+ f.env.DB.batch=async stmts=>{if(!fired&&stmts.some(s=>s.sql.startsWith('INSERT INTO rpg_guard(ok) SELECT NULL'))){fired=true;if(mode==='finished')f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);else{await shortParty(f,'dungeon',NOW+1000);assert.equal(special(f).partyStamina.points,80);before.partyStamina={...special(f).partyStamina};}}return batch(stmts);};
  const r=await f.api({op:'loadout',loadout:[]});assert.equal(fired,true);assert.notEqual(r.status,200);assert.deepEqual(special(f),before);
 });
 test('manual casting and cancellation retain their original party locks',async t=>{

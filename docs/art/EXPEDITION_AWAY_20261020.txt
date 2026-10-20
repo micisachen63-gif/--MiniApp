@@ -1,0 +1,24 @@
+遠征首頁專屬美術與影片
+2026-10-20，內建image_gen新生成原畫，GROK Imagine以該原畫作首幀生成6秒720p影片。沿用遊戲奧林帕斯／大理石／深藍與古金色手繪風格；五位背向鏡頭的旅人，不代表玩家真實外觀。
+非重用既有戰鬥影片；無圖上文字、UI或新怪物。原始PNG／下載MP4與畫面證據留本機.release-sync，不重複放進公開資產。
+
+Image prompt:
+Premium 16:9 key art for 星穹旅誌. Greek marble causeway through clouds, gold celestial astrolabe gate to distant Olympian palace, exactly five small heroes viewed from behind (sword, ranger, mage, twin daggers, support knight), faces not seen, about 15% of image height, central 4:3 safe crop. Navy, cyan and antique gold, hand-painted semi-realistic mature RPG illustration. No text, logos, UI or watermark. Dark bottom 15% overlay area. Animation-ready clouds, fire, rings and cloaks, stable architecture and camera.
+
+GROK prompt:
+Animate this exact fantasy RPG illustration as an elegant seamless 6-second loop with a locked camera. Keep exactly five small travelers seen from behind, with stable anatomy and unchanged positions. Subtle breeze moves their cloaks, golden braziers flicker, soft clouds drift slowly, the celestial astrolabe rings rotate gently, stars shimmer. Preserve the marble causeway, distant Olympian palace, navy blue and antique gold palette, original composition and painted detail. No camera zoom, no cuts, no extra characters, no text or logos. The last frame should match the first for a smooth ambient game background loop.
+
+生成頁：https://grok.com/imagine/post/8d32e08e-99b6-426a-9af4-affa34b6e9d4?conversation=fe5e8120-f5f5-4aed-b080-075b0664e682
+原影片6.041667秒，抽取每秒六格檢視，人物與建築保持穩定，星環／披風／雲霧有動態。循環首尾為同構圖近似接合，並非聲稱每個像素完全相同。去除音軌、H.264 yuv420p、faststart，無加速或增加動作。手機／桌機真網頁靜音循環驗收；減少動態與隱藏頁面停播。
+
+公開檔案：
+{
+  "loop.mp4": {
+    "bytes": 2790411,
+    "sha256": "555117eb34d4674bf64f63747869b544defc755389813ce37ca10d50a9b6bbb5"
+  },
+  "poster.webp": {
+    "bytes": 516314,
+    "sha256": "cd4e02be882e5e493b0774740fe0a28330c803e214f4b68dd0f71bc6a03d3c1c"
+  }
+}

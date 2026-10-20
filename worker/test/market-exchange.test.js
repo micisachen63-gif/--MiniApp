@@ -101,7 +101,7 @@ test('a learned duplicate book stays a real tradeable item; buying and learning 
   await stock(db,'111','book_'+s.id,1);
   const id=(await create(env,'111',{item:'book_'+s.id,price:100})).result.listingId;await buy(env,'222',id);
   await db.prepare("UPDATE rpg_characters SET level=35,class_path='A' WHERE tg_id='222'").run();
-  await SP.action(env,'222',{op:'learn',skillId:s.id},T0);
+  await SP.action(env,'222',{op:'learn',skillId:s.id,requestId:'market-learning-test'},T0);
   assert.equal(qty(db,'222','book_'+s.id),0);assert.ok(JSON.parse(scalar(db,"SELECT special_json FROM rpg_characters WHERE tg_id='222'").special_json).learned.includes(s.id));
   assert.ok(JSON.parse(scalar(db,"SELECT special_json FROM rpg_characters WHERE tg_id='111'").special_json).learned.includes(s.id));
 });

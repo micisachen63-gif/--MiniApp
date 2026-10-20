@@ -1,3 +1,6 @@
+import {learningAction} from './skill-learning.js';
+import {masteredSkill,researchCost} from '../game/skill-mastery.js';
+import {partyStamina} from '../game/party-stamina.js';
 import {requireBackpackAccess} from './party-presence.js';
 import {BOSS_EXCHANGES} from '../game/boss-economy.js';
 import * as P from './player.js';
@@ -13,17 +16,13 @@ import {guardianEffect} from '../game/guardian-effects.js';
 import {specialCost} from '../game/combat-passives.js';
 async function fullState(env,p,now){const rows=(await env.DB.prepare('SELECT * FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NULL AND exchange_id IS NULL ORDER BY quality DESC,created_at DESC LIMIT 200').bind(String(p.char.tg_id)).all()).results||[];return {...stateView(p,now),guardian:p.char.guardian||null,guardianAssist:activeSettings(env).assist,guardianChoices:rows.map(row=>guardianEffect(row,env))};}
 export async function view(env,tg,now){const r=await P.withPlayer(env,tg,now);return fullState(env,r.player,now);}
-export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>specialCost(s,pct)),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
+export function stateView(p,now){const c=p.char,x=specialState(c),v=playerView(p,{now}),pct=computeStats(c,p.equipment).pct;return {ok:true,now,stamina:partyStamina(c,now),bossExchanges:BOSS_EXCHANGES,character:v.character,stats:{...v.stats,pct},inventory:p.inv,special:x,skills:SPECIAL_SKILLS.map(s=>specialCost(masteredSkill(s,x),pct)),eligible:SPECIAL_SKILLS.filter(s=>eligible(c,s)).map(s=>s.id)};}
 export async function action(env,tg,b,now){
+ if(['learn','recycle'].includes(b.op)){const r=await learningAction(env,tg,b,now);return {...await fullState(env,r.player,now),result:r.result};}
  const r=await P.withPlayer(env,tg,now,async(w,ctx)=>{
   const {db}=ctx;if(['redeem','learn','loadout','auto','settings'].includes(b.op))requireBackpackAccess(w.char,ctx);else if(w.char.party_id)throw new GameError('party','組隊戰鬥中請先完成冒險，再調整技能配置');
   const x=specialState(w.char),id=String(b.skillId||''),s=SKILL_MAP[id],extra=[];
-  if(b.op==='learn'){
-   if(!eligible(w.char,s))throw new GameError('skill','此角色的職業、轉職或等級不符合學習資格');
-   if(x.learned.includes(id))throw new GameError('learned','這個角色已學會此技能');
-   const key=`book_${id}`;if(!(w.inv[key]>0))throw new GameError('book','背包沒有此技能的學習道具');
-   w.inv[key]--;x.learned.push(id);
-  }else if(b.op==='loadout'){
+  if(b.op==='loadout'){
    const ids=b.loadout;if(!Array.isArray(ids)||ids.length>3||new Set(ids).size!==ids.length||ids.some(id=>!x.learned.includes(id)||!eligible(w.char,SKILL_MAP[id])))throw new GameError('loadout','最多裝備三招已學會且符合當前職業的技能');
    x.loadout=ids;x.auto=Object.fromEntries(Object.entries(x.auto).filter(([id])=>ids.includes(id)));
   }else if(b.op==='auto'){
@@ -50,7 +49,7 @@ export async function action(env,tg,b,now){
    if(x.pending)throw new GameError('pending','已有技能等待下一場掛機戰鬥');x.pending=id;
   }else if(b.op==='redeem'){
    if(!eligible(w.char,s))throw new GameError('skill','目前無法兌換此技能');
-   const cost={普通:80,高級:160,稀有:320,史詩:640,傳說:960}[s.rarity]||320;
+   const cost=researchCost(s);
    if((w.inv.research_fragment||0)<cost)throw new GameError('fragment',`需要研究碎片 ${cost} 個`);
    w.inv.research_fragment-=cost;w.inv[`book_${id}`]=(w.inv[`book_${id}`]||0)+1;
   }else throw new GameError('op','技能操作無效');

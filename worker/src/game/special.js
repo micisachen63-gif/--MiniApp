@@ -1,3 +1,4 @@
+import {masteredSkill,masteredMechanics,outputMultiplier,utilityMultiplier} from './skill-mastery.js';
 import {THIEF_MECHANICS,addThiefPoison,armThiefCounter,triggerThiefCounter,nextThiefStrikeCount,thiefPrimaryMechanics,applyThiefPrimary} from './thief-skills.js';
 import {elementalDamage} from './elements.js';
 import {guardianDamageMultiplier} from './guardian-effects.js';
@@ -21,7 +22,7 @@ export function eligible(c,s) {
 export function specialState(c){let x;try{x=JSON.parse(c.special_json||'{}')}catch{x={}}return {learned:[],loadout:[],auto:{},cooldowns:{},mode:'safe',budget:0,towerBest:0,...x};}
 export const saveSpecial=(c,x)=>{c.special_json=JSON.stringify(x);};
 export function validateCast(c,x,id,now,{equipped=true,catalog=SKILL_MAP}={}){
- const base=catalog[id];const s=base?specialCost(base,combatPct(c)):base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
+ const base=catalog[id];const s=base?specialCost(masteredSkill(base,x),combatPct(c)):base;if(!eligible(c,s)||!x.learned.includes(id)||(equipped&&!x.loadout.includes(id)))throw new GameError('skill','尚未學會或未裝備此職業技能');
  if((x.cooldowns[id]||0)>now)throw new GameError('cooldown','技能仍在冷卻中');
  if(c.mp<s.mp)throw new GameError('mp','魔力不足');return s;
 }
@@ -49,7 +50,7 @@ const mechanics = {
  skill_24_1:{singleCoefficient:6,shieldBonus:.3},skill_24_2:{revive:true,target:true},
 };
 export const MECHANICS=mechanics;
-export function skillCoefficient(s){return mechanics[s.id]?.coefficient??Number(s.damage.match(/([\d.]+)A/)?.[1]||0);}
+export function skillCoefficient(s){return (mechanics[s.id]?.coefficient??Number(s.damage.match(/([\d.]+)A/)?.[1]||0))*outputMultiplier(s);}
 const buff=(a,type,value,now,seconds=60,uses=null)=>{a.buffs??=[];a.buffs=a.buffs.filter(b=>b.type!==type);a.buffs.push({type,value,until:now+seconds*1000,uses});};
 export function valueOf(a,type,now){return (a.buffs||[]).filter(b=>b.type===type&&b.until>now&&(b.uses==null||b.uses>0)).reduce((n,b)=>Math.max(n,b.value),0);}
 const consume=(a,type)=>{for(const b of a.buffs||[])if(b.type===type&&b.uses!=null)b.uses--;};
@@ -78,10 +79,11 @@ export function performThiefNativeStrikes(actor,enemy,now,{cast=true,baseRaw,rng
  return {damage,crit:strikes.some(s=>s.crit),strikes,attackSpeedMultiplier:actor.attackSpeedMultiplier||1.8,...(statuses.length?{statuses}:{})};
 }
 export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={}){
- const m=mechanics[s.id];if(!m)throw new GameError('skill','技能未定義');
+ const original=mechanics[s.id];if(!original)throw new GameError('skill','技能未定義');
+ const m=masteredMechanics(s,original);
  let target=m.lowest?lowest(team):team.find(a=>a.id===targetId)||actor;
- if(m.revive){if(context.revived)throw new GameError('revive','每隊每場只能復活一次');if(!target||target.hp>0)throw new GameError('target','請選擇倒地的隊友');target.hp=Math.ceil(target.maxHp*.25);context.revived=true;return {damage:0,healed:target.hp,revived:true,targets:[target.id]};}
- if(m.accelerate){if((target.acceleratedUntil||0)>now)throw new GameError('accelerate','此隊友的加速保護尚未結束');const ids=Object.keys(target.special.cooldowns).filter(id=>(target.special.cooldowns[id]||0)>now&&SKILL_MAP[id]?.advancementTier<4);if(!ids.length)throw new GameError('target','隊友沒有冷卻中的非終極技能');const id=ids.sort((a,b)=>target.special.cooldowns[b]-target.special.cooldowns[a])[0];target.special.cooldowns[id]=Math.max(now,target.special.cooldowns[id]-30000);target.acceleratedUntil=now+180000;return {damage:0,accelerated:id};}
+ if(m.revive){if(context.revived)throw new GameError('revive','每隊每場只能復活一次');if(!target||target.hp>0)throw new GameError('target','請選擇倒地的隊友');target.hp=Math.ceil(target.maxHp*.25*outputMultiplier(s));context.revived=true;return {damage:0,healed:target.hp,revived:true,targets:[target.id]};}
+ if(m.accelerate){if((target.acceleratedUntil||0)>now)throw new GameError('accelerate','此隊友的加速保護尚未結束');const ids=Object.keys(target.special.cooldowns).filter(id=>(target.special.cooldowns[id]||0)>now&&SKILL_MAP[id]?.advancementTier<4);if(!ids.length)throw new GameError('target','隊友沒有冷卻中的非終極技能');const id=ids.sort((a,b)=>target.special.cooldowns[b]-target.special.cooldowns[a])[0];target.special.cooldowns[id]=Math.max(now,target.special.cooldowns[id]-Math.round(30000*utilityMultiplier(s)));target.acceleratedUntil=now+180000;return {damage:0,accelerated:id};}
  if(!target||target.hp<=0)throw new GameError('target','隊友已倒地，請選擇其他目標');
  let coef=m.singleCoefficient??skillCoefficient(s);let raw=actor.atk*coef*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now))*(1-valueOf(actor,'enemyNextReduce',now));
  if(s.advancementTier<4)raw*=1+valueOf(actor,'echo',now);
@@ -105,9 +107,9 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.guard){actor.guard={target:target.id,pct:m.guard,until:now+60000};}
  if(m.reflect)buff(actor,'reflect',actor.atk*m.reflect,now,60,1);
  if(m.shieldSlow)buff(target,'shieldSlow',m.shieldSlow,now);
- if(m.lastStand)buff(actor,'lastStand',1,now,60,1);
+ if(m.lastStand)buff(actor,'lastStand',1,now,60*utilityMultiplier(s),1);
  if(m.leech)actor.hp=Math.min(actor.maxHp,actor.hp+Math.round(Math.min(damage*m.leech,actor.maxHp*m.leechCap)));
- if(m.thiefPoison)addThiefPoison(actor,enemy,now);
+ if(m.thiefPoison)addThiefPoison({...actor,atk:actor.atk*outputMultiplier(s)},enemy,now);
  if(m.thiefCounter)armThiefCounter(actor,now,m.thiefCounter);
  if(m.dot)enemy.dots=(enemy.dots||[]).concat({owner:actor.id,source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.dot*(1+(actor.affixPct?.dotPct||0)),left:m.dotCount,next:now+30000});
  if(m.summon)actor.summon={source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.summon*(1+(actor.affixPct?.summonPct||0)),left:m.summonCount,next:now+30000};

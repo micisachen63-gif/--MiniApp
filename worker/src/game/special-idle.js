@@ -1,3 +1,4 @@
+import {masteredSkill} from './skill-mastery.js';
 import {needsBlue,blueTarget} from './auto-blue.js';
 import {thiefPrimaryMechanics,applyThiefPrimary,triggerThiefCounter,nextThiefStrikeCount} from './thief-skills.js';
 import { SKILL_MAP,eligible,specialState,saveSpecial,castSpecial,combatActor,periodic,valueOf } from './special.js';
@@ -16,7 +17,7 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
  if(x.costDay!==day){x.costDay=day;x.extraCost=0;}
  const manual=x.pending;let selected;
  for(const id of manual?[manual]:x.loadout){
-  const base=SKILL_MAP[id],skill=base?specialCost(base,s.pct):base,mode=x.auto[id];if(!eligible(c,skill)||!x.learned.includes(id)||(x.cooldowns[id]||0)>now)continue;
+  const base=SKILL_MAP[id],skill=base?specialCost(masteredSkill(base,x),s.pct):base,mode=x.auto[id];if(!eligible(c,skill)||!x.learned.includes(id)||(x.cooldowns[id]||0)>now)continue;
   if(!manual&&(!mode||mode==='lowHp'&&a.hp/a.maxHp>=.5||mode==='elite'&&Math.floor(now/60000)%33!==0))continue;
   if(['skill_17_2','skill_24_2'].includes(id))continue;
   // Safe mode spends current MP only. Strong mode consumes owned blue potions up to the daily replacement-cost limit.

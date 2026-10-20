@@ -1,0 +1,2914 @@
+{
+  "live": {
+    "capturedAt": 1792483129738,
+    "readOnly": true,
+    "overview": {
+      "characters": 42,
+      "accounts": 31,
+      "minLevel": 1,
+      "maxLevel": 72
+    },
+    "selected": 31,
+    "selectedLv30Plus": 18,
+    "lv30PlusNoNormalPressure": 10,
+    "lv30PlusEliteMinBurst": 14,
+    "groups": [
+      {
+        "range": "11–20",
+        "characters": 7,
+        "noNormalPressure": 0,
+        "medianRatio": 0.7647058823529411,
+        "medianDef": 28,
+        "medianEnhance": 0,
+        "medianElitePct": 32.898874032527345
+      },
+      {
+        "range": "21–30",
+        "characters": 10,
+        "noNormalPressure": 0,
+        "medianRatio": 1.0870535714285714,
+        "medianDef": 41,
+        "medianEnhance": 0.5454545454545454,
+        "medianElitePct": 15.53341803368763
+      },
+      {
+        "range": "31–40",
+        "characters": 2,
+        "noNormalPressure": 1,
+        "medianRatio": 2.725,
+        "medianDef": 143,
+        "medianEnhance": 0.7272727272727273,
+        "medianElitePct": 7.778174593052023
+      },
+      {
+        "range": "41–50",
+        "characters": 3,
+        "noNormalPressure": 1,
+        "medianRatio": 3.9825970548862113,
+        "medianDef": 829,
+        "medianEnhance": 4.7272727272727275,
+        "medianElitePct": 7.778174593052023
+      },
+      {
+        "range": "51–60",
+        "characters": 7,
+        "noNormalPressure": 6,
+        "medianRatio": 7.907508161044614,
+        "medianDef": 1883,
+        "medianEnhance": 4.818181818181818,
+        "medianElitePct": 7.778174593052023
+      },
+      {
+        "range": "61–70",
+        "characters": 1,
+        "noNormalPressure": 1,
+        "medianRatio": 12.755465587044535,
+        "medianDef": 3817,
+        "medianEnhance": 8.545454545454545,
+        "medianElitePct": 7.778174593052023
+      },
+      {
+        "range": "71–80",
+        "characters": 1,
+        "noNormalPressure": 1,
+        "medianRatio": 22.042443729903535,
+        "medianDef": 7160,
+        "medianEnhance": 7.818181818181818,
+        "medianElitePct": 7.778174593052024
+      }
+    ],
+    "bossRules": {
+      "attackWindowSeconds": 180,
+      "maxAttackPercent": 25
+    },
+    "bossSummary": [
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "engaged": 22,
+        "killed": 19,
+        "medianKillMinutes": 7.227916666666666,
+        "medianParticipants": 3
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "engaged": 16,
+        "killed": 15,
+        "medianKillMinutes": 8.017033333333334,
+        "medianParticipants": 4
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "engaged": 23,
+        "killed": 21,
+        "medianKillMinutes": 9.339316666666667,
+        "medianParticipants": 3
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "engaged": 20,
+        "killed": 17,
+        "medianKillMinutes": 6.860033333333333,
+        "medianParticipants": 4
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "engaged": 16,
+        "killed": 12,
+        "medianKillMinutes": 15.19275,
+        "medianParticipants": 3
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "engaged": 11,
+        "killed": 8,
+        "medianKillMinutes": 10.071,
+        "medianParticipants": 4
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "engaged": 10,
+        "killed": 9,
+        "medianKillMinutes": 12.270516666666667,
+        "medianParticipants": 4
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "engaged": 1,
+        "killed": 1,
+        "medianKillMinutes": 3.0532,
+        "medianParticipants": 7
+      }
+    ],
+    "byActivity": [
+      {
+        "kind": "dungeon",
+        "total": 60,
+        "won": 60,
+        "lost": 0,
+        "ended": 0,
+        "medianWinSeconds": 25,
+        "medianEndHpPct": 99.5364238410596,
+        "medianWinRounds": 5
+      },
+      {
+        "kind": "tower",
+        "total": 4,
+        "won": 4,
+        "lost": 0,
+        "ended": 0,
+        "medianWinSeconds": 115,
+        "medianEndHpPct": 99.77628635346755,
+        "medianWinRounds": 4
+      }
+    ]
+  },
+  "synthetic": {
+    "description": "144 cases, deterministic six-hour isolated simulation; no guardians, affixes or skill books. Synthetic T8–T12 results are not live player evidence. Full potion stock, no budget constraint.",
+    "cases": [
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 34,
+        "maxHp": 317,
+        "normalHpLossPerMinute": 0.7592643974989011,
+        "eliteBurstPct": 21.999999999999996,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 737,
+          "deaths": 0,
+          "gold": 10840,
+          "potionReplacementCost": 66,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 294,
+        "maxHp": 365,
+        "normalHpLossPerMinute": -0.6063530292860283,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.8265210731362704,
+        "simulation6h": {
+          "kills": 1306,
+          "deaths": 0,
+          "gold": 18312,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 366,
+        "maxHp": 390,
+        "normalHpLossPerMinute": -0.7620470244498032,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.8880316321282273,
+        "simulation6h": {
+          "kills": 1349,
+          "deaths": 0,
+          "gold": 18871,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 61,
+        "maxHp": 627,
+        "normalHpLossPerMinute": 2.3733350682671492,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 11676,
+          "potionReplacementCost": 204,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 812,
+        "maxHp": 717,
+        "normalHpLossPerMinute": -1.288390660255812,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9317236291760325,
+        "simulation6h": {
+          "kills": 1442,
+          "deaths": 0,
+          "gold": 21044,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 1009,
+        "maxHp": 762,
+        "normalHpLossPerMinute": -1.5725864810895294,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9936470239739874,
+        "simulation6h": {
+          "kills": 1488,
+          "deaths": 0,
+          "gold": 21671,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 89,
+        "maxHp": 950,
+        "normalHpLossPerMinute": 4.162051970402688,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 13143,
+          "potionReplacementCost": 300,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 1572,
+        "maxHp": 1093,
+        "normalHpLossPerMinute": -2.1686921113834563,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1499,
+          "deaths": 0,
+          "gold": 24518,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 1955,
+        "maxHp": 1166,
+        "normalHpLossPerMinute": -2.585942890563007,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1500,
+          "deaths": 0,
+          "gold": 24526,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 283,
+        "maxHp": 1282,
+        "normalHpLossPerMinute": 3.666423993669542,
+        "eliteBurstPct": 10.896290167803729,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 20157,
+          "potionReplacementCost": 403,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 2904,
+        "maxHp": 1490,
+        "normalHpLossPerMinute": -3.200462273739421,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 35048,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 3615,
+        "maxHp": 1594,
+        "normalHpLossPerMinute": -3.746004660122674,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 35048,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 604,
+        "maxHp": 1626,
+        "normalHpLossPerMinute": 2.197628095267363,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 22420,
+          "potionReplacementCost": 287,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 3530,
+        "maxHp": 1908,
+        "normalHpLossPerMinute": -4.039853104407717,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 38917,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 4394,
+        "maxHp": 2050,
+        "normalHpLossPerMinute": -4.775186207679768,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 38917,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 1062,
+        "maxHp": 1981,
+        "normalHpLossPerMinute": 0.7332477613158206,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 24814,
+          "potionReplacementCost": 130,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 4430,
+        "maxHp": 2350,
+        "normalHpLossPerMinute": -5.058252751207448,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 43035,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 5515,
+        "maxHp": 2535,
+        "normalHpLossPerMinute": -5.980465285606753,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 43035,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 1767,
+        "maxHp": 2349,
+        "normalHpLossPerMinute": -0.9940317667751977,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 27324,
+          "potionReplacementCost": 250,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 5824,
+        "maxHp": 2816,
+        "normalHpLossPerMinute": -6.321621488903922,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 47428,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 7255,
+        "maxHp": 3050,
+        "normalHpLossPerMinute": -7.419567832349397,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 47428,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 2439,
+        "maxHp": 2731,
+        "normalHpLossPerMinute": -2.1522049387217983,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 29954,
+          "potionReplacementCost": 125,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 7152,
+        "maxHp": 3311,
+        "normalHpLossPerMinute": -7.617704431499103,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 51949,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 8910,
+        "maxHp": 3602,
+        "normalHpLossPerMinute": -8.923713964416613,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 51949,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 3186,
+        "maxHp": 3132,
+        "normalHpLossPerMinute": -3.304823111271885,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 32700,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 8630,
+        "maxHp": 3844,
+        "normalHpLossPerMinute": -9.05306352328015,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 56713,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 10754,
+        "maxHp": 4201,
+        "normalHpLossPerMinute": -10.589850950434517,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 56713,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 4002,
+        "maxHp": 3554,
+        "normalHpLossPerMinute": -4.4830003772453,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 35566,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 10246,
+        "maxHp": 4420,
+        "normalHpLossPerMinute": -10.63494968126891,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9747687039064,
+        "simulation6h": {
+          "kills": 1923,
+          "deaths": 0,
+          "gold": 60950,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 12770,
+        "maxHp": 4853,
+        "normalHpLossPerMinute": -12.429138545579624,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 61683,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 4893,
+        "maxHp": 3995,
+        "normalHpLossPerMinute": -5.706909195298279,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 38550,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 12012,
+        "maxHp": 5033,
+        "normalHpLossPerMinute": -12.345095320410373,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.949011283724608,
+        "simulation6h": {
+          "kills": 1898,
+          "deaths": 0,
+          "gold": 65253,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 14973,
+        "maxHp": 5553,
+        "normalHpLossPerMinute": -14.426370763500882,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9893096466379399,
+        "simulation6h": {
+          "kills": 1937,
+          "deaths": 0,
+          "gold": 66521,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "sword",
+        "profile": "普通整套+0",
+        "def": 5861,
+        "maxHp": 4458,
+        "normalHpLossPerMinute": -6.994527961281893,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 41652,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "sword",
+        "profile": "傳說整套+7",
+        "def": 13932,
+        "maxHp": 5690,
+        "normalHpLossPerMinute": -14.202239789442707,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9248830133148718,
+        "simulation6h": {
+          "kills": 1874,
+          "deaths": 0,
+          "gold": 69684,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "sword",
+        "profile": "遠征傳說整套+7",
+        "def": 17368,
+        "maxHp": 6307,
+        "normalHpLossPerMinute": -16.59769907132329,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.965019131350014,
+        "simulation6h": {
+          "kills": 1913,
+          "deaths": 0,
+          "gold": 71048,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 25,
+        "maxHp": 228,
+        "normalHpLossPerMinute": 0.9357584271624831,
+        "eliteBurstPct": 22.000000000000004,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 737,
+          "deaths": 0,
+          "gold": 10834,
+          "potionReplacementCost": 126,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 259,
+        "maxHp": 271,
+        "normalHpLossPerMinute": -0.3452886000594655,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.8353306325115717,
+        "simulation6h": {
+          "kills": 1312,
+          "deaths": 0,
+          "gold": 18380,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 321,
+        "maxHp": 293,
+        "normalHpLossPerMinute": -0.4854525560602663,
+        "eliteBurstPct": 7.778174593052022,
+        "efficiency": 1.8957183271386924,
+        "simulation6h": {
+          "kills": 1354,
+          "deaths": 0,
+          "gold": 18930,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 46,
+        "maxHp": 445,
+        "normalHpLossPerMinute": 2.6591985535327254,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 11676,
+          "potionReplacementCost": 240,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 730,
+        "maxHp": 525,
+        "normalHpLossPerMinute": -0.7575826216026047,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9395001143514574,
+        "simulation6h": {
+          "kills": 1448,
+          "deaths": 0,
+          "gold": 21130,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 907,
+        "maxHp": 565,
+        "normalHpLossPerMinute": -1.0171032348874063,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1494,
+          "deaths": 0,
+          "gold": 21751,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 65,
+        "maxHp": 673,
+        "normalHpLossPerMinute": 4.618222978632606,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 13143,
+          "potionReplacementCost": 312,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 1417,
+        "maxHp": 801,
+        "normalHpLossPerMinute": -1.349800336309076,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1500,
+          "deaths": 0,
+          "gold": 24526,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 1764,
+        "maxHp": 866,
+        "normalHpLossPerMinute": -1.7318322110791629,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1500,
+          "deaths": 0,
+          "gold": 24526,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 211,
+        "maxHp": 910,
+        "normalHpLossPerMinute": 3.3448555689830806,
+        "eliteBurstPct": 11.363494737716797,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 951,
+          "deaths": 0,
+          "gold": 18065,
+          "potionReplacementCost": 487,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 2576,
+        "maxHp": 1095,
+        "normalHpLossPerMinute": -2.2940203760434534,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 31239,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 3209,
+        "maxHp": 1188,
+        "normalHpLossPerMinute": -2.7543705067067945,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 31239,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 452,
+        "maxHp": 1157,
+        "normalHpLossPerMinute": 2.4648894539183708,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 951,
+          "deaths": 0,
+          "gold": 20099,
+          "potionReplacementCost": 357,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 3046,
+        "maxHp": 1409,
+        "normalHpLossPerMinute": -2.8792205709517886,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 34688,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 3793,
+        "maxHp": 1535,
+        "normalHpLossPerMinute": -3.502599862567439,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 34688,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 795,
+        "maxHp": 1414,
+        "normalHpLossPerMinute": 1.4975668711629764,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 951,
+          "deaths": 0,
+          "gold": 22244,
+          "potionReplacementCost": 215,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 3719,
+        "maxHp": 1743,
+        "normalHpLossPerMinute": -3.593735777719524,
+        "eliteBurstPct": 7.778174593052022,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 38363,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 4633,
+        "maxHp": 1908,
+        "normalHpLossPerMinute": -4.387482829321435,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1723,
+          "deaths": 0,
+          "gold": 38363,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 1326,
+        "maxHp": 1682,
+        "normalHpLossPerMinute": 0.25067739628029706,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1184,
+          "deaths": 0,
+          "gold": 29850,
+          "potionReplacementCost": 503,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 4771,
+        "maxHp": 2099,
+        "normalHpLossPerMinute": -4.508696691430839,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 52043,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 5943,
+        "maxHp": 2308,
+        "normalHpLossPerMinute": -5.464567157089567,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 52043,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 1831,
+        "maxHp": 1963,
+        "normalHpLossPerMinute": -0.5572728591335947,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1184,
+          "deaths": 0,
+          "gold": 32722,
+          "potionReplacementCost": 378,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 5768,
+        "maxHp": 2481,
+        "normalHpLossPerMinute": -5.465540956543477,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 56982,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 7187,
+        "maxHp": 2741,
+        "normalHpLossPerMinute": -6.611050189663812,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 56982,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 2389,
+        "maxHp": 2261,
+        "normalHpLossPerMinute": -1.3675060453451948,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1184,
+          "deaths": 0,
+          "gold": 35723,
+          "potionReplacementCost": 200,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 6873,
+        "maxHp": 2897,
+        "normalHpLossPerMinute": -6.546835008388729,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 62208,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 8566,
+        "maxHp": 3216,
+        "normalHpLossPerMinute": -7.902043798515744,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2147,
+          "deaths": 0,
+          "gold": 62208,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 3001,
+        "maxHp": 2578,
+        "normalHpLossPerMinute": -2.214375151427255,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1209,
+          "deaths": 0,
+          "gold": 39619,
+          "potionReplacementCost": 84,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 8086,
+        "maxHp": 3351,
+        "normalHpLossPerMinute": -7.760984667870727,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9722886769164665,
+        "simulation6h": {
+          "kills": 2161,
+          "deaths": 0,
+          "gold": 68145,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 10078,
+        "maxHp": 3738,
+        "normalHpLossPerMinute": -9.349164172137336,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2192,
+          "deaths": 0,
+          "gold": 69051,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 3669,
+        "maxHp": 2912,
+        "normalHpLossPerMinute": -3.106412354129442,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1209,
+          "deaths": 0,
+          "gold": 42943,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 9409,
+        "maxHp": 3839,
+        "normalHpLossPerMinute": -9.093467824642092,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9466068661687923,
+        "simulation6h": {
+          "kills": 2133,
+          "deaths": 0,
+          "gold": 72951,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 11729,
+        "maxHp": 4303,
+        "normalHpLossPerMinute": -10.938939447097965,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9866269443658113,
+        "simulation6h": {
+          "kills": 2177,
+          "deaths": 0,
+          "gold": 74370,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "archer",
+        "profile": "普通整套+0",
+        "def": 4395,
+        "maxHp": 3265,
+        "normalHpLossPerMinute": -4.056851776971335,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1223,
+          "deaths": 0,
+          "gold": 46890,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "archer",
+        "profile": "傳說整套+7",
+        "def": 10847,
+        "maxHp": 4365,
+        "normalHpLossPerMinute": -10.554790131897562,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9215518757311363,
+        "simulation6h": {
+          "kills": 2131,
+          "deaths": 0,
+          "gold": 78721,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "archer",
+        "profile": "遠征傳說整套+7",
+        "def": 13524,
+        "maxHp": 4916,
+        "normalHpLossPerMinute": -12.684859152306586,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9613456596091692,
+        "simulation6h": {
+          "kills": 2175,
+          "deaths": 0,
+          "gold": 80263,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 19,
+        "maxHp": 193,
+        "normalHpLossPerMinute": 1.0668327579368144,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 739,
+          "deaths": 0,
+          "gold": 10870,
+          "potionReplacementCost": 132,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 229,
+        "maxHp": 236,
+        "normalHpLossPerMinute": -0.2181032927880387,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.8261632525462765,
+        "simulation6h": {
+          "kills": 1308,
+          "deaths": 0,
+          "gold": 18331,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 286,
+        "maxHp": 258,
+        "normalHpLossPerMinute": -0.3625418105157964,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.8872095321662559,
+        "simulation6h": {
+          "kills": 1350,
+          "deaths": 0,
+          "gold": 18886,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 32,
+        "maxHp": 370,
+        "normalHpLossPerMinute": 3.020752350234698,
+        "eliteBurstPct": 22.000000000000004,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 11676,
+          "potionReplacementCost": 246,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 646,
+        "maxHp": 450,
+        "normalHpLossPerMinute": -0.48765221554378757,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.93204210054352,
+        "simulation6h": {
+          "kills": 1443,
+          "deaths": 0,
+          "gold": 21057,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 805,
+        "maxHp": 490,
+        "normalHpLossPerMinute": -0.7542974537561272,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9938162221867524,
+        "simulation6h": {
+          "kills": 1489,
+          "deaths": 0,
+          "gold": 21682,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 48,
+        "maxHp": 558,
+        "normalHpLossPerMinute": 5.095420414333391,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 754,
+          "deaths": 0,
+          "gold": 13143,
+          "potionReplacementCost": 300,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 1269,
+        "maxHp": 686,
+        "normalHpLossPerMinute": -0.9537353950573353,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1499,
+          "deaths": 0,
+          "gold": 24518,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 1581,
+        "maxHp": 751,
+        "normalHpLossPerMinute": -1.3432755174413624,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1500,
+          "deaths": 0,
+          "gold": 24526,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 147,
+        "maxHp": 755,
+        "normalHpLossPerMinute": 5.279050802273732,
+        "eliteBurstPct": 12.493001402694032,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 20157,
+          "potionReplacementCost": 574,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 2258,
+        "maxHp": 940,
+        "normalHpLossPerMinute": -1.625826089113768,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 35048,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 2814,
+        "maxHp": 1033,
+        "normalHpLossPerMinute": -2.1215234437001724,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 35048,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 307,
+        "maxHp": 962,
+        "normalHpLossPerMinute": 4.9539598824780855,
+        "eliteBurstPct": 7.902858617124192,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 22420,
+          "potionReplacementCost": 475,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 2569,
+        "maxHp": 1214,
+        "normalHpLossPerMinute": -1.9618140856238362,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 38917,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 3200,
+        "maxHp": 1340,
+        "normalHpLossPerMinute": -2.6418646018549925,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 38917,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 536,
+        "maxHp": 1179,
+        "normalHpLossPerMinute": 4.355872304661434,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1074,
+          "deaths": 0,
+          "gold": 24814,
+          "potionReplacementCost": 320,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 3019,
+        "maxHp": 1508,
+        "normalHpLossPerMinute": -2.413955058122378,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 43035,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 3762,
+        "maxHp": 1673,
+        "normalHpLossPerMinute": -3.2883750464609722,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1947,
+          "deaths": 0,
+          "gold": 43035,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 894,
+        "maxHp": 1407,
+        "normalHpLossPerMinute": 3.291738587884476,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1197,
+          "deaths": 0,
+          "gold": 30154,
+          "potionReplacementCost": 815,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 3724,
+        "maxHp": 1824,
+        "normalHpLossPerMinute": -3.077472823697872,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2171,
+          "deaths": 0,
+          "gold": 52583,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 4640,
+        "maxHp": 2033,
+        "normalHpLossPerMinute": -4.137093512749695,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2171,
+          "deaths": 0,
+          "gold": 52583,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 1230,
+        "maxHp": 1648,
+        "normalHpLossPerMinute": 2.7503659515037233,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1197,
+          "deaths": 0,
+          "gold": 33056,
+          "potionReplacementCost": 637,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 4388,
+        "maxHp": 2166,
+        "normalHpLossPerMinute": -3.7849394348941368,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2171,
+          "deaths": 0,
+          "gold": 57589,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 5468,
+        "maxHp": 2426,
+        "normalHpLossPerMinute": -5.056732890804565,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2171,
+          "deaths": 0,
+          "gold": 57589,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 1601,
+        "maxHp": 1906,
+        "normalHpLossPerMinute": 2.195260811639584,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1197,
+          "deaths": 0,
+          "gold": 36087,
+          "potionReplacementCost": 437,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 5121,
+        "maxHp": 2542,
+        "normalHpLossPerMinute": -4.624514546669591,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9861861695091014,
+        "simulation6h": {
+          "kills": 2156,
+          "deaths": 0,
+          "gold": 62459,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 6383,
+        "maxHp": 2861,
+        "normalHpLossPerMinute": -6.127868887085425,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 2171,
+          "deaths": 0,
+          "gold": 62870,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 2015,
+        "maxHp": 2183,
+        "normalHpLossPerMinute": 1.5711858744502907,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1205,
+          "deaths": 0,
+          "gold": 39483,
+          "potionReplacementCost": 300,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 5939,
+        "maxHp": 2956,
+        "normalHpLossPerMinute": -5.61323012361704,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9534901712018375,
+        "simulation6h": {
+          "kills": 2135,
+          "deaths": 0,
+          "gold": 67289,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 7402,
+        "maxHp": 3343,
+        "normalHpLossPerMinute": -7.3685546779291045,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9932773582747145,
+        "simulation6h": {
+          "kills": 2178,
+          "deaths": 0,
+          "gold": 68586,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 2460,
+        "maxHp": 2477,
+        "normalHpLossPerMinute": 0.9150335518649735,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1205,
+          "deaths": 0,
+          "gold": 42796,
+          "potionReplacementCost": 90,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 6821,
+        "maxHp": 3404,
+        "normalHpLossPerMinute": -6.724737282427263,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.929029835731599,
+        "simulation6h": {
+          "kills": 2108,
+          "deaths": 0,
+          "gold": 72071,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 8503,
+        "maxHp": 3868,
+        "normalHpLossPerMinute": -8.75617649434892,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9684020382698024,
+        "simulation6h": {
+          "kills": 2151,
+          "deaths": 0,
+          "gold": 73461,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "mage",
+        "profile": "普通整套+0",
+        "def": 2941,
+        "maxHp": 2790,
+        "normalHpLossPerMinute": 0.19721125984702148,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1213,
+          "deaths": 0,
+          "gold": 46501,
+          "potionReplacementCost": 45,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "mage",
+        "profile": "傳說整套+7",
+        "def": 7775,
+        "maxHp": 3890,
+        "normalHpLossPerMinute": -7.972147850100129,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9042766287616728,
+        "simulation6h": {
+          "kills": 2095,
+          "deaths": 0,
+          "gold": 77379,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "mage",
+        "profile": "遠征傳說整套+7",
+        "def": 9694,
+        "maxHp": 4441,
+        "normalHpLossPerMinute": -10.305901713843205,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.943389236533571,
+        "simulation6h": {
+          "kills": 2138,
+          "deaths": 0,
+          "gold": 78881,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 13,
+        "maxHp": 148,
+        "normalHpLossPerMinute": 1.9752903159574688,
+        "eliteBurstPct": 22.000000000000004,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 796,
+          "deaths": 0,
+          "gold": 11959,
+          "potionReplacementCost": 204,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 214,
+        "maxHp": 191,
+        "normalHpLossPerMinute": 0.13404611346644324,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.8645148026540985,
+        "simulation6h": {
+          "kills": 1439,
+          "deaths": 0,
+          "gold": 20797,
+          "potionReplacementCost": 18,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 1,
+        "name": "阿耳忒彌斯月桂林",
+        "level": 5,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 267,
+        "maxHp": 213,
+        "normalHpLossPerMinute": -0.04315104977902129,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9260023592370505,
+        "simulation6h": {
+          "kills": 1485,
+          "deaths": 0,
+          "gold": 21553,
+          "potionReplacementCost": 6,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 25,
+        "maxHp": 275,
+        "normalHpLossPerMinute": 5.093379990700741,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 815,
+          "deaths": 0,
+          "gold": 12893,
+          "potionReplacementCost": 342,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 614,
+        "maxHp": 355,
+        "normalHpLossPerMinute": 0.16799583139598728,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9709595493285428,
+        "simulation6h": {
+          "kills": 1590,
+          "deaths": 0,
+          "gold": 23462,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 2,
+        "name": "雅典娜百柱神殿",
+        "level": 15,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 765,
+        "maxHp": 395,
+        "normalHpLossPerMinute": -0.16002916362165975,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1620,
+          "deaths": 0,
+          "gold": 23875,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 36,
+        "maxHp": 413,
+        "normalHpLossPerMinute": 8.533605675470122,
+        "eliteBurstPct": 22,
+        "efficiency": 1,
+        "simulation6h": {
+          "kills": 815,
+          "deaths": 0,
+          "gold": 14507,
+          "potionReplacementCost": 474,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 1205,
+        "maxHp": 541,
+        "normalHpLossPerMinute": -0.03976782605286955,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1620,
+          "deaths": 0,
+          "gold": 26817,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 3,
+        "name": "阿卡迪亞聖林",
+        "level": 25,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 1503,
+        "maxHp": 606,
+        "normalHpLossPerMinute": -0.5134466139065286,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1620,
+          "deaths": 0,
+          "gold": 26817,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 115,
+        "maxHp": 560,
+        "normalHpLossPerMinute": 9.568448319111026,
+        "eliteBurstPct": 11.998349539040131,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 937,
+          "deaths": 0,
+          "gold": 18329,
+          "potionReplacementCost": 543,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 2124,
+        "maxHp": 745,
+        "normalHpLossPerMinute": -0.5055629163961561,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 31307,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 4,
+        "name": "波賽頓愛琴海崖",
+        "level": 35,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 2650,
+        "maxHp": 838,
+        "normalHpLossPerMinute": -1.098247021904993,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 31307,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 239,
+        "maxHp": 717,
+        "normalHpLossPerMinute": 9.927611998503194,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 937,
+          "deaths": 0,
+          "gold": 20391,
+          "potionReplacementCost": 488,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 2368,
+        "maxHp": 969,
+        "normalHpLossPerMinute": -0.43083943720005413,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 34764,
+          "potionReplacementCost": 15,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 5,
+        "name": "克里特迷宮門庭",
+        "level": 45,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 2954,
+        "maxHp": 1095,
+        "normalHpLossPerMinute": -1.2533952245164666,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 34764,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 427,
+        "maxHp": 884,
+        "normalHpLossPerMinute": 9.647722792763801,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 937,
+          "deaths": 0,
+          "gold": 22566,
+          "potionReplacementCost": 375,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 2735,
+        "maxHp": 1213,
+        "normalHpLossPerMinute": -0.48187308668832607,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 38444,
+          "potionReplacementCost": 30,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 6,
+        "name": "赫淮斯托斯熔爐",
+        "level": 55,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 3410,
+        "maxHp": 1378,
+        "normalHpLossPerMinute": -1.5406457497796953,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1697,
+          "deaths": 0,
+          "gold": 38444,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 708,
+        "maxHp": 1062,
+        "normalHpLossPerMinute": 8.796139491628685,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1004,
+          "deaths": 0,
+          "gold": 26377,
+          "potionReplacementCost": 608,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 3292,
+        "maxHp": 1479,
+        "normalHpLossPerMinute": -0.7734656793462018,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 45158,
+          "potionReplacementCost": 28,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 7,
+        "name": "冥河斯堤克斯渡口",
+        "level": 65,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 4104,
+        "maxHp": 1688,
+        "normalHpLossPerMinute": -2.0565728404337356,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 45158,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 976,
+        "maxHp": 1253,
+        "normalHpLossPerMinute": 8.616355548032542,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1004,
+          "deaths": 0,
+          "gold": 28915,
+          "potionReplacementCost": 483,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 3822,
+        "maxHp": 1771,
+        "normalHpLossPerMinute": -1.105608712102108,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 49452,
+          "potionReplacementCost": 28,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 8,
+        "name": "德爾菲阿波羅神諭谷",
+        "level": 75,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 4766,
+        "maxHp": 2031,
+        "normalHpLossPerMinute": -2.6412741184521122,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 49452,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 1275,
+        "maxHp": 1461,
+        "normalHpLossPerMinute": 8.402667086160953,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1004,
+          "deaths": 0,
+          "gold": 31567,
+          "potionReplacementCost": 333,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 4413,
+        "maxHp": 2097,
+        "normalHpLossPerMinute": -1.5894399693242498,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 53987,
+          "potionReplacementCost": 28,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 9,
+        "name": "泰坦諸神山隘",
+        "level": 85,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 5504,
+        "maxHp": 2416,
+        "normalHpLossPerMinute": -3.393714827842132,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1818,
+          "deaths": 0,
+          "gold": 53987,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 1603,
+        "maxHp": 1688,
+        "normalHpLossPerMinute": 8.139961064658864,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1023,
+          "deaths": 0,
+          "gold": 34888,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 5061,
+        "maxHp": 2461,
+        "normalHpLossPerMinute": -2.230405072105439,
+        "eliteBurstPct": 7.778174593052022,
+        "efficiency": 1.9937378111640593,
+        "simulation6h": {
+          "kills": 1846,
+          "deaths": 0,
+          "gold": 59553,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 10,
+        "name": "奧林帕斯雲門",
+        "level": 95,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 6312,
+        "maxHp": 2848,
+        "normalHpLossPerMinute": -4.322623831827498,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1852,
+          "deaths": 0,
+          "gold": 59726,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 1959,
+        "maxHp": 1932,
+        "normalHpLossPerMinute": 7.825478473519904,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1023,
+          "deaths": 0,
+          "gold": 37814,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 5766,
+        "maxHp": 2859,
+        "normalHpLossPerMinute": -3.0128503873704444,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 1.9671731789612343,
+        "simulation6h": {
+          "kills": 1821,
+          "deaths": 0,
+          "gold": 63754,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 11,
+        "name": "至福樂土",
+        "level": 105,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 7191,
+        "maxHp": 3323,
+        "normalHpLossPerMinute": -5.413489644207624,
+        "eliteBurstPct": 7.778174593052024,
+        "efficiency": 2,
+        "simulation6h": {
+          "kills": 1852,
+          "deaths": 0,
+          "gold": 64736,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "thief",
+        "profile": "普通整套+0",
+        "def": 2345,
+        "maxHp": 2195,
+        "normalHpLossPerMinute": 7.435681100507279,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.1,
+        "simulation6h": {
+          "kills": 1028,
+          "deaths": 0,
+          "gold": 41040,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "thief",
+        "profile": "傳說整套+7",
+        "def": 6533,
+        "maxHp": 3295,
+        "normalHpLossPerMinute": -3.948941293672056,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9414982319571488,
+        "simulation6h": {
+          "kills": 1807,
+          "deaths": 0,
+          "gold": 68378,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      },
+      {
+        "map": 12,
+        "name": "奧林帕斯星穹聖殿",
+        "level": 115,
+        "base": "thief",
+        "profile": "遠征傳說整套+7",
+        "def": 8148,
+        "maxHp": 3846,
+        "normalHpLossPerMinute": -6.6817717521896975,
+        "eliteBurstPct": 7.778174593052023,
+        "efficiency": 1.9819843242342334,
+        "simulation6h": {
+          "kills": 1844,
+          "deaths": 0,
+          "gold": 69693,
+          "potionReplacementCost": 0,
+          "ticks": 360
+        }
+      }
+    ]
+  }
+}

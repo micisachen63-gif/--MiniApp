@@ -1,3 +1,5 @@
+2026-10-20 打寶體力100／出發20／每小時10，三人原子扣除、舊已出發不追扣、爬塔與試煉／遠征豁免；技能Lv.1–10同書進修與四分之一碎片回收，內容指紋與早讀競爭收據恢復，遠征快照不變；首頁真running遠征專屬GROK動畫／掛機暫停與返回戰況，短隊借位仍顯示，完成恢復。無migration／BOT／怪物調值。讀docs/PARTY_STAMINA_SKILL_MASTERY_HOME_20261020.txt；另有唯讀普通圖與組隊難度盤點docs/MAP_DIFFICULTY_AUDIT_20261020.txt，不宣稱已平衡高階怪物。正式狀態看deployment-records。
+
 2026-10-20 原隊連刷沿用群組圖卡：既有訊息更新第N場、GIF／按鈕／連結；每場戰鬥／獎勵仍獨立。根通知JSON指標與續開原子提交、BOT根鍵序列化／場次rev防回退、dirty重啟／defer競爭處理，舊通知與更新按鈕定位最新場；重新開隊才新卡。8新測試含三場真戰鬥九收據隔離整合，無真TG測訊。讀docs/PARTY_REPEAT_SINGLE_CARD_20261020.txt；先BOT再Worker，無migration，正式狀態看deployment-records。
 
 2026-10-20 爬塔展開區塊修正：5／30秒輪詢不再重建未變的徽記操作面板；保留稱號／塔印／兌換各自展開與收合、裝備選項及聚焦選單，真數據更新仍保留開關，跨角色不延續。隊伍／角色輪詢不停；無經濟／API／DB／BOT變動。真MiniApp隔離390／1280px跨35秒驗收，讀docs/TOWER_PANEL_REFRESH_FIX_20261020.txt；正式狀態看deployment-records。
