@@ -211,7 +211,7 @@ test('idle speed has a single reduced-potency budget and never blindly grants 80
   for (const path of Object.keys(expected)) {
     const c = character(path, { level: 120 }), stats = idleStats(c, standardSet('thief', 120));
     assert.equal(stats.idleNativeDamageMultiplier, 1.08);
-    assert.equal(stats.r, 1);
+    assert.ok(stats.r>=1,'tier growth never weakens standard equipment');assert.ok(stats.g>=1&&stats.g<=1.1,'extra growth efficiency remains bounded independently of native attack speed');
     const baseKills = 2 * (1 + .15 * (Math.min(5, stats.skill.targets) - 1));
     assert.ok(Math.abs(stats.killsPerTick / baseKills - 1.08) < 1e-12);
   }

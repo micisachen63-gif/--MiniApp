@@ -1252,6 +1252,7 @@
       ${e.cannotEquip ? `<div class="warnbox">${esc(e.cannotEquip)}</div>` : ''}
       ${e.relicProtection?`<p class="relictxt">${esc(e.relicProtection)}</p>`:''}
       ${e.expeditionProtection?`<p class="relictxt">${esc(e.expeditionProtection)}</p>`:''}
+      ${e.growth?`<p class="dim">${esc(e.statName)} 組成：基礎 ${fmt(e.growth.base)} ＋ 強化 ${fmt(e.growth.enhancement)}。已計入品階與裝備加成。</p>`:''}
       <p class="dim">星環遠征沿用出發配置；途中換裝用於之後新開的戰鬥。</p>
       <div class="grid2">
         ${e.equipped ? '<button class="btn ghost" data-a="unequip">卸下</button>' : MULTI[e.slot] ? [1, 2].map((p) => `<button class="btn" data-a="equip" data-pos="${p}" ${e.cannotEquip ? 'disabled' : ''}>裝到 ${esc(slotLabel(e.slot, p))}</button>`).join('') : `<button class="btn" data-a="equip" ${e.cannotEquip ? 'disabled' : ''}>${e.grade === 'relic' && !e.bound ? '裝備（綁定）' : '裝備'}</button>`}

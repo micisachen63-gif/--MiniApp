@@ -45,7 +45,7 @@ export const RARITIES = Object.freeze({   // MMORPG color tiers: 白(一般) / �
   supreme: { name: '霸主', color: 'red', colorName: '紅裝', weight: 2, mult: 3.0 },
 });
 export const RARITY_KEYS = Object.freeze(Object.keys(RARITIES));
-export const STAR_RING_GEAR=Object.freeze({version:1,rarityFloor:'legendary',statMult:1.15});
+export const STAR_RING_GEAR=Object.freeze({version:1,rarityFloor:'legendary',statMult:1.25});
 
 // ---- classes (tier 0 + tier 1; deeper tiers are P2/P3) ----------------------------------------
 // skill: cost MP, mult × ATK, targets; passive keys: takenPct, atkPct, expPct, freeCastPct, critPct, killPct, elemPct

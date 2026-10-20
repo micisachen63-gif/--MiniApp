@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-20 裝備成長v2：T4起新增依部位/甲種成長的基礎能力，保留整條+0–15原強化收益；星征由15%改25%，遺物保護/詞條保留、不雙疊。不改物品row或升T補正版本、無migration。v1掛機基準不隨新版抬高，新增效率最多原配置10%且保留2倍總上限。圖例T3霸主+9仍918、T7星征傳說+7由490到1083。31萬組保值/1440效率/128組四職6h配對經濟模型；既有遠征/短戰actor與收據不改，新隊伍用新數值。細節/限制與驗證讀docs/GEAR_GROWTH_V2_20261020.txt，經濟JSON在docs/economy；僅Worker發布，正式狀態看deployment-records。
+
 2026-10-20 管理登入補修：原startapp只開BOT的回報，改普通start短challenge＋私聊8碼批准＋原瀏覽器redeem，備援可複製同一指令；不需創角／MiniApp。批准由service binding再查即時群組管理權，原Cookie/CSRF/一次性收據保留。無migration，0033已安裝勿重跑；乾淨合main後先BOT再Worker，發布看收據。必成卷標籤改明確10px與圖示角落位置，修繼承48px造成撐開。驗證／接手讀docs/ADMIN_LOGIN_TELEGRAM_FIX_20261020.txt。
 
 2026-10-20 管理後台v1：/admin/以MiniApp行為聚合／可解釋洞察及精準角色發獎為核心；Telegram真HMAC＋群組即時管理權、電腦一次核對碼／1h安全Cookie／CSRF；查詢不結算遊戲。發獎白名單、20角色批次、票券確認、原子帳本／入袋／收據與revision、防重與不確定結果恢復，不動當趟遠征／配置。0033僅加管理及聚合表／索引，合main後用worker/tools/admin-console-schema.mjs check/apply精準執行，不跑歷史migration鏈。新增84測試、真API390/1280px隔離驗收；BOT無改動。接手讀docs/ADMIN_CONSOLE_20261020.txt；是否正式上線看deployment-records收據，不能把文件當發布證明。

@@ -1,5 +1,6 @@
 import {collectionBlessing} from './collection-blessings.js';
 import {gearRarity} from './gear-quality.js';
+import {GEAR_GROWTH,tierBaseBonus} from './gear-growth.js';
 import {resistanceRate} from './elements.js';
 import { THIEF_NODES } from './thief-data.js';
 import {affixTotals} from './affixes.js';
@@ -42,27 +43,28 @@ export function enhanceBonus(slot, level, tier = 1) {
 }
 /** Main (+enhance) x rarity; relics protect main rarity and enhance returns.
  * Shared DEF pieces also use the wearer's armor-family defMult. */
-export function itemStat(item, wearerClass = null) {
+export function itemStat(item, wearerClass = null, growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1;
-  const relic=item.grade==='relic',expedition=item.source==='star_ring'&&!relic?STAR_RING_GEAR.statMult:1;
+  const relic=item.grade==='relic',expedition=item.source==='star_ring'&&!relic?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1;
+  const base=item.base_stat+tierBaseBonus(item,growthVersion,wearerClass)*(relic?RELIC.statMult:1);
   const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
-  return { main: Math.round((item.base_stat + enh) * mult * fam * expedition), elem: Math.round((item.element_stat || 0) * mult * expedition) };
+  return { main: Math.round((base + enh) * mult * fam * expedition), elem: Math.round((item.element_stat || 0) * mult * expedition) };
 }
 /** what base_stat means for this slot: ATK (weapon, ring) / DEF (armor slots) / MP (earring) */
 export const mainStatOf = (slot) => (slot === 'weapon' ? 'atk' : SLOT_SPEC[slot]?.main || 'def');
 const FLAT_KEYS = ['atk', 'def', 'hp', 'mp'];
 /** flat secondaries (bonus_json) + relic affix (flat values rarity-scaled) */
-export function itemExtras(item) {
+export function itemExtras(item,growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
-  for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?STAR_RING_GEAR.statMult:1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
+  for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
     if(k==='starRingGearVersion')continue;
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;
   }
   return out;
 }
-export function computeStats(char, equipped = [], level = char.level) {
+export function computeStats(char, equipped = [], level = char.level, growthVersion=GEAR_GROWTH.version) {
   const cls = CLASSES[char.base_class]; const node = nodeFor(char.base_class, char.class_path); const L = level;
   const blessing=collectionBlessing(char);
   const pct = {defPct:0,meleePct:0,rangedPct:0,magicPct:0,mitigationPct:0,mpEfficiencyPct:0,skillHastePct:0,healingPct:0,shieldPct:0,dotPct:0,summonPct:0, atkPct: 0, takenPct: 0, maxHpPct: 0, maxMpPct: 0, mpCostPct: 0, expPct: 0, critPct: 0, freeCastPct: 0, elemPct: 0, extraTargets: 0, lifestealPct: 0, healPerCastPct: 0 };
@@ -72,7 +74,7 @@ export function computeStats(char, equipped = [], level = char.level) {
   let weaponAtk = 0, weaponElem = 0, element = null, armorDef = 0, defFromWeapon = 0; const flat = { atk: 0, def: 0, hp: 0, mp: 0 };
   for (const item of equipped) {
     if (!item || !item.is_equipped) continue;
-    const { main, elem } = itemStat(item, char.base_class); const bonus = parseBonus(item.bonus_json); const x = itemExtras(item);
+    const { main, elem } = itemStat(item, char.base_class,growthVersion); const bonus = parseBonus(item.bonus_json); const x = itemExtras(item,growthVersion);
     const ms = mainStatOf(item.slot);
     if (item.slot === 'weapon') { weaponAtk = main; weaponElem = elem; element = item.element || null; defFromWeapon = bonus.defFromWeaponPct || 0; }
     else {if(item.element in elementResist)elementResist[item.element]+=elem;if (ms === 'def') armorDef += main; else flat[ms] += main;}
@@ -116,7 +118,9 @@ export function standardSet(baseClass, level) {
   return eq;
 }
 export function standardStats(baseClass, path, level) {
-  return computeStats({ base_class: baseClass, class_path: path }, standardSet(baseClass, level), level);
+  // Freeze the published progression denominator. Raising it with equipment would
+  // secretly slow existing players and scale away their upgrade investment.
+  return computeStats({ base_class: baseClass, class_path: path }, standardSet(baseClass, level), level,1);
 }
 
 const clamp = (x, lo, hi) => Math.min(hi, Math.max(lo, x));
@@ -131,7 +135,11 @@ export function gearSpeed(r) {
 }
 export function idleStats(char, equipped, level = char.level) {
   const s = computeStats(char, equipped, level); const std = standardStats(char.base_class, char.class_path, level);
-  const r = s.power / std.power; const g = gearSpeed(r);
+  const r = s.power / std.power;
+  // Better gear improves actual combat, but this balance pass must not multiply
+  // gold/EXP production by the much larger late-tier defensive foundation.
+  const previous=computeStats(char,equipped,level,1),legacyGearEfficiency=gearSpeed(previous.power/std.power);
+  const g = Math.min(gearSpeed(r),legacyGearEfficiency*GEAR_GROWTH.farmingEfficiencyCap,GEAR_SPEED.max);
   const dr = s.def / (s.def + 6 * level + 40);
   // Sustain is restored by the committed damage/cast in idle.js, not a second damage-reduction approximation.
   const hpLoss = monsterPressure(level) * (1 - dr) * s.taken - IDLE.hpRegenPct * s.maxHp;
