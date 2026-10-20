@@ -174,7 +174,11 @@ test('Lv50 foundation roles work at their true level without unlocking high-leve
  const{env,db,id,ids}=await fixture(t,{tier:50,classes:['sword:A','mage:A','thief:A','archer:A','sword:B'],difficulty:'advanced'});
  const s=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json),b=E.simulateStage(s,0,1);
  assert.ok(b.events.some(x=>x.skillId==='role_guard'));assert.ok(b.actors.every(a=>a.level===50));assert.ok(b.actors.every(a=>a.path.length===1));
- const out=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(out.status,'complete');const liveLevel=db.prepare('SELECT level FROM rpg_characters WHERE tg_id=?').get(ids[0]).level;assert.ok(out.me.rewards.equipment.every(e=>e.tier===mapForLevel(liveLevel)));
+ let out;for(let stage=0;stage<6;stage++){
+  out=await R.view(env,id,ids[0],T+(stage+1)*E.STAGE_MS);const liveLevel=db.prepare('SELECT level FROM rpg_characters WHERE tg_id=?').get(ids[0]).level;
+  const reward=JSON.parse(db.prepare('SELECT reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? AND stage=?').get(id,ids[0],stage).reward_json);
+  assert.ok(reward.equipment.length>=1);assert.ok(reward.equipment.every(e=>e.tier===mapForLevel(liveLevel)));assert.ok(out.me.rewards.equipment.every(e=>e.level_req<=liveLevel));
+ }assert.equal(out.status,'complete');
  const mage={...s.actors[1],hp:10,mp:s.actors[1].maxMp},enemy={hp:10000,maxHp:10000,def:1,buffs:[],dots:[],windup:true,interruptible:true};
  const team={actors:[mage],enemy,round:1,cooperation:{}};const heal=E.castExpeditionRole(mage,team,'aid',T);assert.ok(heal.healed>0);assert.equal(mage.level,50);
  await assert.rejects(async()=>E.castExpeditionRole(mage,team,'breach',T),e=>e.code==='role');
