@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "2992f279c2753138675c42732e299ea50350ab0a",
+  "sourceCommit": "2906b51ac9e37e9c91c3a0fc663ae1c177920b54",
   "service": "elf-rpg-api",
-  "productionVersion": "44d9b7c2-33d4-4187-b15a-2f0c837fbd04",
+  "productionVersion": "1808d4d7-ac1c-4039-877a-8471ceea695d",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T03:06:00.538Z",
+  "verifiedAt": "2026-10-20T03:36:20.497Z",
   "runtimeSHA256": {
-    "index.js": "ebeebdffa16a70a44bb622d34521e409291ee17321376985764c611c055d65a9"
+    "index.js": "e228372f9e7d069538863e4aeba831cd6e50a096ae58b1f8f58859576d514d81"
   },
   "source": {
-    "fileCount": 9456,
-    "sha256": "ca709f291d60c7225f4ec3f74a83f7733469b8bfc08e52522b5881ff9ff2c530",
+    "fileCount": 9458,
+    "sha256": "a47d83af9c35f948e0dba4b6e900bc43fe8f4762dcf85d537ebec3ef8e000125",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2467,15 +2467,19 @@
       },
       {
         "file": "worker/public/admin/admin.css",
-        "sha256": "d4280187c98e62385456d61bbcb781dfd5c01391b8cf201a86b507438f1851ca"
+        "sha256": "2df0727b5aaa27fd69849a735e7bd2c42edfa2607b3662ca5bc520b1698c3890"
       },
       {
         "file": "worker/public/admin/admin.js",
-        "sha256": "ba9cda3dfc7029bdc624bdd7f37abcb8d9ad4d3b4db7c7723e0359d72622e22d"
+        "sha256": "3f57e5b8829bf9d622f1e25be08ceaa4f4d674b7c48a533ee1dcfe5b206d369b"
       },
       {
         "file": "worker/public/admin/index.html",
-        "sha256": "f2e9a5e337be76416d8504caa499e7a2d5878d3c363cfa20d1d8715a279c7325"
+        "sha256": "aa6d55b25d05914a53b076a636c540af9aced11600797bd8a85e2596064883f6"
+      },
+      {
+        "file": "worker/public/admin/pairing.js",
+        "sha256": "fb4751cefaa234b005f24f7aebe60300101d2432cbfa68420dde1493cc33b82d"
       },
       {
         "file": "worker/public/advanced-specializations.css",
@@ -2483,7 +2487,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "7f3bec06003ef71764f37c2a27cb08a6e0a7298801d2daa4ca773b2d4652d568"
+        "sha256": "f630f8dbcaad962f192392b74cb90d744632095dda07115b0c14b8d98372512a"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -35303,7 +35307,7 @@
       },
       {
         "file": "worker/public/bag-icons.css",
-        "sha256": "1768117c0b766d03e761e648098b0a6f2a513cfaf016a554aba40047d9b695a6"
+        "sha256": "37a5e36511db7c622510d51b06c298503f343e3efa85ba57249c1830fb78d29a"
       },
       {
         "file": "worker/public/battle.css",
@@ -36019,7 +36023,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "5b573e51244b13bfbce613e77ed59bb4001990c09a25b2c0704b2924df80823e"
+        "sha256": "63e14a23ef43fd1ebb1d9a7383d04e2db4cb8b432732a6eb7b5b86b836574868"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -36051,7 +36055,7 @@
       },
       {
         "file": "worker/public/fate-entry.js",
-        "sha256": "eb05ebad9e179fea8c442c54c6baaa363c1b6ef4a7246d7796a9556b61813e50"
+        "sha256": "ed4e20ea43e9d68fdd29bcf1603489c36290c5eb9b8211c50562d2c5b42f8425"
       },
       {
         "file": "worker/public/fate/app.js",
@@ -36431,7 +36435,7 @@
       },
       {
         "file": "worker/public/fate/fate-gift-ui.js",
-        "sha256": "f112466a5e871627110470d607bb936871f95f053b4d60570ea3ccb276aa06f2"
+        "sha256": "33da51ebc6940cfba9efcb63dcd21a18e9942750ac78f34dbd0aa40b80acb3df"
       },
       {
         "file": "worker/public/fate/formal-ambient-v4.js",
@@ -36463,7 +36467,7 @@
       },
       {
         "file": "worker/public/fate/index.html",
-        "sha256": "8697f09fc0879904e2f82fe965862afedb9aff72a653e4ba2b33ca798dca852d"
+        "sha256": "451619b96e99dfdd3805a20f989d406cc0735d4b592dffcc180af955b2412de7"
       },
       {
         "file": "worker/public/fate/life-comparison.js",
@@ -36791,7 +36795,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "ab21898886c57e837ba1922401e0ca5a053b17aa356ad065c4b7859b589c0d0b"
+        "sha256": "7761e1552ab9383376f4f426f973bf566afb0890b1207979e52a330f5be0194c"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37023,7 +37027,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "b1f866100200f9feac363be005b50d411b2812dae42046a936f0eb03f34c3c71"
+        "sha256": "910f4780c7a1c95753b0720e3622614f349e98dd20442d94d605fc46da9159c8"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -37075,7 +37079,7 @@
       },
       {
         "file": "worker/public/star-ring-rank-rewards.json",
-        "sha256": "52326eeba043ecd605bd3f5a5e7333e9b7b51a228fd381c2814d435d6127f0a8"
+        "sha256": "c1f9ba1768765aae80be5a7d0ed82128d9cc6b3252aa542e9836c05318256ef1"
       },
       {
         "file": "worker/public/star-ring-scenery.js",
@@ -37083,7 +37087,7 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "bc7bfb13164e4a5bd3afe364f31fcf258fd06eab23f602a43cd910f44f3f9b60"
+        "sha256": "6a6a6028eaf6b26b3709680b445a4b8366671af7fbada8bc009335f04a40e3ff"
       },
       {
         "file": "worker/public/star-ring.css",
@@ -37095,7 +37099,7 @@
       },
       {
         "file": "worker/public/styles.css",
-        "sha256": "462134dce78250dff34506626241e02d877da0169b696ff9f30803c31d419469"
+        "sha256": "43fc09302b3d7a1bedbcb63b9e90e5e52d5e8449a249470324bbda3ddd3060d6"
       },
       {
         "file": "worker/public/styles.css.20261010-bag-slot-tabs.bak",
@@ -37431,7 +37435,11 @@
       },
       {
         "file": "worker/src/admin/index.js",
-        "sha256": "334356a7fa66b0929735ef1af51fe3ac595fc7fc1cab7b9d88d2bd4ce489b6ce"
+        "sha256": "99e7f73d3abe174b2a76a8fbc31f1c79b0f194d686c26b8659f2e21456e59873"
+      },
+      {
+        "file": "worker/src/admin/pairing.js",
+        "sha256": "a9254671107d5b67db766ca88759f923dbc69ff255237019baa9044a9c218345"
       },
       {
         "file": "worker/src/app.js",
@@ -37495,7 +37503,7 @@
       },
       {
         "file": "worker/src/game/constants.js",
-        "sha256": "844524b3a436363f382b8051f30cd07ea06aaef186fdb0ffdcf3b78bc48c3c0d"
+        "sha256": "53b6af3e3823a12815695fd1728b0400f1f7d68e0cd9ccfcd64ca85f3b974057"
       },
       {
         "file": "worker/src/game/constants.js.backup-elf-redesign-20261010",
@@ -37659,7 +37667,7 @@
       },
       {
         "file": "worker/src/game/star-ring.js",
-        "sha256": "7cac82d726b73156d860a2f256b109e525531aba3cdecb944318bcdc903be7a2"
+        "sha256": "790a21dbb1387e8b1a3fdeaa7517025e21db0e044d9923246fc024454ede9db7"
       },
       {
         "file": "worker/src/game/stats.js",
@@ -37691,7 +37699,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "6f774c3f0b2976b07b5e5ee4d58e4624678046d02a9e556b44a5f25ffc7f85ef"
+        "sha256": "62fd287a9e8b2c780485652a508294e4dd9c749fd13b2171a42eb7f86814b8d6"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -37841,11 +37849,12 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 151,
+    "verifiedCount": 154,
     "files": [
       "worker/public/admin/admin.css",
       "worker/public/admin/admin.js",
       "worker/public/admin/index.html",
+      "worker/public/admin/pairing.js",
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
@@ -37874,8 +37883,10 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
+      "worker/public/fate/fate-gift-ui.js",
       "worker/public/forge-ritual.css",
       "worker/public/forge-ritual.js",
       "worker/public/game-brand.css",
@@ -37999,7 +38010,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "44d9b7c2-33d4-4187-b15a-2f0c837fbd04",
+        "version_id": "1808d4d7-ac1c-4039-877a-8471ceea695d",
         "percentage": 100
       }
     ],
