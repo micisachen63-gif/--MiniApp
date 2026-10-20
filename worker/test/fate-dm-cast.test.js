@@ -18,9 +18,14 @@ async function fixture(t,{members=['202','303']}={}){
 }
 test('starting a life tags only opted-in group members whose nickname joined the cast, once, without leaking other accounts',async t=>{
  const f=await fixture(t);await f.enable('202');
- const body={requestId:rid(),country:'TW'};await F.start(f.env,'101',body,T);
+ const body={requestId:rid(),country:'TW'};
+ // An opaque life UUID may contain another account's digits without exposing it.
+ const forced=t.mock.method(crypto,'randomUUID',()=> '00000303-0000-4000-8000-000000000000');
+ try{await F.start(f.env,'101',body,T);}finally{forced.mock.restore();}
  const rows=f.all("SELECT * FROM rpg_outbox WHERE kind='fate_cast'");assert.equal(rows.length,1);
- const row=rows[0],payload=JSON.parse(row.payload_json);assert.equal(row.target,'group');assert.equal(payload.accountId,'202');assert.equal(payload.castName,'旅人202');assert.equal(payload.ownerName,'旅人101');assert.ok(payload.role);assert.ok(!JSON.stringify(payload).includes('303'));
+ const row=rows[0],payload=JSON.parse(row.payload_json);assert.equal(row.target,'group');assert.equal(payload.accountId,'202');assert.equal(payload.castName,'旅人202');assert.equal(payload.ownerName,'旅人101');assert.ok(payload.role);assert.match(payload.lifeId,/^[0-9a-f]{32}$/);assert.ok(payload.lifeId.includes('303'));
+ const {lifeId,...identityFields}=payload;assert.ok(!JSON.stringify(identityFields).includes('303'));
+ assert.deepEqual(Object.keys(payload).sort(),['lifeId','accountId','castName','ownerName','thread','role'].sort());
  await F.start(f.env,'101',body,T+1000);assert.equal(f.all("SELECT * FROM rpg_outbox WHERE kind='fate_cast'").length,1);
  assert.equal(f.one('SELECT mentions FROM rpg_fate_social_limits WHERE account_id=?','202').mentions,1);
 });

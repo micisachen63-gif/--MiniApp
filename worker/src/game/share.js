@@ -3,6 +3,8 @@ import { UNBIND, SHARE } from './constants.js';
 import { GameError } from './classes.js';
 import gearNames from '../../public/gear-names.json' with { type: 'json' };
 import {thiefGearArt,isThiefClassGear,thiefGearCardPhoto} from './gear-art.js';
+import {starRingArtId,starRingIcon,starRingCard} from '../../public/star-ring-gear-art.js';
+import {gearRarity} from './gear-quality.js';
 import {THIEF_RELEASE_READY} from './thief-data.js';
 
 const WPN = { sword: 'wpn_sword', greatsword: 'wpn_greatsword', sword_shield: 'wpn_sword_shield', staff: 'wpn_staff', elem_staff: 'wpn_elemental_staff', wand: 'wpn_grimoire', longbow: 'wpn_longbow', compound_bow: 'wpn_composite_bow', crossbow: 'wpn_crossbow' };
@@ -14,6 +16,7 @@ export const CARD_ART = [...Object.values(WPN), ...Object.values(ARMOR_ART).flat
 
 /** same mapping as the Mini App's GEAR_ART (worker/public/app.js) */
 export function gearArt(e) {
+  if(e.source==='star_ring'){const id=starRingArtId(e);return id?'star_ring_'+id:null;}
   // Missing or invalid thief art must never masquerade as a sword/plate fallback.
   if (isThiefClassGear(e)) return thiefGearArt(e)?.artId || null;
   const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
@@ -24,11 +27,13 @@ export function gearArt(e) {
   return ['belt', 'undershirt', 'earring', 'ring'].includes(e.slot) ? e.slot : 'wpn_sword';
 }
 export function gearIconSrc(e){
+ if(e.source==='star_ring')return starRingIcon(e);
  if(isThiefClassGear(e))return thiefGearArt(e)?'/'+thiefGearArt(e).iconSrc:null;
  const art=gearArt(e);return art?'/art/v2/'+art+'.webp':null;
 }
 /** composed item-card JPG (art/cards, built by art-gen/cards.py): painted art + rarity frame + rarity label */
 export const cardPhoto = (e) => {
+  if(e.source==='star_ring')return starRingCard(e,e.grade==='relic'?'relic':gearRarity({...e,element_tier:e.element_tier??e.rarity}));
   if (isThiefClassGear(e)) {
     // Until release art is accepted, BOT captions retain the existing no-photo path.
     if (!THIEF_RELEASE_READY) return null;

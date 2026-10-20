@@ -84,22 +84,22 @@ async function begin(env,p,extra,now){
  Object.assign(p.state,{actors,startedAt:now,endsAt:now+Engine.DURATION,seed:crypto.randomUUID(),results:[],stageTactics:[p.state.tactic]});p.status='running';p.next_at=now+Engine.STAGE_MS;p.state.log.unshift({at:now,text:'星環遠征啟程；伺服器持續推進，離線仍會累積戰果。'});
 }
 export async function action(env,tg,b,now){const id=String(b.partyId||''),op=String(b.action||b.op||'');await advance(env,id,now);
- if(op==='join')await Player.withPlayer(env,String(tg),now);
+ if(op==='join'||op==='join-ready')await Player.withPlayer(env,String(tg),now);
  await mutate(env,id,String(tg),{...b,action:op},now,async(p,extra)=>{
   if(['complete','ended'].includes(p.status))throw new GameError('closed','這趟遠征已結束');
-  if(op==='join'){
+  if(op==='join'||op==='join-ready'){
    if(p.status!=='lobby'||p.expires_at<=now)throw new GameError('started','招募已結束');
-   if(p.members.some(m=>m.char_id===String(tg)&&m.left_at==null))return;
+   if(p.members.some(m=>m.char_id===String(tg)&&m.left_at==null)){if(op==='join-ready')extra.push(env.DB.prepare('UPDATE rpg_star_ring_members SET ready=1 WHERE run_id=? AND char_id=? AND left_at IS NULL').bind(p.id,String(tg)));return;}
    if(p.members.filter(m=>m.left_at==null).length>=5)throw new GameError('full','遠征隊伍已滿');
    const c=await env.DB.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();admit(c,p.state.tier);
-   if(c.party_id||(await daily(env.DB,tg,now)).used)throw new GameError('daily','目前已有戰鬥，或今日已出發過');
+   const admission=await daily(env.DB,tg,now);if(c.party_id||admission.used||admission.busy)throw new GameError('daily','目前已在其他隊伍，或今日已出發過');
    const account=String(c.account_tg_id||tg);
    if(p.members.some(m=>m.account_id===account&&m.char_id!==String(tg)&&m.left_at==null))throw new GameError('account','同帳號只能派一名角色');
    // A player may withdraw an unstarted character and return with another owned
    // character. Historical lobby seats must not hold the UNIQUE owner seat forever.
    const former=p.members.find(m=>m.account_id===account&&m.char_id!==String(tg)&&m.left_at!=null);
    if(former)extra.push(env.DB.prepare('DELETE FROM rpg_star_ring_members WHERE run_id=? AND char_id=? AND left_at IS NOT NULL').bind(p.id,former.char_id),guardStmt(env.DB));
-   extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_members(run_id,char_id,account_id,joined_at) VALUES(?,?,?,?) ON CONFLICT(run_id,char_id) DO UPDATE SET left_at=NULL,ready=0,joined_at=excluded.joined_at').bind(p.id,String(tg),account,now),env.DB.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(presenceKey(tg),p.id,String(tg)));p.state.log.unshift({at:now,text:`${c.name}加入遠征隊伍。`});return;
+   extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_members(run_id,char_id,account_id,joined_at,ready) VALUES(?,?,?,?,?) ON CONFLICT(run_id,char_id) DO UPDATE SET left_at=NULL,ready=excluded.ready,joined_at=excluded.joined_at').bind(p.id,String(tg),account,now,op==='join-ready'?1:0),env.DB.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(presenceKey(tg),p.id,String(tg)));p.state.log.unshift({at:now,text:`${c.name}加入遠征隊伍。`});return;
   }
   const m=member(p,tg);
   if(op==='ready'){

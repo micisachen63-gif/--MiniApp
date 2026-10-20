@@ -20,8 +20,8 @@ export function createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,a
    `隊長：${clean(leader?.name||'旅人',40)}`,
    `同行 ${members.length}／5${lobby?' · 尚缺 '+Math.max(0,5-members.length)+' 人':''}`,
    ...members.map(m=>`${m.ready?'✓':'◇'} ${clean(m.name,40)} · Lv.${Number(m.level)||0}`),'',
-   lobby?'每小時換景、離線持續前進。進入隊伍後加入並準備，五個不同帳號齊聚即可出發。':running?'旅人已踏上星環邊境，點下方查看即時戰況。':'本次招募已關閉，可在遊戲內查看遠征紀錄。'].join('\n').slice(0,1000);
-  const reply_markup={inline_keyboard:[[{text:lobby?'查看／加入隊伍':running?'查看遠征戰況':'查看遠征紀錄',url:`https://t.me/${username}?startapp=ring_${id.slice(5)}`}]]};
+   lobby?'每小時換景、離線持續前進。點「加入並準備」以目前角色直接入隊，五人準備後由隊長出發。':running?'旅人已踏上星環邊境，點下方查看即時戰況。':'本次招募已關閉，可在遊戲內查看遠征紀錄。'].join('\n').slice(0,1000);
+  const reply_markup={inline_keyboard:[[{text:lobby?'加入並準備':running?'查看遠征戰況':'查看遠征紀錄',url:`https://t.me/${username}?startapp=ring_${id.slice(5)}`}]]};
   if(old){
    try{await api.call(old.photo?'editMessageCaption':'editMessageText',{chat_id:old.chatId,message_id:old.messageId,...(old.photo?{caption}:{text:caption}),reply_markup});}
    catch(e){if(!/not modified/i.test(String(e.description||e.message)))throw e;}

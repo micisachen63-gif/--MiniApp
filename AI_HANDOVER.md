@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-20 星征專屬裝備與通知一鍵入隊：共用純解析器接32種512px alpha圖／192張TG品質卡（28張內建image_gen新圖、4張既有星環武器），前後端／交易source／分享一致；各T階共用種類造型，Tier與數值不改。舊ring_招募連結用上次active角色原select直達，以原子join-ready加入並準備，不自動出發／扣次；只邀請lobby本人執行一次，完成私訊／readonly／已出發只讀。新增29案例、390／1280px完整MiniApp真API驗收；普通入口選角保留，手動取消準備關閉重開不被覆蓋。讀docs/STAR_RING_DEDICATED_ART_JOIN_READY_20261020.txt與美術QA／prompts；無migration，先Worker再BOT，發布狀態看deployment-records兩份收據。
+
 2026-10-20 星環遠征裝備收益：每兩小時未結算階段保底1件、完整6件；v3合法菁英5%／首領25%每階段最多額外1件，保留原終章評價額外，全趟最多13件。獨立掉裝RNG、不動戰鬥與其他收益；v1/v2僅新保底、無推測rank死亡。舊已領階段不重發，running剩餘階段即套用；完成DM累計改在配方替換後，與背包一致。最低傳說／當階段EXP後等級／15%優勢延續，created_at為該階段結束。新增11測試、10k條件經濟模型、390／1280px真API畫面驗收。讀docs/STAR_RING_GEAR_YIELD_20261020.txt與經濟JSON；僅Worker、無migration，正式版本看deployment-records。
 
 2026-10-20 星征裝備修正：service終階依角色EXP入帳後等級產裝，最低傳說、同條件普通裝主屬性含強化／元素／flat副屬性+15%；原v1–v3戰鬥／掉落件數與其他收益不變。舊星征裝於withPlayer原子一次補正，保留強化與原詞條key/score，補足Tier詞條格；bonus_json.starRingGearVersion與唯一ledger防再次升階，轉武器保留標記。託管／背景作業／前景短戰延後，無migration。移除泛用胸甲／墜飾覆蓋，背包、TG圖與結算逐件圖用正確職業部位Tier。26新測試、390／1280px各13件真UI驗收。接手讀docs/STAR_RING_GEAR_FIX_20261020.txt；僅Worker發布，正式狀態看deployment-records。

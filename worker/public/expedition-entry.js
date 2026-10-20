@@ -1,5 +1,6 @@
 (() => {
   const original = window.RpgInterface.compose;
+  const consumedInvites=new Set();
   function open(tab) {
     if (document.getElementById('expedition-overlay')) return;
     const focused = document.activeElement;
@@ -19,7 +20,7 @@
     frame.title = '特殊技能、組隊副本與爬塔';
     const frameUrl=new URL('/expedition/index.html',location.origin);frameUrl.searchParams.set('v','20261018-cosmetics1');
     if(tab==='star-ring'){const query=new URLSearchParams(location.search);for(const k of ['ringParty','ringChar']){const value=query.get(k);if(value&&/^[A-Za-z0-9:_-]{1,100}$/.test(value))frameUrl.searchParams.set(k,value);}}
-    if(tab==='star-ring'&&!frameUrl.searchParams.get('ringParty')){const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||'',match=/^ring_([0-9a-f]{32})$/.exec(start);if(match)frameUrl.searchParams.set('ringParty','ring:'+match[1]);}
+    if(tab==='star-ring'&&!frameUrl.searchParams.get('ringParty')){const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||new URLSearchParams(location.search).get('tgWebAppStartParam')||'',match=/^ring_([0-9a-f]{32})$/.exec(start);if(match){frameUrl.searchParams.set('ringParty','ring:'+match[1]);const key=String(window.RpgExpeditionHost?.characterId?.()||'')+':'+match[1];if(!consumedInvites.has(key)){frameUrl.searchParams.set('ringJoin','1');consumedInvites.add(key);}}}
     frameUrl.hash=tab;frame.src=frameUrl.href;
     overlay.append(bar, frame);
     document.getElementById('app').inert = true;
@@ -62,13 +63,13 @@
     window.RpgExpeditionOpen = open;
     original(view, context);
     if (context.tab === 'home') {
-      const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||'';
+      const start=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||new URLSearchParams(location.search).get('tgWebAppStartParam')||'';
       if((start==='star-ring'||/^ring_[0-9a-f]{32}$/.test(start))&&!window.__starRingOpened){window.__starRingOpened=true;setTimeout(()=>open('star-ring'),0);}
       if(/^party_p[\da-f]{15}$/.test(start)&&!window.__partyOpened){window.__partyOpened=true;setTimeout(()=>open(start),0);}
       window.RpgSkillWidgets.mount(view,'battle',open);
     } else if(context.tab==='boss'){
       const group=entry('神戰 · 組隊討伐','集結夥伴，迎戰神話首領。',[['star-ring','星環遠征','五人 · 12 小時'],['dungeons','組隊打寶','30級起'],['trials','轉職試煉','三、四轉'],['tower','組隊爬塔','共同闖關'],['rewards','首領精華','兌換']]);group.classList.add('godwar-entry');const chapter=view.querySelector('.my-chapter');if(chapter)chapter.after(group);else view.prepend(group);
-      const starRingStart=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||'';if((starRingStart==='star-ring'||/^ring_[0-9a-f]{32}$/.test(starRingStart))&&!window.__starRingOpened){window.__starRingOpened=true;setTimeout(()=>open('star-ring'),0);}
+      const starRingStart=window.Telegram?.WebApp?.initDataUnsafe?.start_param||new URLSearchParams(location.search).get('screen')||new URLSearchParams(location.search).get('tgWebAppStartParam')||'';if((starRingStart==='star-ring'||/^ring_[0-9a-f]{32}$/.test(starRingStart))&&!window.__starRingOpened){window.__starRingOpened=true;setTimeout(()=>open('star-ring'),0);}
       window.RpgExpeditionHost.partyList().then(r=>{const active=r.active||r.groupActive;if(!group.isConnected||!active)return;const b=document.createElement('button');b.textContent=r.active?'我的隊伍':'查看本場';b.onclick=()=>open('party_'+active.id);group.querySelector('.expedition-entry-actions').append(b);}).catch(()=>{});
     } else if (context.tab === 'bag') {
       window.RpgSkillWidgets.mount(view,'hero',open);
