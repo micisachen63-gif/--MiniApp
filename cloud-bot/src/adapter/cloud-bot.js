@@ -2,6 +2,7 @@ import {createRpgFlow,RPG_CALLBACK_RE} from './rpg-flow.js';
 import {createOperationApi} from './operation-api.js';
 import {decodeResult} from '../../../worker/public/fate/model.js';
 import {ensureCountryCodes} from '../../../worker/public/fate/country-runtime-v9.js';
+import {createAdminLogin} from './admin-login.js';
 
 export const commands=[{command:'start',description:'✨ 開始星穹旅誌'},{command:'rpg',description:'🎮 開啟冒險與角色'},{command:'group',description:'🌌 加入冒險者之庭'},{command:'help',description:'📖 冒險指引'},{command:'trade',description:'🤝 裝備交易指引'},{command:'duel',description:'⚔️ 挑戰群組玩家'}];
 export function createCloudBot({config,api,store,log=console,rpgApi,renderBattleAnimation,renderPartyCard,fetchImpl=globalThis.fetch,now=()=>Date.now(),outboxClaimLimit=2}){
@@ -28,12 +29,14 @@ export function createCloudBot({config,api,store,log=console,rpgApi,renderBattle
   })();lookups.set(id,lookup);try{return await lookup}finally{lookups.delete(id)}
  };
  const answer=(cq,text='')=>api.call('answerCallbackQuery',{callback_query_id:cq.id,text});
+ const adminLogin=createAdminLogin({config,api,rpgApi,log});
  const flow=createRpgFlow({api,send,answer,log,tgStore:store,inGroup,inUserPrivate:privateChat,isGroupMember,chatId:config.chatId,botUsername:()=>config.botUsername,rpgApi:operations,fetchImpl,mode:'life',appUrl:config.appUrl,mainMiniApp:config.mainMiniApp===true,now,animationRenderer:renderBattleAnimation,renderPartyCard,outboxClaimLimit});
  async function handleUpdate(update){
   const cq=update.callback_query,msg=update.message||cq?.message,user=cq?.from||msg?.from;
   if(!msg||!user||user.is_bot||(!inGroup(msg.chat)&&!privateChat(msg.chat,user)))return;
   if(!config.active){if(cq)return answer(cq,'新庭院正在準備中，原遊戲仍照常運作。');if(/^\/(start|rpg|help|group)(?:@\w+)?(?:\s|$)/i.test(msg.text||''))return send('✨ 歡迎來到《星穹旅誌》\n\n冒險者之庭已點亮星燈，正在準備迎接大家。\n目前仍請從原小精靈遊玩；正式轉移後，同一個 Telegram 帳號可接續原角色與收藏。\n\n🌌 轉移時間會另行通知。',{reply_markup:{inline_keyboard:[[{text:'🌌 冒險者之庭',url:config.inviteLink}]]}},msg.chat.id);return;}
   if(cq){try{await api.call('answerCallbackQuery',{callback_query_id:cq.id},{timeoutMs:3000,retries429:0})}catch(e){if(e.definite&&/query is too old|query ID is invalid/i.test(e.description||e.message)){log.warn('Expired callback ignored before game operation');return {ignored:'expired callback'}}log.warn('Callback acknowledgement unavailable: '+(e.name||'Error'))}}
+  if(await adminLogin.handle({msg,user,cq}))return;
   // Cosmetic public prologue: retain it across the membership gate. No DOB or reward token.
   if(privateChat(msg.chat,user)){
    const start=/^\/start(?:@([A-Za-z0-9_]+))?\s+fate_([a-z0-9]{1,48})$/i.exec(String(msg.text||'').trim());

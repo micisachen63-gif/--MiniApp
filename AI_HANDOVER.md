@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-20 管理登入補修：原startapp只開BOT的回報，改普通start短challenge＋私聊8碼批准＋原瀏覽器redeem，備援可複製同一指令；不需創角／MiniApp。批准由service binding再查即時群組管理權，原Cookie/CSRF/一次性收據保留。無migration，0033已安裝勿重跑；乾淨合main後先BOT再Worker，發布看收據。必成卷標籤改明確10px與圖示角落位置，修繼承48px造成撐開。驗證／接手讀docs/ADMIN_LOGIN_TELEGRAM_FIX_20261020.txt。
+
 2026-10-20 管理後台v1：/admin/以MiniApp行為聚合／可解釋洞察及精準角色發獎為核心；Telegram真HMAC＋群組即時管理權、電腦一次核對碼／1h安全Cookie／CSRF；查詢不結算遊戲。發獎白名單、20角色批次、票券確認、原子帳本／入袋／收據與revision、防重與不確定結果恢復，不動當趟遠征／配置。0033僅加管理及聚合表／索引，合main後用worker/tools/admin-console-schema.mjs check/apply精準執行，不跑歷史migration鏈。新增84測試、真API390/1280px隔離驗收；BOT無改動。接手讀docs/ADMIN_CONSOLE_20261020.txt；是否正式上線看deployment-records收據，不能把文件當發布證明。
 
 2026-10-20 星征專屬裝備與通知一鍵入隊：共用純解析器接32種512px alpha圖／192張TG品質卡（28張內建image_gen新圖、4張既有星環武器），前後端／交易source／分享一致；各T階共用種類造型，Tier與數值不改。舊ring_招募連結用上次active角色原select直達，以原子join-ready加入並準備，不自動出發／扣次；只邀請lobby本人執行一次，完成私訊／readonly／已出發只讀。新增29案例、390／1280px完整MiniApp真API驗收；普通入口選角保留，手動取消準備關閉重開不被覆蓋。讀docs/STAR_RING_DEDICATED_ART_JOIN_READY_20261020.txt與美術QA／prompts；無migration，先Worker再BOT，發布狀態看deployment-records兩份收據。

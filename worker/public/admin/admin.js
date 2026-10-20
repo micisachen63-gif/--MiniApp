@@ -1,3 +1,5 @@
+import { adminLoginCommand, adminLoginLink } from './pairing.js?v=20261020b';
+
 const $ = (selector, root = document) => root.querySelector(selector);
 const $$ = (selector, root = document) => [...root.querySelectorAll(selector)];
 const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
@@ -220,12 +222,34 @@ async function renderLogin(message = '') {
     const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
     const challengeValue = [...new Uint8Array(digest)].map(byte => byte.toString(16).padStart(2, '0')).join('');
     if (epoch !== S.epoch || S.admin) return;
-    $('#login-action').innerHTML = `<a class="button primary" id="browser-login" target="_blank" rel="noopener noreferrer" href="https://t.me/StarJournalRpgBot?startapp=admin_${challengeValue}">開啟 Telegram 驗證 <span aria-hidden="true">↗</span></a><div id="browser-code" hidden><span class="auth-code-label">在 Telegram 核對此代碼</span><div class="auth-code">${escapeHtml(challengeValue.slice(0, 8).toUpperCase())}</div><p class="small" id="login-poll-status" role="status">等待你在 Telegram 明確批准，最多等候 5 分鐘。</p></div>`;
-    $('#browser-login').addEventListener('click', () => {
+    const command = adminLoginCommand(challengeValue);
+    $('#login-action').innerHTML = `<a class="button primary" id="browser-login" target="_blank" rel="noopener noreferrer" href="${escapeHtml(adminLoginLink(challengeValue))}">到 Telegram 取得驗證按鈕 <span aria-hidden="true">↗</span></a><ol class="auth-steps"><li>開啟機器人私訊；若出現「開始／Start」，請先點一下。</li><li>核對私訊與此頁的 8 碼相同，再按私訊中的「批准登入」。</li><li>回到這個瀏覽器，管理台會自動開啟。</li></ol><div id="browser-code" hidden><span class="auth-code-label">在 Telegram 核對此代碼</span><div class="auth-code">${escapeHtml(challengeValue.slice(0, 8).toUpperCase())}</div><p class="small" id="login-poll-status" role="status">等待你在 Telegram 明確批准，最多等候 5 分鐘。</p></div><details class="auth-fallback" id="login-fallback"><summary>Telegram 沒出現驗證訊息？</summary><p class="small">複製下方指令，貼到 @StarJournalRpgBot 的私訊並送出，再核對代碼及按「批准登入」。請勿貼到群組或轉傳他人。</p><label class="auth-code-label" for="login-command">本次登入指令（可直接選取複製）</label><textarea id="login-command" class="mono auth-command" readonly rows="3" spellcheck="false">${escapeHtml(command)}</textarea><button type="button" class="button" id="copy-login-command">複製登入指令</button><p class="small" id="copy-login-status" role="status"></p></details>`;
+    const isCurrentLogin = () => epoch === S.epoch && !S.admin && $('#login-command')?.value === command;
+    const beginPolling = () => {
+      if (!isCurrentLogin()) return;
+      $('#browser-code').hidden = false;
+      // Opening Telegram and copying the fallback belong to the same attempt.
+      // Repeated clicks must not replace its verifier or extend its deadline.
       if (S.poll) return;
       S.poll = { verifier, challenge: challengeValue, deadline: Date.now() + 5 * 60 * 1000, epoch };
-      $('#browser-code').hidden = false;
       pollBrowserLogin();
+    };
+    $('#browser-login').addEventListener('click', beginPolling);
+    $('#login-fallback').addEventListener('toggle', event => { if (event.currentTarget.open) beginPolling(); });
+    $('#login-command').addEventListener('focus', beginPolling);
+    $('#copy-login-command').addEventListener('click', async () => {
+      beginPolling();
+      try {
+        if (!navigator.clipboard?.writeText) throw new Error('clipboard_unavailable');
+        await navigator.clipboard.writeText(command);
+        if (!isCurrentLogin()) return;
+        $('#copy-login-status').textContent = '已複製，請貼到機器人私訊並送出。';
+      } catch {
+        if (!isCurrentLogin()) return;
+        $('#login-command').focus();
+        $('#login-command').select();
+        $('#copy-login-status').textContent = '瀏覽器未允許自動複製。指令已選取，請自行複製後貼到機器人私訊並送出。';
+      }
     });
   } catch {
     if (epoch !== S.epoch) return;
@@ -249,7 +273,7 @@ async function pollBrowserLogin() {
     if (poll !== S.poll || poll.epoch !== S.epoch) return;
     if (result.admin) { stopLoginPolling({ forget: true }); await enterSession(result.admin); return; }
     const status = $('#login-poll-status');
-    if (status) status.textContent = '等待 Telegram 批准。請確認兩邊代碼相同，再回到這個視窗。';
+    if (status) status.textContent = '等待 Telegram 私訊中的「批准登入」。請核對兩邊 8 碼相同，批准後回到這個視窗。';
   } catch (error) {
     if (poll !== S.poll || poll.epoch !== S.epoch) return;
     if ([401, 409].includes(error.status)) {

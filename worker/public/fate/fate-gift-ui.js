@@ -1,5 +1,5 @@
 export const GIFT_ART='/art/ui/command-collect-20261012.webp';
-const pending=new Map(),names={guaranteed_scroll_w:'星輝武器必成卷',guaranteed_scroll_a:'星輝防具必成卷',scroll_w:'武器強化卷',scroll_a:'防具強化卷'};
+const pending=new Map(),names={guaranteed_scroll_w:'必過的武器強化卷',guaranteed_scroll_a:'必過的防具強化卷',scroll_w:'武器強化卷',scroll_a:'防具強化卷'};
 const safeStorage=()=>{try{return globalThis.localStorage;}catch{return null;}};
 const changed=()=>Object.assign(Error('目前角色已改變，請關閉後重新開啟星輝匣。'),{code:'character_changed'});
 export function createFateGiftController(host,{storage=safeStorage(),uuid=()=>crypto.randomUUID()}={}){

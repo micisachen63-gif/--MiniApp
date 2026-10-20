@@ -37,6 +37,7 @@ import * as PK from './services/pk.js';
 import { handleApp, APP_GRANT_MS, metaView } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
+import {approveFromBot} from './admin/pairing.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 const fail = (code, message, status = 400) => json({ ok: false, error: code, message }, status);
@@ -68,6 +69,7 @@ function tradeAct(fn) {
 }
 
 const routes = {
+  'POST /rpg/admin/login/approve': approveFromBot,
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),
   'POST /rpg/exchange/mine':(env,b)=>EXCHANGE.mine(env,tgOf(b),b),
