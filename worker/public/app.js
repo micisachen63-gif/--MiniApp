@@ -1252,6 +1252,7 @@
       ${e.cannotEquip ? `<div class="warnbox">${esc(e.cannotEquip)}</div>` : ''}
       ${e.relicProtection?`<p class="relictxt">${esc(e.relicProtection)}</p>`:''}
       ${e.expeditionProtection?`<p class="relictxt">${esc(e.expeditionProtection)}</p>`:''}
+      ${e.source === 'star_ring' && e.sellNote ? `<p class="dim">${esc(e.sellNote)}</p>` : ''}
       ${e.growth?`<p class="dim">${esc(e.statName)} 組成：基礎 ${fmt(e.growth.base)} ＋ 強化 ${fmt(e.growth.enhancement)}。已計入品階與裝備加成。</p>`:''}
       <p class="dim">星環遠征沿用出發配置；途中換裝用於之後新開的戰鬥。</p>
       <div class="grid2">
@@ -1845,7 +1846,7 @@
   }
   async function sellGearItem(e) {
     if (e.sellBlock) return toast(e.sellBlock, true);
-    if (!(await confirmSheet('🏪 賣給商店', `確定出售「${esc(e.name)}」？<br><b>售價：💰 ${fmt(e.sellPrice)}</b><br><span class="muted">售價為同部位、同階裝備基礎商店價格的三分之一。出售後無法取回${e.grade === 'relic' ? '，請確認不再需要這件遺物' : ''}。</span>`, '出售', true))) return;
+    if (!(await confirmSheet('🏪 賣給商店', `確定出售「${esc(e.name)}」？<br><b>售價：💰 ${fmt(e.sellPrice)}</b><br><span class="muted">${esc(e.sellNote || '售價為同部位、同階裝備基礎商店價格的三分之一。')}出售後無法取回${e.grade === 'relic' ? '，請確認不再需要這件遺物' : ''}。</span>`, '出售', true))) return;
     closeSheet();
     return act('sell-gear', { itemId: e.id }, (j) => `已出售 ${j.result.itemName}，獲得 💰${fmt(j.result.gold)}`);
   }
@@ -1903,7 +1904,7 @@
         <button class="btn" data-m="trade" ${e.tradeBlock ? 'disabled' : ''}>🤝 交易</button>${e.tradeBlock ? `<div class="why">${esc(e.tradeBlock)}（請先卸下裝備／解契）</div>` : '<div class="why">輸入對方角色名稱，開啟交易視窗並先放入這件裝備</div>'}
         <button class="btn ghost" data-m="list" ${e.tradeBlock ? 'disabled' : ''}>🏷️ 掛賣到交易所</button>
         ${e.bound ? `<button class="btn ghost" data-m="unbind" ${ub ? 'disabled' : ''}>🔓 解除綁定（需 ${e.unbindCost} 張・持有 ${have}）</button>${ub ? `<div class="why">${esc(ub)}</div>` : have < e.unbindCost ? '<div class="why">解契卷不夠 — 商店「📜 捲軸」500 金／張</div>' : ''}` : ''}
-        ${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
+        ${e.source === 'star_ring' && e.sellNote ? `<p class="muted">${esc(e.sellNote)}</p>` : ''}${e.sellBlock ? `<button class="btn ghost" disabled title="${esc(e.sellBlock)}">🔒 ${esc(e.sellBlock)}</button>` : `<button class="btn red" data-m="sell">🏪 賣給商店（${fmt(e.sellPrice)} 金）</button>`}
         <button class="btn ghost" data-m="detail">🔍 詳細／強化</button><button class="btn ghost" data-m="x">關閉</button></div>`);
     c.querySelectorAll('[data-m]').forEach((b) => { b.onclick = () => { const m = b.dataset.m; if (m === 'x') return closeSheet(); if (m === 'detail') return itemSheet(id); if (m === 'share') return shareItem(e); if (m === 'trade') return tradeGear(e); if (m === 'list') return listGear(e); if (m === 'unbind') return unbindItem(e); if (m === 'sell') return sellGearItem(e); }; });
   }

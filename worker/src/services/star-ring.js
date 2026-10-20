@@ -6,7 +6,7 @@ import {GameError} from '../game/classes.js';
 import {taipeiDay} from '../game/time.js';
 import {applyExp} from '../game/idle.js';
 import {computeStats} from '../game/stats.js';
-import {makeStarRingGear,starRingEquipmentReward,starRingGearDropPlan,STAR_RING_GEAR_YIELD,STAR_RING_GEAR} from '../game/star-ring-gear.js';
+import {makeStarRingGear,starRingEquipmentReward,starRingGearDropPlan,starRingGearCatchup,STAR_RING_GEAR_YIELD,STAR_RING_GEAR} from '../game/star-ring-gear.js';
 import {gearIconSrc} from '../game/share.js';
 import {rngFor} from '../game/rng.js';
 import {equippedAura} from '../game/star-ring-cosmetics.js';
@@ -136,7 +136,9 @@ async function advance(env,id,now){
   for(const m of p.members.filter(m=>m.left_at==null)){
    const before=await loadPlayer(env.DB,m.char_id,env);if(!before)continue;
    const foreground=before.char.party_id!==p.id;if(foreground){const short=await env.DB.prepare("SELECT 1 FROM rpg_parties sp JOIN rpg_party_members sm ON sm.party_id=sp.id WHERE sp.id=? AND sm.char_id=? AND sp.status='combat'").bind(before.char.party_id||'',m.char_id).first();if(!short)throw new GameError('conflict','角色遠征狀態剛更新',409);}
-   const after=clonePlayer(before),actor=s.actors.find(a=>a.id===m.char_id),entries=[],total=await rewards(env.DB,p.id,m.char_id);
+   const after=clonePlayer(before),actor=s.actors.find(a=>a.id===m.char_id),entries=[];
+   const history=(await rows(env.DB,'SELECT stage,reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? ORDER BY stage',p.id,m.char_id)).map(row=>({stage:row.stage,reward:parse(row.reward_json)}));
+   const total=history.reduce((sum,row)=>addTotal(sum,row.reward),{exp:0,items:{},equipment:[]});
    for(const f of fresh){
     const old=await env.DB.prepare('SELECT 1 FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? AND stage=?').bind(p.id,m.char_id,f.index).first();if(old)continue;
     const r=Engine.stageReward(s,actor,f.index,f.result);after.char.exp+=r.exp;
@@ -144,7 +146,10 @@ async function advance(env,id,now){
     // live character, whose equipment may have changed during the expedition.
     const liveHp=after.char.hp,liveMp=after.char.mp;applyExp(after.char,level=>computeStats(after.char,after.equipment.filter(e=>e.is_equipped),level));if(foreground){after.char.hp=liveHp;after.char.mp=liveMp;}
     r.gearDrops=starRingGearDropPlan(s,actor,f.index,f.result,r.equipment);
-    r.equipment=starRingEquipmentReward(s,actor,f.index,r.equipment,after.char.level,f.result);addTotal(total,r);
+    r.equipment=starRingEquipmentReward(s,actor,f.index,r.equipment,after.char.level,f.result);
+    const topup=starRingGearCatchup(s,actor,f.index,history,after.char.level);
+    if(topup.catchup.length){r.gearDrops.catchup=topup.catchup;r.equipment.push(...topup.equipment);}
+    history.push({stage:f.index,reward:r});addTotal(total,r);
     for(const[k,v]of Object.entries(r.items))after.inv[k]=(after.inv[k]||0)+v;
     after.equipment.push(...r.equipment);entries.push({event_id:`star-ring:${p.id}:${m.char_id}:${f.index}`,tg_id:m.char_id,type:'星環遠征',exp_delta:r.exp,note:JSON.stringify({stage:f.index,grade:r.grade,items:r.items,...(r.bonus?{bonus:r.bonus}:{})})});
     extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_rewards(run_id,char_id,stage,reward_json,created_at) VALUES(?,?,?,?,?)').bind(p.id,m.char_id,f.index,JSON.stringify(r),now));

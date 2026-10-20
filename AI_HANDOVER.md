@@ -1,5 +1,7 @@
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
+2026-10-20 遠征裝備件數v2：每2h保底8件、完整48–55件，最低傳說／25%能力優勢不變。新掉裝starRingYieldVersion=2回收為原基準18%，舊裝／補給所兌換不改，轉路線保留來源價版且不進戰鬥pct。running v1–v3下次階段新收據補足已領舊階段缺少的保底、穩定ID／catchup防重，原收據／已出售物品／戰鬥不回寫，完成與離隊歷史排除。批賣支援160字長ID。大廳／集結／須知／販售說明同步。10k件數／4級各1k金幣模型、11新相容測試與390/1280px真隔離API驗收見docs/STAR_RING_VOLUME_V2_20261020.txt，模型在docs/economy。僅Worker、無migration；正式狀態看deployment-records。
+
 2026-10-20 裝備成長v2：T4起新增依部位/甲種成長的基礎能力，保留整條+0–15原強化收益；星征由15%改25%，遺物保護/詞條保留、不雙疊。不改物品row或升T補正版本、無migration。v1掛機基準不隨新版抬高，新增效率最多原配置10%且保留2倍總上限。圖例T3霸主+9仍918、T7星征傳說+7由490到1083。31萬組保值/1440效率/128組四職6h配對經濟模型；既有遠征/短戰actor與收據不改，新隊伍用新數值。細節/限制與驗證讀docs/GEAR_GROWTH_V2_20261020.txt，經濟JSON在docs/economy；僅Worker發布，正式狀態看deployment-records。
 
 2026-10-20 管理登入補修：原startapp只開BOT的回報，改普通start短challenge＋私聊8碼批准＋原瀏覽器redeem，備援可複製同一指令；不需創角／MiniApp。批准由service binding再查即時群組管理權，原Cookie/CSRF/一次性收據保留。無migration，0033已安裝勿重跑；乾淨合main後先BOT再Worker，發布看收據。必成卷標籤改明確10px與圖示角落位置，修繼承48px造成撐開。驗證／接手讀docs/ADMIN_LOGIN_TELEGRAM_FIX_20261020.txt。

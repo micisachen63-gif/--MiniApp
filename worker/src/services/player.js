@@ -274,7 +274,7 @@ export function openGacha(work,{now,db},{type,requestId},rng=rngDefault()){
   return {extra,ledger:[{event_id:eventId('gacha-open',work.char.tg_id,requestId),tg_id:work.char.tg_id,type:'開啟轉蛋',item:key,item_delta:-1,note:JSON.stringify({itemId:item.id,name:item.name,tier:item.tier,rarity})}],result:{item,rarity,type}};
 }
 
-/** Sell unequipped gear, including relics, for one third of its base shop price. */
+/** Sell unequipped gear at its server-authoritative buyback price. */
 export function sellGear(work, { now }, { itemId, requestId }) {
   const i = work.equipment.findIndex((e) => e.id === itemId);
   if (i < 0) throw new GameError('not_found', '找不到這件裝備');
@@ -288,7 +288,7 @@ export function sellGear(work, { now }, { itemId, requestId }) {
 export const MAX_SELL_BATCH = 50;
 /** Validate every chosen item before committing one sale; a stale/locked item rejects the entire selection. */
 export async function sellGearBatch(work, { db, lockedEquipment = [] }, { itemIds, requestId }) {
-  if (!Array.isArray(itemIds) || !itemIds.length || itemIds.length > MAX_SELL_BATCH || itemIds.some(id => typeof id !== 'string' || !id || id.length > 64) || new Set(itemIds).size !== itemIds.length) {
+  if (!Array.isArray(itemIds) || !itemIds.length || itemIds.length > MAX_SELL_BATCH || itemIds.some(id => typeof id !== 'string' || !id || id.length > 160) || new Set(itemIds).size !== itemIds.length) {
     throw new GameError('selection', `請勾選 1–${MAX_SELL_BATCH} 件不同的裝備`);
   }
   const tg = String(work.char.tg_id), receipt = eventId('sell-gear-batch', tg, requestId);
