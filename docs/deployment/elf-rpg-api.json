@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "fc8b09d51eb0ce72fe7a8d72eef1727985991c59",
+  "sourceCommit": "4e7f45273a19708f82b2149dc6b99c376717e10b",
   "service": "elf-rpg-api",
-  "productionVersion": "cd735e87-028f-472a-930d-498e26657ffb",
+  "productionVersion": "76fceca6-a5c9-4250-8966-949e0f3eae5f",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T08:46:13.470Z",
+  "verifiedAt": "2026-10-20T09:00:52.977Z",
   "runtimeSHA256": {
-    "index.js": "d694374085d906c3e3b6d009e95ead3ac528fbfd323c527d2b7dcbc54659ea76"
+    "index.js": "c647ff781024346c733cc6c00cddf765cf44f2e7e80511f812aa03b980496deb"
   },
   "source": {
     "fileCount": 9477,
-    "sha256": "4c58a1b173151b9aeb8f108375f0d4df634ccd3893dc02e0476d9a3009779f6f",
+    "sha256": "0eb08a117e3aa9dbffaa66c980c25f788368db2d82038d12e080793a14e77e6a",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -37619,7 +37619,7 @@
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "616f15b69600ae6c1630b91d03f9a819cb7275ca2048602cf1414d889a3b79a3"
+        "sha256": "c4a435ecc110b86640c9bb6b9cec1c774e97c11711d8128a907faa77b5318985"
       },
       {
         "file": "worker/src/game/lineage.js",
@@ -37691,7 +37691,7 @@
       },
       {
         "file": "worker/src/game/special-idle.js",
-        "sha256": "9527fbf66c9fb38d9bcb2b7ea3ebe157be0be1ad47b0abd7a4e96ebc1b2bccf8"
+        "sha256": "569100df99b7a2af4f73df7caba581321a15b85da50cc2ac3a074f7cdcb3b0c1"
       },
       {
         "file": "worker/src/game/special.js",
@@ -37925,7 +37925,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 155,
+    "verifiedCount": 150,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -37934,8 +37934,6 @@
       "worker/public/art/blessed-announcement-20261014/armor.png",
       "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_epic.jpg",
       "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B1_m_portrait.png",
-      "worker/public/art/expedition-away-20261020/loop.mp4",
-      "worker/public/art/expedition-away-20261020/poster.webp",
       "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_m.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -37959,9 +37957,6 @@
       "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
-      "worker/public/expedition/index.html",
-      "worker/public/expedition/live.js",
-      "worker/public/expedition/progression.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38087,7 +38082,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "cd735e87-028f-472a-930d-498e26657ffb",
+        "version_id": "76fceca6-a5c9-4250-8966-949e0f3eae5f",
         "percentage": 100
       }
     ],
