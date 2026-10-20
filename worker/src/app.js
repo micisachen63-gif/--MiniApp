@@ -15,6 +15,7 @@ import * as P from './services/player.js';
 import { history as exchangeHistory } from './services/market-exchange-history.js';
 import { activeCharacterId, listAccountCharacters, selectAccountCharacter } from './accounts.js';
 import {nodeFor} from './game/stats.js';
+import {recordBehavior} from './admin/behavior.js';
 import {lineageNodes} from './game/lineage.js';
 
 export const APP_ACTIONS = Object.freeze({
@@ -121,6 +122,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   let body = {};
   try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
   const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;
+  const finish=async result=>{if(result?.ok!==false)await recordBehavior(env,tg,action,body,now);return json(result);};
   if(['fate/gifts/claim','fate/gifts/open'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/start','fate/choice','fate/keep','fate/profile/save','fate/profile/delete'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['guardian/summon','guardian/fuse','guardian/activate','guardian/lock','guardian/unbind','guardian/share','guardian/assist','guardian/shop/sell'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
@@ -135,6 +137,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
     safe.requestId=body.requestId.toLowerCase();
   }
   if (action === 'characters') return json({ ok: true, characters: await listAccountCharacters(env.DB, tg), maxCharacters: 4 });
+  if(action==='behavior/visit'){await recordBehavior(env,tg,action,body,now);return json({ok:true});}
   if (action === 'create' && !auth.dev) {
     const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
     // The short-lived admission pass gates the first character only. Existing
@@ -145,12 +148,12 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
   if (action === 'create') {
     await P.createCharacter(env, { ...safe, tgId: tg }, now);
-    return json({ ok: true, characters: await listAccountCharacters(env.DB, tg), maxCharacters: 4 });
+    return finish({ ok: true, characters: await listAccountCharacters(env.DB, tg), maxCharacters: 4 });
   }
   if (action === 'select') {
     const charId = await selectAccountCharacter(env, tg, body.charId, now);
     const selected = await routes['POST /rpg/me'](env, { tgId: charId }, now);
-    return json({ ...selected, characters: await listAccountCharacters(env.DB, tg), selected: charId });
+    return finish({ ...selected, characters: await listAccountCharacters(env.DB, tg), selected: charId });
   }
   safe.tgId = await activeCharacterId(env.DB, tg);
   if (body.selectedCharacterId && String(body.selectedCharacterId) !== String(safe.tgId))
@@ -173,9 +176,9 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
     const win = attackWindow({ started_at: (await env.DB.prepare('SELECT started_at FROM rpg_boss_instances WHERE id = ?').bind(bossId).first())?.started_at || now }, now);
     // ask 小精靈 to refresh the group boss card (throttled on its side); a kill already queues boss_end
     if (!r.killed) await env.DB.batch([outboxStmt(env.DB, { dedupe: `boss_upd:${bossId}:${character}:${win}`, target: 'group', kind: 'boss_update', payload: { bossId } }, now)]);
-    return json({ ok: true, result: r, ...(await bossFor(env, character, now)) });
+    return finish({ ok: true, result: r, ...(await bossFor(env, character, now)) });
   }
   const path = APP_ACTIONS[action]; if (!path) return fail('not_found', 'not found', 404);
-  return json(await routes[`POST ${path}`](env, safe, now));
+  return finish(await routes[`POST ${path}`](env, safe, now));
 }
 export { GameError };

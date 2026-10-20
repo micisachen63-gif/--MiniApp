@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="color-scheme" content="dark">
+  <meta name="theme-color" content="#0c1421">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <title>星穹旅誌 · 觀星管理台</title>
+  <link rel="stylesheet" href="/admin/admin.css?v=20261020a">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <script type="module" src="/admin/admin.js?v=20261020a"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳至主要內容</a>
+  <div class="ambient" aria-hidden="true"></div>
+  <section id="auth" class="auth-shell" aria-labelledby="auth-title">
+    <div class="auth-brand" aria-hidden="true">✧</div>
+    <p class="eyebrow">STAR JOURNAL · OBSERVATORY</p>
+    <h1 id="auth-title">星穹旅誌<span>觀星管理台</span></h1>
+    <p class="auth-intro">讀懂旅人的足跡，讓每一次營運決策都有依據。</p>
+    <div id="auth-content" class="auth-panel"></div>
+    <p class="auth-footnote">僅限已授權管理員 · 發獎須逐次確認並留下稽核紀錄</p>
+  </section>
+
+  <div id="app" class="app-shell" hidden>
+    <aside class="sidebar" aria-label="管理導覽">
+      <a href="/admin/" class="brand"><span class="brand-mark" aria-hidden="true">✧</span><span>星穹旅誌<small>觀星管理台</small></span></a>
+      <div class="sidebar-section">營運觀測</div>
+      <nav id="navigation">
+        <button type="button" data-tab="overview" class="nav-item" aria-current="page"><span aria-hidden="true">◈</span>營運總覽</button>
+        <button type="button" data-tab="audience" class="nav-item"><span aria-hidden="true">◎</span>旅人洞察</button>
+        <button type="button" data-tab="players" class="nav-item"><span aria-hidden="true">♙</span>玩家查詢</button>
+        <div class="sidebar-section">管理作業</div>
+        <button type="button" data-tab="rewards" class="nav-item"><span aria-hidden="true">◇</span>獎勵發放<span id="nav-selected" class="nav-count" hidden>0</span></button>
+        <button type="button" data-tab="teams" class="nav-item"><span aria-hidden="true">⚑</span>隊伍監看</button>
+        <button type="button" data-tab="audit" class="nav-item"><span aria-hidden="true">≡</span>操作紀錄</button>
+      </nav>
+      <div class="sidebar-bottom"><span class="status-dot"></span>正式環境 · 查詢與發獎分離<p>一般查詢不會改動角色、隊伍或戰鬥進度。</p></div>
+    </aside>
+    <div class="workspace">
+      <header class="topbar">
+        <div class="breadcrumb"><span>營運中心</span><span aria-hidden="true">/</span><strong id="breadcrumb-title">營運總覽</strong></div>
+        <div class="admin-menu"><span id="admin-name"></span><span class="role-pill" id="admin-role"></span><button type="button" id="logout" class="text-button">登出</button></div>
+      </header>
+      <main id="main" tabindex="-1">
+        <div id="notice" class="notice" role="status" hidden></div>
+        <div class="page-heading"><div><p class="eyebrow" id="page-kicker">THE BIG PICTURE</p><h1 id="page-title">營運總覽</h1><p id="page-subtitle">從旅人的行為看見變化，找到值得關注的下一步。</p></div><div id="page-actions"></div></div>
+        <div id="view" aria-live="polite" aria-busy="false"></div>
+      </main>
+      <footer class="page-footer"><span>星穹旅誌 · 管理員專用</span><span id="session-expiry"></span></footer>
+    </div>
+  </div>
+  <dialog id="modal" aria-labelledby="modal-title"><div id="modal-content"></div></dialog>
+  <div id="toast" class="toast" role="status" hidden></div>
+</body>
+</html>

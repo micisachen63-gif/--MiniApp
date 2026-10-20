@@ -36,6 +36,7 @@ import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
 import { handleApp, APP_GRANT_MS, metaView } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
+import {handleAdmin} from './admin/index.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 const fail = (code, message, status = 400) => json({ ok: false, error: code, message }, status);
@@ -356,6 +357,7 @@ export async function runCron(env, now) {
 
 export async function handle(request, env) {
   const url = new URL(request.url);
+  if(url.pathname.startsWith('/admin/api/'))return handleAdmin(request,env);
   const publicCode=/^\/fate\/r\/([^/]+)$/.exec(url.pathname)?.[1],publicCountry=countryFromCode(publicCode);if(publicCountry)await ensureCountryPack(publicCountry);
   const publicStory=fatePublic(request);if(publicStory)return publicStory;
   if (request.method === 'GET' && url.pathname === '/health') return json({ ok: true, service: 'elf-rpg-api' });
