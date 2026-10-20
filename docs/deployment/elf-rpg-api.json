@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "c63f1b31440850483b79e04fa924c8d4e9872725",
+  "sourceCommit": "816a45f226dfca7c38780c5cc131f030ef56f67a",
   "service": "elf-rpg-api",
-  "productionVersion": "98db3aae-1d27-4555-bcc9-2275119bdf5a",
+  "productionVersion": "5e04d2b9-4960-4371-89f2-2b16500abab9",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T04:43:37.899Z",
+  "verifiedAt": "2026-10-20T06:07:00.988Z",
   "runtimeSHA256": {
-    "index.js": "0916c1e273b66c096df223ece5a827cb9f9abb39cf3124ce21e6b3682e32bee3"
+    "index.js": "8905befd58ef6af34cb8881aa911d67ee410eecf38b61c73e77e53befdd75098"
   },
   "source": {
-    "fileCount": 9459,
-    "sha256": "6e9cc196624e27711e02e138d36e4cfbb0b7c37c35c77d9b644f8441ffb8b5cf",
+    "fileCount": 9460,
+    "sha256": "6a591f0af7ff3d6202a781127f795006e8f9677af5e934e4c8049d733dfc9e59",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2487,7 +2487,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "01d68e6a1faea7dd117376993989a7e9f7e9e14001c1744cefac6b13e24a00e9"
+        "sha256": "e231046821be51d7fd9150dd807dcd936c5062ab29b2430b96d116a2452fd139"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -35331,7 +35331,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "1930db0a470dc75ce22fee1d7a0271132c09895cd0111799491699bac8d278a2"
+        "sha256": "6f4f0b2e2e46093258fe43915985e86c1270307d808ca3f178471fac59398757"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -35991,7 +35991,7 @@
       },
       {
         "file": "worker/public/expedition/catalogue.js",
-        "sha256": "180f4a0099622d29b351b3b2cc42c2af55ba4ad6a37aefb0b278061db2b67bfc"
+        "sha256": "fbd997857d27f6a6b3b10c24ac4ded486b4d728a943dacd6220f14e96f863f73"
       },
       {
         "file": "worker/public/expedition/combat-playback.css",
@@ -35999,7 +35999,7 @@
       },
       {
         "file": "worker/public/expedition/combat-playback.js",
-        "sha256": "6e3360968d51d60dd2a19b4ba163a552f5ca43bf4e1d50685fd7a1e784d96251"
+        "sha256": "583bc08c6ed43f25e7df8ab54bf1167f2b614fcb3ce7938e1b0a66b250990be6"
       },
       {
         "file": "worker/public/expedition/demo.html",
@@ -36011,7 +36011,7 @@
       },
       {
         "file": "worker/public/expedition/group-card.js",
-        "sha256": "dd38eb074a7e0e655811c01dbe327c5e99d4d113a59c8f3272cc88a8a54de252"
+        "sha256": "b66db71da3c62a070ea902fc1aa6e769c4a4f5f5d20c396ae0e30ac032231cdb"
       },
       {
         "file": "worker/public/expedition/hero-art-playback.js",
@@ -36023,15 +36023,15 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "91e2f65eea6cf085d9d2fab096203d9e06356859ec2ee352d51a508e15ce1fc9"
+        "sha256": "dc845038fd8dbcbff9f48887ffec43378bea5fe831b2e53b1b76947ceb1c031a"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "052bb52f1d3fb49ba5ecfb6034488e08ffaa6f5aa5620e60a44d33d15c91952d"
+        "sha256": "7bb066ec56a3fbe8b31ad544ef3f1b63644efb41ed7b30896bbec47c92e309fe"
       },
       {
         "file": "worker/public/expedition/model.js",
-        "sha256": "e90e6304ef03ed9f15b785f8bcf48b59c16c30e840a0e1b3e9d0a64a345c4ebc"
+        "sha256": "d154fe96381e72681419fa3c4cf422e3884a55eccf99fe3d11e8e9862193d8bc"
       },
       {
         "file": "worker/public/expedition/party-lobby.js",
@@ -36039,7 +36039,7 @@
       },
       {
         "file": "worker/public/expedition/party-tactics.js",
-        "sha256": "3de15e1986d731efe832375191b14f22d8780c76b9df7aa09b4fb234a4b162f6"
+        "sha256": "6ec058d2d291f366e02286ded8266466b82a14028374dfcabdcd15ebc41194a1"
       },
       {
         "file": "worker/public/expedition/review.css",
@@ -36047,7 +36047,7 @@
       },
       {
         "file": "worker/public/expedition/review.js",
-        "sha256": "3f461b0a01d272946231611d27ad68685e7d0daa9e4a1be2d00cba11cbcad1a5"
+        "sha256": "7f52280139197200108db9816d6c848b1b5e33b07f2e9d1d71a5e93ac6da9096"
       },
       {
         "file": "worker/public/fate-entry.css",
@@ -36639,11 +36639,11 @@
       },
       {
         "file": "worker/public/forge-ritual.css",
-        "sha256": "85e0bc5867eb5c2fc69a51a80e006d5e67f01111cd260bd899974804b10eba6a"
+        "sha256": "c540a718ad6b60f4bb0b96b0703356153adac510ce85384327011bdb1e7f545d"
       },
       {
         "file": "worker/public/forge-ritual.js",
-        "sha256": "3efabd405295e8def28a6dbc701efb8d57b20292ded140d52c1ccbbd82aa2fa3"
+        "sha256": "7c7952270e89d3c67228ce0c64073696c47cb456d4118cfb214ad3efe2b3d7e5"
       },
       {
         "file": "worker/public/game-brand.css",
@@ -36795,7 +36795,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "39dd0dd4aba9a776b1533b75c5e5fddbb183468feb187df80dff2f95f8e17b15"
+        "sha256": "073b7c95b7dd74fc9efbe055bcf3d5094389a4e8dd902a4eb48b896eb522217c"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37047,7 +37047,7 @@
       },
       {
         "file": "worker/public/request-client.js",
-        "sha256": "374a89e9a68a2bbdc66563f7d69d571696ce1911db9e959eff70eda30474e1bf"
+        "sha256": "da36fa62adbc08cc0a96860e0b95ffc98ac27dcafce88834f58f43608c232d32"
       },
       {
         "file": "worker/public/skill-fx.js",
@@ -37055,7 +37055,7 @@
       },
       {
         "file": "worker/public/special-skill-widgets.js",
-        "sha256": "d8a2f10cd0bcacdef8220e43d818508c449e8fc7d3069538572ca3fd6229d46c"
+        "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049"
       },
       {
         "file": "worker/public/star-ring-cosmetics.css",
@@ -37526,6 +37526,10 @@
         "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
       },
       {
+        "file": "worker/src/game/enhance-preview.js",
+        "sha256": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07"
+      },
+      {
         "file": "worker/src/game/enhance.js",
         "sha256": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c"
       },
@@ -37559,7 +37563,7 @@
       },
       {
         "file": "worker/src/game/gear.js",
-        "sha256": "fc83daeb47d9ede993dd1e0e1b4174913e203d45fc9ccaec2fe237b4ef40f287"
+        "sha256": "a56057420c4cb34543deaed9688cf9248477dc5307cc661552974df7d394c7e4"
       },
       {
         "file": "worker/src/game/guardian-assist.js",
@@ -37835,7 +37839,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "66e6766da807830a57d4d1558a05fa3bebc94864e9bae0096c315c01b6c651e8"
+        "sha256": "a8d4043f9c915fdf617518c107091400a9618bf055d0341471a367bbb328b92d"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -37853,7 +37857,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 149,
+    "verifiedCount": 156,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -37883,7 +37887,14 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/catalogue.js",
+      "worker/public/expedition/combat-playback.js",
+      "worker/public/expedition/group-card.js",
       "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
+      "worker/public/expedition/model.js",
+      "worker/public/expedition/party-tactics.js",
+      "worker/public/expedition/review.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38009,7 +38020,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "98db3aae-1d27-4555-bcc9-2275119bdf5a",
+        "version_id": "5e04d2b9-4960-4371-89f2-2b16500abab9",
         "percentage": 100
       }
     ],
