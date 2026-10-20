@@ -15,7 +15,7 @@ test('recruitment sends original art to the group with the exact authenticated r
  const h=setup();await h.make().tick({forceOutbox:true});assert.equal(h.requests.length,1);
  const {method,body}=h.requests[0];assert.equal(method,'sendPhoto');assert.equal(body.chat_id,'-100777');assert.match(body.caption,/同行 1／5 · 尚缺 4 人/);assert.match(body.caption,/遠征隊長/);assert.match(body.caption,/十二小時/);
  assert.match(body.photo,/star-ring-20261018\/background.jpg$/);
- const button=body.reply_markup.inline_keyboard[0][0];assert.equal(button.web_app,undefined);assert.equal(new URL(button.url).searchParams.get('startapp'),'ring_'+'a'.repeat(32));
+ const button=body.reply_markup.inline_keyboard[0][0];assert.equal(button.text,'加入並準備');assert.equal(button.web_app,undefined);assert.equal(new URL(button.url).searchParams.get('startapp'),'ring_'+'a'.repeat(32));
  await h.make().tick({forceOutbox:true});assert.equal(h.requests.length,1);assert.equal(h.texts.length,0);assert.ok(h.calls.some(x=>x.path==='/rpg/outbox/ack'));
 });
 test('joins, readiness and closure edit one group card rather than sending new posts',async()=>{

@@ -1,0 +1,1834 @@
+{
+  "tool": "built-in image_gen",
+  "newImages": 28,
+  "reusedImages": 4,
+  "technicalExport": "alpha-preserving crop, scale, padding and compression; separate generated Greek rarity frames",
+  "icons": 32,
+  "cards": 192,
+  "records": [
+    {
+      "id": "sword-helmet",
+      "name": "劍士·頭盔",
+      "reusedFrom": null,
+      "sourceSha256": "c7372aae5009b3a1d5795c0ad873659eb0ffa66da758f681760060980f90c6c5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        132,
+        19,
+        1067,
+        1237
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5577316860368988,
+      "icon": {
+        "file": "sword-helmet.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "6b432c24f389b29dc5d3967262f2c975b938b71c5f180afae33c1a0677dd5a87",
+        "bytes": 68580
+      },
+      "cards": {
+        "common": {
+          "file": "cards/sword-helmet_common.jpg",
+          "sha256": "60be64b192dc2de548a5fd1d57407f9c9f5b15165bba8c2d4adf41d5517d8dbf",
+          "bytes": 51091
+        },
+        "advanced": {
+          "file": "cards/sword-helmet_advanced.jpg",
+          "sha256": "866325cfe926dd82d54ca6aecd2874641ed66412637da1cc3f33c0d07df3bceb",
+          "bytes": 51894
+        },
+        "epic": {
+          "file": "cards/sword-helmet_epic.jpg",
+          "sha256": "e86b76da781b0d8ec90d5d75059a38c2bd396dec18c83945f26dd447861446a4",
+          "bytes": 52011
+        },
+        "legendary": {
+          "file": "cards/sword-helmet_legendary.jpg",
+          "sha256": "e1c9c267cf7bf6e6783ff21af36b4ce5e146c2c9162a7ad58b833d869fb7eb9d",
+          "bytes": 51587
+        },
+        "supreme": {
+          "file": "cards/sword-helmet_supreme.jpg",
+          "sha256": "45e1330fdfd6a5bae459165b6fe6fb17b8581a9e1d70fb5be03356ca5d186873",
+          "bytes": 51808
+        },
+        "relic": {
+          "file": "cards/sword-helmet_relic.jpg",
+          "sha256": "5b2886259ec75d829de7725a66d686583bac52889a92c2526ee1b281eb9d7f55",
+          "bytes": 52080
+        }
+      }
+    },
+    {
+      "id": "sword-armor",
+      "name": "劍士·胸甲",
+      "reusedFrom": null,
+      "sourceSha256": "d7773d7307712d7402828ae26748fcb3ba0af8e1e09eb15e98509eab35a11b04",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        81,
+        14,
+        1165,
+        1243
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.4301571494344096,
+      "icon": {
+        "file": "sword-armor.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "d703164ae96334a6a06da3bc97476d0951a165849cc434416d13c4024d993e16",
+        "bytes": 85196
+      },
+      "cards": {
+        "common": {
+          "file": "cards/sword-armor_common.jpg",
+          "sha256": "0c2e6dc1824142af32c531a286b90a58d5c27afabff13a1bbc570de2dc16dfd0",
+          "bytes": 62800
+        },
+        "advanced": {
+          "file": "cards/sword-armor_advanced.jpg",
+          "sha256": "8cc180a8847aa803e0a0a8a35da32da53cbf2e81937e826f610700d5773dddb4",
+          "bytes": 63587
+        },
+        "epic": {
+          "file": "cards/sword-armor_epic.jpg",
+          "sha256": "20bb8fec4de09075972b66e9b52e4319673e3512f61a5709cebd878d9ff79b7b",
+          "bytes": 63664
+        },
+        "legendary": {
+          "file": "cards/sword-armor_legendary.jpg",
+          "sha256": "137d48823d3c06b7e375fd0a8a8d2b876f14147a00c76b2bbb214544a0440a80",
+          "bytes": 63243
+        },
+        "supreme": {
+          "file": "cards/sword-armor_supreme.jpg",
+          "sha256": "1084190c6a857dc1c28ad023a1ba3ab795ea274e6f222d0ce362a52a9cb2f0de",
+          "bytes": 63459
+        },
+        "relic": {
+          "file": "cards/sword-armor_relic.jpg",
+          "sha256": "64609fd5d7126bafd004906552be37a40229b3ecf12a8ffd6166f807d27e77a3",
+          "bytes": 63770
+        }
+      }
+    },
+    {
+      "id": "sword-gloves",
+      "name": "劍士·手套",
+      "reusedFrom": null,
+      "sourceSha256": "fa9bb553087b20ee57df01462ebe28d99fc385984b0ce61e2bfd4f47ea2accb5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        33,
+        57,
+        1209,
+        1186
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5291322949973164,
+      "icon": {
+        "file": "sword-gloves.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "2f94036d0ac94b72cb43c858d61ab8ed8157371c33e1942bbdecdbf15c5d553a",
+        "bytes": 80144
+      },
+      "cards": {
+        "common": {
+          "file": "cards/sword-gloves_common.jpg",
+          "sha256": "9d0df97bbc526448d7b85bc3e6bc0ad4c294185923f72d3a97113c98140b7c2e",
+          "bytes": 61928
+        },
+        "advanced": {
+          "file": "cards/sword-gloves_advanced.jpg",
+          "sha256": "4c2b139cf747d5988ccf91e21af4174db4983032c99f6d398aa7529d37c3608d",
+          "bytes": 62691
+        },
+        "epic": {
+          "file": "cards/sword-gloves_epic.jpg",
+          "sha256": "3171f00430245c9cb7cce47e8cc719caf731d14d7332bd8d3485a2928ccf258b",
+          "bytes": 62767
+        },
+        "legendary": {
+          "file": "cards/sword-gloves_legendary.jpg",
+          "sha256": "dfd0e3a34d22a1bf3ea3f924f95af3a471ff07166cdd22437ee1d07d210b71cf",
+          "bytes": 62357
+        },
+        "supreme": {
+          "file": "cards/sword-gloves_supreme.jpg",
+          "sha256": "4eda7a4c0fd17dc5d84cd4c3721a28257d1d83bc726ba1df57d8c07499997846",
+          "bytes": 62553
+        },
+        "relic": {
+          "file": "cards/sword-gloves_relic.jpg",
+          "sha256": "2c2d6c6ff9ed5884570a233268ab62b6a6c8992d2fbe417dcbffb0afae0b6f03",
+          "bytes": 62934
+        }
+      }
+    },
+    {
+      "id": "sword-boots",
+      "name": "劍士·靴子",
+      "reusedFrom": null,
+      "sourceSha256": "0835de1f2af57b503a35a04911e4e1618f041d2c302ca619d6fc206717cce496",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        176,
+        35,
+        1120,
+        1223
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5627376764369965,
+      "icon": {
+        "file": "sword-boots.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "304ede2ae3e9fc4237217792cd4b091d8656f881a90c65082eef8b7313bd29c8",
+        "bytes": 76620
+      },
+      "cards": {
+        "common": {
+          "file": "cards/sword-boots_common.jpg",
+          "sha256": "df0d7469e9da699318a970a8b7a258aec780175fc63df8a7e224650754c8e559",
+          "bytes": 55967
+        },
+        "advanced": {
+          "file": "cards/sword-boots_advanced.jpg",
+          "sha256": "28f13c821c2605a707855804be9c9067d6e1cce042a542bab0204178e3501521",
+          "bytes": 56739
+        },
+        "epic": {
+          "file": "cards/sword-boots_epic.jpg",
+          "sha256": "2433e896c2fa7fe79c733f5a2fe9e8927d9754ba381a53e6ee68ce573c822f04",
+          "bytes": 56859
+        },
+        "legendary": {
+          "file": "cards/sword-boots_legendary.jpg",
+          "sha256": "ef671e74acf2172e91a0b1d5409244a8813cb0b91ad78131a727a56fe0dd6c59",
+          "bytes": 56433
+        },
+        "supreme": {
+          "file": "cards/sword-boots_supreme.jpg",
+          "sha256": "11f188c9904ddab4692da6c1ab08a8e728b32ebc44084f151b9af7a43292323f",
+          "bytes": 56620
+        },
+        "relic": {
+          "file": "cards/sword-boots_relic.jpg",
+          "sha256": "80707a95f15a0d7e0f5a1e35608f2b891d100753dca72e9dd54c61bbefa7061e",
+          "bytes": 56969
+        }
+      }
+    },
+    {
+      "id": "mage-helmet",
+      "name": "法師·頭盔",
+      "reusedFrom": null,
+      "sourceSha256": "1d1d0a85d82470985d4bfcf3d118503058553b3c99445d9172e051f5a4b771e0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        178,
+        41,
+        1193,
+        1190
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5753435895087872,
+      "icon": {
+        "file": "mage-helmet.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "07763a50241615042706bd0129e2c6cc84cf1cde99188fb9a879f65bf91cc6f7",
+        "bytes": 60484
+      },
+      "cards": {
+        "common": {
+          "file": "cards/mage-helmet_common.jpg",
+          "sha256": "7e2aafcd0414d7c777d1d7b1bf4ed01d049db23891ffaa7a83fdd328aad6f475",
+          "bytes": 51461
+        },
+        "advanced": {
+          "file": "cards/mage-helmet_advanced.jpg",
+          "sha256": "8d2728e40f91faa9e276b687485840721b52f04ee7723e0ffb5118fbcd4fe2b0",
+          "bytes": 52267
+        },
+        "epic": {
+          "file": "cards/mage-helmet_epic.jpg",
+          "sha256": "fccb5efa0a963449303180be3c7a0c5e21a771dcb2213ba3e5029ed4572e5342",
+          "bytes": 52381
+        },
+        "legendary": {
+          "file": "cards/mage-helmet_legendary.jpg",
+          "sha256": "4547fada8e3343e4dde39aff9c0d700582e26fa86250668361f75514faf37c3f",
+          "bytes": 51933
+        },
+        "supreme": {
+          "file": "cards/mage-helmet_supreme.jpg",
+          "sha256": "d0a27d00d3cc8197f0611627cbc574686bf97064adacf0e3117b049f401415d4",
+          "bytes": 52150
+        },
+        "relic": {
+          "file": "cards/mage-helmet_relic.jpg",
+          "sha256": "a82b765ceb99c547c78b7f161cfe5600b1460e491affc9f1a021d0d331710ce0",
+          "bytes": 52446
+        }
+      }
+    },
+    {
+      "id": "mage-armor",
+      "name": "法師·胸甲",
+      "reusedFrom": null,
+      "sourceSha256": "2c0b7825fd54634ad0d3948f0b0f5ae899a7634b2b63fbd37f1fe5f5e293a5aa",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        87,
+        51,
+        1171,
+        1207
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5486570565895673,
+      "icon": {
+        "file": "mage-armor.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "88854ea2e839cfa8b7571aa60d326b493f03e58811b0693c899c455542503fe7",
+        "bytes": 79468
+      },
+      "cards": {
+        "common": {
+          "file": "cards/mage-armor_common.jpg",
+          "sha256": "b32adcca129a3b0a439538ff57ec3a5e15d01ef272b73fba82b4eab522e80aa1",
+          "bytes": 57168
+        },
+        "advanced": {
+          "file": "cards/mage-armor_advanced.jpg",
+          "sha256": "9a55243de71625c0134629942128393fc3de08c9597de22f705a3458ad5e26c9",
+          "bytes": 57977
+        },
+        "epic": {
+          "file": "cards/mage-armor_epic.jpg",
+          "sha256": "fa78706588241708aebd72335e1d6a896e867a777e49b996aa65a74c6928b8b2",
+          "bytes": 58098
+        },
+        "legendary": {
+          "file": "cards/mage-armor_legendary.jpg",
+          "sha256": "b447fca0aa59ac68bd5235f9437f327b3780c3b8a474427391ddef1d9057dbae",
+          "bytes": 57672
+        },
+        "supreme": {
+          "file": "cards/mage-armor_supreme.jpg",
+          "sha256": "872b1056f618b8986b286ce496f21d0a04a21c01ed3c660676717c5bc118f736",
+          "bytes": 57870
+        },
+        "relic": {
+          "file": "cards/mage-armor_relic.jpg",
+          "sha256": "fd93806a346ea1f2206634094bf50516d650e88af8a06e0ac65dc95a08034f7f",
+          "bytes": 58172
+        }
+      }
+    },
+    {
+      "id": "mage-gloves",
+      "name": "法師·手套",
+      "reusedFrom": null,
+      "sourceSha256": "2136135b820c8f485ae8e93d2bd5cda11e92b48687dc1a42dc28efbbe86e3a04",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        41,
+        40,
+        1225,
+        1192
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.6265316219358023,
+      "icon": {
+        "file": "mage-gloves.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "8b6a74e0d79c62b0320c611e415893538d63e2e8e206383bf803801773178b71",
+        "bytes": 66236
+      },
+      "cards": {
+        "common": {
+          "file": "cards/mage-gloves_common.jpg",
+          "sha256": "1652ca145281f7d317bf5841deef2021e4da75c7eedf8e979114cb4ca6a599ef",
+          "bytes": 49935
+        },
+        "advanced": {
+          "file": "cards/mage-gloves_advanced.jpg",
+          "sha256": "0bc46639a1965012b7a6ea8d8a7852de4c22afcd236b3e062454b9acf0f55271",
+          "bytes": 50767
+        },
+        "epic": {
+          "file": "cards/mage-gloves_epic.jpg",
+          "sha256": "5b22fe398e73f63e5271d6d1d03d64a2830754e7be4b536f71153b0d6b35d21b",
+          "bytes": 50852
+        },
+        "legendary": {
+          "file": "cards/mage-gloves_legendary.jpg",
+          "sha256": "87c9842fcf6bdf98216ef497aed3799be1b5cae6fb7976cea0735f21a998ba59",
+          "bytes": 50397
+        },
+        "supreme": {
+          "file": "cards/mage-gloves_supreme.jpg",
+          "sha256": "c0445633b2d8c41b969a8b05e236c9a5679563b3f794c981e1d3c85243e40336",
+          "bytes": 50624
+        },
+        "relic": {
+          "file": "cards/mage-gloves_relic.jpg",
+          "sha256": "f4a93c7413d4a77dc861f17cb699218ddf1f4df0c46c3478983e033c69d2903a",
+          "bytes": 50933
+        }
+      }
+    },
+    {
+      "id": "mage-boots",
+      "name": "法師·靴子",
+      "reusedFrom": null,
+      "sourceSha256": "793921cb16dfb6543b15b025599de1e9150abc0c4a90ea4a8a90931aaa269568",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        60,
+        118,
+        1197,
+        1137
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5509851728058729,
+      "icon": {
+        "file": "mage-boots.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "ac4099fb3d09058f09112ce62ab0285905d33f9ebd4a324362fb7a2bd532155d",
+        "bytes": 66394
+      },
+      "cards": {
+        "common": {
+          "file": "cards/mage-boots_common.jpg",
+          "sha256": "1bc4e5ce055b5a410d83b1724ad27e2864482b8f41bab5fe411170b33061db79",
+          "bytes": 55149
+        },
+        "advanced": {
+          "file": "cards/mage-boots_advanced.jpg",
+          "sha256": "762e1569841cd6e32978b38ca171d4306dbd71d9288bcb966aad3383b3dd5cf6",
+          "bytes": 55998
+        },
+        "epic": {
+          "file": "cards/mage-boots_epic.jpg",
+          "sha256": "61961c70c14f6049c088b64181b2b8a4dc72b50c11d09404a1f8626b854b39f6",
+          "bytes": 56077
+        },
+        "legendary": {
+          "file": "cards/mage-boots_legendary.jpg",
+          "sha256": "f7f50628741d67603de4cba22d80ccd419322e38251228209da8b5a837ecebd4",
+          "bytes": 55636
+        },
+        "supreme": {
+          "file": "cards/mage-boots_supreme.jpg",
+          "sha256": "3bc56ac4a96bc5d9645274c64c447dcf81b28977cd95dc3498c237e7460c46ae",
+          "bytes": 55880
+        },
+        "relic": {
+          "file": "cards/mage-boots_relic.jpg",
+          "sha256": "bc2364d56f77d21f6b6f1641b3ce8122e097763b5d49cb097b22141d660c1203",
+          "bytes": 56162
+        }
+      }
+    },
+    {
+      "id": "archer-helmet",
+      "name": "弓手·頭盔",
+      "reusedFrom": null,
+      "sourceSha256": "8b450197cd2eb0a62e7aaf6f4a8edf20d92fe31f094080c224573a5ddf42abb6",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        161,
+        27,
+        1248,
+        1175
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.539787830457687,
+      "icon": {
+        "file": "archer-helmet.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "363e2fea5f63f73794a2e698895ea8ba0d9712fb28c177233e8dfa4d07ed5ef5",
+        "bytes": 83946
+      },
+      "cards": {
+        "common": {
+          "file": "cards/archer-helmet_common.jpg",
+          "sha256": "6a06263808c1a0b12d3a0c67ed841a286d106a0ba0c1e219dae6e25f778c47ea",
+          "bytes": 58349
+        },
+        "advanced": {
+          "file": "cards/archer-helmet_advanced.jpg",
+          "sha256": "d6e04398244fb466b7b5aef66444299865f384ceb60bcebcaad98f6128435fae",
+          "bytes": 59128
+        },
+        "epic": {
+          "file": "cards/archer-helmet_epic.jpg",
+          "sha256": "3e6ff0a8125676c2ac21e73ede5bbf4f28f10e54cafb3a9e0d0ad7cf02730863",
+          "bytes": 59212
+        },
+        "legendary": {
+          "file": "cards/archer-helmet_legendary.jpg",
+          "sha256": "29ecaff2e94b96c992728806790a9bbf575b6770891cc5d71796c225300e5357",
+          "bytes": 58811
+        },
+        "supreme": {
+          "file": "cards/archer-helmet_supreme.jpg",
+          "sha256": "d7d2b8e0badd3389539884a7d12c4463ae6f547f496a7fec45e628392fe375e3",
+          "bytes": 59011
+        },
+        "relic": {
+          "file": "cards/archer-helmet_relic.jpg",
+          "sha256": "84df859610ef14b482d5e3f65f9b5a1a7114558ab43e9cf523fa8191d87be3d9",
+          "bytes": 59329
+        }
+      }
+    },
+    {
+      "id": "archer-armor",
+      "name": "弓手·胸甲",
+      "reusedFrom": null,
+      "sourceSha256": "842a33d2458af3b087e2e4563f78f3c10833121c0c186efb5faa6b119da6b7a8",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        191,
+        72,
+        1163,
+        1191
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5480344874074413,
+      "icon": {
+        "file": "archer-armor.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "c8ccbf9c9850ba414b0a5a62b1ce9617a2f199db4c8efb15cf7724f9c85ab4fc",
+        "bytes": 69128
+      },
+      "cards": {
+        "common": {
+          "file": "cards/archer-armor_common.jpg",
+          "sha256": "7b8b2f8a1501b0414b753a947a94c3aa4b71df90775a4d6e77be4618dcf125f9",
+          "bytes": 57881
+        },
+        "advanced": {
+          "file": "cards/archer-armor_advanced.jpg",
+          "sha256": "1851b62d82d956dc96aef40109984e9474e3922b0dbc0470a81ded1ed5a4255e",
+          "bytes": 58667
+        },
+        "epic": {
+          "file": "cards/archer-armor_epic.jpg",
+          "sha256": "959be2497ef027d4291d40f8ed1af3cc102aafc175f1b03ebace4c2c14d40a66",
+          "bytes": 58773
+        },
+        "legendary": {
+          "file": "cards/archer-armor_legendary.jpg",
+          "sha256": "997df04323efa98abb0695f39e7ebf33038841c121e3f5e4d275e1e12c59e6df",
+          "bytes": 58331
+        },
+        "supreme": {
+          "file": "cards/archer-armor_supreme.jpg",
+          "sha256": "4a43cedc140f5bf1f13023c34aebc78c269e715f9c40216d5ed4e27c2fc01280",
+          "bytes": 58541
+        },
+        "relic": {
+          "file": "cards/archer-armor_relic.jpg",
+          "sha256": "ebc7d9682e90c33258ea042b310e6abfca5b23d16a7e121e3cb5a4d3e6df1287",
+          "bytes": 58858
+        }
+      }
+    },
+    {
+      "id": "archer-gloves",
+      "name": "弓手·手套",
+      "reusedFrom": null,
+      "sourceSha256": "73970f89b9b97a0d99b738066902dc9f45e37a02af6243bd0be87c7e9acb48a0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        74,
+        16,
+        1235,
+        1231
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.6702704455789321,
+      "icon": {
+        "file": "archer-gloves.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "116d1818d02659790ae49b7d703123359d44c40e7edbfc4b37b6da86c486ab4e",
+        "bytes": 62382
+      },
+      "cards": {
+        "common": {
+          "file": "cards/archer-gloves_common.jpg",
+          "sha256": "0ce43c3349dd048f50b27f2c6f33deda901e95b00abe4067f89a88e0b6ba3d91",
+          "bytes": 48815
+        },
+        "advanced": {
+          "file": "cards/archer-gloves_advanced.jpg",
+          "sha256": "e03a9e360694f047ca82cecc5789f5dbf04768804b35e9e4c239a3e0b1f84d8f",
+          "bytes": 49619
+        },
+        "epic": {
+          "file": "cards/archer-gloves_epic.jpg",
+          "sha256": "ad6911872927d8f919c01349cd6b1b04a55cb23a1a3d3c61263a92239cb3cb68",
+          "bytes": 49743
+        },
+        "legendary": {
+          "file": "cards/archer-gloves_legendary.jpg",
+          "sha256": "ed5ae37b31ad83243d10c901c59cbc5f3feada5f01c9c882163ddc9d6b808339",
+          "bytes": 49291
+        },
+        "supreme": {
+          "file": "cards/archer-gloves_supreme.jpg",
+          "sha256": "7fc87d58a01cb8ef164cc7c14f8255bdf1b3c529de13bfcbeb4adcfdd096bcca",
+          "bytes": 49486
+        },
+        "relic": {
+          "file": "cards/archer-gloves_relic.jpg",
+          "sha256": "6c3553b68c5371a825970b54fdaf3a076b1160bb217a1f456d30df556e4712ae",
+          "bytes": 49790
+        }
+      }
+    },
+    {
+      "id": "archer-boots",
+      "name": "弓手·靴子",
+      "reusedFrom": null,
+      "sourceSha256": "e4cfee56f43c7d47011dd1e399444aaff45cdd3beac8a6f529d9f6f6be2959c3",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        108,
+        84,
+        1161,
+        1152
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.6185927519974359,
+      "icon": {
+        "file": "archer-boots.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "1f8f377dddf04f313dc767fe29790224630e1395d78364b24b88b392396fd430",
+        "bytes": 68716
+      },
+      "cards": {
+        "common": {
+          "file": "cards/archer-boots_common.jpg",
+          "sha256": "6836a5636d1736b05053b19b827a7aaeb1674b504d1cda50d897ad15c0561ab4",
+          "bytes": 56384
+        },
+        "advanced": {
+          "file": "cards/archer-boots_advanced.jpg",
+          "sha256": "c122ea9c24d816401ae1e81d6cdce894d484d72733a57055f0541ec1df61cb69",
+          "bytes": 57181
+        },
+        "epic": {
+          "file": "cards/archer-boots_epic.jpg",
+          "sha256": "a8e94d72ad52b8e7745656aba0c2ebf24ce765b4c085df6bf23f74f78014daac",
+          "bytes": 57288
+        },
+        "legendary": {
+          "file": "cards/archer-boots_legendary.jpg",
+          "sha256": "1788246ef94af94e0b6bf226775c3f2bffa281669e2b97e1272c0c52cbeca0aa",
+          "bytes": 56885
+        },
+        "supreme": {
+          "file": "cards/archer-boots_supreme.jpg",
+          "sha256": "0ffa9a39dd3c2f087315823a7230c75346dbf72dcfda898d078c41a000bdae8b",
+          "bytes": 57092
+        },
+        "relic": {
+          "file": "cards/archer-boots_relic.jpg",
+          "sha256": "fab3daf068dc50a50ad8ba8fa9c8ab16b7ac67167c75489cf8a6c4fe12a13c85",
+          "bytes": 57389
+        }
+      }
+    },
+    {
+      "id": "thief-helmet",
+      "name": "盜賊·頭盔",
+      "reusedFrom": null,
+      "sourceSha256": "078f97fafcead13581c60d69c81e9b1bd42d2e28abd35ddf02d046d8aea1c4d9",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        110,
+        8,
+        1229,
+        1243
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.4963892259283848,
+      "icon": {
+        "file": "thief-helmet.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "2420b9161f52e33c6b0ee4255c88ed3acd6823fb50fef80e55ee64ac389b2c54",
+        "bytes": 59202
+      },
+      "cards": {
+        "common": {
+          "file": "cards/thief-helmet_common.jpg",
+          "sha256": "066de13a6c0021556bc9c7737593f11179e7466cbf86b562413771be8b5ad42e",
+          "bytes": 48567
+        },
+        "advanced": {
+          "file": "cards/thief-helmet_advanced.jpg",
+          "sha256": "571f5c7a11bf678b926dcda75a08ce48fe810d075602e4602ff0520ddd6f2b89",
+          "bytes": 49366
+        },
+        "epic": {
+          "file": "cards/thief-helmet_epic.jpg",
+          "sha256": "e5a7f1870bed62c501f4dfa8e9557ca1f4bc3c5080704a6bff4d1a453095fa6e",
+          "bytes": 49474
+        },
+        "legendary": {
+          "file": "cards/thief-helmet_legendary.jpg",
+          "sha256": "43154ba20cdbce248ee5e9ba60e6110ecda4fd317ee588274103f4b6ce6cf2ce",
+          "bytes": 49035
+        },
+        "supreme": {
+          "file": "cards/thief-helmet_supreme.jpg",
+          "sha256": "1232567fafea2184ab1284dfd8ea5ff7a56c64745626267857517d376df1e93c",
+          "bytes": 49257
+        },
+        "relic": {
+          "file": "cards/thief-helmet_relic.jpg",
+          "sha256": "fc32f38046776ee702efce184c536291494fa3a90e4582905129b3da0f144e75",
+          "bytes": 49538
+        }
+      }
+    },
+    {
+      "id": "thief-armor",
+      "name": "盜賊·胸甲",
+      "reusedFrom": null,
+      "sourceSha256": "ca39c294aa33763e95e3348ffb20c1d95d636e1fc2576f07c8e49e453b2c8938",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        73,
+        43,
+        1209,
+        1222
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.49745185422596655,
+      "icon": {
+        "file": "thief-armor.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "c04cd72c6e3b3980f831ea4d1a4079c30d57c88349b867a3652eafa86472414c",
+        "bytes": 72884
+      },
+      "cards": {
+        "common": {
+          "file": "cards/thief-armor_common.jpg",
+          "sha256": "6cbf871a28e805467f08625d8d02b21a7af255f91378623a856128f4054538da",
+          "bytes": 53949
+        },
+        "advanced": {
+          "file": "cards/thief-armor_advanced.jpg",
+          "sha256": "ed8d98f417d6ad86a7a9a868407e3c345119171029b3c2753294fecbb9a12023",
+          "bytes": 54770
+        },
+        "epic": {
+          "file": "cards/thief-armor_epic.jpg",
+          "sha256": "deb53d4a7101e5e88d85e7e5b7e722858174ef472d251ad0e6b904587b1ffb37",
+          "bytes": 54920
+        },
+        "legendary": {
+          "file": "cards/thief-armor_legendary.jpg",
+          "sha256": "022685751f38320118998c10150fc88946659552c478058ad3d3d78e897f09b3",
+          "bytes": 54426
+        },
+        "supreme": {
+          "file": "cards/thief-armor_supreme.jpg",
+          "sha256": "fd2d7555165aff940be902a27185de895fb5d8397d0ece0a298dd6158f7df4d8",
+          "bytes": 54648
+        },
+        "relic": {
+          "file": "cards/thief-armor_relic.jpg",
+          "sha256": "ee6b07fd6953328499d72f9f83ba506466cf318ffc03de6197c21a5343429caf",
+          "bytes": 54971
+        }
+      }
+    },
+    {
+      "id": "thief-gloves",
+      "name": "盜賊·手套",
+      "reusedFrom": null,
+      "sourceSha256": "e9819c63f8b524a45f7bce5b4714ed5964156b565d8a6879b723dc37d517a6d2",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        60,
+        58,
+        1204,
+        1182
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.6009662222832709,
+      "icon": {
+        "file": "thief-gloves.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "e14fd82f2dafd578a22ca8c006bef47adbde0512495f9fc7b2971e570aa806b6",
+        "bytes": 69508
+      },
+      "cards": {
+        "common": {
+          "file": "cards/thief-gloves_common.jpg",
+          "sha256": "9e94b07809b98c4c8a2f60a41bd4d4a0170190f7e45e2bb1374360575ed69c1b",
+          "bytes": 55069
+        },
+        "advanced": {
+          "file": "cards/thief-gloves_advanced.jpg",
+          "sha256": "8e38488ffb22db8234c443639f7f2364b5c98bb82f24fe596197d9b2aea6fce2",
+          "bytes": 55855
+        },
+        "epic": {
+          "file": "cards/thief-gloves_epic.jpg",
+          "sha256": "1078c80926a50c995194cc846e8a7d7830d4275152cd160c40b631d5f50bb9cf",
+          "bytes": 55921
+        },
+        "legendary": {
+          "file": "cards/thief-gloves_legendary.jpg",
+          "sha256": "6db30a0b36b880ef1ca07cd485db62baabf1653dc0e7f40400cefd5b6869379b",
+          "bytes": 55534
+        },
+        "supreme": {
+          "file": "cards/thief-gloves_supreme.jpg",
+          "sha256": "72e472e129603c503938841451952a99611677f050820a695c280f9c32cb36cd",
+          "bytes": 55743
+        },
+        "relic": {
+          "file": "cards/thief-gloves_relic.jpg",
+          "sha256": "0632a349af05f20beb04aa1fe12799d4bd62920c7f53b97b6f108ecfffc3d569",
+          "bytes": 56052
+        }
+      }
+    },
+    {
+      "id": "thief-boots",
+      "name": "盜賊·靴子",
+      "reusedFrom": null,
+      "sourceSha256": "6d98da4f56074dd3675a9c5cca1296106e93b05aba75553d72d37001a03afdaf",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        49,
+        132,
+        1221,
+        1123
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5649080836061445,
+      "icon": {
+        "file": "thief-boots.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "97057b28a871eff7057ff5eaef19bac048934020e0268882be1e1e60e8d0f83a",
+        "bytes": 61678
+      },
+      "cards": {
+        "common": {
+          "file": "cards/thief-boots_common.jpg",
+          "sha256": "13be4c3279689a03785d4abdc84eb11bee5b16e63e8997290f5d55527b49176e",
+          "bytes": 50633
+        },
+        "advanced": {
+          "file": "cards/thief-boots_advanced.jpg",
+          "sha256": "af436ff627244afa7b5f57267cd68a4830a2764297049bda12f2e78a99ebe301",
+          "bytes": 51449
+        },
+        "epic": {
+          "file": "cards/thief-boots_epic.jpg",
+          "sha256": "cb2b1269b5e60a22842e98446d76bdee9fd370b7386553ed422dff1e07723bd3",
+          "bytes": 51525
+        },
+        "legendary": {
+          "file": "cards/thief-boots_legendary.jpg",
+          "sha256": "783c7a2fd862dfee7b325bc4d163ad8d4a9a2e9b43d6cc4222e838875cb704e3",
+          "bytes": 51082
+        },
+        "supreme": {
+          "file": "cards/thief-boots_supreme.jpg",
+          "sha256": "e9fa7a628aeb85f1f35d8a646b0c416d83bd3420d68ded0855d56a3f225d1fed",
+          "bytes": 51311
+        },
+        "relic": {
+          "file": "cards/thief-boots_relic.jpg",
+          "sha256": "9b81e79f0532150cf074b0c627a3a22b985503ae79d33aa2ee9a646f8247744a",
+          "bytes": 51631
+        }
+      }
+    },
+    {
+      "id": "shared-belt",
+      "name": "共用·腰帶",
+      "reusedFrom": null,
+      "sourceSha256": "99808bf7d83791dafd7cdc833764dcaa2a9d8c1a34430603bc5c185ba8ddd838",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        45,
+        277,
+        1229,
+        975
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.6488150200061558,
+      "icon": {
+        "file": "shared-belt.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "91830278d23657aa515ba6e3cf08d4917c71d9902b56f82d1c066c8818ebe60f",
+        "bytes": 60756
+      },
+      "cards": {
+        "common": {
+          "file": "cards/shared-belt_common.jpg",
+          "sha256": "c0428b027f04241628e9ae8a4e844a9d19e8a0382da04dd1a983c7a84147720c",
+          "bytes": 49493
+        },
+        "advanced": {
+          "file": "cards/shared-belt_advanced.jpg",
+          "sha256": "693a393b46848aa6a99a7b5adc5fca413debf7e5bd361b1ec74134534a197076",
+          "bytes": 50333
+        },
+        "epic": {
+          "file": "cards/shared-belt_epic.jpg",
+          "sha256": "e9a0dc0c1b638960234e3532611a45e7193a09f29a8296967904f0aacb34faa9",
+          "bytes": 50421
+        },
+        "legendary": {
+          "file": "cards/shared-belt_legendary.jpg",
+          "sha256": "04e0f39ef91b42207d080f85446eea69c6b60df5d7edda00239897c0eac8b2e3",
+          "bytes": 49982
+        },
+        "supreme": {
+          "file": "cards/shared-belt_supreme.jpg",
+          "sha256": "abd082d63315d17ac808e640edc6ba0225ddfd895750419bbd08a828ca16b80f",
+          "bytes": 50181
+        },
+        "relic": {
+          "file": "cards/shared-belt_relic.jpg",
+          "sha256": "311868fdaaa2c17347171b5460b8ab136baec411bd4a8249fe66b3eef30ade85",
+          "bytes": 50486
+        }
+      }
+    },
+    {
+      "id": "shared-undershirt",
+      "name": "共用·內衣",
+      "reusedFrom": null,
+      "sourceSha256": "54e6ec1a568e9b1a6cde6687c32ff3d0bcbbc622060c5db88dcd264eb76614fc",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        265,
+        31,
+        1063,
+        1237
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5569202475523302,
+      "icon": {
+        "file": "shared-undershirt.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "8923ec8193fa74214c18dab01add1acca5515942156ec69b16d981214092e2d6",
+        "bytes": 50076
+      },
+      "cards": {
+        "common": {
+          "file": "cards/shared-undershirt_common.jpg",
+          "sha256": "03834626d942da24563bf02357fa185bd794b6fabd96735cf157a2ae282222f2",
+          "bytes": 47961
+        },
+        "advanced": {
+          "file": "cards/shared-undershirt_advanced.jpg",
+          "sha256": "256cd40c3a0813ef4556a0041b417e4ba06da5ff4a21559648b16ae1de88ff6e",
+          "bytes": 48802
+        },
+        "epic": {
+          "file": "cards/shared-undershirt_epic.jpg",
+          "sha256": "6e5153d4fda1515f612a9df36c0421ecf824e7fcc33a3447c9401da46e8d9b2d",
+          "bytes": 48900
+        },
+        "legendary": {
+          "file": "cards/shared-undershirt_legendary.jpg",
+          "sha256": "3390cc0526be32027f794d6aee8733f0d540ea450cd607080e62fa8891cd2915",
+          "bytes": 48481
+        },
+        "supreme": {
+          "file": "cards/shared-undershirt_supreme.jpg",
+          "sha256": "a4e374d6f35bc0a97ea54dd182bcce9fcd2964cbac4a0d3d72f58383a5399a69",
+          "bytes": 48654
+        },
+        "relic": {
+          "file": "cards/shared-undershirt_relic.jpg",
+          "sha256": "3fcc20aed577c2147dc15a77cec223e2ab1c2c7bfc7677685851f6263f9cebe2",
+          "bytes": 48958
+        }
+      }
+    },
+    {
+      "id": "shared-earring",
+      "name": "共用·耳飾",
+      "reusedFrom": null,
+      "sourceSha256": "43ae06b61c15bea4a220fe4f4beed549c1ee21b2fa6051c2637412a7f197e655",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        269,
+        53,
+        979,
+        1207
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.8026964431522478,
+      "icon": {
+        "file": "shared-earring.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "11758e5b6ea893b5e0d0fd6c44bb7a4823c7f729d7cab312b4eece3188872755",
+        "bytes": 69414
+      },
+      "cards": {
+        "common": {
+          "file": "cards/shared-earring_common.jpg",
+          "sha256": "e69470e05d54cc82337b7563218746a70e99a018669960083f44be3bc20b6e9a",
+          "bytes": 48512
+        },
+        "advanced": {
+          "file": "cards/shared-earring_advanced.jpg",
+          "sha256": "4bc1d1ff8ee51dd7a83a7ec6b0000b5838d4c30b8df610182104c68b25c9a7cc",
+          "bytes": 49318
+        },
+        "epic": {
+          "file": "cards/shared-earring_epic.jpg",
+          "sha256": "7fb523bdcf4690225f2016a111f0c995e2b22aac3813a10b7ca06aa52bad108a",
+          "bytes": 49422
+        },
+        "legendary": {
+          "file": "cards/shared-earring_legendary.jpg",
+          "sha256": "07e7fff70208aa3440735327b827907767cb3c4e300922a39c1198ace3da7c9d",
+          "bytes": 49008
+        },
+        "supreme": {
+          "file": "cards/shared-earring_supreme.jpg",
+          "sha256": "7c791e4f083fe0bec91b36ce4324f21b1dbe4280e4b09502bd4776eed2199d90",
+          "bytes": 49200
+        },
+        "relic": {
+          "file": "cards/shared-earring_relic.jpg",
+          "sha256": "cee9a95d50b8a392af093c2ac2774008be662c97f35c38ff28feedaaeedbcc6d",
+          "bytes": 49493
+        }
+      }
+    },
+    {
+      "id": "shared-ring",
+      "name": "共用·戒指",
+      "reusedFrom": null,
+      "sourceSha256": "63bd4ac8ca780842b4adda650599dc47a7a1b4a6838bc9ba6ac3c8194c35e7da",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        109,
+        73,
+        1203,
+        1157
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.556771441435254,
+      "icon": {
+        "file": "shared-ring.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "cbbd3f0dce45242d3d89bba9008a059001dc4399be956e18a861da5eb5078672",
+        "bytes": 87502
+      },
+      "cards": {
+        "common": {
+          "file": "cards/shared-ring_common.jpg",
+          "sha256": "81b428b79bd8ebecc9b4610590296db9a6114394c5f3d04c09637000e198ee0f",
+          "bytes": 65594
+        },
+        "advanced": {
+          "file": "cards/shared-ring_advanced.jpg",
+          "sha256": "cf36b32c4f5050de3aa6156f6f820c25a0ed8773d67975e3421b8c8ecc4c1c28",
+          "bytes": 66409
+        },
+        "epic": {
+          "file": "cards/shared-ring_epic.jpg",
+          "sha256": "028235c8f89d89de90f84df17cd7e45436c01065e829b15d3463d5cbff81ec60",
+          "bytes": 66512
+        },
+        "legendary": {
+          "file": "cards/shared-ring_legendary.jpg",
+          "sha256": "c0240c728d67d62918e3d29556ee24b4190bf6f6411a43a3c7beddfc72770abb",
+          "bytes": 66081
+        },
+        "supreme": {
+          "file": "cards/shared-ring_supreme.jpg",
+          "sha256": "b10a9f28f81786a6b4639ad4049d907770b74117ae8b1973ac1aec1a1c14db80",
+          "bytes": 66296
+        },
+        "relic": {
+          "file": "cards/shared-ring_relic.jpg",
+          "sha256": "e61fb351403840c86708b9dc25593dd310cd4f167e4e91ba1cbcb43c294c43a2",
+          "bytes": 66590
+        }
+      }
+    },
+    {
+      "id": "weapon-sword",
+      "name": "單手劍",
+      "reusedFrom": "art/star-ring-rewards-20261018/gear-weapon.webp",
+      "sourceSha256": "ed56db6f43419a97a0e158d8ca88a8413853a4b09d51e9b60a4ea34a697ce73e",
+      "sourceSize": [
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        90,
+        56,
+        456,
+        453
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.90313720703125,
+      "icon": {
+        "file": "weapon-sword.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "453f7585686dde1d6a6722fe6d624903aaa776cb3375ab09afb828c3a994ed0b",
+        "bytes": 40714
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-sword_common.jpg",
+          "sha256": "5aebbce3d9f85b0509610351df16b7e67086510e5bfe91fe61173652e88b12d3",
+          "bytes": 36087
+        },
+        "advanced": {
+          "file": "cards/weapon-sword_advanced.jpg",
+          "sha256": "af43492d9e212142efa6972362681d46c001d7d4e67f5590d8da9ff2b099b7e0",
+          "bytes": 36949
+        },
+        "epic": {
+          "file": "cards/weapon-sword_epic.jpg",
+          "sha256": "64a37520b81b543fb835865fde271ddf8b6ab8531b5fc693971e39c522d8f39a",
+          "bytes": 37057
+        },
+        "legendary": {
+          "file": "cards/weapon-sword_legendary.jpg",
+          "sha256": "860f266580aebc0ab6590da6325c2a973571429affe39042787a763c376463b2",
+          "bytes": 36616
+        },
+        "supreme": {
+          "file": "cards/weapon-sword_supreme.jpg",
+          "sha256": "781a763d132f94407a82724983fb44f6ffa88d5d350814e7f9b708ebf4705708",
+          "bytes": 36825
+        },
+        "relic": {
+          "file": "cards/weapon-sword_relic.jpg",
+          "sha256": "8bd228816d438a2e15d057ed23921c6d7dfcdc43a67433363c159463604493df",
+          "bytes": 37156
+        }
+      }
+    },
+    {
+      "id": "weapon-greatsword",
+      "name": "雙手巨劍",
+      "reusedFrom": null,
+      "sourceSha256": "3fe44897edf7c13be8e8682b281aa267e07c00ba6ccf71d08a8bcce43478e57b",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        16,
+        17,
+        1239,
+        1230
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.787164009777961,
+      "icon": {
+        "file": "weapon-greatsword.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "0fea65817da3db9f1ff97c6ef251893c4971b51a2ea7f8a1acfed6edbecd71f1",
+        "bytes": 44050
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-greatsword_common.jpg",
+          "sha256": "092326df454480c216bc172b4a24bb5cb29524d40ece1debc20f68cfc71337f4",
+          "bytes": 43116
+        },
+        "advanced": {
+          "file": "cards/weapon-greatsword_advanced.jpg",
+          "sha256": "b3355bbb0458ebf7cf982cbe861de5469087620da270353b82aa60d14fed60a2",
+          "bytes": 43921
+        },
+        "epic": {
+          "file": "cards/weapon-greatsword_epic.jpg",
+          "sha256": "641628775d1a99f64718abd738cfd0ec76bf006a96aca0d5f834ec9f4e6a065e",
+          "bytes": 43992
+        },
+        "legendary": {
+          "file": "cards/weapon-greatsword_legendary.jpg",
+          "sha256": "ee26b1e2d6df85bdce0f8331d483dabe1422e95a0853be4f50f6fe6149baa463",
+          "bytes": 43581
+        },
+        "supreme": {
+          "file": "cards/weapon-greatsword_supreme.jpg",
+          "sha256": "7bf84709b858d5503015d81d4a0c1475025b335e70cf6599cefe1dbd36c94ed6",
+          "bytes": 43784
+        },
+        "relic": {
+          "file": "cards/weapon-greatsword_relic.jpg",
+          "sha256": "a3871a04211cfb869e02be3232be503497054a8475fe4f90fa95ec8fe020989a",
+          "bytes": 44103
+        }
+      }
+    },
+    {
+      "id": "weapon-sword_shield",
+      "name": "劍盾",
+      "reusedFrom": null,
+      "sourceSha256": "e9d4a6c63dfbcadd4c628252b0457e17488b559a111368a9bb72f71a54ee6360",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        43,
+        39,
+        1218,
+        1216
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5392282177097085,
+      "icon": {
+        "file": "weapon-sword_shield.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "621076c1b4d3877c9529bc54e169c88f29055832c7d1faf60c9329f1e4363f7d",
+        "bytes": 77144
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-sword_shield_common.jpg",
+          "sha256": "4891263d94fbc388e6d49d0f8a996197dfc13404c775ec306bce244aba1b3499",
+          "bytes": 61173
+        },
+        "advanced": {
+          "file": "cards/weapon-sword_shield_advanced.jpg",
+          "sha256": "ef7e2e7e26bb90dec482ab4731d6f54fb9a6d3a11bcf670bd0a08f3449825d4b",
+          "bytes": 62013
+        },
+        "epic": {
+          "file": "cards/weapon-sword_shield_epic.jpg",
+          "sha256": "ef0ecc5c38b33594fa1ba5a90363ae1e457ded11cba4554ed93bd33287a0f1d4",
+          "bytes": 62079
+        },
+        "legendary": {
+          "file": "cards/weapon-sword_shield_legendary.jpg",
+          "sha256": "11db00a80dd2130fee146019e777ca5f80c2b87534c4055d10f8623038ef6f87",
+          "bytes": 61695
+        },
+        "supreme": {
+          "file": "cards/weapon-sword_shield_supreme.jpg",
+          "sha256": "0f1dc57b83998388778591da46855fe053d81ed8a44d71fdfe23c535a0fca4a9",
+          "bytes": 61887
+        },
+        "relic": {
+          "file": "cards/weapon-sword_shield_relic.jpg",
+          "sha256": "9c58b44e8d2bf6c421958080216182d97d59f8617dbba568d9167e924fc845cc",
+          "bytes": 62205
+        }
+      }
+    },
+    {
+      "id": "weapon-staff",
+      "name": "法杖",
+      "reusedFrom": "art/star-ring-rewards-20261018/gear-weapon-mage.webp",
+      "sourceSha256": "412f329d8aec21e3c86259de2097763aaedad922390334199880bf390419f84b",
+      "sourceSize": [
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        90,
+        51,
+        440,
+        465
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.9269180297851562,
+      "icon": {
+        "file": "weapon-staff.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "a2ad9f0d69f00e539aa1c9c532205991e6a1decfbfaefbcf21dba694e2e39ed8",
+        "bytes": 34164
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-staff_common.jpg",
+          "sha256": "65de99f319390f1034117e91d38bd3abf308231b0f593717919133f29a2bd094",
+          "bytes": 34359
+        },
+        "advanced": {
+          "file": "cards/weapon-staff_advanced.jpg",
+          "sha256": "63fb0b609945ebb1c31703fcd945c9dc177e5d72e6ac2508a154012d29166d30",
+          "bytes": 35199
+        },
+        "epic": {
+          "file": "cards/weapon-staff_epic.jpg",
+          "sha256": "a57fed6f86df3fe8bed0810264a53525fadcf3f9fb54f6cfbbf366f7bdabf5b3",
+          "bytes": 35277
+        },
+        "legendary": {
+          "file": "cards/weapon-staff_legendary.jpg",
+          "sha256": "35f6b9aded5610e7c453f0665e0c5e10ef8d6636f1f59495fef7a32efbdb5cd9",
+          "bytes": 34885
+        },
+        "supreme": {
+          "file": "cards/weapon-staff_supreme.jpg",
+          "sha256": "6f18ef3fe149a09304494f5718ab7db5fbefaea7593e89fe0f46cfc1d8ea75f0",
+          "bytes": 35075
+        },
+        "relic": {
+          "file": "cards/weapon-staff_relic.jpg",
+          "sha256": "a936d0b43af14a1dcbbbae6ca258e4d1e9b2a25a4aaa68edd9e62ae4a5c865ce",
+          "bytes": 35424
+        }
+      }
+    },
+    {
+      "id": "weapon-elem_staff",
+      "name": "元素法杖",
+      "reusedFrom": null,
+      "sourceSha256": "9e066b7e1edb18a34b05e6c142c53080db2b2489967016df0b88cb02df5d5ac5",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        117,
+        35,
+        1212,
+        1225
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.8672261522299296,
+      "icon": {
+        "file": "weapon-elem_staff.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "8f2b5482dac9078cd18129cccb584aac1917707e27790ee4a462032e36f6b2c3",
+        "bytes": 51674
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-elem_staff_common.jpg",
+          "sha256": "7fd20b90918d7855ea1af586b0629fcc0a69e030a587273f2900e04712e12008",
+          "bytes": 39775
+        },
+        "advanced": {
+          "file": "cards/weapon-elem_staff_advanced.jpg",
+          "sha256": "db89b3ee029a5517c9dc4d44cf13461e068c4d1e85d74faaf78a82d156528352",
+          "bytes": 40628
+        },
+        "epic": {
+          "file": "cards/weapon-elem_staff_epic.jpg",
+          "sha256": "68b2f322553e75224126e0f79b55a1fc7a081a112b044f766eed6dcaff84a199",
+          "bytes": 40679
+        },
+        "legendary": {
+          "file": "cards/weapon-elem_staff_legendary.jpg",
+          "sha256": "cc2b279edad4be1fd16550b8cb84150792696ec7fd03d8f07bfd05a3264d84c2",
+          "bytes": 40283
+        },
+        "supreme": {
+          "file": "cards/weapon-elem_staff_supreme.jpg",
+          "sha256": "76d8a97d42cfff4dba2fdd5db307171df6274d495781639d276bcfd6d7735e59",
+          "bytes": 40486
+        },
+        "relic": {
+          "file": "cards/weapon-elem_staff_relic.jpg",
+          "sha256": "bfca914dc003ea8cae783424935c31d4ca5da8ea90f2f70fd4d24dd7f364144a",
+          "bytes": 40802
+        }
+      }
+    },
+    {
+      "id": "weapon-wand",
+      "name": "魔導書",
+      "reusedFrom": null,
+      "sourceSha256": "8846d7990c4ed2ed1d8a0b6c661f203db5b1d0ab8ea948447b8837f2115582b2",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        29,
+        161,
+        1231,
+        1151
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.5593259464450601,
+      "icon": {
+        "file": "weapon-wand.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "647ab5adb0f307f9c078f0b38dd751a13097566bd41ce5090cef7a2bb62e407d",
+        "bytes": 72922
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-wand_common.jpg",
+          "sha256": "a04de328293cd751a2a251e977bca7d0ee52bf2bce80b4c2106f347280e593f3",
+          "bytes": 54996
+        },
+        "advanced": {
+          "file": "cards/weapon-wand_advanced.jpg",
+          "sha256": "600d5748bb6eb70146211aabea10100202337f0fb6854fb8a05d35be840ed461",
+          "bytes": 55813
+        },
+        "epic": {
+          "file": "cards/weapon-wand_epic.jpg",
+          "sha256": "9a72648dbce86e054f8c01808404fcf8819cfc33a7bf3a808782bf26ce48be7e",
+          "bytes": 55924
+        },
+        "legendary": {
+          "file": "cards/weapon-wand_legendary.jpg",
+          "sha256": "07640f6d8662bb61f30f19b922b85e1ddd48041ef92f4d7aae4c1c96b8c2219a",
+          "bytes": 55484
+        },
+        "supreme": {
+          "file": "cards/weapon-wand_supreme.jpg",
+          "sha256": "3228b4def8a19a4a2c881a8110a95024cbd4ae05f175fa0d95c872530d122de9",
+          "bytes": 55694
+        },
+        "relic": {
+          "file": "cards/weapon-wand_relic.jpg",
+          "sha256": "986edb3fcf047663faaa32895c91adecff727240a975c4faf212b935a465628a",
+          "bytes": 56006
+        }
+      }
+    },
+    {
+      "id": "weapon-longbow",
+      "name": "長弓",
+      "reusedFrom": "art/star-ring-rewards-20261018/gear-weapon-archer.webp",
+      "sourceSha256": "103f42b1282b5bc25fc694b729c3f014dc907b45b14d41526ea9353c3cbec83c",
+      "sourceSize": [
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        101,
+        45,
+        456,
+        461
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.9224662780761719,
+      "icon": {
+        "file": "weapon-longbow.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "03147be47ba912c6aedd6eb63296676748559f54cdae8c7ca2b71211996757f4",
+        "bytes": 37660
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-longbow_common.jpg",
+          "sha256": "2559ac9908f1f5fcac4178e3cb0beecdbfe2edc6ad971fb92b1551000852075f",
+          "bytes": 35629
+        },
+        "advanced": {
+          "file": "cards/weapon-longbow_advanced.jpg",
+          "sha256": "bea1db70d9c0a88955829f73540d72f9a7026b66da8f9e9d50f820733e9b42ee",
+          "bytes": 36475
+        },
+        "epic": {
+          "file": "cards/weapon-longbow_epic.jpg",
+          "sha256": "1f7b6c1c89c2bd01f771c13550c9b8b0e44e6a2209f97826449b33156c1d158a",
+          "bytes": 36574
+        },
+        "legendary": {
+          "file": "cards/weapon-longbow_legendary.jpg",
+          "sha256": "6b840c16e6cdd1cc0ec70c5813ba8780b5004d15664df4224e97b3bc1ed9c050",
+          "bytes": 36135
+        },
+        "supreme": {
+          "file": "cards/weapon-longbow_supreme.jpg",
+          "sha256": "0cf8692955734495e58bf0303defad53b7ac711c69f87cf6fb27e99ae8b5a019",
+          "bytes": 36333
+        },
+        "relic": {
+          "file": "cards/weapon-longbow_relic.jpg",
+          "sha256": "f6267120e7efb09cbef6bff07a72717fa6b578d76bfa556e8964698efe98a1e6",
+          "bytes": 36680
+        }
+      }
+    },
+    {
+      "id": "weapon-compound_bow",
+      "name": "複合弓",
+      "reusedFrom": null,
+      "sourceSha256": "af71d3884694435cec9a1c5594913f5b710a30eb7bd5e601a97559c0d56a6ce0",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        237,
+        12,
+        1208,
+        1242
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.822845045773779,
+      "icon": {
+        "file": "weapon-compound_bow.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "f8fe1cd73152b1781da9a92f3571642be673c8e1e9b04fc449c37e64c627da49",
+        "bytes": 58114
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-compound_bow_common.jpg",
+          "sha256": "3a8f4cc5c61bf558a45fd252db146fad743afbe69586d4f2f71f5e5ad5f2d530",
+          "bytes": 41993
+        },
+        "advanced": {
+          "file": "cards/weapon-compound_bow_advanced.jpg",
+          "sha256": "23effc0a0a341543a85062754d281a0b8a0fbe27c66bd008d9108d07ce6416a7",
+          "bytes": 42809
+        },
+        "epic": {
+          "file": "cards/weapon-compound_bow_epic.jpg",
+          "sha256": "03d0edf259dd29dff15ef6d5411fde777eb6216ae73fe4fa51d333f34678fcde",
+          "bytes": 42950
+        },
+        "legendary": {
+          "file": "cards/weapon-compound_bow_legendary.jpg",
+          "sha256": "10a252a9981b19a70e3690a0309899513aa47d8b6bf3d5c656e05edc1bc9ec36",
+          "bytes": 42472
+        },
+        "supreme": {
+          "file": "cards/weapon-compound_bow_supreme.jpg",
+          "sha256": "b8911e051e1440ad21520b88e06268a215e6eee535b76958bf3da07bc89afbdb",
+          "bytes": 42692
+        },
+        "relic": {
+          "file": "cards/weapon-compound_bow_relic.jpg",
+          "sha256": "12c573f2391467e461147040c31c8b491fefaa2f4c69b043687675cf9074a9aa",
+          "bytes": 43013
+        }
+      }
+    },
+    {
+      "id": "weapon-crossbow",
+      "name": "十字弩",
+      "reusedFrom": null,
+      "sourceSha256": "02aeecc104e4875d0002455586b6d5f2cf46063fafe0eebae55e4f381eb25b41",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        50,
+        234,
+        1220,
+        1038
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.7428223305835998,
+      "icon": {
+        "file": "weapon-crossbow.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "42bd2bcef82d58db0ec697dfacc5300ef255b46e2cb941917379a6baaebdb2f0",
+        "bytes": 62290
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-crossbow_common.jpg",
+          "sha256": "aed359bad5c322d3c2d4b3f62694fecac637016bbd24f7b61f1a80ef65764848",
+          "bytes": 46408
+        },
+        "advanced": {
+          "file": "cards/weapon-crossbow_advanced.jpg",
+          "sha256": "8491010fb2ccc016bc92d98ba93b0baabc8bb2d1b4c6467cc3bae04c99f76d5b",
+          "bytes": 47196
+        },
+        "epic": {
+          "file": "cards/weapon-crossbow_epic.jpg",
+          "sha256": "d132dd8dee8e4af5b92f5f5a97cf7b5a85037c78abf0099aafb5c877167e243d",
+          "bytes": 47286
+        },
+        "legendary": {
+          "file": "cards/weapon-crossbow_legendary.jpg",
+          "sha256": "2a01026d6d10da0dc1cc198b1539ed88065c82285bd789ce4b52cdb68126789a",
+          "bytes": 46874
+        },
+        "supreme": {
+          "file": "cards/weapon-crossbow_supreme.jpg",
+          "sha256": "35e6508309b3718d63d669783beb533769e7f45abca51e6f63c0a29c028dc9f5",
+          "bytes": 47095
+        },
+        "relic": {
+          "file": "cards/weapon-crossbow_relic.jpg",
+          "sha256": "924909a80cc6e8523abf32192c9da6fb5da0728ae366e98808dd05aac1d95e2c",
+          "bytes": 47420
+        }
+      }
+    },
+    {
+      "id": "weapon-dagger",
+      "name": "短匕首",
+      "reusedFrom": null,
+      "sourceSha256": "df612ec417bd8d9ae0125234f4ce280d55c0b61ac69108f6135e2403258ed944",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        74,
+        76,
+        1196,
+        1178
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.8110817314418423,
+      "icon": {
+        "file": "weapon-dagger.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "79680be1027ec004a687178391a2454a0e69ffded6c2e977dbff16404015a955",
+        "bytes": 44030
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-dagger_common.jpg",
+          "sha256": "60761723b64516b08e3bb86d8524fd1c03a2b38ed3a184ad603a6028805f224a",
+          "bytes": 41760
+        },
+        "advanced": {
+          "file": "cards/weapon-dagger_advanced.jpg",
+          "sha256": "1f8a40924a29e983f9797a1930c932eecec38dd145a147a914bd0fe31c9ec7ba",
+          "bytes": 42583
+        },
+        "epic": {
+          "file": "cards/weapon-dagger_epic.jpg",
+          "sha256": "e880c5cf4838588d7da6b95e6c8e3591a56e1efc5546924455b15c529ebc9077",
+          "bytes": 42717
+        },
+        "legendary": {
+          "file": "cards/weapon-dagger_legendary.jpg",
+          "sha256": "b7a6456e92449800be720f53e03b2cf0dde35a64fe990371d8068a6112ccdaf6",
+          "bytes": 42301
+        },
+        "supreme": {
+          "file": "cards/weapon-dagger_supreme.jpg",
+          "sha256": "9b4c0993cae3ed4d45cb80c9f9fa2fce72f6c497f77d378f6e00456031448f17",
+          "bytes": 42468
+        },
+        "relic": {
+          "file": "cards/weapon-dagger_relic.jpg",
+          "sha256": "7e0872eba3458d78d8561816b64c63ba3f9f1347d0ddb4c10cadb43798fb4670",
+          "bytes": 42795
+        }
+      }
+    },
+    {
+      "id": "weapon-dual_daggers",
+      "name": "雙匕首",
+      "reusedFrom": "art/star-ring-rewards-20261018/gear-weapon-thief.webp",
+      "sourceSha256": "66fd75e6711289fdc15044fa07309d254d0320f59b4c876094dfacfb75f28677",
+      "sourceSize": [
+        512,
+        512
+      ],
+      "sourceAlphaBounds": [
+        90,
+        63,
+        422,
+        438
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.844390869140625,
+      "icon": {
+        "file": "weapon-dual_daggers.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "96507b1d34dafffc18fb716111291d3e3e843ac7334d5febfe974da42697e9e7",
+        "bytes": 58320
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-dual_daggers_common.jpg",
+          "sha256": "1bfe72d46e9dde52254407c0ae20bbbce6aa2632929a748718adeac82bd78f7d",
+          "bytes": 47412
+        },
+        "advanced": {
+          "file": "cards/weapon-dual_daggers_advanced.jpg",
+          "sha256": "989c564d6f81a8468b2fc9042e223c19ca540a4cc040e0c92ee6ed5423150abb",
+          "bytes": 48223
+        },
+        "epic": {
+          "file": "cards/weapon-dual_daggers_epic.jpg",
+          "sha256": "6138a02c7ff7234e920d56ebec4e724501c9ce5ac5ca0d7c366c94a9b4f3addf",
+          "bytes": 48285
+        },
+        "legendary": {
+          "file": "cards/weapon-dual_daggers_legendary.jpg",
+          "sha256": "4069cf5f13eefcd85bcb1f189cb6425763aeb6e74465968ba719671d2522b388",
+          "bytes": 47895
+        },
+        "supreme": {
+          "file": "cards/weapon-dual_daggers_supreme.jpg",
+          "sha256": "21b3723e550fca1a9e4c8751e6f86d4eb2dfd2e52d819e6583ad63b32fa6b3c1",
+          "bytes": 48106
+        },
+        "relic": {
+          "file": "cards/weapon-dual_daggers_relic.jpg",
+          "sha256": "2f37e36bf13eb758792b7966c14eb0d613b9fb4ffd377160ed0c0c21bdab7fb0",
+          "bytes": 48398
+        }
+      }
+    },
+    {
+      "id": "weapon-throwing_blades",
+      "name": "投擲刃",
+      "reusedFrom": null,
+      "sourceSha256": "a86aea12b4acbb7eb3ca59049655bc4a21a67b5a8a666b7e0ec3fecb93fd236f",
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "sourceAlphaBounds": [
+        68,
+        31,
+        1194,
+        1190
+      ],
+      "sourceBorderPixels": 0,
+      "transparentFraction": 0.7827411612981998,
+      "icon": {
+        "file": "weapon-throwing_blades.webp",
+        "width": 512,
+        "height": 512,
+        "sha256": "8f32c82e8e8cc5f5e57a6156c65b1fdcc0f82c5156612b680722d8c6de0b1efe",
+        "bytes": 59620
+      },
+      "cards": {
+        "common": {
+          "file": "cards/weapon-throwing_blades_common.jpg",
+          "sha256": "dd4af2168b6c9a44f25a0e401dd448767a984fbc3e9d864ea3451ad1c4fff003",
+          "bytes": 45547
+        },
+        "advanced": {
+          "file": "cards/weapon-throwing_blades_advanced.jpg",
+          "sha256": "b785d0ade292596251785398977979f86b942c5bccc8557400e9d84dbaf2cfe0",
+          "bytes": 46339
+        },
+        "epic": {
+          "file": "cards/weapon-throwing_blades_epic.jpg",
+          "sha256": "555599be9f172751df715ca28ac6fec234f17120089507364ffb1d300bfacefb",
+          "bytes": 46429
+        },
+        "legendary": {
+          "file": "cards/weapon-throwing_blades_legendary.jpg",
+          "sha256": "b9549d5c47f73fa49a7a216f59b39298d84c8daf98f2b98d2c90ad6e4a297445",
+          "bytes": 46053
+        },
+        "supreme": {
+          "file": "cards/weapon-throwing_blades_supreme.jpg",
+          "sha256": "f477347870670ab51efb134bd197c5603aed482f246fe780699fd715e1e76ed6",
+          "bytes": 46235
+        },
+        "relic": {
+          "file": "cards/weapon-throwing_blades_relic.jpg",
+          "sha256": "f49db6f925b3ab4632ac251ab66953d93867201320a1bfe5184aeb7de1df351d",
+          "bytes": 46542
+        }
+      }
+    }
+  ]
+}

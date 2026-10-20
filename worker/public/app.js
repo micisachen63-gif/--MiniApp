@@ -2000,11 +2000,14 @@
     try { S.pendingTab = S.tab; S.characters = (await api('characters')).characters; S.creating = false; S.choosing = true; render(); }
     catch (e) { toast(e.message, true); }
   }
+  async function enterCharacter(charId){
+    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.choosing=false;S.tab=S.pendingTab||'home';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
+  }
   function bindCharacterSelect(view) {
     view.querySelectorAll('[data-new]').forEach((card) => { card.onclick = () => { S.create = { step: 0, name: S.create.name || '', cls: null, gender: null, slot: Number(card.dataset.new) }; S.creating = true; S.choosing = false; render(); }; });
     view.querySelectorAll('[data-select]').forEach((card) => { card.onclick = async () => {
       if (S.busy) return; S.busy = true; card.disabled = true;
-      try { const j = absorb(await api('select', { charId: card.dataset.select }),true); S.characters = j.characters || S.characters; S.choosing = false; S.tab = S.pendingTab || 'home'; render(); load(S.tab); if (S.tab !== 'home') loadLedger(); haptic('ok'); }
+      try { await enterCharacter(card.dataset.select); }
       catch (e) { toast(e.message, true); card.disabled = false; }
       finally { S.busy = false; }
     }; });
@@ -2100,7 +2103,7 @@
 
   function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
   async function boot() {
-    await import('./thief-gear-art.js?v=20261015-thief-gear1');
+    await Promise.all([import('./thief-gear-art.js?v=20261015-thief-gear1'),import('./star-ring-gear-art.js?v=20261020-dedicated1')]);
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
     const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
@@ -2116,6 +2119,8 @@
       const u = tg && tg.initDataUnsafe && tg.initDataUnsafe.user; S.create.name = u ? String(u.first_name || '').replace(/[^\p{Script=Han}A-Za-z0-9_]/gu, '').slice(0, 12) : '';
       S.pendingTab = want;
       S.characters = (await api('characters')).characters || []; S.choosing = true;
+      const inviteCharacter=ringLink&&S.characters.find(c=>c.active);
+      if(inviteCharacter){S.busy=true;try{await enterCharacter(inviteCharacter.charId);return;}catch(e){S.choosing=true;render();toast(e.message,true);return;}finally{S.busy=false;}}
       render();
     } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : esc(e.message)); }
   }

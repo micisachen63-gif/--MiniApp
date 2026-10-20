@@ -1,0 +1,25 @@
+星征專屬裝備圖／通知一鍵加入準備 — 2026-10-20
+
+1. 圖片問題與結果
+前版改成正確職業／部位／階級的普通裝圖，解決胸甲代靴子問題，但仍與同部位菁英裝共圖。本次新增星環深藍、金飾、星晶系列：四職業各頭盔／胸甲／手套／靴子16種，十二種一般及分支武器，腰帶／內衣／耳飾／戒指4種，共32種圖。28張使用內建image_gen新生成，4張沿用已驗收星環專用武器圖；不是重染菁英圖，也不使用一張胸甲或墜飾代替其他部位。
+每個種類一款系列造型，並非每個T階各畫32套；T階、稀有度、強化以實際資料及框色呈現。沒有更動裝備等級、能力、15%來源優勢、強化、綁定或掉落配方；前一版每階段保底及最多13件的收益規則保留。
+512px真alpha WebP共32張，TG480px六種品質JPEG共192張。Node sharp只做保alpha裁切、縮放、留白及壓縮；Canvas只派生品質框與文字，不生成道具主體。原始像素hash／alpha範圍／邊界檢驗與衍生檔hash在docs/art/STAR_RING_EQUIPMENT_20261020.json，全新提示完整保存art-production/star-ring-gear-20261020/prompts.json。原PNG保留於CODEX_HOME/generated_images及本地忽略的.release-sync/ring-art-sources，不部署原圖或把它們當運作依賴。
+最終素材在worker/public/art/star-ring-gear-20261020/，32張圖全部透明、無實體像素撞外邊，192張分享卡可讀中文品質名稱。公開預覽 /preview-star-ring-equipment.html 不讀玩家、不扣物品。
+
+2. 對應與相容
+worker/public/star-ring-gear-art.js 為前後端共用純解析器，白名單限制職業／部位／weapon kind，只有source=star_ring改圖。main boot等待模組import，expedition/live.js靜態import；cosmetics.gearArt委派同一解析器。share.gearArt／gearIconSrc／cardPhoto早於普通／盜賊fallback判斷星征來源，普通裝、菁英與遺物原圖不改。
+交易tradeView原先漏回source，本次將託管與歷史行保留的source帶回，避免同一件在背包是星征圖、交易卻退回菁英圖。裝備列表、詳情、重鑄、交易所、雙人交易、英雄殿堂、遠征獎勵與新TG道具分享使用一致分類；舊裝重開後直接換顯示，無重刷、複製道具或DB回填。既有已發送TG分享照片不批次改寫。
+
+3. 通知加入並準備
+保留既有startapp=ring_<32hex>邀請網址，因此舊「查看／加入隊伍」按鈕同樣生效；BOT新卡改標「加入並準備」。app只對此邀請使用帳號上次active角色透過原有select驗證直接登入，不自動另挑角色；沒有有效active則保留選角。一般開遊戲、其他deep link不跳過選角。資格不足或角色另有組隊則顯示原規則錯誤。
+expedition-entry將邀請轉成精準ringParty＋ringJoin=1，按角色／隊伍消耗一次，手動離開iframe再回來不重新準備。live.js把joinOnOpen交給UI，初次精準get後只對本人非readonly且lobby的未入隊／未準備狀態發一筆join-ready。先消耗意圖；新的邀請不重播舊已成功準備操作的編號，背景輪詢不重送寫入；失敗後可按加入並準備，以同requestId重試。不吞真正拒絕、不自動換角、不由TG callback繞過驗證。
+原完成私訊ringParty／ringChar、唯讀檢視、已準備成員、已出發／結束場次只讀，不自動加入或切換準備。換角色、離開面板及舊回應的identity／version防護保留。
+server join-ready共用原join資格流程，以同一revision、batch與操作收據把成員、ready=1、presence一起提交；既有成員只設1不toggle，不增席位。新加入也先檢查該角色其他lobby reservation以給明確錯誤。保留五帳號、等級、每日一次、滿員、過期及出發限制。五人ready不自動開始12小時；仍由隊長啟程才扣當日次數。
+
+4. 驗證／發版
+新增15個server案例、8個UI意圖／防重案例、6個美術對應／真託管歷史案例；既有相關案例更新為專屬圖與新按鈕。完整測試另修既有fate-dm-cast誤報：固定UUID包含303，排除不具帳號意義的lifeId後仍逐一檢查通知身份欄位及精準key白名單；未放寬真正的帳號／暱稱隱私檢查，未改命運旅章runtime。完整Worker1962／BOT163結果以CI與發布收據確認，不跳過失敗檔。
+隔離完整MiniApp＋實際Worker HTTP＋記憶體D1在390／1280px：從ring通知URL自動登入上次角色、補第五席並準備、未扣次數、手動取消準備再關閉重開不被改回；一般bag入口仍顯示選角。實際神器庫與詳情顯示星征／菁英頭盔不同圖片，15%說明保留，32張圖鑑全部decode，無pageerror／水平溢出。這是Chrome響應式測試，非原生iPhone／Android TG實機；沒有向正式玩家或群組測試發文。
+先PR必要Worker and BOT tests，合main後乾淨root deploy:worker，再deploy:bot。Worker先提供新入隊端點與舊連結支援，BOT後換招募文字；沒有migration／新付費服務。正式版本只看origin/deployment-records:docs/deployment/elf-rpg-api.json和star-journal-rpg-bot.json；不要部署收據分支。每個新增／修改public檔包含所有新二進位圖，均納入發布腳本線上hash核對。
+
+重做素材（離線製作工具，非遊戲runtime）
+設定RPG_ART_NODE_MODULES到含sharp、@napi-rs/canvas的本機node_modules，RPG_ART_FONT到中文字型；Node24執行 worker/tools/build-star-ring-gear-art.mjs --sources=<原PNG資料夾>，來源檔名用prompts.json的id.png。保留四張舊星環武器圖與所有原角色美術。重新產出會更新QA hash，先目視與測試再提交，不能當成可盲跑的正式資料修復。

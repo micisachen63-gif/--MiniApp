@@ -1,6 +1,7 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
 import {makeStarRingGear,repairStarRingGear,legacyStarRingGear,STAR_RING_GEAR,starRingGearDropPlan} from '../src/game/star-ring-gear.js';
 import {makeGear,gearOffers,convertWeapon} from '../src/game/gear.js';import {itemStat,itemExtras} from '../src/game/stats.js';
+import {starRingArtId} from '../public/star-ring-gear-art.js';
 import {gearArt,cardPhoto} from '../src/game/share.js';import {CLASS_KEYS,SLOTS,RARITIES,TIER_LEVEL_REQ,GENERAL_WEAPON} from '../src/game/constants.js';
 import {mapForLevel,expToNext} from '../src/game/formulas.js';import {affixLines,affixSlots} from '../src/game/affixes.js';import {rngFor} from '../src/game/rng.js';
 import {skillExpedition,shortParty,NOW} from './star-ring-skill-fixture.js';import * as Ring from '../src/services/star-ring.js';import * as Engine from '../src/game/star-ring.js';
@@ -31,7 +32,7 @@ for(const cls of CLASS_KEYS)test(`${cls}: expedition main, enhancement, element 
 
 test('every class, branch and slot uses the exact tier art and existing real share-card file, never a generic chestplate for boots',()=>{
  for(const cls of CLASS_KEYS)for(const branch of ['A','B'])for(const e of gearOffers({base_class:cls,class_path:branch,level:120})){
-  const source={...e,source:'star_ring',class_req:cls,name:'星征'+e.name},expected=gearArt({...e,class_req:cls}),actual=gearArt(source);assert.equal(actual,expected,e.name);
+  const source={...e,source:'star_ring',class_req:cls,name:'星征'+e.name},expected='star_ring_'+starRingArtId(source),actual=gearArt(source);assert.equal(actual,expected,e.name);assert.notEqual(actual,gearArt({...e,class_req:cls}));
   const photo=cardPhoto({...source,element_tier:'legendary'});assert.ok(fs.existsSync(new URL('../public'+photo,import.meta.url)),photo);
   if(e.slot==='boots')assert.match(actual,/boots/);if(e.slot==='gloves')assert.match(actual,/gloves/);
  }

@@ -7,9 +7,8 @@
  const icon=a=>key(a)?ROOT+'icon-'+key(a)+'.webp':null;
  const safeHero=url=>typeof url==='string'&&/^\/?art\/[a-zA-Z0-9_./?=&%-]+$/.test(url)&&!url.includes('..')?url:null;
  function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="background-image:url('+p+')"></span>':'';}
- // Equipment uses its canonical class/slot/tier art. A chestplate or pendant
- // cannot stand in for boots, gloves, belts, underwear, rings or earrings.
- function gearArt(){return null;}
+ // Each equipment kind resolves through the shared class/slot collection map.
+ function gearArt(e){return globalThis.RpgStarRingGearArt?.gearArt(e)||null;}
  function itemArt(id){if(id==='star_ring_core')return '/art/star-ring-rank-rewards-20261019/star-ring-core.webp';if(/^guaranteed_scroll_[wa]$/.test(id))return '/art/items-scrolls-pink-20261018/'+id+'.webp';if(id==='star_ring_token')return '/art/star-ring-20261018/star_ring_token.webp';if(IDS.includes(id))return icon(id);if(['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a'].includes(id))return '/art/items-scrolls-cutout-20261011/'+id+'.webp';return null;}
  function view(s,host={}){
   const data=s.data,cat=data?.catalog||[],selected=cat.find(a=>a.id===s.preview)||data?.equipped||cat[0],owned=new Set(data?.owned||[]),me=host.me?.(),hero=safeHero(host.actorArt?.(me?.character||me||{})),equipped=data?.equipped?.id;
