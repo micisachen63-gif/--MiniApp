@@ -1,0 +1,12 @@
+2026-10-20 爬塔展開區塊被自動收合修正
+
+問題：expedition/live.js 每 5 秒隊伍輪詢與 30 秒角色更新都呼叫 render，直接重建 #main；原生 details 的 open 與裝備 select 的 DOM／焦點因此被重設。
+
+修正：爬塔頁使用 tower-panel-state.js 保留同角色的 .tp-panel 節點；內容未變時不重建操作區。內容確實改變（徽記、稱號、裝備狀態）時更新內容並按 titles／imprint／offers 穩定鍵恢復開關。使用者主動收合也會保留，不強制全開。裝備選擇沿用 imprintId，跨角色重建不延續別人的展開狀態。頁面其餘隊伍／戰況繼續照原輪詢更新，不停掉輪詢。
+
+不改徽記費用、淬鍊成功率、成長數值、次數、獎勵、戰鬥、資料庫或 BOT。
+
+驗證：Node 24 根目錄 npm test；另從根目錄執行 node worker/test/tower-panel-browser.mjs。
+真完整 Mini App、隔離記憶體 D1 與正式 API handler，390／1280px Chrome 各測：三區塊展開、手動關閉其中一項、改選第二件裝備、真徽記更新、至少 35 秒橫跨 5／30 秒定時器、未變區塊與聚焦 select 節點不變、稱號操作後維持展開、淬鍊確認取消零扣款、角色切換狀態隔離、零頁面錯誤與水平溢出。只是假手機尺寸，未宣稱 iOS／Android 原生實機。
+
+測試結果及截圖存忽略的 .release-sync/tower-panel-*。正式發布狀態以 origin/deployment-records 收據與 runtime 查核為準。

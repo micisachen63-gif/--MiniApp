@@ -1,0 +1,38 @@
+import http from 'node:http';import fs from 'node:fs/promises';import path from 'node:path';import assert from 'node:assert/strict';import {createRequire} from 'node:module';
+import {freshDb} from './d1-shim.js';import {CurrentClientRequest} from './client-request.js';import {handle} from '../src/index.js';import * as P from '../src/services/player.js';import * as G from '../src/services/party.js';import {makeGear} from '../src/game/gear.js';import {computeStats,itemStat} from '../src/game/stats.js';import {insertEquipStmt,loadPlayer} from '../src/db.js';
+const {chromium}=createRequire(import.meta.url)(process.env.RPG_PLAYWRIGHT_MODULE || path.join(process.env.USERPROFILE || process.env.HOME,'.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/playwright')),NOW=Date.parse('2026-10-20T09:00:00+08:00'),root=path.resolve('worker/public'),errors=[],cases=[];
+const types={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.json':'application/json','.css':'text/css','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.svg':'image/svg+xml'},browser=await chromium.launch({headless:true,channel:'chrome'});
+try{await Promise.all([390,1280].map(async width=>{
+ const env={DB:freshDb(),ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',ALLOW_DEBUG_TIME:'true'},db=env.DB.sqlite,ids=['9801','9802','9803'],who=ids[0];let clock=NOW;
+ for(const id of ids){await P.createCharacter(env,{tgId:id,name:'登塔驗收'+id,baseClass:'sword',gender:'m'},NOW);db.prepare("UPDATE rpg_characters SET level=90,class_path='B21',last_settle_at=?,special_json=? WHERE tg_id=?").run(NOW,JSON.stringify({towerBest:20}),id);const p=await loadPlayer(env.DB,id),s=computeStats(p.char,p.equipment);db.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').run(s.maxHp,s.maxMp,id);}
+ const gear={...makeGear({id:'tower-existing',tgId:who,cls:'sword',slot:'helmet',tier:7,forceRarity:'legendary',rng:()=>.5,now:NOW}),enhance_level:7};await insertEquipStmt(env.DB,gear).run();db.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'tower_fragment',1000)").run(who);
+ const spare={...gear,id:'tower-spare',enhance_level:1};await insertEquipStmt(env.DB,spare).run();let reads={tower:0,me:0};
+ const server=http.createServer(async(req,res)=>{try{const url=new URL(req.url,'http://local');if(url.pathname.startsWith('/app/api/')){let body='';for await(const c of req)body+=c;if(url.pathname.endsWith('/tower/status'))reads.tower++;if(url.pathname.endsWith('/expedition/me'))reads.me++;const r=await handle(new CurrentClientRequest('http://local'+req.url,{method:req.method,headers:{...req.headers,'Content-Type':'application/json','X-Debug-Now':String(clock)},...(req.method==='GET'?{}:{body})}),env);res.writeHead(r.status,{'Content-Type':'application/json','Cache-Control':'no-store'});return res.end(await r.text());}const file=path.resolve(root,'.'+(url.pathname==='/'?'/index.html':decodeURIComponent(url.pathname)));if(!file.startsWith(root+path.sep))throw Error('path');let data=await fs.readFile(file);if(url.pathname==='/app.js')data=Buffer.from(data.toString().replace('  boot();','  window.__Tower={S,itemSheet,closeSheet,render};\n  boot();'));res.writeHead(200,{'Content-Type':types[path.extname(file)]||'application/octet-stream','Cache-Control':'no-store'});res.end(data);}catch(e){res.writeHead(500);res.end(e.message);}});
+ await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port,page=await browser.newPage({viewport:{width,height:width<500?800:1050},reducedMotion:'reduce'});page.setDefaultTimeout(15000);page.on('pageerror',e=>errors.push(e.message));await page.route('**/*',r=>r.request().url().startsWith(origin)?r.continue():r.abort());
+ try{
+  await page.goto(origin+'/?devTg='+who);await page.locator('[data-select]').first().click();await page.waitForFunction(()=>!!window.RpgExpeditionOpen);await page.evaluate(()=>window.RpgExpeditionOpen('tower'));await page.locator('#expedition-overlay iframe').waitFor();const frame=page.frames().find(f=>f.url().includes('/expedition/index.html'));await frame.locator('.tp-panel').waitFor();
+  for(const key of ['titles','imprint','offers'])await frame.locator('[data-tower-section="'+key+'"] > summary').click();
+  await frame.locator('[data-tower-gear]').selectOption(spare.id);
+  db.prepare("UPDATE rpg_inventory SET quantity=1005 WHERE tg_id=? AND item='tower_fragment'").run(who);
+  await frame.waitForFunction(()=>document.querySelector('.tp-badges strong').textContent==='1,005',{},{timeout:12000});
+  for(const key of ['titles','imprint','offers'])assert.equal(await frame.locator('[data-tower-section="'+key+'"]').getAttribute('open'),'');
+  assert.equal(await frame.locator('[data-tower-gear]').inputValue(),spare.id);
+  await frame.locator('[data-tower-section="offers"] > summary').click();
+  await frame.locator('[data-tower-gear]').focus();await frame.evaluate(()=>{window.__panel=document.querySelector('.tp-panel');window.__select=document.querySelector('[data-tower-gear]');});
+  const baseline={...reads};await page.waitForTimeout(35000);
+  assert(reads.tower>=baseline.tower+5);assert(reads.me>=baseline.me+5);
+  assert.equal(await frame.evaluate(()=>window.__panel===document.querySelector('.tp-panel')&&window.__select===document.querySelector('[data-tower-gear]')&&document.activeElement===window.__select),true);
+  assert.equal(await frame.locator('[data-tower-gear]').inputValue(),spare.id);
+  assert.equal(await frame.locator('[data-tower-section="imprint"]').getAttribute('open'),'');
+  assert.equal(await frame.locator('[data-tower-section="titles"]').getAttribute('open'),'');
+  assert.equal(await frame.locator('[data-tower-section="offers"]').getAttribute('open'),null);
+  await frame.locator('[data-tower-title="tower_20"]').click();await frame.locator('.tp-record').filter({hasText:'渡夜登臨者'}).waitFor();
+  assert.equal(await frame.locator('[data-tower-section="titles"]').getAttribute('open'),'');assert.equal(await frame.locator('[data-tower-section="imprint"]').getAttribute('open'),'');
+  await frame.locator('[data-tower-imprint="'+spare.id+'"]').click();await frame.locator('#detail [data-close]').click();
+  assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='tower_fragment'").get(who).quantity,1005);
+  assert.equal(await frame.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);
+  await frame.locator('.tp-panel').screenshot({path:'.release-sync/tower-panel-'+width+'.png'});
+  await frame.evaluate(async()=>{const {renderTowerPage}=await import('/expedition/tower-panel-state.js?v=20261020-panel1');const root=document.createElement('div');document.body.append(root);const html='<section class="tp-panel"><details data-tower-section="imprint"><summary>x</summary></details></section>';renderTowerPage(root,html,'a');root.querySelector('details').open=true;renderTowerPage(root,html,'b');if(root.querySelector('details').open)throw Error('Character state leaked');root.remove();});
+  cases.push({width,reads,stablePanel:true,stableFocusedSelect:true,expandedPreserved:true,closedPreserved:true,liveBadgeUpdate:true,titleUpdate:true,cancelZeroCost:true,characterIsolation:true,overflow:false});
+ }catch(e){await page.screenshot({path:'.release-sync/tower-panel-failure-'+width+'.png'});throw e;}finally{await page.close();await new Promise(r=>server.close(r));db.close();}
+}));assert.deepEqual(errors,[]);await fs.writeFile('.release-sync/tower-panel-browser-results.json',JSON.stringify({cases,errors,isolated:true,productionMutations:false},null,2));console.log(JSON.stringify({cases,errors}));}finally{await browser.close();}
