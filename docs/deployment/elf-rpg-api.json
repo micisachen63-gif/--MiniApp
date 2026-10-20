@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "25fc726637fa719791298eb58e2ae226a1838377",
+  "sourceCommit": "fc8b09d51eb0ce72fe7a8d72eef1727985991c59",
   "service": "elf-rpg-api",
-  "productionVersion": "8168182b-dc5a-4dc9-aad7-142e61497773",
+  "productionVersion": "cd735e87-028f-472a-930d-498e26657ffb",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T07:56:20.682Z",
+  "verifiedAt": "2026-10-20T08:46:13.470Z",
   "runtimeSHA256": {
-    "index.js": "9a8e01d0e1da845c48886e820759607df51d5420f98cef6011112fe608a341da"
+    "index.js": "d694374085d906c3e3b6d009e95ead3ac528fbfd323c527d2b7dcbc54659ea76"
   },
   "source": {
-    "fileCount": 9468,
-    "sha256": "d5254f2b9675566a54bc6b7838c97e1085d98a29ffd7d7e47c584c5de23c4434",
+    "fileCount": 9477,
+    "sha256": "4c58a1b173151b9aeb8f108375f0d4df634ccd3893dc02e0476d9a3009779f6f",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2487,7 +2487,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "294281c9e0b9acddb89bfe0ab72f292ece7bd4bf87ee7c062a4a95b5243a620f"
+        "sha256": "b6028a005929c36279b74cc2009b4511705f0a803886502a2724fa07cfb64452"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -22242,6 +22242,14 @@
         "sha256": "a7fa681198b21db4e8068773bc110ef71f2b69250b260079b220ed0f3947513f"
       },
       {
+        "file": "worker/public/art/expedition-away-20261020/loop.mp4",
+        "sha256": "555117eb34d4674bf64f63747869b544defc755389813ce37ca10d50a9b6bbb5"
+      },
+      {
+        "file": "worker/public/art/expedition-away-20261020/poster.webp",
+        "sha256": "cd4e02be882e5e493b0774740fe0a28330c803e214f4b68dd0f71bc6a03d3c1c"
+      },
+      {
         "file": "worker/public/art/fate-chapter-20261016/journey-loop.mp4",
         "sha256": "e78122159c3f01f15a03c84b695ac190aeff56cebb3a8fe90ac906d1c96a6386"
       },
@@ -35438,12 +35446,20 @@
         "sha256": "21ed12413b32fdca7d2d43d17721be4e5d48c60fdb381aa70068e3f38c1c7252"
       },
       {
+        "file": "worker/public/expedition-away.css",
+        "sha256": "c64c8b57361eb931dee34781ef7945134c2018f5f13a52f97323fbeb46117ff0"
+      },
+      {
+        "file": "worker/public/expedition-away.js",
+        "sha256": "393dad7af3736f3f52c36c1ff538f78b0cb636d59cc9fe5a171e8dabcfc8254a"
+      },
+      {
         "file": "worker/public/expedition-entry.css",
         "sha256": "89e599d9dfcdac5f15c312674929bf9d172e8debaaaf504628b5b5b6bdcb3e66"
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "87e4945984a58ce0f16c656c7faf10af1c338eb3f3c2d7157247b7501d80efc6"
+        "sha256": "a9b91de421cf1ca1147e1a31f46da6d78d9d90f9f78abd082f3b9e62531fe4df"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -36023,11 +36039,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "1d256636ae8f51a40c72797aa4f09e0250add09affb508e8597e2253e7c34e8c"
+        "sha256": "94500e9f34fa03481539c7c12b83a42fc9a9bf1c846d979bf27ddd857a746558"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "5ab0e06f58e7a3c3e179459c2e42f56fb9a22cedcb4ed3287002b642f48e4585"
+        "sha256": "5d0c1ee531e8215f9cd92bc6438bd7da624db7d9a403c33f6d0e8ac373604bd0"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36040,6 +36056,10 @@
       {
         "file": "worker/public/expedition/party-tactics.js",
         "sha256": "6ec058d2d291f366e02286ded8266466b82a14028374dfcabdcd15ebc41194a1"
+      },
+      {
+        "file": "worker/public/expedition/progression.css",
+        "sha256": "dfa9fcabda3dee8f143ea620ce6926f79d25ebd7b417d8d27749ac9fe8c91fa1"
       },
       {
         "file": "worker/public/expedition/review.css",
@@ -36807,7 +36827,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "f0d031ad1e0cde51dc8fc58d0be0df981f902fd16d2086ddc5921ad08bf47f5e"
+        "sha256": "d468e0763adb4f6ad37a4061713784191822e0d289384648bade14a43d1dc6c7"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37634,6 +37654,10 @@
         "sha256": "73bdf6a0b4bebdba501c146a8d5e902c577e5e2b1571af5e1fabaf4ccd61597b"
       },
       {
+        "file": "worker/src/game/party-stamina.js",
+        "sha256": "55062a5e7ceca94f938350c938fb1b814c3b40d8662bb14393fe57f0b6a52e46"
+      },
+      {
         "file": "worker/src/game/pk.js",
         "sha256": "35bdf38a4631bf59415dc350177fb8b5082e93da8528d4bbc845f185dfd35c3b"
       },
@@ -37658,16 +37682,20 @@
         "sha256": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5"
       },
       {
+        "file": "worker/src/game/skill-mastery.js",
+        "sha256": "66b5dc04fea1139135ead42063799f003bf8b5d758320ca54c0f30e83782ed40"
+      },
+      {
         "file": "worker/src/game/special-data.js",
         "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
       },
       {
         "file": "worker/src/game/special-idle.js",
-        "sha256": "4e995cec32314a78fb67f482bbde4ca84e0219d6187b28ee3736021cb52d12a0"
+        "sha256": "9527fbf66c9fb38d9bcb2b7ea3ebe157be0be1ad47b0abd7a4e96ebc1b2bccf8"
       },
       {
         "file": "worker/src/game/special.js",
-        "sha256": "883208ac1dab38637b6973e2dfca2b5cb73742f8671c8171b2cdeb56955a30b9"
+        "sha256": "1460c42627ab8a070b960e6e87a66ad9019dc951a776793df7405b8b229e9488"
       },
       {
         "file": "worker/src/game/star-ring-cosmetics.js",
@@ -37723,7 +37751,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "d148c3146fe3cdc10bad6c5850a5e8f90d321a3d95886f465be7f22f00f79fd7"
+        "sha256": "0afef157ea564080522eb813135669efabaf12df2c222c43bca2edbaf79fb40c"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -37790,6 +37818,10 @@
         "sha256": "8bd16f9b7314036243758755d813280b1e95b0e9343133a66a7edf4079c8f592"
       },
       {
+        "file": "worker/src/services/home-activity.js",
+        "sha256": "0480faebc68b7c8aa816ec215c42b4fc7369d74667c0b6637665e827fb174b93"
+      },
+      {
         "file": "worker/src/services/journal.js",
         "sha256": "febf79becd82c52d3add9bf041d5d1b580da9175200cc89f19646c51fa333040"
       },
@@ -37823,7 +37855,7 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "69bfbdcc1a0cc3f13006d17e1be130849f15a3ed932c7726b6f611e5cc81e0bc"
+        "sha256": "790b289499e196c8a92c2a6b4ea97708bb9eef903857277ab2c1d05766c95ba6"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -37842,8 +37874,12 @@
         "sha256": "0e0cedd5f9c0e3b84aa174e8b1e7aef7b52befc30d22768c6acfe1d09e580605"
       },
       {
+        "file": "worker/src/services/skill-learning.js",
+        "sha256": "c6e620d82f3658fe2b46839f0e9f6a461fda0443c29b348811b66a09d04467fa"
+      },
+      {
         "file": "worker/src/services/special.js",
-        "sha256": "05230e9d171663047566185ff659413fc6f0e5c8d3ea4bf78fa36418ecf683c7"
+        "sha256": "2d4854b4751f7183b5eb4a60a54f9060ed22c3ed031acf927fe3f1e0c5071334"
       },
       {
         "file": "worker/src/services/star-ring-cosmetics.js",
@@ -37889,16 +37925,18 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 148,
+    "verifiedCount": 155,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_common.jpg",
-      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B1_m.webp",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_f_attack.webp",
+      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_epic.jpg",
+      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B1_m_portrait.png",
+      "worker/public/art/expedition-away-20261020/loop.mp4",
+      "worker/public/art/expedition-away-20261020/poster.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_m.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -37917,8 +37955,13 @@
       "worker/public/elf-adv2-skill-fx.js",
       "worker/public/elf-low-tier-weapon-fx.js",
       "worker/public/equipment-live-sync.js",
+      "worker/public/expedition-away.css",
+      "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
+      "worker/public/expedition/progression.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38044,7 +38087,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "8168182b-dc5a-4dc9-aad7-142e61497773",
+        "version_id": "cd735e87-028f-472a-930d-498e26657ffb",
         "percentage": 100
       }
     ],
