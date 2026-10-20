@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "78dd9d0cec74286ca0866f0736d6da07f315dff8",
+  "sourceCommit": "001731a3250fc9f9e27c90a3d01301687bccc1ee",
   "service": "elf-rpg-api",
-  "productionVersion": "003f45e7-580b-4d9e-9c37-a06a0b3f800d",
+  "productionVersion": "10cc5663-6145-4094-a060-cee1e5ac8d90",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T00:47:18.271Z",
+  "verifiedAt": "2026-10-20T01:52:42.911Z",
   "runtimeSHA256": {
-    "index.js": "cb67db23e2496947a848bfd717608fd4eba660033349761459572764e6368ba1"
+    "index.js": "b68af28eff5f0ee4a0782536a5a0e5e341550c4ba3fb4790f285a08ee959283d"
   },
   "source": {
-    "fileCount": 9218,
-    "sha256": "0df841a4d5bb81c2c3226553751227d961d71149efd4b500efb412f5b566ad7b",
+    "fileCount": 9445,
+    "sha256": "13eab5c29fbb2fb86930d206cf8f70543eabc45730a35fc4fa5cd61aa8d7c194",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2463,7 +2463,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "63d3e0d012641085934ea7debcdc85e1c65ba5be46486f2f482889deca4676a7"
+        "sha256": "7b0fd8bce37c713537f272e7bd9b6246adae4a685584c01ac093b7f970bcdec7"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -27858,6 +27858,906 @@
         "sha256": "b6d70dcbb2db549bf0f07f728c3022aea72e73df89dcd0abd2c1fcf4b06a4ef2"
       },
       {
+        "file": "worker/public/art/star-ring-gear-20261020/archer-armor.webp",
+        "sha256": "c8ccbf9c9850ba414b0a5a62b1ce9617a2f199db4c8efb15cf7724f9c85ab4fc"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/archer-boots.webp",
+        "sha256": "1f8f377dddf04f313dc767fe29790224630e1395d78364b24b88b392396fd430"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/archer-gloves.webp",
+        "sha256": "116d1818d02659790ae49b7d703123359d44c40e7edbfc4b37b6da86c486ab4e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/archer-helmet.webp",
+        "sha256": "363e2fea5f63f73794a2e698895ea8ba0d9712fb28c177233e8dfa4d07ed5ef5"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_advanced.jpg",
+        "sha256": "1851b62d82d956dc96aef40109984e9474e3922b0dbc0470a81ded1ed5a4255e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_common.jpg",
+        "sha256": "7b8b2f8a1501b0414b753a947a94c3aa4b71df90775a4d6e77be4618dcf125f9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_epic.jpg",
+        "sha256": "959be2497ef027d4291d40f8ed1af3cc102aafc175f1b03ebace4c2c14d40a66"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_legendary.jpg",
+        "sha256": "997df04323efa98abb0695f39e7ebf33038841c121e3f5e4d275e1e12c59e6df"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_relic.jpg",
+        "sha256": "ebc7d9682e90c33258ea042b310e6abfca5b23d16a7e121e3cb5a4d3e6df1287"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-armor_supreme.jpg",
+        "sha256": "4a43cedc140f5bf1f13023c34aebc78c269e715f9c40216d5ed4e27c2fc01280"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_advanced.jpg",
+        "sha256": "c122ea9c24d816401ae1e81d6cdce894d484d72733a57055f0541ec1df61cb69"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_common.jpg",
+        "sha256": "6836a5636d1736b05053b19b827a7aaeb1674b504d1cda50d897ad15c0561ab4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_epic.jpg",
+        "sha256": "a8e94d72ad52b8e7745656aba0c2ebf24ce765b4c085df6bf23f74f78014daac"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_legendary.jpg",
+        "sha256": "1788246ef94af94e0b6bf226775c3f2bffa281669e2b97e1272c0c52cbeca0aa"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_relic.jpg",
+        "sha256": "fab3daf068dc50a50ad8ba8fa9c8ab16b7ac67167c75489cf8a6c4fe12a13c85"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-boots_supreme.jpg",
+        "sha256": "0ffa9a39dd3c2f087315823a7230c75346dbf72dcfda898d078c41a000bdae8b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_advanced.jpg",
+        "sha256": "e03a9e360694f047ca82cecc5789f5dbf04768804b35e9e4c239a3e0b1f84d8f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_common.jpg",
+        "sha256": "0ce43c3349dd048f50b27f2c6f33deda901e95b00abe4067f89a88e0b6ba3d91"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_epic.jpg",
+        "sha256": "ad6911872927d8f919c01349cd6b1b04a55cb23a1a3d3c61263a92239cb3cb68"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_legendary.jpg",
+        "sha256": "ed5ae37b31ad83243d10c901c59cbc5f3feada5f01c9c882163ddc9d6b808339"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_relic.jpg",
+        "sha256": "6c3553b68c5371a825970b54fdaf3a076b1160bb217a1f456d30df556e4712ae"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_supreme.jpg",
+        "sha256": "7fc87d58a01cb8ef164cc7c14f8255bdf1b3c529de13bfcbeb4adcfdd096bcca"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_advanced.jpg",
+        "sha256": "d6e04398244fb466b7b5aef66444299865f384ceb60bcebcaad98f6128435fae"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_common.jpg",
+        "sha256": "6a06263808c1a0b12d3a0c67ed841a286d106a0ba0c1e219dae6e25f778c47ea"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_epic.jpg",
+        "sha256": "3e6ff0a8125676c2ac21e73ede5bbf4f28f10e54cafb3a9e0d0ad7cf02730863"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_legendary.jpg",
+        "sha256": "29ecaff2e94b96c992728806790a9bbf575b6770891cc5d71796c225300e5357"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_relic.jpg",
+        "sha256": "84df859610ef14b482d5e3f65f9b5a1a7114558ab43e9cf523fa8191d87be3d9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_supreme.jpg",
+        "sha256": "d7d2b8e0badd3389539884a7d12c4463ae6f547f496a7fec45e628392fe375e3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_advanced.jpg",
+        "sha256": "9a55243de71625c0134629942128393fc3de08c9597de22f705a3458ad5e26c9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_common.jpg",
+        "sha256": "b32adcca129a3b0a439538ff57ec3a5e15d01ef272b73fba82b4eab522e80aa1"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_epic.jpg",
+        "sha256": "fa78706588241708aebd72335e1d6a896e867a777e49b996aa65a74c6928b8b2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_legendary.jpg",
+        "sha256": "b447fca0aa59ac68bd5235f9437f327b3780c3b8a474427391ddef1d9057dbae"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_relic.jpg",
+        "sha256": "fd93806a346ea1f2206634094bf50516d650e88af8a06e0ac65dc95a08034f7f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-armor_supreme.jpg",
+        "sha256": "872b1056f618b8986b286ce496f21d0a04a21c01ed3c660676717c5bc118f736"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_advanced.jpg",
+        "sha256": "762e1569841cd6e32978b38ca171d4306dbd71d9288bcb966aad3383b3dd5cf6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_common.jpg",
+        "sha256": "1bc4e5ce055b5a410d83b1724ad27e2864482b8f41bab5fe411170b33061db79"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_epic.jpg",
+        "sha256": "61961c70c14f6049c088b64181b2b8a4dc72b50c11d09404a1f8626b854b39f6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_legendary.jpg",
+        "sha256": "f7f50628741d67603de4cba22d80ccd419322e38251228209da8b5a837ecebd4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_relic.jpg",
+        "sha256": "bc2364d56f77d21f6b6f1641b3ce8122e097763b5d49cb097b22141d660c1203"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-boots_supreme.jpg",
+        "sha256": "3bc56ac4a96bc5d9645274c64c447dcf81b28977cd95dc3498c237e7460c46ae"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_advanced.jpg",
+        "sha256": "0bc46639a1965012b7a6ea8d8a7852de4c22afcd236b3e062454b9acf0f55271"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_common.jpg",
+        "sha256": "1652ca145281f7d317bf5841deef2021e4da75c7eedf8e979114cb4ca6a599ef"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_epic.jpg",
+        "sha256": "5b22fe398e73f63e5271d6d1d03d64a2830754e7be4b536f71153b0d6b35d21b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_legendary.jpg",
+        "sha256": "87c9842fcf6bdf98216ef497aed3799be1b5cae6fb7976cea0735f21a998ba59"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_relic.jpg",
+        "sha256": "f4a93c7413d4a77dc861f17cb699218ddf1f4df0c46c3478983e033c69d2903a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_supreme.jpg",
+        "sha256": "c0445633b2d8c41b969a8b05e236c9a5679563b3f794c981e1d3c85243e40336"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_advanced.jpg",
+        "sha256": "8d2728e40f91faa9e276b687485840721b52f04ee7723e0ffb5118fbcd4fe2b0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_common.jpg",
+        "sha256": "7e2aafcd0414d7c777d1d7b1bf4ed01d049db23891ffaa7a83fdd328aad6f475"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_epic.jpg",
+        "sha256": "fccb5efa0a963449303180be3c7a0c5e21a771dcb2213ba3e5029ed4572e5342"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_legendary.jpg",
+        "sha256": "4547fada8e3343e4dde39aff9c0d700582e26fa86250668361f75514faf37c3f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_relic.jpg",
+        "sha256": "a82b765ceb99c547c78b7f161cfe5600b1460e491affc9f1a021d0d331710ce0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_supreme.jpg",
+        "sha256": "d0a27d00d3cc8197f0611627cbc574686bf97064adacf0e3117b049f401415d4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_advanced.jpg",
+        "sha256": "693a393b46848aa6a99a7b5adc5fca413debf7e5bd361b1ec74134534a197076"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_common.jpg",
+        "sha256": "c0428b027f04241628e9ae8a4e844a9d19e8a0382da04dd1a983c7a84147720c"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_epic.jpg",
+        "sha256": "e9a0dc0c1b638960234e3532611a45e7193a09f29a8296967904f0aacb34faa9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_legendary.jpg",
+        "sha256": "04e0f39ef91b42207d080f85446eea69c6b60df5d7edda00239897c0eac8b2e3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_relic.jpg",
+        "sha256": "311868fdaaa2c17347171b5460b8ab136baec411bd4a8249fe66b3eef30ade85"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-belt_supreme.jpg",
+        "sha256": "abd082d63315d17ac808e640edc6ba0225ddfd895750419bbd08a828ca16b80f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_advanced.jpg",
+        "sha256": "4bc1d1ff8ee51dd7a83a7ec6b0000b5838d4c30b8df610182104c68b25c9a7cc"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_common.jpg",
+        "sha256": "e69470e05d54cc82337b7563218746a70e99a018669960083f44be3bc20b6e9a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_epic.jpg",
+        "sha256": "7fb523bdcf4690225f2016a111f0c995e2b22aac3813a10b7ca06aa52bad108a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_legendary.jpg",
+        "sha256": "07e7fff70208aa3440735327b827907767cb3c4e300922a39c1198ace3da7c9d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_relic.jpg",
+        "sha256": "cee9a95d50b8a392af093c2ac2774008be662c97f35c38ff28feedaaeedbcc6d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-earring_supreme.jpg",
+        "sha256": "7c791e4f083fe0bec91b36ce4324f21b1dbe4280e4b09502bd4776eed2199d90"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_advanced.jpg",
+        "sha256": "cf36b32c4f5050de3aa6156f6f820c25a0ed8773d67975e3421b8c8ecc4c1c28"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_common.jpg",
+        "sha256": "81b428b79bd8ebecc9b4610590296db9a6114394c5f3d04c09637000e198ee0f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_epic.jpg",
+        "sha256": "028235c8f89d89de90f84df17cd7e45436c01065e829b15d3463d5cbff81ec60"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_legendary.jpg",
+        "sha256": "c0240c728d67d62918e3d29556ee24b4190bf6f6411a43a3c7beddfc72770abb"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_relic.jpg",
+        "sha256": "e61fb351403840c86708b9dc25593dd310cd4f167e4e91ba1cbcb43c294c43a2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-ring_supreme.jpg",
+        "sha256": "b10a9f28f81786a6b4639ad4049d907770b74117ae8b1973ac1aec1a1c14db80"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_advanced.jpg",
+        "sha256": "256cd40c3a0813ef4556a0041b417e4ba06da5ff4a21559648b16ae1de88ff6e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_common.jpg",
+        "sha256": "03834626d942da24563bf02357fa185bd794b6fabd96735cf157a2ae282222f2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_epic.jpg",
+        "sha256": "6e5153d4fda1515f612a9df36c0421ecf824e7fcc33a3447c9401da46e8d9b2d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_legendary.jpg",
+        "sha256": "3390cc0526be32027f794d6aee8733f0d540ea450cd607080e62fa8891cd2915"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_relic.jpg",
+        "sha256": "3fcc20aed577c2147dc15a77cec223e2ab1c2c7bfc7677685851f6263f9cebe2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_supreme.jpg",
+        "sha256": "a4e374d6f35bc0a97ea54dd182bcce9fcd2964cbac4a0d3d72f58383a5399a69"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_advanced.jpg",
+        "sha256": "8cc180a8847aa803e0a0a8a35da32da53cbf2e81937e826f610700d5773dddb4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_common.jpg",
+        "sha256": "0c2e6dc1824142af32c531a286b90a58d5c27afabff13a1bbc570de2dc16dfd0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_epic.jpg",
+        "sha256": "20bb8fec4de09075972b66e9b52e4319673e3512f61a5709cebd878d9ff79b7b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_legendary.jpg",
+        "sha256": "137d48823d3c06b7e375fd0a8a8d2b876f14147a00c76b2bbb214544a0440a80"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_relic.jpg",
+        "sha256": "64609fd5d7126bafd004906552be37a40229b3ecf12a8ffd6166f807d27e77a3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-armor_supreme.jpg",
+        "sha256": "1084190c6a857dc1c28ad023a1ba3ab795ea274e6f222d0ce362a52a9cb2f0de"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_advanced.jpg",
+        "sha256": "28f13c821c2605a707855804be9c9067d6e1cce042a542bab0204178e3501521"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_common.jpg",
+        "sha256": "df0d7469e9da699318a970a8b7a258aec780175fc63df8a7e224650754c8e559"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_epic.jpg",
+        "sha256": "2433e896c2fa7fe79c733f5a2fe9e8927d9754ba381a53e6ee68ce573c822f04"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_legendary.jpg",
+        "sha256": "ef671e74acf2172e91a0b1d5409244a8813cb0b91ad78131a727a56fe0dd6c59"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_relic.jpg",
+        "sha256": "80707a95f15a0d7e0f5a1e35608f2b891d100753dca72e9dd54c61bbefa7061e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-boots_supreme.jpg",
+        "sha256": "11f188c9904ddab4692da6c1ab08a8e728b32ebc44084f151b9af7a43292323f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_advanced.jpg",
+        "sha256": "4c2b139cf747d5988ccf91e21af4174db4983032c99f6d398aa7529d37c3608d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_common.jpg",
+        "sha256": "9d0df97bbc526448d7b85bc3e6bc0ad4c294185923f72d3a97113c98140b7c2e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_epic.jpg",
+        "sha256": "3171f00430245c9cb7cce47e8cc719caf731d14d7332bd8d3485a2928ccf258b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_legendary.jpg",
+        "sha256": "dfd0e3a34d22a1bf3ea3f924f95af3a471ff07166cdd22437ee1d07d210b71cf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_relic.jpg",
+        "sha256": "2c2d6c6ff9ed5884570a233268ab62b6a6c8992d2fbe417dcbffb0afae0b6f03"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_supreme.jpg",
+        "sha256": "4eda7a4c0fd17dc5d84cd4c3721a28257d1d83bc726ba1df57d8c07499997846"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_advanced.jpg",
+        "sha256": "866325cfe926dd82d54ca6aecd2874641ed66412637da1cc3f33c0d07df3bceb"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_common.jpg",
+        "sha256": "60be64b192dc2de548a5fd1d57407f9c9f5b15165bba8c2d4adf41d5517d8dbf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_epic.jpg",
+        "sha256": "e86b76da781b0d8ec90d5d75059a38c2bd396dec18c83945f26dd447861446a4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_legendary.jpg",
+        "sha256": "e1c9c267cf7bf6e6783ff21af36b4ce5e146c2c9162a7ad58b833d869fb7eb9d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_relic.jpg",
+        "sha256": "5b2886259ec75d829de7725a66d686583bac52889a92c2526ee1b281eb9d7f55"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_supreme.jpg",
+        "sha256": "45e1330fdfd6a5bae459165b6fe6fb17b8581a9e1d70fb5be03356ca5d186873"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_advanced.jpg",
+        "sha256": "ed8d98f417d6ad86a7a9a868407e3c345119171029b3c2753294fecbb9a12023"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_common.jpg",
+        "sha256": "6cbf871a28e805467f08625d8d02b21a7af255f91378623a856128f4054538da"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_epic.jpg",
+        "sha256": "deb53d4a7101e5e88d85e7e5b7e722858174ef472d251ad0e6b904587b1ffb37"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_legendary.jpg",
+        "sha256": "022685751f38320118998c10150fc88946659552c478058ad3d3d78e897f09b3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_relic.jpg",
+        "sha256": "ee6b07fd6953328499d72f9f83ba506466cf318ffc03de6197c21a5343429caf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-armor_supreme.jpg",
+        "sha256": "fd2d7555165aff940be902a27185de895fb5d8397d0ece0a298dd6158f7df4d8"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_advanced.jpg",
+        "sha256": "af436ff627244afa7b5f57267cd68a4830a2764297049bda12f2e78a99ebe301"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_common.jpg",
+        "sha256": "13be4c3279689a03785d4abdc84eb11bee5b16e63e8997290f5d55527b49176e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_epic.jpg",
+        "sha256": "cb2b1269b5e60a22842e98446d76bdee9fd370b7386553ed422dff1e07723bd3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_legendary.jpg",
+        "sha256": "783c7a2fd862dfee7b325bc4d163ad8d4a9a2e9b43d6cc4222e838875cb704e3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_relic.jpg",
+        "sha256": "9b81e79f0532150cf074b0c627a3a22b985503ae79d33aa2ee9a646f8247744a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-boots_supreme.jpg",
+        "sha256": "e9fa7a628aeb85f1f35d8a646b0c416d83bd3420d68ded0855d56a3f225d1fed"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_advanced.jpg",
+        "sha256": "8e38488ffb22db8234c443639f7f2364b5c98bb82f24fe596197d9b2aea6fce2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_common.jpg",
+        "sha256": "9e94b07809b98c4c8a2f60a41bd4d4a0170190f7e45e2bb1374360575ed69c1b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_epic.jpg",
+        "sha256": "1078c80926a50c995194cc846e8a7d7830d4275152cd160c40b631d5f50bb9cf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_legendary.jpg",
+        "sha256": "6db30a0b36b880ef1ca07cd485db62baabf1653dc0e7f40400cefd5b6869379b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_relic.jpg",
+        "sha256": "0632a349af05f20beb04aa1fe12799d4bd62920c7f53b97b6f108ecfffc3d569"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_supreme.jpg",
+        "sha256": "72e472e129603c503938841451952a99611677f050820a695c280f9c32cb36cd"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_advanced.jpg",
+        "sha256": "571f5c7a11bf678b926dcda75a08ce48fe810d075602e4602ff0520ddd6f2b89"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_common.jpg",
+        "sha256": "066de13a6c0021556bc9c7737593f11179e7466cbf86b562413771be8b5ad42e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_epic.jpg",
+        "sha256": "e5a7f1870bed62c501f4dfa8e9557ca1f4bc3c5080704a6bff4d1a453095fa6e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_legendary.jpg",
+        "sha256": "43154ba20cdbce248ee5e9ba60e6110ecda4fd317ee588274103f4b6ce6cf2ce"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_relic.jpg",
+        "sha256": "fc32f38046776ee702efce184c536291494fa3a90e4582905129b3da0f144e75"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_supreme.jpg",
+        "sha256": "1232567fafea2184ab1284dfd8ea5ff7a56c64745626267857517d376df1e93c"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_advanced.jpg",
+        "sha256": "23effc0a0a341543a85062754d281a0b8a0fbe27c66bd008d9108d07ce6416a7"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_common.jpg",
+        "sha256": "3a8f4cc5c61bf558a45fd252db146fad743afbe69586d4f2f71f5e5ad5f2d530"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_epic.jpg",
+        "sha256": "03d0edf259dd29dff15ef6d5411fde777eb6216ae73fe4fa51d333f34678fcde"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_legendary.jpg",
+        "sha256": "10a252a9981b19a70e3690a0309899513aa47d8b6bf3d5c656e05edc1bc9ec36"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_relic.jpg",
+        "sha256": "12c573f2391467e461147040c31c8b491fefaa2f4c69b043687675cf9074a9aa"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_supreme.jpg",
+        "sha256": "b8911e051e1440ad21520b88e06268a215e6eee535b76958bf3da07bc89afbdb"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_advanced.jpg",
+        "sha256": "8491010fb2ccc016bc92d98ba93b0baabc8bb2d1b4c6467cc3bae04c99f76d5b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_common.jpg",
+        "sha256": "aed359bad5c322d3c2d4b3f62694fecac637016bbd24f7b61f1a80ef65764848"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_epic.jpg",
+        "sha256": "d132dd8dee8e4af5b92f5f5a97cf7b5a85037c78abf0099aafb5c877167e243d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_legendary.jpg",
+        "sha256": "2a01026d6d10da0dc1cc198b1539ed88065c82285bd789ce4b52cdb68126789a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_relic.jpg",
+        "sha256": "924909a80cc6e8523abf32192c9da6fb5da0728ae366e98808dd05aac1d95e2c"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_supreme.jpg",
+        "sha256": "35e6508309b3718d63d669783beb533769e7f45abca51e6f63c0a29c028dc9f5"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_advanced.jpg",
+        "sha256": "1f8a40924a29e983f9797a1930c932eecec38dd145a147a914bd0fe31c9ec7ba"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_common.jpg",
+        "sha256": "60761723b64516b08e3bb86d8524fd1c03a2b38ed3a184ad603a6028805f224a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_epic.jpg",
+        "sha256": "e880c5cf4838588d7da6b95e6c8e3591a56e1efc5546924455b15c529ebc9077"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_legendary.jpg",
+        "sha256": "b7a6456e92449800be720f53e03b2cf0dde35a64fe990371d8068a6112ccdaf6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_relic.jpg",
+        "sha256": "7e0872eba3458d78d8561816b64c63ba3f9f1347d0ddb4c10cadb43798fb4670"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_supreme.jpg",
+        "sha256": "9b4c0993cae3ed4d45cb80c9f9fa2fce72f6c497f77d378f6e00456031448f17"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_advanced.jpg",
+        "sha256": "989c564d6f81a8468b2fc9042e223c19ca540a4cc040e0c92ee6ed5423150abb"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_common.jpg",
+        "sha256": "1bfe72d46e9dde52254407c0ae20bbbce6aa2632929a748718adeac82bd78f7d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_epic.jpg",
+        "sha256": "6138a02c7ff7234e920d56ebec4e724501c9ce5ac5ca0d7c366c94a9b4f3addf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_legendary.jpg",
+        "sha256": "4069cf5f13eefcd85bcb1f189cb6425763aeb6e74465968ba719671d2522b388"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_relic.jpg",
+        "sha256": "2f37e36bf13eb758792b7966c14eb0d613b9fb4ffd377160ed0c0c21bdab7fb0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_supreme.jpg",
+        "sha256": "21b3723e550fca1a9e4c8751e6f86d4eb2dfd2e52d819e6583ad63b32fa6b3c1"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_advanced.jpg",
+        "sha256": "db89b3ee029a5517c9dc4d44cf13461e068c4d1e85d74faaf78a82d156528352"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_common.jpg",
+        "sha256": "7fd20b90918d7855ea1af586b0629fcc0a69e030a587273f2900e04712e12008"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_epic.jpg",
+        "sha256": "68b2f322553e75224126e0f79b55a1fc7a081a112b044f766eed6dcaff84a199"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_legendary.jpg",
+        "sha256": "cc2b279edad4be1fd16550b8cb84150792696ec7fd03d8f07bfd05a3264d84c2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_relic.jpg",
+        "sha256": "bfca914dc003ea8cae783424935c31d4ca5da8ea90f2f70fd4d24dd7f364144a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_supreme.jpg",
+        "sha256": "76d8a97d42cfff4dba2fdd5db307171df6274d495781639d276bcfd6d7735e59"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_advanced.jpg",
+        "sha256": "b3355bbb0458ebf7cf982cbe861de5469087620da270353b82aa60d14fed60a2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_common.jpg",
+        "sha256": "092326df454480c216bc172b4a24bb5cb29524d40ece1debc20f68cfc71337f4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_epic.jpg",
+        "sha256": "641628775d1a99f64718abd738cfd0ec76bf006a96aca0d5f834ec9f4e6a065e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_legendary.jpg",
+        "sha256": "ee26b1e2d6df85bdce0f8331d483dabe1422e95a0853be4f50f6fe6149baa463"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_relic.jpg",
+        "sha256": "a3871a04211cfb869e02be3232be503497054a8475fe4f90fa95ec8fe020989a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_supreme.jpg",
+        "sha256": "7bf84709b858d5503015d81d4a0c1475025b335e70cf6599cefe1dbd36c94ed6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_advanced.jpg",
+        "sha256": "bea1db70d9c0a88955829f73540d72f9a7026b66da8f9e9d50f820733e9b42ee"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_common.jpg",
+        "sha256": "2559ac9908f1f5fcac4178e3cb0beecdbfe2edc6ad971fb92b1551000852075f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_epic.jpg",
+        "sha256": "1f7b6c1c89c2bd01f771c13550c9b8b0e44e6a2209f97826449b33156c1d158a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_legendary.jpg",
+        "sha256": "6b840c16e6cdd1cc0ec70c5813ba8780b5004d15664df4224e97b3bc1ed9c050"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_relic.jpg",
+        "sha256": "f6267120e7efb09cbef6bff07a72717fa6b578d76bfa556e8964698efe98a1e6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_supreme.jpg",
+        "sha256": "0cf8692955734495e58bf0303defad53b7ac711c69f87cf6fb27e99ae8b5a019"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_advanced.jpg",
+        "sha256": "63fb0b609945ebb1c31703fcd945c9dc177e5d72e6ac2508a154012d29166d30"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_common.jpg",
+        "sha256": "65de99f319390f1034117e91d38bd3abf308231b0f593717919133f29a2bd094"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_epic.jpg",
+        "sha256": "a57fed6f86df3fe8bed0810264a53525fadcf3f9fb54f6cfbbf366f7bdabf5b3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_legendary.jpg",
+        "sha256": "35f6b9aded5610e7c453f0665e0c5e10ef8d6636f1f59495fef7a32efbdb5cd9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_relic.jpg",
+        "sha256": "a936d0b43af14a1dcbbbae6ca258e4d1e9b2a25a4aaa68edd9e62ae4a5c865ce"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_supreme.jpg",
+        "sha256": "6f18ef3fe149a09304494f5718ab7db5fbefaea7593e89fe0f46cfc1d8ea75f0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_advanced.jpg",
+        "sha256": "af43492d9e212142efa6972362681d46c001d7d4e67f5590d8da9ff2b099b7e0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_common.jpg",
+        "sha256": "5aebbce3d9f85b0509610351df16b7e67086510e5bfe91fe61173652e88b12d3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_epic.jpg",
+        "sha256": "64a37520b81b543fb835865fde271ddf8b6ab8531b5fc693971e39c522d8f39a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_legendary.jpg",
+        "sha256": "860f266580aebc0ab6590da6325c2a973571429affe39042787a763c376463b2"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_relic.jpg",
+        "sha256": "8bd228816d438a2e15d057ed23921c6d7dfcdc43a67433363c159463604493df"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_advanced.jpg",
+        "sha256": "ef7e2e7e26bb90dec482ab4731d6f54fb9a6d3a11bcf670bd0a08f3449825d4b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_common.jpg",
+        "sha256": "4891263d94fbc388e6d49d0f8a996197dfc13404c775ec306bce244aba1b3499"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_epic.jpg",
+        "sha256": "ef0ecc5c38b33594fa1ba5a90363ae1e457ded11cba4554ed93bd33287a0f1d4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_legendary.jpg",
+        "sha256": "11db00a80dd2130fee146019e777ca5f80c2b87534c4055d10f8623038ef6f87"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_relic.jpg",
+        "sha256": "9c58b44e8d2bf6c421958080216182d97d59f8617dbba568d9167e924fc845cc"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_supreme.jpg",
+        "sha256": "0f1dc57b83998388778591da46855fe053d81ed8a44d71fdfe23c535a0fca4a9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_supreme.jpg",
+        "sha256": "781a763d132f94407a82724983fb44f6ffa88d5d350814e7f9b708ebf4705708"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_advanced.jpg",
+        "sha256": "b785d0ade292596251785398977979f86b942c5bccc8557400e9d84dbaf2cfe0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_common.jpg",
+        "sha256": "dd4af2168b6c9a44f25a0e401dd448767a984fbc3e9d864ea3451ad1c4fff003"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_epic.jpg",
+        "sha256": "555599be9f172751df715ca28ac6fec234f17120089507364ffb1d300bfacefb"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_legendary.jpg",
+        "sha256": "b9549d5c47f73fa49a7a216f59b39298d84c8daf98f2b98d2c90ad6e4a297445"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_relic.jpg",
+        "sha256": "f49db6f925b3ab4632ac251ab66953d93867201320a1bfe5184aeb7de1df351d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_supreme.jpg",
+        "sha256": "f477347870670ab51efb134bd197c5603aed482f246fe780699fd715e1e76ed6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_advanced.jpg",
+        "sha256": "600d5748bb6eb70146211aabea10100202337f0fb6854fb8a05d35be840ed461"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_common.jpg",
+        "sha256": "a04de328293cd751a2a251e977bca7d0ee52bf2bce80b4c2106f347280e593f3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_epic.jpg",
+        "sha256": "9a72648dbce86e054f8c01808404fcf8819cfc33a7bf3a808782bf26ce48be7e"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_legendary.jpg",
+        "sha256": "07640f6d8662bb61f30f19b922b85e1ddd48041ef92f4d7aae4c1c96b8c2219a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_relic.jpg",
+        "sha256": "986edb3fcf047663faaa32895c91adecff727240a975c4faf212b935a465628a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_supreme.jpg",
+        "sha256": "3228b4def8a19a4a2c881a8110a95024cbd4ae05f175fa0d95c872530d122de9"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/catalog.json",
+        "sha256": "fecfbcafbe7e99f75b9a2877603bf4f1e46bee5d20341de056db6490690f49bf"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/mage-armor.webp",
+        "sha256": "88854ea2e839cfa8b7571aa60d326b493f03e58811b0693c899c455542503fe7"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/mage-boots.webp",
+        "sha256": "ac4099fb3d09058f09112ce62ab0285905d33f9ebd4a324362fb7a2bd532155d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/mage-gloves.webp",
+        "sha256": "8b6a74e0d79c62b0320c611e415893538d63e2e8e206383bf803801773178b71"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/mage-helmet.webp",
+        "sha256": "07763a50241615042706bd0129e2c6cc84cf1cde99188fb9a879f65bf91cc6f7"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/shared-belt.webp",
+        "sha256": "91830278d23657aa515ba6e3cf08d4917c71d9902b56f82d1c066c8818ebe60f"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/shared-earring.webp",
+        "sha256": "11758e5b6ea893b5e0d0fd6c44bb7a4823c7f729d7cab312b4eece3188872755"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/shared-ring.webp",
+        "sha256": "cbbd3f0dce45242d3d89bba9008a059001dc4399be956e18a861da5eb5078672"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/shared-undershirt.webp",
+        "sha256": "8923ec8193fa74214c18dab01add1acca5515942156ec69b16d981214092e2d6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/sword-armor.webp",
+        "sha256": "d703164ae96334a6a06da3bc97476d0951a165849cc434416d13c4024d993e16"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/sword-boots.webp",
+        "sha256": "304ede2ae3e9fc4237217792cd4b091d8656f881a90c65082eef8b7313bd29c8"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/sword-gloves.webp",
+        "sha256": "2f94036d0ac94b72cb43c858d61ab8ed8157371c33e1942bbdecdbf15c5d553a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/sword-helmet.webp",
+        "sha256": "6b432c24f389b29dc5d3967262f2c975b938b71c5f180afae33c1a0677dd5a87"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/thief-armor.webp",
+        "sha256": "c04cd72c6e3b3980f831ea4d1a4079c30d57c88349b867a3652eafa86472414c"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/thief-boots.webp",
+        "sha256": "97057b28a871eff7057ff5eaef19bac048934020e0268882be1e1e60e8d0f83a"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/thief-gloves.webp",
+        "sha256": "e14fd82f2dafd578a22ca8c006bef47adbde0512495f9fc7b2971e570aa806b6"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/thief-helmet.webp",
+        "sha256": "2420b9161f52e33c6b0ee4255c88ed3acd6823fb50fef80e55ee64ac389b2c54"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-compound_bow.webp",
+        "sha256": "f8fe1cd73152b1781da9a92f3571642be673c8e1e9b04fc449c37e64c627da49"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-crossbow.webp",
+        "sha256": "42bd2bcef82d58db0ec697dfacc5300ef255b46e2cb941917379a6baaebdb2f0"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-dagger.webp",
+        "sha256": "79680be1027ec004a687178391a2454a0e69ffded6c2e977dbff16404015a955"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-dual_daggers.webp",
+        "sha256": "96507b1d34dafffc18fb716111291d3e3e843ac7334d5febfe974da42697e9e7"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-elem_staff.webp",
+        "sha256": "8f2b5482dac9078cd18129cccb584aac1917707e27790ee4a462032e36f6b2c3"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-greatsword.webp",
+        "sha256": "0fea65817da3db9f1ff97c6ef251893c4971b51a2ea7f8a1acfed6edbecd71f1"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-longbow.webp",
+        "sha256": "03147be47ba912c6aedd6eb63296676748559f54cdae8c7ca2b71211996757f4"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-staff.webp",
+        "sha256": "a2ad9f0d69f00e539aa1c9c532205991e6a1decfbfaefbcf21dba694e2e39ed8"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-sword.webp",
+        "sha256": "453f7585686dde1d6a6722fe6d624903aaa776cb3375ab09afb828c3a994ed0b"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-sword_shield.webp",
+        "sha256": "621076c1b4d3877c9529bc54e169c88f29055832c7d1faf60c9329f1e4363f7d"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-throwing_blades.webp",
+        "sha256": "8f32c82e8e8cc5f5e57a6156c65b1fdcc0f82c5156612b680722d8c6de0b1efe"
+      },
+      {
+        "file": "worker/public/art/star-ring-gear-20261020/weapon-wand.webp",
+        "sha256": "647ab5adb0f307f9c078f0b38dd751a13097566bd41ce5090cef7a2bb62e407d"
+      },
+      {
         "file": "worker/public/art/star-ring-pools-20261019/catalog.json",
         "sha256": "3b2404713860bc92ab1d836e09e59baa8f2bce2411df381b4aaa194478920608"
       },
@@ -34519,7 +35419,7 @@
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "5bef2a28b26135fa0550394261cf652a3f820dab8b812962f8c3fab96a6fc5cc"
+        "sha256": "59bfffc2be66e579dfb6f1e4eaf7396d1da1a5fe2f8b6703fe65fcbadc5fee1f"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -35099,11 +35999,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "898472420bb22ddc74beb8d48edd7b8f5c41199a31ee1425e45b58f31e5a708f"
+        "sha256": "5b573e51244b13bfbce613e77ed59bb4001990c09a25b2c0704b2924df80823e"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "de85db67d97b8934ad08ec8d0c8d2b8796cac608ecf7d9e74913458a1e330256"
+        "sha256": "052bb52f1d3fb49ba5ecfb6034488e08ffaa6f5aa5620e60a44d33d15c91952d"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -35871,7 +36771,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "422339dcd9bc894f519df720bb675cd85ba0e49336c46813265f7d792bb6ae57"
+        "sha256": "74a8abf1e3a8333a6a8864a5d90f17e7d5ee6d185c8ec8585a2505106d598607"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -36098,6 +36998,10 @@
         "sha256": "d0be2300b319df5bfad5213de4980e5f404ae9d3710f0dede49207d79047c5f9"
       },
       {
+        "file": "worker/public/preview-star-ring-equipment.html",
+        "sha256": "f041699a988bd4582a708fefd7b384476cec3cc3609964710ddfd29da3eb8f01"
+      },
+      {
         "file": "worker/public/preview-star-ring.html",
         "sha256": "b1f866100200f9feac363be005b50d411b2812dae42046a936f0eb03f34c3c71"
       },
@@ -36135,7 +37039,11 @@
       },
       {
         "file": "worker/public/star-ring-cosmetics.js",
-        "sha256": "cea194dfc79407ab41cbd88255ace1b65ce34dae3144d0048fab2579e1b0aa82"
+        "sha256": "3b5ee64ea5df14a82065dc35ee72655e1619ce5c311a4452eee922f9b4c402de"
+      },
+      {
+        "file": "worker/public/star-ring-gear-art.js",
+        "sha256": "3314be193e98c7983b54eeef645d79ce2fbb5c7f7e98ee63df57c3788632c29d"
       },
       {
         "file": "worker/public/star-ring-heroes.js",
@@ -36155,7 +37063,7 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "100b4378a93a8b4b38dcd626b3cdb6247c350bd257fb1b12ef5b5c1d590f4911"
+        "sha256": "bc7bfb13164e4a5bd3afe364f31fcf258fd06eab23f602a43cd910f44f3f9b60"
       },
       {
         "file": "worker/public/star-ring.css",
@@ -36667,7 +37575,7 @@
       },
       {
         "file": "worker/src/game/share.js",
-        "sha256": "ada735d408cb645095fb9fcc4d944194ab4bc1e29d2513c7a9672e0ec67bdd0b"
+        "sha256": "d89fcf9ddb5e5576bdf7f9dd5ca408dc8db111843eac10e43b1b6a07179a7fe3"
       },
       {
         "file": "worker/src/game/shop.js",
@@ -36863,11 +37771,11 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "6b7f4b72e4e4893ea518bdb1e671b06c9765601445219692c56c8be468d52963"
+        "sha256": "49c5bb1a3390c7030bea0595f7903f54d03e0e9175c5623d3dc5cc10eae0f0bd"
       },
       {
         "file": "worker/src/services/trade.js",
-        "sha256": "a876ba019cbc47baaaebb94f678e96993a772aae7c2fe0076dfe45ce3e913fa2"
+        "sha256": "2b5a6d44f5b31aa43cd0ea48979a2fdc7e3f2fc9bac4a1521457ea331a1df25c"
       },
       {
         "file": "worker/src/views.js",
@@ -36889,16 +37797,241 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 147,
+    "verifiedCount": 375,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_boots_athena_leather_legendary.jpg",
-      "worker/public/art/collection-materials-20261014/hunt_8_1.webp",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_B121_f_attack.webp",
+      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_leather_supreme.jpg",
+      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B1_f.webp",
+      "worker/public/art/star-ring-gear-20261020/archer-armor.webp",
+      "worker/public/art/star-ring-gear-20261020/archer-boots.webp",
+      "worker/public/art/star-ring-gear-20261020/archer-gloves.webp",
+      "worker/public/art/star-ring-gear-20261020/archer-helmet.webp",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-armor_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-boots_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-gloves_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/archer-helmet_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-armor_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-boots_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-gloves_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/mage-helmet_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-belt_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-earring_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-ring_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/shared-undershirt_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-armor_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-boots_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-gloves_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/sword-helmet_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-armor_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-boots_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-gloves_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/thief-helmet_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-compound_bow_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-crossbow_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dagger_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-dual_daggers_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-elem_staff_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-greatsword_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-longbow_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-staff_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_shield_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-sword_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-throwing_blades_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_advanced.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_common.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_epic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_legendary.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_relic.jpg",
+      "worker/public/art/star-ring-gear-20261020/cards/weapon-wand_supreme.jpg",
+      "worker/public/art/star-ring-gear-20261020/catalog.json",
+      "worker/public/art/star-ring-gear-20261020/mage-armor.webp",
+      "worker/public/art/star-ring-gear-20261020/mage-boots.webp",
+      "worker/public/art/star-ring-gear-20261020/mage-gloves.webp",
+      "worker/public/art/star-ring-gear-20261020/mage-helmet.webp",
+      "worker/public/art/star-ring-gear-20261020/shared-belt.webp",
+      "worker/public/art/star-ring-gear-20261020/shared-earring.webp",
+      "worker/public/art/star-ring-gear-20261020/shared-ring.webp",
+      "worker/public/art/star-ring-gear-20261020/shared-undershirt.webp",
+      "worker/public/art/star-ring-gear-20261020/sword-armor.webp",
+      "worker/public/art/star-ring-gear-20261020/sword-boots.webp",
+      "worker/public/art/star-ring-gear-20261020/sword-gloves.webp",
+      "worker/public/art/star-ring-gear-20261020/sword-helmet.webp",
+      "worker/public/art/star-ring-gear-20261020/thief-armor.webp",
+      "worker/public/art/star-ring-gear-20261020/thief-boots.webp",
+      "worker/public/art/star-ring-gear-20261020/thief-gloves.webp",
+      "worker/public/art/star-ring-gear-20261020/thief-helmet.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-compound_bow.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-crossbow.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-dagger.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-dual_daggers.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-elem_staff.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-greatsword.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-longbow.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-staff.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-sword.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-sword_shield.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-throwing_blades.webp",
+      "worker/public/art/star-ring-gear-20261020/weapon-wand.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A211_m_attack.png",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -36920,6 +38053,7 @@
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
       "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -37012,6 +38146,7 @@
       "worker/public/preview-single-elf4.html",
       "worker/public/preview-skill-fx.html",
       "worker/public/preview-star-ring-cosmetics.html",
+      "worker/public/preview-star-ring-equipment.html",
       "worker/public/preview-star-ring.html",
       "worker/public/preview-sword-adv2.html",
       "worker/public/preview-sword-adv3.html",
@@ -37022,6 +38157,7 @@
       "worker/public/special-skill-widgets.js",
       "worker/public/star-ring-cosmetics.css",
       "worker/public/star-ring-cosmetics.js",
+      "worker/public/star-ring-gear-art.js",
       "worker/public/star-ring-heroes.js",
       "worker/public/star-ring-monsters.js",
       "worker/public/star-ring-rank-rewards.json",
@@ -37043,7 +38179,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "003f45e7-580b-4d9e-9c37-a06a0b3f800d",
+        "version_id": "10cc5663-6145-4094-a060-cee1e5ac8d90",
         "percentage": 100
       }
     ],
