@@ -1,0 +1,3030 @@
+{
+  "summary": {
+    "localOnly": true,
+    "hours": 6,
+    "idleCases": 2592,
+    "idleDeaths": 0,
+    "maxPotionShare": 0.14325887409136734,
+    "minNetRetention": 0.8618858256158425,
+    "medianNetRetention": 0.9845152813839272,
+    "partyRuns": 270,
+    "profiles": {
+      "common0": {
+        "runs": 90,
+        "partialKnockouts": 11,
+        "maxFiveRunPotionCost": 1280,
+        "maxClearSeconds": 315
+      },
+      "epic4": {
+        "runs": 90,
+        "partialKnockouts": 0,
+        "maxFiveRunPotionCost": 545,
+        "maxClearSeconds": 225
+      },
+      "ring7": {
+        "runs": 90,
+        "partialKnockouts": 0,
+        "maxFiveRunPotionCost": 28,
+        "maxClearSeconds": 150
+      }
+    }
+  },
+  "assumptions": {
+    "gear": "11 slots, entry-tier, mid-roll; no guardian, mastery or manual actions",
+    "idle": "all branches; 3 deterministic identities; 50%/75% red; supplied stock; 6h",
+    "party": "6 dungeons × 3 rosters × 3 gear levels × 5 actual repeats; HP carried; owned potion cost, not free refill",
+    "limits": "Model, not observed future player win rates. 25% red settings, missing supplies and under-tier gear may cause deaths."
+  },
+  "party": [
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 12,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 47.23247232472325
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 44.17879417879418
+        },
+        {
+          "turns": 12,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 40.228690228690226
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 42.95592048401037
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 40.622299049265344
+        }
+      ],
+      "costs": {
+        "red": 770,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 46.783088235294116
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 48.713235294117645
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 46.6893039049236
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 43.72564302416212
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 50.11691348402182
+        }
+      ],
+      "costs": {
+        "red": 185,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 97.46268656716418
+        },
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 94.92537313432835
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 89.85074626865672
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 84.77611940298507
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 79.70149253731343
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 31.39293139293139
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 25.155925155925157
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 34.51143451143451
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 28.274428274428274
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 22.037422037422036
+        }
+      ],
+      "costs": {
+        "red": 720,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 46.783088235294116
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 48.713235294117645
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 46.01018675721562
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 47.82116581777023
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 49.632144878324844
+        }
+      ],
+      "costs": {
+        "red": 200,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 97.46268656716418
+        },
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 94.92537313432835
+        },
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 92.38805970149254
+        },
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 89.85074626865672
+        },
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 87.31343283582089
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 15,
+          "seconds": 75,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 14,
+          "seconds": 70,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 14,
+          "seconds": 70,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 15,
+          "seconds": 75,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 15,
+          "seconds": 75,
+          "living": 2,
+          "minHpPct": 0
+        }
+      ],
+      "costs": {
+        "red": 885,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 33.570581257414
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 20.99644128113879
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 26.215895610913403
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 48.754448398576514
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 35.705812574139976
+        }
+      ],
+      "costs": {
+        "red": 270,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "aegean",
+      "level": 45,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 2,
+          "seconds": 10,
+          "living": 3,
+          "minHpPct": 95.52511415525115
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 86.57534246575342
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 77.62557077625571
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 68.67579908675799
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 59.726027397260275
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 13,
+          "seconds": 65,
+          "living": 3,
+          "minHpPct": 22.33787029623699
+        },
+        {
+          "turns": 13,
+          "seconds": 65,
+          "living": 3,
+          "minHpPct": 16.733386709367494
+        },
+        {
+          "turns": 13,
+          "seconds": 65,
+          "living": 3,
+          "minHpPct": 11.128903122497999
+        },
+        {
+          "turns": 13,
+          "seconds": 65,
+          "living": 3,
+          "minHpPct": 17.53402722177742
+        },
+        {
+          "turns": 13,
+          "seconds": 65,
+          "living": 3,
+          "minHpPct": 11.929543634907926
+        }
+      ],
+      "costs": {
+        "red": 1280,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 35.64356435643565
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 44.41301272984441
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 42.57425742574257
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 40.735502121640735
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 38.8967468175389
+        }
+      ],
+      "costs": {
+        "red": 425,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 92.19736087205966
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 84.39472174411934
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 68.38783706253585
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 60.58519793459553
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 52.78255880665519
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 14.731785428342674
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 39.62765957446808
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 35.06805444355484
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 39.23138510808647
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 31.385108086469174
+        }
+      ],
+      "costs": {
+        "red": 1115,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 35.64356435643565
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 38.33097595473833
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 27.015558698727016
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 26.30834512022631
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 25.6011315417256
+        }
+      ],
+      "costs": {
+        "red": 310,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 92.19736087205966
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 84.39472174411934
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 76.592082616179
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 68.78944348823867
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 60.986804360298336
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 19,
+          "seconds": 95,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 20,
+          "seconds": 100,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 19,
+          "seconds": 95,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 19,
+          "seconds": 95,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 19,
+          "seconds": 95,
+          "living": 2,
+          "minHpPct": 0
+        }
+      ],
+      "costs": {
+        "red": 1245,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 8.775137111517367
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 31.809872029250457
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 9.140767824497258
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 32.17550274223035
+        },
+        {
+          "turns": 8,
+          "seconds": 40,
+          "living": 3,
+          "minHpPct": 27.787934186471663
+        }
+      ],
+      "costs": {
+        "red": 545,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "forge",
+      "level": 60,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 85.80463808854533
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 71.60927617709065
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 57.41391426563598
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 38.791286015460294
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 45.678144764581866
+        }
+      ],
+      "costs": {
+        "red": 15,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 51.451859398879265
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 48.80995972171366
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 43.50728155339806
+        },
+        {
+          "turns": 12,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 44.90291262135922
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 39.01699029126213
+        }
+      ],
+      "costs": {
+        "red": 709.3333333333334,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 38.57442348008386
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 44.23480083857442
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 49.895178197064986
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 38.78406708595388
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 44.44444444444444
+        }
+      ],
+      "costs": {
+        "red": 224,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 88.45836768342951
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 76.91673536685903
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 65.37510305028854
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 59.76916735366859
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 48.22753503709811
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 9,
+          "seconds": 45,
+          "living": 3,
+          "minHpPct": 54.00485436893204
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 40.8373786407767
+        },
+        {
+          "turns": 9,
+          "seconds": 45,
+          "living": 3,
+          "minHpPct": 50.99337748344371
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 39.92718446601942
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 26.759708737864077
+        }
+      ],
+      "costs": {
+        "red": 513.3333333333334,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 54.297693920335426
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 57.89473684210526
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 46.75052410901468
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 51.36268343815514
+        },
+        {
+          "turns": 6,
+          "seconds": 30,
+          "living": 3,
+          "minHpPct": 55.9748427672956
+        }
+      ],
+      "costs": {
+        "red": 168,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 94.39406430338005
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 88.7881286067601
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 83.18219291014015
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 77.5762572135202
+        },
+        {
+          "turns": 3,
+          "seconds": 15,
+          "living": 3,
+          "minHpPct": 71.97032151690024
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 16,
+          "seconds": 80,
+          "living": 2,
+          "minHpPct": 0
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 29.608938547486034
+        },
+        {
+          "turns": 10,
+          "seconds": 50,
+          "living": 3,
+          "minHpPct": 7.182761372705507
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 36.71189146049481
+        },
+        {
+          "turns": 11,
+          "seconds": 55,
+          "living": 3,
+          "minHpPct": 40.702314445331204
+        }
+      ],
+      "costs": {
+        "red": 858.6666666666666,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 21.348314606741575
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 27.296761401189688
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 33.24520819563781
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 39.193654990085925
+        },
+        {
+          "turns": 7,
+          "seconds": 35,
+          "living": 3,
+          "minHpPct": 23.992068737607404
+        }
+      ],
+      "costs": {
+        "red": 317.3333333333333,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "river",
+      "level": 75,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 78.77892663712457
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 57.55785327424914
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 52.09256523879862
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 46.62727720334811
+        },
+        {
+          "turns": 4,
+          "seconds": 20,
+          "living": 3,
+          "minHpPct": 41.16198916789759
+        }
+      ],
+      "costs": {
+        "red": 28,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 47.67206477732793
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 43.927125506072876
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 50.202429149797574
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 46.45748987854251
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 42.71255060728745
+        }
+      ],
+      "costs": {
+        "red": 550.6666666666666,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 52.63616557734205
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 47.10239651416122
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 55.5119825708061
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 49.662921348314605
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 44.44444444444444
+        }
+      ],
+      "costs": {
+        "red": 158.66666666666666,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.82940975776185
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 97.16820197884681
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 94.50699419993177
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 91.84578642101671
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 89.18457864210167
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 35.32388663967611
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 35.4251012145749
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 35.526315789473685
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 35.62753036437247
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 40.587044534412954
+        }
+      ],
+      "costs": {
+        "red": 457.3333333333333,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 58.86710239651416
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 45.62091503267974
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 46.31808278867102
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 47.01525054466231
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 47.712418300653596
+        }
+      ],
+      "costs": {
+        "red": 149.33333333333334,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.82940975776185
+        },
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.65881951552372
+        },
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.48822927328557
+        },
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.31763903104742
+        },
+        {
+          "turns": 4,
+          "seconds": 60,
+          "living": 3,
+          "minHpPct": 99.14704878880929
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 46.81274900398407
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 37.71580345285525
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 48.93758300132802
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 35.39176626826029
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 42.16467463479416
+        }
+      ],
+      "costs": {
+        "red": 644,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 47.50684931506849
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 47.28767123287671
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 52
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 49.662921348314605
+        },
+        {
+          "turns": 8,
+          "seconds": 120,
+          "living": 3,
+          "minHpPct": 55.056179775280896
+        }
+      ],
+      "costs": {
+        "red": 196,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "titan",
+      "level": 90,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 95.89597724502235
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 95.89597724502235
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 95.89597724502235
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 95.89597724502235
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 95.89597724502235
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 16,
+          "seconds": 240,
+          "living": 3,
+          "minHpPct": 41.792582417582416
+        },
+        {
+          "turns": 16,
+          "seconds": 240,
+          "living": 3,
+          "minHpPct": 28.663706096083974
+        },
+        {
+          "turns": 16,
+          "seconds": 240,
+          "living": 3,
+          "minHpPct": 38.029874848607186
+        },
+        {
+          "turns": 16,
+          "seconds": 240,
+          "living": 3,
+          "minHpPct": 43.02884615384615
+        },
+        {
+          "turns": 16,
+          "seconds": 240,
+          "living": 3,
+          "minHpPct": 32.53936213161082
+        }
+      ],
+      "costs": {
+        "red": 870,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 43.726623597415845
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 44.697867298578196
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 53.92723563413805
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 55.86535192111527
+        },
+        {
+          "turns": 11,
+          "seconds": 165,
+          "living": 3,
+          "minHpPct": 54.20616113744076
+        }
+      ],
+      "costs": {
+        "red": 255,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 81.90279214064115
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 86.63391933815926
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 81.90279214064115
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 37.94913201453371
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 60.989010989010985
+        },
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 40.613645538958416
+        },
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 43.07630197819943
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 59.30561162696811
+        }
+      ],
+      "costs": {
+        "red": 690,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 63.37980278816729
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 49.91499489969398
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 48.16350710900474
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 47.541469194312796
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 43.25059503570214
+        }
+      ],
+      "costs": {
+        "red": 225,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        },
+        {
+          "turns": 5,
+          "seconds": 75,
+          "living": 3,
+          "minHpPct": 89.91726990692865
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 87.33195449844881
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 52.60989010989011
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 58.99874843554443
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 36.904761904761905
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 43.63354037267081
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 50.98343685300207
+        }
+      ],
+      "costs": {
+        "red": 915,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 48.9983305509182
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 44.44908180300501
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 39.89983305509182
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 34.09849749582638
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 28.92320534223706
+        }
+      ],
+      "costs": {
+        "red": 255,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "oracle",
+      "level": 105,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 90.97201324104725
+        },
+        {
+          "turns": 7,
+          "seconds": 105,
+          "living": 3,
+          "minHpPct": 84.14083659343966
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 93.01835690640988
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 93.46967232163607
+        },
+        {
+          "turns": 6,
+          "seconds": 90,
+          "living": 3,
+          "minHpPct": 93.46967232163607
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "balanced",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 21,
+          "seconds": 315,
+          "living": 3,
+          "minHpPct": 48.256333830104325
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 49.359165424739196
+        },
+        {
+          "turns": 21,
+          "seconds": 315,
+          "living": 3,
+          "minHpPct": 42.2027972027972
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 43.35664335664335
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 44.51048951048951
+        }
+      ],
+      "costs": {
+        "red": 765,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "balanced",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 58.39929639401935
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 57.314570507182644
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 56.229844620345936
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 61.00850190559953
+        },
+        {
+          "turns": 15,
+          "seconds": 225,
+          "living": 3,
+          "minHpPct": 59.92377601876283
+        }
+      ],
+      "costs": {
+        "red": 120,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "balanced",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 10,
+          "seconds": 150,
+          "living": 3,
+          "minHpPct": 100
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "damage",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 18,
+          "seconds": 270,
+          "living": 3,
+          "minHpPct": 45.94405594405595
+        },
+        {
+          "turns": 17,
+          "seconds": 255,
+          "living": 3,
+          "minHpPct": 43.49650349650349
+        },
+        {
+          "turns": 18,
+          "seconds": 270,
+          "living": 3,
+          "minHpPct": 44.947839046199704
+        },
+        {
+          "turns": 18,
+          "seconds": 270,
+          "living": 3,
+          "minHpPct": 55.886736214605065
+        },
+        {
+          "turns": 17,
+          "seconds": 255,
+          "living": 3,
+          "minHpPct": 54.75409836065574
+        }
+      ],
+      "costs": {
+        "red": 660,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "damage",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 82.40985048372912
+        },
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 56.64028144239226
+        },
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 48.4608619173263
+        },
+        {
+          "turns": 12,
+          "seconds": 180,
+          "living": 3,
+          "minHpPct": 52.565230137789506
+        },
+        {
+          "turns": 13,
+          "seconds": 195,
+          "living": 3,
+          "minHpPct": 44.38581061272354
+        }
+      ],
+      "costs": {
+        "red": 45,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "damage",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "thief",
+      "profile": "common0",
+      "runs": [
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 50.401785714285715
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 53.973214285714285
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 31.339285714285715
+        },
+        {
+          "turns": 20,
+          "seconds": 300,
+          "living": 3,
+          "minHpPct": 33.973214285714285
+        },
+        {
+          "turns": 19,
+          "seconds": 285,
+          "living": 3,
+          "minHpPct": 29.955357142857142
+        }
+      ],
+      "costs": {
+        "red": 1095,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "thief",
+      "profile": "epic4",
+      "runs": [
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 44.6434969544966
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 55.49982085274095
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 46.79326406305984
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 57.47044070225726
+        },
+        {
+          "turns": 14,
+          "seconds": 210,
+          "living": 3,
+          "minHpPct": 48.692225008957365
+        }
+      ],
+      "costs": {
+        "red": 225,
+        "blue": 0
+      }
+    },
+    {
+      "dungeon": "stars",
+      "level": 120,
+      "composition": "thief",
+      "profile": "ring7",
+      "runs": [
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        },
+        {
+          "turns": 9,
+          "seconds": 135,
+          "living": 3,
+          "minHpPct": 100
+        }
+      ],
+      "costs": {
+        "red": 0,
+        "blue": 0
+      }
+    }
+  ],
+  "idleByClass": [
+    {
+      "cls": "sword",
+      "level": 35,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.0403880500081182,
+      "minNetRetention": 0.9819322146535969,
+      "maxRedCost": 855,
+      "maxBlueCost": 140
+    },
+    {
+      "cls": "sword",
+      "level": 35,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.014453169454876522,
+      "minNetRetention": 0.9918396564065856,
+      "maxRedCost": 480,
+      "maxBlueCost": 28
+    },
+    {
+      "cls": "sword",
+      "level": 35,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.00229013460902313,
+      "minNetRetention": 1.0,
+      "maxRedCost": 90,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 45,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.06412213740458016,
+      "minNetRetention": 0.9527430059648828,
+      "maxRedCost": 1470,
+      "maxBlueCost": 84
+    },
+    {
+      "cls": "sword",
+      "level": 45,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.026286305265879512,
+      "minNetRetention": 0.9808994617121028,
+      "maxRedCost": 915,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 45,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.004722302384762705,
+      "minNetRetention": 0.9991932664640869,
+      "maxRedCost": 180,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 65,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.06244232543832667,
+      "minNetRetention": 0.9532944120100083,
+      "maxRedCost": 1652,
+      "maxBlueCost": 175
+    },
+    {
+      "cls": "sword",
+      "level": 65,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.024612379440849715,
+      "minNetRetention": 0.9807517615575361,
+      "maxRedCost": 1008,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 65,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.006049606775559589,
+      "minNetRetention": 0.9975713418336369,
+      "maxRedCost": 280,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 85,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.066304,
+      "minNetRetention": 0.9429901105293775,
+      "maxRedCost": 2072,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 85,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.03098293113596233,
+      "minNetRetention": 0.9754473278824505,
+      "maxRedCost": 1316,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 85,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.009230071903908359,
+      "minNetRetention": 0.9946960767806028,
+      "maxRedCost": 448,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 105,
+      "profile": "common0",
+      "cases": 48,
+      "maxPotionShare": 0.05889071311299879,
+      "minNetRetention": 0.9482163406214039,
+      "maxRedCost": 2475,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 105,
+      "profile": "epic4",
+      "cases": 48,
+      "maxPotionShare": 0.027454808513605385,
+      "minNetRetention": 0.9771621574323615,
+      "maxRedCost": 1575,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 105,
+      "profile": "ring7",
+      "cases": 48,
+      "maxPotionShare": 0.009507998792635074,
+      "minNetRetention": 0.9944754772573814,
+      "maxRedCost": 630,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 120,
+      "profile": "common0",
+      "cases": 96,
+      "maxPotionShare": 0.07075319304744879,
+      "minNetRetention": 0.9360408496301951,
+      "maxRedCost": 3285,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 120,
+      "profile": "epic4",
+      "cases": 96,
+      "maxPotionShare": 0.03441627762463951,
+      "minNetRetention": 0.9708277334176615,
+      "maxRedCost": 2160,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "sword",
+      "level": 120,
+      "profile": "ring7",
+      "cases": 96,
+      "maxPotionShare": 0.012944850826004767,
+      "minNetRetention": 0.9906229162036008,
+      "maxRedCost": 945,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 35,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.04288508557457213,
+      "minNetRetention": 0.9797277004705176,
+      "maxRedCost": 765,
+      "maxBlueCost": 280
+    },
+    {
+      "cls": "archer",
+      "level": 35,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.016613799817844915,
+      "minNetRetention": 0.9904989795200225,
+      "maxRedCost": 435,
+      "maxBlueCost": 154
+    },
+    {
+      "cls": "archer",
+      "level": 35,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.003310423103600479,
+      "minNetRetention": 0.9995140126356715,
+      "maxRedCost": 105,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 45,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.0693615972393394,
+      "minNetRetention": 0.9473103171417102,
+      "maxRedCost": 1365,
+      "maxBlueCost": 196
+    },
+    {
+      "cls": "archer",
+      "level": 45,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.030495285498965963,
+      "minNetRetention": 0.9767187555116582,
+      "maxRedCost": 870,
+      "maxBlueCost": 56
+    },
+    {
+      "cls": "archer",
+      "level": 45,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.006296822526478946,
+      "minNetRetention": 0.9979953893956099,
+      "maxRedCost": 195,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 65,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.05115219042795644,
+      "minNetRetention": 0.9614485374344054,
+      "maxRedCost": 1764,
+      "maxBlueCost": 250
+    },
+    {
+      "cls": "archer",
+      "level": 65,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.02052308847453385,
+      "minNetRetention": 0.9829381507966378,
+      "maxRedCost": 1148,
+      "maxBlueCost": 25
+    },
+    {
+      "cls": "archer",
+      "level": 65,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.0061694392420403215,
+      "minNetRetention": 0.9964310182750984,
+      "maxRedCost": 392,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 85,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.056821515892420536,
+      "minNetRetention": 0.9496799606105367,
+      "maxRedCost": 2324,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 85,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.027358539947306894,
+      "minNetRetention": 0.9769369621983491,
+      "maxRedCost": 1568,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 85,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.00932852772814005,
+      "minNetRetention": 0.9935287048164926,
+      "maxRedCost": 616,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 105,
+      "profile": "common0",
+      "cases": 48,
+      "maxPotionShare": 0.05113542640347501,
+      "minNetRetention": 0.9536219081272085,
+      "maxRedCost": 2790,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 105,
+      "profile": "epic4",
+      "cases": 48,
+      "maxPotionShare": 0.024767071588630736,
+      "minNetRetention": 0.9786957036335661,
+      "maxRedCost": 1890,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 105,
+      "profile": "ring7",
+      "cases": 48,
+      "maxPotionShare": 0.009581764389456697,
+      "minNetRetention": 0.9928577906765826,
+      "maxRedCost": 855,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 120,
+      "profile": "common0",
+      "cases": 96,
+      "maxPotionShare": 0.05459349863723991,
+      "minNetRetention": 0.9503817431545183,
+      "maxRedCost": 3285,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 120,
+      "profile": "epic4",
+      "cases": 96,
+      "maxPotionShare": 0.02700594130708756,
+      "minNetRetention": 0.9761575049671865,
+      "maxRedCost": 2250,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "archer",
+      "level": 120,
+      "profile": "ring7",
+      "cases": 96,
+      "maxPotionShare": 0.010668123441010946,
+      "minNetRetention": 0.9920126127631139,
+      "maxRedCost": 1035,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 35,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.045434226033242577,
+      "minNetRetention": 0.9824333932828642,
+      "maxRedCost": 810,
+      "maxBlueCost": 322
+    },
+    {
+      "cls": "mage",
+      "level": 35,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.019006603502727534,
+      "minNetRetention": 0.9912962748056168,
+      "maxRedCost": 480,
+      "maxBlueCost": 182
+    },
+    {
+      "cls": "mage",
+      "level": 35,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.0030528913425089677,
+      "minNetRetention": 0.9989623685666851,
+      "maxRedCost": 120,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 45,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.07067662964950666,
+      "minNetRetention": 0.946742410793538,
+      "maxRedCost": 1530,
+      "maxBlueCost": 182
+    },
+    {
+      "cls": "mage",
+      "level": 45,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.029982004992163466,
+      "minNetRetention": 0.9771359807460891,
+      "maxRedCost": 1005,
+      "maxBlueCost": 28
+    },
+    {
+      "cls": "mage",
+      "level": 45,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.006688524590163935,
+      "minNetRetention": 0.9966571333060952,
+      "maxRedCost": 255,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 65,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.07356867398398101,
+      "minNetRetention": 0.9353099730458221,
+      "maxRedCost": 2156,
+      "maxBlueCost": 400
+    },
+    {
+      "cls": "mage",
+      "level": 65,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.03353685256054453,
+      "minNetRetention": 0.9704320788477897,
+      "maxRedCost": 1456,
+      "maxBlueCost": 150
+    },
+    {
+      "cls": "mage",
+      "level": 65,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.009309224828009513,
+      "minNetRetention": 0.9921116660263798,
+      "maxRedCost": 532,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 85,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.09711635410364992,
+      "minNetRetention": 0.9100776454327412,
+      "maxRedCost": 2884,
+      "maxBlueCost": 25
+    },
+    {
+      "cls": "mage",
+      "level": 85,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.047225636774248875,
+      "minNetRetention": 0.9566028529605924,
+      "maxRedCost": 2016,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 85,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.015881235974451926,
+      "minNetRetention": 0.9854796888504753,
+      "maxRedCost": 868,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 105,
+      "profile": "common0",
+      "cases": 48,
+      "maxPotionShare": 0.09075038377027962,
+      "minNetRetention": 0.9142027055654753,
+      "maxRedCost": 3510,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 105,
+      "profile": "epic4",
+      "cases": 48,
+      "maxPotionShare": 0.04524064171122995,
+      "minNetRetention": 0.9575244020165183,
+      "maxRedCost": 2520,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 105,
+      "profile": "ring7",
+      "cases": 48,
+      "maxPotionShare": 0.017254286183790102,
+      "minNetRetention": 0.9839019430637144,
+      "maxRedCost": 1170,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 120,
+      "profile": "common0",
+      "cases": 96,
+      "maxPotionShare": 0.09823450759953066,
+      "minNetRetention": 0.9044969599632902,
+      "maxRedCost": 4140,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 120,
+      "profile": "epic4",
+      "cases": 96,
+      "maxPotionShare": 0.049711986112207056,
+      "minNetRetention": 0.9520208501984323,
+      "maxRedCost": 2970,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "mage",
+      "level": 120,
+      "profile": "ring7",
+      "cases": 96,
+      "maxPotionShare": 0.019641747947689157,
+      "minNetRetention": 0.9811137038964527,
+      "maxRedCost": 1485,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 35,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.042141123763300356,
+      "minNetRetention": 0.9829659835854023,
+      "maxRedCost": 765,
+      "maxBlueCost": 168
+    },
+    {
+      "cls": "thief",
+      "level": 35,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.016312104941208456,
+      "minNetRetention": 0.9897526984560733,
+      "maxRedCost": 480,
+      "maxBlueCost": 42
+    },
+    {
+      "cls": "thief",
+      "level": 35,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.002732821182400632,
+      "minNetRetention": 0.9981764580737319,
+      "maxRedCost": 90,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 45,
+      "profile": "common0",
+      "cases": 12,
+      "maxPotionShare": 0.07557656347392479,
+      "minNetRetention": 0.9450403568394222,
+      "maxRedCost": 1455,
+      "maxBlueCost": 98
+    },
+    {
+      "cls": "thief",
+      "level": 45,
+      "profile": "epic4",
+      "cases": 12,
+      "maxPotionShare": 0.03643176850213386,
+      "minNetRetention": 0.9716594940694867,
+      "maxRedCost": 1050,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 45,
+      "profile": "ring7",
+      "cases": 12,
+      "maxPotionShare": 0.009481668773704172,
+      "minNetRetention": 0.9919291027061243,
+      "maxRedCost": 300,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 65,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.10089815425181278,
+      "minNetRetention": 0.9175881932472775,
+      "maxRedCost": 2520,
+      "maxBlueCost": 225
+    },
+    {
+      "cls": "thief",
+      "level": 65,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.046235138705416116,
+      "minNetRetention": 0.9592233009708738,
+      "maxRedCost": 1820,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 65,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.015101462954223691,
+      "minNetRetention": 0.9861395495353599,
+      "maxRedCost": 700,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 85,
+      "profile": "common0",
+      "cases": 24,
+      "maxPotionShare": 0.12130847807941492,
+      "minNetRetention": 0.8875818043120408,
+      "maxRedCost": 3332,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 85,
+      "profile": "epic4",
+      "cases": 24,
+      "maxPotionShare": 0.06086956521739131,
+      "minNetRetention": 0.943089430894309,
+      "maxRedCost": 2436,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 85,
+      "profile": "ring7",
+      "cases": 24,
+      "maxPotionShare": 0.023108833047368764,
+      "minNetRetention": 0.9780807619544654,
+      "maxRedCost": 1064,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 105,
+      "profile": "common0",
+      "cases": 48,
+      "maxPotionShare": 0.13169061484884845,
+      "minNetRetention": 0.8748463024767258,
+      "maxRedCost": 4770,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 105,
+      "profile": "epic4",
+      "cases": 48,
+      "maxPotionShare": 0.057925862358450084,
+      "minNetRetention": 0.9452483012934504,
+      "maxRedCost": 3105,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 105,
+      "profile": "ring7",
+      "cases": 48,
+      "maxPotionShare": 0.0236796785304248,
+      "minNetRetention": 0.9770213988223467,
+      "maxRedCost": 1485,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 120,
+      "profile": "common0",
+      "cases": 96,
+      "maxPotionShare": 0.14325887409136734,
+      "minNetRetention": 0.8618858256158425,
+      "maxRedCost": 5715,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 120,
+      "profile": "epic4",
+      "cases": 96,
+      "maxPotionShare": 0.0712983627783362,
+      "minNetRetention": 0.9307222843318732,
+      "maxRedCost": 4185,
+      "maxBlueCost": 0
+    },
+    {
+      "cls": "thief",
+      "level": 120,
+      "profile": "ring7",
+      "cases": 96,
+      "maxPotionShare": 0.031360706196643245,
+      "minNetRetention": 0.9692725661402566,
+      "maxRedCost": 2160,
+      "maxBlueCost": 0
+    }
+  ]
+}

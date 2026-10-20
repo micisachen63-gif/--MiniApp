@@ -1,4 +1,5 @@
 import {potionPreference,potionKeyFor,potionStock,potionHealing,potionTierFor} from './potion-choice.js';
+import {idleBalanceFrom} from './pve-balance.js';
 export {potionTierFor} from './potion-choice.js';
 import {needsBlue,blueTarget} from './auto-blue.js';
 import {chooseMonster,monsterMaterialPlan} from './monsters.js';
@@ -78,7 +79,7 @@ export function emptyReport(from, to) {
  * @returns { char, inv, report, events }
  */
 const parseDrops = (j) => { try { return j ? JSON.parse(j) : {}; } catch { return {}; } };
-export function settleIdle(char, inventory, equipped, now) {
+export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) {
   const c = { ...char }; const inv = { ...inventory }; const events = [];
   const total = Math.floor((now - c.last_settle_at) / TICK_MS);
   const report = emptyReport(c.last_settle_at, c.last_settle_at);
@@ -95,7 +96,8 @@ export function settleIdle(char, inventory, equipped, now) {
   const materialRng = rngFor(`${c.tg_id}:${c.last_settle_at}:monster-material`);
   let eliteGold = 0, killGold = 0, realKills = 0, combatState=null;
   let dropsToday = parseDrops(c.drops_today);
-  const cache = new Map(); const statsFor = (L) => { if (!cache.has(L)) cache.set(L, idleStats(c, equipped, L)); return cache.get(L); };
+  const balanceFrom=idleBalanceFrom(c);
+  const cache = new Map(); const statsFor = (L,t=Infinity) => {const v=balanceVersion??(balanceFrom!=null&&t>balanceFrom?2:1),key=L+':'+v;if (!cache.has(key)) cache.set(key, idleStats(c, equipped, L,{balanceVersion:v})); return cache.get(key); };
   let goldAcc = 0, killAcc = 0;
   const use = (k) => { inv[k] -= 1; report.used[k] = (report.used[k] || 0) + 1; };
   const setState = (st, t, extra = {}) => { if (c.idle_state !== st) { c.idle_state = st; events.push({ type: st, at: t, ...extra }); } };
@@ -105,7 +107,7 @@ export function settleIdle(char, inventory, equipped, now) {
     const t = start + i * TICK_MS; const day = taipeiDay(t);
     if (c.penalty_day !== day) { c.penalty_day = day; c.penalties_today = 0; }
     if (c.drop_day !== day) { c.drop_day = day; dropsToday = {}; }
-    const s = statsFor(c.level); const mapTier = mapForLevel(c.level);
+    const s = statsFor(c.level,t); const mapTier = mapForLevel(c.level);
     const townRegen = () => { c.hp = Math.min(s.maxHp, c.hp + Math.ceil(IDLE.townRegenPct * s.maxHp)); c.mp = Math.min(s.maxMp, c.mp + Math.ceil(IDLE.townRegenPct * s.maxMp)); };
 
     if (atGate(c)) { setState('gate', t, { level: c.level }); townRegen(); continue; }

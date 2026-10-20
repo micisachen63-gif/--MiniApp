@@ -4,8 +4,9 @@ import {freshDb} from './d1-shim.js';
 import * as P from '../src/services/player.js';
 import * as G from '../src/services/party.js';
 import app from '../src/index.js';
-import {loadPlayer} from '../src/db.js';
-import {computeStats} from '../src/game/stats.js';
+import {loadPlayer,insertEquipStmt} from '../src/db.js';
+import {computeStats,standardSet} from '../src/game/stats.js';
+import {makeGear} from '../src/game/gear.js';
 const T=Date.parse('2026-10-19T00:00:00Z');
 async function fixture(t,{kind='dungeon',roles=false,env=null,base=100,start=true}={}){
  if(!env){env={DB:freshDb()};t.after(()=>env.DB.sqlite.close());}
@@ -14,6 +15,13 @@ async function fixture(t,{kind='dungeon',roles=false,env=null,base=100,start=tru
   const [baseClass,path]=(roles?['sword:B2','mage:A1','thief:A1']:['sword:B1','sword:B1','sword:B1'])[i].split(':');
   await P.createCharacter(env,{tgId,name:'離線旅人'+tgId,baseClass,gender:'f'},T);
   env.DB.sqlite.prepare('UPDATE rpg_characters SET level=120,class_path=?,special_json=?,last_settle_at=? WHERE tg_id=?').run(path,JSON.stringify({towerBest:20}),T,tgId);
+  // The high-level ordinary dungeon now expects a real entry-tier loadout,
+  // rather than the two Lv1 starter items used by the old normalized boss.
+  if(roles&&kind==='dungeon'){
+   env.DB.sqlite.prepare('DELETE FROM rpg_equipment WHERE tg_id=?').run(tgId);
+   for(const[i,e]of standardSet(baseClass,120).entries())await insertEquipStmt(env.DB,{...makeGear({id:tgId+'-pve-'+i,tgId,cls:baseClass,slot:e.slot,kind:e.kind,tier:12,forceRarity:'epic',source:'shop',rng:()=>.5,now:T}),enhance_level:4,is_equipped:e.is_equipped}).run();
+   env.DB.sqlite.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'red_4',100)").run(tgId);
+  }
   const p=await loadPlayer(env.DB,tgId),stats=computeStats(p.char,p.equipment);
   env.DB.sqlite.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').run(stats.maxHp,stats.maxMp,tgId);
  }
