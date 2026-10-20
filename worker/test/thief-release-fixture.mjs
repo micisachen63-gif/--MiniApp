@@ -10,6 +10,7 @@ const [{freshDb},{T0},{THIEF_RELEASE_READY,THIEF_PATHS},{THIEF_SKILLS},{SPECIAL_
 assert.equal(THIEF_RELEASE_READY,releaseReady);
 assert.equal(SPECIAL_SKILLS.length,54+(releaseReady?6:0));
 const results=[],legacyChecks=[];
+const {makeGear}=await import('../src/game/gear.js');
 for(const base of ['sword','archer','mage'])for(const d of Party.DUNGEONS.filter(d=>!d.trial)){
  const expected=LEGACY_SPECIAL_SKILLS.filter(s=>d.skillLevels.includes(s.level)),actual=Catalog.dungeonSkillPool(SPECIAL_SKILLS,d.skillLevels,{base_class:base,class_path:'A111',level:120});
  assert.equal(JSON.stringify(actual),JSON.stringify(expected));legacyChecks.push({base,dungeon:d.id,count:actual.length,SHA:JSON.stringify(actual)});
@@ -23,6 +24,10 @@ async function setup(route='A1'){
   const base=id==='333'?'sword':releaseReady?'thief':'sword';
   await Player.createCharacter(env,{tgId:id,name:'測試'+id,gender:'f',baseClass:base},T0);
   await env.DB.prepare('UPDATE rpg_characters SET level=120,class_path=?,base_class=?,auto_blue=0,auto_red_pct=20 WHERE tg_id=?').bind(id==='333'?'B1':route,id==='333'?'sword':'thief',id).run();
+  // Skill-pipeline acceptance uses a real Lv120 loadout; naked starter gear no
+  // longer trivializes fixed-strength ordinary bosses.
+  await env.DB.prepare('UPDATE rpg_equipment SET is_equipped=0 WHERE tg_id=?').bind(id).run();
+  const cls=id==='333'?'sword':'thief';for(const[i,e]of Stats.standardSet(cls,120).entries())await DB.insertEquipStmt(env.DB,{...makeGear({id:id+'pve'+i,tgId:id,cls,slot:e.slot,kind:e.kind,tier:12,forceRarity:'epic',source:'shop',rng:()=>.5,now:T0}),enhance_level:4,is_equipped:e.is_equipped}).run();
   const p=await DB.loadPlayer(env.DB,id),s=Stats.computeStats(p.char,p.equipment);
   await env.DB.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').bind(s.maxHp,s.maxMp,id).run();
  }
@@ -70,14 +75,14 @@ if(!releaseReady){
   for(const tg of ['222','333'])await Party.action(env,tg,{partyId,op:'join',requestId:request()},T0);
   for(const tg of ['111','222','333'])await Party.action(env,tg,{partyId,op:'ready',requestId:request()},T0);
   await Party.action(env,'111',{partyId,op:'start',requestId:request()},T0);
-  let now=T0,p,event;
+  let now=T0,p,event,expectedMp;
   for(let i=0;i<40;i++){
-   p=await Party.view(env,partyId,'111',now);if(p.status!=='combat')break;
+   p=await Party.view(env,partyId,'111',now);if(p.status!=='combat')break;if(i===0){const a=p.me.actor;expectedMp=Rules.validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,book.id,now).mp;}
    for(const tg of ['111','222','333'])await Party.action(env,tg,{partyId,op:'submit',skillId:i===0&&tg==='111'?book.id:'attack',round:p.round,requestId:request()},now);
    // Inspect the selected skill's actual resolved round; a late poll may now catch up several.
    now=p.deadline;
    const after=await Party.view(env,partyId,'111',now);
-   if(i===0){event=after.battleTurn.events.find(e=>e.actorId==='111');assert.equal(event.skillId,book.id);assert.equal(event.spentMp,book.mp);assert.ok(Number.isFinite(event.damage));}
+   if(i===0){event=after.battleTurn.events.find(e=>e.actorId==='111');assert.equal(event.skillId,book.id);assert.equal(event.spentMp,expectedMp);assert.ok(Number.isFinite(event.damage));}
   }
   p=await Party.view(env,partyId,'111',now);assert.equal(p.status,'won');
   const reward=await Party.reward(env,'111',{partyId,requestId:request()},now),again=await Party.reward(env,'111',{partyId,requestId:request()},now);
@@ -89,6 +94,8 @@ if(!releaseReady){
   for(const tgId of ['111','222'])await Trade.confirm(env,{tgId,tradeId:trade.tradeId,requestId:request()},now);
   assert.equal((await DB.loadPlayer(env.DB,'111')).inv['book_'+book.id]||0,0);
   assert.equal((await DB.loadPlayer(env.DB,'222')).inv['book_'+book.id],beforeTrade+1);
+  // Restore the original two-item idle fixture so its MP-spend assertion remains meaningful.
+  await env.DB.prepare("UPDATE rpg_equipment SET is_equipped=CASE WHEN id LIKE '%pve%' THEN 0 ELSE 1 END WHERE tg_id='111'").run();
   const castAt=now+300000,owner=await DB.loadPlayer(env.DB,'111'),stats=Stats.computeStats(owner.char,owner.equipment);
   await env.DB.prepare("UPDATE rpg_characters SET hp=?,mp=?,last_settle_at=?,idle_state='fighting' WHERE tg_id=?").bind(stats.maxHp,stats.maxMp,castAt,'111').run();
   const pending=await call(env,'111',{op:'cast',skillId:book.id},castAt);assert.equal(pending.special.pending,book.id);

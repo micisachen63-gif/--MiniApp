@@ -1,4 +1,5 @@
 import {imprintMultiplier} from './tower-progression.js';
+import {idleBalanceVersion,idleEncounter} from './pve-balance.js';
 import {collectionBlessing} from './collection-blessings.js';
 import {gearRarity} from './gear-quality.js';
 import {GEAR_GROWTH,tierBaseBonus} from './gear-growth.js';
@@ -134,18 +135,19 @@ export function gearSpeed(r) {
   if (r <= kneeR) return clamp(r ** 0.8, GEAR_SPEED.min, GEAR_SPEED.knee);
   return Math.min(GEAR_SPEED.max, GEAR_SPEED.knee + GEAR_SPEED.tail * Math.log(r / kneeR));
 }
-export function idleStats(char, equipped, level = char.level) {
+export function idleStats(char, equipped, level = char.level, {balanceVersion=idleBalanceVersion(char)}={}) {
   const s = computeStats(char, equipped, level); const std = standardStats(char.base_class, char.class_path, level);
   const r = s.power / std.power;
   // Better gear improves actual combat, but this balance pass must not multiply
   // gold/EXP production by the much larger late-tier defensive foundation.
   const previous=computeStats(char,equipped,level,1),legacyGearEfficiency=gearSpeed(previous.power/std.power);
   const g = Math.min(gearSpeed(r),legacyGearEfficiency*GEAR_GROWTH.farmingEfficiencyCap,GEAR_SPEED.max);
-  const dr = s.def / (s.def + 6 * level + 40);
+  const legacyDr = s.def / (s.def + 6 * level + 40);
   // Sustain is restored by the committed damage/cast in idle.js, not a second damage-reduction approximation.
-  const hpLoss = monsterPressure(level) * (1 - dr) * s.taken - IDLE.hpRegenPct * s.maxHp;
+  const legacyLoss = monsterPressure(level) * (1 - legacyDr) * s.taken - IDLE.hpRegenPct * s.maxHp;
   const mpRegen = IDLE.mpRegenPct * s.maxMp + 1;
-  const burst = IDLE.eliteBurstPct * s.maxHp * (1 / clamp(r, 0.3, 2)) ** 1.5;
+  const legacyBurst = IDLE.eliteBurstPct * s.maxHp * (1 / clamp(r, 0.3, 2)) ** 1.5;
+  const {hpLoss,dr,burst,version}=idleEncounter(s,level,{hpLoss:legacyLoss,dr:legacyDr,burst:legacyBurst},balanceVersion);
   // Diminishing returns keep multi-target classes attractive without letting
   // target count double both their gold and experience versus single-target paths.
   const targets = clamp(s.skill.targets, 1, 5);
@@ -155,5 +157,5 @@ export function idleStats(char, equipped, level = char.level) {
   const idleNativeDamageMultiplier = s.attackSpeedMultiplier * s.hitAttackMultiplier;
   const killsPerTick = 2 * (1 + 0.15 * (targets - 1)) * idleNativeDamageMultiplier;
   const map = MAPS[mapForLevel(level)];
-  return { ...s, std: std.power, r, g, dr, hpLoss, mpRegen, burst, expFactor, killsPerTick, idleNativeDamageMultiplier, map };
+  return { ...s, balanceVersion:version,std: std.power, r, g, dr, hpLoss, mpRegen, burst, expFactor, killsPerTick, idleNativeDamageMultiplier, map };
 }

@@ -891,6 +891,7 @@
     <div class="lc-battle-shell"><div class="lc-battle-head"><span>${window.RpgExpeditionAway?.activity(me)?'✦ 旅途仍在繼續':'⚔ 狩獵戰場'}</span><span>${si.text}</span></div>
     ${window.RpgExpeditionAway?.activity(me) ? window.RpgExpeditionAway.markup(me) : BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
     </div></div>
+    ${me.pve?.idleVersion===2&&c.level>30&&!window.RpgExpeditionAway?.activity(me)?`<div class="banner"><span class="e">⚔️</span><div><b>中高等狩獵挑戰</b><br>請備足生命藥水；菁英重擊更有威脅，生命自動補水建議設為 50% 以上。</div></div>`:''}
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
     ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>目前選用的生命藥水已用完</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}

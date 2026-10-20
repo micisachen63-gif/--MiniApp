@@ -4,8 +4,9 @@ import {freshDb} from './d1-shim.js';
 import {T0} from './helpers.js';
 import * as P from '../src/services/player.js';
 import * as G from '../src/services/party.js';
-import {loadPlayer} from '../src/db.js';
-import {computeStats} from '../src/game/stats.js';
+import {loadPlayer,insertEquipStmt} from '../src/db.js';
+import {computeStats,standardSet} from '../src/game/stats.js';
+import {makeGear} from '../src/game/gear.js';
 import {damageEnemy,periodic,performThiefNativeStrikes} from '../src/game/special.js';
 import {encounterPlan,roleSkills,assignRoles,briefing,initCooperation,prepareMechanic,castRole,creditMechanic,resolveMechanic,roleEvidence,validateRole} from '../src/game/party-roles.js';
 const archetypes=['sword:A1','sword:A2','sword:B1','sword:B2','archer:A1','archer:A2','archer:B1','archer:B2','mage:A1','mage:A2','mage:B1','mage:B2','thief:A1','thief:A2','thief:B1','thief:B2'];
@@ -17,6 +18,11 @@ async function setup(specs=['sword:B2','mage:A1','thief:A1'],dungeonId='stars',k
  for(let i=0;i<3;i++){
   const [baseClass,path]=specs[i].split(':');await P.createCharacter(env,{tgId:ids[i],name:'配隊'+ids[i],baseClass,gender:'f'},T0);
   await env.DB.prepare('UPDATE rpg_characters SET level=120,class_path=?,special_json=?,last_settle_at=? WHERE tg_id=?').bind(path,JSON.stringify({towerBest:20}),T0+600001,ids[i]).run();
+  if(kind==='dungeon'){
+   await env.DB.prepare('DELETE FROM rpg_equipment WHERE tg_id=?').bind(ids[i]).run();
+   for(const[j,e]of standardSet(baseClass,120).entries())await insertEquipStmt(env.DB,{...makeGear({id:ids[i]+'pve'+j,tgId:ids[i],cls:baseClass,slot:e.slot,kind:e.kind,tier:12,forceRarity:'epic',source:'shop',rng:()=>.5,now:T0}),enhance_level:4,is_equipped:e.is_equipped}).run();
+   await env.DB.prepare("INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,'red_4',100)").bind(ids[i]).run();
+  }
   const q=await loadPlayer(env.DB,ids[i]),st=computeStats(q.char,q.equipment);await env.DB.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').bind(st.maxHp,st.maxMp,ids[i]).run();
  }
  const {party:{id}}=await G.create(env,ids[0],{kind,dungeonId,startFloor:21},T0);
