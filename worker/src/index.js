@@ -165,7 +165,7 @@ const routes = {
   'POST /rpg/party/create': (env,b,now)=>PARTY.create(env,tgOf(b),b,now),
   'POST /rpg/party/action': (env,b,now)=>PARTY.action(env,tgOf(b),b,now),
   'POST /rpg/party/reward': (env,b,now)=>PARTY.reward(env,tgOf(b),b,now),
-  'POST /rpg/party/get': async(env,b,now)=>({ok:true,party:await PARTY.view(env,String(b.partyId),b.tgId?tgOf(b):null,now,b.sinceTurnId)}),
+  'POST /rpg/party/get': async(env,b,now)=>({ok:true,party:await (b.currentCard?PARTY.cardView(env,String(b.partyId),b.tgId?tgOf(b):null,now):PARTY.view(env,String(b.partyId),b.tgId?tgOf(b):null,now,b.sinceTurnId))}),
   'POST /rpg/party/message': (env,b)=>PARTY.setMessage(env,b),
   'POST /rpg/party/tick': async(env,b,now)=>({ok:true,advanced:await PARTY.sweep(env,now)}),
 
@@ -261,7 +261,7 @@ async function claimOutbox(env, now, limit) {
     }
     if (payload.tradeId) payload.trade = await T.tradeView(env, String(payload.tradeId), null, now);
     if (payload.shareId) payload.share = await SH.shareView(env, String(payload.shareId));
-    if (payload.partyId) payload.party=String(payload.partyId).startsWith('ring:')?await STAR_RING.view(env,String(payload.partyId),null,now):await PARTY.view(env,String(payload.partyId),null,now);
+    if (payload.partyId) payload.party=String(payload.partyId).startsWith('ring:')?await STAR_RING.view(env,String(payload.partyId),null,now):await (r.kind==='party_card'?PARTY.cardView(env,String(payload.partyId),null,now):PARTY.view(env,String(payload.partyId),null,now));
     if (payload.pkId) payload.pk = await PK.pkView(env, String(payload.pkId), null, now);
     if(r.target==='dm'&&!payload.recipientCharId&&(payload.trade||payload.pk)){
       const sides=payload.trade||payload.pk;
