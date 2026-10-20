@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "2906b51ac9e37e9c91c3a0fc663ae1c177920b54",
+  "sourceCommit": "25fc726637fa719791298eb58e2ae226a1838377",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "5d070e80-c875-4967-b439-cad99a026df0",
+  "productionVersion": "06e3fadc-dff0-423d-b45a-33f2efb8ad0a",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T03:32:31.178Z",
+  "verifiedAt": "2026-10-20T07:51:50.320Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "6b4a7d94770e491ea64d2cea828c850cdacdec12626bdc80467f79154d27bb9d"
+    "index.js": "1a337f1e87727fa7f1cebf409603e40db112efa935a38bcf5bddafaac639fa7c"
   },
   "source": {
     "fileCount": 252,
-    "sha256": "7a0df62678a130ea8ebec8ee3b40d36872fd915f31cdcc848b0fd86faa73b2ff",
+    "sha256": "87f7b63b2edacf1166c3c1d4e093f9740bf4dc9bb57b81201a59d2e54ddfa084",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -904,7 +904,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/party-caption.js",
-        "sha256": "9b5ff3c4ec3dd874e615b65d242a69f02f61c528afc79e0bb79b6053a21e1bc6"
+        "sha256": "875258d2a0aa828cafe0b29c120efc79633264279bb5f18e059f142c293ae47e"
       },
       {
         "file": "cloud-bot/src/adapter/persistent-map.js",
@@ -920,7 +920,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
-        "sha256": "bab9239a3afb24e7e52756a9c06fb156b892320210bde96646d5b797db3b3d31"
+        "sha256": "ee7ea22c4fcedd19f44f36134b6d275bbd851b6b098794841b95d84aaaf5f8c1"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-pk-animation-flow.js",
@@ -1037,7 +1037,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "5d070e80-c875-4967-b439-cad99a026df0",
+        "version_id": "06e3fadc-dff0-423d-b45a-33f2efb8ad0a",
         "percentage": 100
       }
     ],
