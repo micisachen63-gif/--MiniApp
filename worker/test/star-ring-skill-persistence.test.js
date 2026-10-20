@@ -49,7 +49,7 @@ for(const version of [1,2,3])for(const kind of ['dungeon','tower'])for(const rin
  assert.deepEqual(f.state().actors,departure.actors);assert.deepEqual(f.state().results,control.state().results);assert.deepEqual(rewards(f),rewards(control));assert.equal(rewards(f).length,30);
  await Ring.sweep(f.env,endAt+60000);await Party.sweep(f.env,endAt+60000);await Party.view(f.env,id,owner,endAt+60000);await Party.reward(f.env,owner,{partyId:id},endAt+60000);
  assert.deepEqual(skills(f),saved,'duplicate cleanup/settlement also retains the newest configuration');assert.equal(rewards(f).length,30);assert.equal(f.db.prepare('SELECT count(*) n FROM rpg_party_rewards WHERE party_id=?').get(id).n,3);
- const nextId=await shortParty(f,kind,endAt+60001),next=shortState(f,nextId).actors.find(a=>a.id===owner);
+ const nextId=await shortParty(f,kind==='tower'?'dungeon':kind,endAt+60001),next=shortState(f,nextId).actors.find(a=>a.id===owner);
  assert.deepEqual(next.special.loadout,latest);assert.deepEqual(next.special.auto,saved.auto);assert.deepEqual(next.special.learned,saved.learned);
  await Party.action(f.env,owner,{partyId:nextId,op:'end'},endAt+60002);
 });

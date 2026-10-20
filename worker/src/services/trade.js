@@ -1,3 +1,4 @@
+import {imprintLevel,TOWER_RULES} from '../game/tower-progression.js';
 import {runningRingId,canManageBackpackInParty,backpackAccessStmt} from './party-presence.js';
 // 交易 (v0.5): a window opens only from a share request (services/share.js acceptRequest). Initiator a = the owner/sharer
 // (top slots), acceptor b = the requester (bottom). Each side places items/gold (escrowed immediately), presses 鎖定
@@ -67,7 +68,7 @@ export async function tradeView(env, id, viewer = null, now = Date.now()) {
     const e = (t.status==='open'?eqMap.get(l.ref):null) || JSON.parse(l.snapshot_json || '{}'); const st = e.base_stat != null ? itemStat(e) : { main: null };const extras=itemExtras({...e,affix_json:null});
     const rarity=gearRarity(e);
     return { kind: 'equip', ref: l.ref, qty: 1, name: e.name, source:e.source||null, slot: e.slot, wkind: e.kind, slotName: SLOT_NAMES[e.slot], tier: e.tier, grade: e.grade || 'normal', rarity, rarityName: RARITIES[rarity]?.name,
-      enhance: e.enhance_level || 0, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業', stat: st.main, statName: mainStatOf(e.slot).toUpperCase(), affix: e.affix_json ? JSON.parse(e.affix_json) : null,
+      towerImprint:{level:imprintLevel(e),max:TOWER_RULES.imprintMax,bonusPct:Math.round(imprintLevel(e)*TOWER_RULES.imprintStep*100)},enhance: e.enhance_level || 0, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業', stat: st.main, statName: mainStatOf(e.slot).toUpperCase(), affix: e.affix_json ? JSON.parse(e.affix_json) : null,
       affixes:affixView(e),element:e.element,elementName:ELEMENTS[e.element]?.name,elemStat:st.elem||0,extras:extras.flat,pct:extras.pct,levelReq:e.level_req,branchReq:e.branch_req };
   };
   const side = (s, c) => ({ tgId: t[`${s}_tg`], name: c?.name || '?', username: c?.tg_username || null, gold: t[`${s}_gold`], goldNet: netGold(t[`${s}_gold`]), tax: tradeTax(t[`${s}_gold`]),

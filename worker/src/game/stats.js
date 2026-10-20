@@ -1,3 +1,4 @@
+import {imprintMultiplier} from './tower-progression.js';
 import {collectionBlessing} from './collection-blessings.js';
 import {gearRarity} from './gear-quality.js';
 import {GEAR_GROWTH,tierBaseBonus} from './gear-growth.js';
@@ -49,7 +50,7 @@ export function itemStat(item, wearerClass = null, growthVersion=GEAR_GROWTH.ver
   const base=item.base_stat+tierBaseBonus(item,growthVersion,wearerClass)*(relic?RELIC.statMult:1);
   const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
-  return { main: Math.round((base + enh) * mult * fam * expedition), elem: Math.round((item.element_stat || 0) * mult * expedition) };
+  return { main: Math.round(Math.round((base + enh) * mult * fam * expedition) * imprintMultiplier(item)), elem: Math.round((item.element_stat || 0) * mult * expedition) };
 }
 /** what base_stat means for this slot: ATK (weapon, ring) / DEF (armor slots) / MP (earring) */
 export const mainStatOf = (slot) => (slot === 'weapon' ? 'atk' : SLOT_SPEC[slot]?.main || 'def');
@@ -59,7 +60,7 @@ export function itemExtras(item,growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
   for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
-    if(k==='starRingGearVersion'||k==='starRingYieldVersion')continue;
+    if(k==='starRingGearVersion'||k==='starRingYieldVersion'||k==='towerImprint')continue;
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;
   }
   return out;

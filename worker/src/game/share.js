@@ -47,7 +47,7 @@ export const cardPhoto = (e) => {
 /** the item fields a group caption needs, frozen at post time (from views.equipmentView output) */
 export function snapshotOf(v) {
   const keep = ['name', 'slot', 'slotName', 'type', 'tier', 'levelReq', 'rarity', 'rarityName', 'grade', 'gradeName', 'element', 'elementName', 'stat', 'statName', 'elemStat',
-    'extras', 'pct', 'affix', 'affixes', 'enhance', 'classReq', 'className', 'branchReq', 'bound', 'equipped', 'inTrade', 'kind', 'source'];
+    'towerImprint', 'extras', 'pct', 'affix', 'affixes', 'enhance', 'classReq', 'className', 'branchReq', 'bound', 'equipped', 'inTrade', 'kind', 'source'];
   return Object.fromEntries(keep.map((k) => [k, v[k] ?? null]));
 }
 

@@ -148,6 +148,6 @@ export function convertWeapon(item) {
   const to = COUNTERPART_WEAPON[item.kind]; if (!to || !item.convert_token) return null;
   const w = WEAPON_KINDS[to];
   const previous=JSON.parse(item.bonus_json||'{}');
-  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{}),...(previous.starRingYieldVersion?{starRingYieldVersion:previous.starRingYieldVersion}:{})}), convert_token: 0, is_equipped: 0 };
+  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.towerImprint?{towerImprint:previous.towerImprint}:{}),...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{}),...(previous.starRingYieldVersion?{starRingYieldVersion:previous.starRingYieldVersion}:{})}), convert_token: 0, is_equipped: 0 };
 }
 export { CLASS_ARMOR_SLOTS };

@@ -1,3 +1,6 @@
+import {TOWER_RULES,TOWER_TITLES,towerTitle,towerRewardable,clearedFloors,towerBadges} from '../game/tower-progression.js';
+import {requireTowerEntry,towerEntryId} from './tower-daily.js';
+import {repeatParty} from './party-repeat.js';
 import {equippedAura} from '../game/star-ring-cosmetics.js';
 import {runningRingSql,runningRingId,borrowRunningRingStmt,restoreRingPresenceStmt} from './party-presence.js';
 import {needsBlue,blueTarget} from '../game/auto-blue.js';
@@ -58,28 +61,34 @@ export async function create(env,tg,b,now){
  await sweep(env,now);
  const r=await P.withPlayer(env,tg,now);const c=r.player.char,db=env.DB;const d=DUNGEONS.find(d=>d.id===b.dungeonId);const kind=b.kind==='tower'?'tower':'dungeon';const startFloor=kind==='tower'?[1,11,21].includes(Number(b.startFloor))?Number(b.startFloor):1:1;
  if(kind==='dungeon'&&!d)throw new GameError('dungeon','副本無效');
- const state={name:kind==='tower'?`星穹爬塔 · 第 ${startFloor}–${startFloor+9} 層`:d.name,level:kind==='tower'?30+(startFloor-1)*3:d.level,map:kind==='tower'?2:d.map,trial:d?.trial||null,dungeonId:d?.id||'pillar',startFloor,floor:startFloor,round:1,actors:[],actions:{},log:['隊伍招募中，三人準備後出發。'],rewarded:[],revived:false};
+ if(c.party_id&&c.party_id!==await runningRingId(db,tg))throw new GameError('party','請先完成目前的打寶或爬塔挑戰',409);
+ if(kind==='tower')await requireTowerEntry(db,tg,now);
+ const state={...(kind==='tower'?{towerVersion:TOWER_RULES.version,clearedFloor:startFloor-1}:{}),name:kind==='tower'?`星穹爬塔 · 第 ${startFloor}–${startFloor+9} 層`:d.name,level:kind==='tower'?30+(startFloor-1)*3:d.level,map:kind==='tower'?2:d.map,trial:d?.trial||null,dungeonId:d?.id||'pillar',startFloor,floor:startFloor,round:1,actors:[],actions:{},log:['隊伍招募中，三人準備後出發。'],rewarded:[],revived:false};
  state.roleRules=encounterPlan(kind,d?.id,kind==='tower'&&startFloor===21?30:startFloor);
  const id=`p${crypto.randomUUID().replaceAll('-','').slice(0,15)}`;const p={id,leader_id:tg,kind,status:'lobby',rev:-1,state};admit(c,p);
  await db.batch([db.prepare("INSERT INTO rpg_parties(id,leader_id,kind,state_json,created_at,updated_at,expires_at) VALUES(?,?,?,?,?,?,?)").bind(id,tg,kind,JSON.stringify(state),now,now,now+600000),guardStmt(db),db.prepare('INSERT INTO rpg_party_members(party_id,char_id,account_id,joined_at) VALUES(?,?,?,?)').bind(id,tg,c.account_tg_id||tg,now),borrowRunningRingStmt(db,tg),db.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(c.account_tg_id||tg,id,tg),cardStmt(db,p,now)]).catch(e=>{const error=classifyDbError(e);if(error?.code==='conflict')throw new GameError('group_busy','其他玩家已先開場，請等本場結束',409);throw error||new GameError('party','你已有隊伍，請先離隊');});
  return {ok:true,party:await view(env,id,tg,now)};
 }
 async function beginParty(env,p,stmts,now){const s=p.state;s.actors=[];
+ if(p.kind==='tower'){s.towerVersion=TOWER_RULES.version;s.clearedFloor=s.startFloor-1;for(const m of p.members){await requireTowerEntry(env.DB,m.char_id,now);stmts.push(ledgerStmt(env.DB,{event_id:towerEntryId(m.char_id,now),tg_id:m.char_id,type:'爬塔每日出發',note:JSON.stringify({partyId:p.id,day:taipeiDay(now)})},now));}s.challengeEndsAt=now+TOWER_RULES.durationMs;}
    for(const m of p.members){await P.withPlayer(env,m.char_id,now);const player=await loadPlayer(env.DB,m.char_id,env),c=player.char;admit(c,p);if(await env.DB.prepare('SELECT 1 FROM rpg_guardian_sigils WHERE char_id=? AND trade_id IS NOT NULL LIMIT 1').bind(c.tg_id).first())throw new GameError('guardian_trade','請先完成守護天使交易再出發');if((c.party_id&&c.party_id!==await runningRingId(env.DB,m.char_id))||c.hp<=0||c.idle_state==='reviving')throw new GameError('down','有隊員倒地或仍在其他戰鬥');const active=await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(m.account_id).first();if(active?.active_char_id!==m.char_id)throw new GameError('changed','隊員已切換角色，請重新準備');const st=computeStats(c,player.equipment.filter(e=>e.is_equipped));s.actors.push(combatActor(c,st));stmts.push(env.DB.prepare(`UPDATE rpg_characters SET party_id=?,last_settle_at=?,rev=rev+1 WHERE tg_id=? AND rev=? AND (party_id IS NULL OR party_id=${runningRingSql('rpg_characters.tg_id')}) AND EXISTS(SELECT 1 FROM rpg_accounts WHERE account_tg_id=? AND active_char_id=?) AND EXISTS(SELECT 1 FROM rpg_party_presence WHERE char_id=rpg_characters.tg_id AND party_id=?)`).bind(p.id,now,c.tg_id,c.rev,m.account_id,m.char_id,p.id),guardStmt(env.DB));}
    if(s.roleRules)assertRoster(s.roleRules,s.actors);
    initCooperation(s,s.roleRules?encounterPlan(p.kind,s.dungeonId,s.floor):null);
-   p.status='combat';s.combatClockVersion=1;s.combatStartedAt=now;s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;s.enemy=enemyFor(p);if(s.cooperation){prepareMechanic(s,now);s.log.unshift('職責機制啟動：'+cooperationView(s).name+'；不同隊員分工，三回合內破解。');}s.log.unshift('三位英雄出發，戰鬥由伺服器結算。');stmts.push(env.DB.prepare('UPDATE rpg_parties SET expires_at=? WHERE id=?').bind(now+(p.kind==='tower'?10:1)*40*15000+60000,p.id));
+   p.status='combat';s.combatClockVersion=1;s.combatStartedAt=now;s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;s.enemy=enemyFor(p);if(s.cooperation){prepareMechanic(s,now);s.log.unshift('職責機制啟動：'+cooperationView(s).name+'；不同隊員分工，三回合內破解。');}s.log.unshift('三位英雄出發，戰鬥由伺服器結算。');stmts.push(env.DB.prepare('UPDATE rpg_parties SET expires_at=? WHERE id=?').bind(s.challengeEndsAt||now+(p.kind==='tower'?10:1)*40*15000+60000,p.id));
 }
 export async function action(env,tg,b,now){const id=String(b.partyId||'');
  if(b.op==='join')await P.withPlayer(env,tg,now);
  else if((await load(env.DB,id)).status==='combat')await advance(env,id,now);
- await mutate(env,id,tg,b,now,async(p,stmts)=>{
+ const finished=await load(env.DB,id);if(towerRewardable(finished))await grantAll(env,finished,now);
+ const outcome=await mutate(env,id,tg,b.op==='repeat'?{...b,silent:true}:b,now,async(p,stmts)=>{
   const s=p.state;
+  if(b.op==='repeat'){requireMember(p,tg);return repeatParty(env,p,tg,stmts,now,beginParty);}
+  if(['won','lost','ended'].includes(p.status)&&['leave','end'].includes(b.op)){requireMember(p,tg);if(b.op==='end'&&tg!==p.leader_id)throw new GameError('leader','只有隊長能解散');if(s.nextPartyId)throw new GameError('continued','已開啟下一場，請先前往新戰況',409);s.departedMembers=[...new Set([...(s.departedMembers||[]),tg])];if(tg===p.leader_id)s.disbanded=true;return {ok:true};}
   if((p.status==='lobby'&&p.expires_at<=now)||['ended','lost','won'].includes(p.status))throw new GameError('closed','隊伍已結束或已過期');
   if(b.op==='join'){
    if(p.status!=='lobby')throw new GameError('started','隊伍已出發');if(p.members.length>=3)throw new GameError('full','隊伍已滿');
    if(p.members.some(m=>m.char_id===tg))return {ok:true};
-   const c=await env.DB.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').bind(tg).first();if(!c)throw new GameError('character','需要角色');admit(c,p);
+   const c=await env.DB.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').bind(tg).first();if(!c)throw new GameError('character','需要角色');if(p.kind==='tower')await requireTowerEntry(env.DB,tg,now);admit(c,p);
    stmts.push(env.DB.prepare('INSERT INTO rpg_party_members(party_id,char_id,account_id,joined_at) VALUES(?,?,?,?)').bind(p.id,tg,c.account_tg_id||tg,now),borrowRunningRingStmt(env.DB,tg),env.DB.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(c.account_tg_id||tg,p.id,tg));s.log.unshift(`${c.name}加入隊伍。`);return {ok:true};
   }
   requireMember(p,tg);
@@ -100,7 +109,7 @@ export async function action(env,tg,b,now){const id=String(b.partyId||'');
    if(b.targetId&&!s.actors.some(a=>a.id===String(b.targetId)))throw new GameError('target','隊友目標無效');
    s.actions[tg]={skillId,targetId:String(b.targetId||tg),manual:true};s.log.unshift(`${a.name}已選擇戰術。`);
   }else throw new GameError('op','隊伍操作無效');s.log=s.log.slice(0,6);return {ok:true};
- });return {ok:true,party:await view(env,id,tg,now)};}
+ });return {ok:true,party:await view(env,outcome?.partyId||id,tg,now)};}
 // Resolve combat on its scheduled clock, never on the time a viewer or bot polls.
 // A whole catch-up uses one player snapshot and one guarded transaction per party.
 function combatRound(p,players,now){const s=p.state;
@@ -149,10 +158,10 @@ function combatRound(p,players,now){const s=p.state;
   s.log.push(enemy.windup?'首領施放蓄力重擊！':'首領攻擊全隊。');
  }else if(enemy.interrupted){s.log.push('蓄力已被隊伍打斷！');turn.events.push({actorId:'boss',label:'蓄力已打斷',interrupted:true,after:snapshot()});}
  for(const a of s.actors){if(a.hp>0)a.mp=Math.min(a.maxMp,a.mp+Math.ceil(a.maxMp*.04));a.buffs=a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0));}
- if(enemy.hp<=0&&s.actors.some(a=>a.hp>0)&&p.kind==='tower')s.journalFloors=[...(s.journalFloors||[]),{floor:s.floor,at:now,participants:s.actors.filter(a=>a.manualActions>0).map(a=>a.id)}].slice(-10);
+ if(enemy.hp<=0&&s.actors.some(a=>a.hp>0)&&p.kind==='tower'&&(s.towerVersion!==2||p.status==='combat')){if(s.towerVersion===TOWER_RULES.version)s.clearedFloor=s.floor;s.journalFloors=[...(s.journalFloors||[]),{floor:s.floor,at:now,participants:s.actors.filter(a=>a.manualActions>0).map(a=>a.id)}].slice(-10);}
  if(p.status==='lost'){}
  else if(s.actors.every(a=>a.hp<=0)){p.status='lost';s.log.push('隊伍全員倒地，挑戰結束。');}
- else if(enemy.hp<=0){if(p.kind==='tower'&&s.floor<s.startFloor+9){s.floor++;s.deadline=now+5000;s.round=1;for(const a of s.actors)if(a.hp>0){a.hp=Math.min(a.maxHp,a.hp+Math.ceil(a.maxHp*.2));a.mp=Math.min(a.maxMp,a.mp+Math.ceil(a.maxMp*.25));}s.actions={};s.roundStarted=now;s.enemy=enemyFor(p);initCooperation(s,s.roleRules?encounterPlan(p.kind,s.dungeonId,s.floor):null);if(s.cooperation){s.deadline=now+15000;prepareMechanic(s,now);}s.log.push('本層已通關，存活隊員恢復 20% HP／25% MP，回合重置後繼續攀登。');}else{p.status='won';s.log.push('隊伍通關！每位隊員獨立領取戰利品。');}}
+ else if(enemy.hp<=0){if(p.kind==='tower'&&s.floor<s.startFloor+9){s.floor++;s.deadline=now+5000;s.round=1;for(const a of s.actors)if(a.hp>0){a.hp=Math.min(a.maxHp,a.hp+Math.ceil(a.maxHp*.2));a.mp=Math.min(a.maxMp,a.mp+Math.ceil(a.maxMp*.25));}s.actions={};s.roundStarted=now;s.enemy=enemyFor(p);initCooperation(s,s.roleRules?encounterPlan(p.kind,s.dungeonId,s.floor):null);if(s.cooperation){s.deadline=now+15000;prepareMechanic(s,now);}s.log.push('本層已通關，存活隊員恢復 20% 生命值／25% 魔力，回合重置後繼續攀登。');}else{p.status='won';s.log.push('隊伍通關！每位隊員獨立領取戰利品。');}}
  else if(s.round>=40){p.status='lost';s.log.push('首領狂暴，挑戰結束。');}
  else{s.round++;s.actions={};s.deadline=now+(s.cooperation?15000:5000);s.roundStarted=now;if(s.cooperation){prepareMechanic(s,now);const next=cooperationView(s);s.log.unshift(next.complete?'機制全數破解，全力進攻！':`${next.name}：${next.roles.map(r=>({guard:'守護',breach:'破陣',aid:'支援',control:'壓制'})[r]).join('／')}${next.next?'；下一道機制於第 '+next.next.round+' 回合開始':''}`);}}
  if(p.status==='won')s.journalWonAt=now;
@@ -162,9 +171,9 @@ function combatRound(p,players,now){const s=p.state;
 }
 async function advance(env,id,observedAt){
  const current=await load(env.DB,id);
- if(current.status!=='combat'||current.state.deadline>observedAt)return;
+ if(current.status!=='combat'||Math.min(current.state.deadline,current.state.challengeEndsAt||Infinity)>observedAt)return;
  return mutate(env,id,'system',{silent:false},observedAt,async(p,stmts)=>{
-  const s=p.state;if(p.status!=='combat'||s.deadline>observedAt)return {ok:true};
+  const s=p.state;if(p.status!=='combat'||Math.min(s.deadline,s.challengeEndsAt||Infinity)>observedAt)return {ok:true};
   const players=new Map();
   for(const a of s.actors){
    const player=await loadPlayer(env.DB,a.id,env);if(!player)throw new GameError('character','隊員角色不存在',409);
@@ -173,10 +182,11 @@ async function advance(env,id,observedAt){
   }
   // Forty rounds per floor, ten floors: finite even after a long scheduler outage.
   // The legacy wall-clock expiry must not discard turns that were due before it.
-  for(let turns=0;p.status==='combat'&&s.deadline<=observedAt&&turns<400;turns++){
+  for(let turns=0;p.status==='combat'&&s.deadline<=Math.min(observedAt,s.challengeEndsAt||Infinity)&&turns<400;turns++){
    if(!Number.isFinite(s.deadline)){throw new GameError('clock','隊伍回合時間異常',409);}
    const at=s.deadline;combatRound(p,players,at);
   }
+  if(p.status==='combat'&&s.challengeEndsAt&&observedAt>=s.challengeEndsAt){p.status='ended';s.endedAt=s.challengeEndsAt;s.finishReason='time_limit';s.log.unshift('十五分鐘挑戰結束，依實際通關層數結算徽記與成就。');}
   for(const [tg,player]of players)for(const[key,before]of Object.entries(player.initialInv)){
    const spent=before-(player.inv[key]||0);if(spent>0)stmts.push(env.DB.prepare('UPDATE rpg_inventory SET quantity=quantity-? WHERE tg_id=? AND item=? AND quantity>=?').bind(spent,tg,key,spent),guardStmt(env.DB));
   }
@@ -190,33 +200,33 @@ const granting=new Set();
 async function grantAll(env,p,now){if(granting.has(p.id))return false;granting.add(p.id);let n=0;try{const have=new Set((await rows(env.DB,'SELECT char_id FROM rpg_party_rewards WHERE party_id=?',p.id)).map(r=>r.char_id));for(const m of p.members){const a=p.state.actors.find(a=>a.id===m.char_id);if(have.has(m.char_id)||p.state.rewarded.includes(m.char_id)||!(a?.actions>0))continue;try{await reward(env,m.char_id,{partyId:p.id},now);n++;}catch(e){}}}finally{granting.delete(p.id);}return n>0;}
 export async function view(env,id,tg,now,sinceTurnId=null){
  let p=await load(env.DB,id);if(p.status==='lobby'&&p.expires_at<=now){await sweep(env,now);p=await load(env.DB,id);}
- if(p.status==='combat'&&(now>=p.state.deadline)) {await advance(env,id,now);p=await load(env.DB,id);}
-  if(p.status==='won'&&await grantAll(env,p,now))p=await load(env.DB,id);
+ if(p.status==='combat'&&(now>=Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity))) {await advance(env,id,now);p=await load(env.DB,id);}
+  if(towerRewardable(p)&&await grantAll(env,p,now))p=await load(env.DB,id);
  const s=p.state;
  const cooperation=cooperationView(s),plan=briefing(s.roleRules,s.actors.length?s.actors:p.members.map(m=>({...m,id:m.char_id})));
  const recent=s.recentTurns?.length?s.recentTurns:s.lastTurn?[s.lastTurn]:[],cursor=sinceTurnId?recent.findIndex(t=>t.id===String(sinceTurnId)):-1;
- const mine=p.members.find(m=>m.char_id===tg);let myReward=null;if(mine&&p.status==='won'){const rr=await env.DB.prepare('SELECT reward_json FROM rpg_party_rewards WHERE party_id=? AND char_id=?').bind(p.id,tg).first();if(rr)try{myReward=JSON.parse(rr.reward_json);}catch{}}return {id:p.id,kind:p.kind,status:p.status,leaderId:p.leader_id,rev:p.rev,name:p.state.name,level:p.state.level,dungeonId:p.state.dungeonId,map:p.state.map,trial:p.state.trial,floor:p.state.floor,startFloor:p.state.startFloor,round:p.state.round,roundSeconds:s.cooperation?15:5,cooperation,briefing:plan,roundLimit:40,deadline:p.state.deadline||p.expires_at,enemy:p.state.enemy?{...p.state.enemy,name:dungeonTheme({kind:p.kind,dungeonId:p.state.dungeonId,map:p.state.map,floor:p.state.floor}).name}:null,log:p.state.log,battleTurn:p.state.lastTurn||null,battleTurns:sinceTurnId&&cursor>=0?recent.slice(cursor+1):recent,battleSync:{latestTurnId:s.lastTurn?.id||null,hasGap:!!sinceTurnId&&cursor<0&&recent.length>0},members:p.members.map(m=>({id:m.char_id,name:m.name,level:m.level,base:m.base_class,gender:m.gender,classPath:m.class_path,aura:equippedAura(m),roles:roleSkills({...m,maxMp:s.actors.find(a=>a.id===m.char_id)?.maxMp}).map(x=>x.role),ready:!!m.ready,collectionBlessing:p.state.actors.find(a=>a.id===m.char_id)?.collectionBlessing||collectionBlessing(m),...(p.state.actors.find(a=>a.id===m.char_id)?{hp:p.state.actors.find(a=>a.id===m.char_id).hp,maxHp:p.state.actors.find(a=>a.id===m.char_id).maxHp,guardian:p.state.actors.find(a=>a.id===m.char_id).guardian||null,mp:p.state.actors.find(a=>a.id===m.char_id).mp,maxMp:p.state.actors.find(a=>a.id===m.char_id).maxMp}:{}),submitted:!!p.state.actions[m.char_id]})),me:mine?{id:tg,ready:!!mine.ready,leader:tg===p.leader_id,actor:p.state.actors.find(a=>a.id===tg),roleSkills:s.cooperation?roleSkills(s.actors.find(a=>a.id===tg)||{}):[],rewarded:p.state.rewarded.includes(tg)||!!myReward,reward:myReward}:null,chatId:p.chat_id,messageId:p.message_id};
+ const mine=p.members.find(m=>m.char_id===tg);let myReward=null;if(mine&&towerRewardable(p)){const rr=await env.DB.prepare('SELECT reward_json FROM rpg_party_rewards WHERE party_id=? AND char_id=?').bind(p.id,tg).first();if(rr)try{myReward=JSON.parse(rr.reward_json);}catch{}}return {id:p.id,kind:p.kind,status:p.status,leaderId:p.leader_id,rev:p.rev,name:p.state.name,level:p.state.level,dungeonId:p.state.dungeonId,map:p.state.map,trial:p.state.trial,floor:p.state.floor,startFloor:p.state.startFloor,towerVersion:s.towerVersion||null,challengeEndsAt:s.challengeEndsAt||null,clearedFloor:s.clearedFloor??null,nextPartyId:s.nextPartyId||null,disbanded:!!s.disbanded,round:p.state.round,roundSeconds:s.cooperation?15:5,cooperation,briefing:plan,roundLimit:40,deadline:p.state.deadline||p.expires_at,enemy:p.state.enemy?{...p.state.enemy,name:dungeonTheme({kind:p.kind,dungeonId:p.state.dungeonId,map:p.state.map,floor:p.state.floor}).name}:null,log:p.state.log,battleTurn:p.state.lastTurn||null,battleTurns:sinceTurnId&&cursor>=0?recent.slice(cursor+1):recent,battleSync:{latestTurnId:s.lastTurn?.id||null,hasGap:!!sinceTurnId&&cursor<0&&recent.length>0},members:p.members.map(m=>({id:m.char_id,name:m.name,title:towerTitle(m),level:m.level,base:m.base_class,gender:m.gender,classPath:m.class_path,aura:equippedAura(m),roles:roleSkills({...m,maxMp:s.actors.find(a=>a.id===m.char_id)?.maxMp}).map(x=>x.role),ready:!!m.ready,left:(s.departedMembers||[]).includes(m.char_id),collectionBlessing:p.state.actors.find(a=>a.id===m.char_id)?.collectionBlessing||collectionBlessing(m),...(p.state.actors.find(a=>a.id===m.char_id)?{hp:p.state.actors.find(a=>a.id===m.char_id).hp,maxHp:p.state.actors.find(a=>a.id===m.char_id).maxHp,guardian:p.state.actors.find(a=>a.id===m.char_id).guardian||null,mp:p.state.actors.find(a=>a.id===m.char_id).mp,maxMp:p.state.actors.find(a=>a.id===m.char_id).maxMp}:{}),submitted:!!p.state.actions[m.char_id]})),me:mine?{id:tg,left:(s.departedMembers||[]).includes(tg),ready:!!mine.ready,leader:tg===p.leader_id,actor:p.state.actors.find(a=>a.id===tg),roleSkills:s.cooperation?roleSkills(s.actors.find(a=>a.id===tg)||{}):[],rewarded:p.state.rewarded.includes(tg)||!!myReward,reward:myReward}:null,chatId:p.chat_id,messageId:p.message_id};
 }
 export async function reward(env,tg,b,now){
  const id=String(b.partyId);const old=await env.DB.prepare('SELECT reward_json FROM rpg_party_rewards WHERE party_id=? AND char_id=?').bind(id,tg).first();if(old)return {ok:true,reward:JSON.parse(old.reward_json),party:await view(env,id,tg,now)};
- await mutate(env,id,tg,b,now,async(p,stmts)=>{requireMember(p,tg);if(p.state.rewarded.includes(tg))return {already:true};if(p.status!=='won')throw new GameError('win','尚未通關');const a=p.state.actors.find(a=>a.id===tg);if(!(a?.actions>0))throw new GameError('participation','需要實際選擇戰術參與討伐才能領寶');
+ await mutate(env,id,tg,b,now,async(p,stmts)=>{requireMember(p,tg);if(p.state.rewarded.includes(tg))return {already:true};if(!towerRewardable(p))throw new GameError('win','尚未通關或結束挑戰');const a=p.state.actors.find(a=>a.id===tg);if(!(a?.actions>0))throw new GameError('participation','需要實際選擇戰術參與討伐才能領寶');
   const db=env.DB,day=taipeiDay(now),reward={items:{}};const c=await db.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').bind(tg).first();const account=c.account_tg_id||tg;
   if(p.state.trial){const key=`trial_${p.state.trial}`;if(c.level>=p.state.trial*30&&c.class_path.length===p.state.trial-1){const count=await db.prepare('SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item=?').bind(tg,key).first();if(!count?.quantity)reward.items[key]=1;}}
-  else if(p.kind==='tower'){const x=specialState(c);x.towerBest=Math.max(x.towerBest,p.state.floor);reward.items.tower_fragment=10;stmts.push(db.prepare('UPDATE rpg_characters SET special_json=?,rev=rev+1 WHERE tg_id=? AND rev=?').bind(JSON.stringify(x),tg,c.rev),guardStmt(db));}
+  else if(p.kind==='tower'){const x=specialState(c);const cleared=p.state.towerVersion===TOWER_RULES.version?clearedFloors(p):10;const best=p.state.towerVersion===TOWER_RULES.version?p.state.startFloor-1+cleared:p.state.floor;x.towerBest=Math.max(x.towerBest,best);if(!Object.hasOwn(x,'towerTitle'))x.towerTitle=[...TOWER_TITLES].reverse().find(t=>t.floor<=x.towerBest)?.id||null;reward.items.tower_fragment=p.state.towerVersion===TOWER_RULES.version?towerBadges(p):10;reward.tower={cleared,best:x.towerBest,version:p.state.towerVersion||1};stmts.push(db.prepare('UPDATE rpg_characters SET special_json=?,rev=rev+1 WHERE tg_id=? AND rev=?').bind(JSON.stringify(x),tg,c.rev),guardStmt(db));}
   else{
     reward.items.research_fragment=8;const d=DUNGEONS.find(d=>d.id===p.state.dungeonId);const pool=dungeonSkillPool(SPECIAL_SKILLS,d.skillLevels,c);const rng=crypto.getRandomValues(new Uint32Array(2));if(pool.length&&rng[0]/2**32<guardianChance(.35,p.state.actors.find(a=>a.id===tg)))reward.items[`book_${pool[rng[1]%pool.length].id}`]=1;
   }
-  for(const [item,qty] of Object.entries(reward.items))stmts.push(invDeltaStmt(db,tg,item,qty));
+  for(const [item,qty] of Object.entries(reward.items))if(qty>0)stmts.push(invDeltaStmt(db,tg,item,qty));
   if(p.kind!=='tower')stmts.push(db.prepare('UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=? AND rev=?').bind(tg,c.rev),guardStmt(db));
   stmts.push(db.prepare('INSERT INTO rpg_party_rewards(party_id,char_id,reward_json,created_at) VALUES(?,?,?,?)').bind(p.id,tg,JSON.stringify(reward),now),ledgerStmt(db,{event_id:`party-reward:${p.id}:${tg}`,tg_id:tg,type:p.state.trial?'轉職試煉獎勵':'組隊戰利品',note:JSON.stringify(reward.items)},now));p.state.rewarded.push(tg);return reward;
  });const row=await env.DB.prepare('SELECT reward_json FROM rpg_party_rewards WHERE party_id=? AND char_id=?').bind(id,tg).first();return {ok:true,reward:JSON.parse(row.reward_json),party:await view(env,id,tg,now)};
 }
 export async function sweep(env,now,limit=6){
- const due=await rows(env.DB,"SELECT id,status FROM rpg_parties p WHERE (status='lobby' AND expires_at<=?) OR (status='combat' AND json_extract(state_json,'$.deadline')<=?) OR (status='won' AND EXISTS(SELECT 1 FROM rpg_party_members m JOIN json_each(p.state_json,'$.actors') a ON json_extract(a.value,'$.id')=m.char_id LEFT JOIN rpg_party_rewards r ON r.party_id=m.party_id AND r.char_id=m.char_id WHERE m.party_id=p.id AND r.char_id IS NULL AND json_extract(a.value,'$.actions')>0)) ORDER BY COALESCE(json_extract(state_json,'$.deadline'),expires_at),id LIMIT ?",now,now,Math.max(1,Math.min(6,Number(limit)||6)));
+ const due=await rows(env.DB,"SELECT id,status FROM rpg_parties p WHERE (status='lobby' AND expires_at<=?) OR (status='combat' AND (json_extract(state_json,'$.deadline')<=? OR json_extract(state_json,'$.challengeEndsAt')<=?)) OR ((status='won' OR (status IN ('lost','ended') AND json_extract(state_json,'$.towerVersion')=2 AND json_extract(state_json,'$.combatStartedAt') IS NOT NULL)) AND EXISTS(SELECT 1 FROM rpg_party_members m JOIN json_each(p.state_json,'$.actors') a ON json_extract(a.value,'$.id')=m.char_id LEFT JOIN rpg_party_rewards r ON r.party_id=m.party_id AND r.char_id=m.char_id WHERE m.party_id=p.id AND r.char_id IS NULL AND json_extract(a.value,'$.actions')>0)) ORDER BY COALESCE(json_extract(state_json,'$.deadline'),expires_at),id LIMIT ?",now,now,now,Math.max(1,Math.min(6,Number(limit)||6)));
  for(const row of due)try{
-  if(row.status==='lobby'){await mutate(env,row.id,'system',{},now,async(p,stmts)=>{if(p.status!=='lobby'||p.expires_at>now)return {ok:true};const ready=p.members.length===3&&p.members.every(m=>m.ready)&&new Set(p.members.map(m=>m.account_id)).size===3;if(ready){try{await beginParty(env,p,stmts,now);p.state.log.unshift('招募倒數結束，全員準備，自動出發。');return {ok:true};}catch(e){if(!['down','changed','level','trial','tower','no_character','party_roles'].includes(e.code))throw e;stmts.length=0;p.state.actors=[];p.state.log.unshift('自動出發失敗：'+e.message+'。請調整後重新組隊。');}}else p.state.log.unshift(p.members.length<3?'招募時間結束，人數不足，隊伍已解散。':'招募時間結束，未全員準備，隊伍已解散。');p.status='ended';stmts.push(...releaseStmts(env.DB,p,now));});}
+  if(row.status==='lobby'){await mutate(env,row.id,'system',{},now,async(p,stmts)=>{if(p.status!=='lobby'||p.expires_at>now)return {ok:true};const ready=p.members.length===3&&p.members.every(m=>m.ready)&&new Set(p.members.map(m=>m.account_id)).size===3;if(ready){try{await beginParty(env,p,stmts,now);p.state.log.unshift('招募倒數結束，全員準備，自動出發。');return {ok:true};}catch(e){if(!['down','changed','level','trial','tower','tower_daily','no_character','party_roles'].includes(e.code))throw e;stmts.length=0;p.state.actors=[];p.state.log.unshift('自動出發失敗：'+e.message+'。請調整後重新組隊。');}}else p.state.log.unshift(p.members.length<3?'招募時間結束，人數不足，隊伍已解散。':'招募時間結束，未全員準備，隊伍已解散。');p.status='ended';stmts.push(...releaseStmts(env.DB,p,now));});}
   if(row.status!=='won')await advance(env,row.id,now);
-  const p=await load(env.DB,row.id);if(p.status==='won')await grantAll(env,p,now);
+  const p=await load(env.DB,row.id);if(towerRewardable(p))await grantAll(env,p,now);
  }catch(e){console.warn('party sweep',e.code||'internal');}
  return due.length;
 }
@@ -237,7 +247,7 @@ export async function hall(env,tg,b,now){
  const count=await env.DB.prepare('SELECT COUNT(*) AS total FROM rpg_parties WHERE '+where).bind(cutoff).first();
  const total=count?.total||0,pages=Math.max(1,Math.ceil(total/size)),current=Math.min(page,pages);
  const entries=await rows(env.DB,'SELECT id FROM rpg_parties WHERE '+where+' ORDER BY '+(ended?"COALESCE(json_extract(state_json,'$.endedAt'),updated_at) DESC":"created_at DESC")+',id DESC LIMIT ? OFFSET ?',cutoff,size,(current-1)*size);
- const parties=await Promise.all(entries.map(async row=>{const p=await load(env.DB,row.id);return {id:p.id,name:p.state.name,kind:p.kind,status:p.status,level:p.state.level,floor:p.state.floor,round:p.state.round,createdAt:p.created_at,endedAt:ended?endedTime(p):null,deadline:p.state.deadline||p.expires_at,mine:p.members.some(m=>m.char_id===tg),members:p.members.map(m=>({id:m.char_id,name:m.name,level:m.level,base:m.base_class,classPath:m.class_path,gender:m.gender,leader:m.char_id===p.leader_id}))};}));
+ const parties=await Promise.all(entries.map(async row=>{const p=await load(env.DB,row.id);return {id:p.id,name:p.state.name,kind:p.kind,status:p.status,level:p.state.level,floor:p.state.floor,round:p.state.round,createdAt:p.created_at,endedAt:ended?endedTime(p):null,deadline:p.state.deadline||p.expires_at,mine:p.members.some(m=>m.char_id===tg),members:p.members.map(m=>({id:m.char_id,name:m.name,title:towerTitle(m),level:m.level,base:m.base_class,classPath:m.class_path,gender:m.gender,leader:m.char_id===p.leader_id}))};}));
  return {ok:true,tab:ended?'ended':'active',parties,total,page:current,pages,pageSize:size,retentionDays:7,now};
 }
 export async function hallGet(env,tg,b,now){

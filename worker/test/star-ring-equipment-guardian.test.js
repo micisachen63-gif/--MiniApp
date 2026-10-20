@@ -38,7 +38,7 @@ for(const version of [1,2,3])for(const kind of ['dungeon','tower'])for(const rin
  await Ring.sweep(f.env,end+60000);await Party.sweep(f.env,end+60000);await Party.view(f.env,id,f.ids[0],end+60000);await Party.reward(f.env,f.ids[0],{partyId:id},end+60000);
  assert.deepEqual(f.equipped(),equipped);assert.deepEqual(f.active(),active);assert.deepEqual(special(f).guardianAssist,assist);assert.equal(stones(f),n);assert.equal(f.character().party_id,null);
  assert.deepEqual(f.state().actors,departure.actors);assert.deepEqual(f.state().results,control.state().results);assert.deepEqual(awards(f),awards(control));assert.equal(awards(f).length,30);
- const nextId=await shortParty(f,kind,end+60001),current=await expectedActor(f);await assertActor(f,nextId,current);assert.equal(current.guardian.id,latest.guardian.id);
+ const nextId=await shortParty(f,kind==='tower'?'dungeon':kind,end+60001),current=await expectedActor(f);await assertActor(f,nextId,current);assert.equal(current.guardian.id,latest.guardian.id);
  await Party.action(f.env,f.ids[0],{partyId:nextId,op:'end'},end+60002);
 });
 
