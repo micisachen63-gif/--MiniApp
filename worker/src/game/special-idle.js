@@ -5,6 +5,12 @@ import { SKILL_MAP,eligible,specialState,saveSpecial,castSpecial,combatActor,per
 import {mapForLevel} from './formulas.js';
 import {specialCost} from './combat-passives.js';
 import {mapElement} from './elements.js';
+// Idle settles its elite hit after saving the action's buffs. A mastered
+// protection window can cross the next minute, so persist its one-shot use.
+export function consumeIdleLastStand(c,now){
+ const x=specialState(c),b=x.idleActor?.buffs?.find(b=>b.type==='lastStand'&&b.until>now&&(b.uses==null||b.uses>0));
+ if(!b)return false;b.uses=0;saveSpecial(c,x);return true;
+}
 // One action per minute. A special skill replaces the normal attack and is off by default.
 export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5}){
  const x=specialState(c);if(c.base_class!=='thief'&&!x.pending&&!Object.keys(x.auto).length&&!x.idleActor)return null;
