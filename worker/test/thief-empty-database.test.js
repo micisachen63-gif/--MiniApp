@@ -19,6 +19,9 @@ const snapshot = db => ({
 test('fresh initialization preserves historical definitions except explicit class CHECK and expedition guardian migrations', () => {
   const historical = repositorySchemaDatabase(), current = freshDb().sqlite;
   try {
+    // 0033 adds independent console/analytics objects and indexes; the populated
+    // admin migration test proves all existing game rows remain unchanged.
+    historical.exec(readFileSync(new URL('../migrations/0033_admin_console.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n'));
     const before = schemaRows(historical), plan = buildThiefSchemaCandidate(historical);
     assert.deepEqual(plan.createOrder, tables);
     const guardianMigration=readFileSync(new URL('../migrations/0031_star_ring_guardian_backpack.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');

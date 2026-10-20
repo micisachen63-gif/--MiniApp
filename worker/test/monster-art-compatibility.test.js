@@ -1,6 +1,7 @@
 ﻿import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
 import {MONSTER_ART_REVISION,monsterArtCompatibility} from '../src/game/monster-art-compatibility.js';
 import {appAuth,APP_ACTIONS,metaView} from '../src/app.js';
+import {recordBehavior} from '../src/admin/behavior.js';
 import {freshDb} from './d1-shim.js';import * as P from '../src/services/player.js';import {handle} from '../src/index.js';import {loadPlayer} from '../src/db.js';
 import {createHash} from 'node:crypto';import {MONSTER_DATA} from '../src/game/monster-data.js';
 import {MONSTER_ART_REVISION as RELEASE_REVISION} from '../src/game/monster-readiness.js';
@@ -8,7 +9,7 @@ const source=fs.readFileSync(new URL('../src/app.js',import.meta.url),'utf8');
 function appHarness(readyKeys,compatibility=monsterArtCompatibility){
  let mutations=0,reads=0;const env={ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',DB:{prepare(){reads++;throw Error('unexpected database access');}}},respond=(body,status=200)=>new Response(JSON.stringify(body),{status}),fail=(error,message,status=400)=>respond({ok:false,error,message},status);
  const routes=Object.fromEntries(Object.values(APP_ACTIONS).map(path=>[`POST ${path}`,async()=>{mutations++;return {ok:true};}]));
- const ctx=vm.createContext({crypto,appAuth,APP_ACTIONS,metaView,monsterArtCompatibility:(action,revision)=>compatibility(action,revision,{readyKeys}),activeCharacterId:async()=>{reads++;return '111';},listAccountCharacters:async()=>{reads++;return [];},P:{createCharacter:async()=>mutations++},selectAccountCharacter:async()=>{mutations++;return '111';}});
+ const ctx=vm.createContext({crypto,appAuth,APP_ACTIONS,metaView,recordBehavior,monsterArtCompatibility:(action,revision)=>compatibility(action,revision,{readyKeys}),activeCharacterId:async()=>{reads++;return '111';},listAccountCharacters:async()=>{reads++;return [];},P:{createCharacter:async()=>mutations++},selectAccountCharacter:async()=>{mutations++;return '111';}});
  vm.runInContext(source.slice(source.indexOf('export async function handleApp('),source.indexOf('export { GameError };')).replace('export async','async')+';this.run=handleApp;',ctx);
  const call=async(action,revision)=>{const headers={'Content-Type':'application/json','X-Dev-Tg-Id':'111'};if(revision!==undefined)headers['X-Monster-Art-Revision']=revision;const url=new URL('http://rpg/app/api/'+action),request=new Request(url,{method:'POST',headers,body:JSON.stringify({requestId:'test-client-01',item:'red_1',qty:1})}),response=await ctx.run(request,env,url,{routes,json:respond,fail,nowFor:()=>0});return {status:response.status,...await response.json()};};
  return {call,get mutations(){return mutations},get reads(){return reads}};

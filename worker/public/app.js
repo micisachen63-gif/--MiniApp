@@ -2106,7 +2106,12 @@
     await Promise.all([import('./thief-gear-art.js?v=20261015-thief-gear1'),import('./star-ring-gear-art.js?v=20261020-dedicated1')]);
     if (!initData && !devTg) return fatal('請從 Telegram 的「星穹旅誌」打開遊戲<br><span class="muted">私訊 @StarJournalRpgBot，按「開啟旅誌」或輸入 /rpg</span>');
     const h0 = location.hash.replace(/^#/, '').split('&')[0]; const sp = (tg && tg.initDataUnsafe && tg.initDataUnsafe.start_param) || qs.get('screen') || qs.get('tgWebAppStartParam') || (h0.includes('=') ? '' : h0) || '';
-    const spx = sp.replace(/^rpg_?/, ''); const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
+    const spx = sp.replace(/^rpg_?/, '');
+    if(spx==='admin'||/^admin_[0-9a-f]{64}$/.test(spx)){
+      const target='/admin/'+(spx==='admin'?'':'?approve='+spx.slice(6))+location.hash;
+      location.replace(target);return;
+    }
+    const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
     const ringLink=/^ring_([0-9a-f]{32})$/.exec(spx);
     const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
     if(spx==='gacha')S.shopTab='gacha';
@@ -2119,6 +2124,7 @@
       const u = tg && tg.initDataUnsafe && tg.initDataUnsafe.user; S.create.name = u ? String(u.first_name || '').replace(/[^\p{Script=Han}A-Za-z0-9_]/gu, '').slice(0, 12) : '';
       S.pendingTab = want;
       S.characters = (await api('characters')).characters || []; S.choosing = true;
+      api('behavior/visit').catch(()=>{});
       const inviteCharacter=ringLink&&S.characters.find(c=>c.active);
       if(inviteCharacter){S.busy=true;try{await enterCharacter(inviteCharacter.charId);return;}catch(e){S.choosing=true;render();toast(e.message,true);return;}finally{S.busy=false;}}
       render();
