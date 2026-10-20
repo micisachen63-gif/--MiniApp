@@ -38,3 +38,5 @@ Node24執行 worker/tools/admin-console-schema.mjs check 為唯讀。合main後�
 新增84項隔離測試（auth26／analytics22／grants23／race7／integration6）：HMAC／權限撤銷、CSRF／Cookie／配對併發、票券及收據早期競爭、提交後回覆遺失、容量競爭、全批回滾、舊玩家寫入衝突、精準多角色對象、遠征狀態不改、台北時區／分群／留存／所有帳本來源／稽核分頁。0033於帶角色、背包與running遠征的舊資料庫逐表比對所有既有列不變。
 390/1280px真完整HTML＋實際Worker handle＋記憶體D1：電腦配對與TG批准UI、secure cookie、45玩家分頁、XSS文字、確認前零發獎、已提交回覆斷線後原ID重試只入袋一次、群組管理權撤銷清畫面，無pageerror或整頁橫溢。390/1440px額外mock驗證慢分頁／詳情重試／過期原單恢復及大ID精確性。
 這些為隔離Chrome響應式測試，不宣稱原生TG手機或真實管理帳號的實機驗收；沒有對正式玩家發測試獎勵、沒有發群組訊息。完整現有Worker/BOT測試及CI以本次PR與發布收據確認。
+
+安裝工具補驗：Wrangler --file即使帶--json仍會輸出上傳進度，寫入的stdout不可當作JSON收據；改為只核對CLI退出狀態，再用獨立唯讀查詢精準確認10個schema物件及0033收據。node:sqlite的null-prototype資料列與遠端普通JSON列只正規化prototype，名稱／類型／完整SQL仍精準比對，部分或漂移仍停止。新增11項工具測試，確認寫入後讀取失敗不會再寫一次；正式首次套用後已獨立核對成功，不重複套用0033。
