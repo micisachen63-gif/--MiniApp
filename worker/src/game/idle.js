@@ -3,7 +3,7 @@ export {potionTierFor} from './potion-choice.js';
 import {needsBlue,blueTarget} from './auto-blue.js';
 import {chooseMonster,monsterMaterialPlan} from './monsters.js';
 import {guardianDamageMultiplier,guardianChance} from './guardian-effects.js';
-import {idleSpecial,idleThiefNative,prepareThiefIdleEncounter,clearThiefIdleNative,idleThiefStrikePlan} from './special-idle.js';
+import {idleSpecial,consumeIdleLastStand,idleThiefNative,prepareThiefIdleEncounter,clearThiefIdleNative,idleThiefStrikePlan} from './special-idle.js';
 import {beginAssistBattle,idleGuardianActor} from './guardian-assist.js';
 import {idleCombatState,idleMonsterHp,resolveIdleCombat} from './idle-combat.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
@@ -149,6 +149,7 @@ export function settleIdle(char, inventory, equipped, now) {
       if (c.hp <= s.burst && !special?.eliteProtected) died = true;
       else {
         eliteDefeated=true;
+        if(special?.eliteProtected&&c.hp<=s.burst)consumeIdleLastStand(c,t);
         c.hp = Math.max(special?.eliteProtected?1:0,c.hp-s.burst); autoRed();
         eliteGold += goldPerKill(c.level) * MONSTER_GOLD.elite * (1 - MONSTER_GOLD.variance + 2 * MONSTER_GOLD.variance * goldRng());
         // Every surviving elite drops one class-usable advanced+ item; 40% chance for a second.
