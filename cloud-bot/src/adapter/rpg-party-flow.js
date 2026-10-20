@@ -2,6 +2,9 @@ import {partyCaption} from './party-caption.js';
 import {persistentMap} from './persistent-map.js';
 import {battleKey} from './battle-key.js';
 const codes=new Set(['pj','py','pg','pl','ps','pt','px','pz','pv','pr','bt']);
+const cardId=p=>p.cardRootId||p.id;
+const run=p=>Math.max(1,Number(p.cardRun)||1);
+const newer=(a,b)=>run(a)>run(b)||(run(a)===run(b)&&a.rev>b.rev);
 const btn=(text,data)=>({text,callback_data:`rpg:${data}`});
 export function createPartyFlow({api,client,send,popup,st,save,chatId,deepLink,appBtn,now,warn,animationRenderer,renderPartyCard}){
  const dirty=persistentMap(st,save,'dirtyParty'),inflight=new Map();
@@ -12,35 +15,38 @@ export function createPartyFlow({api,client,send,popup,st,save,chatId,deepLink,a
  const url=deepLink(`party_${p.id}`);rows.push([btn('更新進度',`pv:${p.id}`),...(url?[{text:'打開隊伍畫面',url}]:[])]);return rows;
  }
  async function render(p,force=false){
-  if(inflight.has(p.id)){const old=dirty.get(p.id);if(!old||old.rev<p.rev)dirty.set(p.id,p);return;}
-  const task=renderNow(p,force);inflight.set(p.id,task);try{await task;}finally{inflight.delete(p.id);}
+  if(p.cardLatestId&&p.cardLatestId!==p.id)p=(await client.call('/rpg/party/get',{partyId:p.id,currentCard:true})).party;
+  const id=cardId(p);if(inflight.has(id)){const old=dirty.get(id);if(!old||newer(p,old))dirty.set(id,p);return;}
+  const task=renderNow(p,force);inflight.set(id,task);try{await task;}finally{inflight.delete(id);}
  }
  async function renderNow(p,force=false){
-  const cards=st().partyCards??={};let c=cards[p.id];if(!c&&p.messageId)c=cards[p.id]={chatId:p.chatId||chatId,messageId:p.messageId,photo:true,lastRev:-1,lastEdit:0};
-  if(c&&c.lastRev>p.rev)return;
+  const id=cardId(p),cards=st().partyCards??={};let c=cards[id];if(!c&&p.messageId)c=cards[id]={chatId:p.chatId||chatId,messageId:p.messageId,photo:true,lastRev:-1,lastEdit:0};
+  const previous=c?{cardRun:c.lastRun||1,rev:c.lastRev}:null;
+  if(previous&&newer(previous,p)){if(dirty.has(id)&&!newer(dirty.get(id),previous))dirty.delete(id);return;}
+  const sameRun=previous&&run(previous)===run(p);
   const animated=typeof api.sendAnimation==='function'&&typeof api.editMessageMedia==='function'&&p.enemy&&['combat','won','lost'].includes(p.status);
   const key=animated?battleKey('party',p):null,needsAnimation=animated&&c?.lastAnimationKey!==key;
-  if(c&&c.lastRev>=p.rev&&!needsAnimation)return;
-  if(c&&!force&&now()-(c.lastEdit||0)<5000){dirty.set(p.id,p);return;}
+  if(sameRun&&c.lastRev>=p.rev&&!needsAnimation){if(dirty.has(id)&&!newer(dirty.get(id),p))dirty.delete(id);return;}
+  if(c&&!force&&now()-(c.lastEdit||0)<5000){dirty.set(id,p);return;}
   const caption=partyCaption(p),markup={inline_keyboard:keyboard(p)};
-  const defer=needsAnimation&&c&&p.status==='combat'&&now()-(c.lastAnimationAt||0)<10000;
+  const defer=needsAnimation&&c&&sameRun&&p.status==='combat'&&now()-(c.lastAnimationAt||0)<10000;
   let animation;if(needsAnimation&&!defer){try{animation=await animationRenderer('party',p);}catch(e){warn('party animation',e);}}
   if(!c){let m,photo=false;if(animation){try{m=await api.sendAnimation({chatId,buffer:animation,mimeType:'image/gif',fileName:`${p.id}.gif`,caption,replyMarkup:markup});photo=true;}catch(e){if(e?.definite===false)throw e;animation=null;warn('party animation upload',e);}}
    if(!m&&typeof api.sendPhoto==='function'){try{m=await api.sendPhoto({chatId,buffer:await renderPartyCard(p),mimeType:'image/png',fileName:`${p.id}.png`,caption,replyMarkup:markup});photo=true;}catch(e){if(e?.definite===false)throw e;warn('party art',e);}}
    if(!m)m=await send(caption,{reply_markup:markup},chatId);const mid=m?.message_id??m?.result?.message_id;if(!mid)throw Error('Telegram did not confirm party message');
-   c=cards[p.id]={chatId,messageId:mid,photo,animation:!!animation,lastRev:p.rev,lastEdit:now(),...(animation?{lastAnimationKey:key,lastAnimationAt:now()}:{})};save();await client.call('/rpg/party/message',{partyId:p.id,chatId,messageId:mid});
+   c=cards[id]={chatId,messageId:mid,photo,animation:!!animation,lastRev:p.rev,lastRun:run(p),lastPartyId:p.id,lastEdit:now(),...(animation?{lastAnimationKey:key,lastAnimationAt:now()}:{})};save();await client.call('/rpg/party/message',{partyId:p.id,chatId,messageId:mid});
   }else{
    try{if(animation){try{await api.editMessageMedia({chatId:c.chatId,messageId:c.messageId,buffer:animation,mimeType:'image/gif',fileName:`${p.id}.gif`,mediaType:'animation',caption,replyMarkup:markup});c.photo=true;c.animation=true;c.lastAnimationKey=key;c.lastAnimationAt=now();}catch(e){if(e?.definite===false)throw e;warn('party animation upload',e);animation=null;if(c.photo||c.animation)await api.call('editMessageCaption',{chat_id:c.chatId,message_id:c.messageId,caption,reply_markup:markup});else await api.call('editMessageText',{chat_id:c.chatId,message_id:c.messageId,text:caption,reply_markup:markup});}}
     else if(c.animation)await api.call('editMessageCaption',{chat_id:c.chatId,message_id:c.messageId,caption,reply_markup:markup});
     else if(c.photo&&typeof api.editMessageMedia==='function')await api.editMessageMedia({chatId:c.chatId,messageId:c.messageId,buffer:await renderPartyCard(p),mimeType:'image/png',fileName:`${p.id}.png`,caption,replyMarkup:markup});
     else await api.call(c.photo?'editMessageCaption':'editMessageText',{chat_id:c.chatId,message_id:c.messageId,...(c.photo?{caption}:{text:caption}),reply_markup:markup});
    }catch(e){if(!/not modified/i.test(String(e.message||e.description)))throw e;}
-   c.lastRev=p.rev;c.lastEdit=now();save();
-  }if(defer)dirty.set(p.id,p);else if(!dirty.has(p.id)||dirty.get(p.id).rev<=p.rev)dirty.delete(p.id);
+   c.lastRev=p.rev;c.lastRun=run(p);c.lastPartyId=p.id;c.lastEdit=now();save();
+  }if(defer){if(!dirty.has(id)||!newer(dirty.get(id),p))dirty.set(id,p);}else if(!dirty.has(id)||!newer(dirty.get(id),p))dirty.delete(id);
  }
  async function handle(cq,action,arg){if(!codes.has(action))return null;const tg=String(cq.from.id),requestId=`party-cq-${cq.id}`;try{
   if(action==='bt'){const [ownerId,skillId]=arg.split('.');const r=await client.call('/rpg/expedition/trade',{tgId:tg,ownerId,skillId,requestId});const a=appBtn('確認技能寶物交易',`trade_${r.tradeId}`);await send('交易視窗已開啟。物品不會自動轉移，請雙方放入、鎖定並確認。',a?{reply_markup:{inline_keyboard:[[a]]}}:{},tg);await popup(cq,'交易視窗已私訊，請雙方確認',false);return {rpg:'book-trade'};}
-  const [id,round,skillId,targetIndex]=String(arg).split('.');let p=(await client.call('/rpg/party/get',{partyId:id,tgId:tg})).party;
+  const [id,round,skillId,targetIndex]=String(arg).split('.');let p=(await client.call('/rpg/party/get',{partyId:id,tgId:tg,...(action==='pv'?{currentCard:true}:{})})).party;
   if(action==='pv'){await popup(cq,'進度已更新',false);await render(p,true);return {rpg:'party-refresh'};}
   if(action==='ps'||action==='pt'){
    if(!p.me?.actor||p.me.actor.hp<=0)throw Error('你目前不能施放隊伍技能');const me=p.me.actor;
