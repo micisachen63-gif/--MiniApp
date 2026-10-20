@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "7ed9a015ae2a560d1b51db40f707b8caa8d207bf",
+  "sourceCommit": "a5530f39fa7436b2b0754436bdbefab3aa0465be",
   "service": "elf-rpg-api",
-  "productionVersion": "09205401-cdcc-4d8f-8406-34f80ded8445",
+  "productionVersion": "061b2170-21ec-445c-84e4-2537adb63dd6",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-19T09:32:12.272Z",
+  "verifiedAt": "2026-10-20T00:00:54.687Z",
   "runtimeSHA256": {
-    "index.js": "5031523377a95884e3ab80c37d831f49d4a896a673ebd69d9a9d6a0955ab6008"
+    "index.js": "f7278d0d3433be964169100b6162909e659f4e13551ff4d9283057171a54254a"
   },
   "source": {
-    "fileCount": 9216,
-    "sha256": "bbb09fccd34ef21974630c8b91e2437594585f6993294b1bfdc505f4addd73cf",
+    "fileCount": 9218,
+    "sha256": "89dbd133f39a9defd22c946786f57fd4811f3066b8cd436b3ecaf14eb0eee33f",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2463,7 +2463,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "9cac7d0e984e6babc82bfe1bda0ed6ceacdd8ed9b871d43adb8840da1c3b2b21"
+        "sha256": "63d3e0d012641085934ea7debcdc85e1c65ba5be46486f2f482889deca4676a7"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -35099,7 +35099,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "53a2533dec1b366b21f7736f499a95c3a03966b6efb3db5092de86e06d78875e"
+        "sha256": "d75b535539a6b9e5e9008822e56106b58907a7c1d78ec629dfa31002fce8ffc6"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -35871,7 +35871,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "a033bb4b324bbb45703afbdba372fad8e50f076c482b4cfe0811cf2a6f0ad7cb"
+        "sha256": "422339dcd9bc894f519df720bb675cd85ba0e49336c46813265f7d792bb6ae57"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -36135,7 +36135,7 @@
       },
       {
         "file": "worker/public/star-ring-cosmetics.js",
-        "sha256": "89e25979ec536d911c3a1ee82565d1ee60823d27354e53a26d4c38c3670baa5f"
+        "sha256": "cea194dfc79407ab41cbd88255ace1b65ce34dae3144d0048fab2579e1b0aa82"
       },
       {
         "file": "worker/public/star-ring-heroes.js",
@@ -36155,7 +36155,7 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "8c90fc1b5886165122f9ec6cc1fbe0bf974c29751028cd580a0428bde49ee355"
+        "sha256": "ca8c7510ed7cbd4feba51af98cdea9774ef9f18f638bbd1e9f58918aa601e0d6"
       },
       {
         "file": "worker/public/star-ring.css",
@@ -36499,7 +36499,7 @@
       },
       {
         "file": "worker/src/db.js",
-        "sha256": "07d633342e8955df59e1020ffcb770104b054e84c7666b0e9afcfe050708d512"
+        "sha256": "16b4c8260d1c6b5501c9449afd1639388c8a3bd55b2346649b9b021883b23f9e"
       },
       {
         "file": "worker/src/fate-public.js",
@@ -36543,7 +36543,7 @@
       },
       {
         "file": "worker/src/game/constants.js",
-        "sha256": "c9b1e764a19b78b4404cd2e4303e1ef7ed38fcb0aca8e9ef054d7722f8622188"
+        "sha256": "844524b3a436363f382b8051f30cd07ea06aaef186fdb0ffdcf3b78bc48c3c0d"
       },
       {
         "file": "worker/src/game/constants.js.backup-elf-redesign-20261010",
@@ -36591,11 +36591,11 @@
       },
       {
         "file": "worker/src/game/gear-quality.js",
-        "sha256": "528d5793da41cc7df749dc4f29b64866bb3e2c6d2410af1fa90856b154933f64"
+        "sha256": "3b0f35bb547c472b9a0264dff34575cd707252bea6001ac511b47fbcbd8514aa"
       },
       {
         "file": "worker/src/game/gear.js",
-        "sha256": "5034947514394f86aecfe0a09e9a770fc339d67bf23bc09618944edc87b90193"
+        "sha256": "088c3855c85efcffab50a3ca8976bcf2c08c7d625fbf57a9185d7d9ae60bf22c"
       },
       {
         "file": "worker/src/game/guardian-assist.js",
@@ -36667,7 +36667,7 @@
       },
       {
         "file": "worker/src/game/share.js",
-        "sha256": "6224e2f747ac7c52c9ade7ff9e04ef6c20cd50535a8bbc928c5897b7c7ce3068"
+        "sha256": "ada735d408cb645095fb9fcc4d944194ab4bc1e29d2513c7a9672e0ec67bdd0b"
       },
       {
         "file": "worker/src/game/shop.js",
@@ -36694,6 +36694,10 @@
         "sha256": "01a28be90c230e46ac75550fedb209b55615091ce56bedcd5189acd07bc017dd"
       },
       {
+        "file": "worker/src/game/star-ring-gear.js",
+        "sha256": "1a19f51bdfb5bb1c51304f319eb4709aed4466212ba7c45f5f41346acd70ff99"
+      },
+      {
         "file": "worker/src/game/star-ring-pools.js",
         "sha256": "39ae312b74229872e5ec355c70f4512026ae2a9124130275845c0c824e404673"
       },
@@ -36707,7 +36711,7 @@
       },
       {
         "file": "worker/src/game/stats.js",
-        "sha256": "937842500a739660ec2d21009897bf9544ff2772716c3fe3ed2d561e15a92635"
+        "sha256": "8d64d4c6f9fe8a6303a7149a22cfe8ec121ce5a0286cbb9a536b965ede6327eb"
       },
       {
         "file": "worker/src/game/thief-advancement.js",
@@ -36811,7 +36815,7 @@
       },
       {
         "file": "worker/src/services/market-exchange.js",
-        "sha256": "37058c2ed67c1bbb615cd7ca89bd8ef1118ba7ce0ed64ea671c90e289f6cf1cc"
+        "sha256": "d25c8a7b67ce6e427277d93a7d92013c6bc16aacb5adb0e413f4fa8b8794b0c8"
       },
       {
         "file": "worker/src/services/monster-exchange.js",
@@ -36835,7 +36839,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "bfb5b0b75f7af33a08f729a3cd4d54968f02a3939109bd5a79eb8749613855ce"
+        "sha256": "0f7f196ada100e854738d3abd1630372509d8b26d667698ab0e250a773d2eafc"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -36854,8 +36858,12 @@
         "sha256": "0095dfa15b6735c3cc9975c13d77c9adc6833ae4449c4b9cddc75efa4e970107"
       },
       {
+        "file": "worker/src/services/star-ring-gear.js",
+        "sha256": "ea1d84205cbed1eaf346386873c7d644df29837165c2383a6d9b2340f39e3888"
+      },
+      {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "d45d1eaa566a6d4ecdbb28d08bd328291a7c8f44f253e418b798b649895405a5"
+        "sha256": "f220f406832e0ff914b763a4b6ac1dfbabf7aee7ab1eddc49b17803895db5c2c"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -36863,7 +36871,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "0013b9fe6101cfc0febe39da94bca1f2cfa961d1a7dac3ec911f797078d72147"
+        "sha256": "ace52437d63bd6ecb763654015326d12066d497a1ba3ad4e506e0572db87652b"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -36881,7 +36889,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 146,
+    "verifiedCount": 147,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -36911,6 +36919,7 @@
       "worker/public/equipment-live-sync.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -37034,7 +37043,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "09205401-cdcc-4d8f-8406-34f80ded8445",
+        "version_id": "061b2170-21ec-445c-84e4-2537adb63dd6",
         "percentage": 100
       }
     ],
