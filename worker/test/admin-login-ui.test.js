@@ -51,6 +51,13 @@ function setup({ clipboard = async () => {}, telegram = '', search = '' } = {}) 
   };
 }
 const flush = () => new Promise(resolve => setImmediate(resolve));
+async function waitUntil(predicate) {
+  const deadline = Date.now() + 3000;
+  while (!predicate()) {
+    assert.ok(Date.now() < deadline, 'async login rendering did not complete');
+    await new Promise(resolve => setTimeout(resolve, 2));
+  }
+}
 
 test('browser login uses compact BOT start and matching manual command while keeping verifier private', async () => {
   const s = setup(); await s.render();
@@ -100,8 +107,12 @@ test('expired attempt replaces its challenge and ignores a late copy completion 
   const s = setup({ clipboard: () => new Promise(resolve => { copied = resolve; }) }); await s.render();
   const operation = s.nodes.get('copy-login-command').fire('click'); await flush();
   const old = s.state().poll;
+  const oldCommandField = s.nodes.get('login-command');
   s.advance(300001); await s.evaluate('pollBrowserLogin()'); await flush();
   assert.equal(s.state().poll, null);
+  // WebCrypto can finish after an event-loop turn under the full suite's load.
+  // Wait for the replacement DOM rather than firing the removed link's handler.
+  await waitUntil(() => s.nodes.get('login-command') !== oldCommandField && s.nodes.get('browser-login').events.has('click'));
   s.nodes.get('browser-login').fire('click'); await flush();
   assert.notEqual(s.state().poll.challenge, old.challenge);
   copied(); await operation;
