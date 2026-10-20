@@ -1,0 +1,27 @@
+{
+  "samples": 10000,
+  "assumption": "4 actual elites + 2 actual bosses each checkpoint, S grade; not live player telemetry",
+  "stats": [
+    {
+      "difficulty": "normal",
+      "mean": 9.6075,
+      "guardian50Mean": 10.8046,
+      "min": 6,
+      "max": 13
+    },
+    {
+      "difficulty": "advanced",
+      "mean": 9.8583,
+      "guardian50Mean": 11.1758,
+      "min": 6,
+      "max": 13
+    }
+  ],
+  "level120": {
+    "recipes": 9221,
+    "supremeRate": 0.02320789502223186,
+    "averageSaleGold": 34619.528,
+    "maxSampleSaleGold": 71504,
+    "hardSaleGoldCap": 133510
+  }
+}

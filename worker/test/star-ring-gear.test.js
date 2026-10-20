@@ -1,5 +1,5 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';
-import {makeStarRingGear,repairStarRingGear,legacyStarRingGear,STAR_RING_GEAR} from '../src/game/star-ring-gear.js';
+import {makeStarRingGear,repairStarRingGear,legacyStarRingGear,STAR_RING_GEAR,starRingGearDropPlan} from '../src/game/star-ring-gear.js';
 import {makeGear,gearOffers,convertWeapon} from '../src/game/gear.js';import {itemStat,itemExtras} from '../src/game/stats.js';
 import {gearArt,cardPhoto} from '../src/game/share.js';import {CLASS_KEYS,SLOTS,RARITIES,TIER_LEVEL_REQ,GENERAL_WEAPON} from '../src/game/constants.js';
 import {mapForLevel,expToNext} from '../src/game/formulas.js';import {affixLines,affixSlots} from '../src/game/affixes.js';import {rngFor} from '../src/game/rng.js';
@@ -42,7 +42,7 @@ for(const version of [1,2,3])for(const online of [false,true])test(`v${version} 
  for(let stage=0;stage<6;stage++){const result=Engine.simulateStage(reference,stage);reference.results.push(result);if(online)await Ring.view(f.env,f.id,f.ids[0],NOW+(stage+1)*Engine.STAGE_MS);}
  const done=await Ring.view(f.env,f.id,f.ids[0],NOW+Engine.DURATION);assert.equal(done.status,'complete');assert.deepEqual(f.state().results,reference.results);assert.deepEqual(f.state().actors,departure.actors);
  for(const owner of f.ids){const records=f.db.prepare('SELECT stage,reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? ORDER BY stage').all(f.id,owner),a=reference.actors.find(a=>a.id===owner),c=f.db.prepare('SELECT level FROM rpg_characters WHERE tg_id=?').get(owner);
-  assert.equal(records.length,6);for(const record of records){const r=JSON.parse(record.reward_json),old=Engine.stageReward(reference,a,record.stage,reference.results[record.stage]);assert.equal(r.exp,old.exp);assert.deepEqual(r.items,old.items);assert.equal(r.equipment.length,old.equipment.length);
+  assert.equal(records.length,6);for(const record of records){const r=JSON.parse(record.reward_json),old=Engine.stageReward(reference,a,record.stage,reference.results[record.stage]);assert.equal(r.exp,old.exp);assert.deepEqual(r.items,old.items);assert.deepEqual(r.equipment.map(e=>e.id),starRingGearDropPlan(reference,a,record.stage,reference.results[record.stage],old.equipment).ids);assert.ok(r.equipment.length>=1);
    for(const e of r.equipment){assert.equal(e.tier,mapForLevel(c.level));assert.ok(e.tier>=8);assert.ok(['legendary','supreme'].includes(e.element_tier));assert.equal(legacyStarRingGear(e),false);assert.equal(f.db.prepare('SELECT tier FROM rpg_equipment WHERE id=?').get(e.id).tier,e.tier);}
   }
  }
@@ -52,7 +52,7 @@ for(const version of [1,2,3])for(const online of [false,true])test(`v${version} 
 test('final stage EXP level-up happens before equipment tier selection',async t=>{
  const f=await fixture(t,{runTier:40});await Ring.sweep(f.env,NOW+5*Engine.STAGE_MS);
  f.db.prepare("UPDATE rpg_characters SET class_path='A11',exp=? WHERE tg_id=?").run(expToNext(80)-1,f.ids[0]);
- const p=await Ring.view(f.env,f.id,f.ids[0],NOW+Engine.DURATION),c=f.character();assert.ok(c.level>=81);assert.ok(p.me.rewards.equipment.length);assert.ok(p.me.rewards.equipment.every(e=>e.tier===mapForLevel(c.level)&&e.level_req<=c.level));
+ const p=await Ring.view(f.env,f.id,f.ids[0],NOW+Engine.DURATION),c=f.character();assert.ok(c.level>=81);assert.ok(p.me.rewards.equipment.length);const final=JSON.parse(f.db.prepare('SELECT reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? AND stage=5').get(f.id,f.ids[0]).reward_json);assert.ok(final.equipment.every(e=>e.tier===mapForLevel(c.level)&&e.level_req<=c.level));
 });
 
 test('legacy worn T4 repair is atomic and once only, retaining enhancement, binding, element and affix identity through future levels',async t=>{

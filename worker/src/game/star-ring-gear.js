@@ -3,6 +3,8 @@ import {mapForLevel} from './formulas.js';
 import {TIER_LEVEL_REQ,WEAPON_KINDS,STAR_RING_GEAR} from './constants.js';
 import {rollAffixes,affixLines,affixSlots,rangeFor} from './affixes.js';
 import {rngFor} from './rng.js';
+import {creditedDefeats,hasRankRewards} from './star-ring-rank-rewards.js';
+import {guardianChance} from './guardian-effects.js';
 
 export {STAR_RING_GEAR} from './constants.js';
 const bonusOf=e=>{try{return JSON.parse(e.bonus_json||'{}');}catch{return {};}};
@@ -12,11 +14,19 @@ export function makeStarRingGear({level,...options}){
  e.source='star_ring';e.name=e.name.replace(/^菁英/,'星征');
  e.bonus_json=JSON.stringify({...bonusOf(e),starRingGearVersion:STAR_RING_GEAR.version});return e;
 }
-// Keep the published personal extra-drop roll/count. Only the equipment recipe
-// changes, using an isolated stream and the recipient's post-EXP live level.
-export function starRingEquipmentReward(state,actor,index,old,level){
- const rng=rngFor(`${state.seed}:equipment-v1:${actor.id}:${index}`);
- return old.map(e=>makeStarRingGear({id:e.id,tgId:actor.id,cls:actor.base,classPath:actor.path,level,rng,now:state.endsAt}));
+// This service-side policy leaves all published combat/base-loot replays intact.
+export const STAR_RING_GEAR_YIELD=Object.freeze({version:1,perStage:1,stages:6,minimum:6,maximum:13,eliteChance:.05,bossChance:.25,rankExtraPerStage:1});
+export function starRingGearDropPlan(state,actor,index,result,old){
+ const ranks=hasRankRewards(state)?creditedDefeats(result).filter(d=>Math.floor(d.hourIndex/2)===index):[];
+ const extra=ranks.some(d=>rngFor(`${state.seed}:equipment-yield-v1:${actor.id}:${index}:${d.hourIndex}:${d.serial}`)()<guardianChance(d.rank==='boss'?STAR_RING_GEAR_YIELD.bossChance:STAR_RING_GEAR_YIELD.eliteChance,actor));
+ // The former final guaranteed item and personal grade roll keep their IDs.
+ const ids=index===5?old.map(e=>e.id):[`ringgear:${state.id}:${actor.id}:checkpoint:${index}`];
+ if(extra)ids.push(`ringgear:${state.id}:${actor.id}:hunt:${index}`);
+ return {version:1,guaranteed:1,huntExtra:Number(extra),gradeExtra:index===5?Math.max(0,old.length-1):0,ids};
+}
+export function starRingEquipmentReward(state,actor,index,old,level,result=state.results[index]){
+ const rng=rngFor(`${state.seed}:equipment-v1:${actor.id}:${index}`),plan=starRingGearDropPlan(state,actor,index,result,old);
+ return plan.ids.map(id=>makeStarRingGear({id,tgId:actor.id,cls:actor.base,classPath:actor.path,level,rng,now:state.startedAt+(index+1)*(state.endsAt-state.startedAt)/STAR_RING_GEAR_YIELD.stages}));
 }
 // One-time repair, never an item that automatically levels forever. Preserve
 // enhancements, ownership, binding, element and all authored affix keys/scores.
