@@ -1,3 +1,4 @@
+import {homeActivity} from './services/home-activity.js';
 import * as TOWER from './services/tower.js';
 import {countryFromCode,ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
@@ -52,10 +53,10 @@ const tgOf = (b) => { const t = String(b?.tgId ?? ''); if (!/^(?:\d{1,20}|c[\da-
 
 async function me(env, tg, now, { summary = false } = {}) {
   const r = await P.withPlayer(env, tg, now);
-  const [autoEnhance,guardianAuto,autoReroll,backgroundJobs,boss,badges] = await Promise.all([
-    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),B.currentBoss(env,now),SH.pendingCounts(env,tg,now).catch(() => null)
+  const [autoEnhance,guardianAuto,autoReroll,backgroundJobs,boss,badges,activity] = await Promise.all([
+    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),B.currentBoss(env,now),SH.pendingCounts(env,tg,now).catch(() => null),homeActivity(env.DB,r.player.char)
   ]);
-  return { ok: true, ...playerView(r.player, { now, report: r.report?.ticks ? r.report : null, compact:summary }), autoEnhance,guardianAuto,autoReroll,backgroundJobs, boss, badges };
+  return { ok: true, ...playerView(r.player, { now, report: r.report?.ticks ? r.report : null, compact:summary }), autoEnhance,guardianAuto,autoReroll,backgroundJobs, boss, badges, activity, now };
 }
 function act(fn) {
   return async (env, body, now) => {

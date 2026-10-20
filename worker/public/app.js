@@ -636,6 +636,7 @@
     if (j && j.character) {
       if(S.me?.character&&S.me.character.tgId!==j.character.tgId){S.bossPersonalActor=null;if(S.boss)S.boss={...S.boss,me:undefined};}
       if (S.me?.character && S.me.character.tgId !== j.character.tgId) { S.lastReport=null;S.pending=null;S.session={kills:0,exp:0,gold:0,ticks:0};resetFight(); }
+      if(!Object.hasOwn(j,'activity')&&j.character.tgId===S.me?.character?.tgId)j={...j,activity:S.me.activity};
       const acceptedReport = !!j.report?.ticks && acceptIdleReport(j.character.tgId,j.report);
       if (BATTLE) BATTLE.sync(j, acceptedReport ? j.report : null);
       if (acceptedReport) { S.lastReport = j.report; { const r = j.report; const P = S.pending || (S.pending = { ticks: 0, kills: 0, gold_gained: 0, elites: 0, drops: {} }); P.ticks += r.ticks || 0; P.kills += r.kills || 0; P.gold_gained += r.gold_gained || 0; P.elites += r.elites || 0; for (const [k, v] of Object.entries(r.drops || {})) P.drops[k] = (P.drops[k] || 0) + v; } S.session.kills += j.report.kills || 0; S.session.exp += (j.report.exp_gained || 0) - (j.report.exp_lost || 0); S.session.gold += j.report.gold_gained || 0; S.session.ticks += j.report.ticks || 0; }
@@ -850,7 +851,9 @@
   }
 
   // ---------- screens ----------
+  let awayCleanup=null;
   function stateInfo(me) {
+    const activity=window.RpgExpeditionAway?.activity(me);if(activity)return {cls:'',text:activity.kind==='star-ring'?'✦ 星環遠征中 · 一般掛機暫停':'組隊冒險中 · 一般掛機暫停'};
     const c = me.character, g = me.gate;
     switch (c.state) {
       case 'fighting': return { cls: '', text: '⚔️ 自動戰鬥中' };
@@ -885,8 +888,8 @@
       ${bar('mp', c.mp, c.maxMp, `魔力 ${fmt(c.mp)} / ${fmt(c.maxMp)}`)}
       ${bar('exp', c.expPct, 100, c.expNeed ? `經驗值 ${c.expPct}%` : '經驗值 MAX')}
     </div></div></div>
-    <div class="lc-battle-shell"><div class="lc-battle-head"><span>⚔ 狩獵戰場</span><span>${si.text}</span></div>
-    ${BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
+    <div class="lc-battle-shell"><div class="lc-battle-head"><span>${window.RpgExpeditionAway?.activity(me)?'✦ 旅途仍在繼續':'⚔ 狩獵戰場'}</span><span>${si.text}</span></div>
+    ${window.RpgExpeditionAway?.activity(me) ? window.RpgExpeditionAway.markup(me) : BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
     </div></div>
     ${todoHtml()}
     ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
@@ -923,7 +926,8 @@
   function bindHome(view) {
     const guardianEntry=view.querySelector('[data-guardian-entry]');if(guardianEntry)guardianEntry.onclick=openGuardian;
     drawPortrait($('#pt', view), heroOpts({}));
-    if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
+    if(window.RpgExpeditionAway?.activity(S.me))awayCleanup=window.RpgExpeditionAway.mount(view,()=>Date.now()+(S.skew||0));
+    else if (BATTLE) BATTLE.attach($('#bslot', view)); else drawers.push({ c: $('#stage', view), fn: drawStage });
     const supplyToggle=$('#refillGuardian',view);if(supplyToggle)supplyToggle.onchange=async()=>{const checked=supplyToggle.checked;supplyToggle.disabled=true;try{await api('guardian/assist',{mode:'supply',autoBuy:checked,requestId:window.RpgGuardianHost.requestId()});await refreshMe();window.dispatchEvent(new Event('elf-skills-refresh'));toast(checked?'已允許召喚石用完自動購買，每顆3,000金幣':'已關閉召喚石自動購買，背包石頭用完就停止召喚');}catch(e){supplyToggle.checked=!checked;toast(e.message);}finally{supplyToggle.disabled=false;}};
     view.querySelectorAll('[data-potion-kind]').forEach(select=>{select.onchange=async()=>{const field=select.dataset.potionKind==='red'?'autoRedPotion':'autoBluePotion',value=select.value;select.disabled=true;try{const j=await act('settings',{[field]:value},value==='auto'?'已改為自動選擇藥水':'已設定自動飲用：'+itemName(value));if(!j){select.value=S.me.character[field]||'auto';select.disabled=false;}}catch{select.value=S.me.character[field]||'auto';select.disabled=false;}};});
     $('#refill', view).onclick = () => act('refill', {}, (j) => '已補水，花費 '+fmt(j.result?.cost)+' 金幣');
@@ -2053,6 +2057,8 @@
     guardianController?.cleanup();guardianController=null;guardianActor=null;
     if(S.tab!=='shop'||S.shopTab!=='sell'||S.choosing||S.creating)window.RpgMarketSell?.reset();
     bossWaitingCleanup?.(); bossWaitingCleanup = null;
+    const oldAway=document.querySelector('.expedition-away');
+    awayCleanup?.();awayCleanup=null;
     drawers = []; const view = $('#view');
     if (!S.meta) return;
     const designState = S.designState || (S.designState = {});
@@ -2062,7 +2068,7 @@
     if(guardianVisible){view.innerHTML='<div id="guardian-root"></div>';guardianActor=String(S.me.character.tgId);guardianController=window.RpgGuardianSigil.mount(view.querySelector('#guardian-root'),{host:window.RpgGuardianHost,interactive:true,initialView:S.guardianInitialView||'overview',onBack:()=>{S.tab='home';render();}});guardianFrameSize();return;}
     const revealInventory = S._lastTab === 'shop' && S.tab === 'bag';
     const scrollKeep = S._lastTab === S.tab ? window.scrollY : 0; S._lastTab = S.tab;
-    if (S.tab === 'home') { view.innerHTML = homeView(); bindHome(view); }
+    if (S.tab === 'home') { view.innerHTML = homeView();const nextAway=view.querySelector('.expedition-away');if(oldAway&&nextAway&&oldAway.dataset.awayKey===nextAway.dataset.awayKey)nextAway.replaceWith(oldAway); bindHome(view); }
     else if (S.tab === 'bag') { view.innerHTML = bagView(); bindBag(view); }
     else if (S.tab === 'trade') { view.innerHTML = tradeView(); bindTrade(view); }
     else if (S.tab === 'shop') { if(shopForActor!==String(S.me.character.tgId))S.shop=null;view.innerHTML = shopView(); bindShop(view); }

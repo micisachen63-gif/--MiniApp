@@ -18,6 +18,7 @@ for(const version of [1,2,3])for(const kind of ['dungeon','tower'])for(const rin
  const configured=skills(f),at=ringFirst?NOW+Engine.DURATION-1000:NOW+1000;
  assert.ok(!old.loadout.includes(newSkill));assert.ok(!old.learned.includes(newBook));
  const id=await shortParty(f,kind,at),started=shortState(f,id),actor=started.actors.find(a=>a.id===owner);
+ if(kind==='dungeon'){assert.equal(actor.special.partyStamina.points,80);configured.partyStamina={...actor.special.partyStamina};}
  assert.deepEqual(actor.special,configured,'newly started battle snapshots the actual new character configuration');
  assert.deepEqual(actor.special.loadout,loadout);assert.ok(actor.special.learned.includes(newBook));
  // Use the replacement skill in a real turn, rather than merely inspecting it.

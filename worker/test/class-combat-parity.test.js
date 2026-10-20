@@ -43,7 +43,7 @@ test('specials honor branch mana discounts, affix efficiency and haste in valida
  const skill=validateCast({...c,affixPct:pct},x,'skill_14_1',T0);
  assert.equal(skill.mp,Math.round(SKILL_MAP.skill_14_1.mp*.85*.8));
  assert.equal(skill.cooldownSeconds,Math.round(SKILL_MAP.skill_14_1.cooldownSeconds*.75));
- assert.deepEqual(skill,specialCost(SKILL_MAP.skill_14_1,pct));
+ const {mastery,...base}=skill;assert.equal(mastery.level,1);assert.equal(mastery.outputPct,0);assert.deepEqual(base,specialCost(SKILL_MAP.skill_14_1,pct));
 });
 
 test('special free casts keep mana, start cooldowns and trigger actual native cast healing',()=>{

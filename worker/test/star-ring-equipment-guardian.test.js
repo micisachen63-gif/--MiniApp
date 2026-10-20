@@ -53,7 +53,7 @@ test('permanent activation, deactivation, legacy selection and assist toggles ar
 
 for(const mode of ['fake','left','finished','foreground'])test(`${mode} membership cannot edit gear or guardian configuration`,async t=>{
  const f=await fixture(t),equipment=f.equipped(),active=f.active(),x=special(f),n=stones(f);
- if(mode==='foreground')await shortParty(f,'dungeon');
+ if(mode==='foreground'){await shortParty(f,'dungeon');assert.equal(special(f).partyStamina.points,80);x.partyStamina={...special(f).partyStamina};}
  if(mode==='fake')f.db.prepare("UPDATE rpg_characters SET party_id='ring:fake' WHERE tg_id=?").run(f.ids[0]);
  if(mode==='left')f.db.prepare('UPDATE rpg_star_ring_members SET left_at=? WHERE run_id=? AND char_id=?').run(NOW,f.id,f.ids[0]);
  if(mode==='finished')f.db.prepare("UPDATE rpg_star_ring_runs SET status='complete' WHERE id=?").run(f.id);
