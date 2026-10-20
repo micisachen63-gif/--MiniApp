@@ -21,9 +21,9 @@ export const gearName = (cls, slot, tier) => (isShared(slot) ? SHARED_NAMES[slot
 const typeName = (cls, slot) => (isShared(slot) ? SLOT_NAMES[slot] : `${ARMOR_FAMILIES[cls].name}${SLOT_NAMES[slot]}`);
 const descOf = (cls, slot) => {
   const sp = SLOT_SPEC[slot]; const parts = [];
-  if (sp.main === 'mp') parts.push('MaxMP'); if (sp.main === 'atk') parts.push('ATK');
-  if (sp.main === 'def') parts.push('DEF'); for (const k of Object.keys(sp.flat)) parts.push(k.toUpperCase());
-  if (sp.pct.takenPct) parts.push('受傷 −1%'); if (sp.pct.critPct) parts.push('爆擊 +1%'); if (sp.pct.maxMpPct) parts.push('MaxMP +1%');
+  if (sp.main === 'mp') parts.push('魔力上限'); if (sp.main === 'atk') parts.push('攻擊力');
+  if (sp.main === 'def') parts.push('防禦力'); for (const k of Object.keys(sp.flat)) parts.push(({atk:'攻擊力',def:'防禦力',hp:'生命值',mp:'魔力'})[k]||k);
+  if (sp.pct.takenPct) parts.push('受傷 −1%'); if (sp.pct.critPct) parts.push('爆擊 +1%'); if (sp.pct.maxMpPct) parts.push('魔力上限 +1%');
   return (isShared(slot) ? '全職業通用・' : `${ARMOR_FAMILIES[cls].desc}・`) + parts.join('／');
 };
 

@@ -57,3 +57,13 @@ body.greek.v2.mythic.olympus-suite #sheet .forge-flow-sheet .reroll-cost:before,
 #forge.ritual.guaranteed.dragging .fr-flow{filter:drop-shadow(0 0 10px #f278bdaa);opacity:1}
 @keyframes fr-pink{50%{filter:brightness(1.4) drop-shadow(0 0 12px #ff9dce);transform:scale(1.05)}}
 @media(prefers-reduced-motion:reduce){#forge.ritual.guaranteed .fr-scroll:before{animation:none}}
+
+/* Server-derived equipment gains, shared by the detail sheet and all forge modes. */
+.fr-gain{margin:12px 0;padding:12px 14px;border:1px solid #c5a26988;border-radius:6px;background:linear-gradient(120deg,#283d4d,#101c2e);text-align:left;color:#e7d8b5;min-width:0}
+.fr-gain-head{display:flex;gap:8px;justify-content:space-between;align-items:center;flex-wrap:wrap;font-size:11px;color:#c6b58e}
+.fr-gain-head small{font-size:10px;color:#aebccc}.fr-gain-values{display:flex;gap:10px;align-items:baseline;flex-wrap:wrap;margin-top:8px;font-variant-numeric:tabular-nums}
+.fr-gain-values>span{font-size:16px;color:#adbbcc}.fr-gain-values i{font-style:normal;color:#bca56e}.fr-gain-values strong{font-size:24px;font-weight:700;color:#ffe2a1;line-height:1.25}
+.fr-gain-values b{margin-left:auto;font-size:14px;color:#a9e1c1;white-space:nowrap}.fr-gain>p{margin:6px 0 0;font-size:11px;color:#a9e1c1}
+.fr-auto-preview{width:100%;min-width:0}.fr-gain-compact{margin:4px 0 0;padding:7px 10px}.fr-gain-compact .fr-gain-head{font-size:10px}.fr-gain-compact .fr-gain-values{margin-top:3px;gap:8px}.fr-gain-compact .fr-gain-values>span{font-size:12px}.fr-gain-compact .fr-gain-values strong{font-size:16px}.fr-gain-compact .fr-gain-values b{font-size:12px}
+.forge-confirm .fr-gain p{font-size:11px;color:#a9e1c1;margin:6px 0 0}#forge:not(.ritual) .fr-gain{max-width:430px;margin:12px auto}
+@media(max-width:360px){.fr-gain{padding:10px}.fr-gain-values{gap:7px}.fr-gain-values strong{font-size:21px}.fr-gain-values b{font-size:12px}}
