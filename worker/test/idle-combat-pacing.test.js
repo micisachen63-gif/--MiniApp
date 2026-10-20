@@ -52,7 +52,7 @@ function killRound(){const a=enemy('a','海塞壬',100),b=enemy('b','潮蟲',100
     {type:'hit',targetId:'b',enemy:b,damage:100,beforeHp:100,afterHp:0,skill:false},
     {type:'spawn',slot:1,enemy:{...b,id:'d'}}]};}
 
-test('each kill shows real EXP/gold/drop popups that add up to the report totals',async()=>{
+test('each kill shows real 經驗值/gold/drop popups that add up to the report totals',async()=>{
   const h=idleBattleHarness(),me=idleMe({mapId:4,level:35}),round=killRound();
   const made=[];const orig=h.document.createElement;h.document.createElement=t=>{const e=orig(t);made.push(e);return e;};
   me.battle.idleCombat={enemies:round.after,round};
@@ -65,7 +65,7 @@ test('each kill shows real EXP/gold/drop popups that add up to the report totals
   assert.equal(texts.filter(x=>/exp/.test(x.c)).length,2);assert.deepEqual(h.errors,[]);
 });
 
-test('gaps are filled with cosmetic swings that never change monster HP',async()=>{
+test('gaps are filled with cosmetic swings that never change monster 生命值',async()=>{
   const h=fixture(mk());await h.advance(1500);
   const hp=()=>h.battle.state.group.map(e=>e.mon?.hp).join();
   const seen=new Set();for(let i=0;i<40;i++){await h.advance(100);seen.add(hp());}
@@ -85,10 +85,10 @@ async function popups(steps,mutate){
 
 test('round delivered by the idle feed first, report arriving later, still shows the real kill popups',async()=>{
   const t=await popups((h,me,rep)=>{h.battle.sync(me,null);h.battle.sync(me,rep);});
-  assert.equal(t.filter(x=>/EXP/.test(x)).length,2);assert.ok(t.includes('+50 EXP'));assert.ok(t.some(x=>x.includes('強化卷軸')));
+  assert.equal(t.filter(x=>/經驗值/.test(x)).length,2);assert.ok(t.includes('+50 經驗值'));assert.ok(t.some(x=>x.includes('強化卷軸')));
 });
 
 test('summarized round (no per-hit events) still shows the real totals once',async()=>{
   const t=await popups((h,me,rep)=>h.battle.sync(me,rep),r=>{r.events=[];r.summarized=true;});
-  assert.deepEqual(t,['+101 EXP','+55 金幣','強化卷軸 ×3']);
+  assert.deepEqual(t,['+101 經驗值','+55 金幣','強化卷軸 ×3']);
 });

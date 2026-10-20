@@ -1,7 +1,7 @@
 // 小精靈 RPG — v0.5 battle animation layer (v0.4 + natural motion, per-path skill FX, monster spells) for the painted (art v2) Mini App stage.
-// Combat is resolved server-side once per minute; this layer REPLAYS each settlement report (kills, elites, EXP, gold,
+// Combat is resolved server-side once per minute; this layer REPLAYS each settlement report (kills, elites, 經驗值, gold,
 // potions, drops, relics, level-ups, deaths) as an animation queue. Gains shown always add up to the server totals;
-// Between reports, combat motion is an illustration. No per-hit damage, crits, misses or enemy HP are invented.
+// Between reports, combat motion is an illustration. No per-hit damage, crits, misses or enemy 生命值 are invented.
 // GPU-friendly: CSS transform/opacity keyframes on cut-out <img> fighters + a small capped canvas particle layer.
 // Pauses when the tab is hidden or the stage is detached; prefers-reduced-motion → simple fades, no shakes/particles.
 // v0.5 motion: anticipation → action → hit-stop → follow-through → recover, jittered timings (--d), breathing + a top-anchored
@@ -589,7 +589,7 @@
         const releaseMs=Number.isFinite(S.heroSheet?.releaseAtMs)?S.heroSheet.releaseAtMs*duration/nativeDuration:(releasePosition>=0?duration*program.weights.slice(0,releasePosition).reduce((n,v)=>n+v,0)/sum:duration*.42);
         await wait(S.rm?0:releaseMs);checkScene(epoch);
         // Timers can resolve just before the RAF that paints this authored pose.
-        // Paint the exact release cell synchronously before the one server HP impact.
+        // Paint the exact release cell synchronously before the one server 生命值 impact.
         if(!S.rm&&S.heroSheet?.ready&&Number.isInteger(releaseIndex)&&program?.sequence.includes(releaseIndex))setHeroSheetFrame(releaseIndex);
         commitImpact();
         if(window.RpgSkillFX)await skillEffect(heroCastPt(),target,Math.max(1,duration-releaseMs),skill);
@@ -684,7 +684,7 @@
       const it = o.items[key] || {}; const red = /^red_/.test(key); const p = heroPt(0.5, 0.18);
       flash(E.hAct, red ? 'g' : 'b', 'glow');
       burst(p.x, p.y + 30, 14, red ? ['#6dff9a', '#d8ffe4', '#3ad16a'] : ['#8fd0ff', '#ffffff', '#4f8dff'], { speed: 1.4, life: 0.8, size: 2.4, grav: -0.05, kind: 'dot' });
-      // The report records consumption, not the effective heal after caps. Never infer recovered HP/MP.
+      // The report records consumption, not the effective heal after caps. Never infer recovered 生命值/魔力.
       float(p.x, p.y, `使用 ${it.name || (red ? '紅水' : '藍水')} ×${o.fmt(n)}`, red ? 'heal' : 'mana');
       await wait(S.rm ? 300 : 650);
     }
@@ -699,7 +699,7 @@
     }
     function showKillReward(at, r) {
       if (!r) return; let y = at.y - 6; const x = at.x;
-      if (r.exp > 0) { float(x, y, `+${o.fmt(r.exp)} EXP`, 'exp'); y -= 20; }
+      if (r.exp > 0) { float(x, y, `+${o.fmt(r.exp)} 經驗值`, 'exp'); y -= 20; }
       if (r.gold > 0) { float(x, y, `+${o.fmt(r.gold)} 金幣`, 'gold'); y -= 20; }
       for (const [k, n] of Object.entries(r.drops || {})) { if (n > 0) { float(x, y, `${o.items[k]?.name || k} ×${o.fmt(n)}`, 'gold'); y -= 20; } }
     }
@@ -718,7 +718,7 @@
     async function die(r) {
       if (!S.mon) await spawnGroup(1,true); await monsterAttack(true); await wait(200);
       E.hero.classList.add('down'); const p = heroPt(0.5, 0.2); await wait(600);
-      float(p.x + 30, Math.max(18, p.y), r.exp_lost ? `EXP −${o.fmt(r.exp_lost)}` : r.wards_used ? '🧿 守護符抵銷 EXP 損失' : '不扣 EXP', 'loss');
+      float(p.x + 30, Math.max(18, p.y), r.exp_lost ? `經驗值 −${o.fmt(r.exp_lost)}` : r.wards_used ? '🧿 守護符抵銷 經驗值 損失' : '不扣 經驗值', 'loss');
       await wait(1400); E.mon.style.opacity = '0';if(E.mHud)E.mHud.hidden=true; S.mon = null;
     }
 
@@ -811,7 +811,7 @@
       E.mon.classList.toggle('face-left', [1,3].includes(Number(c.mapId)) && !S.mon?.sheet?.includes('monsters-clean-20261011') && !S.monAtlas);
       E.mapname.textContent = town ? '🏛️ 城鎮' : (scene ? `${scene.emoji} ${scene.name}` : c.mapName);
       const si = o.stateInfo(me); E.status.textContent = si.text; E.status.className = `status ${si.cls}`;
-      // An accepted settlement always carries its own round: if the same round already arrived earlier via the idle feed (queued with zero totals, then cleared by cancelScene), replay it now so the real EXP/gold/drops attach to its kills.
+      // An accepted settlement always carries its own round: if the same round already arrived earlier via the idle feed (queued with zero totals, then cleared by cancelScene), replay it now so the real 經驗值/gold/drops attach to its kills.
       if (accepted) { publishSettlement(report); S.queue.push({...report,combat:round&&round.mapId===c.mapId&&root.dataset.completedRound!==round.id?round:null}); }
       bars();syncGuardian();
       if (!S.running) loop();

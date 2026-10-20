@@ -1,6 +1,7 @@
 import {potionPreference,potionOptions} from './game/potion-choice.js';
 import {gearRarity} from './game/gear-quality.js';
 import {tierBaseBonus,GEAR_GROWTH} from './game/gear-growth.js';
+import {enhancementGrowth} from './game/enhance-preview.js';
 import {autoBluePct} from './game/auto-blue.js';
 import {monsterPool,monsterIdentity,collectionView} from './game/monsters.js';
 import {affixView,affixCost} from './game/affixes.js';
@@ -32,7 +33,8 @@ export function equipmentView(char, e) {
     expeditionProtection:e.source==='star_ring'?'星征裝備最低傳說品質；主屬性、強化、元素與固定副屬性提高25%':null,
     sellNote:starRingVolumeGear(e)?'星征戰利品：商店回收價為原基準18%；能力與玩家間交易不受影響。':'售價為同部位、同階裝備基礎商店價格的三分之一。',
     growth:{version:GEAR_GROWTH.version,tierBaseBonus:tierBaseBonus(e,undefined,char.base_class),base,enhancement:st.main-base,enhancementPreserved:true},
-    element: e.element, elementName: ELEMENTS[e.element]?.name, stat: st.main, elemStat: st.elem, statName: { atk: 'ATK', def: 'DEF', mp: 'MP', hp: 'HP' }[ms],
+    enhanceGrowth:enhancementGrowth(e,char.base_class),
+    element: e.element, elementName: ELEMENTS[e.element]?.name, stat: st.main, elemStat: st.elem, statName: { atk: '攻擊力', def: '防禦力', mp: '魔力', hp: '生命值' }[ms],
     extras: x.flat, pct: x.pct, kind: e.kind, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業',
     enhance: e.enhance_level, equipped: !!e.is_equipped, branchReq: e.branch_req, levelReq: e.level_req, source: e.source,
     type: e.slot === 'weapon' ? WEAPON_KINDS[e.kind]?.type : SHARED_SLOTS.includes(e.slot) ? SLOT_NAMES[e.slot] : ARMOR_FAMILIES[e.class_req]?.name,

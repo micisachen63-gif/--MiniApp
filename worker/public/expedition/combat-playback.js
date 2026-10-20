@@ -37,7 +37,7 @@ function viewAt(p,snapshot,turn){
   enemy:p.enemy?{...p.enemy,hp:snapshot.enemyHp,maxHp:snapshot.enemyMaxHp||p.enemy.maxHp,name:snapshot.enemyName||p.enemy.name}:null,
   members:p.members.map(m=>({...m,...snapshot.members?.find(a=>String(a.id)===String(m.id))}))};
 }
-// Called before HTML is inserted, so final HP never flashes before a replay rewinds it.
+// Called before HTML is inserted, so final 生命值 never flashes before a replay rewinds it.
 export function combatView(p){
  preparePartyArt(p.members,(p.battleTurns||[p.battleTurn]).filter(Boolean).flatMap(t=>t.events||[]));
  const s=session(p.id);
@@ -74,7 +74,7 @@ function applySnapshot(scene,p,snapshot,round=p.round){
  if(finite(hp)&&maximum){
   const percent=Math.max(0,Math.min(100,Math.round(hp/maximum*100))),bar=scene.querySelector('.boss-meter .meter i'),text=scene.querySelector('.boss-meter small');
   if(bar)bar.style.width=percent+'%';
-  if(text)text.textContent=`${snapshot.enemyName||art.name} · HP ${hp}／${maximum}（${percent}%）`;
+  if(text)text.textContent=`${snapshot.enemyName||art.name} · 生命值 ${hp}／${maximum}（${percent}%）`;
  }
  const layout=scene.closest('.party-layout');
  for(const a of snapshot.members||[]){
@@ -83,8 +83,8 @@ function applySnapshot(scene,p,snapshot,round=p.round){
   if(hero)hero.classList.toggle('combat-down',a.hp<=0);
   if(member){
    const hpText=member.querySelector('[data-member-hp]'),mpText=member.querySelector('[data-member-mp]');
-   if(hpText)hpText.textContent=`HP ${a.hp}／${a.maxHp}${a.hp<=0?' · 倒地':''}`;
-   if(mpText&&finite(a.mp))mpText.textContent=`MP ${a.mp}／${a.maxMp}`;
+   if(hpText)hpText.textContent=`生命值 ${a.hp}／${a.maxHp}${a.hp<=0?' · 倒地':''}`;
+   if(mpText&&finite(a.mp))mpText.textContent=`魔力 ${a.mp}／${a.maxMp}`;
   }
  }
 }
@@ -100,8 +100,8 @@ function impact(scene,p,before,after,round=p.round){
  }
  applySnapshot(scene,p,after,round);
 }
-// A replay may split only the exact strike HP transitions already settled by the server.
-// MP/healing/final buffs stay on the one authoritative action snapshot.
+// A replay may split only the exact strike 生命值 transitions already settled by the server.
+// 魔力/healing/final buffs stay on the one authoritative action snapshot.
 export function combatStrikeSteps(event,before){
  const fallback=[event.after],strikes=event.strikes;
  if(event.base!=='thief'||event.skillId!=='attack'||!Array.isArray(strikes)||!strikes.length||strikes.length>3||!finite(before?.enemyHp)||!finite(event.after?.enemyHp))return fallback;

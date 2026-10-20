@@ -10,7 +10,7 @@ export const catalogue = {
       "name": "裂甲重斬",
       "level": 30,
       "damage": "3.0A，單體",
-      "effect": "DEF −15%，60 秒",
+      "effect": "防禦力 −15%，60 秒",
       "mp": 18,
       "cooldownSeconds": 60,
       "rarity": "普通"
@@ -23,7 +23,7 @@ export const catalogue = {
       "name": "血性戰吼",
       "level": 40,
       "damage": "無直接傷害",
-      "effect": "自身 ATK +20%、承傷 +10%，60 秒",
+      "effect": "自身 攻擊力 +20%、承傷 +10%，60 秒",
       "mp": 22,
       "cooldownSeconds": 120,
       "rarity": "普通"
@@ -36,7 +36,7 @@ export const catalogue = {
       "name": "斬殺追擊",
       "level": 50,
       "damage": "3.6A，單體",
-      "effect": "目標 HP≤30% 時傷害 +25%",
+      "effect": "目標 生命值≤30% 時傷害 +25%",
       "mp": 28,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -88,7 +88,7 @@ export const catalogue = {
       "name": "穿風箭",
       "level": 30,
       "damage": "2.8A，單體",
-      "effect": "計傷時忽略目標 20% DEF",
+      "effect": "計傷時忽略目標 20% 防禦力",
       "mp": 18,
       "cooldownSeconds": 60,
       "rarity": "普通"
@@ -140,7 +140,7 @@ export const catalogue = {
       "name": "生命之泉",
       "level": 40,
       "damage": "無直接傷害",
-      "effect": "一名隊友回復 2.4A HP；自身 HP<50% 時可作掛機條件",
+      "effect": "一名隊友回復 2.4A 生命值；自身 生命值<50% 時可作掛機條件",
       "mp": 26,
       "cooldownSeconds": 120,
       "rarity": "普通"
@@ -205,7 +205,7 @@ export const catalogue = {
       "name": "奧術脈衝",
       "level": 30,
       "damage": "3.0A，單體",
-      "effect": "忽略目標 15% DEF",
+      "effect": "忽略目標 15% 防禦力",
       "mp": 22,
       "cooldownSeconds": 60,
       "rarity": "普通"
@@ -244,7 +244,7 @@ export const catalogue = {
       "name": "血刃風暴",
       "level": 60,
       "damage": "2.6A／敵，最多 3 敵",
-      "effect": "實際总傷害吸血 8%，回復最多自身 MaxHP 12%",
+      "effect": "實際总傷害吸血 8%，回復最多自身 生命上限 12%",
       "mp": 34,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -257,7 +257,7 @@ export const catalogue = {
       "name": "不屈血誓",
       "level": 70,
       "damage": "無直接傷害",
-      "effect": "60 秒內一次致命傷保留 1 HP；不重置倒地，PvP 改護盾 2.4A",
+      "effect": "60 秒內一次致命傷保留 1 生命值；不重置倒地，PvP 改護盾 2.4A",
       "mp": 40,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -283,7 +283,7 @@ export const catalogue = {
       "name": "劍心破界",
       "level": 70,
       "damage": "4.2A，單體",
-      "effect": "忽略目標 30% DEF",
+      "effect": "忽略目標 30% 防禦力",
       "mp": 42,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -296,7 +296,7 @@ export const catalogue = {
       "name": "聖光裁決",
       "level": 60,
       "damage": "2.8A，單體",
-      "effect": "回復最低 HP 比例隊友 1.4A",
+      "effect": "回復最低 生命值 比例隊友 1.4A",
       "mp": 34,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -335,7 +335,7 @@ export const catalogue = {
       "name": "震地破陣",
       "level": 70,
       "damage": "2.0A／敵，最多 3 敵",
-      "effect": "命中者 DEF −20%，60 秒",
+      "effect": "命中者 防禦力 −20%，60 秒",
       "mp": 38,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -348,7 +348,7 @@ export const catalogue = {
       "name": "貫星狙擊",
       "level": 60,
       "damage": "3.8A，單體",
-      "effect": "忽略目標 25% DEF",
+      "effect": "忽略目標 25% 防禦力",
       "mp": 36,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -400,7 +400,7 @@ export const catalogue = {
       "name": "群狼突襲",
       "level": 60,
       "damage": "3.2A，單體",
-      "effect": "實際傷害 15% 轉為最低 HP 比例隊友回復，最多目標 MaxHP 10%",
+      "effect": "實際傷害 15% 轉為最低 生命值 比例隊友回復，最多目標 生命上限 10%",
       "mp": 34,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -426,7 +426,7 @@ export const catalogue = {
       "name": "月影爆雷",
       "level": 60,
       "damage": "2.6A／敵，最多 3 敵",
-      "effect": "命中者 DEF −15%，60 秒",
+      "effect": "命中者 防禦力 −15%，60 秒",
       "mp": 32,
       "cooldownSeconds": 120,
       "rarity": "高級"
@@ -439,7 +439,7 @@ export const catalogue = {
       "name": "封魔陷阱",
       "level": 70,
       "damage": "2.8A，單體",
-      "effect": "取消一次可打斷技能；PvP 次回合技能 MP 消耗 +20%",
+      "effect": "取消一次可打斷技能；PvP 次回合技能 魔力 消耗 +20%",
       "mp": 38,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -517,7 +517,7 @@ export const catalogue = {
       "name": "時間加速",
       "level": 70,
       "damage": "無直接傷害",
-      "effect": "一名隊友一個冷卻中的非終極技能剩餘 CD −30 秒；同目標 180 秒內限受一次",
+      "effect": "一名隊友一個冷卻中的非終極技能剩餘 冷卻 −30 秒；同目標 180 秒內限受一次",
       "mp": 46,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -556,7 +556,7 @@ export const catalogue = {
       "name": "泰坦破軍",
       "level": 90,
       "damage": "4.8A，單體",
-      "effect": "DEF −20%，60 秒",
+      "effect": "防禦力 −20%，60 秒",
       "mp": 54,
       "cooldownSeconds": 180,
       "rarity": "稀有"
@@ -634,7 +634,7 @@ export const catalogue = {
       "name": "神域斬決",
       "level": 120,
       "damage": "6.0A，單體",
-      "effect": "首領 HP≤25% 傷害 +20%；忽略 20% DEF",
+      "effect": "首領 生命值≤25% 傷害 +20%；忽略 20% 防禦力",
       "mp": 84,
       "cooldownSeconds": 300,
       "rarity": "神話"
@@ -699,7 +699,7 @@ export const catalogue = {
       "name": "命運逆轉",
       "level": 120,
       "damage": "無直接傷害",
-      "effect": "回復一名倒地隊友至 MaxHP 25%；每隊每場成功一次；PvP 禁用",
+      "effect": "回復一名倒地隊友至 生命上限 25%；每隊每場成功一次；PvP 禁用",
       "mp": 110,
       "cooldownSeconds": 600,
       "rarity": "神話"

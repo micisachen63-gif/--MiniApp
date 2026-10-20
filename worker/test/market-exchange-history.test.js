@@ -134,7 +134,7 @@ test('guardian history keeps sold type and all eight immutable qualities rather 
 test('shared armor history displays immutable stored base values rather than a later wearer-class multiplier',async()=>{
   const env=await fixture(),gear=makeGear({id:'history-belt',tgId:'111',cls:'sword',slot:'belt',tier:4,forceRarity:'epic',rng:()=>.5,now:T0});
   await insertEquipStmt(env.DB,gear).run();await sell(env,{item:undefined,equipId:gear.id,qty:1});
-  const before=(await history(env,'222')).items[0].item;assert.equal(before.equipment.stat,gear.base_stat);assert.equal(before.equipment.statName,'基礎 DEF');assert.equal(before.equipment.elemStat,gear.element_stat);
+  const before=(await history(env,'222')).items[0].item;assert.equal(before.equipment.stat,gear.base_stat);assert.equal(before.equipment.statName,'基礎 防禦力');assert.equal(before.equipment.elemStat,gear.element_stat);
   await env.DB.prepare("UPDATE rpg_characters SET base_class='mage' WHERE tg_id='222'").run();assert.deepEqual((await history(env,'222')).items[0].item,before);
 });
 

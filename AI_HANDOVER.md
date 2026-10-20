@@ -1,3 +1,5 @@
+2026-10-20 強化能力預覽：equipmentView 由真 itemStat 提供+0..15主能力，詳情／單次儀式／目標選擇／自動確認均顯示目前→成功後與差值；成功後以新裝備更新下次與目標預覽，必過取消零消耗，+15無虛構+16。介面能力縮寫中文化，request-client僅轉描述欄位，保留名稱／數值／既有戰鬥資料；組隊iframe同步載入。新增9測試、360／390／1280px真API隔離UI操作，讀docs/ENHANCE_GAIN_PREVIEW_20261020.txt；僅Worker，無migration／BOT／經濟數值改動。正式狀態以deployment-records為準。
+
 # 🤖 星穹旅誌 (Star Journal RPG) - AI 專案續行交接手冊 (AI_HANDOVER.md)
 
 2026-10-20 遠征裝備件數v2：每2h保底8件、完整48–55件，最低傳說／25%能力優勢不變。新掉裝starRingYieldVersion=2回收為原基準18%，舊裝／補給所兌換不改，轉路線保留來源價版且不進戰鬥pct。running v1–v3下次階段新收據補足已領舊階段缺少的保底、穩定ID／catchup防重，原收據／已出售物品／戰鬥不回寫，完成與離隊歷史排除。批賣支援160字長ID。大廳／集結／須知／販售說明同步。10k件數／4級各1k金幣模型、11新相容測試與390/1280px真隔離API驗收見docs/STAR_RING_VOLUME_V2_20261020.txt，模型在docs/economy。僅Worker、無migration；正式狀態看deployment-records。
