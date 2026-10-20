@@ -1,0 +1,132 @@
+{
+  "policy": {
+    "version": 2,
+    "perStage": 8,
+    "stages": 6,
+    "minimum": 48,
+    "maximum": 55,
+    "eliteChance": 0.05,
+    "bossChance": 0.25,
+    "rankExtraPerStage": 1,
+    "buybackMult": 0.18
+  },
+  "assumptions": "Every checkpoint defeats four credited elites and two bosses; S grade. Solo: 720 supplied active minutes, survive all elites; excludes rare relics. Not live results.",
+  "idle": [
+    {
+      "lootBonus": 0,
+      "expectedEquipment": 30.239999999999995,
+      "guarantee": 0
+    },
+    {
+      "lootBonus": 0.5,
+      "expectedEquipment": 34.559999999999995,
+      "guarantee": 0
+    },
+    {
+      "lootBonus": 1,
+      "expectedEquipment": 38.879999999999995,
+      "guarantee": 0
+    }
+  ],
+  "samples": 10000,
+  "models": [
+    {
+      "lootBonus": 0,
+      "difficulty": "normal",
+      "oldMean": 9.6364,
+      "mean": 51.6364,
+      "min": 48,
+      "max": 55,
+      "ratioToIdle": 1.7075529100529103
+    },
+    {
+      "lootBonus": 0,
+      "difficulty": "advanced",
+      "oldMean": 9.8862,
+      "mean": 51.8862,
+      "min": 48,
+      "max": 55,
+      "ratioToIdle": 1.7158134920634924
+    },
+    {
+      "lootBonus": 0.5,
+      "difficulty": "normal",
+      "oldMean": 10.8343,
+      "mean": 52.8343,
+      "min": 48,
+      "max": 55,
+      "ratioToIdle": 1.5287702546296298
+    },
+    {
+      "lootBonus": 0.5,
+      "difficulty": "advanced",
+      "oldMean": 11.2115,
+      "mean": 53.2115,
+      "min": 49,
+      "max": 55,
+      "ratioToIdle": 1.5396846064814818
+    },
+    {
+      "lootBonus": 1,
+      "difficulty": "normal",
+      "oldMean": 11.73,
+      "mean": 53.73,
+      "min": 49,
+      "max": 55,
+      "ratioToIdle": 1.3819444444444444
+    },
+    {
+      "lootBonus": 1,
+      "difficulty": "advanced",
+      "oldMean": 12.0393,
+      "mean": 54.0393,
+      "min": 50,
+      "max": 55,
+      "ratioToIdle": 1.3898996913580248
+    }
+  ],
+  "recipes": [
+    {
+      "level": 40,
+      "samples": 1000,
+      "totalGear": 51659,
+      "supremeRate": 0.020112661878859444,
+      "oldMeanSaleGold": 7407.618,
+      "meanSaleGold": 7083.558,
+      "saleRatio": 0.956253143723124,
+      "maxSampleSale": 9110
+    },
+    {
+      "level": 70,
+      "samples": 1000,
+      "totalGear": 51701,
+      "supremeRate": 0.020928028471402873,
+      "oldMeanSaleGold": 15521.368,
+      "meanSaleGold": 14783.127,
+      "saleRatio": 0.9524371176561242,
+      "maxSampleSale": 19966
+    },
+    {
+      "level": 100,
+      "samples": 1000,
+      "totalGear": 51646,
+      "supremeRate": 0.019885373504240404,
+      "oldMeanSaleGold": 26785.725,
+      "meanSaleGold": 25584.557,
+      "saleRatio": 0.9551564126041017,
+      "maxSampleSale": 34450
+    },
+    {
+      "level": 120,
+      "samples": 1000,
+      "totalGear": 51672,
+      "supremeRate": 0.020475305774887754,
+      "oldMeanSaleGold": 36565.964,
+      "meanSaleGold": 34882.555,
+      "saleRatio": 0.9539624061326538,
+      "maxSampleSale": 43981
+    }
+  ],
+  "hardMaxNewRunSaleGold": 101640,
+  "oldHardMaxSaleGold": 133510
+}

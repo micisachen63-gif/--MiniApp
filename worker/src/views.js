@@ -11,7 +11,7 @@ import { idleStats, itemStat, itemExtras, mainStatOf, classTier, nodeFor } from 
 import {idleCombatState} from './game/idle-combat.js';
 import { supplyHours, refillPlan, atGate, gateLevel, canAdvanceNow } from './game/idle.js';
 import { dailyGoldFor } from './game/daily.js';
-import { canEquip, gearOffers, tradeBlock, gearSellPrice, gearSellBlock } from './game/gear.js';
+import { canEquip, gearOffers, tradeBlock, gearSellPrice, gearSellBlock, starRingVolumeGear } from './game/gear.js';
 import { unbindCost, unbindBlock, gearArt, shareBlock } from './game/share.js';
 import { itemOffers, gachaOffers, GACHA_RATES } from './game/shop.js';
 import { branchChoices } from './game/classes.js';
@@ -30,6 +30,7 @@ export function equipmentView(char, e) {
     affixes:affixView(e,char.class_path,char.base_class),rerollCost:affixCost(e),rerollPrices:Array.from({length:affixView(e).slots},(_,n)=>({locks:n,scrolls:Math.max(1,e.tier)*[1,2,4,7,11][n],fee:Math.max(1,e.tier)*30*(n+1)**2})),grade: e.grade || 'normal', gradeName: e.grade === 'relic' ? '遺物' : null, affix: e.affix_json ? JSON.parse(e.affix_json) : null,
     relicProtection:e.grade==='relic'?'遺物最低傳說品質；強化加成提高25%':null,
     expeditionProtection:e.source==='star_ring'?'星征裝備最低傳說品質；主屬性、強化、元素與固定副屬性提高25%':null,
+    sellNote:starRingVolumeGear(e)?'星征戰利品：商店回收價為原基準18%；能力與玩家間交易不受影響。':'售價為同部位、同階裝備基礎商店價格的三分之一。',
     growth:{version:GEAR_GROWTH.version,tierBaseBonus:tierBaseBonus(e,undefined,char.base_class),base,enhancement:st.main-base,enhancementPreserved:true},
     element: e.element, elementName: ELEMENTS[e.element]?.name, stat: st.main, elemStat: st.elem, statName: { atk: 'ATK', def: 'DEF', mp: 'MP', hp: 'HP' }[ms],
     extras: x.flat, pct: x.pct, kind: e.kind, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業',

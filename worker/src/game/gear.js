@@ -3,7 +3,7 @@ import {gearRarity} from './gear-quality.js';
 // Shop / boss / relic gear (pure). Returns rows in the D1 rpg_equipment shape (v0.4: + grade, affix_json, bound, trade_id).
 import { WEAPON_KINDS, ARMOR_FAMILIES, WEAPON_ATK, ARMOR_DEF, WEAPON_PRICE, BRANCH_WEAPON_PRICE_MULT, ARMOR_PRICE, TIER_PREFIX, TIER_LEVEL_REQ,
   RARITIES, RARITY_KEYS, ELEMENT_KEYS, SLOTS, SLOT_NAMES, MAX_OPEN_MAP, COUNTERPART_WEAPON, SLOT_SPEC, SLOT_CAPACITY, CLASS_ARMOR_SLOTS, SHARED_SLOTS,
-  SHARED_NAMES, RELIC, CLASS_KEYS, CLASSES } from './constants.js';
+  SHARED_NAMES, RELIC, CLASS_KEYS, CLASSES, STAR_RING_GEAR_YIELD } from './constants.js';
 import { mapForLevel } from './formulas.js';
 import { randInt, pick } from './rng.js';
 
@@ -120,10 +120,15 @@ export function equipPosition(equipment, item, requested = null) {
   for (let p = 1; p <= cap; p++) if (!used.has(p)) return p;
   return 1;
 }
-/** Shop buyback: all eligible gear sells for one third of its base shop price. */
+export function starRingVolumeGear(item){
+  if(item.source!=='star_ring')return false;
+  try{return JSON.parse(item.bonus_json||'{}').starRingYieldVersion===2;}catch{return false;}
+}
+/** Existing gear/shop redemptions retain buyback; new volume loot has a gold sink. */
 export function gearSellPrice(item) {
   const price = item.slot === 'weapon' ? weaponPrice(item.kind, item.tier) : armorPrice(item.slot, item.tier);
-  return Math.max(1, Math.floor(price / 3));
+  const base=Math.max(1,Math.floor(price/3));
+  return starRingVolumeGear(item)?Math.max(1,Math.floor(base*STAR_RING_GEAR_YIELD.buybackMult)):base;
 }
 export function gearSellBlock(item) {
   if (item.is_equipped) return '請先卸下裝備再出售';
@@ -143,6 +148,6 @@ export function convertWeapon(item) {
   const to = COUNTERPART_WEAPON[item.kind]; if (!to || !item.convert_token) return null;
   const w = WEAPON_KINDS[to];
   const previous=JSON.parse(item.bonus_json||'{}');
-  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{})}), convert_token: 0, is_equipped: 0 };
+  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{}),...(previous.starRingYieldVersion?{starRingYieldVersion:previous.starRingYieldVersion}:{})}), convert_token: 0, is_equipped: 0 };
 }
 export { CLASS_ARMOR_SLOTS };

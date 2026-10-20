@@ -46,6 +46,9 @@ export const RARITIES = Object.freeze({   // MMORPG color tiers: 白(一般) / �
 });
 export const RARITY_KEYS = Object.freeze(Object.keys(RARITIES));
 export const STAR_RING_GEAR=Object.freeze({version:1,rarityFloor:'legendary',statMult:1.25});
+// Full-run guaranteed volume beats even 12h idle's 38.88 expected pieces with
+// the highest approved loot angel. Buyback is stamped only on new run rewards.
+export const STAR_RING_GEAR_YIELD=Object.freeze({version:2,perStage:8,stages:6,minimum:48,maximum:55,eliteChance:.05,bossChance:.25,rankExtraPerStage:1,buybackMult:.18});
 
 // ---- classes (tier 0 + tier 1; deeper tiers are P2/P3) ----------------------------------------
 // skill: cost MP, mult × ATK, targets; passive keys: takenPct, atkPct, expPct, freeCastPct, critPct, killPct, elemPct

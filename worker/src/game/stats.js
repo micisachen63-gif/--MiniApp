@@ -59,7 +59,7 @@ export function itemExtras(item,growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
   for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
-    if(k==='starRingGearVersion')continue;
+    if(k==='starRingGearVersion'||k==='starRingYieldVersion')continue;
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;
   }
   return out;
