@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "a5530f39fa7436b2b0754436bdbefab3aa0465be",
+  "sourceCommit": "78dd9d0cec74286ca0866f0736d6da07f315dff8",
   "service": "elf-rpg-api",
-  "productionVersion": "061b2170-21ec-445c-84e4-2537adb63dd6",
+  "productionVersion": "003f45e7-580b-4d9e-9c37-a06a0b3f800d",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T00:00:54.687Z",
+  "verifiedAt": "2026-10-20T00:47:18.271Z",
   "runtimeSHA256": {
-    "index.js": "f7278d0d3433be964169100b6162909e659f4e13551ff4d9283057171a54254a"
+    "index.js": "cb67db23e2496947a848bfd717608fd4eba660033349761459572764e6368ba1"
   },
   "source": {
     "fileCount": 9218,
-    "sha256": "89dbd133f39a9defd22c946786f57fd4811f3066b8cd436b3ecaf14eb0eee33f",
+    "sha256": "0df841a4d5bb81c2c3226553751227d961d71149efd4b500efb412f5b566ad7b",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35099,7 +35099,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "d75b535539a6b9e5e9008822e56106b58907a7c1d78ec629dfa31002fce8ffc6"
+        "sha256": "898472420bb22ddc74beb8d48edd7b8f5c41199a31ee1425e45b58f31e5a708f"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -36155,7 +36155,7 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "ca8c7510ed7cbd4feba51af98cdea9774ef9f18f638bbd1e9f58918aa601e0d6"
+        "sha256": "100b4378a93a8b4b38dcd626b3cdb6247c350bd257fb1b12ef5b5c1d590f4911"
       },
       {
         "file": "worker/public/star-ring.css",
@@ -36695,7 +36695,7 @@
       },
       {
         "file": "worker/src/game/star-ring-gear.js",
-        "sha256": "1a19f51bdfb5bb1c51304f319eb4709aed4466212ba7c45f5f41346acd70ff99"
+        "sha256": "94d641e11b76e887bc184f9a61a6244fac849dc1d575343e7b65d475c8af893d"
       },
       {
         "file": "worker/src/game/star-ring-pools.js",
@@ -36863,7 +36863,7 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "f220f406832e0ff914b763a4b6ac1dfbabf7aee7ab1eddc49b17803895db5c2c"
+        "sha256": "6b7f4b72e4e4893ea518bdb1e671b06c9765601445219692c56c8be468d52963"
       },
       {
         "file": "worker/src/services/trade.js",
@@ -37043,7 +37043,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "061b2170-21ec-445c-84e4-2537adb63dd6",
+        "version_id": "003f45e7-580b-4d9e-9c37-a06a0b3f800d",
         "percentage": 100
       }
     ],
