@@ -1,0 +1,230 @@
+{
+  "policy": {
+    "version": 2,
+    "tierBase": [
+      0,
+      0,
+      0,
+      24,
+      65,
+      125,
+      220,
+      310,
+      410,
+      520,
+      640,
+      770
+    ],
+    "slotWeight": {
+      "weapon": 1.25,
+      "armor": 1.3,
+      "helmet": 1,
+      "gloves": 0.85,
+      "boots": 0.85,
+      "belt": 0.85,
+      "undershirt": 0.85,
+      "ring": 0.85,
+      "earring": 1
+    },
+    "legacyExpeditionMult": 1.15,
+    "farmingEfficiencyCap": 1.1,
+    "referenceArmorFamily": 0.75
+  },
+  "expeditionPremium": 1.25,
+  "comparisons": 311040,
+  "decreases": 0,
+  "lostEnhancementIncrements": 0,
+  "efficiencyCases": 1440,
+  "maxDirectEfficiencyRatio": 1.1,
+  "unmodifiedRates": {
+    "eliteChance": 0.03,
+    "relicEliteChance": 0.005,
+    "relicBossChance": 0.35,
+    "blessedDrops": {
+      "eliteChance": 0.015,
+      "bossChance": 0.2,
+      "keys": [
+        "blessed_scroll_w",
+        "blessed_scroll_a"
+      ]
+    }
+  },
+  "helmets": [
+    {
+      "tier": 1,
+      "ordinaryPlus7": 44,
+      "expeditionPlus0": 5,
+      "expeditionPlus7": 55,
+      "expeditionPlus9": 130
+    },
+    {
+      "tier": 2,
+      "ordinaryPlus7": 128,
+      "expeditionPlus0": 10,
+      "expeditionPlus7": 160,
+      "expeditionPlus9": 385
+    },
+    {
+      "tier": 3,
+      "ordinaryPlus7": 250,
+      "expeditionPlus0": 13,
+      "expeditionPlus7": 313,
+      "expeditionPlus9": 763
+    },
+    {
+      "tier": 4,
+      "ordinaryPlus7": 460,
+      "expeditionPlus0": 75,
+      "expeditionPlus7": 575,
+      "expeditionPlus9": 1325
+    },
+    {
+      "tier": 5,
+      "ordinaryPlus7": 546,
+      "expeditionPlus0": 183,
+      "expeditionPlus7": 683,
+      "expeditionPlus9": 1433
+    },
+    {
+      "tier": 6,
+      "ordinaryPlus7": 670,
+      "expeditionPlus0": 338,
+      "expeditionPlus7": 838,
+      "expeditionPlus9": 1588
+    },
+    {
+      "tier": 7,
+      "ordinaryPlus7": 866,
+      "expeditionPlus0": 583,
+      "expeditionPlus7": 1083,
+      "expeditionPlus9": 1833
+    },
+    {
+      "tier": 8,
+      "ordinaryPlus7": 1052,
+      "expeditionPlus0": 815,
+      "expeditionPlus7": 1315,
+      "expeditionPlus9": 2065
+    },
+    {
+      "tier": 9,
+      "ordinaryPlus7": 1258,
+      "expeditionPlus0": 1073,
+      "expeditionPlus7": 1573,
+      "expeditionPlus9": 2323
+    },
+    {
+      "tier": 10,
+      "ordinaryPlus7": 1484,
+      "expeditionPlus0": 1355,
+      "expeditionPlus7": 1855,
+      "expeditionPlus9": 2605
+    },
+    {
+      "tier": 11,
+      "ordinaryPlus7": 1732,
+      "expeditionPlus0": 1665,
+      "expeditionPlus7": 2165,
+      "expeditionPlus9": 2915
+    },
+    {
+      "tier": 12,
+      "ordinaryPlus7": 2000,
+      "expeditionPlus0": 2000,
+      "expeditionPlus7": 2500,
+      "expeditionPlus9": 3250
+    }
+  ],
+  "economy6h": [
+    {
+      "level": 50,
+      "cls": "sword",
+      "oldGross": 21215,
+      "gross": 23100,
+      "oldUpkeep": 926,
+      "upkeep": 390,
+      "grossRatio": 1.0888522271977374,
+      "netRatio": 1.1193257430134556
+    },
+    {
+      "level": 50,
+      "cls": "archer",
+      "oldGross": 19041,
+      "gross": 20708,
+      "oldUpkeep": 817,
+      "upkeep": 431,
+      "grossRatio": 1.0875479229032088,
+      "netRatio": 1.112653643546971
+    },
+    {
+      "level": 50,
+      "cls": "mage",
+      "oldGross": 21215,
+      "gross": 23100,
+      "oldUpkeep": 933,
+      "upkeep": 578,
+      "grossRatio": 1.0888522271977374,
+      "netRatio": 1.1104427571245439
+    },
+    {
+      "level": 70,
+      "cls": "sword",
+      "oldGross": 25773,
+      "gross": 28063,
+      "oldUpkeep": 987,
+      "upkeep": 109,
+      "grossRatio": 1.088852675280332,
+      "netRatio": 1.1278140885984023
+    },
+    {
+      "level": 70,
+      "cls": "archer",
+      "oldGross": 23132,
+      "gross": 25157,
+      "oldUpkeep": 841,
+      "upkeep": 134,
+      "grossRatio": 1.08754106864949,
+      "netRatio": 1.1225606747117671
+    },
+    {
+      "level": 70,
+      "cls": "mage",
+      "oldGross": 25773,
+      "gross": 28063,
+      "oldUpkeep": 950,
+      "upkeep": 246,
+      "grossRatio": 1.088852675280332,
+      "netRatio": 1.1206139467429401
+    },
+    {
+      "level": 100,
+      "cls": "sword",
+      "oldGross": 33424,
+      "gross": 36393,
+      "oldUpkeep": 1119,
+      "upkeep": 129,
+      "grossRatio": 1.088828386787937,
+      "netRatio": 1.1225506887478718
+    },
+    {
+      "level": 100,
+      "cls": "archer",
+      "oldGross": 29998,
+      "gross": 32625,
+      "oldUpkeep": 891,
+      "upkeep": 129,
+      "grossRatio": 1.0875725048336555,
+      "netRatio": 1.1164324732882125
+    },
+    {
+      "level": 100,
+      "cls": "mage",
+      "oldGross": 33424,
+      "gross": 36393,
+      "oldUpkeep": 984,
+      "upkeep": 264,
+      "grossRatio": 1.088828386787937,
+      "netRatio": 1.1137176325524045
+    }
+  ]
+}
