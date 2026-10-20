@@ -6,13 +6,13 @@ async function short(f,at,{kind='dungeon',leader=0,start=true}={}){const who=f.i
 async function finish(f,id,at){let p=await G.view(f.env,id,f.ids[0],at);for(let i=0;i<410&&p.status==='combat';i++)p=await G.view(f.env,id,f.ids[0],p.deadline+1);assert.equal(p.status,'won');return p;}
 const row=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').get(tg);
 const presence=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_party_presence WHERE char_id=?').get(tg);
-for(const kind of ['dungeon','tower'])test(`full twelve-hour expedition while repeatedly playing ${kind}: all six combats and thirty reward receipts match an isolated expedition exactly`,async t=>{
+for(const kind of ['dungeon','tower'])test(`full twelve-hour expedition while playing ${kind==='tower'?'one daily tower and repeated dungeons':'repeated dungeons'}: all six combats and thirty reward receipts match an isolated expedition exactly`,async t=>{
  const f=await fixture(t),control=await fixture(t),shortRewards={},initial=await loadPlayer(f.env.DB,f.ids[0]);
  const stored=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json);
  stored.seed='parallel-full-run-'+kind;
  for(const run of [f,control])run.db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(stored),run.id);
  for(let stage=0;stage<6;stage++){
-  const due=T+(stage+1)*E.STAGE_MS,id=await short(f,due-60000,{kind});
+  const due=T+(stage+1)*E.STAGE_MS,id=await short(f,due-60000,{kind:kind==='tower'&&stage>0?'dungeon':kind});
   const before=await R.view(f.env,f.id,f.ids[0],due-60000),during=await R.view(f.env,f.id,f.ids[0],due-30000);
   const standalone=await R.view(control.env,control.id,control.ids[0],due-30000);
   assert.ok(during.battle.sequence>before.battle.sequence,'background combat advances while the foreground party is in combat');

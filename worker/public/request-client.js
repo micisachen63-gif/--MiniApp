@@ -9,7 +9,7 @@
     if(!value||typeof value!=='object')return value;
     return Object.fromEntries(Object.entries(value).map(([k,v])=>[k,typeof v==='string'&&(displayFields.has(k)||k==='text'&&parent==='passive')?statText(v):localizeStats(v,k)]));
   }
-  const safeReads=new Set(['guardian/config','guardian/inventory','guardian/shop/list','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/get','trade/requests','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','party/hall','party/hall/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const safeReads=new Set(['guardian/config','guardian/inventory','guardian/shop/list','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/get','trade/requests','trade/log','pk/list','pk/get','expedition/me','tower/status','party/list','party/get','party/hall','party/hall/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function request(action,body,headers,{signal,timeoutMs=20000}={}){
     const safe=safeReads.has(action),attempts=safe?2:1;
     for(let attempt=0;attempt<attempts;attempt++){

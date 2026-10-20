@@ -1,3 +1,4 @@
+import * as TOWER from './services/tower.js';
 import {countryFromCode,ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
@@ -140,6 +141,8 @@ const routes = {
   'POST /rpg/expedition/trade': (env,b,now)=>SP.tradeBook(env,tgOf(b),b,now),
   'POST /rpg/party/hall': (env,b,now)=>PARTY.hall(env,tgOf(b),b,now),
   'POST /rpg/party/hall/get': (env,b,now)=>PARTY.hallGet(env,tgOf(b),b,now),
+  'POST /rpg/tower/status': (env,b,now)=>TOWER.view(env,tgOf(b),now),
+  'POST /rpg/tower/action': (env,b,now)=>TOWER.action(env,tgOf(b),b,now),
   'POST /rpg/party/list': (env,b,now)=>PARTY.list(env,tgOf(b),now),
   'POST /rpg/star-ring/list': (env,b,now)=>STAR_RING.list(env,tgOf(b),now),
   'POST /rpg/star-ring/me': (env,b,now)=>STAR_RING.me(env,tgOf(b),now),

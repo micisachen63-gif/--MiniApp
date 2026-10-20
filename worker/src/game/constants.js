@@ -167,7 +167,7 @@ export const ITEMS = Object.freeze({
   boss_essence:{kind:'boss_resource',name:'首領精華',emoji:'◆',desc:'群組首領討伐獎勵；每帳號每日前四次。兌換洗屬性、強化捲與遺物碎片，不可交易。'},
   relic_fragment:{kind:'boss_resource',name:'遺物碎片',emoji:'🏺',desc:'30 個兌換一件目前等級的本職業遺物，不可交易。'},
   research_fragment: {kind:'research',name:'技能研究碎片',emoji:'✧',desc:'職業秘藏獎勵，兌換指定技能寶物'},
-  tower_fragment: {kind:'tower',name:'星穹徽記',emoji:'♜',desc:'爬塔長期成就材料'},
+  tower_fragment: {kind:'tower',name:'星穹徽記',emoji:'♜',desc:'星穹爬塔獎勵，用於塔印淬鍊既有裝備，或兌換普通與祝福強化卷。背包點擊可前往工坊。'},
   trial_3: {kind:'bound',tier:3,name:'三人試煉之證',emoji:'🏅',desc:'三轉組隊試煉綁定獎勵，不能交易'},
   trial_4: {kind:'bound',tier:4,name:'星穹覺醒之證',emoji:'🏅',desc:'120 級組隊試煉綁定獎勵，不能交易'},
   ...Object.fromEntries(Object.entries(POTIONS).map(([k, p]) => [k, { ...p, emoji: p.kind === 'red' ? '🧪' : '💙' }])),

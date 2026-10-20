@@ -1,3 +1,4 @@
+import {imprintLevel,withImprint,towerTitle,TOWER_RULES} from './game/tower-progression.js';
 import {potionPreference,potionOptions} from './game/potion-choice.js';
 import {gearRarity} from './game/gear-quality.js';
 import {tierBaseBonus,GEAR_GROWTH} from './game/gear-growth.js';
@@ -33,7 +34,7 @@ export function equipmentView(char, e) {
     expeditionProtection:e.source==='star_ring'?'星征裝備最低傳說品質；主屬性、強化、元素與固定副屬性提高25%':null,
     sellNote:starRingVolumeGear(e)?'星征戰利品：商店回收價為原基準18%；能力與玩家間交易不受影響。':'售價為同部位、同階裝備基礎商店價格的三分之一。',
     growth:{version:GEAR_GROWTH.version,tierBaseBonus:tierBaseBonus(e,undefined,char.base_class),base,enhancement:st.main-base,enhancementPreserved:true},
-    enhanceGrowth:enhancementGrowth(e,char.base_class),
+    enhanceGrowth:enhancementGrowth(e,char.base_class),towerImprint:{level:imprintLevel(e),max:TOWER_RULES.imprintMax,bonusPct:Math.round(imprintLevel(e)*TOWER_RULES.imprintStep*100),cost:TOWER_RULES.imprintCosts[imprintLevel(e)]||null,nextStat:imprintLevel(e)<TOWER_RULES.imprintMax?itemStat(withImprint(e,imprintLevel(e)+1),char.base_class).main:null},
     element: e.element, elementName: ELEMENTS[e.element]?.name, stat: st.main, elemStat: st.elem, statName: { atk: '攻擊力', def: '防禦力', mp: '魔力', hp: '生命值' }[ms],
     extras: x.flat, pct: x.pct, kind: e.kind, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業',
     enhance: e.enhance_level, equipped: !!e.is_equipped, branchReq: e.branch_req, levelReq: e.level_req, source: e.source,
@@ -52,7 +53,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
   const gate = { atGate: atGate(char), gateLevel: gateLevel(char), canAdvance: canAdvanceNow(char), material: gateMat, materialName: ITEMS[gateMat]?.name, have: inv[gateMat] || 0 };
   const sup = supplyHours(char, inv, equipped);
   return {
-    character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, aura:equippedAura(char), name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
+    character: { tgId: char.tg_id, revision: Number(char.rev)||0, partyId:char.party_id||null, aura:equippedAura(char),title:towerTitle(char), name: char.name, gender: char.gender, baseClass: char.base_class, baseClassName: CLASSES[char.base_class].name, emoji: CLASSES[char.base_class].emoji,
       className: node.name, classPath: char.class_path, classTier: tier, level: char.level, exp: char.exp, expNeed: Number.isFinite(need) ? need : null,
       expPct: Number.isFinite(need) ? Math.min(100, Math.floor((char.exp / need) * 1000) / 10) : 100, hp: char.hp, mp: char.mp, maxHp: s.maxHp, maxMp: s.maxMp,
       mapId: map.id, mapName: `${map.emoji} ${map.name}`, state: char.idle_state, stateUntil: char.state_until, gold: char.gold, autoRedPct: char.auto_red_pct, autoBlue: !!char.auto_blue, autoBluePct:autoBluePct(char), autoRedPotion:potionPreference(char,'red'), autoBluePotion:potionPreference(char,'blue'),

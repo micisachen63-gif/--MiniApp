@@ -39,7 +39,7 @@ test('shortcuts round-trip to the exact expedition and keep the active dungeon o
   assert.match(s.h.backgroundRingNotice(),/返回遠征戰況/);
   await s.h.navigateActivity('star-ring');assert.equal(s.h.tab(),'star-ring');
   assert.equal(s.h.party().id,foreground.id);assert.equal(s.h.ringDestination().expectedCharacterId,'other-owned');
-  assert.ok(s.calls.every(c=>['expedition/me','party/list','party/get'].includes(c.action)));
+  assert.ok(s.calls.every(c=>['expedition/me','tower/status','party/list','party/get'].includes(c.action)));
  }
 });
 test('finished expedition remains reachable and character changes clear the saved return destination',async()=>{
@@ -49,6 +49,12 @@ test('finished expedition remains reachable and character changes clear the save
  assert.match(s.h.backgroundRingNotice(),/遠征戰報隨時可看/);assert.equal(s.h.ringDestination().partyId,'ring:finished');
  s.h.set({...snapshot(100),character:{tgId:'222'}});
  assert.equal(s.h.ringDestination().partyId,null);assert.equal(s.h.ringDestination().expectedCharacterId,null);assert.equal(s.h.backgroundRingNotice(),'');
+});
+
+test('an ended dungeon without replay cannot redirect a player who has selected the tower page',async()=>{
+ const ended={...party('old-dungeon'),kind:'dungeon',status:'ended',battleTurn:null};
+ const s=setup(c=>response(c.action==='expedition/me'?snapshot(100):c.action==='party/list'?list():c.action==='tower/status'?{ok:true,tower:{}}:{ok:true,party:ended}),{hash:'#dungeons'});
+ s.h.set(snapshot(100),ended,ended.id);await s.h.navigateActivity('tower');assert.equal(s.h.tab(),'tower');assert.equal(s.h.party(),null);
 });
 test('switching activities invalidates an old party read before it can overwrite the current view',async()=>{
  let release;const foreground={...party('p1'),kind:'dungeon'};
