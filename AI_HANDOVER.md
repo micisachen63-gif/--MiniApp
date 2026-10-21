@@ -1,3 +1,5 @@
+2026-10-21 組隊三技／離線補驗：風縛箭陣addsOnly僅限制首領戰的附帶減傷，修autoPartyAction錯跳過整招1.8A傷害，三種玩法共用；遠征事件顯示實際技能名。9新回歸，普通／職責打寶爬塔真排程對照，以及遠征v1–v3完整12h／各30份收益與五人背包、MP／CD對照；重跑不重發、遠征不覆蓋live配置，無倍率／時程／獎勵常數改動。既有未處理回合適用，已結算階段不回寫。讀docs/PARTY_THREE_SKILLS_OFFLINE_20261021.txt；僅Worker無migration，正式狀態看deployment-records。
+
 2026-10-21 普通掛機技能防飢餓：成功自動施放後持久輪替下一格，保留每分鐘一動、各招CD／條件／魔力／預算、手動優先與無特殊技後備行動；首次兩招以上自動結算保護舊離線分鐘，不改遠征或短戰快照。補給低耗水改文字，指定水種非地圖使用限制。8新回歸＋390／1280px隔離真API驗收；實際配置6h模型360／0／0改120／120／120，回魔足所以仍0藍水，功能型技能輪替會影響收益，未調倍率補償。讀docs/IDLE_AUTO_ROTATION_POTION_20261021.txt；僅Worker無migration，正式版本看deployment-records。
 
 2026-10-21 星環群組直接加入準備：招募主鈕改Telegram callback，驗指定群組／成員／原卡ID，Worker服務以帳號選目前角色、原子active guard與跨角色操作收據恢復；零開遊戲／私訊／自動啟程，不扣出發次數。舊卡正常維護每次最多2張同訊息改按鈕，純SELECT投影、失敗退避、不猜pending；running/complete以private start提供web_app戰況入口，修mainMiniApp=false卻硬用startapp問題。12 Worker＋4 BOT新增隔離測試。讀docs/STAR_RING_TELEGRAM_JOIN_20261021.txt；先Worker後BOT，無migration／玩家重設，正式狀態看deployment-records。
