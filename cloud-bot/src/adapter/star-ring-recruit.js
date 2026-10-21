@@ -1,6 +1,6 @@
 // One group recruitment post per expedition; later revisions edit that same post.
-// No Telegram callback can join a room: the authenticated Mini App owns admission.
-export function createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,appUrl,now,rejectedImage}){
+// Group callbacks use the authenticated BOT service; the Worker owns admission.
+export function createStarRingRecruitFlow({api,client,send,popup,warn,st,save,chatId,botUsername,deepLink,appUrl,now,rejectedImage}){
  const clean=(v,n=60)=>String(v??'').replace(/[\r\n\t]+/g,' ').slice(0,n);
  async function deliver(item){
   if(item.kind!=='star_ring_recruit')return false;
@@ -10,7 +10,7 @@ export function createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,a
   const cards=st().starRingRecruitCards??={},old=cards[id];
   if(!old&&(p.status!=='lobby'||!(p.expiresAt>now())))return true;
   if(old?.pending)throw Error('星環招募通知送達待核對：'+id);
-  if(old&&old.rev>=p.rev)return true;
+  if(old&&(old.rev>p.rev||old.rev===p.rev&&old.buttonVersion===2))return true;
   const username=String(botUsername()||'').replace(/^@/,'');
   if(!/^[A-Za-z0-9_]+$/.test(username))throw Error('星環招募缺少遊戲入口設定');
   const members=(p.members||[]).filter(m=>!m.left).slice(0,5),leader=members.find(m=>m.id===p.leaderId);
@@ -20,12 +20,12 @@ export function createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,a
    `隊長：${clean(leader?.name||'旅人',40)}`,
    `同行 ${members.length}／5${lobby?' · 尚缺 '+Math.max(0,5-members.length)+' 人':''}`,
    ...members.map(m=>`${m.ready?'✓':'◇'} ${clean(m.name,40)} · Lv.${Number(m.level)||0}`),'',
-   lobby?'每小時換景、離線持續前進。點「加入並準備」以目前角色直接入隊，五人準備後由隊長出發。':running?'旅人已踏上星環邊境，點下方查看即時戰況。':'本次招募已關閉，可在遊戲內查看遠征紀錄。'].join('\n').slice(0,1000);
-  const reply_markup={inline_keyboard:[[{text:lobby?'加入並準備':running?'查看遠征戰況':'查看遠征紀錄',url:`https://t.me/${username}?startapp=ring_${id.slice(5)}`}]]};
+   lobby?'每小時換景、離線持續前進。直接按「加入並準備」，使用目前角色入隊，不必開遊戲；五人準備後由隊長出發。':running?'旅人已踏上星環邊境，點下方查看即時戰況。':'本次招募已關閉，可在遊戲內查看遠征紀錄。'].join('\n').slice(0,1000);
+  const reply_markup={inline_keyboard:[lobby?[{text:'加入並準備',callback_data:`rpg:rj:${id.slice(5)}`}]:[{text:running?'查看遠征戰況':'查看遠征紀錄',url:deepLink('ring_'+id.slice(5))}]]};
   if(old){
    try{await api.call(old.photo?'editMessageCaption':'editMessageText',{chat_id:old.chatId,message_id:old.messageId,...(old.photo?{caption}:{text:caption}),reply_markup});}
    catch(e){if(!/not modified/i.test(String(e.description||e.message)))throw e;}
-   cards[id]={...old,rev:p.rev,at:now()};save();return true;
+   cards[id]={...old,rev:p.rev,buttonVersion:2,at:now()};save();return true;
   }
   // Persist intent before sending: an uncertain Telegram response must not create a second post.
   cards[id]={pending:true,at:now()};save();
@@ -34,9 +34,23 @@ export function createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,a
    if(appUrl){try{m=await api.call('sendPhoto',{chat_id:chatId,photo:new URL('/art/star-ring-20261018/background.jpg',appUrl).href,caption,reply_markup},{retries429:0,timeoutMs:15000});photo=!!m;}catch(e){if(!rejectedImage(e))throw e;}}
    if(!m)m=await send(caption,{reply_markup},chatId);
    const messageId=m?.message_id??m?.result?.message_id;if(!messageId)throw Error('Telegram 未確認星環招募通知');
-   cards[id]={chatId,messageId,photo,rev:p.rev,at:now()};save();
+   cards[id]={chatId,messageId,photo,rev:p.rev,buttonVersion:2,at:now()};save();
   }catch(e){if(e?.definite===true){delete cards[id];save();}throw e;}
   return true;
  }
- return {deliver};
+ async function join(cq,hex){
+  const id='ring:'+hex,card=st().starRingRecruitCards?.[id];
+  if(!/^[0-9a-f]{32}$/.test(hex)||!card||card.pending||String(card.chatId)!==String(cq.message?.chat?.id)||card.messageId!==cq.message?.message_id){await popup(cq,'請使用群組原本的遠征招募卡');return {rpg:'ring-invalid-card'};}
+  let r;try{r=await client.call('/rpg/star-ring/recruit/join',{tgId:String(cq.from.id),partyId:id,chatId:String(cq.message.chat.id),callbackId:String(cq.id)});}
+  catch(e){await popup(cq,e.message);return {rpg:'ring-join-failed',error:e.code};}
+  const seat=r.party.members.find(m=>m.id===r.character.id&&!m.left);
+  await popup(cq,seat?.ready?`${r.character.name} 已加入並準備，等待隊長出發。`:'這次加入已處理；請查看招募卡目前狀態。',true);
+  try{await deliver({kind:'star_ring_recruit',target:'group',payload:{partyId:id,party:r.party}});}catch(e){warn('ring joined; card refresh pending',e);}
+  return {rpg:'ring-joined-ready'};
+ }
+ async function repair(){
+  const candidates=Object.entries(st().starRingRecruitCards||{}).filter(([,c])=>!c.pending&&c.buttonVersion!==2&&!(c.repairRetryAt>now())).sort((a,b)=>b[1].at-a[1].at).slice(0,2);
+  for(const[id]of candidates){try{const r=await client.call('/rpg/star-ring/recruit/card',{partyId:id});if(r?.party)await deliver({kind:'star_ring_recruit',target:'group',payload:{partyId:id,party:r.party}});}catch(e){const c=st().starRingRecruitCards?.[id];if(c){c.repairRetryAt=now()+300000;save();}warn('ring button repair',e);}}
+ }
+ return {deliver,join,repair};
 }

@@ -149,6 +149,8 @@ const routes = {
   'POST /rpg/star-ring/me': (env,b,now)=>STAR_RING.me(env,tgOf(b),now),
   'POST /rpg/star-ring/create': (env,b,now)=>STAR_RING.create(env,tgOf(b),b,now),
   'POST /rpg/star-ring/action': (env,b,now)=>STAR_RING.action(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/recruit/join': (env,b,now)=>STAR_RING.joinRecruit(env,b.tgId,b,now),
+  'POST /rpg/star-ring/recruit/card': (env,b)=>STAR_RING.recruitment(env,String(b.partyId)),
   'POST /rpg/star-ring/get': async(env,b,now)=>{
     const active=tgOf(b),recipient=b.recipientCharId?String(b.recipientCharId):active;
     if(recipient!==active){
@@ -378,7 +380,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if (routeBody.tgId && !['/rpg/create', '/rpg/app/grant'].includes(url.pathname))
+    if (routeBody.tgId && !['/rpg/create', '/rpg/app/grant','/rpg/star-ring/recruit/join'].includes(url.pathname))
       routeBody.tgId = await resolveActiveCharacterId(env.DB, tgOf(routeBody));
     return json(await route(env, routeBody, now));
   }

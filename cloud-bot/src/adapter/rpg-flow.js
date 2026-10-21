@@ -137,12 +137,12 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   const members = new Map(); const dirty = persistentMap(st,save,'dirtyBoss'); const sdirty = persistentMap(st,save,'dirtyShare');
   const timing=()=>st().cloudTiming??={lastClaim:0,lastPhoto:0}; let lastClaim=timing().lastClaim||0,lastPhoto=timing().lastPhoto||0,ticking=false;
   const warn = (what, error) => log.warn(`rpg ${what}: ${error?.message || error}`);
-  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'fate'?'rpgfate':screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':(screen==='shop'||screen==='gacha')?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
+  const deepLink = (screen = '') => (!botUsername() ? null : app.main && app.url ? `https://t.me/${botUsername()}?startapp=${screen || 'home'}` : `https://t.me/${botUsername()}?start=${screen === 'fate'?'rpgfate':screen === 'guardian'?'rpgguardian':screen === 'boss' ? 'rpgboss' : screen==='bag'?'rpgbag':/^ring_[0-9a-f]{32}$/.test(screen)?`rpg${screen}`:(screen==='shop'||screen==='gacha')?'rpgshop': /^(trade|req|pk|party)_/.test(screen) ? `rpg${screen}` : 'rpg'}`);
   /** web_app button (private chats only — Telegram rejects web_app inline buttons in groups) */
   const appBtn = (text, screen = '') => (app.url ? { text, web_app: { url: screen ? `${app.url}?screen=${screen}` : app.url } } : null);
   const popup = async (cq, text, alert = true) => { try { await api.call('answerCallbackQuery', { callback_query_id: cq.id, text: String(text).slice(0, 190), show_alert: alert }); } catch (error) { warn('answer', error); } };
   const partyFlow=createPartyFlow({api,client,send,popup,st,save,chatId,deepLink,appBtn,now,warn,animationRenderer,renderPartyCard});
-  const starRingRecruit=createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,appUrl:app.url,now,rejectedImage});
+  const starRingRecruit=createStarRingRecruitFlow({api,send,st,save,chatId,botUsername,appUrl:app.url,now,rejectedImage,client,popup,warn,deepLink});
   const editMsg = async (cid, mid, text, keyboard = []) => {
     try { await api.call('editMessageText', { chat_id: cid, message_id: mid, text: text.slice(0, 4096), reply_markup: { inline_keyboard: keyboard } }); }
     catch (error) { if (/not modified/i.test(String(error?.description || error?.message))) return; warn('edit', error); throw error; }
@@ -418,6 +418,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
       else body = '🤝 交易請求在遊戲畫面的「🤝 交易」分頁確認或拒絕。';
       await send(body, a ? { reply_markup: { inline_keyboard: [[a]] } } : {}, msg.chat.id); return { rpg: 'trade-link', kind };
     }
+    const ringStart=/^\/start\s+rpgring_([0-9a-f]{32})$/i.exec(text);if(ringStart)return showMain(msg.chat.id,msg.from,null,'',`ring_${ringStart[1]}`);
     const partyStart=/^\/start\s+rpgparty_(p[\da-f]{15})$/i.exec(text);if(partyStart)return showMain(msg.chat.id,msg.from,null,'',`party_${partyStart[1]}`);
     if (START_RE.test(text)) { await client.call('/rpg/notify/dm-reachable',{tgId:String(msg.from.id)}).catch(()=>{}); }
     if (START_RE.test(text)) return showMain(msg.chat.id, msg.from, null, '', /^\/start\s+rpgfate$/i.test(text)?'fate':/^\/start\s+rpgguardian$/i.test(text)?'guardian':/^\/start\s+rpgbag$/i.test(text)?'bag':/^\/start\s+rpgshop$/i.test(text)?'shop':BOSS_START_RE.test(text) ? 'boss' : '');
@@ -428,6 +429,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
   async function onCallback(cq, action, arg) {
     if (!client) { await popup(cq, '⚔️ 冒險尚未開放'); return { ignored: 'rpg disabled' }; }
     const chat = cq.message?.chat; const mid = cq.message?.message_id; const user = cq.from; const tg = String(user.id); const req = `cq${cq.id}`;
+    if(action==='rj'){if(!inGroup(chat)||!await isMember(user)){await popup(cq,'請在冒險者之庭的招募卡操作');return {ignored:'not group'};}return starRingRecruit.join(cq,arg);}
     if(action==='jc'||action==='jv'){
       if(!inGroup(chat)||!await isMember(user)){await popup(cq,'請在冒險者之庭的今日旅誌卡操作');return {ignored:'not group'};}
       const day=new Date(now()+8*3600e3).toISOString().slice(0,10);
@@ -824,6 +826,7 @@ export function createRpgFlow({ api, send, answer, log, now = () => Date.now(), 
           const journalDate=new Date(t+8*3600e3).toISOString(),journalDay=journalDate.slice(0,10);
           if(journalDate.slice(11,16)>='08:00'&&st().journalChecked!==journalDay){const r=await client.call('/rpg/journal/publish',{}).catch(e=>warn('journal publish',e));if(r?.ok){st().journalChecked=journalDay;save();}}
           if (slot && st().spawnChecked !== slot) { const r = await client.call('/rpg/boss/spawn-due', {}).catch((e) => warn('spawn-due', e)); if (r) { st().spawnChecked = slot; save(); out.spawn = r.spawn; } }
+          await starRingRecruit.repair();
           await client.call('/rpg/party/tick',{}).catch(e=>warn('party tick',e));
         }
         for (const [id, c] of Object.entries(st().cards)) if (t - (c.lastEdit || 0) > 2 * 3600e3) { delete st().cards[id]; save(); }
