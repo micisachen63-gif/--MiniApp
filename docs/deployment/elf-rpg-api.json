@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "a5095636593a589fc35cced45fe517728237e71f",
+  "sourceCommit": "4f4b255dcba40750fd6e42ac448146ce5d373ebc",
   "service": "elf-rpg-api",
-  "productionVersion": "a47d68f7-57df-4ebc-84e3-a8b025f1c9ed",
+  "productionVersion": "2fdec932-18ef-4ff9-abb9-a9603a81b313",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-21T01:09:50.507Z",
+  "verifiedAt": "2026-10-21T01:31:50.665Z",
   "runtimeSHA256": {
-    "index.js": "21a9c502643c180593e795359f980e1f736562ae787dd5dc5fb00b4e8d9ee6a3"
+    "index.js": "63a376e31ea7c0903fd268e3b44a4aa3b38407f8068a555caaf9c02c343b91da"
   },
   "source": {
     "fileCount": 9479,
-    "sha256": "9d8218c4e34c9d5dc35cb89596575406dee6a4e87f9d17f54fc19a6d7873ac57",
+    "sha256": "567585232b4e8a8bfd2e95cd98e0f0a290b91416aa01ad85eded45f099f3b291",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -37703,7 +37703,7 @@
       },
       {
         "file": "worker/src/game/special.js",
-        "sha256": "1460c42627ab8a070b960e6e87a66ad9019dc951a776793df7405b8b229e9488"
+        "sha256": "c274b3a3af9a8fee3ea49c429d5f9732f09f1b27805d8f67c00c27c75a18a318"
       },
       {
         "file": "worker/src/game/star-ring-cosmetics.js",
@@ -37723,7 +37723,7 @@
       },
       {
         "file": "worker/src/game/star-ring.js",
-        "sha256": "790a21dbb1387e8b1a3fdeaa7517025e21db0e044d9923246fc024454ede9db7"
+        "sha256": "dba000d626deedb3e17e9d224f456099c3cff8308af2d6d0b714df0ab5f64be3"
       },
       {
         "file": "worker/src/game/stats.js",
@@ -37933,7 +37933,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 152,
+    "verifiedCount": 150,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -37965,8 +37965,6 @@
       "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
-      "worker/public/expedition/index.html",
-      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38092,7 +38090,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "a47d68f7-57df-4ebc-84e3-a8b025f1c9ed",
+        "version_id": "2fdec932-18ef-4ff9-abb9-a9603a81b313",
         "percentage": 100
       }
     ],
