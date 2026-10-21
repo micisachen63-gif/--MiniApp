@@ -255,7 +255,7 @@ export function supplyHours(char, inv, equipped, opts = {}) {
   // the formula ignores special skills, sustain and the potions the loop really drinks: trust the larger of formula and measured use
   const m = opts.measure === false ? null : measureUse(char, equipped);
   if (m) { hpPerTick = Math.max(hpPerTick, m.hp); mpPerTick = Math.max(mpPerTick, m.mp); }
-  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, hpPerTick, mpPerTick, tier: pTier, redKey:potionKeyFor(char,'red'), blueKey:potionKeyFor(char,'blue'), measured: !!m };
+  return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, redLowUse:hpPerTick<=.01,blueLowUse:mpPerTick<=.01,hpPerTick, mpPerTick, tier: pTier, redKey:potionKeyFor(char,'red'), blueKey:potionKeyFor(char,'blue'), measured: !!m };
 }
 /** how many potions to cover `hours` of idle at the current consumption (buys the potions the character really drinks) */
 export function refillPlan(char, inv, equipped, hours = 24, sup = null) {
