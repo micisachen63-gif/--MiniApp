@@ -1,3 +1,5 @@
+2026-10-21 星環群組直接加入準備：招募主鈕改Telegram callback，驗指定群組／成員／原卡ID，Worker服務以帳號選目前角色、原子active guard與跨角色操作收據恢復；零開遊戲／私訊／自動啟程，不扣出發次數。舊卡正常維護每次最多2張同訊息改按鈕，純SELECT投影、失敗退避、不猜pending；running/complete以private start提供web_app戰況入口，修mainMiniApp=false卻硬用startapp問題。12 Worker＋4 BOT新增隔離測試。讀docs/STAR_RING_TELEGRAM_JOIN_20261021.txt；先Worker後BOT，無migration／玩家重設，正式狀態看deployment-records。
+
 2026-10-20 中高等PVE難度v2：普通Lv31起壓力／菁英曲線，第一次實際結算保護舊離線分鐘；新出發45+打寶固定敵方HP／反擊／防禦尺度，強裝更快更省水，不隨隊伍ATK拉血。背包紅水依原門檻／種類、只在真正反擊前飲用，離在線原子扣紅藍水／獎勵防重；舊已出發照原快照。低階30、塔／試煉／世界首領／遠征與所有裝備能力／掉率／體力不改。2592掛機模型0死、藥費最高14.33%，270真連刷通關，強化裝0倒地。讀docs/PVE_DIFFICULTY_V2_20261020.txt與docs/economy/PVE_BALANCE_V2_20261020.json；僅Worker、無migration，正式狀態看deployment-records。
 
 2026-10-20 技能進修保命補驗：不屈血誓延長保護跨分鐘後，普通掛機實際擋下致命菁英時立即持久扣除唯一保命次數；非致命不扣，避免同次施放跨兩分鐘重複保命。固定seed真掛機重現修前失敗／修後通過，見docs/IDLE_LAST_STAND_SINGLE_USE_20261020.txt；只Worker，無migration／怪物數值／掉率／裝備變動。

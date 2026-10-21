@@ -1,0 +1,20 @@
+星環招募卡：群組直接加入並準備（2026-10-21）
+
+原因與行為
+正式coordinator設定mainMiniApp=false，舊星環招募卻硬編startapp連結，沒有沿用一般遊戲入口的private start備援。使用者確認完全沒開啟遊戲，並要求不必開遊戲直接加入及準備。
+招募按鈕改為rpg:rj:<32hex> Telegram callback（39 bytes內）。BOT只接受指定群組、群組成員、本人callback.from以及已持久確認的原招募訊息chat/message ID；轉貼、其他訊息與無法確認送達的卡片不能操作。按鈕不含帳號、角色或可偽造的授權資訊。
+後端服務以Telegram帳號解析目前選用角色，join-ready沿原五帳號、等級、職責、每日次數、其他隊伍、招募期限與滿員保護，同一交易加入並ready=1。按鈕不切換角色、不創角、不啟程、不扣出發次數；已入隊者再點維持準備，不toggle。成功彈窗顯示實際角色名，群組編輯原卡，outbox後續同rev不重送。
+
+安全／防重
+新增/rpg/star-ring/recruit/join只供既有X-Service-Secret驗證的BOT Service Binding，不加入/app/api白名單。例外保留原始帳號tgId，不能先經一般active resolver轉成另角ID；服務只接受數字帳號、固定群組與callback編號。
+操作收據仍用rpg_star_ring_operations，requestId綁定帳號與callback，同一隊同一callback先跨該帳號所有角色恢復原收據，再解析目前角色。這樣回覆遺失、重啟或後來切角不會加入另一名角色，也不會把後來手動取消準備覆蓋回去。提交時以原子UPDATE＋guard再檢查active_char_id與所有權，切角競爭整批回滾並明確提示重點。失敗後再核對同帳號原收據，涵蓋提交成功但回覆遺失。
+BOT原operation-api加入此端點的replay-safe白名單；其他不確定操作規則不改。直接更新卡片失敗不把入隊成功當失敗，既有outbox補刷新。
+
+既有卡片
+持久卡片buttonVersion=2。正常30秒維護每次最多修復兩張舊卡，最近優先：/rpg/star-ring/recruit/card純SELECT投影，不推進遠征或發獎；在同一則訊息改按鈕，允許同rev格式更新，不倒退新rev、不重貼。未知送達pending仍保留原保護、不猜訊息ID；失敗5分鐘退避，避免刪除的舊卡阻擋其他卡片。已過期招募顯示結束，不能重新加入。
+已啟程／完成卡片保留查看入口，Main Mini App未開時使用start=rpgring_<id>，私訊再提供正常web_app按鈕，將精確ring_<id>交給原前端；查看不在BOT自動入隊。招募中主按鈕直接入隊，不經這條開遊戲路徑。
+
+驗證與發布
+12項新增Worker測試：真CloudBot→服務HTTP→記憶體D1加入與ready／原卡更新／零私訊／零開遊戲／零出發；服務驗證與未公開端點；另一角色與外來selectedCharacterId；原收據跨切角與取消準備恢復；提交中切角；重複callback與最後一席；成功提交回覆遺失；無角色帳號；等級／過期／滿員／其他隊伍拒絕。原15項join-ready防護與戰鬥回歸不放寬。
+4項新增BOT測試：舊連結卡同rev原地修正且不重修、main=false戰況連結備援、private start保留精準隊伍並提供web_app而不入隊。原招募測試改驗callback按鈕、圖失敗文字備援與未知送達防重。
+所有測試皆隔離Telegram傳輸與本機D1，不對正式玩家操作或發測試訊息。整套Worker／BOT與必要CI須通過後才發布。先Worker提供端點，再BOT切按鈕及正常排程修舊卡；無migration、不重置隊伍／玩家／DO狀態。權威版本見origin/deployment-records兩服務收據。

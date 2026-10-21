@@ -1,6 +1,6 @@
 import {synchronousSave} from './persistent-map.js';
 const READS=new Set(['/rpg/meta','/rpg/me','/rpg/shop','/rpg/boss/get','/rpg/share/get','/rpg/trade/get','/rpg/pk/get','/rpg/party/get','/rpg/expedition/me','/rpg/journal','/rpg/journal/card','/rpg/outbox/status','/rpg/guardian/state','/rpg/background/status']);
-const REPLAY_SAFE=new Set(['/rpg/daily','/rpg/refill','/rpg/buy','/rpg/buy-gear','/rpg/enhance','/rpg/advance','/rpg/reselect','/rpg/party/action','/rpg/party/reward','/rpg/expedition/trade']);
+const REPLAY_SAFE=new Set(['/rpg/star-ring/recruit/join','/rpg/daily','/rpg/refill','/rpg/buy','/rpg/buy-gear','/rpg/enhance','/rpg/advance','/rpg/reselect','/rpg/party/action','/rpg/party/reward','/rpg/expedition/trade']);
 const stable=value=>value===null||typeof value!=='object'?JSON.stringify(value):Array.isArray(value)?'['+value.map(stable).join(',')+']':'{'+Object.keys(value).sort().map(k=>JSON.stringify(k)+':'+stable(value[k])).join(',')+'}';
 const sha=async value=>[...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(value)))].map(n=>n.toString(16).padStart(2,'0')).join('');
 function error(code,message,status=0){return Object.assign(new Error(message),{code,status});}
