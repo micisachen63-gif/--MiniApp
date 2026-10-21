@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "4f4b255dcba40750fd6e42ac448146ce5d373ebc",
+  "sourceCommit": "164fc67d254586448957596e53bb3b75db589e79",
   "service": "elf-rpg-api",
-  "productionVersion": "2fdec932-18ef-4ff9-abb9-a9603a81b313",
+  "productionVersion": "7fed819b-50b0-4f48-ac4a-f0baf2ad2ae8",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-21T01:31:50.665Z",
+  "verifiedAt": "2026-10-21T02:40:23.427Z",
   "runtimeSHA256": {
-    "index.js": "63a376e31ea7c0903fd268e3b44a4aa3b38407f8068a555caaf9c02c343b91da"
+    "index.js": "7ed8b302942ff4a7aa099b99c4020c6c3e8bba4bbc37f240183940ab6f261bc1"
   },
   "source": {
-    "fileCount": 9479,
-    "sha256": "567585232b4e8a8bfd2e95cd98e0f0a290b91416aa01ad85eded45f099f3b291",
+    "fileCount": 9481,
+    "sha256": "824376ed95037ca31223b2386355e7aa32a11362d861d25e12008f85aca4f9cd",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35459,7 +35459,7 @@
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "970c8a6cfc105c9f79bb119df946cc719ca9a2947b02165659cf0ec7239d9641"
+        "sha256": "008b68da6456abcbc6259c6d2070b3cb91963db9cef8de315c42eee08ba6785d"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -36039,11 +36039,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "8c53ee061da9fffa4f5bd9abea49202264e66f51621d35d2c88b9c717c5add4d"
+        "sha256": "12d32ed17a60e9d6b3ea207f6b6e96b876cbee0cdd13e49e8e61c6f56c89018e"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "f94adee4362ea9188ecccfa831eed6c24ebeaf3b6167a0aec9de428cb38f72bc"
+        "sha256": "27747f7aaecf006341515de586875e80ae87f45ae6df88ebf90e67053d4aa269"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36052,6 +36052,14 @@
       {
         "file": "worker/public/expedition/party-lobby.js",
         "sha256": "ac2ed8e40baa2f9a1856232e63176e29d09f1ce4a9e5969a649685af40c82381"
+      },
+      {
+        "file": "worker/public/expedition/party-stamina-ui.js",
+        "sha256": "61cd3b68987fc589c16ef312380541d7c74ac11f9074017c15b1be383e522b6c"
+      },
+      {
+        "file": "worker/public/expedition/party-stamina.css",
+        "sha256": "6f4fbb87f810232ea73427a66da433edb8028c0aa656364aeafb5f3e64f0bf65"
       },
       {
         "file": "worker/public/expedition/party-tactics.js",
@@ -36827,7 +36835,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "99be5fba68a7942e532d2356a3b63527e1d5021a4f027deccbbc875618731841"
+        "sha256": "db7f71b03ed34a2047e5eb62e8812e575c057d2cd24e968549d82f93e0cbabb9"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37659,7 +37667,7 @@
       },
       {
         "file": "worker/src/game/party-stamina.js",
-        "sha256": "55062a5e7ceca94f938350c938fb1b814c3b40d8662bb14393fe57f0b6a52e46"
+        "sha256": "e3263cadead6347f2606a38f7518a7065d3b112217df5a672c1cd710e9da21e9"
       },
       {
         "file": "worker/src/game/pk.js",
@@ -37863,7 +37871,7 @@
       },
       {
         "file": "worker/src/services/party.js",
-        "sha256": "9420280efa4ff57d6909e8c14c6c5cd29a5243d6a3a7c88905aac5298391be39"
+        "sha256": "d3be6102400833261921822fc4ff878f588a8afd083a140fa3f4f0322b117ba1"
       },
       {
         "file": "worker/src/services/pk.js",
@@ -37933,16 +37941,16 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 150,
+    "verifiedCount": 154,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_epic.jpg",
-      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B1_m_portrait.png",
-      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_m.png",
+      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_legendary.jpg",
+      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B2_f.webp",
+      "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_m_attack.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
       "worker/public/background-workshop.js",
@@ -37965,6 +37973,10 @@
       "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
+      "worker/public/expedition/party-stamina-ui.js",
+      "worker/public/expedition/party-stamina.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38090,7 +38102,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "2fdec932-18ef-4ff9-abb9-a9603a81b313",
+        "version_id": "7fed819b-50b0-4f48-ac4a-f0baf2ad2ae8",
         "percentage": 100
       }
     ],
