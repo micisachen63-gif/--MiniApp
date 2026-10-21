@@ -153,7 +153,8 @@ export function autoPartyAction(actor,team,enemy,now,context={}){
  else if(m.heal&&!skillCoefficient(skill)){if(lowest.hp/lowest.maxHp>.65)continue;target=lowest;priority=90;}
  else if(m.accelerate){target=alive.find(a=>(a.acceleratedUntil||0)<=now&&Object.keys(a.special?.cooldowns||{}).some(k=>a.special.cooldowns[k]>now&&SKILL_MAP[k]?.advancementTier<4));if(!target)continue;priority=25;}
  else if(m.interrupt){if(!enemy.windup||!enemy.interruptible||enemy.interrupted){if(!skillCoefficient(skill))continue;}else priority=80;}
- else if(m.addsOnly&&!enemy.adds)continue;
+ // addsOnly restricts the secondary debuff, not the skill's authored damage.
+ else if(m.addsOnly&&!enemy.adds&&!skillCoefficient(skill))continue;
  else if(!skillCoefficient(skill)){if(Object.keys(m).some(key=>['atkUp','damageUp','nextReduce','reduce','guard'].includes(key)&&valueOf(actor,key,now)>0))continue;priority=30;}
  if(m.target&&!m.revive&&!m.accelerate)target=lowest;
  choices.push({skillId:id,targetId:target.id,priority});

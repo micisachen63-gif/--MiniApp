@@ -1,7 +1,7 @@
 // Server-authoritative, deterministic expedition simulation. No browser clock/power/loot input.
 import {rngFor} from './rng.js';
 import {roleSkills,assignRoles,castRole} from './party-roles.js';
-import {combatActor,autoPartyAction,castSpecial,validateCast,periodic,receiveDamage,damageEnemy,performThiefNativeStrikes,valueOf} from './special.js';
+import {combatActor,autoPartyAction,castSpecial,validateCast,periodic,receiveDamage,damageEnemy,performThiefNativeStrikes,valueOf,SKILL_MAP} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 import {computeStats,idleStats,standardStats} from './stats.js';
 import {expPerTick} from './formulas.js';
@@ -226,7 +226,7 @@ export function simulateStage(state,index,beats=BEATS){
     restoreOnAction(a,result.damage||0,{cast,enabled:true});action={skillId:'attack'};
    }
    const c=b.contribution[a.id]??={damage:0,healing:0,roles:0};c.damage+=result.damage||0;c.healing+=result.healed||0;c.roles+=action.skillId.startsWith('role_')?1:0;
-   events.push({actorId:a.id,skillId:action.skillId,label:result.label||a.skill?.name||'戰技',damage:result.damage||0,healed:result.healed||0,...(result.restoredMp?{restoredMp:result.restoredMp}:{}),...(result.cleansed?{cleansed:result.cleansed}:{}),...(result.shieldBroken?{shieldBroken:result.shieldBroken}:{})});
+   events.push({actorId:a.id,skillId:action.skillId,label:result.label||SKILL_MAP[action.skillId]?.name||a.skill?.name||'戰技',damage:result.damage||0,healed:result.healed||0,...(result.restoredMp?{restoredMp:result.restoredMp}:{}),...(result.cleansed?{cleansed:result.cleansed}:{}),...(result.shieldBroken?{shieldBroken:result.shieldBroken}:{})});
   }
   monsterAttack(b,localBeat,at,pressure,tactic,currentMatch.missing.length,events);
   if(b.enemy.hp<=0){b.waves++;if(b.waves>=b.objective)resolvedBeat??=beat;events.push({actorId:'boss',label:`已擊退第 ${b.waves} 波`,wave:b.waves});if(hasRankRewards(state)&&b.enemy.rank!=='normal')(b.defeats??=[]).push({hourIndex:b.hourIndex,serial:b.poolSerial,id:b.enemy.id,name:b.enemy.name,rank:b.enemy.rank,at});}
