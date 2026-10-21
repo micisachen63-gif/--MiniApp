@@ -8,6 +8,7 @@ import {affixCost} from '../game/affixes.js';
 import { CLASSES, CLASS_KEYS, GENERAL_WEAPON, ITEMS, POTIONS, MAX_OPEN_MAP, RARITY_KEYS } from '../game/constants.js';
 import { settleIdle, emptyReport, autoResume, applyExp, refillPlan, supplyHours } from '../game/idle.js';
 import {armIdleBalance} from '../game/pve-balance.js';
+import {armIdleSkillRotation} from '../game/idle-skill-rotation.js';
 import { idleStats, computeStats } from '../game/stats.js';
 import { advance, reselect, GameError } from '../game/classes.js';
 import { checkItemPurchase, drawGacha } from '../game/shop.js';
@@ -62,7 +63,7 @@ function settleSelectedPlayer(player, now) {
     report.end_state = char.idle_state;
     return {char,inv:{...player.inv},report,events:[]};
   }
-  return settleIdle(armIdleBalance(player.char,now),player.inv,equippedOf(player),now);
+  return settleIdle(armIdleSkillRotation(armIdleBalance(player.char,now),now),player.inv,equippedOf(player),now);
 }
 
 function reportStatements(db, tg, report, now) {

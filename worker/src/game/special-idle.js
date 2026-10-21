@@ -1,4 +1,5 @@
 import {masteredSkill} from './skill-mastery.js';
+import {idleSkillOrder} from './idle-skill-rotation.js';
 import {needsBlue,blueTarget} from './auto-blue.js';
 import {thiefPrimaryMechanics,applyThiefPrimary,triggerThiefCounter,nextThiefStrikeCount} from './thief-skills.js';
 import { SKILL_MAP,eligible,specialState,saveSpecial,castSpecial,combatActor,periodic,valueOf } from './special.js';
@@ -22,7 +23,8 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
  const periodicDamage=enemy.maxHp-enemy.hp;
  if(x.costDay!==day){x.costDay=day;x.extraCost=0;}
  const manual=x.pending;let selected;
- for(const id of manual?[manual]:x.loadout){
+ const ordered=idleSkillOrder(x,now);
+ for(const id of manual?[manual]:ordered){
   const base=SKILL_MAP[id],skill=base?specialCost(masteredSkill(base,x),s.pct):base,mode=x.auto[id];if(!eligible(c,skill)||!x.learned.includes(id)||(x.cooldowns[id]||0)>now)continue;
   if(!manual&&(!mode||mode==='lowHp'&&a.hp/a.maxHp>=.5||mode==='elite'&&Math.floor(now/60000)%33!==0))continue;
   if(['skill_17_2','skill_24_2'].includes(id))continue;
@@ -31,7 +33,7 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
   if(a.mp<skill.mp)continue;selected=skill;break;
  }
  let damage=periodicDamage;
- if(selected){const result=castSpecial(a,[a],enemy,selected,a.id,now,rng,{applySustain:false});damage+=result.damage;if(manual)delete x.pending;}
+ if(selected){const result=castSpecial(a,[a],enemy,selected,a.id,now,rng,{applySustain:false});damage+=result.damage;if(manual)delete x.pending;else if(x.loadout.length>1)x.idleAutoNext=x.loadout[(x.loadout.indexOf(selected.id)+1)%x.loadout.length];}
  const normalBonus=Math.min(1.5,(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now))+periodicDamage/Math.max(1,s.atk*s.skill.mult));
  const ratio=selected?Math.min(1.5,Math.max(.15,damage/Math.max(1,s.atk*s.skill.mult))):null;
  // The existing idle pressure is already reduced by DEF; apply only active skill protection here.

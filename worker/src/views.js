@@ -69,7 +69,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     inventory: inv,
     collection:collectionView(inv,char),
     ...(compact?{compact:true}:{equipment: equipment.map((e) => equipmentView(char, e))}),
-    supply: { redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey:sup.redKey, blueKey:sup.blueKey, redTierCount:inv[sup.redKey]||0, blueTierCount:inv[sup.blueKey]||0, redOptions:potionOptions(char,inv,'red'), blueOptions:potionOptions(char,inv,'blue') },
+    supply: { redLowUse:sup.redLowUse,blueLowUse:sup.blueLowUse, redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey:sup.redKey, blueKey:sup.blueKey, redTierCount:inv[sup.redKey]||0, blueTierCount:inv[sup.blueKey]||0, redOptions:potionOptions(char,inv,'red'), blueOptions:potionOptions(char,inv,'blue') },
     refill: refillPlan(char, inv, equipped, 24, sup),
     daily: dailyGoldFor(char, now),
     gate,
