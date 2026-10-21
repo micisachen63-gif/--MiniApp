@@ -1,18 +1,18 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "25fc726637fa719791298eb58e2ae226a1838377",
+  "sourceCommit": "8852e7f8fddfcea33d72ab1b411b27f78629b8f9",
   "service": "star-journal-rpg-bot",
-  "productionVersion": "06e3fadc-dff0-423d-b45a-33f2efb8ad0a",
+  "productionVersion": "c6329e2e-401a-4195-a065-7f164892859c",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-20T07:51:50.320Z",
+  "verifiedAt": "2026-10-21T00:47:50.412Z",
   "runtimeSHA256": {
     "dd4dd8881e2df4e64203b5c0ae65e1648ab55207-resvg.wasm": "22bf6e9f9a100d972da0411a69c5ba504367fc1fa87b3b64e3f35e53926d2d70",
-    "index.js": "1a337f1e87727fa7f1cebf409603e40db112efa935a38bcf5bddafaac639fa7c"
+    "index.js": "5ff335350ec456fec7256f28f1678ba88b0711eeb5935a3e558b53880ac387b8"
   },
   "source": {
     "fileCount": 252,
-    "sha256": "87f7b63b2edacf1166c3c1d4e093f9740bf4dc9bb57b81201a59d2e54ddfa084",
+    "sha256": "b409d898c4dd9b3687294699382b5fab1a54fa014eb6946d0781c98506140f4a",
     "files": [
       {
         "file": "cloud-bot/package.json",
@@ -896,7 +896,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/operation-api.js",
-        "sha256": "db136ba5fa332422376679fa2be15bfd94ba9aebf2814f367ba4957ac1dfca71"
+        "sha256": "1208a25e4f2b1cdb6f73e03e097ab18952a78ca1024e6ba65bc97ad68efa5ee5"
       },
       {
         "file": "cloud-bot/src/adapter/package.json",
@@ -916,7 +916,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/rpg-flow.js",
-        "sha256": "50a0b7ef497c5127e59df7a1c9cf362815e064df43de85981deaabd4c1a9a024"
+        "sha256": "4859883f293c90a6024aeb287a9045ed6200f25cacebacafd373106372d26860"
       },
       {
         "file": "cloud-bot/src/adapter/rpg-party-flow.js",
@@ -928,7 +928,7 @@
       },
       {
         "file": "cloud-bot/src/adapter/star-ring-recruit.js",
-        "sha256": "e75fbf80043b3c12715c2c6467453eafe3e21365087454c3640296f1c12ac1da"
+        "sha256": "9e0761e3a10ce3c4817b48f03353f52b8e8edf43f722404a26aa2f92a45c389d"
       },
       {
         "file": "cloud-bot/src/adapter/verification.json",
@@ -1037,7 +1037,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "06e3fadc-dff0-423d-b45a-33f2efb8ad0a",
+        "version_id": "c6329e2e-401a-4195-a065-7f164892859c",
         "percentage": 100
       }
     ],
