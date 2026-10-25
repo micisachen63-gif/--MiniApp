@@ -1,3 +1,5 @@
+2026-10-25 星環外觀重製：依使用者改環身光流，內建imagegen三款透明新圖，前後景遮罩／星點軌跡／穩定錯峰，依可見身高等比定位與框內裁切；撤足下盤及掛機上移，不轉動整張bitmap。248造型×3主題×8時點×2版型=11904檢查＋四職真API全畫面；隱藏暫停、reduced-motion、男女／手機與動態預覽。讀docs/SURROUND_AURA_ART_20261025.txt；/preview-star-ring-surround.html；原圖／提示／QA在worker/art-production/star-ring-surround-20261025。既有IDs／擁有權／價格／戰力不改，僅Worker無migration／BOT，正式版本看deployment-records。
+
 2026-10-25 光環跨畫面顯示：共用alpha腳底定位跟隨圖片load／尺寸／正規化，掛機依真戰報高度留地面並重算背景載入atlas；打寶爬塔圖層、自他英雄武裝、殿堂實際圖騰及防重／清理，遠征衣櫥即時讀回外觀。5新UI回歸＋390／1280px四職真API全畫面與三外觀穿卸驗收，衣櫥兌換／丟回覆同收據也重跑。讀docs/AURA_VISIBILITY_FIX_20261025.txt；僅Worker靜態前端，無migration／數值／快照／BOT改動，正式版本看deployment-records。
 
 2026-10-25 衣櫥兌換無反應：preview paint誤用未定義scene，已快取圖重畫在try外拋錯導致busy永久卡住。改用原衣櫥幾何、重畫入try保證復原，戰場contain保留；主頁／iframe／示意頁快取版本更新。3新UI回歸＋25集中測試，390／1280px原碼重現與修後真API83→23解鎖一次、穿戴／卸下；丟失成功回覆同ID重試不多扣。讀docs/WARDROBE_REDEMPTION_FIX_20261025.txt；僅Worker、無migration／補發／價格改動，正式版本看deployment-records。

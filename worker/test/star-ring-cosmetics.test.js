@@ -31,7 +31,7 @@ const wear=(env,tg,id,request)=>C.equip(env,tg,{cosmeticId:id,requestId:request}
 test('three permanent bound visual catalogs carry dedicated art; no stat values enter combat',async t=>{
  const {env,tg}=await fixture(t),before=await loadPlayer(env.DB,tg),stats=computeStats(before.char,before.equipment);
  assert.deepEqual(COSMETICS.map(x=>x.cost),[60,120,180]);assert.equal(COSMETICS.every(x=>x.bound&&x.visualOnly&&x.slot==='aura'&&x.level===40),true);
- for(const c of COSMETICS){assert.match(c.art,/^\/art\/star-ring-rewards-20261018\/aura-/);assert.match(c.icon,/\/icon-/);assert.equal(E.SHOP.find(o=>o.id===c.id).cosmetic,c.id);}
+ for(const c of COSMETICS){assert.match(c.art,/^\/art\/star-ring-surround-20261025\/surround-/);assert.match(c.icon,/\/icon-/);assert.equal(E.SHOP.find(o=>o.id===c.id).cosmetic,c.id);}
  await buy(env,tg,dawn,'buy');await wear(env,tg,dawn,'wear');const after=await loadPlayer(env.DB,tg);
  assert.deepEqual(computeStats(after.char,after.equipment),stats);
  assert.equal(after.inv.star_ring_token,940);assert.equal(after.inv[dawn],undefined);
