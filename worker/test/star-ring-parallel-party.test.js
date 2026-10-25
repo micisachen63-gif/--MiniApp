@@ -8,6 +8,9 @@ const row=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_characters WHERE tg_i
 const presence=(f,tg=f.ids[0])=>f.db.prepare('SELECT * FROM rpg_party_presence WHERE char_id=?').get(tg);
 for(const kind of ['dungeon','tower'])test(`full twelve-hour expedition while playing ${kind==='tower'?'one daily tower and repeated dungeons':'repeated dungeons'}: all six combats and thirty reward receipts match an isolated expedition exactly`,async t=>{
  const f=await fixture(t),control=await fixture(t),shortRewards={},initial=await loadPlayer(f.env.DB,f.ids[0]);
+ // This gross-reward reconciliation assumes no automatic blue-potion spending. Random
+ // foreground fights can otherwise drink a newly earned blue potion mid-run.
+ for(const run of [f,control])run.db.prepare('UPDATE rpg_characters SET auto_blue=0').run();
  const stored=JSON.parse(f.db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(f.id).state_json);
  stored.seed='parallel-full-run-'+kind;
  for(const run of [f,control])run.db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(stored),run.id);
