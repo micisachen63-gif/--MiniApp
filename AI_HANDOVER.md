@@ -1,3 +1,5 @@
+2026-10-25 衣櫥兌換無反應：preview paint誤用未定義scene，已快取圖重畫在try外拋錯導致busy永久卡住。改用原衣櫥幾何、重畫入try保證復原，戰場contain保留；主頁／iframe／示意頁快取版本更新。3新UI回歸＋25集中測試，390／1280px原碼重現與修後真API83→23解鎖一次、穿戴／卸下；丟失成功回覆同ID重試不多扣。讀docs/WARDROBE_REDEMPTION_FIX_20261025.txt；僅Worker、無migration／補發／價格改動，正式版本看deployment-records。
+
 2026-10-21 組隊體力阻擋顯示：party/get成員帶stamina完整投影，readyAt沿原6分鐘anchor算到20門檻、不重算等待；隊員體力數字／按鈕旁不足名單、缺額、恢復時間及招募先到期提醒，出發／續刷鍵明示原因；現有輪詢恢復後才啟用。5新測試＋390／1280px真API隔離測試含全準備19點、自動輪詢回20、真出發只扣一次及真通關後低體力續刷提示。規則、恢復速率、扣除、獎勵皆不改。讀docs/PARTY_STAMINA_UI_20261021.txt；僅Worker無migration／BOT，正式狀態看deployment-records。
 
 2026-10-21 組隊三技／離線補驗：風縛箭陣addsOnly僅限制首領戰的附帶減傷，修autoPartyAction錯跳過整招1.8A傷害，三種玩法共用；遠征事件顯示實際技能名。9新回歸，普通／職責打寶爬塔真排程對照，以及遠征v1–v3完整12h／各30份收益與五人背包、MP／CD對照；重跑不重發、遠征不覆蓋live配置，無倍率／時程／獎勵常數改動。既有未處理回合適用，已結算階段不回寫。讀docs/PARTY_THREE_SKILLS_OFFLINE_20261021.txt；僅Worker無migration，正式狀態看deployment-records。

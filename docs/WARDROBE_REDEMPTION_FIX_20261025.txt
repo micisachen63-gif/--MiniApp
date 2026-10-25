@@ -1,0 +1,33 @@
+星環衣櫥兌換無反應 — 2026-10-25
+
+根因
+star-ring-cosmetics.js的衣櫥paint()將戰鬥場景的holder===scene判斷
+複製進來，但衣櫥函式沒有scene變數。圖片load事件及已快取圖片的同步
+重畫會拋ReferenceError。兌換run()先設busy=true，再在try外呼叫paint，
+所以錯誤發生時API尚未送出，busy卻永久留下，所有操作鍵變灰。
+
+隔離重現
+使用原碼、真MiniApp／API／SQLite、已快取角色圖片及83枚徽記，390與
+1280px皆重現scene is not defined、兌換鍵卡住、徽記83未扣、無解鎖row。
+此為本機重現，不宣稱查過回報玩家的正式收據或補發任何物品。
+
+修正
+衣櫥圖片定位使用自身holder與原預覽預設幾何，不再引用戰鬥scene。
+mountActors中的scene是合法參數，繼續保留戰場足下光環的contain處理。
+將busy期間初次重畫移入try，暫時的重畫錯誤也會走error與finally復原。
+保留sessionStorage原操作編號、伺服器收據與所有權／費用驗證。
+更新主頁、遠征iframe入口與兩個示意預覽的快取版本，避免重開仍用舊碼。
+
+驗證
+新增3個UI回歸：已快取圖片重畫仍能兌換、圖片稍後載入與關閉後忽略回調、
+重畫單次錯誤不送API且不鎖死，修復後可再試。搭配既有後端與UI共25項
+集中測試通過，含原收據重送只解鎖／扣費一次、穿戴不改戰鬥能力。
+390與1280px真MiniApp在83枚時兌換60枚曙星之環，餘額23、解鎖row=1，
+再穿戴、卸下成功，已解鎖後沒有再次兌換按鈕；無頁面錯誤及水平溢位。
+另做390px已提交卻丟失HTTP回覆案例，兩次請求使用同一requestId，最終
+仍餘23與1份解鎖，沒有第二次扣款。所有外部請求阻擋，無正式遊戲操作。
+證據保留忽略的.release-sync/wardrobe-*。完整Worker／BOT、GitHub必要
+檢查通過後合main，只發Worker，並核對正式runtime、public與收據。
+
+無DB migration、無BOT變更、無價格／徽記來源／強度／獎勵改動。
+不人工發獎或改玩家餘額。正式版本以origin/deployment-records為準。
