@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "164fc67d254586448957596e53bb3b75db589e79",
+  "sourceCommit": "dd142757b92e1a4b5b098dc165e94b2515a637f9",
   "service": "elf-rpg-api",
-  "productionVersion": "7fed819b-50b0-4f48-ac4a-f0baf2ad2ae8",
+  "productionVersion": "544ae78c-c699-4f06-ae0a-03d5e45cd2d2",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-21T02:40:23.427Z",
+  "verifiedAt": "2026-10-25T13:50:14.573Z",
   "runtimeSHA256": {
     "index.js": "7ed8b302942ff4a7aa099b99c4020c6c3e8bba4bbc37f240183940ab6f261bc1"
   },
   "source": {
     "fileCount": 9481,
-    "sha256": "824376ed95037ca31223b2386355e7aa32a11362d861d25e12008f85aca4f9cd",
+    "sha256": "d0e5459516c20043d97562d7d1832fe7130f3315226da2fb2b697f1cba03e496",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -35459,7 +35459,7 @@
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "008b68da6456abcbc6259c6d2070b3cb91963db9cef8de315c42eee08ba6785d"
+        "sha256": "7d5bfd418ae122b7b8ca1fb74cf3eac0d443de1033282c47b382a63934d87a9f"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -36039,7 +36039,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "12d32ed17a60e9d6b3ea207f6b6e96b876cbee0cdd13e49e8e61c6f56c89018e"
+        "sha256": "be886dec344239142b02517d73317d7ef09c427c04836fe9cc69a2f2ecd114e4"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -36835,7 +36835,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "db7f71b03ed34a2047e5eb62e8812e575c057d2cd24e968549d82f93e0cbabb9"
+        "sha256": "b6e369aa08294d14e47c83a1f0941a5253370b8642fd8066c117465b7d24b72b"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37059,7 +37059,7 @@
       },
       {
         "file": "worker/public/preview-star-ring-cosmetics.html",
-        "sha256": "d0be2300b319df5bfad5213de4980e5f404ae9d3710f0dede49207d79047c5f9"
+        "sha256": "fb7966c37cbd8c3e17ef282ff1c4b54c3a6acc21b9bf9b08f52d9282426a3731"
       },
       {
         "file": "worker/public/preview-star-ring-equipment.html",
@@ -37067,7 +37067,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "857fdf393cb4f4d07d1e599823a1321e88a12aaa95c9516f65805512b1e859af"
+        "sha256": "a9329d71e69367438567319e6218bd36bfff8cec0dc2300559445a4d94543e08"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -37103,7 +37103,7 @@
       },
       {
         "file": "worker/public/star-ring-cosmetics.js",
-        "sha256": "3b5ee64ea5df14a82065dc35ee72655e1619ce5c311a4452eee922f9b4c402de"
+        "sha256": "88444b67f0b63b68a1421ff176425de9793b068d9ed8b6429e02a239e76d711e"
       },
       {
         "file": "worker/public/star-ring-gear-art.js",
@@ -37941,7 +37941,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 154,
+    "verifiedCount": 151,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -37974,9 +37974,6 @@
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
       "worker/public/expedition/index.html",
-      "worker/public/expedition/live.js",
-      "worker/public/expedition/party-stamina-ui.js",
-      "worker/public/expedition/party-stamina.css",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38102,7 +38099,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "7fed819b-50b0-4f48-ac4a-f0baf2ad2ae8",
+        "version_id": "544ae78c-c699-4f06-ae0a-03d5e45cd2d2",
         "percentage": 100
       }
     ],
