@@ -1,0 +1,23 @@
+星環光環跨畫面顯示修正（2026-10-25）
+
+問題與結果
+穿戴資料原已正確保存在角色 special_json，playerView、短隊成員、遠征成員與英雄殿堂 API 也都有 aura。缺口在前端定位、遮罩與缺少圖騰節點：
+1. 掛機：腳底定位改跟隨實際角色透明圖邊界；依戰報實際高度保留地面空間，防兩行收穫再次遮住光環。切回掛機時重算已在背景載入的角色 atlas 尺寸，避免舊尺寸為零使人物隱形。
+2. 打寶、爬塔：光環放在地面上方、人物下方；載入圖片與縮放後重定位。
+3. 遠征：沿用目前角色 aura 投影；衣櫥穿戴／卸下後立即重讀戰況，不等下一次輪詢。只更新外觀，戰力仍沿用當趟快照。
+4. 自己與他人的英雄武裝：跟隨 hero-size.js 非同步的透明圖正規化，不沿用圖片初次載入時的過期座標；調整圖層與裁切以顯示足下圖騰。
+5. 英雄殿堂：在既有 hall-portrait 中新增實際光環，保留外觀名稱、職業分頁與排行；綁定重用既有圖騰節點，避免重複繪製。
+
+共用定位
+每個角色圖來源以 256px 縮圖一次掃描 alpha > 8 的可見輪廓，底部十分之一估計腳底中心；URL 快取結果。新 follow 綁定處理 load、ResizeObserver 與 src/style/class 改變，RAF 合併重定位。無法讀取圖像時退回原有幾何。切頁／關閉清掉 observer、load handler 及待執行 RAF。衣櫥預覽仍用原幾何，不重演前一版未定義 scene 的錯誤。
+
+驗證
+- 新增 5 項單元回歸：alpha 與非對稱腳底／fill 與 contain、延後 load／樣式正規化／縮放、關閉及脫離畫面不再寫入、重用殿堂節點／冪等清理、殿堂實際圖騰及既有版面資訊。
+- worker/test/aura-visibility-browser.mjs：隔離 SQLite + 真 handle/API + 正式 public 原碼，Chrome 390px 劍士／妖精、1280px 法師／盜賊。每一組都測三款外觀在運行遠征中穿戴與卸下；離隊後真掛機、自己武裝、殿堂卡片、他人武裝、真打寶／爬塔出發與離線通關、戰況換外觀／卸下、跨頁清理及橫向溢出。零 pageerror；掛機角色 atlas 尺寸及光環避開真戰報額外斷言。
+- worker/test/wardrobe-redemption-browser.mjs 重跑：390／1280px 快取圖兌換、83→23、穿戴／卸下、丟失成功回覆後同收據重試，只有一份解鎖、零 pageerror。
+- 根目錄 Node 24 npm test 完整 Worker 與 BOT；結果見本次 PR 必要檢查與發布日誌。畫面測試是本機 Chrome，不宣稱已在實體 Telegram iPhone 驗收。
+- 本機圖與結果存忽略的 .release-sync/aura-*，未向正式玩家發測試訊息、未呼叫正式遊戲 action/view。
+
+發布
+主頁、iframe 與兩個美術預覽入口的受影響 JS／CSS 快取版為 20261025-aura2。僅 Worker 靜態前端，沒有資料遷移／獎勵補發／數值與戰鬥快照改動；BOT 不需發布。
+須經 PR、Worker and BOT tests 必要檢查合入 main，再由乾淨 main 的根 deploy:worker 發布。正式版本與原始碼對應以 origin/deployment-records:docs/deployment/elf-rpg-api.json 及 runtime 為準，文件本身不是部署證明。

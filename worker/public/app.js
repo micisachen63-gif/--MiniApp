@@ -669,7 +669,9 @@
   let sheetReturnFocus = null;
   let sheetCancel = null;
   let sheetPlaybackCancel = null;
+  let armoryAuraCleanup=null,hallAuraCleanup=null,sheetAuraCleanup=null;
   function sheet(html) {
+    sheetAuraCleanup?.();sheetAuraCleanup=null;
     if (sheetPlaybackCancel) { sheetPlaybackCancel(); sheetPlaybackCancel = null; }
     const s = $('#sheet'), card = $('.sheet-card', s);
     if (s.hidden) sheetReturnFocus = document.activeElement;
@@ -682,6 +684,7 @@
     return card;
   }
   function closeSheet() {
+    sheetAuraCleanup?.();sheetAuraCleanup=null;
     if (sheetPlaybackCancel) { sheetPlaybackCancel(); sheetPlaybackCancel = null; }
     $('#sheet').hidden = true; $('#app').inert = false;
     if (sheetCancel) { const cancel = sheetCancel; sheetCancel = null; cancel(); }
@@ -1204,7 +1207,7 @@
   }
   function bindBag(view) {
     view.querySelector('[data-cosmetic-open]')?.addEventListener('click',openCosmeticWardrobe);
-    const auraFigure=view.querySelector('.hero-armory .fig'),auraImage=auraFigure?.querySelector('img'),auraNode=auraFigure?.querySelector('.star-ring-aura');if(auraNode&&auraImage){const placeAura=()=>window.RpgStarRingCosmetics?.position(auraNode,auraImage,auraFigure,{contain:true,maxWidthRatio:.52,maxHeightRatio:.6});auraImage.addEventListener('load',placeAura,{once:true});if(auraImage.complete)placeAura();}
+    const auraFigure=view.querySelector('.hero-armory .fig'),auraImage=auraFigure?.querySelector('img'),auraNode=auraFigure?.querySelector('.star-ring-aura');if(auraNode&&auraImage){armoryAuraCleanup=window.RpgStarRingCosmetics?.follow(auraNode,auraImage,auraFigure,{maxWidthRatio:.52,maxHeightRatio:.6});}
     const guardianMarkup=window.RpgGuardianSigil?.summary(S.me.guardian,S.me.guardianSummonEnabled===true&&S.me.guardianAssist?.itemId===S.me.guardian?.id&&S.me.guardianAssist?.remainingBattles>0);if(guardianMarkup){view.querySelector('.lc-character')?.insertAdjacentHTML('beforeend',guardianMarkup);view.querySelector('[data-guardian-entry]').onclick=openGuardian;}const collectionMarkup=monsterCollectionView();if(collectionMarkup)view.querySelector('.lc-character')?.insertAdjacentHTML('beforeend',collectionMarkup);
     window.RpgCollectionUI?.bind(view,collectionItemSheet,collectionMaterialSheet);
     window.RpgCollectionUI?.bindInventory(view);
@@ -1677,7 +1680,7 @@
   function hallPortrait(h){return characterPortrait(h);}
   function heroHallHtml(){return window.RpgHeroHallUI.render(S.hall,{filter:S.hallClass||'all',page:S.hallPage||1},{esc,fmt,portrait:hallPortrait,includeThief:!!S.meta?.classes?.thief});}
   async function loadHeroes(){try{S.hall=await api('hall/list');if(S.tab==='trade'&&S.social==='hall'&&$('#sheet').hidden)render()}catch(e){toast(e.message,true)}}
-  async function inspectHero(id){try{const {hero:h}=await api('hall/get',{charId:id});const cell=([slot,pos])=>{const e=h.equipment.find(x=>x.slot===slot&&(!MULTI[slot]||x.position===pos));return '<div class="slot '+(e?'has rar-'+esc(e.rarity):'')+'">'+(e?eqIcon(e)+(e.enhance?'<em>+'+e.enhance+'</em>':''):'<span class="ph">'+SLOT_EMOJI[slot]+'</span>')+'<small>'+esc(slotLabel(slot,pos))+'</small></div>'};const c=sheet('<div class="hall-loadout lc-character"><h2>'+esc(h.name)+' · 英雄武裝</h2><p>'+esc(h.className)+' · Lv.'+h.level+' · 戰力 '+fmt(h.power)+'</p><div class="card lc-equip"><div class="doll"><div class="col">'+DOLL_L.map(cell).join('')+'</div><div class="fig">'+(window.RpgStarRingCosmetics?.markup(h.aura)||'')+'<img src="'+esc(hallPortrait(h))+'" alt="'+esc(h.name)+'目前角色外觀"></div><div class="col">'+DOLL_R.map(cell).join('')+'</div></div><div class="acc">'+DOLL_B.map(cell).join('')+'</div></div><div class="hall-stats">攻擊力 '+fmt(h.stats.atk)+' · 防禦力 '+fmt(h.stats.def)+' · 生命值 '+fmt(h.stats.maxHp)+' · 魔力 '+fmt(h.stats.maxMp)+' · 爆擊 '+h.stats.crit+'%</div><div class="hall-equipment-list">'+h.equipment.map(e=>'<div class="item"><div class="ic">'+eqIcon(e)+'</div><div class="mid"><b>'+esc(e.name)+'</b><small>+'+e.enhance+' · '+esc(e.slotName)+' · '+esc(e.rarityName)+'</small></div></div>').join('')+'</div><button class="btn ghost" data-hall-close>關閉</button></div>');c.querySelector('[data-hall-close]').onclick=closeSheet;}catch(e){toast(e.message,true)}}
+  async function inspectHero(id){try{const {hero:h}=await api('hall/get',{charId:id});const cell=([slot,pos])=>{const e=h.equipment.find(x=>x.slot===slot&&(!MULTI[slot]||x.position===pos));return '<div class="slot '+(e?'has rar-'+esc(e.rarity):'')+'">'+(e?eqIcon(e)+(e.enhance?'<em>+'+e.enhance+'</em>':''):'<span class="ph">'+SLOT_EMOJI[slot]+'</span>')+'<small>'+esc(slotLabel(slot,pos))+'</small></div>'};const c=sheet('<div class="hall-loadout lc-character"><h2>'+esc(h.name)+' · 英雄武裝</h2><p>'+esc(h.className)+' · Lv.'+h.level+' · 戰力 '+fmt(h.power)+'</p><div class="card lc-equip"><div class="doll"><div class="col">'+DOLL_L.map(cell).join('')+'</div><div class="fig">'+(window.RpgStarRingCosmetics?.markup(h.aura)||'')+'<img src="'+esc(hallPortrait(h))+'" alt="'+esc(h.name)+'目前角色外觀"></div><div class="col">'+DOLL_R.map(cell).join('')+'</div></div><div class="acc">'+DOLL_B.map(cell).join('')+'</div></div><div class="hall-stats">攻擊力 '+fmt(h.stats.atk)+' · 防禦力 '+fmt(h.stats.def)+' · 生命值 '+fmt(h.stats.maxHp)+' · 魔力 '+fmt(h.stats.maxMp)+' · 爆擊 '+h.stats.crit+'%</div><div class="hall-equipment-list">'+h.equipment.map(e=>'<div class="item"><div class="ic">'+eqIcon(e)+'</div><div class="mid"><b>'+esc(e.name)+'</b><small>+'+e.enhance+' · '+esc(e.slotName)+' · '+esc(e.rarityName)+'</small></div></div>').join('')+'</div><button class="btn ghost" data-hall-close>關閉</button></div>');const figure=c.querySelector('.hall-loadout .fig'),image=figure?.querySelector('img'),aura=figure?.querySelector('.star-ring-aura');if(aura&&image)sheetAuraCleanup=window.RpgStarRingCosmetics?.follow(aura,image,figure,{maxWidthRatio:.82});c.querySelector('[data-hall-close]').onclick=closeSheet;}catch(e){toast(e.message,true)}}
   async function loadPks() { try { const j = await api('pk/list'); S.pks = { pending: j.pending, history: j.history, today: j.today }; if (S.tab === 'trade' && S.social === 'pk' && $('#sheet').hidden) render(); } catch (e) { toast(e.message, true); } }
   async function loadTradeLog(id) {
     try { const j = await api('trade/log', { tradeId: id }); const el = $('#tlog'); if (!el || S.trade?.id!==id) return; const nm = (tg) => (String(tg) === String(S.trade.a.tgId) ? S.trade.a.name : String(tg) === String(S.trade.b.tgId) ? S.trade.b.name : '系統');
@@ -1686,7 +1689,7 @@
   }
   function bindTrade(view) {
     view.querySelectorAll('[data-soc]').forEach((b) => { b.onclick = () => { S.social = b.dataset.soc;if(S.social==='hall'){S.hallClass='all';S.hallPage=1;} render(); if(S.social==='hall')loadHeroes();else if (S.social === 'pk') loadPks(); else if (S.trade) loadTrade(S.trade.id); else loadTrades(); }; });
-    if(S.social==='hall'){window.RpgHeroHallUI.bind(view,{onFilter:value=>{S.hallClass=value;S.hallPage=1;render();},onPage:value=>{S.hallPage=value;render();document.querySelector('.hero-hall')?.scrollIntoView({block:'start'});},onInspect:inspectHero});return;}
+    if(S.social==='hall'){hallAuraCleanup=window.RpgStarRingCosmetics?.mountActors(view,S.hall?.heroes||[],'.hall-portrait');window.RpgHeroHallUI.bind(view,{onFilter:value=>{S.hallClass=value;S.hallPage=1;render();},onPage:value=>{S.hallPage=value;render();document.querySelector('.hero-hall')?.scrollIntoView({block:'start'});},onInspect:inspectHero});return;}
     if (S.social === 'pk') return bindPk(view);
     view.querySelectorAll('[data-trade],[data-otrade]').forEach((el) => { el.onclick = () => { S.trade = null; S._lastTab = null; window.scrollTo(0, 0); selectTrade(el.dataset.trade || el.dataset.otrade); }; });
     view.querySelectorAll('[data-racc]').forEach((b) => { b.onclick = async () => { if (S.busy) return; S.busy = true;
@@ -2054,6 +2057,7 @@
     if(guardianVisible&&guardianController&&guardianActor===String(S.me.character.tgId)&&document.getElementById('guardian-root')){renderHud();guardianFrameSize();return;}
     const marketVisible=S.tab==='shop'&&!S.choosing&&!S.creating&&!!S.me;
     if(marketVisible&&marketController&&marketActor===String(S.me.character.tgId)&&document.querySelector('.market-hub')){renderHud();updateShopSurface();marketController.update();return;}
+    armoryAuraCleanup?.();armoryAuraCleanup=null;hallAuraCleanup?.();hallAuraCleanup=null;
     marketController?.cleanup();marketController=null;marketActor=null;
     guardianController?.cleanup();guardianController=null;guardianActor=null;
     if(S.tab!=='shop'||S.shopTab!=='sell'||S.choosing||S.creating)window.RpgMarketSell?.reset();

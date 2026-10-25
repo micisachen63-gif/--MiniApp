@@ -42,8 +42,8 @@
     const q = (s) => root.querySelector(s);
     const guardianBadge=document.createElement('div');guardianBadge.className='guardian-battle-head';guardianBadge.style.cssText='position:absolute;z-index:7;pointer-events:none;width:0;height:0';root.append(guardianBadge);let guardianVisualKey='',guardianVisual=null;
     function positionGuardian(){if(document.hidden||!root.isConnected)return;if(guardianVisual?.current?.visual){guardianVisual.position(heroPt(.5,0),root.clientWidth,root.clientHeight);}else if(guardianBadge.childElementCount){const point=heroPt(.5,0);guardianBadge.style.left=point.x+'px';guardianBadge.style.top=Math.max(66,point.y-4)+'px';}}
-    let auraNode=null,auraKey='';
-    function syncAura(){const aura=S.me?.character?.aura,key=window.RpgStarRingCosmetics?.key(aura)||'';if(key!==auraKey){auraNode?.remove();auraNode=null;auraKey=key;if(key){root.insertAdjacentHTML('beforeend',window.RpgStarRingCosmetics.markup(aura));auraNode=root.lastElementChild;}}if(auraNode&&S.me){const feet=heroPt(.5,1),left=heroPt(0,1),right=heroPt(1,1),w=Math.max(48,Math.min(210,Math.abs(right.x-left.x)*1.2));Object.assign(auraNode.style,{left:feet.x+'px',top:feet.y+'px',width:w+'px',height:w*.5+'px',bottom:'auto',transform:'translate(-50%,-50%)'});}}
+    let auraNode=null,auraKey='',auraFollow=null;
+    function syncAura(){const aura=S.me?.character?.aura,key=window.RpgStarRingCosmetics?.key(aura)||'';if(key){root.dataset.starRingAura=key;const lift=Math.max(32,E.settlement.hidden?0:E.settlement.offsetHeight+16)+'px';if(root.style.getPropertyValue('--aura-ground-lift')!==lift)root.style.setProperty('--aura-ground-lift',lift);}else{delete root.dataset.starRingAura;root.style.removeProperty('--aura-ground-lift');}if(key!==auraKey){auraFollow?.();auraFollow=null;auraNode?.remove();auraNode=null;auraKey=key;if(key){root.insertAdjacentHTML('beforeend',window.RpgStarRingCosmetics.markup(aura));auraNode=root.lastElementChild;auraFollow=window.RpgStarRingCosmetics.follow(auraNode,E.hImg,root,{maxWidthRatio:.55,maxHeightRatio:.4});}}auraFollow?.refresh();}
     function syncGuardian(){
       syncAura();
       if(!guardianVisual&&window.RpgGuardianIdleFX){guardianVisual=window.RpgGuardianIdleFX.create(root);guardianBadge.replaceChildren();guardianBadge.hidden=true;}
@@ -939,6 +939,9 @@
       const detached=!root.isConnected;
       if (slot && root.parentNode !== slot) slot.appendChild(root);
       if (detached && root.isConnected) {
+        // Cached atlases can finish loading while the stage is off-page.
+        // Restore their real dimensions before showing the retained hero.
+        if(S.heroSheet?.ready&&S.heroSheet.useAsIdle)sizeHeroSheet();
         // Removed stages retain their canvas bitmap but stop scheduling frames.
         // Discard those old effects and resume each living atlas under its owner.
         clearTransientFx();
