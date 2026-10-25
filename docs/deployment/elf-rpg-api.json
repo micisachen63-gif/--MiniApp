@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "d61238bac3604b66b57af0a644bb4ec5c007ec59",
+  "sourceCommit": "3d94be7223cb9b12b96781b1400560da52de8ab8",
   "service": "elf-rpg-api",
-  "productionVersion": "519c5c3d-9b15-4ac8-8de8-66851dc47f13",
+  "productionVersion": "6ff50660-a222-46ee-8399-0bf81c18ed15",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-25T15:03:02.957Z",
+  "verifiedAt": "2026-10-25T15:47:53.610Z",
   "runtimeSHA256": {
-    "index.js": "7ed8b302942ff4a7aa099b99c4020c6c3e8bba4bbc37f240183940ab6f261bc1"
+    "index.js": "1f1dc694113da1d1245d17eb33ca97b7156d14c9cafbd28acda7da1e5414587a"
   },
   "source": {
-    "fileCount": 9481,
-    "sha256": "642f01b3fdf63edb05e03bebadc911a37c0a8a085ae0c9f99253a18594d90386",
+    "fileCount": 9490,
+    "sha256": "041e7eeecef6a5723e9614077504e6a53bfe4ffc39d298b5cdc0150d574c1341",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -368,6 +368,26 @@
       {
         "file": "worker/art-production/star-ring-rank-rewards-20261019/star-ring-core-source.png",
         "sha256": "5e7867cddb1bd499f829bcdc45b77b52dfc16f98acb237c7f9d8057af8717ada"
+      },
+      {
+        "file": "worker/art-production/star-ring-surround-20261025/dawn.png",
+        "sha256": "edf7c94c19d8cc8fda4acb3edc938c5d64b531f87c12397463869c901208a2c7"
+      },
+      {
+        "file": "worker/art-production/star-ring-surround-20261025/eclipse.png",
+        "sha256": "95e947b9fe49b721a5dbdf5d0705926afac373e03575f918a25d30162a51f156"
+      },
+      {
+        "file": "worker/art-production/star-ring-surround-20261025/manifest.json",
+        "sha256": "4edc4a2e70e8c57afd80987ae666ac78d414ebc747b433e990e68bc2f7d74bcc"
+      },
+      {
+        "file": "worker/art-production/star-ring-surround-20261025/moon.png",
+        "sha256": "98d983c5e14758d3da40854020e7b9e5e0218a4058ccb1985eb4f73ecbf0e79b"
+      },
+      {
+        "file": "worker/art-production/star-ring-surround-20261025/prompts.txt",
+        "sha256": "e0ab2a16c6a73c60783e5569c04b8eef8c1446bc1a131542f2e58a5743f88f52"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5-rejected-gutter.png",
@@ -2487,7 +2507,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "71bcddd6a4172ac694656a1396ee5f3bdd9a9d4200ec3daffb57d89afe2f20e6"
+        "sha256": "8b5e1d783f368ac1270f82cb3e76c2ae9bed0c0199a50e54d3f739ee134bd7ea"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -29138,6 +29158,18 @@
         "sha256": "a74f45686c9cab463cf59bb2bc7f5f75ddeb3b54f58607682785635a0e3b227e"
       },
       {
+        "file": "worker/public/art/star-ring-surround-20261025/surround-dawn.webp",
+        "sha256": "d46066edeac43c6f22ad6382afeaf828e1ab97ec0acd778457db34004db1041b"
+      },
+      {
+        "file": "worker/public/art/star-ring-surround-20261025/surround-eclipse.webp",
+        "sha256": "3cbc74f9e051db65aef166dab3eb4cfc3bef8abccff78913344b08d4a88b8590"
+      },
+      {
+        "file": "worker/public/art/star-ring-surround-20261025/surround-moon.webp",
+        "sha256": "1734d883c3f4e609a3d604d4deb492086ec15dde374f1390c6ec2837024fbf15"
+      },
+      {
         "file": "worker/public/art/sword-adv1-clean-20261011/hero_adv1_sword_A_f.png",
         "sha256": "cd1e01cadbc23efed187643fcf999c988df2cf1091e4b3c65864a10d6057ed1a"
       },
@@ -35339,7 +35371,7 @@
       },
       {
         "file": "worker/public/battle.js",
-        "sha256": "181d475a1ed39c7dae74d96d77e091f105f9d20b44afd863438b8bd41297da57"
+        "sha256": "fa7271c592f54556f6af8ff3e814980402d715a2b4318fe2b823a85b141223cc"
       },
       {
         "file": "worker/public/battle.js.backup-20261010-elf-motion-2",
@@ -35459,7 +35491,7 @@
       },
       {
         "file": "worker/public/expedition-entry.js",
-        "sha256": "c8b784234f0ed6af36ee2eede3adabc493e2904d43c6d24b1a0f78dea0242063"
+        "sha256": "f4f0931f2fd7c951f2724f1da88aaf1fbd9502dc6be1af82981c34aaad557546"
       },
       {
         "file": "worker/public/expedition/asset-manifest.json",
@@ -36039,7 +36071,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "7cf794e386088fa90e1cf2ae8941f3c82263d5dceb06696ee39abc6c7b891284"
+        "sha256": "53250e864bf1005904422a478ad0542c1a96e966d5f7e41563e460c9f57df20f"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -36835,7 +36867,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "fe48d76814d20b5baf1725438220476f76d13d918a45b9528738b411e655c8e2"
+        "sha256": "67c5e14a3a7f40c875b4f2cc36814c8aed82f38ea659654ce0a54450a49b670c"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37059,15 +37091,19 @@
       },
       {
         "file": "worker/public/preview-star-ring-cosmetics.html",
-        "sha256": "b8c2405e6f9a7c4f74a1f43af3ff1e2c147d272c95ae6f2e0a105b25c6858745"
+        "sha256": "d07d3515abd8c71c78bbca0c5e261f5520edd238d87afca75ed59881e0e80636"
       },
       {
         "file": "worker/public/preview-star-ring-equipment.html",
         "sha256": "f041699a988bd4582a708fefd7b384476cec3cc3609964710ddfd29da3eb8f01"
       },
       {
+        "file": "worker/public/preview-star-ring-surround.html",
+        "sha256": "371654614be5a84f7043e22cb1e67afbd2eed2ff91664ce113ab86ead5c6d56f"
+      },
+      {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "9127ec943776b4c5638ec7f590874f2c2d16ba52728c3abc79dbcafd2a45d7e7"
+        "sha256": "eb521098923ada85ab8330ccc0a60d92b6e1c936d9249617b513fe8b72245102"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -37099,11 +37135,11 @@
       },
       {
         "file": "worker/public/star-ring-cosmetics.css",
-        "sha256": "f81dfea4f9a760f697dc91bba294e2066444a91b09e28794b3657d28137a8555"
+        "sha256": "2f4a9c31b124b8cccde67561ad25fc827dcfedfbc529580d01097a7f739c2138"
       },
       {
         "file": "worker/public/star-ring-cosmetics.js",
-        "sha256": "6459f238299e58ef528d404f18b8d1e5172860091196387f3960dc0f4ae1211e"
+        "sha256": "e073294813d6dda3d20d1d1fba226284bfcfd3dfb85c2472ca1ede935b52d627"
       },
       {
         "file": "worker/public/star-ring-gear-art.js",
@@ -37715,7 +37751,7 @@
       },
       {
         "file": "worker/src/game/star-ring-cosmetics.js",
-        "sha256": "01a28be90c230e46ac75550fedb209b55615091ce56bedcd5189acd07bc017dd"
+        "sha256": "c3a14bf1a8704beaa29c4559b1c24f8d1a92599be3163db4a05b7ef53407ea66"
       },
       {
         "file": "worker/src/game/star-ring-gear.js",
@@ -37941,15 +37977,18 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 151,
+    "verifiedCount": 155,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
       "worker/public/armory-specializations.js",
       "worker/public/art.js",
       "worker/public/art/blessed-announcement-20261014/armor.png",
-      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_legendary.jpg",
-      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B2_f.webp",
+      "worker/public/art/cards/equipment-20261011/gear_boots_elysium_plate_relic.jpg",
+      "worker/public/art/elf-adv2-magic-20261013/hero_adv2_archer_B2_f_portrait.png",
+      "worker/public/art/star-ring-surround-20261025/surround-dawn.webp",
+      "worker/public/art/star-ring-surround-20261025/surround-eclipse.webp",
+      "worker/public/art/star-ring-surround-20261025/surround-moon.webp",
       "worker/public/art/sword-adv4-magic-20261013/hero_adv4_sword_A212_m_attack.webp",
       "worker/public/auto-reroll-ui.js",
       "worker/public/background-workshop.css",
@@ -38067,6 +38106,7 @@
       "worker/public/preview-skill-fx.html",
       "worker/public/preview-star-ring-cosmetics.html",
       "worker/public/preview-star-ring-equipment.html",
+      "worker/public/preview-star-ring-surround.html",
       "worker/public/preview-star-ring.html",
       "worker/public/preview-sword-adv2.html",
       "worker/public/preview-sword-adv3.html",
@@ -38099,7 +38139,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "519c5c3d-9b15-4ac8-8de8-66851dc47f13",
+        "version_id": "6ff50660-a222-46ee-8399-0bf81c18ed15",
         "percentage": 100
       }
     ],
