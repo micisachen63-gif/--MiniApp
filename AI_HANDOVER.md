@@ -1,3 +1,5 @@
+2026-10-25 光環跨畫面顯示：共用alpha腳底定位跟隨圖片load／尺寸／正規化，掛機依真戰報高度留地面並重算背景載入atlas；打寶爬塔圖層、自他英雄武裝、殿堂實際圖騰及防重／清理，遠征衣櫥即時讀回外觀。5新UI回歸＋390／1280px四職真API全畫面與三外觀穿卸驗收，衣櫥兌換／丟回覆同收據也重跑。讀docs/AURA_VISIBILITY_FIX_20261025.txt；僅Worker靜態前端，無migration／數值／快照／BOT改動，正式版本看deployment-records。
+
 2026-10-25 衣櫥兌換無反應：preview paint誤用未定義scene，已快取圖重畫在try外拋錯導致busy永久卡住。改用原衣櫥幾何、重畫入try保證復原，戰場contain保留；主頁／iframe／示意頁快取版本更新。3新UI回歸＋25集中測試，390／1280px原碼重現與修後真API83→23解鎖一次、穿戴／卸下；丟失成功回覆同ID重試不多扣。讀docs/WARDROBE_REDEMPTION_FIX_20261025.txt；僅Worker、無migration／補發／價格改動，正式版本看deployment-records。
 
 2026-10-21 組隊體力阻擋顯示：party/get成員帶stamina完整投影，readyAt沿原6分鐘anchor算到20門檻、不重算等待；隊員體力數字／按鈕旁不足名單、缺額、恢復時間及招募先到期提醒，出發／續刷鍵明示原因；現有輪詢恢復後才啟用。5新測試＋390／1280px真API隔離測試含全準備19點、自動輪詢回20、真出發只扣一次及真通關後低體力續刷提示。規則、恢復速率、扣除、獎勵皆不改。讀docs/PARTY_STAMINA_UI_20261021.txt；僅Worker無migration／BOT，正式狀態看deployment-records。

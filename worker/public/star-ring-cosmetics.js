@@ -5,6 +5,31 @@
  const key=a=>IDS.includes(typeof a==='string'?a:a?.id)?(typeof a==='string'?a:a.id).replace('star_ring_aura_',''):null;
  const art=a=>key(a)?ROOT+'aura-'+key(a)+'.webp':null;
  const icon=a=>key(a)?ROOT+'icon-'+key(a)+'.webp':null;
+ const silhouetteCache=new Map();
+ async function silhouette(image){
+  const src=image.currentSrc||image.src;if(!src||!image.naturalWidth||!globalThis.document?.createElement)return null;
+  if(!silhouetteCache.has(src))silhouetteCache.set(src,(async()=>{
+   const canvas=document.createElement('canvas'),w=256,h=Math.max(1,Math.round(w*image.naturalHeight/image.naturalWidth));canvas.width=w;canvas.height=h;
+   const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.drawImage(image,0,0,w,h);const data=ctx.getImageData(0,0,w,h).data;
+   let left=w,top=h,right=-1,bottom=-1;for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(data[(y*w+x)*4+3]>8){left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
+   if(right<=left||bottom<=top)return null;
+   let footLeft=w,footRight=-1;for(let y=Math.floor(bottom-(bottom-top)*.1);y<=bottom;y++)for(let x=left;x<=right;x++)if(data[(y*w+x)*4+3]>8){footLeft=Math.min(footLeft,x);footRight=Math.max(footRight,x);}
+   return {left:left/w,right:(right+1)/w,top:top/h,bottom:(bottom+1)/h,footX:footRight>=footLeft?(footLeft+footRight+1)/2/w:(left+right+1)/2/w};
+  })().catch(()=>null));
+  return silhouetteCache.get(src);
+ }
+ // Portrait normalization happens after load. Follow its real size and crop,
+ // rather than preserving coordinates measured before attachment or alpha fit.
+ function follow(node,image,holder,options={}){
+  let stopped=false,frame=null,bounds=null,src='';
+  const sync=()=>{frame=null;if(!stopped&&node.isConnected&&image.isConnected&&holder.isConnected)position(node,image,holder,{...options,bounds});};
+  const schedule=()=>{if(!stopped&&frame==null)frame=requestAnimationFrame(sync);};
+  const load=()=>{const current=image.currentSrc||image.src;src=current;bounds=null;schedule();void silhouette(image).then(value=>{if(!stopped&&src===current){bounds=value;schedule();}});};
+  image.addEventListener('load',load);
+  const resize=typeof ResizeObserver==='function'?new ResizeObserver(schedule):null;resize?.observe(image);if(holder!==image)resize?.observe(holder);
+  const changes=typeof MutationObserver==='function'?new MutationObserver(()=>{if(src!==(image.currentSrc||image.src))load();else schedule();}):null;changes?.observe(image,{attributes:true,attributeFilter:['src','style','class']});
+  load();const stop=()=>{stopped=true;if(frame!=null)cancelAnimationFrame(frame);image.removeEventListener('load',load);resize?.disconnect();changes?.disconnect();};stop.refresh=schedule;return stop;
+ }
  const safeHero=url=>typeof url==='string'&&/^\/?art\/[a-zA-Z0-9_./?=&%-]+$/.test(url)&&!url.includes('..')?url:null;
  function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="background-image:url('+p+')"></span>':'';}
  // Each equipment kind resolves through the shared class/slot collection map.
@@ -30,12 +55,12 @@
   root.addEventListener('click',click);paint();if(autoload)void run();return ()=>{disposed=true;epoch++;root.removeEventListener('click',click);};
  }
  // Fit a foot-ring to the rendered image, rather than its tall object-fit box.
- function placement(image,container,{contain=false,maxWidthRatio=null,maxHeightRatio=null}={}){const r=image.getBoundingClientRect(),c=container.getBoundingClientRect(),ratio=image.naturalWidth/image.naturalHeight;if(!Number.isFinite(ratio)||!ratio)return null;const w=Math.min(r.width,r.height*ratio),h=w/ratio;const pos=String(globalThis.getComputedStyle?.(image)?.objectPosition||'50% 100%').split(/\s+/),fraction=(v,fallback)=>v==='left'||v==='top'?0:v==='right'||v==='bottom'?1:v==='center'?.5:/^-?[\d.]+%$/.test(v)?Number.parseFloat(v)/100:fallback;const p={left:r.left-c.left+(r.width-w)*fraction(pos[0],.5)+w/2,top:r.top-c.top+(r.height-h)*fraction(pos[1],1)+h*.94,width:w*1.2,height:w*.6};if(maxWidthRatio>0&&c.width>0||maxHeightRatio>0&&c.height>0){const scale=Math.min(1,maxWidthRatio>0?c.width*maxWidthRatio/p.width:1,maxHeightRatio>0?c.height*maxHeightRatio/p.height:1);p.width*=scale;p.height*=scale;}if(contain&&c.width>0&&c.height>0){const margin=4,scale=Math.min(1,Math.max(1,c.width-margin*2)/p.width,Math.max(1,c.height-margin*2)/p.height);p.width*=scale;p.height*=scale;p.left=Math.max(margin+p.width/2,Math.min(c.width-margin-p.width/2,p.left));p.top=Math.max(margin+p.height/2,Math.min(c.height-margin-p.height/2,p.top));}return p;}
+ function placement(image,container,{contain=false,maxWidthRatio=null,maxHeightRatio=null,bounds=null}={}){const r=image.getBoundingClientRect(),c=container.getBoundingClientRect(),ratio=image.naturalWidth/image.naturalHeight;if(!Number.isFinite(ratio)||!ratio)return null;const w=Math.min(r.width,r.height*ratio),h=w/ratio;const pos=String(globalThis.getComputedStyle?.(image)?.objectPosition||'50% 100%').split(/\s+/),fraction=(v,fallback)=>v==='left'||v==='top'?0:v==='right'||v==='bottom'?1:v==='center'?.5:/^-?[\d.]+%$/.test(v)?Number.parseFloat(v)/100:fallback;const p={left:r.left-c.left+(r.width-w)*fraction(pos[0],.5)+w/2,top:r.top-c.top+(r.height-h)*fraction(pos[1],1)+h*.94,width:w*1.2,height:w*.6};if(bounds){const fit=globalThis.getComputedStyle?.(image)?.objectFit;if(fit==='fill'){p.left=r.left-c.left+r.width*bounds.footX;p.top=r.top-c.top+r.height*bounds.bottom;p.width=r.width*(bounds.right-bounds.left)*1.2;}else{p.left=r.left-c.left+(r.width-w)*fraction(pos[0],.5)+w*bounds.footX;p.top=r.top-c.top+(r.height-h)*fraction(pos[1],1)+h*bounds.bottom;p.width=w*(bounds.right-bounds.left)*1.2;}p.height=p.width*.5;}if(maxWidthRatio>0&&c.width>0||maxHeightRatio>0&&c.height>0){const scale=Math.min(1,maxWidthRatio>0?c.width*maxWidthRatio/p.width:1,maxHeightRatio>0?c.height*maxHeightRatio/p.height:1);p.width*=scale;p.height*=scale;}if(contain&&c.width>0&&c.height>0){const margin=4,scale=Math.min(1,Math.max(1,c.width-margin*2)/p.width,Math.max(1,c.height-margin*2)/p.height);p.width*=scale;p.height*=scale;p.left=Math.max(margin+p.width/2,Math.min(c.width-margin-p.width/2,p.left));p.top=Math.max(margin+p.height/2,Math.min(c.height-margin-p.height/2,p.top));}return p;}
  function position(node,image,container,options){const p=placement(image,container,options);if(!p)return;Object.assign(node.style,{left:p.left+'px',top:p.top+'px',width:p.width+'px',height:p.height+'px',bottom:'auto',transform:'translate(-50%,-50%)'});}
  function mountActors(scene,members,selector='.scene-hero'){
   if(!scene)return ()=>{};const fields=[];let disposed=false;
-  for(const member of members||[]){if(!key(member.aura))continue;const actor=[...scene.querySelectorAll(selector)].find(n=>String(n.dataset.memberId)===String(member.id));const image=actor?.matches?.('img')?actor:actor?.querySelector('img');if(!image)continue;const holder=actor.matches('img')?scene:actor;holder.insertAdjacentHTML('beforeend',markup(member.aura,'scene-cosmetic-aura'));const node=holder.lastElementChild;const sync=()=>{if(!disposed&&node.isConnected)position(node,image,holder,{contain:holder===scene});};image.addEventListener('load',sync);fields.push({node,image,sync});sync();}
-  const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(()=>fields.forEach(f=>f.sync())):null;observer?.observe(scene);return ()=>{disposed=true;observer?.disconnect();for(const f of fields){f.image.removeEventListener('load',f.sync);f.node.remove();}};
+  for(const member of members||[]){if(!key(member.aura))continue;const actor=[...scene.querySelectorAll(selector)].find(n=>String(n.dataset.memberId)===String(member.id));const image=actor?.matches?.('img')?actor:actor?.querySelector('img');if(!image)continue;const holder=actor.matches('img')?scene:actor;let node=holder.querySelector(':scope > .star-ring-aura[data-cosmetic-aura="'+(typeof member.aura==='string'?member.aura:member.aura.id)+'"]');if(!node){holder.insertAdjacentHTML('beforeend',markup(member.aura,'scene-cosmetic-aura'));node=holder.lastElementChild;}const stop=follow(node,image,holder,{contain:holder===scene});fields.push({node,stop});}
+  const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(()=>fields.forEach(f=>f.stop.refresh())):null;observer?.observe(scene);return ()=>{if(disposed)return;disposed=true;observer?.disconnect();for(const f of fields){f.stop();f.node.remove();}};
  }
- globalThis.RpgStarRingCosmetics=Object.freeze({mountActors,ids:IDS,key,art,icon,markup,gearArt,itemArt,render:view,mount,placement,position});
+ globalThis.RpgStarRingCosmetics=Object.freeze({mountActors,ids:IDS,key,art,icon,markup,gearArt,itemArt,render:view,mount,placement,position,follow});
 })();
