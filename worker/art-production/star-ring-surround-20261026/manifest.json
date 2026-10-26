@@ -1,0 +1,49 @@
+{
+  "generator": "built-in image_gen",
+  "transparent": true,
+  "prompts": "prompts.json",
+  "assets": [
+    {
+      "file": "surround-dawn.webp",
+      "width": 384,
+      "height": 576,
+      "bytes": 126084,
+      "sha256": "3b61d1abe37886da5a0d12d279ea7831b6068f8a97dd9822c63b61bdcadaed94",
+      "sourceSHA256": "de57d6c5676c096a3228181b2abd6b6c678692ab8b3e3f9e86361cbfc1056ab1",
+      "alphaZero": 56156,
+      "clearPixels": 108507,
+      "softAlpha": 165028,
+      "edgeAlpha": 13,
+      "faceAlphaMax": 1,
+      "faceAlphaMean": 0.20113770526993668
+    },
+    {
+      "file": "surround-eclipse.webp",
+      "width": 384,
+      "height": 576,
+      "bytes": 134768,
+      "sha256": "5b5f332dbbf7479d7f8029ab5ae2a57891b05898a9d4d597555650f8039aaa8f",
+      "sourceSHA256": "4ff5ba0b9fa4fd90835f9c471512f6a528187adac6cda2c5ac0d0c48972d7e6c",
+      "alphaZero": 79951,
+      "clearPixels": 113748,
+      "softAlpha": 141001,
+      "edgeAlpha": 4,
+      "faceAlphaMax": 1,
+      "faceAlphaMean": 0.041536975421272944
+    },
+    {
+      "file": "surround-moon.webp",
+      "width": 384,
+      "height": 576,
+      "bytes": 124822,
+      "sha256": "e92fefbed7d39e21035d7277497fcc849b3e434a1fcf5611f04d62dea61ed4ac",
+      "sourceSHA256": "7a31f64c9129a531888e1f8a5b6d9fb2ddd6b338803e2d75f04f61c7c48cbcde",
+      "alphaZero": 77075,
+      "clearPixels": 109672,
+      "softAlpha": 143960,
+      "edgeAlpha": 21,
+      "faceAlphaMax": 2,
+      "faceAlphaMean": 0.14146184394118277
+    }
+  ]
+}
