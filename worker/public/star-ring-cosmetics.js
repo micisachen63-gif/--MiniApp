@@ -3,7 +3,7 @@
  const ROOT='/art/star-ring-rewards-20261018/',IDS=['star_ring_aura_dawn','star_ring_aura_moon','star_ring_aura_eclipse'];
  const esc=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const key=a=>IDS.includes(typeof a==='string'?a:a?.id)?(typeof a==='string'?a:a.id).replace('star_ring_aura_',''):null;
- const art=a=>key(a)?'/art/star-ring-surround-20261025/surround-'+key(a)+'.webp':null;
+ const art=a=>key(a)?'/art/star-ring-surround-20261026/surround-'+key(a)+'.webp':null;
  const icon=a=>key(a)?ROOT+'icon-'+key(a)+'.webp':null;
  const silhouetteCache=new Map();
  async function silhouette(image){
@@ -32,7 +32,7 @@
   load();const stop=()=>{stopped=true;if(frame!=null)cancelAnimationFrame(frame);image.removeEventListener('load',load);globalThis.document?.removeEventListener?.('visibilitychange',visibility);resize?.disconnect();changes?.disconnect();};stop.refresh=schedule;return stop;
  }
  const safeHero=url=>typeof url==='string'&&/^\/?art\/[a-zA-Z0-9_./?=&%-]+$/.test(url)&&!url.includes('..')?url:null;
- function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="--sr-surround-art:url('+p+')"><span class="sr-aura-rear"></span><span class="sr-aura-front"></span><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i></span>':'';}
+ function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="--sr-surround-art:url('+p+')"><span class="sr-aura-rear"></span><span class="sr-aura-front"></span><span class="sr-aura-lustre"></span><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i></span>':'';}
  // Each equipment kind resolves through the shared class/slot collection map.
  function gearArt(e){return globalThis.RpgStarRingGearArt?.gearArt(e)||null;}
  function itemArt(id){if(id==='star_ring_core')return '/art/star-ring-rank-rewards-20261019/star-ring-core.webp';if(/^guaranteed_scroll_[wa]$/.test(id))return '/art/items-scrolls-pink-20261018/'+id+'.webp';if(id==='star_ring_token')return '/art/star-ring-20261018/star_ring_token.webp';if(IDS.includes(id))return icon(id);if(['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a'].includes(id))return '/art/items-scrolls-cutout-20261011/'+id+'.webp';return null;}
@@ -70,7 +70,7 @@
   if(contain&&c.width>0&&c.height>0){p.left=Math.max(4+p.width/2,Math.min(c.width-4-p.width/2,p.left));p.top=Math.max(4+p.height/2,Math.min(c.height-4-p.height/2,p.top));}
   return p;
  }
- function position(node,image,container,options){const p=placement(image,container,options);if(!p)return;Object.assign(node.style,{left:(p.left-p.width/2)+'px',top:(p.top-p.height/2)+'px',width:p.width+'px',height:p.height+'px',bottom:'auto',transform:'none'});node.style.setProperty?.('--sr-effect-height',p.height+'px');}
+ function position(node,image,container,options){const p=placement(image,container,options);if(!p)return;Object.assign(node.style,{left:(p.left-p.width/2)+'px',top:(p.top-p.height/2)+'px',width:p.width+'px',height:p.height+'px',bottom:'auto',transform:'none'});node.style.setProperty?.('--sr-effect-height',p.height+'px');node.style.setProperty?.('--sr-lower-path',`ellipse(${p.width*.43}px ${p.height*.14}px at ${p.width*.5}px ${p.height*.66}px)`);node.style.setProperty?.('--sr-upper-path',`ellipse(${p.width*.4}px ${p.height*.1}px at ${p.width*.5}px ${p.height*.47}px)`);}
  function mountActors(scene,members,selector='.scene-hero'){
   if(!scene)return ()=>{};const fields=[];let disposed=false;
   for(const member of members||[]){if(!key(member.aura))continue;const actor=[...scene.querySelectorAll(selector)].find(n=>String(n.dataset.memberId)===String(member.id));const image=actor?.matches?.('img')?actor:actor?.querySelector('img');if(!image)continue;const holder=actor.matches('img')?scene:actor;let node=holder.querySelector(':scope > .star-ring-aura[data-cosmetic-aura="'+(typeof member.aura==='string'?member.aura:member.aura.id)+'"]');if(!node){holder.insertAdjacentHTML('beforeend',markup(member.aura,'scene-cosmetic-aura'));node=holder.lastElementChild;}const stop=follow(node,image,holder,{contain:holder===scene,phaseKey:member.id});fields.push({node,stop});}
