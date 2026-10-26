@@ -1,3 +1,5 @@
+2026-10-26 環身特效移出人物：撤前景光帶，原透明圖等比例左右面板向身側分離／內緣漸隱，光流掃光與星點全部低於人物；五人遠征與短隊共用低場景層，避免蓋隊友。248造型×3×8×2=11904檢查，四職真API全畫面與五人穿戴；48組開關特效比較1033593近不透明人物像素，無超透明度容許範圍覆蓋。讀docs/SURROUND_OUTSIDE_BODY_20261026.txt；快取perimeter1，僅Worker呈現，無數值／權益／migration／BOT。正式版本看deployment-records。
+
 2026-10-26 環身特效華麗度：內建imagegen三款新版金羽／月牙晶光／紫金碎晶，透明WebP合計386KB；前後分層加掃光、六顆雙軌反向彗星、多人亮度與錯峰保留。非同步縮放後軌跡以即時像素尺寸更新，防沿舊框跑。248造型×3×8完整週期×2版型=11904檢查，四職真API全流程含五人同時穿外觀；原ID／擁有權／價格／戰力不改。讀docs/SURROUND_LUXURY_20261026.txt，原圖／完整提示／QA在worker/art-production/star-ring-surround-20261026；僅Worker無migration／BOT，正式版本看deployment-records。
 
 2026-10-25 星環外觀重製：依使用者改環身光流，內建imagegen三款透明新圖，前後景遮罩／星點軌跡／穩定錯峰，依可見身高等比定位與框內裁切；撤足下盤及掛機上移，不轉動整張bitmap。248造型×3主題×8時點×2版型=11904檢查＋四職真API全畫面；隱藏暫停、reduced-motion、男女／手機與動態預覽。讀docs/SURROUND_AURA_ART_20261025.txt；/preview-star-ring-surround.html；原圖／提示／QA在worker/art-production/star-ring-surround-20261025。既有IDs／擁有權／價格／戰力不改，僅Worker無migration／BOT，正式版本看deployment-records。

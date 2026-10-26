@@ -10,9 +10,9 @@ function fixture(document){
  vm.runInContext(source,ctx);let rect={left:40,top:20,width:100,height:200};const listeners=new Map(),image={isConnected:true,src:'',naturalWidth:100,naturalHeight:200,getBoundingClientRect:()=>rect,addEventListener:(e,fn)=>listeners.set(e,fn),removeEventListener:e=>listeners.delete(e)},holder={isConnected:true,getBoundingClientRect:()=>({left:0,top:0,width:400,height:400})},node={isConnected:true,style:{}};
  return {ui:ctx.RpgStarRingCosmetics,ctx,image,holder,node,listeners,resizes,changes,frames,setRect:r=>rect=r,tick:()=>{const pending=[...frames.values()];frames.clear();pending.forEach(fn=>fn());}};
 }
-test('visible-body surround uses asymmetric body center, normalized fill and a fixed portrait aspect',()=>{
- const f=fixture(),bounds={left:.2,right:.8,top:.1,bottom:.9,footX:.6};let p=f.ui.placement(f.image,f.holder,{bounds,contain:false});assert.equal(p.left,96.5);assert.equal(p.top,120);assert.ok(Math.abs(p.height-166.4)<1e-8);assert.ok(Math.abs(p.width/p.height-2/3)<1e-9);
- f.image.fit='fill';f.setRect({left:50,top:10,width:200,height:300});p=f.ui.placement(f.image,f.holder,{bounds,contain:false});assert.equal(p.left,163);assert.equal(p.top,160);assert.ok(Math.abs(p.height-249.6)<1e-8);
+test('visible-body surround uses asymmetric body center, normalized fill and an expanded surrounding field',()=>{
+ const f=fixture(),bounds={left:.2,right:.8,top:.1,bottom:.9,footX:.6};let p=f.ui.placement(f.image,f.holder,{bounds,contain:false});assert.equal(p.left,96.5);assert.equal(p.top,120);assert.ok(Math.abs(p.height-176)<1e-8);assert.ok(p.width/p.height>=.78&&p.width/p.height<=1.05);
+ f.image.fit='fill';f.setRect({left:50,top:10,width:200,height:300});p=f.ui.placement(f.image,f.holder,{bounds,contain:false});assert.equal(p.left,163);assert.equal(p.top,160);assert.ok(Math.abs(p.height-264)<1e-8);
  f.image.fit='contain';f.setRect({left:0,top:0,width:300,height:200});f.image.objectPosition='left bottom';p=f.ui.placement(f.image,f.holder,{bounds,contain:false});assert.ok(Math.abs(p.left-56.5)<1e-9);assert.equal(p.top,100);
 });
 const center=node=>({x:parseFloat(node.style.left)+parseFloat(node.style.width)/2,y:parseFloat(node.style.top)+parseFloat(node.style.height)/2});
@@ -31,6 +31,12 @@ test('surround pauses on hidden pages, resumes on return and releases its visibi
 test('hall actor mounting reuses rendered aura and cleans up exactly once without duplicate graphics',()=>{
  const f=fixture();let inserts=0,removed=0;f.node.remove=()=>removed++;const actor={...f.holder,dataset:{memberId:'hero1'},matches:()=>false,querySelector:s=>s==='img'?f.image:f.node,insertAdjacentHTML:()=>inserts++},scene={...f.holder,querySelectorAll:()=>[actor]};
  const stop=f.ui.mountActors(scene,[{id:'hero1',aura:{id:'star_ring_aura_dawn'}}],'.hall-portrait');f.tick();assert.equal(inserts,0);assert.equal(center(f.node).x,90);stop();stop();assert.equal(removed,1);assert.ok(f.resizes.every(x=>x.closed));assert.ok(f.changes.every(x=>x.closed));
+});
+test('party effects use the shared scene plane instead of a teammate stacking context',()=>{
+ const f=fixture();f.node.dataset={cosmeticMember:'hero1'};f.node.remove=()=>{};let actorAuraQueries=0;
+ const actor={dataset:{memberId:'hero1'},matches:()=>false,querySelector:s=>{if(s==='img')return f.image;actorAuraQueries++;return null;},getBoundingClientRect:()=>({left:100,top:80,width:140,height:220})};
+ const scene={...f.holder,matches:()=>true,querySelectorAll:s=>s==='.sr-hero'?[actor]:[f.node]};
+ const stop=f.ui.mountActors(scene,[{id:'hero1',aura:{id:'star_ring_aura_dawn'}}],'.sr-hero');f.tick();assert.equal(actorAuraQueries,0);assert.equal(center(f.node).x,90);assert.equal(f.node.dataset.cosmeticMember,'hero1');stop();
 });
 test('hero hall renders the actual aura inside the existing normalized portrait slot',()=>{
  const f=fixture();f.ctx.window={RpgStarRingCosmetics:f.ui};vm.runInContext(readFileSync(new URL('../public/hero-hall-ui.js',import.meta.url),'utf8'),f.ctx);const heroes=[{id:'1',name:'旅人',level:80,power:100,baseClass:'sword',aura:{id:'star_ring_aura_moon',name:'月潮星紋'}},{id:'2',name:'旅人二',level:70,power:90,baseClass:'mage',aura:null}];

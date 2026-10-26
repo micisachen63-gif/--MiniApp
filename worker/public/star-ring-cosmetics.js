@@ -32,7 +32,7 @@
   load();const stop=()=>{stopped=true;if(frame!=null)cancelAnimationFrame(frame);image.removeEventListener('load',load);globalThis.document?.removeEventListener?.('visibilitychange',visibility);resize?.disconnect();changes?.disconnect();};stop.refresh=schedule;return stop;
  }
  const safeHero=url=>typeof url==='string'&&/^\/?art\/[a-zA-Z0-9_./?=&%-]+$/.test(url)&&!url.includes('..')?url:null;
- function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="--sr-surround-art:url('+p+')"><span class="sr-aura-rear"></span><span class="sr-aura-front"></span><span class="sr-aura-lustre"></span><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i></span>':'';}
+ function markup(a,extra=''){const p=art(a);return p?'<span class="star-ring-aura '+esc(extra)+'" data-cosmetic-aura="'+esc(typeof a==='string'?a:a.id)+'" aria-hidden="true" style="--sr-surround-art:url('+p+')"><span class="sr-aura-rear"></span><span class="sr-aura-lustre"></span><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i><i class="sr-aura-mote"></i></span>':'';}
  // Each equipment kind resolves through the shared class/slot collection map.
  function gearArt(e){return globalThis.RpgStarRingGearArt?.gearArt(e)||null;}
  function itemArt(id){if(id==='star_ring_core')return '/art/star-ring-rank-rewards-20261019/star-ring-core.webp';if(/^guaranteed_scroll_[wa]$/.test(id))return '/art/items-scrolls-pink-20261018/'+id+'.webp';if(id==='star_ring_token')return '/art/star-ring-20261018/star_ring_token.webp';if(IDS.includes(id))return icon(id);if(['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a'].includes(id))return '/art/items-scrolls-cutout-20261011/'+id+'.webp';return null;}
@@ -63,8 +63,8 @@
   const style=globalThis.getComputedStyle?.(image),fill=style?.objectFit==='fill',w=fill?r.width:Math.min(r.width,r.height*ratio),h=fill?r.height:w/ratio;
   const pos=String(style?.objectPosition||'50% 100%').split(/\s+/),fraction=(v,fallback)=>v==='left'||v==='top'?0:v==='right'||v==='bottom'?1:v==='center'?.5:/^-?[\d.]+%$/.test(v)?Number.parseFloat(v)/100:fallback;
   const x=r.left-c.left+(r.width-w)*fraction(pos[0],.5),y=r.top-c.top+(r.height-h)*fraction(pos[1],1),b=bounds||{left:0,right:1,top:0,bottom:1,footX:.5};
-  const bodyHeight=h*(b.bottom-b.top),height=bodyHeight*1.04,center=(b.left+b.right)/2;
-  const p={left:x+w*(b.footX*.65+center*.35),top:y+h*(b.top+b.bottom)/2,width:height*2/3,height};
+  const bodyHeight=h*(b.bottom-b.top),bodyWidth=w*(b.right-b.left),height=bodyHeight*1.1,center=(b.left+b.right)/2;
+  const p={left:x+w*(b.footX*.65+center*.35),top:y+h*(b.top+b.bottom)/2,width:Math.max(height*.78,Math.min(bodyWidth*1.2,height*1.05)),height};
   const scale=Math.min(1,maxWidthRatio>0&&c.width>0?c.width*maxWidthRatio/p.width:1,maxHeightRatio>0&&c.height>0?c.height*maxHeightRatio/p.height:1,contain&&c.width>0?Math.max(1,c.width-8)/p.width:1,contain&&c.height>0?Math.max(1,c.height-8)/p.height:1);
   p.width*=scale;p.height*=scale;
   if(contain&&c.width>0&&c.height>0){p.left=Math.max(4+p.width/2,Math.min(c.width-4-p.width/2,p.left));p.top=Math.max(4+p.height/2,Math.min(c.height-4-p.height/2,p.top));}
@@ -73,7 +73,16 @@
  function position(node,image,container,options){const p=placement(image,container,options);if(!p)return;Object.assign(node.style,{left:(p.left-p.width/2)+'px',top:(p.top-p.height/2)+'px',width:p.width+'px',height:p.height+'px',bottom:'auto',transform:'none'});node.style.setProperty?.('--sr-effect-height',p.height+'px');node.style.setProperty?.('--sr-lower-path',`ellipse(${p.width*.43}px ${p.height*.14}px at ${p.width*.5}px ${p.height*.66}px)`);node.style.setProperty?.('--sr-upper-path',`ellipse(${p.width*.4}px ${p.height*.1}px at ${p.width*.5}px ${p.height*.47}px)`);}
  function mountActors(scene,members,selector='.scene-hero'){
   if(!scene)return ()=>{};const fields=[];let disposed=false;
-  for(const member of members||[]){if(!key(member.aura))continue;const actor=[...scene.querySelectorAll(selector)].find(n=>String(n.dataset.memberId)===String(member.id));const image=actor?.matches?.('img')?actor:actor?.querySelector('img');if(!image)continue;const holder=actor.matches('img')?scene:actor;let node=holder.querySelector(':scope > .star-ring-aura[data-cosmetic-aura="'+(typeof member.aura==='string'?member.aura:member.aura.id)+'"]');if(!node){holder.insertAdjacentHTML('beforeend',markup(member.aura,'scene-cosmetic-aura'));node=holder.lastElementChild;}const stop=follow(node,image,holder,{contain:holder===scene,phaseKey:member.id});fields.push({node,stop});}
+  const shared=!!scene.matches?.('.sr-arena,.battle-scene');
+  for(const member of members||[]){
+   if(!key(member.aura))continue;
+   const actor=[...scene.querySelectorAll(selector)].find(n=>String(n.dataset.memberId)===String(member.id)),image=actor?.matches?.('img')?actor:actor?.querySelector('img');if(!image)continue;
+   const holder=shared||actor.matches('img')?scene:actor;
+   let node=shared?[...holder.querySelectorAll(':scope > .star-ring-aura')].find(n=>String(n.dataset.cosmeticMember)===String(member.id)):holder.querySelector(':scope > .star-ring-aura');
+   if(!node){holder.insertAdjacentHTML('beforeend',markup(member.aura,'scene-cosmetic-aura'));node=holder.lastElementChild;}
+   if(node.dataset)node.dataset.cosmeticMember=String(member.id);
+   const stop=follow(node,image,holder,{contain:true,phaseKey:member.id});fields.push({node,stop});
+  }
   const observer=typeof ResizeObserver!=='undefined'?new ResizeObserver(()=>fields.forEach(f=>f.stop.refresh())):null;observer?.observe(scene);return ()=>{if(disposed)return;disposed=true;observer?.disconnect();for(const f of fields){f.stop();f.node.remove();}};
  }
  globalThis.RpgStarRingCosmetics=Object.freeze({mountActors,ids:IDS,key,art,icon,markup,gearArt,itemArt,render:view,mount,placement,position,follow});

@@ -17,18 +17,18 @@ test('network-uncertain purchase deliberately retries with the same receipt and 
 test('late responses after character switch or closed wardrobe cannot repaint or refresh another character',async()=>{for(const mode of ['switch','close']){const s=setup();let actor='1',release,refreshes=0;const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:actor,level:55}}),api:()=>new Promise(r=>release=r),refresh:()=>refreshes++});const old=s.root.innerHTML;if(mode==='switch')actor='2';else stop();release(state());await flush();assert.equal(s.root.innerHTML,old);assert.equal(refreshes,0);stop();}});
 test('surround uses portrait proportions centered on the visible actor, never a foot disc',()=>{
  const {ui}=setup(),container={getBoundingClientRect:()=>({left:10,top:10,width:300,height:300})},image={naturalWidth:100,naturalHeight:200,getBoundingClientRect:()=>({left:20,top:30,width:200,height:200})},p=ui.placement(image,container);
- assert.equal(p.left,110);assert.equal(p.top,120);assert.equal(p.height,208);assert.ok(Math.abs(p.width/p.height-2/3)<1e-9);assert.equal(ui.placement({...image,naturalWidth:0},container),null);
+ assert.equal(p.left,110);assert.equal(p.top,120);assert.ok(Math.abs(p.height-220)<1e-9);assert.ok(p.width/p.height>=.78&&p.width/p.height<=1.05);assert.equal(ui.placement({...image,naturalWidth:0},container),null);
 });
 
 test('portrait and short-party containment keep all surround layers within each stage',()=>{
  const {ui}=setup(),container={getBoundingClientRect:()=>({left:0,top:0,width:180,height:200})},image={naturalWidth:200,naturalHeight:200,getBoundingClientRect:()=>({left:-20,top:30,width:180,height:200})};
- const fitted=ui.placement(image,container,{contain:true});assert.ok(fitted.top+fitted.height/2<=196);assert.ok(fitted.top-fitted.height/2>=4);assert.ok(fitted.left-fitted.width/2>=4);assert.ok(fitted.left+fitted.width/2<=176);assert.ok(Math.abs(fitted.width/fitted.height-2/3)<1e-9);
- const node={style:{}};ui.position(node,image,container,{contain:true});assert.equal(node.style.top,(fitted.top-fitted.height/2)+'px');assert.equal(node.style.transform,'none','front/back children share the portrait stacking context');
+ const fitted=ui.placement(image,container,{contain:true});assert.ok(fitted.top+fitted.height/2<=196);assert.ok(fitted.top-fitted.height/2>=4);assert.ok(fitted.left-fitted.width/2>=4);assert.ok(fitted.left+fitted.width/2<=176);assert.ok(fitted.width/fitted.height>=.78&&fitted.width/fitted.height<=1.05);
+ const node={style:{}};ui.position(node,image,container,{contain:true});assert.equal(node.style.top,(fitted.top-fitted.height/2)+'px');assert.equal(node.style.transform,'none','all effect layers stay below the portrait');
 });
 
 test('wide cloaks and long weapons cannot turn the surround into an oversized horizontal effect',()=>{
  const {ui}=setup(),container={getBoundingClientRect:()=>({left:0,top:0,width:500,height:490})},image={naturalWidth:600,naturalHeight:600,getBoundingClientRect:()=>({left:0,top:0,width:500,height:490})};
- const p=ui.placement(image,container);assert.ok(p.height<=482);assert.ok(p.width<322);assert.ok(Math.abs(p.width/p.height-2/3)<1e-9);assert.ok(p.top+p.height/2<=486);
+ const p=ui.placement(image,container);assert.ok(p.height<=482);assert.ok(p.width<=492);assert.ok(p.width/p.height>=.78&&p.width/p.height<=1.05);assert.ok(p.top+p.height/2<=486);
 });
 
 function previewImage(complete=true){const listeners=new Map(),aura={style:{}},rect=()=>({left:0,top:0,width:250,height:300}),image={complete,isConnected:true,naturalWidth:200,naturalHeight:300,getBoundingClientRect:rect,addEventListener:(event,fn)=>listeners.set(event,fn)},holder={getBoundingClientRect:rect};return {image,aura,holder,listeners};}
