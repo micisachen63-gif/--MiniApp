@@ -1,3 +1,5 @@
+2026-10-27 轉職假提示：gate.canAdvance僅代表等級達標，首頁任務誤寫材料已到手。首頁門檻／現在可以做／傳承紅點統一還要have>=1；缺料顯示等待與實際數量，保留路線預覽與原disabled。四職一至四轉及390／1280真API SQLite完整轉職扣料驗收。讀docs/ADVANCEMENT_READY_PROMPT_20261027.txt；快取advance-ready1，僅Worker前端，無轉職規則／數值／DB／BOT改動。正式狀態看deployment-records。
+
 2026-10-26 環身特效移出人物：撤前景光帶，原透明圖等比例左右面板向身側分離／內緣漸隱，光流掃光與星點全部低於人物；五人遠征與短隊共用低場景層，避免蓋隊友。248造型×3×8×2=11904檢查，四職真API全畫面與五人穿戴；48組開關特效比較1033593近不透明人物像素，無超透明度容許範圍覆蓋。讀docs/SURROUND_OUTSIDE_BODY_20261026.txt；快取perimeter1，僅Worker呈現，無數值／權益／migration／BOT。正式版本看deployment-records。
 
 2026-10-26 環身特效華麗度：內建imagegen三款新版金羽／月牙晶光／紫金碎晶，透明WebP合計386KB；前後分層加掃光、六顆雙軌反向彗星、多人亮度與錯峰保留。非同步縮放後軌跡以即時像素尺寸更新，防沿舊框跑。248造型×3×8完整週期×2版型=11904檢查，四職真API全流程含五人同時穿外觀；原ID／擁有權／價格／戰力不改。讀docs/SURROUND_LUXURY_20261026.txt，原圖／完整提示／QA在worker/art-production/star-ring-surround-20261026；僅Worker無migration／BOT，正式版本看deployment-records。

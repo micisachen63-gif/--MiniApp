@@ -828,6 +828,9 @@
   }
 
   // ---------- header + nav ----------
+  function advancementReady(me) {
+    return !!me?.gate?.canAdvance && Number(me.gate.have) >= 1;
+  }
   function renderHud() {
     const hud = $('#hud'), nav = $('#nav');
     if (!S.me || S.choosing || S.creating) { hud.hidden = true; nav.hidden = true; return; }
@@ -846,7 +849,7 @@
       const titles = { home: '遠征', bag: '英雄', shop: '市集', boss: '神戰', trade: '集會', class: '傳承' };
       const label = b.querySelector('small'); if (label && titles[b.dataset.tab]) label.textContent = titles[b.dataset.tab];
       if (b.dataset.tab === currentTab) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current');
-      b.classList.toggle('dot', (b.dataset.tab === 'boss' && !!(S.me.boss && S.me.boss.status === 'active')) || (b.dataset.tab === 'class' && S.me.gate.canAdvance) || (b.dataset.tab === 'home' && !S.me.daily.claimed));
+      b.classList.toggle('dot', (b.dataset.tab === 'boss' && !!(S.me.boss && S.me.boss.status === 'active')) || (b.dataset.tab === 'class' && advancementReady(S.me)) || (b.dataset.tab === 'home' && !S.me.daily.claimed));
       const bd = S.me.badges || {}; const n = b.dataset.tab === 'trade' ? (bd.requests || 0) + (bd.challenges || 0) + (bd.trades || 0) : 0;
       let cnt = b.querySelector('.nb'); if (n) { if (!cnt) { cnt = document.createElement('b'); cnt.className = 'nb'; b.appendChild(cnt); } cnt.textContent = n > 9 ? '9+' : String(n); } else if (cnt) cnt.remove();
       b.onclick = () => { if (S.tab === b.dataset.tab) return; S.tab = b.dataset.tab;if(S.tab==='trade'&&S.social==='hall'){S.hallClass='all';S.hallPage=1;} haptic('light'); render(); window.scrollTo({ top: 0, behavior: 'instant' }); load(S.tab); };
@@ -880,7 +883,7 @@
     const redName = (S.meta.items[redKey] || {}).name || '紅水', blueName = (S.meta.items[blueKey] || {}).name || '藍水';
     const redTier = (S.me.inventory || {})[redKey] || 0, blueTier = (S.me.inventory || {})[blueKey] || 0;
     const redOther = Math.max(0, red - redTier), blueOther = Math.max(0, blue - blueTier);
-    const g = me.gate; const r = S.lastReport;
+    const g = me.gate, ready = advancementReady(me); const r = S.lastReport;
     const used = r ? Object.entries(r.used || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${fmt(v)}`).join('、') : '';
     const drops = r ? Object.entries(r.drops || {}).map(([k, v]) => `${itemEmoji(k)}${itemName(k)}×${v}`).join('、') : '';
     return `
@@ -896,7 +899,7 @@
     </div></div>
     ${me.pve?.idleVersion===2&&c.level>30&&!window.RpgExpeditionAway?.activity(me)?`<div class="banner"><span class="e">⚔️</span><div><b>中高等狩獵挑戰</b><br>請備足生命藥水；菁英重擊更有威脅，生命自動補水建議設為 50% 以上。</div></div>`:''}
     ${todoHtml()}
-    ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${g.canAdvance ? '可以轉職了！' : '卡在轉職門檻'}</b><br>${esc(g.materialName)}：${g.have} / 1${g.canAdvance ? '' : ' · 擊敗首領取得'}</div><button class="btn sm gold" data-go="class">轉職</button></div>` : ''}
+    ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${ready ? '可以轉職了！' : '等待轉職材料'}</b><br>${esc(g.materialName)}：${g.have} / 1${ready ? '' : ' · 請至傳承查看取得方式'}</div><button class="btn sm gold" data-go="class">查看轉職</button></div>` : ''}
     ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>目前選用的生命藥水已用完</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
     <div class="card"><h3>🧪 補給 <small>自動喝${esc(redName)} ≤ ${c.autoRedPct}%</small></h3>
       <div class="grid2 supply-choices">${potionChoiceHtml('red',redKey,redName,redTier,me.supply.redHours,redOther)}${potionChoiceHtml('blue',blueKey,blueName,blueTier,me.supply.blueHours,blueOther)}</div>
@@ -956,7 +959,7 @@
       out.push({ k: 'collect', ic: '🎁', t: `掛機收穫 💰+${fmt(r.gold_gained)}${dr ? ` ${dr}` : ''}`, s: `${r.ticks >= 120 ? `${Math.round(r.ticks / 6) / 10} 小時` : `${r.ticks} 分鐘`} · 擊殺 ${fmt(r.kills)}${r.elites ? ` · 菁英 ${r.elites}` : ''}`, b: '收下', cls: 'gold' });
     }
     if (!me.daily.claimed) out.push({ k: 'daily', ic: '<img class="daily-coin-icon" src="art/ui/hud-coin-v2.webp" alt="">', t: `每日補給金 ${fmt(me.daily.total)}`, s: me.daily.firstWeek ? '首週 +50%' : '每天 00:00 重置', b: '領取', cls: 'gold' });
-    if (me.gate && me.gate.canAdvance) out.push({ k: 'go:class', ic: '✨', t: '可以轉職了！', s: `${me.gate.materialName} 已到手`, b: '轉職', cls: 'gold' });
+    if (advancementReady(me)) out.push({ k: 'go:class', ic: '✨', t: '可以轉職了！', s: `${me.gate.materialName} 已到手`, b: '轉職', cls: 'gold' });
     const nReq = (bd.requests || 0) + (bd.trades || 0) + (bd.challenges || 0);
     if (nReq) out.push({ k: 'go:trade', ic: '🤝', t: `${nReq} 個交易／決鬥等你回覆`, s: [bd.requests ? `交易請求 ${bd.requests}` : '', bd.trades ? `交易視窗 ${bd.trades}` : '', bd.challenges ? `決鬥 ${bd.challenges}` : ''].filter(Boolean).join(' · '), b: '查看' });
     if (me.refill.cost > 0 && me.supply.redHours < 8) out.push({ k: 'refill', ic: '🧪', t: `水只剩約 ${me.supply.redHours} 小時`, s: `補滿 24h 💰${fmt(me.refill.cost)}`, b: '補水' });
