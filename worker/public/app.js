@@ -829,7 +829,7 @@
 
   // ---------- header + nav ----------
   function advancementReady(me) {
-    return !!me?.gate?.canAdvance && Number(me.gate.have) >= 1;
+    return !!me?.gate?.canAdvance && Number(me.gate.have) >= 1 && !me.character?.partyId;
   }
   function renderHud() {
     const hud = $('#hud'), nav = $('#nav');
@@ -899,7 +899,7 @@
     </div></div>
     ${me.pve?.idleVersion===2&&c.level>30&&!window.RpgExpeditionAway?.activity(me)?`<div class="banner"><span class="e">⚔️</span><div><b>中高等狩獵挑戰</b><br>請備足生命藥水；菁英重擊更有威脅，生命自動補水建議設為 50% 以上。</div></div>`:''}
     ${todoHtml()}
-    ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${ready ? '可以轉職了！' : '等待轉職材料'}</b><br>${esc(g.materialName)}：${g.have} / 1${ready ? '' : ' · 請至傳承查看取得方式'}</div><button class="btn sm gold" data-go="class">查看轉職</button></div>` : ''}
+    ${c.state === 'gate' || g.canAdvance ? `<div class="banner gate"><span class="e">✨</span><div style="flex:1"><b>${ready ? '可以轉職了！' : g.have>=1&&c.partyId ? '組隊中，暫不能轉職' : '等待轉職材料'}</b><br>${esc(g.materialName)}：${g.have} / 1${ready ? '' : c.partyId ? ' · 請先結束組隊，再前往轉職' : ' · 請至傳承查看取得方式'}</div><button class="btn sm gold" data-go="class">查看轉職</button></div>` : ''}
     ${c.state === 'town_no_red' ? `<div class="banner warn"><span class="e">🧪</span><div style="flex:1"><b>目前選用的生命藥水已用完</b><br>補水後會自動回到 ${esc(mapLabel)}</div></div>` : ''}
     <div class="card"><h3>🧪 補給 <small>自動喝${esc(redName)} ≤ ${c.autoRedPct}%</small></h3>
       <div class="grid2 supply-choices">${potionChoiceHtml('red',redKey,redName,redTier,me.supply.redHours,redOther)}${potionChoiceHtml('blue',blueKey,blueName,blueTier,me.supply.blueHours,blueOther)}</div>
@@ -947,10 +947,25 @@
   // ---------- v0.5.1「現在可以做」: every visit shows what to spend gold / time on ----------
   const RAR_ORDER = ['common', 'advanced', 'epic', 'legendary', 'supreme'];
   const scrollPrice = (k) => (S.meta.items[k] && S.meta.items[k].price) || (S.shop && (S.shop.items.find((x) => x.item === k) || {}).price) || { scroll_w: 75, scroll_a: 50, scroll_r: 60 }[k] || 0;
-  /** what an enhance/reroll attempt needs right now: scrolls owned, missing, gold to buy the rest, affordable? */
+  /** Match a single, unlocked manual attempt, including reroll labor and missing scrolls. */
   function attemptCost(e, scroll) {
-    const have = S.me.inventory[scroll] || 0; const miss = Math.max(0, e.scrollCost - have); const gold = miss * scrollPrice(scroll);
-    return { have, miss, gold, ok: gold <= S.me.character.gold };
+    const have = S.me.inventory[scroll] || 0, need = scroll==='scroll_r'?e.rerollCost?.scrolls:e.scrollCost;
+    const fee = scroll==='scroll_r'?e.rerollCost?.fee:0, miss = Math.max(0, need-have), gold = fee+miss*scrollPrice(scroll);
+    return { have, need, fee, miss, gold, ok: Number.isFinite(gold) && gold>=0 && Number.isInteger(need) && need>0 && gold<=S.me.character.gold };
+  }
+  function todoMaintenanceReady(e) {
+    if(S.me.character.partyId||e.inTrade)return false;
+    const jobs=[...(S.backgroundJobs||[]).map(n=>n.job),S.autoEnhance,S.autoReroll];
+    return !jobs.some(j=>j?.status==='running'&&String(j.characterId)===String(S.me.character.tgId)&&j.itemId===e.id);
+  }
+  function todoRefillReady() {
+    const me=S.me;
+    if(!(me.refill.cost>0&&me.refill.cost<=me.character.gold&&me.supply.redHours<8))return false;
+    return ['red','blue'].every(kind=>{const key=me.supply[kind+'Key'];return !!key&&Number.isInteger(me.refill[key])&&me.refill[key]>=0&&(!(me.refill[key]>0)||(me.supply[kind+'Options']||[]).some(p=>p.key===key&&p.unlocked));});
+  }
+  function todoBossReady() {
+    const b=S.boss, c=S.me.character, now=sNow();
+    return !!(b?.status==='active'&&b.hp>0&&b.endsAt>now&&S.bossPersonalActor===String(c.tgId)&&b.me?.hasCharacter===true&&!(c.bossDownUntil>now)&&!(b.me.downUntil>now)&&!(b.me.attackedThisWindow&&b.me.nextAttackAt>now));
   }
   function todoList() {
     const me = S.me, c = me.character, out = [], bd = me.badges || {}; const r = S.pending;   // everything earned since the last 收下 (incl. the offline settlement on open)
@@ -958,25 +973,24 @@
       const dr = Object.entries(r.drops || {}).map(([k, v]) => `${itemEmoji(k)}×${v}`).join(' ');
       out.push({ k: 'collect', ic: '🎁', t: `掛機收穫 💰+${fmt(r.gold_gained)}${dr ? ` ${dr}` : ''}`, s: `${r.ticks >= 120 ? `${Math.round(r.ticks / 6) / 10} 小時` : `${r.ticks} 分鐘`} · 擊殺 ${fmt(r.kills)}${r.elites ? ` · 菁英 ${r.elites}` : ''}`, b: '收下', cls: 'gold' });
     }
-    if (!me.daily.claimed) out.push({ k: 'daily', ic: '<img class="daily-coin-icon" src="art/ui/hud-coin-v2.webp" alt="">', t: `每日補給金 ${fmt(me.daily.total)}`, s: me.daily.firstWeek ? '首週 +50%' : '每天 00:00 重置', b: '領取', cls: 'gold' });
+    if (!me.daily.claimed && me.daily.total>0) out.push({ k: 'daily', ic: '<img class="daily-coin-icon" src="art/ui/hud-coin-v2.webp" alt="">', t: `每日補給金 ${fmt(me.daily.total)}`, s: me.daily.firstWeek ? '首週 +50%' : '每天 00:00 重置', b: '領取', cls: 'gold' });
     if (advancementReady(me)) out.push({ k: 'go:class', ic: '✨', t: '可以轉職了！', s: `${me.gate.materialName} 已到手`, b: '轉職', cls: 'gold' });
     const nReq = (bd.requests || 0) + (bd.trades || 0) + (bd.challenges || 0);
     if (nReq) out.push({ k: 'go:trade', ic: '🤝', t: `${nReq} 個交易／決鬥等你回覆`, s: [bd.requests ? `交易請求 ${bd.requests}` : '', bd.trades ? `交易視窗 ${bd.trades}` : '', bd.challenges ? `決鬥 ${bd.challenges}` : ''].filter(Boolean).join(' · '), b: '查看' });
-    if (me.refill.cost > 0 && me.supply.redHours < 8) out.push({ k: 'refill', ic: '🧪', t: `水只剩約 ${me.supply.redHours} 小時`, s: `補滿 24h 💰${fmt(me.refill.cost)}`, b: '補水' });
+    if (todoRefillReady()) out.push({ k: 'refill', ic: '🧪', t: `水只剩約 ${me.supply.redHours} 小時`, s: `補滿 24h 💰${fmt(me.refill.cost)}`, b: '補水' });
     // safe enhancement first (no break chance), highest tier / lowest + first
-    const eq = me.equipment.filter((e) => e.equipped && e.enhanceNext && !e.inTrade);
-    const safe = eq.filter((e) => !e.enhanceNext.break).map((e) => ({ e, a: attemptCost(e, e.scroll) })).filter((x) => x.a.ok).sort((x, y) => y.e.tier - x.e.tier || x.e.enhance - y.e.enhance || x.a.gold - y.a.gold);
+    const eq = me.equipment.filter((e) => e.equipped && todoMaintenanceReady(e));
+    const safe = eq.filter((e) => e.enhanceNext&&!e.enhanceNext.break).map((e) => ({ e, a: attemptCost(e, e.scroll) })).filter((x) => x.a.ok).sort((x, y) => y.e.tier - x.e.tier || x.e.enhance - y.e.enhance || x.a.gold - y.a.gold);
     if (safe.length) { const { e, a } = safe[0];
       out.push({ k: `item:${e.id}`, ic: '⚒️', t: `可強化 +${e.enhance + 1}：${e.name}`, s: `安全 · 成功 ${Math.round(e.enhanceNext.success * 100)}% · ${a.miss ? `買捲 💰${fmt(a.gold)}` : `捲軸 ${a.have}/${e.scrollCost}`}${safe.length > 1 ? ` · 還有 ${safe.length - 1} 件可強化` : ''}`, b: '強化', cls: 'green' }); }
-    const rr = eq.map((e) => ({ e, a: attemptCost(e, 'scroll_r') })).filter((x) => x.a.ok && RAR_ORDER.indexOf(x.e.rarity) < 3).sort((x, y) => RAR_ORDER.indexOf(x.e.rarity) - RAR_ORDER.indexOf(y.e.rarity) || y.e.tier - x.e.tier);
-    if (rr.length) { const { e, a } = rr[0]; out.push({ k: `item:${e.id}`, ic: '🎲', t: `洗屬性：${e.name}（${e.rarityName}）`, s: `追極品／傳說 · ${a.miss ? `買捲 💰${fmt(a.gold)}` : `捲軸 ${a.have}/${e.scrollCost}`}`, b: '洗' }); }
-    if (S.shop) { // a better shop piece for a slot you can afford now
+    const rr = eq.map((e) => ({ e, a: attemptCost(e, 'scroll_r') })).filter((x) => x.a.ok && x.e.affixes?.slots>0 && x.e.affixes.quality!=='SS').sort((x, y) => x.e.affixes.score-y.e.affixes.score || y.e.tier-x.e.tier);
+    if (rr.length) { const { e, a } = rr[0]; out.push({ k: `item:${e.id}`, ic: '🎲', t: `重鑄詞條：${e.name}（${e.affixes.quality}）`, s: `捲軸 ${a.have}/${a.need} · 工費 💰${fmt(a.fee)}${a.miss?`＋補購 💰${fmt(a.gold-a.fee)}`:''} · 共 💰${fmt(a.gold)}`, b: '洗' }); }
+    if (S.shop && shopForActor===String(c.tgId) && !c.partyId) { // a purchasable piece on the current character's route
       const best = {}; for (const e of me.equipment.filter((x) => x.equipped)) best[e.slot] = Math.max(best[e.slot] || 0, e.tier);
-      const up = S.shop.gear.filter((o) => o.levelReq <= c.level && o.price <= c.gold && o.tier > (best[o.slot] || 0)).sort((a, b) => b.tier - a.tier || a.price - b.price);
-      if (up.length) out.push({ k: 'go:shop', ic: '🛒', t: `買得起：${up[0].name}（T${up[0].tier}）`, s: `💰${fmt(up[0].price)}${up.length > 1 ? ` · 共 ${up.length} 件升級` : ''}`, b: '商店' });
+      const up = S.shop.gear.filter((o) => o.levelReq <= c.level && o.price>0 && o.price <= c.gold && (!o.branch||o.branch===c.classPath?.[0]) && o.tier > (best[o.slot] || 0)).sort((a, b) => b.tier - a.tier || a.price - b.price);
+      if (up.length) out.push({ k: 'go:shop', ic: '🛒', t: `買得起：${up[0].name}（T${up[0].tier}）`, s: `💰${fmt(up[0].price)}${up.length > 1 ? ` · 共 ${up.length} 件可買的高階裝備` : ''}`, b: '商店' });
     }
-    if (S.boss && S.boss.status === 'active') out.push({ k: 'go:boss', ic: '👹', t: `首領出現中：${S.boss.name || '地圖首領'}`, s: '每 3 分鐘可攻擊一次', b: '去打', cls: 'red' });
-    else if (me.nextBoss) out.push({ k: 'go:boss', ic: '⏰', t: `下一隻首領 ${String(me.nextBoss.hour).padStart(2, '0')}:00`, s: `<span id="todoCd">${mmss(me.nextBoss.start - sNow())}</span> 後出現`, b: '看看' });
+    if (todoBossReady()) out.push({ k: 'go:boss', ic: '👹', t: `可以挑戰：${S.boss.name || '地圖首領'}`, s: '首領仍在場 · 本輪可攻擊', b: '去打', cls: 'red' });
     return out;
   }
   function commandIcon(t){
@@ -995,22 +1009,40 @@
     return `<div class="card todo my-command-board"><div class="command-heading"><div><span class="command-kicker">HERMES · 遠征指引</span><h3>現在可以做</h3></div><small class="command-balance"><img class="daily-coin-icon" src="art/ui/hud-coin-v2.webp" alt="金幣"> ${fmt(S.me.character.gold)}</small></div>${list.length ? list.slice(0, 6).map((t, i) => `<div class="todo-row" data-todo="${i}"><span class="ti">${commandIcon(t)}</span><div class="tm"><b>${esc(t.t)}</b><small>${t.s}</small></div><button class="btn sm ${t.cls || ''}">${t.b}</button></div>`).join('') : '<div class="muted">都處理好了，安心掛機 ☕</div>'}</div>`;
   }
   function bindTodo(view) {
-    if (!S.shop && !S.shopLoading) { S.shopLoading = true; api('shop').then((j) => { absorb(j); if (S.tab === 'home' && $('#sheet').hidden) render(); }).catch(() => {}); }
+    const actor=String(S.me.character.tgId);
+    if ((!S.shop||shopForActor!==actor) && S.shopLoading!==actor) {
+      S.shopLoading=actor;
+      void loadShop(true).then(()=>{if(String(S.me?.character?.tgId)===actor&&shopForActor===actor&&S.tab==='home'&&$('#sheet').hidden)render();}).finally(()=>{if(S.shopLoading===actor)S.shopLoading=null;});
+    }
     const list = todoList();
-    view.querySelectorAll('[data-todo]').forEach((row) => { row.onclick = () => {
-      const t = list[Number(row.dataset.todo)]; if (!t) return; haptic('light');
-      if (t.k === 'collect') {
-        // Idle rewards are credited by the server when it settles the report. The
-        // collect button acknowledges that report; animate the already-credited
-        // amount into the HUD instead of issuing a second gold mutation.
-        const reward = Math.max(0, Number(S.pending && S.pending.gold_gained) || 0);
-        const total = Math.max(0, Number(S.me && S.me.character && S.me.character.gold) || 0);
-        S.pending = null; collectFx(row, reward, total); setTimeout(render, 700); return;
-      }
-      if (t.k === 'daily') return act('daily', {}, (j) => `💰 領到 ${fmt(j.result && j.result.gold)} 金幣`);
-      if (t.k === 'refill') return act('refill', {}, (j) => `🧪 已補水，花費 💰${fmt(j.result && j.result.cost)}`);
-      if (t.k.startsWith('go:')) { S.tab = t.k.slice(3); render(); return; }
-      if (t.k.startsWith('item:')) return itemSheet(t.k.slice(5));
+    view.querySelectorAll('[data-todo]').forEach((row) => { row.onclick = async () => {
+      let t = list[Number(row.dataset.todo)]; if (!t||S.todoChecking||S.busy) return;
+      const selected=String(S.me.character.tgId),epoch=S.apiEpoch||0,button=row.querySelector('button');
+      const current=()=>selected===String(S.me?.character?.tgId)&&epoch===(S.apiEpoch||0)&&S.tab==='home'&&!S.busy&&$('#sheet').hidden;
+      S.todoChecking=true;if(button)button.disabled=true;
+      try {
+        const fresh=await refreshMe({silent:true,full:true});
+        if(!current())return;
+        if(!fresh)return toast('無法確認最新條件，請稍後再試',true);
+        if(t.k==='go:shop') {const shop=await api('shop');if(!current())return;absorb(shop);shopForActor=selected;render();}
+        const available=todoList().find(n=>n.k===t.k&&n.b===t.b);
+        if(!available)return toast('條件已變更，可做清單已更新');
+        t=available;haptic('light');
+        if (t.k === 'collect') {
+          // Idle rewards are credited by the server when it settles the report. The
+          // collect button acknowledges that report; animate the already-credited
+          // amount into the HUD instead of issuing a second gold mutation.
+          const reward = Math.max(0, Number(S.pending && S.pending.gold_gained) || 0);
+          const total = Math.max(0, Number(S.me && S.me.character && S.me.character.gold) || 0);
+          const currentRow=view.querySelector('[data-todo="'+todoList().findIndex(n=>n.k==='collect')+'"]');
+          S.pending = null; collectFx(currentRow||row, reward, total); setTimeout(render, 700); return;
+        }
+        if (t.k === 'daily') return await act('daily', {}, (j) => `💰 領到 ${fmt(j.result && j.result.gold)} 金幣`);
+        if (t.k === 'refill') return await act('refill', {}, (j) => `🧪 已補水，花費 💰${fmt(j.result && j.result.cost)}`);
+        if (t.k.startsWith('go:')) { S.tab = t.k.slice(3); render(); return; }
+        if (t.k.startsWith('item:')) return itemSheet(t.k.slice(5));
+      }catch(e){if(current())toast(e.message,true);}
+      finally{S.todoChecking=false;if(button?.isConnected)button.disabled=false;}
     }; });
   }
   /** coins fly from the row to the gold chip */
@@ -1440,7 +1472,7 @@
       <div class="mt" style="font-size:13px">${currentNode?.blurb?`${esc(currentNode.blurb)}<br>`:''}目前技能「${esc(me.stats.skill.name)}」實際 魔力 ${me.stats.skill.cost} · ×${lineageNumber(me.stats.skill.mult)} · 最多 ${me.stats.skill.targets} 體<br>被動：${esc(me.stats.passive)}${currentNode?.effect?`<br>效果：${esc(currentNode.effect)}`:''}${currentNode?.inheritance?`<br>${esc(currentNode.inheritance)}`:''}${c.baseClass==='thief'?`<br><span class="thief-combat-traits">${esc(window.RpgThiefClass.traits(base))}</span>`:''}</div></div></div></div>`;
     if (g.canAdvance) {
       html += `<div class="banner gate"><span class="e">🎉</span><div>${c.classTier ? `第 ${c.classTier+1} 次轉職！` : ''}已達 Lv.${(c.classTier + 1) * 30}，用「${esc(g.materialName)}」（${g.have}/1）選一條路線轉職！${currentNode?`<br>材料取得：${esc(base.lineageNodes.find(n=>n.tier===c.classTier+1)?.materialSource||'')}`:''}</div></div>`;
-      html += me.branches.map((b) => branchCard(c.baseClass, b, { path: b.path, button: `<button class="btn mt" data-adv="${esc(b.branch)}" ${g.have ? '' : 'disabled'}>${g.have ? `選擇「${esc(b.name)}」` : `缺「${esc(g.materialName)}」`}</button>` })).join('');
+      html += me.branches.map((b) => branchCard(c.baseClass, b, { path: b.path, button: `<button class="btn mt" data-adv="${esc(b.branch)}" ${g.have&&!c.partyId ? '' : 'disabled'}>${c.partyId ? '組隊中暫不能轉職' : g.have ? `選擇「${esc(b.name)}」` : `缺「${esc(g.materialName)}」`}</button>` })).join('');
     } else if (c.classTier >= 1) {
       const book = me.inventory.reselect_1 || 0; const cur = c.classPath[0];
       html += `<div class="card"><h3>📖 命運轉職書 I <small>持有 ${book}</small></h3><div class="muted">可把第一次轉職改成另一條路線；已完成的後續轉職保留相同分支位置。重選共用 30 分鐘冷卻；不合路線的限定裝備會卸下，可用尚未使用的轉換機會轉換。</div></div>`;
