@@ -80,7 +80,7 @@ test('invalid price and quantity never reach mutation; one gold correctly disclo
 });
 test('same-character background render preserves market controller and focused form node',()=>{
   const h=setup(),form={focus:'price'};let rendered=0,updated=0,cleaned=0;const S={tab:'shop',choosing:false,creating:false,me:{character:{tgId:'hero-a'}}};
-  const ctx=vm.createContext({S,document:{body:{classList:{toggle(){}}},querySelector:()=>form},guardianController:null,guardianActor:null,marketController:{update(){updated++;},cleanup(){cleaned++;}},marketActor:'hero-a',renderHud(){rendered++;},updateShopSurface(){},window:{}});
+  const ctx=vm.createContext({S,document:{body:{classList:{toggle(){}}},querySelector:()=>form},guardianController:null,guardianActor:null,marketController:{update(){updated++;},cleanup(){cleaned++;}},marketActor:'hero-a',renderBackground(){},renderHud(){rendered++;},updateShopSurface(){},window:{}});
   const start=app.indexOf('  function render() {'),end=app.indexOf('  let refreshFlight=null;',start);vm.runInContext(app.slice(start,end)+';this.run=render;',ctx);ctx.run();ctx.run();assert.equal(rendered,2);assert.equal(updated,2);assert.equal(cleaned,0);assert.equal(ctx.document.querySelector('.market-hub'),form);h.handle.cleanup();
 });
 test('free draws disappear only from the bag and display credits retain the Japanese producer',()=>{
