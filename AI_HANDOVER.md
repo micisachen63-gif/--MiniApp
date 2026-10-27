@@ -1,3 +1,5 @@
+2026-10-27 切角可做清單：材料／金幣既有完整select同步保留；背景工坊統一只呈現目前角色，選角隱藏但帳號作業不刪不停止。api的character_changed恢復增加請求actor及epoch，防舊讀取409把新S.me清空，A→B→A亦保護；真現役衝突仍重選。四新回歸＋390／1280真API SQLite四情境，故意延遲me／shop／背景成功與真409，快速往返零重載、兩角色材料金幣及作業提示分離。讀docs/CHARACTER_ACTION_BOARD_20261027.txt；快取character-board1，僅Worker前端無DB／經濟／作業執行／BOT變動。正式版本看deployment-records。
+
 2026-10-27 現在可以做完整盤點：補水須付完整24h費且指定水已解鎖；強化／詞條重鑄驗組隊、同角色背景作業、託管、缺卷＋工費，重鑄改看詞條品質並支援+15；購裝驗目前角色清單／路線／等級／金額；首領用me個人CD與倒地資料，撤未開始倒數。所有點擊先full me核對、購裝再取商店，保留actor／epoch／頁面／防連點，不開過期操作。14新測試與24集中測試、390／1280真API SQLite180金6卷單次扣款、179金過期點擊／作業／首領CD通過。讀docs/ACTION_BOARD_READINESS_20261027.txt；快取action-ready1，僅Worker無經濟／規則／DB／BOT變動。正式版本看deployment-records。
 
 2026-10-27 轉職假提示：gate.canAdvance僅代表等級達標，首頁任務誤寫材料已到手。首頁門檻／現在可以做／傳承紅點統一還要have>=1；缺料顯示等待與實際數量，保留路線預覽與原disabled。四職一至四轉及390／1280真API SQLite完整轉職扣料驗收。讀docs/ADVANCEMENT_READY_PROMPT_20261027.txt；快取advance-ready1，僅Worker前端，無轉職規則／數值／DB／BOT改動。正式狀態看deployment-records。
