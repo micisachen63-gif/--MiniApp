@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "072d95f9ad7cee6f6b8d108dc9c57a383057d225",
+  "sourceCommit": "c2951be034a6adafc57dcfd438d2ab39bbd714ea",
   "service": "elf-rpg-api",
-  "productionVersion": "84823187-8a7e-422e-ae7b-19562d73b711",
+  "productionVersion": "d6e8e608-14b1-48cf-9809-618356231197",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-27T02:09:03.979Z",
+  "verifiedAt": "2026-10-27T02:42:43.094Z",
   "runtimeSHA256": {
     "index.js": "73029cc59a5d76c80c71859cc4348accb7bf9ee766a3693b9b8452e6204586ba"
   },
   "source": {
     "fileCount": 9499,
-    "sha256": "2eb28a65c27bfe449dffdec5506d32c3538e66af4dcec7476094a811ecb8bf3b",
+    "sha256": "0151364491bc9e913d05a32f7986aaa6a0b609255619a0f151f0d99267d1a19f",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2531,7 +2531,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "0278517dc9200c7f88c290e685841df6ccda4fe2ddd4ed09d60389a61d8f6bf1"
+        "sha256": "44e9e5b956662490a5988141e7261d5b32299e511c8f00d9ccdca2561a365b92"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -36903,7 +36903,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "94427772f71c63eb31fae4adb4f3a60a90405f2e603507b0c8aefcd5be63014c"
+        "sha256": "25c853db5017880b4dcbf053f784f0cff8d5bc58d30572dfd8dc1db9311fb516"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -38171,7 +38171,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "84823187-8a7e-422e-ae7b-19562d73b711",
+        "version_id": "d6e8e608-14b1-48cf-9809-618356231197",
         "percentage": 100
       }
     ],
