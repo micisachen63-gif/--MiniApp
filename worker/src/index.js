@@ -36,7 +36,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
@@ -54,7 +54,7 @@ const tgOf = (b) => { const t = String(b?.tgId ?? ''); if (!/^(?:\d{1,20}|c[\da-
 async function me(env, tg, now, { summary = false } = {}) {
   const r = await P.withPlayer(env, tg, now);
   const [autoEnhance,guardianAuto,autoReroll,backgroundJobs,boss,badges,activity] = await Promise.all([
-    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),B.currentBoss(env,now),SH.pendingCounts(env,tg,now).catch(() => null),homeActivity(env.DB,r.player.char)
+    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),bossFor(env,tg,now).then(r=>r.boss),SH.pendingCounts(env,tg,now).catch(() => null),homeActivity(env.DB,r.player.char)
   ]);
   return { ok: true, ...playerView(r.player, { now, report: r.report?.ticks ? r.report : null, compact:summary }), autoEnhance,guardianAuto,autoReroll,backgroundJobs, boss, badges, activity, now };
 }

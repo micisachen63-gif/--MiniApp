@@ -1,3 +1,5 @@
+2026-10-27 現在可以做完整盤點：補水須付完整24h費且指定水已解鎖；強化／詞條重鑄驗組隊、同角色背景作業、託管、缺卷＋工費，重鑄改看詞條品質並支援+15；購裝驗目前角色清單／路線／等級／金額；首領用me個人CD與倒地資料，撤未開始倒數。所有點擊先full me核對、購裝再取商店，保留actor／epoch／頁面／防連點，不開過期操作。14新測試與24集中測試、390／1280真API SQLite180金6卷單次扣款、179金過期點擊／作業／首領CD通過。讀docs/ACTION_BOARD_READINESS_20261027.txt；快取action-ready1，僅Worker無經濟／規則／DB／BOT變動。正式版本看deployment-records。
+
 2026-10-27 轉職假提示：gate.canAdvance僅代表等級達標，首頁任務誤寫材料已到手。首頁門檻／現在可以做／傳承紅點統一還要have>=1；缺料顯示等待與實際數量，保留路線預覽與原disabled。四職一至四轉及390／1280真API SQLite完整轉職扣料驗收。讀docs/ADVANCEMENT_READY_PROMPT_20261027.txt；快取advance-ready1，僅Worker前端，無轉職規則／數值／DB／BOT改動。正式狀態看deployment-records。
 
 2026-10-26 環身特效移出人物：撤前景光帶，原透明圖等比例左右面板向身側分離／內緣漸隱，光流掃光與星點全部低於人物；五人遠征與短隊共用低場景層，避免蓋隊友。248造型×3×8×2=11904檢查，四職真API全畫面與五人穿戴；48組開關特效比較1033593近不透明人物像素，無超透明度容許範圍覆蓋。讀docs/SURROUND_OUTSIDE_BODY_20261026.txt；快取perimeter1，僅Worker呈現，無數值／權益／migration／BOT。正式版本看deployment-records。

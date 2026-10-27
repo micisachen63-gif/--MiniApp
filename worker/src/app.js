@@ -103,7 +103,7 @@ export function metaView() {
     pk: { minLevel: PK.minLevel, maxLevelGap: PK.maxLevelGap, dailyCap: PK.dailyCap, pairCooldownHours: PK.pairCooldownMs / 3600e3, challengeMinutes: PK.challengeTtlMs / 60e3, dropPct: PK.dropChance } };
 }
 
-async function bossFor(env, tg, now) {
+export async function bossFor(env, tg, now) {
   const boss = await B.currentBoss(env, now);
   if (!boss) return { boss: null };
   const rows = await env.DB.prepare('SELECT win, damage FROM rpg_boss_attacks WHERE boss_id = ? AND tg_id = ?').bind(boss.id, tg).all();

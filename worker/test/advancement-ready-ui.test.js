@@ -8,10 +8,10 @@ import {advance} from '../src/game/classes.js';
 
 const app=fs.readFileSync(new URL('../public/app.js',import.meta.url),'utf8');
 function context(me) {
-  const ctx=vm.createContext({S:{me,shop:null,boss:null,pending:null},fmt:String,esc:String});
+  const ctx=vm.createContext({S:{me,shop:null,boss:null,pending:null},fmt:String,esc:String,sNow:()=>T0,shopForActor:null});
   const helper=app.indexOf('  function advancementReady(');
   if(helper>=0)vm.runInContext(app.slice(helper,app.indexOf('  function renderHud(',helper)),ctx);
-  vm.runInContext(app.slice(app.indexOf('  function todoList('),app.indexOf('  function commandIcon(')),ctx);
+  vm.runInContext(app.slice(app.indexOf('  const RAR_ORDER ='),app.indexOf('  function commandIcon(')),ctx);
   return ctx;
 }
 function view(char,inv) {
