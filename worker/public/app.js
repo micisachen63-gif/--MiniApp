@@ -560,11 +560,12 @@
   const operationNotices=window.RpgOperationNotices?.create({api,owner:()=>String(tg?.initDataUnsafe?.user?.id||devTg||'')});
   const autoNotice=j=>({kind:'auto_enhance_end',refId:j.id,ownerAccountId:j.ownerAccountId,dismissed:j.dismissed});
   const backgroundWorkshop=window.RpgBackgroundWorkshop?.create({gate:operationNotices,onOpen:n=>{void openBackground(n).catch(e=>toast(e.message,true));},onDismiss:()=>{void syncBackground().catch(()=>{});}});
-  function setBackground(jobs,actor=S.me?.character?.tgId){equipmentSync?.observe(jobs,null,actor);S.backgroundJobs=jobs||[];for(const[kind,key]of [['auto_enhance_end','autoEnhance'],['auto_reroll_end','autoReroll'],['guardian_auto','guardianAuto']]){const own=S.backgroundJobs.filter(x=>x.kind===kind),current=own.find(x=>x.job.status==='running')||own.at(-1);S[key]=current?.job||null;}backgroundWorkshop?.render(S.backgroundJobs);guardianController?.update({autoJob:S.guardianAuto});window.RpgAutoRerollUI?.updateJob(S.autoReroll);scheduleEquipmentSync();}
+  function renderBackground(){const actor=String(S.me?.character?.tgId||'');backgroundWorkshop?.render(!S.choosing&&!S.creating&&actor?(S.backgroundJobs||[]).filter(n=>String(n.job?.characterId)===actor):[]);}
+  function setBackground(jobs,actor=S.me?.character?.tgId){equipmentSync?.observe(jobs,null,actor);S.backgroundJobs=jobs||[];for(const[kind,key]of [['auto_enhance_end','autoEnhance'],['auto_reroll_end','autoReroll'],['guardian_auto','guardianAuto']]){const own=S.backgroundJobs.filter(x=>x.kind===kind),current=own.find(x=>x.job.status==='running')||own.at(-1);S[key]=current?.job||null;}renderBackground();guardianController?.update({autoJob:S.guardianAuto});window.RpgAutoRerollUI?.updateJob(S.autoReroll);scheduleEquipmentSync();}
   async function syncBackground(){const epoch=S.apiEpoch||0,r=await api('background/status');if(epoch===(S.apiEpoch||0)){setBackground(r.jobs);equipmentSync?.observe(r.jobs,r.balance,S.me?.character?.tgId);if(r.balance&&String(r.balance.characterId)===String(S.me?.character?.tgId)&&r.balance.revision>=S.me.character.revision){S.me.character.gold=r.balance.gold;S.me.character.revision=r.balance.revision;renderHud();if(r.balance.guardianBalances)guardianController?.update({balances:r.balance.guardianBalances,revision:r.balance.revision,characterId:r.balance.characterId});}void operationNotices?.flush();if(equipmentSync?.pending(S.me?.character?.tgId))await refreshMe({silent:true,full:true});}return r;}
   async function openBackground(n){if(n.kind==='auto_enhance_end'){S.autoEnhance=n.job;autoPanel();}else if(n.kind==='auto_reroll_end')showRerollJob(n.job);else{if(String(n.job.characterId)!==String(S.me?.character?.tgId)){absorb(await api('select',{charId:n.job.characterId}),true);S.choosing=false;}openGuardian('inventory');}}
   function rerollNotice(j){return {kind:'auto_reroll_end',refId:j.id,ownerAccountId:j.ownerAccountId};}
-  function showRerollJob(job){S.autoReroll=job;window.RpgAutoRerollUI.showJob(job,{sheet,closeSheet,api,onError:m=>toast(m,true),onDismiss:j=>{backgroundWorkshop.dismiss(rerollNotice(j));void refreshMe({silent:true});},onUpdate:j=>{S.autoReroll=j;S.backgroundJobs=(S.backgroundJobs||[]).map(n=>n.refId===j.id?{...n,job:j}:n);backgroundWorkshop.render(S.backgroundJobs);void syncBackground().catch(()=>{});}});}
+  function showRerollJob(job){S.autoReroll=job;window.RpgAutoRerollUI.showJob(job,{sheet,closeSheet,api,onError:m=>toast(m,true),onDismiss:j=>{backgroundWorkshop.dismiss(rerollNotice(j));void refreshMe({silent:true});},onUpdate:j=>{S.autoReroll=j;S.backgroundJobs=(S.backgroundJobs||[]).map(n=>n.refId===j.id?{...n,job:j}:n);renderBackground();void syncBackground().catch(()=>{});}});}
   const ITEMS_REF = {};
   const BATTLE = V2 && window.RpgBattle ? window.RpgBattle.create({ src: artSrc, items: ITEMS_REF, fmt: (n) => fmt(n), stateInfo: (me) => stateInfo(me),
     heroKey: (c) => heroKey(c.baseClass, c.gender, c.classPath), heroMeta: (k) => window.RpgHeroArtRegistry?.get(k)?.heroMeta || (ELF_ADV4_HD[k] ? {fig:ELF_ADV4_HD[k].fig} : ELF_ADV3_HD[k] ? {fig:ELF_ADV3_HD[k].fig} : ELF_ADV2_HD[k] ? {fig:ELF_ADV2_HD[k].fig} : MAGE_ADV2_HD[k] ? {fig:MAGE_ADV2_HD[k].fig} : SWORD_ADV4_HD[k] ? {fig:SWORD_ADV4_HD[k].fig} : SWORD_ADV3_HD[k] ? {fig:SWORD_ADV3_HD[k].fig} : SWORD_ADV2_HD[k] ? {fig:SWORD_ADV2_HD[k].fig} : HEROES.meta[`hero_${k}`] || null),
@@ -598,11 +599,11 @@
     const headers = { 'content-type': 'application/json' };
     if(expansion?.revision)headers['X-Monster-Art-Revision']=expansion.revision;
     if (initData) headers['X-Telegram-Init-Data'] = initData; else if (devTg) headers['X-Dev-Tg-Id'] = devTg;
-    const selected = S.me && S.me.character && S.me.character.tgId;
+    const selected = S.me && S.me.character && S.me.character.tgId, requestEpoch=S.apiEpoch||0;
     const requestBody = selected && !['characters', 'select', 'meta'].includes(action) ? { ...body, selectedCharacterId: selected } : body;
     const {res,j}=await window.RpgRequest.request(action,requestBody,headers,options).catch(e=>{if(e.uncertain&&selected)void refreshMe({silent:true});throw e;});
     if (!j || !j.ok) { const e = new Error((j && j.message) || `連線失敗（${res.status}）`); e.code = j && j.error; e.status = res.status;
-      if (e.code === 'character_changed') { S.me = null; S.choosing = true; setTimeout(openCharacterSelect, 0); }
+      if (e.code === 'character_changed' && selected===S.me?.character?.tgId && requestEpoch===(S.apiEpoch||0)) { S.me = null; S.choosing = true; setTimeout(openCharacterSelect, 0); }
       throw e; }
     return j;
     }finally{if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;}
@@ -1069,8 +1070,8 @@
   const reducedMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
   let forgeSession=0;
   const autoReasons={target:'願望成真 · 已達目標',break:'裝備破碎 · 淬鍊結束',resources:'資源不足 · 已停止',stopped:'已停止強化',party:'組隊戰鬥 · 已停止',busy:'裝備狀態改變 · 已停止',missing:'找不到裝備 · 已停止'};
-  function autoBanner(){const old=$('#auto-forge-banner');if(old){old.hidden=true;old.style.display='none';}backgroundWorkshop?.render(S.backgroundJobs||[]);}
-  function guardianAutoBanner(){const old=$('#guardian-auto-banner');if(old)old.hidden=true;backgroundWorkshop?.render(S.backgroundJobs||[]);}
+  function autoBanner(){const old=$('#auto-forge-banner');if(old){old.hidden=true;old.style.display='none';}renderBackground();}
+  function guardianAutoBanner(){const old=$('#guardian-auto-banner');if(old)old.hidden=true;renderBackground();}
   function autoPanel(){const j=S.autoEnhance;if(!j)return;window.RpgForgeRitual?.dispose?.();let ov=$('#forge');if(!ov){ov=document.createElement('div');ov.id='forge';document.body.append(ov);}ov.className='forge enhance';ov.hidden=false;$('#app').inert=true;
     ov.innerHTML=`<div class="fg-box"><div class="fg-t">${j.status==='running'?'🔨 背景淬鍊中':autoReasons[j.reason]||'淬鍊結束'}</div><div class="fg-r"><b class="big">${j.status==='running'?'+'+j.level+' → +'+j.target:'+'+j.level}</b><p>${esc(j.itemName)}</p></div>${j.status==='running'?window.RpgForgeRitual?.gainPreview?.({...S.me.equipment.find(e=>e.id===j.itemId),enhance:j.level},j.target,'若達成目標')||'':''}<div class="fg-s" aria-live="polite">已強化 ${j.attempts} 次<br>卷軸 ${j.spentScrolls} 張 · 補購金幣 ${fmt(j.spentGold)}<p class="muted">${j.status==='running'?'關閉遊戲也會繼續；約每 3 秒強化一次。結束後由 BOT 私訊通知。':'本次淬鍊已結束，可返回查看最新裝備。'}</p></div><div class="fg-b"><button class="btn ghost" data-auto-back>返回冒險</button>${j.status==='running'?'<button class="btn red" data-auto-stop>停止強化</button>':'<button class="btn gold" data-auto-done>完成</button>'}</div></div>`;
     const close=()=>{if(j.status!=='running'){S.dismissAuto=j.id;backgroundWorkshop?.dismiss(autoNotice(j));autoBanner();}ov.hidden=true;$('#app').inert=false;void refreshMe({silent:true,full:true});};ov.querySelector('[data-auto-back]').onclick=close;
@@ -2087,6 +2088,7 @@
     openTrade:async item=>{if(S.trade?.status==='open'){const [mine,other]=tradeSide(S.trade);if(mine.locked){toast('交易已鎖定，不能新增羽毛。',true);return;}if(!await confirmSheet('放入守護羽毛',`將這根羽毛放入與 ${esc(other.name)} 的交易視窗？`,'放入'))return;await tradeCall('add',{tradeId:S.trade.id,sigilId:item.id});}else{S.tab='trade';S.social='trade';render();loadTrades();toast('可由「分享至群組」開始交易；已有視窗時可放入守護羽毛。');}}
   };
   function render() {
+    renderBackground();
     const guardianVisible=S.tab==='guardian'&&!S.choosing&&!S.creating&&!!S.me;
     document.body.classList.toggle('guardian-mode',guardianVisible);
     if(guardianVisible&&guardianController&&guardianActor===String(S.me.character.tgId)&&document.getElementById('guardian-root')){renderHud();guardianFrameSize();return;}
