@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "a3ee7d5bfdaa7171f8016d1b990bea3534d3de5a",
+  "sourceCommit": "ca063939fe92b520760dbead89f5c0384a349f97",
   "service": "elf-rpg-api",
-  "productionVersion": "2d6affed-4e1e-46b9-bc5f-eb05d4d5f2f6",
+  "productionVersion": "3400fbfe-9dbe-4b4a-ad6b-3c9f38e75e0c",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-28T01:49:11.727Z",
+  "verifiedAt": "2026-10-28T02:19:08.107Z",
   "runtimeSHA256": {
     "index.js": "eca0d433feee8a42a47fda2de53d995c811a553392810c73193a99381dbd00a2"
   },
   "source": {
     "fileCount": 9499,
-    "sha256": "b6eefe62dbf9bf96243922d454f02fe0bb768c52d24a6dad65c551fe70eb8ca2",
+    "sha256": "40765f2c4c6892fe83cc34a0f362ed79088f22c7eb030d4970b65f9e78b920a4",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -36083,7 +36083,7 @@
       },
       {
         "file": "worker/public/expedition/combat-playback.js",
-        "sha256": "583bc08c6ed43f25e7df8ab54bf1167f2b614fcb3ce7938e1b0a66b250990be6"
+        "sha256": "d99230cafd2b37e03f8c1745b8505bdc203c43145d2a9e68052966a10450bcab"
       },
       {
         "file": "worker/public/expedition/demo.html",
@@ -36099,7 +36099,7 @@
       },
       {
         "file": "worker/public/expedition/hero-art-playback.js",
-        "sha256": "eb0b2aec9f60bc4528751a494645b1a58e7c2edf37b957e3dcd3103aa216ce69"
+        "sha256": "557258dfe144d892dd5d4470ba70152348519a06311e79fb190c68d240548399"
       },
       {
         "file": "worker/public/expedition/hero-art.js",
@@ -36107,11 +36107,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "ab9dbc6a8864671f532bec91ebf9e5bd29fdb3755bd8502275ecb11c8662b69b"
+        "sha256": "653a8fc3e6460338ff6a25ca171626f6fbccc3a5233ed9cd612e3fd2de69c933"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "27747f7aaecf006341515de586875e80ae87f45ae6df88ebf90e67053d4aa269"
+        "sha256": "c2660bf3ff1fa2b397d7a96ea5100e059d098a30ee1b17bc660368540e5d3f71"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36895,15 +36895,15 @@
       },
       {
         "file": "worker/public/hero-size.css",
-        "sha256": "328b6c1e7dfc1b9ce987b2761392bf5d30112479fe26cff5d59c03f74d079669"
+        "sha256": "444db684fa1eb287dedac9057912363027c00a3d0d30d0447aa5683abaac9ac8"
       },
       {
         "file": "worker/public/hero-size.js",
-        "sha256": "3ffaf7effdd9ae10abe123b58487bfda38597fe764c99aa1601271238fec4743"
+        "sha256": "77625126a3ffd8fa4e10988b7404f92d046a97d8556dfeacd1a5c1c50af5c64a"
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "808a518dd1a8c741c1ac4dad862eb314a935e0986c8f0d3b3f42bf0b93e004cc"
+        "sha256": "835a60ba91eb20e0856224e9e5c7334cc6bf12602e116e244ffb56dcd46a0d9c"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37135,11 +37135,11 @@
       },
       {
         "file": "worker/public/preview-star-ring-surround.html",
-        "sha256": "132b56503b396608b786c8a29acbc8b9078b2b3fc438e6478975e01c83f33668"
+        "sha256": "f04ff99b4069e0a165c58fe0aa1f8ea860b099f5e5f9ff378e492bc7b899beac"
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "26bedcbea353c5dc71ed27211a3592372f4decd68efb5b13946a55c2643cc675"
+        "sha256": "008609d19e798d917cccdac4eb04faa0700d0517b50be0ea603ba82350b7dd8a"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -37183,7 +37183,7 @@
       },
       {
         "file": "worker/public/star-ring-heroes.js",
-        "sha256": "0c86098985a25bb7471cff41e7dc32ba30012407469e10af8a3fc14cb50c2e5d"
+        "sha256": "b51a2fc1d64169f73f9e7d7a5d9a5b2a32062b556ce0d26e926056b0eec8dd44"
       },
       {
         "file": "worker/public/star-ring-monsters.js",
@@ -38013,7 +38013,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 151,
+    "verifiedCount": 155,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -38045,6 +38045,10 @@
       "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
+      "worker/public/expedition/combat-playback.js",
+      "worker/public/expedition/hero-art-playback.js",
+      "worker/public/expedition/index.html",
+      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38171,7 +38175,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "2d6affed-4e1e-46b9-bc5f-eb05d4d5f2f6",
+        "version_id": "3400fbfe-9dbe-4b4a-ad6b-3c9f38e75e0c",
         "percentage": 100
       }
     ],
