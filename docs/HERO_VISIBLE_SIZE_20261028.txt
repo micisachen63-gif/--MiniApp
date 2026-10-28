@@ -1,0 +1,24 @@
+2026-10-28 全職業人物可見尺寸檢查與遠征校正
+
+原因
+遠征集結與五人戰場使用registry hero圖；部分圖為帶透明留白的正方形畫布。二轉男性sword A1／A2／B1可見輪廓只占整張高度64.45%／65.49%／62.76%。四職各62、共248男女及轉職身份原圖量測，劍士20個hero高度低於75%，弓手1、法師2、盜賊0。直接縮放整張圖導致特別像小人物。
+
+修正
+- 遠征集結及五人角色接入既有alpha輪廓縮放，保留原圖片、人物身份、姿勢及武器；集結仍在卡片內完整顯示。
+- 戰場可見繪製寬度最多arena42%、不超人物槽高1.4倍，允許武器超原窄姓名槽，但實際輪廓限制arena邊緣內5px。五人腳線與姓名槽不擴張、不重新對應。
+- 站姿暴露同步visibleRect，containedActor動畫以可見人物矩形對齊，不把放大的透明畫布再當人體高度；舊非正規化contain路徑保留。
+- 保留倒地灰階／旋倒，清理反覆重畫後斷開的ResizeObserver與尚未載入的IntersectionObserver目標。
+- 完整更新主頁、組隊iframe、預覽與playback動態import快取鏈visible-body1。沒有改圖片bytes、戰鬥、裝備能力或收益，不需migration或BOT發布。
+
+量化驗證
+修前248×5席×390／1280×lobby／battle共4960 placements，2078個未充分利用輪廓可容納空間，最小fill42.7%，最大腳底浮空51.18px。
+修後相同4960全部通過，0人物／武器裁切、最大腳底gap6.57px、重建時觀察框最多10且不增加。手機戰場各職可見高度中位數約slot95%（劍士94.9、法師95.1、弓手94.9、盜賊95.1）。報圖B1男性聖騎第5席集結65.9→100.9px、戰場61.7→167.0px。寬橫劍／低跨步造型保留自然比例；A112_m少數配置約65.5–67.7%slot，沒有強行拉伸或裁武器。
+全量獨立量測使用原始PNG alpha，而非直接相信fit回傳值：worker/test/hero-size-all-art-browser.mjs。default為修後，--before使用忽略目錄留存的四個原始asset snapshots；所有數據／前後截圖在.release-sync/hero-size-audit-*。
+
+其餘驗證
+- hero-size-visible.test.js：可見輪廓、同步動畫rect、舊contain、窄姓名槽擴繪不出arena、斷開ResizeObserver與lazy圖片清理。
+- 代表造型真動畫站→普攻→站，輪廓高度與腳線差異<0.1px、無裁切。
+- 隔離MiniApp／API／SQLite真流程：四職男女、二轉男性劍盾、lobby按鈕啟程到五人戰場，掛機／武裝／殿堂／他人武裝／三人打寶爬塔、外觀穿卸及五人寬武器壓力場景；資料與截圖保留在.release-sync/hero-size-live-*。
+- 完整npm test、GitHub必要檢查與正式Worker發布測試必須通過。
+所有測試只使用本機隔離資料，不使用正式玩家view/action、寫資料庫或發TG。
+正式狀態看origin/deployment-records與runtime。
