@@ -287,7 +287,7 @@ export function sellGear(work, { now }, { itemId, requestId }) {
   return { ledger: [{ event_id: eventId('sell-gear', tg, requestId), tg_id: tg, type: '出售裝備', gold_delta: gold, item: `equip:${item.id}`, item_delta: -1, note: item.name }], result: { itemId: item.id, itemName: item.name, gold } };
 }
 
-export const MAX_SELL_BATCH = 50;
+export const MAX_SELL_BATCH = 100;
 /** Validate every chosen item before committing one sale; a stale/locked item rejects the entire selection. */
 export async function sellGearBatch(work, { db, lockedEquipment = [] }, { itemIds, requestId }) {
   if (!Array.isArray(itemIds) || !itemIds.length || itemIds.length > MAX_SELL_BATCH || itemIds.some(id => typeof id !== 'string' || !id || id.length > 160) || new Set(itemIds).size !== itemIds.length) {

@@ -1,3 +1,5 @@
+2026-10-28 商店篩選全選100件：分類／名稱加品質與T階，全選僅當前結果前100件，換條件及切角清勾選；件數金額固定底部、珍稀明細確認及背景／穿戴／託管保護保留。後端max100，批刪用json_each兩綁定參數、精確changes／rev與一次帳本防重保留；第100件競爭回滾、重疊100防重及390／1280真UI105選100／333300金／取消／切角驗收見docs/SHOP_FILTERED_SALE_100_20261028.txt。無經濟／migration／BOT，快取filter100-1，正式看deployment-records。
+
 2026-10-28 無坦評價補修：optionalGuard仍被finalMatch.missing鎖B，改排除guard降評；advance在新階段計算前設guardRatingVersion=2，涵蓋舊進行中標準隊，已存results／收據不回寫。原戰鬥及收益配方不改，無坦可得真A／S與對應經驗／終章額外裝備。72組戰鬥hash一致、三版A/S與各1000份A掉裝、兩類既有隊真收據／裝備／防重及390／1280實際UI驗收見docs/STAR_RING_GUARD_RATING_20261028.txt。無migration／BOT；快取guard-rating1，正式看deployment-records。
 
 2026-10-28 遠征守護改可選：高難度只強制三個不同隊員分擔破陣／支援／壓制，新出發含既有招募加optionalGuard快照，僅缺守護不鎖傷害，實際盾／承傷／分工評價不改；舊running無旗標完整保留。集結／選單／須知同步，無migration／數值／掉率／BOT改動。Lv40／90真12h30收據與防重、三缺職責拒絕及390／1280真MiniApp出發驗收見docs/STAR_RING_OPTIONAL_GUARD_20261028.txt；正式版本看deployment-records。
