@@ -86,7 +86,7 @@ export async function state(env,charId,now=Date.now(),{cursor=null,limit=40,qual
  return {schemaVersion:1,charId:char,level:player.char.level,unlocked,revision:player.char.rev,serverNow:now,resetAt:taipeiAt(day,0)+86400000,balances:{gold:player.char.gold,voucherCount,remainder,availableDraws:voucherCount*5+remainder,freeNormalDraws:player.inv.guardian_free_normal||0},welcome:{claimed:!!welcome,granted:welcome?200:0,freeDraws:player.inv.guardian_free_normal||0,recipientCharId:welcome?.recipient_char_id||null},daily:{day,granted:count,remaining:Math.max(0,4-count)},activeGuardian:active?sigilView(active):null,assist,inventory:{items:rows.slice(0,safeLimit).map(sigilView),nextCursor:rows.length>safeLimit?rows[safeLimit-1].id:null,quality:filterQuality??null,qualityCounts,eligibleCounts:qualityCounts,totalCount:totals?.total_count||0},actions:Object.fromEntries(Object.entries(publicConfig(env).actions).map(([key,value])=>[key,value&&unlocked]))};
 }
 export async function ensureWelcome(env,charId,now){
- await env.DB.prepare('INSERT OR IGNORE INTO rpg_guardian_welcome(account_id,recipient_char_id,created_at) SELECT account_tg_id,tg_id,? FROM rpg_characters WHERE tg_id=? AND level>=15').bind(now,String(charId)).run();
+ await env.DB.prepare('INSERT OR IGNORE INTO rpg_guardian_welcome(account_id,recipient_char_id,created_at) SELECT account_tg_id,tg_id,? FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND level>=15').bind(now,String(charId)).run();
 }
 export async function inventory(env,charId,input,now){if(publicConfig(env).enabled)await ensureWelcome(env,charId,now);return {ok:true,state:await state(env,charId,now,input)};}
 export async function operation(env,charId,input){

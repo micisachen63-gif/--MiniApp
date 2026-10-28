@@ -3,7 +3,7 @@ import {taipeiDay,taipeiAt} from '../game/time.js';
 export async function fateEvidence(env,account,now){
  const from=taipeiAt(taipeiDay(now),0),to=from+86400000;
  const [boss,parties]=await env.DB.batch([
-  env.DB.prepare(`SELECT MIN(b.settled_at) at FROM rpg_boss_attacks a JOIN rpg_characters c ON c.tg_id=a.tg_id
+  env.DB.prepare(`SELECT MIN(b.settled_at) at FROM rpg_boss_attacks a JOIN rpg_live_characters c ON c.tg_id=a.tg_id
    JOIN rpg_boss_instances b ON b.id=a.boss_id WHERE c.account_tg_id=? AND a.damage>0 AND b.status='killed'
    AND b.chat_id=? AND b.settled_at>=? AND b.settled_at<? AND a.created_at>=? AND a.created_at<?`)
    .bind(account,String(env.GROUP_CHAT_ID||''),from,to,from,to),

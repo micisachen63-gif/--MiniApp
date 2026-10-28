@@ -7,7 +7,7 @@ export const INTERVAL_MS=3000;
 // Only the scroll used this round, target equipment and equipped gear are needed for an attempt.
 async function loadEnhancePlayer(db,tg,itemId,blessed){
  const [chars,inv,gear]=await db.batch([
-  db.prepare('SELECT c.*,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(tg),
+  db.prepare('SELECT c.*,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(tg),
   db.prepare("SELECT item,quantity FROM rpg_inventory WHERE tg_id=? AND item IN (?,?)").bind(tg,blessed?'blessed_scroll_w':'scroll_w',blessed?'blessed_scroll_a':'scroll_a'),
   db.prepare('SELECT * FROM rpg_equipment WHERE tg_id=? AND (id=? OR is_equipped<>0)').bind(tg,itemId)
  ]);const char=chars.results?.[0];return char?{char,inv:Object.fromEntries((inv.results||[]).map(x=>[x.item,x.quantity])),equipment:gear.results||[]}:null;
@@ -20,7 +20,7 @@ export async function wake(env,id){
  if(!r.ok)throw new Error('Unable to schedule background enhancement');return true;
 }
 
-const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first())?.account_tg_id||String(tg);
+const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first())?.account_tg_id||String(tg);
 export const jobView=j=>j?{id:j.id,itemId:j.item_id,itemName:j.item_name,characterId:j.tg_id,ownerAccountId:j.owner,dismissed:!!j.notice_dismissed_at,target:j.target,blessed:!!j.blessed,status:j.status,reason:j.reason,level:j.level,attempts:j.attempts,spentGold:j.spent_gold,spentScrolls:j.spent_scrolls,updatedAt:j.updated_at,nextAt:j.next_at,intervalMs:INTERVAL_MS}:null;
 export async function view(env,tg){const owner=await ownerOf(env.DB,tg);return jobView(await env.DB.prepare("SELECT j.*,n.created_at AS notice_dismissed_at FROM rpg_auto_enhance j LEFT JOIN rpg_notice_dismissals n ON n.account_tg_id=j.owner AND n.kind='auto_enhance_end' AND n.ref_id=j.id WHERE j.owner=? ORDER BY CASE WHEN j.status='running' THEN 0 ELSE 1 END,j.created_at DESC,j.rowid DESC LIMIT 1").bind(owner).first());}
 export async function start(env,tg,b,now){

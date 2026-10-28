@@ -17,7 +17,7 @@ function normalize(b){
 }
 const fingerprint=p=>digest(JSON.stringify(p));
 async function recipients(env,p){
- const result=await env.DB.prepare(`SELECT tg_id id,COALESCE(account_tg_id,tg_id) accountId,name,level FROM rpg_characters WHERE tg_id IN (${p.charIds.map(()=>'?').join(',')}) ORDER BY tg_id`).bind(...p.charIds).all();
+ const result=await env.DB.prepare(`SELECT tg_id id,COALESCE(account_tg_id,tg_id) accountId,name,level FROM rpg_live_characters AS rpg_characters WHERE tg_id IN (${p.charIds.map(()=>'?').join(',')}) ORDER BY tg_id`).bind(...p.charIds).all();
  if(result.results?.length!==p.charIds.length)throw new GameError('grant_targets','名單中有不存在的角色，請重新確認',409);
  if(p.item&&ITEMS[p.item].maxHold){
   const held=await env.DB.prepare(`SELECT tg_id,quantity FROM rpg_inventory WHERE item=? AND tg_id IN (${p.charIds.map(()=>'?').join(',')})`).bind(p.item,...p.charIds).all();

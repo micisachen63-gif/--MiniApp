@@ -172,7 +172,7 @@ export async function createCharacter(env, { tgId, tgName = null, name, gender, 
     return p;
   };
   const previous=await recover();if(previous)return previous;
-  const owned = await db.prepare('SELECT tg_id, char_slot FROM rpg_characters WHERE account_tg_id = ? ORDER BY char_slot').bind(account).all();
+  const owned = await db.prepare('SELECT tg_id, char_slot FROM rpg_live_characters AS rpg_characters WHERE account_tg_id = ? ORDER BY char_slot').bind(account).all();
   const characters = owned.results || [];
   if (characters.length >= 4) throw new GameError('character_limit', '每個 Telegram 帳號最多建立 4 隻角色');
   const usedSlots = new Set(characters.map((r) => Number(r.char_slot)));
@@ -180,7 +180,8 @@ export async function createCharacter(env, { tgId, tgName = null, name, gender, 
   const slot = requestedSlot || [1, 2, 3, 4].find((n) => !usedSlots.has(n));
   // Keep the original Telegram ID as the first character's key for backward compatibility.
   // Additional characters receive opaque internal IDs; account_tg_id remains the Telegram identity.
-  const tg = characters.length ? `c${crypto.randomUUID().replaceAll('-', '')}` : account;
+  const reserved=await db.prepare('SELECT 1 FROM rpg_characters WHERE tg_id=?').bind(account).first();
+  const tg = characters.length||reserved ? `c${crypto.randomUUID().replaceAll('-', '')}` : account;
   const char = { tg_id: tg, base_class: baseClass, class_path: '', level: 1 };
   const st = computeStats(char, []);
   const day = taipeiDay(now);

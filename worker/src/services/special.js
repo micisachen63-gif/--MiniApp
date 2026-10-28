@@ -69,7 +69,7 @@ export async function tradeBook(env,tg,b,now){
  const old=await env.DB.prepare('SELECT trade_id FROM rpg_book_trade_operations WHERE char_id=? AND request_id=?').bind(tg,requestId).first();if(old)return {ok:true,tradeId:old.trade_id,trade:await T.tradeView(env,old.trade_id,tg,now)};
  const ownerId=b.ownerId?String(b.ownerId):tg;const target=b.ownerId?{tgId:tg}:b.target;
  const other=await T.findTarget(env,target);if(!other)throw new GameError('target','找不到交易對象');
- const [a,z]=await Promise.all([env.DB.prepare('SELECT account_tg_id FROM rpg_characters WHERE tg_id=?').bind(ownerId).first(),env.DB.prepare('SELECT account_tg_id FROM rpg_characters WHERE tg_id=?').bind(other.tg_id).first()]);
+ const [a,z]=await Promise.all([env.DB.prepare('SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(ownerId).first(),env.DB.prepare('SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(other.tg_id).first()]);
  if(!a||!z||a.account_tg_id===z.account_tg_id)throw new GameError('self','同一帳號的角色不能彼此交易');
  const item=`book_${b.skillId}`;if(!SKILL_MAP[b.skillId])throw new GameError('book','技能道具無效');
  const qty=await env.DB.prepare('SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item=?').bind(ownerId,item).first();if(!(qty?.quantity>0))throw new GameError('book','對方已沒有此寶物');

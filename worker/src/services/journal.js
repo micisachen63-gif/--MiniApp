@@ -12,7 +12,7 @@ export const QUESTS=Object.freeze([
  {id:'tower',name:'向星而行',icon:'♜',goal:5,min:30,description:'同一場三人爬塔成功推進五層，並手動參戰。',action:'tower',button:'組隊爬塔',combat:true},
  {id:'share',name:'分享收穫',icon:'◇',goal:1,min:1,description:'分享一件可分享的裝備，獲另一位旅人的「超讚」。',action:'bag',button:'分享裝備'},
 ]);
-const character=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name,level FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再寫下今天的旅誌',404);return c;};
+const character=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name,level FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再寫下今天的旅誌',404);return c;};
 const account=c=>String(c.account_tg_id||c.tg_id);
 const rowFor=(db,acct,day)=>db.prepare('SELECT * FROM rpg_journals WHERE account_id=? AND day=?').bind(acct,day).first();
 const tierFor=c=>Math.min(MAX_OPEN_MAP,mapForLevel(c.level));
@@ -22,19 +22,19 @@ const tierFor=c=>Math.min(MAX_OPEN_MAP,mapForLevel(c.level));
 async function progress(env,c,now){
  const db=env.DB,acct=account(c),day=taipeiDay(now),from=taipeiAt(day,0),to=from+86400000,group=String(env.GROUP_CHAT_ID||'');
  const [likes,shares,boss,parties]=await db.batch([
-  db.prepare(`SELECT DISTINCT COALESCE(o.account_tg_id,o.tg_id) owner FROM rpg_characters me
-   JOIN rpg_share_likes l ON l.tg_id=me.tg_id JOIN rpg_shares s ON s.id=l.share_id JOIN rpg_characters o ON o.tg_id=s.tg_id
+  db.prepare(`SELECT DISTINCT COALESCE(o.account_tg_id,o.tg_id) owner FROM rpg_live_characters me
+   JOIN rpg_share_likes l ON l.tg_id=me.tg_id JOIN rpg_shares s ON s.id=l.share_id JOIN rpg_live_characters o ON o.tg_id=s.tg_id
    WHERE me.account_tg_id=? AND l.created_at>=? AND l.created_at<? AND s.chat_id=? AND s.message_id IS NOT NULL
    AND COALESCE(o.account_tg_id,o.tg_id)<>? LIMIT 2`).bind(acct,from,to,group,acct),
-  db.prepare(`SELECT s.id FROM rpg_characters me JOIN rpg_shares s ON s.tg_id=me.tg_id
+  db.prepare(`SELECT s.id FROM rpg_live_characters me JOIN rpg_shares s ON s.tg_id=me.tg_id
    WHERE me.account_tg_id=? AND s.created_at>=? AND s.created_at<? AND s.kind='share'
    AND (s.context_json IS NULL OR (json_extract(s.context_json,'$.showcase')=1 AND json_extract(s.context_json,'$.source') IS NULL))
    AND s.chat_id=? AND s.message_id IS NOT NULL
-   AND EXISTS(SELECT 1 FROM rpg_share_likes l JOIN rpg_characters o ON o.tg_id=l.tg_id
+   AND EXISTS(SELECT 1 FROM rpg_share_likes l JOIN rpg_live_characters o ON o.tg_id=l.tg_id
      WHERE l.share_id=s.id AND l.created_at>=? AND l.created_at<? AND COALESCE(o.account_tg_id,o.tg_id)<>?) LIMIT 1`).bind(acct,from,to,group,from,to,acct),
-  db.prepare(`SELECT a.boss_id FROM rpg_characters me JOIN rpg_boss_attacks a ON a.tg_id=me.tg_id JOIN rpg_boss_instances b ON b.id=a.boss_id
+  db.prepare(`SELECT a.boss_id FROM rpg_live_characters me JOIN rpg_boss_attacks a ON a.tg_id=me.tg_id JOIN rpg_boss_instances b ON b.id=a.boss_id
    WHERE me.account_tg_id=? AND a.created_at>=? AND a.created_at<? AND a.damage>0 AND b.chat_id=?
-   AND EXISTS(SELECT 1 FROM rpg_boss_attacks x JOIN rpg_characters o ON o.tg_id=x.tg_id
+   AND EXISTS(SELECT 1 FROM rpg_boss_attacks x JOIN rpg_live_characters o ON o.tg_id=x.tg_id
      WHERE x.boss_id=a.boss_id AND x.damage>0 AND x.created_at>=? AND x.created_at<? AND COALESCE(o.account_tg_id,o.tg_id)<>?) LIMIT 1`).bind(acct,from,to,group,from,to,acct),
   db.prepare(`SELECT p.kind,p.status,p.state_json,m.char_id FROM rpg_party_members m JOIN rpg_parties p ON p.id=m.party_id
    WHERE m.account_id=? AND p.updated_at>=? AND p.updated_at<? AND p.status<>'lobby'

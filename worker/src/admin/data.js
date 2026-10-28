@@ -12,14 +12,14 @@ export async function players(env,b){
  const q=String(b.q||'').trim().slice(0,80),cursor=String(b.cursor||'');
  if(cursor&&!/^(?:\d{1,20}|c[0-9a-f]{32})$/i.test(cursor))throw new GameError('cursor','分頁無效');
  const pattern='%'+q.replace(/[\\%_]/g,'\\$&')+'%';
- const result=rows(await env.DB.prepare(`SELECT ${charSelect} FROM rpg_characters
+ const result=rows(await env.DB.prepare(`SELECT ${charSelect} FROM rpg_live_characters
   WHERE (?='' OR tg_id=? OR account_tg_id=? OR name LIKE ? ESCAPE '\\') AND tg_id>? ORDER BY tg_id LIMIT 41`)
   .bind(q,q,q,pattern,cursor).all());
  return {items:result.slice(0,40),nextCursor:result.length>40?result[39].id:null};
 }
 export async function player(env,b,now){
  const id=String(b.id||'');
- const c=await env.DB.prepare(`SELECT ${charSelect},idle_state AS idleState,party_id AS partyId FROM rpg_characters WHERE tg_id=?`).bind(id).first();
+ const c=await env.DB.prepare(`SELECT ${charSelect},idle_state AS idleState,party_id AS partyId FROM rpg_live_characters AS rpg_characters WHERE tg_id=?`).bind(id).first();
  if(!c)throw new GameError('not_found','找不到角色',404);
  const result=await env.DB.batch([
   env.DB.prepare('SELECT item,quantity FROM rpg_inventory WHERE tg_id=? ORDER BY item LIMIT 250').bind(id),
@@ -47,21 +47,21 @@ export function insights({trend,features,retention,economy,modes,segments}){
 export async function dashboard(env,b,now){
  const days=[7,14,30].includes(Number(b.days))?Number(b.days):14,today=taipeiDay(now),start=dayStart(today)-(days-1)*DAY,from=taipeiDay(start);
  const result=await env.DB.batch([
-  env.DB.prepare('SELECT COUNT(*) characters,COUNT(DISTINCT COALESCE(account_tg_id,tg_id)) accounts,COALESCE(SUM(gold),0) gold FROM rpg_characters'),
+  env.DB.prepare('SELECT COUNT(*) characters,COUNT(DISTINCT COALESCE(account_tg_id,tg_id)) accounts,COALESCE(SUM(gold),0) gold FROM rpg_live_characters'),
   env.DB.prepare('SELECT day,COUNT(DISTINCT account_tg_id) active FROM rpg_behavior_daily WHERE day>=? AND day<=? GROUP BY day').bind(from,today),
-  env.DB.prepare(`SELECT date(MIN(created_at)/1000,'unixepoch','+8 hours') day,COALESCE(account_tg_id,tg_id) account FROM rpg_characters GROUP BY account HAVING MIN(created_at)>=? AND MIN(created_at)<=?`).bind(start,now),
+  env.DB.prepare(`SELECT date(MIN(created_at)/1000,'unixepoch','+8 hours') day,COALESCE(account_tg_id,tg_id) account FROM rpg_character_origins GROUP BY account HAVING MIN(created_at)>=? AND MIN(created_at)<=?`).bind(start,now),
   env.DB.prepare('SELECT event,COUNT(DISTINCT account_tg_id) users FROM rpg_behavior_daily WHERE day>=? AND day<=? GROUP BY event ORDER BY users DESC').bind(from,today),
-  env.DB.prepare('SELECT base_class name,COUNT(*) count FROM rpg_characters GROUP BY base_class'),
-  env.DB.prepare('SELECT CAST((level-1)/10 AS INTEGER)*10+1 low,COUNT(*) count FROM rpg_characters GROUP BY low ORDER BY low'),
+  env.DB.prepare('SELECT base_class name,COUNT(*) count FROM rpg_live_characters GROUP BY base_class'),
+  env.DB.prepare('SELECT CAST((level-1)/10 AS INTEGER)*10+1 low,COUNT(*) count FROM rpg_live_characters GROUP BY low ORDER BY low'),
   env.DB.prepare('SELECT MIN(day) day FROM rpg_behavior_daily WHERE day<=?').bind(today),
   env.DB.prepare(`SELECT type,COUNT(*) entries,COALESCE(SUM(CASE WHEN gold_delta>0 THEN gold_delta ELSE 0 END),0) inflow,COALESCE(SUM(CASE WHEN gold_delta<0 THEN -gold_delta ELSE 0 END),0) outflow FROM rpg_ledger WHERE created_at>=? AND created_at<=? GROUP BY type ORDER BY inflow+outflow DESC`).bind(start,now),
-  env.DB.prepare(`WITH cohorts AS (SELECT COALESCE(account_tg_id,tg_id) account,MIN(created_at) born FROM rpg_characters GROUP BY account)
+  env.DB.prepare(`WITH cohorts AS (SELECT COALESCE(account_tg_id,tg_id) account,MIN(created_at) born FROM rpg_character_origins GROUP BY account)
    SELECT date(born/1000,'unixepoch','+8 hours') day,COUNT(*) size,
    SUM(EXISTS(SELECT 1 FROM rpg_behavior_daily b WHERE b.account_tg_id=c.account AND b.day=date((c.born+86400000)/1000,'unixepoch','+8 hours'))) d1,
    SUM(EXISTS(SELECT 1 FROM rpg_behavior_daily b WHERE b.account_tg_id=c.account AND b.day=date((c.born+604800000)/1000,'unixepoch','+8 hours'))) d7
    FROM cohorts c WHERE born>=? AND born<=? GROUP BY day ORDER BY day`).bind(start,now),
   env.DB.prepare("SELECT 'short' mode,status,COUNT(*) count FROM rpg_parties WHERE created_at>=? AND created_at<=? GROUP BY status UNION ALL SELECT 'ring' mode,status,COUNT(*) count FROM rpg_star_ring_runs WHERE created_at>=? AND created_at<=? GROUP BY status").bind(start,now,start,now),
-  env.DB.prepare(`SELECT COUNT(*) observed,SUM(CASE WHEN lastDay<=? THEN 1 ELSE 0 END) risk FROM (SELECT b.account_tg_id,MAX(b.day) lastDay FROM rpg_behavior_daily b WHERE b.day<=? AND EXISTS(SELECT 1 FROM rpg_characters c WHERE COALESCE(c.account_tg_id,c.tg_id)=b.account_tg_id) GROUP BY b.account_tg_id)`).bind(taipeiDay(now-3*DAY),today),
+  env.DB.prepare(`SELECT COUNT(*) observed,SUM(CASE WHEN lastDay<=? THEN 1 ELSE 0 END) risk FROM (SELECT b.account_tg_id,MAX(b.day) lastDay FROM rpg_behavior_daily b WHERE b.day<=? AND EXISTS(SELECT 1 FROM rpg_live_characters c WHERE COALESCE(c.account_tg_id,c.tg_id)=b.account_tg_id) GROUP BY b.account_tg_id)`).bind(taipeiDay(now-3*DAY),today),
   env.DB.prepare('SELECT COUNT(*) count FROM rpg_behavior_daily WHERE day>=? AND day<=? AND event=?').bind(from,today,'select'),
  ]);
  const active=new Map(rows(result[1]).map(x=>[x.day,x.active])),newAccounts=new Map();
@@ -83,10 +83,10 @@ export async function segment(env,b,now){
  const condition=kind==='risk'?'lastDay<=?':kind==='new'?'born>=?':'activeDays>=?';
  const threshold=kind==='risk'?taipeiDay(now-3*DAY):kind==='new'?dayStart(taipeiDay(now))-6*DAY:7;
  const items=rows(await env.DB.prepare(`WITH activity AS(SELECT account_tg_id account,MAX(day) lastDay,COUNT(DISTINCT CASE WHEN day>=? THEN day END) activeDays FROM rpg_behavior_daily WHERE day<=? GROUP BY account),
-  accounts AS(SELECT COALESCE(account_tg_id,tg_id) account,MIN(created_at) born FROM rpg_characters GROUP BY account),
+  accounts AS(SELECT COALESCE(account_tg_id,tg_id) account,MIN(created_at) born FROM rpg_character_origins GROUP BY account),
   members AS(SELECT a.account,a.born,b.lastDay,COALESCE(b.activeDays,0) activeDays FROM accounts a LEFT JOIN activity b ON b.account=a.account)
-  SELECT m.*,c.tg_id charId,c.name,c.level,c.base_class baseClass FROM members m JOIN rpg_characters c ON COALESCE(c.account_tg_id,c.tg_id)=m.account
-  AND c.tg_id=COALESCE((SELECT owned.tg_id FROM rpg_characters owned JOIN rpg_accounts a ON a.active_char_id=owned.tg_id WHERE a.account_tg_id=m.account AND COALESCE(owned.account_tg_id,owned.tg_id)=m.account),(SELECT tg_id FROM rpg_characters WHERE COALESCE(account_tg_id,tg_id)=m.account ORDER BY char_slot LIMIT 1))
+  SELECT m.*,c.tg_id charId,c.name,c.level,c.base_class baseClass FROM members m JOIN rpg_live_characters c ON COALESCE(c.account_tg_id,c.tg_id)=m.account
+  AND c.tg_id=COALESCE((SELECT owned.tg_id FROM rpg_live_characters owned JOIN rpg_accounts a ON a.active_char_id=owned.tg_id WHERE a.account_tg_id=m.account AND COALESCE(owned.account_tg_id,owned.tg_id)=m.account),(SELECT tg_id FROM rpg_live_characters AS rpg_characters WHERE COALESCE(account_tg_id,tg_id)=m.account ORDER BY char_slot LIMIT 1))
   WHERE ${condition} AND born<=? AND m.account>? ORDER BY m.account LIMIT 41`).bind(taipeiDay(now-13*DAY),taipeiDay(now),threshold,now,cursor).all());
  return {items:items.slice(0,40),nextCursor:items.length>40?items[39].account:null,segment:kind};
 }

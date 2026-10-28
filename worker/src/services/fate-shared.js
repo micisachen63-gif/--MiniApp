@@ -51,7 +51,7 @@ const pending=r=>r&&['scheduled','pending'].includes(r.status);
 const parse=s=>JSON.parse(s);
 const fail=(code,message,status=409)=>{throw new GameError(code,message,status)};
 async function actor(db,tg){
- const c=await db.prepare('SELECT c.tg_id,c.name,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(String(tg)).first();
+ const c=await db.prepare('SELECT c.tg_id,c.name,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(String(tg)).first();
  if(!c)fail('no_character','先建立角色，再開啟旅章',404);
  if(c.active_char_id&&String(c.active_char_id)!==String(tg))fail('character_changed','角色已切換，請重新開啟旅章');
  return {...c,account:String(c.account)};
@@ -68,8 +68,8 @@ const rowFor=async(db,id)=>warmRow(await db.prepare('SELECT s.*,l.state_json sto
 // Membership is external; bound-character ownership and consent are local and
 // must not race a deletion/reassignment after the last async eligibility read.
 const authorityGuard=(db,row,now)=>db.prepare(`INSERT INTO rpg_guard(ok) SELECT NULL WHERE NOT (
- EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=?)
- AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=?)
+ EXISTS(SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=?)
+ AND EXISTS(SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=?)
  AND EXISTS(SELECT 1 FROM rpg_fate_social_preferences WHERE account_id=? AND enabled=1 AND allow_mentions=1 AND quiet_until<=?)
  AND COALESCE((SELECT quiet_until FROM rpg_fate_social_preferences WHERE account_id=?),0)<=?
  AND EXISTS(SELECT 1 FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active')
@@ -95,8 +95,8 @@ async function memberships(env,accounts){const valid=await memberSet(env,account
 async function localEligible(env,row,now){
  const [a,b,oc,gc,life,guestLife]=await Promise.all([
   pref(env.DB,row.owner_account),pref(env.DB,row.guest_account),
-  env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.owner_char).first(),
-  env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.guest_char).first(),
+  env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.owner_char).first(),
+  env.DB.prepare('SELECT c.tg_id,COALESCE(c.account_tg_id,c.tg_id) account,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=COALESCE(c.account_tg_id,c.tg_id) WHERE c.tg_id=?').bind(row.guest_char).first(),
   env.DB.prepare('SELECT status,state_json FROM rpg_fate_lives WHERE id=?').bind(row.life_id).first(),
   env.DB.prepare("SELECT state_json FROM rpg_fate_lives WHERE char_id=? AND status='active'").bind(row.guest_char).first()
  ]);
@@ -173,7 +173,7 @@ export async function schedule(env,{lifeId,charId,accountId,name,draft},now){
  const c=await actor(db,charId);if(c.account!==account)return {scheduled:false};
  const life=await db.prepare("SELECT id,state_json FROM rpg_fate_lives WHERE id=? AND char_id=? AND account_id=? AND status='active'").bind(lifeId,String(charId),account).first();if(!life)return {scheduled:false};
  let stored;try{stored=JSON.parse(life.state_json);}catch{return {scheduled:false};}if(stored.version===8&&stored.country!=='TW')return {scheduled:false};if(stored.version===9){if(!Object.hasOwn(COUNTRY_METADATA_V9,stored.country))return {scheduled:false};await ensureCountryPack(stored.country);}
- const rows=(await db.prepare('SELECT p.account_id,c.tg_id,c.name FROM rpg_fate_social_preferences p JOIN rpg_accounts a ON a.account_tg_id=p.account_id JOIN rpg_characters c ON c.tg_id=a.active_char_id AND COALESCE(c.account_tg_id,c.tg_id)=p.account_id LEFT JOIN rpg_fate_social_locks l ON l.account_id=p.account_id WHERE p.account_id<>? AND p.enabled=1 AND p.allow_mentions=1 AND p.quiet_until<=? AND p.active_at>=? AND l.account_id IS NULL ORDER BY p.active_at DESC,p.account_id LIMIT 12').bind(account,now,now-DAY).all()).results||[];
+ const rows=(await db.prepare('SELECT p.account_id,c.tg_id,c.name FROM rpg_fate_social_preferences p JOIN rpg_accounts a ON a.account_tg_id=p.account_id JOIN rpg_live_characters c ON c.tg_id=a.active_char_id AND COALESCE(c.account_tg_id,c.tg_id)=p.account_id LEFT JOIN rpg_fate_social_locks l ON l.account_id=p.account_id WHERE p.account_id<>? AND p.enabled=1 AND p.allow_mentions=1 AND p.quiet_until<=? AND p.active_at>=? AND l.account_id IS NULL ORDER BY p.active_at DESC,p.account_id LIMIT 12').bind(account,now,now-DAY).all()).results||[];
  let offset=40*MINUTE;if(stored.version===9){const death=countryProfile(stored.seed,stored.orbit,stored.country).deathAge,min=Math.ceil(18/death*LIFE_MS);offset=min+storyHash('v9-shared-open:'+stored.country+':'+stored.seed)%(100*MINUTE-min);}
  const open=addActive(stored.startedAt,offset),deadline=Math.min(addActive(open,10*MINUTE),addActive(stored.startedAt,LIFE_MS)),day=taipeiDay(open);
  if(now>=deadline)return {scheduled:false};

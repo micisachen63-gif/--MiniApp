@@ -4,7 +4,7 @@ import {withPlayer} from './player.js';
 
 const requestOf=b=>{const id=String(b?.requestId||'');if(!id||id.length>100)throw new GameError('request','請提供有效的操作編號');return id;};
 export async function state(env,tg){
- const c=await env.DB.prepare('SELECT level,special_json FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();
+ const c=await env.DB.prepare('SELECT level,special_json FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();
  if(!c)throw new GameError('no_character','請先建立角色',404);
  const owned=(await env.DB.prepare('SELECT cosmetic_id FROM rpg_star_ring_cosmetics WHERE char_id=? ORDER BY unlocked_at,cosmetic_id').bind(String(tg)).all()).results.map(r=>r.cosmetic_id);
  const selected=equippedAura(c),equipped=selected&&owned.includes(selected.id)?selected:null;

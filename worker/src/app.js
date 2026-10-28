@@ -1,3 +1,4 @@
+import * as CHARACTER_DELETE from './services/character-delete.js';
 import {monsterMeta,monsterPool} from './game/monsters.js';
 import {MONSTER_ART_REVISION,monsterArtCompatibility} from './game/monster-art-compatibility.js';
 // Telegram Mini App API (/app/api/*). Auth = Telegram WebApp initData (HMAC with 小精靈's BOT_TOKEN, auth_date ≤ 24h).
@@ -109,7 +110,7 @@ export async function bossFor(env, tg, now) {
   const rows = await env.DB.prepare('SELECT win, damage FROM rpg_boss_attacks WHERE boss_id = ? AND tg_id = ?').bind(boss.id, tg).all();
   const mine = rows.results || []; const win = attackWindow({ started_at: boss.startedAt }, now);
   const attacked = mine.some((r) => r.win === win);
-  const ch = await env.DB.prepare('SELECT boss_down_until FROM rpg_characters WHERE tg_id = ?').bind(tg).first();
+  const ch = await env.DB.prepare('SELECT boss_down_until FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(tg).first();
   const downUntil = ch?.boss_down_until && ch.boss_down_until > now ? ch.boss_down_until : null;
   const nextAt = attacked ? boss.startedAt + (win + 1) * BOSS.attackWindowMs : now;
   return { boss: { ...boss, me: { hits: mine.length, damage: mine.reduce((s, r) => s + r.damage, 0), attackedThisWindow: attacked, nextAttackAt: Math.max(nextAt, downUntil || 0), downUntil, hasCharacter: !!ch } }, now };
@@ -138,12 +139,15 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
     safe.requestId=body.requestId.toLowerCase();
   }
   if (action === 'characters') return json({ ok: true, characters: await listAccountCharacters(env.DB, tg), maxCharacters: 4 });
+  if(action==='character/delete-status'){const result=await CHARACTER_DELETE.status(env,tg,body);return json(result.committed?{...result,characters:await listAccountCharacters(env.DB,tg),activeCharacterId:await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(tg).first().then(r=>r?.active_char_id??null)}:result);}
+  if(action==='character/delete-preview')return json(await CHARACTER_DELETE.preview(env,tg,body,now));
+  if(action==='character/delete'){const result=await CHARACTER_DELETE.remove(env,tg,body,now);return finish({...result,characters:await listAccountCharacters(env.DB,tg),activeCharacterId:await env.DB.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id=?').bind(tg).first().then(r=>r?.active_char_id??null)});}
   if(action==='behavior/visit'){await recordBehavior(env,tg,action,body,now);return json({ok:true});}
   if (action === 'create' && !auth.dev) {
     const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
     // The short-lived admission pass gates the first character only. Existing
     // membership comes from owned server rows, never a client-selected character ID.
-    const established = await env.DB.prepare('SELECT 1 FROM rpg_characters WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    const established = await env.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
     if (!established && (!g || g.expires_at <= now)) return fail('no_pass', '首次建立角色，請先私訊 @StarJournalRpgBot 輸入 /rpg，再按「開啟旅誌」進入', 403);
   }
   if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
@@ -164,7 +168,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   if (action === 'pk/challenge') { safe.origin = 'app'; delete safe.chatId; safe.username = auth.user?.username || null; }
   if (action === 'players') {   // 決鬥 opponent picker: other characters (name, class, level) — no ids of non-players
     const q = String(body.q || '').trim().slice(0, 20);
-    const rows = await env.DB.prepare(`SELECT tg_id, name, base_class, class_path, gender, level, tg_username FROM rpg_characters WHERE account_tg_id <> ? ${q ? 'AND (name LIKE ? OR tg_username LIKE ?)' : ''} ORDER BY updated_at DESC LIMIT 30`)
+    const rows = await env.DB.prepare(`SELECT tg_id, name, base_class, class_path, gender, level, tg_username FROM rpg_live_characters AS rpg_characters WHERE account_tg_id <> ? ${q ? 'AND (name LIKE ? OR tg_username LIKE ?)' : ''} ORDER BY updated_at DESC LIMIT 30`)
       .bind(...(q ? [tg, `%${q}%`, `%${q}%`] : [tg])).all();
     return json({ ok: true, players: (rows.results || []).map((r) => ({ tgId: r.tg_id, name: r.name, baseClass: r.base_class, classPath: r.class_path, gender: r.gender, level: r.level, username: r.tg_username })) });
   }

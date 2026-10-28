@@ -154,7 +154,7 @@ const routes = {
   'POST /rpg/star-ring/get': async(env,b,now)=>{
     const active=tgOf(b),recipient=b.recipientCharId?String(b.recipientCharId):active;
     if(recipient!==active){
-      const owned=await env.DB.prepare('SELECT tg_id FROM rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=(SELECT COALESCE(account_tg_id,tg_id) FROM rpg_characters WHERE tg_id=?)').bind(recipient,active).first();
+      const owned=await env.DB.prepare('SELECT tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND COALESCE(account_tg_id,tg_id)=(SELECT COALESCE(account_tg_id,tg_id) FROM rpg_live_characters AS rpg_characters WHERE tg_id=?)').bind(recipient,active).first();
       if(!owned)throw new GameError('character_not_owned','找不到這個角色的遠征戰報',403);
     }
     const party=await STAR_RING.view(env,String(b.partyId),recipient,now);
@@ -268,7 +268,7 @@ async function claimOutbox(env, now, limit) {
     if (payload.pkId) payload.pk = await PK.pkView(env, String(payload.pkId), null, now);
     if(r.target==='dm'&&!payload.recipientCharId&&(payload.trade||payload.pk)){
       const sides=payload.trade||payload.pk;
-      const recipient=await db.prepare('SELECT tg_id FROM rpg_characters WHERE account_tg_id=? AND tg_id IN (?,?) LIMIT 1').bind(String(r.tg_id),String(sides.a.tgId),String(sides.b.tgId)).first();
+      const recipient=await db.prepare('SELECT tg_id FROM rpg_live_characters AS rpg_characters WHERE account_tg_id=? AND tg_id IN (?,?) LIMIT 1').bind(String(r.tg_id),String(sides.a.tgId),String(sides.b.tgId)).first();
       if(recipient)payload.recipientCharId=recipient.tg_id;
     }
     if (payload.requestId && r.kind.startsWith('trade_re')) payload.request = await SH.requestView(env, await env.DB.prepare('SELECT * FROM rpg_trade_requests WHERE id = ?').bind(String(payload.requestId)).first());
@@ -333,7 +333,7 @@ async function adminGrant(env, b, now) {
   if (!/^\d+$/.test(admin)) throw new GameError('admin', 'adminTgId 無效');
   if (!b.requestId) throw new GameError('request', '需要 requestId');
   if (gold < 0 || gold > 1_000_000 || (item && (!ITEMS[item] || qty < 1 || qty > 999)) || (!gold && !item)) throw new GameError('grant', '發放內容無效');
-  const exists = await db.prepare('SELECT 1 FROM rpg_characters WHERE tg_id = ?').bind(tg).first(); if (!exists) throw new GameError('no_character', '對方還沒有角色', 404);
+  const exists = await db.prepare('SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(tg).first(); if (!exists) throw new GameError('no_character', '對方還沒有角色', 404);
   const eid = `admin:${b.requestId}`;
   const stmts = [ledgerStmt(db, { event_id: eid, tg_id: tg, type: '管理員發放', gold_delta: gold, item, item_delta: item ? qty : 0, note: String(b.reason || '').slice(0, 100) }, now),
     db.prepare('INSERT INTO rpg_admin_audit (id, admin_tg_id, action, details, created_at) VALUES (?,?,?,?,?)').bind(eid, admin, 'grant', JSON.stringify({ tg, gold, item, qty, reason: b.reason || null }), now)];
@@ -349,7 +349,7 @@ export async function runCron(env, now) {
   await PARTY.sweep(env,now);
   const out = { spawn: await B.spawnDue(env, now), expired: await B.expireDue(env, now), tradesExpired: await T.expireDue(env, now).catch((e) => { console.error('trade expire', e?.message); return -1; }),
     requestsExpired: await SH.expireRequests(env, now).catch(() => -1), pkExpired: await PK.expirePk(env, now).catch(() => -1), settled: 0, errors: 0 };
-  const rows = await env.DB.prepare(`SELECT c.tg_id FROM rpg_characters c
+  const rows = await env.DB.prepare(`SELECT c.tg_id FROM rpg_live_characters c
     JOIN rpg_accounts a ON a.active_char_id = c.tg_id AND a.account_tg_id = c.account_tg_id
     WHERE c.last_settle_at < ? ORDER BY c.last_settle_at LIMIT 300`).bind(now - 60_000).all();
   for (const r of rows.results || []) {

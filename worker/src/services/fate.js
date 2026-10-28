@@ -11,7 +11,7 @@ import {fateEvidence} from './fate-quests.js';
 import {snapshotSocialCast} from './fate-social.js';
 import * as SHARED from './fate-shared.js';
 const parse=(s,fallback=null)=>{try{return JSON.parse(s)}catch{return fallback}};
-const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
+const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','selectedCharacterId','tgId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
 async function fingerprint(kind,b){const a=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify({kind,body:canonical(b)})));return [...new Uint8Array(a)].map(n=>n.toString(16).padStart(2,'0')).join('');}
 async function mutation(env,tg,b,now,kind,fn){

@@ -1,0 +1,23 @@
+角色刪除（2026-10-28）
+
+玩家入口：選角卡片下方「刪除角色」。先查本人角色及阻擋原因，再輸入完整名稱並勾選確認；不會因點卡片、開確認窗或取消而刪角。每個 Telegram 帳號每台北日最多刪除一隻，00:00 重置。刪後欄位與名字釋出；重建保留正常新手禮。
+
+交易、掛賣、隊伍／遠征招募或出發、背景作業、決鬥邀請、進行中的命運旅章／共享選擇、未結算首領與未領組隊獎勵均阻擋。檢查在正式寫入時再次執行，沒有只靠前端。
+
+資料生命週期：0034 是加法更新，角色增加 nullable deleted_at；原主鍵及子表保留供交易／FK／帳本稽核。刪角會解除 account_tg_id、保留原所有權與角色快照於 rpg_character_deletions、使用保留命名空間釋放原名，金幣歸零並寫負額帳本。遊戲讀取一律用 rpg_live_characters；rpg_character_origins 保留原帳號與加入時間，避免管理分析的 cohort 被重建重置。原實體表不更名。
+
+刪除由一筆 INSERT rpg_character_deletions 驅動；同一 SQL statement 的 trigger 驗擁有權／名稱／欄位／版本／金幣、活動阻擋與台北日期，執行帳號切角、資產停用、帳本、公開分享不可交易及指定角色訊息／工坊通知收尾。任何步驟失敗，包含直接 run()、整筆回滾。帳號／日期、帳號／request_id 與角色 PK 防重。正常資產寫入檢查 tombstone，阻止舊請求復活角色或補入不可使用資產。
+
+刪除目前角色時，選最前面尚存角色並從刪除時重設其掛機起點；不補算休眠期間。沒有剩餘角色則回空選角。刪除未啟用分身，不改其他角色、遠征快照或隊伍。舊角色回應仍受 epoch／revision／actor 檢查。角色 ID 永不再發給新角色，連舊式數字 ID 的最後角色刪除後，重建也使用新 opaque ID。
+
+刪角確認使用持久 request_id；寫入斷線後可用同一操作重送，或關閉再打開時經唯讀 status 核對。狀態檢查之前／之後的競爭也會恢復已提交相同收據，不換編號誤刪。preview/status 都列為唯讀請求，不執行遊戲推進。
+
+平台相容：阻擋 view 使用各角色 correlated EXISTS + json_each，避免 D1 compound SELECT 項數限制；正式唯讀編譯預檢 rows_written=0。既有動態 SQL 仍保留 rpg_characters alias。舊版 migration 測試僅加入相容 live view 來建立舊 fixture；原斷言保留。空資料庫 schema contract 明列 0034 新物件及單一 nullable 欄位；新增 populated migration 測試逐表確認既有資料與 FK 不改。
+
+測試：character-delete.test.js 18 項，涵蓋越權、名稱、每日界線、防重／重送讀取間隙、單一 SQL late-failure 整筆回滾、活動競爭、資產／獎勵舊寫入、其他角色／進行中遠征、排程、FK、重建、舊通知與 cohort。character-delete-browser.mjs 使用隔離 SQLite +完整 MiniApp/API，在 320／390／1280 驗證取消零寫入、名稱＋勾選、回應截斷後唯讀恢復、每日／掛賣限制、預覽後加入隊伍、刪除目前角色與延遲 me、其他角色資產、重新整理及視窗不溢出。完整測試結果查 .release-sync/character-delete-*.log 及 CI。測試身分均為虛構，真實指定操作僅保存在忽略的 .release-sync。
+
+發布順序：PR 必要檢查後合入 main，乾淨 checkout 等於 origin/main。只套用 0034_character_deletion.sql，並在 d1_migrations 登記這一檔；既有歷史 0026–0028 有未登記檔案，本次不批次 apply 所有 pending migrations。先備存結構與指定操作目標，確認僅加法 DDL；更新後核對所有新增物件及 deleted_at 欄位、刪除表為空，既有玩家仍可用舊程式正常操作。再用根目錄 deploy:worker，保留原 secrets、namespace、cron 與素材；不部署 BOT。正式 receipt、版本與 public hash 都驗證後，才以同一 remove service 處理人類明確授權的指定刪角。
+
+維護操作：.release-sync/character-delete-d1-adapter.mjs 預設只讀，開啟刪除權限時也只接受一筆 INSERT rpg_character_deletions，不能做其他 SQL 寫入；使用原服務產生參數並經現有 Wrangler 登入執行。原 SQL 單一指令的 trigger 原子性不依賴多筆 REST batch 的假設。目標固定第一次查核的角色 ID，不能改刪同名新角色；備份、request_id、防重收據、保留資產與帳本、其他角色及啟用指標的確認留在忽略目錄，不送 TG 訊息、不反覆檢查。Windows Miniflare 本機 runtime 曾無法啟動，維護操作不依賴它。
+
+快取 app.js／request-client.js／character-delete.css：20261028-character-delete1。功能發布本身不會自動刪除任何角色；真實指定操作另有獨立確認收據。

@@ -14,7 +14,7 @@ export const guardStmt = (db) => db.prepare('INSERT INTO rpg_guard(ok) SELECT NU
 
 export async function loadPlayer(db, tgId, env={}) {
   const [c, inv, eq, guardian] = await db.batch([
-    db.prepare('SELECT c.*, a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id = ?').bind(String(tgId)),
+    db.prepare('SELECT c.*, a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id = ?').bind(String(tgId)),
     db.prepare('SELECT item, quantity FROM rpg_inventory WHERE tg_id = ?').bind(String(tgId)),
     db.prepare('SELECT * FROM rpg_equipment WHERE tg_id = ? ORDER BY created_at').bind(String(tgId)),
     db.prepare('SELECT * FROM rpg_guardian_sigils WHERE char_id = ? AND active = 1').bind(String(tgId)),
@@ -41,7 +41,7 @@ export const invDeltaStmt = (db, tgId, item, delta) => db.prepare('INSERT INTO r
 export const invDeltaStmts = (db, tgId, item, delta) => (delta >= 0 ? [invDeltaStmt(db, tgId, item, delta)]
   : [db.prepare('UPDATE rpg_inventory SET quantity = quantity + ? WHERE tg_id = ? AND item = ?').bind(delta, String(tgId), item), guardStmt(db)]);
 export const outboxStmt = (db, { dedupe, target, tgId = null, kind, payload = {} }, now) => db.prepare(`INSERT OR IGNORE INTO rpg_outbox (dedupe_key,target,tg_id,kind,payload_json,created_at)
-  VALUES (?,?,CASE WHEN ? = 'dm' AND ? IS NOT NULL THEN COALESCE((SELECT account_tg_id FROM rpg_characters WHERE tg_id = ?), ?) ELSE ? END,?,?,?)`)
+  VALUES (?,?,CASE WHEN ? = 'dm' AND ? IS NOT NULL THEN COALESCE((SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?), ?) ELSE ? END,?,?,?)`)
   .bind(dedupe || null, target, target, tgId == null ? null : String(tgId), tgId == null ? null : String(tgId), tgId == null ? null : String(tgId), tgId == null ? null : String(tgId), kind, JSON.stringify(target==='dm'&&tgId!=null?{...payload,recipientCharId:String(tgId)}:payload), now);
 
 /** build the batch statements that turn `before` into `after` (+ ledger rows + extra statements) */
@@ -80,6 +80,10 @@ export function classifyDbError(error) {
 }
 function classifyRaw(error) {
   const m = String(error?.message || error);
+  if (/character_delete_changed/.test(m)) return new GameError('character_delete_changed','角色狀態已更新，請重新確認要刪除的角色',409);
+  if (/character_delete_day/.test(m)) return new GameError('request','刪角日期無效');
+  if (/character_delete_busy/.test(m)) return new GameError('character_delete_busy','角色狀態已變動，請先完成隊伍、交易或進行中的活動再刪除',409);
+  if (/character_deleted/.test(m)) return new GameError('no_character','角色已刪除，請重新選角',404);
   if (/UNIQUE constraint failed: rpg_party_presence\./.test(m)) return new GameError('party','目前已有打寶、爬塔或招募隊伍，請先完成或離隊',409);
   if (/exchange_guardian_locked/.test(m)) return new GameError('in_exchange','這位守護天使已在交易所保管，請先取回',409);
   if (/exchange_equipment_locked/.test(m)) return new GameError('in_exchange','這件裝備已在交易所保管，請先取回',409);
