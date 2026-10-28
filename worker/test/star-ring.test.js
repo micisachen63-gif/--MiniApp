@@ -122,7 +122,7 @@ test('idle disabled while running; completion resumes only from true end time; E
  const settled=settleIdle(p.char,p.inv,p.equipment,T+3600000);assert.equal(settled.report.exp_gained,0);
  await R.view(env,id,ids[0],T+E.DURATION+3600000);const c=db.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').get(ids[0]);assert.equal(c.level,90);assert.equal(c.class_path,'B2');assert.equal(c.last_settle_at,T+E.DURATION);
 });
-test('advanced eligibility enforces four distinct simultaneous duties and all existing classes',async t=>{
+test('advanced eligibility retains three distinct non-guard duties and all existing classes',async t=>{
  const{env,id,ids}=await fixture(t,{difficulty:'advanced',start:false,classes:Array(5).fill('thief:A1')});
  await assert.rejects(R.action(env,ids[0],{partyId:id,action:'start'},T),e=>e.code==='party_roles');
  assert.equal(env.DB.sqlite.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,0);
@@ -358,4 +358,33 @@ test('core redemption uses only bound cores and a retry-safe private receipt; co
 test('v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores',async t=>{
  const{env,db,id,ids}=await fixture(t,{engineVersion:3});const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);state.actors=state.actors.map(a=>({...a,atk:1e7,departureAtk:1e7}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
  const at=T+E.HOUR_MS;assert.ok((await R.view(env,id,ids[0],at)).pendingRankReward.bossKills>0);await R.action(env,ids[0],{partyId:id,action:'leave'},at);await assert.rejects(R.create(env,ids[0],{tier:90},at+1),e=>e.code==='daily');const v=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(v.pendingRankReward,null);assert.equal(v.me.rewards.exp,0);assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='star_ring_core'").get(ids[0]),undefined);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards WHERE char_id=?').get(ids[0]).n,0);
+});
+
+for(const tier of [40,90])test(`advanced Lv${tier} no-guard team starts, fights and settles all six stages exactly once`,async t=>{
+ const classes=tier===40?['archer:A','mage:A','thief:A','archer:B','mage:B']:['archer:A1','mage:A1','thief:A1','archer:A2','mage:B1'];
+ const {env,db,id,ids}=await fixture(t,{tier,classes,difficulty:'advanced',engineVersion:E.ENGINE_VERSION,start:false});
+ const lobby=await R.view(env,id,ids[0],T);assert.equal(lobby.optionalGuard,true);assert.deepEqual(lobby.roleCoverage.missing,['guard']);
+ const started=await R.action(env,ids[0],{partyId:id,action:'start',requestId:'no-tank-start'},T);assert.equal(started.party.status,'running');
+ const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.equal(state.optionalGuard,true);assert.ok(state.actors.every(a=>!E.rolesOf(a).includes('guard')));assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,5);
+ // Guard-only gaps used to silently prohibit all damage, even after admission.
+ const probe={...state,engineVersion:1};const live=E.simulateStage(probe,0,8);assert.ok(Object.values(live.contribution).some(c=>c.damage>0));assert.ok(live.coverage.missing.includes('guard'));
+ const legacy=E.simulateStage({...probe,optionalGuard:undefined},0,8);assert.equal(Object.values(legacy.contribution).reduce((n,c)=>n+c.damage,0),0);
+ const end=await R.view(env,id,ids[0],T+E.DURATION);assert.equal(end.status,'complete');assert.equal(end.completedStages,6);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+ for(const charId of ids){const rows=db.prepare('SELECT reward_json FROM rpg_star_ring_rewards WHERE char_id=?').all(charId).map(r=>JSON.parse(r.reward_json));assert.equal(rows.length,6);assert.ok(rows.every(r=>r.exp>0&&r.equipment.length>=8));const ids=rows.flatMap(r=>r.equipment.map(e=>e.id));assert.equal(new Set(ids).size,ids.length);assert.equal(db.prepare('SELECT count(*) n FROM rpg_equipment WHERE tg_id=? AND id LIKE ?').get(charId,'ringgear:%').n,ids.length);}
+ await R.sweep(env,T+E.DURATION+60000);assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
+});
+
+for(const [path,missing]of [['mage:A1','control'],['mage:B1','breach'],['thief:A1','aid']])test(`advanced still rejects missing ${missing} without charging departure`,async t=>{
+ const {env,db,id,ids}=await fixture(t,{difficulty:'advanced',classes:Array(5).fill(path),start:false});
+ const actors=ids.map(id=>({id,level:90,base:path.split(':')[0],path:path.split(':')[1]}));assert.ok(E.coverage(actors,['breach','aid','control']).missing.includes(missing));
+ await assert.rejects(R.action(env,ids[0],{partyId:id,action:'start'},T),e=>e.code==='party_roles'&&e.message.includes('守護職責可自由搭配'));assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_starts').get().n,0);assert.equal(db.prepare('SELECT status FROM rpg_star_ring_runs WHERE id=?').get(id).status,'lobby');
+});
+
+test('optional guard never consumes the sole healer when only three simultaneous duties fit',async t=>{
+ const {env,db,id,ids}=await fixture(t,{difficulty:'advanced',classes:['mage:A2',...Array(4).fill('thief:A1')],engineVersion:E.ENGINE_VERSION});
+ const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json),probe={...state,engineVersion:1};
+ assert.deepEqual((await R.view(env,id,ids[0],T)).roleCoverage.missing,['guard']);
+ assert.deepEqual(E.coverage(state.actors).missing,['aid']);assert.deepEqual(E.coverage(state.actors,['breach','aid','control']).missing,[]);
+ const result=E.simulateStage(probe,4,8);assert.deepEqual(result.coverage.missing,['guard']);assert.equal(result.coverage.assignment.aid,ids[0]);assert.ok(Object.values(result.contribution).some(c=>c.damage>0));
+ const legacy=E.simulateStage({...probe,optionalGuard:undefined},4,8);assert.ok(legacy.coverage.missing.includes('aid'));assert.equal(Object.values(legacy.contribution).reduce((n,c)=>n+c.damage,0),0);
 });
