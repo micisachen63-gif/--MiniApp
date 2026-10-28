@@ -11,3 +11,5 @@ me 增加 idleSettlement，按目前角色查詢已提交最近一份 rpg_idle_r
 idle-exp-progress-browser.mjs 使用隔離 SQLite 與完整 MiniApp／真 API，在320／390／1280寬度驗證每30秒真更新、cron先結算、不重寫紀錄、切角提示清除、延遲前角色 me 回應、直接結算、升級後新分母、119級大數字、120級滿級及畫面不溢出。證據在忽略的.release-sync/idle-exp-*.json／png／log。
 
 快取 app.js 與 idle-exp.css：20261028-exp-progress1。僅發布 Worker；不變更 BOT、不呼叫正式玩家遊戲 API 或人工補發。完整測試與正式來源／版本以執行日誌及 deployment-records 收據核對。
+
+完整回歸的測試維護：frontend-state-audit 載入真實 idle／EXP helper（保留原斷言）；遠征既有收據／額外裝備測試固定 guard-rating-proof 種子，避免隨機抽不到額外裝備而偶發失敗，原獎勵與防重斷言保留。正式戰鬥及掉率不改。
