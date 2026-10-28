@@ -143,6 +143,8 @@ async function advance(env,id,now){
   if(p.status==='lobby'){if(p.expires_at<=now){p.status='ended';extra.push(...release(env.DB,p,now));}return;}
   if(p.status!=='running')return;
   const s=p.state,due=Math.min(6,Math.max(0,Math.floor((now-s.startedAt)/Engine.STAGE_MS))),fresh=[];
+  // Grade only future checkpoints with the current policy; stored battles/receipts stay immutable.
+  if(due>s.results.length)s.guardRatingVersion=2;
   for(let i=s.results.length;i<due;i++){
    const result=Engine.simulateStage(s,i);s.results.push(result);fresh.push({index:i,result});
    s.log.unshift({at:s.startedAt+(i+1)*Engine.STAGE_MS,text:`${Engine.STAGES[i].name}完成，評價 ${result.grade}；${i===5?'十二小時遠征結束，戰利品已結算':result.defeated?Engine.usesPools(s)?`已擊退 ${result.waves} 波魔物，穿越兩片邊境`:'已擊退'+Engine.STAGES[i].enemyName:'整頓補給後繼續前行'}。`});

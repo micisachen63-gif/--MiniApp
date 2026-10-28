@@ -245,7 +245,9 @@ export function simulateStage(state,index,beats=BEATS){
  if(steps===BEATS)finishArea(b,state);
  const finalMatch=coverageForExpedition(state,b.actors,usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,b.hourIndex));
  finalMatch.missing=[...new Set([...b.roleFailures,...finalMatch.missing])];
- const defeated=b.waves>=b.objective,grade=defeated&&!finalMatch.missing.length?(resolvedBeat!=null&&resolvedBeat<BEATS*.65?'S':'A'):'B';
+ // Optional guard remains visible in coverage, but cannot impose an automatic B rating.
+ const ratingFailures=finalMatch.missing.filter(r=>r!=='guard'||state.optionalGuard!==true&&state.guardRatingVersion!==2);
+ const defeated=b.waves>=b.objective,grade=defeated&&!ratingFailures.length?(resolvedBeat!=null&&resolvedBeat<BEATS*.65?'S':'A'):'B';
  delete b.enemy.damageBudget;
  return {...b,grade,defeated,coverage:finalMatch,expHours:grade==='S'?4:grade==='A'?22/6:3};
 }

@@ -64,3 +64,7 @@ test('no-guard lobby shows optional guardian and a ready leader can start while 
  const html=ui.render({party:p},{me:()=>({character:{level:105}})});assert.match(html,/守護 · 可選配/);assert.doesNotMatch(html,/守護 · 待補位/);assert.match(html,/高難度仍需不同隊員分擔破陣、支援與壓制/);assert.match(html,/data-sr-action="start" >啟程/);
  const home=ui.render({data:{},draft:{tier:90,difficulty:'advanced'}},{me:()=>({character:{level:105}})});assert.doesNotMatch(home,/完整職責／額外戰利品/);assert.match(home,/高難度 · 破陣／支援／壓制/);
 });
+
+test('optional guard explanation promises performance-based A/S rather than a fixed grade penalty',()=>{
+ const {ui}=setup(),p=party();Object.assign(p,{status:'lobby',optionalGuard:true,roleCoverage:{missing:['guard']}});const html=ui.render({party:p});assert.match(html,/不會因缺守護固定降低評價/);assert.match(html,/無守護也能取得 A／S/);
+});
