@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "52129959b4c5d21ec52fafeded46a9f071359bfb",
+  "sourceCommit": "d50469640fc938da13ad57e14ab64f4f12ed1848",
   "service": "elf-rpg-api",
-  "productionVersion": "5cb72a9b-52bf-4bc6-9512-d671f827fbdd",
+  "productionVersion": "321b8ed9-abd7-4f75-93bd-e333e5c471e5",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-28T01:20:59.866Z",
+  "verifiedAt": "2026-10-28T01:36:16.178Z",
   "runtimeSHA256": {
-    "index.js": "7917f7fcd5fdc6a40681af86a8f15c70033462abb3a462c11f2179b3774dce38"
+    "index.js": "8006056b20af7aeac1e5fc1592d2426e0e05000ef652c83ca924b7b3bb511c61"
   },
   "source": {
     "fileCount": 9499,
-    "sha256": "08dadaffcb07a99a8fd79761cda91c036d69dcf938c0ebaf358c390a9295afe3",
+    "sha256": "59060014b178d11749d19b13ce15538874f979e92d0f41e2890884763954c5be",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -36107,7 +36107,7 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "dab7acd1963dbdaac5cbc653ac976440a8f208e298924c4294887e81ea3c6f27"
+        "sha256": "ab9dbc6a8864671f532bec91ebf9e5bd29fdb3755bd8502275ecb11c8662b69b"
       },
       {
         "file": "worker/public/expedition/live.js",
@@ -37139,7 +37139,7 @@
       },
       {
         "file": "worker/public/preview-star-ring.html",
-        "sha256": "85c29fa36d6717aa249967f80f3faa64d0cffd73b7402d1e38c8c9762ebffd6d"
+        "sha256": "26bedcbea353c5dc71ed27211a3592372f4decd68efb5b13946a55c2643cc675"
       },
       {
         "file": "worker/public/preview-sword-adv2.html",
@@ -37199,7 +37199,7 @@
       },
       {
         "file": "worker/public/star-ring-ui.js",
-        "sha256": "4bc2d59da460260deaf8235f3a44e91f3cb32bd0ede9cd3e73ac4e898fe701f9"
+        "sha256": "fee5174a55ea451eb73cc1530211d8bb25ab90a8565e9c8e392304e200c419b9"
       },
       {
         "file": "worker/public/star-ring.css",
@@ -37803,7 +37803,7 @@
       },
       {
         "file": "worker/src/game/star-ring.js",
-        "sha256": "a3e6f28dc29871b1bf721b530781a47680de5423f374cb820582829c4c462442"
+        "sha256": "2bac5c6627954c8c78d10ef31dfcfe31eba2b653e8a563f986143dc7f77cf59b"
       },
       {
         "file": "worker/src/game/stats.js",
@@ -37979,7 +37979,7 @@
       },
       {
         "file": "worker/src/services/star-ring.js",
-        "sha256": "f88f12c17d79ca597583f5893efe921d649a6fb4cd0bd38834a5c5169f8ece98"
+        "sha256": "fc1f723dcb3a06c896eef46a17e8e04676abfa32fb8529e588775e2dd6c6b38c"
       },
       {
         "file": "worker/src/services/tower-daily.js",
@@ -38172,7 +38172,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "5cb72a9b-52bf-4bc6-9512-d671f827fbdd",
+        "version_id": "321b8ed9-abd7-4f75-93bd-e333e5c471e5",
         "percentage": 100
       }
     ],
