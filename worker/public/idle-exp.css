@@ -1,0 +1,6 @@
+body.greek.v2.mythic #view .card.lc-profile .bar.exp{height:18px}
+body.greek.v2.mythic #view .card.lc-profile .bar.exp b{font-size:clamp(9px,2.6vw,11px);line-height:18px;white-space:nowrap}
+.idle-exp-settlement{margin-top:7px;font-size:11px;line-height:1.6;color:#d4c49b;overflow-wrap:anywhere}
+.idle-exp-settlement strong{color:#f4d58a;font-variant-numeric:tabular-nums}
+.idle-exp-settlement small{display:block;font-size:10px;color:#9cabbc}
+@media(max-width:360px){.idle-exp-percent{display:none}}

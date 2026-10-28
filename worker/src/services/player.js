@@ -373,6 +373,13 @@ export async function ledgerFor(db, tgId, limit = 15) {
   const r = await db.prepare('SELECT type, gold_delta, item, item_delta, note, created_at FROM rpg_ledger WHERE tg_id = ? ORDER BY id DESC LIMIT ?').bind(String(tgId), limit).all();
   return r.results || [];
 }
+// Read only the latest committed settlement visible to this character snapshot.
+// Kept separate from `report`: cron receipts must not replay battle/drop accounting.
+export async function latestIdleSettlement(db, char) {
+  const r = await db.prepare('SELECT from_at,to_at,ticks,exp_gained,exp_lost,levels_gained FROM rpg_idle_reports WHERE tg_id=? AND to_at<=? ORDER BY created_at DESC,id DESC LIMIT 1')
+    .bind(String(char.tg_id),char.last_settle_at).first();
+  return r ? {characterId:String(char.tg_id),...r} : null;
+}
 export async function latestReport(db, tgId) {
   return db.prepare('SELECT * FROM rpg_idle_reports WHERE tg_id = ? ORDER BY id DESC LIMIT 1').bind(String(tgId)).first();
 }

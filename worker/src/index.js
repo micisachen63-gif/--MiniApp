@@ -53,10 +53,10 @@ const tgOf = (b) => { const t = String(b?.tgId ?? ''); if (!/^(?:\d{1,20}|c[\da-
 
 async function me(env, tg, now, { summary = false } = {}) {
   const r = await P.withPlayer(env, tg, now);
-  const [autoEnhance,guardianAuto,autoReroll,backgroundJobs,boss,badges,activity] = await Promise.all([
-    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),bossFor(env,tg,now).then(r=>r.boss),SH.pendingCounts(env,tg,now).catch(() => null),homeActivity(env.DB,r.player.char)
+  const [autoEnhance,guardianAuto,autoReroll,backgroundJobs,boss,badges,activity,idleSettlement] = await Promise.all([
+    AUTO.view(env,tg),GUARDIAN_AUTO.view(env,tg),REROLL_AUTO.view(env,tg),BACKGROUND.list(env,tg),bossFor(env,tg,now).then(r=>r.boss),SH.pendingCounts(env,tg,now).catch(() => null),homeActivity(env.DB,r.player.char),P.latestIdleSettlement(env.DB,r.player.char)
   ]);
-  return { ok: true, ...playerView(r.player, { now, report: r.report?.ticks ? r.report : null, compact:summary }), autoEnhance,guardianAuto,autoReroll,backgroundJobs, boss, badges, activity, now };
+  return { ok: true, ...playerView(r.player, { now, report: r.report?.ticks ? r.report : null, compact:summary }), autoEnhance,guardianAuto,autoReroll,backgroundJobs, boss, badges, activity, idleSettlement, now };
 }
 function act(fn) {
   return async (env, body, now) => {

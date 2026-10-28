@@ -627,6 +627,22 @@
     if (idleReportWindows.size > 20) idleReportWindows.delete(idleReportWindows.keys().next().value);
     return true;
   }
+  let expSettlementActor=null;
+  function syncExpSettlement(j) {
+    const actor=String(j.character.tgId);
+    if(expSettlementActor!==actor){S.expSettlement=null;expSettlementActor=actor;}
+    const candidates=[j.idleSettlement,j.report?.ticks?{characterId:actor,...j.report}:null];
+    for(const r of candidates){
+      if(!r||String(r.characterId)!==actor||!Number.isFinite(r.from_at)||!Number.isFinite(r.to_at)||r.to_at<=r.from_at||!(r.ticks>0))continue;
+      if(!S.expSettlement||r.to_at>S.expSettlement.to_at)S.expSettlement={...r};
+    }
+  }
+  function expSettlementHtml(c) {
+    const r=S.expSettlement;
+    if(!r||r.characterId!==String(c.tgId))return '<div class="idle-exp-settlement muted" data-exp-settlement>每分鐘結算經驗，畫面會自動更新</div>';
+    const time=new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(r.to_at));
+    return `<div class="idle-exp-settlement" data-exp-settlement>最近結算：經驗 <strong>+${fmt(r.exp_gained||0)}</strong>${r.exp_lost?` ／死亡損失 −${fmt(r.exp_lost)}`:''}${r.levels_gained?` · 升了 ${fmt(r.levels_gained)} 級`:''}<small>${fmt(r.ticks)} 分鐘 · ${esc(time)}</small></div>`;
+  }
   function absorb(j,allowCharacterSwitch=false,equipmentTicket) {
     if(!allowCharacterSwitch&&j?.character&&S.me?.character&&S.me.character.tgId!==j.character.tgId)return j;
     if(j?.character&&S.me?.character?.tgId===j.character.tgId&&Number(j.character.revision)<Number(S.me.character.revision))return j;
@@ -638,6 +654,7 @@
       if(S.me?.character&&S.me.character.tgId!==j.character.tgId){S.bossPersonalActor=null;if(S.boss)S.boss={...S.boss,me:undefined};}
       if (S.me?.character && S.me.character.tgId !== j.character.tgId) { S.lastReport=null;S.pending=null;S.session={kills:0,exp:0,gold:0,ticks:0};resetFight(); }
       if(!Object.hasOwn(j,'activity')&&j.character.tgId===S.me?.character?.tgId)j={...j,activity:S.me.activity};
+      syncExpSettlement(j);
       const acceptedReport = !!j.report?.ticks && acceptIdleReport(j.character.tgId,j.report);
       if (BATTLE) BATTLE.sync(j, acceptedReport ? j.report : null);
       if (acceptedReport) { S.lastReport = j.report; { const r = j.report; const P = S.pending || (S.pending = { ticks: 0, kills: 0, gold_gained: 0, elites: 0, drops: {} }); P.ticks += r.ticks || 0; P.kills += r.kills || 0; P.gold_gained += r.gold_gained || 0; P.elites += r.elites || 0; for (const [k, v] of Object.entries(r.drops || {})) P.drops[k] = (P.drops[k] || 0) + v; } S.session.kills += j.report.kills || 0; S.session.exp += (j.report.exp_gained || 0) - (j.report.exp_lost || 0); S.session.gold += j.report.gold_gained || 0; S.session.ticks += j.report.ticks || 0; }
@@ -893,7 +910,8 @@
       <div class="cls">${esc(c.className)}${c.title?` <span class="tower-title-chip">${esc(c.title.name)}</span>`:''} <span class="lv">Lv.${c.level}${c.classPath ? ` · ${esc(c.baseClassName)}系` : ''}</span></div>
       ${bar('hp', c.hp, c.maxHp, `生命值 ${fmt(c.hp)} / ${fmt(c.maxHp)}`)}
       ${bar('mp', c.mp, c.maxMp, `魔力 ${fmt(c.mp)} / ${fmt(c.maxMp)}`)}
-      ${bar('exp', c.expPct, 100, c.expNeed ? `經驗值 ${c.expPct}%` : '經驗值 MAX')}
+      ${bar('exp', c.expPct, 100, c.expNeed ? `經驗值 ${fmt(c.exp)} / ${fmt(c.expNeed)}<span class="idle-exp-percent">（${c.expPct}%）</span>` : `經驗值 ${fmt(c.exp)} · 等級已滿`)}
+      ${expSettlementHtml(c)}
     </div></div></div>
     <div class="lc-battle-shell"><div class="lc-battle-head"><span>${window.RpgExpeditionAway?.activity(me)?'✦ 旅途仍在繼續':'⚔ 狩獵戰場'}</span><span>${si.text}</span></div>
     ${window.RpgExpeditionAway?.activity(me) ? window.RpgExpeditionAway.markup(me) : BATTLE ? '<div id="bslot"></div>' : `<div class="stage"><canvas id="stage"></canvas><div class="status ${si.cls}" id="stStatus">${si.text}</div><div class="mapname">${esc(mapLabel)}</div></div>`}
