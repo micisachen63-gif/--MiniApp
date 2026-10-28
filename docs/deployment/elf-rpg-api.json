@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "ca063939fe92b520760dbead89f5c0384a349f97",
+  "sourceCommit": "dc3e5c4677a26603d862360f59dc2172e4aff13f",
   "service": "elf-rpg-api",
-  "productionVersion": "3400fbfe-9dbe-4b4a-ad6b-3c9f38e75e0c",
+  "productionVersion": "2beee00a-dbfc-4eed-b2ef-ee3baf37facc",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-28T02:19:08.107Z",
+  "verifiedAt": "2026-10-28T04:45:36.069Z",
   "runtimeSHA256": {
-    "index.js": "eca0d433feee8a42a47fda2de53d995c811a553392810c73193a99381dbd00a2"
+    "index.js": "0e65ccdd2fd060e4edf88d18aa905153a6cd2af42a92af73336b174f368b4c24"
   },
   "source": {
-    "fileCount": 9499,
-    "sha256": "40765f2c4c6892fe83cc34a0f362ed79088f22c7eb030d4970b65f9e78b920a4",
+    "fileCount": 9500,
+    "sha256": "6703b409e75933c640143be8ac7bd6cdd059f6e64c8b4fdba60d85603623247f",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -2531,7 +2531,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "44e9e5b956662490a5988141e7261d5b32299e511c8f00d9ccdca2561a365b92"
+        "sha256": "8e598025d2096bf897ee5f7d6b6900049eea26cacdfa67ebfc3853855843be84"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -36902,8 +36902,12 @@
         "sha256": "77625126a3ffd8fa4e10988b7404f92d046a97d8556dfeacd1a5c1c50af5c64a"
       },
       {
+        "file": "worker/public/idle-exp.css",
+        "sha256": "d46a3b580713fce98702a2fe707d28a99b8ea3072a580561f2fef507d9249f9e"
+      },
+      {
         "file": "worker/public/index.html",
-        "sha256": "835a60ba91eb20e0856224e9e5c7334cc6bf12602e116e244ffb56dcd46a0d9c"
+        "sha256": "a3a60ea4d7e854039ee6dcdcf58d9fb8b9cfcc116025dee5103ba63118a72478"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37839,7 +37843,7 @@
       },
       {
         "file": "worker/src/index.js",
-        "sha256": "f5cf59329a30dd3c534e1bf13953703dbae394c3d380bc30a703bbd4dc64c924"
+        "sha256": "69ecb517c314343f001775e50c2bb8e8e88935faf53d7f19f09f8b092f85d71c"
       },
       {
         "file": "worker/src/index.js.20261010-gacha-v1.bak",
@@ -37951,7 +37955,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "7edbea6c810494d7cf9b7786dea64454ff467bf55a0ea146c87c8384d9706ff5"
+        "sha256": "b67f735a1e43de5027f9a7f4ea140216e44f3ce2903b349872b4265cff51a068"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -38013,7 +38017,7 @@
   },
   "assets": {
     "scope": "Root JS/CSS/JSON/HTML entrypoints, representative binary assets, and every added/modified public file since the recorded source commit; initial adoption is not a full historical binary download.",
-    "verifiedCount": 155,
+    "verifiedCount": 152,
     "files": [
       "worker/public/advanced-specializations.css",
       "worker/public/app.js",
@@ -38045,10 +38049,6 @@
       "worker/public/expedition-away.js",
       "worker/public/expedition-entry.css",
       "worker/public/expedition-entry.js",
-      "worker/public/expedition/combat-playback.js",
-      "worker/public/expedition/hero-art-playback.js",
-      "worker/public/expedition/index.html",
-      "worker/public/expedition/live.js",
       "worker/public/fate-entry.css",
       "worker/public/fate-entry.js",
       "worker/public/forge-ritual.css",
@@ -38090,6 +38090,7 @@
       "worker/public/hero-lavish-fx.js",
       "worker/public/hero-size.css",
       "worker/public/hero-size.js",
+      "worker/public/idle-exp.css",
       "worker/public/index.html",
       "worker/public/journal.css",
       "worker/public/journal.js",
@@ -38175,7 +38176,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "3400fbfe-9dbe-4b4a-ad6b-3c9f38e75e0c",
+        "version_id": "2beee00a-dbfc-4eed-b2ef-ee3baf37facc",
         "percentage": 100
       }
     ],
