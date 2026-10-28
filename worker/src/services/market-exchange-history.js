@@ -50,7 +50,7 @@ export async function history(env,tg,input={}) {
   const role=input.role??'all';
   if(!['all','buy','sell'].includes(role))fail('history_filters','請選擇買入或賣出紀錄');
   const cursor=cursorOf(input.cursor),id=String(tg),db=env.DB;
-  const char=await db.prepare('SELECT c.*,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(id).first();
+  const char=await db.prepare('SELECT c.*,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(id).first();
   if(!char)fail('no_character','請先建立角色',404);
   if(input.characterId!=null&&String(input.characterId)!==id||char.active_char_id&&String(char.active_char_id)!==id)fail('character_changed','角色已在另一個視窗切換，請重新選角',409);
   const types=role==='buy'?['交易所購買']:role==='sell'?['交易所售出入帳']:['交易所購買','交易所售出入帳'];
@@ -60,7 +60,7 @@ export async function history(env,tg,input={}) {
   const sql=`SELECT g.id AS ledger_id,g.event_id,g.type AS ledger_type,g.gold_delta,g.created_at AS settled_at,l.*,other.name AS other_name
     FROM rpg_ledger g INDEXED BY idx_rpg_ledger_owner
     JOIN rpg_exchange_listings l ON l.id=substr(g.event_id,10,36)
-    LEFT JOIN rpg_characters other ON other.tg_id=CASE WHEN g.type='交易所購買' THEN l.seller_char ELSE l.buyer_char END
+    LEFT JOIN rpg_live_characters other ON other.tg_id=CASE WHEN g.type='交易所購買' THEN l.seller_char ELSE l.buyer_char END
     WHERE g.tg_id=? AND g.type IN (${types.map(()=>'?').join(',')}) AND l.status='sold'
       AND ((g.type='交易所購買' AND l.buyer_char=? AND g.event_id='exchange:'||l.id||':buy')
         OR (g.type='交易所售出入帳' AND l.seller_char=? AND l.seller_account=? AND g.event_id='exchange:'||l.id||':payout'))

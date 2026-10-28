@@ -16,7 +16,7 @@ const snapshot = db => ({
   sequence: db.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all(),
 });
 
-test('fresh initialization preserves historical definitions except explicit class CHECK and expedition guardian migrations', () => {
+test('fresh initialization preserves historical definitions except reviewed class, guardian and retirement additions', () => {
   const historical = repositorySchemaDatabase(), current = freshDb().sqlite;
   try {
     // 0033 adds independent console/analytics objects and indexes; the populated
@@ -29,14 +29,22 @@ test('fresh initialization preserves historical definitions except explicit clas
     const configurationMigration=readFileSync(new URL('../migrations/0032_star_ring_guardian_configuration.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
     for(const m of configurationMigration.matchAll(/CREATE TRIGGER (guardian_sigil_party_\w+)[\s\S]*?END;/g))guardianTriggers.set(m[1],m[0].slice(0,-1));
     assert.equal(guardianTriggers.size,2);
+    const retirement=readFileSync(new URL('../migrations/0034_character_deletion.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    const retirementObjects=new Map([...retirement.matchAll(/CREATE (TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
+    const characterSchema=new DatabaseSync(':memory:');
+    characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
+    characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
+    const retiredCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
     const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
-      ? { ...row, sql: plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
+      ? { ...row, sql: row.name==='rpg_characters'?retiredCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
     // independent Fate tables/indexes; 0029 adds isolated expedition tables.
     // 0031 replaces two blanket guardian party locks; 0032 allows self-owned
     // activation on real expeditions. Each populated migration test separately
-    // verifies every row and all other schema objects.
-    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')), expected);
+    // verifies every row and all other schema objects. 0034's populated migration
+    // proof additionally checks the one nullable retirement column and isolated lifecycle objects.
+    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)), expected);
+    for(const [name,type] of retirementObjects){const found=schemaRows(current).filter(r=>r.name===name);assert.equal(found.length,1,name);assert.equal(found[0].type,type,name);}
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);
     assert.deepEqual(current.prepare('PRAGMA foreign_key_check').all(), []);

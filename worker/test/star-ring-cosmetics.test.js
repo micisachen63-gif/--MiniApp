@@ -139,6 +139,8 @@ test('authenticated HTTP actions use selected character and ignore forged tgId o
 });
 test('0030 is additive and preserves every previous row/schema and foreign keys',async()=>{
  const db=new D1Shim(),dir=new URL('../migrations/',import.meta.url);for(const name of readdirSync(dir).filter(n=>n.endsWith('.sql')&&n<'0030').sort())db.sqlite.exec(readFileSync(new URL(name,dir),'utf8').replace(/\r\n/g,'\n'));
+ // Current services use a live view; this fixture intentionally predates 0034.
+ db.sqlite.exec('CREATE VIEW rpg_live_characters AS SELECT * FROM rpg_characters');
  await P.createCharacter({DB:db},{tgId:'97899',name:'保存旅人',gender:'m',baseClass:'sword'},T);
  const names=db.sqlite.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name NOT LIKE 'sqlite_%' ORDER BY name").all().map(x=>x.name);
  const snapshot=()=>({schema:db.sqlite.prepare("SELECT name,sql FROM sqlite_master WHERE tbl_name NOT LIKE 'rpg_star_ring_cosmetic%' ORDER BY name").all(),rows:names.map(name=>[name,db.sqlite.prepare(`SELECT * FROM "${name}"`).all()])});

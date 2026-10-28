@@ -17,7 +17,7 @@ import { findTarget } from './trade.js';
 import { shareStmts } from './share.js';
 
 const newId = () => `p${crypto.randomUUID().replace(/-/g, '').slice(0, 11)}`;
-const fullChar = (db, tg) => db.prepare('SELECT * FROM rpg_characters WHERE tg_id = ?').bind(String(tg)).first();
+const fullChar = (db, tg) => db.prepare('SELECT * FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(String(tg)).first();
 const pkRow = (db, id) => db.prepare('SELECT * FROM rpg_pk WHERE id = ?').bind(String(id)).first();
 const hhmm = (ms) => { const m = Math.ceil(ms / 60e3); return m >= 60 ? `${Math.floor(m / 60)} 小時 ${m % 60} 分` : `${m} 分鐘`; };
 const checkParty = (a,b) => { if(a?.party_id||b?.party_id)throw new GameError('party','你或對方正在組隊戰鬥，請完成冒險後再決鬥',409); };
@@ -68,7 +68,7 @@ export async function challenge(env, { tgId, target, origin = 'app', chatId = nu
     WHERE (SELECT COUNT(*) FROM rpg_pk WHERE a_tg=? AND status='pending')<?
       AND (SELECT COUNT(*) FROM rpg_pk WHERE b_tg=? AND status='pending')<?
       AND NOT EXISTS(SELECT 1 FROM rpg_pk WHERE status='pending' AND ((a_tg=? AND b_tg=?) OR (a_tg=? AND b_tg=?)))
-      AND NOT EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id IN (?,?) AND party_id IS NOT NULL)
+      AND NOT EXISTS(SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id IN (?,?) AND party_id IS NOT NULL)
       AND NOT EXISTS(SELECT 1 FROM rpg_auto_enhance j JOIN rpg_equipment e ON e.id=j.item_id WHERE j.tg_id IN (?,?) AND j.status IN ('running','processing') AND e.is_equipped>0)`)
     .bind(id, tg, o, origin === 'group' ? 'group' : 'app', chatId == null ? null : String(chatId), now, now + PK.challengeTtlMs,tg,PK.maxPendingOut,o,PK.maxPendingIn,tg,o,o,tg,tg,o,tg,o),guardStmt(db),
     outboxStmt(db, { dedupe: `dm:${o}:pk:${id}`, target: 'dm', tgId: o, kind: 'pk_challenge', payload: { pkId: id, from: me.name } }, now)];

@@ -2,7 +2,7 @@
 // Unique account/day/event avoids inflating participating-user counts on retries.
 import {taipeiDay} from '../game/time.js';
 export const BEHAVIOR_LABELS=Object.freeze({
- login:'開啟選角',create:'建立角色',select:'進入角色',daily:'領取每日獎勵',
+ 'character/delete':'刪除角色',login:'開啟選角',create:'建立角色',select:'進入角色',daily:'領取每日獎勵',
  gacha:'購買轉蛋','gacha/open':'開啟轉蛋',enhance:'強化裝備',reroll:'重鑄屬性',
  'guardian/summon':'召喚天使','guardian/fuse':'合成天使','exchange/create':'交易所掛賣',
  'exchange/buy':'交易所購買','trade/confirm':'確認交易','fate/start':'開啟輪迴',

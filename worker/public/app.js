@@ -592,7 +592,7 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['character/delete-preview','character/delete-status','fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
     try {
@@ -2056,12 +2056,37 @@
       const c = bySlot.get(slot);
       if (!c) return `<button class="char-card char-empty" data-new="${slot}" aria-label="建立第 ${slot} 隻角色"><span class="char-question">?</span><b>尚未創角</b><small>第 ${slot} 格 · 建立新冒險者</small><em>＋ 建立角色</em></button>`;
       const cls = S.meta.classes[c.baseClass] || {}; const pic = artSrc('hero', heroKey(c.baseClass, c.gender, c.classPath));
-      return `<button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${c.active ? ' · 上次掛機' : ''}</span>
+      return `<div class="char-choice"><button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${c.active ? ' · 上次掛機' : ''}</span>
         <span class="char-portrait">${pic ? `<img src="${pic}" alt="">` : `<i>${esc(cls.emoji || '✦')}</i>`}</span><strong>${esc(c.name)}</strong><small>${esc(cls.name || c.baseClass)} · Lv.${c.level}</small>
-        <em>${c.active ? '繼續冒險' : '選擇角色'}</em></button>`;
+        <em>${c.active ? '繼續冒險' : '選擇角色'}</em></button><button type="button" class="char-delete-link" data-delete-character="${esc(c.charId)}" aria-label="刪除角色 ${esc(c.name)}">刪除角色</button></div>`;
     }).join('');
     return `<section class="char-select"><div class="char-select-title"><span>✥ ADVENTURER SELECT ✥</span><h1>選擇角色</h1><p>選定的角色會繼續離線掛機，並代表你挑戰世界王</p></div><div class="char-grid">${slots}</div>
-      <div class="char-select-foot">${S.characters.length}/4 名冒險者 · 只有目前選定的角色獲得掛機收益</div>${S.me ? '<button class="btn ghost char-back" id="backAdventure">返回目前角色</button>' : ''}</section>`;
+      <div class="char-select-foot">${S.characters.length}/4 名冒險者 · 只有目前選定的角色獲得掛機收益<br><small>每帳號每天最多刪除 1 隻角色 · 台灣時間 00:00 重置</small></div>${S.me ? '<button class="btn ghost char-back" id="backAdventure">返回目前角色</button>' : ''}</section>`;
+  }
+  const characterDeleteKey=(id,name)=>`elfRpgPendingDelete:${String(tg?.initDataUnsafe?.user?.id||devTg||'account')}:${id}:${name}`;
+  function finishCharacterDelete(result,charId,name,panel=null){
+    clearPendingRequest(characterDeleteKey(charId,name));S.characters=result.characters||[];S.apiEpoch=(S.apiEpoch||0)+1;
+    if(S.me?.character?.tgId===charId||S.me?.character?.tgId!==result.activeCharacterId){S.me=null;S.lastReport=null;S.expSettlement=null;S.pending=null;S.session={kills:0,exp:0,gold:0,ticks:0};S.shop=null;S.ledger=null;S.boss=null;S.trade=null;S.autoEnhance=null;resetFight();}
+    S.choosing=true;S.creating=false;if(panel?.isConnected)closeSheet();render();toast(`已刪除「${name}」，角色欄位已釋出`);haptic('ok');
+  }
+  async function openCharacterDelete(charId){
+    if(S.busy)return;S.busy=true;
+    let j;try{const known=S.characters.find(c=>c.charId===charId);let pending=null;try{if(known)pending=localStorage.getItem(characterDeleteKey(charId,known.name));}catch{}if(pending){const status=await api('character/delete-status',{charId,confirmName:known.name,requestId:pending});if(status.committed){finishCharacterDelete(status,charId,known.name);return;}}j=await api('character/delete-preview',{charId});}catch(e){toast(e.message,true);return;}finally{S.busy=false;}
+    if(!S.choosing||!S.characters.some(c=>c.charId===charId))return;
+    const c=j.character,card=sheet(`<div class="char-delete-panel"><span class="char-delete-eyebrow">旅程告別</span><h2>刪除角色</h2><div class="char-delete-identity"><strong>${esc(c.name)}</strong><span>Lv.${c.level} · 第 ${c.slot} 角色欄</span></div><p>刪除後，這隻角色的等級、金幣、裝備、道具與進度將無法再使用，也無法在遊戲中復原。</p><p class="muted">角色欄位及名稱會釋出；重建可領正常新手禮。每個帳號每天最多刪除一隻角色，台灣時間 00:00 重置。</p>${j.allowed?`<label class="char-delete-name">請輸入完整角色名稱「${esc(c.name)}」<input data-delete-name type="text" autocomplete="off" spellcheck="false" maxlength="12" placeholder="輸入角色名稱"></label><label class="char-delete-check"><input data-delete-ack type="checkbox">我已確認以上角色，了解刪除後無法復原</label>`:`<div class="char-delete-blocks" role="status"><b>目前暫時無法刪除</b><ul>${j.reasons.map(r=>`<li>${esc(r.message)}</li>`).join('')}</ul></div>`}<div data-delete-error class="char-delete-error" role="alert"></div><div class="row mt"><button type="button" class="btn ghost" data-delete-cancel>保留角色</button>${j.allowed?'<button type="button" class="btn red" data-delete-submit disabled>永久刪除角色</button>':'<button type="button" class="btn" data-delete-recheck>重新檢查</button>'}</div></div>`),panel=card.querySelector('.char-delete-panel');
+    panel.querySelector('[data-delete-cancel]').onclick=closeSheet;
+    const recheck=panel.querySelector('[data-delete-recheck]');if(recheck)recheck.onclick=()=>{closeSheet();void openCharacterDelete(charId);};
+    if(!j.allowed)return;
+    const input=panel.querySelector('[data-delete-name]'),ack=panel.querySelector('[data-delete-ack]'),submit=panel.querySelector('[data-delete-submit]'),error=panel.querySelector('[data-delete-error]');
+    const sync=()=>{submit.disabled=S.busy||input.value!==c.name||!ack.checked;};input.oninput=sync;ack.onchange=sync;
+    submit.onclick=async()=>{
+      if(S.busy||input.value!==c.name||!ack.checked)return;S.busy=true;submit.disabled=true;input.disabled=true;ack.disabled=true;error.textContent='';
+      const key=characterDeleteKey(charId,c.name);
+      try{
+        const result=await api('character/delete',{charId,confirmName:input.value,requestId:pendingRequestId(key)});finishCharacterDelete(result,charId,c.name,panel);
+      }catch(e){if(!e.uncertain)clearPendingRequest(key);if(panel.isConnected)error.textContent=e.uncertain?'刪除結果待確認，請再次確認；系統會核對同一次操作，不會多刪其他角色。':e.message;else toast(e.message,true);}
+      finally{S.busy=false;if(panel.isConnected){input.disabled=false;ack.disabled=false;sync();}}
+    };
   }
   async function openCharacterSelect() {
     window.RpgElf4AttackFX?.dispose();
@@ -2072,6 +2097,7 @@
     const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.choosing=false;S.tab=S.pendingTab||'home';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
   }
   function bindCharacterSelect(view) {
+    view.querySelectorAll('[data-delete-character]').forEach(button=>{button.onclick=()=>{void openCharacterDelete(button.dataset.deleteCharacter);};});
     view.querySelectorAll('[data-new]').forEach((card) => { card.onclick = () => { S.create = { step: 0, name: S.create.name || '', cls: null, gender: null, slot: Number(card.dataset.new) }; S.creating = true; S.choosing = false; render(); }; });
     view.querySelectorAll('[data-select]').forEach((card) => { card.onclick = async () => {
       if (S.busy) return; S.busy = true; card.disabled = true;

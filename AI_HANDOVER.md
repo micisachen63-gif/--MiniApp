@@ -1,3 +1,5 @@
+2026-10-28 角色刪除：選角按鈕＋名稱與勾選確認，帳號每日台北日一次、重建正常新手禮。0034 加 nullable deleted_at／archive／live及origin views；一筆 INSERT trigger 原子收尾，活動與 stale write 保護、收據恢復、防錯帳號與睡眠補算，所有遊戲讀取 live view 並保留舊 SQL alias。元資料先僅0034（正式尚有0026–28未登記，不全量apply），再正常 Worker發布；具體人類授權刪角另用受限單筆INSERT的原服務維護工具，固定原ID、查核與備份留.release-sync，不上Git或發TG。18測試＋320/390/1280真UI/API，完整結果看CI與日誌；詳見docs/CHARACTER_DELETE_20261028.txt，正式版本看deployment-records。
+
 2026-10-28 掛機經驗回饋：首頁顯示目前／升級所需經驗，最近結算顯示實際增加、死亡損失與升級。me 唯讀取同角色且 to_at 不超過回應快照的已提交最近紀錄，與 report 動畫／背包記帳分離；切角清除提示，舊角色／版本回應不污染。320／390／1280 真 MiniApp/API 驗證 cron、30 秒自動更新、重複讀取、延遲舊 me、切角、直接結算、升級、大數字與滿級；無遊戲數值／migration／BOT 變動，快取 exp-progress1。詳見 docs/IDLE_EXP_PROGRESS_20261028.txt，正式版本以 deployment-records 為準。
 
 2026-10-28 全職業尺寸：248造型原hero留白使男性二轉劍士尤其小。遠征lobby/battle接既有alpha fit，戰場42%arena擴繪但姓名/腳線不變、輪廓場內5px，containedActor同步visibleRect避免動畫跳大；保留原圖/倒地、清理斷開及lazy observer、完整快取visible-body1。4960 placement零裁切、手機四職中位可見高約95%slot，B1男戰場61.7→167px；寬橫劍低姿勢保留比例。全量/動畫/真API跨畫面QA與限制見docs/HERO_VISIBLE_SIZE_20261028.txt，無遊戲數值／DB／BOT改動，正式看deployment-records。

@@ -10,7 +10,7 @@ export const GIFT_POOL=Object.freeze([
  Object.freeze({id:'armor',weight:5,items:Object.freeze({guaranteed_scroll_a:1})}),
  Object.freeze({id:'scrolls',weight:90,items:Object.freeze({scroll_w:2,scroll_a:2})}),
 ]);
-const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','請先建立角色',404);return {char:String(c.tg_id),account:String(c.account_tg_id||c.tg_id)};};
+const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','請先建立角色',404);return {char:String(c.tg_id),account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','tgId','selectedCharacterId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
 async function hash(value){return [...new Uint8Array(await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify(value))))].map(x=>x.toString(16).padStart(2,'0')).join('');}
 async function mutate(env,tg,b,now,kind,fn){

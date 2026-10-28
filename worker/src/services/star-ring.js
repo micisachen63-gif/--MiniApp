@@ -35,7 +35,7 @@ function projected(p,index,beats,now){
 const failure=e=>classifyDbError(e)||(/rpg_party_presence/.test(String(e))?new GameError('party','此角色已有組隊，請先完成或離隊',409):/rpg_star_ring_starts/.test(String(e))?new GameError('daily','這個角色今日已出發過',409):e);
 const recruitCard=(db,id,rev,now)=>outboxStmt(db,{dedupe:`star-ring-card:${id}:${rev}`,target:'group',kind:'star_ring_recruit',payload:{partyId:id}},now);
 const validRequest=b=>{const id=String(b.requestId||'');if(id.length>100)throw new GameError('request','操作編號過長');return id;};
-async function load(db,id){const p=await db.prepare('SELECT * FROM rpg_star_ring_runs WHERE id=?').bind(String(id)).first();if(!p)throw new GameError('star_ring','找不到這趟星環遠征',404);p.state=parse(p.state_json);p.members=await rows(db,'SELECT m.*,c.name,c.level,c.base_class,c.class_path,c.gender,c.special_json FROM rpg_star_ring_members m JOIN rpg_characters c ON c.tg_id=m.char_id WHERE m.run_id=? ORDER BY m.joined_at,m.char_id',p.id);return p;}
+async function load(db,id){const p=await db.prepare('SELECT * FROM rpg_star_ring_runs WHERE id=?').bind(String(id)).first();if(!p)throw new GameError('star_ring','找不到這趟星環遠征',404);p.state=parse(p.state_json);p.members=await rows(db,'SELECT m.*,c.name,c.level,c.base_class,c.class_path,c.gender,c.special_json FROM rpg_star_ring_members m JOIN rpg_live_characters c ON c.tg_id=m.char_id WHERE m.run_id=? ORDER BY m.joined_at,m.char_id',p.id);return p;}
 const member=(p,tg)=>{const m=p.members.find(m=>m.char_id===String(tg));if(!m||m.left_at!=null)throw new GameError('member','你不在這支遠征隊伍中',403);return m;};
 const admit=(c,tier)=>{if(!c)throw new GameError('no_character','請先建立角色',404);if(c.level<tier||Engine.rolesOf(c).length===0)throw new GameError('level',`需要 Lv.${tier}${tier>=90?' 並完成二轉':''}`);};
 async function mutate(env,id,tg,b,now,fn){for(let attempt=0;attempt<5;attempt++){
@@ -59,10 +59,10 @@ export async function joinRecruit(env,account,b,now){
  account=String(account);const id=String(b.partyId||''),callback=String(b.callbackId||'');
  if(!/^\d{1,20}$/.test(account)||!/^ring:[0-9a-f]{32}$/.test(id)||!/^[-\w]{1,60}$/.test(callback)||String(b.chatId)!==String(env.GROUP_CHAT_ID)||!env.GROUP_CHAT_ID)throw new GameError('recruit','招募操作無效',403);
  const requestId=`tg-recruit:${account}:${callback}`;
- const recover=async()=>{const old=await env.DB.prepare('SELECT o.char_id,c.name FROM rpg_star_ring_operations o JOIN rpg_characters c ON c.tg_id=o.char_id WHERE o.run_id=? AND o.request_id=? AND c.account_tg_id=? AND o.operation=?').bind(id,requestId,account,'join-ready').first();return old?{ok:true,character:{id:old.char_id,name:old.name},...await recruitment(env,id)}:null;};
+ const recover=async()=>{const old=await env.DB.prepare('SELECT o.char_id,c.name FROM rpg_star_ring_operations o JOIN rpg_live_characters c ON c.tg_id=o.char_id WHERE o.run_id=? AND o.request_id=? AND c.account_tg_id=? AND o.operation=?').bind(id,requestId,account,'join-ready').first();return old?{ok:true,character:{id:old.char_id,name:old.name},...await recruitment(env,id)}:null;};
  const old=await recover();if(old)return old;
  const tg=await activeCharacterId(env.DB,account);
- try{const r=await action(env,tg,{partyId:id,action:'join-ready',requestId,recruitAccount:account},now);const c=await env.DB.prepare('SELECT name FROM rpg_characters WHERE tg_id=?').bind(tg).first();return {...r,character:{id:tg,name:c.name}};}
+ try{const r=await action(env,tg,{partyId:id,action:'join-ready',requestId,recruitAccount:account},now);const c=await env.DB.prepare('SELECT name FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(tg).first();return {...r,character:{id:tg,name:c.name}};}
  catch(e){const done=await recover();if(done)return done;if(await activeCharacterId(env.DB,account)!==tg)throw new GameError('character_changed','角色已切換，請重新點擊加入並準備',409);throw e;}
 }
 export async function list(env,tg,now){await sweep(env,now,6);const db=env.DB,presence=await db.prepare('SELECT party_id FROM rpg_party_presence WHERE char_id=?').bind(String(tg)).first();const open=await rows(db,"SELECT id FROM rpg_star_ring_runs WHERE status='lobby' AND expires_at>? ORDER BY created_at DESC LIMIT 20",now),history=await rows(db,"SELECT r.id FROM rpg_star_ring_runs r JOIN rpg_star_ring_members m ON m.run_id=r.id WHERE m.char_id=? AND (r.status IN('complete','ended') OR m.left_at IS NOT NULL) ORDER BY r.updated_at DESC LIMIT 8",String(tg));const ringId=await runningRingId(db,tg)||(presence?.party_id?.startsWith('ring:')?presence.party_id:null);const active=ringId?await view(env,ringId,tg,now):null;return {ok:true,...catalog,active,parties:await Promise.all(open.map(x=>view(env,x.id,tg,now))),history:await Promise.all(history.map(x=>view(env,x.id,tg,now))),daily:await daily(db,tg,now),now};}
@@ -107,7 +107,7 @@ export async function action(env,tg,b,now){const id=String(b.partyId||''),op=Str
    if(b.recruitAccount)extra.push(env.DB.prepare('UPDATE rpg_characters SET rev=rev+1 WHERE tg_id=? AND account_tg_id=? AND EXISTS(SELECT 1 FROM rpg_accounts WHERE account_tg_id=? AND active_char_id=?)').bind(String(tg),String(b.recruitAccount),String(b.recruitAccount),String(tg)),guardStmt(env.DB));
    if(p.members.some(m=>m.char_id===String(tg)&&m.left_at==null)){if(op==='join-ready')extra.push(env.DB.prepare('UPDATE rpg_star_ring_members SET ready=1 WHERE run_id=? AND char_id=? AND left_at IS NULL').bind(p.id,String(tg)));return;}
    if(p.members.filter(m=>m.left_at==null).length>=5)throw new GameError('full','遠征隊伍已滿');
-   const c=await env.DB.prepare('SELECT * FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first();admit(c,p.state.tier);
+   const c=await env.DB.prepare('SELECT * FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();admit(c,p.state.tier);
    const admission=await daily(env.DB,tg,now);if(c.party_id||admission.used||admission.busy)throw new GameError('daily','目前已在其他隊伍，或今日已出發過');
    const account=String(c.account_tg_id||tg);
    if(p.members.some(m=>m.account_id===account&&m.char_id!==String(tg)&&m.left_at==null))throw new GameError('account','同帳號只能派一名角色');

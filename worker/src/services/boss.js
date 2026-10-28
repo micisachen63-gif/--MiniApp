@@ -18,7 +18,7 @@ import { bossView } from '../views.js';
 
 async function allPlayers(db) {
   const [cs, inv] = await db.batch([
-    db.prepare('SELECT tg_id, level, class_path, base_class FROM rpg_characters'),
+    db.prepare('SELECT tg_id, level, class_path, base_class FROM rpg_live_characters'),
     db.prepare("SELECT tg_id, item, quantity FROM rpg_inventory WHERE item LIKE 'mat_%' AND quantity > 0"),
   ]);
   const mats = new Map();
@@ -57,7 +57,7 @@ export async function spawnDue(env, now, { force = null } = {}) {
 
 export async function bossWithAttackers(db, id) {
   const boss = await db.prepare('SELECT * FROM rpg_boss_instances WHERE id = ?').bind(id).first(); if (!boss) return null;
-  const a = await db.prepare('SELECT a.tg_id, c.name, SUM(a.damage) AS damage, COUNT(*) AS hits FROM rpg_boss_attacks a LEFT JOIN rpg_characters c ON c.tg_id = a.tg_id WHERE a.boss_id = ? GROUP BY a.tg_id ORDER BY damage DESC').bind(id).all();
+  const a = await db.prepare('SELECT a.tg_id, c.name, SUM(a.damage) AS damage, COUNT(*) AS hits FROM rpg_boss_attacks a LEFT JOIN rpg_live_characters c ON c.tg_id = a.tg_id WHERE a.boss_id = ? GROUP BY a.tg_id ORDER BY damage DESC').bind(id).all();
   return { boss, attackers: a.results || [] };
 }
 
@@ -139,7 +139,7 @@ export async function settleKill(env, bossId, now) {
   const chars = new Map(); const invs = new Map(); const counts = new Map();
   for (const id of ids) {
     const [c, inv, cnt, eq, guardian] = await db.batch([
-      db.prepare('SELECT * FROM rpg_characters WHERE tg_id = ?').bind(id),
+      db.prepare('SELECT * FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(id),
       db.prepare("SELECT item, quantity FROM rpg_inventory WHERE tg_id = ? AND (item LIKE 'mat_%' OR item LIKE 'hunt_%' OR item LIKE 'collection_%')").bind(id),
       db.prepare("SELECT n FROM rpg_daily_counters WHERE tg_id = ? AND day = ? AND key = 'boss_loot'").bind(id, day),
       db.prepare('SELECT slot FROM rpg_equipment WHERE tg_id = ?').bind(id),

@@ -29,6 +29,8 @@ test('admin API route is isolated from game debug authentication and the interna
 test('0033 only adds administration tables and indexes, leaving all existing game rows and active combats byte-for-byte unchanged',async t=>{
  const db=new D1Shim();t.after(()=>db.sqlite.close());const dir=new URL('../migrations/',import.meta.url);
  for(const file of fs.readdirSync(dir).filter(x=>x.endsWith('.sql')&&x<'0033').sort())db.sqlite.exec(fs.readFileSync(new URL(file,dir),'utf8').replaceAll('\r\n','\n'));
+ // Current services use the live view; this historical fixture predates retirement fields.
+ db.sqlite.exec('CREATE VIEW rpg_live_characters AS SELECT * FROM rpg_characters');
  await P.createCharacter({DB:db},{tgId:'101',name:'保留玩家',baseClass:'thief',gender:'f'},NOW);
  db.sqlite.prepare("UPDATE rpg_characters SET level=80,party_id='ring:original',special_json=? WHERE tg_id='101'").run('{"loadout":["skill01"],"auto":{"on":true}}');
  db.sqlite.prepare("INSERT INTO rpg_star_ring_runs(id,leader_id,status,state_json,created_at,updated_at,expires_at,next_at) VALUES('ring:original','101','running',?,?,?,?,?)").run('{"actors":[{"atk":500}],"rewards":["pending"]}',NOW,NOW,NOW+43200000,NOW+1000);

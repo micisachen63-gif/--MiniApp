@@ -35,7 +35,7 @@ function requestId(value) {
   return value.toLowerCase();
 }
 async function actor(db,tg) {
-  const row=await db.prepare('SELECT c.*,a.active_char_id FROM rpg_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(String(tg)).first();
+  const row=await db.prepare('SELECT c.*,a.active_char_id FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=?').bind(String(tg)).first();
   if(!row)fail('no_character','請先建立角色',404);
   return row;
 }
@@ -126,14 +126,14 @@ export async function list(env,tg,b={}) {
   const c=await actor(env.DB,tg),filters=normalizeFilters(b.filters),cursor=listingCursor(b.cursor),q=filterSQL(filters);
   const where=["l.status='active'",...q.parts],params=[...q.params];
   if(cursor!==null){where.push('l.seq<?');params.push(cursor);}
-  const rows=(await env.DB.prepare(`SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_characters c ON c.tg_id=l.seller_char WHERE ${where.join(' AND ')} ORDER BY l.seq DESC LIMIT 31`).bind(...params).all()).results||[];
+  const rows=(await env.DB.prepare(`SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_live_characters c ON c.tg_id=l.seller_char WHERE ${where.join(' AND ')} ORDER BY l.seq DESC LIMIT 31`).bind(...params).all()).results||[];
   return {ok:true,items:rows.slice(0,30).map(r=>listingView(r,c,env)),nextCursor:rows.length>30?String(rows[29].seq):null,filters,meta:meta(),balance:balance(c)};
 }
 export async function mine(env,tg,b={}) {
   bodyObject(b);
   const c=await actor(env.DB,tg),cursor=listingCursor(b.cursor),params=[ownerOf(c)];
   if(cursor!==null)params.push(cursor);
-  const rows=(await env.DB.prepare(`SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_characters c ON c.tg_id=l.seller_char WHERE l.seller_account=? ${cursor!==null?'AND l.seq<?':''} ORDER BY l.seq DESC LIMIT 31`).bind(...params).all()).results||[];
+  const rows=(await env.DB.prepare(`SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_live_characters c ON c.tg_id=l.seller_char WHERE l.seller_account=? ${cursor!==null?'AND l.seq<?':''} ORDER BY l.seq DESC LIMIT 31`).bind(...params).all()).results||[];
   return {ok:true,items:rows.slice(0,30).map(r=>listingView(r,c,env)),nextCursor:rows.length>30?String(rows[29].seq):null,meta:meta(),balance:balance(c)};
 }
 function candidateCursor(value) {
@@ -194,7 +194,7 @@ async function write(db,c,id,action,payload,stmts,result,now) {
   return response(db,c,result);
 }
 async function rowById(db,id) {
-  return db.prepare('SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_characters c ON c.tg_id=l.seller_char WHERE l.id=?').bind(id).first();
+  return db.prepare('SELECT l.*,c.name seller_name FROM rpg_exchange_listings l LEFT JOIN rpg_live_characters c ON c.tg_id=l.seller_char WHERE l.id=?').bind(id).first();
 }
 export async function create(env,tg,b,now=Date.now()) {
   bodyObject(b);
@@ -269,7 +269,7 @@ export async function buy(env,tg,b,now=Date.now()) {
   const stmts=[db.prepare("UPDATE rpg_exchange_listings SET status='sold',buyer_char=?,rev=rev+1,closed_at=?,updated_at=? WHERE id=? AND rev=? AND status='active'").bind(String(tg),now,now,listingId,row.rev),guardStmt(db),
     revisionStmt(db,c,now,-row.price,{active:true,party:true,allowExpedition:true}),guardStmt(db),revisionStmt(db,seller,now,net,{party:row.kind==='guardian',allowExpedition:true}),guardStmt(db)];
   if(row.kind==='equip')stmts.push(db.prepare('UPDATE rpg_equipment SET tg_id=?,trade_id=NULL,is_equipped=0 WHERE id=? AND tg_id=? AND trade_id=? AND bound=0 AND is_equipped=0').bind(String(tg),row.ref,row.seller_char,escrow(listingId)),guardStmt(db));
-  else if(row.kind==='guardian')stmts.push(db.prepare(`UPDATE rpg_guardian_sigils SET char_id=?,exchange_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND exchange_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND level>=15 AND (party_id IS NULL OR party_id=${runningRingSql('rpg_characters.tg_id')}))`).bind(String(tg),now,row.ref,row.seller_char,listingId,String(tg)),guardStmt(db));
+  else if(row.kind==='guardian')stmts.push(db.prepare(`UPDATE rpg_guardian_sigils SET char_id=?,exchange_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND char_id=? AND exchange_id=? AND bound=0 AND active=0 AND locked=0 AND trade_id IS NULL AND EXISTS(SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND level>=15 AND (party_id IS NULL OR party_id=${runningRingSql('rpg_characters.tg_id')}))`).bind(String(tg),now,row.ref,row.seller_char,listingId,String(tg)),guardStmt(db));
   else stmts.push(invDeltaStmt(db,String(tg),row.ref,row.qty));
   const item=row.kind==='equip'?'equip:'+row.ref:row.kind==='guardian'?'sigil:'+row.ref:row.ref;
   stmts.push(ledgerStmt(db,{event_id:`exchange:${listingId}:buy`,tg_id:tg,type:'交易所購買',gold_delta:-row.price,item,item_delta:row.qty,note:listingId},now),

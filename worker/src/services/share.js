@@ -11,7 +11,7 @@ import { guardStmt, outboxStmt, classifyDbError } from '../db.js';
 import { openTradeStmts, tradeView } from './trade.js';
 
 const sid = (p) => `${p}${crypto.randomUUID().replace(/-/g, '').slice(0, 11)}`;
-const charOf = (db, tg) => db.prepare('SELECT tg_id, account_tg_id, name, base_class, class_path, level, gold FROM rpg_characters WHERE tg_id = ?').bind(String(tg)).first();
+const charOf = (db, tg) => db.prepare('SELECT tg_id, account_tg_id, name, base_class, class_path, level, gold FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(String(tg)).first();
 const counterStmt = (db, tg, day, key) => db.prepare('INSERT INTO rpg_daily_counters (tg_id,day,key,n) VALUES (?,?,?,1) ON CONFLICT(tg_id,day,key) DO UPDATE SET n = n + 1').bind(String(tg), day, key);
 
 /** INSERT statement for a post (also used inside the relic / PK batches). kind: share | relic | pk */
@@ -43,7 +43,7 @@ export async function shareView(env, id) {
 /** Mini App long-press → 分享至群組 */
 export async function shareItem(env, { tgId, equipId }, now) {
   const db = env.DB; const tg = String(tgId); const day = taipeiDay(now);
-  const ch = await db.prepare('SELECT * FROM rpg_characters WHERE tg_id = ?').bind(tg).first(); if (!ch) throw new GameError('no_character', '你還沒有角色', 404);
+  const ch = await db.prepare('SELECT * FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(tg).first(); if (!ch) throw new GameError('no_character', '你還沒有角色', 404);
   const e = await db.prepare('SELECT * FROM rpg_equipment WHERE id = ?').bind(String(equipId)).first();
   const why = shareBlock(e, tg); if (why) throw new GameError('unshareable', why === '找不到這件裝備' ? why : `不能分享：${why}`);
   const [last, today, same] = await Promise.all([

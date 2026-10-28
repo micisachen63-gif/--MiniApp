@@ -26,7 +26,7 @@ async function load(db, id) {
   const lines = (await db.prepare('SELECT * FROM rpg_trade_items WHERE trade_id = ?').bind(t.id).all()).results || [];
   return { ...t, lines };
 }
-async function charOf(db, tg) { return db.prepare('SELECT tg_id, account_tg_id, name, base_class, level, party_id, gold, tg_username FROM rpg_characters WHERE tg_id = ?').bind(String(tg)).first(); }
+async function charOf(db, tg) { return db.prepare('SELECT tg_id, account_tg_id, name, base_class, level, party_id, gold, tg_username FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(String(tg)).first(); }
 
 /** run fn(trade) → { stmts, result } with optimistic-lock retries; lazily expires an overdue trade first */
 async function mutate(env, id, now, tg, fn, requestId = null, attempts = 4) {
@@ -99,20 +99,20 @@ export async function findTarget(env, target) {
   if (target?.tgId && /^\d{1,20}$/.test(String(target.tgId))) {
     const account = String(target.tgId);
     return db.prepare(`SELECT c.tg_id, c.name, c.tg_username FROM rpg_accounts a
-      JOIN rpg_characters c ON c.tg_id = a.active_char_id AND c.account_tg_id = a.account_tg_id
+      JOIN rpg_live_characters c ON c.tg_id = a.active_char_id AND c.account_tg_id = a.account_tg_id
       WHERE a.account_tg_id = ?`).bind(account).first().then((c) => c || charOf(db, account));
   }
   if (target?.username) return db.prepare(`SELECT c.tg_id, c.name, c.tg_username FROM rpg_accounts a
-    JOIN rpg_characters c ON c.tg_id = a.active_char_id AND c.account_tg_id = a.account_tg_id
+    JOIN rpg_live_characters c ON c.tg_id = a.active_char_id AND c.account_tg_id = a.account_tg_id
     WHERE c.tg_username = ? COLLATE NOCASE`).bind(String(target.username).replace(/^@/, '')).first();
-  if (target?.name) return db.prepare('SELECT tg_id, name, tg_username FROM rpg_characters WHERE name = ? COLLATE NOCASE').bind(String(target.name).replace(/^@/, '')).first();
+  if (target?.name) return db.prepare('SELECT tg_id, name, tg_username FROM rpg_live_characters AS rpg_characters WHERE name = ? COLLATE NOCASE').bind(String(target.name).replace(/^@/, '')).first();
   return null;
 }
 /** statements that open a window a (initiator/owner) ⇄ b (acceptor/requester), optionally with a's shared item pre-placed */
 export async function openTradeStmts(env, { aTg, bTg, origin = 'share', shareId = null, requestId = null, preEquip = null, preItem = null, preSigil = null }, now) {
   const db = env.DB; const a = String(aTg), o = String(bTg);
   if (a === o) throw new GameError('self', '不能跟自己交易');
-  const owners=(await db.prepare('SELECT tg_id,account_tg_id FROM rpg_characters WHERE tg_id IN (?,?)').bind(a,o).all()).results||[];
+  const owners=(await db.prepare('SELECT tg_id,account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id IN (?,?)').bind(a,o).all()).results||[];
   if(owners.length===2&&(owners[0].account_tg_id||owners[0].tg_id)===(owners[1].account_tg_id||owners[1].tg_id))throw new GameError('self','同一帳號的角色不能彼此交易');
   const id = newId();
   // IDs are either Telegram numeric IDs (legacy characters) or server-generated c+hex IDs.
@@ -167,7 +167,7 @@ export async function setGold(env, { tgId, tradeId, gold, requestId = null }, no
 async function checkSigil(db,row,tg,other){
  if(!row||row.char_id!==tg)throw new GameError('not_found','找不到你的守護羽毛');
  if(row.bound||row.active||row.locked||row.trade_id||row.exchange_id)throw new GameError('protected','請先解除啟用、綁定、鎖定或交易保管');
- const players=(await db.prepare('SELECT tg_id,level,party_id FROM rpg_characters WHERE tg_id IN (?,?)').bind(tg,other).all()).results||[];
+ const players=(await db.prepare('SELECT tg_id,level,party_id FROM rpg_live_characters AS rpg_characters WHERE tg_id IN (?,?)').bind(tg,other).all()).results||[];
  if(players.length!==2||players.some(c=>c.level<15))throw new GameError('guardian_level','守護天使交易雙方須達15級');
  for(const c of players)if(!canManageBackpackInParty(c,c.party_id?await runningRingId(db,c.tg_id):null))throw new GameError('guardian_level','請先完成目前的組隊戰鬥；星環遠征期間可交易未召喚、未綁定的天使');
  return players.map(c=>backpackAccessStmt(db,c.tg_id,15));
@@ -268,7 +268,7 @@ function settleStatements(db, t, now) {
     const from = t[`${s}_tg`]; const to = t[`${otherSide(s)}_tg`];
     for (const l of t.lines.filter((x) => x.side === s)) {
       if(l.kind==='sigil'){
-        out.push(db.prepare('UPDATE rpg_guardian_sigils SET char_id=?,trade_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND trade_id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND EXISTS(SELECT 1 FROM rpg_characters WHERE tg_id=? AND level>=15)').bind(to,now,l.ref,t.id,from,to),guardStmt(db),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+from+':give:'+l.ref,tg_id:from,type:'交易交出守護羽毛',item:'sigil:'+l.ref,item_delta:-1,note:t.id},now),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+to+':get:'+l.ref,tg_id:to,type:'交易獲得守護羽毛',item:'sigil:'+l.ref,item_delta:1,note:t.id},now));
+        out.push(db.prepare('UPDATE rpg_guardian_sigils SET char_id=?,trade_id=NULL,rev=rev+1,updated_at=? WHERE id=? AND trade_id=? AND char_id=? AND bound=0 AND active=0 AND locked=0 AND EXISTS(SELECT 1 FROM rpg_live_characters AS rpg_characters WHERE tg_id=? AND level>=15)').bind(to,now,l.ref,t.id,from,to),guardStmt(db),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+from+':give:'+l.ref,tg_id:from,type:'交易交出守護羽毛',item:'sigil:'+l.ref,item_delta:-1,note:t.id},now),ledgerStmt(db,{event_id:'trade:'+t.id+':done:'+to+':get:'+l.ref,tg_id:to,type:'交易獲得守護羽毛',item:'sigil:'+l.ref,item_delta:1,note:t.id},now));
       } else if (l.kind === 'equip') {
         out.push(db.prepare('UPDATE rpg_equipment SET tg_id = ?, trade_id = NULL, is_equipped = 0 WHERE id = ? AND trade_id = ? AND tg_id = ?').bind(to, l.ref, t.id, from), guardStmt(db),
           ledgerStmt(db, { event_id: `trade:${t.id}:done:${from}:give:${l.ref}`, tg_id: from, type: '交易交出裝備', item: `equip:${l.ref}`, item_delta: -1, note: t.id }, now),

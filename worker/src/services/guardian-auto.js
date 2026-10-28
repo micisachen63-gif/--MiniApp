@@ -3,7 +3,7 @@ import {loadPlayer,guardStmt,classifyDbError} from '../db.js';
 import {activeSettings} from '../game/guardian-sigil-config.js';
 import {ensureWelcome,autoSummonStep} from './guardian-sigil.js';
 export const INTERVAL_MS=3000;
-const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_characters WHERE tg_id=?').bind(String(tg)).first())?.account_tg_id||String(tg);
+const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first())?.account_tg_id||String(tg);
 export const jobView=j=>j?{id:j.id,characterId:j.char_id,pool:j.pool,count:j.single_draw?1:j.draw_count,targetType:j.target_type,targetRank:j.target_rank,maxGold:j.max_gold,status:j.status,reason:j.reason,matchId:j.match_id,batches:j.batches,totalDraws:j.total_draws,spentGold:j.spent_gold,spentVouchers:j.spent_vouchers,usedFree:j.used_free,counts:JSON.parse(j.counts_json),nextAt:j.next_at,updatedAt:j.updated_at,seen:!!j.seen_at}:null;
 export async function view(env,tg){const owner=await ownerOf(env.DB,tg);return jobView(await env.DB.prepare("SELECT * FROM rpg_guardian_auto WHERE owner=? AND (status='running' OR seen_at IS NULL) ORDER BY CASE WHEN status='running' THEN 0 ELSE 1 END,created_at DESC,rowid DESC LIMIT 1").bind(owner).first());}
 export async function start(env,tg,b,now){
