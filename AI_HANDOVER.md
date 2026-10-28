@@ -1,3 +1,5 @@
+2026-10-28 掛機經驗回饋：首頁顯示目前／升級所需經驗，最近結算顯示實際增加、死亡損失與升級。me 唯讀取同角色且 to_at 不超過回應快照的已提交最近紀錄，與 report 動畫／背包記帳分離；切角清除提示，舊角色／版本回應不污染。320／390／1280 真 MiniApp/API 驗證 cron、30 秒自動更新、重複讀取、延遲舊 me、切角、直接結算、升級、大數字與滿級；無遊戲數值／migration／BOT 變動，快取 exp-progress1。詳見 docs/IDLE_EXP_PROGRESS_20261028.txt，正式版本以 deployment-records 為準。
+
 2026-10-28 全職業尺寸：248造型原hero留白使男性二轉劍士尤其小。遠征lobby/battle接既有alpha fit，戰場42%arena擴繪但姓名/腳線不變、輪廓場內5px，containedActor同步visibleRect避免動畫跳大；保留原圖/倒地、清理斷開及lazy observer、完整快取visible-body1。4960 placement零裁切、手機四職中位可見高約95%slot，B1男戰場61.7→167px；寬橫劍低姿勢保留比例。全量/動畫/真API跨畫面QA與限制見docs/HERO_VISIBLE_SIZE_20261028.txt，無遊戲數值／DB／BOT改動，正式看deployment-records。
 
 2026-10-28 商店篩選全選100件：分類／名稱加品質與T階，全選僅當前結果前100件，換條件及切角清勾選；件數金額固定底部、珍稀明細確認及背景／穿戴／託管保護保留。後端max100，批刪用json_each兩綁定參數、精確changes／rev與一次帳本防重保留；第100件競爭回滾、重疊100防重及390／1280真UI105選100／333300金／取消／切角驗收見docs/SHOP_FILTERED_SALE_100_20261028.txt。無經濟／migration／BOT，快取filter100-1，正式看deployment-records。

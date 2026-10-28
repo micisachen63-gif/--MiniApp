@@ -1,0 +1,15 @@
+掛機經驗數字與結算提示（2026-10-28）
+
+首頁經驗條顯示目前經驗／升級所需經驗，百分比保留（360px 以下省略百分比以保留完整數字）；滿級顯示等級已滿。最近結算顯示獲得經驗、死亡損失、升級數與結算時點／分鐘數。
+
+me 增加 idleSettlement，按目前角色查詢已提交最近一份 rpg_idle_reports，to_at 不超過此次角色快照 last_settle_at。只讀取六個必要欄位，原角色 created_at 索引及 LIMIT 1；不新增表、不修改結算、經驗曲線、收益或角色資料。伺服器 cron 先結算，me 的 report 為空時仍有正確增量。此資料僅供提示，不接動畫、session/drop accounting，避免重播或重複計入。
+
+提示保留最近結算而非無事輪詢就清掉；接受較新時段，切角即清除，只接受同角色資料，沿用既有角色／revision／epoch 防舊回應保護。
+
+測試：idle-exp-progress.test.js（4項）及既有 idle-report-accounting.test.js（3項）：cron 收據、同窗重送不重播、角色切換／舊角色／舊 revision、死亡與升級、正式路由讀取無重複寫入及角色／快照範圍。
+
+idle-exp-progress-browser.mjs 使用隔離 SQLite 與完整 MiniApp／真 API，在320／390／1280寬度驗證每30秒真更新、cron先結算、不重寫紀錄、切角提示清除、延遲前角色 me 回應、直接結算、升級後新分母、119級大數字、120級滿級及畫面不溢出。證據在忽略的.release-sync/idle-exp-*.json／png／log。
+
+快取 app.js 與 idle-exp.css：20261028-exp-progress1。僅發布 Worker；不變更 BOT、不呼叫正式玩家遊戲 API 或人工補發。完整測試與正式來源／版本以執行日誌及 deployment-records 收據核對。
+
+完整回歸的測試維護：frontend-state-audit 載入真實 idle／EXP helper（保留原斷言）；遠征既有收據／額外裝備測試固定 guard-rating-proof 種子，避免隨機抽不到額外裝備而偶發失敗，原獎勵與防重斷言保留。正式戰鬥及掉率不改。
