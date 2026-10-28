@@ -1,3 +1,5 @@
+2026-10-28 無坦評價補修：optionalGuard仍被finalMatch.missing鎖B，改排除guard降評；advance在新階段計算前設guardRatingVersion=2，涵蓋舊進行中標準隊，已存results／收據不回寫。原戰鬥及收益配方不改，無坦可得真A／S與對應經驗／終章額外裝備。72組戰鬥hash一致、三版A/S與各1000份A掉裝、兩類既有隊真收據／裝備／防重及390／1280實際UI驗收見docs/STAR_RING_GUARD_RATING_20261028.txt。無migration／BOT；快取guard-rating1，正式看deployment-records。
+
 2026-10-28 遠征守護改可選：高難度只強制三個不同隊員分擔破陣／支援／壓制，新出發含既有招募加optionalGuard快照，僅缺守護不鎖傷害，實際盾／承傷／分工評價不改；舊running無旗標完整保留。集結／選單／須知同步，無migration／數值／掉率／BOT改動。Lv40／90真12h30收據與防重、三缺職責拒絕及390／1280真MiniApp出發驗收見docs/STAR_RING_OPTIONAL_GUARD_20261028.txt；正式版本看deployment-records。
 
 2026-10-27 切角可做清單：材料／金幣既有完整select同步保留；背景工坊統一只呈現目前角色，選角隱藏但帳號作業不刪不停止。api的character_changed恢復增加請求actor及epoch，防舊讀取409把新S.me清空，A→B→A亦保護；真現役衝突仍重選。四新回歸＋390／1280真API SQLite四情境，故意延遲me／shop／背景成功與真409，快速往返零重載、兩角色材料金幣及作業提示分離。讀docs/CHARACTER_ACTION_BOARD_20261027.txt；快取character-board1，僅Worker前端無DB／經濟／作業執行／BOT變動。正式版本看deployment-records。

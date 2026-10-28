@@ -388,3 +388,28 @@ test('optional guard never consumes the sole healer when only three simultaneous
  const result=E.simulateStage(probe,4,8);assert.deepEqual(result.coverage.missing,['guard']);assert.equal(result.coverage.assignment.aid,ids[0]);assert.ok(Object.values(result.contribution).some(c=>c.damage>0));
  const legacy=E.simulateStage({...probe,optionalGuard:undefined},4,8);assert.ok(legacy.coverage.missing.includes('aid'));assert.equal(Object.values(legacy.contribution).reduce((n,c)=>n+c.damage,0),0);
 });
+
+test('optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot',async t=>{
+ const {env,db,id,ids}=await fixture(t,{tier:90,difficulty:'advanced',classes:['archer:A1','mage:A1','thief:A1','archer:A2','mage:B1'],engineVersion:3});
+ const original=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);
+ for(const engineVersion of [1,2,3]){
+  const state={...original,engineVersion,seed:'guard-rating-proof',actors:original.actors.map(a=>({...a,atk:1e7,departureAtk:1e7}))};state.results=[];
+  for(let index=0;index<6;index++){
+   const r=E.simulateStage(state,index);assert.equal(r.defeated,true);assert.equal(r.grade,'S',`v${engineVersion} stage ${index}`);assert.equal(r.expHours,4);state.results.push(r);
+   for(const a of state.actors){const actual=E.stageReward(state,a,index,r),reference=E.stageReward({...state,optionalGuard:false},a,index,r);assert.deepEqual(actual,reference);assert.equal(actual.baseExp??actual.exp-(actual.bonus?.exp||0),Math.round(a.baselineExpPerMinute*240));}
+  }
+  assert.ok(state.results.some(r=>r.coverage.missing.includes('guard')));
+  assert.equal(E.stageReward(state,state.actors[0],5,state.results[5]).items.star_ring_token,12);
+ }
+});
+
+for(const legacy of [false,true])test(`already running ${legacy?'legacy standard':'optional-guard advanced'} expedition gets fair future grades without rewriting earlier receipts`,async t=>{
+ const {env,db,id,ids}=await fixture(t,{tier:90,difficulty:'advanced',classes:['archer:A1','mage:A1','thief:A1','archer:A2','mage:B1'],engineVersion:3});
+ let state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);if(legacy){delete state.optionalGuard;state.difficulty='normal';}state.actors=state.actors.map(a=>({...a,atk:.001,departureAtk:.001}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
+ await R.view(env,id,ids[0],T+E.STAGE_MS);const before=db.prepare('SELECT * FROM rpg_star_ring_rewards WHERE run_id=? ORDER BY char_id,stage').all(id);assert.ok(before.every(row=>JSON.parse(row.reward_json).grade==='B'));
+ state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);state.results[0].actors=state.results[0].actors.map(a=>({...a,atk:1e7,departureAtk:1e7}));db.prepare('UPDATE rpg_star_ring_runs SET state_json=? WHERE id=?').run(JSON.stringify(state),id);
+ await R.sweep(env,T+E.DURATION);const all=db.prepare('SELECT * FROM rpg_star_ring_rewards WHERE run_id=? ORDER BY char_id,stage').all(id);assert.equal(all.length,30);assert.deepEqual(all.filter(row=>row.stage===0),before);
+ const future=all.filter(row=>row.stage>0).map(row=>JSON.parse(row.reward_json));assert.ok(future.every(r=>r.grade==='S'&&r.expHours===4));assert.ok(future.filter(r=>r.gearDrops.gradeExtra>0).length>0);assert.equal(JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json).guardRatingVersion,2);
+ for(const who of ids){const rows=all.filter(r=>r.char_id===who),rewards=rows.map(r=>JSON.parse(r.reward_json)),gear=rewards.flatMap(r=>r.equipment.map(e=>e.id));assert.equal(new Set(gear).size,gear.length);assert.equal(db.prepare("SELECT count(*) n FROM rpg_equipment WHERE tg_id=? AND source='star_ring'").get(who).n,gear.length);assert.equal(db.prepare("SELECT count(*) n FROM rpg_ledger WHERE tg_id=? AND type='星環遠征'").get(who).n,6);}
+ await R.sweep(env,T+E.DURATION+60000);assert.deepEqual(db.prepare('SELECT * FROM rpg_star_ring_rewards WHERE run_id=? ORDER BY char_id,stage').all(id),all);
+});
