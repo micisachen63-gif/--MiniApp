@@ -171,7 +171,7 @@ function monsterAttack(b,beat,at,pressure,tactic,missing,events){
 }
 /** Project exactly the same combat steps used by checkpoint settlement; projections never write rewards. */
 // Keep the established full match, but do not spend the only healer on an optional guard slot.
-function encounterCoverage(state,actors,roles){
+export function coverageForExpedition(state,actors,roles=['guard','breach','aid','control']){
  const match=coverage(actors,roles);
  return state.optionalGuard===true&&roles.includes('guard')&&match.missing.some(r=>r!=='guard')
   ?coverage(actors,[...roles.filter(r=>r!=='guard'),'guard']):match;
@@ -198,7 +198,7 @@ export function simulateStage(state,index,beats=BEATS){
    if(defeated)for(const a of b.actors){a.hp=Math.min(a.maxHp,a.hp+a.maxHp*.02);a.mp=Math.min(a.maxMp,a.mp+a.maxMp*.04);}
   }
   const required=usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,hourIndex),def=usesPools(state)?{mechanic:b.enemy.mechanic}:HOURLY_ENCOUNTERS[hourIndex];
-  const currentMatch=encounterCoverage(state,b.actors,required);
+  const currentMatch=coverageForExpedition(state,b.actors,required);
   b.roleFailures=[...new Set([...b.roleFailures,...currentMatch.missing])];
   // Only new departures waive the guard seal; old battle snapshots replay unchanged.
   b.enemy.damageBudget=state.difficulty==='advanced'&&currentMatch.missing.some(r=>r!=='guard'||state.optionalGuard!==true)?0:Infinity;
@@ -243,7 +243,7 @@ export function simulateStage(state,index,beats=BEATS){
  // its first combat action. Both online projections and offline replay use it.
  if(steps===HOUR_BEATS){nextArea(b,state,index*2+1);b.events=[{actorId:'system',label:`隊伍抵達${b.scene.name}`}];}
  if(steps===BEATS)finishArea(b,state);
- const finalMatch=encounterCoverage(state,b.actors,usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,b.hourIndex));
+ const finalMatch=coverageForExpedition(state,b.actors,usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,b.hourIndex));
  finalMatch.missing=[...new Set([...b.roleFailures,...finalMatch.missing])];
  const defeated=b.waves>=b.objective,grade=defeated&&!finalMatch.missing.length?(resolvedBeat!=null&&resolvedBeat<BEATS*.65?'S':'A'):'B';
  delete b.enemy.damageBudget;

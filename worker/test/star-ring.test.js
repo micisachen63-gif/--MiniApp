@@ -383,6 +383,7 @@ for(const [path,missing]of [['mage:A1','control'],['mage:B1','breach'],['thief:A
 test('optional guard never consumes the sole healer when only three simultaneous duties fit',async t=>{
  const {env,db,id,ids}=await fixture(t,{difficulty:'advanced',classes:['mage:A2',...Array(4).fill('thief:A1')],engineVersion:E.ENGINE_VERSION});
  const state=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json),probe={...state,engineVersion:1};
+ assert.deepEqual((await R.view(env,id,ids[0],T)).roleCoverage.missing,['guard']);
  assert.deepEqual(E.coverage(state.actors).missing,['aid']);assert.deepEqual(E.coverage(state.actors,['breach','aid','control']).missing,[]);
  const result=E.simulateStage(probe,4,8);assert.deepEqual(result.coverage.missing,['guard']);assert.equal(result.coverage.assignment.aid,ids[0]);assert.ok(Object.values(result.contribution).some(c=>c.damage>0));
  const legacy=E.simulateStage({...probe,optionalGuard:undefined},4,8);assert.ok(legacy.coverage.missing.includes('aid'));assert.equal(Object.values(legacy.contribution).reduce((n,c)=>n+c.damage,0),0);
