@@ -1,5 +1,5 @@
 import {dungeonTheme} from './dungeon-art.js?v=20261012-tower-roster1';
-import {preparePartyArt,startRegistryAction} from './hero-art-playback.js?v=20261015-thief-complete1';
+import {preparePartyArt,startRegistryAction} from './hero-art-playback.js?v=20261028-visible-body1';
 
 const sessions=new Map();
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));

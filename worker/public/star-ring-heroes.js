@@ -7,7 +7,7 @@
   // Keep combat poses moving without predicting damage, HP or rewards.
   if(events.every(e=>e.actorId==='system')&&p.status==='running'&&Number(b.enemy?.hp)>0)events=members.filter(alive).map(m=>({actorId:m.id,skillId:'attack',cosmetic:true,presentationOnly:true}));
   return events.map((event,index)=>({event,index,member:members.find(m=>String(m.id)===String(event.actorId))})).filter(x=>x.event.actorId!=='boss'&&typeof x.event.skillId==='string'&&alive(x.member));}
- function load(){if(!modulePromise)modulePromise=import('/expedition/hero-art-playback.js?v=20261019-combat-loop1').catch(e=>{modulePromise=null;throw e;});return modulePromise;}
+ function load(){if(!modulePromise)modulePromise=import('/expedition/hero-art-playback.js?v=20261028-visible-body1').catch(e=>{modulePromise=null;throw e;});return modulePromise;}
  function mount(scene,party,{playback}={}){
   if(!scene||!party?.battle)return ()=>{};
   let stopped=false,running=false,active=null,timer=0,releaseWait=null;const media=globalThis.matchMedia?.('(prefers-reduced-motion: reduce)'),b=party.battle,key=String(party.id)+':'+String(b.stageIndex)+':'+String(b.sequence),queue=eligibleEvents(party);

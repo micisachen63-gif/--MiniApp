@@ -58,6 +58,7 @@ function actorImpactPhase(spec){if(Number.isFinite(spec.impactPhase))return Math
 // Optional contain geometry for compact formations. Legacy callers retain their
 // full DOM rectangles; a portrait scene can anchor actions to the actual image.
 export function containedImageRect(actor,rect=actor.getBoundingClientRect()){
+ const normalized=globalThis.RpgHeroSize?.visibleRect?.(actor,rect);if(normalized)return normalized;
  const width=Number(actor.naturalWidth),height=Number(actor.naturalHeight),style=getComputedStyle(actor);
  if(style.objectFit!=='contain'||!(width>0&&height>0&&rect.width>0&&rect.height>0))return rect;
  const scale=Math.min(rect.width/width,rect.height/height),w=width*scale,h=height*scale,position=String(style.objectPosition||'50% 100%').trim().split(/\s+/);

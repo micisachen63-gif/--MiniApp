@@ -1,3 +1,5 @@
+2026-10-28 全職業尺寸：248造型原hero留白使男性二轉劍士尤其小。遠征lobby/battle接既有alpha fit，戰場42%arena擴繪但姓名/腳線不變、輪廓場內5px，containedActor同步visibleRect避免動畫跳大；保留原圖/倒地、清理斷開及lazy observer、完整快取visible-body1。4960 placement零裁切、手機四職中位可見高約95%slot，B1男戰場61.7→167px；寬橫劍低姿勢保留比例。全量/動畫/真API跨畫面QA與限制見docs/HERO_VISIBLE_SIZE_20261028.txt，無遊戲數值／DB／BOT改動，正式看deployment-records。
+
 2026-10-28 商店篩選全選100件：分類／名稱加品質與T階，全選僅當前結果前100件，換條件及切角清勾選；件數金額固定底部、珍稀明細確認及背景／穿戴／託管保護保留。後端max100，批刪用json_each兩綁定參數、精確changes／rev與一次帳本防重保留；第100件競爭回滾、重疊100防重及390／1280真UI105選100／333300金／取消／切角驗收見docs/SHOP_FILTERED_SALE_100_20261028.txt。無經濟／migration／BOT，快取filter100-1，正式看deployment-records。
 
 2026-10-28 無坦評價補修：optionalGuard仍被finalMatch.missing鎖B，改排除guard降評；advance在新階段計算前設guardRatingVersion=2，涵蓋舊進行中標準隊，已存results／收據不回寫。原戰鬥及收益配方不改，無坦可得真A／S與對應經驗／終章額外裝備。72組戰鬥hash一致、三版A/S與各1000份A掉裝、兩類既有隊真收據／裝備／防重及390／1280實際UI驗收見docs/STAR_RING_GUARD_RATING_20261028.txt。無migration／BOT；快取guard-rating1，正式看deployment-records。

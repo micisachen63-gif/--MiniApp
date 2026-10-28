@@ -24,3 +24,7 @@ body.greek.v2.mythic.olympus-suite #view img#cpt.portrait{
   border:0!important;border-radius:0!important;background:none!important;
   box-shadow:none!important;outline:0!important;
 }
+
+/* Shared visible-body fitting for expedition portraits and combat slots. */
+.sr-visible-frame{overflow:hidden;pointer-events:none}
+.sr-visible-frame>.sr-seat-bitmap.hero-size-normalized,.sr-hero-node>img.hero-size-normalized{position:absolute!important;max-width:none!important;max-height:none!important;min-width:0!important;object-fit:fill!important;pointer-events:none}
