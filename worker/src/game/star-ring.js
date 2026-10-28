@@ -194,7 +194,8 @@ export function simulateStage(state,index,beats=BEATS){
   const required=usesPools(state)?b.enemy.counterRoles:encounterRoles(state.tier,hourIndex),def=usesPools(state)?{mechanic:b.enemy.mechanic}:HOURLY_ENCOUNTERS[hourIndex];
   const currentMatch=coverage(b.actors,required);
   b.roleFailures=[...new Set([...b.roleFailures,...currentMatch.missing])];
-  b.enemy.damageBudget=state.difficulty==='advanced'&&currentMatch.missing.length?0:Infinity;
+  // Only new departures waive the guard seal; old battle snapshots replay unchanged.
+  b.enemy.damageBudget=state.difficulty==='advanced'&&currentMatch.missing.some(r=>r!=='guard'||state.optionalGuard!==true)?0:Infinity;
   b.enemy.windup=encounterWindup(def,localBeat);b.enemy.interrupted=false;b.enemy.interruptible=true;
   if(b.enemy.hp<=0){b.enemy.hp=b.enemy.maxHp;b.enemy.buffs=[];b.enemy.dots=[];b.enemy.shield=['shield','hollow','tide','unravel'].includes(b.enemy.mechanic)?Math.round(b.enemy.maxHp*(b.enemy.mechanic==='hollow'?.22:.18)):0;for(const a of b.actors){a.hp=Math.min(a.maxHp,a.hp+a.maxHp*.02);a.mp=Math.min(a.maxMp,a.mp+a.maxMp*.04);}}
   const events=arrival;periodic(b.actors,b.enemy,at);
