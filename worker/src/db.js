@@ -59,7 +59,7 @@ export function persistStatements(db, before, after, { ledger = [], extra = [], 
   const removed = before.equipment.filter(e => !kept.has(e.id));
   if (batchEquipmentDeletes && removed.length) {
     // One indexed deletion plus an exact count guard; not two queries per sold item.
-    stmts.push(db.prepare(`DELETE FROM rpg_equipment WHERE tg_id=? AND is_equipped=0 AND trade_id IS NULL AND id IN (${removed.map(() => '?').join(',')})`).bind(tg, ...removed.map(e => e.id)),
+    stmts.push(db.prepare('DELETE FROM rpg_equipment WHERE tg_id=? AND is_equipped=0 AND trade_id IS NULL AND id IN (SELECT value FROM json_each(?))').bind(tg, JSON.stringify(removed.map(e => e.id))),
       db.prepare('INSERT INTO rpg_guard(ok) SELECT NULL WHERE changes() <> ?').bind(removed.length));
   } else for (const e of removed) stmts.push(db.prepare('DELETE FROM rpg_equipment WHERE id = ? AND tg_id = ?').bind(e.id, tg), guardStmt(db));
   const added=[];
