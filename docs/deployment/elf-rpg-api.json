@@ -1,17 +1,17 @@
 {
   "status": "VERIFIED",
   "repository": "https://github.com/micisachen63-gif/--MiniApp",
-  "sourceCommit": "ba0fdc9ee109f117e4cc9bb860e882bf8416c9cb",
+  "sourceCommit": "3c6729aa9167223a3a915c5dc19fcc075cbad0ed",
   "service": "elf-rpg-api",
-  "productionVersion": "4b5c3d0a-be8f-416d-b075-2937c4621419",
+  "productionVersion": "d2695468-4c75-4aa7-9e7c-eb9b57303a00",
   "activePercentage": 100,
-  "verifiedAt": "2026-10-28T08:35:59.587Z",
+  "verifiedAt": "2026-10-29T03:19:42.716Z",
   "runtimeSHA256": {
-    "index.js": "79b60b0cfb628697a03536fc6347c6fd00e164882c5c740144f77e613e51e645"
+    "index.js": "cc58704b633d927ce24591597500d5d4037250cbab0d7e70989acd0d33ba844c"
   },
   "source": {
     "fileCount": 9503,
-    "sha256": "bd0764c49edb161b2fa587fc11f543b585aba862c4dc56797ceb50822fcb1baf",
+    "sha256": "e4ea5a19c3dbf3883f521900c5e03fb27078b9d81131e78b5839b24f223dee7c",
     "files": [
       {
         "file": "worker/art-manifests/monster-expansion.json",
@@ -27,55 +27,55 @@
       },
       {
         "file": "worker/art-production/star-ring-20261018/manifest.json",
-        "sha256": "e99c99d249d7d3d6bbade27339d1d707297c990139e40b7b3c791871b534faa6"
+        "sha256": "821ff6d80c46944e5324a0f06e8aeb0cbfe199ebeadec9cf1bd09551233f5630"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_astromancer.json",
-        "sha256": "1d41b29a6a6adf5cbf7913bcb046d9bc7b0f6efe9eb152173dcdd932818f981f"
+        "sha256": "34b848948efc8cbb699cccdc4f1483de9b47be36ab5800c2352cc51657919a50"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_behemoth.json",
-        "sha256": "84fc861f7edd3f6039362bc95af1a743e1cc8cc6b9cbcba115e71ee76dcede3f"
+        "sha256": "29d2d07993fde6da2c81a948130d92f5a7f8b2545218570fda18bb89dbb68c98"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_bird.json",
-        "sha256": "57a9493be34d17b8f2c018f780566dca7f3563c763ee6771a496c173f95f06df"
+        "sha256": "4694ed8f79c8844fa712f7920ca2b29f2280d3676817597eeef316090b6156f7"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_gargoyle.json",
-        "sha256": "ef69f1baced632efc70396c2181df8fadcd45569594ac5ee1657138856fa3294"
+        "sha256": "f1500767e0c3fa847cb8698e2954427716fd82afb4266b7c9a23990d067444b4"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_judge.json",
-        "sha256": "c1ec13f72afd5884ecad1cca5c7dabdf0fc1eb6a45bbd0dbb15c92d372a80be6"
+        "sha256": "90ae2226a1101ca0d66130f52ed1a2165b9cf0a209c45f835ce606a8da466a36"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_lament.json",
-        "sha256": "0c27ddb0159877d53e180c9f6ad8dd0942651edfa5840fe21857e1ee55da4a93"
+        "sha256": "71058ff484c37150f0cbb4bc08e80ff692ce19a639aa7b9439bee062a5b58bd8"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_lantern.json",
-        "sha256": "0ce1dd427b6485b794b1afb0cfc9c6d5a2c7720b9ff99724d6017cf493f78f7d"
+        "sha256": "4d6d34e43bdf31051d9d65164ec1df90b8dd24f687c28c44fc259a7cefaccf8c"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_scorpion.json",
-        "sha256": "7c3aa9c589be67afe3c284a68b842540725b0866a41dd166ce3f66cb1beb0186"
+        "sha256": "22b116910cca6a6a4f54fb4148eb69a6b0118a44ca6e19112f80af4492912444"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_sentinel.json",
-        "sha256": "1c79f685614a74ef7760e5e9422b83f2cf648dadabcaf92215ea0ae68eaa7d44"
+        "sha256": "a424e736b12d575e46817a6cadf760fb1c2d61cdcb8343fcbcee262aaf486055"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_serpent.json",
-        "sha256": "14b775bfc7ae95c1f0470a2301a706666ccf1ed8a23a6f266dc87f0b8c676a5a"
+        "sha256": "b12f4f313e0eb97f73551f141932eef3b69070e18bee5fb1e110802c84a2d9f2"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_tide.json",
-        "sha256": "cf580a6f12e9aa5fd6f16b8220ca56bd2526442525856cd5eb91ee70f603373d"
+        "sha256": "9fcff13dcc30c3d46d100373110012e92ee06c863ed641b803f9be89ae51cf7a"
       },
       {
         "file": "worker/art-production/star-ring-20261018/packed/star_ring_weaver.json",
-        "sha256": "96298eafb5ea5f1493e83a5b36f4ab954f425776f653f786b61787e989376e40"
+        "sha256": "7b21ae1a4dfb581005b27142e35f7e091978b42bbf77ec811791dab7760e9475"
       },
       {
         "file": "worker/art-production/star-ring-20261018/source/monster-01.png",
@@ -151,11 +151,11 @@
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/README.txt",
-        "sha256": "4e9865d0e36ae3a0e6eabad9bcd75f876b9027cb8b2d89a28af6a94ef28ef56a"
+        "sha256": "cd673d81c3e48c9431f3634ce9bc6deadc91b8ba60129c17aea29d584ba23bf9"
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/manifest.json",
-        "sha256": "66abd024c8fba5c1fdb985a1e86d314b1520973df4a1a17f7eefe9642f3d5f75"
+        "sha256": "b0aad06be13bfbdabaec7aa9d4ef8a7041382cb71e959367f886115a0916af5f"
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-01-04/review/all-stills.png",
@@ -259,7 +259,7 @@
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/manifest.json",
-        "sha256": "49cf2e2b8b2f38d0ebfdef65ebf04f55283de329f02b0b8a01b966d8f2756b9d"
+        "sha256": "6e2135fc818c74cd8abf868305aedcc9141f4e2a4fbf0004ed520780d612dd72"
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-05-08/source/map-05-elite.png",
@@ -311,7 +311,7 @@
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/manifest.json",
-        "sha256": "2ae2bef52a754ddbc77968344e98564811feb768c7891ecfca28b5df14d50845"
+        "sha256": "3c93c5055c54faa5e06745222864730b5771f5c416bbd3a8fe676ee0dd78007e"
       },
       {
         "file": "worker/art-production/star-ring-pools-20261019/maps-09-12/source/map-09-elite.png",
@@ -363,7 +363,7 @@
       },
       {
         "file": "worker/art-production/star-ring-rank-rewards-20261019/README.txt",
-        "sha256": "6f420b2a2ba312f0ccd0591af1141177cf7f1d69f10a6e794f110d30869371f2"
+        "sha256": "ba282ff0d2d6aec9bdf41af6f479da7964bbfa9e04a4ce2515eee86e0c7c5a1e"
       },
       {
         "file": "worker/art-production/star-ring-rank-rewards-20261019/star-ring-core-source.png",
@@ -387,7 +387,7 @@
       },
       {
         "file": "worker/art-production/star-ring-surround-20261025/prompts.txt",
-        "sha256": "e0ab2a16c6a73c60783e5569c04b8eef8c1446bc1a131542f2e58a5743f88f52"
+        "sha256": "8227f3f09fdbc3f9055c618c40e2ac294b8480f2ed0c9759c2c497d41f423b98"
       },
       {
         "file": "worker/art-production/star-ring-surround-20261026/dawn.png",
@@ -395,7 +395,7 @@
       },
       {
         "file": "worker/art-production/star-ring-surround-20261026/eclipse-refinement.txt",
-        "sha256": "50659b8738e7a4707641252addd6363e9ab8f74d8b13fe519262119d0198edf8"
+        "sha256": "29bd63a12a13f8be7cb1abfe849b1db63c710b43b877fc75984d7ddd85989b8e"
       },
       {
         "file": "worker/art-production/star-ring-surround-20261026/eclipse.png",
@@ -411,7 +411,7 @@
       },
       {
         "file": "worker/art-production/star-ring-surround-20261026/prompts.json",
-        "sha256": "a082e0fe8ef33757bf521e80c292df36b1882c655a3e3f779b6fd4a187b052cf"
+        "sha256": "637170e70cb37e09b73e8ea948fff48273404fce0b87727c1ce210228598dcc8"
       },
       {
         "file": "worker/art-production/thief-20261015/A1-left/adv3_thief_A11_f/attack-0-5-rejected-gutter.png",
@@ -2511,7 +2511,7 @@
       },
       {
         "file": "worker/public/_headers",
-        "sha256": "796d01c8321b2b65493204f334481f9c9139a7fbb01dd43d6eef3b7465c945c8"
+        "sha256": "7bc9d080aacf5df151ee409c68b6cb75fb7647805c381421fdc2f9ae0ba94cc9"
       },
       {
         "file": "worker/public/admin/admin.css",
@@ -2523,11 +2523,11 @@
       },
       {
         "file": "worker/public/admin/index.html",
-        "sha256": "aa6d55b25d05914a53b076a636c540af9aced11600797bd8a85e2596064883f6"
+        "sha256": "a8bfdea6c685b2c97c2dc3306a9ab2994b217054e9e0e9571322bb7206019b95"
       },
       {
         "file": "worker/public/admin/pairing.js",
-        "sha256": "fb4751cefaa234b005f24f7aebe60300101d2432cbfa68420dde1493cc33b82d"
+        "sha256": "2bf1c618edfd02b8a8df97ed6cb167efd13b1fbc9cc5c21a74c2e41a38d82fd7"
       },
       {
         "file": "worker/public/advanced-specializations.css",
@@ -2535,7 +2535,7 @@
       },
       {
         "file": "worker/public/app.js",
-        "sha256": "5df83c4950e631f81c4ee41205e750276718dd4a7db74859afcff4c2fcb3c585"
+        "sha256": "2592ff8b20fa5272a9547ed24877102d77e311d389c1d49b715b08025cfb497d"
       },
       {
         "file": "worker/public/app.js.20261010-bag-slot-tabs.bak",
@@ -27739,7 +27739,7 @@
       },
       {
         "file": "worker/public/art/star-ring-20261018/manifest.json",
-        "sha256": "47660357555724ebfec6ea9ef2cfbd86982606a1dcc605e29ae288cee3992a7e"
+        "sha256": "f26a005fb2de582ed8157db3938104a8916c16340f0f41becef9f4a1563ade7c"
       },
       {
         "file": "worker/public/art/star-ring-20261018/map-01.mp4",
@@ -28723,7 +28723,7 @@
       },
       {
         "file": "worker/public/art/star-ring-gear-20261020/catalog.json",
-        "sha256": "fecfbcafbe7e99f75b9a2877603bf4f1e46bee5d20341de056db6490690f49bf"
+        "sha256": "4ebf932c7872caedf136deb21ba25a2b2940395ae439383d9a9ba0e7a3a909da"
       },
       {
         "file": "worker/public/art/star-ring-gear-20261020/mage-armor.webp",
@@ -28839,11 +28839,11 @@
       },
       {
         "file": "worker/public/art/star-ring-pools-20261019/catalog.json",
-        "sha256": "3b2404713860bc92ab1d836e09e59baa8f2bce2411df381b4aaa194478920608"
+        "sha256": "18c6dba0c0ad3c34b849291e3c71e2b832fafcfe14d97ae50c3d52dd537504a2"
       },
       {
         "file": "worker/public/art/star-ring-pools-20261019/manifest.json",
-        "sha256": "e0c32149d3bb9cd9fc60c3e257d64f37c1f4e2e189d53429498ce9a15ad9369e"
+        "sha256": "14035f69fe7a53f746213ffedc9eefbb76edfb8c68e9d4db6d1dcbea31c982ef"
       },
       {
         "file": "worker/public/art/star-ring-pools-20261019/map-01-elite.webp",
@@ -35375,7 +35375,7 @@
       },
       {
         "file": "worker/public/auto-reroll-ui.js",
-        "sha256": "d9d394fae8c8f51d530bfd96479600fe1cf017961d35768240d8ed57cb41c7d5"
+        "sha256": "7812648b85b74cd8b12e8247831a821f2b841c2a72a0013e49ae3b6a495d95a2"
       },
       {
         "file": "worker/public/background-workshop.css",
@@ -35459,7 +35459,7 @@
       },
       {
         "file": "worker/public/character-delete.css",
-        "sha256": "3b81957d329cce7140adc97832f1b6d41b33d4929a0b71b4d6391ef331555319"
+        "sha256": "9065a5ca19b0d81479b740109067090de1901f67021fa8f00fe52f95a05ce8a8"
       },
       {
         "file": "worker/public/cinematic-fx.js",
@@ -35523,7 +35523,7 @@
       },
       {
         "file": "worker/public/expedition-away.css",
-        "sha256": "c64c8b57361eb931dee34781ef7945134c2018f5f13a52f97323fbeb46117ff0"
+        "sha256": "9e8043c805e7cf97781097c075ceaa98ef8afeecd9d129a9f2443282f1751928"
       },
       {
         "file": "worker/public/expedition-away.js",
@@ -36115,11 +36115,11 @@
       },
       {
         "file": "worker/public/expedition/index.html",
-        "sha256": "653a8fc3e6460338ff6a25ca171626f6fbccc3a5233ed9cd612e3fd2de69c933"
+        "sha256": "f0aa4348ad8d7be96c4c7fd41070a0a4c5c4a76ff11152765cec05b48e60b9e2"
       },
       {
         "file": "worker/public/expedition/live.js",
-        "sha256": "c2660bf3ff1fa2b397d7a96ea5100e059d098a30ee1b17bc660368540e5d3f71"
+        "sha256": "70fccbf8c1d897c4722d82c21cb8bd73495179cc52f609a7e33a2865ae058e66"
       },
       {
         "file": "worker/public/expedition/model.js",
@@ -36131,19 +36131,19 @@
       },
       {
         "file": "worker/public/expedition/party-stamina-ui.js",
-        "sha256": "61cd3b68987fc589c16ef312380541d7c74ac11f9074017c15b1be383e522b6c"
+        "sha256": "469bba426bd835b2110f44e1d1ae1a0bdc2ff2eb541ad3c45393c6e337bfad37"
       },
       {
         "file": "worker/public/expedition/party-stamina.css",
-        "sha256": "6f4fbb87f810232ea73427a66da433edb8028c0aa656364aeafb5f3e64f0bf65"
+        "sha256": "affc818691978f2af82f863ffc50bae7395fb6ac58bcf51fe9fc49d88bb1e201"
       },
       {
         "file": "worker/public/expedition/party-tactics.js",
-        "sha256": "6ec058d2d291f366e02286ded8266466b82a14028374dfcabdcd15ebc41194a1"
+        "sha256": "d01cc10bef619a729ae2aa39e5479e5495756ae8735134aa78ced20724a76bba"
       },
       {
         "file": "worker/public/expedition/progression.css",
-        "sha256": "dfa9fcabda3dee8f143ea620ce6926f79d25ebd7b417d8d27749ac9fe8c91fa1"
+        "sha256": "df93837f819abed1a6acfd891df941315258a68cc83c492448f1d16dbd9488fd"
       },
       {
         "file": "worker/public/expedition/review.css",
@@ -36171,7 +36171,7 @@
       },
       {
         "file": "worker/public/fate-entry.js",
-        "sha256": "ed4e20ea43e9d68fdd29bcf1603489c36290c5eb9b8211c50562d2c5b42f8425"
+        "sha256": "687318ed494004b855a5b72bcb3091c90267f1a6bdb3c204dedcab28d9b40f37"
       },
       {
         "file": "worker/public/fate/app.js",
@@ -36551,7 +36551,7 @@
       },
       {
         "file": "worker/public/fate/fate-gift-ui.js",
-        "sha256": "33da51ebc6940cfba9efcb63dcd21a18e9942750ac78f34dbd0aa40b80acb3df"
+        "sha256": "c8fd310f6e0eea35c7f3dacd998262b86b34a139826fcfc7f531b2f1167af882"
       },
       {
         "file": "worker/public/fate/formal-ambient-v4.js",
@@ -36583,7 +36583,7 @@
       },
       {
         "file": "worker/public/fate/index.html",
-        "sha256": "451619b96e99dfdd3805a20f989d406cc0735d4b592dffcc180af955b2412de7"
+        "sha256": "8697f09fc0879904e2f82fe965862afedb9aff72a653e4ba2b33ca798dca852d"
       },
       {
         "file": "worker/public/fate/life-comparison.js",
@@ -36847,7 +36847,7 @@
       },
       {
         "file": "worker/public/guardian-sigil.js",
-        "sha256": "2e873323b9c2bd04f2bd77ff9268e16e4b9a7bff14682a6c366d8a91cdcb7799"
+        "sha256": "c2bc9daf96b2b1e1319f62d11d402e5d3b2f1766b7d621409e31b8ff02eec8b6"
       },
       {
         "file": "worker/public/guardian-summon-gesture.js",
@@ -36915,7 +36915,7 @@
       },
       {
         "file": "worker/public/index.html",
-        "sha256": "a22006eccc01965ae62ad306dbe43e2ab2371041b032f23d5c7868dd9faf65d7"
+        "sha256": "4ba58d7e6f0f82c3f0b8568dd5b49889c5f6ea75b1cd8660969fb1d5a80489c9"
       },
       {
         "file": "worker/public/index.html.backup-20261010-elf-motion-2",
@@ -37207,7 +37207,7 @@
       },
       {
         "file": "worker/public/star-ring-scenery.js",
-        "sha256": "d8eea4d779a91741899233a3786b855bb919a19bca807bbfe72ed361250af12a"
+        "sha256": "2d9307c4c6f9cc12328e33fbd9e2e0b1450d20608f7164d4c83ddd81d42993fd"
       },
       {
         "file": "worker/public/star-ring-ui.js",
@@ -37535,39 +37535,39 @@
       },
       {
         "file": "worker/src/accounts.js",
-        "sha256": "3aefc08abd6eb874ed2b7fb88601a78fe374672775f016f1273678270069fbb6"
+        "sha256": "784b31069c612e4e3e2574accbdca6e51589ddd4091a04da0a5f106db865c584"
       },
       {
         "file": "worker/src/admin/auth.js",
-        "sha256": "effeb7c3ed3babf671a58c399ece7b8d6965f740f3f85e5cb3ea528f306a624f"
+        "sha256": "96057ba1b3d4b24d450d14aa671435e3964cbf6abee2da61147793320dcff2b8"
       },
       {
         "file": "worker/src/admin/behavior.js",
-        "sha256": "fd280b8ef8413d3685bc899b1b0e10dd9338b41abe80c7de52f1dd6f138185a8"
+        "sha256": "180c7da40fd1eacd05d4529cf0be5e0c1b855234ff90356e4271184ba79716c0"
       },
       {
         "file": "worker/src/admin/catalog.js",
-        "sha256": "b78a13c40e95183a0968250270580c4e3e87a09184a55fed6838cebe35dc8a10"
+        "sha256": "5757f52fa19a098b4b292c82355742098967602b152d2042c4cb88f49a9c20b1"
       },
       {
         "file": "worker/src/admin/data.js",
-        "sha256": "0116289c00b61056089a3aeec959aaeba755cdfe4167af62b669f1b495df677d"
+        "sha256": "d06124f44225d73faf10406ce3fa13281309b24ea644a073aa638f7347295621"
       },
       {
         "file": "worker/src/admin/grants.js",
-        "sha256": "de4bdc46d9c464d9258593c1ff983275e896a5e9086f4d6529409df78a2f6ae2"
+        "sha256": "d702c05b92320ef9aec746ad8687e37aa396081165a2c8a4bb475f9ed83b75cf"
       },
       {
         "file": "worker/src/admin/index.js",
-        "sha256": "99e7f73d3abe174b2a76a8fbc31f1c79b0f194d686c26b8659f2e21456e59873"
+        "sha256": "36b7b88e6458e8608685518a061cfddbd08824ab13e3c3f1325bad29ceb687d1"
       },
       {
         "file": "worker/src/admin/pairing.js",
-        "sha256": "a9254671107d5b67db766ca88759f923dbc69ff255237019baa9044a9c218345"
+        "sha256": "4bb1e53dc2a3bd2edbc7596550ba62942b96834b3fce77196fcf9ec66e52533c"
       },
       {
         "file": "worker/src/app.js",
-        "sha256": "21e20e95ce5c073cc8dbfdcc937d3dd424ac876df3da600b6da852f3b13829fe"
+        "sha256": "66e822acc28cfb1de411a7935f77c7cc7d2e5d383198ad9c5cb3199fed9af125"
       },
       {
         "file": "worker/src/app.js.20261010-gacha-v1.bak",
@@ -37583,11 +37583,11 @@
       },
       {
         "file": "worker/src/db.js",
-        "sha256": "d1032ea3a3355d220bdb3a731f66f00fedc41382b0cb0cd8a9fc423e4a0e8a69"
+        "sha256": "dbffb07e6b76532745766b2ed15ee6a255c24617a9ffbcaf9e85875e20845bc5"
       },
       {
         "file": "worker/src/fate-public.js",
-        "sha256": "5453cce81fd25ca49a2d58d38ceeafb1524b1eaf64899f677df64be135dc88eb"
+        "sha256": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6"
       },
       {
         "file": "worker/src/game/advanced-specializations.js",
@@ -37679,11 +37679,11 @@
       },
       {
         "file": "worker/src/game/gear-growth.js",
-        "sha256": "0b909dc34211537d41cd811b3a1d951796f209fa7b53e7eff7c7e7cfbe058108"
+        "sha256": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a"
       },
       {
         "file": "worker/src/game/gear-quality.js",
-        "sha256": "3b0f35bb547c472b9a0264dff34575cd707252bea6001ac511b47fbcbd8514aa"
+        "sha256": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a"
       },
       {
         "file": "worker/src/game/gear.js",
@@ -37711,11 +37711,11 @@
       },
       {
         "file": "worker/src/game/idle-skill-rotation.js",
-        "sha256": "d5b0148c68f70c1501093a60619ebf1442a84605d2d616af822dcd3e099760a5"
+        "sha256": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432"
       },
       {
         "file": "worker/src/game/idle.js",
-        "sha256": "773dbc3a2d1fc03460bdb6ca99dc1ef5f1371adadfccf1e2b47f7441cc61e38d"
+        "sha256": "36b30992346f493f3cb054f3867751fcc66a12904001c31c395e042d3178a4bd"
       },
       {
         "file": "worker/src/game/lineage.js",
@@ -37751,7 +37751,7 @@
       },
       {
         "file": "worker/src/game/party-stamina.js",
-        "sha256": "e3263cadead6347f2606a38f7518a7065d3b112217df5a672c1cd710e9da21e9"
+        "sha256": "d6b6d3028d58327c499b8ae7fdaa24cda6f64d966f766db583f7607bb2e0369c"
       },
       {
         "file": "worker/src/game/pk.js",
@@ -37763,7 +37763,7 @@
       },
       {
         "file": "worker/src/game/pve-balance.js",
-        "sha256": "f00588d9bf0a1f8e61d79ab8ba58a4a519aa53bcbac808547bd7de621dd90296"
+        "sha256": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683"
       },
       {
         "file": "worker/src/game/rng.js",
@@ -37783,7 +37783,7 @@
       },
       {
         "file": "worker/src/game/skill-mastery.js",
-        "sha256": "66b5dc04fea1139135ead42063799f003bf8b5d758320ca54c0f30e83782ed40"
+        "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
       },
       {
         "file": "worker/src/game/special-data.js",
@@ -37807,11 +37807,11 @@
       },
       {
         "file": "worker/src/game/star-ring-pools.js",
-        "sha256": "39ae312b74229872e5ec355c70f4512026ae2a9124130275845c0c824e404673"
+        "sha256": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1"
       },
       {
         "file": "worker/src/game/star-ring-rank-rewards.js",
-        "sha256": "849f5a04be8947bf5e0c3ba2f6fe5e7abd829e65059b3f306a3f72ddf4f93c3b"
+        "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
       },
       {
         "file": "worker/src/game/star-ring.js",
@@ -37879,7 +37879,7 @@
       },
       {
         "file": "worker/src/services/character-delete.js",
-        "sha256": "7d5635583920f8a045b6725bfa38dc0ab68dbbfb20c06cf0fe3ac2adcb80d1d8"
+        "sha256": "51edda5e2afd61fbbf947236efa03a268b09893b5b98810f6f528d024de91f3b"
       },
       {
         "file": "worker/src/services/collection-blessings.js",
@@ -37923,7 +37923,7 @@
       },
       {
         "file": "worker/src/services/home-activity.js",
-        "sha256": "0480faebc68b7c8aa816ec215c42b4fc7369d74667c0b6637665e827fb174b93"
+        "sha256": "3d8232080b6f32f59f275af9b60a3b60f5d48fd0320957fb6c71a14c4761dd44"
       },
       {
         "file": "worker/src/services/journal.js",
@@ -37935,7 +37935,7 @@
       },
       {
         "file": "worker/src/services/market-exchange.js",
-        "sha256": "6711b27a2ebcef6a9a470296efd35e87371a7c3b10d8c7322a989303190ca665"
+        "sha256": "c064121e125887b746cbf7dfb578ae12b01a31634eefcf643c6bf71f82379139"
       },
       {
         "file": "worker/src/services/monster-exchange.js",
@@ -37947,11 +37947,11 @@
       },
       {
         "file": "worker/src/services/party-card.js",
-        "sha256": "0774ed5ff1c985674f6e66da1cf13737c9a66bc1f3a6914f46d49e9d463e0c61"
+        "sha256": "4b66de537e9acdca64815acf4be67e751ddeb0e68ed4f60b967f858da2324d1c"
       },
       {
         "file": "worker/src/services/party-presence.js",
-        "sha256": "0140847b5bdc749d57b3c5a3ae35de01f9dd9d4e7d6efb6221302fe38919a744"
+        "sha256": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0"
       },
       {
         "file": "worker/src/services/party-repeat.js",
@@ -37967,7 +37967,7 @@
       },
       {
         "file": "worker/src/services/player.js",
-        "sha256": "aa52d3f90dfede5495752d5559ca89f8559644ffa1c1b23ffe7997dbcf2faeda"
+        "sha256": "18f1ef4a0fd47e6f5ba6d07afe59eb30ffacee5e8494cd6f0b083e6606d52b4f"
       },
       {
         "file": "worker/src/services/player.js.20261010-gacha-v1.bak",
@@ -37987,11 +37987,11 @@
       },
       {
         "file": "worker/src/services/star-ring-cosmetics.js",
-        "sha256": "daf4a27a19626db174bf34fb25aabdbf28b177e289458d8fcbf1be4bf9a60f4b"
+        "sha256": "56e1b54c96ecd34e8550d405c4b5609ad52c9d402d1f62e581a83a7e6cbd4c22"
       },
       {
         "file": "worker/src/services/star-ring-gear.js",
-        "sha256": "ea1d84205cbed1eaf346386873c7d644df29837165c2383a6d9b2340f39e3888"
+        "sha256": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d"
       },
       {
         "file": "worker/src/services/star-ring.js",
@@ -38011,7 +38011,7 @@
       },
       {
         "file": "worker/src/views.js",
-        "sha256": "c6cdda5636ab81f78146ebdeb2bc7954c0214a89fe8b17249c43fe05e54c02a8"
+        "sha256": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218"
       },
       {
         "file": "worker/src/views.js.20261010-gacha-v1.bak",
@@ -38189,7 +38189,7 @@
   "protectedState": {
     "versions": [
       {
-        "version_id": "4b5c3d0a-be8f-416d-b075-2937c4621419",
+        "version_id": "d2695468-4c75-4aa7-9e7c-eb9b57303a00",
         "percentage": 100
       }
     ],
