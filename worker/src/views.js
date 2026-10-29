@@ -11,7 +11,7 @@ import { CLASSES, MAPS, ITEMS, SLOT_NAMES, RARITIES, ELEMENTS, WEAPON_KINDS, ARM
 import { expToNext, mapForLevel } from './game/formulas.js';
 import { idleStats, itemStat, itemExtras, mainStatOf, classTier, nodeFor } from './game/stats.js';
 import {idleCombatState} from './game/idle-combat.js';
-import { supplyHours, refillPlan, atGate, gateLevel, canAdvanceNow } from './game/idle.js';
+import { supplyHours, refillPlan, atGate, gateLevel, canAdvanceNow, choosePotion } from './game/idle.js';
 import { dailyGoldFor } from './game/daily.js';
 import { canEquip, gearOffers, tradeBlock, gearSellPrice, gearSellBlock, starRingVolumeGear } from './game/gear.js';
 import { unbindCost, unbindBlock, gearArt, shareBlock } from './game/share.js';
@@ -69,7 +69,7 @@ export function playerView({ char, inv, equipment }, { now, report = null, compa
     inventory: inv,
     collection:collectionView(inv,char),
     ...(compact?{compact:true}:{equipment: equipment.map((e) => equipmentView(char, e))}),
-    supply: { redLowUse:sup.redLowUse,blueLowUse:sup.blueLowUse, redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey:sup.redKey, blueKey:sup.blueKey, redTierCount:inv[sup.redKey]||0, blueTierCount:inv[sup.blueKey]||0, redOptions:potionOptions(char,inv,'red'), blueOptions:potionOptions(char,inv,'blue') },
+    supply: { redLowUse:sup.redLowUse,blueLowUse:sup.blueLowUse, redHours: Math.round(sup.red * 10) / 10, blueHours: Math.round(sup.blue * 10) / 10, tier: sup.tier, redKey:sup.redKey, blueKey:sup.blueKey, redDrinkKey:choosePotion(inv,'red',map.id,char), blueDrinkKey:choosePotion(inv,'blue',map.id,char), redTierCount:inv[sup.redKey]||0, blueTierCount:inv[sup.blueKey]||0, redOptions:potionOptions(char,inv,'red'), blueOptions:potionOptions(char,inv,'blue') },
     refill: refillPlan(char, inv, equipped, 24, sup),
     daily: dailyGoldFor(char, now),
     gate,

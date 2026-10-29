@@ -89,14 +89,15 @@ test('minute-by-minute settlements (app open) earn about the same gold as one lo
   assert.ok(Math.abs(sum - one) / one < 0.15, `per-minute ${sum} vs one window ${one}`);
 });
 
-test('growth v2 supplied-idle economy matches audited gross and potion costs, bounded against the released baseline',()=>{
+test('growth v2 lowest-first auto potion economy matches audited costs, bounded against the released baseline',()=>{
   // Growth v2 retains all prices/drop rates, caps the direct speed uplift at10%,
-  // and stronger defense/MP reduces upkeep. Keep both exact new observations and
-  // the independently recorded pre-change six-hour baseline.
-  const baseline=[[50,'sword',23100,390,21215,926],[50,'archer',20708,431,19041,817],[50,'mage',23100,578,21215,933],[70,'sword',28063,109,25773,987],[70,'archer',25157,134,23132,841],[70,'mage',28063,246,25773,950],[100,'sword',36393,129,33424,1119],[100,'archer',32625,129,29998,891],[100,'mage',36393,264,33424,984]];
+  // and stronger defense/MP reduces upkeep. Auto now drains tier 2 before 3/4
+  // in this mixed bag (2026-10-29). Gross income and all pre-growth bounds stay fixed.
+  const baseline=[[50,'sword',23100,390,21215,926],[50,'archer',20708,431,19041,817],[50,'mage',23100,578,21215,933],[70,'sword',28063,118,25773,987],[70,'archer',25157,146,23132,841],[70,'mage',28063,252,25773,950],[100,'sword',36393,144,33424,1119],[100,'archer',32625,130,29998,891],[100,'mage',36393,279,33424,984]];
   for(const [level,cls,gross,potions,oldGross,oldPotions] of baseline){
     const c=mkChar({level,base_class:cls,class_path:'A'}),r=settleIdle(c,{red_2:1e6,blue_2:1e6,red_3:1e6,blue_3:1e6,red_4:1e6,blue_4:1e6},standardSet(cls,level),T0+6*H);
     const used=Object.entries(r.report.used).reduce((sum,[key,n])=>sum+(POTIONS[key]?.price||0)*n,0);
+    assert(Object.keys(r.report.used).every(key=>key==='red_2'||key==='blue_2'));
     assert.equal(r.report.gold_gained,gross,`${level} ${cls} gross`);assert.equal(used,potions,`${level} ${cls} potions`);assert.ok(gross>used);assert.ok(gross<=oldGross*1.1);assert.ok(used<=oldPotions);assert.ok((gross-used)/(oldGross-oldPotions)<1.15);
   }
 });
