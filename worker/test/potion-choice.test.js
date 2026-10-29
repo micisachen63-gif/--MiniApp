@@ -9,13 +9,37 @@ import {idleStats} from '../src/game/stats.js';
 import {mkChar,starterGear,T0} from './helpers.js';
 
 const pref=(red='red_1',blue='blue_2')=>JSON.stringify({autoRedPotion:red,autoBluePotion:blue,autoBluePct:70});
-test('legacy automatic choice retains level ordering; explicit choice never drains another tier',()=>{
+test('automatic choice starts with lowest stock; explicit choice never drains another tier',()=>{
  const inv={red_1:20,red_2:10,blue_1:10,blue_2:3};
- assert.equal(choosePotion(inv,'red',6),'red_2');
+ assert.equal(choosePotion(inv,'red',6),'red_1');
  const c=mkChar({level:60,special_json:pref()});
  assert.equal(choosePotion(inv,'red',6,c),'red_1');assert.equal(choosePotion(inv,'blue',6,c),'blue_2');
  assert.equal(choosePotion({...inv,blue_2:0},'blue',6,c),null);
  assert.equal(potionPreference({special_json:'broken'},'red'),'auto');
+});
+test('auto exhausts each tier in order for HP and MP on every map, including legacy settings and gaps',()=>{
+ for(const kind of ['red','blue'])for(const map of [1,6,9,12])for(const special_json of ['{}','broken',pref('auto','auto')]){
+  const c=mkChar({level:map*10,special_json}),inv={[kind+'_4']:1,[kind+'_3']:0,[kind+'_2']:1,[kind+'_1']:2};
+  const spent=[];let key;
+  while((key=choosePotion(inv,kind,map,c))){spent.push(key);inv[key]--;}
+  assert.deepEqual(spent,[kind+'_1',kind+'_1',kind+'_2',kind+'_4']);
+  assert.equal(choosePotion({},kind,map,c),null);
+ }
+});
+test('auto idle exhausts low HP/MP stock and continues up; display follows stock without changing refill tier',()=>{
+ const c=mkChar({level:59,class_path:'A',hp:1,mp:1,special_json:pref('auto','auto')}),eq=starterGear(c);
+ const inv={red_1:1,red_2:1000,red_4:1000,blue_1:1,blue_2:1000,blue_4:1000};
+ const before=playerView({char:c,inv,equipment:eq},{now:T0});
+ assert.equal(before.supply.redDrinkKey,'red_1');assert.equal(before.supply.blueDrinkKey,'blue_1');
+ assert.equal(before.supply.redKey,'red_2');assert.equal(before.supply.blueKey,'blue_2');
+ const r=settleIdle(c,inv,eq,T0+60000);
+ assert.equal(r.report.used.red_1,1);assert.equal(r.report.used.blue_1,1);
+ assert(r.report.used.red_2>0);assert(r.report.used.blue_2>0);
+ assert.equal(r.inv.red_4,1000);assert.equal(r.inv.blue_4,1000);
+ const after=playerView({char:r.char,inv:r.inv,equipment:eq},{now:T0+60000});
+ assert.equal(after.supply.redDrinkKey,'red_2');assert.equal(after.supply.blueDrinkKey,'blue_2');
+ const empty=playerView({char:c,inv:{},equipment:eq},{now:T0});
+ assert.equal(empty.supply.redDrinkKey,null);assert.equal(empty.supply.blueDrinkKey,null);
 });
 test('per-character settings preserve skills, guardian supply and thresholds, reject wrong kind and locked purchases',()=>{
  const c=mkChar({level:60,special_json:JSON.stringify({learned:['skill_02_1'],guardianStoneSupply:true,autoBluePct:70})}),work={char:c,inv:{},equipment:starterGear(c)};

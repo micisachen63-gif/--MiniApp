@@ -23,14 +23,11 @@ const potionKeys = (kind) => Object.keys(POTIONS).filter((k) => POTIONS[k].kind 
 const RED = potionKeys('red'), BLUE = potionKeys('blue');
 export const countKind = (inv, kind) => (kind === 'red' ? RED : BLUE).reduce((n, k) => n + (inv[k] || 0), 0);
 
-/** best potion to drink: highest tier ≤ map potion tier, else the lowest higher tier */
+/** Auto drinks the lowest stocked tier first, regardless of map; explicit choices stay exclusive. */
 export function choosePotion(inv, kind, mapTier, char=null) {
   const preferred=potionPreference(char,kind);
   if(preferred!=='auto')return (inv[preferred]||0)>0?preferred:null;
   const keys = kind === 'red' ? RED : BLUE;
-  const pTier = Math.min(4, Math.ceil(mapTier / 3));
-  const lower = keys.filter((k) => POTIONS[k].tier <= pTier && (inv[k] || 0) > 0);
-  if (lower.length) return lower[lower.length - 1];
   return keys.find((k) => (inv[k] || 0) > 0) || null;
 }
 
@@ -231,8 +228,6 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
   return { char: c, inv, report, events: out };
 }
 
-/** potion tier the character really drinks/buys: same rule as choosePotion */
-
 const SUPPLY_SIM_TICKS = 120;
 /** Measure real potion use by replaying the real settle loop on a throw-away copy with endless current-tier potions (no DB, no mutation). */
 function measureUse(char, equipped) {
@@ -257,7 +252,7 @@ export function supplyHours(char, inv, equipped, opts = {}) {
   if (m) { hpPerTick = Math.max(hpPerTick, m.hp); mpPerTick = Math.max(mpPerTick, m.mp); }
   return { red: healOf('red') / hpPerTick / 60, blue: healOf('blue') / mpPerTick / 60, redLowUse:hpPerTick<=.01,blueLowUse:mpPerTick<=.01,hpPerTick, mpPerTick, tier: pTier, redKey:potionKeyFor(char,'red'), blueKey:potionKeyFor(char,'blue'), measured: !!m };
 }
-/** how many potions to cover `hours` of idle at the current consumption (buys the potions the character really drinks) */
+/** Refill the selected type, or the level-appropriate type in auto mode; existing stock is drunk lowest first. */
 export function refillPlan(char, inv, equipped, hours = 24, sup = null) {
   const { hpPerTick, mpPerTick } = sup || supplyHours(char, inv, equipped);
   const pTier = potionTierFor(char);
