@@ -1,0 +1,104 @@
+{
+  "cases": 2,
+  "actors": 1,
+  "results": [
+    {
+      "actor": "archer_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "canvas-occluder-alpha",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 10,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "canvas-occluder-alpha",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 10,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "archer_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "canvas-occluder-alpha",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "canvas-occluder-alpha",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    }
+  ]
+}

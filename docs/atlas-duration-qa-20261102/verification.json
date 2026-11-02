@@ -1,0 +1,42 @@
+{
+  "date": "2026-11-02",
+  "baseCommit": "cf85f4823f18796680fcd9d90d57248a6e78d9a6",
+  "localOnly": true,
+  "productionWrites": 0,
+  "productionDeployments": 0,
+  "otherPreviewChanged": false,
+  "fullTestsBeforeTwoAdditionalServiceCases": {
+    "worker": 2423,
+    "bot": 205,
+    "failures": 0,
+    "skipped": 0
+  },
+  "finalTargetedTests": {
+    "passed": 96,
+    "failures": 0
+  },
+  "browser": {
+    "viewports": [
+      [
+        1280,
+        960
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "pageErrors": [],
+    "errorToasts": []
+  },
+  "dryRun": {
+    "exitCode": 0,
+    "publicFiles": 8959
+  },
+  "artAssetsModified": 0,
+  "fixture": {
+    "path": "worker/test/fixtures/atlas-v1-resume.json",
+    "synthetic": true,
+    "sha256": "6fef678586f14a6e7b8b26c1ef8232318fde19fc08c0ec3962c7fbb2b4506aed"
+  }
+}

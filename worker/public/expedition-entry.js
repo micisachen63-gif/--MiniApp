@@ -4,6 +4,7 @@
   function open(tab) {
     if (document.getElementById('expedition-overlay')) return;
     const focused = document.activeElement;
+    const previousOverflow=document.body.style.overflow,previousInert=document.getElementById('app').inert;
     const scroll = window.scrollY;
     const overlay = document.createElement('section');
     overlay.id = 'expedition-overlay';
@@ -12,11 +13,12 @@
     overlay.setAttribute('aria-label', '技能與組隊冒險');
     const bar = document.createElement('header');
     const close = document.createElement('button');
-    close.textContent = '‹ 返回冒險';
+    close.textContent = document.body.classList.contains('atlas-enabled')?'✕ 關閉':'‹ 返回冒險';
     const label = document.createElement('span');
-    label.textContent = '技能與組隊冒險';
+    label.textContent = ({skills:'技能配置',lobby:'組隊大廳','star-ring':'星環遠征',dungeons:'組隊打寶',tower:'星穹爬塔'})[tab]||'技能與組隊冒險';
     bar.append(close, label);
     const frame = document.createElement('iframe');
+    window.RpgAtlasUI?.styleSceneFrame(frame);
     frame.title = '特殊技能、組隊副本與爬塔';
     const frameUrl=new URL('/expedition/index.html',location.origin);frameUrl.searchParams.set('v','20261101-realms1');
     if(tab==='star-ring'){const query=new URLSearchParams(location.search);for(const k of ['ringParty','ringChar']){const value=query.get(k);if(value&&/^[A-Za-z0-9:_-]{1,100}$/.test(value))frameUrl.searchParams.set(k,value);}}
@@ -30,8 +32,8 @@
       overlay.remove();window.RpgExpeditionHost?.refresh();window.dispatchEvent(new Event('elf-skills-refresh'));
       window.removeEventListener('message',trade);
       window.removeEventListener('rpg-context-changed',exit);
-      document.getElementById('app').inert = false;
-      document.body.style.overflow = '';
+      document.getElementById('app').inert = previousInert;
+      document.body.style.overflow = previousOverflow;
       document.removeEventListener('keydown', key);
       window.scrollTo(0, scroll);
       if (focused?.isConnected) focused.focus();

@@ -1,0 +1,73 @@
+最新續作（2026-11-02）：PR #43 已增加主場景半透明浮窗、四職天賦星盤與引導教學；新出征為 atlas-v3，舊 v1／v2 保留。詳見 docs/ATLAS_TALENTS_SCENE_WINDOWS_20261102.txt。以下保留較早檢查點，不代表新增天賦已部署。
+
+星穹旅誌 POE 本機接續紀錄
+更新日期：2026-11-02（Asia/Taipei）
+
+範圍與來源
+- 設計來源：星穹旅誌 POE 模式重構規格草案 v1.4。
+  https://chatgpt.com/space/page_9a8e855499c881919be5f073f798eabe
+- 接續來源：GitHub Draft PR #42，codex/poe-realms-preserve-progress。
+  起點 cf85f4823f18796680fcd9d90d57248a6e78d9a6。
+- 已 fetch main；main 仍為 3c6729aa9167223a3a915c5dc19fcc075cbad0ed。
+- 獨立工作目錄：D:\StarJournal\worktree-snapshots\star-journal-poe-continuation
+- 獨立分支：codex/poe-local-continuation-20261102。
+- 不修改另一邊正在製作的 9593 角色／介面，不修改舊 star-journal-new-era 工作樹。
+- 本次沒有部署、合併 main、正式資料讀寫、建立正式季庫或執行遠端 migration。
+- ATLAS_ENABLED 的正式預設仍關閉；本機測試明確開啟。
+
+本輪完成
+1. 依時間持續探索
+- queueMode=duration：同一張星圖通關後繼續下一張，直到接受的時間截止、死亡或手動停止。
+- 不再因第 96 次通關而提前結束，沒有憑空發給未完成房間／地圖的報酬。
+- 上限仍為 8 小時；每次最多處理 2,000 個引擎秒，分段及 JSON 重載不改變結果。
+- queueMode=count 保留 1..96 張及原時間上限。
+- 舊 API 沒有 queueMode 時仍採 count，避免把舊客戶端的一張變成整段持續刷圖。
+- 新前端以 catalog.defaultQueueMode=duration 為預設；選擇指定張數時才啟用張數輸入。
+- 明確 duration 不允許同時指定 mapCount；返營退還未用補給，不自動追加或購買。
+
+2. 規則版本與重試保留
+- 新出征 atlas-v2；仍能結算 atlas-v1 原始存檔，不修改舊快照。
+- 舊 count start 的 signature 字串及欄位順序維持不變，回應遺失後重試不會二次扣水或新開一趟。
+- worker/test/fixtures/atlas-v1-resume.json 來自接續起點的原始引擎；完全合成資料，不含玩家識別資料。
+- 測試以該快照續跑，比對完整最終 state、已領及待領 reward，逐項一致。
+
+3. 金幣與經驗分開校準
+- 僅伺服器 ATLAS_PROFILE_JSON 支援 goldMultiplier、experienceMultiplier。
+- 未指定個別倍率時，沿用 rewardMultiplier；既有出征仍使用當時鎖定的 profile。
+- 倍率範圍 0.05..100；必須是有限 number。前端提交 profile 不會生效。
+- 不改材料、戰鬥、補給消耗、裝備能力或 +N。
+- benchmark 新增 unusedPlannedSeconds、dispatchUtilization，避免把提早打完的有效時薪誤作整段離線收入。
+- 仍是 prototype，未擅自把倍率改為正式值，尚未完成正式人口／經濟校準。
+
+驗證
+- 完整 npm test：Worker 2,423／2,423，BOT 205／205，共 2,628，零失敗、零跳過。
+- 最後的短標籤／signature 括號／前端 cache key 調整後，再跑核心相關 96 案，全部通過。
+- 新增 14 案涵蓋八小時超過96張、分段重播、死亡停止、未完成不發獎、原始v1存檔、獨立倍率、輸入邊界、補給退還、防重、停用旗標、舊請求重試、八小時逐批帳本對帳與環境截止。
+- 另新增 duration UI 真實進度呈現測試，沒有把它與完整總數重複相加。
+- 1280x960、390x844 真服務＋兩個隔離 SQLite 操作驗收通過。
+- 範圍含 duration 預設與 payload、指定張數、60秒真結算、抽天使／啟用、旅章、技能、+7銘刻保留、永久任務連點防重、環境切換與停用回滾。
+- 本機 9642 的 390x844 畫面另行檢查：沒有頁面錯誤或橫向溢出。
+- 這不是 Telegram 真機驗收，也不代表所有既有功能的每個分支都已重新測試。
+- 完整測試記錄：.release-sync-full-tests.log。
+- 完整測試結束後另補兩個服務層邊界案例；已包含於最後 96 案，完整遠端測試以本分支 PR 的 CI 為準。
+- 最後相關測試：.release-sync-atlas-final.log。
+- 瀏覽器記錄：.release-sync/atlas-ui/results.json 與 PNG。
+- Wrangler 本機 dry-run 建置成功，exit 0，讀取 8,959 個 public 檔案；沒有發布。
+- 本機建置記錄：.release-sync-atlas-build.log。
+
+本機功能預覽
+- URL：http://127.0.0.1:9642/?devTg=90101
+- 指令：node worker/tools/atlas-local-preview.mjs --port=9642
+- 只監聽 127.0.0.1；兩個全新記憶體 SQLite，不讀取 9586 存檔或正式機。
+- 四個測試職業，測試金幣／材料／補給與 +7 武器；不是玩家原始資料。
+- 關閉程序後測試資料清除；禁止伺服器向外發送請求，沒有 BOT_TOKEN 或遠端資料庫 binding。
+- 此入口驗證 POE 功能，未把另一邊的 9593 新角色或介面合併進來。
+
+仍待完成的整體重構
+- 中高等級星圖、其餘九個主題與完整終局／目標掉落。
+- 以匿名代表快照成對重播舊版／新版；分別校準金幣、經驗、材料與裝備出售價值。
+- 季末維護 drain、不可變 manifest、目的端分批匯入與收據、4+4角色保留、溢出保管頁與故障恢復。
+- Cloud BOT 的季服通知、分享、舊 callback／背景作業契約與完整季末驗收。
+- 9593 美術／UI 完成後，再以明確角色、地圖、怪物 ID 及真實已提交事件整合；不拿示意水位當正式數值。
+- 任何初次改版／季末移轉都必須保留全部角色、資產與每件裝備 +N，不能重建既有裝備或改強化曲線來抹平投入。
+- 草稿 PR／測試通過／本機可玩均不等於正式可發布。使用者明確要求先不部署。

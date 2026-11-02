@@ -36,7 +36,7 @@
       if (contextKey(context) === contextKey(state.context)) { state.context = context; return false; }
       generation++; controller?.abort(); questController?.abort(); controller = null; flight = null; questController = null; questFlight = null;
       const saved=context?.characterId?host.loadPendingOperation?.(context):null;
-      const pending=saved&&['atlas/configure','atlas/start','atlas/settle','atlas/stop','atlas/craft','atlas/quests/claim'].includes(saved.action)&&saved.payload&&typeof saved.payload==='object'?saved:null;
+      const pending=saved&&['atlas/configure','atlas/start','atlas/settle','atlas/stop','atlas/craft','atlas/quests/claim','atlas/talents/action'].includes(saved.action)&&saved.payload&&typeof saved.payload==='object'?saved:null;
       Object.assign(state, {context, catalog:null, snapshot:null, quests:null, questError:'', questsLoading:false, draft:null, pending, loading:false, busy:false, error:'', syncedAt:null});
       notify(); return true;
     }
@@ -46,7 +46,7 @@
     function acceptQuests(data) {checkContext(data);if(!Array.isArray(data.quests))throw Error('委託資料尚未完整載入。');state.quests=data;state.questError='';if(state.snapshot&&data.materials)state.snapshot={...state.snapshot,materials:{...data.materials}};}
     function accept(data) {
       checkContext(data);
-      state.snapshot = data;
+      state.snapshot = data.talentOnly?{...state.snapshot,talents:data.talents}:data;
       state.syncedAt = Number.isFinite(Number(data.now)) ? Number(data.now) : null;
       if (!state.draft) state.draft = {...(data.profile || {}), supportIds:[...(data.profile?.supportIds || [])]};
     }
@@ -121,7 +121,7 @@
     return Number.isFinite(ratio) ? Math.max(0, Math.min(100, ratio * 100)) : 0;
   }
   function progressLabel(run) {
-    const maps = Number.isFinite(run?.mapCount) ? `${number(run.completedMaps)} / ${number(run.mapCount)} 張星圖` : '探索進度待同步';
+    const maps = run?.queueMode === 'duration' ? `已完成 ${number(run.completedMaps)} 張星圖 · 持續探索至派遣時間結束` : Number.isFinite(run?.mapCount) ? `${number(run.completedMaps)} / ${number(run.mapCount)} 張星圖` : '探索進度待同步';
     return `${maps}${run?.progress?.catchingUp ? ' · 離線進度仍在結算，請繼續同步' : ''}`;
   }
   function reportHtml(report, catalog) {
@@ -135,22 +135,30 @@
 
   function mount(host) {
     let context = null, panel = null, lastPanelKey = '', focusReturn = null, disposed = false;
-    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null;
+    let scrollLocked = false, previousOverflow = '', legacyFocusReturn = null;
+    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
+    let gearbookView=null;
+    let talentPreview=null,talentPreviewLoading=false,talentPreviewSeq=0,talentPreviewAbort=null;
     const app = document.getElementById('app'), view = document.getElementById('view');
     const root = document.createElement('section'); root.id = 'atlas-world'; root.setAttribute('aria-label','星穹旅誌星圖營地'); root.hidden = true;
     root.innerHTML = `<div class="atlas-landscape" aria-hidden="true"></div><div class="atlas-vignette" aria-hidden="true"></div>
       <header class="atlas-topbar"><button class="atlas-brand" type="button" data-atlas-home><span>✦</span><span><small>STAR JOURNAL</small><strong>星穹旅誌</strong></span></button><div class="atlas-environment"><label for="atlas-realm">旅程環境</label><select id="atlas-realm" aria-label="切換永久或賽季環境"></select><span data-atlas-season></span></div><button class="atlas-character-button" type="button" data-atlas-character>選擇角色</button></header>
       <div class="atlas-scene"><div class="atlas-location"><small>ATLAS OF THE STARS</small><h1>你的下一段旅程</h1><p data-atlas-location>選擇角色，展開星圖</p></div><div class="atlas-actor" data-atlas-actor></div><aside class="atlas-tracker" aria-label="目前探索進度"></aside></div>
-      <div class="atlas-character-bar" data-atlas-stats></div><div class="atlas-shortcuts"><button type="button" data-atlas-direct="guardian:summon">✦ 召喚天使</button><button type="button" data-atlas-direct="fate">◇ 命運旅章</button><span data-atlas-sync role="status"></span></div>
+      <div class="atlas-character-bar" data-atlas-stats></div><div class="atlas-shortcuts"><button type="button" data-atlas-open-talents>✧ 天賦星盤</button><button type="button" data-atlas-open-growth>✦ 冒險進程</button><button type="button" data-atlas-direct="guardian:summon">✦ 召喚天使</button><button type="button" data-atlas-direct="fate">◇ 命運旅章</button><span data-atlas-sync role="status"></span></div>
       <nav class="atlas-nav" aria-label="六大系統">${groups.map(group => `<button type="button" data-atlas-group="${group.id}">${icon(group.icon)}<span><strong>${group.name}</strong><small>${group.subtitle}</small></span></button>`).join('')}</nav><footer class="atlas-world-credit">Game Producer · ミカサ</footer>`;
     app.prepend(root);
-    const legacy = document.createElement('section'); legacy.id = 'atlas-legacy'; legacy.hidden = true; legacy.setAttribute('aria-label','遊戲功能');
+    const legacy = document.createElement('section'); legacy.id = 'atlas-legacy'; legacy.hidden = true; legacy.setAttribute('aria-label','遊戲功能');legacy.setAttribute('role','dialog');legacy.setAttribute('aria-modal','true');
     legacy.innerHTML = `<header class="atlas-panel-header"><div><small>STAR JOURNAL</small><h2 data-atlas-legacy-title>冒險</h2></div><button type="button" class="atlas-close" data-atlas-legacy-close aria-label="返回營地">${icon('close')}</button></header>`;
     view.before(legacy); legacy.append(view);
+    const legacyBackdrop=document.createElement('div');legacyBackdrop.className='atlas-legacy-backdrop';legacyBackdrop.hidden=true;legacyBackdrop.setAttribute('aria-hidden','true');legacy.before(legacyBackdrop);
     const overlay = document.createElement('section'); overlay.id = 'atlas-panel'; overlay.hidden = true; overlay.setAttribute('role','dialog'); overlay.setAttribute('aria-modal','true');
     overlay.innerHTML = `<div class="atlas-panel-backdrop" data-atlas-close></div><div class="atlas-panel-card" tabindex="-1"><header class="atlas-panel-header"><div><small data-atlas-panel-eyebrow>星圖營地</small><h2 id="atlas-panel-title"></h2></div><button type="button" class="atlas-close" data-atlas-close aria-label="關閉並返回營地">${icon('close')}</button></header><div class="atlas-panel-body"></div></div>`;
     overlay.setAttribute('aria-labelledby','atlas-panel-title'); document.body.append(overlay);
     const client = createClient(host, () => paint());
+    let chatStorage;try{chatStorage=window.sessionStorage;}catch{}
+    const chatClient=window.RpgSceneChatUI?.createClient({...host,storage:chatStorage},()=>paint());
+    let chatPanel=null;
+    const chatLauncher=document.createElement('button');chatLauncher.type='button';chatLauncher.className='scene-chat-launcher';chatLauncher.innerHTML='<b>聊天</b><span>世界與隊伍頻道</span>';root.querySelector('.atlas-shortcuts').after(chatLauncher);chatLauncher.onclick=()=>open('chat');
     const refreshAll=async()=>{await client.refresh();return client.refreshQuests();};
     const operate=async(action,payload)=>{const data=await client.operate(action,payload);if(data){if(action==='atlas/quests/claim')void refreshAll();else void client.refreshQuests();}return data;};
     const get = selector => root.querySelector(selector);
@@ -160,18 +168,25 @@
     const canStart = () => client.state.catalog?.canStart !== false && client.state.snapshot?.canStart !== false;
     const validCharacter = () => !!character() && !context?.choosing && !context?.creating;
 
+    function syncWindowState() {
+      const visible=!overlay.hidden||!legacy.hidden;
+      root.inert=visible;
+      if(visible&&!scrollLocked){previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';scrollLocked=true;}
+      else if(!visible&&scrollLocked){document.body.style.overflow=previousOverflow;scrollLocked=false;}
+    }
+
     function close() {
-      panel = null; overlay.hidden = true; root.inert = false; lastPanelKey = '';
+      gearbookView?.dispose();gearbookView=null;panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
       if (focusReturn?.isConnected) focusReturn.focus({preventScroll:true}); focusReturn = null;
       paintNav();
     }
     function open(name) {
-      if (!groups.some(group => group.id === name) && !(name==='quests'&&context.realmId==='permanent')) return;
+      if (!groups.some(group => group.id === name) && !['talents','chat','progression','gearbook'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
       if (!validCharacter()) {host.chooseCharacter(); return;}
       if (context.tab !== 'atlas') host.home();
-      focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false; root.inert = true;overlay.querySelector('.atlas-panel-body').scrollTop=0;
+      if(name!=='gearbook'){gearbookView?.dispose();gearbookView=null;}focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
       paint(); overlay.querySelector('.atlas-panel-card').focus({preventScroll:true});
-      if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records'].includes(name)) void refreshAll();
+      if(name==='chat')void chatClient?.refresh();else if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records','talents','progression'].includes(name)) void refreshAll();
     }
     function route(name) {close(); host.openRoute(name);}
     function paintNav() {
@@ -179,7 +194,7 @@
     }
     function questPreview() {
       if(context.realmId!=='permanent'||!validCharacter())return '';
-      const state=client.state,quests=state.quests?.quests||[],next=quests.find(item=>item.category==='tutorial'&&!item.claimed)||quests.find(item=>item.claimable)||quests.find(item=>!item.claimed),claimable=quests.filter(item=>item.claimable).length;
+      const state=client.state,quests=state.quests?.quests||[],next=quests.find(item=>item.claimable)||quests.find(item=>item.category==='tutorial'&&!item.claimed)||quests.find(item=>!item.claimed&&(!item.expiresAt||item.expiresAt>state.quests.now)),claimable=quests.filter(item=>item.claimable).length;
       if(state.catalog?.enabled===false)return '<div class="atlas-quest-preview"><small>永久世界委託</small><p>新星圖開放後，可查看教學與長期目標。</p></div>';
       return `<div class="atlas-quest-preview"><small>永久世界委託${claimable?' · '+number(claimable)+' 項可領獎':''}</small><strong>${esc(next?.title|| (state.questsLoading?'正在讀取下一個目標':state.questError?'委託暫未同步':'查看教學與長期目標'))}</strong>${next?`<p>${number(next.progress)} / ${number(next.target)} ${esc(next.unit||'')} ${next.claimable?'· 已達成':''}</p>`:''}<button type="button" data-atlas-open-quests ${state.busy?'disabled':''}>${claimable?'查看與領取獎勵':'查看任務與教學'} ${icon('arrow')}</button></div>`;
     }
@@ -207,7 +222,7 @@
     }
     function dataState(content) {
       const state=client.state;
-      const operationNames={'atlas/configure':'儲存構築','atlas/start':'開始出征','atlas/settle':'探索結算','atlas/stop':'停止探索','atlas/craft':'星圖銘刻','atlas/quests/claim':'委託領獎'};
+      const operationNames={'atlas/configure':'儲存構築','atlas/start':'開始出征','atlas/settle':'探索結算','atlas/stop':'停止探索','atlas/craft':'星圖銘刻','atlas/quests/claim':'委託領獎','atlas/talents/action':'天賦配點'};
       const pending=state.pending&&!state.busy?`<div class="atlas-error" role="status">「${esc(operationNames[state.pending.action])}」的結果尚未確認。按下方按鈕會核對同一次操作。<button type="button" data-atlas-recover>確認上次操作</button></div>`:'';
       if(state.loading&&!state.snapshot)return empty('正在展開星圖','讀取你的構築、探索與材料。');
       if(state.catalog?.enabled===false)return pending+empty('星圖尚未開放','目前仍可透過下方入口繼續原有冒險、裝備與收藏進度。');
@@ -223,8 +238,8 @@
     function runFields() {
       const catalog=client.state.catalog,locked=running()||client.state.busy||!canStart(),inventory=context.me?.inventory||{},supplyCounts=client.state.snapshot?.supplies;
       const maxMaps=Math.min(96,Number(catalog.maxMapCount)||96),maxMinutes=Math.min(480,Math.floor(Number(catalog.maxDurationSeconds)/60)||480);
-      const values={mapCount:draftRun.mapCount??1,durationMinutes:draftRun.durationMinutes??60,hp:draftRun.supplies?.hp??0,mp:draftRun.supplies?.mp??0};
-      return `<div class="atlas-run-options"><label class="atlas-field"><span>最多探索張數</span><input name="mapCount" type="number" inputmode="numeric" min="1" max="${maxMaps}" step="1" value="${esc(values.mapCount)}" required ${locked?'disabled':''}><small>1–${maxMaps} 張，達上限即返營</small></label><label class="atlas-field"><span>最長派遣時間</span><input name="durationMinutes" type="number" inputmode="numeric" min="1" max="${maxMinutes}" step="1" value="${esc(values.durationMinutes)}" required ${locked?'disabled':''}><small>1–${maxMinutes} 分鐘</small></label>${[['hp','生命藥水','red_1'],['mp','魔力藥水','blue_1']].map(([key,label,item])=>{const held=Number(supplyCounts?.[key]??inventory[item]??0);return `<label class="atlas-field"><span>${label}預算</span><input name="${key}" type="number" inputmode="numeric" min="0" max="${Math.min(500,held)}" step="1" value="${esc(values[key])}" required ${locked?'disabled':''}><small>背包持有 ${number(held)} 瓶 · 最多帶 500 瓶</small></label>`;}).join('')}</div><p class="atlas-note">從背包預留初級生命／魔力藥水，按實際需要使用；返營退還剩餘藥水。不會自動購買或追加預算。</p>`;
+      const values={queueMode:draftRun.queueMode??catalog.defaultQueueMode??'count',mapCount:draftRun.mapCount??1,durationMinutes:draftRun.durationMinutes??60,hp:draftRun.supplies?.hp??0,mp:draftRun.supplies?.mp??0};
+      return `<div class="atlas-run-options"><label class="atlas-field"><span>出征方式</span><select name="queueMode" ${locked?'disabled':''}>${entries(catalog.queueModes||[{id:'count',name:'探索指定張數'}]).map(mode=>`<option value="${esc(mode.id)}" ${values.queueMode===mode.id?'selected':''}>${esc(mode.name)}</option>`).join('')}</select><small>持續探索不受 96 張上限影響，倒地或手動停止會提前返營。</small></label><label class="atlas-field"><span>最多探索張數</span><input name="mapCount" type="number" inputmode="numeric" min="1" max="${maxMaps}" step="1" value="${esc(values.mapCount)}" required ${locked||values.queueMode==='duration'?'disabled':''}><small>${values.queueMode==='duration'?'持續探索模式依時間結束，不以張數停止':`1–${maxMaps} 張，達上限即返營`}</small></label><label class="atlas-field"><span>最長派遣時間</span><input name="durationMinutes" type="number" inputmode="numeric" min="1" max="${maxMinutes}" step="1" value="${esc(values.durationMinutes)}" required ${locked?'disabled':''}><small>1–${maxMinutes} 分鐘</small></label>${[['hp','生命藥水','red_1'],['mp','魔力藥水','blue_1']].map(([key,label,item])=>{const held=Number(supplyCounts?.[key]??inventory[item]??0);return `<label class="atlas-field"><span>${label}預算</span><input name="${key}" type="number" inputmode="numeric" min="0" max="${Math.min(500,held)}" step="1" value="${esc(values[key])}" required ${locked?'disabled':''}><small>背包持有 ${number(held)} 瓶 · 最多帶 500 瓶</small></label>`;}).join('')}</div><p class="atlas-note">從背包預留初級生命／魔力藥水，按實際需要使用；返營退還剩餘藥水。不會自動購買或追加預算。</p>`;
     }
     function automationField() {
       const modes=entries(client.state.catalog?.automation),current=client.state.draft?.automation;
@@ -262,28 +277,47 @@
       return content+routeCards([['home','一般掛機與補給','查看原有冒險、藥水與每日領獎','map'],['boss','首領與合作冒險','世界首領、星環遠征、組隊副本','social']]);
     }
     function panelHtml() {
+      if(panel==='talents')return dataState(()=>window.RpgAtlasTalents?.render(client.state.snapshot.talents,{level:character()?.level||1,busy:client.state.busy,locked:running()||!!character()?.partyId||!canStart(),selectedId:talentSelected,zoom:talentZoom,effectsReviewed:talentEffectsReviewed,preview:talentPreview,previewLoading:talentPreviewLoading})||empty('天賦介面尚未載入','請重新開啟遊戲。'));
+      if(panel==='progression')return dataState(()=>window.RpgAtlasProgression?.render(client.state.catalog,client.state.snapshot,{level:character()?.level||1,busy:client.state.busy})||'');
       if(panel==='quests')return questsPanel();
       if(panel==='expedition')return expeditionPanel();
-      if(panel==='build')return dataState(()=>`<p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
-      if(panel==='workshop')return workshopPanel();
+      if(panel==='build')return dataState(()=>`<button type="button" class="atlas-primary" data-atlas-open-talents>天賦星盤 · 可用 ${number(client.state.snapshot.talents?.availablePoints??0)} 點</button><p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
+      if(panel==='workshop')return '<button type="button" class="atlas-primary" data-atlas-open-gearbook>裝備收藏冊 · 集滿獲得永久能力</button>'+workshopPanel();
       if(panel==='companions')return `<p class="atlas-panel-intro">帶著守護啟程，也為另一段人生留一盞星燈。</p>${routeCards([['guardian:summon','抽取天使','召喚、查看結果與原有抽取紀錄','angel'],['guardian:inventory','天使管理','啟用、鎖定、合成與守護配置','angel'],['fate','命運旅章與輪迴','繼續此世、開啟新人生與查看進度','book'],['fate:archive','靈魂旅誌','翻閱過往人生與旅章紀錄','book'],['fate:gift','星輝匣','查看、領取與開啟輪迴贈禮','angel']])}`;
       if(panel==='social')return `<p class="atlas-panel-intro">與同一環境的旅人同行，交換彼此需要的收穫。</p>${routeCards([['party','組隊冒險','尋找隊伍、討伐、轉職試煉與爬塔','social'],['star-ring','星環遠征','原有五人遠征與進行中戰況','map'],['trade','雙人交易與集會','邀請、託管、確認交易與紀錄','social'],['exchange','交易所','搜尋、上架與查看成交紀錄','forge'],['hall','英雄殿堂','查看角色與公開穿戴','social']])}`;
       return `${dataState(()=>`<div class="atlas-section-top"><h3>最近一趟星圖</h3><button type="button" class="atlas-icon-button" data-atlas-refresh aria-label="更新戰報">${icon('refresh')}</button></div>${reportHtml(client.state.snapshot?.run?.report,client.state.catalog)}`)}${routeCards([['collection','地圖圖鑑與收藏','材料、徽記與收藏祝福','book'],['journal','旅團日誌','原有委託進度與領獎','book'],['home','掛機戰報與帳本','查看原有結算、掉落與操作紀錄','book']])}`;
     }
     function paintPanel() {
       if(!panel||overlay.hidden)return;
-      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||'永久世界委託';
+      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='chat'?'聊天':panel==='talents'?'天賦星盤':panel==='progression'?'冒險成長路線':panel==='gearbook'?'裝備收藏冊':'永久世界委託');
+      if(panel==='gearbook'){if(!gearbookView){const body=overlay.querySelector('.atlas-panel-body'),scope=contextKey(client.state.context);body.innerHTML='';gearbookView=window.RpgEquipmentCollection.mount(body,{request:host.request,characterId:character().tgId,realmId:context.realmId,current:()=>scope===contextKey(client.state.context)&&panel==='gearbook',onChanged:()=>{void refreshAll();void host.refresh?.();}});}return;}
+      if(panel==='chat'&&chatClient){const body=overlay.querySelector('.atlas-panel-body');if(!body.querySelector('[data-scene-chat-panel]'))chatPanel=window.RpgSceneChatUI.mountPanel(body,chatClient);chatPanel.update();lastPanelKey='';return;}
       const state=client.state,scope=contextKey(state.context);
       if(draftScope!==scope){draftScope=scope;draftRun={};draftCraft={};}
-      const signature=JSON.stringify([panel,scope,state.loading,state.busy,state.error,state.pending,state.catalog,state.snapshot,state.quests,state.questError,state.questsLoading,context.me?.inventory?.red_1,context.me?.inventory?.blue_1]);
+      const signature=JSON.stringify([panel,scope,state.loading,state.busy,state.error,state.pending,state.catalog,state.snapshot,state.quests,state.questError,state.questsLoading,talentSelected,talentEffectsReviewed,talentPreview,talentPreviewLoading,context.me?.inventory?.red_1,context.me?.inventory?.blue_1]);
       if(signature===lastPanelKey)return;lastPanelKey=signature;
-      const body=overlay.querySelector('.atlas-panel-body'),scroll=body.scrollTop,active=document.activeElement;
+      const body=overlay.querySelector('.atlas-panel-body'),scroll=body.scrollTop,active=document.activeElement,oldTree=body.querySelector('.atlas-talent-canvas'),treeScroll=oldTree?{left:oldTree.scrollLeft,top:oldTree.scrollTop}:null;
       const focusedName=body.contains(active)?active.name:null,focusedValue=active?.value,details=[...body.querySelectorAll('details')].map(node=>node.open);
       body.innerHTML=panelHtml();body.scrollTop=scroll;bindPanel(body);
+      const tree=body.querySelector('.atlas-talent-canvas');if(tree){tree.scrollLeft=treeScroll?.left??Math.max(0,(tree.scrollWidth-tree.clientWidth)/2);tree.scrollTop=treeScroll?.top??0;}
       body.querySelectorAll('details').forEach((node,index)=>{if(details[index]!==undefined)node.open=details[index];});
       if(focusedName){const controls=[...body.querySelectorAll(`[name="${CSS.escape(focusedName)}"]`)];(controls.find(node=>node.value===focusedValue)||controls[0])?.focus({preventScroll:true});}
     }
     function bindPanel(body) {
+      body.querySelector('[data-atlas-open-gearbook]')?.addEventListener('click',()=>open('gearbook'));
+      body.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
+      body.querySelectorAll('[data-talent-node]').forEach(node=>{const select=()=>{if(node.dataset.talentNode==='origin'){talentSelected='origin';lastPanelKey='';paintPanel();return;}void previewTalent(node.dataset.talentNode);};node.onclick=select;node.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();select();}};});
+      body.querySelectorAll('[data-talent-plan]').forEach(button=>button.onclick=()=>previewTalent(button.dataset.talentPlan,true));
+      body.querySelector('[data-talent-apply-path]')?.addEventListener('click',async()=>{const data=talentPreview,scope=contextKey(client.state.context);if(!data?.plan.canApply||talentConfirming||client.state.busy)return;talentConfirming=true;try{if(!await host.confirm('確認天賦路線',`新增 ${data.plan.requiredPoints} 點，保留原有節點。${esc(data.plan.after.effectText)}。`,'配置整條路線')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'allocate_path',nodeId:data.nodeId,expectedRevision:data.baseRevision});if(result){talentPreview=null;host.toast('路線已保存，原有節點與裝備強化保留。');}}finally{talentConfirming=false;lastPanelKey='';paintPanel();}});
+      body.querySelectorAll('[data-growth-open]').forEach(button=>button.onclick=()=>open(button.dataset.growthOpen));
+      body.querySelectorAll('[data-growth-map]').forEach(button=>button.onclick=()=>{draftRun.mapId=button.dataset.growthMap;open('expedition');});
+      const talentCanvas=body.querySelector('.atlas-talent-canvas');
+      if(talentCanvas){let drag=null,moved=false;talentCanvas.addEventListener('pointerdown',event=>{if(event.pointerType!=='mouse'||event.button!==0)return;drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:talentCanvas.scrollLeft,top:talentCanvas.scrollTop};moved=false;});talentCanvas.addEventListener('pointermove',event=>{if(!drag||event.pointerId!==drag.id)return;if(!moved&&Math.hypot(event.clientX-drag.x,event.clientY-drag.y)<6)return;moved=true;event.preventDefault();talentCanvas.setPointerCapture(event.pointerId);talentCanvas.scrollLeft=drag.left-(event.clientX-drag.x);talentCanvas.scrollTop=drag.top-(event.clientY-drag.y);});const endDrag=event=>{if(drag&&event.pointerId===drag.id){if(talentCanvas.hasPointerCapture(event.pointerId))talentCanvas.releasePointerCapture(event.pointerId);drag=null;}};talentCanvas.addEventListener('pointerup',endDrag);talentCanvas.addEventListener('pointercancel',endDrag);talentCanvas.addEventListener('click',event=>{if(moved){moved=false;event.preventDefault();event.stopPropagation();}},true);}
+      body.querySelector('[name="talentZoom"]')?.addEventListener('input',event=>{talentZoom=Number(event.target.value);body.querySelector('.atlas-talent-canvas svg').style.width=900*talentZoom/100+'px';});
+      body.querySelector('[data-talent-review]')?.addEventListener('click',()=>{talentEffectsReviewed=true;lastPanelKey='';paintPanel();body.querySelector('[data-talent-effects]')?.scrollIntoView({block:'nearest'});});
+      body.querySelectorAll('[data-talent-guide]').forEach(button=>button.onclick=async()=>{const result=await operate('atlas/talents/action',{kind:button.dataset.talentGuide});if(result)body.scrollTop=0;});
+      body.querySelector('[data-talent-allocate]')?.addEventListener('click',async event=>{if(talentConfirming||client.state.busy)return;talentConfirming=true;try{const nodeId=event.currentTarget.dataset.talentAllocate,t=client.state.snapshot.talents,node=t.catalog.nodes.find(n=>n.id===nodeId),scope=contextKey(client.state.context);if(!node)return;if(!await host.confirm('確認天賦配點',`配置「${esc(node.name)}」，消耗 1 點天賦。${esc(node.description)}。下次星圖出征生效。`,'配置 1 點')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'allocate',nodeId});if(result){host.toast('天賦已保存，下次星圖出征生效。');if(result.talents?.tutorialStep===1)body.scrollTop=0;}}finally{talentConfirming=false;}});
+      body.querySelector('[data-talent-reset]')?.addEventListener('click',async()=>{const scope=contextKey(client.state.context);if(!await host.confirm('重新配置天賦','試作期間免費洗點，清空目前節點並返還全部天賦點。裝備、強化與等級維持原樣。','確認洗點')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'reset'});if(result){talentSelected=null;talentEffectsReviewed=false;lastPanelKey='';paintPanel();host.toast('天賦點已返還。');}});
       body.querySelectorAll('[data-atlas-route]').forEach(button=>button.onclick=()=>route(button.dataset.atlasRoute));
       body.querySelectorAll('[data-atlas-refresh]').forEach(button=>button.onclick=()=>refreshAll());
       body.querySelectorAll('[data-atlas-quests-refresh]').forEach(button=>button.onclick=()=>client.refreshQuests());
@@ -297,44 +331,72 @@
       body.querySelector('[data-atlas-recommend]')?.addEventListener('click',()=>{const build=entries(client.state.catalog.builds).find(item=>idOf(item)===client.state.draft.buildId);client.state.draft.supportIds=[...(build?.recommendedSupports||[])].slice(0,2);lastPanelKey='';paintPanel();});
       body.querySelectorAll('[name="supportIds"]').forEach(input=>input.onchange=()=>{const selected=[...body.querySelectorAll('[name="supportIds"]:checked')];if(selected.length>2){input.checked=false;return host.toast('最多選擇 2 個輔助。',true);}client.state.draft.supportIds=selected.map(node=>node.value);input.closest('label').classList.toggle('selected',input.checked);});
       body.querySelectorAll('[name="mapId"]').forEach(input=>input.onchange=()=>{draftRun.mapId=input.value;body.querySelectorAll('.atlas-map-card').forEach(card=>card.classList.toggle('selected',card.contains(input)));});
+      body.querySelector('[name="queueMode"]')?.addEventListener('change',event=>{draftRun.queueMode=event.target.value;lastPanelKey='';paintPanel();});
       body.querySelectorAll('[name="mapCount"],[name="durationMinutes"],[name="hp"],[name="mp"]').forEach(input=>input.oninput=()=>{if(input.name==='hp'||input.name==='mp')draftRun.supplies={...draftRun.supplies,[input.name]:input.value};else draftRun[input.name]=input.value;});
       body.querySelector('[name="craftItemId"]')?.addEventListener('change',event=>{draftCraft.itemId=event.target.value;lastPanelKey='';paintPanel();});
       body.querySelectorAll('[name="recipeId"]').forEach(input=>input.onchange=()=>{draftCraft.recipeId=input.value;lastPanelKey='';paintPanel();});
       body.querySelector('[data-atlas-craft]')?.addEventListener('submit',async event=>{event.preventDefault();if(!event.currentTarget.reportValidity())return;const scope=contextKey(client.state.context),payload={itemId:draftCraft.itemId,recipeId:draftCraft.recipeId},item=entries(client.state.snapshot.equipment).find(row=>idOf(row)===payload.itemId),recipe=entries(client.state.catalog.recipes).find(row=>idOf(row)===payload.recipeId);if(!item||!recipe)return;const cost=Object.entries(recipe.cost||{}).map(([id,count])=>`${esc(entries(client.state.catalog.materials).find(row=>idOf(row)===id)?.name||id)} ×${number(count)}`).join('、');if(!await host.confirm('確認星圖銘刻',`在「${esc(item.name)} +${number(item.enhanceLevel)}」套用${esc(recipe.name)}，消耗 ${cost}。強化 +${number(item.enhanceLevel)} 維持不變。`,'確認製作')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/craft',payload);if(result)host.toast('銘刻完成，原有強化等級保留。');});
       body.querySelector('[data-atlas-build]')?.addEventListener('submit',async event=>{event.preventDefault();const draft=client.state.draft;if(!draft?.buildId)return host.toast('請先選擇流派。',true);const result=await operate('atlas/configure',{buildId:draft.buildId,supportIds:[...(draft.supportIds||[])],automation:draft.automation||'balanced'});if(result)host.toast('構築已儲存，下一趟探索將使用這份配置。');});
-      body.querySelector('[data-atlas-expedition]')?.addEventListener('submit',async event=>{event.preventDefault();if(!event.currentTarget.reportValidity())return;if(!draftRun.mapId)return host.toast('請先選擇一張星圖。',true);if(!client.state.draft?.buildId)return host.toast('請先選擇流派。',true);const draft={...client.state.draft,supportIds:[...(client.state.draft.supportIds||[])]},payload={mapId:draftRun.mapId,mapCount:Number(draftRun.mapCount??1),durationMinutes:Number(draftRun.durationMinutes??60),supplies:{hp:Number(draftRun.supplies?.hp??0),mp:Number(draftRun.supplies?.mp??0)}};const configured=await operate('atlas/configure',{buildId:draft.buildId,supportIds:draft.supportIds,automation:draft.automation||'balanced'});if(!configured)return;const result=await operate('atlas/start',payload);if(result)host.toast('已開始探索，離線後旅程仍會繼續。');});
+      body.querySelector('[data-atlas-expedition]')?.addEventListener('submit',async event=>{event.preventDefault();if(!event.currentTarget.reportValidity())return;if(!draftRun.mapId)return host.toast('請先選擇一張星圖。',true);if(!client.state.draft?.buildId)return host.toast('請先選擇流派。',true);const draft={...client.state.draft,supportIds:[...(client.state.draft.supportIds||[])]},queueMode=draftRun.queueMode??client.state.catalog.defaultQueueMode??'count',payload={mapId:draftRun.mapId,queueMode,...(queueMode==='count'?{mapCount:Number(draftRun.mapCount??1)}:{}),durationMinutes:Number(draftRun.durationMinutes??60),supplies:{hp:Number(draftRun.supplies?.hp??0),mp:Number(draftRun.supplies?.mp??0)}};const configured=await operate('atlas/configure',{buildId:draft.buildId,supportIds:draft.supportIds,automation:draft.automation||'balanced'});if(!configured)return;const result=await operate('atlas/start',payload);if(result)host.toast('已開始探索，離線後旅程仍會繼續。');});
     }
-    function paint() {if(disposed)return;paintScene();paintPanel();paintNav();}
+    async function previewTalent(nodeId,routePreview=false){
+      talentPreviewAbort?.abort();const abort=new AbortController(),seq=++talentPreviewSeq,scope=contextKey(client.state.context);talentPreviewAbort=abort;talentSelected=nodeId;talentPreview=null;talentPreviewLoading=true;lastPanelKey='';paintPanel();
+      try{const data=await host.request('atlas/talents/preview',{nodeId},{signal:abort.signal});if(seq!==talentPreviewSeq||scope!==contextKey(client.state.context))return;talentPreview=data;}
+      catch(error){if(!abort.signal.aborted&&scope===contextKey(client.state.context))host.toast(errorText(error),true);}
+      finally{if(seq===talentPreviewSeq&&scope===contextKey(client.state.context)){talentPreviewLoading=false;lastPanelKey='';paintPanel();overlay.querySelector(routePreview?'.atlas-talent-preview':'.atlas-talent-detail')?.scrollIntoView({block:routePreview?'start':'nearest'});}}
+    }
+    function paint() {if(disposed)return;if(talentPreview&&talentPreview.baseRevision!==client.state.snapshot?.talents?.revision)talentPreview=null;paintScene();paintPanel();paintNav();chatLauncher.hidden=!validCharacter();const s=chatClient?.state,m=s?.messages.at(-1);chatLauncher.querySelector('span').textContent=s?.error?'聊天暫時離線 · 點此重新連線':m?`${m.channel==='party'?'隊伍':'世界'} · ${m.name}：${m.text}`:'世界與隊伍頻道 · 點此聊天';}
     function update(next) {
       context=next;document.body.classList.add('atlas-enabled');root.hidden=!next.meta;
       const selecting=next.choosing||next.creating||!next.me;
-      legacy.hidden=!selecting&&next.tab==='atlas';legacy.classList.toggle('atlas-selecting',selecting);
+      const legacyWasOpen=!legacy.hidden;
+      legacy.hidden=!selecting&&next.tab==='atlas';legacyBackdrop.hidden=legacy.hidden;legacy.classList.toggle('atlas-selecting',selecting);
+      if(!legacy.hidden&&!legacyWasOpen){legacyFocusReturn=document.activeElement;queueMicrotask(()=>{if(!disposed&&!legacy.hidden&&!document.getElementById('app').inert)legacy.querySelector('[data-atlas-legacy-close]:not([hidden])')?.focus({preventScroll:true});});}
+      if(legacy.hidden&&legacyWasOpen){const target=legacyFocusReturn;legacyFocusReturn=null;queueMicrotask(()=>{if(!disposed&&legacy.hidden&&!root.inert&&target?.isConnected)target.focus({preventScroll:true});});}
       legacy.querySelector('[data-atlas-legacy-close]').hidden=selecting&&!next.me;
       legacy.querySelector('[data-atlas-legacy-title]').textContent=selecting?'選擇冒險者':({home:'一般掛機與補給',bag:'裝備與背包',class:'職業與傳承',guardian:'守護天使',shop:'工坊與市集',trade:'社交與交易',boss:'首領與合作冒險',collection:'地圖圖鑑'})[next.tab]||'冒險';
       const changed=client.setContext({realmId:next.realmId,characterId:next.me?.character?.tgId||'',epoch:next.contextEpoch||0});
-      if(changed){close();draftRun={};draftCraft={};draftScope='';}
-      if(selecting)close();paint();
-      if(changed&&!selecting)void refreshAll();
+      chatClient?.setContext({realmId:next.realmId,characterId:next.me?.character?.tgId||'',epoch:next.contextEpoch||0});
+      if(changed){close();draftRun={};draftCraft={};draftScope='';talentSelected=null;talentZoom=90;talentEffectsReviewed=false;talentPreviewSeq++;talentPreviewAbort?.abort();talentPreview=null;talentPreviewLoading=false;}
+      if(selecting)close();syncWindowState();paint();
+      if(changed&&!selecting){void refreshAll();void chatClient?.refresh();}
     }
     root.querySelectorAll('[data-atlas-group]').forEach(button=>button.onclick=()=>open(button.dataset.atlasGroup));
     root.querySelectorAll('[data-atlas-direct]').forEach(button=>button.onclick=()=>route(button.dataset.atlasDirect));
+    root.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
+    root.querySelectorAll('[data-atlas-open-growth]').forEach(button=>button.onclick=()=>open('progression'));
     get('[data-atlas-home]').onclick=()=>{close();host.home();};get('[data-atlas-character]').onclick=()=>{close();host.chooseCharacter();};
     get('#atlas-realm').onchange=event=>{close();void host.switchRealm(event.target.value);};
     legacy.querySelector('[data-atlas-legacy-close]').onclick=()=>{host.home();};
+    legacyBackdrop.onclick=()=>{if(context?.me)host.home();};
     overlay.querySelectorAll('[data-atlas-close]').forEach(button=>button.onclick=close);
     function keydown(event){
-      if(overlay.hidden)return;
+      const active=!overlay.hidden?overlay:!legacy.hidden?legacy:null;
+      if(!active)return;
       if(!document.getElementById('sheet')?.hidden)return;
-      if(event.key==='Escape'){event.preventDefault();close();return;}
+      if(document.getElementById('expedition-overlay')||document.querySelector('.fate-overlay'))return;
+      if(event.key==='Escape'){event.preventDefault();if(active===legacy){if(context?.me)host.home();}else close();return;}
       if(event.key!=='Tab')return;
-      const items=[...overlay.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,[tabindex="0"]')].filter(node=>node.getClientRects().length),first=items[0],last=items.at(-1);
+      const items=[...active.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,[tabindex="0"]')].filter(node=>node.getClientRects().length),first=items[0],last=items.at(-1);
       if(event.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
     }
     document.addEventListener('keydown',keydown);
-    const visibility=()=>{if(!document.hidden&&validCharacter())void refreshAll();};
+    const visibility=()=>{if(!document.hidden&&validCharacter()){void refreshAll();void chatClient?.refresh();}};
     document.addEventListener('visibilitychange',visibility);
     poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
-    return {update,open,close,refresh:client.refresh,client,dispose(){disposed=true;clearInterval(poll);client.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();root.remove();}};
+    const chatPoll=setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
+    return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }
-  window.RpgAtlasUI={mount,createClient,groups,contextKey,reportHtml,progressPercent,progressLabel};
+  function styleSceneFrame(frame) {
+    if(!document.body.classList.contains('atlas-enabled'))return;
+    frame.addEventListener('load',()=>{
+      const doc=frame.contentDocument;
+      if(!doc?.head)return;
+      doc.documentElement.classList.add('atlas-scene-frame');
+      if(!doc.getElementById('atlas-scene-frame-style')){
+        const css=doc.createElement('link');css.id='atlas-scene-frame-style';css.rel='stylesheet';css.href='/scene-window-frame.css?v=20261102-floating1';doc.head.append(css);
+      }
+    });
+  }
+  window.RpgAtlasUI={mount,createClient,groups,contextKey,reportHtml,progressPercent,progressLabel,styleSceneFrame};
 })();

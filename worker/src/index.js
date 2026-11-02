@@ -5,6 +5,7 @@ import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
+import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
@@ -24,6 +25,7 @@ import * as EXCHANGE from './services/market-exchange.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
 import { GameError } from './game/classes.js';
+import * as ATLAS_TALENTS from './services/atlas-talents.js';
 import { checkServiceSecret } from './auth.js';
 import { classifyDbError, invDeltaStmt, ledgerStmt } from './db.js';
 import { playerView, shopView, equipmentView } from './views.js';
@@ -42,6 +44,7 @@ import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
 import * as ATLAS from './services/atlas.js';
 import * as ATLAS_QUESTS from './services/atlas-quests.js';
+import * as SCENE_CHAT from './services/scene-chat.js';
 import {listRealmCatalog,resolveRealm,scopeEnvForRealm} from './realm/index.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -74,6 +77,8 @@ function tradeAct(fn) {
 }
 
 const routes = {
+  'POST /rpg/chat/state':(env,b,now)=>SCENE_CHAT.view(env,tgOf(b),b,now),
+  'POST /rpg/chat/send':(env,b,now)=>SCENE_CHAT.send(env,tgOf(b),b,now),
   'POST /rpg/atlas/catalog':(env,b,now)=>ATLAS.catalog(env,b?.tgId?tgOf(b):null,now),
   'POST /rpg/atlas/status':(env,b,now)=>ATLAS.status(env,tgOf(b),now),
   'POST /rpg/atlas/configure':(env,b,now)=>ATLAS.configure(env,tgOf(b),b,now),
@@ -83,6 +88,9 @@ const routes = {
   'POST /rpg/atlas/craft':(env,b,now)=>ATLAS.craft(env,tgOf(b),b,now),
   'POST /rpg/atlas/quests':(env,b,now)=>ATLAS_QUESTS.view(env,tgOf(b),now),
   'POST /rpg/atlas/quests/claim':(env,b,now)=>ATLAS_QUESTS.claim(env,tgOf(b),b,now),
+  'POST /rpg/atlas/talents':(env,b,now)=>ATLAS_TALENTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/talents/preview':(env,b,now)=>ATLAS_TALENTS.preview(env,tgOf(b),b,now),
+  'POST /rpg/atlas/talents/action':(env,b,now)=>ATLAS_TALENTS.action(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),
@@ -188,6 +196,9 @@ const routes = {
   'POST /rpg/me': (env, b, now) => me(env, tgOf(b), now, {summary:b.summary===true}),
   'POST /rpg/create': async (env, b, now) => { const tg = tgOf(b); await P.createCharacter(env, { ...b, tgId: tg }, now); return me(env, tg, now); },
   'POST /rpg/monster-exchange': act((w,c,b)=>monsterExchange(w,c,b)),
+  'POST /rpg/equipment-collection':(env,b,now)=>EQUIPMENT_COLLECTION.view(env,tgOf(b),now),
+  'POST /rpg/equipment-collection/preview':(env,b,now)=>EQUIPMENT_COLLECTION.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection/submit':(env,b,now)=>EQUIPMENT_COLLECTION.submit(env,tgOf(b),b,now),
   'POST /rpg/collection/activate': act((w,c,b)=>activateCollection(w,c,b)),
   'POST /rpg/boss-exchange': act((w,c,b)=>bossExchange(w,c,b)),
   'POST /rpg/daily': act((w, c, b) => P.claimDaily(w, c, b.requestId)),

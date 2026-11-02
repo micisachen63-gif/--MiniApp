@@ -79,6 +79,27 @@ test('progress and reports use server fields, preserve zero values, and escape r
   assert.match(html,/月桂精鐵/);assert.match(html,/生命藥水消耗/);assert.match(html,/&lt;script&gt;/);assert.doesNotMatch(html,/<script>|裝備掉落|補給花費/);assert.match(html,/<strong>0<\/strong>/);
 });
 
+test('duration progress uses the server mode and actual clears without inventing a map quota',()=>{
+  const ui=module();
+  const label=ui.progressLabel({queueMode:'duration',mapCount:null,completedMaps:123,progress:{catchingUp:true}});
+  assert.match(label,/123 張星圖/);assert.match(label,/派遣時間結束/);assert.match(label,/仍在結算/);
+  assert.doesNotMatch(label,/待同步|\/ 96/);
+});
+
+test('a talent-only response preserves the current exploration and updates only this character tree',async()=>{
+  const run={id:'existing-run',status:'completed',report:{gold:80}};
+  const h=harness(async action=>action==='atlas/catalog'?{catalog:{enabled:true}}:action==='atlas/status'?snapshot(context(),{run,talents:{spent:0}}):{...snapshot(),talentOnly:true,talents:{spent:1,availablePoints:2}});
+  await h.client.refresh();await h.client.operate('atlas/talents/action',{kind:'allocate',nodeId:'sword_whirlwind_1'});
+  assert.equal(h.client.state.snapshot.run.id,'existing-run');assert.equal(h.client.state.snapshot.talents.spent,1);assert.equal(h.client.state.pending,null);
+});
+
+test('an uncertain talent allocation restores its exact node and request ID after a context return',async()=>{
+  let fail=true;const h=harness(async()=>{if(fail)throw Object.assign(Error('lost response'),{uncertain:true});return {...snapshot(),talentOnly:true,talents:{spent:1}};});
+  const payload={kind:'allocate',nodeId:'sword_whirlwind_1'};await h.client.operate('atlas/talents/action',payload);const request=h.calls[0].body.requestId;
+  h.client.setContext(context('season_1','hero-b',2));h.client.setContext(context('permanent','hero-a',3));assert.deepEqual(plain(h.client.state.pending.payload),payload);
+  fail=false;await h.client.operate('atlas/talents/action',payload);assert.equal(h.calls[1].body.requestId,request);assert.equal(h.store.size,0);
+});
+
 function apiHarness(){const requests=[],S={realmId:'permanent',contextEpoch:1,apiEpoch:0,me:{character:{tgId:'hero-a'}}};const window={RpgRequest:{request:(action,body,headers)=>{const d=deferred();requests.push({action,body,headers,...d});return d.promise;}}};const ctx=vm.createContext({S,window,expansion:null,initData:'',devTg:'111',tg:null,refreshMe(){},setTimeout(){},openCharacterSelect(){},resetRealmContext(){S.contextEpoch++;S.me=null;}});vm.runInContext(app.slice(app.indexOf('  const readActions='),app.indexOf('  const pendingRequestMemory='))+';this.call=api;this.key=mutationKey;',ctx);return {S,ctx,requests};}
 test('the actual shared API helper sends the realm header and rejects an old A-B-A response',async()=>{
   const h=apiHarness(),pending=h.ctx.call('atlas/status');assert.equal(h.requests[0].headers['X-Realm-Id'],'permanent');assert.equal(h.requests[0].body.selectedCharacterId,'hero-a');
