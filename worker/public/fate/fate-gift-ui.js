@@ -3,9 +3,9 @@ const pending=new Map(),names={guaranteed_scroll_w:'必過的武器強化卷',gu
 const safeStorage=()=>{try{return globalThis.localStorage;}catch{return null;}};
 const changed=()=>Object.assign(Error('目前角色已改變，請關閉後重新開啟星輝匣。'),{code:'character_changed'});
 export function createFateGiftController(host,{storage=safeStorage(),uuid=()=>crypto.randomUUID()}={}){
- const character=String(host?.characterId()||'');if(!character)throw changed();let busy=false;
- const check=()=>{if(String(host.characterId())!==character)throw changed();};
- const key=kind=>`star-fate-gift:${character}:${kind}`;
+ const character=String(host?.characterId()||''),realm=String(host?.realmId?.()||'permanent'),epoch=host?.contextEpoch?.()||0;if(!character)throw changed();let busy=false;
+ const check=()=>{if(String(host.characterId())!==character||String(host.realmId?.()||'permanent')!==realm||(host.contextEpoch?.()||0)!==epoch)throw changed();};
+ const key=kind=>`star-fate-gift:${realm==='permanent'?'':realm+':'}${character}:${kind}`;
  function get(kind){const k=key(kind);let id=pending.get(k);if(!id){try{id=storage?.getItem(k)||null;}catch{}if(id)pending.set(k,id);}return id;}
  function clear(kind){pending.delete(key(kind));try{storage?.removeItem(key(kind));}catch{}}
  const summary=async()=>{check();const value=await host.request('fate/gifts/summary',{});check();if(!value?.ok)throw Error(value?.message||'星輝匣暫時無法同步');return value;};
@@ -36,6 +36,6 @@ export function openFateGift(host=window.RpgFateHost,{doc=document,storage=safeS
  claim.onclick=()=>perform('claim');open.onclick=()=>perform('open');retry.onclick=sync;
  function key(e){if(e.key==='Escape'){e.preventDefault();dispose();return;}if(e.key==='Tab'){const buttons=[close,claim,open,retry].filter(n=>!n.disabled),first=buttons[0],last=buttons.at(-1);if(e.shiftKey&&doc.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&doc.activeElement===last){e.preventDefault();first.focus();}}}
  const timer=setInterval(()=>{if(alive&&!changing)roleCheck();},400);
- function dispose(){if(!alive)return;alive=false;clearInterval(timer);doc.removeEventListener('keydown',key);overlay.remove();if(app)app.inert=wasInert;doc.body.style.overflow=overflow;if(focused?.isConnected)focused.focus();opened=null;}
- close.onclick=dispose;doc.addEventListener('keydown',key);close.focus();opened={close:dispose};void sync();return opened;
+ function dispose(){if(!alive)return;alive=false;clearInterval(timer);doc.removeEventListener('keydown',key);globalThis.removeEventListener?.('rpg-context-changed',dispose);overlay.remove();if(app)app.inert=wasInert;doc.body.style.overflow=overflow;if(focused?.isConnected)focused.focus();opened=null;}
+ close.onclick=dispose;doc.addEventListener('keydown',key);globalThis.addEventListener?.('rpg-context-changed',dispose);close.focus();opened={close:dispose};void sync();return opened;
 }

@@ -7,19 +7,19 @@
  const handles=new WeakMap();
  function mount(root,data){
   handles.get(root)?.cleanup();
-  const C=window.RpgGuardianContract,host=window.RpgGuardianHost,actor=String(host.characterId()),key='guardianAssistPending:'+actor;
+  const C=window.RpgGuardianContract,host=window.RpgGuardianHost,actor=String(host.characterId()),realm=String(host.realmId?.()||'permanent'),contextEpoch=host.contextEpoch?.()||0,key='guardianAssistPending:'+(realm==='permanent'?'':realm+':')+actor;
   let config=null,state=null,items=[],cursor=null,busy=false,loading=true,disposed=false,notice='',draft=false,pending=null,readController=null;
-  const current=()=>!disposed&&root.isConnected&&actor===String(host.characterId());
+  const current=()=>!disposed&&root.isConnected&&actor===String(host.characterId())&&realm===String(host.realmId?.()||'permanent')&&contextEpoch===(host.contextEpoch?.()||0);
   const parent=root.closest?.('.skill-widget');
   function save(value){pending=value;try{if(value)localStorage.setItem(key,JSON.stringify(value));else localStorage.removeItem(key);}catch{}}
   const modes=['start','stop','continuation','buy','select','renew','supply'];
   try{const value=JSON.parse(localStorage.getItem(key)||'null');if(value?.characterId===actor&&value.action==='assist'&&/^[A-Za-z0-9_-]{6,64}$/.test(value.requestId||'')&&(value.payload?.characterId===actor||value.legacy===true&&value.payload?.characterId===undefined)&&value.payload.requestId===value.requestId&&modes.includes(value.payload.mode))pending=value;}catch{}
   // Preserve an unresolved operation saved by the previous widget, including
   // its original legacy mode and body. A receipt check never creates a write.
-  if(!pending&&typeof sessionStorage!=='undefined')try{const legacy=JSON.parse(sessionStorage.getItem(key)||'null');if(legacy&&/^[A-Za-z0-9_-]{6,64}$/.test(legacy.requestId||'')&&modes.includes(legacy.mode)&&(!legacy.characterId||String(legacy.characterId)===actor)){save({characterId:actor,action:'assist',requestId:legacy.requestId,legacy:true,payload:legacy});if(localStorage.getItem(key))sessionStorage.removeItem(key);}}catch{}
+  if(!pending&&realm==='permanent'&&typeof sessionStorage!=='undefined')try{const legacy=JSON.parse(sessionStorage.getItem(key)||'null');if(legacy&&/^[A-Za-z0-9_-]{6,64}$/.test(legacy.requestId||'')&&modes.includes(legacy.mode)&&(!legacy.characterId||String(legacy.characterId)===actor)){save({characterId:actor,action:'assist',requestId:legacy.requestId,legacy:true,payload:legacy});if(localStorage.getItem(key))sessionStorage.removeItem(key);}}catch{}
   const assist=()=>state?.assist||{};
   const canAct=()=>current()&&!busy&&!loading&&!pending&&state?.unlocked&&config?.enabled===true&&config.status==='approved';
-  function setBusy(value){busy=value;if(parent)parent.busy=value;}
+  function setBusy(value){busy=value;if(parent&&handles.get(root)===handle)parent.busy=value;}
   function decorated(item){const type=config.types.find(row=>row.id===item.type),quality=config.qualities.find(row=>row.id===item.quality);return {...item,typeName:type?.name||C.TYPE_NAMES[item.type],qualityName:quality?.name||C.QUALITY_NAMES[item.quality],artUrl:type?.artUrl,ability:type?.ability,damageBonus:quality?.damageBonus,lootBonus:quality?.lootBonus};}
   function effect(item){return `${{melee:'近戰傷害',ranged:'遠程傷害',magic:'魔法傷害',loot:'隨機掉寶率'}[item.type]} +${pct(item.type==='loot'?item.lootBonus:item.damageBonus)}`;}
   function paint(){

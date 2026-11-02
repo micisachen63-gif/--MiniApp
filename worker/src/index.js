@@ -40,6 +40,9 @@ import { handleApp, APP_GRANT_MS, metaView, bossFor } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
+import * as ATLAS from './services/atlas.js';
+import * as ATLAS_QUESTS from './services/atlas-quests.js';
+import {listRealmCatalog,resolveRealm,scopeEnvForRealm} from './realm/index.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 const fail = (code, message, status = 400) => json({ ok: false, error: code, message }, status);
@@ -71,6 +74,15 @@ function tradeAct(fn) {
 }
 
 const routes = {
+  'POST /rpg/atlas/catalog':(env,b,now)=>ATLAS.catalog(env,b?.tgId?tgOf(b):null,now),
+  'POST /rpg/atlas/status':(env,b,now)=>ATLAS.status(env,tgOf(b),now),
+  'POST /rpg/atlas/configure':(env,b,now)=>ATLAS.configure(env,tgOf(b),b,now),
+  'POST /rpg/atlas/start':(env,b,now)=>ATLAS.start(env,tgOf(b),b,now),
+  'POST /rpg/atlas/settle':(env,b,now)=>ATLAS.settle(env,tgOf(b),b,now),
+  'POST /rpg/atlas/stop':(env,b,now)=>ATLAS.stop(env,tgOf(b),b,now),
+  'POST /rpg/atlas/craft':(env,b,now)=>ATLAS.craft(env,tgOf(b),b,now),
+  'POST /rpg/atlas/quests':(env,b,now)=>ATLAS_QUESTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/quests/claim':(env,b,now)=>ATLAS_QUESTS.claim(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),
@@ -365,12 +377,15 @@ export async function runCron(env, now) {
 
 export async function handle(request, env) {
   const url = new URL(request.url);
-  if(url.pathname.startsWith('/admin/api/'))return handleAdmin(request,env);
+  if(url.pathname.startsWith('/admin/api/')){
+    if(request.headers.get('X-Realm-Id')&&request.headers.get('X-Realm-Id')!=='permanent')return fail('realm_admin','管理介面目前僅操作永久環境',409);
+    try{return await handleAdmin(request,await prepareRealmEnv(request,env));}catch(error){return errorResponse(error,url);}
+  }
   const publicCode=/^\/fate\/r\/([^/]+)$/.exec(url.pathname)?.[1],publicCountry=countryFromCode(publicCode);if(publicCountry)await ensureCountryPack(publicCountry);
   const publicStory=fatePublic(request);if(publicStory)return publicStory;
   if (request.method === 'GET' && url.pathname === '/health') return json({ ok: true, service: 'elf-rpg-api' });
   if (url.pathname.startsWith('/app/api/')) {
-    try { return await handleApp(request, env, url, { routes, json, fail, nowFor }); }
+    try { return await handleApp(request, env, url, { routes, json, fail, nowFor, prepareRealmEnv }); }
     catch (e) { return errorResponse(e, url); }
   }
   const auth = checkServiceSecret(request, env); if (!auth.ok) return fail(auth.error, auth.error, auth.status);
@@ -380,11 +395,42 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
+    if(url.pathname.startsWith('/rpg/atlas/')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
+    // Shared class metadata has no player state. Preserve the BOT's authenticated,
+    // database-free metadata contract; only asset-bearing routes resolve a D1.
+    if(url.pathname==='/rpg/meta'){
+      const selected=request.headers.get('X-Realm-Id')||'permanent';
+      if(!listRealmCatalog(env).some(realm=>realm.id===selected))throw new GameError('realm_unknown','找不到指定的世界',404);
+      return json(await route(env,routeBody,now));
+    }
+    env=await prepareRealmEnv(request,env);
     if (routeBody.tgId && !['/rpg/create', '/rpg/app/grant','/rpg/star-ring/recruit/join'].includes(url.pathname))
       routeBody.tgId = await resolveActiveCharacterId(env.DB, tgOf(routeBody));
     return json(await route(env, routeBody, now));
   }
   catch (e) { return errorResponse(e, url); }
+}
+async function prepareRealmEnv(request,env){
+  const context=await resolveRealm(env,request.headers.get('X-Realm-Id')||'permanent');
+  return attachWakeups(scopeEnvForRealm(env,context));
+}
+function attachWakeups(env){
+  if(!env.realmWaitUntil)return env;
+  return {...env,
+    autoEnhanceWake:id=>env.realmWaitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message))),
+    guardianAutoWake:id=>env.realmWaitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),
+    autoRerollWake:id=>env.realmWaitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),
+  };
+}
+async function scheduledRealms(event,env){
+  for(const realm of listRealmCatalog(env)){
+    const context=await resolveRealm(env,realm.id);
+    if(context.phase!=='ACTIVE')continue;
+    const scoped=scopeEnvForRealm(env,context);
+    if(event.cron==='* * * * *')await Promise.all([PARTY.sweep(scoped,event.scheduledTime),AUTO.sweep(scoped,event.scheduledTime),GUARDIAN_AUTO.sweep(scoped,event.scheduledTime),REROLL_AUTO.sweep(scoped,event.scheduledTime),STAR_RING.sweep(scoped,event.scheduledTime),FATE_SHARED.sweep(scoped,event.scheduledTime).then(()=>FATE.sweep(scoped,event.scheduledTime))]);
+    else console.log('cron',context.id,JSON.stringify(await runCron(scoped,event.scheduledTime)));
+  }
 }
 function errorResponse(e, url) {
   {
@@ -399,7 +445,7 @@ function errorResponse(e, url) {
 }
 
 export default {
-  fetch: (request, env, ctx) => handle(request, {...env,autoRerollWake:id=>ctx?.waitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),guardianAutoWake:id=>ctx?.waitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),autoEnhanceWake:id=>ctx?.waitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message)))}),
-  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([PARTY.sweep(env,event.scheduledTime),AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),STAR_RING.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
+  fetch: (request, env, ctx) => handle(request, {...env,realmWaitUntil:promise=>ctx?.waitUntil(promise)}),
+  scheduled: (event, env, ctx) => ctx.waitUntil(scheduledRealms(event,env)),
 };
 void equipmentView;

@@ -10,6 +10,7 @@
   function setCategory(filters,category) {const next={...filters,category};if(!qualityOptions(category).some(([k])=>k===next.quality))next.quality='all';if(!['equipment','all'].includes(category)){next.tier=null;next.enhanceMin=null;next.enhanceMax=null;}return next;}
   const STATUS = {active:'販售中',sold:'已售出',cancelled:'已取回',expired:'已結束'};
   const remembered = new Map();
+  window.addEventListener?.('rpg-context-changed',()=>remembered.clear());
   // Exchange receipts use a canonical UUID; older game actions intentionally
   // retain their existing compact IDs and must not change with this adapter.
   function requestId() {

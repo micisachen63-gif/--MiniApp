@@ -16,7 +16,7 @@ const snapshot = db => ({
   sequence: db.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all(),
 });
 
-test('fresh initialization preserves historical definitions except reviewed class, guardian and retirement additions', () => {
+test('fresh initialization preserves historical definitions except reviewed class, guardian, retirement and Realm/Atlas additions', () => {
   const historical = repositorySchemaDatabase(), current = freshDb().sqlite;
   try {
     // 0033 adds independent console/analytics objects and indexes; the populated
@@ -31,19 +31,32 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.equal(guardianTriggers.size,2);
     const retirement=readFileSync(new URL('../migrations/0034_character_deletion.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
     const retirementObjects=new Map([...retirement.matchAll(/CREATE (TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
+    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql']
+      .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
+    const realmAtlasObjects=new Map(realmAtlasMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
     const characterSchema=new DatabaseSync(':memory:');
     characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
     characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
-    const retiredCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
+    // Use exact historical target tables for the new triggers. This independent
+    // catalog applies only the three reviewed migrations, never freshDb's list.
+    for(const name of ['rpg_accounts','rpg_party_presence'])characterSchema.exec(before.find(row=>row.type==='table'&&row.name===name).sql);
+    for(const sql of realmAtlasMigrations)characterSchema.exec(sql);
+    const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
+    assert.equal(realmAtlasExpected.length,realmAtlasObjects.size);
+    const currentCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
     const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
-      ? { ...row, sql: row.name==='rpg_characters'?retiredCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
+      ? { ...row, sql: row.name==='rpg_characters'?currentCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
     // independent Fate tables/indexes; 0029 adds isolated expedition tables.
     // 0031 replaces two blanket guardian party locks; 0032 allows self-owned
     // activation on real expeditions. Each populated migration test separately
     // verifies every row and all other schema objects. 0034's populated migration
     // proof additionally checks the one nullable retirement column and isolated lifecycle objects.
-    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)), expected);
+    // 0035-0037 add an explicitly enumerated catalog and the nullable TEXT
+    // atlas_run_id column. Compare every new definition separately, including
+    // unique indexes and triggers, while keeping the historical SQL comparison exact.
+    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)), expected);
+    assert.deepEqual(schemaRows(current).filter(row=>realmAtlasObjects.has(row.name)),realmAtlasExpected);
     for(const [name,type] of retirementObjects){const found=schemaRows(current).filter(r=>r.name===name);assert.equal(found.length,1,name);assert.equal(found[0].type,type,name);}
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);

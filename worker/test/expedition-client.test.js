@@ -10,13 +10,13 @@ const list=()=>({ok:true,parties:[],history:[],dungeons:[],active:null,groupActi
 const party=id=>({id,status:'combat',round:1,me:{},members:[]});
 const response=j=>({status:200,json:async()=>j});
 const turn=()=>new Promise(resolve=>setImmediate(resolve));
-function setup(fetcher,{hash='#tower',search=''}={}){
-  const calls=[],storage=new Map(),timers=[],listeners=new Map(),windowListeners=new Map();
+function setup(fetcher,{hash='#tower',search='',host=null,saved=null}={}){
+  const calls=[],storage=saved||new Map(),timers=[],listeners=new Map(),windowListeners=new Map();
   let uuid=0,renders=0;
   const detail={open:false,addEventListener(){},close(){this.open=false;}};
   const document={hidden:false,querySelector:s=>s==='#detail'?detail:{addEventListener(){},textContent:'',hidden:false},querySelectorAll:()=>[],addEventListener:(event,fn)=>listeners.set(event,fn)};
   const window={addEventListener:(event,fn)=>windowListeners.set(event,fn),scrollTo(){}};
-  const ctx=vm.createContext({window,document,parent:{Telegram:{WebApp:{initData:'fixture-auth'}}},URLSearchParams,location:{hash,search,origin:'https://fixture.invalid'},data:{skills:[]},heroArt(){},playCombat(){},combatView:p=>p,combatCursor:()=>null,dungeonTheme(){},AbortController,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},crypto:{randomUUID:()=>`uuid-${++uuid}`},setTimeout:(fn,ms)=>{timers.push({fn,ms});return timers.length},clearTimeout(){},setInterval:()=>1,clearInterval(){},fetch:async(url,options)=>{const body=JSON.parse(options.body),action=url.slice('/app/api/'.length),call={action,body,options};calls.push(call);return await fetcher(call);},Date,Promise,JSON});
+  const ctx=vm.createContext({window,document,parent:{Telegram:{WebApp:{initData:'fixture-auth'}},location:{origin:'https://fixture.invalid'},RpgExpeditionHost:host},URLSearchParams,location:{hash,search,origin:'https://fixture.invalid'},data:{skills:[]},heroArt(){},playCombat(){},combatView:p=>p,combatCursor:()=>null,dungeonTheme(){},AbortController,localStorage:{getItem:key=>storage.get(key)||null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},crypto:{randomUUID:()=>`uuid-${++uuid}`},setTimeout:(fn,ms)=>{timers.push({fn,ms});return timers.length},clearTimeout(){},setInterval:()=>1,clearInterval(){},fetch:async(url,options)=>{const body=JSON.parse(options.body),action=url.slice('/app/api/'.length),call={action,body,options};calls.push(call);return await fetcher(call);},Date,Promise,JSON});
   vm.runInContext(requestSource,ctx);
   vm.runInContext(liveSource+`\nrender=()=>{this.renderCount=(this.renderCount||0)+1;};toast=()=>{};this.h={api,refresh,poll,navigateActivity,ringDestination,backgroundRingNotice,set:(s,p=null,id=null)=>{state=s;pinned=s?.character?.tgId||null;party=p;partyId=id;},select:(p,id)=>{party=p;partyId=id;},state:()=>state,party:()=>party,tab:()=>tab};`,ctx);
   return {h:ctx.h,ctx,calls,storage,timers,listeners,windowListeners,document,request:window.RpgRequest.request};
@@ -117,6 +117,21 @@ test('uncertain mutation keeps its request id for manual retry and clears it on 
   await s.h.api('expedition/action',body);
   const ids=s.calls.filter(c=>c.action==='expedition/action').map(c=>c.body.requestId);
   assert.equal(ids.length,2);assert.equal(ids[0],ids[1]);assert.equal(s.storage.size,0);
+});
+
+test('same-ID realm pending operations use separate storage and preserve the original permanent key',async()=>{
+ const saved=new Map(),body={op:'redeem',skillId:'skill_01_1'},fetcher=c=>{if(c.action==='expedition/action')throw Error('network');return response(c.action==='party/list'?list():snapshot(100));};
+ const permanent=setup(fetcher,{saved,host:{realmId:()=> 'permanent'}});permanent.h.set(snapshot(100));await assert.rejects(permanent.h.api('expedition/action',body));await turn();
+ const oldKey=[...saved.keys()][0];assert.ok(oldKey.startsWith('elfRpgExpeditionPending:111:'));
+ const season=setup(fetcher,{saved,host:{realmId:()=> 'season-a'}});season.h.set(snapshot(100));await assert.rejects(season.h.api('expedition/action',body));await turn();
+ assert.equal(saved.size,2);assert.ok([...saved.keys()].some(key=>key.startsWith('elfRpgExpeditionPending:season-a:111:')));assert.ok(saved.has(oldKey));assert.equal(season.calls[0].options.headers['X-Realm-Id'],'season-a');
+});
+
+test('an embedded old realm cannot send new actions or accept a delayed A-B-A result',async()=>{
+ let realm='permanent',epoch=1,resolve,calls=0;const host={realmId:()=>realm,contextEpoch:()=>epoch,request:()=>{calls++;return new Promise(done=>resolve=done);}};
+ const s=setup(()=>{throw Error('must use host');},{host});s.h.set(snapshot(100));const reading=s.h.api('expedition/me');
+ realm='season-a';epoch++;realm='permanent';epoch++;resolve(snapshot(999));await assert.rejects(reading,e=>e.code==='context_changed');
+ await assert.rejects(s.h.api('expedition/action',{op:'redeem',skillId:'skill_01_1'}),e=>e.code==='context_changed');assert.equal(calls,1);assert.equal(s.h.state().character.gold,100);
 });
 
 test('mutation timeout releases the operation and never retries a financial request',async()=>{
