@@ -1,0 +1,3976 @@
+{
+  "status": "local visual preview; NOT production rules",
+  "productionDeployed": false,
+  "levelsPerMap": 10,
+  "maps": [
+    {
+      "id": "elite-01",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 1,
+      "name": "日耀聖庭",
+      "levelMin": 121,
+      "levelMax": 130,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-01-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-01.json",
+      "ordinary": [
+        "temple_statue",
+        "temple_owl",
+        "bronze_guard",
+        "temple_ghost",
+        "immortal_bird",
+        "pure_gold_lion"
+      ],
+      "elite": "temple_centurion",
+      "boss": "pillar_colossus",
+      "names": {
+        "temple_statue": "菁英 · 百柱石像",
+        "temple_owl": "菁英 · 智慧夜梟",
+        "bronze_guard": "菁英 · 青銅衛兵",
+        "temple_ghost": "菁英 · 神殿侍從鬼魂",
+        "immortal_bird": "菁英 · 長生鳥",
+        "pure_gold_lion": "菁英 · 純金石獅",
+        "temple_centurion": "菁英 · 神殿禁衛百夫長",
+        "pillar_colossus": "菁英 · 雅典娜銅翼獅王"
+      },
+      "sources": [
+        {
+          "id": "temple_statue",
+          "name": "百柱石像",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_owl",
+          "name": "智慧夜梟",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_guard",
+          "name": "青銅衛兵",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_ghost",
+          "name": "神殿侍從鬼魂",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "immortal_bird",
+          "name": "長生鳥",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "pure_gold_lion",
+          "name": "純金石獅",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "temple_centurion",
+          "name": "神殿禁衛百夫長",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "pillar_colossus",
+          "name": "雅典娜銅翼獅王",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-02",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 2,
+      "name": "金枝月桂林",
+      "levelMin": 131,
+      "levelMax": 140,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-02-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-02.json",
+      "ordinary": [
+        "moon_hare",
+        "laurel_treant",
+        "wood_nymph",
+        "forest_scout",
+        "sacred_antelope",
+        "olive_guardian"
+      ],
+      "elite": "artemis_ranger",
+      "boss": "ancient_laurel",
+      "names": {
+        "moon_hare": "菁英 · 月光野兔",
+        "laurel_treant": "菁英 · 月桂樹精",
+        "wood_nymph": "菁英 · 林地花仙",
+        "forest_scout": "菁英 · 林精斥候",
+        "sacred_antelope": "菁英 · 聖角羚羊",
+        "olive_guardian": "菁英 · 古木守衛",
+        "artemis_ranger": "菁英 · 阿耳忒彌斯巡林長",
+        "ancient_laurel": "菁英 · 月桂巨樹精"
+      },
+      "sources": [
+        {
+          "id": "moon_hare",
+          "name": "月光野兔",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "laurel_treant",
+          "name": "月桂樹精",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "wood_nymph",
+          "name": "林地花仙",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "forest_scout",
+          "name": "林精斥候",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "sacred_antelope",
+          "name": "聖角羚羊",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "olive_guardian",
+          "name": "古木守衛",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "artemis_ranger",
+          "name": "阿耳忒彌斯巡林長",
+          "role": "elite",
+          "sourceMap": 1
+        },
+        {
+          "id": "ancient_laurel",
+          "name": "月桂巨樹精",
+          "role": "boss",
+          "sourceMap": 1
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-03",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 3,
+      "name": "勝利者百柱廊",
+      "levelMin": 141,
+      "levelMax": 150,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-03-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-03.json",
+      "ordinary": [
+        "temple_statue",
+        "temple_owl",
+        "bronze_guard",
+        "temple_ghost",
+        "sunlight_stone_spirit",
+        "sun_disc_acolyte"
+      ],
+      "elite": "temple_centurion",
+      "boss": "pillar_colossus",
+      "names": {
+        "temple_statue": "菁英 · 百柱石像",
+        "temple_owl": "菁英 · 智慧夜梟",
+        "bronze_guard": "菁英 · 青銅衛兵",
+        "temple_ghost": "菁英 · 神殿侍從鬼魂",
+        "sunlight_stone_spirit": "菁英 · 日光石妖",
+        "sun_disc_acolyte": "菁英 · 日輪祭徒",
+        "temple_centurion": "菁英 · 神殿禁衛百夫長",
+        "pillar_colossus": "菁英 · 雅典娜銅翼獅王"
+      },
+      "sources": [
+        {
+          "id": "temple_statue",
+          "name": "百柱石像",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_owl",
+          "name": "智慧夜梟",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_guard",
+          "name": "青銅衛兵",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_ghost",
+          "name": "神殿侍從鬼魂",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "sunlight_stone_spirit",
+          "name": "日光石妖",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "temple_centurion",
+          "name": "神殿禁衛百夫長",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "pillar_colossus",
+          "name": "雅典娜銅翼獅王",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-04",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 4,
+      "name": "晨光愛琴海崖",
+      "levelMin": 151,
+      "levelMax": 160,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-04-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-04.json",
+      "ordinary": [
+        "aegean_siren",
+        "tidal_beetle",
+        "wave_fish",
+        "sea_crab",
+        "styx_naiad",
+        "chain_soul"
+      ],
+      "elite": "deepsea_crab",
+      "boss": "aegean_leviathan",
+      "names": {
+        "aegean_siren": "菁英 · 海崖塞壬",
+        "tidal_beetle": "菁英 · 潮汐甲蟲",
+        "wave_fish": "菁英 · 波濤飛魚",
+        "sea_crab": "菁英 · 海潮巨蟹",
+        "styx_naiad": "菁英 · 冥河水妖",
+        "chain_soul": "菁英 · 鎖鏈亡魂",
+        "deepsea_crab": "菁英 · 深海狂暴巨蟹",
+        "aegean_leviathan": "菁英 · 海崖利維坦"
+      },
+      "sources": [
+        {
+          "id": "aegean_siren",
+          "name": "海崖塞壬",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "tidal_beetle",
+          "name": "潮汐甲蟲",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "wave_fish",
+          "name": "波濤飛魚",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "sea_crab",
+          "name": "海潮巨蟹",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "styx_naiad",
+          "name": "冥河水妖",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "chain_soul",
+          "name": "鎖鏈亡魂",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "deepsea_crab",
+          "name": "深海狂暴巨蟹",
+          "role": "elite",
+          "sourceMap": 4
+        },
+        {
+          "id": "aegean_leviathan",
+          "name": "海崖利維坦",
+          "role": "boss",
+          "sourceMap": 4
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-05",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 5,
+      "name": "王冠迷宮",
+      "levelMin": 161,
+      "levelMax": 170,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-05-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-05.json",
+      "ordinary": [
+        "labyrinth_patrol",
+        "bronze_bull",
+        "gorgon_phantom",
+        "petrifying_bat",
+        "bronze_griffin",
+        "shield_stoneguard"
+      ],
+      "elite": "labyrinth_general",
+      "boss": "minos_bull",
+      "names": {
+        "labyrinth_patrol": "菁英 · 迷宮巡邏兵",
+        "bronze_bull": "菁英 · 青銅公牛",
+        "gorgon_phantom": "菁英 · 蛇髮女妖幻影",
+        "petrifying_bat": "菁英 · 石化蝙蝠",
+        "bronze_griffin": "菁英 · 銅翼獅鷲",
+        "shield_stoneguard": "菁英 · 持盾石衛",
+        "labyrinth_general": "菁英 · 迷宮巡查將軍",
+        "minos_bull": "菁英 · 米諾斯魔牛"
+      },
+      "sources": [
+        {
+          "id": "labyrinth_patrol",
+          "name": "迷宮巡邏兵",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "bronze_bull",
+          "name": "青銅公牛",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "gorgon_phantom",
+          "name": "蛇髮女妖幻影",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "petrifying_bat",
+          "name": "石化蝙蝠",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "bronze_griffin",
+          "name": "銅翼獅鷲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "shield_stoneguard",
+          "name": "持盾石衛",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "labyrinth_general",
+          "name": "迷宮巡查將軍",
+          "role": "elite",
+          "sourceMap": 5
+        },
+        {
+          "id": "minos_bull",
+          "name": "米諾斯魔牛",
+          "role": "boss",
+          "sourceMap": 5
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-06",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 6,
+      "name": "天火鑄造庭",
+      "levelMin": 171,
+      "levelMax": 180,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-06-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-06.json",
+      "ordinary": [
+        "lava_salamander",
+        "forge_golem",
+        "fire_crystal_demon",
+        "forge_fire_bat",
+        "mountain_golem",
+        "storm_acolyte"
+      ],
+      "elite": "molten_forgemaster",
+      "boss": "lava_colossus",
+      "names": {
+        "lava_salamander": "菁英 · 熔岩火蜥蜴",
+        "forge_golem": "菁英 · 鍛造巨傀儡",
+        "fire_crystal_demon": "菁英 · 火晶石魔",
+        "forge_fire_bat": "菁英 · 鍛火魔蝠",
+        "mountain_golem": "菁英 · 碎山傀儡",
+        "storm_acolyte": "菁英 · 風暴祭徒",
+        "molten_forgemaster": "菁英 · 熔火鍛造長",
+        "lava_colossus": "菁英 · 熔岩巨像"
+      },
+      "sources": [
+        {
+          "id": "lava_salamander",
+          "name": "熔岩火蜥蜴",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "forge_golem",
+          "name": "鍛造巨傀儡",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "fire_crystal_demon",
+          "name": "火晶石魔",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "forge_fire_bat",
+          "name": "鍛火魔蝠",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "mountain_golem",
+          "name": "碎山傀儡",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "storm_acolyte",
+          "name": "風暴祭徒",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "molten_forgemaster",
+          "name": "熔火鍛造長",
+          "role": "elite",
+          "sourceMap": 6
+        },
+        {
+          "id": "lava_colossus",
+          "name": "熔岩巨像",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-07",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 7,
+      "name": "金穗神諭谷",
+      "levelMin": 181,
+      "levelMax": 190,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-07-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-07.json",
+      "ordinary": [
+        "oracle_python",
+        "apollo_sun_hawk",
+        "prophet_priest_ghost",
+        "sunlight_stone_spirit",
+        "star_chain_guard",
+        "eclipse_priest"
+      ],
+      "elite": "oracle_high_priest",
+      "boss": "python_serpent",
+      "names": {
+        "oracle_python": "菁英 · 神諭幻蟒",
+        "apollo_sun_hawk": "菁英 · 阿波羅日鷹",
+        "prophet_priest_ghost": "菁英 · 預言祭司幽靈",
+        "sunlight_stone_spirit": "菁英 · 日光石妖",
+        "star_chain_guard": "菁英 · 星鏈神兵",
+        "eclipse_priest": "菁英 · 日蝕祭司",
+        "oracle_high_priest": "菁英 · 神諭大祭司",
+        "python_serpent": "菁英 · 皮同巨蟒"
+      },
+      "sources": [
+        {
+          "id": "oracle_python",
+          "name": "神諭幻蟒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "apollo_sun_hawk",
+          "name": "阿波羅日鷹",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "prophet_priest_ghost",
+          "name": "預言祭司幽靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sunlight_stone_spirit",
+          "name": "日光石妖",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "star_chain_guard",
+          "name": "星鏈神兵",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "eclipse_priest",
+          "name": "日蝕祭司",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "oracle_high_priest",
+          "name": "神諭大祭司",
+          "role": "elite",
+          "sourceMap": 8
+        },
+        {
+          "id": "python_serpent",
+          "name": "皮同巨蟒",
+          "role": "boss",
+          "sourceMap": 8
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-08",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 8,
+      "name": "守誓泰坦山隘",
+      "levelMin": 191,
+      "levelMax": 200,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-08-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-08.json",
+      "ordinary": [
+        "titan_hoof_beast",
+        "earthsplit_stone_demon",
+        "mountain_gale_bird",
+        "thunder_lizard",
+        "ancient_wood_swarm",
+        "spectral_spring"
+      ],
+      "elite": "titan_vanguard",
+      "boss": "lava_colossus",
+      "names": {
+        "titan_hoof_beast": "菁英 · 泰坦巨足獸",
+        "earthsplit_stone_demon": "菁英 · 裂地石魔",
+        "mountain_gale_bird": "菁英 · 山隘狂風鳥",
+        "thunder_lizard": "菁英 · 雷霆蜥蜴",
+        "ancient_wood_swarm": "菁英 · 古木蟲群",
+        "spectral_spring": "菁英 · 幽泉靈",
+        "titan_vanguard": "菁英 · 泰坦先鋒戰將",
+        "lava_colossus": "菁英 · 熔岩巨像"
+      },
+      "sources": [
+        {
+          "id": "titan_hoof_beast",
+          "name": "泰坦巨足獸",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "earthsplit_stone_demon",
+          "name": "裂地石魔",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "mountain_gale_bird",
+          "name": "山隘狂風鳥",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_lizard",
+          "name": "雷霆蜥蜴",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "ancient_wood_swarm",
+          "name": "古木蟲群",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "spectral_spring",
+          "name": "幽泉靈",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "titan_vanguard",
+          "name": "泰坦先鋒戰將",
+          "role": "elite",
+          "sourceMap": 9
+        },
+        {
+          "id": "lava_colossus",
+          "name": "熔岩巨像",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-09",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 9,
+      "name": "浮雲天門",
+      "levelMin": 201,
+      "levelMax": 210,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-09-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-09.json",
+      "ordinary": [
+        "cloud_pegasus",
+        "celestial_patrol_bird",
+        "cloud_nymph",
+        "holy_light_statue",
+        "ash_ghost",
+        "lava_salamander"
+      ],
+      "elite": "cloud_gate_guard",
+      "boss": "cloud_gate_deity",
+      "names": {
+        "cloud_pegasus": "菁英 · 雲海天馬",
+        "celestial_patrol_bird": "菁英 · 天界巡翼鳥",
+        "cloud_nymph": "菁英 · 雲嵐仙女",
+        "holy_light_statue": "菁英 · 聖光石像",
+        "ash_ghost": "菁英 · 灰燼幽魂",
+        "lava_salamander": "菁英 · 熔岩火蜥蜴",
+        "cloud_gate_guard": "菁英 · 雲門神廷禁軍長",
+        "cloud_gate_deity": "菁英 · 雲門守門巨神"
+      },
+      "sources": [
+        {
+          "id": "cloud_pegasus",
+          "name": "雲海天馬",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "celestial_patrol_bird",
+          "name": "天界巡翼鳥",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_nymph",
+          "name": "雲嵐仙女",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "holy_light_statue",
+          "name": "聖光石像",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "ash_ghost",
+          "name": "灰燼幽魂",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "lava_salamander",
+          "name": "熔岩火蜥蜴",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "cloud_gate_guard",
+          "name": "雲門神廷禁軍長",
+          "role": "elite",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_gate_deity",
+          "name": "雲門守門巨神",
+          "role": "boss",
+          "sourceMap": 10
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-10",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 10,
+      "name": "英靈至福園",
+      "levelMin": 211,
+      "levelMax": 220,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-10-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-10.json",
+      "ordinary": [
+        "heroic_spirit",
+        "immortal_bird",
+        "pure_gold_lion",
+        "elysium_fairy",
+        "astral_attendant",
+        "zodiac_beast"
+      ],
+      "elite": "achilles_spirit",
+      "boss": "elysium_guardian_king",
+      "names": {
+        "heroic_spirit": "菁英 · 英雄英靈",
+        "immortal_bird": "菁英 · 長生鳥",
+        "pure_gold_lion": "菁英 · 純金石獅",
+        "elysium_fairy": "菁英 · 至福精靈",
+        "astral_attendant": "菁英 · 星穹神侍",
+        "zodiac_beast": "菁英 · 星座巨獸",
+        "achilles_spirit": "菁英 · 阿基里斯英靈",
+        "elysium_guardian_king": "菁英 · 至福守護王者"
+      },
+      "sources": [
+        {
+          "id": "heroic_spirit",
+          "name": "英雄英靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "immortal_bird",
+          "name": "長生鳥",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "pure_gold_lion",
+          "name": "純金石獅",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "elysium_fairy",
+          "name": "至福精靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "astral_attendant",
+          "name": "星穹神侍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "zodiac_beast",
+          "name": "星座巨獸",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "achilles_spirit",
+          "name": "阿基里斯英靈",
+          "role": "elite",
+          "sourceMap": 11
+        },
+        {
+          "id": "elysium_guardian_king",
+          "name": "至福守護王者",
+          "role": "boss",
+          "sourceMap": 11
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-11",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 11,
+      "name": "群星觀測台",
+      "levelMin": 221,
+      "levelMax": 230,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-11-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-11.json",
+      "ordinary": [
+        "astral_attendant",
+        "zodiac_beast",
+        "corona_spirit",
+        "void_devourer",
+        "apollo_sun_hawk",
+        "prophet_priest_ghost"
+      ],
+      "elite": "astral_high_priest",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "astral_attendant": "菁英 · 星穹神侍",
+        "zodiac_beast": "菁英 · 星座巨獸",
+        "corona_spirit": "菁英 · 日冕精魄",
+        "void_devourer": "菁英 · 虛空吞噬者",
+        "apollo_sun_hawk": "菁英 · 阿波羅日鷹",
+        "prophet_priest_ghost": "菁英 · 預言祭司幽靈",
+        "astral_high_priest": "菁英 · 星穹神官長",
+        "void_meteor_dragon_emperor": "菁英 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "astral_attendant",
+          "name": "星穹神侍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "zodiac_beast",
+          "name": "星座巨獸",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "corona_spirit",
+          "name": "日冕精魄",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_devourer",
+          "name": "虛空吞噬者",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "apollo_sun_hawk",
+          "name": "阿波羅日鷹",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "prophet_priest_ghost",
+          "name": "預言祭司幽靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "astral_high_priest",
+          "name": "星穹神官長",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "elite-12",
+      "mode": "elite",
+      "modeName": "菁英",
+      "chapter": 12,
+      "name": "日冕主神殿",
+      "levelMin": 231,
+      "levelMax": 240,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/elite-12-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/elite-12.json",
+      "ordinary": [
+        "cloud_pegasus",
+        "celestial_patrol_bird",
+        "cloud_nymph",
+        "holy_light_statue"
+      ],
+      "elite": "cloud_gate_guard",
+      "boss": "cloud_gate_deity",
+      "names": {
+        "cloud_pegasus": "菁英 · 雲海天馬",
+        "celestial_patrol_bird": "菁英 · 天界巡翼鳥",
+        "cloud_nymph": "菁英 · 雲嵐仙女",
+        "holy_light_statue": "菁英 · 聖光石像",
+        "cloud_gate_guard": "菁英 · 雲門神廷禁軍長",
+        "cloud_gate_deity": "菁英 · 雲門守門巨神"
+      },
+      "sources": [
+        {
+          "id": "cloud_pegasus",
+          "name": "雲海天馬",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "celestial_patrol_bird",
+          "name": "天界巡翼鳥",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_nymph",
+          "name": "雲嵐仙女",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "holy_light_statue",
+          "name": "聖光石像",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_gate_guard",
+          "name": "雲門神廷禁軍長",
+          "role": "elite",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_gate_deity",
+          "name": "雲門守門巨神",
+          "role": "boss",
+          "sourceMap": 10
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/elite-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-01",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 1,
+      "name": "霜鏡神域",
+      "levelMin": 241,
+      "levelMax": 250,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-01-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-01.json",
+      "ordinary": [
+        "corona_spirit",
+        "void_devourer",
+        "star_ring_eye",
+        "meteor_beetle",
+        "pure_gold_lion",
+        "elysium_fairy"
+      ],
+      "elite": "star_chain_commander",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "corona_spirit": "專家 · 日冕精魄",
+        "void_devourer": "專家 · 虛空吞噬者",
+        "star_ring_eye": "專家 · 星環浮眼",
+        "meteor_beetle": "專家 · 隕星甲蟲",
+        "pure_gold_lion": "專家 · 純金石獅",
+        "elysium_fairy": "專家 · 至福精靈",
+        "star_chain_commander": "專家 · 星鏈神兵統領",
+        "void_meteor_dragon_emperor": "專家 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "corona_spirit",
+          "name": "日冕精魄",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_devourer",
+          "name": "虛空吞噬者",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_ring_eye",
+          "name": "星環浮眼",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "meteor_beetle",
+          "name": "隕星甲蟲",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "pure_gold_lion",
+          "name": "純金石獅",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "elysium_fairy",
+          "name": "至福精靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "star_chain_commander",
+          "name": "星鏈神兵統領",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-02",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 2,
+      "name": "銀杉寒林",
+      "levelMin": 251,
+      "levelMax": 260,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-02-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-02.json",
+      "ordinary": [
+        "wood_nymph",
+        "forest_scout",
+        "moonshadow_wolf",
+        "thorn_spider",
+        "olive_guardian",
+        "thorn_boar"
+      ],
+      "elite": "thorn_hunt_king",
+      "boss": "eclipse_wolf_king",
+      "names": {
+        "wood_nymph": "專家 · 林地花仙",
+        "forest_scout": "專家 · 林精斥候",
+        "moonshadow_wolf": "專家 · 月影狼",
+        "thorn_spider": "專家 · 荊棘蜘蛛",
+        "olive_guardian": "專家 · 古木守衛",
+        "thorn_boar": "專家 · 棘角野豬",
+        "thorn_hunt_king": "專家 · 荊棘狩獵王",
+        "eclipse_wolf_king": "專家 · 月蝕狼王"
+      },
+      "sources": [
+        {
+          "id": "wood_nymph",
+          "name": "林地花仙",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "forest_scout",
+          "name": "林精斥候",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "moonshadow_wolf",
+          "name": "月影狼",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "thorn_spider",
+          "name": "荊棘蜘蛛",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "olive_guardian",
+          "name": "古木守衛",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "thorn_boar",
+          "name": "棘角野豬",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "thorn_hunt_king",
+          "name": "荊棘狩獵王",
+          "role": "elite",
+          "sourceMap": 1
+        },
+        {
+          "id": "eclipse_wolf_king",
+          "name": "月蝕狼王",
+          "role": "boss",
+          "sourceMap": 1
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-03",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 3,
+      "name": "冰封百柱廊",
+      "levelMin": 261,
+      "levelMax": 270,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-03-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-03.json",
+      "ordinary": [
+        "bronze_guard",
+        "temple_ghost",
+        "rune_beetle",
+        "bronze_griffin",
+        "sun_disc_acolyte",
+        "lightfeather_griffin"
+      ],
+      "elite": "aegis_guard",
+      "boss": "bronze_lion_king",
+      "names": {
+        "bronze_guard": "專家 · 青銅衛兵",
+        "temple_ghost": "專家 · 神殿侍從鬼魂",
+        "rune_beetle": "專家 · 符文甲蟲",
+        "bronze_griffin": "專家 · 銅翼獅鷲",
+        "sun_disc_acolyte": "專家 · 日輪祭徒",
+        "lightfeather_griffin": "專家 · 光羽獅鷲",
+        "aegis_guard": "專家 · 白銀神盾衛",
+        "bronze_lion_king": "專家 · 百柱守護巨像"
+      },
+      "sources": [
+        {
+          "id": "bronze_guard",
+          "name": "青銅衛兵",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_ghost",
+          "name": "神殿侍從鬼魂",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "rune_beetle",
+          "name": "符文甲蟲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_griffin",
+          "name": "銅翼獅鷲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "lightfeather_griffin",
+          "name": "光羽獅鷲",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "aegis_guard",
+          "name": "白銀神盾衛",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_lion_king",
+          "name": "百柱守護巨像",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-04",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 4,
+      "name": "藍晶海岸",
+      "levelMin": 271,
+      "levelMax": 280,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-04-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-04.json",
+      "ordinary": [
+        "wave_fish",
+        "sea_crab",
+        "coral_mage",
+        "tideblade_serpent",
+        "chain_soul",
+        "bone_archer"
+      ],
+      "elite": "coral_tideblade_lord",
+      "boss": "deepsea_coral_queen",
+      "names": {
+        "wave_fish": "專家 · 波濤飛魚",
+        "sea_crab": "專家 · 海潮巨蟹",
+        "coral_mage": "專家 · 珊瑚法師",
+        "tideblade_serpent": "專家 · 潮刃海蛇",
+        "chain_soul": "專家 · 鎖鏈亡魂",
+        "bone_archer": "專家 · 白骨弓手",
+        "coral_tideblade_lord": "專家 · 珊瑚潮刃統領",
+        "deepsea_coral_queen": "專家 · 深海珊瑚女王"
+      },
+      "sources": [
+        {
+          "id": "wave_fish",
+          "name": "波濤飛魚",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "sea_crab",
+          "name": "海潮巨蟹",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "coral_mage",
+          "name": "珊瑚法師",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "tideblade_serpent",
+          "name": "潮刃海蛇",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "chain_soul",
+          "name": "鎖鏈亡魂",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "bone_archer",
+          "name": "白骨弓手",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "coral_tideblade_lord",
+          "name": "珊瑚潮刃統領",
+          "role": "elite",
+          "sourceMap": 4
+        },
+        {
+          "id": "deepsea_coral_queen",
+          "name": "深海珊瑚女王",
+          "role": "boss",
+          "sourceMap": 4
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-05",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 5,
+      "name": "映雪迷宮",
+      "levelMin": 281,
+      "levelMax": 290,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-05-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-05.json",
+      "ordinary": [
+        "gorgon_phantom",
+        "petrifying_bat",
+        "labyrinth_hound",
+        "dualblade_minotaur",
+        "shield_stoneguard",
+        "oracle_acolyte"
+      ],
+      "elite": "dualblade_warlord",
+      "boss": "hundred_eye_serpent",
+      "names": {
+        "gorgon_phantom": "專家 · 蛇髮女妖幻影",
+        "petrifying_bat": "專家 · 石化蝙蝠",
+        "labyrinth_hound": "專家 · 迷宮獵犬",
+        "dualblade_minotaur": "專家 · 雙刃牛頭兵",
+        "shield_stoneguard": "專家 · 持盾石衛",
+        "oracle_acolyte": "專家 · 神諭祭徒",
+        "dualblade_warlord": "專家 · 雙刃牛頭督軍",
+        "hundred_eye_serpent": "專家 · 百眼迷宮巨蛇"
+      },
+      "sources": [
+        {
+          "id": "gorgon_phantom",
+          "name": "蛇髮女妖幻影",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "petrifying_bat",
+          "name": "石化蝙蝠",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "labyrinth_hound",
+          "name": "迷宮獵犬",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "dualblade_minotaur",
+          "name": "雙刃牛頭兵",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "shield_stoneguard",
+          "name": "持盾石衛",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "oracle_acolyte",
+          "name": "神諭祭徒",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "dualblade_warlord",
+          "name": "雙刃牛頭督軍",
+          "role": "elite",
+          "sourceMap": 5
+        },
+        {
+          "id": "hundred_eye_serpent",
+          "name": "百眼迷宮巨蛇",
+          "role": "boss",
+          "sourceMap": 5
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-06",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 6,
+      "name": "寒焰鍛爐",
+      "levelMin": 291,
+      "levelMax": 300,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-06-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-06.json",
+      "ordinary": [
+        "fire_crystal_demon",
+        "forge_fire_bat",
+        "molten_drake",
+        "furnace_spirit",
+        "storm_acolyte",
+        "magnet_stone_bug"
+      ],
+      "elite": "obsidian_warlord",
+      "boss": "molten_iron_wyvern",
+      "names": {
+        "fire_crystal_demon": "專家 · 火晶石魔",
+        "forge_fire_bat": "專家 · 鍛火魔蝠",
+        "molten_drake": "專家 · 熔核幼龍",
+        "furnace_spirit": "專家 · 爐火精靈",
+        "storm_acolyte": "專家 · 風暴祭徒",
+        "magnet_stone_bug": "專家 · 磁岩蟲",
+        "obsidian_warlord": "專家 · 黑曜石戰將",
+        "molten_iron_wyvern": "專家 · 熔核鐵翼龍"
+      },
+      "sources": [
+        {
+          "id": "fire_crystal_demon",
+          "name": "火晶石魔",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "forge_fire_bat",
+          "name": "鍛火魔蝠",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "molten_drake",
+          "name": "熔核幼龍",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "furnace_spirit",
+          "name": "爐火精靈",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "storm_acolyte",
+          "name": "風暴祭徒",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "magnet_stone_bug",
+          "name": "磁岩蟲",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "obsidian_warlord",
+          "name": "黑曜石戰將",
+          "role": "elite",
+          "sourceMap": 6
+        },
+        {
+          "id": "molten_iron_wyvern",
+          "name": "熔核鐵翼龍",
+          "role": "boss",
+          "sourceMap": 6
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-07",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 7,
+      "name": "凝霜渡口",
+      "levelMin": 301,
+      "levelMax": 310,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-07-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-07.json",
+      "ordinary": [
+        "underworld_raven",
+        "cerberus_pup",
+        "styx_naiad",
+        "chain_soul",
+        "eclipse_priest",
+        "stardust_spirit"
+      ],
+      "elite": "styx_soulchain_general",
+      "boss": "abyss_lamp_behemoth",
+      "names": {
+        "underworld_raven": "專家 · 冥府渡鴉",
+        "cerberus_pup": "專家 · 三頭犬幼崽",
+        "styx_naiad": "專家 · 冥河水妖",
+        "chain_soul": "專家 · 鎖鏈亡魂",
+        "eclipse_priest": "專家 · 日蝕祭司",
+        "stardust_spirit": "專家 · 星塵精靈",
+        "styx_soulchain_general": "專家 · 冥河鎖魂將",
+        "abyss_lamp_behemoth": "專家 · 沉淵魂燈巨獸"
+      },
+      "sources": [
+        {
+          "id": "underworld_raven",
+          "name": "冥府渡鴉",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "cerberus_pup",
+          "name": "三頭犬幼崽",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "styx_naiad",
+          "name": "冥河水妖",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "chain_soul",
+          "name": "鎖鏈亡魂",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "eclipse_priest",
+          "name": "日蝕祭司",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "stardust_spirit",
+          "name": "星塵精靈",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "styx_soulchain_general",
+          "name": "冥河鎖魂將",
+          "role": "elite",
+          "sourceMap": 7
+        },
+        {
+          "id": "abyss_lamp_behemoth",
+          "name": "沉淵魂燈巨獸",
+          "role": "boss",
+          "sourceMap": 7
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-08",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 8,
+      "name": "極光神諭谷",
+      "levelMin": 311,
+      "levelMax": 320,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-08-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-08.json",
+      "ordinary": [
+        "prophet_priest_ghost",
+        "sunlight_stone_spirit",
+        "sun_disc_acolyte",
+        "lightfeather_griffin",
+        "spectral_spring",
+        "pan_cub"
+      ],
+      "elite": "sun_archer_captain",
+      "boss": "eclipse_oracle_griffin",
+      "names": {
+        "prophet_priest_ghost": "專家 · 預言祭司幽靈",
+        "sunlight_stone_spirit": "專家 · 日光石妖",
+        "sun_disc_acolyte": "專家 · 日輪祭徒",
+        "lightfeather_griffin": "專家 · 光羽獅鷲",
+        "spectral_spring": "專家 · 幽泉靈",
+        "pan_cub": "專家 · 潘神幼獸",
+        "sun_archer_captain": "專家 · 日輪神射長",
+        "eclipse_oracle_griffin": "專家 · 日蝕神諭獅鷲"
+      },
+      "sources": [
+        {
+          "id": "prophet_priest_ghost",
+          "name": "預言祭司幽靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sunlight_stone_spirit",
+          "name": "日光石妖",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "lightfeather_griffin",
+          "name": "光羽獅鷲",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "spectral_spring",
+          "name": "幽泉靈",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "pan_cub",
+          "name": "潘神幼獸",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "sun_archer_captain",
+          "name": "日輪神射長",
+          "role": "elite",
+          "sourceMap": 8
+        },
+        {
+          "id": "eclipse_oracle_griffin",
+          "name": "日蝕神諭獅鷲",
+          "role": "boss",
+          "sourceMap": 8
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-09",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 9,
+      "name": "風雪泰坦山隘",
+      "levelMin": 321,
+      "levelMax": 330,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-09-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-09.json",
+      "ordinary": [
+        "mountain_gale_bird",
+        "thunder_lizard",
+        "stone_bear",
+        "thunder_goat",
+        "lava_salamander",
+        "forge_golem"
+      ],
+      "elite": "mountain_bear_king",
+      "boss": "thunder_titan_dragon",
+      "names": {
+        "mountain_gale_bird": "專家 · 山隘狂風鳥",
+        "thunder_lizard": "專家 · 雷霆蜥蜴",
+        "stone_bear": "專家 · 岩甲巨熊",
+        "thunder_goat": "專家 · 雷角山羊",
+        "lava_salamander": "專家 · 熔岩火蜥蜴",
+        "forge_golem": "專家 · 鍛造巨傀儡",
+        "mountain_bear_king": "專家 · 裂山巨熊王",
+        "thunder_titan_dragon": "專家 · 雷霆泰坦古龍"
+      },
+      "sources": [
+        {
+          "id": "mountain_gale_bird",
+          "name": "山隘狂風鳥",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_lizard",
+          "name": "雷霆蜥蜴",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "stone_bear",
+          "name": "岩甲巨熊",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_goat",
+          "name": "雷角山羊",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "lava_salamander",
+          "name": "熔岩火蜥蜴",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "forge_golem",
+          "name": "鍛造巨傀儡",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "mountain_bear_king",
+          "name": "裂山巨熊王",
+          "role": "elite",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_titan_dragon",
+          "name": "雷霆泰坦古龍",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-10",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 10,
+      "name": "白夜雲門",
+      "levelMin": 331,
+      "levelMax": 340,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-10-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-10.json",
+      "ordinary": [
+        "cloud_nymph",
+        "holy_light_statue",
+        "cloudshield_guard",
+        "thunder_eagle",
+        "zodiac_beast",
+        "corona_spirit"
+      ],
+      "elite": "cloud_wing_commander",
+      "boss": "rainbow_thunder_dragon_king",
+      "names": {
+        "cloud_nymph": "專家 · 雲嵐仙女",
+        "holy_light_statue": "專家 · 聖光石像",
+        "cloudshield_guard": "專家 · 雲盾神兵",
+        "thunder_eagle": "專家 · 雷羽鷹",
+        "zodiac_beast": "專家 · 星座巨獸",
+        "corona_spirit": "專家 · 日冕精魄",
+        "cloud_wing_commander": "專家 · 雲海巡翼統領",
+        "rainbow_thunder_dragon_king": "專家 · 虹霆雲海龍王"
+      },
+      "sources": [
+        {
+          "id": "cloud_nymph",
+          "name": "雲嵐仙女",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "holy_light_statue",
+          "name": "聖光石像",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloudshield_guard",
+          "name": "雲盾神兵",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "thunder_eagle",
+          "name": "雷羽鷹",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "zodiac_beast",
+          "name": "星座巨獸",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "corona_spirit",
+          "name": "日冕精魄",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "cloud_wing_commander",
+          "name": "雲海巡翼統領",
+          "role": "elite",
+          "sourceMap": 10
+        },
+        {
+          "id": "rainbow_thunder_dragon_king",
+          "name": "虹霆雲海龍王",
+          "role": "boss",
+          "sourceMap": 10
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-11",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 11,
+      "name": "霜星觀測台",
+      "levelMin": 341,
+      "levelMax": 350,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-11-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-11.json",
+      "ordinary": [
+        "corona_spirit",
+        "void_devourer",
+        "star_ring_eye",
+        "meteor_beetle",
+        "prophet_priest_ghost",
+        "sunlight_stone_spirit"
+      ],
+      "elite": "star_chain_commander",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "corona_spirit": "專家 · 日冕精魄",
+        "void_devourer": "專家 · 虛空吞噬者",
+        "star_ring_eye": "專家 · 星環浮眼",
+        "meteor_beetle": "專家 · 隕星甲蟲",
+        "prophet_priest_ghost": "專家 · 預言祭司幽靈",
+        "sunlight_stone_spirit": "專家 · 日光石妖",
+        "star_chain_commander": "專家 · 星鏈神兵統領",
+        "void_meteor_dragon_emperor": "專家 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "corona_spirit",
+          "name": "日冕精魄",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_devourer",
+          "name": "虛空吞噬者",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_ring_eye",
+          "name": "星環浮眼",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "meteor_beetle",
+          "name": "隕星甲蟲",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "prophet_priest_ghost",
+          "name": "預言祭司幽靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sunlight_stone_spirit",
+          "name": "日光石妖",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "star_chain_commander",
+          "name": "星鏈神兵統領",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "expert-12",
+      "mode": "expert",
+      "modeName": "專家",
+      "chapter": 12,
+      "name": "鉑銀裁決殿",
+      "levelMin": 351,
+      "levelMax": 360,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/expert-12-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/expert-12.json",
+      "ordinary": [
+        "bronze_guard",
+        "temple_ghost",
+        "rune_beetle",
+        "bronze_griffin",
+        "holy_light_statue",
+        "cloudshield_guard"
+      ],
+      "elite": "aegis_guard",
+      "boss": "bronze_lion_king",
+      "names": {
+        "bronze_guard": "專家 · 青銅衛兵",
+        "temple_ghost": "專家 · 神殿侍從鬼魂",
+        "rune_beetle": "專家 · 符文甲蟲",
+        "bronze_griffin": "專家 · 銅翼獅鷲",
+        "holy_light_statue": "專家 · 聖光石像",
+        "cloudshield_guard": "專家 · 雲盾神兵",
+        "aegis_guard": "專家 · 白銀神盾衛",
+        "bronze_lion_king": "專家 · 百柱守護巨像"
+      },
+      "sources": [
+        {
+          "id": "bronze_guard",
+          "name": "青銅衛兵",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "temple_ghost",
+          "name": "神殿侍從鬼魂",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "rune_beetle",
+          "name": "符文甲蟲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_griffin",
+          "name": "銅翼獅鷲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "holy_light_statue",
+          "name": "聖光石像",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloudshield_guard",
+          "name": "雲盾神兵",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "aegis_guard",
+          "name": "白銀神盾衛",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_lion_king",
+          "name": "百柱守護巨像",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/expert-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-01",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 1,
+      "name": "蝕月遺庭",
+      "levelMin": 361,
+      "levelMax": 370,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-01-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-01.json",
+      "ordinary": [
+        "styx_naiad",
+        "chain_soul",
+        "bone_archer",
+        "soul_lamp_keeper",
+        "elysium_fairy",
+        "moonwell_deer"
+      ],
+      "elite": "soul_lamp_priest",
+      "boss": "styx_ferryman",
+      "names": {
+        "styx_naiad": "惡夢 · 冥河水妖",
+        "chain_soul": "惡夢 · 鎖鏈亡魂",
+        "bone_archer": "惡夢 · 白骨弓手",
+        "soul_lamp_keeper": "惡夢 · 靈燈侍者",
+        "elysium_fairy": "惡夢 · 至福精靈",
+        "moonwell_deer": "惡夢 · 月泉仙鹿",
+        "soul_lamp_priest": "惡夢 · 靈燈司祭",
+        "styx_ferryman": "惡夢 · 冥河擺渡者"
+      },
+      "sources": [
+        {
+          "id": "styx_naiad",
+          "name": "冥河水妖",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "chain_soul",
+          "name": "鎖鏈亡魂",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "bone_archer",
+          "name": "白骨弓手",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "soul_lamp_keeper",
+          "name": "靈燈侍者",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "elysium_fairy",
+          "name": "至福精靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "moonwell_deer",
+          "name": "月泉仙鹿",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "soul_lamp_priest",
+          "name": "靈燈司祭",
+          "role": "elite",
+          "sourceMap": 7
+        },
+        {
+          "id": "styx_ferryman",
+          "name": "冥河擺渡者",
+          "role": "boss",
+          "sourceMap": 7
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-02",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 2,
+      "name": "影棘月桂林",
+      "levelMin": 371,
+      "levelMax": 380,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-02-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-02.json",
+      "ordinary": [
+        "moonshadow_wolf",
+        "thorn_spider",
+        "dewglo_moth",
+        "spring_spirit",
+        "thorn_boar",
+        "mist_fox"
+      ],
+      "elite": "moondew_priestess",
+      "boss": "ancient_laurel",
+      "names": {
+        "moonshadow_wolf": "惡夢 · 月影狼",
+        "thorn_spider": "惡夢 · 荊棘蜘蛛",
+        "dewglo_moth": "惡夢 · 露光蛾",
+        "spring_spirit": "惡夢 · 林泉精靈",
+        "thorn_boar": "惡夢 · 棘角野豬",
+        "mist_fox": "惡夢 · 迷霧狐",
+        "moondew_priestess": "惡夢 · 月露大祭司",
+        "ancient_laurel": "惡夢 · 月桂巨樹精"
+      },
+      "sources": [
+        {
+          "id": "moonshadow_wolf",
+          "name": "月影狼",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "thorn_spider",
+          "name": "荊棘蜘蛛",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "dewglo_moth",
+          "name": "露光蛾",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "spring_spirit",
+          "name": "林泉精靈",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "thorn_boar",
+          "name": "棘角野豬",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "mist_fox",
+          "name": "迷霧狐",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "moondew_priestess",
+          "name": "月露大祭司",
+          "role": "elite",
+          "sourceMap": 1
+        },
+        {
+          "id": "ancient_laurel",
+          "name": "月桂巨樹精",
+          "role": "boss",
+          "sourceMap": 1
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-03",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 3,
+      "name": "幽晶百柱廊",
+      "levelMin": 381,
+      "levelMax": 390,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-03-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-03.json",
+      "ordinary": [
+        "rune_beetle",
+        "bronze_griffin",
+        "shield_stoneguard",
+        "oracle_acolyte",
+        "lightfeather_griffin",
+        "oracle_eye"
+      ],
+      "elite": "rune_priest",
+      "boss": "pillar_colossus",
+      "names": {
+        "rune_beetle": "惡夢 · 符文甲蟲",
+        "bronze_griffin": "惡夢 · 銅翼獅鷲",
+        "shield_stoneguard": "惡夢 · 持盾石衛",
+        "oracle_acolyte": "惡夢 · 神諭祭徒",
+        "lightfeather_griffin": "惡夢 · 光羽獅鷲",
+        "oracle_eye": "惡夢 · 神諭浮眼",
+        "rune_priest": "惡夢 · 智慧符文祭司",
+        "pillar_colossus": "惡夢 · 雅典娜銅翼獅王"
+      },
+      "sources": [
+        {
+          "id": "rune_beetle",
+          "name": "符文甲蟲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_griffin",
+          "name": "銅翼獅鷲",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "shield_stoneguard",
+          "name": "持盾石衛",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "oracle_acolyte",
+          "name": "神諭祭徒",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "lightfeather_griffin",
+          "name": "光羽獅鷲",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "oracle_eye",
+          "name": "神諭浮眼",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "rune_priest",
+          "name": "智慧符文祭司",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "pillar_colossus",
+          "name": "雅典娜銅翼獅王",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-04",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 4,
+      "name": "沉夢海崖",
+      "levelMin": 391,
+      "levelMax": 400,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-04-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-04.json",
+      "ordinary": [
+        "coral_mage",
+        "tideblade_serpent",
+        "stormfin_jellyfish",
+        "reef_hermit",
+        "bone_archer",
+        "soul_lamp_keeper"
+      ],
+      "elite": "stormfin_matriarch",
+      "boss": "aegean_leviathan",
+      "names": {
+        "coral_mage": "惡夢 · 珊瑚法師",
+        "tideblade_serpent": "惡夢 · 潮刃海蛇",
+        "stormfin_jellyfish": "惡夢 · 雷鰭水母",
+        "reef_hermit": "惡夢 · 礁岩寄居蟹",
+        "bone_archer": "惡夢 · 白骨弓手",
+        "soul_lamp_keeper": "惡夢 · 靈燈侍者",
+        "stormfin_matriarch": "惡夢 · 雷鰭水母主母",
+        "aegean_leviathan": "惡夢 · 海崖利維坦"
+      },
+      "sources": [
+        {
+          "id": "coral_mage",
+          "name": "珊瑚法師",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "tideblade_serpent",
+          "name": "潮刃海蛇",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "stormfin_jellyfish",
+          "name": "雷鰭水母",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "reef_hermit",
+          "name": "礁岩寄居蟹",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "bone_archer",
+          "name": "白骨弓手",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "soul_lamp_keeper",
+          "name": "靈燈侍者",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "stormfin_matriarch",
+          "name": "雷鰭水母主母",
+          "role": "elite",
+          "sourceMap": 4
+        },
+        {
+          "id": "aegean_leviathan",
+          "name": "海崖利維坦",
+          "role": "boss",
+          "sourceMap": 4
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-05",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 5,
+      "name": "無聲迷宮",
+      "levelMin": 401,
+      "levelMax": 410,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-05-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-05.json",
+      "ordinary": [
+        "labyrinth_hound",
+        "dualblade_minotaur",
+        "rune_stone_eye",
+        "venom_serpent_guard",
+        "oracle_acolyte",
+        "broken_idol"
+      ],
+      "elite": "stone_eye_mage",
+      "boss": "minos_bull",
+      "names": {
+        "labyrinth_hound": "惡夢 · 迷宮獵犬",
+        "dualblade_minotaur": "惡夢 · 雙刃牛頭兵",
+        "rune_stone_eye": "惡夢 · 符文石眼",
+        "venom_serpent_guard": "惡夢 · 毒牙蛇衛",
+        "oracle_acolyte": "惡夢 · 神諭祭徒",
+        "broken_idol": "惡夢 · 破碎神像",
+        "stone_eye_mage": "惡夢 · 石眼迷宮法師",
+        "minos_bull": "惡夢 · 米諾斯魔牛"
+      },
+      "sources": [
+        {
+          "id": "labyrinth_hound",
+          "name": "迷宮獵犬",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "dualblade_minotaur",
+          "name": "雙刃牛頭兵",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "rune_stone_eye",
+          "name": "符文石眼",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "venom_serpent_guard",
+          "name": "毒牙蛇衛",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "oracle_acolyte",
+          "name": "神諭祭徒",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "broken_idol",
+          "name": "破碎神像",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "stone_eye_mage",
+          "name": "石眼迷宮法師",
+          "role": "elite",
+          "sourceMap": 5
+        },
+        {
+          "id": "minos_bull",
+          "name": "米諾斯魔牛",
+          "role": "boss",
+          "sourceMap": 5
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-06",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 6,
+      "name": "黑曜熄火爐",
+      "levelMin": 411,
+      "levelMax": 420,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-06-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-06.json",
+      "ordinary": [
+        "molten_drake",
+        "furnace_spirit",
+        "iron_beetle",
+        "obsidian_guard",
+        "magnet_stone_bug",
+        "titan_soldier"
+      ],
+      "elite": "furnace_warlock",
+      "boss": "lava_colossus",
+      "names": {
+        "molten_drake": "惡夢 · 熔核幼龍",
+        "furnace_spirit": "惡夢 · 爐火精靈",
+        "iron_beetle": "惡夢 · 鎔鐵甲蟲",
+        "obsidian_guard": "惡夢 · 黑曜石衛",
+        "magnet_stone_bug": "惡夢 · 磁岩蟲",
+        "titan_soldier": "惡夢 · 泰坦遺兵",
+        "furnace_warlock": "惡夢 · 爐火契約術士",
+        "lava_colossus": "惡夢 · 熔岩巨像"
+      },
+      "sources": [
+        {
+          "id": "molten_drake",
+          "name": "熔核幼龍",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "furnace_spirit",
+          "name": "爐火精靈",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "iron_beetle",
+          "name": "鎔鐵甲蟲",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "obsidian_guard",
+          "name": "黑曜石衛",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "magnet_stone_bug",
+          "name": "磁岩蟲",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "titan_soldier",
+          "name": "泰坦遺兵",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "furnace_warlock",
+          "name": "爐火契約術士",
+          "role": "elite",
+          "sourceMap": 6
+        },
+        {
+          "id": "lava_colossus",
+          "name": "熔岩巨像",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-07",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 7,
+      "name": "忘川冥河渡口",
+      "levelMin": 421,
+      "levelMax": 430,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-07-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-07.json",
+      "ordinary": [
+        "styx_naiad",
+        "chain_soul",
+        "bone_archer",
+        "soul_lamp_keeper",
+        "stardust_spirit",
+        "astral_attendant"
+      ],
+      "elite": "soul_lamp_priest",
+      "boss": "styx_ferryman",
+      "names": {
+        "styx_naiad": "惡夢 · 冥河水妖",
+        "chain_soul": "惡夢 · 鎖鏈亡魂",
+        "bone_archer": "惡夢 · 白骨弓手",
+        "soul_lamp_keeper": "惡夢 · 靈燈侍者",
+        "stardust_spirit": "惡夢 · 星塵精靈",
+        "astral_attendant": "惡夢 · 星穹神侍",
+        "soul_lamp_priest": "惡夢 · 靈燈司祭",
+        "styx_ferryman": "惡夢 · 冥河擺渡者"
+      },
+      "sources": [
+        {
+          "id": "styx_naiad",
+          "name": "冥河水妖",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "chain_soul",
+          "name": "鎖鏈亡魂",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "bone_archer",
+          "name": "白骨弓手",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "soul_lamp_keeper",
+          "name": "靈燈侍者",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "stardust_spirit",
+          "name": "星塵精靈",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "astral_attendant",
+          "name": "星穹神侍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "soul_lamp_priest",
+          "name": "靈燈司祭",
+          "role": "elite",
+          "sourceMap": 7
+        },
+        {
+          "id": "styx_ferryman",
+          "name": "冥河擺渡者",
+          "role": "boss",
+          "sourceMap": 7
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-08",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 8,
+      "name": "逆星神諭谷",
+      "levelMin": 431,
+      "levelMax": 440,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-08-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-08.json",
+      "ordinary": [
+        "sun_disc_acolyte",
+        "lightfeather_griffin",
+        "oracle_eye",
+        "mirror_spirit",
+        "pan_cub",
+        "arcadia_nymph"
+      ],
+      "elite": "mirror_oracle_priest",
+      "boss": "python_serpent",
+      "names": {
+        "sun_disc_acolyte": "惡夢 · 日輪祭徒",
+        "lightfeather_griffin": "惡夢 · 光羽獅鷲",
+        "oracle_eye": "惡夢 · 神諭浮眼",
+        "mirror_spirit": "惡夢 · 鏡光精靈",
+        "pan_cub": "惡夢 · 潘神幼獸",
+        "arcadia_nymph": "惡夢 · 山林仙女",
+        "mirror_oracle_priest": "惡夢 · 鏡光預言祭司",
+        "python_serpent": "惡夢 · 皮同巨蟒"
+      },
+      "sources": [
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "lightfeather_griffin",
+          "name": "光羽獅鷲",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "oracle_eye",
+          "name": "神諭浮眼",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "mirror_spirit",
+          "name": "鏡光精靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "pan_cub",
+          "name": "潘神幼獸",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "arcadia_nymph",
+          "name": "山林仙女",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "mirror_oracle_priest",
+          "name": "鏡光預言祭司",
+          "role": "elite",
+          "sourceMap": 8
+        },
+        {
+          "id": "python_serpent",
+          "name": "皮同巨蟒",
+          "role": "boss",
+          "sourceMap": 8
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-09",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 9,
+      "name": "破月泰坦山隘",
+      "levelMin": 441,
+      "levelMax": 450,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-09-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-09.json",
+      "ordinary": [
+        "stone_bear",
+        "thunder_goat",
+        "mountain_golem",
+        "storm_acolyte",
+        "forge_golem",
+        "fire_crystal_demon"
+      ],
+      "elite": "storm_titan_priest",
+      "boss": "lava_colossus",
+      "names": {
+        "stone_bear": "惡夢 · 岩甲巨熊",
+        "thunder_goat": "惡夢 · 雷角山羊",
+        "mountain_golem": "惡夢 · 碎山傀儡",
+        "storm_acolyte": "惡夢 · 風暴祭徒",
+        "forge_golem": "惡夢 · 鍛造巨傀儡",
+        "fire_crystal_demon": "惡夢 · 火晶石魔",
+        "storm_titan_priest": "惡夢 · 風暴泰坦祭司",
+        "lava_colossus": "惡夢 · 熔岩巨像"
+      },
+      "sources": [
+        {
+          "id": "stone_bear",
+          "name": "岩甲巨熊",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_goat",
+          "name": "雷角山羊",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "mountain_golem",
+          "name": "碎山傀儡",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "storm_acolyte",
+          "name": "風暴祭徒",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "forge_golem",
+          "name": "鍛造巨傀儡",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "fire_crystal_demon",
+          "name": "火晶石魔",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "storm_titan_priest",
+          "name": "風暴泰坦祭司",
+          "role": "elite",
+          "sourceMap": 9
+        },
+        {
+          "id": "lava_colossus",
+          "name": "熔岩巨像",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-10",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 10,
+      "name": "殘夢雲門",
+      "levelMin": 451,
+      "levelMax": 460,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-10-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-10.json",
+      "ordinary": [
+        "cloudshield_guard",
+        "thunder_eagle",
+        "rainbow_spirit",
+        "cloud_dragon",
+        "corona_spirit",
+        "void_devourer"
+      ],
+      "elite": "bell_storm_priest",
+      "boss": "cloud_gate_deity",
+      "names": {
+        "cloudshield_guard": "惡夢 · 雲盾神兵",
+        "thunder_eagle": "惡夢 · 雷羽鷹",
+        "rainbow_spirit": "惡夢 · 虹光精靈",
+        "cloud_dragon": "惡夢 · 雲海龍",
+        "corona_spirit": "惡夢 · 日冕精魄",
+        "void_devourer": "惡夢 · 虛空吞噬者",
+        "bell_storm_priest": "惡夢 · 聖鐘風暴祭司",
+        "cloud_gate_deity": "惡夢 · 雲門守門巨神"
+      },
+      "sources": [
+        {
+          "id": "cloudshield_guard",
+          "name": "雲盾神兵",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "thunder_eagle",
+          "name": "雷羽鷹",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "rainbow_spirit",
+          "name": "虹光精靈",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_dragon",
+          "name": "雲海龍",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "corona_spirit",
+          "name": "日冕精魄",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_devourer",
+          "name": "虛空吞噬者",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "bell_storm_priest",
+          "name": "聖鐘風暴祭司",
+          "role": "elite",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_gate_deity",
+          "name": "雲門守門巨神",
+          "role": "boss",
+          "sourceMap": 10
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-11",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 11,
+      "name": "凋零至福園",
+      "levelMin": 461,
+      "levelMax": 470,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-11-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-11.json",
+      "ordinary": [
+        "moonwell_deer",
+        "memory_flower",
+        "heroic_shieldguard",
+        "goldwing_bee",
+        "sunlight_stone_spirit",
+        "sun_disc_acolyte"
+      ],
+      "elite": "dawn_dream_priest",
+      "boss": "elysium_guardian_king",
+      "names": {
+        "moonwell_deer": "惡夢 · 月泉仙鹿",
+        "memory_flower": "惡夢 · 記憶花靈",
+        "heroic_shieldguard": "惡夢 · 英靈盾衛",
+        "goldwing_bee": "惡夢 · 金翼蜂",
+        "sunlight_stone_spirit": "惡夢 · 日光石妖",
+        "sun_disc_acolyte": "惡夢 · 日輪祭徒",
+        "dawn_dream_priest": "惡夢 · 晨曦夢境祭司",
+        "elysium_guardian_king": "惡夢 · 至福守護王者"
+      },
+      "sources": [
+        {
+          "id": "moonwell_deer",
+          "name": "月泉仙鹿",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "memory_flower",
+          "name": "記憶花靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "heroic_shieldguard",
+          "name": "英靈盾衛",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "goldwing_bee",
+          "name": "金翼蜂",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "sunlight_stone_spirit",
+          "name": "日光石妖",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "dawn_dream_priest",
+          "name": "晨曦夢境祭司",
+          "role": "elite",
+          "sourceMap": 11
+        },
+        {
+          "id": "elysium_guardian_king",
+          "name": "至福守護王者",
+          "role": "boss",
+          "sourceMap": 11
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "nightmare-12",
+      "mode": "nightmare",
+      "modeName": "惡夢",
+      "chapter": 12,
+      "name": "月蝕終焉殿",
+      "levelMin": 471,
+      "levelMax": 480,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/nightmare-12-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/nightmare-12.json",
+      "ordinary": [
+        "star_ring_eye",
+        "meteor_beetle",
+        "void_wyvern",
+        "star_chain_guard",
+        "cloudshield_guard",
+        "thunder_eagle"
+      ],
+      "elite": "eclipse_astral_archpriest",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "star_ring_eye": "惡夢 · 星環浮眼",
+        "meteor_beetle": "惡夢 · 隕星甲蟲",
+        "void_wyvern": "惡夢 · 虛空翼龍",
+        "star_chain_guard": "惡夢 · 星鏈神兵",
+        "cloudshield_guard": "惡夢 · 雲盾神兵",
+        "thunder_eagle": "惡夢 · 雷羽鷹",
+        "eclipse_astral_archpriest": "惡夢 · 日蝕星穹大祭司",
+        "void_meteor_dragon_emperor": "惡夢 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "star_ring_eye",
+          "name": "星環浮眼",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "meteor_beetle",
+          "name": "隕星甲蟲",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_wyvern",
+          "name": "虛空翼龍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_chain_guard",
+          "name": "星鏈神兵",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "cloudshield_guard",
+          "name": "雲盾神兵",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "thunder_eagle",
+          "name": "雷羽鷹",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "eclipse_astral_archpriest",
+          "name": "日蝕星穹大祭司",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/nightmare-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-01",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 1,
+      "name": "泰坦熔界",
+      "levelMin": 481,
+      "levelMax": 490,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-01-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-01.json",
+      "ordinary": [
+        "iron_beetle",
+        "obsidian_guard",
+        "firechain_smith",
+        "ash_ghost",
+        "moonwell_deer",
+        "memory_flower"
+      ],
+      "elite": "molten_forgemaster",
+      "boss": "molten_iron_wyvern",
+      "names": {
+        "iron_beetle": "地獄 · 鎔鐵甲蟲",
+        "obsidian_guard": "地獄 · 黑曜石衛",
+        "firechain_smith": "地獄 · 火鏈鍛工",
+        "ash_ghost": "地獄 · 灰燼幽魂",
+        "moonwell_deer": "地獄 · 月泉仙鹿",
+        "memory_flower": "地獄 · 記憶花靈",
+        "molten_forgemaster": "地獄 · 熔火鍛造長",
+        "molten_iron_wyvern": "地獄 · 熔核鐵翼龍"
+      },
+      "sources": [
+        {
+          "id": "iron_beetle",
+          "name": "鎔鐵甲蟲",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "obsidian_guard",
+          "name": "黑曜石衛",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "firechain_smith",
+          "name": "火鏈鍛工",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "ash_ghost",
+          "name": "灰燼幽魂",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "moonwell_deer",
+          "name": "月泉仙鹿",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "memory_flower",
+          "name": "記憶花靈",
+          "role": "normal",
+          "sourceMap": 11
+        },
+        {
+          "id": "molten_forgemaster",
+          "name": "熔火鍛造長",
+          "role": "elite",
+          "sourceMap": 6
+        },
+        {
+          "id": "molten_iron_wyvern",
+          "name": "熔核鐵翼龍",
+          "role": "boss",
+          "sourceMap": 6
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-02",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 2,
+      "name": "焦土月桂林",
+      "levelMin": 491,
+      "levelMax": 500,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-02-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-02.json",
+      "ordinary": [
+        "dewglo_moth",
+        "spring_spirit",
+        "laurel_fawn",
+        "fallen_moon_acolyte",
+        "mist_fox",
+        "goat_priest"
+      ],
+      "elite": "artemis_ranger",
+      "boss": "eclipse_wolf_king",
+      "names": {
+        "dewglo_moth": "地獄 · 露光蛾",
+        "spring_spirit": "地獄 · 林泉精靈",
+        "laurel_fawn": "地獄 · 月桂幼鹿",
+        "fallen_moon_acolyte": "地獄 · 墮月祭徒",
+        "mist_fox": "地獄 · 迷霧狐",
+        "goat_priest": "地獄 · 山羊祭司",
+        "artemis_ranger": "地獄 · 阿耳忒彌斯巡林長",
+        "eclipse_wolf_king": "地獄 · 月蝕狼王"
+      },
+      "sources": [
+        {
+          "id": "dewglo_moth",
+          "name": "露光蛾",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "spring_spirit",
+          "name": "林泉精靈",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "laurel_fawn",
+          "name": "月桂幼鹿",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "fallen_moon_acolyte",
+          "name": "墮月祭徒",
+          "role": "normal",
+          "sourceMap": 1
+        },
+        {
+          "id": "mist_fox",
+          "name": "迷霧狐",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "goat_priest",
+          "name": "山羊祭司",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "artemis_ranger",
+          "name": "阿耳忒彌斯巡林長",
+          "role": "elite",
+          "sourceMap": 1
+        },
+        {
+          "id": "eclipse_wolf_king",
+          "name": "月蝕狼王",
+          "role": "boss",
+          "sourceMap": 1
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-03",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 3,
+      "name": "燼火百柱廊",
+      "levelMin": 501,
+      "levelMax": 510,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-03-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-03.json",
+      "ordinary": [
+        "shield_stoneguard",
+        "oracle_acolyte",
+        "broken_idol",
+        "star_serpent",
+        "oracle_eye",
+        "mirror_spirit"
+      ],
+      "elite": "temple_centurion",
+      "boss": "bronze_lion_king",
+      "names": {
+        "shield_stoneguard": "地獄 · 持盾石衛",
+        "oracle_acolyte": "地獄 · 神諭祭徒",
+        "broken_idol": "地獄 · 破碎神像",
+        "star_serpent": "地獄 · 星紋蛇",
+        "oracle_eye": "地獄 · 神諭浮眼",
+        "mirror_spirit": "地獄 · 鏡光精靈",
+        "temple_centurion": "地獄 · 神殿禁衛百夫長",
+        "bronze_lion_king": "地獄 · 百柱守護巨像"
+      },
+      "sources": [
+        {
+          "id": "shield_stoneguard",
+          "name": "持盾石衛",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "oracle_acolyte",
+          "name": "神諭祭徒",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "broken_idol",
+          "name": "破碎神像",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "star_serpent",
+          "name": "星紋蛇",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "oracle_eye",
+          "name": "神諭浮眼",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "mirror_spirit",
+          "name": "鏡光精靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "temple_centurion",
+          "name": "神殿禁衛百夫長",
+          "role": "elite",
+          "sourceMap": 2
+        },
+        {
+          "id": "bronze_lion_king",
+          "name": "百柱守護巨像",
+          "role": "boss",
+          "sourceMap": 2
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-04",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 4,
+      "name": "赤潮黑岩岸",
+      "levelMin": 511,
+      "levelMax": 520,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-04-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-04.json",
+      "ordinary": [
+        "stormfin_jellyfish",
+        "reef_hermit",
+        "sea_mist_ghost",
+        "wreck_guard",
+        "soul_lamp_keeper",
+        "underworld_moths"
+      ],
+      "elite": "deepsea_crab",
+      "boss": "deepsea_coral_queen",
+      "names": {
+        "stormfin_jellyfish": "地獄 · 雷鰭水母",
+        "reef_hermit": "地獄 · 礁岩寄居蟹",
+        "sea_mist_ghost": "地獄 · 海霧幽靈",
+        "wreck_guard": "地獄 · 沉船衛兵",
+        "soul_lamp_keeper": "地獄 · 靈燈侍者",
+        "underworld_moths": "地獄 · 冥蝶群",
+        "deepsea_crab": "地獄 · 深海狂暴巨蟹",
+        "deepsea_coral_queen": "地獄 · 深海珊瑚女王"
+      },
+      "sources": [
+        {
+          "id": "stormfin_jellyfish",
+          "name": "雷鰭水母",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "reef_hermit",
+          "name": "礁岩寄居蟹",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "sea_mist_ghost",
+          "name": "海霧幽靈",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "wreck_guard",
+          "name": "沉船衛兵",
+          "role": "normal",
+          "sourceMap": 4
+        },
+        {
+          "id": "soul_lamp_keeper",
+          "name": "靈燈侍者",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "underworld_moths",
+          "name": "冥蝶群",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "deepsea_crab",
+          "name": "深海狂暴巨蟹",
+          "role": "elite",
+          "sourceMap": 4
+        },
+        {
+          "id": "deepsea_coral_queen",
+          "name": "深海珊瑚女王",
+          "role": "boss",
+          "sourceMap": 4
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-05",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 5,
+      "name": "熔心迷宮",
+      "levelMin": 521,
+      "levelMax": 530,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-05-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-05.json",
+      "ordinary": [
+        "rune_stone_eye",
+        "venom_serpent_guard",
+        "bronze_spider",
+        "lost_priest",
+        "broken_idol",
+        "star_serpent"
+      ],
+      "elite": "labyrinth_general",
+      "boss": "hundred_eye_serpent",
+      "names": {
+        "rune_stone_eye": "地獄 · 符文石眼",
+        "venom_serpent_guard": "地獄 · 毒牙蛇衛",
+        "bronze_spider": "地獄 · 青銅機關蛛",
+        "lost_priest": "地獄 · 失落祭司",
+        "broken_idol": "地獄 · 破碎神像",
+        "star_serpent": "地獄 · 星紋蛇",
+        "labyrinth_general": "地獄 · 迷宮巡查將軍",
+        "hundred_eye_serpent": "地獄 · 百眼迷宮巨蛇"
+      },
+      "sources": [
+        {
+          "id": "rune_stone_eye",
+          "name": "符文石眼",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "venom_serpent_guard",
+          "name": "毒牙蛇衛",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "bronze_spider",
+          "name": "青銅機關蛛",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "lost_priest",
+          "name": "失落祭司",
+          "role": "normal",
+          "sourceMap": 5
+        },
+        {
+          "id": "broken_idol",
+          "name": "破碎神像",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "star_serpent",
+          "name": "星紋蛇",
+          "role": "normal",
+          "sourceMap": 2
+        },
+        {
+          "id": "labyrinth_general",
+          "name": "迷宮巡查將軍",
+          "role": "elite",
+          "sourceMap": 5
+        },
+        {
+          "id": "hundred_eye_serpent",
+          "name": "百眼迷宮巨蛇",
+          "role": "boss",
+          "sourceMap": 5
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-06",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 6,
+      "name": "泰坦核心鍛爐",
+      "levelMin": 531,
+      "levelMax": 540,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-06-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-06.json",
+      "ordinary": [
+        "iron_beetle",
+        "obsidian_guard",
+        "firechain_smith",
+        "ash_ghost",
+        "titan_soldier",
+        "titan_hoof_beast"
+      ],
+      "elite": "molten_forgemaster",
+      "boss": "molten_iron_wyvern",
+      "names": {
+        "iron_beetle": "地獄 · 鎔鐵甲蟲",
+        "obsidian_guard": "地獄 · 黑曜石衛",
+        "firechain_smith": "地獄 · 火鏈鍛工",
+        "ash_ghost": "地獄 · 灰燼幽魂",
+        "titan_soldier": "地獄 · 泰坦遺兵",
+        "titan_hoof_beast": "地獄 · 泰坦巨足獸",
+        "molten_forgemaster": "地獄 · 熔火鍛造長",
+        "molten_iron_wyvern": "地獄 · 熔核鐵翼龍"
+      },
+      "sources": [
+        {
+          "id": "iron_beetle",
+          "name": "鎔鐵甲蟲",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "obsidian_guard",
+          "name": "黑曜石衛",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "firechain_smith",
+          "name": "火鏈鍛工",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "ash_ghost",
+          "name": "灰燼幽魂",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "titan_soldier",
+          "name": "泰坦遺兵",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "titan_hoof_beast",
+          "name": "泰坦巨足獸",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "molten_forgemaster",
+          "name": "熔火鍛造長",
+          "role": "elite",
+          "sourceMap": 6
+        },
+        {
+          "id": "molten_iron_wyvern",
+          "name": "熔核鐵翼龍",
+          "role": "boss",
+          "sourceMap": 6
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-07",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 7,
+      "name": "焦魂冥河渡口",
+      "levelMin": 541,
+      "levelMax": 550,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-07-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-07.json",
+      "ordinary": [
+        "bone_archer",
+        "soul_lamp_keeper",
+        "underworld_moths",
+        "abyss_wraith",
+        "astral_attendant",
+        "zodiac_beast"
+      ],
+      "elite": "styx_ferry_general",
+      "boss": "abyss_lamp_behemoth",
+      "names": {
+        "bone_archer": "地獄 · 白骨弓手",
+        "soul_lamp_keeper": "地獄 · 靈燈侍者",
+        "underworld_moths": "地獄 · 冥蝶群",
+        "abyss_wraith": "地獄 · 沉淵怨靈",
+        "astral_attendant": "地獄 · 星穹神侍",
+        "zodiac_beast": "地獄 · 星座巨獸",
+        "styx_ferry_general": "地獄 · 冥河擺渡鬼將",
+        "abyss_lamp_behemoth": "地獄 · 沉淵魂燈巨獸"
+      },
+      "sources": [
+        {
+          "id": "bone_archer",
+          "name": "白骨弓手",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "soul_lamp_keeper",
+          "name": "靈燈侍者",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "underworld_moths",
+          "name": "冥蝶群",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "abyss_wraith",
+          "name": "沉淵怨靈",
+          "role": "normal",
+          "sourceMap": 7
+        },
+        {
+          "id": "astral_attendant",
+          "name": "星穹神侍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "zodiac_beast",
+          "name": "星座巨獸",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "styx_ferry_general",
+          "name": "冥河擺渡鬼將",
+          "role": "elite",
+          "sourceMap": 7
+        },
+        {
+          "id": "abyss_lamp_behemoth",
+          "name": "沉淵魂燈巨獸",
+          "role": "boss",
+          "sourceMap": 7
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-08",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 8,
+      "name": "灰燼神諭谷",
+      "levelMin": 551,
+      "levelMax": 560,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-08-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-08.json",
+      "ordinary": [
+        "oracle_eye",
+        "mirror_spirit",
+        "prophecy_guard",
+        "blind_seer",
+        "arcadia_nymph",
+        "sacred_antelope"
+      ],
+      "elite": "oracle_high_priest",
+      "boss": "eclipse_oracle_griffin",
+      "names": {
+        "oracle_eye": "地獄 · 神諭浮眼",
+        "mirror_spirit": "地獄 · 鏡光精靈",
+        "prophecy_guard": "地獄 · 預言石衛",
+        "blind_seer": "地獄 · 失明先知",
+        "arcadia_nymph": "地獄 · 山林仙女",
+        "sacred_antelope": "地獄 · 聖角羚羊",
+        "oracle_high_priest": "地獄 · 神諭大祭司",
+        "eclipse_oracle_griffin": "地獄 · 日蝕神諭獅鷲"
+      },
+      "sources": [
+        {
+          "id": "oracle_eye",
+          "name": "神諭浮眼",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "mirror_spirit",
+          "name": "鏡光精靈",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "prophecy_guard",
+          "name": "預言石衛",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "blind_seer",
+          "name": "失明先知",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "arcadia_nymph",
+          "name": "山林仙女",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "sacred_antelope",
+          "name": "聖角羚羊",
+          "role": "normal",
+          "sourceMap": 3
+        },
+        {
+          "id": "oracle_high_priest",
+          "name": "神諭大祭司",
+          "role": "elite",
+          "sourceMap": 8
+        },
+        {
+          "id": "eclipse_oracle_griffin",
+          "name": "日蝕神諭獅鷲",
+          "role": "boss",
+          "sourceMap": 8
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-09",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 9,
+      "name": "裂焰泰坦山隘",
+      "levelMin": 561,
+      "levelMax": 570,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-09-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-09.json",
+      "ordinary": [
+        "mountain_golem",
+        "storm_acolyte",
+        "magnet_stone_bug",
+        "titan_soldier",
+        "fire_crystal_demon",
+        "forge_fire_bat"
+      ],
+      "elite": "titan_vanguard",
+      "boss": "thunder_titan_dragon",
+      "names": {
+        "mountain_golem": "地獄 · 碎山傀儡",
+        "storm_acolyte": "地獄 · 風暴祭徒",
+        "magnet_stone_bug": "地獄 · 磁岩蟲",
+        "titan_soldier": "地獄 · 泰坦遺兵",
+        "fire_crystal_demon": "地獄 · 火晶石魔",
+        "forge_fire_bat": "地獄 · 鍛火魔蝠",
+        "titan_vanguard": "地獄 · 泰坦先鋒戰將",
+        "thunder_titan_dragon": "地獄 · 雷霆泰坦古龍"
+      },
+      "sources": [
+        {
+          "id": "mountain_golem",
+          "name": "碎山傀儡",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "storm_acolyte",
+          "name": "風暴祭徒",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "magnet_stone_bug",
+          "name": "磁岩蟲",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "titan_soldier",
+          "name": "泰坦遺兵",
+          "role": "normal",
+          "sourceMap": 9
+        },
+        {
+          "id": "fire_crystal_demon",
+          "name": "火晶石魔",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "forge_fire_bat",
+          "name": "鍛火魔蝠",
+          "role": "normal",
+          "sourceMap": 6
+        },
+        {
+          "id": "titan_vanguard",
+          "name": "泰坦先鋒戰將",
+          "role": "elite",
+          "sourceMap": 9
+        },
+        {
+          "id": "thunder_titan_dragon",
+          "name": "雷霆泰坦古龍",
+          "role": "boss",
+          "sourceMap": 9
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-10",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 10,
+      "name": "煉獄天門",
+      "levelMin": 571,
+      "levelMax": 580,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-10-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-10.json",
+      "ordinary": [
+        "rainbow_spirit",
+        "cloud_dragon",
+        "holy_bell_keeper",
+        "storm_patrol",
+        "void_devourer",
+        "star_ring_eye"
+      ],
+      "elite": "cloud_gate_guard",
+      "boss": "rainbow_thunder_dragon_king",
+      "names": {
+        "rainbow_spirit": "地獄 · 虹光精靈",
+        "cloud_dragon": "地獄 · 雲海龍",
+        "holy_bell_keeper": "地獄 · 聖鐘侍者",
+        "storm_patrol": "地獄 · 暴風巡衛",
+        "void_devourer": "地獄 · 虛空吞噬者",
+        "star_ring_eye": "地獄 · 星環浮眼",
+        "cloud_gate_guard": "地獄 · 雲門神廷禁軍長",
+        "rainbow_thunder_dragon_king": "地獄 · 虹霆雲海龍王"
+      },
+      "sources": [
+        {
+          "id": "rainbow_spirit",
+          "name": "虹光精靈",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "cloud_dragon",
+          "name": "雲海龍",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "holy_bell_keeper",
+          "name": "聖鐘侍者",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "storm_patrol",
+          "name": "暴風巡衛",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "void_devourer",
+          "name": "虛空吞噬者",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_ring_eye",
+          "name": "星環浮眼",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "cloud_gate_guard",
+          "name": "雲門神廷禁軍長",
+          "role": "elite",
+          "sourceMap": 10
+        },
+        {
+          "id": "rainbow_thunder_dragon_king",
+          "name": "虹霆雲海龍王",
+          "role": "boss",
+          "sourceMap": 10
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-11",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 11,
+      "name": "隕星崩落台",
+      "levelMin": 581,
+      "levelMax": 590,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-11-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-11.json",
+      "ordinary": [
+        "void_wyvern",
+        "star_chain_guard",
+        "eclipse_priest",
+        "stardust_spirit",
+        "sun_disc_acolyte",
+        "lightfeather_griffin"
+      ],
+      "elite": "astral_high_priest",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "void_wyvern": "地獄 · 虛空翼龍",
+        "star_chain_guard": "地獄 · 星鏈神兵",
+        "eclipse_priest": "地獄 · 日蝕祭司",
+        "stardust_spirit": "地獄 · 星塵精靈",
+        "sun_disc_acolyte": "地獄 · 日輪祭徒",
+        "lightfeather_griffin": "地獄 · 光羽獅鷲",
+        "astral_high_priest": "地獄 · 星穹神官長",
+        "void_meteor_dragon_emperor": "地獄 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "void_wyvern",
+          "name": "虛空翼龍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_chain_guard",
+          "name": "星鏈神兵",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "eclipse_priest",
+          "name": "日蝕祭司",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "stardust_spirit",
+          "name": "星塵精靈",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "sun_disc_acolyte",
+          "name": "日輪祭徒",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "lightfeather_griffin",
+          "name": "光羽獅鷲",
+          "role": "normal",
+          "sourceMap": 8
+        },
+        {
+          "id": "astral_high_priest",
+          "name": "星穹神官長",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    },
+    {
+      "id": "hell-12",
+      "mode": "hell",
+      "modeName": "地獄",
+      "chapter": 12,
+      "name": "諸神終戰殿",
+      "levelMin": 591,
+      "levelMax": 600,
+      "background": "/ui-generated-20261030/progression-maps-20261102/maps/hell-12-v1.png",
+      "metadata": "/ui-generated-20261030/progression-maps-20261102/encounters/hell-12.json",
+      "ordinary": [
+        "void_wyvern",
+        "star_chain_guard",
+        "eclipse_priest",
+        "stardust_spirit",
+        "thunder_eagle",
+        "rainbow_spirit"
+      ],
+      "elite": "astral_high_priest",
+      "boss": "void_meteor_dragon_emperor",
+      "names": {
+        "void_wyvern": "地獄 · 虛空翼龍",
+        "star_chain_guard": "地獄 · 星鏈神兵",
+        "eclipse_priest": "地獄 · 日蝕祭司",
+        "stardust_spirit": "地獄 · 星塵精靈",
+        "thunder_eagle": "地獄 · 雷羽鷹",
+        "rainbow_spirit": "地獄 · 虹光精靈",
+        "astral_high_priest": "地獄 · 星穹神官長",
+        "void_meteor_dragon_emperor": "地獄 · 虛空隕星龍帝"
+      },
+      "sources": [
+        {
+          "id": "void_wyvern",
+          "name": "虛空翼龍",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "star_chain_guard",
+          "name": "星鏈神兵",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "eclipse_priest",
+          "name": "日蝕祭司",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "stardust_spirit",
+          "name": "星塵精靈",
+          "role": "normal",
+          "sourceMap": 12
+        },
+        {
+          "id": "thunder_eagle",
+          "name": "雷羽鷹",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "rainbow_spirit",
+          "name": "虹光精靈",
+          "role": "normal",
+          "sourceMap": 10
+        },
+        {
+          "id": "astral_high_priest",
+          "name": "星穹神官長",
+          "role": "elite",
+          "sourceMap": 12
+        },
+        {
+          "id": "void_meteor_dragon_emperor",
+          "name": "虛空隕星龍帝",
+          "role": "boss",
+          "sourceMap": 12
+        }
+      ],
+      "aura": "/ui-generated-20261030/progression-maps-20261102/fx/hell-aura-v1.png",
+      "status": "visual-preview-only; not balance configuration"
+    }
+  ],
+  "sourceMonsterCount": 180
+}

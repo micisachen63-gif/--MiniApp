@@ -65,3 +65,5 @@ GitHub 推送或正式部署失敗時，明確回報哪一端尚未同步。不�
 - **部署雲端 Bot**：`npm run deploy:bot`
 
 詳細上下文與版本演進請參閱：[`AI_HANDOVER.md`](./AI_HANDOVER.md) 與 [`docs/HOME_DEVELOPMENT_GUIDE.md`](./docs/HOME_DEVELOPMENT_GUIDE.md)。
+
+2026-11-02 新版接線續作：本機世界／隊伍聊天、真委託追蹤領獎、雙天使HUD、48張模式背景與166隻精確ID怪群配置、密集戰場主角輪廓保護；9593改為讀最新生成檔的獨立接線層，原角色檔不覆寫。未部署／未遠端migration，600級及16招進階技能仍為規劃。必讀docs/SCENE_CHAT_QUESTS_HUD_MAPS_20261102.txt。

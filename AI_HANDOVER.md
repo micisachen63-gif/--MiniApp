@@ -1,3 +1,5 @@
+2026-11-02 新版接線續作：本機世界／隊伍聊天、真委託追蹤領獎、雙天使HUD、48張模式背景與166隻精確ID怪群配置、密集戰場主角輪廓保護；9593改為讀最新生成檔的獨立接線層，原角色檔不覆寫。未部署／未遠端migration，600級及16招進階技能仍為規劃。必讀docs/SCENE_CHAT_QUESTS_HUD_MAPS_20261102.txt。
+
 2026-11-02 POE 掛機改版接續：分支 codex/poe-realms-preserve-progress，永久／季服 D1 隔離、Atlas 試作、永久教學與長期委託、六系統浮層及舊天使／旅章入口。所有角色資料與每件裝備 +N 保留；無正式玩家改寫／遠端 migration／部署，ATLAS 預設關閉。本次會話已獲明確批准並完成 Wrangler 裝置授權，11 個必要物件／欄位預檢通過、13 類正式 D1 聚合取得且零寫入；原始統計與收據保存在私有資料，不放 Git。後續先確認當前環境既有登入，不要假設各工作環境共用授權。正式數值校準與完整季末 drain／manifest／跨庫匯入及四加四角色保留仍未完成，勿宣稱完成或啟用賽季。基線工具已修正帶 -- 註解的命令列參數解析，新增真 CLI 離線回歸，6／6 通過。續接必讀 docs/POE_REALMS_CHECKPOINT_20261102.md、docs/REALM_ECONOMY_BASELINE.md 與 docs/ATLAS_BALANCE_PROTOTYPE.md；驗證及發布狀態以檢查點、CI 與 deployment-records 為準。
 
 2026-10-28 角色刪除：選角按鈕＋名稱與勾選確認，帳號每日台北日一次、重建正常新手禮。0034 加 nullable deleted_at／archive／live及origin views；一筆 INSERT trigger 原子收尾，活動與 stale write 保護、收據恢復、防錯帳號與睡眠補算，所有遊戲讀取 live view 並保留舊 SQL alias。元資料先僅0034（正式尚有0026–28未登記，不全量apply），再正常 Worker發布；具體人類授權刪角另用受限單筆INSERT的原服務維護工具，固定原ID、查核與備份留.release-sync，不上Git或發TG。18測試＋320/390/1280真UI/API，完整結果看CI與日誌；詳見docs/CHARACTER_DELETE_20261028.txt，正式版本看deployment-records。
@@ -233,4 +235,3 @@
 
 一般fate_event連舊group佇列也只走私訊，重新核對權威帳號；403不回退群組。只有fate_social與fate_cast保留群組，詳見 `docs/fate/PRIVATE_NOTIFICATIONS_20261018.txt`。
 2026-10-29 自動藥水最低階優先：共用choosePotion依現有紅／藍水由低到高，耗盡／缺階往上；手動指定、門檻、特殊技預算與原補給購買階級保留。面板next drink欄位與purchase key分離、快取potion-order1；12相關測試及隔離真MiniApp/API切換驗收通過。讀docs/POTION_LOWEST_FIRST_20261029.txt，正式以deployment-records為準；無migration／BOT。
-
