@@ -137,6 +137,7 @@
     let context = null, panel = null, lastPanelKey = '', focusReturn = null, disposed = false;
     let scrollLocked = false, previousOverflow = '', legacyFocusReturn = null;
     let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
+    let gearbookView=null;
     let talentPreview=null,talentPreviewLoading=false,talentPreviewSeq=0,talentPreviewAbort=null;
     const app = document.getElementById('app'), view = document.getElementById('view');
     const root = document.createElement('section'); root.id = 'atlas-world'; root.setAttribute('aria-label','星穹旅誌星圖營地'); root.hidden = true;
@@ -175,15 +176,15 @@
     }
 
     function close() {
-      panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
+      gearbookView?.dispose();gearbookView=null;panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
       if (focusReturn?.isConnected) focusReturn.focus({preventScroll:true}); focusReturn = null;
       paintNav();
     }
     function open(name) {
-      if (!groups.some(group => group.id === name) && !['talents','chat','progression'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
+      if (!groups.some(group => group.id === name) && !['talents','chat','progression','gearbook'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
       if (!validCharacter()) {host.chooseCharacter(); return;}
       if (context.tab !== 'atlas') host.home();
-      focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
+      if(name!=='gearbook'){gearbookView?.dispose();gearbookView=null;}focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
       paint(); overlay.querySelector('.atlas-panel-card').focus({preventScroll:true});
       if(name==='chat')void chatClient?.refresh();else if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records','talents','progression'].includes(name)) void refreshAll();
     }
@@ -281,14 +282,15 @@
       if(panel==='quests')return questsPanel();
       if(panel==='expedition')return expeditionPanel();
       if(panel==='build')return dataState(()=>`<button type="button" class="atlas-primary" data-atlas-open-talents>天賦星盤 · 可用 ${number(client.state.snapshot.talents?.availablePoints??0)} 點</button><p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
-      if(panel==='workshop')return workshopPanel();
+      if(panel==='workshop')return '<button type="button" class="atlas-primary" data-atlas-open-gearbook>裝備收藏冊 · 集滿獲得永久能力</button>'+workshopPanel();
       if(panel==='companions')return `<p class="atlas-panel-intro">帶著守護啟程，也為另一段人生留一盞星燈。</p>${routeCards([['guardian:summon','抽取天使','召喚、查看結果與原有抽取紀錄','angel'],['guardian:inventory','天使管理','啟用、鎖定、合成與守護配置','angel'],['fate','命運旅章與輪迴','繼續此世、開啟新人生與查看進度','book'],['fate:archive','靈魂旅誌','翻閱過往人生與旅章紀錄','book'],['fate:gift','星輝匣','查看、領取與開啟輪迴贈禮','angel']])}`;
       if(panel==='social')return `<p class="atlas-panel-intro">與同一環境的旅人同行，交換彼此需要的收穫。</p>${routeCards([['party','組隊冒險','尋找隊伍、討伐、轉職試煉與爬塔','social'],['star-ring','星環遠征','原有五人遠征與進行中戰況','map'],['trade','雙人交易與集會','邀請、託管、確認交易與紀錄','social'],['exchange','交易所','搜尋、上架與查看成交紀錄','forge'],['hall','英雄殿堂','查看角色與公開穿戴','social']])}`;
       return `${dataState(()=>`<div class="atlas-section-top"><h3>最近一趟星圖</h3><button type="button" class="atlas-icon-button" data-atlas-refresh aria-label="更新戰報">${icon('refresh')}</button></div>${reportHtml(client.state.snapshot?.run?.report,client.state.catalog)}`)}${routeCards([['collection','地圖圖鑑與收藏','材料、徽記與收藏祝福','book'],['journal','旅團日誌','原有委託進度與領獎','book'],['home','掛機戰報與帳本','查看原有結算、掉落與操作紀錄','book']])}`;
     }
     function paintPanel() {
       if(!panel||overlay.hidden)return;
-      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='chat'?'聊天':panel==='talents'?'天賦星盤':panel==='progression'?'冒險成長路線':'永久世界委託');
+      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='chat'?'聊天':panel==='talents'?'天賦星盤':panel==='progression'?'冒險成長路線':panel==='gearbook'?'裝備收藏冊':'永久世界委託');
+      if(panel==='gearbook'){if(!gearbookView){const body=overlay.querySelector('.atlas-panel-body'),scope=contextKey(client.state.context);body.innerHTML='';gearbookView=window.RpgEquipmentCollection.mount(body,{request:host.request,characterId:character().tgId,realmId:context.realmId,current:()=>scope===contextKey(client.state.context)&&panel==='gearbook',onChanged:()=>{void refreshAll();void host.refresh?.();}});}return;}
       if(panel==='chat'&&chatClient){const body=overlay.querySelector('.atlas-panel-body');if(!body.querySelector('[data-scene-chat-panel]'))chatPanel=window.RpgSceneChatUI.mountPanel(body,chatClient);chatPanel.update();lastPanelKey='';return;}
       const state=client.state,scope=contextKey(state.context);
       if(draftScope!==scope){draftScope=scope;draftRun={};draftCraft={};}
@@ -302,6 +304,7 @@
       if(focusedName){const controls=[...body.querySelectorAll(`[name="${CSS.escape(focusedName)}"]`)];(controls.find(node=>node.value===focusedValue)||controls[0])?.focus({preventScroll:true});}
     }
     function bindPanel(body) {
+      body.querySelector('[data-atlas-open-gearbook]')?.addEventListener('click',()=>open('gearbook'));
       body.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
       body.querySelectorAll('[data-talent-node]').forEach(node=>{const select=()=>{if(node.dataset.talentNode==='origin'){talentSelected='origin';lastPanelKey='';paintPanel();return;}void previewTalent(node.dataset.talentNode);};node.onclick=select;node.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();select();}};});
       body.querySelectorAll('[data-talent-plan]').forEach(button=>button.onclick=()=>previewTalent(button.dataset.talentPlan,true));
@@ -382,7 +385,7 @@
     document.addEventListener('visibilitychange',visibility);
     poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
     const chatPoll=setInterval(()=>{if(!document.hidden&&validCharacter()&&(panel==='chat'||Date.now()-(chatClient?.state.syncedAt||0)>=30000))void chatClient?.refresh();},5000);
-    return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
+    return {update,open,close,refresh:client.refresh,client,chatClient,dispose(){disposed=true;gearbookView?.dispose();clearInterval(poll);clearInterval(chatPoll);talentPreviewSeq++;talentPreviewAbort?.abort();client.dispose();chatClient?.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }
   function styleSceneFrame(frame) {
     if(!document.body.classList.contains('atlas-enabled'))return;

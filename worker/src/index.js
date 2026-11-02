@@ -5,6 +5,7 @@ import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
+import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
@@ -195,6 +196,9 @@ const routes = {
   'POST /rpg/me': (env, b, now) => me(env, tgOf(b), now, {summary:b.summary===true}),
   'POST /rpg/create': async (env, b, now) => { const tg = tgOf(b); await P.createCharacter(env, { ...b, tgId: tg }, now); return me(env, tg, now); },
   'POST /rpg/monster-exchange': act((w,c,b)=>monsterExchange(w,c,b)),
+  'POST /rpg/equipment-collection':(env,b,now)=>EQUIPMENT_COLLECTION.view(env,tgOf(b),now),
+  'POST /rpg/equipment-collection/preview':(env,b,now)=>EQUIPMENT_COLLECTION.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection/submit':(env,b,now)=>EQUIPMENT_COLLECTION.submit(env,tgOf(b),b,now),
   'POST /rpg/collection/activate': act((w,c,b)=>activateCollection(w,c,b)),
   'POST /rpg/boss-exchange': act((w,c,b)=>bossExchange(w,c,b)),
   'POST /rpg/daily': act((w, c, b) => P.claimDaily(w, c, b.requestId)),

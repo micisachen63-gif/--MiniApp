@@ -8,6 +8,9 @@ import { freshDb } from '../test/d1-shim.js';
 import { CurrentClientRequest } from '../test/client-request.js';
 import { handle } from '../src/index.js';
 import * as Player from '../src/services/player.js';
+import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
+import {makeGear} from '../src/game/gear.js';
+import {insertEquipStmt} from '../src/db.js';
 import { initializeRealmIdentity, resolveRealm, scopeEnvForRealm } from '../src/realm/index.js';
 import { CATALOG } from '../test/realm-test-helpers.js';
 
@@ -20,7 +23,7 @@ globalThis.fetch = async () => { throw Error('Outbound requests disabled in isol
 const env = {
   DB: freshDb(), DB_SEASON: freshDb(), REALM_CATALOG_JSON: JSON.stringify(CATALOG),
   CURRENT_SEASON_ID: 'season_2026_01', ENVIRONMENT: 'development',
-  ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true',
+  ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true',
 };
 const now = Date.now();
 await initializeRealmIdentity(env, 'permanent', { now });
@@ -33,6 +36,7 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   db.prepare('UPDATE rpg_characters SET level=15,gold=50000,last_settle_at=? WHERE tg_id=?').run(now, id);
   db.prepare("UPDATE rpg_equipment SET enhance_level=7 WHERE tg_id=? AND slot='weapon'").run(id);
   for (const item of ['red_1', 'blue_1']) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,500) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=500').run(id, item);
+  for(const collection of equipmentCollectionCatalog(baseClass).filter(c=>c.tier===1))for(const r of collection.requirements){const item=makeGear({id:`collection-fixture:${id}:${r.slot}`,tgId:id,cls:baseClass,slot:r.slot,kind:r.kind,tier:1,rng:()=>.2,now,source:'local-collection-fixture',forceRarity:'common'});item.enhance_level=r.slot==='weapon'?4:r.minEnhance;await insertEquipStmt(env.DB,item).run();}
   for (const material of ['atlas_shard', 'atlas_iron', 'atlas_ember', 'atlas_venom']) db.prepare('INSERT INTO rpg_atlas_materials(char_id,material,quantity) VALUES(?,?,100)').run(id, material);
 }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
@@ -43,7 +47,7 @@ const server = http.createServer(async (req, res) => {
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
     const previewOrigin='http://127.0.0.1:9593';
-    const socialPaths=new Set(['me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
