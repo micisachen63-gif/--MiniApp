@@ -31,14 +31,14 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.equal(guardianTriggers.size,2);
     const retirement=readFileSync(new URL('../migrations/0034_character_deletion.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
     const retirementObjects=new Map([...retirement.matchAll(/CREATE (TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
-    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql']
+    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql','0038_atlas_talents.sql']
       .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
     const realmAtlasObjects=new Map(realmAtlasMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
     const characterSchema=new DatabaseSync(':memory:');
     characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
     characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
     // Use exact historical target tables for the new triggers. This independent
-    // catalog applies only the three reviewed migrations, never freshDb's list.
+    // catalog applies only the four reviewed migrations, never freshDb's list.
     for(const name of ['rpg_accounts','rpg_party_presence'])characterSchema.exec(before.find(row=>row.type==='table'&&row.name===name).sql);
     for(const sql of realmAtlasMigrations)characterSchema.exec(sql);
     const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
@@ -52,7 +52,7 @@ test('fresh initialization preserves historical definitions except reviewed clas
     // activation on real expeditions. Each populated migration test separately
     // verifies every row and all other schema objects. 0034's populated migration
     // proof additionally checks the one nullable retirement column and isolated lifecycle objects.
-    // 0035-0037 add an explicitly enumerated catalog and the nullable TEXT
+    // 0035-0038 add an explicitly enumerated catalog and the nullable TEXT
     // atlas_run_id column. Compare every new definition separately, including
     // unique indexes and triggers, while keeping the historical SQL comparison exact.
     assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)), expected);

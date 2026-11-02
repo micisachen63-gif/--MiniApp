@@ -24,6 +24,7 @@ export const APP_ACTIONS = Object.freeze({
   'atlas/catalog':'/rpg/atlas/catalog','atlas/status':'/rpg/atlas/status','atlas/configure':'/rpg/atlas/configure',
   'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',
   'atlas/quests':'/rpg/atlas/quests','atlas/quests/claim':'/rpg/atlas/quests/claim',
+  'atlas/talents':'/rpg/atlas/talents','atlas/talents/action':'/rpg/atlas/talents/action',
   'fate/social/preferences':'/rpg/fate/social/preferences','fate/social/preferences/save':'/rpg/fate/social/preferences/save',
   'fate/social/inbox':'/rpg/fate/social/inbox','fate/social/event':'/rpg/fate/social/event',
   'fate/social/reply':'/rpg/fate/social/reply','fate/social/decline':'/rpg/fate/social/decline','fate/social/withdraw':'/rpg/fate/social/withdraw',
@@ -144,7 +145,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
   const originalJson=json;
   json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
   const finish=async result=>{if(result?.ok!==false)await recordBehavior(env,tg,action,body,now);return json(result);};
-  if(['atlas/configure','atlas/start','atlas/stop','atlas/craft','atlas/quests/claim'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
+  if(['atlas/configure','atlas/start','atlas/stop','atlas/craft','atlas/quests/claim','atlas/talents/action'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/gifts/claim','fate/gifts/open'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/start','fate/choice','fate/keep','fate/profile/save','fate/profile/delete'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['guardian/summon','guardian/fuse','guardian/activate','guardian/lock','guardian/unbind','guardian/share','guardian/assist','guardian/shop/sell'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');

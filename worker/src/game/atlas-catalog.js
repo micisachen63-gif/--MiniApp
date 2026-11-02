@@ -1,8 +1,8 @@
 import { MAPS } from './constants.js';
 
 /** Prototype values, not production-approved balance. Never retune a saved run. */
-export const ATLAS_RULESET_VERSION = 'atlas-v2';
-export const ATLAS_SUPPORTED_RULESETS = Object.freeze(['atlas-v1', ATLAS_RULESET_VERSION]);
+export const ATLAS_RULESET_VERSION = 'atlas-v3';
+export const ATLAS_SUPPORTED_RULESETS = Object.freeze(['atlas-v1','atlas-v2',ATLAS_RULESET_VERSION]);
 export const ATLAS_MAX_DURATION_SECONDS = 8 * 60 * 60;
 export const ATLAS_MAX_MAP_COUNT = 96;
 export const ATLAS_MAX_ADVANCE_STEPS = 2000;

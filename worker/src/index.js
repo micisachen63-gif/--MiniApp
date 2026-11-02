@@ -24,6 +24,7 @@ import * as EXCHANGE from './services/market-exchange.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
 import { GameError } from './game/classes.js';
+import * as ATLAS_TALENTS from './services/atlas-talents.js';
 import { checkServiceSecret } from './auth.js';
 import { classifyDbError, invDeltaStmt, ledgerStmt } from './db.js';
 import { playerView, shopView, equipmentView } from './views.js';
@@ -83,6 +84,8 @@ const routes = {
   'POST /rpg/atlas/craft':(env,b,now)=>ATLAS.craft(env,tgOf(b),b,now),
   'POST /rpg/atlas/quests':(env,b,now)=>ATLAS_QUESTS.view(env,tgOf(b),now),
   'POST /rpg/atlas/quests/claim':(env,b,now)=>ATLAS_QUESTS.claim(env,tgOf(b),b,now),
+  'POST /rpg/atlas/talents':(env,b,now)=>ATLAS_TALENTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/talents/action':(env,b,now)=>ATLAS_TALENTS.action(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),

@@ -1,0 +1,84 @@
+{
+  "date": "2026-11-02",
+  "baseCommit": "55b4e7e2060941e3c3160b83f7e65fe7d381cf7c",
+  "localOnly": true,
+  "productionDeployments": 0,
+  "productionMigrations": 0,
+  "productionWrites": 0,
+  "otherPreview9593Changed": false,
+  "fullTests": {
+    "worker": 2440,
+    "bot": 205,
+    "total": 2645,
+    "failures": 0,
+    "skipped": 0
+  },
+  "talentBrowser": {
+    "classCount": 4,
+    "viewports": [
+      [
+        1280,
+        960
+      ],
+      [
+        390,
+        844
+      ]
+    ],
+    "cases": 8,
+    "pageErrors": 0,
+    "doubleClickOneAllocation": true,
+    "resetAndReload": true,
+    "equipmentEnhancePreserved": 12
+  },
+  "sceneBrowser": {
+    "viewports": [
+      [
+        1280,
+        960
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        844,
+        390
+      ]
+    ],
+    "windows": 36,
+    "newTabs": 0,
+    "scenePreserved": true
+  },
+  "legacyBrowser": {
+    "passed": true,
+    "viewports": 2
+  },
+  "rulesets": {
+    "new": "atlas-v3",
+    "resume": [
+      "atlas-v1",
+      "atlas-v2"
+    ],
+    "talents": "atlas-talents-v1"
+  },
+  "talentScope": "Atlas dispatches only; classic idle, dungeons, tower and star-ring unchanged",
+  "nodeCountPerClass": 31,
+  "allocatableNodesPerClass": 30,
+  "maxPoints": 24,
+  "resetGold": 0,
+  "tutorialPersists": true,
+  "dryRunExitCode": 0,
+  "hashFormat": "SHA256 of UTF-8 source normalized CRLF to LF",
+  "sourceHashes": {
+    "worker/src/game/atlas-talents.js": "fc416dd742df28792fdad0e786fb653e576b21f9100050e7633b5686ec700735",
+    "worker/src/game/atlas-engine.js": "ac0365160e422dd6731d9855220cdd19bbc59d220223e3b1ce5d4199d90ef0a4",
+    "worker/src/services/atlas-talents.js": "b31f5008df57c57d6e137e2e909a65a970d1943cc8bbd4db70b83613b96c3507",
+    "worker/src/services/atlas.js": "5586d79d2bca16fc9d22063b6a3545a2d0131ea6bc36f113a97e37026b4ae0ad",
+    "worker/migrations/0038_atlas_talents.sql": "5948ae5cf91aa2ac8349b4acef8f623fb8bfa9c5fe6b08d23be9d90448fdf5e7",
+    "worker/public/atlas-ui.js": "a9ee30d5a78d755dea1380676ace3380a3bf0351fc5434606da162c2c7a2f8c3",
+    "worker/public/atlas-talents-ui.js": "0777ee5dc97ae2d6608c6941820e6771232b20a8d2c84818c0de8df5c30e22ee",
+    "worker/public/scene-windows.css": "6a5afdb1ba6d1858d55012df39ba38ea1b4f83efdf24141495b7ef760639d216",
+    "worker/public/scene-window-frame.css": "9a7dc0fec18b2bfa0f9938e477eac1e946de1391628697af9d1b440c77dd7011"
+  }
+}

@@ -9,6 +9,7 @@ import { withPlayer } from './player.js';
 import { requireBackpackAccess } from './party-presence.js';
 import { applyEquipmentAbilityPatch } from '../realm/asset-preservation.js';
 import { questEventStatements, isPermanentQuestRealm } from './atlas-quests.js';
+import {readAtlasTalents} from './atlas-talents.js';
 
 export const ATLAS_RECIPES=Object.freeze([
  {id:'temper',name:'精鐵淬鍊',description:'提高這件裝備的基礎能力 3%；強化值原樣保留。',cost:{atlas_shard:12,atlas_iron:4},stat:'base_stat'},
@@ -70,7 +71,7 @@ export async function status(env,charId,now){
  const completed=Object.fromEntries(progress.results.map(r=>[r.map_id,r.completions]));
  const counts=Object.fromEntries(crafts.results.map(r=>[r.item_id,r.crafts]));
  return {ok:true,enabled:enabled(env)||!!p.char.atlas_run_id,canStart:canStart(env,now),realmId:realmId(env),characterId:charId,profile:profileFor(profile,p.char.base_class),run:runView(run,now,env.REALM_CONTEXT?.cutoffAt),
-  materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,
+  materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,talents:await readAtlasTalents(db,p.char),
   availableMapIds:getAtlasCatalog().maps.filter(m=>m.minLevel<=p.char.level&&m.prerequisites.every(id=>completed[id]>0)).map(m=>m.id),
   supplies:{hp:p.inv.red_1||0,mp:p.inv.blue_1||0},
   equipment:p.equipment.map(e=>({id:e.id,name:e.name,slot:e.slot,enhanceLevel:e.enhance_level,baseStat:e.base_stat,crafts:counts[e.id]||0,tradeLocked:!!e.trade_id})),now};
@@ -125,7 +126,8 @@ export async function start(env,charId,body,now){
   const stats=computeStats(work.char,work.equipment.filter(e=>e.is_equipped));
   let balanceProfile;
   if(env.ATLAS_PROFILE_JSON){try{balanceProfile=JSON.parse(env.ATLAS_PROFILE_JSON);}catch{throw new GameError('atlas_config','星圖平衡設定無效',503);}}
-  const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,
+  const talentState=await readAtlasTalents(ctx.db,work.char);
+  const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,talentIds:talentState.allocatedIds,
    snapshot:{...stats,characterId:charId,baseClass:work.char.base_class,hp:Math.max(1,Math.min(work.char.hp,stats.maxHp)),mp:Math.max(0,Math.min(work.char.mp,stats.maxMp))},
    supplies:{...supplies,hpRestore:POTIONS.red_1.heal,mpRestore:POTIONS.blue_1.heal}});
   work.inv.red_1=(work.inv.red_1||0)-supplies.hp;work.inv.blue_1=(work.inv.blue_1||0)-supplies.mp;
@@ -171,8 +173,9 @@ export async function settle(env,charId,body,now){
   if(done){
    work.inv.red_1=(work.inv.red_1||0)+next.supplies.hp;work.inv.blue_1=(work.inv.blue_1||0)+next.supplies.mp;
    const finalStats=computeStats(work.char,work.equipment.filter(e=>e.is_equipped));
-   work.char.hp=Math.max(1,Math.min(finalStats.maxHp,Math.floor(next.hero.hp)));
-   work.char.mp=Math.max(0,Math.min(finalStats.maxMp,Math.floor(next.hero.mp)));
+   const talentLife=next.talentSnapshot?.spent>0;
+   work.char.hp=Math.max(1,Math.min(finalStats.maxHp,Math.floor(talentLife?next.hero.hp/next.snapshot.maxHp*finalStats.maxHp:next.hero.hp)));
+   work.char.mp=Math.max(0,Math.min(finalStats.maxMp,Math.floor(talentLife&&next.snapshot.maxMp?next.hero.mp/next.snapshot.maxMp*finalStats.maxMp:next.hero.mp)));
    for(const [kind,key]of [['hp','red_1'],['mp','blue_1']])if(next.supplies[kind])entries.push({event_id:`atlas:${run.id}:refund:${kind}`,tg_id:charId,type:'星圖補給歸還',item:key,item_delta:next.supplies[kind]});
   }
   const persistedStatus=next.status==='dead'?'failed':next.status;

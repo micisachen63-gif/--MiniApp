@@ -36,7 +36,7 @@
       if (contextKey(context) === contextKey(state.context)) { state.context = context; return false; }
       generation++; controller?.abort(); questController?.abort(); controller = null; flight = null; questController = null; questFlight = null;
       const saved=context?.characterId?host.loadPendingOperation?.(context):null;
-      const pending=saved&&['atlas/configure','atlas/start','atlas/settle','atlas/stop','atlas/craft','atlas/quests/claim'].includes(saved.action)&&saved.payload&&typeof saved.payload==='object'?saved:null;
+      const pending=saved&&['atlas/configure','atlas/start','atlas/settle','atlas/stop','atlas/craft','atlas/quests/claim','atlas/talents/action'].includes(saved.action)&&saved.payload&&typeof saved.payload==='object'?saved:null;
       Object.assign(state, {context, catalog:null, snapshot:null, quests:null, questError:'', questsLoading:false, draft:null, pending, loading:false, busy:false, error:'', syncedAt:null});
       notify(); return true;
     }
@@ -46,7 +46,7 @@
     function acceptQuests(data) {checkContext(data);if(!Array.isArray(data.quests))throw Error('委託資料尚未完整載入。');state.quests=data;state.questError='';if(state.snapshot&&data.materials)state.snapshot={...state.snapshot,materials:{...data.materials}};}
     function accept(data) {
       checkContext(data);
-      state.snapshot = data;
+      state.snapshot = data.talentOnly?{...state.snapshot,talents:data.talents}:data;
       state.syncedAt = Number.isFinite(Number(data.now)) ? Number(data.now) : null;
       if (!state.draft) state.draft = {...(data.profile || {}), supportIds:[...(data.profile?.supportIds || [])]};
     }
@@ -135,18 +135,20 @@
 
   function mount(host) {
     let context = null, panel = null, lastPanelKey = '', focusReturn = null, disposed = false;
-    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null;
+    let scrollLocked = false, previousOverflow = '', legacyFocusReturn = null;
+    let draftRun = {}, draftCraft = {}, draftScope = '', poll = null,talentSelected=null,talentZoom=90,talentEffectsReviewed=false,talentConfirming=false;
     const app = document.getElementById('app'), view = document.getElementById('view');
     const root = document.createElement('section'); root.id = 'atlas-world'; root.setAttribute('aria-label','星穹旅誌星圖營地'); root.hidden = true;
     root.innerHTML = `<div class="atlas-landscape" aria-hidden="true"></div><div class="atlas-vignette" aria-hidden="true"></div>
       <header class="atlas-topbar"><button class="atlas-brand" type="button" data-atlas-home><span>✦</span><span><small>STAR JOURNAL</small><strong>星穹旅誌</strong></span></button><div class="atlas-environment"><label for="atlas-realm">旅程環境</label><select id="atlas-realm" aria-label="切換永久或賽季環境"></select><span data-atlas-season></span></div><button class="atlas-character-button" type="button" data-atlas-character>選擇角色</button></header>
       <div class="atlas-scene"><div class="atlas-location"><small>ATLAS OF THE STARS</small><h1>你的下一段旅程</h1><p data-atlas-location>選擇角色，展開星圖</p></div><div class="atlas-actor" data-atlas-actor></div><aside class="atlas-tracker" aria-label="目前探索進度"></aside></div>
-      <div class="atlas-character-bar" data-atlas-stats></div><div class="atlas-shortcuts"><button type="button" data-atlas-direct="guardian:summon">✦ 召喚天使</button><button type="button" data-atlas-direct="fate">◇ 命運旅章</button><span data-atlas-sync role="status"></span></div>
+      <div class="atlas-character-bar" data-atlas-stats></div><div class="atlas-shortcuts"><button type="button" data-atlas-open-talents>✧ 天賦星盤</button><button type="button" data-atlas-direct="guardian:summon">✦ 召喚天使</button><button type="button" data-atlas-direct="fate">◇ 命運旅章</button><span data-atlas-sync role="status"></span></div>
       <nav class="atlas-nav" aria-label="六大系統">${groups.map(group => `<button type="button" data-atlas-group="${group.id}">${icon(group.icon)}<span><strong>${group.name}</strong><small>${group.subtitle}</small></span></button>`).join('')}</nav><footer class="atlas-world-credit">Game Producer · ミカサ</footer>`;
     app.prepend(root);
-    const legacy = document.createElement('section'); legacy.id = 'atlas-legacy'; legacy.hidden = true; legacy.setAttribute('aria-label','遊戲功能');
+    const legacy = document.createElement('section'); legacy.id = 'atlas-legacy'; legacy.hidden = true; legacy.setAttribute('aria-label','遊戲功能');legacy.setAttribute('role','dialog');legacy.setAttribute('aria-modal','true');
     legacy.innerHTML = `<header class="atlas-panel-header"><div><small>STAR JOURNAL</small><h2 data-atlas-legacy-title>冒險</h2></div><button type="button" class="atlas-close" data-atlas-legacy-close aria-label="返回營地">${icon('close')}</button></header>`;
     view.before(legacy); legacy.append(view);
+    const legacyBackdrop=document.createElement('div');legacyBackdrop.className='atlas-legacy-backdrop';legacyBackdrop.hidden=true;legacyBackdrop.setAttribute('aria-hidden','true');legacy.before(legacyBackdrop);
     const overlay = document.createElement('section'); overlay.id = 'atlas-panel'; overlay.hidden = true; overlay.setAttribute('role','dialog'); overlay.setAttribute('aria-modal','true');
     overlay.innerHTML = `<div class="atlas-panel-backdrop" data-atlas-close></div><div class="atlas-panel-card" tabindex="-1"><header class="atlas-panel-header"><div><small data-atlas-panel-eyebrow>星圖營地</small><h2 id="atlas-panel-title"></h2></div><button type="button" class="atlas-close" data-atlas-close aria-label="關閉並返回營地">${icon('close')}</button></header><div class="atlas-panel-body"></div></div>`;
     overlay.setAttribute('aria-labelledby','atlas-panel-title'); document.body.append(overlay);
@@ -160,18 +162,25 @@
     const canStart = () => client.state.catalog?.canStart !== false && client.state.snapshot?.canStart !== false;
     const validCharacter = () => !!character() && !context?.choosing && !context?.creating;
 
+    function syncWindowState() {
+      const visible=!overlay.hidden||!legacy.hidden;
+      root.inert=visible;
+      if(visible&&!scrollLocked){previousOverflow=document.body.style.overflow;document.body.style.overflow='hidden';scrollLocked=true;}
+      else if(!visible&&scrollLocked){document.body.style.overflow=previousOverflow;scrollLocked=false;}
+    }
+
     function close() {
-      panel = null; overlay.hidden = true; root.inert = false; lastPanelKey = '';
+      panel = null; overlay.hidden = true; lastPanelKey = '';syncWindowState();
       if (focusReturn?.isConnected) focusReturn.focus({preventScroll:true}); focusReturn = null;
       paintNav();
     }
     function open(name) {
-      if (!groups.some(group => group.id === name) && !(name==='quests'&&context.realmId==='permanent')) return;
+      if (!groups.some(group => group.id === name) && name!=='talents' && !(name==='quests'&&context.realmId==='permanent')) return;
       if (!validCharacter()) {host.chooseCharacter(); return;}
       if (context.tab !== 'atlas') host.home();
-      focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false; root.inert = true;overlay.querySelector('.atlas-panel-body').scrollTop=0;
+      focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
       paint(); overlay.querySelector('.atlas-panel-card').focus({preventScroll:true});
-      if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records'].includes(name)) void refreshAll();
+      if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records','talents'].includes(name)) void refreshAll();
     }
     function route(name) {close(); host.openRoute(name);}
     function paintNav() {
@@ -207,7 +216,7 @@
     }
     function dataState(content) {
       const state=client.state;
-      const operationNames={'atlas/configure':'儲存構築','atlas/start':'開始出征','atlas/settle':'探索結算','atlas/stop':'停止探索','atlas/craft':'星圖銘刻','atlas/quests/claim':'委託領獎'};
+      const operationNames={'atlas/configure':'儲存構築','atlas/start':'開始出征','atlas/settle':'探索結算','atlas/stop':'停止探索','atlas/craft':'星圖銘刻','atlas/quests/claim':'委託領獎','atlas/talents/action':'天賦配點'};
       const pending=state.pending&&!state.busy?`<div class="atlas-error" role="status">「${esc(operationNames[state.pending.action])}」的結果尚未確認。按下方按鈕會核對同一次操作。<button type="button" data-atlas-recover>確認上次操作</button></div>`:'';
       if(state.loading&&!state.snapshot)return empty('正在展開星圖','讀取你的構築、探索與材料。');
       if(state.catalog?.enabled===false)return pending+empty('星圖尚未開放','目前仍可透過下方入口繼續原有冒險、裝備與收藏進度。');
@@ -262,9 +271,10 @@
       return content+routeCards([['home','一般掛機與補給','查看原有冒險、藥水與每日領獎','map'],['boss','首領與合作冒險','世界首領、星環遠征、組隊副本','social']]);
     }
     function panelHtml() {
+      if(panel==='talents')return dataState(()=>window.RpgAtlasTalents?.render(client.state.snapshot.talents,{level:character()?.level||1,busy:client.state.busy,locked:running()||!!character()?.partyId||!canStart(),selectedId:talentSelected,zoom:talentZoom,effectsReviewed:talentEffectsReviewed})||empty('天賦介面尚未載入','請重新開啟遊戲。'));
       if(panel==='quests')return questsPanel();
       if(panel==='expedition')return expeditionPanel();
-      if(panel==='build')return dataState(()=>`<p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
+      if(panel==='build')return dataState(()=>`<button type="button" class="atlas-primary" data-atlas-open-talents>天賦星盤 · 可用 ${number(client.state.snapshot.talents?.availablePoints??0)} 點</button><p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
       if(panel==='workshop')return workshopPanel();
       if(panel==='companions')return `<p class="atlas-panel-intro">帶著守護啟程，也為另一段人生留一盞星燈。</p>${routeCards([['guardian:summon','抽取天使','召喚、查看結果與原有抽取紀錄','angel'],['guardian:inventory','天使管理','啟用、鎖定、合成與守護配置','angel'],['fate','命運旅章與輪迴','繼續此世、開啟新人生與查看進度','book'],['fate:archive','靈魂旅誌','翻閱過往人生與旅章紀錄','book'],['fate:gift','星輝匣','查看、領取與開啟輪迴贈禮','angel']])}`;
       if(panel==='social')return `<p class="atlas-panel-intro">與同一環境的旅人同行，交換彼此需要的收穫。</p>${routeCards([['party','組隊冒險','尋找隊伍、討伐、轉職試煉與爬塔','social'],['star-ring','星環遠征','原有五人遠征與進行中戰況','map'],['trade','雙人交易與集會','邀請、託管、確認交易與紀錄','social'],['exchange','交易所','搜尋、上架與查看成交紀錄','forge'],['hall','英雄殿堂','查看角色與公開穿戴','social']])}`;
@@ -272,18 +282,28 @@
     }
     function paintPanel() {
       if(!panel||overlay.hidden)return;
-      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||'永久世界委託';
+      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='talents'?'天賦星盤':'永久世界委託');
       const state=client.state,scope=contextKey(state.context);
       if(draftScope!==scope){draftScope=scope;draftRun={};draftCraft={};}
-      const signature=JSON.stringify([panel,scope,state.loading,state.busy,state.error,state.pending,state.catalog,state.snapshot,state.quests,state.questError,state.questsLoading,context.me?.inventory?.red_1,context.me?.inventory?.blue_1]);
+      const signature=JSON.stringify([panel,scope,state.loading,state.busy,state.error,state.pending,state.catalog,state.snapshot,state.quests,state.questError,state.questsLoading,talentSelected,talentEffectsReviewed,context.me?.inventory?.red_1,context.me?.inventory?.blue_1]);
       if(signature===lastPanelKey)return;lastPanelKey=signature;
-      const body=overlay.querySelector('.atlas-panel-body'),scroll=body.scrollTop,active=document.activeElement;
+      const body=overlay.querySelector('.atlas-panel-body'),scroll=body.scrollTop,active=document.activeElement,oldTree=body.querySelector('.atlas-talent-canvas'),treeScroll=oldTree?{left:oldTree.scrollLeft,top:oldTree.scrollTop}:null;
       const focusedName=body.contains(active)?active.name:null,focusedValue=active?.value,details=[...body.querySelectorAll('details')].map(node=>node.open);
       body.innerHTML=panelHtml();body.scrollTop=scroll;bindPanel(body);
+      const tree=body.querySelector('.atlas-talent-canvas');if(tree){tree.scrollLeft=treeScroll?.left??Math.max(0,(tree.scrollWidth-tree.clientWidth)/2);tree.scrollTop=treeScroll?.top??0;}
       body.querySelectorAll('details').forEach((node,index)=>{if(details[index]!==undefined)node.open=details[index];});
       if(focusedName){const controls=[...body.querySelectorAll(`[name="${CSS.escape(focusedName)}"]`)];(controls.find(node=>node.value===focusedValue)||controls[0])?.focus({preventScroll:true});}
     }
     function bindPanel(body) {
+      body.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
+      body.querySelectorAll('[data-talent-node]').forEach(node=>{const select=()=>{talentSelected=node.dataset.talentNode;lastPanelKey='';paintPanel();body.querySelector('.atlas-talent-detail')?.scrollIntoView({block:'nearest'});};node.onclick=select;node.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();select();}};});
+      const talentCanvas=body.querySelector('.atlas-talent-canvas');
+      if(talentCanvas){let drag=null,moved=false;talentCanvas.addEventListener('pointerdown',event=>{if(event.pointerType!=='mouse'||event.button!==0)return;drag={id:event.pointerId,x:event.clientX,y:event.clientY,left:talentCanvas.scrollLeft,top:talentCanvas.scrollTop};moved=false;});talentCanvas.addEventListener('pointermove',event=>{if(!drag||event.pointerId!==drag.id)return;if(!moved&&Math.hypot(event.clientX-drag.x,event.clientY-drag.y)<6)return;moved=true;event.preventDefault();talentCanvas.setPointerCapture(event.pointerId);talentCanvas.scrollLeft=drag.left-(event.clientX-drag.x);talentCanvas.scrollTop=drag.top-(event.clientY-drag.y);});const endDrag=event=>{if(drag&&event.pointerId===drag.id){if(talentCanvas.hasPointerCapture(event.pointerId))talentCanvas.releasePointerCapture(event.pointerId);drag=null;}};talentCanvas.addEventListener('pointerup',endDrag);talentCanvas.addEventListener('pointercancel',endDrag);talentCanvas.addEventListener('click',event=>{if(moved){moved=false;event.preventDefault();event.stopPropagation();}},true);}
+      body.querySelector('[name="talentZoom"]')?.addEventListener('input',event=>{talentZoom=Number(event.target.value);body.querySelector('.atlas-talent-canvas svg').style.width=900*talentZoom/100+'px';});
+      body.querySelector('[data-talent-review]')?.addEventListener('click',()=>{talentEffectsReviewed=true;lastPanelKey='';paintPanel();body.querySelector('[data-talent-effects]')?.scrollIntoView({block:'nearest'});});
+      body.querySelectorAll('[data-talent-guide]').forEach(button=>button.onclick=async()=>{const result=await operate('atlas/talents/action',{kind:button.dataset.talentGuide});if(result)body.scrollTop=0;});
+      body.querySelector('[data-talent-allocate]')?.addEventListener('click',async event=>{if(talentConfirming||client.state.busy)return;talentConfirming=true;try{const nodeId=event.currentTarget.dataset.talentAllocate,t=client.state.snapshot.talents,node=t.catalog.nodes.find(n=>n.id===nodeId),scope=contextKey(client.state.context);if(!node)return;if(!await host.confirm('確認天賦配點',`配置「${esc(node.name)}」，消耗 1 點天賦。${esc(node.description)}。下次星圖出征生效。`,'配置 1 點')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'allocate',nodeId});if(result){host.toast('天賦已保存，下次星圖出征生效。');if(result.talents?.tutorialStep===1)body.scrollTop=0;}}finally{talentConfirming=false;}});
+      body.querySelector('[data-talent-reset]')?.addEventListener('click',async()=>{const scope=contextKey(client.state.context);if(!await host.confirm('重新配置天賦','試作期間免費洗點，清空目前節點並返還全部天賦點。裝備、強化與等級維持原樣。','確認洗點')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'reset'});if(result){talentSelected=null;talentEffectsReviewed=false;lastPanelKey='';paintPanel();host.toast('天賦點已返還。');}});
       body.querySelectorAll('[data-atlas-route]').forEach(button=>button.onclick=()=>route(button.dataset.atlasRoute));
       body.querySelectorAll('[data-atlas-refresh]').forEach(button=>button.onclick=()=>refreshAll());
       body.querySelectorAll('[data-atlas-quests-refresh]').forEach(button=>button.onclick=()=>client.refreshQuests());
@@ -309,33 +329,51 @@
     function update(next) {
       context=next;document.body.classList.add('atlas-enabled');root.hidden=!next.meta;
       const selecting=next.choosing||next.creating||!next.me;
-      legacy.hidden=!selecting&&next.tab==='atlas';legacy.classList.toggle('atlas-selecting',selecting);
+      const legacyWasOpen=!legacy.hidden;
+      legacy.hidden=!selecting&&next.tab==='atlas';legacyBackdrop.hidden=legacy.hidden;legacy.classList.toggle('atlas-selecting',selecting);
+      if(!legacy.hidden&&!legacyWasOpen){legacyFocusReturn=document.activeElement;queueMicrotask(()=>{if(!disposed&&!legacy.hidden&&!document.getElementById('app').inert)legacy.querySelector('[data-atlas-legacy-close]:not([hidden])')?.focus({preventScroll:true});});}
+      if(legacy.hidden&&legacyWasOpen){const target=legacyFocusReturn;legacyFocusReturn=null;queueMicrotask(()=>{if(!disposed&&legacy.hidden&&!root.inert&&target?.isConnected)target.focus({preventScroll:true});});}
       legacy.querySelector('[data-atlas-legacy-close]').hidden=selecting&&!next.me;
       legacy.querySelector('[data-atlas-legacy-title]').textContent=selecting?'選擇冒險者':({home:'一般掛機與補給',bag:'裝備與背包',class:'職業與傳承',guardian:'守護天使',shop:'工坊與市集',trade:'社交與交易',boss:'首領與合作冒險',collection:'地圖圖鑑'})[next.tab]||'冒險';
       const changed=client.setContext({realmId:next.realmId,characterId:next.me?.character?.tgId||'',epoch:next.contextEpoch||0});
-      if(changed){close();draftRun={};draftCraft={};draftScope='';}
-      if(selecting)close();paint();
+      if(changed){close();draftRun={};draftCraft={};draftScope='';talentSelected=null;talentZoom=90;talentEffectsReviewed=false;}
+      if(selecting)close();syncWindowState();paint();
       if(changed&&!selecting)void refreshAll();
     }
     root.querySelectorAll('[data-atlas-group]').forEach(button=>button.onclick=()=>open(button.dataset.atlasGroup));
     root.querySelectorAll('[data-atlas-direct]').forEach(button=>button.onclick=()=>route(button.dataset.atlasDirect));
+    root.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
     get('[data-atlas-home]').onclick=()=>{close();host.home();};get('[data-atlas-character]').onclick=()=>{close();host.chooseCharacter();};
     get('#atlas-realm').onchange=event=>{close();void host.switchRealm(event.target.value);};
     legacy.querySelector('[data-atlas-legacy-close]').onclick=()=>{host.home();};
+    legacyBackdrop.onclick=()=>{if(context?.me)host.home();};
     overlay.querySelectorAll('[data-atlas-close]').forEach(button=>button.onclick=close);
     function keydown(event){
-      if(overlay.hidden)return;
+      const active=!overlay.hidden?overlay:!legacy.hidden?legacy:null;
+      if(!active)return;
       if(!document.getElementById('sheet')?.hidden)return;
-      if(event.key==='Escape'){event.preventDefault();close();return;}
+      if(document.getElementById('expedition-overlay')||document.querySelector('.fate-overlay'))return;
+      if(event.key==='Escape'){event.preventDefault();if(active===legacy){if(context?.me)host.home();}else close();return;}
       if(event.key!=='Tab')return;
-      const items=[...overlay.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,[tabindex="0"]')].filter(node=>node.getClientRects().length),first=items[0],last=items.at(-1);
+      const items=[...active.querySelectorAll('button:not(:disabled),input:not(:disabled),select:not(:disabled),summary,[tabindex="0"]')].filter(node=>node.getClientRects().length),first=items[0],last=items.at(-1);
       if(event.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){event.preventDefault();last?.focus();}else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first?.focus();}
     }
     document.addEventListener('keydown',keydown);
     const visibility=()=>{if(!document.hidden&&validCharacter())void refreshAll();};
     document.addEventListener('visibilitychange',visibility);
     poll=setInterval(()=>{if(!document.hidden&&validCharacter()&&!client.state.busy)void refreshAll();},30000);
-    return {update,open,close,refresh:client.refresh,client,dispose(){disposed=true;clearInterval(poll);client.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();root.remove();}};
+    return {update,open,close,refresh:client.refresh,client,dispose(){disposed=true;clearInterval(poll);client.dispose();document.removeEventListener('keydown',keydown);document.removeEventListener('visibilitychange',visibility);overlay.remove();legacyBackdrop.remove();if(scrollLocked)document.body.style.overflow=previousOverflow;root.remove();}};
   }
-  window.RpgAtlasUI={mount,createClient,groups,contextKey,reportHtml,progressPercent,progressLabel};
+  function styleSceneFrame(frame) {
+    if(!document.body.classList.contains('atlas-enabled'))return;
+    frame.addEventListener('load',()=>{
+      const doc=frame.contentDocument;
+      if(!doc?.head)return;
+      doc.documentElement.classList.add('atlas-scene-frame');
+      if(!doc.getElementById('atlas-scene-frame-style')){
+        const css=doc.createElement('link');css.id='atlas-scene-frame-style';css.rel='stylesheet';css.href='/scene-window-frame.css?v=20261102-floating1';doc.head.append(css);
+      }
+    });
+  }
+  window.RpgAtlasUI={mount,createClient,groups,contextKey,reportHtml,progressPercent,progressLabel,styleSceneFrame};
 })();

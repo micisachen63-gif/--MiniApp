@@ -3,6 +3,7 @@ import {
   ATLAS_MAX_ADVANCE_STEPS, ATLAS_PROTOTYPE_PROFILE, ATLAS_SUPPORTS,
   ATLAS_AUTOMATION, ATLAS_SUPPORTED_RULESETS, ATLAS_QUEUE_MODES, getAtlasBuild, getAtlasMap,
 } from './atlas-catalog.js';
+import {applyAtlasTalentSnapshot} from './atlas-talents.js';
 
 /** Pure rules only. The API must authorize the realm/character, enforce map
  * minLevel/prerequisites, reserve supplies, pause legacy idle, and atomically
@@ -49,7 +50,7 @@ export function normalizeAtlasSnapshot(input) {
   const baseClass = input.baseClass ?? input.base_class;
   if (!['sword', 'archer', 'mage', 'thief'].includes(baseClass)) fail('atlas_invalid_snapshot', '不支援的職業');
   const pct = {};
-  for (const key of ['critPct', 'dotPct', 'summonPct', 'shieldPct', 'mpEfficiencyPct', 'mpCostPct', 'skillHastePct', 'lifestealPct', 'healPerCastPct']) {
+  for (const key of ['critPct', 'dotPct', 'summonPct', 'shieldPct', 'mpEfficiencyPct', 'mpCostPct', 'skillHastePct', 'lifestealPct', 'healPerCastPct','skillDamagePct']) {
     pct[key] = number(input.pct?.[key], `pct.${key}`, -.9, 3, 0);
   }
   const result = {
@@ -88,7 +89,7 @@ function profileSnapshot(input = {}) {
 function skillSnapshot(build, supportIds, snapshot) {
   if (!Array.isArray(supportIds) || supportIds.length > 2 || new Set(supportIds).size !== supportIds.length) fail('atlas_invalid_support', '最多兩個不同輔助');
   const skill = clone(build);
-  skill.damageMultiplier = 1;
+  skill.damageMultiplier = 1+(snapshot.pct.skillDamagePct||0);
   skill.durationMultiplier = 1;
   skill.costMultiplier = clamp(1 + snapshot.pct.mpCostPct, .1, 4) * clamp(1 - snapshot.pct.mpEfficiencyPct, .2, 2);
   skill.cooldownMultiplier = clamp(1 - snapshot.pct.skillHastePct, .25, 2);
@@ -117,7 +118,7 @@ function skillSnapshot(build, supportIds, snapshot) {
  */
 export function createAtlasRun(input) {
   if (!input || typeof input !== 'object') fail('atlas_invalid_input', '缺少派遣資料');
-  const snapshot = normalizeAtlasSnapshot(input.snapshot);
+  const {snapshot,talents}=applyAtlasTalentSnapshot(normalizeAtlasSnapshot(input.snapshot),input.talentIds||[]);
   const build = getAtlasBuild(input.buildId);
   const map = getAtlasMap(input.mapId);
   if (!build || build.baseClass !== snapshot.baseClass) fail('atlas_invalid_build', '流派與角色職業不符');
@@ -150,7 +151,7 @@ export function createAtlasRun(input) {
     seed, encounterRng: hash(`encounter:${seed}`), combatRng: hash(`combat:${seed}`), lootRng: hash(`loot:${seed}`),
     startedAt, processedAt: startedAt, durationSeconds, elapsedSeconds: 0,
     status: 'running', stopReason: null, endedAt: null,
-    snapshot, balanceProfile: profile,
+    snapshot, balanceProfile: profile,talentSnapshot:talents,
     buildId: build.id, supports: [...supports], automation, skill,
     mapId: map.id, map: mapSnapshot, queueMode, mapCount, mapIndex: 0, roomIndex: 0,
     transitionSeconds: mapSnapshot.entrySeconds, enemies: [],
