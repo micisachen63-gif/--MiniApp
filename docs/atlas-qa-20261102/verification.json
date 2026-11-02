@@ -1,0 +1,23 @@
+{
+  "sourceCommit": "9807cee9eddee2c2f33e96dfa34eabc3ec82bdc5",
+  "tree": "076b60325c567de1b371e0905cf75bbccf9d8ba5",
+  "command": "npm test",
+  "node": "v24.22.1",
+  "worker": {
+    "tests": 2409,
+    "pass": 2409,
+    "fail": 0,
+    "skipped": 0
+  },
+  "bot": {
+    "tests": 205,
+    "pass": 205,
+    "fail": 0,
+    "skipped": 0
+  },
+  "exitCode": 0,
+  "testLogSha256": "71ce7ea9a39e88a2c0a174d08c95aa6f11bfaf5ba13bb2b9424e3642cfdc1e28",
+  "browserResults": "results.json",
+  "productionRequests": 0,
+  "deployed": false
+}

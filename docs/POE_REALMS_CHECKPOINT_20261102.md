@@ -85,3 +85,17 @@ node node_modules/wrangler/bin/wrangler.js deploy --dry-run --config worker/wran
 停用 `ATLAS_ENABLED` 不刪除資料；已有出征仍能結算、停止與退還補給，已成功收據仍可重播。更新規則不得替換既有進行中的快照。
 
 依 AGENTS.md 經 PR 與「Worker and BOT tests」gate 合入後，仍須從乾淨且等於最新 `origin/main` 的 checkout 使用根目錄發布流程。draft PR、dry-run 或 CI 成功都不代表正式已上線；不得直接部署本工作分支或自動套用遠端 SQL。
+
+
+## 最終驗證紀錄
+
+GitHub 草稿 [PR #42](https://github.com/micisachen63-gif/--MiniApp/pull/42) 已保存本次程式、測試、規格與驗收截圖。被測程式與 GitHub 提交 `9807cee9eddee2c2f33e96dfa34eabc3ec82bdc5` 的 Git tree 完全一致；本地原始兩筆提交另保存在 `codex/poe-realms-local-checkpoint`，沒有強推或改寫 main。
+
+- 完整 `npm test` 成功結束，exit 0：Worker **2,409／2,409**、BOT **205／205**，合計 **2,614**；fail、cancelled、skipped、todo 均為 0。
+- 首輪發現的三個失敗來自新增 schema 預期及 BOT metadata 讀取 DB 的相容問題，已修正後重跑全套。初始化預期逐項比對已審閱新增表／索引／trigger，歷史結構嚴格比較保留；metadata 仍需 service authentication，但不讀玩家資料。
+- 前端相關 177 個案例全部通過；它們包含在完整 Worker 回歸中，不能再與總數相加。
+- 最終 browser 兩種尺寸通過：1280×960、390×844；無 page errors、error toasts 或橫向溢出。請以 `docs/atlas-qa-20261102/results.json` 為準，沒有重新驗證所有舊玩法的每個分支，也不是原生 Telegram 手機驗收。
+- Wrangler 整合 dry-run 建置成功，包含 8,973 個現有與新增 public 檔案；沒有發布。
+- 正式公開查核的原始範圍記錄在 `docs/atlas-qa-20261102/public-baseline.json`；仍未取得正式 D1 聚合。
+
+GitHub CI 是獨立檢查，應以 PR 當下結果為準。上述本機全部通過不表示 PR 已合併或正式已部署。
