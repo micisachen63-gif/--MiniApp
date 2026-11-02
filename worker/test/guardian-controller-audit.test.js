@@ -15,12 +15,12 @@ function rootNode(query=()=>null){
   const events=new Map();let html='',renders=0;
   return {get innerHTML(){return html;},set innerHTML(value){html=value;renders++;},get renders(){return renders;},querySelector:query,querySelectorAll:()=>[],contains:()=>true,addEventListener:(name,fn)=>events.set(name,fn),removeEventListener:name=>events.delete(name),click(dataset){const button={dataset,disabled:false,closest:()=>({dataset:{guardianId:dataset.guardianId}}),hasAttribute:name=>Object.hasOwn(dataset,attrKey(name))};events.get('click')?.({target:{closest:()=>button}});},change(key,value,checked=false){events.get('change')?.({target:{value,checked,hasAttribute:name=>attrKey(name)===key}});}};
 }
-function setup(host,{root=rootNode(),autoLoad=false,extraWindow={},initialView='summon',extraState={}}={}){
+function setup(host,{root=rootNode(),autoLoad=false,extraWindow={},initialView='summon',extraState={},coldStart=false}={}){
   let gesture;const scene={},originalQuery=root.querySelector;
   root.querySelector=selector=>originalQuery(selector)||(selector==='.guardian-worldtree-scene'?scene:null);
   const window={RpgGuardianWorldTree:{markup:()=>'',mount:()=>({cleanup(){}})},RpgGuardianSummonGesture:{mount:(_scene,options)=>{let held=false;gesture={pull(){if(held||!options.canStart())return;held=true;void options.commit().then(result=>{held=false;options.onFinish(result,{complete:!!result});});},isInteracting:()=>held,getState:()=>({pointer:null,requesting:held}),cleanup(){}};return gesture;}},...extraWindow},context=vm.createContext({window,AbortController,console,setTimeout,clearTimeout});
   for(const name of ['guardian-sigil-contract.js','guardian-auto-ui.js','guardian-ritual.js','guardian-sigil.js'])vm.runInContext(read(name),context);
-  const handle=window.RpgGuardianSigil.mount(root,{config,state:{...state,...extraState},host,interactive:true,autoLoad,initialView});
+  const handle=window.RpgGuardianSigil.mount(root,{config:coldStart?undefined:config,state:coldStart?undefined:{...state,...extraState},host,interactive:true,autoLoad,initialView});
   return {root,handle,window,pull:()=>gesture.pull()};
 }
 function selectAuto(h){h.root.change('guardianAutoEnabled','',true);h.root.change('guardianAutoType','magic');}
@@ -64,6 +64,13 @@ function receiptStage(host,{saved={operation:{...receipt('old_request'),operatio
   }});
   return {...h,button,planning,snapshots,mountOptions,get gesture(){return gesture;},get presentation(){return presentation;}};
 }
+
+test('summon shortcut mounts safely before any guardian state arrives',async()=>{
+  const dom=mediaDomRoot();let resolveState;
+  const h=setup({characterId:()=>state.charId,mutate:async()=>{},config:async()=>config,state:()=>new Promise(resolve=>resolveState=resolve)},{root:dom.root,coldStart:true,autoLoad:true});
+  assert.equal(dom.footer.button.disabled,true);resolveState(state);await tick();await tick();
+  assert.equal(dom.footer.button.disabled,false);assert.match(dom.root.innerHTML,/免費 200 次/);h.handle.cleanup();
+});
 
 test('unchanged background polling does not recreate the stage or restart its media',()=>{const h=setup({characterId:()=>state.charId,mutate:async()=>{}}),start=h.root.renders;assert.equal(h.handle.update({autoJob:null}),false);assert.equal(h.handle.update({characterId:'hero-a',revision:state.revision,balances:state.balances}),false);assert.equal(h.root.renders,start);const job={id:'job-a',status:'running',totalDraws:1};h.handle.update({autoJob:job});const changed=h.root.renders;assert.equal(h.handle.update({autoJob:{...job}}),false);assert.equal(h.root.renders,changed);h.handle.cleanup();});
 
@@ -139,6 +146,9 @@ test('actual Host keeps foreground and auto start pending in separate persistent
   const context=vm.createContext({window,S,localStorage:store(values),sessionStorage:store(session),guardianAutoBanner:()=>{},guardianController:null,confirmSheet:()=>{},crypto:{randomUUID:()=> '11111111-1111-1111-1111-111111111111'}});vm.runInContext(app.slice(start,end),context);
   const host=window.RpgGuardianHost;host.savePending({requestId:'manual_a'});host.saveAutoPending(pendingAuto);assert.equal(host.loadPending().requestId,'manual_a');assert.equal(host.loadAutoPending().requestId,'auto_request_1');assert.equal(values.size,2);assert.equal(session.size,0);
   S.me.character.tgId='hero-b';assert.equal(host.loadAutoPending(),null);host.saveAutoPending({...pendingAuto,characterId:'hero-b',requestId:'auto_b'});S.me.character.tgId='hero-a';host.clearAutoPending();assert.equal(host.loadPending().requestId,'manual_a');S.me.character.tgId='hero-b';assert.equal(host.loadAutoPending().requestId,'auto_b');
+  S.me.character.tgId='hero-a';S.realmId='season-a';assert.equal(host.loadPending(),null);assert.equal(host.loadReceipt(),null);host.savePending({requestId:'season_manual'});host.saveReceipt({operationId:'season_receipt'},{});
+  S.realmId='permanent';assert.equal(host.loadPending().requestId,'manual_a');assert.equal(host.loadReceipt(),null);assert.ok(values.has('elfRpgGuardian:pending:hero-a'));
+  S.realmId='season-a';assert.equal(host.loadPending().requestId,'season_manual');assert.equal(host.loadReceipt().operation.operationId,'season_receipt');
 });
 
 test('same-snapshot guardian balances update current resources but reject old revisions and other characters',()=>{

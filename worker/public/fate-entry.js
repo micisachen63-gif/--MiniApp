@@ -2,16 +2,17 @@
  'use strict';
  const original=window.RpgInterface.compose;
  const valid=c=>typeof c==='string'&&/^f(?:[1-5][a-f0-9x]{10,30}|7[a-f0-9x]{29}|(?:8tw|9(?:jp|kr|us|ca|gb|de|fr|au|in))[0-9ab][0-9][01]{18}[0-9abx][a-f0-9]{8})$/.test(c);
- let overlay=null,frame=null,pinned=null,exit=null,opening=false;
+ let overlay=null,frame=null,pinned=null,exit=null,opening=false,contextVersion=0;
  const entryParams=new URLSearchParams(location.search),incoming=entryParams.get('fate'),startParam=String(window.Telegram?.WebApp?.initDataUnsafe?.start_param||entryParams.get('screen')||entryParams.get('tgWebAppStartParam')||location.hash.replace(/^#/,'').split('&')[0]||'').replace(/^rpg_?/,''),autoOpen=startParam==='fate'||entryParams.has('fateEvent'),cache=new Map(),seen=new Set();
  const targetCharacter=entryParams.get('fateCharacter'),targetName=entryParams.get('fateCharacterName')?.slice(0,24)||'另一角色';
  const wrongCharacter=id=>targetCharacter&&String(id)!==targetCharacter;
  function characterNotice(){if(overlay)return;const app=document.getElementById('app'),wasInert=app.inert,oldOverflow=document.body.style.overflow,focused=document.activeElement;overlay=document.createElement('section');overlay.className='fate-overlay';overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','旅章角色提醒');const close=document.createElement('button');close.className='fate-overlay-close';close.textContent='‹ 返回冒險';const notice=document.createElement('div');notice.className='fate-character-notice';const title=document.createElement('h2');title.textContent='星燈寄給另一位旅人';const copy=document.createElement('p');copy.textContent=`這是${targetName==='另一角色'?'另一角色':'「'+targetName+'」'}的旅章，請先從選角切換至該角色。`;notice.append(title,copy);overlay.append(close,notice);app.inert=true;document.body.style.overflow='hidden';document.body.append(overlay);const key=e=>{if(e.key==='Escape')exit()};exit=()=>{overlay?.remove();overlay=null;document.removeEventListener('keydown',key);app.inert=wasInert;document.body.style.overflow=oldOverflow;if(focused?.isConnected)focused.focus()};document.addEventListener('keydown',key);close.onclick=exit;close.focus();}
 
- async function state(id){const old=cache.get(String(id));if(old&&Date.now()-old.at<45000)return old.value;const value=await window.RpgFateHost.request('fate/me',{});if(String(window.RpgFateHost.characterId())===String(id))cache.set(String(id),{at:Date.now(),value});return value;}
+ window.addEventListener('rpg-context-changed',()=>{contextVersion++;opening=false;cache.clear();if(overlay)exit?.();});
+ async function state(id){const version=contextVersion,old=cache.get(String(id));if(old&&Date.now()-old.at<45000)return old.value;const value=await window.RpgFateHost.request('fate/me',{});if(version===contextVersion&&String(window.RpgFateHost.characterId())===String(id))cache.set(String(id),{at:Date.now(),value});return value;}
  async function open(code,archive=false){
-  if(overlay||opening)return;if(wrongCharacter(window.RpgFateHost?.characterId())){characterNotice();return;}opening=true;let protocol,nativeModel,nativeHost;
-  try{protocol=await import('/fate/bridge-protocol.js');nativeModel=await import('/fate/share-model.js');const nativeModule=await import('/fate/native-share-host.js');nativeHost=nativeModule.createNativeShareHost({tg:window.Telegram?.WebApp});}catch{opening=false;return}opening=false;if(overlay)return;
+  if(overlay||opening)return;if(wrongCharacter(window.RpgFateHost?.characterId())){characterNotice();return;}opening=true;const version=contextVersion,requestedCharacter=String(window.RpgFateHost?.characterId()||'');let protocol,nativeModel,nativeHost;
+  try{protocol=await import('/fate/bridge-protocol.js');nativeModel=await import('/fate/share-model.js');const nativeModule=await import('/fate/native-share-host.js');nativeHost=nativeModule.createNativeShareHost({tg:window.Telegram?.WebApp});}catch{if(version===contextVersion)opening=false;return}if(version!==contextVersion||requestedCharacter!==String(window.RpgFateHost?.characterId()||''))return;opening=false;if(overlay)return;
   const app=document.getElementById('app'),focused=document.activeElement,oldOverflow=document.body.style.overflow,wasInert=app.inert;
   pinned=String(window.RpgFateHost?.characterId()||'');if(!pinned)return;
   overlay=document.createElement('section');overlay.className='fate-overlay';overlay.setAttribute('role','dialog');overlay.setAttribute('aria-modal','true');overlay.setAttribute('aria-label','命運旅章');
@@ -35,19 +36,20 @@
   };
   window.addEventListener('message',message);document.addEventListener('keydown',key);close.onclick=exit;close.focus();
  }
+ window.RpgFateEntry={open:()=>open(valid(incoming)?incoming:null),archive:()=>open(null,true),gift:async()=>{const version=contextVersion,id=String(window.RpgFateHost?.characterId()||'');if(!id)return;const module=await import('/fate/fate-gift-ui.js?v=20261101-realms1');if(version===contextVersion&&id===String(window.RpgFateHost?.characterId()||''))return module.openFateGift(window.RpgFateHost);}};
  window.RpgInterface.compose=(view,context)=>{
   original(view,context);if(context.tab!=='home')return;
-  const id=window.RpgFateHost?.characterId();if(!id)return;
+  const id=window.RpgFateHost?.characterId(),version=window.RpgFateHost?.contextEpoch?.()||0;if(!id)return;
   const cycles=view.querySelector('[data-fate-cycles]'),cycleRow=cycles?.parentElement;
   const gift=document.createElement('button');gift.type='button';gift.className='my-fate-gift-button';gift.textContent='星輝匣';gift.setAttribute('aria-label','領取與開啟四世星輝匣');
   const giftNote=document.createElement('small');giftNote.className='my-fate-gift-note';giftNote.textContent='每四世 · 留一份星輝';
-  const showGift=async()=>{if(String(window.RpgFateHost?.characterId())!==String(id))return;try{const module=await import('/fate/fate-gift-ui.js?v=20261020-scroll-name1');if(String(window.RpgFateHost?.characterId())===String(id))module.openFateGift(window.RpgFateHost);}catch{giftNote.textContent='星輝匣暫未連上，請稍後重試';}};
+  const showGift=async()=>{if(version!==(window.RpgFateHost?.contextEpoch?.()||0)||String(window.RpgFateHost?.characterId())!==String(id))return;try{const module=await import('/fate/fate-gift-ui.js?v=20261101-realms1');if(version===(window.RpgFateHost?.contextEpoch?.()||0)&&String(window.RpgFateHost?.characterId())===String(id))module.openFateGift(window.RpgFateHost);}catch{giftNote.textContent='星輝匣暫未連上，請稍後重試';}};
   gift.onclick=showGift;if(cycleRow)cycleRow.append(giftNote,gift);
   window.RpgFateHost.openGift=()=>{if(String(window.RpgFateHost?.characterId())===String(id))return showGift();};
   const card=document.createElement('section');card.className='fate-home-card';
   const tag=document.createElement('small');tag.textContent='THE LAST STAR LANTERN';const title=document.createElement('h3');title.textContent='命運旅章';const desc=document.createElement('p');desc.textContent='如果人生能重新啟程，你會把光留給誰？';
   const actions=document.createElement('div');actions.className='fate-home-actions';const b=document.createElement('button');b.type='button';b.textContent='展開旅章  ›';b.onclick=()=>open(valid(incoming)?incoming:null);const journal=document.createElement('button');journal.type='button';journal.textContent='靈魂旅誌';journal.onclick=()=>open(null,true);actions.append(b,journal);card.append(tag,title,desc,actions);view.prepend(card);
-  const current=()=>card.isConnected&&String(window.RpgFateHost.characterId())===String(id);
+  const current=()=>version===(window.RpgFateHost?.contextEpoch?.()||0)&&card.isConnected&&String(window.RpgFateHost.characterId())===String(id);
   state(id).then(data=>{if(!current())return;if(cycles)cycles.textContent=`輪迴 ${Number.isSafeInteger(data.completed)&&data.completed>=0?data.completed:'—'} 世`;if(!wrongCharacter(id)){if(data.active){desc.textContent='這一世仍在生長。回來看看，命運又寫下了什麼。';b.textContent='繼續此世  ›';}else if(data.completed){desc.textContent=`已承載 ${data.completed} 世記憶 · 每段人生都值得被記得`;b.textContent='翻閱旅章  ›';}}return window.RpgFateHost.request('fate/gifts/summary',{});}).then(data=>{if(!data||!current())return;giftNote.textContent=data.claimable?`可領 ${data.claimable} 匣 · 持有 ${data.unopened} 匣`:data.unopened?`持有 ${data.unopened} 匣`:`再 ${data.nextIn} 世 · 星輝成匣`;gift.classList.toggle('has-gift',data.claimable>0||data.unopened>0);}).catch(()=>{if(!current())return;if(cycles?.textContent.includes('載入'))cycles.textContent='輪迴 · 待同步';giftNote.textContent='星輝匣 · 點開同步';desc.textContent='星燈正在等你。開啟旅章後可重新連線。';});
   if(wrongCharacter(id)){desc.textContent=`這是${targetName==='另一角色'?'另一角色':'「'+targetName+'」'}的旅章，請先從選角切換至該角色。`;b.textContent='查看旅章角色提醒';journal.hidden=true;}
   if((valid(incoming)||autoOpen)&&!seen.has(String(id)+(incoming||'event'))){seen.add(String(id)+(incoming||'event'));queueMicrotask(()=>open(incoming));}

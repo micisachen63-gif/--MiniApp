@@ -2,6 +2,7 @@ import {GameError} from '../game/classes.js';
 import {loadPlayer,clonePlayer,persistStatements,guardStmt,outboxStmt} from '../db.js';
 import {doEnhance,withPlayer} from './player.js';
 import {runningRingId,canEnhanceInParty,backpackAccessStmt} from './party-presence.js';
+import {wakeRealmJob} from '../realm/background.js';
 export const INTERVAL_MS=3000;
 
 // Only the scroll used this round, target equipment and equipped gear are needed for an attempt.
@@ -14,10 +15,7 @@ async function loadEnhancePlayer(db,tg,itemId,blessed){
 }
 
 export async function wake(env,id){
- if(!env.AUTO_ENHANCE_RUNNER)return false;
- const stub=env.AUTO_ENHANCE_RUNNER.get(env.AUTO_ENHANCE_RUNNER.idFromName(id));
- const r=await stub.fetch('https://auto-enhance.internal/wake',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({jobId:id})});
- if(!r.ok)throw new Error('Unable to schedule background enhancement');return true;
+ return wakeRealmJob(env,id,'enhance');
 }
 
 const ownerOf=async(db,tg)=>(await db.prepare('SELECT account_tg_id FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first())?.account_tg_id||String(tg);

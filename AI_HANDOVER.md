@@ -1,3 +1,5 @@
+2026-11-02 POE 掛機改版接續：分支 codex/poe-realms-preserve-progress，永久／季服 D1 隔離、Atlas 試作、永久教學與長期委託、六系統浮層及舊天使／旅章入口。所有角色資料與每件裝備 +N 保留；無正式玩家改寫／遠端 migration／部署，ATLAS 預設關閉。正式經濟資料尚待 Cloudflare 登入授權；完整季末 drain／manifest／跨庫匯入與四加四角色保留尚未實作，勿宣稱完成或啟用賽季。續接必讀 docs/POE_REALMS_CHECKPOINT_20261102.md、docs/REALM_ECONOMY_BASELINE.md 與 docs/ATLAS_BALANCE_PROTOTYPE.md；驗證及發布狀態以檢查點、CI 與 deployment-records 為準。
+
 2026-10-28 角色刪除：選角按鈕＋名稱與勾選確認，帳號每日台北日一次、重建正常新手禮。0034 加 nullable deleted_at／archive／live及origin views；一筆 INSERT trigger 原子收尾，活動與 stale write 保護、收據恢復、防錯帳號與睡眠補算，所有遊戲讀取 live view 並保留舊 SQL alias。元資料先僅0034（正式尚有0026–28未登記，不全量apply），再正常 Worker發布；具體人類授權刪角另用受限單筆INSERT的原服務維護工具，固定原ID、查核與備份留.release-sync，不上Git或發TG。18測試＋320/390/1280真UI/API，完整結果看CI與日誌；詳見docs/CHARACTER_DELETE_20261028.txt，正式版本看deployment-records。
 
 2026-10-28 掛機經驗回饋：首頁顯示目前／升級所需經驗，最近結算顯示實際增加、死亡損失與升級。me 唯讀取同角色且 to_at 不超過回應快照的已提交最近紀錄，與 report 動畫／背包記帳分離；切角清除提示，舊角色／版本回應不污染。320／390／1280 真 MiniApp/API 驗證 cron、30 秒自動更新、重複讀取、延遲舊 me、切角、直接結算、升級、大數字與滿級；無遊戲數值／migration／BOT 變動，快取 exp-progress1。詳見 docs/IDLE_EXP_PROGRESS_20261028.txt，正式版本以 deployment-records 為準。

@@ -68,3 +68,30 @@ test('no-guard lobby shows optional guardian and a ready leader can start while 
 test('optional guard explanation promises performance-based A/S rather than a fixed grade penalty',()=>{
  const {ui}=setup(),p=party();Object.assign(p,{status:'lobby',optionalGuard:true,roleCoverage:{missing:['guard']}});const html=ui.render({party:p});assert.match(html,/不會因缺守護固定降低評價/);assert.match(html,/無守護也能取得 A／S/);
 });
+
+test('same-ID permanent and seasonal expeditions retain distinct pending receipts across remounts',async()=>{
+ const s=setup(),storage=new Map(),writes=[];let realm='permanent',epoch=0;
+ s.context.sessionStorage={getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
+ const host={me:()=>({character:{tgId:'1',level:100}}),realmId:()=>realm,contextEpoch:()=>epoch,api:async(path,body)=>{if(path==='star-ring/list')return {ok:true,parties:[]};writes.push({realm,...body});throw Error('連線中斷');}};
+ const action=()=>s.events.get('click')({target:{closest:()=>({dataset:{srAction:'create'}})}});
+ let stop=s.ui.mount(s.root,host);await flush();action();await flush();const permanent=[...storage.entries()].find(([key])=>key.startsWith('starRingPending:1:'));assert.ok(permanent);stop();
+ realm='season_one';epoch++;stop=s.ui.mount(s.root,host);await flush();action();await flush();const season=[...storage.entries()].find(([key])=>key.startsWith('starRingPending:season_one:1:'));assert.ok(season);assert.notEqual(season[1],permanent[1]);assert.equal(storage.get(permanent[0]),permanent[1]);stop();
+ epoch++;stop=s.ui.mount(s.root,host);await flush();action();await flush();assert.equal(writes[2].requestId,writes[1].requestId);assert.equal(writes[2].realm,'season_one');stop();
+});
+
+test('late invitation reads cannot auto-join after a same-ID realm or epoch switch',async()=>{
+ for(const mode of ['realm','epoch']){
+  const s=setup(),calls=[];let realm='permanent',epoch=0,release;
+  const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:'1',level:100}}),realmId:()=>realm,contextEpoch:()=>epoch,initialPartyId:'ring:1',joinOnOpen:true,api:async(path)=>{calls.push(path);return new Promise(done=>release=done);}});
+  const html=s.root.innerHTML;if(mode==='realm')realm='season_one';else epoch++;release({ok:true,party:{...party(),status:'lobby',me:null}});await flush();
+  assert.deepEqual(calls,['star-ring/get']);assert.equal(s.root.innerHTML,html);for(const run of [...s.intervals.values()])run();assert.equal(s.intervals.size,0);stop();
+ }
+});
+
+test('late expedition purchase does not clear its receipt or refresh the newly selected realm',async()=>{
+ const s=setup(),storage=new Map(),calls=[];let epoch=0,release,refreshes=0;
+ s.context.sessionStorage={getItem:key=>storage.get(key),setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)};
+ const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:'1'}}),realmId:()=> 'season_one',contextEpoch:()=>epoch,refresh:()=>refreshes++,api:async(path,body)=>{calls.push([path,body]);if(path==='star-ring/list')return {ok:true,parties:[]};return new Promise(done=>release=done);}});
+ await flush();s.events.get('click')({target:{closest:()=>({dataset:{srOffer:'core-w'}})}});const key='starRingPending:season_one:1:shop:core-w',id=storage.get(key);assert.ok(id);
+ epoch++;release({ok:true});await flush();assert.equal(storage.get(key),id);assert.equal(calls.length,2);assert.equal(refreshes,0);stop();
+});

@@ -57,7 +57,9 @@ function rowChanged(before, after, ignored = new Set()) {
 }
 function settleSelectedPlayer(player, now) {
   const active = player.char.active_char_id;
-  if (active && String(active) !== String(player.char.tg_id)) {
+  // Atlas owns this time window. Its run snapshot and reward ledger are settled
+  // separately; opening an old panel or cron must not also farm legacy idle.
+  if (player.char.atlas_run_id || active && String(active) !== String(player.char.tg_id)) {
     const char = {...player.char,last_settle_at:Math.max(now,player.char.last_settle_at)};
     const report = emptyReport(player.char.last_settle_at,char.last_settle_at);
     report.end_state = char.idle_state;

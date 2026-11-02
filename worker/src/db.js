@@ -80,6 +80,7 @@ export function classifyDbError(error) {
 }
 function classifyRaw(error) {
   const m = String(error?.message || error);
+  if (/atlas_character_busy/.test(m)) return new GameError('atlas_active','請先完成或停止目前的星圖出征，再切換角色、組隊或刪除角色',409);
   if (/character_delete_changed/.test(m)) return new GameError('character_delete_changed','角色狀態已更新，請重新確認要刪除的角色',409);
   if (/character_delete_day/.test(m)) return new GameError('request','刪角日期無效');
   if (/character_delete_busy/.test(m)) return new GameError('character_delete_busy','角色狀態已變動，請先完成隊伍、交易或進行中的活動再刪除',409);

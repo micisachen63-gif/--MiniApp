@@ -67,3 +67,34 @@ test('the ranged guide uses the existing transparent angel cutout even when conf
 test('an unresolved legacy session operation migrates without a write and explicit retry preserves its original body and receipt',async()=>{
  const f=await fixture(),first=await harness(f),body={mode:'buy',quantity:1,requestId:'legacy_widget_buy_001'},legacyStorage=storage();await first.host.mutate('assist',body);first.controller.cleanup();legacyStorage.setItem('guardianAssistPending:790',JSON.stringify(body));const h=await harness(f,{legacyStorage});assert.equal(h.sent.filter(row=>row.action==='guardian/assist').length,0);assert.equal(legacyStorage.getItem('guardianAssistPending:790'),null);assert.match(h.root.innerHTML,/data-assist-recover/);h.root.click({assistRetry:''});await h.settle();assert.deepEqual(h.sent.find(row=>row.action==='guardian/assist').body,body);assert.equal(h.saved.getItem('guardianAssistPending:790'),null);const s=await G.state(f.env,'790',T0);assert.equal(s.assist.stoneCount,3);assert.equal(s.balances.gold,97000);h.controller.cleanup();
 });
+
+test('season assist ignores permanent local and legacy session pending operations for the same character ID',async()=>{
+ const f=await fixture(),saved=storage(),legacyStorage=storage(),body={mode:'buy',quantity:1,characterId:'790',requestId:'permanent_pending_buy'};
+ saved.setItem('guardianAssistPending:790',JSON.stringify({characterId:'790',action:'assist',requestId:body.requestId,payload:body}));
+ legacyStorage.setItem('guardianAssistPending:790',JSON.stringify({...body,requestId:'legacy_pending_buy'}));
+ const h=await harness(f,{saved,legacyStorage,overrides:{realmId:()=> 'season_one',contextEpoch:()=>4}});
+ assert.doesNotMatch(h.root.innerHTML,/data-assist-retry/);assert.equal(h.sent.filter(row=>row.action==='guardian/assist').length,0);
+ assert.ok(saved.getItem('guardianAssistPending:790'));assert.ok(legacyStorage.getItem('guardianAssistPending:790'));
+ h.root.click({assistBuy:''});await h.settle();assert.equal(h.sent.filter(row=>row.action==='guardian/assist').length,1);
+ assert.equal(saved.getItem('guardianAssistPending:season_one:790'),null);assert.ok(saved.getItem('guardianAssistPending:790'));h.controller.cleanup();
+});
+
+test('same-ID realm or epoch switches invalidate an open assist confirmation before any write',async()=>{
+ for(const mode of ['realm','epoch']){
+  const f=await fixture();let realm='permanent',epoch=0,release;
+  const h=await harness(f,{overrides:{realmId:()=>realm,contextEpoch:()=>epoch,confirm:()=>new Promise(done=>release=done)}});
+  h.root.click({assistBuy:''});if(mode==='realm')realm='season_one';else epoch++;
+  release(true);await h.settle();assert.equal(h.sent.filter(row=>row.action==='guardian/assist').length,0);
+  assert.equal(h.saved.getItem('guardianAssistPending:790'),null);h.controller.cleanup();
+ }
+});
+
+test('late committed assist keeps the seasonal receipt for explicit retry after returning in a new epoch',async()=>{
+ const f=await fixture();let epoch=0,release;const h=await harness(f,{overrides:{realmId:()=> 'season_one',contextEpoch:()=>epoch}}),mutate=h.host.mutate;
+ h.host.mutate=async(...args)=>{const result=await mutate(...args);await new Promise(done=>release=()=>done(result));return result;};
+ h.root.click({assistBuy:''});while(!release)await tick();const key='guardianAssistPending:season_one:790',original=JSON.parse(h.saved.getItem(key));
+ epoch++;release();await h.settle();assert.ok(h.saved.getItem(key));assert.equal(h.changes.length,0);h.controller.cleanup();
+ const restored=await harness(f,{saved:h.saved,overrides:{realmId:()=> 'season_one',contextEpoch:()=>epoch}});
+ restored.root.click({assistRetry:''});await restored.settle();assert.equal(restored.sent.find(row=>row.action==='guardian/assist').body.requestId,original.requestId);
+ assert.equal(h.saved.getItem(key),null);assert.equal((await G.state(f.env,'790',T0)).balances.gold,97000);restored.controller.cleanup();
+});

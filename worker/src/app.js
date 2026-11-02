@@ -18,8 +18,12 @@ import { activeCharacterId, listAccountCharacters, selectAccountCharacter } from
 import {nodeFor} from './game/stats.js';
 import {recordBehavior} from './admin/behavior.js';
 import {lineageNodes} from './game/lineage.js';
+import {listRealmCatalog,resolveRealm} from './realm/index.js';
 
 export const APP_ACTIONS = Object.freeze({
+  'atlas/catalog':'/rpg/atlas/catalog','atlas/status':'/rpg/atlas/status','atlas/configure':'/rpg/atlas/configure',
+  'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',
+  'atlas/quests':'/rpg/atlas/quests','atlas/quests/claim':'/rpg/atlas/quests/claim',
   'fate/social/preferences':'/rpg/fate/social/preferences','fate/social/preferences/save':'/rpg/fate/social/preferences/save',
   'fate/social/inbox':'/rpg/fate/social/inbox','fate/social/event':'/rpg/fate/social/event',
   'fate/social/reply':'/rpg/fate/social/reply','fate/social/decline':'/rpg/fate/social/decline','fate/social/withdraw':'/rpg/fate/social/withdraw',
@@ -117,14 +121,30 @@ export async function bossFor(env, tg, now) {
 }
 
 /** handles /app/api/<action>; `routes` = the service routes from index.js (same game logic, same D1 rows) */
-export async function handleApp(request, env, url, { routes, json, fail, nowFor }) {
+export async function handleApp(request, env, url, { routes, json, fail, nowFor, prepareRealmEnv }) {
   if (request.method !== 'POST') return fail('method', 'POST only', 405);
   const auth = await appAuth(request, env);
   if (auth.error) return fail(auth.error, auth.error === 'not_configured' ? 'Mini App 尚未設定' : '請從 Telegram 星穹旅誌開啟遊戲', auth.status);
   let body = {};
   try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
   const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;
+  const rootEnv=env;
+  if(body.realmId&&String(body.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))return fail('realm_mismatch','遊戲環境已改變，請重新整理',409);
+  if(action==='realms'){
+    const realms=await Promise.all(listRealmCatalog(rootEnv).map(async item=>{
+      try{const context=await resolveRealm(rootEnv,item.id);return {...item,phase:context.phase,available:context.phase==='ACTIVE',endsAt:context.cutoffAt??null,maxCharacters:4,current:item.isCurrent===true};}
+      catch(error){return {...item,phase:'UNAVAILABLE',available:false,maxCharacters:4,error:error.code||'realm_unavailable'};}
+    }));
+    const selected=request.headers.get('X-Realm-Id')||'permanent';
+    if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
+    return json({ok:true,realms,selectedRealmId:selected});
+  }
+  if(action.startsWith('atlas/')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
+  const originalJson=json;
+  json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
   const finish=async result=>{if(result?.ok!==false)await recordBehavior(env,tg,action,body,now);return json(result);};
+  if(['atlas/configure','atlas/start','atlas/stop','atlas/craft','atlas/quests/claim'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/gifts/claim','fate/gifts/open'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/start','fate/choice','fate/keep','fate/profile/save','fate/profile/delete'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['guardian/summon','guardian/fuse','guardian/activate','guardian/lock','guardian/unbind','guardian/share','guardian/assist','guardian/shop/sell'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
@@ -147,7 +167,9 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
     const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
     // The short-lived admission pass gates the first character only. Existing
     // membership comes from owned server rows, never a client-selected character ID.
-    const established = await env.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    let established = await env.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    // Membership is shared; permanent gold, gear, angels and rewards are not.
+    if(!established&&env.REALM_CONTEXT?.type==='season')established=await rootEnv.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
     if (!established && (!g || g.expires_at <= now)) return fail('no_pass', '首次建立角色，請先私訊 @StarJournalRpgBot 輸入 /rpg，再按「開啟旅誌」進入', 403);
   }
   if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
