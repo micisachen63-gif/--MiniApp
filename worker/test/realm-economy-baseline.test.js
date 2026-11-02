@@ -1,9 +1,13 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { spawnSync } from 'node:child_process';
+import { mkdtempSync, rmSync, writeFileSync } from 'node:fs';
+import { tmpdir } from 'node:os';
+import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { freshDb } from './d1-shim.js';
 import { createCharacter } from '../src/services/player.js';
-import { assertReadOnlySql, buildBaselineQueries, executeBaseline, parseBaselineArgs } from '../tools/realm-economy-baseline.mjs';
+import { assertReadOnlySql, baselineSql, buildBaselineQueries, executeBaseline, parseBaselineArgs } from '../tools/realm-economy-baseline.mjs';
 import { NOW, gameplaySnapshot } from './realm-test-helpers.js';
 
 async function data(t) {
@@ -86,13 +90,47 @@ test('remote execution uses the read-query command API, never file import, and r
   let calls = 0;
   const result = executeBaseline(options, { run: (_node, args, runtime) => {
     calls++;
-    assert(args.includes('--remote')); assert(args.includes('--command')); assert(!args.includes('--file'));
+    assert(args.includes('--remote')); assert(!args.includes('--command')); assert(!args.includes('--file'));
     assert.equal(runtime.env.CI, 'true'); assert.equal(runtime.stdio[0], 'ignore');
-    const sql = args[args.indexOf('--command') + 1];
+    const command = args.find(arg => arg.startsWith('--command='));
+    assert.equal(command, '--command=' + baselineSql(queries));
+    const sql = command.slice('--command='.length);
     assert(sql.includes('-- gold_distribution'));
     return JSON.stringify(queries.map(query => ({ success: true, results: DB.sqlite.prepare(query.sql).all() })));
   } });
   assert.equal(calls, 1); assert.equal(result.source.mode, 'remote');
   assert.equal(Object.keys(result.sections).length, 13);
   assert.deepEqual(gameplaySnapshot(DB), before);
+});
+
+test('commented SQL survives real Wrangler argument parsing without reaching any local or remote database', t => {
+  const folder = mkdtempSync(join(tmpdir(), 'baseline-argv-test-'));
+  t.after(() => rmSync(folder, { recursive: true, force: true }));
+  const config = join(folder, 'wrangler.toml');
+  writeFileSync(config, 'name = "baseline-argv-test"\ncompatibility_date = "2026-11-01"\n');
+  const options = parseBaselineArgs(['--local', '--database', 'missing-baseline-probe', '--config', config, '--as-of', new Date(NOW).toISOString()]);
+  const queries = buildBaselineQueries(options);
+  let calls = 0;
+  const result = executeBaseline(options, { run: (node, args, runtime) => {
+    calls++;
+    assert(args.includes('--local')); assert(!args.includes('--remote'));
+    const commandIndex = args.findIndex(arg => arg === '--command' || arg.startsWith('--command='));
+    assert(commandIndex >= 0);
+    const probeArgs = [...args], probeSql = '-- baseline_probe\nSELECT 1 AS ok;';
+    // Keep the tool's argument shape so this test fails with the old split argv.
+    if (args[commandIndex] === '--command') probeArgs[commandIndex + 1] = probeSql;
+    else probeArgs[commandIndex] = '--command=' + probeSql;
+    const probe = spawnSync(node, probeArgs, { ...runtime, timeout: 10_000 });
+    assert.equal(probe.error, undefined);
+    assert.equal(probe.status, 1);
+    const output = probe.stdout + '\n' + probe.stderr;
+    assert.doesNotMatch(output, /Unknown argument/);
+    // No binding exists: reaching this local-only check proves CLI parsing
+    // succeeded, while avoiding database startup, credentials and network I/O.
+    assert.match(output, /Couldn't find a D1 DB with the name or binding 'missing-baseline-probe'/);
+    return JSON.stringify(queries.map(() => ({ success: true, results: [] })));
+  } });
+  assert.equal(calls, 1);
+  assert.equal(result.source.mode, 'local');
+  assert.match(baselineSql(queries), /^-- schema_presence\nSELECT /);
 });

@@ -154,8 +154,10 @@ export function executeBaseline(options, { run = execFileSync } = {}) {
   try {
     // Wrangler --remote --file uses D1's import API, which can take the DB
     // offline and does not return SELECT rows. --command uses its query API.
+    // Bind the value with '=': a separate argv starting with '--' (our SQL
+    // section comment) is otherwise interpreted as another CLI option.
     const args = [join(REPO, 'node_modules/wrangler/bin/wrangler.js'), 'd1', 'execute', options.database, '--config', options.config,
-      '--' + options.mode, '--command', baselineSql(queries), '--json', '--yes'];
+      '--' + options.mode, '--command=' + baselineSql(queries), '--json', '--yes'];
     if (options.persistTo) args.push('--persist-to', options.persistTo);
     let raw;
     try {

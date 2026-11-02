@@ -46,7 +46,9 @@
 
 已 fetch `origin/deployment-records`，最新遊戲收據：2026-10-29 03:19:42 UTC、source commit 為上述 main、production version `d2695468-4c75-4aa7-9e7c-eb9b57303a00`。它是歷史收據，並非本次即時控制台版本查詢。
 
-**正式 D1 角色及經濟聚合尚未取得。** CLI 沒有已配置 Cloudflare 憑證；管理頁需登入，轉到 Google 後自動批准審核拒絕觀察該網域，需使用者明確授權登入步驟後續接。沒有把模擬數據冒充正式玩家基線。
+**正式 D1 唯讀基線已取得。** 2026-11-02 經使用者明確批准 Wrangler 裝置授權後，已成功查詢現有 `elf-rpg`。11 個必要資料表／檢視與欄位預檢通過；13 類聚合完整取得，所有查詢收據的 `rows_written` 均為 0、`changed_db` 均為 false。事件窗口為 2026-10-26T01:25:47.847Z 至 2026-11-02T01:25:47.847Z；最後查詢完成於 2026-11-02T01:28:47.958Z。現存餘額與裝備是查詢當下值，不是停服快照。原始聚合與收據保存在私有查核資料，不放入 Git。
+
+本次只使用帳號／使用者唯讀及 D1 權限，未取得 Worker 管理權限；因此這次成功不代表重新核對了正式 Worker runtime。Google 網頁登入問題已由獨立的官方命令列裝置授權途徑解決存取需求；後續先確認既有 Wrangler 登入狀態，不需再要求使用者手動貼 SQL。授權是否可用仍依當前工作環境為準。正式資料取得與完成數值校準是不同里程碑；全職業代表配置、收益／消耗與高強化投入的新版重播仍待完成。
 
 唯讀工具 `worker/tools/realm-economy-baseline.mjs` 涵蓋角色／職業／等級、金幣分位數、裝備品質與 +N、背包、七天帳本流入流出、收益／死亡／藥水及既有進度。見 [REALM_ECONOMY_BASELINE.md](REALM_ECONOMY_BASELINE.md)。正式匯出不放 Git，不包含玩家姓名、Telegram ID、訊息或裝備實例 ID。
 
@@ -96,6 +98,8 @@ GitHub 草稿 [PR #42](https://github.com/micisachen63-gif/--MiniApp/pull/42) �
 - 前端相關 177 個案例全部通過；它們包含在完整 Worker 回歸中，不能再與總數相加。
 - 最終 browser 兩種尺寸通過：1280×960、390×844；無 page errors、error toasts 或橫向溢出。請以 `docs/atlas-qa-20261102/results.json` 為準，沒有重新驗證所有舊玩法的每個分支，也不是原生 Telegram 手機驗收。
 - Wrangler 整合 dry-run 建置成功，包含 8,973 個現有與新增 public 檔案；沒有發布。
-- 正式公開查核的原始範圍記錄在 `docs/atlas-qa-20261102/public-baseline.json`；仍未取得正式 D1 聚合。
+- 正式公開查核的原始範圍記錄在 `docs/atlas-qa-20261102/public-baseline.json`；後續正式 D1 聚合已如上取得，兩者是不同範圍的證據。
+
+後續查核修正：正式執行時發現 Wrangler 會把 `--command` 後方以 `--` 註解開頭的分開參數視為新旗標。工具改用單一 `--command=<SQL>` 參數，保留 SQL 與 dry-run 註解；新增真 Wrangler CLI 的離線解析回歸，針對性測試 6／6 通過。沒有因此重跑已成功的正式聚合。上述 2,614 案完整測試對應先前程式提交；此工具修正的完整遠端 gate 以最新 PR CI 為準。
 
 GitHub CI 是獨立檢查，應以 PR 當下結果為準。上述本機全部通過不表示 PR 已合併或正式已部署。
