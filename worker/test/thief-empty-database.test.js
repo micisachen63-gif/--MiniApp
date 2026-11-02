@@ -31,7 +31,7 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.equal(guardianTriggers.size,2);
     const retirement=readFileSync(new URL('../migrations/0034_character_deletion.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
     const retirementObjects=new Map([...retirement.matchAll(/CREATE (TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
-    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql','0038_atlas_talents.sql']
+    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql','0038_atlas_talents.sql','0039_scene_chat.sql']
       .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
     const realmAtlasObjects=new Map(realmAtlasMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
     const characterSchema=new DatabaseSync(':memory:');

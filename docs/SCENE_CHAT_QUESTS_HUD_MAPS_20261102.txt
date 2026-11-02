@@ -1,0 +1,75 @@
+星穹旅誌：聊天／任務接線、雙天使HUD、48張模式背景與怪群
+2026-11-02（Asia/Taipei）
+
+狀態
+僅本機開發及9593美術預覽；未部署、未合併main、未執行遠端migration或改寫正式玩家。
+接續分支codex/poe-local-continuation-20261102，Draft PR #43，基底PR #42。
+正式ATLAS預設仍關閉。五輪600級成長、進階技能與逐輪強化率目前是規劃，這批美術不代表其規則已實作或解鎖。
+
+可操作入口
+http://127.0.0.1:9593/?character=adv1_sword_A_f
+http://127.0.0.1:9593/?character=adv1_archer_A_m&map=expert-09
+點上方「人物／預覽設定」：新增地圖與怪群選單，四個模式各12張。
+左下聊天開啟懸浮視窗；右上任務開啟真實委託、追蹤及領獎視窗。
+http://127.0.0.1:9642/?devTg=90101 是隔離的功能營地，亦有真實聊天入口。
+9642是兩個記憶體SQLite與合成測試角色；停止後資料清除，不是正式玩家。9593仍是展示戰鬥，不把展示擊殺、藥水數量或水位當成真實結算。
+
+聊天
+新增0039_scene_chat.sql，僅新增訊息、限速與交易斷言表，不改既有角色、裝備、強化或收據。
+POST chat/state、chat/send沿用MiniApp驗證、目前角色與明確X-Realm-Id，永久／季服隔離。
+世界頻道與現有打寶／爬塔隊、長遠征成員頻道可用。公會系統不存在，分頁明示尚未開放，不建立假公會訊息。
+使用伺服器角色名稱、等級及職業；不信任用戶提交的姓名或身分。隊伍權限在讀取與寫入SQL重新核對，離隊／完場不能再讀新訊息或傳送。
+200個Unicode字、最多3行、帳號每3秒一則；同requestId重試只回同一則，改內容不能重用。
+近7天歷史、每頁50則、客戶端最多保留200則；較早訊息可分頁。這不是無限期聊天封存或管理員檢舉系統。
+純textContent顯示，輸入法組字不誤送、Shift+Enter換行；輪詢保留草稿與聚焦，不強迫閱讀歷史的人跳到底。
+切角色／環境會中止舊讀取與清除畫面；不確定是否傳送成功的訊息以原編號恢復，避免重複。
+背景30秒、視窗開啟5秒同步；分頁不可見時暫停。
+
+任務
+使用原有Atlas永久委託：伺服器事件、18個任務定義、每日／週期／長期進度與唯一領獎收據。
+右上移除假泰坦40/40計數。展示場景仍保留內部擊殺計數安排首領，不更新真任務、不發EXP或道具。
+可追蹤指定任務、顯示真實條件／進度／獎勵、領獎防連點與斷線重試；營地追蹤優先提示可領獎目標。
+9593接線固定為本機永久測試帳號90101；不能當作正式Telegram登入、季服或新模式已開通。
+
+HUD
+左側好天使為象牙白／金雕像，右側壞天使為黑曜／暗金雕像，與中央金屬軌座整合。
+保持原紅藍球、5個戰鬥快捷鈕及6個底部功能鈕的佈局與觸控尺寸；原比較切換及原圖保留。
+新素材在worker/public/art/hud-angels-20261102；內建image_gen產生，最終提示與來源在worker/art-production/hud-angels-20261102/provenance.json。
+
+背景與怪群
+普通原有12張保留；後四輪各12張新圖，48張均1024×1536、2:3，對應Lv.121–600，每10級一張。
+先前4張模式母版＋本次44張新圖皆已完成。森林、海崖、迷宮、熔爐、冥河、山隘等地形分別製作。
+完整背景及來源：worker/art-production/progression-maps-20261102/maps、兩份map-*-provenance.json。
+四個透明模式特效在同資料夾fx，來源見fx-provenance.json。這些光環原件不是新的角色動作或全套技能動畫。
+catalog.json記錄每張普通怪池、菁英、首領、來源map與精確素材ID。
+從本機12圖的180隻來源中配置，實際本批使用166個不重複怪物ID；其餘來源素材保留。
+每個來源核對idle／walk／attack／death及腳底錨點、逐動作體型，動作切換跟隨對應metadata。
+修正舊順序的場景不符：熔爐不再使用腐朽樹王，非霜域星穹場景改用星隕首領，霜域仍可用霜龍。
+預覽維持原示意戰鬥數值，未把Lv.600文字變成正式怪物強度或掉落。ATLAS伺服器原有可玩圖數及經濟未被這些候選圖改寫。
+
+密集戰場可讀性
+不調低CAP、刷怪數、怪物生命、攻擊、AI排程或獎勵；僅稍擴大主角前方圍攻缺口。
+WebGL把前景敵人及其光環放入共用Layer，以主角當前真實sprite frame的反向alpha遮罩，僅移除擋住身體的像素。
+血條共用遮罩，主角外緣有輕描邊；不是清空整圈敵人、換人物圖片或把整群變透明。
+Canvas備援只降低遮擋敵人的透明度並使用同一角色同一動作的可見副本。WebGL40案及Canvas兩尺寸備援已驗證；兩者都不是Telegram真機驗收。
+通知只顯示最新一則並移到左側邊緣，避免三張大型通知卡蓋住角色。
+
+與角色重構並行
+另一邊會重建characters-v1/scene.html及scene.js，早期直接接入會被覆蓋。
+改為serve-preview.mjs載入獨立scene-bound-20261102/scene-preview-bindings.mjs，在GET時讀最新原始場景並組合接線。
+原角色場景、ui-proto及preview.html原件均不覆寫；新增角色或素材可隨原始生成器更新。必要掛點變更則明確失敗，避免悄悄退回假聊天或假任務。
+工具：
+node worker/tools/build-progression-map-preview.mjs --art-root=D:/StarJournal/progression-design-20261102 --grok-root=D:/StarJournal/grok-assets
+node worker/tools/install-scene-encounter-preview.mjs --grok-root=D:/StarJournal/grok-assets
+只有安裝接線模組／修改server時需由確認owner的9593程序重啟；之後原始角色場景由GET時讀取。
+9642工具僅允許9593 loopback來源讀取指定的本機測試API，不新增正式環境CORS或轉送Telegram憑證。
+舊GROK動畫仍留在外部grok-assets，由角色素材工作接續管理；Git本批保存新背景／HUD／FX、來源、配置及可重建接線工具。
+
+驗證與限制
+完整npm test：Worker2459＋BOT205＝2664，零失敗／跳過（記錄.release-sync/scene-social-full-tests-final.log）。
+新聊天服務與client案例涵蓋跨環境、帳號／角色／成員權限、讀寫競爭、限速、防重、Unicode、歷史、失敗回滾、季末fence、未開放舊schema與資產守恆。
+9593與9642在390／1280真API操作：互傳、重整保留、純文字XSS、草稿／聚焦、公會空態、真實任務領取；.release-sync/scene-social/results.json。
+HUD在390×844、628×796、1280×960、844×390比對所有操作控制的rect完全相同；.release-sync/hud-angels/after.json。
+48個地圖場景逐一載入，來源動作全可註冊，名稱匹配、無素材404；.release-sync/progression-maps/results.json。曾發現favicon404與另一邊重建覆蓋，均已修正後重驗。
+目前20個可用人物×2尺寸＝40案，加入首領並把既有怪物疊至主角前方，比較啟閉遮罩；存活數不變、遮罩與實際人物frame／origin一致、無頁面錯誤。原圖與248個未全部交付的未來造型不混稱已驗收。
+本機瀏覽器不是Telegram真機或完整手機GPU效能驗收。任何後續發布仍須正式環境既有流程、schema與授權；本次不部署。

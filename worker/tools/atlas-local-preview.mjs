@@ -40,9 +40,18 @@ const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    // Only the user's loopback art preview may read these isolated test APIs.
+    // No production authentication or player data is forwarded.
+    const previewOrigin='http://127.0.0.1:9593';
+    const socialPaths=new Set(['me','atlas/catalog','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
+      if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
+      res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
+      if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Headers':'Content-Type,X-Dev-Tg-Id,X-Realm-Id'});res.end();return;}
+    }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2 }));
+      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true }));
       return;
     }
     if (url.pathname.startsWith('/app/api/')) {

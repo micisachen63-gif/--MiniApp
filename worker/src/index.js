@@ -43,6 +43,7 @@ import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
 import * as ATLAS from './services/atlas.js';
 import * as ATLAS_QUESTS from './services/atlas-quests.js';
+import * as SCENE_CHAT from './services/scene-chat.js';
 import {listRealmCatalog,resolveRealm,scopeEnvForRealm} from './realm/index.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
@@ -75,6 +76,8 @@ function tradeAct(fn) {
 }
 
 const routes = {
+  'POST /rpg/chat/state':(env,b,now)=>SCENE_CHAT.view(env,tgOf(b),b,now),
+  'POST /rpg/chat/send':(env,b,now)=>SCENE_CHAT.send(env,tgOf(b),b,now),
   'POST /rpg/atlas/catalog':(env,b,now)=>ATLAS.catalog(env,b?.tgId?tgOf(b):null,now),
   'POST /rpg/atlas/status':(env,b,now)=>ATLAS.status(env,tgOf(b),now),
   'POST /rpg/atlas/configure':(env,b,now)=>ATLAS.configure(env,tgOf(b),b,now),

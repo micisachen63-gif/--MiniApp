@@ -1,0 +1,1966 @@
+{
+  "cases": 40,
+  "actors": 20,
+  "results": [
+    {
+      "actor": "sword",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "sword",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 12,
+        "affected": 8,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 12,
+        "affected": 8,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "archer",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 14,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 14,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "archer",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 1,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 1,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 1,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 1,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "mage",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "mage",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "thief",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "thief",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 14,
+        "affected": 7,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 14,
+        "affected": 7,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "sword_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 10,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 10,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "sword_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 16,
+        "affected": 7,
+        "foregroundChildren": 18,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 16,
+        "affected": 7,
+        "foregroundChildren": 18,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "archer_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "archer_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "mage_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-right",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-right",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "mage_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 14,
+        "affected": 7,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 14,
+        "affected": 7,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "thief_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 11,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 11,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-up",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-up",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "thief_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 14,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 9,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 9,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 14,
+        "affected": 9,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 9,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 9,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_B_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_A_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 12,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 12,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_B_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 1,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 1,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 11,
+        "affected": 8,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 1,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 1,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_A_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 9,
+        "heroTexture": "char-1-1-1-attack-left",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-attack-left",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 9,
+        "heroTexture": "char-1-1-1-attack-left",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-attack-left",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_A_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-idle-left",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-left",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-idle-left",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-left",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_A_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_thief_A_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 15,
+        "affected": 9,
+        "foregroundChildren": 17,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 5,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 5,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 15,
+        "affected": 9,
+        "foregroundChildren": 17,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 5,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 5,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_thief_A_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 8,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 10,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 10,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 15,
+        "affected": 8,
+        "foregroundChildren": 16,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 10,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 10,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_B_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 9,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_B_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 8,
+        "affected": 7,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 8,
+        "affected": 7,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_A_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 6,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 6,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_A_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_A_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 11,
+        "affected": 9,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-idle-up",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-up",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 11,
+        "affected": 9,
+        "foregroundChildren": 13,
+        "heroTexture": "char-1-1-1-idle-up",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-up",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_A_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 10,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_thief_A_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 11,
+        "affected": 10,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 13,
+        "frontCount": 11,
+        "affected": 10,
+        "foregroundChildren": 12,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_thief_A_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 15,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 2,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 2,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_A_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 8,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_A_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 16,
+        "affected": 8,
+        "foregroundChildren": 17,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 17,
+        "frontCount": 16,
+        "affected": 8,
+        "foregroundChildren": 17,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 7,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 7,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_A_m",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 7,
+        "affected": 7,
+        "foregroundChildren": 8,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 4,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 4,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_sword_A_m",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 7,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 12,
+        "frontCount": 12,
+        "affected": 7,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-attack-right",
+        "heroFrame": 3,
+        "maskTexture": "char-1-1-1-attack-right",
+        "maskFrame": 3,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_B_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 13,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 13,
+        "affected": 11,
+        "foregroundChildren": 14,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_mage_B_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 12,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 13,
+        "affected": 12,
+        "foregroundChildren": 15,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_B_f",
+      "width": 628,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 9,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 14,
+        "frontCount": 8,
+        "affected": 8,
+        "foregroundChildren": 9,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    },
+    {
+      "actor": "adv1_archer_B_f",
+      "width": 390,
+      "before": {
+        "enabled": false,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 9,
+        "affected": 8,
+        "foregroundChildren": 11,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0
+      },
+      "after": {
+        "enabled": true,
+        "strategy": "shared-inverse-hero-silhouette",
+        "totalLiving": 16,
+        "frontCount": 9,
+        "affected": 8,
+        "foregroundChildren": 11,
+        "heroTexture": "char-1-1-1-idle-down",
+        "heroFrame": 0,
+        "maskTexture": "char-1-1-1-idle-down",
+        "maskFrame": 0,
+        "maskOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "heroOrigin": {
+          "x": 0.5,
+          "y": 0.91796875
+        },
+        "maskAlpha": 1,
+        "outlineAlpha": 0.46
+      },
+      "errors": []
+    }
+  ]
+}
