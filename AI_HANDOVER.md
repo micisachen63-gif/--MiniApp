@@ -235,3 +235,4 @@
 
 一般fate_event連舊group佇列也只走私訊，重新核對權威帳號；403不回退群組。只有fate_social與fate_cast保留群組，詳見 `docs/fate/PRIVATE_NOTIFICATIONS_20261018.txt`。
 2026-10-29 自動藥水最低階優先：共用choosePotion依現有紅／藍水由低到高，耗盡／缺階往上；手動指定、門檻、特殊技預算與原補給購買階級保留。面板next drink欄位與purchase key分離、快取potion-order1；12相關測試及隔離真MiniApp/API切換驗收通過。讀docs/POTION_LOWEST_FIRST_20261029.txt，正式以deployment-records為準；無migration／BOT。
+2026-11-02 天賦與玩法續作：四職最短合法路線預覽、現役裝備與技能前後比較、整路原子配置與rev防舊視窗、真實進度成長路線；9642及9593技能／地圖內懸浮視窗可操作，原+N及模型不變。完整2671測試＋四職兩尺寸8組操作通過，未部署／未遠端migration；五輪600級與覺醒仍為規劃。讀docs/ATLAS_TALENT_PROGRESSION_20261102.txt。

@@ -71,7 +71,7 @@ export async function status(env,charId,now){
  const completed=Object.fromEntries(progress.results.map(r=>[r.map_id,r.completions]));
  const counts=Object.fromEntries(crafts.results.map(r=>[r.item_id,r.crafts]));
  return {ok:true,enabled:enabled(env)||!!p.char.atlas_run_id,canStart:canStart(env,now),realmId:realmId(env),characterId:charId,profile:profileFor(profile,p.char.base_class),run:runView(run,now,env.REALM_CONTEXT?.cutoffAt),
-  materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,talents:await readAtlasTalents(db,p.char),
+  materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,talents:await readAtlasTalents(db,p.char),profileSaved:!!profile,
   availableMapIds:getAtlasCatalog().maps.filter(m=>m.minLevel<=p.char.level&&m.prerequisites.every(id=>completed[id]>0)).map(m=>m.id),
   supplies:{hp:p.inv.red_1||0,mp:p.inv.blue_1||0},
   equipment:p.equipment.map(e=>({id:e.id,name:e.name,slot:e.slot,enhanceLevel:e.enhance_level,baseStat:e.base_stat,crafts:counts[e.id]||0,tradeLocked:!!e.trade_id})),now};

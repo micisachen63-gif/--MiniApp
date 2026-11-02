@@ -46,7 +46,7 @@ export function getAtlasTalentCatalog(baseClass){
     }
   });
   for(const index of [4,8])for(let branch=0;branch<2;branch++)edges.push([`${builds[branch].id}_${index}`,`${builds[branch+1].id}_${index}`]);
-  const catalog=freeze({version:ATLAS_TALENT_VERSION,baseClass,nodes,edges,branches:builds.map(b=>({id:b.id,name:b.name})),effectLabels:TALENT_EFFECT_LABELS,maxPoints:24,resetGold:0,balanceStatus:'prototype'});
+  const catalog=freeze({version:ATLAS_TALENT_VERSION,baseClass,nodes,edges,branches:builds.map(b=>({id:b.id,name:b.name,mainSkill:b.mainSkill,strengths:b.strengths,weaknesses:b.weaknesses})),effectLabels:TALENT_EFFECT_LABELS,maxPoints:24,resetGold:0,balanceStatus:'prototype'});
   catalogs.set(baseClass,catalog);return structuredClone(catalog);
 }
 export function validateAtlasTalents(baseClass,level,ids){
@@ -72,4 +72,19 @@ export function applyAtlasTalentSnapshot(snapshot,ids=[]){
   next.attackSpeedMultiplier=Math.min(4,snapshot.attackSpeedMultiplier*(1+(e.attackSpeedPct||0)));
   for(const key of ['critPct','dotPct','summonPct','shieldPct','mpEfficiencyPct','mpCostPct','skillHastePct','skillDamagePct'])next.pct[key]=Math.max(-.9,Math.min(3,(next.pct[key]||0)+(e[key]||0)));
   return {snapshot:next,talents};
+}
+
+/** Shortest legal additive route; existing choices and their tradeoffs remain. */
+export function planAtlasTalentPath(baseClass,level,ids,nodeId){
+  const current=validateAtlasTalents(baseClass,level,ids),catalog=getAtlasTalentCatalog(baseClass),nodes=new Map(catalog.nodes.map(n=>[n.id,n]));
+  const target=nodes.get(nodeId);if(!target||target.id==='origin')fail('請選擇這個職業的天賦節點');
+  const owned=new Set(['origin',...ids]),queue=[...owned],paths=new Map(queue.map(id=>[id,[]]));
+  for(let i=0;i<queue.length&&!paths.has(nodeId);i++){
+    const at=queue[i];for(const edge of catalog.edges){const next=edge[0]===at?edge[1]:edge[1]===at?edge[0]:null;if(!next||paths.has(next)||nodes.get(next).minLevel>level)continue;paths.set(next,[...paths.get(at),next]);queue.push(next);}
+  }
+  const route=paths.get(nodeId)||[],addedIds=route.filter(id=>!owned.has(id)),required=addedIds.length;
+  const reason=owned.has(nodeId)?'此節點已配置':target.minLevel>level?`此節點需要 Lv.${target.minLevel}`:!paths.has(nodeId)?'目前等級還無法連通這條路線':required>current.availablePoints?`需要 ${required} 點，目前可用 ${current.availablePoints} 點`:null;
+  return {nodeId,targetName:target.name,addedIds,requiredPoints:required,availablePoints:current.availablePoints,canApply:!reason,reason,
+    route:route.map(id=>({id,name:nodes.get(id).name,description:nodes.get(id).description,kind:nodes.get(id).kind})),
+    before:current,after:reason?null:validateAtlasTalents(baseClass,level,[...ids,...addedIds])};
 }

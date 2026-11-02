@@ -88,6 +88,7 @@ const routes = {
   'POST /rpg/atlas/quests':(env,b,now)=>ATLAS_QUESTS.view(env,tgOf(b),now),
   'POST /rpg/atlas/quests/claim':(env,b,now)=>ATLAS_QUESTS.claim(env,tgOf(b),b,now),
   'POST /rpg/atlas/talents':(env,b,now)=>ATLAS_TALENTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/talents/preview':(env,b,now)=>ATLAS_TALENTS.preview(env,tgOf(b),b,now),
   'POST /rpg/atlas/talents/action':(env,b,now)=>ATLAS_TALENTS.action(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),

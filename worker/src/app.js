@@ -25,6 +25,7 @@ export const APP_ACTIONS = Object.freeze({
   'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',
   'atlas/quests':'/rpg/atlas/quests','atlas/quests/claim':'/rpg/atlas/quests/claim',
   'atlas/talents':'/rpg/atlas/talents','atlas/talents/action':'/rpg/atlas/talents/action',
+  'atlas/talents/preview':'/rpg/atlas/talents/preview',
   'chat/state':'/rpg/chat/state','chat/send':'/rpg/chat/send',
   'fate/social/preferences':'/rpg/fate/social/preferences','fate/social/preferences/save':'/rpg/fate/social/preferences/save',
   'fate/social/inbox':'/rpg/fate/social/inbox','fate/social/event':'/rpg/fate/social/event',

@@ -43,7 +43,7 @@ const server = http.createServer(async (req, res) => {
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
     const previewOrigin='http://127.0.0.1:9593';
-    const socialPaths=new Set(['me','atlas/catalog','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
