@@ -69,7 +69,11 @@ try {
       await page.locator('[data-atlas-direct="fate"]').click();await page.locator('.fate-overlay iframe').waitFor();const birth=page.frameLocator('.fate-overlay iframe').locator('#fate-birth');await birth.fill('2000-01-01');assert.equal(await birth.inputValue(),'2000-01-01');await page.frameLocator('.fate-overlay iframe').getByRole('button',{name:'展開我的旅章'}).waitFor();await birth.scrollIntoViewIfNeeded();await page.screenshot({path:path.join(output,`fate-${width}.png`),animations:'disabled'});await page.locator('.fate-overlay-close').click();await page.locator('.fate-overlay').waitFor({state:'detached'});assert.equal(await page.locator('#atlas-legacy').isHidden(),true);
       await group('build');await page.locator('[data-atlas-route="skills"]').click();await page.frameLocator('#expedition-overlay iframe').locator('#profile-button').filter({hasText:'月桂旅人'}).waitFor();await page.screenshot({path:path.join(output,`skills-${width}.png`),animations:'disabled'});await page.locator('#expedition-overlay>header button').click();await page.locator('#expedition-overlay').waitFor({state:'detached'});
 
-      await group('expedition');await page.locator('[name="mapId"][value="laurel_intro"]').check();await page.locator('[name="mapCount"]').fill('1');await page.locator('[name="durationMinutes"]').fill('60');await page.locator('[name="hp"]').fill('3');await page.locator('[name="mp"]').fill('4');
+      await group('expedition');await page.locator('[name="mapId"][value="laurel_intro"]').check();
+      assert.equal(await page.locator('[name="queueMode"]').inputValue(),'duration');assert.equal(await page.locator('[name="mapCount"]').isDisabled(),true);
+      await page.locator('[name="queueMode"]').evaluate(node=>node.scrollIntoView({block:'center'}));
+      await page.screenshot({path:path.join(output,`duration-options-${width}.png`)});
+      await page.locator('[name="queueMode"]').selectOption('count');await page.locator('[name="mapCount"]').fill('1');await page.locator('[name="durationMinutes"]').fill('60');await page.locator('[name="hp"]').fill('3');await page.locator('[name="mp"]').fill('4');
       await page.locator('[data-atlas-expedition] button[type="submit"]').click();await page.locator('[data-atlas-stop]').waitFor();
       assert.equal(calls.filter(call=>call.action==='atlas/start').length,1);assert.equal(db.prepare('SELECT COUNT(*) n FROM rpg_atlas_runs').get().n,1);assert.equal(db.prepare("SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item='red_1'").get(a).quantity,17);
       env.ATLAS_ENABLED='false';await page.locator('[data-atlas-refresh]').click();await page.getByText('新星圖出征與製作暫停開放；現有探索仍可同步或停止，結束時退還剩餘補給。').waitFor();
@@ -77,7 +81,17 @@ try {
       await page.screenshot({path:path.join(output,`report-${width}.png`)});const reportCount=db.prepare('SELECT COUNT(*) n FROM rpg_ledger WHERE event_id LIKE \'atlas:%\'').get().n;
       await page.locator('[data-atlas-settle]').click();await page.waitForFunction(()=>!document.querySelector('[data-atlas-settle]')?.disabled);assert.equal(db.prepare('SELECT COUNT(*) n FROM rpg_ledger WHERE event_id LIKE \'atlas:%\'').get().n,reportCount);await closePanel();
 
-      env.ATLAS_ENABLED='true';await group('workshop');await page.locator('[name="craftItemId"]').selectOption(weapon);await page.locator('[name="recipeId"][value="temper"]').check();await page.screenshot({path:path.join(output,`workshop-${width}.png`)});
+      env.ATLAS_ENABLED='true';await group('expedition');await page.locator('[name="queueMode"]').selectOption('duration');
+      assert.equal(await page.locator('[name="mapCount"]').isDisabled(),true);
+      await page.locator('[name="durationMinutes"]').fill('1');await page.locator('[name="hp"]').fill('5');await page.locator('[name="mp"]').fill('5');
+      await page.locator('[data-atlas-expedition] button[type="submit"]').click();await page.locator('[data-atlas-stop]').waitFor();
+      const durationCall=calls.filter(call=>call.action==='atlas/start').at(-1);assert.equal(durationCall.body.queueMode,'duration');assert.equal(Object.hasOwn(durationCall.body,'mapCount'),false);
+      clock+=60000;await page.locator('[data-atlas-settle]').click();await page.locator('[data-atlas-stop]').waitFor({state:'detached'});
+      const durationState=JSON.parse(db.prepare('SELECT state_json FROM rpg_atlas_runs ORDER BY rowid DESC LIMIT 1').get().state_json);
+      assert.equal(durationState.status,'completed');assert.equal(durationState.elapsedSeconds,60);assert.equal(durationState.stopReason,'duration_reached');
+      await page.screenshot({path:path.join(output,`duration-report-${width}.png`)});await closePanel();
+
+      await group('workshop');await page.locator('[name="craftItemId"]').selectOption(weapon);await page.locator('[name="recipeId"][value="temper"]').check();await page.screenshot({path:path.join(output,`workshop-${width}.png`)});
       const before=db.prepare('SELECT base_stat,enhance_level FROM rpg_equipment WHERE id=?').get(weapon);await page.locator('[data-atlas-craft] button[type="submit"]').click();await page.locator('#sheet [data-x="1"]').click();await page.waitForFunction(()=>document.querySelector('#toast')?.textContent.includes('銘刻完成'));
       const after=db.prepare('SELECT base_stat,enhance_level FROM rpg_equipment WHERE id=?').get(weapon);assert.equal(after.enhance_level,7);assert.ok(after.base_stat>before.base_stat);assert.equal(db.prepare('SELECT crafts FROM rpg_atlas_forges WHERE item_id=?').get(weapon).crafts,1);await closePanel();
 
@@ -92,7 +106,7 @@ try {
       env.ATLAS_ENABLED='false';await group('expedition');await page.getByRole('heading',{name:'星圖尚未開放'}).waitFor();await page.locator('[data-atlas-route="home"]').click();await page.locator('#view .lc-profile').waitFor();assert.equal(await page.locator('#atlas-legacy').isVisible(),true);
       assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth+1),false);assert.deepEqual(errors,[]);assert.deepEqual(await page.evaluate(()=>window.__atlasErrorToasts),[]);assert.ok(calls.every(call=>call.realm));
       assert.ok(calls.some(call=>call.action==='characters'&&call.realm==='season_2026_01'));assert.ok(calls.filter(call=>call.action.startsWith('atlas/')&&(includeQuests||!call.action.startsWith('atlas/quests'))).every(call=>call.status===200));
-      results.push({width,scope:includeQuests?'complete':'legacy-and-atlas',sixEntrances:true,originalGuardian:true,guardianSummonOnce:true,guardianActivate:true,originalFate:true,originalSkills:true,oneStart:true,realSettlement:true,disabledActiveRunCanFinish:true,noDuplicateReward:true,craftPreservesEnhance:7,permanentQuestProgress:includeQuests?true:null,questDoubleClickOneClaim:includeQuests?true:null,emptySeason:true,realmIsolation:true,disabledAtlasKeepsLegacy:true,pageErrors:errors,errorToasts:[]});
+      results.push({width,scope:includeQuests?'complete':'legacy-and-atlas',sixEntrances:true,originalGuardian:true,guardianSummonOnce:true,guardianActivate:true,originalFate:true,originalSkills:true,oneStart:true,durationDefault:true,durationPayload:true,durationSettlementSeconds:60,realSettlement:true,disabledActiveRunCanFinish:true,noDuplicateReward:true,craftPreservesEnhance:7,permanentQuestProgress:includeQuests?true:null,questDoubleClickOneClaim:includeQuests?true:null,emptySeason:true,realmIsolation:true,disabledAtlasKeepsLegacy:true,pageErrors:errors,errorToasts:[]});
     }catch(error){await page.screenshot({path:path.join(output,`failure-${width}.png`)});console.error(JSON.stringify({width,errors,lastCalls:calls.slice(-12)}));throw error;}
     finally{await page.close();server.closeAllConnections();await new Promise(resolve=>server.close(resolve));db.close();env.DB_SEASON.sqlite.close();}
   }

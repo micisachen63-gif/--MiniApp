@@ -1,7 +1,7 @@
 import {
   ATLAS_RULESET_VERSION, ATLAS_MAX_DURATION_SECONDS, ATLAS_MAX_MAP_COUNT,
   ATLAS_MAX_ADVANCE_STEPS, ATLAS_PROTOTYPE_PROFILE, ATLAS_SUPPORTS,
-  ATLAS_AUTOMATION, getAtlasBuild, getAtlasMap,
+  ATLAS_AUTOMATION, ATLAS_SUPPORTED_RULESETS, ATLAS_QUEUE_MODES, getAtlasBuild, getAtlasMap,
 } from './atlas-catalog.js';
 
 /** Pure rules only. The API must authorize the realm/character, enforce map
@@ -77,6 +77,11 @@ function profileSnapshot(input = {}) {
   for (const key of ['enemyHpMultiplier', 'enemyDamageMultiplier', 'enemyDefenseMultiplier', 'rewardMultiplier', 'travelMultiplier']) {
     profile[key] = number(input[key], `profile.${key}`, .05, 100, profile[key]);
   }
+  // Legacy profiles scale both currencies together; explicit fields override
+  // each currency independently without changing materials or old run snapshots.
+  for (const key of ['goldMultiplier', 'experienceMultiplier']) {
+    profile[key] = number(input[key], `profile.${key}`, .05, 100, profile.rewardMultiplier);
+  }
   return profile;
 }
 
@@ -120,7 +125,10 @@ export function createAtlasRun(input) {
   if (input.ruleset_version && input.ruleset_version !== ATLAS_RULESET_VERSION) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
   const startedAt = number(input.startedAt ?? input.startAt, 'startAt', 0, Number.MAX_SAFE_INTEGER - ATLAS_MAX_DURATION_SECONDS, undefined);
   const durationSeconds = number(input.durationSeconds, 'durationSeconds', 1, ATLAS_MAX_DURATION_SECONDS, ATLAS_MAX_DURATION_SECONDS, true);
-  const mapCount = number(input.mapCount, 'mapCount', 1, ATLAS_MAX_MAP_COUNT, 1, true);
+  const queueMode = input.queueMode ?? 'count';
+  if (!ATLAS_QUEUE_MODES.some(mode => mode.id === queueMode)) fail('atlas_invalid_queue', '不支援的出征方式');
+  if (queueMode === 'duration' && input.mapCount != null) fail('atlas_invalid_queue', '持續探索不使用張數上限');
+  const mapCount = queueMode === 'count' ? number(input.mapCount, 'mapCount', 1, ATLAS_MAX_MAP_COUNT, 1, true) : null;
   const seed = identifier(input.seed, 'seed');
   const automation = input.automation ?? 'balanced';
   if (!ATLAS_AUTOMATION.some(row => row.id === automation)) fail('atlas_invalid_automation', '不支援的自動施放策略');
@@ -144,7 +152,7 @@ export function createAtlasRun(input) {
     status: 'running', stopReason: null, endedAt: null,
     snapshot, balanceProfile: profile,
     buildId: build.id, supports: [...supports], automation, skill,
-    mapId: map.id, map: mapSnapshot, mapCount, mapIndex: 0, roomIndex: 0,
+    mapId: map.id, map: mapSnapshot, queueMode, mapCount, mapIndex: 0, roomIndex: 0,
     transitionSeconds: mapSnapshot.entrySeconds, enemies: [],
     hero: { hp: snapshot.hp, mp: snapshot.mp, shield: 0, nextActionAt: 0, nextSkillAt: 0, combo: 0, pets: [], traps: [] },
     supplies: {
@@ -373,7 +381,8 @@ function enemyActions(state) {
 function reward(state, rewards, kind) {
   const spec = state.map.rewards;
   const completion = kind === 'completion';
-  const multiplier = state.balanceProfile.rewardMultiplier;
+  const goldMultiplier = state.balanceProfile.goldMultiplier ?? state.balanceProfile.rewardMultiplier;
+  const experienceMultiplier = state.balanceProfile.experienceMultiplier ?? state.balanceProfile.rewardMultiplier;
   const materials = completion
     ? { atlas_shard: 2, [spec.material]: 1 }
     : { atlas_shard: random(state, 'lootRng') < .35 ? 2 : 1 };
@@ -382,8 +391,8 @@ function reward(state, rewards, kind) {
     id: `${state.runId}:reward:${sequence}`, runId: state.runId, realmId: state.realmId,
     sequence, mapId: state.mapId, mapIndex: state.mapIndex, roomIndex: state.roomIndex,
     kind, elapsedSeconds: state.elapsedSeconds,
-    gold: Math.floor((completion ? spec.completionGold : spec.roomGold) * multiplier),
-    exp: Math.floor((completion ? spec.completionExp : spec.roomExp) * multiplier),
+    gold: Math.floor((completion ? spec.completionGold : spec.roomGold) * goldMultiplier),
+    exp: Math.floor((completion ? spec.completionExp : spec.roomExp) * experienceMultiplier),
     materials,
   };
   state.totals.gold += record.gold; state.totals.exp += record.exp;
@@ -401,7 +410,7 @@ function clearRoom(state, rewards) {
     state.metrics.mapsCompleted++;
     reward(state, rewards, 'completion');
     event(state, 'map_completed', { mapIndex: state.mapIndex });
-    if (state.metrics.mapsCompleted >= state.mapCount) finish(state, 'completed', 'queue_completed');
+    if (state.queueMode !== 'duration' && state.metrics.mapsCompleted >= state.mapCount) finish(state, 'completed', 'queue_completed');
     else {
       state.mapIndex++; state.roomIndex = 0; state.enemies = [];
       state.transitionSeconds = state.map.entrySeconds;
@@ -447,7 +456,7 @@ function tick(state, rewards) {
  * returned state and SAME now while stillCatchingUp is true.
  */
 export function advanceAtlasRun(run, nowSeconds, options = {}) {
-  if (!run || run.ruleset_version !== ATLAS_RULESET_VERSION) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
+  if (!run || !ATLAS_SUPPORTED_RULESETS.includes(run.ruleset_version)) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
   const now = number(nowSeconds, 'nowSeconds', 0, Number.MAX_SAFE_INTEGER, undefined);
   const maxSteps = number(options.maxSteps, 'maxSteps', 1, ATLAS_MAX_ADVANCE_STEPS, ATLAS_MAX_ADVANCE_STEPS, true);
   if (now < run.startedAt) fail('atlas_clock_before_start', '結算時間早於出發');
@@ -457,7 +466,7 @@ export function advanceAtlasRun(run, nowSeconds, options = {}) {
   let steps = 0;
   while (state.status === 'running' && state.elapsedSeconds < target && steps < maxSteps) {
     tick(state, rewards); steps++;
-    if (state.status === 'running' && state.elapsedSeconds >= state.durationSeconds) finish(state, 'expired', 'duration_reached');
+    if (state.status === 'running' && state.elapsedSeconds >= state.durationSeconds) finish(state, state.queueMode === 'duration' ? 'completed' : 'expired', 'duration_reached');
   }
   return { state, rewards, steps, processedAt: state.processedAt,
     stillCatchingUp: state.status === 'running' && state.elapsedSeconds < target };

@@ -79,6 +79,13 @@ test('progress and reports use server fields, preserve zero values, and escape r
   assert.match(html,/月桂精鐵/);assert.match(html,/生命藥水消耗/);assert.match(html,/&lt;script&gt;/);assert.doesNotMatch(html,/<script>|裝備掉落|補給花費/);assert.match(html,/<strong>0<\/strong>/);
 });
 
+test('duration progress uses the server mode and actual clears without inventing a map quota',()=>{
+  const ui=module();
+  const label=ui.progressLabel({queueMode:'duration',mapCount:null,completedMaps:123,progress:{catchingUp:true}});
+  assert.match(label,/123 張星圖/);assert.match(label,/派遣時間結束/);assert.match(label,/仍在結算/);
+  assert.doesNotMatch(label,/待同步|\/ 96/);
+});
+
 function apiHarness(){const requests=[],S={realmId:'permanent',contextEpoch:1,apiEpoch:0,me:{character:{tgId:'hero-a'}}};const window={RpgRequest:{request:(action,body,headers)=>{const d=deferred();requests.push({action,body,headers,...d});return d.promise;}}};const ctx=vm.createContext({S,window,expansion:null,initData:'',devTg:'111',tg:null,refreshMe(){},setTimeout(){},openCharacterSelect(){},resetRealmContext(){S.contextEpoch++;S.me=null;}});vm.runInContext(app.slice(app.indexOf('  const readActions='),app.indexOf('  const pendingRequestMemory='))+';this.call=api;this.key=mutationKey;',ctx);return {S,ctx,requests};}
 test('the actual shared API helper sends the realm header and rejects an old A-B-A response',async()=>{
   const h=apiHarness(),pending=h.ctx.call('atlas/status');assert.equal(h.requests[0].headers['X-Realm-Id'],'permanent');assert.equal(h.requests[0].body.selectedCharacterId,'hero-a');

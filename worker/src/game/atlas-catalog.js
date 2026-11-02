@@ -1,7 +1,8 @@
 import { MAPS } from './constants.js';
 
 /** Prototype values, not production-approved balance. Never retune a saved run. */
-export const ATLAS_RULESET_VERSION = 'atlas-v1';
+export const ATLAS_RULESET_VERSION = 'atlas-v2';
+export const ATLAS_SUPPORTED_RULESETS = Object.freeze(['atlas-v1', ATLAS_RULESET_VERSION]);
 export const ATLAS_MAX_DURATION_SECONDS = 8 * 60 * 60;
 export const ATLAS_MAX_MAP_COUNT = 96;
 export const ATLAS_MAX_ADVANCE_STEPS = 2000;
@@ -19,6 +20,11 @@ export const ATLAS_PROTOTYPE_PROFILE = freeze({
   enemyHpMultiplier: 1, enemyDamageMultiplier: 1, enemyDefenseMultiplier: 1,
   rewardMultiplier: 1, travelMultiplier: 1,
 });
+
+export const ATLAS_QUEUE_MODES = freeze([
+  { id: 'duration', name: '依時間持續探索', description: '同一張星圖通關後繼續探索；達派遣時限、倒地或手動停止才返營。' },
+  { id: 'count', name: '指定探索張數', description: '達指定張數即返營；仍受派遣時間與攜帶補給限制。' },
+]);
 
 export const ATLAS_THEMES = freeze(Object.values(MAPS).map(map => ({
   id: map.id, name: map.name, emoji: map.emoji, bossName: map.boss.name,
@@ -107,6 +113,7 @@ export function getAtlasCatalog() {
     rulesVersion: ATLAS_RULESET_VERSION, balanceStatus: 'prototype',
     profile: ATLAS_PROTOTYPE_PROFILE,
     maxDurationSeconds: ATLAS_MAX_DURATION_SECONDS, maxMapCount: ATLAS_MAX_MAP_COUNT,
+    queueModes: ATLAS_QUEUE_MODES, defaultQueueMode: 'duration',
     themes: ATLAS_THEMES, maps: ATLAS_MAPS, builds: ATLAS_BUILDS,
     supports: ATLAS_SUPPORTS, automation: ATLAS_AUTOMATION, materials: ATLAS_MATERIALS,
   });
