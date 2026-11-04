@@ -66,18 +66,69 @@ const hashes=async()=>Object.fromEntries(await Promise.all(sources.map(async fil
   note(label+' starts with exact per-item reservation',{runId:status.run.id,requestId:action.body.requestId,initialItems:status.run.supplies.initialItems,policy:status.run.supplies.policy});
   return {result,status};
  };
+ const readStoppedStatus=async(runId,expectedContext)=>{
+  for(let attempt=0;attempt<2;attempt++){
+   const result=await frame.evaluate(async({runId,expectedContext,attempt})=>{
+    const session=window.RpgSceneSession;
+    const matchesScene=scene=>scene&&String(scene.accountId)===String(expectedContext.accountId)&&scene.realmId===expectedContext.realmId&&String(scene.characterId)===String(expectedContext.characterId)&&scene.run?.id===runId&&scene.run.realmId===expectedContext.realmId&&String(scene.run.characterId)===String(expectedContext.characterId);
+    const checkContext=()=>{
+     const context=session.getContext(),snapshot=session.getSnapshot();
+     if(!['accountId','realmId','characterId','epoch'].every(key=>context[key]===expectedContext[key]))throw Object.assign(new Error('Stopped-run verification context changed'),{code:'context_changed',uncertain:false});
+     if(!matchesScene(snapshot))throw Object.assign(new Error('Stopped-run verification no longer owns this scene run'),{code:'run_changed',uncertain:false});
+     return {context,runId:snapshot.run.id};
+    };
+    checkContext();
+    try{
+     const data=await session.request('atlas/status');
+     checkContext();
+     if(data.run?.id!==runId||!matchesScene(data.scene))throw Object.assign(new Error('Stopped-run response identity does not match the owned run'),{code:'run_changed',uncertain:false});
+     return {data};
+    }catch(error){
+     const current=checkContext();
+     if(attempt===0&&error.code==='stale_response'&&error.uncertain===false)return {retry:{at:new Date().toISOString(),action:'atlas/status',attempt:attempt+1,runId,expectedContext,observedContext:current.context,observedRunId:current.runId,name:error.name,code:error.code,message:error.message,uncertain:error.uncertain}};
+     throw error;
+    }
+   },{runId,expectedContext,attempt});
+   if(result.retry){(evidence.readRetries??=[]).push(result.retry);continue;}
+   return result.data;
+  }
+  throw new Error('Stopped-run verification exceeded its two-read bound');
+ };
  const stop=async runId=>{
+  assert(evidence.ownedRunIds.includes(runId),'only stop a run started by this harness');
   await openRoute('expedition');await ready('[data-guide-stop]');await frame.locator('[data-guide-stop]').click();
-  await mutate('atlas/stop',()=>frame.locator('[data-guide-confirm]').click());
-  const status=await call('atlas/status');assert.equal(status.run.id,runId);assert.notEqual(status.run.status,'running');
+  const expectedContext=await frame.evaluate(runId=>{
+   const session=window.RpgSceneSession,context=session.getContext();
+   if(session.getSnapshot()?.run?.id!==runId)throw new Error('Stop confirmation no longer owns this run');
+   return {accountId:context.accountId,realmId:context.realmId,characterId:context.characterId,epoch:context.epoch};
+  },runId);
+  const stopped=await mutate('atlas/stop',()=>frame.locator('[data-guide-confirm]').click());
+  (evidence.stopResponses??=[]).push({at:new Date().toISOString(),runId,expectedContext,httpStatus:200,ok:stopped.ok,run:{id:stopped.run?.id,status:stopped.run?.status,processedSeconds:stopped.run?.progress?.processedSeconds},scene:{accountId:stopped.scene?.accountId,realmId:stopped.scene?.realmId,characterId:stopped.scene?.characterId,runId:stopped.scene?.run?.id,status:stopped.scene?.run?.status}});
+  const status=await readStoppedStatus(runId,expectedContext);assert.equal(status.run.id,runId);assert.notEqual(status.run.status,'running');
   return {status,inventory:inventory(await call('me',{summary:false}))};
  };
- const waitCommitted=async(runId,minSeconds=1)=>{
-  await frame.waitForFunction(({runId,minSeconds})=>{
-   const run=window.RpgSceneSession?.getSnapshot()?.run;
-   return run?.id===runId&&Number(run.processedSeconds)>=minSeconds;
-  },{runId,minSeconds},{timeout:55000});
-  return call('atlas/status');
+ const waitCommitted=async(runId,minSeconds=1,requireConsumption=false)=>{
+  const timeoutMs=requireConsumption?180000:55000,startedAt=new Date().toISOString();
+  try{
+   await frame.waitForFunction(({runId,minSeconds,requireConsumption})=>{
+    const run=window.RpgSceneSession?.getSnapshot()?.run;
+    if(run?.id!==runId)return false;
+    if(requireConsumption&&run.status&&run.status!=='running')return true;
+    return Number(run.processedSeconds)>=minSeconds&&(!requireConsumption||Object.values(run.supplies?.usedItems||{}).some(n=>Number(n)>0));
+   },{runId,minSeconds,requireConsumption},{timeout:timeoutMs});
+   const status=await call('atlas/status');
+   assert.equal(status.run?.id,runId,'committed snapshot belongs to the owned run');
+   assert(Number(status.run.progress?.processedSeconds)>=minSeconds,'server has committed the required elapsed time');
+   if(requireConsumption)assert(Object.values(status.run.supplies?.usedItems||{}).some(n=>Number(n)>0),'run ended without actual committed potion consumption');
+   return status;
+  }catch(error){
+   const diagnostic={runId,minSeconds,requireConsumption,timeoutMs,startedAt,observedAt:new Date().toISOString(),error:{message:error.message,stack:error.stack}};
+   try{diagnostic.authoritativeSnapshot=await call('atlas/status');}catch(snapshotError){diagnostic.snapshotError=snapshotError.message;}
+   const file=path.join(dir,'committed-wait-'+runId+'.json');
+   await fs.writeFile(file,JSON.stringify(diagnostic,null,2)+'\n');
+   (evidence.waitFailures??=[]).push({runId,file,message:error.message});
+   throw error;
+  }
  };
  try{
   for(const endpoint of [origin+'/__preview/health',api+'/__preview/health']){
@@ -149,7 +200,7 @@ const hashes=async()=>Object.fromEntries(await Promise.all(sources.map(async fil
   assert((await frame.locator('.scene-supply').innerText()).includes('關閉則不使用'));
   await frame.locator('[data-supply-reserved]').scrollIntoViewIfNeeded();await shot('390-running-policy-freeze.png');
   note('saved auto/off preferences apply next run; current exact policy stays frozen',{current:changed.run.supplies.policy,next:changed.supplies.policy});
-  const committed=await waitCommitted(runId,15),used=committed.run.supplies.usedItems;
+  const committed=await waitCommitted(runId,15,true),used=committed.run.supplies.usedItems;
   assert(Object.values(used).some(n=>n>0),'the live preview must actually consume a reserved bottle');
   for(const key of keys.filter(key=>!['red_2','blue_2'].includes(key)))assert.equal(Number(used[key]||0),0,'specific choice never substitutes '+key);
   await openRoute('expedition');await frame.locator('[data-guide-run-items]').waitFor();await shot('390-running-items.png');
