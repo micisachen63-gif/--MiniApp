@@ -53,6 +53,8 @@ const GOLDEN_HASHES = {
   "thief_combo:trace-second-seed": "21191d5b2cd57675705a954c451c957ba4187426bd0a25ca6e21c621527b81e6"
 };
 
+const BASELINES = JSON.parse(readFileSync(new URL('./fixtures/atlas-observer-baselines-20261104.json', import.meta.url), 'utf8'));
+
 function withoutTrace(result) {
   const { combatTrace, ...legacy } = result;
   return legacy;
@@ -75,28 +77,33 @@ function arena(buildId) {
 
 function advanceParts(run, checkpoints, maxSteps = 17) {
   let state = structuredClone(run);
-  const rewards = [], events = [];
+  const rewards = [], activities = [], events = [];
   let total = 0;
   for (const elapsed of checkpoints) {
     let result;
     do {
       result = advanceAtlasRun(state, START + elapsed, { maxSteps, combatTrace: { limit: 256 } });
       rewards.push(...result.rewards);
+      activities.push(...result.activities);
       events.push(...result.combatTrace.events);
       total += result.combatTrace.total;
       state = JSON.parse(JSON.stringify(result.state));
     } while (result.stillCatchingUp);
   }
-  return { state, rewards, events, total };
+  return { state, rewards, activities, events, total };
 }
 
-test('all 12 builds and two seeds retain the pre-observer full results with tracing off or on', () => {
+test('all 12 legacy v3 builds and two seeds retain the original pre-observer full results', () => {
   for (const build of ATLAS_BUILDS) {
     for (const seed of ['trace-replay', 'trace-second-seed']) {
-      const run = make(build.id, { seed }), before = structuredClone(run);
+      const fixture = BASELINES.v3.find(row => row.key === build.id + ':' + seed);
+      assert.ok(fixture);
+      const run = structuredClone(fixture.run), before = structuredClone(run);
       const off = advanceAtlasRun(run, START + 240);
+      const { activities, ...legacy } = off;
+      assert.deepEqual(activities, [], 'legacy runs never create v4 activities');
       assert.equal(Object.hasOwn(off, 'combatTrace'), false);
-      assert.equal(createHash('sha256').update(JSON.stringify(off)).digest('hex'),
+      assert.equal(createHash('sha256').update(JSON.stringify(legacy)).digest('hex'),
         GOLDEN_HASHES[build.id + ':' + seed], build.id + ' must retain the pre-change replay');
       assert.deepEqual(advanceAtlasRun(run, START + 240, { combatTrace: false }), off);
       const on = advanceAtlasRun(run, START + 240, { combatTrace: true });
@@ -105,6 +112,28 @@ test('all 12 builds and two seeds retain the pre-observer full results with trac
       assert.deepEqual(run, before, 'observation must not mutate the input snapshot');
       assert.equal(Object.hasOwn(on.state, 'combatTrace'), false);
       assert.equal(Object.hasOwn(on.state, 'combatEvents'), false);
+    }
+  }
+});
+
+test('committed v4 baseline keeps all six RNG streams, activity and equipment receipts identical with tracing', () => {
+  assert.equal(BASELINES.baselines.v4.commit, 'e4908c02f858c27d992a8efb0199a9c3c9a2cd1e');
+  assert.equal(BASELINES.v4.length, 27);
+  for (const fixture of BASELINES.v4) {
+    const before = JSON.stringify(fixture.run);
+    const off = advanceAtlasRun(fixture.run, fixture.now);
+    assert.equal(createHash('sha256').update(JSON.stringify(off)).digest('hex'), fixture.expectedSha256, fixture.key);
+    for (const option of [true, { limit: 1 }]) {
+      const on = advanceAtlasRun(fixture.run, fixture.now, { combatTrace: option });
+      assert.deepEqual(withoutTrace(on), off, fixture.key + ' complete v4 result');
+      assert.deepEqual(on.state.content.rng, off.state.content.rng, 'content RNG');
+      for (const stream of ['combatRng', 'encounterRng', 'lootRng']) assert.equal(on.state[stream], off.state[stream]);
+    }
+    assert.equal(JSON.stringify(fixture.run), before);
+    if (fixture.key.startsWith('survey:')) {
+      assert.ok(off.state.totals.equipment > 0, fixture.key + ' exercises actual equipment blueprints');
+      assert.ok(Object.values(off.state.totals.items).some(value => value > 0), fixture.key + ' exercises actual scroll drops');
+      assert.ok(off.activities.length > 0);
     }
   }
 });
@@ -156,6 +185,7 @@ test('event IDs and complete records survive arbitrary settlement chunks and JSO
     const part = advanceParts(run, [0, .5, 1, 17, 38.2, 57, 57, 118, 240]);
     assert.deepEqual(part.state, whole.state, build.id);
     assert.deepEqual(part.rewards, whole.rewards, build.id);
+    assert.deepEqual(part.activities, whole.activities, build.id + ' activity receipts are chunk invariant');
     assert.deepEqual(part.events.slice(-256), whole.combatTrace.events, build.id + ' stable tick/phase/ordinal identities');
     assert.equal(part.total, whole.combatTrace.total);
     assert.equal(new Set(part.events.map(event => event.eventId)).size, part.events.length);

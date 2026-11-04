@@ -2,7 +2,7 @@ import { computeStats } from './stats.js';
 import { expToNext } from './formulas.js';
 
 const CLASSES = new Set(['sword', 'archer', 'mage', 'thief']);
-const EVENT_TYPES = new Set(['room_entered', 'enemy_defeated', 'map_completed', 'dead', 'completed', 'expired', 'stopped']);
+const EVENT_TYPES = new Set(['room_entered', 'enemy_defeated', 'map_completed', 'dead', 'completed', 'expired', 'stopped', 'encounter', 'encounter_completed', 'loot_equipment', 'loot_scroll']);
 const EVENT_LIMIT = 24;
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const nullableNumber = value => value == null ? null : Number.isFinite(Number(value)) ? Number(value) : null;
@@ -20,11 +20,13 @@ export function atlasAppearanceKey({ baseClass, gender, classPath = '' }) {
 function eventView(event, state, runId) {
   if (!event || !EVENT_TYPES.has(event.type) || !Number.isFinite(event.at) || event.at < 0 || event.at > state.elapsedSeconds) return null;
   const details = {};
-  for (const key of ['enemyId', 'source', 'rank', 'reason']) if (typeof event[key] === 'string') details[key] = event[key];
-  for (const key of ['mapIndex', 'roomIndex', 'enemies']) if (Number.isInteger(event[key]) && event[key] >= 0) details[key] = event[key];
+  for (const key of ['enemyId', 'source', 'rank', 'reason','encounterId','name','rewardId','itemId','item']) if (typeof event[key] === 'string') details[key] = event[key];
+  for (const key of ['mapIndex', 'roomIndex', 'enemies','tier','quantity']) if (Number.isInteger(event[key]) && event[key] >= 0) details[key] = event[key];
+  for (const key of ['hpRestored','mpRestored']) if(Number.isFinite(event[key])&&event[key]>=0) details[key]=event[key];
   // The persisted window slides. Its array index and the run revision cannot
   // identify an event: either would replay the same defeat on the next read.
   const identity = [event.at, event.type, details.enemyId ?? null, details.mapIndex ?? null, details.roomIndex ?? null, details.reason ?? null];
+  if(details.encounterId||details.rewardId)identity.push(details.encounterId??null,details.rewardId??null,details.itemId??null,details.item??null);
   return {
     id: `${runId}:${JSON.stringify(identity)}`,
     type: event.type, at: event.at, atMs: (state.startedAt + event.at) * 1000,
@@ -73,7 +75,7 @@ function committedRunView(row, character, scope, activeRunId) {
     events, eventHistory: { limit: EVENT_LIMIT, complete: false },
     report: {
       gold: number(state.totals?.gold), exp: number(state.totals?.exp),
-      materials: copyNumbers(state.totals?.materials), kills: number(state.metrics?.kills),
+      materials: copyNumbers(state.totals?.materials), ...(state.ruleset_version==='atlas-v4'?{equipment:number(state.totals?.equipment),items:copyNumbers(state.totals?.items)}:{}), kills: number(state.metrics?.kills),
       deaths: row.status === 'failed' ? 1 : 0,
       used: { hp: supplies.hpUsed, mp: supplies.mpUsed },
       reason: state.stopReason ?? null, metrics,

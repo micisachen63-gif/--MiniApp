@@ -1,0 +1,2640 @@
+{
+  "baseline": "b633c3cdf4b8df6d8e689b21a8e585cc320bba3e",
+  "engineSha256": "8f131f77d72803059678fb47f0d21c3a63e327d1d849e617d2dad62491441d82",
+  "fixtures": [
+    {
+      "id": "atlas-v1-sword_counter",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v1",
+        "runId": "legacy-atlas-v1-sword_counter",
+        "realmId": "permanent",
+        "seed": "atlas-v1-sword_counter",
+        "encounterRng": 1993499327,
+        "combatRng": 143550793,
+        "lootRng": 303923473,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-sword",
+          "baseClass": "sword",
+          "level": 20,
+          "atk": 143,
+          "def": 141,
+          "maxHp": 762,
+          "maxMp": 151,
+          "taken": 0.8415,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 762,
+          "mp": 151,
+          "mpRegenPerSecond": 0.906
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "buildId": "sword_counter",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "sword_counter",
+          "baseClass": "sword",
+          "name": "壁壘反擊",
+          "mainSkill": "盾鋒",
+          "description": "格擋減傷並反擊周圍敵人；敵人出手越少，反擊收益越低。",
+          "strengths": [
+            "格擋",
+            "耐久"
+          ],
+          "weaknesses": [
+            "低頻首領"
+          ],
+          "tags": [
+            "block"
+          ],
+          "mechanic": "counter",
+          "coefficient": 1.05,
+          "targets": 1,
+          "cost": 3,
+          "cooldown": 3,
+          "blockChance": 0.4,
+          "blockReduction": 0.7,
+          "counterCoefficient": 0.95,
+          "recommendedSupports": [
+            "guarded",
+            "economy"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "pillar_intro",
+        "map": {
+          "id": "pillar_intro",
+          "name": "雅典娜百柱神殿・教學星圖",
+          "themeId": 2,
+          "themeName": "雅典娜百柱神殿",
+          "emoji": "🏛️",
+          "kind": "tutorial",
+          "minLevel": 5,
+          "prerequisites": [
+            "laurel_intro"
+          ],
+          "available": true,
+          "enemyName": "百柱石像",
+          "eliteName": "神殿禁衛百夫長",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 4,
+            "hp": 120,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 650,
+            "atk": 28,
+            "def": 8,
+            "attackInterval": 4
+          },
+          "rewards": {
+            "roomGold": 18,
+            "roomExp": 30,
+            "completionGold": 40,
+            "completionExp": 60,
+            "material": "atlas_ember"
+          },
+          "hints": [
+            "成群衛兵讓清群、格擋反擊發揮作用。",
+            "凝聚會犧牲清群，換取精英戰傷害。"
+          ]
+        },
+        "mapCount": 3,
+        "mapIndex": 0,
+        "roomIndex": 2,
+        "transitionSeconds": 5,
+        "enemies": [],
+        "hero": {
+          "hp": 751,
+          "mp": 148.906,
+          "shield": 0,
+          "nextActionAt": 37.001000000000005,
+          "nextSkillAt": 38.001000000000005,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 2,
+        "totals": {
+          "gold": 36,
+          "exp": 60,
+          "materials": {
+            "atlas_shard": 4
+          }
+        },
+        "metrics": {
+          "combatSeconds": 18,
+          "packCombatSeconds": 18,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 19,
+          "damage": 954,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 339,
+          "damageTaken": 11,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 4,
+          "blocks": 2,
+          "casts": 6,
+          "basicAttacks": 4,
+          "manaSpent": 18,
+          "manaDenied": 0,
+          "kills": 8,
+          "roomsCleared": 2,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "skill"
+          },
+          {
+            "at": 17,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "skill"
+          },
+          {
+            "at": 19,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "basic"
+          },
+          {
+            "at": 21,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:3",
+            "source": "skill"
+          },
+          {
+            "at": 27,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 28,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "skill"
+          },
+          {
+            "at": 32,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:1",
+            "source": "skill"
+          },
+          {
+            "at": 36,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:2",
+            "source": "skill"
+          },
+          {
+            "at": 36,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:3",
+            "source": "counter"
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "0d30d057d4197b74e01acf7f131aadd2ce9dba16dd1269a081377c44cb3a1d6c",
+        "rewardsSha256": "1a7640e2251674ee3cfa97e7037cc112475245fa1c077f1e31571e5ee25d3094"
+      }
+    },
+    {
+      "id": "atlas-v1-mage_frost",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v1",
+        "runId": "legacy-atlas-v1-mage_frost",
+        "realmId": "permanent",
+        "seed": "atlas-v1-mage_frost",
+        "encounterRng": 2151832842,
+        "combatRng": 859111370,
+        "lootRng": 574107115,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-mage",
+          "baseClass": "mage",
+          "level": 10,
+          "atk": 83,
+          "def": 43,
+          "maxHp": 263,
+          "maxMp": 175,
+          "taken": 0.693,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 263,
+          "mp": 175,
+          "mpRegenPerSecond": 1.05
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "buildId": "mage_frost",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "mage_frost",
+          "baseClass": "mage",
+          "name": "冰盾消磨",
+          "mainSkill": "霜壁脈衝",
+          "description": "造成傷害、建立護盾並減慢敵人攻擊；爆發較低。",
+          "strengths": [
+            "護盾",
+            "緩速"
+          ],
+          "weaknesses": [
+            "輸出速度"
+          ],
+          "tags": [
+            "shield",
+            "area"
+          ],
+          "mechanic": "frost",
+          "coefficient": 1.15,
+          "targets": 2,
+          "cost": 8,
+          "cooldown": 4,
+          "shieldFraction": 0.18,
+          "chillDuration": 5,
+          "recommendedSupports": [
+            "wide",
+            "economy"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "grove_intro",
+        "map": {
+          "id": "grove_intro",
+          "name": "阿卡迪亞聖林・教學星圖",
+          "themeId": 3,
+          "themeName": "阿卡迪亞聖林",
+          "emoji": "🌲",
+          "kind": "tutorial",
+          "minLevel": 10,
+          "prerequisites": [
+            "pillar_intro"
+          ],
+          "available": true,
+          "enemyName": "潘神幼獸",
+          "eliteName": "狂暴潘神衛士",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 3,
+            "hp": 200,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 1100,
+            "atk": 40,
+            "def": 11,
+            "attackInterval": 5
+          },
+          "rewards": {
+            "roomGold": 28,
+            "roomExp": 60,
+            "completionGold": 60,
+            "completionExp": 120,
+            "material": "atlas_venom"
+          },
+          "hints": [
+            "較長戰鬥讓毒、流血與召喚逐步發力。",
+            "護盾與補給能提升完整派遣的存活率。"
+          ]
+        },
+        "mapCount": 3,
+        "mapIndex": 0,
+        "roomIndex": 1,
+        "transitionSeconds": 0,
+        "enemies": [
+          {
+            "id": "0:1:0",
+            "name": "潘神幼獸",
+            "rank": "normal",
+            "maxHp": 201,
+            "hp": 88,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4,
+            "nextAttackAt": 43,
+            "chilledUntil": 39,
+            "dots": []
+          },
+          {
+            "id": "0:1:1",
+            "name": "潘神幼獸",
+            "rank": "normal",
+            "maxHp": 198,
+            "hp": 128,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4,
+            "nextAttackAt": 37.25,
+            "chilledUntil": 39,
+            "dots": []
+          },
+          {
+            "id": "0:1:2",
+            "name": "潘神幼獸",
+            "rank": "normal",
+            "maxHp": 200,
+            "hp": 200,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4,
+            "nextAttackAt": 37.5,
+            "chilledUntil": 0,
+            "dots": []
+          }
+        ],
+        "hero": {
+          "hp": 263,
+          "mp": 160.2,
+          "shield": 111,
+          "nextActionAt": 37.001,
+          "nextSkillAt": 37.001,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 1,
+        "totals": {
+          "gold": 28,
+          "exp": 60,
+          "materials": {
+            "atlas_shard": 2
+          }
+        },
+        "metrics": {
+          "combatSeconds": 19,
+          "packCombatSeconds": 19,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 18,
+          "damage": 781,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 0,
+          "shieldAbsorbed": 35,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 5,
+          "basicAttacks": 5,
+          "manaSpent": 40,
+          "manaDenied": 0,
+          "kills": 3,
+          "roomsCleared": 1,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 19,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "basic"
+          },
+          {
+            "at": 21,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "skill"
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "basic"
+          },
+          {
+            "at": 33,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 3
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "5d8c8c0d7cc218446ec5f35c945b9fa8506e5afdfe9138e258bf85985855d418",
+        "rewardsSha256": "f14333cd441a4c63fdd89ee2a9f21e5072df0813a931580e2acb1fc9023619a7"
+      }
+    },
+    {
+      "id": "atlas-v1-thief_poison",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v1",
+        "runId": "legacy-atlas-v1-thief_poison",
+        "realmId": "permanent",
+        "seed": "atlas-v1-thief_poison",
+        "encounterRng": 1606963826,
+        "combatRng": 2366464412,
+        "lootRng": 4219773205,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-thief",
+          "baseClass": "thief",
+          "level": 45,
+          "atk": 341,
+          "def": 431,
+          "maxHp": 717,
+          "maxMp": 541,
+          "taken": 0.95,
+          "attackSpeedMultiplier": 1.8,
+          "hitAttackMultiplier": 0.6,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 717,
+          "mp": 541,
+          "mpRegenPerSecond": 3.246
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "buildId": "thief_poison",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "thief_poison",
+          "baseClass": "thief",
+          "name": "層毒蔓延",
+          "mainSkill": "淬毒刃",
+          "description": "堆疊毒素，擊殺後部分毒素蔓延；長血條目標較有利。",
+          "strengths": [
+            "持續傷害",
+            "單體"
+          ],
+          "weaknesses": [
+            "暖機",
+            "承傷"
+          ],
+          "tags": [
+            "dot"
+          ],
+          "mechanic": "poison",
+          "coefficient": 0.6,
+          "targets": 1,
+          "cost": 4,
+          "cooldown": 1.6666666666666665,
+          "dotCoefficient": 0.24,
+          "dotDuration": 8,
+          "maxStacks": 5,
+          "recommendedSupports": [
+            "lasting",
+            "wide"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "laurel_warden",
+        "map": {
+          "id": "laurel_warden",
+          "name": "月桂巨樹精・試煉",
+          "themeId": 1,
+          "themeName": "阿耳忒彌斯月桂林",
+          "emoji": "🌿",
+          "kind": "boss",
+          "minLevel": 10,
+          "prerequisites": [
+            "grove_intro"
+          ],
+          "available": true,
+          "enemyName": "月桂巨樹精",
+          "eliteName": "月桂巨樹精",
+          "roomCount": 1,
+          "packRooms": 0,
+          "travelSeconds": 6,
+          "entrySeconds": 15,
+          "enemy": {
+            "count": 1,
+            "hp": 2800,
+            "atk": 58,
+            "def": 12,
+            "attackInterval": 5
+          },
+          "elite": {
+            "count": 1,
+            "hp": 2800,
+            "atk": 58,
+            "def": 12,
+            "attackInterval": 5
+          },
+          "rewards": {
+            "roomGold": 50,
+            "roomExp": 120,
+            "completionGold": 90,
+            "completionExp": 180,
+            "material": "atlas_core"
+          },
+          "hints": [
+            "固定戰力的單體首領；不會隨你的裝備變強而同步加血。",
+            "持續傷害、處決與燃魔適合長血條，仍需預留紅藍補給。"
+          ]
+        },
+        "mapCount": 3,
+        "mapIndex": 1,
+        "roomIndex": 0,
+        "transitionSeconds": 2,
+        "enemies": [],
+        "hero": {
+          "hp": 711,
+          "mp": 541,
+          "shield": 0,
+          "nextActionAt": 23.889888888888887,
+          "nextSkillAt": 23.334333333333333,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 2,
+        "totals": {
+          "gold": 140,
+          "exp": 300,
+          "materials": {
+            "atlas_shard": 3,
+            "atlas_core": 1
+          }
+        },
+        "metrics": {
+          "combatSeconds": 9,
+          "packCombatSeconds": 0,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 9,
+          "travelSeconds": 28,
+          "damage": 2758,
+          "dotDamage": 1562,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 6,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 4,
+          "basicAttacks": 4,
+          "manaSpent": 16,
+          "manaDenied": 0,
+          "kills": 1,
+          "roomsCleared": 1,
+          "mapsCompleted": 1,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 15,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "boss",
+            "enemies": 1
+          },
+          {
+            "at": 24,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "dot"
+          },
+          {
+            "at": 24,
+            "type": "map_completed",
+            "mapIndex": 0
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "86b8f939f0a73a2d44622a5fed8a85cc1ce99d7770c7d2e5bca2755e146219e7",
+        "rewardsSha256": "cd32e978b1f25a380c7485f150cab6904dfc2b6d9a9d59cc67005fc6358472fd"
+      }
+    },
+    {
+      "id": "atlas-v2-archer_beast",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v2",
+        "runId": "legacy-atlas-v2-archer_beast",
+        "realmId": "permanent",
+        "seed": "atlas-v2-archer_beast",
+        "encounterRng": 1267501861,
+        "combatRng": 1116486779,
+        "lootRng": 1098740765,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-archer",
+          "baseClass": "archer",
+          "level": 20,
+          "atk": 152,
+          "def": 118,
+          "maxHp": 535,
+          "maxMp": 182,
+          "taken": 0.7280000000000001,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 535,
+          "mp": 182,
+          "mpRegenPerSecond": 1.092
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 4,
+          "availablePoints": 4,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "archer_beast",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "archer_beast",
+          "baseClass": "archer",
+          "name": "靈獸協擊",
+          "mainSkill": "召喚獵鷹",
+          "description": "召喚最多兩隻獵鷹持續攻擊；需先建立召喚隊伍。",
+          "strengths": [
+            "持續單體",
+            "離線穩定"
+          ],
+          "weaknesses": [
+            "清群",
+            "暖機"
+          ],
+          "tags": [
+            "summon"
+          ],
+          "mechanic": "beast",
+          "coefficient": 0.55,
+          "targets": 1,
+          "cost": 8,
+          "cooldown": 4,
+          "petCoefficient": 0.65,
+          "petDuration": 12,
+          "recommendedSupports": [
+            "focused",
+            "economy"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "grove_intro",
+        "map": {
+          "id": "grove_intro",
+          "name": "阿卡迪亞聖林・教學星圖",
+          "themeId": 3,
+          "themeName": "阿卡迪亞聖林",
+          "emoji": "🌲",
+          "kind": "tutorial",
+          "minLevel": 10,
+          "prerequisites": [
+            "pillar_intro"
+          ],
+          "available": true,
+          "enemyName": "潘神幼獸",
+          "eliteName": "狂暴潘神衛士",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 3,
+            "hp": 200,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 1100,
+            "atk": 40,
+            "def": 11,
+            "attackInterval": 5
+          },
+          "rewards": {
+            "roomGold": 28,
+            "roomExp": 60,
+            "completionGold": 60,
+            "completionExp": 120,
+            "material": "atlas_venom"
+          },
+          "hints": [
+            "較長戰鬥讓毒、流血與召喚逐步發力。",
+            "護盾與補給能提升完整派遣的存活率。"
+          ]
+        },
+        "queueMode": "duration",
+        "mapCount": null,
+        "mapIndex": 0,
+        "roomIndex": 2,
+        "transitionSeconds": 1,
+        "enemies": [],
+        "hero": {
+          "hp": 523,
+          "mp": 176.208,
+          "shield": 0,
+          "nextActionAt": 31.001,
+          "nextSkillAt": 33.001000000000005,
+          "combo": 0,
+          "pets": [
+            {
+              "remaining": 1,
+              "nextAttackAt": 38,
+              "damage": 98.8
+            },
+            {
+              "remaining": 5,
+              "nextAttackAt": 38,
+              "damage": 98.8
+            }
+          ],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 2,
+        "totals": {
+          "gold": 56,
+          "exp": 120,
+          "materials": {
+            "atlas_shard": 3
+          }
+        },
+        "metrics": {
+          "combatSeconds": 14,
+          "packCombatSeconds": 14,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 23,
+          "damage": 1183,
+          "dotDamage": 0,
+          "petDamage": 623,
+          "counterDamage": 0,
+          "damageTaken": 12,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 4,
+          "basicAttacks": 3,
+          "manaSpent": 32,
+          "manaDenied": 0,
+          "kills": 6,
+          "roomsCleared": 2,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "basic"
+          },
+          {
+            "at": 19,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "pet"
+          },
+          {
+            "at": 19,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "basic"
+          },
+          {
+            "at": 25,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 28,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "pet"
+          },
+          {
+            "at": 30,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:1",
+            "source": "pet"
+          },
+          {
+            "at": 32,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:2",
+            "source": "pet"
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "f0af371bc60fcc49cc375416f826f6f5fb8905275d38042e9ca5dcda7e572156",
+        "rewardsSha256": "1f313cd670afdc9506f0e03fb50a7b67410038706327b28d44118d95e121dd8a"
+      }
+    },
+    {
+      "id": "atlas-v2-sword_bleed",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v2",
+        "runId": "legacy-atlas-v2-sword_bleed",
+        "realmId": "permanent",
+        "seed": "atlas-v2-sword_bleed",
+        "encounterRng": 3790099590,
+        "combatRng": 938171547,
+        "lootRng": 343650468,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-sword",
+          "baseClass": "sword",
+          "level": 10,
+          "atk": 73,
+          "def": 66,
+          "maxHp": 451,
+          "maxMp": 90,
+          "taken": 0.8415,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 451,
+          "mp": 90,
+          "mpRegenPerSecond": 0.54
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 2,
+          "availablePoints": 2,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "sword_bleed",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "sword_bleed",
+          "baseClass": "sword",
+          "name": "裂傷追獵",
+          "mainSkill": "裂傷斬",
+          "description": "堆疊流血後持續輸出；短命敵人來不及承受完整傷害。",
+          "strengths": [
+            "持續傷害",
+            "單體"
+          ],
+          "weaknesses": [
+            "暖機",
+            "清群"
+          ],
+          "tags": [
+            "dot"
+          ],
+          "mechanic": "bleed",
+          "coefficient": 0.9,
+          "targets": 1,
+          "cost": 4,
+          "cooldown": 3,
+          "dotCoefficient": 0.25,
+          "dotDuration": 6,
+          "maxStacks": 3,
+          "recommendedSupports": [
+            "lasting",
+            "wide"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "pillar_intro",
+        "map": {
+          "id": "pillar_intro",
+          "name": "雅典娜百柱神殿・教學星圖",
+          "themeId": 2,
+          "themeName": "雅典娜百柱神殿",
+          "emoji": "🏛️",
+          "kind": "tutorial",
+          "minLevel": 5,
+          "prerequisites": [
+            "laurel_intro"
+          ],
+          "available": true,
+          "enemyName": "百柱石像",
+          "eliteName": "神殿禁衛百夫長",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 4,
+            "hp": 120,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 650,
+            "atk": 28,
+            "def": 8,
+            "attackInterval": 4
+          },
+          "rewards": {
+            "roomGold": 18,
+            "roomExp": 30,
+            "completionGold": 40,
+            "completionExp": 60,
+            "material": "atlas_ember"
+          },
+          "hints": [
+            "成群衛兵讓清群、格擋反擊發揮作用。",
+            "凝聚會犧牲清群，換取精英戰傷害。"
+          ]
+        },
+        "queueMode": "count",
+        "mapCount": 3,
+        "mapIndex": 0,
+        "roomIndex": 1,
+        "transitionSeconds": 0,
+        "enemies": [
+          {
+            "id": "0:1:0",
+            "name": "百柱石像",
+            "rank": "normal",
+            "maxHp": 126,
+            "hp": 0,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4,
+            "nextAttackAt": 37,
+            "chilledUntil": 0,
+            "dots": [
+              {
+                "source": "bleed",
+                "remaining": 4,
+                "damage": 18,
+                "appliedAt": 34
+              }
+            ]
+          },
+          {
+            "id": "0:1:1",
+            "name": "百柱石像",
+            "rank": "normal",
+            "maxHp": 117,
+            "hp": 117,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4,
+            "nextAttackAt": 37.25,
+            "chilledUntil": 0,
+            "dots": []
+          },
+          {
+            "id": "0:1:2",
+            "name": "百柱石像",
+            "rank": "normal",
+            "maxHp": 125,
+            "hp": 125,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4,
+            "nextAttackAt": 37.5,
+            "chilledUntil": 0,
+            "dots": []
+          },
+          {
+            "id": "0:1:3",
+            "name": "百柱石像",
+            "rank": "normal",
+            "maxHp": 126,
+            "hp": 126,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4,
+            "nextAttackAt": 37.75,
+            "chilledUntil": 0,
+            "dots": []
+          }
+        ],
+        "hero": {
+          "hp": 427,
+          "mp": 82.96,
+          "shield": 0,
+          "nextActionAt": 37.001,
+          "nextSkillAt": 36.001,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 1,
+        "totals": {
+          "gold": 18,
+          "exp": 30,
+          "materials": {
+            "atlas_shard": 2
+          }
+        },
+        "metrics": {
+          "combatSeconds": 19,
+          "packCombatSeconds": 19,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 18,
+          "damage": 617,
+          "dotDamage": 180,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 24,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 5,
+          "basicAttacks": 5,
+          "manaSpent": 20,
+          "manaDenied": 0,
+          "kills": 5,
+          "roomsCleared": 1,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "basic"
+          },
+          {
+            "at": 19,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "basic"
+          },
+          {
+            "at": 23,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "basic"
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:3",
+            "source": "basic"
+          },
+          {
+            "at": 33,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 36,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "basic"
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "43fe7f6537529a130f7f6998fe062dbe8ac1e70f0e25c22641a43f39a0592544",
+        "rewardsSha256": "2ac132ed3c8e487386633669d9f8d5bfac5b43da599428b92e975309dde2e7e7"
+      }
+    },
+    {
+      "id": "atlas-v2-thief_combo",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v2",
+        "runId": "legacy-atlas-v2-thief_combo",
+        "realmId": "permanent",
+        "seed": "atlas-v2-thief_combo",
+        "encounterRng": 2273019286,
+        "combatRng": 3271880708,
+        "lootRng": 2417381753,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-thief",
+          "baseClass": "thief",
+          "level": 35,
+          "atk": 241,
+          "def": 307,
+          "maxHp": 560,
+          "maxMp": 392,
+          "taken": 0.95,
+          "attackSpeedMultiplier": 1.8,
+          "hitAttackMultiplier": 0.6,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 560,
+          "mp": 392,
+          "mpRegenPerSecond": 2.352
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 7,
+          "availablePoints": 7,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "thief_combo",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "thief_combo",
+          "baseClass": "thief",
+          "name": "鏡刃連擊",
+          "mainSkill": "鏡刃",
+          "description": "每第三次施放追加兩次追擊，可轉向下一個存活目標。",
+          "strengths": [
+            "連擊",
+            "轉火"
+          ],
+          "weaknesses": [
+            "耗魔",
+            "承傷"
+          ],
+          "tags": [
+            "combo"
+          ],
+          "mechanic": "combo",
+          "coefficient": 1.1,
+          "targets": 1,
+          "cost": 4,
+          "cooldown": 1.3888888888888888,
+          "recommendedSupports": [
+            "rapid",
+            "economy"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "laurel_intro",
+        "map": {
+          "id": "laurel_intro",
+          "name": "阿耳忒彌斯月桂林・教學星圖",
+          "themeId": 1,
+          "themeName": "阿耳忒彌斯月桂林",
+          "emoji": "🌿",
+          "kind": "tutorial",
+          "minLevel": 1,
+          "prerequisites": [],
+          "available": true,
+          "enemyName": "月光野兔",
+          "eliteName": "阿耳忒彌斯巡林長",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 3,
+            "hp": 65,
+            "atk": 8,
+            "def": 4,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 300,
+            "atk": 16,
+            "def": 5,
+            "attackInterval": 4
+          },
+          "rewards": {
+            "roomGold": 8,
+            "roomExp": 12,
+            "completionGold": 20,
+            "completionExp": 30,
+            "material": "atlas_iron"
+          },
+          "hints": [
+            "群體技能可同時削減敵人數量。",
+            "觀察紅水與藍水消耗，再決定派遣長度。"
+          ]
+        },
+        "queueMode": "duration",
+        "mapCount": null,
+        "mapIndex": 0,
+        "roomIndex": 3,
+        "transitionSeconds": 0,
+        "enemies": [
+          {
+            "id": "0:3:0",
+            "name": "月光野兔",
+            "rank": "normal",
+            "maxHp": 62,
+            "hp": 62,
+            "atk": 8,
+            "def": 4,
+            "attackInterval": 4,
+            "nextAttackAt": 41,
+            "chilledUntil": 0,
+            "dots": []
+          },
+          {
+            "id": "0:3:1",
+            "name": "月光野兔",
+            "rank": "normal",
+            "maxHp": 63,
+            "hp": 63,
+            "atk": 8,
+            "def": 4,
+            "attackInterval": 4,
+            "nextAttackAt": 41.25,
+            "chilledUntil": 0,
+            "dots": []
+          },
+          {
+            "id": "0:3:2",
+            "name": "月光野兔",
+            "rank": "normal",
+            "maxHp": 65,
+            "hp": 65,
+            "atk": 8,
+            "def": 4,
+            "attackInterval": 4,
+            "nextAttackAt": 41.5,
+            "chilledUntil": 0,
+            "dots": []
+          }
+        ],
+        "hero": {
+          "hp": 560,
+          "mp": 392,
+          "shield": 0,
+          "nextActionAt": 37.001,
+          "nextSkillAt": 31.612111111111112,
+          "combo": 2,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 3,
+        "totals": {
+          "gold": 24,
+          "exp": 36,
+          "materials": {
+            "atlas_shard": 3
+          }
+        },
+        "metrics": {
+          "combatSeconds": 7,
+          "packCombatSeconds": 7,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 30,
+          "damage": 593,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 0,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 5,
+          "basicAttacks": 2,
+          "manaSpent": 20,
+          "manaDenied": 0,
+          "kills": 9,
+          "roomsCleared": 3,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 1,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "skill"
+          },
+          {
+            "at": 14,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "basic"
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "skill"
+          },
+          {
+            "at": 21,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 22,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "skill"
+          },
+          {
+            "at": 22,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:1",
+            "source": "skill"
+          },
+          {
+            "at": 22,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:2",
+            "source": "skill"
+          },
+          {
+            "at": 28,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 2,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 29,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:0",
+            "source": "skill"
+          },
+          {
+            "at": 30,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:1",
+            "source": "basic"
+          },
+          {
+            "at": 31,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:2",
+            "source": "skill"
+          },
+          {
+            "at": 37,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 3,
+            "rank": "normal",
+            "enemies": 3
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "914baa8179a5aea96b217e457d06103649bde6c5bbe07bc0a9e7d72b3b428c20",
+        "rewardsSha256": "c366e39124b8d8e98faa64201930ed15cc890065b1bde6acab692aca1bda8d41"
+      }
+    },
+    {
+      "id": "atlas-v3-mage_chain",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v3",
+        "runId": "legacy-atlas-v3-mage_chain",
+        "realmId": "permanent",
+        "seed": "atlas-v3-mage_chain",
+        "encounterRng": 3946313591,
+        "combatRng": 3968125442,
+        "lootRng": 4186822948,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-mage",
+          "baseClass": "mage",
+          "level": 30,
+          "atk": 257,
+          "def": 172,
+          "maxHp": 628,
+          "maxMp": 400,
+          "taken": 0.693,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 628,
+          "mp": 400,
+          "mpRegenPerSecond": 2.4
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 6,
+          "availablePoints": 6,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "mage_chain",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "mage_chain",
+          "baseClass": "mage",
+          "name": "雷鏈清場",
+          "mainSkill": "連鎖閃電",
+          "description": "閃電跳躍清群；密集施放會消耗更多藍水。",
+          "strengths": [
+            "清群"
+          ],
+          "weaknesses": [
+            "耗魔",
+            "單體"
+          ],
+          "tags": [
+            "area"
+          ],
+          "mechanic": "strike",
+          "coefficient": 1.65,
+          "targets": 4,
+          "secondaryMultiplier": 0.85,
+          "cost": 13,
+          "cooldown": 3,
+          "recommendedSupports": [
+            "rapid",
+            "economy"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "pillar_intro",
+        "map": {
+          "id": "pillar_intro",
+          "name": "雅典娜百柱神殿・教學星圖",
+          "themeId": 2,
+          "themeName": "雅典娜百柱神殿",
+          "emoji": "🏛️",
+          "kind": "tutorial",
+          "minLevel": 5,
+          "prerequisites": [
+            "laurel_intro"
+          ],
+          "available": true,
+          "enemyName": "百柱石像",
+          "eliteName": "神殿禁衛百夫長",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 4,
+            "hp": 120,
+            "atk": 12,
+            "def": 6,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 650,
+            "atk": 28,
+            "def": 8,
+            "attackInterval": 4
+          },
+          "rewards": {
+            "roomGold": 18,
+            "roomExp": 30,
+            "completionGold": 40,
+            "completionExp": 60,
+            "material": "atlas_ember"
+          },
+          "hints": [
+            "成群衛兵讓清群、格擋反擊發揮作用。",
+            "凝聚會犧牲清群，換取精英戰傷害。"
+          ]
+        },
+        "queueMode": "count",
+        "mapCount": 3,
+        "mapIndex": 0,
+        "roomIndex": 4,
+        "transitionSeconds": 3,
+        "enemies": [],
+        "hero": {
+          "hp": 628,
+          "mp": 394.2,
+          "shield": 0,
+          "nextActionAt": 35.001,
+          "nextSkillAt": 36.001,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 4,
+        "totals": {
+          "gold": 72,
+          "exp": 120,
+          "materials": {
+            "atlas_shard": 6
+          }
+        },
+        "metrics": {
+          "combatSeconds": 4,
+          "packCombatSeconds": 4,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 33,
+          "damage": 1909,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 0,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 4,
+          "basicAttacks": 0,
+          "manaSpent": 52,
+          "manaDenied": 0,
+          "kills": 16,
+          "roomsCleared": 4,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "skill"
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "skill"
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "skill"
+          },
+          {
+            "at": 13,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:3",
+            "source": "skill"
+          },
+          {
+            "at": 19,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 20,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "skill"
+          },
+          {
+            "at": 20,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:1",
+            "source": "skill"
+          },
+          {
+            "at": 20,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:2",
+            "source": "skill"
+          },
+          {
+            "at": 20,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:3",
+            "source": "skill"
+          },
+          {
+            "at": 26,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 2,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:0",
+            "source": "skill"
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:1",
+            "source": "skill"
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:2",
+            "source": "skill"
+          },
+          {
+            "at": 27,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:3",
+            "source": "skill"
+          },
+          {
+            "at": 33,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 3,
+            "rank": "normal",
+            "enemies": 4
+          },
+          {
+            "at": 34,
+            "type": "enemy_defeated",
+            "enemyId": "0:3:0",
+            "source": "skill"
+          },
+          {
+            "at": 34,
+            "type": "enemy_defeated",
+            "enemyId": "0:3:1",
+            "source": "skill"
+          },
+          {
+            "at": 34,
+            "type": "enemy_defeated",
+            "enemyId": "0:3:2",
+            "source": "skill"
+          },
+          {
+            "at": 34,
+            "type": "enemy_defeated",
+            "enemyId": "0:3:3",
+            "source": "skill"
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "d8890c02e7022a01e63eaf8c2c083bc9d638a02fc6e65930dcadf9c745d8fb88",
+        "rewardsSha256": "96dc8a8bc89b45b917509f5005319ad7f20761276a644339e6d59519cddafade"
+      }
+    },
+    {
+      "id": "atlas-v3-archer_trap",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v3",
+        "runId": "legacy-atlas-v3-archer_trap",
+        "realmId": "permanent",
+        "seed": "atlas-v3-archer_trap",
+        "encounterRng": 1184665880,
+        "combatRng": 1408470133,
+        "lootRng": 3025564790,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-archer",
+          "baseClass": "archer",
+          "level": 30,
+          "atk": 244,
+          "def": 203,
+          "maxHp": 763,
+          "maxMp": 264,
+          "taken": 0.7280000000000001,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 763,
+          "mp": 264,
+          "mpRegenPerSecond": 1.584
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 6,
+          "availablePoints": 6,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "archer_trap",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "archer_trap",
+          "baseClass": "archer",
+          "name": "棘網爆發",
+          "mainSkill": "棘網陷阱",
+          "description": "延遲引爆一群敵人；引爆前仍會承受攻擊。",
+          "strengths": [
+            "群體爆發"
+          ],
+          "weaknesses": [
+            "延遲",
+            "耗魔"
+          ],
+          "tags": [
+            "area",
+            "trap"
+          ],
+          "mechanic": "trap",
+          "coefficient": 2.8,
+          "targets": 3,
+          "cost": 10,
+          "cooldown": 5,
+          "trapDelay": 2,
+          "recommendedSupports": [
+            "wide",
+            "guarded"
+          ],
+          "recommendedAutomation": "balanced",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "grove_intro",
+        "map": {
+          "id": "grove_intro",
+          "name": "阿卡迪亞聖林・教學星圖",
+          "themeId": 3,
+          "themeName": "阿卡迪亞聖林",
+          "emoji": "🌲",
+          "kind": "tutorial",
+          "minLevel": 10,
+          "prerequisites": [
+            "pillar_intro"
+          ],
+          "available": true,
+          "enemyName": "潘神幼獸",
+          "eliteName": "狂暴潘神衛士",
+          "roomCount": 5,
+          "packRooms": 4,
+          "travelSeconds": 6,
+          "entrySeconds": 12,
+          "enemy": {
+            "count": 3,
+            "hp": 200,
+            "atk": 20,
+            "def": 9,
+            "attackInterval": 4
+          },
+          "elite": {
+            "count": 1,
+            "hp": 1100,
+            "atk": 40,
+            "def": 11,
+            "attackInterval": 5
+          },
+          "rewards": {
+            "roomGold": 28,
+            "roomExp": 60,
+            "completionGold": 60,
+            "completionExp": 120,
+            "material": "atlas_venom"
+          },
+          "hints": [
+            "較長戰鬥讓毒、流血與召喚逐步發力。",
+            "護盾與補給能提升完整派遣的存活率。"
+          ]
+        },
+        "queueMode": "duration",
+        "mapCount": null,
+        "mapIndex": 0,
+        "roomIndex": 3,
+        "transitionSeconds": 2,
+        "enemies": [],
+        "hero": {
+          "hp": 763,
+          "mp": 263.504,
+          "shield": 0,
+          "nextActionAt": 32.001000000000005,
+          "nextSkillAt": 35.001000000000005,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 3,
+        "totals": {
+          "gold": 84,
+          "exp": 180,
+          "materials": {
+            "atlas_shard": 4
+          }
+        },
+        "metrics": {
+          "combatSeconds": 9,
+          "packCombatSeconds": 9,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 28,
+          "damage": 1808,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 0,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 3,
+          "basicAttacks": 0,
+          "manaSpent": 30,
+          "manaDenied": 0,
+          "kills": 9,
+          "roomsCleared": 3,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 3
+        },
+        "events": [
+          {
+            "at": 12,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "trap"
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:1",
+            "source": "trap"
+          },
+          {
+            "at": 15,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:2",
+            "source": "trap"
+          },
+          {
+            "at": 21,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 1,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 24,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:0",
+            "source": "trap"
+          },
+          {
+            "at": 24,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:1",
+            "source": "trap"
+          },
+          {
+            "at": 24,
+            "type": "enemy_defeated",
+            "enemyId": "0:1:2",
+            "source": "trap"
+          },
+          {
+            "at": 30,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 2,
+            "rank": "normal",
+            "enemies": 3
+          },
+          {
+            "at": 33,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:0",
+            "source": "trap"
+          },
+          {
+            "at": 33,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:1",
+            "source": "trap"
+          },
+          {
+            "at": 33,
+            "type": "enemy_defeated",
+            "enemyId": "0:2:2",
+            "source": "trap"
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "c09f103ef39773fd3e3aa9144864ccffba114b543c8f870deb147d61c4a59086",
+        "rewardsSha256": "7087eeeb6b3a53994f41558e793d8ffb5ec9edf7257f3c7d86a1627da97fbee7"
+      }
+    },
+    {
+      "id": "atlas-v3-mage_arcane",
+      "now": 1800001800,
+      "run": {
+        "ruleset_version": "atlas-v3",
+        "runId": "legacy-atlas-v3-mage_arcane",
+        "realmId": "permanent",
+        "seed": "atlas-v3-mage_arcane",
+        "encounterRng": 2555929154,
+        "combatRng": 3204022815,
+        "lootRng": 693766317,
+        "startedAt": 1800000000,
+        "processedAt": 1800000037,
+        "durationSeconds": 1800,
+        "elapsedSeconds": 37,
+        "status": "running",
+        "stopReason": null,
+        "endedAt": null,
+        "snapshot": {
+          "characterId": "sample-mage",
+          "baseClass": "mage",
+          "level": 45,
+          "atk": 597,
+          "def": 507,
+          "maxHp": 962,
+          "maxMp": 750,
+          "taken": 0.693,
+          "attackSpeedMultiplier": 1,
+          "hitAttackMultiplier": 1,
+          "pct": {
+            "critPct": 0.02,
+            "dotPct": 0,
+            "summonPct": 0,
+            "shieldPct": 0,
+            "mpEfficiencyPct": 0,
+            "mpCostPct": 0,
+            "skillHastePct": 0,
+            "lifestealPct": 0,
+            "healPerCastPct": 0,
+            "skillDamagePct": 0
+          },
+          "hp": 962,
+          "mp": 750,
+          "mpRegenPerSecond": 4.5
+        },
+        "balanceProfile": {
+          "id": "prototype-20261101",
+          "status": "prototype",
+          "enemyHpMultiplier": 1,
+          "enemyDamageMultiplier": 1,
+          "enemyDefenseMultiplier": 1,
+          "rewardMultiplier": 1,
+          "travelMultiplier": 1,
+          "goldMultiplier": 1,
+          "experienceMultiplier": 1
+        },
+        "talentSnapshot": {
+          "version": "atlas-talents-v1",
+          "allocatedIds": [],
+          "spent": 0,
+          "totalPoints": 9,
+          "availablePoints": 9,
+          "effects": {},
+          "effectText": "尚未配置天賦"
+        },
+        "buildId": "mage_arcane",
+        "supports": [],
+        "automation": "balanced",
+        "skill": {
+          "id": "mage_arcane",
+          "baseClass": "mage",
+          "name": "秘法燃魔",
+          "mainSkill": "秘法聚束",
+          "description": "額外燃燒最大法力的一部分換取單體爆發；補給不足時回到普攻。",
+          "strengths": [
+            "單體爆發"
+          ],
+          "weaknesses": [
+            "耗魔"
+          ],
+          "tags": [
+            "mana"
+          ],
+          "mechanic": "arcane",
+          "coefficient": 3,
+          "targets": 1,
+          "cost": 57,
+          "cooldown": 3,
+          "manaFraction": 0.06,
+          "recommendedSupports": [
+            "focused",
+            "economy"
+          ],
+          "recommendedAutomation": "burst",
+          "damageMultiplier": 1,
+          "durationMultiplier": 1,
+          "costMultiplier": 1,
+          "cooldownMultiplier": 1,
+          "supportShieldFraction": 0
+        },
+        "mapId": "laurel_warden",
+        "map": {
+          "id": "laurel_warden",
+          "name": "月桂巨樹精・試煉",
+          "themeId": 1,
+          "themeName": "阿耳忒彌斯月桂林",
+          "emoji": "🌿",
+          "kind": "boss",
+          "minLevel": 10,
+          "prerequisites": [
+            "grove_intro"
+          ],
+          "available": true,
+          "enemyName": "月桂巨樹精",
+          "eliteName": "月桂巨樹精",
+          "roomCount": 1,
+          "packRooms": 0,
+          "travelSeconds": 6,
+          "entrySeconds": 15,
+          "enemy": {
+            "count": 1,
+            "hp": 2800,
+            "atk": 58,
+            "def": 12,
+            "attackInterval": 5
+          },
+          "elite": {
+            "count": 1,
+            "hp": 2800,
+            "atk": 58,
+            "def": 12,
+            "attackInterval": 5
+          },
+          "rewards": {
+            "roomGold": 50,
+            "roomExp": 120,
+            "completionGold": 90,
+            "completionExp": 180,
+            "material": "atlas_core"
+          },
+          "hints": [
+            "固定戰力的單體首領；不會隨你的裝備變強而同步加血。",
+            "持續傷害、處決與燃魔適合長血條，仍需預留紅藍補給。"
+          ]
+        },
+        "queueMode": "duration",
+        "mapCount": null,
+        "mapIndex": 1,
+        "roomIndex": 0,
+        "transitionSeconds": 0,
+        "enemies": [
+          {
+            "id": "1:0:0",
+            "name": "月桂巨樹精",
+            "rank": "boss",
+            "maxHp": 2832,
+            "hp": 2832,
+            "atk": 58,
+            "def": 12,
+            "attackInterval": 5,
+            "nextAttackAt": 42,
+            "chilledUntil": 0,
+            "dots": []
+          }
+        ],
+        "hero": {
+          "hp": 958,
+          "mp": 730.5,
+          "shield": 0,
+          "nextActionAt": 37.001,
+          "nextSkillAt": 22.000999999999998,
+          "combo": 0,
+          "pets": [],
+          "traps": []
+        },
+        "supplies": {
+          "hp": 30,
+          "mp": 30,
+          "hpInitial": 30,
+          "mpInitial": 30,
+          "hpUsed": 0,
+          "mpUsed": 0,
+          "hpRestore": 50,
+          "mpRestore": 40,
+          "lastHpAt": -1,
+          "lastMpAt": -1
+        },
+        "rewardSequence": 2,
+        "totals": {
+          "gold": 140,
+          "exp": 300,
+          "materials": {
+            "atlas_shard": 4,
+            "atlas_core": 1
+          }
+        },
+        "metrics": {
+          "combatSeconds": 7,
+          "packCombatSeconds": 0,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 7,
+          "travelSeconds": 30,
+          "damage": 2918,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 4,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 2,
+          "basicAttacks": 2,
+          "manaSpent": 114,
+          "manaDenied": 0,
+          "kills": 1,
+          "roomsCleared": 1,
+          "mapsCompleted": 1,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0
+        },
+        "events": [
+          {
+            "at": 15,
+            "type": "room_entered",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "rank": "boss",
+            "enemies": 1
+          },
+          {
+            "at": 22,
+            "type": "enemy_defeated",
+            "enemyId": "0:0:0",
+            "source": "basic"
+          },
+          {
+            "at": 22,
+            "type": "map_completed",
+            "mapIndex": 0
+          },
+          {
+            "at": 37,
+            "type": "room_entered",
+            "mapIndex": 1,
+            "roomIndex": 0,
+            "rank": "boss",
+            "enemies": 1
+          }
+        ]
+      },
+      "expected": {
+        "stateSha256": "cddc5a724a7df3adf5cb7579f08b4f7ec1e8782f994700dbd87412e58700a4ef",
+        "rewardsSha256": "6530dd40262415a5e07b89e99e4cbfb3284a4c77178ae8f77393067883ce49bb"
+      }
+    }
+  ]
+}

@@ -3,14 +3,15 @@ import { computeStats } from '../game/stats.js';
 import { applyExp } from '../game/idle.js';
 import { POTIONS } from '../game/constants.js';
 import { getAtlasCatalog, getAtlasBuild, getAtlasMap, ATLAS_AUTOMATION, ATLAS_SUPPORTS, ATLAS_MAX_MAP_COUNT, ATLAS_QUEUE_MODES } from '../game/atlas-catalog.js';
-import { createAtlasRun, advanceAtlasRun, AtlasRuleError } from '../game/atlas-engine.js';
+import { createAtlasRun, advanceAtlasRun, finalizeAtlasActivities, AtlasRuleError } from '../game/atlas-engine.js';
 import { loadPlayer, clonePlayer, persistStatements, guardStmt, ledgerBatchStmts, classifyDbError } from '../db.js';
 import { withPlayer } from './player.js';
 import { requireBackpackAccess } from './party-presence.js';
 import { applyEquipmentAbilityPatch } from '../realm/asset-preservation.js';
-import { questEventStatements, isPermanentQuestRealm } from './atlas-quests.js';
+import { questEventStatements, activityEventStatements, isPermanentQuestRealm } from './atlas-quests.js';
 import {readAtlasTalents} from './atlas-talents.js';
 import { projectAtlasScene } from '../game/atlas-scene.js';
+import { materializeAtlasEquipment, atlasInventoryDrops } from '../game/atlas-loot.js';
 
 export const ATLAS_RECIPES=Object.freeze([
  {id:'temper',name:'精鐵淬鍊',description:'提高這件裝備的基礎能力 3%；強化值原樣保留。',cost:{atlas_shard:12,atlas_iron:4},stat:'base_stat'},
@@ -55,7 +56,7 @@ export function runView(row,now,realmCutoff=null){
  return {id:row.id,status:row.status,mapId:s.mapId,buildId:s.buildId,queueMode:s.queueMode||'count',mapCount:s.mapCount,completedMaps:s.metrics.mapsCompleted,
   startedAt:s.startedAt*1000,endsAt,processedAt:s.processedAt*1000,
   progress:{ratio:row.status==='completed'?1:Math.min(1,s.elapsedSeconds/s.durationSeconds),elapsedSeconds:target,processedSeconds:s.elapsedSeconds,catchingUp:row.status==='running'&&s.elapsedSeconds<target},
-  report:{gold:s.totals.gold,exp:s.totals.exp,materials:{...s.totals.materials},kills:s.metrics.kills,deaths:row.status==='failed'?1:0,used:{hp:s.supplies.hpUsed,mp:s.supplies.mpUsed},reason:s.stopReason,metrics:s.metrics},
+  report:{gold:s.totals.gold,exp:s.totals.exp,materials:{...s.totals.materials},...(s.ruleset_version==='atlas-v4'?{equipment:s.totals.equipment||0,items:{...s.totals.items}}:{}),kills:s.metrics.kills,deaths:row.status==='failed'?1:0,used:{hp:s.supplies.hpUsed,mp:s.supplies.mpUsed},reason:s.stopReason,metrics:s.metrics},
   supplies:{hp:s.supplies.hp,mp:s.supplies.mp},stopRequested:row.stop_at!=null};
 }
 
@@ -110,6 +111,9 @@ export async function start(env,charId,body,now){
  const signature=JSON.stringify({...(queueMode==='duration'?{queueMode}:{}),charId,mapId:map.id,mapCount,durationMinutes,supplies});
  if(await receipt(db,account,id,'start',signature))return status(env,charId,now);
  ensure(env,now);
+ // New permanent v4 runs need activity storage before reserving supplies.
+ // Keep prior receipts and legacy v1-v3 settlement available during rollout.
+ if(isPermanentQuestRealm(env)&&!await db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='rpg_atlas_activity_events'").first())throw new GameError('atlas_schema_pending','星圖新內容尚未準備完成，請稍後再出征',503);
  const cutoffAt=env.REALM_CONTEXT?.cutoffAt;
  const durationSeconds=Math.min(durationMinutes*60,cutoffAt==null?Infinity:Math.floor(cutoffAt/1000)-Math.floor(now/1000));
  if(durationSeconds<=0)throw new GameError('realm_closed','這個賽季已停止新的出征',409);
@@ -130,7 +134,7 @@ export async function start(env,charId,body,now){
   if(env.ATLAS_PROFILE_JSON){try{balanceProfile=JSON.parse(env.ATLAS_PROFILE_JSON);}catch{throw new GameError('atlas_config','星圖平衡設定無效',503);}}
   const talentState=await readAtlasTalents(ctx.db,work.char);
   const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,talentIds:talentState.allocatedIds,
-   snapshot:{...stats,characterId:charId,baseClass:work.char.base_class,hp:Math.max(1,Math.min(work.char.hp,stats.maxHp)),mp:Math.max(0,Math.min(work.char.mp,stats.maxMp))},
+   snapshot:{...stats,characterId:charId,baseClass:work.char.base_class,classPath:work.char.class_path||'',hp:Math.max(1,Math.min(work.char.hp,stats.maxHp)),mp:Math.max(0,Math.min(work.char.mp,stats.maxMp))},
    supplies:{...supplies,hpRestore:POTIONS.red_1.heal,mpRestore:POTIONS.blue_1.heal}});
   work.inv.red_1=(work.inv.red_1||0)-supplies.hp;work.inv.blue_1=(work.inv.blue_1||0)-supplies.mp;
   return {ledger:[...['hp','mp'].filter(k=>supplies[k]>0).map(k=>({event_id:`atlas:${runId}:reserve:${k}`,tg_id:charId,type:'星圖補給保留',item:k==='hp'?'red_1':'blue_1',item_delta:-supplies[k]}))],extra:[
@@ -159,6 +163,7 @@ export async function settle(env,charId,body,now){
   const reachedBoundary=!advanced.stillCatchingUp&&next.processedAt>=Math.floor(Math.min(stopCutoff,realmCutoff)/1000);
   if(reachedBoundary&&(next.status==='running'||next.status==='expired')){
    next.status='stopped';next.stopReason=realmCutoff<=stopCutoff?'realm_ended':'player_stopped';next.endedAt=next.processedAt;
+   finalizeAtlasActivities(next,advanced.activities);
   }
   if(next.elapsedSeconds===previous.elapsedSeconds&&next.status===previous.status)return status(env,charId,now);
   const work=clonePlayer(loaded),extra=[],entries=[],events=[];const materials={};let gold=0,exp=0,completions=0;
@@ -166,6 +171,12 @@ export async function settle(env,charId,body,now){
    gold+=reward.gold;exp+=reward.exp;if(reward.kind==='completion')completions++;
    if(reward.kind==='completion')events.push({sourceId:`atlas:${reward.id}:completion`,kind:'completion',mapId:reward.mapId,buildId:previous.buildId,occurredAt:(previous.startedAt+reward.elapsedSeconds)*1000});
    for(const [key,qty]of Object.entries(reward.materials))materials[key]=(materials[key]||0)+qty;
+   for(const item of materializeAtlasEquipment(previous,reward,charId)){
+    work.equipment.push(item);entries.push({event_id:'atlas:'+realmId(env)+':'+item.id,tg_id:charId,type:'星圖裝備掉落',item:'equip:'+item.id,item_delta:1,note:JSON.stringify({runId:run.id,mapId:reward.mapId,tier:item.tier,source:'atlas'})});
+   }
+   for(const [key,qty]of Object.entries(atlasInventoryDrops(previous,reward))){
+    work.inv[key]=(work.inv[key]||0)+qty;entries.push({event_id:'atlas:'+realmId(env)+':'+reward.id+':'+key,tg_id:charId,type:'星圖卷軸掉落',item:key,item_delta:qty,note:JSON.stringify({runId:run.id,mapId:reward.mapId})});
+   }
    entries.push({event_id:`atlas:${realmId(env)}:${reward.id}`,tg_id:charId,type:'星圖掉落',gold_delta:reward.gold,exp_delta:reward.exp,note:JSON.stringify({runId:run.id,mapId:reward.mapId,materials:reward.materials})});
   }
   work.char.gold+=gold;work.char.exp+=exp;
@@ -186,6 +197,7 @@ export async function settle(env,charId,body,now){
   for(const [key,qty]of Object.entries(materials))extra.push(db.prepare('INSERT INTO rpg_atlas_materials(char_id,material,quantity) VALUES(?,?,?) ON CONFLICT(char_id,material) DO UPDATE SET quantity=quantity+excluded.quantity').bind(charId,key,qty));
   if(completions)extra.push(db.prepare('INSERT INTO rpg_atlas_progress(char_id,map_id,completions,first_completed_at,last_completed_at) VALUES(?,?,?,?,?) ON CONFLICT(char_id,map_id) DO UPDATE SET completions=completions+excluded.completions,last_completed_at=excluded.last_completed_at').bind(charId,next.mapId,completions,now,now));
   extra.push(...questEvents(env,db,loaded.char.account_tg_id||charId,charId,events,now));
+  if(advanced.activities?.length)extra.push(...activityEventStatements(db,{accountId:loaded.char.account_tg_id||charId,charId,realmId:realmId(env),events:advanced.activities},now));
   extra.push(...ledgerBatchStmts(db,entries,now));
   try{
    await db.batch(persistStatements(db,loaded,work,{extra},now));

@@ -8,6 +8,7 @@ import { freshDb } from '../test/d1-shim.js';
 import { CurrentClientRequest } from '../test/client-request.js';
 import { handle } from '../src/index.js';
 import * as Player from '../src/services/player.js';
+import * as AtlasBackground from '../src/services/atlas-background.js';
 import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
 import {makeGear} from '../src/game/gear.js';
 import {insertEquipStmt} from '../src/db.js';
@@ -28,7 +29,7 @@ const env = {
   // Explicit local QA only: keep real targets alive long enough to inspect release/impact.
   ...(vfxFixture ? { ATLAS_PROFILE_JSON: JSON.stringify({ id: 'local-vfx-long-targets', enemyHpMultiplier: 20 }) } : {}),
   CURRENT_SEASON_ID: 'season_2026_01', ENVIRONMENT: 'development',
-  ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true',
+  ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true', EQUIPMENT_RECOVERY_ENABLED:'true',
 };
 const now = Date.now();
 await initializeRealmIdentity(env, 'permanent', { now });
@@ -42,16 +43,21 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   db.prepare("UPDATE rpg_equipment SET enhance_level=7 WHERE tg_id=? AND slot='weapon'").run(id);
   for (const item of ['red_1', 'blue_1']) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,500) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=500').run(id, item);
   for(const collection of equipmentCollectionCatalog(baseClass).filter(c=>c.tier===1))for(const r of collection.requirements){const item=makeGear({id:`collection-fixture:${id}:${r.slot}`,tgId:id,cls:baseClass,slot:r.slot,kind:r.kind,tier:1,rng:()=>.2,now,source:'local-collection-fixture',forceRarity:'common'});item.enhance_level=r.slot==='weapon'?4:r.minEnhance;await insertEquipStmt(env.DB,item).run();}
+  // Disposable surplus lets the same real API exercise archive, salvage and reroll.
+  for(let i=0;i<14;i++){const sample=makeGear({id:`recovery-fixture:${id}:${i}`,tgId:id,cls:baseClass,slot:i<12?'boots':'ring',tier:1,rng:()=>.2,now,source:i<6?'atlas':'elite',forceRarity:'common',prefix:'試玩'});await insertEquipStmt(env.DB,sample).run();}
   for (const material of ['atlas_shard', 'atlas_iron', 'atlas_ember', 'atlas_venom']) db.prepare('INSERT INTO rpg_atlas_materials(char_id,material,quantity) VALUES(?,?,100)').run(id, material);
 }
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
+let sweeping=false;
+const sweepTimer=setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
+sweepTimer.unref();
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -91,6 +97,6 @@ server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({
   url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, ephemeral: true,
   notice: '本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
 })));
-function close() { server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
+function close() { clearInterval(sweepTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
 process.once('SIGINT', close);
 process.once('SIGTERM', close);

@@ -1,0 +1,131 @@
+星穹之旅：基礎掛機內容、裝備循環與主戰鬥浮窗整合
+日期：2026-11-04
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-idle-content-20261104
+分支：codex/idle-content-integration-20261104
+基線：b633c3cdf4b8df6d8e689b21a8e585cc320bba3e（PR44）
+PR目標分支：codex/scene-live-integration-20261104
+
+一、交付狀態與範圍
+本批把新版基礎掛機的探索、實際掉落、任務進度、舊新裝備典藏與材料用途接成可操作循環。完整驗證結果列於本文後段。
+正式環境依使用者要求保持凍結：未合併、未部署、未執行遠端 migration、未開正式 feature flags。角色素材、技能特效、catalog／queue 及其他工作線未修改。
+這是基礎掛機補齊批次；不代表五輪600級、16招覺醒、全部舊功能UI遷移或季末移轉已完成。
+
+二、7張可玩星圖
+ID | 名稱 | 最低等級 | 固定裝備階級 | 前置
+laurel_intro | 阿耳忒彌斯月桂林・教學星圖 | 1 | T1 | 無
+pillar_intro | 雅典娜百柱神殿・教學星圖 | 5 | T1 | laurel_intro
+grove_intro | 阿卡迪亞聖林・教學星圖 | 10 | T1 | pillar_intro
+laurel_warden | 月桂巨樹精・試煉 | 10 | T1 | grove_intro
+laurel_survey | 阿耳忒彌斯月桂林・深域調查 | 20 | T2 | laurel_warden
+pillar_survey | 雅典娜百柱神殿・深域調查 | 45 | T5 | laurel_survey
+grove_survey | 阿卡迪亞聖林・深域調查 | 75 | T8 | pillar_survey
+教學圖為4普通房＋1菁英房；調查圖為5普通房＋1菁英房；試煉為1個首領房。高等角色刷低圖仍按地圖Tier掉落。
+來源：worker/src/game/atlas-catalog.js、worker/src/game/constants.js。
+
+三、真正影響探索的4種遭遇
+elite_hunt：菁英狩獵；treasure：寶藏；spring：泉水；ambush：伏擊。
+遭遇有實際敵人、戰鬥或補給／獎勵效果；泉水實際回復HP／MP。成功遭遇只在守衛房間真正通過後記入任務，不因看見事件就給完成次數。
+新出征使用atlas-v4；保存地圖的掉落、遭遇及版本快照。既有v1／v2／v3出征維持原規則、狀態及收益。
+來源：worker/src/game/atlas-content.js、worker/src/game/atlas-engine.js。
+
+四、自動掛機與掉落入庫
+可見場景每15秒先讀取狀態，確認目前角色／世界／active run後，最多提交一個有界結算區塊。前景有單一在途請求、節流與切角過期回覆保護。
+背景每分鐘按世界持久游標輪轉，預設每輪12個run、硬上限24；每個run最多補算2000秒。單筆損壞不堵住後方run，競爭以revision與游標CAS處理。
+atlas/status維持純讀；打開浮窗、手動刷新與輪詢不增加遊戲時間或重複發獎。
+裝備與普通武器／防具卷軸是真正加入背包，另有ledger與穩定事件ID。出征快照／角色職業路線／seed／Tier／版本均核對，裝備保留Atlas來源metadata。
+掉落額度由實際探索時間賺取：每10分鐘最多1件裝備、每5分鐘最多1張普通卷。8小時上限48件／96張，仍需滿足房間掉落條件，不保證拿滿；重新出征沒有免費初始額度。
+裝備與卷軸使用獨立亂數流，不改動戰鬥亂數。掉落、材料、任務事件、玩家／run revision、帳務與收據在同一個db.batch提交，重送不再多發。
+來源：worker/src/services/atlas.js、worker/src/services/atlas-background.js、worker/src/game/atlas-loot.js、worker/public/scene-live-session.js。
+
+五、43個任務定義（原18＋新增25）
+分類 | 原有 | 新增 | 合計
+教學 | 5 | 0 | 5
+每日 | 2 | 7 | 9
+每週 | 2 | 6 | 8
+長期 | 9 | 0 | 9
+地區調查鏈 | 0 | 12 | 12
+合計 | 18 | 25 | 43
+43是任務定義數，不是當下畫面含跨期補領實例的卡片數。
+新增每日涵蓋真實擊殺、菁英、存活探索時間、成功遭遇、裝備／卷軸掉落與無HP損傷通關；每週涵蓋跨地區遭遇、不同構築無傷、分區時間、收藏、回收及卷軸路線。
+三地區各4步調查鏈；進度可提前累積，領取時以同一交易核對前一步已領。舊18個任務ID與獎勵維持。
+時間依事件真正發生時刻計入台北日／ISO週，不把整段離線進度算在登入當天。存活時間按分鐘與跨日分段，手動返營／其他終止會一次補齊尾段。
+永久世界活動事實表以帳號＋kind＋source去重；不把這套永久活動寫入季服。相同事件重送不增，來源內容衝突整筆回滾。
+最多4096個事件，按實際序列化UTF-8位元組切成<=500000 bytes的JSON塊；每塊insert＋signature guard仍由來源同一db.batch執行。避免大量離線事件超過D1單值限制。
+來源：worker/src/game/atlas-quests.js、worker/src/services/atlas-quests.js。
+
+六、舊新裝備的三段去處
+1. 首件典藏：涵蓋合法T1–T12裝備及職業／分支武器，以來源、職業、部位、種類、Tier與品質辨識收藏項。一般、菁英、星環、星圖及遺物來源可篩選；+N不是獨立條目，不能靠同件不同強化反覆刷首藏。
+   典藏會永久消耗所選裝備，保存完整快照；預覽與明確勾選確認後才提交。舊收藏冊與既有永久能力不覆蓋，歷史已捐裝備映射為已發現。
+   新典藏本身不再增加一套永久戰力。舊收藏成功收錄同樣計入新收藏週任務。
+2. 重複精煉：每批最多50件，預覽列出名稱、來源、品質、Tier、+N與實得材料；建議清單保留首件並排除高價值／舊收藏需求／穿戴／託管／背景作業裝備。
+   材料產量依Tier與品質有界計算；新手零成本裝備不產精煉材料，但可做首次典藏。珍貴裝備手動消耗另需第二次確認。
+3. 材料重洗：真正消耗角色專用精煉材料與金幣，重洗既有裝備詞條。每次費用為Tier×10材料＋Tier×30金幣。
+   詞條可能變好或變差；保留裝備ID、+N、品質、元素、綁定與來源等metadata，不建立額外裝備、金幣或可交易卷軸。
+   必須符合當前角色／世界、非穿戴／非託管、無衝突背景作業或活動等條件。
+三種操作皆核對完整預覽指紋與提交時裝備快照，消耗／收益／活動／收據原子提交。回覆遺失可用原request取回相同收據；切角、跨世界或晚回覆不能污染目前畫面。
+交易加入託管同步核對完整裝備欄位；重洗與交易交錯時重新讀取或安全衝突，避免成交歷史快照與實物詞條不同。
+來源：worker/src/game/equipment-recovery.js、worker/src/services/equipment-recovery.js、worker/src/services/equipment-collection.js、worker/src/services/trade.js、worker/src/realm/asset-preservation.js。
+
+七、主戰鬥浮窗
+新典藏／精煉／重洗在同一主戰鬥視窗內操作，舊收藏冊、星圖工坊及任務行動入口互通，沿用同一角色與世界脈絡。
+近透明外框與局部較實底色兼顧戰場可見及文字／確認內容可讀；5種來源篩選、搜尋、每頁18件、最多50件選取、精確預覽與確認。
+30秒資料刷新在預覽／待收據／提交時暫停，防止覆蓋選擇。未知結果不盲目重送新操作；提供原收據核對入口。
+任務按教學、每日、每週、長期、調查鏈5類收合，顯示真實進度。
+尚未把全部舊版頁面改完五大入口；本批實作範圍不能取代完整UI重編排驗收。
+來源：worker/public/equipment-recovery-ui.js／.css、worker/public/atlas-ui.js、worker/public/scene-social-preview.js／.css。
+
+八、Schema、開關與相容性
+0041_atlas_activity_quests.sql：永久世界活動事實表、時間／地區索引、所有權及不可變更保護。
+0042_equipment_recovery.sql：裝備典藏快照、角色材料餘額、操作收據。
+0043_atlas_background.sql：世界輪轉游標／revision及running run部分索引。
+三者為additive schema，未重寫既有裝備、角色、強化值或舊任務收據，僅在隔離本機測試使用。
+ATLAS_ENABLED與EQUIPMENT_RECOVERY_ENABLED都預設關閉；worker/wrangler.toml未啟用。
+新v4永久世界出征若缺活動表，會在預約資源前回atlas_schema_pending，避免開出不能結算的run。0040舊schema仍保留舊任務、舊出征收尾與關閉回收功能的相容路徑。
+回收已成功提交的收據在旗標關閉後仍可查回。
+舊v1／v2／v3已有9組中途存檔的最終state／reward SHA與基線一致；原始v1 fixture保持。
+
+
+九、最終驗證與可重現證據
+完整gate：Node v24.7.0，依 scripts/run-tests.mjs 官方完整檔案清單，--test-concurrency=2，未排除任何測試檔。
+Worker：265檔，2610測試全部通過。
+BOT：23檔，205測試全部通過。
+合計2815／2815；0 fail、0 cancelled、0 skipped、0 todo。47個變更程式／CSS／SQL／JSON檔的SHA256在gate前後及提交前核對一致。
+開始2026-11-04T05:30:53.685Z，結束2026-11-04T05:34:55.862Z。
+完整收據：.release-sync/idle-content-20261104/full-tests-20261104T053053685Z.json
+收據SHA256：91e4fcedbd3365f7aa25c8e9c57c53b22f9bf783d0e2ff351a5c0e809925768d
+Worker／BOT完整TAP日誌在相同前綴的-worker.log／-bot.log。
+第一次gate的2605／2607失敗證據保留於full-tests-20261104T051500434Z.json；不能當成功證據。兩個舊斷言已修正：8h測試仍精確保留原+7裝備全部欄位，另對新裝／卷／帳務完整對帳；schema審查只列12個精確新增物件，仍比較全部歷史SQL。
+
+特別驗證：
+- 真8h裝備／卷／活動／ledger原子入庫；重送不多發；裝備INSERT失敗整批回滾。
+- 12種build任意時間分割的state／reward／activity一致；舊v1–v3的9組golden存檔一致。
+- 4職×3深域，以真正computeStats和+4參考裝備重播皆能完成，耗時130–444秒、紅水0–8瓶。這12組代表樣本不是正式玩家族群校準。
+- 4096筆最大sourceId／tag多位元事件：原JSON 6307841 bytes，分為13塊／26 statements，最大498961 bytes。筆數、總量、Unicode保真；整批與跨塊重送不增；末塊衝突回滾全部活動及來源金幣。
+- 回收50件批次、晚到裝備穿戴／世界fence競態、跨世界／帳號／角色、舊schema與關閉旗標收據恢復。
+- 真重洗與交易交錯，成交實物／歷史詞條一致，+N與來源metadata保留。
+
+Chrome真操作：
+最終backend於2026-11-04T05:35重新載入後驗收；390×844與1280×900，7項通過、0pageerror、0bad response。
+首藏預覽不消耗／確認後消耗一次；11件精煉；故意在服務端提交成功後中斷回覆，關窗重開用同payload取回收據不多扣；材料11→1、真重洗保留+4；珍貴物品二次確認及取消；舊收藏仍在同浮窗；五類任務／調查鏈；7張地圖；無手動settle實際自動推進27秒；桌面無橫向溢出。
+證據：.release-sync/idle-content-20261104/browser/results.json及同目錄8張PNG。
+這些是本機Chrome與記憶體合成資料，不是Telegram真機或正式帳號驗收。
+
+十、本機預覽與接手
+http://127.0.0.1:9683/ ：本批主戰鬥場景。
+http://127.0.0.1:9682/ ：隔離記憶體API，無正式資料存取；重啟即重置。
+本批launcher PID 53948，當下收據在.release-sync/idle-content-20261104/preview-process.json；接手應核對收據及實際命令列，不憑舊PID停止程序。
+原9653／9652場景、9654規劃原型及角色工作線未停止。
+啟動：node worker/tools/scene-live-preview.mjs --grok-root=D:/StarJournal/grok-assets --port=9683 --api-port=9682
+操作驗收：node worker/tools/idle-content-browser.cjs
+瀏覽器工具沿用.release-sync/browser-tools/node_modules/playwright；正式runner不依賴此本機工具。
+持久交接：D:\StarJournal\handoff\non-character\STATUS.json、LATEST.md與history。Windows每30分鐘排程保留；本批完成另手動checkpoint。
+Git提交、PR URL與CI最終狀態以該交接及.release-sync/idle-content-20261104交付收據為準；不要從本文件推定已部署。
+
+十一、下一批剩餘工作
+1. 全部舊新版功能的五入口與單一主戰鬥浮窗重編排，尤其穿脫、強化等完整管理；保留同角色／世界，不要求玩家反覆重新選擇。
+2. 逐擊／施法／傷害事件及角色演出接線；本批仍是已提交快照與摘要，不製造假傷害。
+3. 高階藥水、原自訂門檻與指定藥水，以及舊元素／抗性／經驗等特殊效果的完整相容性。
+4. 五輪Lv1–600、16招覺醒、後續高階地圖與專精；現行MAX_LEVEL仍120。
+5. 真實玩家分布的難度與經濟校準、atlas_core等材料的後續用途。
+6. 季末drain／manifest／跨D1匯入／重跑防重／取出專用倉庫，及永久4＋季服4角色完整保留與可選。
+7. 整合完成後才另依使用者授權安排正式Telegram真機驗收及發布；目前不更新正式環境。

@@ -4,6 +4,7 @@ import {loadPlayer,guardStmt,classifyDbError} from '../db.js';
 import {withPlayer} from './player.js';
 import {computeStats} from '../game/stats.js';
 import {gearIconSrc} from '../game/share.js';
+import {activityEventStatements} from './atlas-quests.js';
 
 const enabled=env=>String(env.EQUIPMENT_COLLECTION_ENABLED)==='true';
 const fail=(message,code='equipment_collection',status=409)=>{throw new GameError(code,message,status);};
@@ -69,6 +70,7 @@ export async function submit(env,charId,b,now){
   const deletion=ctx.db.prepare(`DELETE FROM rpg_equipment WHERE id=? AND tg_id=? AND is_equipped=0 AND trade_id IS NULL AND ${fields.map(k=>`"${k}" IS ?`).join(' AND ')} AND NOT EXISTS(SELECT 1 FROM rpg_auto_enhance WHERE item_id=? AND status IN ('running','processing')) AND NOT EXISTS(SELECT 1 FROM rpg_auto_reroll WHERE item_id=? AND status IN ('running','processing'))`).bind(item.id,charId,...fields.map(k=>item[k]),item.id,item.id);
   const extra=[ctx.db.prepare('INSERT INTO rpg_guard(ok) SELECT NULL WHERE NOT EXISTS(SELECT 1 FROM rpg_live_characters c LEFT JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id WHERE c.tg_id=? AND COALESCE(a.active_char_id,c.tg_id)=c.tg_id AND c.party_id IS NULL AND c.atlas_run_id IS NULL AND c.level>=? AND NOT EXISTS(SELECT 1 FROM rpg_party_presence WHERE char_id=c.tg_id))').bind(charId,c.minLevel),ctx.db.prepare('INSERT INTO rpg_equipment_collection_entries(char_id,collection_id,requirement_id,item_id,snapshot_json,created_at) VALUES(?,?,?,?,?,?)').bind(charId,c.id,r.id,item.id,JSON.stringify(item),now),deletion,guardStmt(ctx.db)];
   if(completes){extra.push(ctx.db.prepare('INSERT INTO rpg_equipment_collection_completions(char_id,collection_id,rules_version,bonuses_json,completed_at) VALUES(?,?,?,?,?)').bind(charId,c.id,EQUIPMENT_COLLECTION_VERSION,JSON.stringify(c.bonuses),now),ctx.db.prepare('UPDATE rpg_characters SET equipment_collection_json=? WHERE tg_id=?').bind(JSON.stringify([...new Set([...completedIds,c.id])].sort()),charId),guardStmt(ctx.db));}
+  if(String(env.ATLAS_ENABLED)==='true')extra.push(...activityEventStatements(ctx.db,{accountId:account,charId,realmId:env.REALM_CONTEXT?.id||'permanent',events:[{sourceId:'gearbook:'+charId+':'+b.requestId,kind:'collection',quantity:1,mapId:null,buildId:null,occurredAt:now}]},now));
   extra.push(ctx.db.prepare('INSERT INTO rpg_equipment_collection_operations(account_id,request_id,signature,result_json,created_at) VALUES(?,?,?,?,?)').bind(account,b.requestId,signature,JSON.stringify(result),now));
   return {extra,ledger:[{event_id:`gearbook:${account}:${b.requestId}`,tg_id:charId,type:'裝備收藏收錄',item:item.id,item_delta:-1,note:JSON.stringify(result)},...(completes?[{event_id:`gearbook:complete:${charId}:${c.id}`,tg_id:charId,type:'裝備收藏完成',note:JSON.stringify({collectionId:c.id,bonuses:c.bonuses})}]:[])]};
  });}catch(error){const committed=await replay();if(committed)return {...await view(env,charId,now),result:committed,replayed:true};throw classifyDbError(error)||error;}

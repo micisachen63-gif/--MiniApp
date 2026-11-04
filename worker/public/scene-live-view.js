@@ -9,6 +9,9 @@
     pillar_intro: { themeId: 2, kind: 'tutorial', sourceMap: 2 },
     grove_intro: { themeId: 3, kind: 'tutorial', sourceMap: 3 },
     laurel_warden: { themeId: 1, kind: 'boss', sourceMap: 1 },
+    laurel_survey: { themeId: 1, kind: 'survey', sourceMap: 1 },
+    pillar_survey: { themeId: 2, kind: 'survey', sourceMap: 2 },
+    grove_survey: { themeId: 3, kind: 'survey', sourceMap: 3 },
   });
   const ENEMIES = Object.freeze([
     ['laurel_intro', 'normal', '月光野兔', 'moon_hare'],
@@ -18,8 +21,16 @@
     ['grove_intro', 'normal', '潘神幼獸', 'pan_cub'],
     ['grove_intro', 'elite', '狂暴潘神衛士', 'pan_warden'],
     ['laurel_warden', 'boss', '月桂巨樹精', 'ancient_laurel'],
+    ['laurel_survey', 'normal', '月光野兔', 'moon_hare'],
+    ['laurel_survey', 'elite', '阿耳忒彌斯巡林長', 'artemis_ranger'],
+    ['pillar_survey', 'normal', '百柱石像', 'temple_statue'],
+    ['pillar_survey', 'elite', '神殿禁衛百夫長', 'temple_centurion'],
+    ['grove_survey', 'normal', '潘神幼獸', 'pan_cub'],
+    ['grove_survey', 'elite', '狂暴潘神衛士', 'pan_warden'],
   ]);
   const EVENT_NAMES = { room_entered: '進入新區域', enemy_defeated: '擊敗敵人', map_completed: '完成星圖', completed: '完成派遣', stopped: '返營', dead: '倒地返營', exhausted: '補給耗盡', timed_out: '派遣結束' };
+  const ENCOUNTER_NAMES = { elite_hunt: '精英追獵', treasure: '寶藏', spring: '補給泉水', ambush: '伏擊' };
+  const ITEM_NAMES = { scroll_w: '武器強化卷', scroll_a: '防具強化卷' };
   const viewers = new Set(), metadata = new Map();
   let lastSnapshot = null, lastSyncError = '', nextViewId = 0, hudMounted = false, syncBusy = false;
   const number = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
@@ -27,6 +38,31 @@
   const text = (node, value) => { if (node && node.textContent !== String(value)) node.textContent = String(value); };
   const clamp = value => Math.max(0, Math.min(1, value));
   const byId = id => global.document?.getElementById(id);
+  function reportText(run) {
+    if (!run) return '尚無派遣紀錄';
+    const report = run.report || {}, parts = ['金幣 ' + pretty(report.gold), '經驗 ' + pretty(report.exp)];
+    if (number(report.equipment) !== null) parts.push('裝備 ' + pretty(report.equipment) + ' 件');
+    if (report.items && typeof report.items === 'object' && !Array.isArray(report.items)) {
+      const entries = Object.entries(report.items).filter(([, amount]) => number(amount) !== null && amount >= 0);
+      const total = entries.reduce((sum, [, amount]) => sum + amount, 0);
+      const detail = entries.filter(([, amount]) => amount > 0).map(([item, amount]) => (ITEM_NAMES[item] || '其他道具') + ' × ' + pretty(amount));
+      parts.push('道具 ' + pretty(total) + ' 件' + (detail.length ? '（' + detail.join('、') + '）' : ''));
+    }
+    if (number(report.metrics?.encountersCompleted) !== null) parts.push('完成遭遇 ' + pretty(report.metrics.encountersCompleted) + ' 次');
+    return '本趟累計：' + parts.join(' · ');
+  }
+  function eventText(event) {
+    if (event.type === 'encounter') {
+      const name = event.name || ENCOUNTER_NAMES[event.encounterId] || '特殊遭遇';
+      const recovery = number(event.hpRestored) !== null && number(event.mpRestored) !== null
+        ? ' · 回復生命 ' + pretty(event.hpRestored) + ' / 魔力 ' + pretty(event.mpRestored) : '';
+      return '遇到' + name + recovery;
+    }
+    if (event.type === 'encounter_completed') return '完成遭遇：' + (ENCOUNTER_NAMES[event.encounterId] || '特殊遭遇');
+    if (event.type === 'loot_equipment') return '取得裝備 1 件';
+    if (event.type === 'loot_scroll') return '取得' + (ITEM_NAMES[event.item] || '強化卷') + (number(event.quantity) !== null ? ' × ' + pretty(event.quantity) : '');
+    return EVENT_NAMES[event.type] || '派遣狀態已更新';
+  }
   function experienceProgress(value) {
     if (!value || number(value.current) === null || value.current < 0 || number(value.ratio) === null || value.ratio < 0 || value.ratio > 1) return null;
     if (value.maxLevel === true && value.required === null) return value;
@@ -270,7 +306,7 @@
       nodes.connection.title = syncError || '';
       nodes.connection.hidden = !syncError;
       nodes.expedition.disabled = !value; nodes.refresh.disabled = syncBusy;
-      text(nodes.report, run ? '本趟累計：金幣 ' + pretty(run.report?.gold) + ' · 經驗 ' + pretty(run.report?.exp) : '尚無派遣紀錄');
+      text(nodes.report, reportText(run));
       const enemies = value?.enemies || [];
       nodes.enemies.replaceChildren(...enemies.map(enemy => {
         const item = doc.createElement('li'); item.textContent = enemy.name + ' · ' + pretty(enemy.hp) + ' / ' + pretty(enemy.maxHp) + (enemyAsset(value.map, enemy) ? '' : ' · 素材待對應'); return item;
@@ -279,7 +315,7 @@
       nodes.events.replaceChildren(...events.map(event => {
         const item = doc.createElement('li'), time = number(event.atMs);
         const stamp = time !== null ? new Date(time).toLocaleTimeString('zh-TW', { timeZone: 'Asia/Taipei', hour12: false }) + ' · ' : '';
-        item.textContent = stamp + (EVENT_NAMES[event.type] || '派遣狀態已更新'); return item;
+        item.textContent = stamp + eventText(event); return item;
       }));
       refreshHud();
     }

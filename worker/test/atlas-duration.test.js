@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import { createAtlasRun, advanceAtlasRun } from '../src/game/atlas-engine.js';
+import { materializeAtlasEquipment } from '../src/game/atlas-loot.js';
 import { getAtlasCatalog } from '../src/game/atlas-catalog.js';
 import { benchmarkAtlasRun } from '../src/game/atlas-balance.js';
 import * as Atlas from '../src/services/atlas.js';
@@ -62,7 +63,7 @@ test('duration expiry never grants an incomplete room or whole-map reward', () =
   assert.equal(result.state.status, 'completed');
   assert.equal(result.state.metrics.mapsCompleted, 0);
   assert.deepEqual(result.rewards, []);
-  assert.deepEqual(result.state.totals, { gold: 0, exp: 0, materials: {} });
+  assert.deepEqual(result.state.totals, { gold: 0, exp: 0, materials: {}, equipment: 0, items: {} });
 });
 
 test('a duration death stops the entire queue and retains its unused supply budget', () => {
@@ -217,12 +218,18 @@ test('legacy count request signature replays after upgrade without starting or r
 test('duration service catches up a full high-power window in bounded commits and reconciles its ledger', async t => {
   const { env, db, id } = await serviceFixture(t);
   // Synthetic equipment, not a representative production balance measurement.
-  db.prepare('UPDATE rpg_equipment SET base_stat=100000 WHERE tg_id=?').run(id);
+  // A nonzero +N makes preservation cover actual enhancements as well as identity.
+  db.prepare('UPDATE rpg_equipment SET base_stat=100000,enhance_level=7 WHERE tg_id=?').run(id);
   const equipment = db.prepare('SELECT * FROM rpg_equipment ORDER BY id').all();
+  const originalIds = new Set(equipment.map(item => item.id));
+  const beforeInventory = Object.fromEntries(inventory(db, id).map(row => [row.item, row.quantity]));
   await Atlas.start(env, id, startBody({ durationMinutes: 480, supplies: { hp: 0, mp: 0 } }), T0);
+  const departure = JSON.parse(saved(db, id).state_json);
+  const expected = finish(departure, departure.startedAt + departure.durationSeconds);
+  const settledAt = T0 + 50 * 86400000;
   let result, chunks = 0, processed = 0;
   do {
-    result = await Atlas.settle(env, id, {}, T0 + 50 * 86400000);
+    result = await Atlas.settle(env, id, {}, settledAt);
     const state = JSON.parse(saved(db, id).state_json);
     assert.ok(state.elapsedSeconds - processed <= 2000);
     processed = state.elapsedSeconds;
@@ -236,10 +243,63 @@ test('duration service catches up a full high-power window in bounded commits an
   assert.equal(earned.exp, result.run.report.exp);
   const state = JSON.parse(saved(db, id).state_json);
   assert.equal(earned.n, state.rewardSequence);
-  assert.deepEqual(db.prepare('SELECT * FROM rpg_equipment ORDER BY id').all(), equipment);
+  assert.deepEqual(state, expected.state);
+
+  const afterEquipment = db.prepare('SELECT * FROM rpg_equipment ORDER BY id').all();
+  // Preserve every original column byte-for-byte, including +7; only new IDs may be added.
+  assert.deepEqual(afterEquipment.filter(item => originalIds.has(item.id)), equipment);
+  const newEquipment = afterEquipment.filter(item => !originalIds.has(item.id)).map(item => ({ ...item }));
+  const expectedEquipment = expected.rewards.flatMap(reward => materializeAtlasEquipment(departure, reward, id))
+    .sort((a, b) => a.id < b.id ? -1 : a.id > b.id ? 1 : 0);
+  assert.deepEqual(newEquipment, expectedEquipment);
+  assert.ok(newEquipment.length > 0 && newEquipment.length <= 48);
+  assert.ok(newEquipment.every(item => item.source === 'atlas' && item.tier === departure.map.dropTier && item.enhance_level === 0 && item.is_equipped === 0));
+  assert.equal(state.totals.equipment, newEquipment.length);
+  assert.equal(result.run.report.equipment, newEquipment.length);
+
+  const totals = { gold: 0, exp: 0, materials: {}, equipment: 0, items: {} };
+  for (const reward of expected.rewards) {
+    totals.gold += reward.gold; totals.exp += reward.exp; totals.equipment += reward.equipment.length;
+    for (const key of ['materials', 'items']) for (const [item, quantity] of Object.entries(reward[key]))
+      totals[key][item] = (totals[key][item] || 0) + quantity;
+  }
+  assert.deepEqual(state.totals, totals);
+  assert.deepEqual(result.run.report.items, totals.items);
+  const scrollCount = Object.values(totals.items).reduce((sum, quantity) => sum + quantity, 0);
+  assert.ok(scrollCount > 0 && scrollCount <= 96);
+  assert.ok(Object.keys(totals.items).every(item => ['scroll_w', 'scroll_a'].includes(item)));
+  const expectedInventory = { ...beforeInventory };
+  for (const [item, quantity] of Object.entries(totals.items)) expectedInventory[item] = (expectedInventory[item] || 0) + quantity;
+  assert.deepEqual(Object.fromEntries(inventory(db, id).map(row => [row.item, row.quantity])), expectedInventory);
+  assert.deepEqual(Object.fromEntries(db.prepare('SELECT material,quantity FROM rpg_atlas_materials WHERE char_id=? ORDER BY material').all(id).map(row => [row.material, row.quantity])), totals.materials);
+
+  const expectedLedger = [];
+  const entry = fields => ({ tg_id: id, gold_delta: 0, exp_delta: 0, item: null, item_delta: 0, created_at: settledAt, ...fields });
+  for (const reward of expected.rewards) {
+    expectedLedger.push(entry({ event_id: 'atlas:permanent:' + reward.id, type: '星圖掉落',
+      gold_delta: reward.gold, exp_delta: reward.exp,
+      note: JSON.stringify({ runId: departure.runId, mapId: reward.mapId, materials: reward.materials }) }));
+    for (const item of reward.equipment) expectedLedger.push(entry({
+      event_id: 'atlas:permanent:' + item.id, type: '星圖裝備掉落', item: 'equip:' + item.id, item_delta: 1,
+      note: JSON.stringify({ runId: departure.runId, mapId: reward.mapId, tier: item.tier, source: 'atlas' }) }));
+    for (const [item, quantity] of Object.entries(reward.items)) expectedLedger.push(entry({
+      event_id: 'atlas:permanent:' + reward.id + ':' + item, type: '星圖卷軸掉落', item, item_delta: quantity,
+      note: JSON.stringify({ runId: departure.runId, mapId: reward.mapId }) }));
+  }
+  expectedLedger.sort((a, b) => a.event_id < b.event_id ? -1 : a.event_id > b.event_id ? 1 : 0);
+  const rewardLedger = db.prepare("SELECT event_id,tg_id,type,gold_delta,exp_delta,item,item_delta,note,created_at FROM rpg_ledger WHERE type IN ('星圖掉落','星圖裝備掉落','星圖卷軸掉落') ORDER BY event_id").all();
+  assert.deepEqual(rewardLedger.map(row => ({ ...row })), expectedLedger);
   assert.equal(db.prepare('SELECT completions FROM rpg_atlas_progress WHERE char_id=?').get(id).completions, result.run.completedMaps);
+
+  const inventoryAfter = inventory(db, id);
+  const ledgerAfter = db.prepare('SELECT * FROM rpg_ledger ORDER BY event_id').all();
+  const runAfter = saved(db, id);
   await Atlas.settle(env, id, {}, T0 + 60 * 86400000);
   assert.equal(db.prepare("SELECT COUNT(*) n FROM rpg_ledger WHERE type='星圖掉落'").get().n, earned.n);
+  assert.deepEqual(db.prepare('SELECT * FROM rpg_equipment ORDER BY id').all(), afterEquipment);
+  assert.deepEqual(inventory(db, id), inventoryAfter);
+  assert.deepEqual(db.prepare('SELECT * FROM rpg_ledger ORDER BY event_id').all(), ledgerAfter);
+  assert.deepEqual(saved(db, id), runAfter);
 });
 
 test('duration admission pins its absolute realm cutoff and cannot yield beyond it', async t => {

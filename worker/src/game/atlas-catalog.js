@@ -1,8 +1,8 @@
 import { MAPS } from './constants.js';
 
 /** Prototype values, not production-approved balance. Never retune a saved run. */
-export const ATLAS_RULESET_VERSION = 'atlas-v3';
-export const ATLAS_SUPPORTED_RULESETS = Object.freeze(['atlas-v1','atlas-v2',ATLAS_RULESET_VERSION]);
+export const ATLAS_RULESET_VERSION = 'atlas-v4';
+export const ATLAS_SUPPORTED_RULESETS = Object.freeze(['atlas-v1','atlas-v2','atlas-v3',ATLAS_RULESET_VERSION]);
 export const ATLAS_MAX_DURATION_SECONDS = 8 * 60 * 60;
 export const ATLAS_MAX_MAP_COUNT = 96;
 export const ATLAS_MAX_ADVANCE_STEPS = 2000;
@@ -58,13 +58,50 @@ export const ATLAS_BUILDS = freeze([
   { id: 'thief_combo', baseClass: 'thief', name: '鏡刃連擊', mainSkill: '鏡刃', description: '每第三次施放追加兩次追擊，可轉向下一個存活目標。', strengths: ['連擊', '轉火'], weaknesses: ['耗魔', '承傷'], tags: ['combo'], mechanic: 'combo', coefficient: 1.1, targets: 1, cost: 4, cooldown: 2.5, recommendedSupports: ['rapid', 'economy'], recommendedAutomation: 'balanced' },
 ]);
 
+
+// These coefficients are copied into each run. Changing a future catalog must
+// never retune an already-dispatched v4 map, encounter or loot allowance.
+const lootProfile = () => ({
+  rulesVersion: 'atlas-loot-v1', equipmentEverySeconds: 600, scrollEverySeconds: 300,
+  maxEquipment: 48, maxScrolls: 96,
+  roomEquipmentChance: .10, completionEquipmentChance: .50,
+  roomScrollChance: .18, completionScrollChance: .65, weaponScrollChance: .4,
+});
+const encounterProfile = (themeId, survey = false) => {
+  const weights = ({1:[30,15,40,15],2:[20,40,15,25],3:[30,15,20,35]})[themeId];
+  const labels = ({
+    1:['巡林長追獵','月桂秘藏','月桂清泉','林間伏擊'],
+    2:['禁衛巡獵','神殿藏寶','聖壇泉水','石廊伏擊'],
+    3:['潘神巡獵','聖林秘藏','聖林甘露','密林伏擊'],
+  })[themeId];
+  return {
+    chance: survey ? .40 : .24, maxPerMap: 2,
+    // Teaching maps introduce beneficial events first; combat variants open
+    // in the survey maps instead of unexpectedly ambushing a level-one player.
+    pool: [
+      { id:'elite_hunt',name:labels[0],weight:survey?weights[0]:0,hpMultiplier:1.12,attackMultiplier:1.08,goldBonus:.5,shardBonus:1,equipmentChanceBonus:.15 },
+      { id:'treasure',name:labels[1],weight:weights[1],goldBonus:.5,shardBonus:2,materialBonus:1,equipmentChanceBonus:.2 },
+      { id:'spring',name:labels[2],weight:weights[2],hpFraction:.14,mpFraction:.2 },
+      { id:'ambush',name:labels[3],weight:survey?weights[3]:0,extraEnemies:1,attackIntervalMultiplier:.85,firstAttackSeconds:2,goldBonus:.25,shardBonus:1 },
+    ],
+  };
+};
+const survey = (id, themeId, minLevel, previous, dropTier, enemy, elite, rewards) => ({
+  id, name: `${MAPS[themeId].name}・深域調查`, themeId, themeName:MAPS[themeId].name,
+  emoji:MAPS[themeId].emoji, kind:'survey', minLevel, prerequisites:[previous], available:true,
+  enemyName:MAPS[themeId].monsters[0], eliteName:MAPS[themeId].elite,
+  roomCount:6, packRooms:5, travelSeconds:7, entrySeconds:15,
+  enemy, elite, rewards, dropTier, loot:lootProfile(), encounters:encounterProfile(themeId,true),
+  hints:[`此區裝備產出固定為T${dropTier}，不會隨角色等級提高。`,'巡獵、藏寶、泉水與伏擊會改變這趟探索；完成房間才取得收益。','建議先檢查實際裝備、天賦與補給，再延長調查時間。'],
+});
+
 const tutorial = (id, themeId, minLevel, previous, enemy, elite, rewards, hints) => ({
   id, name: `${MAPS[themeId].name}・教學星圖`, themeId, themeName: MAPS[themeId].name,
   emoji: MAPS[themeId].emoji, kind: 'tutorial', minLevel,
   prerequisites: previous ? [previous] : [], available: true,
   enemyName: MAPS[themeId].monsters[0], eliteName: MAPS[themeId].elite,
   roomCount: 5, packRooms: 4, travelSeconds: 6, entrySeconds: 12,
-  enemy, elite, rewards, hints,
+  enemy, elite, rewards, hints, dropTier:1, loot:lootProfile(), encounters:encounterProfile(themeId),
 });
 
 export const ATLAS_MAPS = freeze([
@@ -90,7 +127,20 @@ export const ATLAS_MAPS = freeze([
     enemy: { count: 1, hp: 2800, atk: 58, def: 12, attackInterval: 5 },
     elite: { count: 1, hp: 2800, atk: 58, def: 12, attackInterval: 5 },
     rewards: { roomGold: 50, roomExp: 120, completionGold: 90, completionExp: 180, material: 'atlas_core' },
+    dropTier:1,loot:lootProfile(),encounters:{chance:0,maxPerMap:0,pool:[]},
     hints: ['固定戰力的單體首領；不會隨你的裝備變強而同步加血。', '持續傷害、處決與燃魔適合長血條，仍需預留紅藍補給。'] },
+  survey('laurel_survey',1,20,'laurel_warden',2,
+    { count:3,hp:450,atk:40,def:8,attackInterval:4 },
+    { count:1,hp:2400,atk:80,def:12,attackInterval:4 },
+    { roomGold:40,roomExp:90,completionGold:100,completionExp:240,material:'atlas_iron' }),
+  survey('pillar_survey',2,45,'laurel_survey',5,
+    { count:4,hp:1800,atk:100,def:16,attackInterval:4.5 },
+    { count:1,hp:9000,atk:240,def:24,attackInterval:4.5 },
+    { roomGold:100,roomExp:260,completionGold:250,completionExp:700,material:'atlas_ember' }),
+  survey('grove_survey',3,75,'pillar_survey',8,
+    { count:4,hp:6500,atk:280,def:28,attackInterval:4.5 },
+    { count:1,hp:30000,atk:650,def:38,attackInterval:5 },
+    { roomGold:240,roomExp:900,completionGold:600,completionExp:2400,material:'atlas_venom' }),
 ]);
 
 export const ATLAS_MATERIALS = freeze([

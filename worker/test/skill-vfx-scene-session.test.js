@@ -103,3 +103,23 @@ test('a context switch inside snapshot listeners prevents trace delivery from th
   await assert.rejects(f.session.request('atlas/settle'), error => error.code === 'context_changed');
   assert.equal(count, 0); f.session.dispose();
 });
+
+
+test('v4 foreground sync publishes the accepted committed trace once without a redundant forced read', async () => {
+  const before = scene(1), after = scene(2);
+  Object.assign(before, { serverNow: 12000 }); Object.assign(before.run, { status: 'running', processedAt: 10000 });
+  Object.assign(after, { serverNow: 12000 }); Object.assign(after.run, { status: 'running', processedAt: 12000 });
+  const f = fixture({
+    'atlas/status': { ok: true, scene: before },
+    'atlas/settle': { ok: true, scene: after, combatTrace: trace(2) },
+  }, { now: () => 20000, pollMs: 15000 });
+  let count = 0;
+  f.session.subscribeCombatTrace((value, accepted) => {
+    count++; assert.equal(accepted, after); assert.equal(f.session.getSnapshot(), after); assert.equal(value.revision, 2);
+  });
+  await f.session.sync();
+  assert.equal(count, 1);
+  assert.deepEqual(f.calls, ['atlas/status', 'atlas/settle']);
+  assert.deepEqual(f.log, ['request:atlas/status', 'scene:1', 'request:atlas/settle', 'scene:2', 'trace:2']);
+  f.session.dispose();
+});

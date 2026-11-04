@@ -37,7 +37,7 @@ const virtualSocial = new Set([
   'scene-live-session.js','scene-live-view.js','scene-live-view.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
-  'equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
+  'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
 ]);
 const angelFiles = new Set(['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png']);
 const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json'].map(name => ['/' + name, name]));

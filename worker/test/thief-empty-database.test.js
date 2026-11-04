@@ -34,15 +34,41 @@ test('fresh initialization preserves historical definitions except reviewed clas
     const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql','0038_atlas_talents.sql','0039_scene_chat.sql','0040_equipment_collection.sql']
       .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
     const realmAtlasObjects=new Map(realmAtlasMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
+    // 0041-0043 are additive, reviewed objects only. Pin their exact names and
+    // types so neither a new prefix match nor migration discovery can exempt
+    // an unrelated historical definition from the strict comparison below.
+    const activityRecoveryObjects=new Map([
+      ['rpg_atlas_activity_events','table'],
+      ['rpg_atlas_activity_time','index'],
+      ['rpg_atlas_activity_region','index'],
+      ['rpg_atlas_activity_world','trigger'],
+      ['rpg_atlas_activity_owner','trigger'],
+      ['rpg_atlas_activity_no_update','trigger'],
+      ['rpg_atlas_activity_no_delete','trigger'],
+      ['rpg_equipment_archive','table'],
+      ['rpg_equipment_recovery_balances','table'],
+      ['rpg_equipment_recovery_operations','table'],
+      ['rpg_atlas_sweep_cursor','table'],
+      ['rpg_atlas_running_sweep','index'],
+    ]);
+    const activityRecoveryMigrations=['0041_atlas_activity_quests.sql','0042_equipment_recovery.sql','0043_atlas_background.sql']
+      .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
+    const observedActivityRecoveryObjects=new Map(activityRecoveryMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
+    assert.deepEqual([...observedActivityRecoveryObjects].sort(),[...activityRecoveryObjects].sort());
+    for(const [name,type] of activityRecoveryObjects){assert.equal(realmAtlasObjects.has(name),false,name);realmAtlasObjects.set(name,type);}
+    realmAtlasMigrations.push(...activityRecoveryMigrations);
     const characterSchema=new DatabaseSync(':memory:');
     characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
     characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
     // Use exact historical target tables for the new triggers. This independent
-    // catalog applies only the four reviewed migrations, never freshDb's list.
+    // catalog applies only the explicitly reviewed migrations, never freshDb's list.
     for(const name of ['rpg_accounts','rpg_party_presence'])characterSchema.exec(before.find(row=>row.type==='table'&&row.name===name).sql);
     for(const sql of realmAtlasMigrations)characterSchema.exec(sql);
     const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
     assert.equal(realmAtlasExpected.length,realmAtlasObjects.size);
+    const runningSweep=realmAtlasExpected.find(row=>row.name==='rpg_atlas_running_sweep');
+    assert.equal(runningSweep.tbl_name,'rpg_atlas_runs');
+    assert.equal(runningSweep.sql,"CREATE INDEX rpg_atlas_running_sweep ON rpg_atlas_runs(realm_id,id) WHERE status='running'");
     const currentCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
     const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
       ? { ...row, sql: row.name==='rpg_characters'?currentCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
@@ -52,7 +78,7 @@ test('fresh initialization preserves historical definitions except reviewed clas
     // activation on real expeditions. Each populated migration test separately
     // verifies every row and all other schema objects. 0034's populated migration
     // proof additionally checks the one nullable retirement column and isolated lifecycle objects.
-    // 0035-0038 add an explicitly enumerated catalog and the nullable TEXT
+    // 0035-0043 add an explicitly enumerated catalog and the nullable TEXT
     // atlas_run_id column. Compare every new definition separately, including
     // unique indexes and triggers, while keeping the historical SQL comparison exact.
     assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)), expected);
