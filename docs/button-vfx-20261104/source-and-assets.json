@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-04T09:35:03.657Z",
+  "base": "8a2e445fcb4735d2dda4b4ed57d44550dad01f69",
+  "buttonSource": "b8197b3ddb20fab044df508daccbae86c57c819b",
+  "pass": true,
+  "coverageSha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8",
+  "vfxSourceCount": 65,
+  "vfxSourceMismatches": [],
+  "materials": [
+    {
+      "name": "button-plate.webp",
+      "url": "http://127.0.0.1:9667/ui/button-materials/button-plate.webp",
+      "getStatus": 200,
+      "headStatus": 200,
+      "contentType": "image/webp",
+      "bytes": 55356,
+      "sha256": "4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57",
+      "headBodyBytes": 0
+    },
+    {
+      "name": "nav-plate.webp",
+      "url": "http://127.0.0.1:9667/ui/button-materials/nav-plate.webp",
+      "getStatus": 200,
+      "headStatus": 200,
+      "contentType": "image/webp",
+      "bytes": 11798,
+      "sha256": "c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b",
+      "headBodyBytes": 0
+    }
+  ],
+  "sources": {
+    "worker/public/scene-social-preview.css": "6b93e25f8aef4dc45da33a08f0b422f9288957852855b6fae16fc9fcf22ea488",
+    "worker/tools/scene-live-preview.mjs": "e140b2922308cbad45bab8745af3fd3c10c54b6a9e6c42a8759757f5902af63d",
+    "worker/tools/button-polish-browser.cjs": "1f874547a7f517317f699677eb99ea5c6670b1835a8e0ee9079f1e34efbc5fd9",
+    "worker/test/scene-preview-assets.test.js": "453c066c6b4c9f67cef1ffc0d649000efa8d7bc4ca98d219457441e7930b1626"
+  }
+}

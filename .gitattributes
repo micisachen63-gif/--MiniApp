@@ -54,3 +54,9 @@ worker/tools/skill-vfx-identity-browser.mjs text eol=lf
 worker/tools/skill-vfx-legacy-presentation-check.mjs text eol=lf
 worker/tools/skill-vfx-live-browser.cjs text eol=lf
 worker/public/skill-vfx-coverage.json text eol=lf
+
+# Reconstruct verified button source CRLF bytes on every checkout.
+worker/public/scene-social-preview.css text eol=crlf
+worker/tools/scene-live-preview.mjs text eol=crlf
+worker/tools/button-polish-browser.cjs text eol=crlf
+worker/test/scene-preview-assets.test.js text eol=crlf
