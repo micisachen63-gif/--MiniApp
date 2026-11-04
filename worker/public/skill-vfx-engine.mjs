@@ -52,7 +52,7 @@ export function buildEffectFrame(skill,progress,options={}) {
  const body=clamp(finite(options.bodyHeight,150),36,480),scale=body/150;
  const from=point(options.from,{x:160,y:240}),dir=DIR[options.direction]??0;
  let to=point(options.to,{x:from.x+Math.cos(dir)*body*1.7,y:from.y+Math.sin(dir)*body*1.7});
- if(recipe.support)to={...from};
+ if((recipe.support&&options.presentationMode!=='impact')||options.presentationMode==='placement')to={...from};
  const theta=Math.atan2(to.y-from.y,to.x-from.x)||dir;
  const targets=(Array.isArray(options.targets)?options.targets:[]).filter(p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)).slice(0,5);
  const seed=hash32(String(options.seed??recipe.variant)+skill.id),low=options.quality==='low';
@@ -96,21 +96,34 @@ export function buildEffectFrame(skill,progress,options={}) {
    sprite(1,p.x,p.y,size,size*.8,a,pulse(q,0,1)*.96);
    sprite(8,p.x+Math.cos(a)*35*scale,p.y+Math.sin(a)*35*scale,20,20,0,pulse(q,0,.8)*.6);
  }
- function field(p,k,power=1) {
+ function field(p,k,power=1,atGround=false) {
    if(k<=0||k>=1)return;const alpha=pulse(k,0,1)*.6;
-   sprite(7,p.x,p.y+body*.34,140*power,58*power,k*.22,alpha);
-   sprite(3,p.x,p.y+body*.35,144*power,54*power,-k*.35,alpha*.67);
-   ring({x:p.x,y:p.y+body*.35},71*power,alpha,.37,1.2);
+   sprite(7,p.x,p.y+(atGround?0:body*.34),140*power,58*power,k*.22,alpha);
+   sprite(3,p.x,p.y+(atGround?0:body*.35),144*power,54*power,-k*.35,alpha*.67);
+   ring({x:p.x,y:p.y+(atGround?0:body*.35)},71*power,alpha,.37,1.2);
  }
  function spirit(asset,p,size,angle,alpha){if(alpha<=.004||layers.length>=limit)return;layers.push({asset,cell:0,x:p.x,y:p.y,w:size*scale,h:size*scale,rotation:Math.sin(angle)*.16,alpha:clamp(alpha),blend:'source-over',flipX:Math.cos(angle)<-.15});}
  const ground={x:from.x,y:from.y+body*.42};
  const composite=options.blendMode==='source-over'?'source-over':null;
+ function finish(){const edge=Math.min(1,t/.045,(1-t)/.13);for(const l of layers)l.alpha*=edge;for(const g of geometry)g.alpha*=edge;return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};}
  if(t<=0||t>=1)return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
  if(options.reducedMotion){
-   const p=recipe.support?from:to,a=pulse(t,0,1)*.65;
+   const p=options.presentationMode==='placement'||(recipe.support&&options.presentationMode!=='impact')?from:to,a=pulse(t,0,1)*.65;
    const cell=recipe.support?4:recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:family==='frost'?5:8):2;
-   sprite(cell,p.x,p.y,92,92,0,a);ring({x:p.x,y:p.y+body*.3},43,a*.4,.38);
+   sprite(cell,p.x,p.y,92,92,0,a);ring({x:p.x,y:p.y+(options.presentationMode==='placement'?0:body*.3)},43,a*.4,.38);
    return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
+ }
+ // Recorded passive hits have no new actor wind-up; trap placement has no hit.
+ if(options.presentationMode==='impact'){
+   const points=[to,...targets.filter(p=>Math.hypot(p.x-to.x,p.y-to.y)>3)].slice(0,5);
+   for(const p of points)burst(p,t,.78,theta);
+   return finish();
+ }
+ if(options.presentationMode==='placement'){
+   // Placement receives the actual foot point, already in ground coordinates.
+   field(from,(t-.05)/.95,.95,true);
+   sprite(3,from.x,from.y,136,50,-t*.12,pulse(t,.04,.98)*.8);
+   return finish();
  }
  // Wind-up is an actual expanding rune and inward-moving motes, not a static full-frame flash.
  const charge=pulse(t,0,.38);
@@ -220,10 +233,7 @@ export function buildEffectFrame(skill,progress,options={}) {
    }
  }
  // Boundary-safe alpha fade guarantees every clip starts and ends fully transparent.
- const edge=Math.min(1,t/.045,(1-t)/.13);
- for(const l of layers)l.alpha*=edge;
- for(const g of geometry)g.alpha*=edge;
- return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
+ return finish();
 }
 
 export function drawEffectFrame(ctx,atlas,frame,extras={}) {
@@ -271,7 +281,8 @@ export function createVfxPlayer(canvas,{catalog,assetBase='/art/skill-vfx-202611
    try{await prepareSkill(skill);}catch(error){if(destroyed||version!==generation)return{accepted:false,reason:destroyed?'destroyed':'superseded'};onError(error);return{accepted:false,reason:'asset_failed'};}
    if(destroyed||version!==generation)return{accepted:false,reason:'superseded'};if(doc?.hidden)return{accepted:false,reason:'hidden'};
    if(typeof options.canStart==='function'&&!options.canStart())return{accepted:false,reason:'superseded'};
-   const age=Math.max(0,finite(options.ageMs,0))+Math.max(0,now()-loadStarted),durationMs=isReduced()?420:recipeFor(skill).durationMs;
+   const normalDuration=recipeFor(skill).durationMs,durationMs=isReduced()?420:options.presentationMode==='impact'?650:options.presentationMode==='placement'?Math.min(1200,normalDuration):normalDuration;
+   const age=clamp(finite(options.startProgress,0))*durationMs+Math.max(0,finite(options.ageMs,0))+Math.max(0,now()-loadStarted);
    if(age>=durationMs)return{accepted:false,reason:'expired'};manual=null;
    if(instances.length>=limit)return{accepted:false,reason:'capacity'};
    const instanceId=++nextId;instances.push({instanceId,skill,options:{...options},startedAt:now()-age,durationMs});if(!frameHandle)frameHandle=raf(tick);return{accepted:true,instanceId,durationMs};

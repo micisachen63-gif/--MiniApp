@@ -18,10 +18,12 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..'), publicRoot = path.resolve(here, '../public');
 const args = new Map();
 for (const value of process.argv.slice(2)) {
-  const match = /^--(grok-root|port|api-port)=(.+)$/.exec(value);
-  if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652]');
+  const match = /^--(grok-root|port|api-port|vfx-fixture)=(.+)$/.exec(value);
+  if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--vfx-fixture=long-targets]');
   args.set(match[1], match[2]);
 }
+if (args.has('vfx-fixture') && args.get('vfx-fixture') !== 'long-targets') throw Error('Unsupported local VFX fixture');
+const vfxFixture = args.get('vfx-fixture') || null;
 if (!args.has('grok-root')) throw Error('A local --grok-root is required');
 const grokRoot = await fs.realpath(path.resolve(args.get('grok-root')));
 const port = Number(args.get('port') || 9653), apiPort = Number(args.get('api-port') || 9652);
@@ -38,6 +40,8 @@ const virtualSocial = new Set([
   'equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
 ]);
 const angelFiles = new Set(['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png']);
+const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json'].map(name => ['/' + name, name]));
+for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
 const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2' };
 let apiProcess = null, stopping = false, apiReady = false;
 
@@ -52,6 +56,13 @@ async function realFile(root, relative) {
   if (!within(root, actual) || !(await fs.stat(actual)).isFile()) throw Object.assign(Error('Asset not found'), { status: 404 });
   return actual;
 }
+async function serveFile(req, res, file) {
+  const stat = await fs.stat(file);
+  res.writeHead(200, { 'Content-Type':types[path.extname(file)] || 'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff' });
+  if (req.method === 'HEAD') { res.end(); return; }
+  const stream = createReadStream(file);
+  stream.on('error', () => res.destroy()); res.on('close', () => stream.destroy()); stream.pipe(res);
+}
 const server = http.createServer(async (req, res) => {
   try {
     if (!['GET','HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
@@ -59,10 +70,12 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html' }); res.end(); return; }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type':'application/json','Cache-Control':'no-store' });
-      res.end(JSON.stringify({ ok:true, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true })); return;
+      res.end(JSON.stringify({ ok:true, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true, vfxFixture })); return;
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
+    const vfxFile = vfxFiles.get(requestPath);
+    if (vfxFile) { await serveFile(req, res, await realFile(publicRoot, vfxFile)); return; }
     if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath)) {
       res.writeHead(404); res.end('Asset not found'); return;
     }
@@ -80,10 +93,7 @@ const server = http.createServer(async (req, res) => {
       else if (angelFiles.has(name)) file = await realFile(publicRoot, `art/hud-angels-20261102/${name}`);
     }
     if (!file) file = await realFile(grokRoot, requestPath.slice(1));
-    const stat = await fs.stat(file);
-    res.writeHead(200, { 'Content-Type':types[path.extname(file)] || 'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff' });
-    if (req.method === 'HEAD') res.end();
-    else { const stream = createReadStream(file); stream.on('error', () => res.destroy()); res.on('close', () => stream.destroy()); stream.pipe(res); }
+    await serveFile(req, res, file);
   } catch (error) {
     if (res.headersSent) { res.destroy(); return; }
     const status = error.status || (error.code === 'ENOENT' ? 404 : 503);
@@ -94,7 +104,7 @@ const server = http.createServer(async (req, res) => {
 });
 server.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });
 server.listen(port, '127.0.0.1', () => {
-  apiProcess = spawn(process.execPath, [path.join(here,'atlas-local-preview.mjs'),`--port=${apiPort}`,`--preview-origin=${origin}`], { cwd:repo, stdio:['ignore','pipe','pipe'], windowsHide:true });
+  apiProcess = spawn(process.execPath, [path.join(here,'atlas-local-preview.mjs'),`--port=${apiPort}`,`--preview-origin=${origin}`, ...(vfxFixture ? ['--vfx-fixture=' + vfxFixture] : [])], { cwd:repo, stdio:['ignore','pipe','pipe'], windowsHide:true });
   apiProcess.stdout.on('data', chunk => { process.stdout.write(chunk); if (chunk.toString().includes('"isolated":true')) apiReady = true; });
   apiProcess.stderr.on('data', chunk => process.stderr.write(chunk));
   apiProcess.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });

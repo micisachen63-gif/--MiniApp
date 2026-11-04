@@ -5,6 +5,8 @@
  */
 const CONTEXT_KEYS = Object.freeze(['accountId', 'realmId', 'characterId', 'dispatchId']);
 const DIRECTIONS = new Set(['right', 'left', 'up', 'down']);
+const EFFECT_KINDS = new Set(['dot', 'pet', 'trap', 'counter']);
+const PRESENTATION_MODES = new Set(['full', 'placement', 'impact']);
 const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
 const finite = value => typeof value === 'number' && Number.isFinite(value);
 const identifier = value => typeof value === 'string' && value.length > 0 && value.length <= 256;
@@ -34,6 +36,9 @@ function boundedOption(name, value, min, max, integer = false) {
 /**
  * onCast(event, {signal, isCurrent, context}) may await an explicitly authored
  * character release marker and return {from, to, targets, direction, bodyHeight}.
+ * onEffect handles committed periodic effects without replaying the actor cast.
+ * Either hook may additionally return presentation:{startProgress,elapsedMs,mode}.
+ * This presentation clock never replaces event.atMs eligibility checks.
  * It does not infer a release time, damage, cooldown, hit count, or outcome.
  * skillIds/isKnownSkill are optional; player.hasSkill is used when available.
  */
@@ -50,6 +55,7 @@ export function createCombatVfxAdapter(player, options = {}) {
   const clock = options.now ?? Date.now;
   if (typeof clock !== 'function') throw new TypeError('now must be a function.');
   if (options.onCast !== undefined && typeof options.onCast !== 'function') throw new TypeError('onCast must be a function.');
+  if (options.onEffect !== undefined && typeof options.onEffect !== 'function') throw new TypeError('onEffect must be a function.');
   if (options.isKnownSkill !== undefined && typeof options.isKnownSkill !== 'function') throw new TypeError('isKnownSkill must be a function.');
   const explicitSkills = options.skillIds === undefined ? null : new Set(options.skillIds);
   if (explicitSkills && [...explicitSkills].some(id => !identifier(id))) throw new TypeError('skillIds must contain skill ID strings.');
@@ -124,9 +130,10 @@ export function createCombatVfxAdapter(player, options = {}) {
     counts.received++;
     if (destroyed) return reject('destroyed');
     if (!context) return reject('no-context');
-    if (!object(raw) || raw.schemaVersion !== 1 || raw.source !== 'committed-combat' || raw.type !== 'skill_cast') return reject('unsupported-event');
+    if (!object(raw) || raw.schemaVersion !== 1 || raw.source !== 'committed-combat' || !['skill_cast', 'skill_effect'].includes(raw.type)) return reject('unsupported-event');
     if (!identifier(raw.eventId) || !identifier(raw.skillId) || !Number.isSafeInteger(raw.revision) || raw.revision < 0
       || !Number.isSafeInteger(raw.atMs) || raw.atMs < 0) return reject('invalid-event');
+    if (raw.type === 'skill_effect' && !EFFECT_KINDS.has(raw.effectKind)) return reject('invalid-event');
     if (!sameContext(context, raw.context)) return reject('context-mismatch');
     const render = presentation(raw);
     if (!render || (raw.seed !== undefined && !Number.isSafeInteger(raw.seed))) return reject('invalid-geometry');
@@ -140,29 +147,42 @@ export function createCombatVfxAdapter(player, options = {}) {
     // Never evict a recent ID to make room: that would permit its replay.
     if (seen.size >= maxEvents) return reject('replay-window-full');
     const event = Object.freeze({
-      schemaVersion: 1, source: 'committed-combat', type: 'skill_cast',
+      schemaVersion: 1, source: 'committed-combat', type: raw.type,
+      ...(raw.type === 'skill_effect' ? { effectKind: raw.effectKind } : {}),
       eventId: raw.eventId, skillId: raw.skillId, revision: raw.revision, atMs: raw.atMs,
       context: copyContext(raw.context), ...render, seed: raw.seed ?? seedFor(raw.eventId),
     });
     const entry = { event, revision: event.revision, atMs: event.atMs, generation, signal: controller.signal, status: 'pending' };
     seen.set(event.eventId, entry);
-    let actual = render;
+    let actual = render, presentationClock = null;
+    const hook = event.type === 'skill_effect' ? options.onEffect : options.onCast;
     try {
-      if (options.onCast) {
+      if (hook) {
         // A hook sees its own coordinate copies and cannot mutate validated data.
         const hookEvent = { ...event, context: { ...event.context }, ...presentation(render) };
-        const overrides = await options.onCast(hookEvent, {
+        const overrides = await hook(hookEvent, {
           context: { ...event.context }, signal: entry.signal,
           isCurrent: () => !currentReason(entry),
         });
         const stale = currentReason(entry);
         if (stale) { forget(entry); return reject(stale); }
-        if (overrides === false) { forget(entry); return reject('cast-cancelled'); }
+        if (overrides === false) { forget(entry); return reject(event.type === 'skill_effect' ? 'effect-cancelled' : 'cast-cancelled'); }
         if (overrides !== null && overrides !== undefined) {
           if (!object(overrides)) { forget(entry); return reject('invalid-cast-geometry'); }
           const allowed = {};
           for (const key of ['from', 'to', 'targets', 'direction', 'bodyHeight']) {
             if (Object.hasOwn(overrides, key)) allowed[key] = overrides[key];
+          }
+          if (Object.hasOwn(overrides, 'presentation')) {
+            const timing = overrides.presentation;
+            const startProgress = timing?.startProgress ?? 0, elapsedMs = timing?.elapsedMs ?? 0;
+            const mode = timing?.mode ?? (event.type === 'skill_effect' ? 'impact' : 'full');
+            if (!object(timing) || !finite(startProgress) || startProgress < 0 || startProgress > 1
+              || !finite(elapsedMs) || elapsedMs < 0 || elapsedMs > 60000 || !PRESENTATION_MODES.has(mode)
+              || (event.type === 'skill_effect' && mode !== 'impact')) {
+              forget(entry); return reject('invalid-presentation');
+            }
+            presentationClock = { startProgress, elapsedMs, mode, returnedAtMs: clockValue() };
           }
           actual = presentation({ ...render, ...allowed });
           if (!actual) { forget(entry); return reject('invalid-cast-geometry'); }
@@ -170,9 +190,17 @@ export function createCombatVfxAdapter(player, options = {}) {
       }
       const stale = currentReason(entry);
       if (stale) { forget(entry); return reject(stale); }
+      // A one-second settlement effect is still eligible by event.atMs, but its
+      // brief impact presentation begins when received, not one second into it.
+      if (event.type === 'skill_effect' && !presentationClock) {
+        presentationClock = { startProgress: 0, elapsedMs: 0, mode: 'impact', returnedAtMs: clockValue() };
+      }
       const result = await player.play({
         skillId: event.skillId, ...actual, seed: event.seed,
-        ageMs: Math.max(0, clockValue() - event.atMs),
+        ageMs: presentationClock
+          ? presentationClock.elapsedMs + Math.max(0, clockValue() - presentationClock.returnedAtMs)
+          : Math.max(0, clockValue() - event.atMs),
+        ...(presentationClock ? { startProgress: presentationClock.startProgress, presentationMode: presentationClock.mode } : {}),
         canStart: () => !currentReason(entry),
       });
       const after = currentReason(entry, result?.accepted !== true);

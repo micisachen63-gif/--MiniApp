@@ -46,8 +46,19 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
     return { children, textContent: '', style: {}, dataset: {}, classList: { add() {}, toggle() {} }, setAttribute() {}, removeAttribute() {}, appendChild(child) { children.push(child); }, replaceChildren() {}, remove() {}, querySelector(selector) { if (!selectors.has(selector)) selectors.set(selector, node()); return selectors.get(selector); } };
   };
   const document = { documentElement: node(), body: node(), createElement: node, querySelector: () => null, getElementById: () => null };
-  const handlers = new Map();
-  const window = { document, __RpgScenePreviewConfig: { live }, addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); }, dispatchEvent(event) { for (const callback of handlers.get(event.type) || []) callback(event); } };
+  const handlers = new Map(), sceneEvents = new Map();
+  const window = {
+    document, __RpgScenePreviewConfig: { live },
+    addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); },
+    removeEventListener(type, callback) { handlers.set(type, (handlers.get(type) || []).filter(value => value !== callback)); },
+    dispatchEvent(event) { for (const callback of handlers.get(event.type) || []) callback(event); },
+    // This frame-lifetime fixture has no VFX art catalog. The independent
+    // renderer may fail its optional bootstrap without changing actor frames.
+    fetch: async url => {
+      if (url !== '/skill-vfx-catalog.json') throw Error('Unexpected fixture fetch: ' + url);
+      return { ok: false, status: 404 };
+    },
+  };
   const graphics = { mask: null, clear() {}, fillStyle() { return this; }, fillRect() { return this; }, setMask(mask) { this.mask = mask; }, clearMask() { this.mask = null; } };
   const layer = { length: 0, mask: null, setDepth() {}, setMask(mask) { this.mask = mask; }, clearMask() { this.mask = null; } };
   const listeners = new Map(), queue = [];
@@ -61,7 +72,11 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
   const scene = {
     game: { renderer: { gl: webgl ? {} : null } }, scale: { width: 390, height: 844 },
     cameras: { main: camera }, sys: { displayList: {} },
-    events: { once(event, fn) { if (event === 'shutdown') shutdown.push(fn); } },
+    events: {
+      once(event, fn) { if (event === 'shutdown') shutdown.push(fn); },
+      on(event, fn) { if (!sceneEvents.has(event)) sceneEvents.set(event, new Set()); sceneEvents.get(event).add(fn); return this; },
+      off(event, fn) { sceneEvents.get(event)?.delete(fn); return this; },
+    },
     add: { layer: () => layer, image: (x, y, key, frame) => new Image(key, frame).setPosition(x, y), sprite: (x, y, key) => new Image(key).setPosition(x, y) },
     make: { image: ({ key, frame }) => new Image(key, frame) },
     anims: { exists: key => animations.has(key), create(value) { animations.set(value.key, value); }, generateFrameNumbers: key => [{ key, frame: 0 }], remove: key => animations.delete(key) },
@@ -102,7 +117,12 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
   };
   vm.runInNewContext(readabilitySource, { window, document });
   const readability = window.RpgHeroReadability.mount(scene, { hero, monsters: () => monsters, ready: () => animator.ready, hpGraphics: graphics });
-  vm.runInNewContext(viewSource, { window, Intl, Number, Object, Set, Map, String, Error, Date });
+  vm.runInNewContext(viewSource, { window, Intl, Number, Object, Set, Map, String, Error, Date, AbortController }, {
+    importModuleDynamically(specifier) {
+      if (!['/skill-vfx-engine.mjs', '/skill-vfx-actor-bridge.mjs'].includes(specifier)) throw Error('Unexpected fixture import: ' + specifier);
+      return import(new URL('../public/' + specifier.slice(1), import.meta.url).href);
+    },
+  });
   const hooks = { hero, ground, animator, hpGraphics: graphics, resetReadability: () => readability.reset(), setMonsters: value => { monsters = value; }, getWorld: () => world, setWorld: value => { world = value; }, ui: { setHP() {}, setMP() {}, setXP() {}, target() {}, toggle() {} } };
   const render = () => { for (const image of images) if (image.active && image.visible && image.alpha > 0) image.getBounds(); };
   return { scene, window, hero, ground, animator, readability, graphics, layer, hooks, pending, loads, images, texture, render, shutdown };

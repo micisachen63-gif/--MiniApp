@@ -4,6 +4,7 @@ import {
   ATLAS_AUTOMATION, ATLAS_SUPPORTED_RULESETS, ATLAS_QUEUE_MODES, getAtlasBuild, getAtlasMap,
 } from './atlas-catalog.js';
 import {applyAtlasTalentSnapshot} from './atlas-talents.js';
+import { createAtlasCombatObserver } from './atlas-combat-observer.js';
 
 /** Pure rules only. The API must authorize the realm/character, enforce map
  * minLevel/prerequisites, reserve supplies, pause legacy idle, and atomically
@@ -231,17 +232,19 @@ function applyDot(state, enemy, source, duration, damage) {
   enemy.dots.push({ source, remaining: Math.ceil(duration), damage: Math.max(1, Math.round(damage)), appliedAt: state.elapsedSeconds });
 }
 
-function dealDamage(state, enemy, amount, source, critical = false) {
+function dealDamage(state, enemy, amount, source, critical = false, observation) {
   if (!enemy || enemy.hp <= 0) return 0;
   const mitigation = source === 'dot' ? 1 : 100 / (100 + enemy.def * 4);
   const critChance = clamp(.05 + state.snapshot.pct.critPct + (state.skill.critChance || 0), 0, .8);
   const crit = critical && random(state) < critChance ? 1.7 : 1;
+  const hpBefore = enemy.hp;
   const damage = Math.min(enemy.hp, Math.max(1, Math.round(amount * mitigation * crit)));
   enemy.hp -= damage;
   state.metrics.damage += damage;
   if (source === 'dot') state.metrics.dotDamage += damage;
   if (source === 'pet') state.metrics.petDamage += damage;
   if (source === 'counter') state.metrics.counterDamage += damage;
+  observation?.hit(enemy, { damage, source, critical: crit > 1, hpBefore, hpAfter: enemy.hp });
   if (source !== 'dot' && state.snapshot.pct.lifestealPct > 0) state.hero.hp = Math.min(state.snapshot.maxHp, state.hero.hp + Math.floor(damage * clamp(state.snapshot.pct.lifestealPct, 0, .2)));
   if (enemy.hp === 0) {
     state.metrics.kills++;
@@ -267,20 +270,22 @@ function skillDamage(state, enemy, index = 0) {
   return amount;
 }
 
-function cast(state) {
+function cast(state, observer, actionAt) {
   const { hero, skill, snapshot } = state;
+  const observation = observer?.beginCast(state, actionAt);
   hero.mp = round(hero.mp - skill.cost);
   state.metrics.manaSpent += skill.cost; state.metrics.casts++;
   shield(state, skill.supportShieldFraction + (skill.shieldFraction || 0));
   if (snapshot.pct.healPerCastPct > 0) hero.hp = Math.min(snapshot.maxHp, hero.hp + Math.round(snapshot.maxHp * Math.min(.2, snapshot.pct.healPerCastPct)));
   if (skill.mechanic === 'trap') {
     hero.traps.push({ triggerAt: state.elapsedSeconds + skill.trapDelay, targets: skill.targets, damage: snapshot.atk * skill.coefficient * skill.damageMultiplier });
+    observation?.finish(state);
     return;
   }
   const targets = alive(state).slice(0, skill.targets);
   for (let index = 0; index < targets.length; index++) {
     const enemy = targets[index];
-    dealDamage(state, enemy, skillDamage(state, enemy, index), 'skill', true);
+    dealDamage(state, enemy, skillDamage(state, enemy, index), 'skill', true, observation);
     if ((skill.mechanic === 'poison' || skill.mechanic === 'bleed') && enemy.hp > 0) {
       applyDot(state, enemy, skill.mechanic, skill.dotDuration * skill.durationMultiplier,
         snapshot.atk * skill.dotCoefficient * skill.damageMultiplier * clamp(1 + snapshot.pct.dotPct, .1, 4));
@@ -299,13 +304,14 @@ function cast(state) {
       state.metrics.comboBursts++;
       for (let index = 0; index < 2; index++) {
         const target = alive(state)[0];
-        if (target) dealDamage(state, target, snapshot.atk * skill.coefficient * skill.damageMultiplier, 'skill', true);
+        if (target) dealDamage(state, target, snapshot.atk * skill.coefficient * skill.damageMultiplier, 'skill', true, observation);
       }
     }
   }
+  observation?.finish(state);
 }
 
-function heroActions(state) {
+function heroActions(state, observer) {
   const { hero, skill, snapshot } = state;
   const interval = 2 / snapshot.attackSpeedMultiplier;
   // Native speed affects event timestamps, not the number of settlement requests.
@@ -319,7 +325,7 @@ function heroActions(state) {
       (state.automation === 'balanced' ? enemies.length > 1 || hero.mp >= snapshot.maxMp * .35 : hero.mp >= snapshot.maxMp * .5);
     if (ready && strategyAllows && hero.mp < skill.cost && skill.cost <= snapshot.maxMp && (state.automation === 'burst' || strong)) drinkMp(state);
     if (ready && strategyAllows && hero.mp >= skill.cost) {
-      cast(state); hero.nextSkillAt = actionAt + skill.cooldown;
+      cast(state, observer, actionAt); hero.nextSkillAt = actionAt + skill.cooldown;
     } else {
       if (ready && strategyAllows && hero.mp < skill.cost) state.metrics.manaDenied++;
       state.metrics.basicAttacks++;
@@ -328,12 +334,14 @@ function heroActions(state) {
   }
 }
 
-function periodic(state) {
+function periodic(state, observer) {
   for (const enemy of state.enemies) {
     if (enemy.hp <= 0) continue;
     for (const dot of [...enemy.dots]) {
       if (dot.appliedAt >= state.elapsedSeconds) continue;
-      dealDamage(state, enemy, dot.damage, 'dot');
+      const observation = observer?.beginEffect(state, 'dot', state.elapsedSeconds);
+      dealDamage(state, enemy, dot.damage, 'dot', false, observation);
+      observation?.finish(state);
       dot.remaining--;
       if (enemy.hp <= 0) break;
     }
@@ -343,7 +351,11 @@ function periodic(state) {
     pet.remaining--;
     if (pet.nextAttackAt <= state.elapsedSeconds) {
       const enemy = alive(state)[0];
-      if (enemy) dealDamage(state, enemy, pet.damage, 'pet');
+      if (enemy) {
+        const observation = observer?.beginEffect(state, 'pet', pet.nextAttackAt);
+        dealDamage(state, enemy, pet.damage, 'pet', false, observation);
+        observation?.finish(state);
+      }
       pet.nextAttackAt += 2;
     }
   }
@@ -351,15 +363,18 @@ function periodic(state) {
   for (const trap of state.hero.traps) {
     if (trap.triggerAt > state.elapsedSeconds) continue;
     state.metrics.trapsTriggered++;
-    for (const enemy of alive(state).slice(0, trap.targets)) dealDamage(state, enemy, trap.damage, 'trap', true);
+    const observation = observer?.beginEffect(state, 'trap', trap.triggerAt);
+    for (const enemy of alive(state).slice(0, trap.targets)) dealDamage(state, enemy, trap.damage, 'trap', true, observation);
+    observation?.finish(state);
   }
   state.hero.traps = state.hero.traps.filter(trap => trap.triggerAt > state.elapsedSeconds);
 }
 
-function enemyActions(state) {
+function enemyActions(state, observer) {
   const { hero, snapshot, skill } = state;
   for (const enemy of alive(state)) {
     if (enemy.hp <= 0 || enemy.nextAttackAt > state.elapsedSeconds) continue;
+    const attackAt = enemy.nextAttackAt;
     drinkHp(state);
     let damage = Math.max(1, Math.round(enemy.atk * snapshot.taken * (100 / (100 + snapshot.def * 2))));
     const blocked = skill.mechanic === 'counter' && random(state) < skill.blockChance;
@@ -373,8 +388,12 @@ function enemyActions(state) {
     hero.hp -= actual; state.metrics.damageTaken += actual;
     enemy.nextAttackAt += enemy.attackInterval * (enemy.chilledUntil > state.elapsedSeconds ? 1.5 : 1);
     if (hero.hp <= 0) { finish(state, 'dead', 'hp_depleted'); return; }
-    if (blocked) for (const target of alive(state).slice(0, 3)) {
-      dealDamage(state, target, snapshot.atk * skill.counterCoefficient * skill.damageMultiplier, 'counter', true);
+    if (blocked) {
+      const observation = observer?.beginEffect(state, 'counter', attackAt);
+      for (const target of alive(state).slice(0, 3)) {
+        dealDamage(state, target, snapshot.atk * skill.counterCoefficient * skill.damageMultiplier, 'counter', true, observation);
+      }
+      observation?.finish(state);
     }
   }
 }
@@ -422,7 +441,7 @@ function clearRoom(state, rewards) {
   return true;
 }
 
-function tick(state, rewards) {
+function tick(state, rewards, observer) {
   state.elapsedSeconds++; state.processedAt = state.startedAt + state.elapsedSeconds;
   state.hero.mp = Math.min(state.snapshot.maxMp, round(state.hero.mp + state.snapshot.mpRegenPerSecond));
   if (state.transitionSeconds > 0) {
@@ -442,11 +461,11 @@ function tick(state, rewards) {
   if (state.map.kind === 'boss') state.metrics.bossCombatSeconds++;
   else if (state.roomIndex >= state.map.packRooms) state.metrics.eliteCombatSeconds++;
   else state.metrics.packCombatSeconds++;
-  periodic(state);
+  periodic(state, observer);
   if (clearRoom(state, rewards)) return;
-  heroActions(state);
+  heroActions(state, observer);
   if (clearRoom(state, rewards)) return;
-  enemyActions(state);
+  enemyActions(state, observer);
   if (state.status === 'running') clearRoom(state, rewards);
 }
 
@@ -455,6 +474,8 @@ function tick(state, rewards) {
  * identical receipts; advancing the committed output emits no duplicates.
  * A maxSteps chunk never discards unprocessed elapsed time. Call again with the
  * returned state and SAME now while stillCatchingUp is true.
+ * options.combatTrace enables a bounded, non-persistent observation sidecar.
+ * It never changes state/rewards/RNG and is not public until the API commits.
  */
 export function advanceAtlasRun(run, nowSeconds, options = {}) {
   if (!run || !ATLAS_SUPPORTED_RULESETS.includes(run.ruleset_version)) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
@@ -462,13 +483,15 @@ export function advanceAtlasRun(run, nowSeconds, options = {}) {
   const maxSteps = number(options.maxSteps, 'maxSteps', 1, ATLAS_MAX_ADVANCE_STEPS, ATLAS_MAX_ADVANCE_STEPS, true);
   if (now < run.startedAt) fail('atlas_clock_before_start', '結算時間早於出發');
   const state = clone(run);
+  const observer = options.combatTrace ? createAtlasCombatObserver(state, options.combatTrace) : null;
   const rewards = [];
   const target = Math.min(Math.floor(now - state.startedAt), state.durationSeconds);
   let steps = 0;
   while (state.status === 'running' && state.elapsedSeconds < target && steps < maxSteps) {
-    tick(state, rewards); steps++;
+    tick(state, rewards, observer); steps++;
     if (state.status === 'running' && state.elapsedSeconds >= state.durationSeconds) finish(state, state.queueMode === 'duration' ? 'completed' : 'expired', 'duration_reached');
   }
   return { state, rewards, steps, processedAt: state.processedAt,
-    stillCatchingUp: state.status === 'running' && state.elapsedSeconds < target };
+    stillCatchingUp: state.status === 'running' && state.elapsedSeconds < target,
+    ...(observer ? { combatTrace: observer.snapshot() } : {}) };
 }

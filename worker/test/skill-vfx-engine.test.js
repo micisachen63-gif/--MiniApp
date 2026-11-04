@@ -370,3 +370,85 @@ test('late loads, expired events, and a changed actor admission gate cannot star
   assert.equal(surface.rafCount(), 0);
   player.destroy();
 });
+
+test('recorded passive hits render only actual targets without another summon or caster charge', () => {
+  const skill = byId.get('atlas:archer_beast'), from = { x: 40, y: 60 }, to = { x: 1800, y: 300 }, second = { x: 2200, y: 650 };
+  for (const progress of [.05, .3, .75]) {
+    const frame = buildEffectFrame(skill, progress, { from, to, targets: [to, second], presentationMode: 'impact' });
+    assert.ok(frame.layers.length > 0);
+    assert.ok(frame.layers.every(layer => !layer.asset), 'a pet hit must not summon new birds');
+    assert.ok(visiblePoints(frame).every(p => [to, second].some(target => Math.hypot(p.x-target.x, p.y-target.y) < 220)), 'only recorded target geometry is used');
+  }
+  const defensive = catalog.skills.find(s => s.kind === 'shield');
+  for (const reducedMotion of [false, true]) {
+    const frame = buildEffectFrame(defensive, .3, { from, to, presentationMode: 'impact', reducedMotion });
+    assert.ok(frame.layers.every(layer => Math.hypot(layer.x-to.x, layer.y-to.y) < 220));
+  }
+});
+
+test('trap placement has no remote enemy impact and remains independent of unknown target coordinates', () => {
+  const skill = byId.get('atlas:archer_trap'), from = { x: 320, y: 250 };
+  for (const progress of [.2, .5, .8]) for (const reducedMotion of [false, true]) {
+    const common = { from, presentationMode: 'placement', seed: 9, reducedMotion };
+    const a = buildEffectFrame(skill, progress, { ...common, to: { x: 4000, y: 2000 } });
+    const b = buildEffectFrame(skill, progress, { ...common, to: { x: -3000, y: -900 }, targets: [{ x: 9000, y: 1000 }] });
+    assert.deepEqual(a, b);
+    assert.ok(a.layers.length > 0);
+    assert.ok(visiblePoints(a).every(p => Math.hypot(p.x-from.x, p.y-from.y) < 220));
+  }
+});
+
+test('release-aligned playback uses effective duration including reduced motion', async () => {
+  for (const reduced of [false, true]) {
+    const surface = harness({ reduced }), player = createVfxPlayer(surface.canvas, { catalog });
+    try {
+      await preload(player, surface, 'mage');
+      const result = await player.play({ skillId: 'atlas:mage_arcane', startProgress: .22, ageMs: 20 });
+      assert.equal(result.accepted, true);
+      if (reduced) assert.equal(result.durationMs, 420);
+      const remaining = result.durationMs * .78 - 20;
+      surface.advance(1);
+      assert.ok(surface.drawCount() > 0, 'release-aligned clip is visible immediately');
+      surface.advance(remaining - 2);
+      assert.equal(player.stats().active, 1);
+      surface.advance(2);
+      assert.equal(player.stats().active, 0);
+    } finally { player.destroy(); }
+  }
+});
+
+test('impact and placement clips are bounded and account for asset loading and presentation delay', async () => {
+  const surface = harness(), player = createVfxPlayer(surface.canvas, { catalog });
+  try {
+    const pending = player.play({ skillId: 'atlas:mage_arcane', startProgress: .22, presentationMode: 'impact', ageMs: 30 });
+    surface.elapse(100); surface.images[0].succeed();
+    const result = await pending;
+    assert.equal(result.accepted, true); assert.equal(result.durationMs, 650);
+    surface.advance(650 * .78 - 130 - 1);
+    assert.equal(player.stats().active, 1);
+    surface.advance(2);
+    assert.equal(player.stats().active, 0);
+    const expired = await player.play({ skillId: 'atlas:mage_arcane', startProgress: .9, presentationMode: 'impact', ageMs: 100 });
+    assert.equal(expired.reason, 'expired');
+    await preload(player, surface, 'archer');
+    const placed = await player.play({ skillId: 'atlas:archer_trap', presentationMode: 'placement' });
+    assert.equal(placed.accepted, true); assert.equal(placed.durationMs, 1200);
+  } finally { player.destroy(); }
+});
+
+test('trap placement stays centered on the supplied foot point at every body scale and facing', () => {
+  const skill = byId.get('atlas:archer_trap'), foot = { x: 640, y: 450 };
+  for (const bodyHeight of [90, 180, 300]) for (const direction of ['up', 'down', 'left', 'right'])
+    for (const progress of [.2, .5, .8]) for (const reducedMotion of [false, true]) {
+      const frame = buildEffectFrame(skill, progress, { from: foot, bodyHeight, direction, reducedMotion, presentationMode: 'placement' });
+      assert.ok(frame.layers.length > 0 && frame.geometry.length > 0);
+      for (const layer of frame.layers) {
+        assert.equal(layer.x, foot.x, 'ground sprite must not move sideways from the foot anchor');
+        assert.equal(layer.y, foot.y, 'foot anchor must not receive a second anatomical ground offset');
+      }
+      for (const shape of frame.geometry) {
+        assert.equal(shape.x, foot.x);
+        assert.equal(shape.y, foot.y, 'the ground ring stays under the character at every scale');
+      }
+    }
+});

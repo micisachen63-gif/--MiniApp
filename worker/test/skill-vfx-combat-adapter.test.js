@@ -308,3 +308,98 @@ test('preview server is read-only and rejects traversal and out-of-root links', 
     await fs.rm(fixtureRoot, { recursive: true, force: true });
   }
 });
+
+
+test('an authored release presentation starts at its phase without counting the actor windup twice', async () => {
+  let f;
+  f = fixture({ onCast(event) {
+    assert.equal(event.atMs, 10000);
+    f.setNow(10750);
+    return { presentation: { startProgress: .22, elapsedMs: 12, mode: 'full' } };
+  } });
+  assert.equal((await f.adapter.ingest(f.event())).accepted, true);
+  assert.equal(f.calls[0].ageMs, 12);
+  assert.equal(f.calls[0].startProgress, .22);
+  assert.equal(f.calls[0].presentationMode, 'full');
+});
+
+test('presentation timing cannot revive an expired real event', async () => {
+  let f;
+  f = fixture({ maxAgeMs: 100, onCast() {
+    f.setNow(10101);
+    return { presentation: { startProgress: .22, elapsedMs: 0, mode: 'placement' } };
+  } });
+  assert.equal((await f.adapter.ingest(f.event())).reason, 'expired');
+  assert.equal(f.calls.length, 0);
+});
+
+test('placement presentation is separate from caller-supplied event timing', async () => {
+  const f = fixture({ onCast() { return { presentation: { startProgress: .22, elapsedMs: 0, mode: 'placement' } }; } });
+  assert.equal((await f.adapter.ingest(f.event({ atMs: 9000, presentation: { startProgress: .95 } }))).accepted, true);
+  assert.equal(f.calls[0].ageMs, 0);
+  assert.equal(f.calls[0].startProgress, .22);
+  assert.equal(f.calls[0].presentationMode, 'placement');
+});
+
+test('raw presentation fields are ignored without a trusted presentation hook', async () => {
+  const f = fixture();
+  assert.equal((await f.adapter.ingest(f.event({ atMs: 9900, presentation: { startProgress: .9, elapsedMs: 0 } }))).accepted, true);
+  assert.equal(f.calls[0].ageMs, 100);
+  assert.equal(f.calls[0].startProgress, undefined);
+});
+
+test('rejects invalid presentation hook clocks and modes', async () => {
+  for (const presentation of [
+    { startProgress: -1 }, { startProgress: 1.1 }, { startProgress: NaN },
+    { elapsedMs: -1 }, { elapsedMs: Infinity }, { elapsedMs: 60001 }, { mode: 'damage' }, null,
+  ]) {
+    const f = fixture({ onCast() { return { presentation }; } });
+    assert.equal((await f.adapter.ingest(f.event())).reason, 'invalid-presentation');
+    assert.equal(f.calls.length, 0);
+  }
+});
+
+test('committed effects use their own hook and do not replay the actor attack', async () => {
+  let casts = 0, effects = 0;
+  const f = fixture({
+    onCast() { casts++; },
+    onEffect(event) {
+      effects++; assert.equal(event.type, 'skill_effect'); assert.equal(event.effectKind, 'pet');
+      return { presentation: { startProgress: 0, elapsedMs: 7, mode: 'impact' } };
+    },
+  });
+  assert.equal((await f.adapter.ingest(f.event({ type: 'skill_effect', effectKind: 'pet', atMs: 9000 }))).accepted, true);
+  assert.equal(casts, 0); assert.equal(effects, 1);
+  assert.equal(f.calls[0].ageMs, 7);
+  assert.equal(f.calls[0].presentationMode, 'impact');
+});
+
+test('one-second committed effects default to a fresh impact clock and retain replay checks', async () => {
+  const f = fixture();
+  for (const effectKind of ['dot', 'pet', 'trap', 'counter']) {
+    const event = f.event({ eventId: effectKind, type: 'skill_effect', effectKind, atMs: 9000 });
+    assert.equal((await f.adapter.ingest(event)).accepted, true);
+    assert.equal(f.calls.at(-1).ageMs, 0);
+    assert.equal(f.calls.at(-1).presentationMode, 'impact');
+    assert.equal((await f.adapter.ingest(event)).reason, 'duplicate');
+  }
+  assert.equal((await f.adapter.ingest(f.event({ type: 'skill_effect', effectKind: 'basic' }))).reason, 'invalid-event');
+});
+
+test('context switching cancels an awaited effect hook as well as cast hooks', async () => {
+  const held = defer();
+  let signal;
+  const f = fixture({ onEffect(_event, state) { signal = state.signal; return held.promise; } });
+  const pending = f.adapter.ingest(f.event({ type: 'skill_effect', effectKind: 'dot' }));
+  await Promise.resolve();
+  f.adapter.setContext({ ...BASE, dispatchId: 'run-2' });
+  assert.equal(signal.aborted, true);
+  held.resolve({ presentation: { startProgress: 0, elapsedMs: 0, mode: 'impact' } });
+  assert.equal((await pending).reason, 'context-changed');
+  assert.equal(f.calls.length, 0);
+});
+
+test('an effect hook cannot request a new full cast presentation', async () => {
+  const f = fixture({ onEffect() { return { presentation: { mode: 'full' } }; } });
+  assert.equal((await f.adapter.ingest(f.event({ type: 'skill_effect', effectKind: 'trap' }))).reason, 'invalid-presentation');
+});

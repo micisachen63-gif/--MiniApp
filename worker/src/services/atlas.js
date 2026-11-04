@@ -154,7 +154,7 @@ export async function settle(env,charId,body,now){
   if(!run||run.status!=='running')return status(env,charId,now);
   if(body.runId&&body.runId!==run.id)throw new GameError('atlas_changed','這次出征已改變，請重新查看',409);
   const previous=parse(run.state_json),realmCutoff=env.REALM_CONTEXT?.cutoffAt??Infinity,stopCutoff=run.stop_at??Infinity,cutoff=Math.min(now,stopCutoff,realmCutoff);
-  let advanced;try{advanced=advanceAtlasRun(previous,Math.floor(cutoff/1000),{maxSteps:2000});}catch(error){throw ruleError(error);}
+  let advanced;try{advanced=advanceAtlasRun(previous,Math.floor(cutoff/1000),{maxSteps:2000,combatTrace:true});}catch(error){throw ruleError(error);}
   const next=advanced.state;
   const reachedBoundary=!advanced.stillCatchingUp&&next.processedAt>=Math.floor(Math.min(stopCutoff,realmCutoff)/1000);
   if(reachedBoundary&&(next.status==='running'||next.status==='expired')){
@@ -187,7 +187,17 @@ export async function settle(env,charId,body,now){
   if(completions)extra.push(db.prepare('INSERT INTO rpg_atlas_progress(char_id,map_id,completions,first_completed_at,last_completed_at) VALUES(?,?,?,?,?) ON CONFLICT(char_id,map_id) DO UPDATE SET completions=completions+excluded.completions,last_completed_at=excluded.last_completed_at').bind(charId,next.mapId,completions,now,now));
   extra.push(...questEvents(env,db,loaded.char.account_tg_id||charId,charId,events,now));
   extra.push(...ledgerBatchStmts(db,entries,now));
-  try{await db.batch(persistStatements(db,loaded,work,{extra},now));return status(env,charId,now);}catch(error){const classified=classifyDbError(error);if((classified?.code==='conflict'||classified?.code==='duplicate')&&attempt<2)continue;throw classified||error;}
+  try{
+   await db.batch(persistStatements(db,loaded,work,{extra},now));
+   // Only this successful CAS attempt can publish observations. Status remains
+   // read-only; lost responses deliberately have no trace replay or persistence.
+   return {...await status(env,charId,now),combatTrace:{
+    schemaVersion:1,source:'committed-combat',
+    context:{accountId:String(loaded.char.account_tg_id||charId),realmId:String(realmId(env)),characterId:String(charId),dispatchId:String(run.id)},
+    revision:Number(run.rev)+1,committedAtMs:now,resolutionMs:1000,
+    ...advanced.combatTrace,
+   }};
+  }catch(error){const classified=classifyDbError(error);if((classified?.code==='conflict'||classified?.code==='duplicate')&&attempt<2)continue;throw classified||error;}
  }
 }
 

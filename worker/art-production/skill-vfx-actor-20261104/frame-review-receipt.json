@@ -1,0 +1,71 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Read-only technical review of current source attack frames; no character asset pixels are altered.",
+  "normalization": {
+    "canvas": [
+      480,
+      512
+    ],
+    "foot": [
+      240,
+      470
+    ],
+    "body": 300
+  },
+  "outputs": [
+    {
+      "file": "sword-right-sequence.jpg",
+      "size": [
+        1920,
+        1140
+      ],
+      "bytes": 464993,
+      "sha256": "fc26da42bf59ed9844a43a160aeb5b5d5c22a89febc7886a527c66946fd8b639"
+    },
+    {
+      "file": "archer-right-sequence.jpg",
+      "size": [
+        1920,
+        1140
+      ],
+      "bytes": 409773,
+      "sha256": "1bc454d942a1edc6835fee4978fbba50ab4386ab52693a40e04c4afb35f962a2"
+    },
+    {
+      "file": "sword-source-markers.jpg",
+      "size": [
+        960,
+        1140
+      ],
+      "bytes": 141220,
+      "sha256": "b48a20d4975b713b82663d53ccea9751bd96fa6693d26fbdd0db2941073d69ac"
+    },
+    {
+      "file": "archer-source-markers.jpg",
+      "size": [
+        960,
+        1140
+      ],
+      "bytes": 121262,
+      "sha256": "573fabf2c4fe6acfa9709d3eec04fc4fc656de36eb2277e100d6869839f86db5"
+    },
+    {
+      "file": "mage-source-markers.jpg",
+      "size": [
+        960,
+        1140
+      ],
+      "bytes": 220590,
+      "sha256": "88d7fbdb19c88ea8b4c64f0f3807521433e65bb6369428d12ec807a69882daed"
+    },
+    {
+      "file": "thief-source-markers.jpg",
+      "size": [
+        960,
+        1140
+      ],
+      "bytes": 166386,
+      "sha256": "181d4ea2e9380d80eb431b4f336d5e42c88086c9132b533328f799e0566bf5fa"
+    }
+  ]
+}
