@@ -8,7 +8,7 @@
  const endpoint=liveSession?previewConfig.endpoint:'http://127.0.0.1:9642/app/api/';let realm=liveSession?liveSession.getContext().realmId:'permanent',actorContext='';
  const ui=window.UI,byId=id=>document.getElementById(id);
  let actor=null,epoch=0,quests=null,questError='',catalog=null,dialog=null,kind=null,chatView=null,atlasView=null,bootFlight=null,questFlight=null,claimBusy=false,tracked=null,disposed=false,previousFocus=null;
- const savedInert=new Map(),claimRequests=new Map();let itemMetadata=null;
+ const savedInert=new Map(),claimRequests=new Map();let windowManager=null,navigation=null;
  const pretty=n=>new Intl.NumberFormat('zh-TW').format(Number(n)||0);
  async function request(action,body={},options={}){
   if(liveSession)return liveSession.request(action,body,options);
@@ -24,11 +24,11 @@
  const chat=window.RpgSceneChatUI.createClient({request,storage:sessionStorage},()=>{paintStrip();if(kind==='chat')chatView?.update();});
  function applyLiveSnapshot(snapshot){
   if(!liveSession)return;
-  if(!snapshot){if(kind!=='characters')close();actor=null;actorContext='';epoch++;claimBusy=false;quests=null;questFlight=null;tracked=null;catalog=null;chat.setContext(null);paintTracker();paintStrip();return;}
+  if(!snapshot){windowManager?.syncContext();navigation?.querySelectorAll('button').forEach(b=>b.disabled=true);if(kind!=='characters')close();actor=null;actorContext='';epoch++;claimBusy=false;quests=null;questFlight=null;tracked=null;catalog=null;chat.setContext(null);paintTracker();paintStrip();return;}
   const context=liveSession.getContext(),next={tgId:String(snapshot.characterId),...snapshot.character,partyId:snapshot.live.partyId};
   const signature=`${snapshot.realmId}:${snapshot.characterId}:${context.epoch}`;
   if(signature!==actorContext){if(actor&&kind!=='characters')close();actorContext=signature;epoch++;claimBusy=false;quests=null;questFlight=null;tracked=null;catalog=null;realm=snapshot.realmId;actor=next;try{tracked=JSON.parse(sessionStorage.getItem(`scene:tracked-quest:${realm}:${actor.tgId}`)||'null');}catch{}chat.setContext({realmId:realm,characterId:actor.tgId,epoch});}else actor=next;
-  questError='';paintTracker();paintStrip();
+  questError='';paintTracker();paintStrip();windowManager?.syncContext();navigation?.querySelectorAll('button').forEach(b=>b.disabled=false);windowManager?.update(snapshot);
  }
  async function bootstrap(){
   if(bootFlight)return bootFlight;
@@ -54,21 +54,22 @@
    script.onload=()=>window.RpgEquipmentRecovery?resolve(window.RpgEquipmentRecovery):failed();script.onerror=failed;document.head.append(script);
   });return window.__RpgEquipmentRecoveryLoading;
  }
- function paintLegacyGearbook(body){
+ function paintLegacyGearbook(body,extraHost={}){
   const selected=String(actor.tgId),version=epoch;body.replaceChildren();
   const next=document.createElement('button');next.type='button';next.className='scene-atlas-entry';next.textContent='典藏與精煉 · 首次典藏、重複回收與材料重洗';next.onclick=()=>open('recovery');
   const content=document.createElement('div');body.append(next,content);
-  atlasView=window.RpgEquipmentCollection.mount(content,{request,characterId:selected,realmId:realm,current:()=>version===epoch&&String(actor?.tgId)===selected&&kind==='gearbook'&&body.isConnected,artUrl:src=>new URL(endpoint).origin+src,onChanged:()=>void bootstrap()});
+  atlasView=window.RpgEquipmentCollection.mount(content,{...extraHost,request,characterId:selected,realmId:realm,current:()=>version===epoch&&String(actor?.tgId)===selected&&kind==='gearbook'&&body.isConnected&&(!extraHost.current||extraHost.current()),artUrl:src=>new URL(endpoint).origin+src,onChanged:()=>void bootstrap()});
  }
- async function paintRecovery(body){
+ async function paintRecovery(body,extraHost={}){
   const selected=String(actor.tgId),selectedRealm=realm,version=epoch;body.textContent='正在載入典藏與精煉…';
-  const current=()=>version===epoch&&String(actor?.tgId)===selected&&realm===selectedRealm&&kind==='recovery'&&body.isConnected;
+  const current=()=>version===epoch&&String(actor?.tgId)===selected&&realm===selectedRealm&&kind==='recovery'&&body.isConnected&&(!extraHost.current||extraHost.current());
   try{await loadRecoveryUI();if(!current())return;
-   atlasView=window.RpgEquipmentRecovery.mount(body,{request,characterId:selected,realmId:selectedRealm,current,getContext:()=>liveSession?liveSession.getContext():{realmId:realm,characterId:actor?.tgId,epoch},artUrl:src=>new URL(endpoint).origin+src,onChanged:()=>void bootstrap(),onLegacy:()=>open('gearbook')});
-  }catch(error){if(!current())return;body.textContent=error.message;const retry=document.createElement('button');retry.type='button';retry.textContent='重新載入';retry.onclick=()=>void paintRecovery(body);body.append(retry);}
+   atlasView=window.RpgEquipmentRecovery.mount(body,{...extraHost,request,characterId:selected,realmId:selectedRealm,current,getContext:()=>liveSession?liveSession.getContext():{realmId:realm,characterId:actor?.tgId,epoch},artUrl:src=>new URL(endpoint).origin+src,onChanged:()=>void bootstrap(),onLegacy:()=>open('gearbook')});return atlasView;
+  }catch(error){if(!current())return;body.textContent=error.message;const retry=document.createElement('button');retry.type='button';retry.textContent='重新載入';retry.onclick=()=>void paintRecovery(body,extraHost);body.append(retry);}
  }
- function close(){if(!dialog)return;atlasView?.dispose();atlasView=null;dialog.remove();dialog=null;kind=null;chatView=null;for(const [el,value] of savedInert)el.inert=value;savedInert.clear();if(['chat','scene-quests','scene-talents','scene-progression','scene-gearbook','scene-recovery','scene-expedition','scene-characters','scene-equipment','scene-inventory','scene-supplies','scene-build'].includes(ui.open))ui.open=null;if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});}
- function open(type){
+ function close(){if(windowManager){windowManager.close();return;}if(!dialog)return;atlasView?.dispose();atlasView=null;dialog.remove();dialog=null;kind=null;chatView=null;for(const [el,value] of savedInert)el.inert=value;savedInert.clear();if(['chat','scene-quests','scene-talents','scene-progression','scene-gearbook','scene-recovery','scene-expedition','scene-characters','scene-equipment','scene-inventory','scene-supplies','scene-build'].includes(ui.open))ui.open=null;if(previousFocus?.isConnected)previousFocus.focus({preventScroll:true});}
+ function open(type,params={}){
+  if(windowManager)return windowManager.navigate(type,params);
   if(dialog&&kind===type){close();return;}
   close();if(ui.open)originalToggle(ui.open);
   previousFocus=document.activeElement;kind=type;
@@ -90,53 +91,21 @@
   });}
   dialog.querySelector('.scene-social-card').focus({preventScroll:true});
  }
- ui.toggle=function(id){if(liveSession&&['eq','inv','sup','sk','map'].includes(id)){open(({eq:'equipment',inv:'inventory',sup:'supplies',sk:'build',map:'expedition'})[id]);return;}if(liveSession&&id==='scene-characters'){open('characters');return;}if(['talents','progression','gearbook','recovery','expedition'].includes(id)){open(id);return;}if(id==='chat'){open('chat');return;}if(dialog)close();const result=originalToggle(id);if(['sk','map','eq','inv'].includes(id)){const panel=byId('p-'+id),target=panel?.querySelector('.pb')||panel;if(target&&!target.querySelector('[data-live-atlas-entry]')){const entry=document.createElement('button');entry.type='button';entry.dataset.liveAtlasEntry=id==='sk'?'talents':id==='map'?'progression':'gearbook';entry.className='scene-atlas-entry';entry.textContent=id==='sk'?'✧ 天賦星盤 · 路線預覽與引導':id==='map'?'✦ 冒險成長路線 · 通關與鍛造':'✦ 裝備收藏冊 · 集滿獲得永久能力';entry.onclick=()=>open(entry.dataset.liveAtlasEntry);target.prepend(entry);}}return result;};
+ ui.toggle=function(id){if(windowManager){const aliases={eq:'equipment',inv:'inventory',sup:'supplies',sk:'build',map:'expedition','scene-characters':'characters',social:'chat',supply:'supplies'};const route=aliases[id]||(unifiedRoutes[id]?id:null);if(route){if(windowManager.current()?.route===route)close();else open(route);return;}}if(liveSession&&['eq','inv','sup','sk','map'].includes(id)){open(({eq:'equipment',inv:'inventory',sup:'supplies',sk:'build',map:'expedition'})[id]);return;}if(liveSession&&id==='scene-characters'){open('characters');return;}if(['talents','progression','gearbook','recovery','expedition'].includes(id)){open(id);return;}if(id==='chat'){open('chat');return;}if(dialog)close();const result=originalToggle(id);if(['sk','map','eq','inv'].includes(id)){const panel=byId('p-'+id),target=panel?.querySelector('.pb')||panel;if(target&&!target.querySelector('[data-live-atlas-entry]')){const entry=document.createElement('button');entry.type='button';entry.dataset.liveAtlasEntry=id==='sk'?'talents':id==='map'?'progression':'gearbook';entry.className='scene-atlas-entry';entry.textContent=id==='sk'?'✧ 天賦星盤 · 路線預覽與引導':id==='map'?'✦ 冒險成長路線 · 通關與鍛造':'✦ 裝備收藏冊 · 集滿獲得永久能力';entry.onclick=()=>open(entry.dataset.liveAtlasEntry);target.prepend(entry);}}return result;};
  // Keep demonstration boss pacing, but remove its fake 40-kill quest counter.
  ui.addKill=function(){if(!liveSession)ui.kills=(ui.kills||0)+1;};
  const quest=byId('quest');quest.setAttribute('role','button');quest.tabIndex=0;quest.setAttribute('aria-label','開啟真實任務與委託');quest.addEventListener('pointerdown',e=>{e.preventDefault();e.stopImmediatePropagation();open('quests');},true);quest.addEventListener('keydown',e=>{if(['Enter',' '].includes(e.key)){e.preventDefault();open('quests');}});
- async function paintRealInventory(body,type){
-  body.textContent='正在讀取目前角色…';
-  await bootstrap();if(!actor||kind!==type||!body.isConnected)return;
-  const context=liveSession.getContext(),current=()=>kind===type&&body.isConnected&&liveSession.getContext().epoch===context.epoch&&liveSession.getContext().realmId===context.realmId&&liveSession.getContext().characterId===context.characterId;
-  try{
-   const [me,metadata]=await Promise.all([request('me',{summary:false}),itemMetadata?Promise.resolve(itemMetadata):request('meta')]);
-   if(!current())return;
-   if(String(me.character?.tgId)!==String(context.characterId))throw Error('角色資料已變動，請重新同步');
-   itemMetadata=metadata;
-   const atlas=type==='inventory'?await request('atlas/status'):null;if(!current())return;
-   body.replaceChildren();
-   const heading=document.createElement('p');heading.className='scene-guide-actor';heading.textContent=`${me.character.name} · 金幣 ${pretty(me.character.gold)}`;body.append(heading);
-   const add=(title,detail)=>{const card=document.createElement('article');card.className='scene-live-quest';const h=document.createElement('h4'),p=document.createElement('p');h.textContent=title;p.textContent=detail;card.append(h,p);body.append(card);};
-   const refresh=document.createElement('button');refresh.type='button';refresh.textContent='重新讀取';refresh.onclick=()=>void paintRealInventory(body,type);body.append(refresh);
-   if(type==='equipment'||type==='inventory'){
-    const equipment=(me.equipment||[]).filter(item=>type==='equipment'?item.equipped:!item.equipped);
-    const h=document.createElement('h3');h.textContent=type==='equipment'?'已穿戴裝備':'背包裝備';body.append(h);
-    if(!equipment.length)add('目前沒有裝備','');
-    for(const item of equipment)add(`${item.name} +${pretty(item.enhance)}`,[item.slotName||item.slot,item.position?`欄位 ${item.position}`:'未穿戴',`T${item.tier}`,item.rarityName,item.inTrade?'交易中':null].filter(Boolean).join(' · '));
-   }
-   if(type==='inventory'||type==='supplies'){
-    const definitions=metadata.meta?.items||metadata.items||{},items=Object.entries(me.inventory||{}).filter(([id,quantity])=>quantity>0&&(type==='inventory'||definitions[id]?.kind==='potion'||/^(red|blue)_/.test(id)));
-    const h=document.createElement('h3');h.textContent=type==='supplies'?'背包補給':'道具與材料';body.append(h);
-    if(!items.length)add('目前沒有持有道具','');
-    for(const [id,quantity]of items)add(definitions[id]?.name||id,`持有 ${pretty(quantity)}${definitions[id]?.desc?' · '+definitions[id].desc:''}`);
-    if(type==='inventory'&&atlas){const h=document.createElement('h3');h.textContent='星圖材料';body.append(h);const names=Object.fromEntries((catalog?.materials||[]).map(item=>[item.id,item.name]));for(const [id,quantity]of Object.entries(atlas.materials||{}))if(quantity>0)add(names[id]||id,`持有 ${pretty(quantity)}`);}
-    const run=liveSession.getSnapshot()?.run;if(run?.active)add('本趟攜帶補給',`剩餘紅水 ${pretty(run.supplies.hp)}／藍水 ${pretty(run.supplies.mp)}。這些已從背包保留，返營時退回未用部分。`);
-   }
-   const actions=document.createElement('div');const collection=document.createElement('button');collection.type='button';collection.textContent='裝備收藏冊';collection.onclick=()=>open('gearbook');actions.append(collection);
-   if(type==='supplies'){const dispatch=document.createElement('button');dispatch.type='button';dispatch.textContent='配置出征補給';dispatch.onclick=()=>open('expedition');actions.append(dispatch);}
-   const manage=document.createElement('a');manage.href=new URL('/?devTg='+encodeURIComponent(context.accountId),endpoint).href;manage.target='_blank';manage.rel='noopener';manage.className='scene-atlas-entry';manage.textContent='完整管理（另選世界與角色）';actions.append(manage);body.append(actions);
-  }catch(error){if(current()){body.textContent=error.message;const retry=document.createElement('button');retry.type='button';retry.textContent='重新讀取';retry.onclick=()=>void paintRealInventory(body,type);body.append(retry);}}
- }
- async function paintCharacters(body){
+ async function paintRealInventory(body,type){if(windowManager)windowManager.navigate(type);else body.textContent='請重新整理以載入共用背包介面。';}
+ async function paintCharacters(body,extraHost={}){
   body.textContent='正在讀取角色…';
   const scope=liveSession.getContext();
   try{
    const data=await request('characters');
-   if(kind!=='characters'||!body.isConnected||scope.realmId!==liveSession.getContext().realmId||scope.accountId!==liveSession.getContext().accountId)return;
+   if(kind!=='characters'||!body.isConnected||(extraHost.current&&!extraHost.current())||scope.realmId!==liveSession.getContext().realmId||scope.accountId!==liveSession.getContext().accountId)return;
    body.replaceChildren();
-   for(const character of data.characters||[]){const button=document.createElement('button');button.type='button';button.className='scene-atlas-entry';button.textContent=`${character.active?'目前角色 · ':''}${character.name} · Lv.${character.level} · ${({sword:'劍士',archer:'妖精',mage:'法師',thief:'盜賊'})[character.baseClass]||character.baseClass}`;button.disabled=!!character.active;button.onclick=async()=>{for(const b of body.querySelectorAll('button'))b.disabled=true;try{await liveSession.selectCharacter(character.charId);await bootstrap();if(kind==='characters')close();}catch(error){if(kind==='characters'&&body.isConnected){const note=document.createElement('p');note.setAttribute('role','alert');note.textContent=error.message;body.append(note);const retry=document.createElement('button');retry.type='button';retry.textContent='重新讀取角色';retry.onclick=()=>void paintCharacters(body);body.append(retry);}}};body.append(button);}
+   for(const character of data.characters||[]){const button=document.createElement('button');button.type='button';button.className='scene-atlas-entry';button.textContent=`${character.active?'目前角色 · ':''}${character.name} · Lv.${character.level} · ${({sword:'劍士',archer:'妖精',mage:'法師',thief:'盜賊'})[character.baseClass]||character.baseClass}`;button.disabled=!!character.active;button.onclick=async()=>{for(const b of body.querySelectorAll('button'))b.disabled=true;try{await liveSession.selectCharacter(character.charId);await bootstrap();if(kind==='characters'&&(!extraHost.current||extraHost.current()))close();}catch(error){if(kind==='characters'&&body.isConnected&&(!extraHost.current||extraHost.current())){const note=document.createElement('p');note.setAttribute('role','alert');note.textContent=error.message;body.append(note);const retry=document.createElement('button');retry.type='button';retry.textContent='重新讀取角色';retry.onclick=()=>void paintCharacters(body,extraHost);body.append(retry);}}};body.append(button);}
    if(!data.characters?.length)body.textContent='目前世界尚未建立角色。';
-  }catch(error){if(kind==='characters'&&body.isConnected)body.textContent=error.message;}
+  }catch(error){if(kind==='characters'&&body.isConnected&&(!extraHost.current||extraHost.current()))body.textContent=error.message;}
  }
  function rewardText(q){return Object.entries(q.rewards?.materials||{}).map(([id,n])=>`${catalog?.materials?.find?.(m=>m.id===id)?.name||({atlas_shard:'星圖碎片',atlas_iron:'星鐵',atlas_ember:'餘燼',atlas_venom:'幽毒',atlas_core:'守望核心'})[id]||id} ×${pretty(n)}`).join(' · ');}
  const questGroupsOpen = new Map();
@@ -180,10 +149,86 @@
   finally{if(current()){claimBusy=false;paintQuests();}}
  }
 
- document.addEventListener('keydown',e=>{if(!dialog)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close();return;}if(e.key==='Tab'){const items=[...dialog.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')].filter(el=>el.tabIndex>=0&&!el.disabled&&el.getClientRects().length),first=items[0],last=items.at(-1);if(e.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}},true);
+ document.addEventListener('keydown',e=>{if(windowManager||!dialog)return;if(e.key==='Escape'){e.preventDefault();e.stopImmediatePropagation();close();return;}if(e.key==='Tab'){const items=[...dialog.querySelectorAll('a[href],button,input,select,textarea,[tabindex]')].filter(el=>el.tabIndex>=0&&!el.disabled&&el.getClientRects().length),first=items[0],last=items.at(-1);if(e.shiftKey&&(document.activeElement===first||!items.includes(document.activeElement))){e.preventDefault();last?.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first?.focus();}}},true);
  const poll=setInterval(()=>{if(document.hidden||disposed)return;if(kind==='chat')void chat.refresh();else if(Date.now()-(chat.state.syncedAt||0)>=30000)void chat.refresh();},5000);
  const questPoll=setInterval(()=>{if(!document.hidden&&!disposed)void bootstrap();},30000);
- window.addEventListener('pagehide',()=>{disposed=true;clearInterval(poll);clearInterval(questPoll);chat.dispose();},{once:true});
+ window.addEventListener('pagehide',()=>{disposed=true;clearInterval(poll);clearInterval(questPoll);windowManager?.dispose();chat.dispose();},{once:true});
+
+ const unifiedRoutes={
+  character:{title:'角色',group:'character'},equipment:{title:'目前裝備',group:'character'},item:{title:'裝備詳情',group:'inventory'},
+  inventory:{title:'背包',group:'inventory'},adventure:{title:'冒險',group:'adventure'},camp:{title:'營地',group:'camp'},
+  chat:{title:'聊天與社交',group:'social'},quests:{title:'任務與委託',group:'adventure'},characters:{title:'選擇角色',group:'character'},
+  talents:{title:'天賦星盤',group:'character'},progression:{title:'冒險成長路線',group:'adventure'},build:{title:'技能與輔助配置',group:'character'},
+  expedition:{title:'星圖派遣',group:'adventure'},workshop:{title:'強化與洗鍊工坊',group:'camp'},inscription:{title:'定向銘刻工坊',group:'camp'},
+  supplies:{title:'補給設定',group:'camp'},shop:{title:'商店',group:'camp'},gearbook:{title:'裝備收藏冊',group:'camp'},recovery:{title:'典藏與精煉',group:'camp'}
+ };
+ const moduleFlights=new Map();
+ async function loadSceneModule(file,name){
+  if(window[name])return window[name];if(moduleFlights.has(file))return moduleFlights.get(file);
+  const promise=new Promise((resolve,reject)=>{
+   const script=document.createElement('script'),base=document.querySelector('script[src*="scene-social-preview.js"]')?.src||document.baseURI;
+   script.src=new URL(file+'.js?v=unified-ui-20261104',base).href;
+   script.onload=()=>window[name]?resolve(window[name]):failed();script.onerror=failed;
+   function failed(){moduleFlights.delete(file);script.remove();reject(Error('功能介面載入失敗，請重試'));}
+   document.head.append(script);
+  });moduleFlights.set(file,promise);return promise;
+ }
+ function unifiedHost(api,entry){
+  const context=liveSession.getContext(),sameScope=()=>{const next=liveSession.getContext();return context.accountId===next.accountId&&context.realmId===next.realmId&&context.characterId===next.characterId&&context.epoch===next.epoch;};
+  return {...api,request,getContext:()=>liveSession.getContext(),getActor:()=>actor,actor:{...actor},realmId:realm,characterId:String(actor.tgId),params:entry.params,
+   artUrl:src=>new URL(src,new URL(endpoint).origin).href,onChanged:()=>{if(sameScope())void refreshQuests();},
+   mapId:entry.params.mapId,initialItemId:entry.params.itemId
+  };
+ }
+ function paintHub(body,route,host){
+  body.replaceChildren();const context=document.createElement('article');context.className='scene-hub-summary';
+  const name=document.createElement('h3'),detail=document.createElement('p');name.textContent=actor.name+' · Lv.'+actor.level;
+  const run=liveSession.getSnapshot()?.run;detail.textContent=route==='adventure'?(run?.active?'目前正在探索；切換功能仍會繼續推進。':'選擇星圖，準備補給後開始探索。'):route==='camp'?'整理戰利品、調整裝備與補足下趟物資。':'查看穿戴與能力，配置下趟探索的技能和天賦。';
+  context.append(name,detail);body.append(context);
+  const entries=route==='character'?[
+   ['equipment','穿戴與能力','查看裝備、比較與穿脫'],['inventory','持有裝備','開啟共用詳情與整理'],['build','星圖技能','主技能、輔助與自動策略'],['talents','天賦星盤','預覽路線與配置節點'],['progression','成長路線','查看可達成的下一個目標'],['characters','切換角色','沿用目前世界']
+  ]:route==='adventure'?[
+   ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['quests','任務與委託','教學、每日、每週與調查鏈'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
+  ]:[
+   ['workshop','強化與洗鍊','單次操作、自動作業與結果'],['recovery','典藏與精煉','首件典藏、重複精煉、材料重洗'],['gearbook','裝備收藏冊','完成原有套組與永久能力'],['inscription','星圖銘刻','使用探索材料定向加工'],['shop','商店','藥水、卷軸、裝備與寶箱'],['supplies','補給設定','原版藥水設定與補滿']
+  ];
+  const grid=document.createElement('div');grid.className='scene-hub-grid';
+  for(const [target,title,description]of entries){const button=document.createElement('button');button.type='button';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=description;button.append(strong,small);button.onclick=()=>host.navigate(target);grid.append(button);}
+  body.append(grid);return {dispose(){}};
+ }
+ async function mountUnified(entry,body,api){
+  if(!actor)await bootstrap();if(!api.current()||!actor)return;
+  const host=unifiedHost(api,entry);
+  if(['character','adventure','camp'].includes(entry.route))return paintHub(body,entry.route,host);
+  if(['equipment','inventory','item'].includes(entry.route)){const module=await loadSceneModule('scene-inventory-ui','RpgSceneInventory');if(api.current())return module.mount(body,host,{mode:entry.route,itemId:entry.params.itemId});return;}
+  if(entry.route==='workshop'){const module=await loadSceneModule('scene-workshop-ui','RpgSceneWorkshop');if(api.current())return module.mount(body,host,entry.params);return;}
+  if(['supplies','shop'].includes(entry.route)){const module=await loadSceneModule('scene-supply-ui','RpgSceneSupply');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
+  if(entry.route==='chat'){chatView=window.RpgSceneChatUI.mountPanel(body,chat);void chat.refresh();return chatView;}
+  if(entry.route==='quests'){paintQuests();void refreshQuests();return {dispose(){}};}
+  if(entry.route==='characters'){await paintCharacters(body,host);return {dispose(){}};}
+  if(entry.route==='gearbook'){paintLegacyGearbook(body,host);return atlasView;}
+  if(entry.route==='recovery')return await paintRecovery(body,host);
+  const initial=entry.route==='inscription'?'workshop':entry.route;
+  atlasView=window.RpgSceneAtlasGuide.mount(body,host,initial);return atlasView;
+ }
+ function installUnifiedShell(){
+  navigation=document.createElement('nav');navigation.className='scene-primary-nav';navigation.setAttribute('aria-label','主要功能');
+  const roots={character:'character',inventory:'inventory',adventure:'adventure',camp:'camp',social:'chat'};
+  for(const [group,label]of [['character','角色'],['inventory','背包'],['adventure','冒險'],['camp','營地'],['social','社交']]){
+   const button=document.createElement('button');button.type='button';button.dataset.scenePrimary=group;button.textContent=label;button.disabled=!actor;button.onclick=()=>windowManager.navigate(roots[group],{},{reset:true});navigation.append(button);
+  }
+  byId('ui').classList.add('scene-unified-root');byId('ui').append(navigation);
+  windowManager=window.RpgSceneWindows.create({root:byId('ui'),navigation,routes:unifiedRoutes,getContext:()=>liveSession.getContext(),
+   contextLabel:()=>actor?actor.name+' · '+(realm==='permanent'?'永久世界':'賽季世界')+' · Lv.'+actor.level:'正在同步角色…',
+   mount:mountUnified,
+   onNavigate(entry,node){dialog=node;kind=entry.route;ui.open='scene-'+entry.route;chatView=null;atlasView=null;},
+   onClose(){dialog=null;kind=null;chatView=null;atlasView=null;ui.open=null;}
+  });
+  queueMicrotask(()=>window.dispatchEvent(new Event('resize')));
+  window.RpgSceneNavigation={navigate:(route,params)=>windowManager.navigate(route,params),back:()=>windowManager.back(),close:()=>windowManager.close(),current:()=>windowManager.current()};
+ }
+
+ if(liveSession&&window.RpgSceneWindows)installUnifiedShell();
  if(liveSession)liveSession.subscribe(applyLiveSnapshot);
  paintStrip();paintTracker();void bootstrap();
 })();

@@ -79,3 +79,156 @@ test('preview names are escaped and reforge text never promises stronger stats o
  assert.ok(html.includes('&lt;img'));assert.ok(!html.includes('<img src=x'));assert.ok(html.includes('data-recovery-high'));assert.ok(html.includes('+15'));
  const reroll=api.previewHtml(preview('reforge',['gear-a'],{consumesEquipment:false,warning:'可能變強或變弱'}));assert.ok(reroll.includes('可能變強或變弱'));assert.ok(reroll.includes('保留此件裝備'));assert.ok(!reroll.includes('確認永久消耗'));
 });
+
+const flushUi=async()=>{await new Promise(resolve=>setImmediate(resolve));await new Promise(resolve=>setImmediate(resolve));};
+const attrUi=(tag,name)=>tag.match(new RegExp('(?:^|\\s)'+name+'="([^"]*)"'))?.[1]?.replaceAll('&quot;','"').replaceAll('&#39;',"'").replaceAll('&lt;','<').replaceAll('&gt;','>').replaceAll('&amp;','&');
+class UiRoot{
+ constructor(document){this.document=document;this.nodes=[];this.scrollTop=0;this.listeners=new Map();this.html='';}
+ set innerHTML(html){this.html=html;this.nodes=[...html.matchAll(/<(button|input|select|section)\b[^>]*>/g)].map(match=>{
+  const tag=match[0],kind=match[1],root=this,dataset={};
+  for(const [,key,value]of tag.matchAll(/\sdata-([a-z-]+)="([^"]*)"/g))dataset[key.replace(/-([a-z])/g,(_,x)=>x.toUpperCase())]=value;
+  let value=attrUi(tag,'value')||'';
+  if(kind==='select'){const end=html.indexOf('</select>',match.index),inside=html.slice(match.index+tag.length,end),options=[...inside.matchAll(/<option\b[^>]*>/g)].map(x=>x[0]);value=attrUi(options.find(x=>/\sselected(?:\s|>)/.test(x))||options[0]||'','value')||'';}
+  return {root,kind,tag,dataset,value,name:attrUi(tag,'name')||'',disabled:/\sdisabled(?:\s|>)/.test(tag),checked:/\schecked(?:\s|>)/.test(tag),selectionStart:0,handlers:new Map(),
+   addEventListener(type,fn){if(!this.handlers.has(type))this.handlers.set(type,[]);this.handlers.get(type).push(fn);},
+   focus(){root.document.activeElement=this;},setSelectionRange(a){this.selectionStart=a;},scrollIntoView(){}
+  };
+ });}
+ get innerHTML(){return this.html;}
+ contains(node){return this.nodes.includes(node);}
+ querySelectorAll(selector){
+  const selectors=selector.split(',').map(s=>s.trim());
+  return this.nodes.filter(node=>selectors.some(s=>{
+   if(s.startsWith('.'))return String(attrUi(node.tag,'class')||'').split(' ').includes(s.slice(1));
+   if(s.startsWith('[')){const match=s.match(/^\[([a-zA-Z-]+)(?:="([^"]*)")?\]$/);if(!match)return false;return match[2]===undefined?new RegExp('(?:\\s|<)'+match[1]+'(?:\\s|=|>)').test(node.tag):attrUi(node.tag,match[1])===match[2];}
+   return node.kind===s;
+  }));
+ }
+ querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
+ addEventListener(type,fn){if(!this.listeners.has(type))this.listeners.set(type,[]);this.listeners.get(type).push(fn);}
+ removeEventListener(type,fn){this.listeners.set(type,(this.listeners.get(type)||[]).filter(x=>x!==fn));}
+ async event(selector,type,props={}){
+  const node=this.querySelector(selector);assert.ok(node,'Missing '+selector);
+  if(node.disabled&&type==='click')return;Object.assign(node,props);
+  const event={target:node,...props.event};
+  if(node['on'+type])await node['on'+type](event);
+  for(const fn of node.handlers.get(type)||[])await fn(event);
+  await flushUi();
+ }
+ async scroll(value){this.scrollTop=value;for(const fn of this.listeners.get('scroll')||[])fn();await flushUi();}
+}
+function uiEnvironment(source,storage){
+ const document={activeElement:null,hidden:false,baseURI:'https://preview.invalid/',querySelector:()=>({})};
+ const root=new UiRoot(document),window={},timers=[];let serial=0;
+ vm.runInNewContext(source,{window,document,URL,Intl,sessionStorage:storage,crypto:{randomUUID:()=> 'draft-operation-'+(++serial)},setInterval:fn=>{timers.push({fn,cleared:false});return timers.length-1;},clearInterval:id=>{if(timers[id])timers[id].cleared=true;}});
+ return {root,window,timers,document};
+}
+
+function recoveryMount({draft={},context={accountId:'account-a',realmId:'permanent',characterId:'hero-a',epoch:1},initialItemId='',saved=storage(),items,override}={}){
+ const env=uiEnvironment(source,saved),calls=[],changes=[];let ctx={...context};
+ let snapshot={...view(ctx.realmId,ctx.characterId),sources:[{id:'normal',name:'一般',count:0},{id:'elite',name:'菁英',count:0}],description:'典藏保存，精煉回收',items:items||Array.from({length:24},(_,i)=>({id:'gear-'+i,name:'測試裝備 '+i,entryId:'entry-'+i,sourceGroup:'normal',sourceName:'一般',tier:1,rarityName:'一般',enhance:0,dust:2,reforgeCost:{dust:5,gold:10},suggestedSalvage:true}))};
+ const host={draft,storage:saved,characterId:ctx.characterId,realmId:ctx.realmId,getContext:()=>ctx,current:()=>true,initialItemId,artUrl:x=>x,onChanged:data=>changes.push(data),
+  request:async(action,payload)=>{calls.push({action,payload:payload?plain(payload):null});const custom=override?await override(action,payload):undefined;if(custom!==undefined)return custom;if(action==='equipment-recovery')return plain(snapshot);if(action==='equipment-recovery/preview')return preview(payload.mode,payload.itemIds);if(action==='equipment-recovery/action'){snapshot={...snapshot,items:snapshot.items.filter(item=>!payload.itemIds.includes(item.id))};return {...plain(snapshot),result:{mode:payload.mode,count:payload.itemIds.length,dustGained:2,newEntries:payload.itemIds.length}};}throw Error('Unexpected '+action);}};
+ const module=env.window.RpgEquipmentRecovery.mount(env.root,host);
+ return {...env,module,calls,changes,host,draft,saved,setContext:value=>{ctx={...ctx,...value};},setSnapshot:value=>{snapshot=value;},snapshot:()=>plain(snapshot)};
+}
+test('recovery draft restores mode, source, search, page, selected gear and scroll on close or workshop return',async()=>{
+ const draft={},h=recoveryMount({draft});await flushUi();
+ await h.root.event('[data-recovery-mode="salvage"]','click');
+ await h.root.event('[name="recoverySource"]','change',{value:'normal'});
+ await h.root.event('[name="recoverySearch"]','input',{value:'測試裝備'});
+ await h.root.event('[data-recovery-item="gear-0"]','change',{checked:true});
+ await h.root.event('[data-recovery-page="1"]','click');
+ await h.root.event('[data-recovery-item="gear-20"]','change',{checked:true});
+ await h.root.scroll(91);h.module.dispose();
+ assert.deepEqual(plain(draft.recovery.selected),['gear-0','gear-20']);assert.equal(draft.recovery.page,1);
+ const reopened=recoveryMount({draft});await flushUi();
+ assert.equal(reopened.root.querySelector('[name="recoverySearch"]').value,'測試裝備');
+ assert.equal(reopened.root.querySelector('[name="recoverySource"]').value,'normal');
+ assert.equal(reopened.root.querySelector('[data-recovery-item="gear-20"]').checked,true);
+ assert.equal(reopened.root.scrollTop,91);assert.match(reopened.root.innerHTML,/aria-pressed="true"[^>]*>2 · 重複精煉/);
+ assert.equal(reopened.timers.length,1);reopened.module.dispose();assert.equal(reopened.timers[0].cleared,true);
+});
+test('recovery context scope rejects another account or epoch draft even when route object is reused',async()=>{
+ const draft={},h=recoveryMount({draft});await flushUi();await h.root.event('[data-recovery-mode="salvage"]','click');await h.root.event('[name="recoverySearch"]','input',{value:'測試裝備 4'});h.module.dispose();
+ const other=recoveryMount({draft,context:{accountId:'account-b',realmId:'permanent',characterId:'hero-a',epoch:2}});await flushUi();
+ assert.equal(other.root.querySelector('[name="recoverySearch"]').value,'');assert.equal(draft.recovery.mode,'archive');assert.deepEqual(plain(draft.recovery.selected),[]);
+ const before=JSON.stringify(draft);other.setContext({epoch:3});other.module.dispose();assert.equal(JSON.stringify(draft),before);
+});
+test('recovery initialItemId selects only that legal item and back cancels preview without consumption',async()=>{
+ const h=recoveryMount({initialItemId:'gear-20'});await flushUi();
+ assert.equal(h.root.querySelector('[name="recoverySearch"]').value,'測試裝備 20');assert.deepEqual(plain(h.draft.recovery.selected),['gear-20']);
+ assert.equal(h.calls.filter(x=>x.action.endsWith('/action')).length,0);
+ await h.root.event('[data-recovery-preview]','click');assert.match(h.root.innerHTML,/class="recovery-confirm"/);
+ assert.equal(h.module.handleBack(),true);assert.doesNotMatch(h.root.innerHTML,/class="recovery-confirm"/);assert.equal(h.module.handleBack(),false);
+ assert.deepEqual(plain(h.draft.recovery.selected),['gear-20']);assert.equal(h.calls.filter(x=>x.action.endsWith('/action')).length,0);
+ h.module.dispose();
+});
+test('recovery initial blocked or missing target never silently selects a replacement',async()=>{
+ for(const [id,items]of [['locked',[{id:'locked',name:'鎖定裝備',entryId:'locked',blockedReason:'穿戴中',dust:2},{id:'other',name:'可用裝備',entryId:'other',dust:2}]],['missing',[{id:'other',name:'可用裝備',entryId:'other',dust:2}]]]){
+  const h=recoveryMount({initialItemId:id,items});await flushUi();assert.deepEqual(plain(h.draft.recovery.selected),[]);assert.equal(h.calls.length,1);assert.match(h.root.innerHTML,id==='locked'?/穿戴中/:/未改選其他裝備/);h.module.dispose();
+ }
+});
+test('recovery refresh and successful action remove obsolete selected items from saved draft',async()=>{
+ const h=recoveryMount();await flushUi();await h.root.event('[data-recovery-item="gear-0"]','change',{checked:true});
+ const next=h.snapshot();next.items=next.items.filter(item=>item.id!=='gear-0');h.setSnapshot(next);await h.module.refresh();
+ assert.deepEqual(plain(h.draft.recovery.selected),[]);
+ await h.root.event('[data-recovery-item="gear-1"]','change',{checked:true});await h.root.event('[data-recovery-preview]','click');
+ await h.root.event('[data-recovery-ack]','change',{checked:true});await h.root.event('[data-recovery-confirm]','click');
+ assert.deepEqual(plain(h.draft.recovery.selected),[]);assert.equal(h.changes.length,1);h.module.dispose();
+});
+test('recovery back and remount preserve pending exact receipt and do not replay until explicit retry',async()=>{
+ const draft={},saved=storage(),writes=[];
+ const request=async(action,payload)=>{if(action==='equipment-recovery/action'){writes.push(plain(payload));throw Object.assign(Error('lost response'),{uncertain:true});}};
+ const h=recoveryMount({draft,saved,initialItemId:'gear-0',override:request});await flushUi();
+ await h.root.event('[data-recovery-preview]','click');await h.root.event('[data-recovery-ack]','change',{checked:true});await h.root.event('[data-recovery-confirm]','click');
+ assert.equal(writes.length,1);const receipt=[...saved.values.values()][0];assert.equal(h.module.handleBack(),false);h.module.dispose();
+ const again=recoveryMount({draft,saved,initialItemId:'gear-0',override:request});await flushUi();assert.equal(writes.length,1);assert.equal([...saved.values.values()][0],receipt);
+ await again.root.event('[data-recovery-retry]','click');assert.equal(writes.length,2);assert.deepEqual(writes[1],writes[0]);again.module.dispose();
+});
+
+test('blocked deep links retry once on same-item reentry while successful selection preserves later user choices',async()=>{
+ const draft={},items=[
+  {id:'gear-4',name:'強化長劍',entryId:'entry-4',sourceGroup:'normal',sourceName:'一般',tier:1,rarityName:'一般',enhance:4,dust:2},
+  {id:'gear-5',name:'另一件裝備',entryId:'entry-5',sourceGroup:'normal',sourceName:'一般',tier:1,rarityName:'一般',enhance:0,dust:2}
+ ];
+ let locked=true;
+ const override=action=>action==='equipment-recovery'?{...view(),sources:[{id:'normal',name:'一般',count:0}],description:'典藏保存',items,lockedReason:locked?'星圖出征中，請先返營':null}:undefined;
+ const blocked=recoveryMount({draft,initialItemId:'gear-4',override});await flushUi();
+ assert.deepEqual(plain(draft.recovery.selected),[]);assert.equal(draft.recovery.initialItemApplied,false);assert.match(blocked.root.innerHTML,/星圖出征中/);
+ await blocked.root.event('[name="recoverySearch"]','input',{value:'保留這次搜尋'});
+ blocked.timers[0].fn();await flushUi();assert.equal(blocked.root.querySelector('[name="recoverySearch"]').value,'保留這次搜尋');
+ locked=false;await blocked.module.refresh();
+ assert.equal(blocked.root.querySelector('[name="recoverySearch"]').value,'保留這次搜尋');
+ assert.deepEqual(plain(draft.recovery.selected),[],'unlocking during the same mount must not replace the draft');
+ assert.doesNotMatch(blocked.root.innerHTML,/星圖出征中/);blocked.module.dispose();
+
+ const entered=recoveryMount({draft,initialItemId:'gear-4',override});await flushUi();
+ assert.deepEqual(plain(draft.recovery.selected),['gear-4']);assert.equal(draft.recovery.initialItemApplied,true);
+ assert.equal(entered.root.querySelector('[data-recovery-item="gear-4"]').checked,true);
+ assert.equal(entered.root.querySelector('[name="recoverySearch"]').value,'強化長劍');
+ await entered.root.event('[data-recovery-item="gear-4"]','change',{checked:false});entered.module.dispose();
+ const cancelled=recoveryMount({draft,initialItemId:'gear-4',override});await flushUi();
+ assert.deepEqual(plain(draft.recovery.selected),[],'a successful preselection that the player cancelled stays cancelled');
+ await cancelled.root.event('[name="recoverySearch"]','input',{value:''});
+ await cancelled.root.event('[data-recovery-item="gear-5"]','change',{checked:true});cancelled.module.dispose();
+ const changed=recoveryMount({draft,initialItemId:'gear-4',override});await flushUi();
+ assert.deepEqual(plain(draft.recovery.selected),['gear-5']);assert.equal(changed.root.querySelector('[data-recovery-item="gear-5"]').checked,true);
+ for(const mounted of [blocked,entered,cancelled,changed])assert.ok(mounted.calls.every(call=>call.action==='equipment-recovery'),'bringing in equipment never previews or consumes it');
+ changed.module.dispose();
+});
+
+test('Chinese recovery search keeps its DOM through explicit and timed refresh until composition finishes',async()=>{
+ const h=recoveryMount();await flushUi();
+ const input=h.root.querySelector('[name="recoverySearch"]');input.focus();
+ await h.root.event('[name="recoverySearch"]','compositionstart');
+ await h.root.event('[name="recoverySearch"]','input',{value:'ㄊ',event:{isComposing:true}});
+ const latest=h.snapshot();latest.items[0].name='同步後裝備';h.setSnapshot(latest);
+ await h.module.refresh();assert.equal(h.root.querySelector('[name="recoverySearch"]'),input);assert.equal(h.document.activeElement,input);assert.equal(input.value,'ㄊ');
+ h.timers[0].fn();await flushUi();assert.equal(h.root.querySelector('[name="recoverySearch"]'),input);assert.equal(input.value,'ㄊ');
+ await h.root.event('[name="recoverySearch"]','compositionend',{value:'同步後'});
+ const committed=h.root.querySelector('[name="recoverySearch"]');
+ assert.notEqual(committed,input);assert.equal(committed.value,'同步後');assert.equal(h.document.activeElement,committed);
+ assert.match(h.root.innerHTML,/同步後裝備/);assert.equal(h.draft.recovery.search,'同步後');
+ assert.ok(h.calls.every(call=>call.action==='equipment-recovery'));h.module.dispose();
+});

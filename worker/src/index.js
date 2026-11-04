@@ -7,6 +7,7 @@ import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
 import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
 import * as EQUIPMENT_RECOVERY from './services/equipment-recovery.js';
+import * as FORGE_RECEIPT from './services/forge-receipt.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
@@ -257,6 +258,7 @@ const routes = {
   'POST /rpg/pk/get': async (env, b, now) => { const p = await PK.pkView(env, String(b.pkId), b.tgId ? tgOf(b) : null, now); if (!p) throw new GameError('not_found', '找不到這場決鬥', 404); return { ok: true, pk: p }; },
   'POST /rpg/pk/list': async (env, b, now) => ({ ok: true, ...(await PK.listPk(env, tgOf(b), now)) }),
   'POST /rpg/pk/message': async (env, b) => PK.setPkMessage(env, String(b.pkId), b.chatId, b.messageId),
+  'POST /rpg/forge/receipt': (env,b,now)=>FORGE_RECEIPT.view(env,{tgId:tgOf(b),kind:b.kind,requestId:b.requestId,namespace:'service'},now),
   'POST /rpg/ledger': async (env, b) => ({ ok: true, ledger: await P.ledgerFor(env.DB, tgOf(b)) }),
   'POST /rpg/boss/current': async (env, b, now) => ({ ok: true, boss: await B.currentBoss(env, now) }),
   'POST /rpg/boss/get': async (env, b, now) => ({ ok: true, boss: await B.bossById(env, String(b.bossId), now) }),
@@ -411,7 +413,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery'))&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -421,6 +423,13 @@ export async function handle(request, env) {
       return json(await route(env,routeBody,now));
     }
     env=await prepareRealmEnv(request,env);
+    if(url.pathname==='/rpg/forge/receipt'){
+      const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
+      const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
+      if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);
+      if(routeBody.selectedCharacterId&&String(routeBody.selectedCharacterId)!==String(characterId))throw new GameError('character_changed','角色已切換，請重新核對',409);
+      return json(await route(env,{...routeBody,tgId:characterId},now));
+    }
     if (routeBody.tgId && !['/rpg/create', '/rpg/app/grant','/rpg/star-ring/recruit/join'].includes(url.pathname))
       routeBody.tgId = await resolveActiveCharacterId(env.DB, tgOf(routeBody));
     return json(await route(env, routeBody, now));

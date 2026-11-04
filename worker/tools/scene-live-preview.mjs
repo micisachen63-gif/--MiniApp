@@ -32,7 +32,8 @@ const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${
 const injected = `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
 const virtualSocial = new Set([
-  'scene-live-session.js','scene-live-view.js','scene-live-view.css',
+  'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js',
+  'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
@@ -68,7 +69,8 @@ const server = http.createServer(async (req, res) => {
     }
     const bound = await composeResponse(requestPath, grokRoot);
     if (bound) {
-      const body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injected).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
+      let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injected).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
+      if(bound.type.startsWith('text/html'))body=body.replace('<script src="'+socialPrefix+'scene-social-preview.js"></script>','<script src="'+socialPrefix+'scene-window-manager.js"></script><script src="'+socialPrefix+'scene-social-preview.js"></script>');
       if (bound.type.startsWith('text/html') && !body.includes('window.__RpgScenePreviewConfig=')) throw Error('Scene configuration hook changed');
       res.writeHead(200, { 'Content-Type':bound.type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Scene-Integration':'20261104' });
       res.end(req.method === 'HEAD' ? undefined : body); return;
