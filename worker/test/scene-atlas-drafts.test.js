@@ -63,7 +63,7 @@ function fakeBody(document){
     }
     this.nodes.push(...fields(remaining));
     for(const match of html.matchAll(/<button\b([^>]*)>/g))this.nodes.push(new Node(attrs(match[1])));
-    for(const match of html.matchAll(/<(?:p|span)\b([^>]*data-guide-[^>]*)>([^<]*)/g)){const node=new Node(attrs(match[1]));node.textContent=decode(match[2]);this.nodes.push(node);}
+    for(const match of html.matchAll(/<(?:p|span|small)\b([^>]*data-guide-[^>]*)>([^<]*)/g)){const node=new Node(attrs(match[1]));node.textContent=decode(match[2]);this.nodes.push(node);}
     this.canvas=html.includes('class="atlas-talent-canvas"')?Object.assign(new Node(),{scrollLeft:0,scrollTop:0,scrollWidth:900,clientWidth:400}):null;
   }});
   return body;
@@ -228,4 +228,104 @@ test('a committed build keeps its draft through a failed status read and adopts 
   field(h,'buildId').value='build-b';field(h,'buildId').fire('change');
   await h.view.refresh();assert.equal(field(h,'buildId').value,'build-b');
   assert.equal(h.calls.filter(call=>call.action==='atlas/configure').length,2);h.view.dispose();
+});
+
+
+const potionKeys=['red_1','red_2','red_3','red_4','blue_1','blue_2','blue_3','blue_4'];
+const supplyPolicy={hpPreference:'auto',mpPreference:'blue_2',hpThresholdPct:63,mpThresholdPct:47,autoBlue:true};
+catalog.supplyRules={version:'atlas-supplies-v1',maxPerKind:500,potions:potionKeys.map((id,index)=>({id,name:(index<4?'紅水':'藍水')+'實名'+(index%4+1),kind:index<4?'red':'blue',heal:(index%4+1)*50}))};
+function itemSupplies(overrides={}){
+  const items={red_1:20,red_2:15,red_3:9,red_4:2,blue_1:12,blue_2:11,blue_3:7,blue_4:1,...overrides.items};
+  return {hp:potionKeys.filter(key=>key.startsWith('red')).reduce((sum,key)=>sum+items[key],0),mp:potionKeys.filter(key=>key.startsWith('blue')).reduce((sum,key)=>sum+items[key],0),policy:plain(supplyPolicy),...overrides,items};
+}
+function tieredStatus(runState=null,overrides={}){return {...status(runState),supplies:itemSupplies(overrides)};}
+function setItems(h,items={}){
+  for(const key of potionKeys){const input=field(h,'item_'+key);input.value=String(items[key]??0);input.fire('input');}
+}
+function tieredRun(overrides={}){
+  return run({supplies:itemSupplies({items:{red_1:3,red_2:2,red_3:0,red_4:0,blue_1:0,blue_2:4,blue_3:0,blue_4:0},usedItems:{red_1:1,blue_2:2},initialItems:{red_1:4,red_2:2,blue_2:6},supplyRulesVersion:'atlas-supplies-v1'}),...overrides});
+}
+
+test('tiered dispatch uses server potion labels, preserves each draft, and submits items without a client policy',async()=>{
+  const h=harness('expedition',{state:tieredStatus(),handler:action=>action==='atlas/start'?{ok:true}:undefined});await drain();
+  assert.equal(h.body.querySelectorAll('[data-guide-supply-item]').length,8);
+  assert.match(h.body.innerHTML,/紅水實名4/);assert.match(h.body.innerHTML,/藍水實名2/);
+  assert.match(h.body.innerHTML,/紅水低於63%/);assert.equal(field(h,'item_blue_2').value,'10');
+  setItems(h,{red_1:3,red_3:2,blue_2:4});
+  field(h,'minutes').value='37';field(h,'minutes').fire('input');field(h,'item_red_3').focus();
+  form(h,'start').fire('submit');assert.match(h.body.innerHTML,/紅水實名3 × 2/);
+  h.body.querySelector('[data-guide-cancel]').fire('click');
+  assert.equal(h.document.activeElement,field(h,'item_red_3'));assert.equal(h.calls.some(call=>call.action==='atlas/start'),false);
+  h.remount();await drain();assert.equal(field(h,'item_red_3').value,'2');
+  form(h,'start').fire('submit');h.body.querySelector('[data-guide-confirm]').fire('click');await drain();
+  const payload=h.calls.find(call=>call.action==='atlas/start').payload;
+  assert.deepEqual(payload,{mapId:'map-a',queueMode:'duration',durationMinutes:37,supplies:{items:Object.fromEntries(potionKeys.map(key=>[key,({red_1:3,red_3:2,blue_2:4})[key]||0]))},requestId:'original-atlas-request'});
+  assert.equal(Object.hasOwn(payload.supplies,'hp'),false);assert.equal(Object.hasOwn(payload.supplies,'policy'),false);h.view.dispose();
+});
+
+test('tiered dispatch rejects blank, fractional, unavailable, or excessive total bottles before any start',async()=>{
+  const h=harness('expedition',{state:tieredStatus(null,{items:{red_1:500,red_2:500}})});await drain();
+  for(const [value,message] of [['',/需為/],['1.5',/需為/],['501',/需為/],['-1',/需為/]]){
+    setItems(h);field(h,'item_red_1').value=value;field(h,'item_red_1').fire('input');
+    form(h,'start').fire('submit');assert.match(h.body.innerHTML,message);assert.equal(h.body.querySelector('[data-guide-confirm]'),null);
+    assert.equal(field(h,'item_red_1').value,value,'invalid draft remains editable');
+  }
+  setItems(h,{red_1:300,red_2:201});form(h,'start').fire('submit');assert.match(h.body.innerHTML,/紅水攜帶總量不能超過 500/);
+  setItems(h,{blue_4:2});form(h,'start').fire('submit');assert.match(h.body.innerHTML,/藍水實名4攜帶數量需為 0–1/);
+  assert.equal(h.calls.some(call=>call.action==='atlas/start'),false);h.view.dispose();
+});
+
+test('same-run tiered ticks update exact inventory and used bottles without replacing edited inputs or making reads',async()=>{
+  const h=harness('expedition',{state:tieredStatus(tieredRun())});await drain();
+  setItems(h,{red_2:7});const input=field(h,'item_red_2');input.focus();const writes=h.body.writes,requests=h.calls.length;
+  const next=scene();next.live.supplies=itemSupplies({items:{red_2:4}});next.run.supplies=itemSupplies({items:{red_1:2,red_2:1,red_3:0,red_4:0,blue_1:0,blue_2:3,blue_3:0,blue_4:0},usedItems:{red_1:2,red_2:1,blue_2:3},policy:{...supplyPolicy,hpThresholdPct:51}});
+  assert.equal(h.view.update(next),true);
+  assert.equal(field(h,'item_red_2'),input);assert.equal(input.value,'7');assert.equal(input.max,'4');
+  assert.equal(h.document.activeElement,input);assert.equal(h.body.writes,writes);assert.equal(h.calls.length,requests);
+  assert.match(h.body.querySelector('[data-guide-available-item="red_2"]').textContent,/背包 4 瓶/);
+  assert.match(h.body.querySelector('[data-guide-run-items]').textContent,/已用：紅水實名1 × 2、紅水實名2 × 1、藍水實名2 × 3/);
+  assert.match(h.body.querySelector('[data-guide-run-policy]').textContent,/紅水低於51%/);
+  assert.equal(h.view.update({...next,realmId:'other'}),false);h.view.dispose();
+});
+
+test('legacy projections cannot overwrite the detailed supplies of a current tiered status',async()=>{
+  const h=harness('expedition',{state:tieredStatus(tieredRun())});await drain();
+  const before=h.body.querySelector('[data-guide-run-supplies]').textContent,requests=h.calls.length;
+  assert.equal(h.view.update(scene()),true);
+  assert.equal(h.body.querySelector('[data-guide-run-supplies]').textContent,before);
+  assert.match(h.body.querySelector('[data-guide-available-item="red_2"]').textContent,/背包 15 瓶/);
+  assert.equal(h.calls.length,requests);h.view.dispose();
+});
+
+test('tiered refresh defers repaint while a field is composing and preserves blank and zero drafts',async()=>{
+  const h=harness('expedition',{state:tieredStatus()});await drain();
+  setItems(h,{red_2:0});const input=field(h,'item_red_2');input.value='';input.fire('input');input.focus();
+  for(const fn of h.body.listeners.get('compositionstart'))fn({target:input});
+  h.setState(tieredStatus(null,{items:{red_2:4}}));await h.view.refresh();
+  assert.equal(field(h,'item_red_2'),input);assert.equal(input.value,'');
+  for(const fn of h.body.listeners.get('compositionend'))fn({target:input});
+  assert.equal(field(h,'item_red_2').value,'');assert.equal(h.document.activeElement,field(h,'item_red_2'));
+  h.remount();await drain();assert.equal(field(h,'item_red_2').value,'');assert.equal(field(h,'item_red_1').value,'0');h.view.dispose();
+});
+
+test('uncertain tiered start recovers the original item request after the editable draft changes',async()=>{
+  let writes=0;
+  const h=harness('expedition',{state:tieredStatus(),handler:action=>{if(action==='atlas/start'){if(++writes===1)throw Object.assign(Error('response lost'),{uncertain:true});return {ok:true};}}});await drain();
+  setItems(h,{red_4:1,blue_2:3});form(h,'start').fire('submit');h.body.querySelector('[data-guide-confirm]').fire('click');await drain();
+  assert.equal(h.store.size,1);const first=h.calls.find(call=>call.action==='atlas/start').payload;
+  field(h,'item_red_4').value='2';field(h,'item_red_4').fire('input');h.remount();await drain();
+  h.body.querySelector('[data-guide-recover]').fire('click');await drain();
+  assert.deepEqual(h.calls.filter(call=>call.action==='atlas/start').map(call=>call.payload),[first,first]);
+  assert.equal(h.store.size,0);h.view.dispose();
+});
+
+test('old dispatch replies keep legacy fields and do not claim saved settings affect that existing run',async()=>{
+  const h=harness('expedition',{state:status(run())});await drain();
+  assert.equal(h.body.querySelectorAll('[data-guide-supply-item]').length,0);assert.ok(field(h,'hp'));assert.ok(field(h,'mp'));
+  assert.equal(h.body.querySelector('[data-guide-run-policy]'),null);
+  h.view.dispose();
+  const current=harness('expedition',{state:tieredStatus(null,{policy:{...supplyPolicy,autoBlue:false}})});await drain();
+  assert.match(current.body.innerHTML,/藍水自動使用關閉|藍水 自動使用關閉/);
+  for(const key of potionKeys.filter(key=>key.startsWith('blue')))assert.equal(field(current,'item_'+key).value,'0');
+  current.view.dispose();
 });
