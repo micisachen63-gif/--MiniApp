@@ -31,6 +31,7 @@ const env = {
   ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true', EQUIPMENT_RECOVERY_ENABLED:'true',
 };
 const now = Date.now();
+const skillCareerQa = process.env.RPG_SKILL_CAREER_QA === '1';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
 const permanent = scopeEnvForRealm(env, await resolveRealm(env, 'permanent'));
@@ -40,6 +41,12 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   const id = player.char.tg_id, db = env.DB.sqlite;
   db.prepare('UPDATE rpg_characters SET level=15,gold=50000,last_settle_at=? WHERE tg_id=?').run(now, id);
   db.prepare("UPDATE rpg_equipment SET enhance_level=7 WHERE tg_id=? AND slot='weapon'").run(id);
+  // Opt-in, disposable skill/career fixtures; the normal preview seed stays unchanged.
+  if(skillCareerQa && ['sword','archer'].includes(baseClass)) {
+    db.prepare("UPDATE rpg_characters SET level=60,class_path='A',party_id=NULL,special_json='{}' WHERE tg_id=?").run(id);
+    const items=baseClass==='sword'?[['book_skill_01_1',10],['book_skill_01_2',3],['book_skill_01_3',3],['book_skill_02_1',1],['book_skill_07_1',1],['research_fragment',100],['mat_2',1],['reselect_2',1]]:[];
+    for(const [item,quantity] of items)db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,?) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=excluded.quantity').run(id,item,quantity);
+  }
   // Owned higher-tier bottles verify real reservation/consumption/refund without buying locked shop stock.
   for (const [item,quantity] of [['red_1',500],['red_2',30],['red_3',12],['red_4',4],['blue_1',500],['blue_2',30],['blue_3',12],['blue_4',4],['scroll_w',20],['scroll_a',20]]) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,?) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=excluded.quantity').run(id,item,quantity);
   for(const collection of equipmentCollectionCatalog(baseClass).filter(c=>c.tier===1))for(const r of collection.requirements){const item=makeGear({id:`collection-fixture:${id}:${r.slot}`,tgId:id,cls:baseClass,slot:r.slot,kind:r.kind,tier:1,rng:()=>.2,now,source:'local-collection-fixture',forceRarity:'common'});item.enhance_level=r.slot==='weapon'?4:r.minEnhance;await insertEquipStmt(env.DB,item).run();}
@@ -61,7 +68,7 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','skill-career','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -69,7 +76,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true }));
+      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa }));
       return;
     }
     if (url.pathname.startsWith('/app/api/')) {

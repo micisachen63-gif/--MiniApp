@@ -626,3 +626,25 @@ test('equipment recovery discovery and previews are readonly while actions retai
   }
   assert.deepEqual(h.net.calls.map(call => call.action), ['equipment-recovery', 'equipment-recovery/preview', 'equipment-recovery/action']);
 });
+
+test('skill-career pure reads do not create a mutation barrier or a follow-up scene request',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ const refresh=h.client.refresh();
+ const read=h.client.request('skill-career');
+ assert.deepEqual(h.net.calls.map(c=>c.action),['atlas/status','skill-career']);
+ h.net.calls[1].reply({ok:true,characterId:'a',career:{current:{tier:1}}});
+ assert.equal((await read).characterId,'a');
+ h.net.calls[0].reply({ok:true,scene:scene()});
+ assert.equal((await refresh).characterId,'a');
+ assert.equal(h.net.calls.length,2);
+ assert.equal(h.client.getSnapshot().characterId,'a');
+});
+
+test('an offline skill-career read is not an uncertain write and is never retried automatically',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ const read=outcome(h.client.request('skill-career'));
+ h.net.calls[0].fail();
+ const result=await read;
+ assert.equal(result.ok,false);assert.equal(result.error.uncertain,false);
+ assert.equal(result.error.code,'connection_failed');assert.equal(h.net.calls.length,1);
+});

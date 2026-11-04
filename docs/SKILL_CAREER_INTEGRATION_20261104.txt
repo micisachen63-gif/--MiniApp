@@ -1,0 +1,60 @@
+星穹之旅：技能與轉職主戰鬥視窗整合
+日期：2026-11-04（Asia/Taipei）
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-skill-career-integration-20261104
+分支：codex/skill-career-integration-20261104
+接續基線：e454529855d056d906f6f5bf3afcb32e71aa92b8（Draft PR50）
+提交與草稿PR的最終識別以本批 local-submission-receipt.json / pr-receipt.json / ci-final-receipt.json 及主交接 STATUS.json 為準。
+
+一、問題與本批成果
+先前主戰鬥已整合裝備、背包、工坊、商店、補給、Atlas及雙收藏；原版技能管理與轉職仍分散在舊頁面。本批把既有遊戲能力接入同一主戰鬥浮窗，沿用帳號、世界、角色、session與原生服務，不另開iframe、不載入另一套App、不改遊戲成長規則。
+
+角色入口新增「職業技能」與「轉職與進修」。技能頁支援技能書學習、已學技能進修、技能書回收、研究碎片兌換、三格技能裝配及排序、清空配置、自動施法模式及原版技能策略。轉職頁呈現當前職業、各階分支、原生主動技能／被動／武器說明、等級及材料需求、轉職與重選確認，以及重選可能卸下的裝備。職業資格改變後仍保留原始技能學習資料；不符合資格的配置明示不可用且可清空。
+
+二、權威讀取與既有寫入
+新增 skill-career 純讀聚合服務。使用 loadPlayer 和原有 stateView 投影，不能因開頁、切頁、搜尋或刷新而結算玩家。Mini App 路由在驗證身分、明確 realm 與目前所選角色後直接回傳，避開行為紀錄寫入；內部服務路由驗證 service secret、realm、帳號所有權與 selectedCharacterId。凍結世界仍可讀取，並回傳 readOnly；既有 mutation 仍由原本 phase/fence 拒絕。
+
+學習、回收、兌換、裝配、自動模式、技能策略、個人掛機手動技能排程／取消沿用 expedition/action；轉職／重選沿用 advance/reselect。學習繼續帶入 requestId 與 fromLevel，使用原有帳本保護。新UI不把舊 expedition/me 當純讀使用，因該服務會走 withPlayer 及結算。
+
+研究兌換成本由服務回傳 researchCost；UI不重建稀有度價格表。原版 damage 字串（例如倍率／目標說明）及 effect 保留呈現。技能 safe／strong 與每日 budget 依原服務定義；strong 會使用背包藍水，依藥水售價計入預算，與 Atlas 補給／守護者設定分開。
+
+三、轉職規則與 Atlas 相容
+分支、等級、材料、冷卻及裝備限制直接使用原本 branchChoices/nodeFor 與 advance/reselect 的純函式。投影只對複製的玩家資料試算，沒有寫庫或另訂成長門檻。轉職／重選沿用原隊伍限制，沒有憑 partyId 前綴猜測背包操作權限，也沒有新增 Atlas 進行中禁令。
+
+四個職業的全部四階轉職由服務測試實際執行；前三階重選遵守原道具與冷卻。現有資料表沒有第四階重選道具，本批顯示「第4階尚未開放重選」，不製造 reselect_4，不顯示0/0成本或提交按鈕。
+
+原版職業技能配置不等同 Atlas 技能構築；Atlas build/supports/automation 入口仍保留。技能頁不聲稱裝入三格技能便會在 Atlas 施放。當 Atlas 已開始，途中轉職與重選不改寫該 run 的戰鬥快照、RNG及進度；結算依當前角色上限夾住HP/MP，下次開始才讀新的職業與裝備快照。此流程有真實服務測試證據。
+
+四、前端操作與斷線恢復
+模組沿用統一浮窗 host。讀取綁定帳號、realm、角色及context epoch；同角色 revision 也保持單調，避免較舊資料覆蓋較新畫面。搜尋支援中文輸入法與NFKC正規化；篩選、詳情及草稿留在視窗內。對話確認顯示於原面板，會捲入可見範圍並把焦點移到取消按鈕。
+
+需要確認的寫入不會因重開視窗或切換角色而失去待確認記錄。未知結果按帳號／realm／角色隔離保存在sessionStorage及記憶體；只允許純讀刷新及人工確認已檢視，不自動重送原寫入，不用數量差猜測交易收據。已收到成功回覆但後續刷新失敗時，仍保留「已成功」與重讀入口。
+
+移除技能會清除該技能的auto草稿；重新裝入顯示伺服器的manual狀態。尚未套用的選項明確標示。多個技能同時失去職業資格時，可一次清空配置，避免逐格移除仍被其他失格技能阻擋。
+
+五、驗收與可重現證據
+1. 分項驗證58項通過（API/session32、技能轉職服務12、前端14）。本批新增33個Node測試；完整gate已包含它們。
+2. 完整官方測試檔案選取：依 scripts/run-tests.mjs 的全部清單，Node v24.7.0，以 node --test --test-concurrency=2 分別執行 Worker281個測試檔與BOT23個測試檔。2026-11-04 20:32:54～20:37:58（台灣時間）完成，Worker2830＋BOT205＝3035項，0 fail/cancel/skip/todo；兩程序exit0。這是完整檔案清單的同等命令，不冒稱實際執行npm test。
+3. 完整gate前後1769個程式、設定及資料來源的SHA一致，changedSources=[]。Chrome使用的10個相關檔、預覽啟動145個後端檔亦與gate來源一致。完整收據：.release-sync/skill-career-20261104/full-gate-receipt.json；完整日誌與source-before/source-after同目錄。
+3a. 完整gate及Chrome之後，提交前格式檢查發現 scene-skills-ui.js 第291行行尾有1個ASCII空白；只移除此1 byte，所有其他來源與程式內容保持相同。precommit-format-bridge.json保存測試版本與提交版本SHA及精確差異，不把兩個SHA說成相同；已通過的遊戲操作不重跑，最終提交另由精確HEAD CI驗證。
+4. 實際Chrome156.0.8078.80首次全套13/13通過（20:29:09～20:30:53），24張截圖、320/390/1280三寬無水平溢出、同一主浮窗。63次確認區幾何與取消焦點檢查都發生在Playwright點擊之前。root另目視核對4張代表截圖，文字、材料條件與確認操作可讀可用。
+5. 瀏覽器真操作包含學習/進修、三格裝配與排序、自動條件及移除後重加manual、strong/137→關窗重開→safe/0、回收/兌換、A→A1轉職、A1→A2重選及失格技能移除；另一角色缺材料仍禁止。原生寫入均使用真記憶體API，未偽造成功回覆。
+6. 回收2本書、實得40碎片後故意丟失回覆；關窗重開、換角返回、重讀及人工確認過程的原POST始終1次。兌換真扣80碎片取得1本書。轉職與重選各1次POST、各扣1份材料／轉職書。
+7. 晚成功A→B與真409的A→B→A通過。0 pageerror、0非預期HTTP、0 route error、0外部請求；唯一HTTP409為刻意延後的舊角色衝突，expected=true。不呼叫expedition/me或atlas/settle，全程僅初次頁面導航。
+8. Chrome完整證據：.release-sync/skill-career-20261104/browser/2026-11-04T12-29-09-425Z-52292/results.json；root視覺核對：visual-review.json。Harness：worker/tools/skill-career-browser.cjs；SHA256 b19d5349a2d6ae2f52b20bada9063901a3ae820014d4482fd35b93af68ac9b28。
+9. API/host唯讀交叉審查未發現阻擋提交問題。兩個Windows30分鐘工作於20:36核對皆Enabled、PT30M、Ready且LastTaskResult=0；schedule-verification.json保存實際時間及命令，沒有修改或新增排程。
+
+六、本機預覽與來源界線
+本批隔離預覽：http://127.0.0.1:9733/
+本批記憶體API：http://127.0.0.1:9732/
+預覽metadata：.release-sync/skill-career-20261104/preview-process.json
+後端啟動來源：.release-sync/skill-career-20261104/preview-backend-sources.json
+RPG_SKILL_CAREER_QA=1 僅供本機合成角色及材料測試；health 為 isolated=true、ephemeral=true、productionAccess=false。正式資料、正式身分、正式旗標及部署均未變動。預覽啟停僅針對本批PID、命令列、工作樹與連接埠驗證過的程序樹；其他預覽保留。
+
+七、接續與未完成
+本批完成技能管理及轉職主浮窗接線，沒有宣稱所有原版頁面均已遷移。下一批建議聚焦組隊大廳、目前隊伍與戰術技能操作，重用原生組隊服務接入隊友／目標選擇及手動施法。這些組隊操作目前尚未遷移；個人頁的手動按鈕只是排入下一次有效掛機戰鬥，不能取代組隊目標操作或 Atlas 的獨立流派。天使、命運、交易、Boss／塔／星環、衣櫥與完整帳務等仍依主STATUS分批處理。本機Chrome的斷線及切角驗收不等於正式Telegram登入宿主、真實手機或正式經濟驗收。
+
+第四階重選、600級／16招覺醒、逐次攻擊／施法事件、正式平衡、季末跨D1資產轉移、角色／FX與320px場景角色遮擋不在本批完成範圍。角色與FX素材、catalog/queue/grok-assets保持其他工作線所有權。
+
+主交接：D:\StarJournal\handoff\non-character\STATUS.json 與 LATEST.md。
+本批交接：D:\StarJournal\handoff\non-character\skill-career-20261104\STATUS.json。
+沿用現有 Windows 每30分鐘 checkpoint；重大進展與收尾立即更新人工語意狀態並checkpoint。快照生成時間與STATUS.updatedAt分開判讀。禁止操作共享全域agent_workflow/task_control、停止全部Node、部署、合併PR、直接push main或變更正式DB/Secrets/migration/旗標。
