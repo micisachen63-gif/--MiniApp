@@ -35,6 +35,7 @@ const buttonMaterialPrefix = '/ui/button-materials/';
 const virtualSocial = new Set([
   'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js',
   'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
+  'scene-skills-ui.js','scene-skills-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',

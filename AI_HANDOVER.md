@@ -1,3 +1,41 @@
+# 技能與轉職主浮窗整合（2026-11-04）
+
+本批工作樹：`D:\StarJournal\worktree-snapshots\star-journal-skill-career-integration-20261104`
+分支：`codex/skill-career-integration-20261104`；接續已驗收 PR50 的 `e454529855d056d906f6f5bf3afcb32e71aa92b8`。
+本批完整報告：`docs/SKILL_CAREER_INTEGRATION_20261104.txt`。
+
+## 已完成
+
+- 角色入口的「職業技能」「轉職與進修」都接入原本主戰鬥單一浮窗，沿用既有帳號、realm、角色及context。
+- 個人技能學習／進修、三格裝配／排序、自動條件、技能策略、掛機手動排程／取消、技能書回收及研究兌換。
+- 四職全部四階轉職與前三階重選，原生材料、等級、冷卻及卸裝預覽；第四階重選沒有原生道具，明示尚未開放。
+- `skill-career` 新純讀投影不經 withPlayer、不結算、不寫行為紀錄；Mini App與內部service均檢查realm、帳號所有權、目前角色。凍結世界可讀，寫入由原phase/fence管控。
+- A/B/A與較舊revision回覆隔離；斷線未知寫入跨關窗／換角保留，恢復只讀、不自動重送；失格技能明示並能清空配置。
+- Atlas 與個人技能系統保持原本邊界：進行中的run保留既有快照；下次start才讀新職業／裝備。原職業三格技能不會直接成為Atlas施法。
+
+## 驗證
+
+- 相關分項58項已通過；本批新增33個Node測試。
+- 最終完整gate：Worker2830＋BOT205＝3035，全數通過、0 fail/cancel/skip/todo；Node24.7.0，依官方runner全部檔案清單（281＋23檔）以concurrency2執行。2026-11-04 20:37:58（台灣時間）完成。
+- 1769個來源前後SHA完全一致；Chrome10個來源及預覽145個後端來源與gate一致。
+- gate後僅移除技能JS第291行的1個行尾空白；精確差異與兩版SHA保存在 `precommit-format-bridge.json`，其餘來源不變；最終提交另核對精確HEAD CI。
+- 真Chrome13/13、24張截圖、320/390/1280與63次確認可見／取消焦點檢查；0非預期HTTP／pageerror／route error。真提交後丟回覆仍只1次POST，A/B與A/B/A晚成功／409隔離通過。
+- 完整證據：`.release-sync/skill-career-20261104/full-gate-receipt.json`、`browser/2026-11-04T12-29-09-425Z-52292/results.json`、`visual-review.json`。已有成功收據，不無故重跑或重置預覽。
+
+## 接手與本機預覽
+
+本批 `http://127.0.0.1:9733/`，隔離記憶體API `http://127.0.0.1:9732/`；health為isolated/ephemeral且productionAccess=false。啟動程序與後端SHA見 `.release-sync/skill-career-20261104/preview-process.json`、`preview-backend-sources.json`。QA使用本機合成Lv60角色與道具，已執行真學習／回收／轉職／重選；不要把測試後剩餘資源當正式資料，亦勿為重跑成功驗收而重置。
+
+本批提交／草稿PR／精確HEAD CI識別，見 `.release-sync/skill-career-20261104/local-submission-receipt.json`、`pr-receipt.json`、`ci-final-receipt.json` 與 `D:\StarJournal\handoff\non-character\skill-career-20261104\STATUS.json`。來源與測試成功後才進行提交與遠端驗證；不要拿PR50的CI替代本批。
+
+下一批建議組隊大廳、目前隊伍與戰術技能操作。組隊的隊友／目標選擇及手動施法尚未遷移；目前個人技能手動操作只排入下一次有效掛機戰鬥。其他舊頁面、逐擊／施法事件、600級／16招覺醒、正式平衡、季末移轉、正式Telegram／真機驗收及320px角色遮擋仍在主STATUS待辦中。
+
+主線與補給兩個既有30分鐘Windows排程繼續保存交接，語意進度以STATUS.updatedAt為準。不得使用共享全域MCP agent_workflow/task_control；不停止其他預覽；角色／FX、catalog/queue/grok-assets維持其他工作線所有權；正式環境凍結，不部署、不合併、不改正式DB／Secrets／migration／旗標。
+
+---
+
+## 前序交接（完整保留）
+
 2026-11-04 Atlas 舊裝備效果相容整合：獨立 codex/atlas-legacy-effects-20261104 由按鈕＋八階補給共同基線 8370ce7c11f09f44146c3bade06df6b5b7d33ff0 接續。服務端新出征採 atlas-legacy-effects-v1 凍結原生元素、weaponElem、六屬性抗性、elemPct／expPct／freeCastPct；接回實際傷害／承傷／扣魔與 EXP，獨立 manaRng，舊 run 不追補、損壞新版狀態拒絕，status 純讀與 CAS／SQLite 原子防重維持。新增48項測試（16規則／25固定舊v4回歸含24案例／7真SQLite）；只修舊v1人工降版fixture遺留新版欄位，62項相關測試全過。2026-11-04 19:25:22 台灣時間完成官方完整清單 gate：Worker 2797＋BOT205＝3002項全過，無失敗／取消／跳過／todo；1343來源檔前後SHA一致。完整規則與驗收見 docs/ATLAS_LEGACY_EFFECTS_INTEGRATION_20261104.txt；提交、草稿PR與精確HEAD CI以 D:\StarJournal\handoff\non-character\atlas-legacy-effects-20261104\STATUS.json 及 .release-sync/atlas-legacy-effects-20261104 收據為準，不能引用基線CI當成本批CI。主交接已指向本樹，沿用30分鐘Windows checkpoint。既有9723/9722仍為前批預覽，未重啟；未部署、未合併main、未改正式DB/Secrets/migration或角色/FX。舊UI、逐擊事件、320px布局、高階600級/16覺醒、正式平衡、完整季末移轉與正式登入/真機驗收仍待後續。
 
 2026-11-04 主場按鈕與Atlas分階補給合流：獨立codex/ui-supply-integration-20261104保留補給b041521與按鈕b8197b3兩個父提交，9723場景／9722隔離API，原兩樹與預覽保留。CSS兩段、兩張金屬WebP、八階補給及舊run/原子扣還完整保留；唯一文件衝突已同時保留兩批。來源PR48已推送且精確b041521完整Worker/BOT CI41808339254成功。合流230/230相關測試、按鈕Chrome30/30、最終補給Chrome12/12通過；後續僅修browser工具的實際喝水等待與stop後已知stale唯讀重讀，其餘1053來源不變。最終真blue_2用1瓶，兩趟停止與各8階退款成功；實際觸發一次stale_response，固定同context/run後只重讀唯讀status一次，未重試寫入或關閉guard。完整失敗/修正/成功證據見docs/UI_SUPPLY_INTEGRATION_20261104.txt；合流提交、草稿PR與精確HEAD CI以.release-sync/ui-supply-20261104收據及D:/StarJournal/handoff/non-character/atlas-supply-20261104/STATUS.json為準。30分鐘排程沿用且18:02台灣時間成功。正式機凍結，角色/FX、遠端migration/資料/Secrets不動；其餘舊功能/逐擊事件/舊效果/高階成長/正式登入真機/平衡/季末移轉及320px角色局部遮擋仍待後續。下列兩批文字為合流前歷史紀錄。
