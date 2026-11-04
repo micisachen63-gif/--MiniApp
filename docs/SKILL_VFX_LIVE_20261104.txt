@@ -1,0 +1,462 @@
+星穹之旅／StarJournal
+技能特效第二批：真實戰鬥事件、角色出手與本機場景接線
+版本日期：2026-11-04（台灣時間）
+文件狀態：本批程式、素材補充設定與本機驗收完成；正式環境維持凍結。
+
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-20261104
+分支：codex/skill-vfx-20261104
+本批開始提交：13ab05a41a7eb115859159ac761cc2b40d2b6446
+本批核心提交：4e95579292f8e417501f8b60d497c0bd945825fc（35檔）
+本文件及驗收包另以文件提交保存；完整最新HEAD請讀本線STATUS或git log。
+本線進度入口：D:\StarJournal\handoff\skill-vfx\LATEST.md、STATUS.json
+第一批文件：docs/SKILL_VFX_20261104.txt
+本批驗收包：docs/skill-vfx-live-20261104/validation-summary.json
+
+一、已完成的結果與範圍
+
+第一批196個技能身份的動畫配方、28個視覺家族、4張職業透明圖集及2張召喚素材已保留。本批接上實際Atlas結算，不重畫或覆寫角色原稿，也不由HP差額、擊殺摘要或畫面推測技能。
+
+已接通的完整路徑：
+成功提交的Atlas戰鬥事件 → 接受同帳號／世界／角色／派遣的scene → 發布combatTrace → 找到當前房間的實際敵人 → 既有角色attack動畫 → 原生或已審查的release marker／武器出口 → VFX動畫。
+
+完成項目：
+1. 有界、非持久化combat observer；不改原戰鬥／RNG／收益。
+2. settle成功CAS／交易後才回傳trace；status維持純讀。
+3. session成功receipt通知、角色bridge、Canvas overlay與生命週期清理。
+4. 4職共16方向出手設定審查；12條fallback profiles補4個marker、12個anchor。
+5. full／placement／impact三種呈現模式；陷阱放置和觸發、寵物及DOT不混成新施法。
+6. 最終11個直接相關測試檔175/175通過，0失敗／略過／取消。
+7. 真API Chrome完整16案例通過：12主技能桌機＋4職手機；頁面及HTTP錯誤均0。
+8. 目視修正陷阱法環重複向下偏移；桌機／手機另外2個專項通過並重拍。
+9. 完整JSON、原生TAP、來源指紋、修正版截圖與代表總覽均已保存。
+10. 每30分鐘本機快照排程維持運作，重要進展另立即更新人工STATUS。
+
+完成數量的界線：
+- Catalog 196＝124原生技能＋60特殊技能＋12 Atlas主技能。
+- 本批live事件來源為12個Atlas主技能；native／special仍是已備素材與配方，不能宣稱全數已有Atlas實戰路徑。
+- 普攻不偽裝成原生技能或付費Atlas施放。
+- 支援6個、可配置天賦120個（另4起點）、其中核心天賦12個、每職24點上限，沿用第一批核對；支援／天賦不虛構成獨立攻擊。
+- 16招覺醒仍是planned／implemented=false，未納入live完成數。
+- 本線仍是atlas-v3基線。另一線已提交的v4及正在製作的統一UI尚未合入本線；詳見第十一節。
+
+二、12個實戰技能與呈現方式
+
+劍士：
+sword_whirlwind／旋風斬：角色出手後播放旋風掃蕩。
+sword_bleed／裂傷斬：施放與後續真實流血tick分開。
+sword_counter／盾鋒：原施放保留；成功格擋後的真實反擊為獨立impact。
+
+妖精／弓手：
+archer_pierce／貫穿箭：依真正命中目標投射。
+archer_beast／召喚獵鷹：召喚cast與pet後續命中分開，不重複召喚。
+archer_trap／棘網陷阱：先在角色邏輯腳點放置法環，真正觸發後才在實際命中的敵人上播放impact。
+
+法師：
+mage_chain／連鎖閃電：使用真實命中目標。
+mage_frost／霜壁脈衝：施放動畫與對應霜系呈現。
+mage_arcane／秘法聚束：實際付魔cast後播放秘法特效。
+
+盜賊：
+thief_poison／淬毒刃：施放與後續毒傷tick分開。
+thief_execute／終結刃：只反映真正已提交的施放，不由剩餘HP猜測觸發。
+thief_combo／鏡刃：同次施放的多段命中及轉火保留於hits。
+
+三、後端事件契約與不變條件
+
+檔案：
+worker/src/game/atlas-combat-observer.js
+worker/src/game/atlas-engine.js
+worker/src/services/atlas.js
+
+引擎入口：
+advanceAtlasRun(run, nowSeconds, { maxSteps: 2000, combatTrace: true })
+combatTrace亦可用{limit}。省略或false時不增加該回傳欄位。
+啟用後只在回傳物件旁附combatTrace，不把事件寫入state_json，不做migration。
+
+觀察器限制：
+- 不讀時鐘、不抽random、不決定目標、不計算傷害、不改run。
+- 預設保留最近128筆，選項硬上限256，至少1筆。
+- 回傳events、limit、dropped、total。
+- 事件超量只丟觀察值，不能停止或縮短戰鬥推進。
+- Service目前採預設128；前端bridge明確接受最多128的envelope。
+- 這是短期呈現窗口，不是完整戰鬥歷史或收益帳本。
+
+成功提交後的envelope：
+schemaVersion:1
+source:"committed-combat"
+context:{accountId,realmId,characterId,dispatchId}
+revision:Number(run.rev)+1
+committedAtMs:now
+resolutionMs:1000
+events、limit、dropped、total
+
+每筆event：
+eventId、type、actorId、skillId、
+atMs、resolvedAtMs、scheduledAtMs、resolutionMs、
+mapIndex、roomIndex、targetIds、hits。
+
+eventId格式：
+runId:combat:elapsedSeconds:phase:ordinal
+phase為cast／dot／pet／trap／counter。完整tick內按phase編號，分批／JSON續跑／重試保持身份一致。
+
+時間：
+atMs＝resolvedAtMs，是startedAt＋實際解析tick轉毫秒。
+scheduledAtMs保留原hero／pet／trap／counter排程時間。
+目前權威解析度是1000ms；細緻動畫不代表後端新增了毫秒級傷害規則。
+committedAtMs沿用本次結算請求的now與DB updated_at，不是額外量測的實體交易結束瞬間。
+
+命中：
+skill_cast另有mpBefore、mpSpent、mpAfter。
+hits含targetId、damage、critical、hpBefore、hpAfter、source；傷害是實際扣血後、受剩餘HP截斷的值。
+targetIds是hits中按順序去重的真實敵人ID；hits保留多段命中與retarget。
+trap cast的targetIds／hits為空；無實際命中的skill_effect不發布。
+pet／trap保存狀態沒有獨立actor ID或持久cast ID，因此使用owning hero，不虛構寵物身份或特定原施放關聯。
+
+發布邊界：
+只有await db.batch成功後，才使用該成功attempt的trace。
+CAS失敗、交易晚期失敗與競爭重試不混入先前attempt事件。
+No-op、status、已提交後重試均不補發trace。成功提交但回應遺失，動畫資料可以遺失；不得為補動畫再發獎勵。
+
+同包scene與trace的revision：
+A提交N後、讀status前若B已提交N+1，A可回傳scene N+1與合法trace N。
+前端只在同context／dispatch且trace.revision不高於已接受scene時通知，保留原trace revision。
+已新增真正SQLite案例，驗A/B各自events深相等自己的引擎結果、ID不相交、不錯標或混批。
+Bridge仍檢查當前房間、目標、時效；adapter若已接受更高trace revision，會拒絕較舊trace。
+
+四、角色release profiles
+
+執行設定：worker/public/skill-vfx-actor-profiles.json
+SHA256：64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7
+來源：D:\StarJournal\grok-assets\ui-generated-20261030\characters-v1\character-preview-actors\
+角色ID：sword、archer、mage、thief；不是catalog顯示用的*_f key。
+
+原生優先：
+有效releaseFrame優先，再使用hitFrame；有效原生releaseAnchorPx優先。
+原生資料完整就直接使用，不套fallback。
+缺項才讀VFX側profile；metadata與release frame實際圖片bytes雙SHA都必須相符，並核對frameCount、各影格duration、clip/frame mirrorX、rect、anchor、bodyHeight。
+來源改變即拒絕舊profile；不猜新位置、不修改角色metadata。
+不把Animator的duration/2估計冒充已審查marker。
+
+補項（frame從0計數，anchor為未鏡像裁框局部像素）：
+sword up：frame2／210ms／[386,236]；anchor。
+sword down：frame2／210ms／[8,260]；anchor。
+sword right/left：frame3／375ms／[434,406]；marker＋anchor。
+archer up：frame2／400ms／[123,115]；anchor。
+archer down：frame2／400ms／[154,190]；anchor。
+archer right/left：frame5／500ms／[464,380]；marker＋anchor。
+mage up：frame2／480ms／[89,93]；anchor。
+mage down：frame2／480ms／[250,131]；anchor。
+thief up：frame2／180ms／[268,24]；anchor。
+thief down：frame2／180ms／[132,215]；anchor。
+保留原生mage right/left：frame2／480ms／[483,215]。
+保留原生thief right/left：frame6／440ms／[286,248]。
+
+Sword側向取首次完整向前伸展；Archer側向取箭身第一次明確離弦，出發點仍在弓握把。
+共16方向審查，12條fallback，新增4 marker／12 anchor，pending=0。
+變速影格保留frameDurationsMs；releaseAtMs是前置影格時長之和，不以平均FPS代替。
+
+鏡像與投射：
+origin=(releaseAnchorPx-frame.anchor)/frame.bodyHeight。
+x只套一次clip.mirrorX XOR frame.mirrorX的符號；native releaseOrigin已處理鏡像，不再次反轉。
+世界身高B=300*abs(hero.scaleY)，現場約sceneHeight*0.20。
+武器出口world=(hero.x+origin.x*B, hero.y+origin.y*B)。
+經camera scroll/matrix、game canvas DOMRect投影到overlay CSS座標；身高使用投影後B，不能用整張貼圖外框。
+角色Animator只由既有scene update更新一次。Bridge觀察elapsed跨過marker，不另起角色時鐘。
+
+角色來源仍approved:false／partial-candidate。本線的出手審查不等於核准角色原稿；未修改grok-assets、catalog、queue或角色排程。
+
+五、呈現時鐘、模式與生命週期
+
+Adapter的onCast／onEffect可回傳：
+presentation:{startProgress,elapsedMs,mode}
+
+真event.atMs仍用於時效／未來事件／防重；不改成呈現時間。
+預設maxAgeMs=5000，maxFutureMs=250。舊房間、失去目標或過期資料直接捨棄。
+有效snapshot目標有既有素材映射但sprite尚未載入時，可在原始5秒窗口內等待；不補placeholder座標。
+場景／相機布局變動可能取消舊效果，保留診斷，不在新位置重播歷史事件。
+
+full：
+角色attack到release marker後，從recipe release.from（目前0.22）播放。
+age只計marker後elapsed及資產載入經過時間，不再次播放完整蓄力。
+原配方時長保持不變。
+
+placement：
+空目標trap cast。from是已投影的邏輯腳點，效果以這個地面座標為中心，時長最多1200ms。
+目視曾發現field沿用身體原點的+.35H／ground+.42H，使法環向下多移65–70px；已修正placement專屬定位，其他full配方不變。
+新增3尺度×4方向×3相位×2動態設定的腳點回歸。
+可見鞋底會隨來源出手姿勢移動；描述為回到邏輯腳點地面範圍，不能聲稱每個姿勢的鞋底像素與法環中心完全重合。
+
+impact：
+dot／pet／trap／counter只在實際targets播放650ms命中，不重演英雄attack、不重召喚。
+這些短效果在通過真事件時效後，自收到呈現的時刻開始，避免1秒權威解析度讓650ms動畫一到達就消失。
+
+Reduced motion：
+三種模式皆420ms；placement仍維持正確地面anchor。
+
+取消：
+context／角色generation／dispatch／房間變動、外部重啟attack、hidden、pause、sleep、clear、destroy／pagehide會取消待播，釋放overlay及listeners。
+同角色重啟attack以token／clip／elapsed變化守衛。
+被動效果不佔角色attack queue。事件ID防重；重送相同receipt不新增呈現。
+session通知順序為接受write scene→trace通知→forced refresh；read status不通知trace。
+
+觀察入口：
+RpgSceneSession.subscribeCombatTrace(listener)
+rpg:combat-trace CustomEvent(detail:{trace,scene})
+RpgSceneLiveView.inspect()[0].vfx
+RpgSceneLiveView.inspect()[0].actorAnimation
+RpgSceneLiveView.ingestCombatTrace(trace)僅供呈現QA，仍嚴格驗context/room/targets。
+vfx包括received/accepted、按原因略過、pendingGeometry/pendingCasts、lastRelease/lastEffect/lastTrace與player/adapter stats。
+lastRelease跨clear保留但附context/room，方便診斷；不能把舊lastRelease當作仍在播放。
+
+六、程式與證據位置
+
+核心：
+worker/public/skill-vfx-actor-bridge.mjs
+worker/public/skill-vfx-actor-profiles.json
+worker/public/skill-vfx-combat-adapter.mjs
+worker/public/skill-vfx-engine.mjs
+worker/public/scene-live-session.js
+worker/public/scene-live-view.js
+worker/src/game/atlas-combat-observer.js
+worker/src/game/atlas-engine.js
+worker/src/services/atlas.js
+
+工具：
+worker/tools/scene-live-preview.mjs
+worker/tools/atlas-local-preview.mjs
+worker/tools/skill-vfx-live-browser.cjs
+
+scene-live-preview只增加明確同源路由：bridge、adapter、engine、catalog、profiles五檔與既有6張WebP。
+沿用realFile containment檢查與GET/HEAD，不廣泛開放工作樹根目錄。
+scene-preview-bindings.mjs本批未修改；既有禁止prototype假cast/hit/projectile guard保留。
+
+角色來源審查：
+worker/art-production/skill-vfx-actor-20261104/
+內含source-inventory、profile-provenance、handoff、建立工具、原生marker審查圖、缺失marker序列、兩張release點總覽。
+金色為本線補項、青色為原生；屬技術QA，沒有重新繪製角色。
+
+正式交付驗收：
+docs/skill-vfx-live-20261104/
+  validation-summary.json
+  tests.tap
+  test-validation.json
+  post-gate-formatting.json
+  browser-results.json
+  browser-trap-desktop.json
+  browser-trap-phone.json
+  live-contact-sheet.jpg
+  trap-ground-desktop.png
+  trap-impact-desktop.png
+  trap-ground-phone.png
+
+完整原始操作目錄：
+.release-sync/skill-vfx-20261104/live-2026-11-04T06-15-41-789Z/
+.release-sync/skill-vfx-20261104/live-trap-ground-desktop/
+.release-sync/skill-vfx-20261104/live-trap-ground-phone/
+第一個smoke：live-2026-11-04T06-12-19-256Z/
+歷史失敗與修復紀錄也保留在.release-sync/skill-vfx-20261104/，未刪除或混入最終通過數。
+
+七、最終驗證結果
+
+最終時間：2026-11-04T06:30:20.344Z。
+原生TAP：175 tests、175 pass、0 fail/cancelled/skipped/todo。
+測試耗時約1.656秒；24份程式及測試輸入SHA前後一致，changedDuringGate=[]。
+TAP大小41060 bytes。
+TAP SHA256：bbd03f9f2b1e7bb7ce9808aa476c1b2431289feb60fe28ac7f5bee9637c6dc68。
+
+指令：
+node --test --test-reporter=tap worker/test/atlas-engine.test.js worker/test/atlas-service.test.js worker/test/atlas-combat-observer.test.js worker/test/atlas-combat-trace-service.test.js worker/test/skill-vfx-engine.test.js worker/test/skill-vfx-combat-adapter.test.js worker/test/skill-vfx-actor-bridge.test.js worker/test/skill-vfx-scene-session.test.js worker/test/scene-live-view.test.js worker/test/scene-live-lifecycle.test.js worker/test/scene-live-session.test.js
+
+涵蓋：
+- Backend56項：原engine/service、新observer、新service trace／post-commit read skew。
+- Engine21項：配方／播放生命週期、release時鐘、mode、placement腳點。
+- Bridge18＋adapter/server35＋新session7＝60項。
+- 既有view／lifecycle／session回歸38項。
+不是完整Worker/BOT suite或正式部署gate，不以focused結果冒稱全專案驗收。
+
+不改機制證據：
+12 builds×2 seeds共24份修改前完整結果雜湊。
+Observer開關state/rewards及三條原RNG一致；分段／整段／JSON續跑事件一致。
+Combo retarget、trap、pet、DOT、counter、basic attack區分、128/256上限。
+v1/v2舊狀態不新增持久欄位。
+真SQLite CAS失敗、併發重算、late ledger回滾、回應遺失、status零寫入。
+Post-commit scene N+1/trace N與前端接受順序另有明確案例。
+
+修復歷史：
+- 首輪frontend 59/60：具體actor-interrupted被通用cast-cancelled診斷蓋過；取消本身已安全，修正理由保存後60/60。
+- 初次11檔合跑166/174：8個舊VM案例缺AbortController等瀏覽器能力；僅補測試harness，原assert全部保留，之後174/174。
+- 目視發現placement地面偏移後補一個多尺度四向案例，最終175/175。
+- 最終gate後cached whitespace檢查指出新服務測試EOF多一空行；只移除這個空行，trimEnd字元內容完全相同，沒有改assert或runtime。before/after SHA與normalizedEqual=true保存在post-gate-formatting.json，archive再次驗證無其他source drift。
+- git diff --cached --check在核心提交前通過。
+
+Catalog與recipes --check皆通過；此批沒有修改技能身份或既有6張runtime圖。
+
+八、瀏覽器與視覺驗收的精確界線
+
+完整矩陣：
+12個Atlas build，1280×900各1案例；
+sword_whirlwind、archer_beast、mage_chain、thief_combo，390×844各1案例。
+16/16，164次trace receipts、586個可見時序samples，page errors=0、HTTP errors=0。
+原始JSON大小2718038 bytes，SHA256：
+670b247625ec16ba0ec89e5d46653c8b170a6ff8480923569c64b50c87ea6915。
+
+陷阱修正後：
+archer_trap桌機1280×900與手機390×844各再驗1案例，均通過，page/HTTP errors均0。
+完整矩陣的舊trap放置截圖被專項修正版取代；JSON保留歷史，未偽造重跑整個矩陣。
+總覽8格採四職desktop、修正版trap release/effect與兩張手機代表。
+live-contact-sheet.jpg：1280×2404，1538080 bytes，
+SHA256 ba4fab48b88aef00f290652d78008def03ce18b05b2baf06ae87f98f53be968a。
+
+真實流程檢查：
+配置→開始→真時鐘等待→真正settle→接受commit trace→角色marker→player有實際draw calls。
+另檢查status不推進／不重播、同receipt防重、真HP/MP一致、返營清理、桌機手機投射。
+Required被動案例為bleed DOT、poison DOT、pet及trap；counter機率觸發由確定性backend／bridge測試覆蓋，未宣稱完整browser捕捉每種隨機反擊。
+完整16案例的自動目標方向為left；陷阱專項保留實際當時方向。四方向完整素材播放是第一批196×4驗收，16方向角色出手點另有視覺審查，不能混稱12×4真API全跑。
+
+視覺限制：
+- 手機左上舊status panel會遮住部分中左敵人；左右怪物靠邊且有裁切。
+- 可見角色出口及特效沒有壓住底部HUD，但不能宣稱所有手機敵人命中都完整可見。
+- 靜態release/effect截圖不等於逐影格檢查所有連鎖段落。
+- 使用headless Chrome／SwiftShader與手機viewport，不代表實體手機GPU或Telegram正式入口。
+- 本runner收集pageerror與HTTP失敗，沒有另將所有console文字做完整稽核。
+- 原角色仍partial-candidate，不以本批QA更改其批准狀態。
+
+九、本機預覽與重現
+
+直接開啟：
+http://127.0.0.1:9664/preview-skill-vfx.html
+第一批技能工坊，可看196身份、四方向、逐步／暫停與支援天賦核對。
+
+http://127.0.0.1:9667/
+第二批真實戰鬥場景，API在9666；兩端isolated/ephemeral=true、productionAccess=false。
+本線scene啟動收據：
+.release-sync/skill-vfx-20261104/combat-preview-server.json
+當次scene PID13296；PID會重用，停止／重啟前必須讀收據並核對命令列。不要停止其他工作線、9664或全部Node。
+
+啟動命令（現有服務已在執行，勿直接重複啟動）：
+node worker/tools/scene-live-preview.mjs --grok-root=D:/StarJournal/grok-assets --port=9667 --api-port=9666 --vfx-fixture=long-targets
+
+--vfx-fixture=long-targets是明確opt-in：
+只在隔離記憶體API將敵HP×20，其餘倍率1，保留目標供出手／命中觀察。
+使用真時鐘、真API、原引擎，不注入假cast、不開時間travel、不改正式catalog。
+不帶flag的preview維持原本測試行為。兩端health均回報fixture。
+服務禁止遊戲handler對外fetch，關閉後記憶體資料清除。
+
+手動觀看：
+選擇四職角色與對應構築，從星圖派遣開始，等待進場，再按當次結算觀看合法新事件。
+本線v3場景的同步為純讀，不會因開窗而自動加速戰鬥。歷史事件超過5秒或房間已改會被捨棄；這不是補播整段離線戰報。
+v4前景自動提交需後續合流；不要把本線預覽宣稱為新版全部UI。
+
+Playwright：
+使用已存在的
+D:\StarJournal\worktree-snapshots\star-journal-scene-integration-20261104\.release-sync\browser-tools\node_modules
+以本次命令的CODEX_PRIMARY_RUNTIME_NODE_MODULES指定，未安裝或修改共享依賴。
+ATLAS_BROWSER_EXECUTABLE可指定已安裝瀏覽器；未指定則channel=chrome。
+
+工具參數：
+node worker/tools/skill-vfx-live-browser.cjs
+node worker/tools/skill-vfx-live-browser.cjs --smoke
+node worker/tools/skill-vfx-live-browser.cjs --inspect-only
+node worker/tools/skill-vfx-live-browser.cjs --build=archer_trap
+node worker/tools/skill-vfx-live-browser.cjs --build=archer_trap --phone
+--phone只用於指定--build的聚焦補驗。
+SKILL_VFX_LIVE_QA_DIR可指定證據目錄；預設在.release-sync/skill-vfx-20261104/live-時間戳。
+Runner固定核對9667/9666的隔離health，正式端點不可使用。
+
+工作樹node_modules junction唯讀重用既有依賴；本線、scene-integration及實體來源star-journal-poe-continuation的package-lock SHA相同：
+b5d6001cde5c4664c2d1e731718d024c73edd1a9d12f2ce0676a3946b5e976ca。
+沒有重裝、修改manifest/lockfile或共享套件。
+
+十、保存與新對話接手
+
+Windows排程：StarJournal-SkillVFX-Checkpoint-30m。
+每30分鐘＋登入補執行、InteractiveToken／LeastPrivilege、IgnoreNew／StartWhenAvailable。
+排程只記錄STATUS、Git摘要及指定驗收觀測，不測試、不改碼、不commit、不部署，也不自行推論完成。
+
+固定入口：
+D:\StarJournal\handoff\skill-vfx\STATUS.json
+D:\StarJournal\handoff\skill-vfx\LATEST.md
+D:\StarJournal\handoff\skill-vfx\history\
+D:\StarJournal\handoff\skill-vfx\SCHEDULE.json
+D:\StarJournal\handoff\skill-vfx\SCHEDULER.md
+
+本輪重要進度已手動checkpoint於06:01:58Z與06:29:07Z；收尾另立即保存。
+06:23左右讀回排程Ready、LastTaskResult=0、MissedRuns=0，當時前次05:54:42Z、下次06:24:41Z；最新收尾值以STATUS及收據為準。
+區分checkpoint生成時間與人工updatedAt，不能把定時快照視為新的工作完成。
+
+立即checkpoint：
+node handoff/skill-vfx/.tooling/checkpoint-progress.mjs --root=D:/StarJournal "--git=C:/Users/User/Documents/ChatGPT/tools/git/cmd/git.exe"
+
+新對話順序：
+1. 讀根START_HERE、根／本工作樹AGENTS與AI_HANDOVER。
+2. 讀本線LATEST／STATUS及本文件，核對git branch/status/log。
+3. 讀validation-summary.json確認核心提交、175測試、16＋2browser及明確限制。
+4. 沿下一節既有提交合流，不重做第一批圖集、不覆寫別線未提交內容。
+5. 新的實作／驗收／阻礙更新STATUS，每30分鐘或重要進展立即checkpoint。
+
+十一、與已提交v4及活動UI線的後續整合
+
+已核實的新基線：
+e4908c02f858c27d992a8efb0199a9c3c9a2cd1e
+feat: complete Atlas idle content and equipment recovery
+2026-11-04 13:38:57 +0800。
+工作樹star-journal-idle-content-20261104／branch codex/idle-content-integration-20261104。
+root讀到的交接記錄顯示其已提交、clean、Draft PR45及CI成功；本線未合併它。
+共同祖先仍b633c3cdf4b8df6d8e689b21a8e585cc320bba3e。
+
+目前另一活動線：
+D:\StarJournal\worktree-snapshots\star-journal-unified-ui-20261104
+branch codex/unified-battle-ui-20261104，以e4908c0為基線。
+正在做五入口／單窗／背包／工坊／補給，會改session與scene UI。
+本線只讀交接與已提交Git object，沒有覆寫該工作檔或停止其服務。
+
+最重要的合流衝突：
+e490的dealDamage(state,enemy,amount,source,critical=false,activities)第6參數，
+與本線新增observation位置衝突。
+後續應保留activities第6、observation第7；不可用一方整段覆蓋另一方。
+
+其他建議簽名：
+cast(state,activities,observer,actionAt)
+heroActions(state,activities,observer)
+periodic(state,activities,observer)
+enemyActions(state,activities,observer)
+tick(state,rewards,activities,observer)
+reward(state,rewards,kind,activities)及clearRoom(state,rewards,activities)保留。
+所有dealDamage呼叫（包含不產生VFX的普攻）都須保留activities。
+
+v4必須保留：
+recordAtlasKill、實際HP傷害recordAtlasDamage、applyAtlasContentRewards、
+遭遇完成／safe_completion／survival活動、裝備與卷軸藍圖、原子ledger與quest事件。
+activities達4000是在完整tick邊界讓出；持久化最多4096並分割500000 UTF-8 bytes binding。
+combatTrace的128/256只丟觀測，不能取代活動容量或提前flush survival。
+Service在所有新獎勵／活動stmt保留後的成功db.batch分支發布trace。
+停派／realm cutoff的finalizeAtlasActivities與schema前置條件也必須保留。
+
+v4基準：
+支援v1/v2/v3/v4；預設返回值新增activities。
+state.content新增encounter/equipment/scroll三條RNG，連同原三條RNG都要比較。
+本線24份v3完整結果hash不能直接當v4答案。
+先從e490未加observer的版本建立基準，再比較on/off除combatTrace外的state/rewards/activities/藍圖/全部RNG。
+e490已提交worker/test/fixtures/atlas-legacy-replay-20261104.json共9份舊版基準，來源engine SHA：
+8f131f77d72803059678fb47f0d21c3a63e327d1d849e617d2dad62491441d82。
+合流可保留其舊state/reward不變的證據。
+
+背景事件限制：
+e490的atlas-background sweep每分鐘有界呼叫settle，預設12／上限24 run，只回統計，沒有轉送每次trace。
+所以背景已推進事件不會透過純讀status補播，不能由activities猜技能。
+前景成功寫入回應仍是本批可用的trace來源。
+v4未改12個build身份；新增survey／遭遇可能改敵人數量與節奏。Catalog來源hash改變後要重新產生audit metadata。
+
+本輪沒有執行v4合流、v4後續回歸或其0041–0043 migration。上述為已提交程式的唯讀整合交接，不是新驗收成功宣告。
+
+十二、仍待後續的工作與邊界
+
+1. 以已提交v4和穩定的統一UI版本做最小合流，保留activities、loot、background及所有UI流程。
+2. 解決手機舊status panel遮擋與敵人貼邊，對新UI再做完整可見性與動畫觀感驗收。
+3. 若legacy native／special戰鬥路徑要使用196配方中的其他身份，先建立各自真正提交的事件契約；不從Atlas摘要擬造。
+4. 原角色素材仍由角色線製作；來源變更需重新驗profiles雙SHA與出手點。
+5. 真實手機、Telegram登入宿主、GPU效能與正式經濟／平衡，尚未在本批驗收。
+6. 正式環境維持凍結：未push本線、未合main／PR、未部署、未遠端migration、未改正式玩家或Secrets。
+7. 不接管或停止其他工作線、全域MCP task、角色排程或全部Node程序。
+
+本批交付是一條已驗收、可重跑、可追溯的本機技能呈現鏈。完整最新提交、排程狀態及接手下一步以本線STATUS/LATEST為準。
