@@ -302,3 +302,68 @@ test('an old pending frame cannot steal or cancel the one-time reveal for a newe
  m.flush(true);assert.equal(m.root.reveals,1);assert.equal(m.root.ownerDocument.activeElement.dataset.spAction,'pending-view');
  assert.equal(m.h.calls.filter(c=>c.action==='party/create').length,2);m.view.dispose();
 });
+
+function towerFixture(options={}){
+ const data=fixture(options);delete data.dungeons;data.active.kind='tower';data.active.name='星穹塔第一區';data.active.canJoin=false;data.active.joinReason=null;
+ data.active.towerProgress={version:2,startFloor:1,endFloor:10,cleared:4,clearedFloor:4,badges:18,challengeEndsAt:data.now+900000,rewardable:false};
+ data.tower={best:20,badges:100,daily:{used:false,day:'2026-11-05',resetAt:data.now+86400000},
+  areas:[{id:'tower_1',startFloor:1,endFloor:10,level:30,requiredBest:0,name:'第一區',fullClearBadges:50,cooperation:'一般協作',canCreate:true,reason:null},
+   {id:'tower_2',startFloor:11,endFloor:20,level:60,requiredBest:10,name:'第二區',fullClearBadges:100,cooperation:'分工協作',canCreate:true,reason:null},
+   {id:'tower_3',startFloor:21,endFloor:30,level:90,requiredBest:20,name:'第三區',fullClearBadges:150,cooperation:'嚴密協作',canCreate:false,reason:{code:'best',message:'需先通關第 20 層'}}]};
+ return data;
+}
+async function readTower(h,c,data=towerFixture(),query){const p=c.refresh(query);assert.equal(h.calls.at(-1).action,'tower/scene');h.calls.at(-1).resolve(data);assert.equal(await p,true);}
+test('tower and dungeon clients keep independent pending storage and never cross-acknowledge the same character',async()=>{
+ const h=harness(),dungeon=h.create();await read(h,dungeon);
+ const dw=dungeon.execute('party/action',{partyId:'party-a',op:'ready',ready:false},'副本取消準備');h.calls.at(-1).reject(Error('offline'));await dw;const d=plain(dungeon.pending());
+ const tower=h.api.createClient(h.host,{kind:'tower'});assert.equal(tower.pending(),null);await readTower(h,tower);
+ const tw=tower.execute('party/action',{partyId:'tower-a',op:'ready',ready:false},'爬塔取消準備');h.calls.at(-1).reject(Error('offline'));await tw;const t=plain(tower.pending());
+ assert.notEqual(d.id,t.id);assert.equal(d.kind,'dungeon');assert.equal(t.kind,'tower');assert.equal(h.values.size,2);
+ const data=towerFixture({partyId:'tower-a',partyRev:2});await readTower(h,tower,data);assert.equal(tower.acknowledge(),true);
+ assert.equal(dungeon.pending().id,d.id);assert.equal(dungeon.acknowledge(),false);assert.equal(h.calls.filter(x=>x.action==='party/action').length,2);
+ tower.dispose();dungeon.dispose();const reopened=h.create();assert.equal(reopened.pending().id,d.id);reopened.dispose();
+});
+test('tower projections reject dungeon parties and mutations cannot be acknowledged with a different party kind',async()=>{
+ const h=harness(),tower=h.api.createClient(h.host,{kind:'tower'});let data=towerFixture();data.active.kind='dungeon';
+ const bad=tower.refresh();h.calls.at(-1).resolve(data);assert.equal(await bad,false);assert.equal(tower.state.data,null);
+ await readTower(h,tower);const write=tower.execute('party/action',{partyId:'party-a',op:'start'},'開始爬塔');
+ h.calls.at(-1).resolve({ok:true,party:fixture().party});assert.equal(await write,false);assert.ok(tower.pending());assert.equal(tower.acknowledge(),false);tower.dispose();
+});
+test('tower creation uses the original three start floors and cannot create a dungeon in tower mode',async()=>{
+ const h=harness(),tower=h.api.createClient(h.host,{kind:'tower'});await readTower(h,tower);
+ assert.throws(()=>tower.prepare('party/create',{kind:'dungeon',dungeonId:'d30'},'錯誤種類',''),/不支援/);
+ assert.throws(()=>tower.prepare('party/create',{kind:'tower',startFloor:12},'錯誤樓層',''),/不支援/);
+ const write=tower.execute('party/create',{kind:'tower',startFloor:11},'第二區');assert.deepEqual(h.calls.at(-1).body,{kind:'tower',startFloor:11});
+ h.calls.at(-1).reject(Error('offline'));await write;const pending=plain(tower.pending());
+ await readTower(h,tower);assert.equal(tower.pending().id,pending.id);assert.equal(h.calls.filter(x=>x.action==='party/create').length,1);tower.dispose();
+});
+test('tower tactical recovery stays tied to its original tower and cannot be acknowledged from a different selected team',async()=>{
+ const h=harness(),tower=h.api.createClient(h.host,{kind:'tower'});await readTower(h,tower,towerFixture({partyId:'tower-a',status:'combat'}));
+ const write=tower.execute('party/action',{partyId:'tower-a',op:'submit',round:3,skillId:'attack',targetId:'a'},'爬塔戰術');h.calls.at(-1).reject(Error('offline'));await write;const pending=plain(tower.pending());
+ await readTower(h,tower,towerFixture({partyId:'tower-b',status:'ended'}),{partyId:'tower-b',tab:'ended'});assert.equal(tower.acknowledge(),false);
+ const none=towerFixture();none.active=null;none.party=null;none.activeOtherKind={id:'dungeon-a',kind:'dungeon',status:'lobby',ownCharacter:true,characterId:'a'};
+ await readTower(h,tower,none,{tab:'active'});assert.equal(tower.acknowledge(),false);assert.equal(tower.pending().id,pending.id);
+ await readTower(h,tower,towerFixture({partyId:'tower-a',status:'combat',partyRev:2}),{partyId:'tower-a'});assert.equal(tower.acknowledge(),true);assert.equal(h.calls.filter(x=>x.action==='party/action').length,1);tower.dispose();
+});
+test('tower daily use changes invalidate a ready start confirmation while countdowns follow server time',async()=>{
+ const h=harness(),tower=h.api.createClient(h.host,{kind:'tower'}),data=towerFixture();data.now=200000;await readTower(h,tower,data);
+ assert.ok(Math.abs(tower.now()-200000)<1000);assert.equal(tower.prepare('party/action',{partyId:'party-a',op:'start'},'開始爬塔','使用今日機會'),true);
+ const changed=plain(data);changed.tower.daily.used=true;await readTower(h,tower,changed);assert.equal(tower.state.confirm,null);assert.equal(await tower.submit(),false);assert.equal(h.calls.filter(x=>x.action==='party/action').length,0);tower.dispose();
+});
+test('tower lost and ended partial completions keep reward controls and original per-area server gates visible',async t=>{
+ for(const status of ['lost','ended'])await t.test(status,async()=>{
+  const h=harness(),root=new RevealRoot(),data=towerFixture({status}),view=h.api.mount(root,h.host,{kind:'tower',tab:'current'});
+  data.party.canReward=true;data.party.towerProgress.rewardable=true;h.calls.at(-1).resolve(data);await drainMount();
+  assert.equal(root.button('reward').disabled,false);assert.match(root.html,/對應 18 枚徽記/);assert.match(root.html,/已通關/);
+  const tabRead=root.click('tab',{tab:'areas'});assert.equal(h.calls.at(-1).action,'tower/scene');h.calls.at(-1).resolve(data);await tabRead;assert.equal(root.button('create-tower',{startFloor:'21'}).disabled,true);assert.match(root.html,/需先通關第 20 層/);view.dispose();
+ });
+});
+test('another-kind occupancy gives explicit own-character and character-switch navigation without exposing dungeon actions as tower actions',async()=>{
+ for(const ownCharacter of [true,false]){
+  const h=harness(),root=new RevealRoot(),nav=[];h.host.navigate=(route,params)=>nav.push([route,plain(params)]);
+  const data=towerFixture();data.active=null;data.party=null;data.activeOtherKind={id:'dungeon-b',kind:'dungeon',status:'lobby',ownCharacter,characterId:ownCharacter?'a':'b'};
+  const view=h.api.mount(root,h.host,{kind:'tower',tab:'current'});h.calls.at(-1).resolve(data);await drainMount();
+  await root.click(ownCharacter?'other-kind':'other-character');assert.equal(nav[0][0],ownCharacter?'party':'characters');
+  if(ownCharacter)assert.equal(nav[0][1].partyId,'dungeon-b');view.dispose();
+ }
+});

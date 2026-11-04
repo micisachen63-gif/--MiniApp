@@ -1,5 +1,5 @@
-/* Dungeon-party operations in the shared battle window.
- * Pure read: party/scene. Existing writes are explicit, never replayed.
+/* Dungeon and tower parties in the shared battle window.
+ * Pure reads: party/scene and tower/scene. Existing writes are explicit, never replayed.
  * Selectors: data-sp-action, data-party-id, data-dungeon-id, data-skill-id;
  * data-sp-ready, data-sp-tab, data-sp-party, data-sp-confirm, data-sp-pending.
  */
@@ -13,14 +13,15 @@
   const STATUS = {lobby:'招募中',combat:'戰鬥中',won:'挑戰成功',lost:'挑戰失敗',ended:'已結束'};
   const ROLES = {guard:'守護',breach:'破陣',aid:'支援',control:'壓制'};
   const TABS = [['current','目前隊伍'],['dungeons','三人副本'],['trials','轉職試煉'],['lobby','組隊大廳']];
+  const TOWER_TABS = [['current','目前隊伍'],['areas','登塔區域'],['lobby','爬塔大廳']];
   const OPS = new Set(['join','ready','start','leave','end','submit']);
   const pendingMemory = new Map(), sheets = new WeakMap();
   const scriptUrl = globalThis.document?.currentScript?.src;
   const requestKey = () => 'sp_' + (globalThis.crypto?.randomUUID?.().replaceAll('-','') || Date.now().toString(36) + Math.random().toString(36).slice(2,14));
-  function validPending(p,key) {
-    return !!p && p.version === 1 && p.scope === key && typeof p.id === 'string' && /^[A-Za-z0-9_-]{6,80}$/.test(p.id)
+  function validPending(p,key,kind='dungeon') {
+    return !!p && p.version === 1 && p.scope === key && (p.kind || 'dungeon') === kind && typeof p.id === 'string' && /^[A-Za-z0-9_-]{6,80}$/.test(p.id)
       && typeof p.label === 'string' && p.label.length <= 240 && p.body && typeof p.body === 'object'
-      && (p.action === 'party/create' && p.body.kind === 'dungeon' && typeof p.body.dungeonId === 'string'
+      && (p.action === 'party/create' && p.body.kind === kind && (kind === 'tower' ? [1,11,21].includes(p.body.startFloor) : typeof p.body.dungeonId === 'string')
         || p.action === 'party/action' && OPS.has(p.body.op) && typeof p.body.partyId === 'string'
         || p.action === 'party/reward' && typeof p.body.partyId === 'string');
   }
@@ -58,27 +59,30 @@
     if(!targetChoices(p,s,characterId).length)return s.target==='downed_ally'?'目前沒有倒地隊友':'目前沒有可選目標';
     return '';
   }
-  function createClient(host) {
+  function createClient(host,options={}) {
+    const kind=options.kind || 'dungeon';if(!['dungeon','tower'].includes(kind))throw Error('不支援的隊伍種類');
+    const readAction=kind==='tower'?'tower/scene':'party/scene';
     const context = {...host.getContext?.()}, scope = scopeKey(context), identity = identityKey(context);
     let storage = host.storage;
     if (!storage) { try { storage = globalThis.sessionStorage; } catch {} }
-    const storageKey = 'rpg-sp-pending:' + identity, revisions = new Map();
+    const pendingKey=kind==='tower'?'tower:'+identity:identity;
+    const storageKey = (kind==='tower'?'rpg-sp-tower-pending:':'rpg-sp-pending:') + identity, revisions = new Map();
     const state = {data:null,loading:false,busy:false,stale:true,error:'',notice:'',confirm:null,revision:-1,minRevision:-1,checkedPending:null,receivedAt:0};
     let disposed = false, generation = 0, controller = null, query = {tab:'active',page:1};
     const current = () => !disposed && scopeKey(host.getContext?.()) === scope && host.current?.() !== false;
     const notify = () => { if (current()) host.onState?.(state); };
     function pending() {
-      if (pendingMemory.has(identity)) return pendingMemory.get(identity);
+      if (pendingMemory.has(pendingKey)) return pendingMemory.get(pendingKey);
       let value = null;
-      try { const p = JSON.parse(storage?.getItem?.(storageKey) || 'null');if (validPending(p,identity)) value = p; } catch {}
-      pendingMemory.set(identity,value);return value;
+      try { const p = JSON.parse(storage?.getItem?.(storageKey) || 'null');if (validPending(p,identity,kind)) value = p; } catch {}
+      pendingMemory.set(pendingKey,value);return value;
     }
     function savePending(value) {
-      pendingMemory.set(identity,value);
+      pendingMemory.set(pendingKey,value);
       try { if (value) storage?.setItem?.(storageKey,JSON.stringify(value));else storage?.removeItem?.(storageKey); } catch {}
     }
     function clearPending(id) { if (pending()?.id === id) savePending(null); }
-    const fingerprint = () => JSON.stringify([state.data?.character,state.data?.party,state.data?.active,state.data?.canCreate,state.data?.readOnly]);
+    const fingerprint = () => JSON.stringify([state.data?.character,state.data?.party,state.data?.active,state.data?.canCreate,state.data?.readOnly,state.data?.tower?.daily]);
     const now = () => (Number(state.data?.now) || Date.now()) + Math.max(0,Date.now() - state.receivedAt);
     function readiness() {
       if (!current()) return '角色或世界已切換';
@@ -90,13 +94,13 @@
     }
     function feedback(message,error = false) { if (!current()) return;state[error ? 'error' : 'notice'] = message;notify(); }
     function accept(data) {
-      if (!data || data.ok === false || !data.character || !Array.isArray(data.dungeons) || !Array.isArray(data.skills) || !data.directory || !Array.isArray(data.directory.parties)) throw Error('隊伍資料尚未完整，請重新整理');
+      if (!data || data.ok === false || !data.character || (kind==='tower' ? !data.tower || !Array.isArray(data.tower.areas) : !Array.isArray(data.dungeons)) || !Array.isArray(data.skills) || !data.directory || !Array.isArray(data.directory.parties)) throw Error('隊伍資料尚未完整，請重新整理');
       for (const k of ['accountId','realmId','characterId']) if (String(data[k]) !== String(context[k])) throw Error('角色或世界已切換，請重新開啟隊伍視窗');
       if (String(data.character.tgId ?? data.character.id) !== String(context.characterId)) throw Error('收到其他角色的隊伍資料');
       const rev = Number(data.character.revision ?? data.character.rev);
       if (!Number.isFinite(rev) || rev < Math.max(state.revision,state.minRevision)) throw Error('收到較早的角色資料，請重新整理');
       for (const p of [data.active,data.party].filter(Boolean)) {
-        if (p.kind !== 'dungeon' || !Array.isArray(p.members)) throw Error('這場隊伍不屬於三人副本');
+        if (p.kind !== kind || !Array.isArray(p.members)) throw Error(kind==='tower'?'這場隊伍不屬於爬塔':'這場隊伍不屬於三人副本');
         const r = partyRevision(p);
         if (!Number.isFinite(r) || r < (revisions.get(String(p.id)) ?? -1)) throw Error('收到較早的隊伍戰況，請重新整理');
         if (p.me?.actor?.id != null && String(p.me.actor.id) !== String(context.characterId)) throw Error('隊伍角色已切換，請重新開啟視窗');
@@ -110,7 +114,7 @@
       const ticket = ++generation, before = fingerprint();
       controller?.abort();controller = new AbortController();state.loading = true;state.error = '';notify();
       try {
-        const data = await host.request('party/scene',{...query},{signal:controller.signal});
+        const data = await host.request(readAction,{...query},{signal:controller.signal});
         if (!current() || ticket !== generation) return false;
         state.revision = accept(data);state.data = clone(data);state.receivedAt = Date.now();state.stale = false;
         const waiting=pending(),sameParty=waiting?.body?.partyId?String(data.party?.id)===String(waiting.body.partyId):!query.partyId&&String(data.party?.id||'')===String(data.active?.id||'');
@@ -125,8 +129,8 @@
     }
     function prepare(action,body,label,details,{quiet = false} = {}) {
       const reason = readiness();if (reason) {feedback(reason,true);return false;}
-      const record = {version:1,scope:identity,id:requestKey(),action,body:clone(body),label};
-      if (!validPending(record,identity)) throw Error('不支援的隊伍操作');
+      const record = {version:1,scope:identity,kind,id:requestKey(),action,body:clone(body),label};
+      if (!validPending(record,identity,kind)) throw Error('不支援的隊伍操作');
       state.error = '';state.notice = '';state.confirm = {action,body:clone(body),label,details,fingerprint:fingerprint()};
       if (!quiet) notify();return true;
     }
@@ -137,13 +141,13 @@
       if (plan.fingerprint !== fingerprint()) {state.confirm = null;feedback('隊伍狀態已更新，請重新選擇。',true);return false;}
       const recordId = requestKey(), requestBody = clone(plan.body);
       if (plan.action !== 'party/create') requestBody.requestId = recordId;
-      const record = {version:1,scope:identity,id:recordId,action:plan.action,body:requestBody,label:plan.label,at:Date.now()};
+      const record = {version:1,scope:identity,kind,id:recordId,action:plan.action,body:requestBody,label:plan.label,at:Date.now()};
       savePending(record);state.confirm = null;state.busy = true;state.checkedPending = null;state.error = '';state.notice = '';
       generation++;controller?.abort();notify();let acknowledged = false;
       try {
         const result = await host.request(plan.action,clone(record.body));
         if (!current()) return false;
-        if (!result || result.ok !== true || !result.party || result.party.kind !== 'dungeon' || !Array.isArray(result.party.members)
+        if (!result || result.ok !== true || !result.party || result.party.kind !== kind || !Array.isArray(result.party.members)
           || (plan.body.partyId && String(result.party.id) !== String(plan.body.partyId))) throw Object.assign(Error('未收到完整隊伍收據'),{uncertain:true});
         clearPending(record.id);acknowledged = true;state.stale = true;
         const rev = partyRevision(result.party);if (Number.isFinite(rev)) revisions.set(String(result.party.id),Math.max(revisions.get(String(result.party.id)) ?? -1,rev));
@@ -179,17 +183,18 @@
         void refresh();
       }
     }
-    return {state,context,current,pending,now,readiness,refresh,prepare,cancel,submit,execute,acknowledge,feedback,update,
+    return {state,context,kind,current,pending,now,readiness,refresh,prepare,cancel,submit,execute,acknowledge,feedback,update,
       dispose(){if(disposed)return;disposed=true;generation++;controller?.abort();}};
   }
   function ensureStyle(root) {
     const doc = root.ownerDocument;if (!doc?.createElement || !doc.head || sheets.has(doc)) return;
-    const link = doc.createElement('link');link.rel = 'stylesheet';link.href = scriptUrl ? new URL('scene-party-ui.css?v=20261104',scriptUrl).href : 'scene-party-ui.css?v=20261104';
+    const link = doc.createElement('link');link.rel = 'stylesheet';link.href = scriptUrl ? new URL('scene-party-ui.css?v=20261105',scriptUrl).href : 'scene-party-ui.css?v=20261105';
     link.onerror = () => {sheets.delete(doc);link.remove?.();};doc.head.appendChild(link);sheets.set(doc,link);
   }
   function mount(root,host,options = {}) {
-    ensureStyle(root);const draft = host.draft || {};
-    draft.tab = TABS.some(([key])=>key === (options.tab || draft.tab)) ? options.tab || draft.tab : 'current';
+    ensureStyle(root);const kind=options.kind || 'dungeon',towerMode=kind==='tower',tabs=towerMode?TOWER_TABS:TABS,catalogueTab=towerMode?'areas':'dungeons';
+    const draft = host.draft || {};if(options.partyId)draft.partyId=String(options.partyId);
+    draft.tab = tabs.some(([key])=>key === (options.tab || draft.tab)) ? options.tab || draft.tab : 'current';
     draft.directoryTab = draft.directoryTab === 'ended' ? 'ended' : 'active';draft.page = Math.max(1,Number(draft.page) || 1);
     let disposed = false, timer = null, focusConfirm = false, savedFocus = null;
     let pendingRevealFrame=null,pendingRevealId=null,revealedPendingId=null;
@@ -198,13 +203,13 @@
       if (op.action === 'party/create' || op.body.op === 'join') {draft.tab='current';draft.partyId=result.party.id;draft.tactics=false;draft.pool='';}
       if (op.body.op === 'submit') draft.tactics=false;
       try {host.onChanged?.(result);} catch {}
-    }});
+    }},{kind});
     const state=client.state,data=()=>state.data,party=()=>data()?.party;
     const query=()=>({tab:draft.directoryTab,page:draft.page,...(draft.partyId ? {partyId:draft.partyId} : {})});
     const refresh=()=>client.refresh(query());
     const disabled=()=>!!client.readiness(), ownId=()=>String(client.context.characterId);
-    const button=(action,label,{partyId,dungeonId,skillId,tab,page,disabled:locked=false,primary=false,danger=false,extra=''}={})=>
-      '<button type="button" data-sp-action="'+action+'"'+(partyId?' data-party-id="'+esc(partyId)+'"':'')+(dungeonId?' data-dungeon-id="'+esc(dungeonId)+'"':'')+(skillId?' data-skill-id="'+esc(skillId)+'"':'')+(tab?' data-tab="'+esc(tab)+'"':'')+(page?' data-page="'+page+'"':'')+
+    const button=(action,label,{partyId,dungeonId,startFloor,skillId,tab,page,disabled:locked=false,primary=false,danger=false,extra=''}={})=>
+      '<button type="button" data-sp-action="'+action+'"'+(partyId?' data-party-id="'+esc(partyId)+'"':'')+(dungeonId?' data-dungeon-id="'+esc(dungeonId)+'"':'')+(startFloor!=null?' data-start-floor="'+Number(startFloor)+'"':'')+(skillId?' data-skill-id="'+esc(skillId)+'"':'')+(tab?' data-tab="'+esc(tab)+'"':'')+(page?' data-page="'+page+'"':'')+
       (locked?' disabled':'')+' class="'+(primary?'sp-primary is-primary ':danger?'sp-danger ':'')+'"'+extra+'>'+esc(label)+'</button>';
     const muted=text=>'<p class="sp-muted">'+esc(text)+'</p>';
     const meter=(name,value,max,type='hp')=>{
@@ -214,7 +219,7 @@
     };
     const roles=(values=[])=>values.map(role=>'<span class="sp-role">'+esc(ROLES[role]||role)+'</span>').join('');
     const rewardText=items=>Object.entries(items||{}).filter(([,n])=>Number(n)>0).map(([key,n])=>{
-      const s=data()?.skills?.find(v=>'book_'+v.id===key), name=s?s.name+'技能書':({research_fragment:'研究碎片',trial_3:'三轉試煉證明',trial_4:'四轉試煉證明'})[key]||key;
+      const s=data()?.skills?.find(v=>'book_'+v.id===key), name=s?s.name+'技能書':({tower_fragment:'星穹徽記',research_fragment:'研究碎片',trial_3:'三轉試煉證明',trial_4:'四轉試煉證明'})[key]||key;
       return name+' × '+fmt(n);
     }).join('、')||'本次沒有可領取的物品';
     function notices() {
@@ -228,7 +233,7 @@
         const guidance=partyId?'請查看這筆操作原本的隊伍，核對回合、已選戰術或獎勵。':'請以目前隊伍核對建立結果；若尚未看到隊伍，請稍後再更新。';
         html+='<section class="sp-pending" data-sp-pending role="status"><h3>上次操作待核對</h3><p>'+esc(pending.label)+'。'+esc(guidance)+'這筆操作不會自動再次送出。</p>'+
           (partyId&&String(data()?.party?.id)!==String(partyId)?muted('目前查看的是其他隊伍；請先回到待核對隊伍。'):'')+
-          (!partyId&&data()?muted(data().active?'目前隊伍：'+data().active.name+'（'+(STATUS[data().active.status]||data().active.status)+'）':'目前沒有三人副本隊伍。'):'')+
+          (!partyId&&data()?muted(data().active?'目前隊伍：'+data().active.name+'（'+(STATUS[data().active.status]||data().active.status)+'）':(towerMode?'目前沒有爬塔隊伍。':'目前沒有三人副本隊伍。')):'')+
           '<div class="sp-actions">'+button('pending-view',partyId?'查看待核對隊伍':'查看目前隊伍',{disabled:state.busy||state.loading})+button('acknowledge','我已核對結果',{disabled:state.busy||state.loading||state.stale||state.checkedPending!==pending.id})+'</div></section>';
       }
       return html;
@@ -241,7 +246,31 @@
       const s=data()?.stamina;if(!s)return '';
       return '<section class="sp-summary"><strong>打寶體力 '+fmt(s.points)+'／'+fmt(s.max)+'</strong>'+muted('一般副本出發每人消耗 '+fmt(s.cost)+' 點；招募與準備不扣除。轉職試煉不消耗此體力。')+'</section>';
     }
+    const reasonText=value=>typeof value==='string'?value:value?.message||'';
+    const localTime=value=>Number.isFinite(Number(value))?new Date(Number(value)).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}):'待更新';
+    function otherActivity() {
+      const other=data()?.activeOtherKind;if(!other)return '';
+      const canNavigate=other.ownCharacter&&['tower','dungeon'].includes(other.kind);
+      return '<section class="sp-feedback" data-sp-other-kind="'+esc(other.kind)+'"><p>'+esc(reasonText(data()?.blockedReason)||'目前有其他隊伍行程，請先查看該隊伍。')+'</p>'+
+        (canNavigate?button('other-kind',other.kind==='tower'?'查看目前塔隊':'查看目前副本',{disabled:state.busy}):!other.ownCharacter?button('other-character','查看角色',{disabled:state.busy}):'')+'</section>';
+    }
+    function towerSummary() {
+      const t=data()?.tower;if(!t)return '';
+      return '<section class="sp-summary" data-sp-tower-summary><span class="sp-kicker">每一步，都留下刻印</span><h3>最高通關 '+fmt(t.best)+' 層 · '+fmt(t.badges)+' 枚星穹徽記</h3>'+
+        muted(t.daily?.used?'今日已使用挑戰次數；台灣時間 '+localTime(t.daily.resetAt)+' 重置。':'今日尚可挑戰一次。建立、加入與準備不扣次數，出發時才使用。')+
+        muted('三個不同帳號同行，不消耗一般打寶體力。每場最長 15 分鐘；失敗或中止依已通關層數與出手紀錄結算。')+'</section>';
+    }
+    function towerCatalogue() {
+      const areas=data()?.tower?.areas||[];
+      return towerSummary()+otherActivity()+(!data()?.activeOtherKind&&data()?.blockedReason?'<p class="sp-feedback">'+esc(reasonText(data().blockedReason))+'</p>':'')+
+        '<div class="sp-card-grid">'+areas.map(a=>'<article class="sp-card" data-sp-area="'+esc(a.id)+'"><span class="sp-kicker">第 '+fmt(a.startFloor)+'–'+fmt(a.endFloor)+' 層 · Lv.'+fmt(a.level)+'</span><h3>'+esc(a.name)+'</h3>'+
+          muted((a.requiredBest?'需先通關第 '+fmt(a.requiredBest)+' 層。':'從第一區開始攀登。')+'本區完整通關 '+fmt(a.fullClearBadges)+' 枚徽記。')+
+          (a.cooperation?.phases?.length?'<div class="sp-role-guide">'+a.cooperation.phases.map(v=>'<p>'+esc(v.name)+' '+roles(v.roles)+'</p>').join('')+'</div>':'')+
+          (a.reason?muted(reasonText(a.reason)):'')+'<div class="sp-actions">'+button('create-tower','建立爬塔隊伍',{startFloor:a.startFloor,primary:true,disabled:disabled()||a.canCreate!==true})+'</div>'+
+          muted('出發後依本場裝備與技能快照戰鬥。')+'</article>').join('')+'</div>';
+    }
     function catalogue() {
+      if(towerMode)return towerCatalogue();
       const trial=draft.tab==='trials',items=(data()?.dungeons||[]).filter(d=>!!d.trial===trial);
       const blocked=data()?.blockedReason?.message;
       return (blocked?'<p class="sp-feedback">'+esc(blocked)+'</p>':'')+(!trial?stamina():'')+
@@ -266,7 +295,7 @@
     }
     function teamCard(p) {
       const members=p.members||[];
-      return '<article class="sp-card" data-sp-list-party="'+esc(p.id)+'"><span class="sp-kicker">'+esc(STATUS[p.status]||p.status)+' · '+(p.trial?'轉職試煉':'三人副本')+'</span><h3>'+esc(p.name||'副本隊伍')+'</h3>'+
+      return '<article class="sp-card" data-sp-list-party="'+esc(p.id)+'"><span class="sp-kicker">'+esc(STATUS[p.status]||p.status)+' · '+(towerMode?'三人爬塔':p.trial?'轉職試煉':'三人副本')+'</span><h3>'+esc(p.name||(towerMode?'爬塔隊伍':'副本隊伍'))+'</h3>'+
         muted(members.length+'／3 人 · '+members.map(m=>m.name).filter(Boolean).join('、'))+
         button('view','查看隊伍',{partyId:p.id})+'</article>';
     }
@@ -316,15 +345,15 @@
     }
     function currentParty() {
       const p=party();
-      if(!p)return '<section class="sp-empty"><h3>目前沒有三人副本隊伍</h3>'+muted(data()?.blockedReason?.message||'建立隊伍，或到大廳加入其他旅人。')+'<div class="sp-actions">'+button('tab','選擇副本',{tab:'dungeons',primary:true})+button('tab','前往組隊大廳',{tab:'lobby'})+'</div></section>'+history();
+      if(!p)return (towerMode?towerSummary():'')+otherActivity()+'<section class="sp-empty"><h3>'+(towerMode?'目前沒有爬塔隊伍':'目前沒有三人副本隊伍')+'</h3>'+muted(data()?.blockedReason?.message||'建立隊伍，或到大廳加入其他旅人。')+'<div class="sp-actions">'+button('tab',towerMode?'選擇登塔區域':'選擇副本',{tab:catalogueTab,primary:true})+button('tab','前往組隊大廳',{tab:'lobby'})+'</div></section>'+history();
       const me=p.me,member=!!me&&!me.left,combat=p.status==='combat',finished=['won','lost','ended'].includes(p.status);
-      const canStart=member&&me.leader&&p.status==='lobby'&&p.members.length===3&&p.members.every(m=>m.ready)&&p.briefing?.ready!==false&&p.stamina?.ready!==false&&!p.expired;
+      const canStart=member&&me.leader&&p.status==='lobby'&&p.members.length===3&&p.members.every(m=>m.ready)&&p.briefing?.ready!==false&&p.stamina?.ready!==false&&!p.expired&&(!towerMode||!data()?.tower?.daily?.used);
       let actions='';
       if(p.status==='lobby'){
         if(member)actions+=button('ready',me.ready?'取消準備':'我已準備',{primary:true,disabled:disabled()||p.expired})+
           (me.leader?button('start','全員準備 · 出發',{disabled:disabled()||!canStart}):'')+
           button('leave',me.leader?'結束招募':'離開隊伍',{danger:!!me.leader,disabled:disabled()||p.expired});
-        else actions+=button('join',p.members.length>=3?'隊伍已滿':'加入隊伍',{partyId:p.id,primary:true,disabled:disabled()||!data().canCreate||p.members.length>=3||p.expired});
+        else actions+=button('join',p.members.length>=3?'隊伍已滿':'加入隊伍',{partyId:p.id,primary:true,disabled:disabled()||(towerMode?p.canJoin!==true:!data().canCreate)||p.members.length>=3||p.expired});
       }
       if(combat&&member)actions+=button('tactics','選擇戰術',{primary:true,disabled:disabled()||Number(me.actor?.hp)<=0})+button(me.leader?'end':'leave',me.leader?'中止全隊挑戰':'離隊並中止挑戰',{danger:true,disabled:disabled()});
       if(finished&&member&&p.canReward)actions+=button('reward','領取戰利品',{primary:true,disabled:disabled()});
@@ -333,6 +362,8 @@
       actions+=button('tab','返回大廳',{tab:'lobby'});
       return '<section data-sp-party="'+esc(p.id)+'" data-sp-status="'+esc(p.status)+'" data-sp-round="'+fmt(p.round)+'"><div class="sp-summary"><span class="sp-kicker">'+esc(STATUS[p.status]||p.status)+' · '+p.members.length+'／3 人</span><h3>'+esc(p.name)+'</h3>'+
         (combat?'<p>第 '+fmt(p.round)+'／'+fmt(p.roundLimit||40)+' 回合</p>':'')+
+        (towerMode&&p.towerProgress?'<div data-sp-tower-progress><p>本場已通關 '+fmt(p.towerProgress.cleared)+'／'+fmt(Number(p.towerProgress.endFloor)-Number(p.towerProgress.startFloor)+1)+' 層 · 對應 '+fmt(p.towerProgress.badges)+' 枚徽記</p>'+
+          (p.towerProgress.challengeEndsAt?muted('本場最晚結算：台灣時間 '+localTime(p.towerProgress.challengeEndsAt)):'')+'</div>':'')+
         (p.pendingSettlement||p.expired?muted('等待戰況更新；最新結算完成後會顯示在這裡。'):'')+'</div>'+
         (p.enemy?'<article class="sp-enemy"><h4>'+esc(p.enemy.name||'目前敵人')+'</h4>'+meter('生命',p.enemy.hp,p.enemy.maxHp)+
           (p.challenge?.nextAttack?.windup?muted('即將蓄力重擊 · '+(p.challenge.nextAttack.interruptible?'可用技能打斷':'請準備護盾或防禦')):'')+'</article>':'')+
@@ -345,7 +376,7 @@
           (m.guardian?muted('守護 · '+(m.guardian.typeName||m.guardian.name||'')):'')+'</article>').join('')+'</div>'+
         (p.stamina?.ready===false?'<p class="sp-feedback">有隊員體力不足，暫時不能出發。</p>':'')+
         (combat&&Number(me?.actor?.hp)<=0?muted('你已倒地，等待隊友復活。'):'')+
-        '<div class="sp-actions">'+actions+'</div>'+
+        '<div class="sp-actions">'+actions+'</div>'+(towerMode&&!member&&p.joinReason?muted(reasonText(p.joinReason)):'')+
         (draft.tactics&&combat&&member?tactics(p):'')+
         (me?.reward?'<section class="sp-summary"><h3>已取得戰利品</h3><p>'+esc(rewardText(me.reward.items))+'</p></section>':finished&&member&&p.rewardReason?muted(typeof p.rewardReason==='object'?p.rewardReason.message:p.rewardReason):'')+
         cooperation(p)+partyDrops()+
@@ -386,11 +417,11 @@
       if(root.contains?.(active))savedFocus={name:active?.name,action:active?.dataset?.spAction,skill:active?.dataset?.skillId,party:active?.dataset?.partyId,dungeon:active?.dataset?.dungeonId,tab:active?.dataset?.tab,page:active?.dataset?.page,pending:!!active?.closest?.('[data-sp-pending]')};
       else if(active&&active!==doc?.body&&active!==doc?.documentElement)savedFocus=null;
       const focus=savedFocus;
-      root.innerHTML='<div class="sp-panel" data-sp-ready="'+(!state.loading&&!state.stale&&!!data()?'1':'0')+'" data-sp-tab="'+draft.tab+'" aria-busy="'+(state.loading||state.busy)+'">'+
-        '<header class="sp-header"><div><h2>結伴出征</h2><p>'+esc(data()?.character?.name||host.getActor?.()?.name||'')+'</p></div>'+button('refresh',state.loading?'更新中…':'更新戰況',{disabled:state.loading||state.busy})+'</header>'+
-        '<nav class="sp-tabs" aria-label="副本與隊伍">'+TABS.map(([key,label])=>button('tab',label,{tab:key,disabled:state.busy,extra:' aria-pressed="'+(draft.tab===key)+'"'})).join('')+'</nav>'+
+      root.innerHTML='<div class="sp-panel" data-sp-kind="'+kind+'" data-sp-ready="'+(!state.loading&&!state.stale&&!!data()?'1':'0')+'" data-sp-tab="'+draft.tab+'" aria-busy="'+(state.loading||state.busy)+'">'+
+        '<header class="sp-header"><div><h2>'+(towerMode?'攜手登塔':'結伴出征')+'</h2><p>'+esc(data()?.character?.name||host.getActor?.()?.name||'')+'</p></div>'+button('refresh',state.loading?'更新中…':'更新戰況',{disabled:state.loading||state.busy})+'</header>'+
+        '<nav class="sp-tabs" aria-label="'+(towerMode?'爬塔與隊伍':'副本與隊伍')+'">'+tabs.map(([key,label])=>button('tab',label,{tab:key,disabled:state.busy,extra:' aria-pressed="'+(draft.tab===key)+'"'})).join('')+'</nav>'+
         notices()+confirmation()+(!data()?muted('正在讀取隊伍…'):draft.pool?pool():draft.tab==='current'?currentParty():draft.tab==='lobby'?directory():catalogue())+
-        '<div class="sp-footer">'+button('skills','配置特殊技能')+button('supplies','準備藥水')+'</div></div>';
+        '<div class="sp-footer">'+button('skills','配置特殊技能')+button('supplies','準備藥水')+(towerMode?button('tower-workshop','塔印工坊'):'')+'</div></div>';
       root.scrollTop=top;
       if(state.confirm&&focusConfirm){focusConfirm=false;root.scrollTop=0;root.querySelector?.('[data-sp-confirm]')?.scrollIntoView?.({block:'nearest'});root.querySelector?.('[data-sp-action="cancel"]')?.focus?.({preventScroll:true});}
       else if(focus){const node=[...root.querySelectorAll?.('button,select')||[]].find(n=>focus.name?n.name===focus.name:n.dataset.spAction===focus.action&&n.dataset.skillId===focus.skill&&n.dataset.partyId===focus.party&&n.dataset.dungeonId===focus.dungeon&&n.dataset.tab===focus.tab&&n.dataset.page===focus.page&&!!n.closest?.('[data-sp-pending]')===focus.pending);node?.focus?.({preventScroll:true});}
@@ -411,9 +442,12 @@
         if(pending.body.targetId)draft.targetId=String(pending.body.targetId);
         client.cancel();paint();return refresh();
       }
+      if(action==='tower-workshop'){if(!state.busy)host.navigate?.('tower-imprint',{});return;}
+      if(action==='other-character'){if(!state.busy)host.navigate?.('characters',{});return;}
+      if(action==='other-kind'){const other=data()?.activeOtherKind;if(!state.busy&&other?.ownCharacter&&['dungeon','tower'].includes(other.kind))host.navigate?.(other.kind==='tower'?'tower':'party',{tab:'current',partyId:other.id});return;}
       if(action==='skills'||action==='supplies'){if(!state.busy)host.navigate?.(action==='skills'?'skills':'supplies',{});return;}
       if(state.busy)return;
-      if(action==='tab'){if(!TABS.some(([key])=>key===b.dataset.tab))return;draft.tab=b.dataset.tab;draft.partyId='';draft.tactics=false;draft.pool='';client.cancel();paint();return refresh();}
+      if(action==='tab'){if(!tabs.some(([key])=>key===b.dataset.tab))return;draft.tab=b.dataset.tab;draft.partyId='';draft.tactics=false;draft.pool='';client.cancel();paint();return refresh();}
       if(action==='view'){draft.tab='current';draft.partyId=b.dataset.partyId;draft.tactics=false;draft.pool='';client.cancel();paint();return refresh();}
       if(action==='directory'){draft.directoryTab=b.dataset.tab==='ended'?'ended':'active';draft.page=1;return refresh();}
       if(action==='page'){draft.page=Math.max(1,Number(b.dataset.page)||1);return refresh();}
@@ -423,20 +457,26 @@
       if(action==='tactics-back'){draft.tactics=false;return paint();}
       if(action==='choose-skill'){draft.skillId=b.dataset.skillId;draft.targetId='';return paint();}
       const reason=client.readiness();if(reason)return client.feedback(reason,true);
+      if(action==='create-tower'){
+        const a=data()?.tower?.areas?.find(v=>v.startFloor===Number(b.dataset.startFloor));
+        if(!towerMode||!a||a.canCreate!==true)return client.feedback(reasonText(a?.reason)||'目前不符合登塔條件。',true);
+        return client.execute('party/create',{kind:'tower',startFloor:a.startFloor},'建立「'+a.name+'」塔隊');
+      }
       if(action==='create'){
+        if(towerMode)return;
         const d=data().dungeons.find(v=>v.id===b.dataset.dungeonId);
         if(!d||!data().canCreate||Number(data().character.level)<Number(d.level)||d.trial&&String(data().character.classPath||'').length<Number(d.trial)-1)return client.feedback(data().blockedReason?.message||'目前不符合副本條件。',true);
         return client.execute('party/create',{kind:'dungeon',dungeonId:d.id},'建立「'+d.name+'」隊伍');
       }
       if(action==='join'){
-        if(!p||p.id!==b.dataset.partyId||p.status!=='lobby'||p.expired||p.members.length>=3||!data().canCreate)return client.feedback('這支隊伍目前無法加入，請更新戰況。',true);
+        if(!p||p.id!==b.dataset.partyId||p.status!=='lobby'||p.expired||p.members.length>=3||(towerMode?p.canJoin!==true:!data().canCreate))return client.feedback(reasonText(p?.joinReason)||'這支隊伍目前無法加入，請更新戰況。',true);
         return client.execute('party/action',{partyId:p.id,op:'join'},'加入隊伍');
       }
       if(!p||!p.me||p.me.left)return;
       if(action==='ready'&&p.status==='lobby'&&!p.expired)return client.execute('party/action',{partyId:p.id,op:'ready',ready:!p.me.ready},p.me.ready?'取消準備':'設定準備');
       if(action==='start'){
-        if(!p.me.leader||p.status!=='lobby'||p.expired||p.members.length!==3||p.members.some(m=>!m.ready)||p.briefing?.ready===false||p.stamina?.ready===false)return;
-        return prepare('party/action',{partyId:p.id,op:'start'},'開始挑戰',p.name+'。'+(p.trial?'轉職試煉不消耗打寶體力。':'每位隊員消耗 '+fmt(p.stamina?.cost??data().stamina?.cost)+' 點打寶體力；失敗或中止不退還。')+'出發後沿用本次裝備與技能配置。');
+        if(!p.me.leader||p.status!=='lobby'||p.expired||p.members.length!==3||p.members.some(m=>!m.ready)||p.briefing?.ready===false||p.stamina?.ready===false||towerMode&&data()?.tower?.daily?.used)return;
+        return prepare('party/action',{partyId:p.id,op:'start'},'開始挑戰',p.name+'。'+(towerMode?'每位隊員使用今日一次登塔機會；出發後不退還次數，不消耗一般打寶體力。':p.trial?'轉職試煉不消耗打寶體力。':'每位隊員消耗 '+fmt(p.stamina?.cost??data().stamina?.cost)+' 點打寶體力；失敗或中止不退還。')+'出發後沿用本次裝備與技能配置。');
       }
       if(action==='leave'||action==='end'){
         const combat=p.status==='combat',leader=!!p.me.leader;
@@ -444,7 +484,7 @@
         const label=combat?'中止全隊挑戰':leader?(p.status==='lobby'?'結束招募':'結束隊伍'):'離開隊伍';
         const body={partyId:p.id,op:action};
         if(!combat&&!leader)return client.execute('party/action',body,label);
-        return prepare('party/action',body,label,combat?'這個操作會中止整支三人隊伍的挑戰。已消耗的體力不退還，也不會發放未完成的通關獎勵。':p.status==='lobby'?'隊長結束招募會解散這支隊伍，隊友需要重新組隊。':'本次已取得的戰利品與紀錄會保留。');
+        return prepare('party/action',body,label,combat?(towerMode?'這個操作會中止整支三人隊伍的挑戰。出發已使用的次數不退還；可領戰果依本場規則、實際通關層數與出手紀錄結算。':'這個操作會中止整支三人隊伍的挑戰。已消耗的體力不退還，也不會發放未完成的通關獎勵。'):p.status==='lobby'?'隊長結束招募會解散這支隊伍，隊友需要重新組隊。':'本次已取得的戰利品與紀錄會保留。');
       }
       if(action==='reward'){if(!p.canReward)return;return client.execute('party/reward',{partyId:p.id},'領取戰利品');}
       if(action==='submit'){

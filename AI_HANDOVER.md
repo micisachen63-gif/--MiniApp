@@ -1,3 +1,50 @@
+# 三人爬塔與塔印工坊主浮窗整合（2026-11-05）
+
+本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-tower-integration-20261105
+分支：codex/tower-integration-20261105；接續 cecb0158a9f6b47865f08281202418cc2cc15c13。
+完整報告：docs/TOWER_INTEGRATION_20261105.txt。
+最後提交與精確 HEAD 全套結果：.release-sync/tower-20261105/full-final-head-gate-receipt.json、local-submission-receipt.json，以及 D:/StarJournal/handoff/non-character/tower-integration-20261105/STATUS.json／FINAL_STATUS.md。本文件隨提交保存，最後 gate 於提交後寫入外部收據；不能用前批或中途版本的成功代替。
+
+## 已完成
+
+- 主戰鬥單浮窗的三人爬塔區域／大廳／目前隊伍、建立／加入／準備／出發、隊友目標／技能戰術、全隊中止與實際部分獎勵。
+- 塔印工坊：五階塔印、裝備前後能力與限制、徽記卷軸兌換、登塔稱號佩戴／卸下，沿既有金屬控件與至少44px操作區。
+- 新 tower/scene 與 tower/receipt 為 SELECT-only；App／Service 驗 realm、帳號與選角，不經 withPlayer／analytics、不推進／發獎。舊 tower/status 不加入 READS。
+- party-scene-common 只供固定 dungeon／tower kind；前者保持原範圍。跨種類／同帳號其他角色占用顯示原因，pending與sessionStorage按種類／角色隔離。
+- 保留原每日每角色台灣日界、出發扣次、原15分鐘期限、v2 lost／ended實際清層部分獎勵與legacy won規則。原party.js／tower.js權威未改。
+- 工坊原ID／完整body持續保留；正常刷新／重開不重送。found:false保留pending；明確確認後才重試同一原ID／body，取消／Back零POST；匹配成功或匹配收據明確核對後才解除。
+- 收據嚴驗原signature／typed cost／ledger／目標／from與to；空結果與壞收據不冒充成功。稱號卸下保留空字串。
+- A/B/A、revision floor、舊錯誤／成功隔離；未知提示每筆只定位一次；確認預設取消，取消／Back回來源按鈕，舊RAF／dispose不搶焦點。
+
+## 驗證與來源界線
+
+- 後端68/68，8檔來源穩定。前端初版106/106；其後僅工坊JS／test補取消／Back焦點，定向34/34，其餘來源不變。兩組集合有重疊，不相加冒充唯一測試數。
+- Chrome15個分段已完成檢查：3布局＋2初版工坊＋1新版焦點＋2原ID恢復／稱號＋4塔戰＋3切角競態。初版18布局圖；root另外實際目視10張代表圖。
+- 五次真塔印0→5、250徽記、+9與bonus保留；已提交丟回覆原POST仍1次。never-sent的原pending跨段恢復，同ID／body明確重試後僅1ledger、扣10徽記／給12卷軸。
+- 三不同帳號真API組隊／出發、真護盾技能／隊友目標／MP；打過2層後UI明確中止，三人各2徽記且防重。9次純讀比較雙realm各96張表不變，包含原deadline與台北午夜。
+- QA使用明示開發時鐘移至原deadline，再用原Party.sweep；900000ms期限未改。不是自然等待15分鐘，也不是30層瀏覽器全通關。
+- 四次harness失敗原件保留，按成功check分段採認；原成功塔印沒有重做。races真409為預期測試。不能宣稱單次完整Chrome run全綠。
+- 初版至最終來源差異為工坊取消焦點與harness；後端／CSS／玩法不變。source-bridge.json綁原件與HTTP JS SHA；root-source-freeze.json核對210檔。
+- 最後工坊JS SHA：3bd1af62b9250a7d7a9f809611a7e54cd24f2fda6c5d8c499cc7a113f34f77c1。
+- Node24.7.0；完整gate採官方runner全部檔清單、每服務concurrency2、乾淨精確HEAD；最終數目以full-final-head-gate-receipt.json及FINAL_STATUS為準，沒有成功收據前不能宣稱完成。
+- 證據根：.release-sync/tower-20261105/。重點為qa-summary.json、source-bridge.json、visual-review.json、root-source-freeze.json、backend-focused-final.json與兩份ui聚焦收據。不要無故重跑成功驗收或重置資料。
+
+## 預覽、發布與下一批
+
+隔離驗收預覽 http://127.0.0.1:9753/ ／記憶體API9752；主PID26260，實際程序以preview-process.json與命令列為準。六合成角色／三帳號、isolated／ephemeral／productionAccess=false；197啟動來源。QA時鐘已推到次日台灣日界，自動塔戰sweep關閉；非正式玩家／真實時間驗收。舊9743／9742及其他預覽保留。
+
+前批 cecb015 精確HEAD完整本機測試為3090項、2310來源一致；其GitHub push被自動核准審查拒絕，需提交與目的地明確核准。本批未重試或以子分支繞過，尚無本批草稿PR／遠端CI。若獲核准，先party分支base skill-career，再tower分支base party，分別核對精確HEAD checks。不得拿PR51 CI冒充本批。
+
+下一批建議Boss／首領精華，來源計畫見本批外部交接NEXT_BATCH_PLAN.json；星環另批。Boss current會expireDue／結算／outbox，攻擊以boss＋角色＋時間窗去重，不能照搬塔印requestId恢復；星環list/me/get也會sweep／advance，五人12小時與前景隊伍並行要另做投影。
+
+天使／命運／交易／Boss／星環／衣櫥／完整帳務、逐擊事件／角色FX、Lv600／16覺醒、正式平衡、完整季末跨DB資產與角色保留、正式Telegram／真機、320px主場資訊卡遮角色仍待接續。第四階重選未開放。全遊戲尚未整合完成。
+
+沿用兩個PT30M Windows checkpoint，里程碑即時更新；語意時間看STATUS.updatedAt。禁止操作共享全域MCP agent_workflow／task_control；不停止其他預覽。正式環境凍結，不部署、不合併main、不改正式DB／Secrets／migration／旗標；角色／FX／catalog／queue／grok-assets由其他工作線處理。
+
+---
+
+## 前序交接（原文完整保留；其當時狀態以後續最終收據修正）
+
 # 三人副本與轉職試煉主浮窗整合（2026-11-04）
 
 本批工作樹：`D:\StarJournal\worktree-snapshots\star-journal-party-integration-20261104`

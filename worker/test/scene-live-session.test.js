@@ -668,3 +668,20 @@ test('offline party projection is a read; party creation and tactics remain unce
  }
  assert.deepEqual(h.net.calls.map(c=>c.action),['party/scene','party/create','party/action','party/reward']);
 });
+
+test('tower scene and receipt are pure reads without an Atlas mutation barrier or implicit follow-up',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());const refresh=h.client.refresh();
+ const sceneRead=h.client.request('tower/scene'),receiptRead=h.client.request('tower/receipt',{requestId:'st_original',op:'imprint',itemId:'helmet',from:0});
+ assert.deepEqual(h.net.calls.map(c=>c.action),['atlas/status','tower/scene','tower/receipt']);
+ h.net.calls[1].reply({ok:true,characterId:'a',tower:{}});h.net.calls[2].reply({ok:true,characterId:'a',found:false,result:null,receipt:null});
+ assert.equal((await sceneRead).characterId,'a');assert.equal((await receiptRead).found,false);
+ h.net.calls[0].reply({ok:true,scene:scene()});assert.equal((await refresh).characterId,'a');assert.equal(h.net.calls.length,3);
+});
+test('offline pure tower reads are never uncertain writes; legacy status and actions remain mutations',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ for(const action of ['tower/scene','tower/receipt','tower/status','tower/action']){
+  const pending=outcome(h.client.request(action,{requestId:'st_original',op:'title',titleId:''}));h.net.calls.at(-1).fail();const result=await pending;
+  assert.equal(result.error.uncertain,['tower/status','tower/action'].includes(action));
+ }
+ assert.deepEqual(h.net.calls.map(c=>c.action),['tower/scene','tower/receipt','tower/status','tower/action']);
+});

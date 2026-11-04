@@ -1,5 +1,6 @@
 import * as CHARACTER_DELETE from './services/character-delete.js';
 import * as FORGE_RECEIPT from './services/forge-receipt.js';
+import * as TOWER_RECEIPT from './services/tower-receipt.js';
 import {monsterMeta,monsterPool} from './game/monsters.js';
 import {MONSTER_ART_REVISION,monsterArtCompatibility} from './game/monster-art-compatibility.js';
 // Telegram Mini App API (/app/api/*). Auth = Telegram WebApp initData (HMAC with 小精靈's BOT_TOKEN, auth_date ≤ 24h).
@@ -53,7 +54,7 @@ export const APP_ACTIONS = Object.freeze({
   'auto-enhance/start':'/rpg/auto-enhance/start','auto-enhance/stop':'/rpg/auto-enhance/stop','auto-enhance/status':'/rpg/auto-enhance/status',
   'expedition/me':'/rpg/expedition/me','expedition/action':'/rpg/expedition/action','expedition/share':'/rpg/expedition/share','expedition/trade':'/rpg/expedition/trade',
   'party/hall':'/rpg/party/hall','party/hall/get':'/rpg/party/hall/get',
-  'tower/status':'/rpg/tower/status','tower/action':'/rpg/tower/action',
+  'tower/status':'/rpg/tower/status','tower/action':'/rpg/tower/action','tower/scene':'/rpg/tower/scene','tower/receipt':'/rpg/tower/receipt',
   'party/list':'/rpg/party/list','party/create':'/rpg/party/create','party/action':'/rpg/party/action','party/reward':'/rpg/party/reward','party/get':'/rpg/party/get',
   'star-ring/list':'/rpg/star-ring/list','star-ring/me':'/rpg/star-ring/me','star-ring/get':'/rpg/star-ring/get',
   'star-ring/create':'/rpg/star-ring/create','star-ring/action':'/rpg/star-ring/action','star-ring/shop':'/rpg/star-ring/shop',
@@ -146,7 +147,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
     return json({ok:true,realms,selectedRealmId:selected});
   }
-  if((action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if((action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
   if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
   const originalJson=json;
   json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
@@ -194,10 +195,11 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     return fail('character_changed', '這個 Telegram 帳號已在另一個視窗切換角色，請重新選角後再操作', 409);
   // Pure projections must not settle idle time or create an admin behavior write.
   if(action==='skill-career')return json(await routes['POST /rpg/skill-career'](env,{tgId:safe.tgId},now));
-  if(action==='party/scene'){
+  if(action==='party/scene'||action==='tower/scene'||action==='tower/receipt'){
     const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
     if(!owned)return fail('no_character','找不到目前帳號的角色',404);
-    return json(await routes['POST /rpg/party/scene'](env,{tgId:safe.tgId,partyId:body.partyId,tab:body.tab,page:body.page,sinceTurnId:body.sinceTurnId},now));
+    if(action==='tower/receipt')return json(await TOWER_RECEIPT.view(env,safe.tgId,body,now,'app'));
+    return json(await routes['POST /rpg/'+action](env,{tgId:safe.tgId,partyId:body.partyId,tab:body.tab,page:body.page,sinceTurnId:body.sinceTurnId},now));
   }
   if(action==='forge/receipt')return json(await FORGE_RECEIPT.view(env,{tgId:safe.tgId,kind:body.kind,requestId:body.requestId,namespace:'app'},now));
   if (action === 'exchange/history') return json(await exchangeHistory(env, safe.tgId, safe));

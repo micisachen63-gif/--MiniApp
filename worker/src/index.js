@@ -1,5 +1,7 @@
 import {homeActivity} from './services/home-activity.js';
 import * as TOWER from './services/tower.js';
+import * as TOWER_SCENE from './services/tower-scene.js';
+import * as TOWER_RECEIPT from './services/tower-receipt.js';
 import {countryFromCode,ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
@@ -170,6 +172,8 @@ const routes = {
   'POST /rpg/party/hall': (env,b,now)=>PARTY.hall(env,tgOf(b),b,now),
   'POST /rpg/party/hall/get': (env,b,now)=>PARTY.hallGet(env,tgOf(b),b,now),
   'POST /rpg/tower/status': (env,b,now)=>TOWER.view(env,tgOf(b),now),
+  'POST /rpg/tower/scene': (env,b,now)=>TOWER_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/tower/receipt': (env,b,now)=>TOWER_RECEIPT.view(env,tgOf(b),b,now,'service'),
   'POST /rpg/tower/action': (env,b,now)=>TOWER.action(env,tgOf(b),b,now),
   'POST /rpg/party/list': (env,b,now)=>PARTY.list(env,tgOf(b),now),
   'POST /rpg/star-ring/list': (env,b,now)=>STAR_RING.list(env,tgOf(b),now),
@@ -417,7 +421,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -427,7 +431,7 @@ export async function handle(request, env) {
       return json(await route(env,routeBody,now));
     }
     env=await prepareRealmEnv(request,env);
-    if(url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'){
+    if(url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
       const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
       const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
       if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);

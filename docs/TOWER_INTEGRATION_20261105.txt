@@ -1,0 +1,132 @@
+星穹旅誌：爬塔與塔印工坊主浮窗整合
+日期：2026-11-05（台灣時間）
+
+一、版本與權威交接
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-tower-integration-20261105
+分支：codex/tower-integration-20261105
+接續提交：cecb0158a9f6b47865f08281202418cc2cc15c13（三人副本／轉職試煉）
+前批精確 HEAD 本機全套：Worker 2885 + BOT 205 = 3090，2310 個來源前後一致；前批仍未推送。不要把其舊 3083 項中間收據當成最後結果。
+開工時已 fetch origin/main=3c6729aa9167223a3a915c5dc19fcc075cbad0ed，確認為接續提交祖先；Node 24.7.0、與前批相同 lock 的依賴。
+
+本報告與 AI_HANDOVER 隨本機提交保存。該提交後的完整測試計數、精確 HEAD 與結案狀態，以以下檔案為準：
+- .release-sync/tower-20261105/full-final-head-gate-receipt.json
+- .release-sync/tower-20261105/local-submission-receipt.json
+- D:/StarJournal/handoff/non-character/tower-integration-20261105/STATUS.json
+- D:/StarJournal/handoff/non-character/tower-integration-20261105/FINAL_STATUS.md
+沒有對應成功收據前，不得聲稱最終 HEAD 全套通過；本機測試不能冒充 GitHub CI。
+
+二、已整合範圍
+
+冒險入口的三人爬塔與營地入口的塔印工坊，均接入既有主戰鬥單一浮窗，沿用同一帳號、realm、目前角色、context epoch 與 revision。保留金屬按鈕與透明面板，操作區最小 44px。
+
+爬塔包含目前隊伍、三區門檻、公開大廳、建立／加入／準備／出發、隊友與合法目標、原回合戰術、離隊／全隊中止、實際通關層數與部分獎勵。塔印工坊包含裝備選擇、下一階能力與費用、五階塔印、普通／祝福卷軸兌換，以及登塔稱號佩戴／卸下。沒有新增玩法數值或替換原戰鬥、交易、發獎權威。
+
+三、純讀投影與原規則
+
+新增 worker/src/services/tower-scene.js 與 tower-receipt.js。
+party-scene-common.js 抽出固定種類的共用 SELECT-only 投影；party/scene 仍只處理 dungeon／轉職試煉，tower/scene 明確處理 tower，使用者傳入 kind 不會擴大查詢。
+
+App 與 Service 均新增 tower/scene、tower/receipt：
+- 驗證 realm、帳號所有權、目前選角；凍結世界仍可讀。
+- 早於 withPlayer／analytics 路徑返回；開頁、輪詢、收據查詢不結算、不掃除、不推進隊伍、不發獎、不寫資料。
+- 只有這兩個新端點加入 SceneLiveSession READS。舊 tower/status 仍有 withPlayer 副作用，不可視為純讀。
+- 原 worker/src/services/party.js 與 tower.js 未修改。
+- 其他種類隊伍或同帳號其他角色占用，使用 activeOtherKind 與原因顯示，不誤標為可建隊；提供原隊伍／角色頁入口，不自動換角。
+
+保留原生爬塔門檻：
+1–10 層：Lv30，前區門檻 0，完整 10 徽記。
+11–20 層：Lv60，最高通關至少 10，完整 15 徽記。
+21–30 層：Lv90，最高通關至少 20，完整 20 徽記。
+三個不同帳號出發、全員準備；每日按角色與台灣日界計算，只在出發扣一次，不耗普通副本體力。保留原 15 分鐘期限與原回合 deadline／戰術／MP／CD／技能資格。
+v2 won／lost／ended 的實際參戰者可依 floor(已清層數 × 區域完整徽記 / 10) 結算；legacy won 固定 10 徽記的舊規則獨立保留。投影不因「失敗」或「中止」推定獎勵為零。
+
+塔印維持 Lv30 工坊、五階每階主能力 +2%（最高 +10%），成本 20／30／45／65／90，共 250 徽記。原 ID、+N、詞條、元素及其他 bonus 保留；穿戴、交易、running／processing 作業仍依原規則阻擋，from 由原原子寫入再驗。普通卷軸 10 徽記且數量依原 tier 規則，祝福卷軸 60 徽記／1 張；稱號只是外觀，不新增戰力。
+
+四、未知結果與角色切換保護
+
+爬塔與 dungeon 的 pending memory／sessionStorage 使用不同 kind 範圍；既有沒有 kind 的舊記錄仍按 dungeon 處理。工坊另有自己的 pending 空間，綁定 account／realm／character。原 requestId 與完整原 body 持續保留，不會因關窗、刷新或普通輪詢自動重送。
+
+tower/receipt 查原 tower-action:<character>:<requestId> ledger；App 命名空間 app: 由路由指定，body 無法改命名空間。完整 signature 保留 op、offerId、itemId、from、titleId 的原始型別與 null／空字串區別；稱號卸下仍使用 titleId:''。
+收據核對原 op／目標、數字 safe integer、非負 cost、ledger itemDelta，以及正確 from／to。壞 JSON、空 result、錯誤目標或成本視為損壞，不得當成功或當作 not_found。
+
+找不到收據只代表結果未確認：
+- 保留 pending，不自動確認、不自動重送。
+- 取得當前角色的新鮮投影及 found:false 後，才提供「重試這筆原操作」。
+- 顯示原操作、目標與費用，第二次確認後重用完全相同 ID／body。
+- 取消／返回不發 POST；再度不明或錯誤仍保留原 pending。
+- 只有匹配成功結果，或匹配收據且明確核對解除，才清除 pending。
+此人工重試限原生具 requestId 防重的工坊 action，沒有擴張到其他種類操作。
+
+前端有 epoch／generation／abort／revision floor 守衛；A→B、A→B→A 的舊成功與 409 都不能覆蓋新角色。未知提示每個 pending 只自動定位一次，焦點放純讀入口；之後使用者點 tab 不再搶焦點。確認預設在取消，取消／Back 返回原操作按鈕；dispose、切角、隱藏頁面及舊 RAF 均有保護。
+
+五、聚焦測試與來源凍結
+
+後端：68/68，0 fail/cancel/skip/todo；8 檔來源前後一致。
+證據：backend-focused-final.json／.log。
+首次 6 個測試失敗來自新增 SELECT guard 誤拒原 loadPlayer 的 batch(SELECT)；修正測試逐句驗 SELECT，未為此改正式邏輯，首次紀錄保留。
+
+前端：scene-party-ui、scene-tower-ui、scene-live-session 共 106/106。
+證據：ui-focused-2026-11-04T21-07-37-440Z.json。
+之後只修工坊取消／Back 返回來源焦點，定向重跑 scene-tower-ui 34/34，其他 7 檔來源不變。
+證據：ui-cancel-focus-2026-11-04T21-11-20-852Z.json。
+上述集合有重疊，不能把 106 與 34 相加當不同測試總數。
+
+最終工坊 JS SHA256：
+3bd1af62b9250a7d7a9f809611a7e54cd24f2fda6c5d8c499cc7a113f34f77c1
+初版工坊 JS：
+656bc24ca1f1cb196d756c9969a84aebc7182ba5692acb2f33c51bfb0a7a5cb2
+
+Root 已交叉審查 UI／API 契約，核對 210 個受驗收覆蓋的來源與各收據，保存 root-source-freeze.json；完整 gate 另按官方 scripts/run-tests.mjs 的全檔清單於乾淨精確 HEAD 執行，Node24、每服務 concurrency=2，不略過任何測試。
+
+六、真 Chrome 分段驗收
+
+Chrome 156.0.8078.80、真本機 API／SQLite、六合成角色／三帳號、兩個 realm。
+共 15 個已完成檢查：
+- layout-02：3 項，320／390／1280 共 18 圖、單浮窗焦點、44px、無橫溢出、三區與穿戴／交易／processing 門檻。
+- workshop-01：2 項，已提交丟回覆仍只 1 POST；五次真塔印 0→5，250 徽記，+9／原裝備／bonus 保留，+10% 封頂。
+- workshop-recovery-01：1 項，新版窄屏回頂與取消／Back 精確返回來源、零玩法 POST。
+- workshop-recovery-03：2 項，同原 pending 的明確重試／一次扣款與稱號裝卸／鎖定。
+- tower-01：4 項，三人組隊與出發扣次、隊友護盾技能／MP、原期限與兩層部分結算、防重領獎及台北午夜。
+- races-01：3 項，A→B 晚成功、A→B→A 真 409、已提交工坊晚失敗在關窗／換角後不搶焦點，回原角純讀核對。
+
+總收據 qa-summary.json，逐段 results.json 在 browser/。
+workshop-01 與 workshop-recovery-01 的整個 run 後段曾因 harness 判定失敗，以上只計入其在原件中已完成的 checks。沒有單一全 run 全綠主張。
+
+四次 harness 失敗均保留：來源清單漏 composition bindings、搶在 RAF 前取焦點、誤以為 not_found 會有 disabled acknowledge、以及使用者點 tab 後誤期待再次自動定位。沒有為配合 helper 改產品安全行為，也沒有重跑已成功的五次塔印。
+
+來源橋接 source-bridge.json 明確列出初版到最終版只有工坊 JS 焦點修正與 harness 差異；後端、CSS 與玩法規則不變。最終 JS 有定向 Node 與新 HTTP 載入 SHA 驗證。初版成功操作保留舊 SHA，不宣稱當時載入了新版。
+
+原 never-sent st_0f4… 沒到 API、ledger 0、沒有重放；另個 st_18c5… 從 recovery-01 的完整 sessionStorage 原件恢復到 recovery-03，同 ID／完整 body，原 1 次 browser attempt + 使用者確認後 1 次，最終 ledger 1 筆、扣 10 徽記、得 12 張卷軸。中間恢復段沒有玩法寫入。不得把兩個 requestId 混成同一筆恢復證據。
+
+9 次純讀檢查覆蓋兩個 realm 各 96 張表。通過段沒有意外 page／HTTP／route／外部請求錯誤；races 的 1 個真 stale-character HTTP 409 已明確標 expected。
+Root 透過 MCP 實際目視 10 張代表圖，紀錄 visual-review.json。320 初版摘要被捲出可回頂，並非內容遺失；確認費用、未知查收據入口、全隊中止與通關進度可讀。
+
+七、測試時鐘與預覽界線
+
+UI http://127.0.0.1:9753/；記憶體 API http://127.0.0.1:9752/。
+主程序 PID 26260；啟停前核對 preview-process.json 及真實命令列。preview-backend-sources.json 綁定 197 個啟動來源；最終瀏覽器來源集合 205 檔。舊 9743／9742 與其他預覽全部保留。
+
+本預覽 RPG_TOWER_QA=1 僅 loopback／isolated／ephemeral、productionAccess=false。明示開發 X-Debug-Now，使用原保存的回合 deadline，不修改 challengeEndsAt（900000ms）。每次先移到原 deadline、純讀比較資料庫，再呼叫原 Party.sweep；最後移到台北午夜檢查日界。
+真打過兩層後由 UI 明確中止，三人各 2 徽記；不是自然等待 15 分鐘逾時測試，也不是全 30 層瀏覽器通關。QA 時計已推到下一個台灣日界，不能當現實時間或正式玩家資料。該模式關閉其他自動 sweep 以保持可重現；不影響非 QA 模式與正式 cron。
+
+八、修改範圍
+
+後端 8 檔：app.js、index.js、party-scene.js；新增 party-scene-common.js、tower-scene.js、tower-receipt.js、tower-scene-service.test.js、tower-scene-api.test.js。
+前端／測試 9 檔：scene-party-ui.js/css、scene-social-preview.js、scene-live-session.js、scene-party-ui.test.js、scene-live-session.test.js；新增 scene-tower-ui.js/css、scene-tower-ui.test.js。
+工具 4 檔：atlas-local-preview.mjs、scene-live-preview.mjs；新增 tower-qa-fixture.mjs、tower-browser.cjs。
+文件：本報告、AI_HANDOVER.md。角色素材、FX、catalog、queue、grok-assets 不在本批。
+
+九、發布、待辦與下一批
+
+本機提交與完整 gate 完成後，精確結果補在外部 FINAL_STATUS／STATUS，避免改動已驗收 HEAD。既有三人副本提交 cecb015 的 GitHub push 曾被自動核准審查拒絕，理由為需本提交與目的地明確授權；本次不重試或改用子分支繞過。沒有新草稿 PR／遠端 CI，不合併 main、不部署、不改正式 DB／Secrets／migration／旗標。
+未來若獲明確核准，應先發布 party 分支並以 skill-career 分支為 base，再發布 tower 分支並以 party 為 base，分別核對精確 HEAD GitHub checks。
+
+下一批建議 Boss／首領精華；星環遠征拆成下一個獨立批次，來源盤點見交接 NEXT_BATCH_PLAN.json。Boss current 有 expireDue／outbox 副作用；攻擊依 boss＋角色＋時間窗去重，不可套用塔印 requestId 安全重試。星環 list/me/get 有 sweep／advance，五帳號、12 小時與前景隊伍並行規則需另做純讀契約。
+
+其餘未完成：天使／命運／交易／Boss／星環／衣櫥／完整帳務舊頁；逐擊／施法／傷害事件與角色FX；Lv600／16覺醒與後續成長；正式數值平衡；完整賽季 drain／manifest／跨D1匯入／防重與角色資產保留；正式 Telegram 宿主與實體手機；320px 主場資訊卡與角色頭部局部交疊。第四階重選仍無原生道具。不能宣稱整個遊戲整合完成。
+
+十、繼續接手
+
+先讀 D:/StarJournal/START_HERE.md、主 STATUS／LATEST、本批 STATUS／FINAL_STATUS，再核對 branch、HEAD、乾淨狀態與成功收據。不要無故重跑成功扣款／戰鬥、重置 preview 或重做全套 gate。
+兩個既有 Windows PT30M 排程持續運作，里程碑另即時 checkpoint；05:22:28 主線、05:02:34 補給排程最近觀察均成功。語意進度以 STATUS.updatedAt 為準，排程複製時間不代表完成新工作。禁止操作共享全域 MCP agent_workflow／task_control，也不要終止其他工作線 Node／預覽。

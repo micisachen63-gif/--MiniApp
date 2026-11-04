@@ -27,3 +27,7 @@
 
 #ui.scene-unified-root .scene-unified-dialog button.sp-danger{--sb-top:#623537;--sb-bottom:#2c1724;--sb-edge:linear-gradient(135deg,#d6a58a,#6e4439 44%,#b77c66 77%,#e2b69a);color:#ffe5d8}
 #ui.scene-unified-root .scene-unified-dialog .sp-tabs button{--sb-height:46px;--sb-depth:3px;--sb-cut:6px;font-size:12px;padding:calc(8px + var(--sb-press)) 8px calc(11px - var(--sb-press))}
+
+.sp-panel[data-sp-kind="tower"] .sp-tabs{grid-template-columns:repeat(3,minmax(0,1fr))}
+.sp-panel [data-sp-tower-progress]{border-top:1px solid var(--sp-line);margin-top:.6rem;padding-top:.6rem}
+.sp-panel [data-sp-other-kind] p:last-child{margin-bottom:0}
