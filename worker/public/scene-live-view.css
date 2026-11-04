@@ -1,0 +1,29 @@
+/* Independent live-scene status; existing HUD dimensions remain unchanged. */
+.rpg-live-scene #skills .sk { pointer-events: none; opacity: .35; }
+.rpg-live-scene #buffs:empty { display: none; }
+.rpg-live-scene .dark-potions { display: none !important; }
+.rpg-live-scene .scene-live-panel { position: absolute; top: 108px; left: 12px; width: min(270px, calc(100vw - 24px)); box-sizing: border-box; z-index: 35; padding: 10px 12px; color: #ede2c8; background: rgba(10, 15, 22, .86); border: 1px solid #7b69504d; border-radius: 9px; font: 12px/1.5 "Noto Serif TC", serif; pointer-events: auto; box-shadow: 0 4px 20px #0005; }
+.scene-live-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.scene-live-heading strong { font-size: 14px; color: #ead19b; }
+.scene-live-heading span { font: 10px/1.5 sans-serif; color: #a8b4ba; font-variant-numeric: tabular-nums; }
+.scene-live-panel p { margin: 4px 0; }
+.scene-live-warning { color: #e1b77b; font-size: 11px; }
+.scene-live-buttons { display: flex; gap: 5px; margin: 8px 0 3px; }
+.scene-live-buttons button { flex: 1; min-height: 36px; padding: 4px 5px; border: 1px solid #96815b80; border-radius: 5px; background: #1b2531; color: #efdfb7; font: inherit; cursor: pointer; }
+.scene-live-buttons button:disabled { opacity: .5; cursor: default; }
+.scene-live-buttons button:focus-visible, .scene-live-panel summary:focus-visible { outline: 2px solid #c4a36a; outline-offset: 2px; }
+.scene-live-panel details { margin-top: 6px; }
+.scene-live-panel summary { color: #bdc4c6; cursor: pointer; min-height: 24px; }
+.scene-live-enemies, .scene-live-events { margin: 4px 0; padding-left: 18px; max-height: 100px; overflow: auto; }
+.scene-live-events { color: #abb6bf; }
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-slot:disabled { opacity: .78; cursor: default; }
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-name { white-space: nowrap; }
+@media (max-width: 600px) {
+  .rpg-live-scene .scene-live-panel { top: 91px; left: 8px; width: min(224px, calc(100vw - 190px)); padding: 8px; font-size: 11px; }
+  .scene-live-heading strong { font-size: 13px; }
+  .scene-live-buttons { gap: 4px; }
+  .scene-live-buttons button { min-height: 36px; min-width: 0; padding: 4px 2px; font-size: 11px; line-height: 1.2; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .rpg-live-scene .scene-live-panel { top: 80px; width: 230px; max-height: calc(100vh - 180px); overflow: auto; }
+}

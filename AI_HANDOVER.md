@@ -1,3 +1,5 @@
+2026-11-04 非角色場景整合：獨立9653場景與9652隔離API，atlas/status新增唯讀已提交scene投影；共用帳號／環境／角色／revision狀態，真實血魔、經驗、補給、地圖敵人與出征／返營。裝備、背包、補給、構築、天賦、收藏冊及委託沿用同一角色；切角晚回覆、貼圖釋放與桌面縮放均納入回歸。原角色美術與9593／9642流程保留，未部署／未遠端migration。五輪600級、16招覺醒、正式平衡與完整賽季收尾仍待後續。分支codex/scene-live-integration-20261104接PR #43，必讀docs/SCENE_LIVE_INTEGRATION_20261104.txt，驗收以該文件與實際測試紀錄為準。
+
 2026-11-02 新版接線續作：本機世界／隊伍聊天、真委託追蹤領獎、雙天使HUD、48張模式背景與166隻精確ID怪群配置、密集戰場主角輪廓保護；9593改為讀最新生成檔的獨立接線層，原角色檔不覆寫。未部署／未遠端migration，600級及16招進階技能仍為規劃。必讀docs/SCENE_CHAT_QUESTS_HUD_MAPS_20261102.txt。
 
 2026-11-02 POE 掛機改版接續：分支 codex/poe-realms-preserve-progress，永久／季服 D1 隔離、Atlas 試作、永久教學與長期委託、六系統浮層及舊天使／旅章入口。所有角色資料與每件裝備 +N 保留；無正式玩家改寫／遠端 migration／部署，ATLAS 預設關閉。本次會話已獲明確批准並完成 Wrangler 裝置授權，11 個必要物件／欄位預檢通過、13 類正式 D1 聚合取得且零寫入；原始統計與收據保存在私有資料，不放 Git。後續先確認當前環境既有登入，不要假設各工作環境共用授權。正式數值校準與完整季末 drain／manifest／跨庫匯入及四加四角色保留仍未完成，勿宣稱完成或啟用賽季。基線工具已修正帶 -- 註解的命令列參數解析，新增真 CLI 離線回歸，6／6 通過。續接必讀 docs/POE_REALMS_CHECKPOINT_20261102.md、docs/REALM_ECONOMY_BASELINE.md 與 docs/ATLAS_BALANCE_PROTOTYPE.md；驗證及發布狀態以檢查點、CI 與 deployment-records 為準。

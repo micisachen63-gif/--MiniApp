@@ -38,13 +38,44 @@ export function bindScene(source){
   s=s.replace('window.RpgSceneEncounter.previewBoss=function()',"window.RpgSceneEncounter.reviewVisibility=function(value){sc.scene.pause();HERO_READABILITY?.setEnabled(value);HERO_READABILITY?.update();return HERO_READABILITY?.inspect();};window.RpgSceneEncounter.previewBoss=function()");
   s=s.replace('window.RpgSceneEncounter.previewBoss=function()',"window.RpgSceneEncounter.reviewCrowd=function(){var crowd=mons.filter(alive).slice(0,6),boss=mons.find(function(m){return alive(m)&&m.role==='boss';});if(boss&&!crowd.includes(boss))crowd.push(boss);crowd.forEach(function(m,i){m.x=hero.x+(i-3)*HS*.025;m.y=hero.y+HS*(.06+i*.008);m.setDepth(m.y);m.modeAura?.setPosition(m.x,m.y-HS*m.pct*.5).setDepth(m.y-.5);});sc.scene.pause();HERO_READABILITY?.update();};window.RpgSceneEncounter.previewBoss=function()");
  }
+ return bindLiveScene(s);
+}
+function once(source,old,replacement){if(source.split(old).length!==2)throw Error('Live scene hook changed: '+old.slice(0,90));return source.replace(old,replacement);}
+export function bindLiveScene(source){
+ if(source.includes('var LIVE_SCENE=window.__RpgScenePreviewConfig'))return source;
+ let s=once(source,"var visual, debugState=","var LIVE_SCENE=window.__RpgScenePreviewConfig?.live===true,LIVE_VIEW=null,sceneGround=null;\nvar visual, debugState=");
+ s=once(s,"window.addEventListener('message',function(event){","window.addEventListener('message',function(event){\n if(LIVE_SCENE)return;");
+ s=once(s,"function preload(){var L=this.load;","function preload(){if(LIVE_SCENE){var placeholder=document.createElement('canvas');placeholder.width=1;placeholder.height=1;this.textures.addCanvas('ground',placeholder);this.textures.addCanvas('hero_idle',placeholder);this.cache.json.add('meta',{});return;}var L=this.load;");
+ s=once(s,"this.add.image(0,0,'ground').setOrigin(0).setScale(k);","sceneGround=this.add.image(0,0,'ground').setOrigin(0).setScale(k);");
+ s=once(s,"mk('h_walk','hero_walk_right',{},13,-1);mk('h_atk','hero_attack_right',{},20,0);mk('h_idle','hero_idle',{frames:[4,5]},3,-1);","if(!LIVE_SCENE){mk('h_walk','hero_walk_right',{},13,-1);mk('h_atk','hero_attack_right',{},20,0);mk('h_idle','hero_idle',{frames:[4,5]},3,-1);}");
+ s=once(s,"mk('fx_spin','fx_whirlwind',{},22,0);mk('fx_hit','fx_hit_sparks',{},28,0);","if(!LIVE_SCENE){mk('fx_spin','fx_whirlwind',{},22,0);mk('fx_hit','fx_hit_sparks',{},28,0);}");
+ s=once(s,"hero.setScale(HS*.22/205);hero.play('h_idle');","hero.setScale(HS*.22/205);if(!LIVE_SCENE)hero.play('h_idle');else hero.setVisible(false);");
+ s=once(s,'hero.hp=3600;hero.mhp=3600;hero.rage=60;','hero.hp=LIVE_SCENE?0:3600;hero.mhp=LIVE_SCENE?0:3600;hero.rage=LIVE_SCENE?0:60;');
+ s=once(s,';loadCharacter(debugState.actor);',';if(!LIVE_SCENE)loadCharacter(debugState.actor);');
+ s=once(s,"UI.cast=function(i){if(visual?.ready)castSkill(i,true);};","UI.cast=function(i){if(!LIVE_SCENE&&visual?.ready)castSkill(i,true);};");
+ for(const delay of [9000,21000])s=once(s,'this.time.addEvent({delay:'+delay,'if(!LIVE_SCENE)this.time.addEvent({delay:'+delay);
+ s=once(s,'UI.setHP(hero.hp,hero.mhp);UI.setMP(hero.rage,100);UI.setXP(.62);','if(!LIVE_SCENE){UI.setHP(hero.hp,hero.mhp);UI.setMP(hero.rage,100);UI.setXP(.62);}');
+ const arrival=/setTimeout\(function\(\)\{UI\.toast\('進入 [^\n]*\},600\);/g,arrivals=[...s.matchAll(arrival)];
+ if(arrivals.length!==1)throw Error('Live scene arrival toast changed');s=s.replace(arrival,match=>'if(!LIVE_SCENE)'+match);
+ const panel="if(Q.get('panel'))setTimeout(function(){UI.toggle(Q.get('panel'));},400);";
+ s=once(s,panel,"if(!LIVE_SCENE&&Q.get('panel'))setTimeout(function(){UI.toggle(Q.get('panel'));},400);\n if(LIVE_SCENE){LIVE_VIEW=window.RpgSceneLiveView?.mount(this,{hero:hero,animator:visual,ui:UI,ground:sceneGround,hpGraphics:hpG,getWorld:function(){return G;},setWorld:function(world){G=world;},setMonsters:function(items){mons=items;},resetReadability:function(){HERO_READABILITY?.reset();},clearDecorations:function(){ringG.clear();rim.setAlpha(0);ghost.setAlpha(0);}});if(!LIVE_VIEW){hero.setVisible(false);sceneGround.setVisible(false);UI.target(null);}}");
+ for(const signature of ['function projectileTo(target,damage){','function performPreviewAttack(target){','function horde(s,n){','function spawnElite(s){','function spawnBoss(s,near){','function hit(m,d,crit){','function kill(m){','function castSkill(i,user){'])s=once(s,signature,signature+'if(LIVE_SCENE)return;');
+ s=once(s,'function update(t,dms){','function update(t,dms){if(LIVE_SCENE){LIVE_VIEW?.update(dms);HERO_READABILITY?.update();perf(dms);return;}');
+ // RESIZE uses cached parentSize before refreshing DOM bounds. Read the new
+ // parent first so resize does not restore the previous canvas dimensions.
+ s=once(s,"window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();sc.scale.resize(b.width,b.height);});","window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();if(LIVE_SCENE)sc.scale.getParentBounds();sc.scale.resize(b.width,b.height);});");
  return s;
 }
 export function bindUi(source){
- if(source.includes('if(!window.RPG_LIVE_SOCIAL)'))return source;
+ let s=source;
  const old='for(var k=0;k<4;k++)pushChat();setInterval(pushChat,7000);';
- if(source.split(old).length!==2)throw Error('Visual mock-chat bootstrap changed');
- return source.replace(old,`if(!window.RPG_LIVE_SOCIAL){${old}}`);
+ if(!s.includes('if(!window.RPG_LIVE_SOCIAL)'))s=once(s,old,`if(!window.RPG_LIVE_SOCIAL){${old}}`);
+ if(!s.includes('/* live-preview-ui-guard */')){
+  s=once(s,'UI.trigger=function(i){','UI.trigger=function(i){/* live-preview-ui-guard */if(window.__RpgScenePreviewConfig?.live===true)return false;');
+  s=once(s,"[['rage',3],['shield',0],['spin',12]].forEach(function(b){","(window.__RpgScenePreviewConfig?.live===true?[]:[['rage',3],['shield',0],['spin',12]]).forEach(function(b){");
+  s=once(s,'(function(){var im=new Image();','(function(){if(window.__RpgScenePreviewConfig?.live===true)return;var im=new Image();');
+ }
+ return s;
 }
 export function bindSceneHtml(source){
  let s=source;
@@ -57,8 +88,9 @@ export function bindSceneHtml(source){
  if(!s.includes('window.RPG_LIVE_SOCIAL=true'))s=s.replace('</head>',`<script>window.RPG_LIVE_SOCIAL=true;</script></head>`);
  if(!s.includes('scene-chat-ui.css'))s=s.replace('</head>',`<link rel="stylesheet" href="${social}/scene-chat-ui.css"><link rel="stylesheet" href="${social}/scene-social-preview.css"></head>`);
  if(!s.includes('scene-hero-readability.css'))s=s.replace('</head>',`<link rel="stylesheet" href="${social}/scene-hero-readability.css"></head>`);
- s=s.replace(`<script src="${prefix}/scene.js"></script>`,`<script src="${social}/scene-hero-readability.js"></script><script src="${prefix}/scene.js"></script>`);
+ s=s.replace(`<script src="${prefix}/scene.js"></script>`,`<script src="${social}/scene-live-session.js"></script><script src="${social}/scene-live-view.js"></script><script src="${social}/scene-hero-readability.js"></script><script src="${prefix}/scene.js"></script>`);
  s=s.replace('</head>',`<link rel="stylesheet" href="${social}/atlas-talents-ui.css"><link rel="stylesheet" href="${social}/equipment-collection-ui.css"></head>`);
+ s=s.replace('</head>',`<link rel="stylesheet" href="${social}/scene-live-view.css"></head>`);
  return s.replace('</body>',`<script src="${social}/atlas-talents-ui.js"></script><script src="${social}/atlas-progression-ui.js"></script><script src="${social}/equipment-collection-ui.js"></script><script src="${social}/scene-atlas-guide.js"></script><script src="${social}/scene-chat-ui.js"></script><script src="${social}/scene-social-preview.js"></script></body>`);
 }
 export function bindPreviewHtml(source){
@@ -67,12 +99,23 @@ export function bindPreviewHtml(source){
  if(!s.includes('hud-angels-20261102/hud-angels.js'))s=s.replace('</body>',`<script src="${social}/hud-angels.js?v=20261102-angels1"></script></body>`);
  if(!s.includes('progression-maps-20261102/scene-map-preview-controls.js'))s=s.replace('</body>',`<script src="${maps}/scene-map-preview-controls.js"></script></body>`);
  if(!s.includes('rel="icon"'))s=s.replace('</head>','<link rel="icon" href="data:,"></head>');
+ s=s.replace('</body>',`<script>if(window.__RpgScenePreviewConfig?.live===true){document.getElementById('controls').hidden=true;document.getElementById('controls').inert=true;document.getElementById('show').hidden=true;const artControls=document.querySelector('aside.test-controls');if(artControls){artControls.hidden=true;artControls.inert=true;artControls.style.display='none';}}</script></body>`);
  return s;
 }
+export function bindPreviewJs(source){
+ if(source.includes('/* live-preview-orbs */'))return source;
+ return once(source,'function update() {','function update() {\n  /* live-preview-orbs */if(window.__RpgScenePreviewConfig?.live===true){frame.contentWindow?.RpgSceneLiveView?.refreshHUD?.();return;}');
+}
+export function bindHudV2(source){return `if(window.__RpgScenePreviewConfig?.live===true){window.RpgSceneLiveView?.mountHUD();}else{\n${source}\n}`;}
+export function bindArtOnly(source){return `if(window.__RpgScenePreviewConfig?.live!==true){\n${source}\n}`;}
 export async function boundPreviewResponse(requestPath,root){
  if(requestPath==='/ui-generated-20261030/preview.html')return {type:'text/html; charset=utf-8',body:bindPreviewHtml(await fs.readFile(path.join(root,'ui-generated-20261030/preview.html'),'utf8'))};
  if(requestPath===`${prefix}/scene.html`)return {type:'text/html; charset=utf-8',body:bindSceneHtml(await fs.readFile(path.join(root,'ui-generated-20261030/characters-v1/scene.html'),'utf8'))};
  if(requestPath===`${prefix}/scene.js`)return {type:'text/javascript; charset=utf-8',body:bindScene(await fs.readFile(path.join(root,'ui-generated-20261030/characters-v1/scene.js'),'utf8'))};
  if(requestPath===`${prefix}/ui.js`)return {type:'text/javascript; charset=utf-8',body:bindUi(await fs.readFile(path.join(root,'ui-proto/ui.js'),'utf8'))};
+ if(requestPath==='/ui-generated-20261030/preview.js')return {type:'text/javascript; charset=utf-8',body:bindPreviewJs(await fs.readFile(path.join(root,'ui-generated-20261030/preview.js'),'utf8'))};
+ if(requestPath==='/ui-generated-20261030/hud-v2.js')return {type:'text/javascript; charset=utf-8',body:bindHudV2(await fs.readFile(path.join(root,'ui-generated-20261030/hud-v2.js'),'utf8'))};
+ if(requestPath==='/ui-generated-20261030/dark-ui.js'||requestPath==='/ui-generated-20261030/characters-v1/preview-controls.js')return {type:'text/javascript; charset=utf-8',body:bindArtOnly(await fs.readFile(path.join(root,requestPath.slice(1)),'utf8'))};
+ if(requestPath===`${maps}/scene-map-preview-controls.js`)return {type:'text/javascript; charset=utf-8',body:bindArtOnly(await fs.readFile(path.join(root,requestPath.slice(1)),'utf8'))};
  return null;
 }

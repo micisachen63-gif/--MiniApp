@@ -1,0 +1,75 @@
+星穹之旅｜非角色場景整合｜2026-11-04
+
+本批目的
+把既有場景、HUD及功能浮層接到同一個隔離本機遊戲API與選角狀態，呈現已提交的角色及出征資料，補齊連線恢復、切角與縮放生命週期，完成最終回歸、文件及草稿PR。
+
+開發位置
+D:\StarJournal\worktree-snapshots\star-journal-scene-integration-20261104
+分支：codex/scene-live-integration-20261104
+基線：83229277a39ef6050a659dbacf979d30e3e85b94
+前置：PR #43，codex/poe-local-continuation-20261102
+預覽：http://127.0.0.1:9653/
+隔離API：http://127.0.0.1:9652/app/api/
+資料：記憶體合成測試帳號與四職角色；重啟會重置。不是正式玩家資料。
+
+已完成
+1. atlas/status增加唯讀scene投影，包含帳號、realm、角色revision、真實規則算出的血魔/經驗、當趟補給、已提交地圖/敵人/摘要事件及累計戰報。讀取不推進戰鬥，不發獎，不修改戰鬥規則及migration。
+2. scene-live-session共用選角、15秒可見頁唯讀同步、切角epoch/revision防止晚回覆覆蓋新角色；失聯寫入不自動重播；成功寫入不因後續refresh失敗被誤認失敗。
+3. 裝備、背包、補給、構築、出征、天賦、收藏冊、聊天及委託沿用同一角色；保留每件裝備真實+N。完整管理連結標明另選世界/角色且鍵盤焦點可達。
+4. 3張教學地圖背景與7種怪物以確切ID對應；未把48張高階背景當成已開放玩法。場景只呈現已提交快照；開始有12秒移動階段，可能沒有敵人。
+5. 先解除sprite貼圖與遮罩再釋放角色資源，修復destroyed Frame/sourceSize錯誤；resize先更新Phaser parentSize，調整live camera viewport/follow，確保390與1280主角居中且在HUD上方。
+6. 本線9653/9652獨立預覽只讀取既有角色與grok-assets來源；既有9593/9642工作線保留。
+7. Windows每30分鐘交接排程已安裝並實跑；STATUS人工語意與checkpoint生成時間分開，未偵測變更會明示。重要進展即時更新STATUS並產生history。
+8. 恢復性補強：同角色、同地圖及同敵人素材短暫載入失敗後可隨下一次快照或手動同步重試；失敗promise從快取移除，載入中的請求仍防重，舊角色的晚失敗不影響新角色。
+9. API失聯時獨立顯示「同步失敗，顯示上次資料。」；成功新快照清除連線提示，不會清除尚存在的素材問題。完整錯誤原因保留於title。390px真畫面核對後縮短為一行，避免長提示遮擋角色臉部。
+
+驗證
+最終完整gate：2026-11-04T02:58:34Z至03:02:09Z（台灣10:58至11:02），Node v24.7.0、並行2、TAP報告。
+- Worker：257份完整測試檔，2526/2526通過。
+- BOT：23份完整測試檔，205/205通過。
+- 合計2731/2731，0失敗、0取消、0略過、0待辦；未排除任何測試檔。
+- 按scripts/run-tests.mjs相同檔案列舉及服務順序執行，加入--test-concurrency=2與--test-reporter=tap；完整參數與檔案清單保存在收據。
+- 21個變更程式檔的SHA256在gate前後一致，changedDuringGate=[]。最後的文字報告在測試後新增，不改程式。
+
+針對恢復與renderer：24/24 focused通過（包含5項新增回歸；這24項已計入上方2731，不能再相加）。
+真Chrome：修正後390/1280幾何加外部切角3case通過，0pageerror，預期409切角衝突正確恢復。主角居中且完整位於底部HUD上方，兩尺寸出征截圖已目視。
+失聯提示：實際阻斷一次atlas/status請求後，保留同角色與上次血量、顯示同步失敗；解除阻斷再同步後提示清除且角色仍可見，0pageerror。第一次目視發現手機長文字遮到主角上緣，已縮短提示並再次實跑、目視390px截圖，之後才執行上述最終完整gate。
+本機30分鐘排程：2026-11-04T03:00:24Z直接查詢Windows Scheduler，Enabled=true、LastRunTime=02:52:27Z、LastTaskResult=0、NextRunTime=03:22:27Z（台灣10:52與11:22）。
+
+證據（均位於本工作樹）
+- .release-sync/scene-live-20261104/full-tests-resume-20261104T025834964Z.json
+- .release-sync/scene-live-20261104/full-tests-resume-20261104T025834964Z-worker.log
+- .release-sync/scene-live-20261104/full-tests-resume-20261104T025834964Z-bot.log
+- .release-sync/scene-live-20261104/compact-warning-focused.log
+- .release-sync/scene-live-20261104/compact-warning-receipt.json
+- .release-sync/scene-live-20261104/recovery-review-20261104.patch
+- .release-sync/scene-live-20261104/recovery-browser-final/browser-geometry-results.json
+- .release-sync/scene-live-20261104/recovery-browser-final/390-expedition-camera-final.png
+- .release-sync/scene-live-20261104/recovery-browser-final/1280-expedition-camera-final.png
+- .release-sync/scene-live-20261104/recovery-browser-compact/offline-recovery-results.json
+- .release-sync/scene-live-20261104/recovery-browser-compact/phone-offline-warning.png
+- .release-sync/scene-live-20261104/recovery-browser-compact/phone-sync-recovered.png
+- .release-sync/scene-live-20261104/scheduled-checkpoint-observed-final.json
+
+重現入口
+- 原整套測試入口：node scripts/run-tests.mjs all。低並行的本批精確命令、全檔案清單在最終gate JSON。
+- 390/1280與切角：node worker/tools/scene-live-browser.cjs --geometry-only；可用SCENE_LIVE_QA_DIR指定新證據目錄。
+- 最終短提示斷線/恢復：node .release-sync/scene-live-20261104/recovery-browser-compact-20261104T0258.cjs。
+- 上述瀏覽器工具只能對本機9653/9652隔離預覽執行；預覽來源讀取最新檔案，無須重啟原9593/9642。
+
+驗證邊界與歷史
+先前完整Worker共2514項，2513通過、1項cron town_no_red通知預期失敗，BOT未跑。未證實首錯根因；後續僅固定測試起始裝備/低血/無紅水，保留DM去重斷言並加errors=0及town_no_red狀態斷言，未修改生產規則。早期因camera修正而中止的full-tests-pre-geometry-aborted.log不作最終gate。
+先前四職×390/1280加外部選角，共9case API操作通過，0pageerror、0非預期HTTP錯誤；預期409切角衝突可恢復。本輪修正後驗證以新的結果為準。
+無逐擊或逐施法事件，所以不製造假傷害、冷卻或掉落；累計戰報不可當本次新獎勵。
+本機Chrome驗證不等於Telegram手機真機驗收。
+
+仍未完成
+五輪Lv1–600、16招覺醒、依正式玩家母體的數值平衡、完整季末drain/manifest/跨庫匯入。後續依各自設計與規則接續，不能宣稱這批已完成上述產品內容。
+本批不合併main、不部署、不執行遠端migration、不開啟正式Atlas/賽季、不改正式玩家資料或Secrets。角色製作另有工作線，本批不改角色素材/catalog/queue或生成排程。
+
+接手入口
+D:\StarJournal\START_HERE.md
+D:\StarJournal\handoff\non-character\LATEST.md
+D:\StarJournal\handoff\non-character\STATUS.json
+D:\StarJournal\handoff\non-character\SCHEDULER.md
+完成/待驗收/待辦必須以最新STATUS、Git與實際證據交叉核對，不把排程生成時間當成人工新進度。不要停止全域MCP task或其他Node程序。
