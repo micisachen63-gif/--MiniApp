@@ -84,12 +84,15 @@
     const run = snapshot.run;
     if (run && (String(run.characterId) !== String(snapshot.characterId) || run.realmId !== snapshot.realmId)) return null;
     const active = !!run?.active && String(snapshot.live.activeRunId) === String(run.id);
+    const supplies = active ? run.supplies : snapshot.live.supplies, totals = active ? null : supplies?.totals;
     return {
       context: [snapshot.realmId, snapshot.accountId, snapshot.characterId].join(':'),
       snapshot, character: snapshot.character, live: snapshot.live, run,
       active, map: active ? run.map : null,
       hero: active ? run.hero : snapshot.live,
-      supplies: active ? run.supplies : snapshot.live.supplies,
+      supplies: totals ? { ...supplies,
+        hp: number(totals.hp) !== null && totals.hp >= 0 ? totals.hp : supplies.hp,
+        mp: number(totals.mp) !== null && totals.mp >= 0 ? totals.mp : supplies.mp } : supplies,
       enemies: active && Array.isArray(run.enemies) ? run.enemies : [],
     };
   }

@@ -5,6 +5,10 @@ import {
 } from './atlas-catalog.js';
 import {applyAtlasTalentSnapshot} from './atlas-talents.js';
 import {
+  AtlasSupplyError, createAtlasSupplyState, validateAtlasSupplyState,
+  isVersionedAtlasSupplies, drinkAtlasHp, drinkAtlasMp,
+} from './atlas-supplies.js';
+import {
   initializeAtlasContent, hasAtlasContent, selectAtlasEncounter, applyAtlasEncounter,
   completeAtlasEncounter, recordAtlasKill, recordAtlasDamage, recordAtlasCompletion,
   resetAtlasMapContent, applyAtlasContentRewards, recordAtlasSurvival, finalizeAtlasActivities,
@@ -21,6 +25,10 @@ export class AtlasRuleError extends Error {
   constructor(code, message) { super(message); this.name = 'AtlasRuleError'; this.code = code; this.status = 400; }
 }
 const fail = (code, message) => { throw new AtlasRuleError(code, message); };
+function supplyRules(operation) {
+  try { return operation(); }
+  catch (error) { if (error instanceof AtlasSupplyError) fail(error.code, error.message); throw error; }
+}
 const clone = value => structuredClone(value);
 const round = value => Math.round(value * 1000) / 1000;
 const clamp = (value, low, high) => Math.max(low, Math.min(high, value));
@@ -150,8 +158,9 @@ export function createAtlasRun(input) {
   }
   mapSnapshot.entrySeconds = Math.ceil(mapSnapshot.entrySeconds * profile.travelMultiplier);
   mapSnapshot.travelSeconds = Math.ceil(mapSnapshot.travelSeconds * profile.travelMultiplier);
-  const hp = number(input.supplies?.hp, 'supplies.hp', 0, 10000, 0, true);
-  const mp = number(input.supplies?.mp, 'supplies.mp', 0, 10000, 0, true);
+  const supplySnapshot = supplyRules(() => createAtlasSupplyState(input.supplies));
+  const hp = supplySnapshot?.hp ?? number(input.supplies?.hp, 'supplies.hp', 0, 10000, 0, true);
+  const mp = supplySnapshot?.mp ?? number(input.supplies?.mp, 'supplies.mp', 0, 10000, 0, true);
   const state = {
     ruleset_version: ATLAS_RULESET_VERSION, runId: identifier(input.runId, 'runId'), realmId: identifier(input.realmId, 'realmId'),
     seed, encounterRng: hash(`encounter:${seed}`), combatRng: hash(`combat:${seed}`), lootRng: hash(`loot:${seed}`),
@@ -162,7 +171,7 @@ export function createAtlasRun(input) {
     mapId: map.id, map: mapSnapshot, queueMode, mapCount, mapIndex: 0, roomIndex: 0,
     transitionSeconds: mapSnapshot.entrySeconds, enemies: [],
     hero: { hp: snapshot.hp, mp: snapshot.mp, shield: 0, nextActionAt: 0, nextSkillAt: 0, combo: 0, pets: [], traps: [] },
-    supplies: {
+    supplies: supplySnapshot || {
       hp, mp, hpInitial: hp, mpInitial: mp, hpUsed: 0, mpUsed: 0,
       hpRestore: number(input.supplies?.hpRestore, 'supplies.hpRestore', 1, 100000000, 50),
       mpRestore: number(input.supplies?.mpRestore, 'supplies.mpRestore', 1, 100000000, 40),
@@ -219,13 +228,15 @@ function shield(state, fraction) {
   state.hero.shield = Math.min(Math.round(state.snapshot.maxHp * .45), state.hero.shield + amount);
 }
 function drinkHp(state) {
+  if (isVersionedAtlasSupplies(state.supplies)) return drinkAtlasHp(state);
   const { hero, supplies, snapshot } = state;
   if (hero.hp <= 0 || hero.hp > snapshot.maxHp * .4 || supplies.hp <= 0 || supplies.lastHpAt === state.elapsedSeconds) return;
   const restored = Math.min(supplies.hpRestore, snapshot.maxHp - hero.hp);
   hero.hp += restored; supplies.hp--; supplies.hpUsed++; supplies.lastHpAt = state.elapsedSeconds;
   state.metrics.hpRestored += restored;
 }
-function drinkMp(state) {
+function drinkMp(state, required = 0) {
+  if (isVersionedAtlasSupplies(state.supplies)) return drinkAtlasMp(state, required);
   const { hero, supplies, snapshot } = state;
   if (supplies.mp <= 0 || hero.mp >= snapshot.maxMp || supplies.lastMpAt === state.elapsedSeconds) return;
   const restored = Math.min(supplies.mpRestore, snapshot.maxMp - hero.mp);
@@ -330,7 +341,9 @@ function heroActions(state, activities) {
     const ready = actionAt + 1e-9 >= hero.nextSkillAt;
     const strategyAllows = state.automation === 'burst' || strong ||
       (state.automation === 'balanced' ? enemies.length > 1 || hero.mp >= snapshot.maxMp * .35 : hero.mp >= snapshot.maxMp * .5);
-    if (ready && strategyAllows && hero.mp < skill.cost && skill.cost <= snapshot.maxMp && (state.automation === 'burst' || strong)) drinkMp(state);
+    if (isVersionedAtlasSupplies(state.supplies)) {
+      if (ready && strategyAllows && hero.mp < skill.cost && skill.cost <= snapshot.maxMp) drinkMp(state, skill.cost);
+    } else if (ready && strategyAllows && hero.mp < skill.cost && skill.cost <= snapshot.maxMp && (state.automation === 'burst' || strong)) drinkMp(state);
     if (ready && strategyAllows && hero.mp >= skill.cost) {
       cast(state, activities); hero.nextSkillAt = actionAt + skill.cooldown;
     } else {
@@ -462,6 +475,11 @@ function tick(state, rewards, activities) {
   else state.metrics.packCombatSeconds++;
   periodic(state, activities);
   if (clearRoom(state, rewards, activities)) return;
+  if (isVersionedAtlasSupplies(state.supplies)) {
+    // Consume only during live combat, after periodic damage can clear a room.
+    // Shared last*At counters cap threshold and emergency uses to once/second.
+    drinkHp(state); drinkMp(state);
+  }
   heroActions(state, activities);
   if (clearRoom(state, rewards, activities)) return;
   enemyActions(state, activities);
@@ -476,6 +494,7 @@ function tick(state, rewards, activities) {
  */
 export function advanceAtlasRun(run, nowSeconds, options = {}) {
   if (!run || !ATLAS_SUPPORTED_RULESETS.includes(run.ruleset_version)) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
+  supplyRules(() => validateAtlasSupplyState(run.supplies, run.elapsedSeconds));
   const now = number(nowSeconds, 'nowSeconds', 0, Number.MAX_SAFE_INTEGER, undefined);
   const maxSteps = number(options.maxSteps, 'maxSteps', 1, ATLAS_MAX_ADVANCE_STEPS, ATLAS_MAX_ADVANCE_STEPS, true);
   if (now < run.startedAt) fail('atlas_clock_before_start', '結算時間早於出發');

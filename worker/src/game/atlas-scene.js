@@ -1,5 +1,6 @@
 import { computeStats } from './stats.js';
 import { expToNext } from './formulas.js';
+import { ATLAS_SUPPLY_RULES_VERSION, ATLAS_POTION_KEYS, atlasSupplyPolicyForCharacter, isVersionedAtlasSupplies } from './atlas-supplies.js';
 
 const CLASSES = new Set(['sword', 'archer', 'mage', 'thief']);
 const EVENT_TYPES = new Set(['room_entered', 'enemy_defeated', 'map_completed', 'dead', 'completed', 'expired', 'stopped', 'encounter', 'encounter_completed', 'loot_equipment', 'loot_scroll']);
@@ -50,6 +51,11 @@ function committedRunView(row, character, scope, activeRunId) {
     hp: number(state.supplies?.hp), mp: number(state.supplies?.mp),
     hpUsed: number(state.supplies?.hpUsed), mpUsed: number(state.supplies?.mpUsed),
   };
+  if (isVersionedAtlasSupplies(state.supplies)) Object.assign(supplies, {
+    supplyRulesVersion: state.supplies.supplyRulesVersion,
+    items: copyNumbers(state.supplies.items), initialItems: copyNumbers(state.supplies.initialItems), usedItems: copyNumbers(state.supplies.usedItems),
+    policy: { ...state.supplies.policy },
+  });
   const events = (Array.isArray(state.events) ? state.events : []).slice(-EVENT_LIMIT)
     .map(event => eventView(event, state, String(row.id))).filter(Boolean);
   return {
@@ -100,6 +106,8 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
   const activeRunId = char.atlas_run_id == null ? null : String(char.atlas_run_id);
   const currentExperience = number(char.exp), requiredExperience = expToNext(char.level);
   const maxLevel = !Number.isFinite(requiredExperience);
+  const availableItems = Object.fromEntries(ATLAS_POTION_KEYS.map(key => [key, number(inv[key])]));
+  const countSupplies = kind => ATLAS_POTION_KEYS.filter(key => key.startsWith(kind + '_')).reduce((sum, key) => sum + availableItems[key], 0);
   return {
     schemaVersion: 1, realmId: scope,
     accountId: String(char.account_tg_id || char.tg_id), characterId: character.id,
@@ -112,7 +120,8 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
       experience: { current: currentExperience, required: maxLevel ? null : requiredExperience,
         ratio: maxLevel ? 1 : Math.max(0, Math.min(1, currentExperience / requiredExperience)), maxLevel },
       activeRunId, partyId: char.party_id == null ? null : String(char.party_id),
-      supplies: { hp: number(inv.red_1), mp: number(inv.blue_1) },
+      supplies: { hp: availableItems.red_1, mp: availableItems.blue_1, totals: { hp: countSupplies('red'), mp: countSupplies('blue') }, items: availableItems,
+        policy: atlasSupplyPolicyForCharacter(char), supplyRulesVersion: ATLAS_SUPPLY_RULES_VERSION },
     },
     run: committedRunView(run, character, scope, activeRunId),
   };

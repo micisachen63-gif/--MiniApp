@@ -1,5 +1,6 @@
 import { POTIONS } from './constants.js';
 import { createAtlasRun, advanceAtlasRun, AtlasRuleError } from './atlas-engine.js';
+import { ATLAS_POTION_KEYS, isVersionedAtlasSupplies } from './atlas-supplies.js';
 
 /** Local calibration helper, never an HTTP handler. Pass an anonymized snapshot
  * from the real computeStats, keep the SAME seed/map/profile for before/after,
@@ -19,7 +20,11 @@ export function benchmarkAtlasRun(input, { supplyPrices, target } = {}) {
     state = result.state;
     rewards.push(...result.rewards);
   } while (result.stillCatchingUp);
-  const supplyGoldSpent = state.supplies.hpUsed * prices.hp + state.supplies.mpUsed * prices.mp;
+  // Itemized runs use the frozen server replacement price for each consumed
+  // potion. The optional per-color calibration prices still apply to legacy runs.
+  const supplyGoldSpent = isVersionedAtlasSupplies(state.supplies)
+    ? ATLAS_POTION_KEYS.reduce((total, key) => total + state.supplies.usedItems[key] * state.supplies.priceByItem[key], 0)
+    : state.supplies.hpUsed * prices.hp + state.supplies.mpUsed * prices.mp;
   const netGold = state.totals.gold - supplyGoldSpent;
   const activeRate = amount => amount * 3600 / Math.max(1, state.elapsedSeconds);
   const plannedRate = amount => amount * 3600 / state.durationSeconds;

@@ -8,6 +8,8 @@
   const PURCHASES = new Set(['buy','buy-gear','gacha']);
   const ACTIONS = new Set([...PURCHASES,'refill','settings']);
   const FIELDS = ['autoRedPct','autoBlue','autoBluePct','autoRedPotion','autoBluePotion'];
+  const SUPPLY_KEYS = ['red_1','red_2','red_3','red_4','blue_1','blue_2','blue_3','blue_4'];
+  const hasSupplyItems = supplies => !!supplies?.items&&typeof supplies.items==='object'&&!Array.isArray(supplies.items);
   const CATEGORIES = [['all','全部'],['potion','藥水'],['scroll','卷軸'],['gacha','轉蛋'],['weapon','武器'],['armor','防具'],['accessory','飾品'],['special','其他']];
   const scopeOf = context => ({accountId:String(context?.accountId || ''),realmId:String(context?.realmId || ''),characterId:String(context?.characterId || ''),epoch:context?.epoch ?? 0});
   const same = (a,b,epoch=true) => a.accountId===b.accountId && a.realmId===b.realmId && a.characterId===b.characterId && (!epoch || a.epoch===b.epoch);
@@ -61,7 +63,7 @@
     return {action:'refill',name:partial?'依目前金幣補充藥水':'補滿原版掛機 24 小時',quantity,total,fullTotal,partial,rows,body:{},
       description:'只補充背包；伺服器依確認時的實際持有與金幣結算，不增加進行中星圖已預留的補給。'};
   }
-  function settingsPlan(me,draft) {
+  function settingsPlan(me,draft,atlas) {
     const desired=draft.settings || settingsOf(me),current=settingsOf(me),body={};
     for(const field of FIELDS){
       if(!draft.settingsTouched?.[field])continue;
@@ -77,8 +79,8 @@
       if(value!==previous)body[field]=value;
     }
     if(!Object.keys(body).length)throw error('設定與目前角色相同，無需再次保存。','unchanged');
-    return {action:'settings',name:'保存原版自動喝水設定',quantity:0,total:0,body,
-      description:'這些設定供原版玩法使用；進行中的 Atlas 沿用出發時的快照與已預留補給。'};
+    return {action:'settings',name:'保存自動喝水設定',quantity:0,total:0,body,
+      description:hasSupplyItems(atlas?.supplies)?'這些設定同時供原版玩法與下一趟 Atlas 使用；進行中的出征維持原設定與已預留補給。':'這些設定供原版玩法使用；進行中的 Atlas 沿用出發時的快照與已預留補給。'};
   }
   function comparable(plan){return JSON.stringify([plan.action,plan.name,plan.body,plan.quantity,plan.total,plan.rows || null]);}
   function createClient(host,options={},changed=()=>{}) {
@@ -133,7 +135,7 @@
     }
     async function makePlan(kind,keyValue) {
       await readPlayer(kind!=='settings');
-      if(kind==='settings')return settingsPlan(state.me,draft);
+      if(kind==='settings')return settingsPlan(state.me,draft,state.atlas);
       if(kind==='refill')return refillPreview(state.me,state.shop || {});
       const entry=catalogEntries(state.shop,state.meta || {}).find(row=>row.key===keyValue);
       return purchasePlan(entry,draft.quantities[keyValue] ?? '1',state.me);
@@ -147,7 +149,7 @@
     }
     async function tellChanged(result){if(!current())return;try{await host.onChanged?.(result);}catch{}}
     function successMessage(operation,data) {
-      if(operation.action==='settings')return '原版自動喝水設定已保存。';
+      if(operation.action==='settings')return '自動喝水設定已保存。';
       if(operation.action==='refill')return '已補充紅水 '+fmt(data.result?.red || 0)+' 瓶、藍水 '+fmt(data.result?.blue || 0)+' 瓶，實際花費 '+fmt(data.result?.cost)+' 金幣'+(data.result?.partial?'（本次為部分補充）。':'。');
       return '已購買 '+operation.plan.name+' × '+fmt(operation.plan.quantity)+'，請在背包查看。';
     }
@@ -216,7 +218,13 @@
     function update(snapshot){
       if(!current()||!snapshot)return false;
       if(String(snapshot.realmId)!==scope.realmId||String(snapshot.characterId)!==scope.characterId)return false;
-      if(snapshot.run!==undefined)state.atlas={realmId:scope.realmId,characterId:scope.characterId,run:snapshot.run};
+      if(snapshot.run!==undefined){
+        const incoming=snapshot.supplies||snapshot.live?.supplies;
+        let run=snapshot.run;
+        if(run?.id===state.atlas?.run?.id&&hasSupplyItems(state.atlas?.run?.supplies)&&!hasSupplyItems(run?.supplies))run={...run,supplies:state.atlas.run.supplies};
+        state.atlas={...state.atlas,realmId:scope.realmId,characterId:scope.characterId,run,
+          ...(incoming&&(!hasSupplyItems(state.atlas?.supplies)||hasSupplyItems(incoming))?{supplies:incoming}:{})};
+      }
       return true;
     }
     return {state,draft,scope,refresh,preparePurchase:key=>prepare('purchase',key),prepareRefill:()=>prepare('refill'),
@@ -225,8 +233,21 @@
   }
   function reservedHtml(state){
     const run=state.atlas?.run,active=!!run&&(run.active===true||run.status==='running');
+    const defs=state.meta?.meta?.items || state.meta?.items || {};
+    const name=key=>defs[key]?.name||((String(key).startsWith('red_')?'紅水':'藍水')+' '+String(key).slice(-1)+' 階');
+    const summary=(items,empty)=>SUPPLY_KEYS.filter(key=>Number(items?.[key])>0).map(key=>name(key)+' × '+fmt(items[key])).join('、')||empty;
+    let details='';
+    if(active&&hasSupplyItems(run.supplies)){
+      details='<p>剩餘：'+esc(summary(run.supplies.items,'皆已用完'))+'</p><p>已用：'+esc(summary(run.supplies.usedItems,'尚未使用'))+'</p>';
+      const policy=run.supplies.policy;
+      if(policy){
+        const choice=key=>key==='auto'?'最低階優先':name(key);
+        const setting='紅水低於'+fmt(policy.hpThresholdPct)+'% · '+choice(policy.hpPreference)+'；藍水 '+(policy.autoBlue?fmt(policy.mpThresholdPct)+'% 以下或技能魔力不足時 · '+choice(policy.mpPreference):'自動使用關閉');
+        details+='<p>本趟設定：'+esc(setting)+'。</p>';
+      }
+    }
     return '<h4>本趟星圖已預留</h4><p>'+(active?'紅水 <b>'+fmt(run.supplies?.hp || 0)+'</b> 瓶 · 藍水 <b>'+fmt(run.supplies?.mp || 0)+'</b> 瓶':
-      state.atlasError?esc(state.atlasError):'目前沒有進行中的星圖出征。')+'</p><small>已預留的補給不在背包中。購買與原版設定不改變當趟快照；返營後退回未用部分。</small>';
+      state.atlasError?esc(state.atlasError):'目前沒有進行中的星圖出征。')+'</p>'+details+'<small>已預留的補給不在背包中。購買與設定修改不改變當趟快照；返營後退回未用部分。</small>';
   }
   function confirmationHtml(plan,metadata={}){
     if(!plan)return '';
@@ -275,14 +296,14 @@
         const options=supply[kind+'Options'] || [],held=options.reduce((sum,p)=>sum+Number(me.inventory?.[p.key] || 0),0);
         return '<section class="supply-potion"><h4>'+label+' <small>背包共 '+fmt(held)+' 瓶</small></h4>'+
           (red?'<p>紅水依門檻自動使用。</p>':'<label class="supply-check"><input type="checkbox" name="autoBlue" '+(settings.autoBlue?'checked':'')+'> 自動使用藍水</label>')+
-          '<label>低於或等於此比例時使用<div class="supply-percent"><input type="number" name="'+pct+'" min="20" max="80" step="1" inputmode="numeric" value="'+esc(settings[pct])+'"><span>%</span></div></label>'+
+          '<label>'+(kind==='red'?'低於':'低於或等於')+'此比例時使用<div class="supply-percent"><input type="number" name="'+pct+'" min="20" max="80" step="1" inputmode="numeric" value="'+esc(settings[pct])+'"><span>%</span></div></label>'+
           '<label>自動飲用種類<select name="'+field+'"><option value="auto" '+(settings[field]==='auto'?'selected':'')+'>自動選擇（最低階先喝）</option>'+
           options.map(p=>'<option value="'+esc(p.key)+'" '+(settings[field]===p.key?'selected ':'')+(!p.unlocked&&!(p.count>0)?'disabled':'')+'>'+esc(p.name)+' · '+(red?'生命':'魔力')+' +'+fmt(p.heal)+' · 持有 '+fmt(me.inventory?.[p.key] || 0)+(!p.unlocked?'（未解鎖購買）':'')+'</option>').join('')+'</select></label>'+
-          '<small>'+(supply[kind+'LowUse']?'目前消耗極低，達門檻才使用。':'目前種類預估可用 '+fmt(supply[kind+'Hours'])+' 小時。')+'</small></section>';
+          '<small>'+(supply[kind+'LowUse']?'原版掛機目前消耗極低，達門檻才使用。':'原版掛機預估可用 '+fmt(supply[kind+'Hours'])+' 小時。')+'</small></section>';
       };
-      content='<p class="supply-note">原版自動喝水設定與 Atlas 攜帶量分開。魔力不足時會依原規則嘗試補水；指定種類只使用該藥水。</p>'+
+      content='<p class="supply-note">'+(hasSupplyItems(state.atlas?.supplies)?'已保存設定會供原版玩法與下一趟 Atlas 使用，攜帶數量於派遣時選擇。':'原版自動喝水設定與 Atlas 攜帶量分開。')+'自動藍水開啟時，達門檻或技能魔力不足才補水；關閉則不使用。指定種類只使用該藥水。</p>'+
         '<form data-supply-settings><div class="supply-potion-grid">'+potionCard('red')+potionCard('blue')+'</div>'+
-        '<button type="submit" class="is-primary">保存原版設定</button></form>'+
+        '<button type="submit" class="is-primary">保存喝水設定</button></form>'+
         '<section class="supply-refill"><h4>補充背包藥水</h4><p>以已保存的飲用種類補滿原版掛機 24 小時；金幣不足時可按比例補充。先預覽實際種類、數量與總價。</p>'+
         '<button type="button" data-supply-refill '+(!(me.refill?.cost>0)?'disabled':'')+'>'+(me.refill?.cost>0?'預覽補滿方案':'背包補給已充足')+'</button></section>'+
         '<div class="supply-actions"><button type="button" data-supply-route="expedition">配置 Atlas 攜帶補給</button><button type="button" data-supply-route="inventory">查看背包</button></div>';

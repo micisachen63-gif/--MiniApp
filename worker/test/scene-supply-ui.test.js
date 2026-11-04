@@ -308,3 +308,43 @@ test('native change emitted while removing the focused search input cannot reent
   assert.equal(h.calls.length,beforeCalls);assert.equal(h.writes.length,0);
   mounted.dispose();h.client.dispose();assert.equal(listeners.size,0);
 });
+
+
+function tieredFixture(){
+  const f=fixture(),policy={hpPreference:'red_2',mpPreference:'auto',hpThresholdPct:64,mpThresholdPct:45,autoBlue:false};
+  f.atlas.supplies={hp:11,mp:5,items:{red_1:10,red_2:1,blue_1:5},policy:{...policy,hpThresholdPct:70,autoBlue:true}};
+  f.atlas.run.supplies={hp:3,mp:4,items:{red_1:1,red_2:2,blue_1:4},initialItems:{red_1:1,red_2:3,blue_1:4},usedItems:{red_2:1},policy,supplyRulesVersion:'atlas-supplies-v1'};
+  return f;
+}
+
+test('tiered settings explain next-run behavior while the current reserve shows its own immutable policy and exact bottles',async()=>{
+  const h=harness({tab:'supplies',data:tieredFixture()});await h.client.refresh();
+  h.client.setSetting('autoRedPct','72');await h.client.prepareSettings();
+  assert.match(h.client.state.confirmation.description,/下一趟 Atlas/);
+  const html=h.api.render(h.client.state,h.draft,h.host),reserved=h.api.reservedHtml(h.client.state);
+  assert.match(html,/達門檻或技能魔力不足才補水；關閉則不使用/);
+  assert.match(reserved,/中紅水 × 2/);assert.match(reserved,/已用：中紅水 × 1/);
+  assert.match(reserved,/本趟設定：紅水低於64% · 中紅水；藍水 自動使用關閉/);
+  assert.doesNotMatch(reserved,/72%|70%/);assert.equal(h.writes.length,0);
+});
+
+test('live tiered reserve updates keep edited settings and ignore a legacy projection for the same run',async()=>{
+  const h=harness({tab:'supplies',data:tieredFixture()});await h.client.refresh();
+  h.client.setSetting('autoRedPct','73');const calls=h.calls.length;
+  const before=plain(h.client.state.atlas);
+  assert.equal(h.client.update({realmId:'permanent',characterId:'hero-a',live:{supplies:{hp:0,mp:0}},run:{id:'run-a',status:'running',supplies:{hp:0,mp:0}}}),true);
+  assert.deepEqual(plain(h.client.state.atlas.supplies),before.supplies);assert.deepEqual(plain(h.client.state.atlas.run.supplies),before.run.supplies);
+  const next=plain(before);next.run.supplies.items.red_2=1;next.run.supplies.hp=2;next.run.supplies.usedItems.red_2=2;
+  assert.equal(h.client.update(next),true);assert.equal(h.draft.settings.autoRedPct,'73');assert.equal(h.calls.length,calls);
+  assert.match(h.api.reservedHtml(h.client.state),/已用：中紅水 × 2/);
+  assert.equal(h.client.update({...next,characterId:'other'}),false);
+});
+
+test('old reserve replies never invent a per-tier policy and tier labels remain escaped',async()=>{
+  const old=harness({tab:'supplies'});await old.client.refresh();
+  assert.doesNotMatch(old.api.reservedHtml(old.client.state),/本趟設定：|已用：/);
+  old.client.setSetting('autoRedPct','61');await old.client.prepareSettings();assert.doesNotMatch(old.client.state.confirmation.description,/下一趟 Atlas/);
+  const data=tieredFixture();data.meta.meta.items.red_2.name='<img src=x onerror=alert(1)>';
+  const h=harness({data});await h.client.refresh();const html=h.api.reservedHtml(h.client.state);
+  assert.ok(html.includes('&lt;img src=x onerror=alert(1)&gt;'));assert.equal(html.includes('<img'),false);
+});

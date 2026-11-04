@@ -1,0 +1,89 @@
+星穹旅誌｜Atlas 分階補給整合
+日期：2026-11-04（台灣時間）
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-atlas-supply-20261104
+分支：codex/atlas-supply-integration-20261104
+基線：0219f9d899547af254cf3ddf63f9ff66c5344959（PR #46，統一主戰鬥 UI）
+本批提交、草稿 PR 與 CI：以本批 STATUS.json 和 .release-sync 收據為準，文件不預填尚未取得的提交識別。
+
+一、整合結果
+
+本批補齊 Atlas 與原版喝水設定之間的接線。新出征可攜帶原有紅水一至四階、藍水一至四階，每色合計最多 500 瓶。出發時逐物品原子預留，實際使用時保留階級身分，結束、死亡或停止後把未使用數量歸還原種類。沒有新增藥水、修改藥水效果或價格，也沒有新增 migration。
+
+新出征把角色已保存的設定與藥水效果、價格保存為當趟快照。紅水在生命嚴格低於已保存門檻時使用；藍水依原版規則，開啟後在低於或等於門檻、或實際技能魔力不足時嘗試補水。關閉自動藍水後，門檻補水和技能救急皆不使用藍水。自動選擇依最低階有庫存者先喝；指定種類耗盡後不替代成其他階。當趟修改原版設定不會回頭改寫已出發快照，下一趟才套用。
+
+使用獨立補給版本 atlas-supplies-v1，不更動 atlas-v1 至 atlas-v4 的內容與掉落版本。舊存檔完全缺少補給版本時保持原有初階藥水、40% 紅水門檻與原策略補藍流程；不會在中途套用新設定。未知版本、不完整快照或逐項餘額不守恆會拒絕結算。
+
+二、服務契約與資料保護
+
+1. 新 start 請求：supplies.items 只接受 red_1..red_4、blue_1..blue_4 的非負整數；禁止混入舊 hp/mp、未知種類或客戶端 policy。每種顏色總數不可超過 500；庫存於真正交易內重新核對。
+2. 舊 start 請求：supplies.hp/mp 仍代表 red_1/blue_1。既有 hpRestore/mpRestore 提示繼續忽略，保留原有 request signature，讓升級前成功但遺失回覆的請求仍能取得原收據。
+3. status.supplies 與 scene.live.supplies 的 hp/mp 保留初階藥水原義；新增 totals 表示各色全階合計，items 表示八種庫存，policy 表示下趟設定。這保護仍快取舊版 atlas-ui 的客戶端。
+4. run.supplies 的 hp/mp 是當趟各色總量，並提供 items、initialItems、usedItems、policy 與 supplyRulesVersion。資料只反映已提交的狀態，讀 status 不推進戰鬥。
+5. 預留、歸還、角色和出征 revision、活動、獎勵與帳務沿用同一交易；同 request、競爭請求及 commit 成功後回覆遺失皆不得重複扣還。
+6. 成本校準工具對新版以 usedItems × priceByItem 計算；舊版自訂單價公式保留。這是本機診斷，不是改變玩家收入或物品售價。
+
+三、主戰鬥介面
+
+星圖派遣浮窗提供八種藥水真實名稱、回復量、逐階庫存、攜帶數量與明細確認。各色以小卡分組，保留現有地圖與分鐘選擇。新欄位與新設定按鈕至少 44×44 像素；取消、返回、重開、組字與同步不清除草稿或焦點。
+
+補給浮窗分開顯示當趟已預留／已使用與下一趟已保存設定；舊 run 不假裝已使用新政策。主 HUD 在營地顯示 totals、出征時顯示當趟總數，缺少新欄位時仍可讀舊回應。原版掛機時間估算已明確標示「原版掛機」，不當作 Atlas 可持續時間保證。
+
+原按鈕美術批位於另一工作樹，尚未提交的內容沒有複製到本批；兩批共同基線為 PR #46。本批 CSS 只新增補給分組規則，方便在按鈕批封版後整合。
+
+四、驗收與實際證據
+
+A. 最終功能來源
+2026-11-04T09:03:46Z 起的 17 份必要測試共 227 項全部通過，0 fail/cancel/skip/todo，Node v24.7.0，並行 2。
+1051 個程式、樣式、測試、工具及設定檔案 SHA256 在執行前後一致。
+證據：
+.release-sync/atlas-supply-20261104/focused-final-2026-11-04T09-03-46-557Z.json
+.release-sync/atlas-supply-20261104/focused-final-2026-11-04T09-03-46-557Z.log
+
+測試涵蓋新補給、引擎、舊版本固定結果、分段重播、內容與成本、服務與 HTTP 場景、背景提交、掉落、舊頁相容、派遣草稿、補給視窗、renderer、lifecycle 與 session。
+
+B. 真 Chrome／真本機 API
+2026-11-04T08:59:32Z 開始的一輪 12 項全部通過，來源執行前後一致，沒有頁面或非預期 HTTP 錯誤。
+320×780、390×844、1280×900 均有八個高度 44 像素輸入框，dialog/body/form 沒有橫向溢出。
+實際保存指定二階紅藍水及 80% 門檻、逐物品預留、當趟設定凍結、正常前景提交與逐階退款。
+實測第一趟消耗 red_2 一瓶，其餘藥水未消耗，返營逐物品核對 final inventory = before start inventory - usedItems。
+下一趟採用 auto 選擇與 autoBlue=false，沒有消耗任一階藍水；最終已停止兩趟測試出征。
+證據：
+.release-sync/atlas-supply-20261104/browser/2026-11-04T08-59-32-959Z/results.json
+同目錄保存 10 張手機與桌面截圖。
+
+C. 最後文字複核
+真 Chrome 完成後，只修正設定欄的紅水「嚴格低於」文案，以及原版掛機估算的適用範圍。沒有修改喝水／派遣行為。
+以上 A 的 227 項為這些文字修正後的最終來源。
+另於 2026-11-04T09:05:08Z 以真 Chrome 驗證紅水與藍水欄位標示、原版估算說明、320／1280 視窗無溢出及新增設定按鈕 98×44，0 pageerror、來源 SHA 不變。
+證據：
+.release-sync/atlas-supply-20261104/final-copy-review.json
+.release-sync/atlas-supply-20261104/final-copy-browser/results.json
+
+D. 保留的中間發現
+首輪 Chrome 發現新欄位被既有較高 specificity 規則壓成 40px；已限定新欄位 selector 修到 44px，沒有降低斷言或使用全域 !important。
+首輪新增 service 測試的 v1 身分映射錯誤已只修 fixture 的 characterId，戰鬥、補給、時間與獎勵 golden 原值保留。
+中間失敗不是最終結果，原始 log 與收據仍保留於 .release-sync。
+
+五、本機預覽與交接
+
+預覽：http://127.0.0.1:9713/
+記憶體 API：http://127.0.0.1:9712/
+兩端健康回應均為 isolated=true、ephemeral=true、productionAccess=false。
+啟動資料與 PID：.release-sync/atlas-supply-20261104/preview-process.json；停止或重啟前必須核對實際 PID、執行檔及命令列，不停其他預覽或全域 Node。
+
+本批交接：
+D:\StarJournal\handoff\non-character\atlas-supply-20261104\STATUS.json
+D:\StarJournal\handoff\non-character\atlas-supply-20261104\LATEST.md
+歷史：同目錄 history
+排程：StarJournal-AtlasSupply-Checkpoint-30m
+2026-11-04T08:32:34Z 已實際成功寫檔；原非角色主線每 30 分鐘排程保留。START_HERE.md 已提供兩條工作線入口。重要進展與結束亦即刻寫入。
+人工語意更新與排程產生時間分開記錄；排程只保存狀態與唯讀觀測，不推測完成、測試、提交或部署。
+
+重現真 Chrome：
+先建立獨立 9713/9712 預覽，再以既有 Playwright 路徑設定 SUPPLY_PLAYWRIGHT_PATH，執行 node worker/tools/atlas-supply-browser.cjs。不要在另一工作線的 preview 埠執行。
+
+六、明確未納入本批
+
+未更新正式機、未合併 PR、未改遠端 DB／Secrets／migration；沒有發送 Telegram 訊息。角色與技能特效素材、queue/catalog 及其他工作樹保留。
+
+完整舊版頁面遷移、逐次攻擊／施法／傷害事件契約、舊元素與特殊詞條相容、正式玩家經濟校準、五輪 600 級／16 覺醒、季末跨 D1 資產移轉與正式 Telegram／手機驗收，仍依主交接待辦處理。本批本機合成資料與桌機 Chrome 尺寸測試不能視為正式環境或真手機驗收。
