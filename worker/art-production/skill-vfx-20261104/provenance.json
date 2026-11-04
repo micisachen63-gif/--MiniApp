@@ -1,0 +1,386 @@
+{
+  "schemaVersion": 1,
+  "generator": "Built-in image_gen.imagegen",
+  "createdAt": "2026-11-04",
+  "task": "StarJournal skill VFX atlas layer production",
+  "grid": {
+    "columns": 3,
+    "rows": 3,
+    "width": 1254,
+    "height": 1254,
+    "cellWidth": 418,
+    "cellHeight": 418
+  },
+  "runtimeURLTemplate": "/art/skill-vfx-20261104/{class}-atlas.webp",
+  "notAnimationFrames": true,
+  "sharedCells": [
+    {
+      "index": 0,
+      "kind": "projectile",
+      "direction": "right"
+    },
+    {
+      "index": 1,
+      "kind": "crescent_slash",
+      "direction": "right-opening"
+    },
+    {
+      "index": 2,
+      "kind": "impact"
+    },
+    {
+      "index": 3,
+      "kind": "ground_ring",
+      "projection": "front-facing; flatten at runtime"
+    },
+    {
+      "index": 4,
+      "kind": "shield"
+    },
+    {
+      "index": 5,
+      "kind": "spray"
+    },
+    {
+      "index": 6,
+      "kind": "pillar"
+    },
+    {
+      "index": 7,
+      "kind": "vortex"
+    },
+    {
+      "index": 8,
+      "kind": "spark"
+    }
+  ],
+  "prompts": {
+    "sword": "Use case: stylized-concept. Asset type: production game VFX texture atlas for a premium 2.5D dark fantasy action RPG. Create ONE square 1536x1536 transparent PNG atlas, exactly 3 equal columns by 3 equal rows. Each invisible 512x512 cell contains ONE independent hand-painted magical effect layer, isolated and centered. This is an atlas of nine DIFFERENT components, not a sequential animation. Every component and all its glow stay inside the central 70% of its cell, with generous fully transparent gutters of at least 15% on all four sides. No effect crosses a grid boundary. True RGBA transparency, delicate translucent emission edges. High-end painterly realistic energy, fine luminous filaments, crisp sculpted light, smoky detail without opaque backdrop, visually elegant readable silhouettes. No people, no weapons held by people, no environments, no UI, no labels, no lettering, no borders, no checkerboard, no black rectangle. Row-major layout exactly as specified. Use an orthographic front view. Rings face the viewer as perfect circles so they can be flattened to the ground by the engine. Directional components point RIGHT. Make the layers visually rich enough to look beautiful in motion at 100-250 pixels. Keep the overall atlas clean and separated. Theme: holy knight and blood-warrior energy; silver-white razor light, antique gold, small controlled crimson battle embers. Cell 0 top left: a compact right-facing golden-white lance of light with tapered trail. Cell 1 top middle: a sweeping crescent slash, silver-white cutting edge and flowing gold inner filaments, opens right. Cell 2 top right: explosive radial gold-white impact crown with flying sparks. Cell 3 middle left: ornate circular golden ground rune ring, clear empty center, no readable writing. Cell 4 middle center: upright golden heraldic shield made of light, clean pointed silhouette, luminous layered edges. Cell 5 middle right: a fan of small crimson and gold metal-like light shards. Cell 6 bottom left: narrow upward erupting crimson-gold energy plume with bright base. Cell 7 bottom middle: a circular silver-gold battle vortex with distinct curling light ribbons and transparent center. Cell 8 bottom right: one small concentrated white-gold star-shaped spark core, refined rays, occupying only the central 30% of its cell.",
+    "mage": "Use case: stylized-concept. Asset type: production game VFX texture atlas for a premium 2.5D dark fantasy action RPG. Create ONE square 1536x1536 transparent PNG atlas, exactly 3 equal columns by 3 equal rows. Each invisible 512x512 cell contains ONE independent hand-painted magical effect layer, isolated and centered. This is an atlas of nine DIFFERENT components, not a sequential animation. Every component and all its glow stay inside the central 70% of its cell, with generous fully transparent gutters of at least 15% on all four sides. No effect crosses a grid boundary. True RGBA transparency, delicate translucent emission edges. High-end painterly realistic energy, fine luminous filaments, crisp sculpted light, smoky detail without opaque backdrop, visually elegant readable silhouettes. No people, no weapons held by people, no environments, no UI, no labels, no lettering, no borders, no checkerboard, no black rectangle. Row-major layout exactly as specified. Use an orthographic front view. Rings face the viewer as perfect circles so they can be flattened to the ground by the engine. Directional components point RIGHT. Make the layers visually rich enough to look beautiful in motion at 100-250 pixels. Keep the overall atlas clean and separated. Theme: elemental sorcery, opulent orange-gold fire, icy cyan crystal, violet arcane energy; each cell uses the specifically assigned element, harmonious high-end finish. Cell 0 top left: bright molten orange-gold firebolt pointing right, bright rounded core and curling flame tail to left. Cell 1 top middle: an icy cyan curved crescent blade made from sharp translucent crystal with frosty wisps, opens right. Cell 2 top right: explosive orange-white radial fire impact blossom with molten filaments. Cell 3 middle left: intricate violet-blue circular arcane rune ring with tiny ornamental geometric glyphs, no readable letters, clear center. Cell 4 middle center: upright cyan magical ward shield, faceted ice-like light panels and a brilliant central diamond. Cell 5 middle right: a cluster spray of sharply detailed icy cyan crystal splinters. Cell 6 bottom left: vertical violet-white lightning plume or pillar, branching fine filaments, contained. Cell 7 bottom middle: purple-blue arcane vortex with a clear center and tightly curving starry vapor. Cell 8 bottom right: one small concentrated violet-white star-shaped spark core occupying only the central 30% of its cell.",
+    "archer": "Use case: stylized-concept. Asset type: production game VFX texture atlas for a premium 2.5D dark fantasy action RPG. Create ONE square 1536x1536 transparent PNG atlas, exactly 3 equal columns by 3 equal rows. Each invisible 512x512 cell contains ONE independent hand-painted magical effect layer, isolated and centered. This is an atlas of nine DIFFERENT components, not a sequential animation. Every component and all its glow stay inside the central 70% of its cell, with generous fully transparent gutters of at least 15% on all four sides. No effect crosses a grid boundary. True RGBA transparency, delicate translucent emission edges. High-end painterly realistic energy, fine luminous filaments, crisp sculpted light, smoky detail without opaque backdrop, visually elegant readable silhouettes. No people, no weapons held by people, no environments, no UI, no labels, no lettering, no borders, no checkerboard, no black rectangle. Row-major layout exactly as specified. Use an orthographic front view. Rings face the viewer as perfect circles so they can be flattened to the ground by the engine. Directional components point RIGHT. Make the layers visually rich enough to look beautiful in motion at 100-250 pixels. Keep the overall atlas clean and separated. Theme: elven wind and nature magic, emerald and teal currents, fine gold-white light, ethereal leaf filigree. Cell 0 top left: a streamlined arrow-shaped emerald-white energy bolt pointing right, flowing wispy teal tail to left. Cell 1 top middle: elegant crescent wind sweep opening right, curved emerald ribbon, white razor-light edge, subtle gold motes. Cell 2 top right: radiant green-white radial impact bloom with leaf-shaped rays and fine bright sparks. Cell 3 middle left: ornate perfect circular emerald-gold ground rune ring interwoven with delicate vines, clear center, no readable writing. Cell 4 middle center: upright guardian ward sigil made of golden-white light with a central emerald leaf, shaped like a narrow shield. Cell 5 middle right: a drifting fan of distinct glowing emerald leaves and gold-white feather particles, each finely detailed. Cell 6 bottom left: narrow upward emerald-white healing plume with rising fine leaves, contained bright base. Cell 7 bottom middle: whirling circular teal wind vortex with leaf filaments and transparent center. Cell 8 bottom right: one small concentrated emerald-white star spark core, fine golden rays, occupying only the central 30% of its cell.",
+    "thief": "Use case: stylized-concept. Asset type: production game VFX texture atlas for a premium 2.5D dark fantasy action RPG. Create ONE square 1536x1536 transparent PNG atlas, exactly 3 equal columns by 3 equal rows. Each invisible 512x512 cell contains ONE independent hand-painted magical effect layer, isolated and centered. This is an atlas of nine DIFFERENT components, not a sequential animation. Every component and all its glow stay inside the central 70% of its cell, with generous fully transparent gutters of at least 15% on all four sides. No effect crosses a grid boundary. True RGBA transparency, delicate translucent emission edges. High-end painterly realistic energy, fine luminous filaments, crisp sculpted light, smoky detail without opaque backdrop, visually elegant readable silhouettes. No people, no weapons held by people, no environments, no UI, no labels, no lettering, no borders, no checkerboard, no black rectangle. Row-major layout exactly as specified. Use an orthographic front view. Rings face the viewer as perfect circles so they can be flattened to the ground by the engine. Directional components point RIGHT. Make the layers visually rich enough to look beautiful in motion at 100-250 pixels. Keep the overall atlas clean and separated. Theme: assassin shadowcraft, deep violet and indigo smoke, cold blue blade light, poisonous emerald accents. Keep translucent shadows visible in alpha, no solid dark background. Cell 0 top left: a compact cold blue-violet dagger-shaped energy bolt pointing right, sharply tapered blade and wispy indigo trail to left. Cell 1 top middle: lethal violet-cyan crescent slash opening right, razor-thin white cutting edge, textured purple shadow ribbons. Cell 2 top right: fractured violet-white radial impact with thin blue shards and smoky indigo curls. Cell 3 middle left: a precise circular violet ground snare sigil, concentric broken arc ornamentation, clear center, no readable writing. Cell 4 middle center: upright angular purple ward sigil with a luminous diamond inside a pointed spectral shield. Cell 5 middle right: a spray of emerald poison droplets and violet glass-like splinters, clean distinct silhouettes. Cell 6 bottom left: narrow vertical rising emerald poison plume with violet shadow curls, highly detailed wisps. Cell 7 bottom middle: swirling indigo-violet smoke vortex forming a circular ring, clear transparent center. Cell 8 bottom right: one small concentrated icy-blue white star spark core, violet rim, occupying only the central 30% of its cell."
+  },
+  "alphaCorrectionPrompt": "Use case: background-extraction. Edit target: the provided transparent 3x3 game VFX texture atlas. Change ONLY the defective background alpha. The nine beautifully painted effect components MUST retain exactly their existing designs, colors, scale, positions, and nine-cell row-major layout. The current image has an unwanted broad whitish-gray atmospheric fog covering the empty space of the sheet, especially the top two rows. REMOVE THAT BACKGROUND FOG COMPLETELY, yielding literal alpha=0 transparent empty space between all nine components and along every outer edge. Do not leave a white, gray, black, checkerboard, or translucent rectangle. Do not add shadows, scenery, or framing. Preserve localized colored emission/glow and colored smoke that is directly attached to each magical object, with soft antialiased transparent edges. Everything away from the distinct nine isolated silhouettes should be fully transparent. Each effect stays inside its existing equal-sized cell, with clean transparent gutters so each can be cropped independently with no background rectangle. Keep the central open spaces of rings/vortices transparent. Preserve the same square canvas and exact 3x3 geometry. This is a technical background correction, not a redesign.",
+  "assets": [
+    {
+      "class": "sword",
+      "original": "/workspace/scratch/89c265cf998e/generated_images/exec-18e09039-bd50-485d-b0ee-75a488ff4413.png",
+      "selectedVersion": "alpha-v2",
+      "cells": [
+        "金白右向長槍光束",
+        "金銀弧形劍光，視覺開口向左（需依動畫方向校正）",
+        "金白落地衝擊冠",
+        "金色正圓符紋",
+        "金色尖底護盾",
+        "紅金刃片噴射",
+        "紅金向上爆發柱",
+        "金銀旋渦",
+        "金白微型星芒"
+      ],
+      "selected": "/workspace/scratch/89c265cf998e/generated_images/exec-de7c16a7-d854-4f31-82c3-20d18557b998.png",
+      "originalSourceFile": null,
+      "unselectedHistoryOnly": true,
+      "originalSourceStatus": "Unselected v1 generation history retained in scratch/native image records only; NOT delivered to D checkout.",
+      "selectedSourceFile": "source/sword-atlas-v2.png",
+      "publicAsset": "/art/skill-vfx-20261104/sword-atlas.webp",
+      "correction": "One built-in imagegen alpha-only background correction, preserving the original as v1.",
+      "defaultFlipXCells": [
+        1
+      ]
+    },
+    {
+      "class": "mage",
+      "original": "/workspace/scratch/89c265cf998e/generated_images/exec-d2783e9d-bc67-4c6f-8e59-034f401e88d1.png",
+      "selectedVersion": "alpha-v2",
+      "cells": [
+        "橘金右向火球",
+        "冰藍向右開口月刃",
+        "橘金放射火爆",
+        "紫色正圓法陣",
+        "冰藍晶面護盾",
+        "冰晶碎片群",
+        "紫白閃電柱",
+        "紫藍奧術漩渦",
+        "紫白微型星芒"
+      ],
+      "selected": "/workspace/scratch/89c265cf998e/generated_images/exec-6a5b183c-6ec1-4dc8-b78a-c73f83bc83f6.png",
+      "originalSourceFile": null,
+      "unselectedHistoryOnly": true,
+      "originalSourceStatus": "Unselected v1 generation history retained in scratch/native image records only; NOT delivered to D checkout.",
+      "selectedSourceFile": "source/mage-atlas-v2.png",
+      "publicAsset": "/art/skill-vfx-20261104/mage-atlas.webp",
+      "correction": "One built-in imagegen alpha-only background correction, preserving the original as v1.",
+      "defaultFlipXCells": []
+    },
+    {
+      "class": "archer",
+      "original": "/workspace/scratch/89c265cf998e/generated_images/exec-c8a1dd51-662e-4b2d-a531-6e57acba8a76.png",
+      "selected": "/workspace/scratch/89c265cf998e/generated_images/exec-29e419fe-63f3-49d5-be5d-db3a2b9534b2.png",
+      "selectedVersion": "alpha-v2",
+      "correction": "One built-in imagegen alpha-only background correction, preserving the original as v1.",
+      "cells": [
+        "翡翠金白右向風箭",
+        "翡翠金白向右開口月弧",
+        "翡翠葉片放射爆發",
+        "金綠正圓藤紋",
+        "金葉護盾（非召喚獸）",
+        "綠葉與金白羽屑群",
+        "翡翠向上療癒光柱",
+        "青綠風葉旋渦",
+        "金綠微型星芒"
+      ],
+      "originalSourceFile": null,
+      "unselectedHistoryOnly": true,
+      "originalSourceStatus": "Unselected v1 generation history retained in scratch/native image records only; NOT delivered to D checkout.",
+      "selectedSourceFile": "source/archer-atlas-v2.png",
+      "publicAsset": "/art/skill-vfx-20261104/archer-atlas.webp",
+      "defaultFlipXCells": []
+    },
+    {
+      "class": "thief",
+      "original": "/workspace/scratch/89c265cf998e/generated_images/exec-58775a15-b1be-4752-a76e-b7a008884508.png",
+      "selected": "/workspace/scratch/89c265cf998e/generated_images/exec-c8d1a8b3-00af-47bb-830f-cd602eb89eeb.png",
+      "selectedVersion": "alpha-v2",
+      "correction": "One built-in imagegen alpha-only background correction, preserving the original as v1.",
+      "cells": [
+        "藍紫右向刃光",
+        "紫藍向右開口月刃",
+        "紫白碎晶爆發",
+        "紫色正圓陷阱符紋",
+        "紫色尖形護符盾",
+        "綠毒液滴與紫晶碎片",
+        "綠毒紫煙上升柱",
+        "紫影圓形漩渦",
+        "藍白微型星芒"
+      ],
+      "originalSourceFile": null,
+      "unselectedHistoryOnly": true,
+      "originalSourceStatus": "Unselected v1 generation history retained in scratch/native image records only; NOT delivered to D checkout.",
+      "selectedSourceFile": "source/thief-atlas-v2.png",
+      "publicAsset": "/art/skill-vfx-20261104/thief-atlas.webp",
+      "defaultFlipXCells": []
+    }
+  ],
+  "technicalProcessing": "No programmatic keying, recoloring, matte correction, or repainting. All background defects corrected using imagegen. Selected source PNG materialization is tracked by the separate source receipt. Unselected atlas v1 originals are generation history in scratch/native image records only and are NOT delivered to D checkout. Atlas runtime WebP uses format encoding only at quality92/method4/exact=True, alpha verified byte-identical. Summons are placed unscaled onto a transparent canvas with 213px extra padding each side (1254→1680); no source pixels cropped. QA composites do not modify the runtime asset. Runtime summons resized 1680 to 840 with LANCZOS, 1680px padded intermediates retained in scratch only; the six unmodified 1254px selected PNGs are the authoritative D-checkout sources; runtime encoded atomically and decoded+hashed.",
+  "artReview": {
+    "proofType": "Runtime bitmap source-over QA composites; separate from imagegen original raw-alpha review.",
+    "proofSource": "Six decoded WebP files from worker/public/art/skill-vfx-20261104; no runtime mutation.",
+    "proofBuilder": "build-runtime-proofs.py",
+    "proofReceipt": "runtime-proof-receipt.json",
+    "status": "passed_with_noted_minimal_glow",
+    "reviewed": "All 36 cropped atlas cells plus two summon sprites composited normally with source-over on dark slate, after all 4 atlases received one imagegen alpha-only correction.",
+    "proofs": [
+      "cropped-source-over-proof-final.jpg",
+      "summons-source-over-proof.jpg"
+    ],
+    "limits": [
+      "This validates isolated bitmap assets, not per-skill animations, semantic recipes, live combat integration, or mobile performance.",
+      "Archer horizontal boundary at row836 retains a very small faint glow, max alpha32/255; no visible rectangular background or clipped main silhouette in final cell proof.",
+      "Sword crescent faces opposite the other classes; renderer must mirror its base orientation for matched attacks."
+    ]
+  },
+  "summonPrompts": [
+    {
+      "key": "hawk",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent summoned-creature sprite for a premium 2.5D dark fantasy action RPG. One majestic spectral hunting hawk in flight, facing RIGHT in clear three-quarter side profile, beak and eyes on the right, tail trailing left, both powerful wings completely visible and unclipped. Body formed from translucent emerald-teal spirit light with exquisite fine gold-white feather filaments and bright sculpted feather tips. Anatomically readable as a hawk, not an abstract badge, not a shield, not a logo. Dynamic elegant airborne pose; high-end hand-painted game illustration, fine light textures and superb silhouette at small size. Full creature centered within square canvas, occupies at most 68% of width and height, at least 16% transparent empty margin on EVERY edge. Scene/backdrop: literal alpha=0 true transparent background. The empty canvas must have NO fog, NO gray/white/black backdrop, NO clouds, NO environment, NO floor, NO ground shadow, NO platform, NO text, NO border, NO checkerboard. Restrict luminous light and colored mist strictly to the creature itself and a very narrow soft antialiased edge; no broad atmospheric glow across empty space. Only one bird, no other objects. Transparent cutout for direct source-over compositing into a dark game battlefield."
+    },
+    {
+      "key": "fire-spirit",
+      "prompt": "Use case: stylized-concept. Asset type: a single transparent summoned-fire-elemental sprite for a premium 2.5D dark fantasy action RPG. One elegant nonhuman fire spirit, floating and facing RIGHT in clear three-quarter side profile. Its body is made entirely of sculpted orange-gold magical flames around a brilliant white-gold ember core, with a distinguishable spirit head and two graceful flame arms, a tapering whirling flame tail rather than legs. Expressive powerful fiery silhouette, no clothes, no armor, no weapon, no pedestal; a magical elemental creature, not a human portrait and not a fireball. Rich layered hand-painted flame filaments, warm vermilion edges, subtle golden motes contained close to body, high-end 2.5D fantasy game asset, readable at small size. Whole creature centered within square canvas, occupies at most 68% of width and height, at least 16% fully transparent empty margin on EVERY side. Scene/backdrop: literal alpha=0 true transparent background. NO smoke backdrop, NO white/gray/black rectangle, NO environment, NO ground, NO shadow, NO base, NO text, NO border, NO checkerboard. Luminous color and localized fire wisps only within and immediately alongside creature silhouette. Absolutely no broad atmospheric haze in the empty canvas. Only one isolated summoned spirit, direct source-over cutout for a dark game battlefield."
+    }
+  ],
+  "summons": [
+    {
+      "name": "hawk",
+      "selectedSourceFile": "source/hawk-v1.png",
+      "generatedPath": "/workspace/scratch/89c265cf998e/generated_images/exec-4a32d5d3-c810-4f34-8d9b-a2a0eff6f6bd.png",
+      "publicAsset": "/art/skill-vfx-20261104/hawk.webp",
+      "direction": "right",
+      "meaning": "翡翠金白獵鷹靈體；兩翼完整、可供召喚與持續攻擊呈現。"
+    },
+    {
+      "name": "fire-spirit",
+      "selectedSourceFile": "source/fire-spirit-v1.png",
+      "generatedPath": "/workspace/scratch/89c265cf998e/generated_images/exec-cd513445-f8d7-4879-aa5b-c8769bca9a75.png",
+      "publicAsset": "/art/skill-vfx-20261104/fire-spirit.webp",
+      "direction": "right",
+      "meaning": "橘金火精靈；頭部、雙臂與火種核心清楚，無衣裝。"
+    }
+  ],
+  "qaSummary": [
+    {
+      "name": "sword",
+      "file": "sword-atlas.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/sword-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558",
+      "decodePassed": true
+    },
+    {
+      "name": "mage",
+      "file": "mage-atlas.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/mage-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb",
+      "decodePassed": true
+    },
+    {
+      "name": "archer",
+      "file": "archer-atlas.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/archer-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d",
+      "decodePassed": true
+    },
+    {
+      "name": "thief",
+      "file": "thief-atlas.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/thief-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05",
+      "decodePassed": true
+    },
+    {
+      "name": "hawk",
+      "file": "hawk.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/hawk.webp",
+      "size": [
+        840,
+        840
+      ],
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825",
+      "decodePassed": true
+    },
+    {
+      "name": "fire-spirit",
+      "file": "fire-spirit.webp",
+      "path": "/workspace/scratch/89c265cf998e/vfx-art-staging/fire-spirit.webp",
+      "size": [
+        840,
+        840
+      ],
+      "bytes": 94338,
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617",
+      "decodePassed": true
+    }
+  ],
+  "delivery": {
+    "sourceDirectory": "source",
+    "selectedPngFiles": [
+      {
+        "file": "fire-spirit-v1.png",
+        "bytes": 823995,
+        "sha256": "9cbd99c35e03c865b6a19e7d65725648860bf708b2ea6c6b4cd852c71a335a83"
+      },
+      {
+        "file": "hawk-v1.png",
+        "bytes": 1338588,
+        "sha256": "439545f0cb5a7508c89baade00bd724aec35c3f203c70a531e121a6313ee127b"
+      },
+      {
+        "file": "sword-atlas-v2.png",
+        "bytes": 1659697,
+        "sha256": "dccea19e773702010dab4c24b6ccecf0ea575139328ac258ce0b27f68c0281c0"
+      },
+      {
+        "file": "mage-atlas-v2.png",
+        "bytes": 1846319,
+        "sha256": "adc492ba04ad52ae055b65f2f5f05a2ffd79ea495fc3e712c33b89efaade68e7"
+      },
+      {
+        "file": "archer-atlas-v2.png",
+        "bytes": 1728711,
+        "sha256": "8d27d108fbd2bc2015deedd68bd244a00496f767c99d1ec0e230def25d69c334"
+      },
+      {
+        "file": "thief-atlas-v2.png",
+        "bytes": 1511778,
+        "sha256": "59154083dad859021bc5d91471f3b3c76733d4bc8d6d77a4135204ec5bab2709"
+      }
+    ],
+    "runtimeDirectory": "../../public/art/skill-vfx-20261104",
+    "runtimeFiles": [
+      {
+        "file": "sword-atlas.webp",
+        "bytes": 668976,
+        "size": [
+          1254,
+          1254
+        ],
+        "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+      },
+      {
+        "file": "mage-atlas.webp",
+        "bytes": 697614,
+        "size": [
+          1254,
+          1254
+        ],
+        "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+      },
+      {
+        "file": "archer-atlas.webp",
+        "bytes": 669942,
+        "size": [
+          1254,
+          1254
+        ],
+        "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+      },
+      {
+        "file": "thief-atlas.webp",
+        "bytes": 586874,
+        "size": [
+          1254,
+          1254
+        ],
+        "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+      },
+      {
+        "file": "hawk.webp",
+        "bytes": 112014,
+        "size": [
+          840,
+          840
+        ],
+        "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+      },
+      {
+        "file": "fire-spirit.webp",
+        "bytes": 94338,
+        "size": [
+          840,
+          840
+        ],
+        "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617"
+      }
+    ],
+    "unselectedAtlasV1Delivered": false,
+    "paddedSummon1680IntermediatesDelivered": false,
+    "paddedSummonRecipe": "Keep the 1254px original unscaled, add 213px transparent padding on every side (1680px), then resize to 840px with LANCZOS and encode WebP quality92/method4/exact=True.",
+    "receipts": {
+      "sources": "source-materialization-receipt.json",
+      "runtime": "runtime-materialization-receipt.json",
+      "bitmapQa": "runtime-proof-receipt.json",
+      "delivery": "delivery-verification.json"
+    },
+    "validationNote": "Actual existence, PNG byte preservation, hashes, dimensions and temporary-file cleanup are verified by verify-delivery.py; use delivery-verification.json for the observed result."
+  }
+}
