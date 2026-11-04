@@ -1,3 +1,4 @@
+import {nativeCastVfx} from './skill-vfx-events.js';
 import {combatActor,performThiefNativeStrikes,autoPartyAction,validateCast,castSpecial,damageEnemy,periodic,valueOf} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 // v0.5 群組決鬥 (1v1 PK) rules + duel simulation (pure). Persistence lives in services/pk.js.
@@ -22,7 +23,7 @@ export function checkPk(a, b) { const x = pkBlock(a, b); if (x) throw new GameEr
  * ±10% variance, damage × (1 − def/(def + 6·L + 40)) × taken × PK.dmgScale. First actor: coin flip.
  * ≤ PK.maxRounds rounds (one round = both act), then the higher HP% wins (ties → defender b).
  */
-export function simulateDuel(sa, sb, rng, characters={}) {
+export function simulateDuel(sa, sb, rng, characters={},presentation={}) {
   const fighter=(s,id)=>{
     const c=characters[id]||{base_class:s.baseClass,class_path:s.node?.path||'',level:s.level};
     const a=combatActor(c,s,{id,hp:s.maxHp,mp:s.maxMp});
@@ -40,33 +41,34 @@ export function simulateDuel(sa, sb, rng, characters={}) {
     for(let k=0;k<2;k++){
       const x=F[turn],o=turn==='a'?'b':'a',y=F[o],before=snapshot(),now=rounds*30000;
       y.windup=(rounds+1)%3===0;y.interruptible=true;
-      periodic([x],y,now);const periodicDamage=before.hp[o]-y.hp;
-      let crit=false,useSkill=false,skillId=null,label='普通攻擊',heal=0,spentMp=0,statuses=[],strikes=[];
+      const periodicVfx=periodic([x],y,now,{vfx:{eventId:'pk:'+(presentation.id||'simulation')+':'+rounds+':'+k+':periodic',source:'committed-combat',enemyId:o}});const periodicDamage=before.hp[o]-y.hp;
+      let crit=false,useSkill=false,skillId=null,label='普通攻擊',heal=0,spentMp=0,statuses=[],strikes=[],visual=null;
+      const observation={eventId:'pk:'+(presentation.id||'simulation')+':'+rounds+':'+k+':'+turn,effects:[],source:'committed-combat',atMs:(presentation.at||0)+now,enemyId:o};
       if(y.hp>0&&!x.interrupted){
         const action=autoPartyAction(x,[x],y,now,{});
         if(action.skillId!=='attack'){
           const skill=validateCast({base_class:x.base,class_path:x.path,level:x.level,mp:x.mp,affixPct:x.affixPct},x.special,action.skillId,now);
-          const r=castSpecial(x,[x],y,skill,x.id,now,rng,{});
+          const r=castSpecial(x,[x],y,skill,x.id,now,rng,{},observation);visual=r.vfx||null;
           crit=r.crit;useSkill=true;skillId=skill.id;label=skill.name;spentMp=r.spentMp;heal=r.selfHealed||0;
         }else{
           useSkill=x.mp>=x.skill.cost;
           if(useSkill)spentMp=spendMana(x,x.skill.cost,rng);else x.mp=Math.min(x.maxMp,x.mp+Math.ceil(x.maxMp*.08)+1);
           if(x.base==='thief'){
-            const native=performThiefNativeStrikes(x,y,now,{cast:useSkill,baseRaw:x.atk*(useSkill?x.skill.mult:.6),rng,critMultiplier:PK.critMult,variance:true,actionId:`${rounds}:${k}:${turn}`});
+            const native=performThiefNativeStrikes(x,y,now,{cast:useSkill,baseRaw:x.atk*(useSkill?x.skill.mult:.6),rng,critMultiplier:PK.critMult,variance:true,actionId:`${rounds}:${k}:${turn}`,observation});
             crit=native.crit;strikes=native.strikes;statuses=native.statuses||[];heal=restoreOnAction(x,native.damage,{cast:useSkill,enabled:y.hp>0}).heal;
           }else{
           crit=rng()<Math.min(.8,x.crit+valueOf(x,'critUp',now));
           let raw=x.atk*(useSkill?x.skill.mult:.6)*(crit?PK.critMult:1)*(.9+rng()*.2);
           raw*=(1+valueOf(x,'atkUp',now))*(1+valueOf(x,'damageUp',now))*(1+valueOf(x,'nextDamage',now))*(1-valueOf(x,'enemyNextReduce',now));
-          const damage=damageEnemy(y,raw,{},now,x);
+          const damage=damageEnemy(y,raw,{},now,x,observation);
           const restored=restoreOnAction(x,damage,{cast:useSkill,enabled:y.hp>0});heal=restored.heal;
           for(const b of x.buffs)if(['nextDamage','critUp','enemyNextReduce'].includes(b.type)&&b.uses>0)b.uses--;
           }
-          if(useSkill)label=x.skill.name||'職業技能';
+          if(useSkill){label=x.skill.name||'職業技能';visual=nativeCastVfx(x,observation);}
         }
       }else if(x.interrupted){label='蓄力遭打斷';x.interrupted=false;}
       const after=snapshot(),dmg=Math.max(0,before.hp[o]-after.hp[o]);
-      log.push({by:turn,...(statuses.length?{statuses}:{}),...(x.base==='thief'?{periodicDamage,directDamage:Math.max(0,dmg-periodicDamage),strikes,attackSpeedMultiplier:x.attackSpeedMultiplier}:{}),dmg,crit,skill:useSkill,skillId,label,spentMp,hp:y.hp,before,after,healed:Math.max(0,x.hp-before.hp[turn]),...(heal>0?{heal,self:x.hp}:{})});
+      log.push({by:turn,...((periodicVfx?.length||observation.effects.length)?{vfxEvents:[...(periodicVfx||[]),...observation.effects].map(v=>({...v,atMs:(presentation.at||0)+now}))}:{}),...(visual?{vfx:visual}:{}),...(statuses.length?{statuses}:{}),...(x.base==='thief'?{periodicDamage,directDamage:Math.max(0,dmg-periodicDamage),strikes,attackSpeedMultiplier:x.attackSpeedMultiplier}:{}),dmg,crit,skill:useSkill,skillId,label,spentMp,hp:y.hp,before,after,healed:Math.max(0,x.hp-before.hp[turn]),...(heal>0?{heal,self:x.hp}:{})});
       if(y.hp<=0||x.hp<=0)return result(y.hp<=0?turn:o,true);
       turn=o;
     }

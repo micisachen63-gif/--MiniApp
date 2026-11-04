@@ -143,12 +143,25 @@
     const vfxController = new AbortController();
     doc.documentElement.classList.add('rpg-live-scene');
     const panel = doc.createElement('section'); panel.className = 'scene-live-panel'; panel.id = 'scene-live-status'; panel.setAttribute('aria-label', '出征狀態');
-    panel.innerHTML = '<div class="scene-live-heading"><strong data-live-title></strong><span data-live-sync></span></div><p data-live-progress></p><p data-live-supplies></p><p class="scene-live-warning" data-live-connection role="status" hidden></p><p class="scene-live-warning" data-live-warning role="status"></p><div class="scene-live-buttons"><button type="button" data-live-expedition>星圖派遣</button><button type="button" data-live-characters>選擇角色</button><button type="button" data-live-refresh>同步</button></div><details><summary>已結算紀錄與敵人</summary><p data-live-report></p><ul class="scene-live-enemies" data-live-enemies></ul><ol class="scene-live-events" data-live-events></ol></details>';
+    panel.innerHTML = '<div class="scene-live-heading"><strong data-live-title></strong><span data-live-sync></span><button type="button" data-live-collapse aria-label="收合戰況" aria-expanded="true">▴</button></div><p data-live-progress></p><p data-live-supplies></p><p class="scene-live-warning" data-live-connection role="status" hidden></p><p class="scene-live-warning" data-live-warning role="status"></p><div class="scene-live-buttons"><button type="button" data-live-expedition>星圖派遣</button><button type="button" data-live-characters>選擇角色</button><button type="button" data-live-refresh>同步</button></div><details><summary>已結算紀錄與敵人</summary><p data-live-report></p><ul class="scene-live-enemies" data-live-enemies></ul><ol class="scene-live-events" data-live-events></ol></details>';
     (byId('ui') || doc.body).appendChild(panel);
-    const nodes = Object.fromEntries(['title', 'sync', 'progress', 'supplies', 'connection', 'warning', 'report', 'enemies', 'events', 'expedition', 'characters', 'refresh'].map(key => [key, panel.querySelector('[data-live-' + key + ']')]));
+    const nodes = Object.fromEntries(['title', 'sync', 'progress', 'supplies', 'connection', 'warning', 'report', 'enemies', 'events', 'expedition', 'characters', 'refresh', 'collapse'].map(key => [key, panel.querySelector('[data-live-' + key + ']')]));
     nodes.expedition.onclick = () => ui.toggle('expedition');
     nodes.characters.onclick = () => ui.toggle('scene-characters');
     nodes.refresh.onclick = () => void refresh();
+
+    // Keep the narrow battlefield visible; details remain one tap away.
+    let panelCollapsed = !!global.matchMedia?.('(max-width: 600px)').matches;
+    function collapsePanel(value) {
+      panelCollapsed = !!value;
+      panel.setAttribute('data-collapsed', String(panelCollapsed));
+      nodes.collapse?.setAttribute('aria-expanded', String(!panelCollapsed));
+      nodes.collapse?.setAttribute('aria-label', panelCollapsed ? '展開戰況' : '收合戰況');
+      if (nodes.collapse) nodes.collapse.textContent = panelCollapsed ? '▾' : '▴';
+    }
+    if (nodes.collapse) nodes.collapse.onclick = () => collapsePanel(!panelCollapsed);
+    collapsePanel(panelCollapsed);
+
     ui.skills?.forEach(skill => { skill.left = 0; skill.el.inert = true; skill.el.setAttribute('aria-disabled', 'true'); });
     byId('buffs')?.replaceChildren();
     const pc = byId('pc')?.getContext('2d'); pc?.clearRect(0, 0, 112, 112);
@@ -362,7 +375,8 @@
       const alive = [...entities.values()].filter(entity => entity.sprite?.active);
       alive.forEach((entity, index) => {
         const angle = -Math.PI + (index + 1) / (alive.length + 1) * Math.PI, radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
-        entity.sprite.setPosition(hero.x + Math.cos(angle) * radius, hero.y + Math.sin(angle) * radius * .7);
+        const horizontalRadius = Math.min(radius, width * .3);
+        entity.sprite.setPosition(hero.x + Math.cos(angle) * horizontalRadius, hero.y + Math.sin(angle) * radius * .7);
         entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(entity.sprite.x > hero.x).setDepth(entity.sprite.y);
       });
       // A committed snapshot repositions the whole encounter at once. The art

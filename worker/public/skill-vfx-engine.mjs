@@ -48,11 +48,13 @@ function curve(a,b,t,bend=0) {const dx=b.x-a.x,dy=b.y-a.y,len=Math.hypot(dx,dy)|
 /** Deterministic frame plan; shared by live player, scrubbing and CPU tests. Coordinates are CSS pixels. */
 export function buildEffectFrame(skill,progress,options={}) {
  const recipe=recipeFor(skill),t=clamp(finite(progress,0));
- const family=recipe.support?(skill.kind==='shield'?'shield':skill.kind==='heal'?'heal':recipe.family==='time'?'time':'buff'):recipe.family;
+ const supporting=recipe.support||options.presentationMode==='support';
+ const supportKind=options.presentationMode==='support'&&['heal','shield','buff'].includes(options.supportKind)?options.supportKind:skill.kind;
+ const family=supporting?(supportKind==='shield'?'shield':supportKind==='heal'?'heal':recipe.family==='time'?'time':'buff'):recipe.family;
  const body=clamp(finite(options.bodyHeight,150),36,480),scale=body/150;
  const from=point(options.from,{x:160,y:240}),dir=DIR[options.direction]??0;
  let to=point(options.to,{x:from.x+Math.cos(dir)*body*1.7,y:from.y+Math.sin(dir)*body*1.7});
- if((recipe.support&&options.presentationMode!=='impact')||options.presentationMode==='placement')to={...from};
+ if((supporting&&options.presentationMode!=='impact')||['placement','summon'].includes(options.presentationMode))to={...from};
  const theta=Math.atan2(to.y-from.y,to.x-from.x)||dir;
  const targets=(Array.isArray(options.targets)?options.targets:[]).filter(p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)).slice(0,5);
  const seed=hash32(String(options.seed??recipe.variant)+skill.id),low=options.quality==='low';
@@ -108,8 +110,8 @@ export function buildEffectFrame(skill,progress,options={}) {
  function finish(){const edge=Math.min(1,t/.045,(1-t)/.13);for(const l of layers)l.alpha*=edge;for(const g of geometry)g.alpha*=edge;return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};}
  if(t<=0||t>=1)return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
  if(options.reducedMotion){
-   const p=options.presentationMode==='placement'||(recipe.support&&options.presentationMode!=='impact')?from:to,a=pulse(t,0,1)*.65;
-   const cell=recipe.support?4:recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:family==='frost'?5:8):2;
+   const p=['placement','summon'].includes(options.presentationMode)||(supporting&&options.presentationMode!=='impact')?from:to,a=pulse(t,0,1)*.65;
+   const cell=supporting||options.presentationMode==='summon'?4:recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:family==='frost'?5:8):2;
    sprite(cell,p.x,p.y,92,92,0,a);ring({x:p.x,y:p.y+(options.presentationMode==='placement'?0:body*.3)},43,a*.4,.38);
    return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
  }
@@ -123,6 +125,15 @@ export function buildEffectFrame(skill,progress,options={}) {
    // Placement receives the actual foot point, already in ground coordinates.
    field(from,(t-.05)/.95,.95,true);
    sprite(3,from.x,from.y,136,50,-t*.12,pulse(t,.04,.98)*.8);
+   return finish();
+ }
+ if(options.presentationMode==='summon'){
+   // A recorded non-damaging summon creates one local companion. It neither
+   // travels to an enemy nor claims that any of its later pulses already hit.
+   field(from,(t-.05)/.95,.95);
+   const a=pulse(t,.08,.99),asset=family==='beast'?'hawk':'fire-spirit';
+   sprite(3,from.x,from.y-12*scale,108,108,-t*.2,a*.5);
+   spirit(asset,{x:from.x+Math.cos(dir)*body*.28,y:from.y-body*.18-Math.sin(t*Math.PI)*body*.08},106,dir,a*.9);
    return finish();
  }
  // Wind-up is an actual expanding rune and inward-moving motes, not a static full-frame flash.
@@ -221,15 +232,15 @@ export function buildEffectFrame(skill,progress,options={}) {
      const a=pulse(t,.13,.99);field(from,(t-.07)/.92,.9);
      sprite(4,from.x,from.y,112+out(t/.3)*8,142,0,a*.85);
      ring(from,62,a*.35,1.12,1.5);for(let i=0;i<5;i++){const ang=i/5*TAU+t*.4;sprite(8,from.x+Math.cos(ang)*61*scale,from.y+Math.sin(ang)*72*scale,11,11,ang,a*.7);}
-     if(!recipe.support){projectile(from,to,.29,.57,0,4,92);burst(to,hit,.95);}break;
+     if(!supporting){projectile(from,to,.29,.57,0,4,92);burst(to,hit,.95);}break;
    }
    case 'heal': case 'holy': case 'buff': case 'time': case 'curse': {
-     const p=recipe.support?from:to,k=(t-.1)/.89,a=pulse(t,.14,.99);field(p,k,1.05);
+     const p=supporting?from:to,k=(t-.1)/.89,a=pulse(t,.14,.99);field(p,k,1.05);
      if(family==='holy'||family==='heal'){sprite(6,p.x,p.y-18*scale,104,184,0,a*.68);sprite(4,p.x,p.y-18*scale,83,83,0,a*.55);}
      else if(family==='time'){sprite(3,p.x,p.y,147,147,t*.2,a*.7);ring(p,70,a*.65,1,1.6,recipe.colors[0],t*.2);for(let i=0;i<12;i++){const ang=i/12*TAU;line([{x:p.x+Math.cos(ang)*58*scale,y:p.y+Math.sin(ang)*58*scale},{x:p.x+Math.cos(ang)*66*scale,y:p.y+Math.sin(ang)*66*scale}],a*.7,1);}}
      else sprite(7,p.x,p.y,142,161,-t*.25,a*.62);
      for(let i=0;i<(low?7:12);i++){const q=(t*1.3+rand(seed,i))%1,x=p.x+(rand(seed,i+20)-.5)*95*scale,y=p.y+55*scale-q*150*scale;sprite(i%3===0?5:8,x,y,11+rand(seed,i+40)*10,17,rand(seed,i+60)*TAU,a*Math.sin(q*Math.PI)*.65);}
-     if(!recipe.support)burst(to,hit,.86);break;
+     if(!supporting)burst(to,hit,.86);break;
    }
  }
  // Boundary-safe alpha fade guarantees every clip starts and ends fully transparent.

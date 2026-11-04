@@ -13,8 +13,17 @@ if(chosen&&!builds.includes(chosen))throw Error('Unknown Atlas build');
 if(phone&&!chosen)throw Error('--phone requires --build to select one focused case');
 const passive={sword_bleed:'dot',archer_beast:'pet',archer_trap:'trap',thief_poison:'dot'};
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
+const sourcePaths=[
+ 'worker/src/game/atlas-engine.js','worker/src/game/atlas-combat-observer.js','worker/src/game/atlas-catalog.js','worker/src/game/atlas-talents.js','worker/src/services/atlas.js',
+ 'worker/public/scene-live-session.js','worker/public/scene-live-view.js','worker/public/scene-live-view.css',
+ 'worker/public/skill-vfx-engine.mjs','worker/public/skill-vfx-combat-adapter.mjs','worker/public/skill-vfx-actor-bridge.mjs',
+ 'worker/public/skill-vfx-catalog.json','worker/public/skill-vfx-recipes.json','worker/public/skill-vfx-actor-profiles.json',
+ 'worker/tools/skill-vfx-live-browser.cjs'
+];
+async function sourceFingerprints(){const rows=[];for(const file of sourcePaths){const bytes=await fs.readFile(file);rows.push({path:file,sha256:crypto.createHash('sha256').update(bytes).digest('hex'),bytes:bytes.length});}return rows;}
 (async()=>{
  await fs.mkdir(evidenceDir,{recursive:true});
+ const sourceFiles=await sourceFingerprints();
  const health=await(await fetch(sceneOrigin+'/__preview/health')).json(),apiHealth=await(await fetch(apiOrigin+'/__preview/health')).json();
  assert(health.isolated&&health.ephemeral&&health.productionAccess===false&&health.apiReady&&health.apiOrigin===apiOrigin,'Only the isolated 9667/9666 preview is allowed');
  assert(apiHealth.isolated&&apiHealth.ephemeral&&apiHealth.productionAccess===false);
@@ -37,35 +46,49 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
   await ready((await state()).characterId);
   if(inspectOnly){cases.push({name:'initial-inspection',passed:true,snapshot:await state(),view:await view()});await page.screenshot({path:path.join(evidenceDir,'initial-scene.png'),fullPage:true});return;}
   await frame.waitForFunction(()=>window.RpgSceneLiveView.inspect()[0]?.vfx?.ready,{},{timeout:45000});
-  await frame.evaluate(()=>{
+  const attachQa=()=>frame.evaluate(()=>{
    window.__skillVfxQa={traces:[],samples:[]};
    window.RpgSceneSession.subscribeCombatTrace((trace,scene)=>{window.__skillVfxQa.traces.push({trace,sceneRevision:scene?.run?.revision,receivedAt:Date.now()});});
    window.__skillVfxQa.timer=setInterval(()=>{const v=window.RpgSceneLiveView.inspect()[0];if(v?.vfx?.activeCast||v?.vfx?.player?.active){const q=window.__skillVfxQa.samples;q.push({at:Date.now(),actor:v.actorAnimation,vfx:v.vfx});if(q.length>600)q.shift();}},40);
   });
+  await attachQa();
   await stop();
   const selected=chosen?[chosen]:smoke?builds.slice(0,1):builds;
   const plan=selected.map(build=>({build,width:phone?390:1280,height:phone?844:900}));
   if(!chosen&&!smoke)for(const build of ['sword_whirlwind','archer_beast','mage_chain','thief_combo'])plan.push({build,width:390,height:844});
+  let priorWidth=1280;
   for(const item of plan){
    const char=characters.find(c=>c.baseClass===item.build.split('_')[0]);assert(char);
    await page.setViewportSize({width:item.width,height:item.height});
+   if(item.width!==priorWidth){
+    await page.reload({waitUntil:'domcontentloaded'});
+    frame=await(await page.locator('#demo').elementHandle()).contentFrame();
+    await frame.waitForFunction(()=>window.RpgSceneLiveView?.inspect?.()[0]?.vfx?.ready,{},{timeout:45000});
+    await attachQa();
+   }
+   priorWidth=item.width;
    if((await state()).characterId!==String(char.charId))await frame.evaluate(id=>window.RpgSceneSession.selectCharacter(id),String(char.charId));
    await ready(char.charId);await stop();
    await call('atlas/configure',{buildId:item.build,supportIds:['economy'],automation:'burst',requestId:crypto.randomUUID()});
    const started=await call('atlas/start',{mapId:'laurel_intro',queueMode:'duration',durationMinutes:2,supplies:{hp:40,mp:40},requestId:crypto.randomUUID()});
    currentRun=(await state()).run.id;
-   const entry={...item,characterId:String(char.charId),runId:currentRun,startedAt:new Date().toISOString(),casts:[],effects:[],traceCount:0};
+   const foregroundAuto=!chosen&&!smoke&&cases.length===0;
+   const entry={...item,trigger:foregroundAuto?'foreground-auto':'explicit-settle',characterId:String(char.charId),runId:currentRun,startedAt:new Date().toISOString(),casts:[],effects:[],traceCount:0};
    console.log(JSON.stringify({stage:'start-live-case',build:item.build,width:item.width,runId:currentRun}));
    const beforeRead=JSON.stringify((await state()).run),traceBefore=await frame.evaluate(()=>window.__skillVfxQa.traces.length);
    await frame.evaluate(()=>window.RpgSceneSession.refresh());
    assert.equal(JSON.stringify((await state()).run),beforeRead,'Read-only refresh changed combat');
    assert.equal(await frame.evaluate(()=>window.__skillVfxQa.traces.length),traceBefore,'Read-only refresh replayed combat trace');
-   const observed=new Map();let release=null,effect=null,releaseReceipt=null;
+   entry.panel=await frame.evaluate(()=>{const panel=document.querySelector('#scene-live-status');return {collapsed:panel?.dataset.collapsed,expanded:panel?.querySelector('[data-live-collapse]')?.getAttribute('aria-expanded'),rect:panel?.getBoundingClientRect().toJSON()};});
+   if(item.width<600)assert.equal(entry.panel.collapsed,'true','Fresh phone scene must begin with compact status');
+   const observed=new Map();let release=null,effect=null,releaseReceipt=null,subscriptionCursor=traceBefore;
    const deadline=Date.now()+36000;
    while(Date.now()<deadline&&(!release||(passive[item.build]&&!effect))){
-    await sleep(900);
-    const response=await call('atlas/settle',{runId:currentRun});
-    if(response.combatTrace){const receipt={build:item.build,width:item.width,receivedAt:Date.now(),sceneRevision:response.scene?.run?.revision,trace:response.combatTrace};receipts.push(receipt);entry.traceCount++;for(const e of receipt.trace.events)observed.set(e.eventId,{event:e,receipt});}
+    await sleep(foregroundAuto?100:900);
+    if(!foregroundAuto)await call('atlas/settle',{runId:currentRun});
+    const traceBatch=await frame.evaluate(cursor=>window.__skillVfxQa.traces.slice(cursor),subscriptionCursor);subscriptionCursor+=traceBatch.length;
+    for(const itemTrace of traceBatch){const receipt={build:item.build,width:item.width,trigger:entry.trigger,...itemTrace};receipts.push(receipt);entry.traceCount++;for(const e of receipt.trace.events)observed.set(e.eventId,{event:e,receipt});}
+    if(foregroundAuto&&!traceBatch.length)continue;
     const samplingStarted=Date.now();
     await sleep(90);
     const early=await view(),earlyEffect=early.vfx?.lastEffect;
@@ -99,6 +122,13 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
    if(item.build==='archer_trap'){assert(entry.casts.every(e=>e.targetIds.length===0&&e.hits.length===0));assert.equal(release.mode,'placement');}
    if(effect){const real=observed.get(effect.eventId).event;assert(real.targetIds.length&&real.hits.length);assert.equal(effect.mode,'impact');}
    const realSnapshot=await state(),rendered=await view();
+   if(item.width<600){
+    entry.phoneGeometry={canvas:rendered.geometry.canvas,enemies:rendered.geometry.enemies};
+    await frame.locator('[data-live-collapse]').click();
+    assert.equal(await frame.locator('[data-live-collapse]').getAttribute('aria-expanded'),'true');
+    await frame.locator('[data-live-collapse]').click();
+    assert.equal(await frame.locator('[data-live-collapse]').getAttribute('aria-expanded'),'false');
+   }
    assert.equal(rendered.hp,realSnapshot.run.hero.hp);assert.equal(rendered.mp,realSnapshot.run.hero.mp);
    assert.equal(rendered.activeRunId,currentRun);
    assert(!await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),'Horizontal overflow');
@@ -120,7 +150,8 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
  }finally{
   const samples=frame?await frame.evaluate(()=>{const q=window.__skillVfxQa;if(q?.timer)clearInterval(q.timer);return q?.samples||[];}).catch(()=>[]):[];
   if(currentRun&&frame)await stop().catch(()=>{});
-  await fs.writeFile(path.join(evidenceDir,'results.json'),JSON.stringify({generatedAt:new Date().toISOString(),mode:inspectOnly?'inspection':smoke?'smoke':chosen?'selected':'full',health,apiHealth,cases,receipts,samples,errors,badResponses},null,2));
+  const sourceFilesAfter=await sourceFingerprints(),sourceChangedDuring=sourceFiles.filter((file,i)=>file.sha256!==sourceFilesAfter[i]?.sha256).map(file=>file.path);
+  await fs.writeFile(path.join(evidenceDir,'results.json'),JSON.stringify({generatedAt:new Date().toISOString(),sourceFiles,sourceFilesAfter,sourceChangedDuring,mode:inspectOnly?'inspection':smoke?'smoke':chosen?'selected':'full',health,apiHealth,cases,receipts,samples,errors,badResponses},null,2));
   await browser.close();
  }
 })().catch(error=>{console.error(error.stack);process.exitCode=1;});

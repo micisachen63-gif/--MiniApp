@@ -27,7 +27,7 @@ const projections=new Map();
 function projected(p,index,beats,now){
  const key=`${p.id}:${p.rev}:${index}:${beats}`,hit=projections.get(key);
  if(hit&&now-hit.at>=0&&now-hit.at<120000)return hit.battle;
- const battle=Engine.simulateStage(p.state,index,beats);
+ const battle=Engine.simulateStage(p.state,index,beats,{vfxSource:'deterministic-projection'});
  for(const[k,v]of projections)if(now-v.at>=120000||now<v.at)projections.delete(k);
  projections.set(key,{at:now,battle});while(projections.size>48)projections.delete(projections.keys().next().value);
  return battle;
@@ -146,7 +146,7 @@ async function advance(env,id,now){
   // Grade only future checkpoints with the current policy; stored battles/receipts stay immutable.
   if(due>s.results.length)s.guardRatingVersion=2;
   for(let i=s.results.length;i<due;i++){
-   const result=Engine.simulateStage(s,i);s.results.push(result);fresh.push({index:i,result});
+   const result=Engine.simulateStage(s,i,undefined,{vfxSource:'committed-combat'});s.results.push(result);fresh.push({index:i,result});
    s.log.unshift({at:s.startedAt+(i+1)*Engine.STAGE_MS,text:`${Engine.STAGES[i].name}完成，評價 ${result.grade}；${i===5?'十二小時遠征結束，戰利品已結算':result.defeated?Engine.usesPools(s)?`已擊退 ${result.waves} 波魔物，穿越兩片邊境`:'已擊退'+Engine.STAGES[i].enemyName:'整頓補給後繼續前行'}。`});
    if(s.nextTactic){s.tactic=s.nextTactic;delete s.nextTactic;}s.stageTactics[i+1]=s.tactic;
   }

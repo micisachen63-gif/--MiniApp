@@ -452,3 +452,29 @@ test('trap placement stays centered on the supplied foot point at every body sca
       }
     }
 });
+
+test('non-damaging fire-spirit summon remains local and cannot imply an enemy impact',()=>{
+ const skill=byId.get('special:skill_18_1'),from={x:320,y:300};
+ for(const bodyHeight of [90,180,300])for(const direction of ['left','right','up','down'])
+ for(const progress of [.2,.5,.8])for(const reducedMotion of [false,true]){
+  const base={from,bodyHeight,direction,reducedMotion,presentationMode:'summon',seed:42};
+  const a=buildEffectFrame(skill,progress,{...base,to:{x:4000,y:900},targets:[{x:5000,y:800}]});
+  const b=buildEffectFrame(skill,progress,{...base,to:{x:-4000,y:-900},targets:[{x:-5000,y:-800}]});
+  assert.deepEqual(a,b,'unknown enemy positions cannot affect a non-damaging summon');
+  assert.ok(a.layers.length>0);
+  assert.ok(visiblePoints(a).every(p=>Math.hypot(p.x-from.x,p.y-from.y)<bodyHeight*.8));
+  assert.equal(a.layers.filter(layer=>layer.asset==='fire-spirit').length,reducedMotion?0:1);
+  checkFrame(a,'high','summon');
+ }
+});
+test('ancillary support on a direct attack has support geometry only at the supplied beneficiary',()=>{
+ const skill=byId.get('native:sword:A11'),from={x:750,y:280};
+ for(const supportKind of ['heal','shield','buff'])for(const reducedMotion of [false,true])for(const progress of [.2,.5,.8]){
+  const common={from,bodyHeight:150,presentationMode:'support',supportKind,reducedMotion};
+  const a=buildEffectFrame(skill,progress,{...common,to:{x:4000,y:900}});
+  const b=buildEffectFrame(skill,progress,{...common,to:{x:-4000,y:-900}});
+  assert.deepEqual(a,b);assert.ok(a.layers.length>0);
+  assert.ok(visiblePoints(a).every(p=>Math.hypot(p.x-from.x,p.y-from.y)<200));
+  assert.ok(a.layers.every(layer=>!layer.asset),'support must not create a companion');
+ }
+});
