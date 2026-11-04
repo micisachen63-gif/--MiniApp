@@ -1,0 +1,98 @@
+星穹之旅｜三人副本與轉職試煉主浮窗整合
+日期：2026-11-04（台灣時間）
+範圍：非角色整合工作線；提交前驗收報告。
+
+一、接續基線與工作位置
+
+本批接續技能／轉職整合 PR51 的 264f7e78760704c7008d9ddc1e82519788ab4999。
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-party-integration-20261104
+分支：codex/party-integration-20261104
+預期草稿 PR base：codex/skill-career-integration-20261104
+主交接：D:\StarJournal\handoff\non-character\STATUS.json
+本批交接：D:\StarJournal\handoff\non-character\party-integration-20261104\STATUS.json
+
+本報告記錄實作和提交前來源證據。最終提交、遠端分支、草稿 PR、精確提交 CI 與本機狀態，分別以 .release-sync/party-20261104/local-submission-receipt.json、pr-receipt.json、ci-final-receipt.json、final-local-state.json 及本批 STATUS 為準；不得以 PR51 的 CI 代替本批結果。
+
+二、這批完成的功能與界線
+
+既有主戰鬥單一浮窗新增「結伴出征」，含目前隊伍、三人副本、轉職試煉、組隊大廳。沿用既有帳號、realm、角色、context、浮窗返回／關閉、近透明視覺與金屬按鈕。
+
+目前隊伍呈現成員、準備狀態、戰鬥階段、實際回合、敵人、隊友、機制、技能與合法目標、已提交戰術、真實戰果及個人／隊員領取收據。支援建立、加入、準備、出發、戰術提交、離隊、結束與領獎。出發、解散及作戰離隊等會影響資源或整隊的操作有明確確認；普通操作維持簡潔。
+
+副本與試煉沿用原生服務規則。本批不加入 Boss、爬塔、星環、續戰卡、不改新成長系統，也不改角色模型、動畫、FX、catalog、queue 或 grok-assets。四階轉職既已由前批接入；第四階重選沒有原生道具，仍明示未開放。
+
+三、查詢與寫入契約
+
+1. 新增 party/scene 獨立純讀投影，明確限定 kind=dungeon。回傳獨立欄位而非 Atlas 的 data.scene。提供目前／所選隊伍、每頁20筆大廳、近七日公開結束紀錄、個人最近歷史、技能與收據。
+2. 原 party/get 所用 view，以及 list、hall、hallGet，具有 sweep、advance 或 grantAll 副作用；保留原行為，不加入主場 READS。新增 snapshot 僅 SELECT，與舊 view 共用投影，開窗及五秒輪詢不推進或發獎。
+3. 新 App 與 Service 路由都核對 realm、帳號所有權及目前角色。App 額外核對真實角色歸屬，避免舊 active-character fallback。新查詢不經 withPlayer、不寫分析／活動紀錄；凍結世界可讀，寫入仍由原 phase/fence 控制。
+4. 到期或待結算以狀態呈現，純讀不偷偷完成結算。正式既有每分鐘 cron／有界 sweep 規則保持；本機 QA 的一秒檢查只是模擬已到期工作，不縮短真實回合期限，不能將其視為正式調度頻率。
+5. party/create、party/action、party/reward 保持原權威服務。手動戰術只是原生回合提交，不製造逐擊／逐施法事件或假傷害。
+6. 技能 MP、冷卻、熟練度及資格遵循戰鬥 actor 快照；有目標差異的技能依真正機制標記敵方、存活隊友、倒下隊友、自身或全體。原生職業攻擊不足魔力時沿原服務退回普通攻擊，UI 不誤寫固定零魔力，也不因低魔力禁用。
+7. 未學或失格的舊配置保留顯示原因且不能送出。技能書池採實際 dungeonSkillPool：非盜賊不混入盜賊書、盜賊遵循有效路線／fallback、試煉不冒造技能書池。
+8. drops 收據使用原生 characterId/name/received/items/at 形狀；不將隊員收據誤認成另一隊伍。
+
+四、斷線恢復、焦點與角色隔離
+
+未知結果保存在記憶體及 sessionStorage，可跨關窗／換角保留。恢復只查詢，不自動重送。party/action 與 party/reward 使用持久 pending.id 作原 requestId，保存與實際送出的 body 一致；create 不偽稱後端已有額外 idempotency 保證。
+
+使用者必須回到原 partyId 核對，查看別隊不能解除未知結果；未知建立則查實際目前隊伍。A→B、A→B→A 及較舊 revision 回覆不得更新新角色或清除新狀態。五秒輪詢保留確切 tab／副本／頁次與焦點。
+
+最後目視發現：從戰術區底部送出、回覆丟失時，待核對提示在上方而不在視野內。已作最小修正：每個 pending ID 只自動定位一次，焦點放到純讀 pending-view。RAF 執行前再核對 current context、dispose、root連線、頁面可見性、busy/loading 及 ID，dispose取消排程。後續輪詢不再次搶捲動／焦點，已知成功操作不觸發此定位。API 與 createClient 語意未改。
+
+五、測試與精確版本邊界
+
+A. 後端
+- 較廣相關組合53/53通過。
+- 最後契約測試24/24通過：20個本批 SQLite/API 測試＋4個既有盜賊回歸，0 fail/cancel/skip/todo，6來源SHA穩定。
+- backend-focused-receipt.json、backend-contract-receipt.json 保存原始結果。
+- 早期從 repo cwd 執行舊塔素材測試出現路徑失敗；改用官方 worker cwd 後通過，未為測試修改遊戲規則。
+
+B. 完整本機 gate
+- 2026-11-04 21:47:38（台灣時間）完成。
+- Worker 2878＋BOT205＝3083，全數通過；0 fail/cancel/skip/todo。
+- 依 scripts/run-tests.mjs 的全部284個 Worker 與23個 BOT 檔案，Node24.7.0、每服務 concurrency2。
+- 2310個來源檔 gate 前後 SHA 一致。
+- 收據：.release-sync/party-20261104/full-gate-receipt.json；immutable原始資料在 full-gate/2026-11-04T13-42-12-592Z-37136/。
+
+C. gate 後最後可視性修正
+- 上述3083項完整 gate 對應 scene-party-ui.js de386b2b110b2b7f53176ef68b1e10d75ed17726d95f3a3ebc5f1427e53961c6。
+- 最後 JS 為197ec1d4c718bb838f27521a299bd3d55bb84c327c81c1550892ee130edbfaff；對應測試1930f30728c8c6a59e05868e1cdbad2b125459bc0efac4e645f2610b49fc71b1。
+- 全來源比對僅上述UI module與測試2檔改動，其餘2308個相同。JS淨增23行、測試淨增96行。兩檔反向移除精確改動可回到gate SHA；變更是功能修正，不宣稱只有格式差異。
+- 修改後 UI/session 62/62通過，0 fail/cancel/skip/todo，6來源SHA穩定。收據 ui-focused-2026-11-04T13-55-18-055Z.json。
+- post-gate-source-bridge.json 與 final-source-manifest.json 保留完整橋接。最終提交完整測試由精確HEAD GitHub CI另核，不能把舊本機gate描述成新JS的完整測試。
+
+D. 真 Chrome 與實際 SQLite 流程
+- 320／390／1280四個頁籤共12個版面；無水平溢出，互動目標至少44px，焦點陷阱與關窗返回可用。
+- 3次純讀後兩個realm SQLite所有表SHA不變；勝利／獎勵補圖亦核對純讀，0遊戲寫入。
+- 三個不同合成帳號完成建立、加入、準備；非隊長與未全員準備不能出發。
+- 實際排程回合對隊友施放護盾，扣除原生MP與冷卻；同requestId不重複施法。
+- 伺服器已接受建立／戰術提交但前端丟回覆，關窗重開與核對仍只有一個原始POST；查看別隊不能解除原隊未知狀態。
+- 真勝利三帳號領獎一次，重複領取無增加；作戰結束有確認、釋放presence且不發未賺得的勝利獎勵。
+- 近況／歷史 IDs、第三頁籤與非首個副本焦點、職業書池、A→B晚成功及A→B→A晚409隔離已驗證。
+- 最後可視性修正使用新Chrome context，直接記錄HTTP收到的JS body SHA，驗證提示／純讀入口完整可見、一次性定位、後續純讀不搶焦點、已知成功不跳、取消／關窗／切角回覆隔離。定向分段的最終結果與限制以qa-summary.json為準。
+- root已目視9張代表圖，見visual-review.json。圖片涵蓋版面、隊友技能結果、未知結果缺陷與修正、結束確認、勝利及可見獎勵卡。
+
+瀏覽器證據採分段驗收，不宣稱有單一全流程全綠 run。核心流程 run 2026-11-04T13-37-13-623Z-35032 完成10項後，因腳本點擊已選中的 disabled 歷史頁籤超時，原run保留failed；續驗 2026-11-04T13-41-31-376Z-27808 完成其餘5項。後續定向run也保留招募隊伍清理誤用end、把BODY任務文案當焦點身分的驗收腳本失敗，修正後只補剩餘項。qa-summary.json、browser-workflow-source-bridge.json及最終source bridge列出對應版本，未抹除失敗原件。這些腳本失敗不得寫成產品全流程成功，也不得為了漂亮收據無限重跑已通過項。
+
+六、隔離預覽
+
+主場：http://127.0.0.1:9743/
+記憶體API：http://127.0.0.1:9742/
+本批預覽目前記錄launcher PID49064；接手仍應先核對實際command line和health，勿只按PID終止程序。
+啟動與來源：preview-process.json、preview-backend-sources.json。
+health確認isolated=true、ephemeral=true、productionAccess=false，RPG_PARTY_QA opt-in，六個合成角色／三個帳號（90101／90102／90103）。
+合成角色的高能力、MP、獎勵或戰鬥時間只是流程fixture，不是正式平衡證據。瀏覽器與API只連本機，舊工作樹與預覽均保留。不得為無理由重測而重置目前合成隊伍或停止其他Node程序。
+
+七、接續計畫與未完成整體工作
+
+下一批建議爬塔與塔印工坊，在本批通過最終CI的提交上建立新的獨立分支。來源稽核顯示 tower/status 經 withPlayer，不純讀；塔v2的lost/ended也可能按實際通關層數發部分徽記，不能直接照搬dungeon的won-only條件。每日次數以角色及台灣日界計，出發扣次；塔印需保留裝備既有投資與原子from／背景作業保護。下一批細部計畫保存於本批交接NEXT_BATCH_PLAN.json，僅計畫，尚未實作。
+
+整體仍待：天使、命運、交易、Boss、爬塔、星環、衣櫥、完整帳務等舊頁整合；逐次攻擊／施法／傷害事件與角色／FX接線；Lv600五輪、16招覺醒及後續專精；正式玩家經濟與高強化平衡；完整賽季drain／manifest／跨D1匯入與防重；正式Telegram宿主及實體手機驗收；320px主場HUD與角色頭部的既有重疊。不得把本批副本完成等同全部遊戲完成。
+
+八、交接與操作規則
+
+沿用StarJournal-NonCharacter-Checkpoint-30m與StarJournal-AtlasSupply-Checkpoint-30m，PT30M，重大里程碑亦立即更新STATUS並checkpoint。generatedAt是觀測時間，updatedAt是人工語意進度；排程只記錄，不自動改碼、測試、commit、merge或deploy。
+主LATEST由既有checkpoint腳本產生；START_HERE、主STATUS及本批STATUS共同指向最新工作樹。
+共享全域MCP agent_workflow/task_control屬其他並行工作，不接續、不停止。角色／FX/catalog/queue/grok-assets維持其他工作線所有權。
+所有整合PR保持草稿與未合併；正式環境依使用者指示凍結，未部署、未改正式DB／Secrets／migrations／旗標。

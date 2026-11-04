@@ -59,7 +59,7 @@ export const APP_ACTIONS = Object.freeze({
   'star-ring/create':'/rpg/star-ring/create','star-ring/action':'/rpg/star-ring/action','star-ring/shop':'/rpg/star-ring/shop',
   'star-ring/cosmetics':'/rpg/star-ring/cosmetics','star-ring/cosmetics/equip':'/rpg/star-ring/cosmetics/equip',
 
-  'forge/receipt':'/rpg/forge/receipt','skill-career':'/rpg/skill-career',
+  'forge/receipt':'/rpg/forge/receipt','skill-career':'/rpg/skill-career','party/scene':'/rpg/party/scene',
   'monster-exchange':'/rpg/monster-exchange',
   'equipment-recovery':'/rpg/equipment-recovery','equipment-recovery/preview':'/rpg/equipment-recovery/preview','equipment-recovery/action':'/rpg/equipment-recovery/action',
   'equipment-collection':'/rpg/equipment-collection','equipment-collection/preview':'/rpg/equipment-collection/preview','equipment-collection/submit':'/rpg/equipment-collection/submit',
@@ -146,7 +146,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
     return json({ok:true,realms,selectedRealmId:selected});
   }
-  if((action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if((action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
   if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
   const originalJson=json;
   json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
@@ -194,6 +194,11 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     return fail('character_changed', '這個 Telegram 帳號已在另一個視窗切換角色，請重新選角後再操作', 409);
   // Pure projections must not settle idle time or create an admin behavior write.
   if(action==='skill-career')return json(await routes['POST /rpg/skill-career'](env,{tgId:safe.tgId},now));
+  if(action==='party/scene'){
+    const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
+    if(!owned)return fail('no_character','找不到目前帳號的角色',404);
+    return json(await routes['POST /rpg/party/scene'](env,{tgId:safe.tgId,partyId:body.partyId,tab:body.tab,page:body.page,sinceTurnId:body.sinceTurnId},now));
+  }
   if(action==='forge/receipt')return json(await FORGE_RECEIPT.view(env,{tgId:safe.tgId,kind:body.kind,requestId:body.requestId,namespace:'app'},now));
   if (action === 'exchange/history') return json(await exchangeHistory(env, safe.tgId, safe));
   if (auth.user?.username && action === 'me') await T.touchUsername(env, safe.tgId, auth.user.username).catch(() => null);

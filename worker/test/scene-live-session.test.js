@@ -648,3 +648,23 @@ test('an offline skill-career read is not an uncertain write and is never retrie
  assert.equal(result.ok,false);assert.equal(result.error.uncertain,false);
  assert.equal(result.error.code,'connection_failed');assert.equal(h.net.calls.length,1);
 });
+
+test('party scene is a pure read with no mutation barrier or implicit Atlas follow-up',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ const refresh=h.client.refresh(),read=h.client.request('party/scene',{tab:'active',page:1});
+ assert.deepEqual(h.net.calls.map(c=>c.action),['atlas/status','party/scene']);
+ h.net.calls[1].reply({ok:true,characterId:'a',party:null});
+ assert.equal((await read).party,null);
+ h.net.calls[0].reply({ok:true,scene:scene()});
+ assert.equal((await refresh).characterId,'a');
+ assert.equal(h.net.calls.length,2);
+});
+test('offline party projection is a read; party creation and tactics remain uncertain writes',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ for(const action of ['party/scene','party/create','party/action','party/reward']){
+  const read=outcome(h.client.request(action,{partyId:'p1',op:'submit',round:2}));
+  h.net.calls.at(-1).fail();const result=await read;
+  assert.equal(result.error.uncertain,action!=='party/scene');
+ }
+ assert.deepEqual(h.net.calls.map(c=>c.action),['party/scene','party/create','party/action','party/reward']);
+});

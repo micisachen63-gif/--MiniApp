@@ -206,6 +206,17 @@ export async function view(env,id,tg,now,sinceTurnId=null){
  let p=await load(env.DB,id);if(p.status==='lobby'&&p.expires_at<=now){await sweep(env,now);p=await load(env.DB,id);}
  if(p.status==='combat'&&(now>=Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity))) {await advance(env,id,now);p=await load(env.DB,id);}
   if(towerRewardable(p)&&await grantAll(env,p,now))p=await load(env.DB,id);
+ return projectParty(env,p,tg,now,sinceTurnId);
+}
+// Only SELECTs and pure projection; used by party/scene, never by the legacy ticker.
+export async function snapshot(env,id,tg,now,sinceTurnId=null){
+ const p=await load(env.DB,id),result=await projectParty(env,p,tg,now,sinceTurnId);
+ const expired=p.status==='lobby'&&p.expires_at<=now;
+ const due=p.status==='combat'&&now>=Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity);
+ if(result.me)result.me.submission=p.state.actions[tg]?{...p.state.actions[tg],round:p.state.round}:null;
+ return {...result,expired,pendingSettlement:expired||due,nextSettlementAt:p.status==='lobby'?p.expires_at:p.status==='combat'?Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity):null};
+}
+async function projectParty(env,p,tg,now,sinceTurnId){
  const s=p.state,card=await cardRecord(env.DB,p);
  const cooperation=cooperationView(s),plan=briefing(s.roleRules,s.actors.length?s.actors:p.members.map(m=>({...m,id:m.char_id})));
  const recent=s.recentTurns?.length?s.recentTurns:s.lastTurn?[s.lastTurn]:[],cursor=sinceTurnId?recent.findIndex(t=>t.id===String(sinceTurnId)):-1;

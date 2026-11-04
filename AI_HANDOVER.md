@@ -1,3 +1,42 @@
+# 三人副本與轉職試煉主浮窗整合（2026-11-04）
+
+本批工作樹：`D:\StarJournal\worktree-snapshots\star-journal-party-integration-20261104`
+分支：`codex/party-integration-20261104`；接續已驗收 PR51 的 `264f7e78760704c7008d9ddc1e82519788ab4999`。
+本批完整報告：`docs/PARTY_INTEGRATION_20261104.txt`。
+
+## 已完成
+
+- 主戰鬥單浮窗的目前隊伍、三人副本、轉職試煉、組隊大廳；建立／加入／準備／出發、隊友與合法目標、手動戰術、離隊／結束、實際獎勵與隊員收據。
+- 新 `party/scene` 與共用SELECT-only snapshot，開頁／輪詢不推進、清理或發獎；保留舊party查詢原副作用，不將其標為READS。App／Service檢查realm、帳號及選角，不經withPlayer。
+- actor快照的MP／CD／技能資格與機制目標；原生低魔力普通攻擊fallback、真正職業技能書池、失格配置原因及原回合submission。
+- pending與原requestId保留；未知結果只讀核對原隊、不自動重送，A/B/A／舊revision隔離。
+- 最後目視修正：每個未知pending只定位提示一次，焦點放純讀入口；輪詢不搶焦點，dispose／切角／隱藏及舊RAF守衛。
+
+## 驗證與來源界線
+
+- 後端最後24/24通過，較廣53/53保留；最後UI/session62/62通過。
+- 本機完整gate於21:47:38完成：Worker2878＋BOT205＝3083，0 fail/cancel/skip/todo，284＋23檔官方完整清單，Node24.7.0／concurrency2，2310來源前後SHA一致。
+- 完整gate對應UI `de386b2b...`。其後僅UI module及測試兩檔為一次性提示可見性修正，最後UI為`197ec1d4...`；其餘2308來源相同。最後UI有62項受影響測試及新Chrome context定向驗收，精確HEAD完整CI另核。不能將舊完整gate當成最終JS已跑過完整本機測試。
+- Chrome版面12頁，320／390／1280；核心10項與續驗5項分段完成，真三帳號／真API回合、隊友護盾、勝利防重、未知建立／戰術不重送及切角晚回覆隔離。最後pending定位另作定向實測，HTTP JS body SHA與來源相同。root目視9張代表圖。
+- 瀏覽器run保留腳本錯選disabled歷史頁籤、招募清理動作及BODY文案比較的失敗紀錄，續驗只補剩餘項，沒有宣稱單一全流程run全綠。最終逐項判定以`qa-summary.json`為準。
+- 證據根：`.release-sync/party-20261104/`；重要收據為`full-gate-receipt.json`、`post-gate-source-bridge.json`、`ui-focused-2026-11-04T13-55-18-055Z.json`、`qa-summary.json`、`visual-review.json`。不要無故重跑成功驗收。
+
+## 接手
+
+本批隔離預覽 `http://127.0.0.1:9743/`／記憶體API `http://127.0.0.1:9742/`，isolated/ephemeral、productionAccess=false，六合成角色／三帳號。程序與來源見`preview-process.json`、`preview-backend-sources.json`；QA一秒檢查沿用真deadline，正式cron頻率未改。原預覽全保留。
+
+本批提交／草稿PR／精確HEAD CI，見`local-submission-receipt.json`、`pr-receipt.json`、`ci-final-receipt.json`及`D:\StarJournal\handoff\non-character\party-integration-20261104\STATUS.json`；不得引用PR51的CI代替。
+
+下一批為爬塔／塔印工坊，詳細來源計畫見本批交接`NEXT_BATCH_PLAN.json`。注意舊tower/status會withPlayer結算、塔戰lost/ended可能有部分獎勵、每日次數按角色台灣日界並於出發扣除、塔印原子保護及投資保留；此計畫尚未實作。
+
+Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件／角色FX接線、600級／16覺醒、正式平衡與賽季跨DB移轉、正式Telegram／真機及320px角色遮擋仍在主STATUS待辦。
+
+沿用兩個30分鐘Windows排程並在里程碑立即checkpoint。禁止操作共享全域MCP agent_workflow/task_control；不停止其他預覽。正式環境凍結，不部署、不合併main、不改正式DB／Secrets／migration／旗標；角色／FX／catalog／queue／grok-assets由其他工作線處理。
+
+---
+
+## 前序交接（完整保留）
+
 # 技能與轉職主浮窗整合（2026-11-04）
 
 本批工作樹：`D:\StarJournal\worktree-snapshots\star-journal-skill-career-integration-20261104`

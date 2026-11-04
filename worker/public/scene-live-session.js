@@ -1,7 +1,7 @@
 /* One context for the local scene and its real Atlas windows. Reads never settle. */
 (() => {
   'use strict';
-  const READS = new Set(['meta','characters','skill-career','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
+  const READS = new Set(['meta','characters','skill-career','party/scene','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
     const endpoint = options.endpoint;

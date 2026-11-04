@@ -159,7 +159,7 @@
   inventory:{title:'背包',group:'inventory'},adventure:{title:'冒險',group:'adventure'},camp:{title:'營地',group:'camp'},
   chat:{title:'聊天與社交',group:'social'},quests:{title:'任務與委託',group:'adventure'},characters:{title:'選擇角色',group:'character'},
   talents:{title:'天賦星盤',group:'character'},progression:{title:'冒險成長路線',group:'adventure'},build:{title:'技能與輔助配置',group:'character'},
-  skills:{title:'職業技能',group:'character'},career:{title:'轉職與進修',group:'character'},
+  skills:{title:'職業技能',group:'character'},career:{title:'轉職與進修',group:'character'},party:{title:'組隊副本',group:'adventure'},
   expedition:{title:'星圖派遣',group:'adventure'},workshop:{title:'強化與洗鍊工坊',group:'camp'},inscription:{title:'定向銘刻工坊',group:'camp'},
   supplies:{title:'補給設定',group:'camp'},shop:{title:'商店',group:'camp'},gearbook:{title:'裝備收藏冊',group:'camp'},recovery:{title:'典藏與精煉',group:'camp'}
  };
@@ -189,7 +189,7 @@
   const entries=route==='character'?[
    ['equipment','穿戴與能力','查看裝備、比較與穿脫'],['inventory','持有裝備','開啟共用詳情與整理'],['skills','職業技能','學習、裝備與自動施法'],['career','轉職與進修','職業分支、條件與進修'],['build','星圖技能','主技能、輔助與自動策略'],['talents','天賦星盤','預覽路線與配置節點'],['progression','成長路線','查看可達成的下一個目標'],['characters','切換角色','沿用目前世界']
   ]:route==='adventure'?[
-   ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['quests','任務與委託','教學、每日、每週與調查鏈'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
+   ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['quests','任務與委託','教學、每日、每週與調查鏈'],['party','組隊副本','三人副本、試煉與戰術'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
   ]:[
    ['workshop','強化與洗鍊','單次操作、自動作業與結果'],['recovery','典藏與精煉','首件典藏、重複精煉、材料重洗'],['gearbook','裝備收藏冊','完成原有套組與永久能力'],['inscription','星圖銘刻','使用探索材料定向加工'],['shop','商店','藥水、卷軸、裝備與寶箱'],['supplies','補給設定','原版藥水設定與補滿']
   ];
@@ -203,9 +203,10 @@
   if(['character','adventure','camp'].includes(entry.route))return paintHub(body,entry.route,host);
   if(['equipment','inventory','item'].includes(entry.route)){const module=await loadSceneModule('scene-inventory-ui','RpgSceneInventory');if(api.current())return module.mount(body,host,{mode:entry.route,itemId:entry.params.itemId});return;}
   if(['skills','career'].includes(entry.route)){const module=await loadSceneModule('scene-skills-ui','RpgSceneSkills');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
+  if(entry.route==='party'){const module=await loadSceneModule('scene-party-ui','RpgSceneParty');if(api.current())return module.mount(body,host,entry.params);return;}
   if(entry.route==='workshop'){const module=await loadSceneModule('scene-workshop-ui','RpgSceneWorkshop');if(api.current())return module.mount(body,host,entry.params);return;}
   if(['supplies','shop'].includes(entry.route)){const module=await loadSceneModule('scene-supply-ui','RpgSceneSupply');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
-  if(entry.route==='chat'){chatView=window.RpgSceneChatUI.mountPanel(body,chat);void chat.refresh();return chatView;}
+  if(entry.route==='chat'){const shortcuts=document.createElement('div');shortcuts.className='scene-social-shortcuts';const partyButton=document.createElement('button');partyButton.type='button';partyButton.dataset.sceneRoute='party';partyButton.textContent='我的隊伍';partyButton.style.minHeight='44px';partyButton.onclick=()=>host.navigate('party',{tab:'current'});shortcuts.append(partyButton);const chatBody=document.createElement('div');body.replaceChildren(shortcuts,chatBody);chatView=window.RpgSceneChatUI.mountPanel(chatBody,chat);void chat.refresh();return chatView;}
   if(entry.route==='quests'){paintQuests();void refreshQuests();return {dispose(){}};}
   if(entry.route==='characters'){await paintCharacters(body,host);return {dispose(){}};}
   if(entry.route==='gearbook'){paintLegacyGearbook(body,host);return atlasView;}

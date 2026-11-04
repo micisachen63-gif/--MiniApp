@@ -9,6 +9,8 @@ import { CurrentClientRequest } from '../test/client-request.js';
 import { handle } from '../src/index.js';
 import * as Player from '../src/services/player.js';
 import * as AtlasBackground from '../src/services/atlas-background.js';
+import * as Party from '../src/services/party.js';
+import { seedPartyQa, partyQaSnapshot } from './party-qa-fixture.mjs';
 import * as AutoEnhance from '../src/services/auto-enhance.js';
 import * as AutoReroll from '../src/services/auto-reroll.js';
 import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
@@ -32,6 +34,7 @@ const env = {
 };
 const now = Date.now();
 const skillCareerQa = process.env.RPG_SKILL_CAREER_QA === '1';
+const partyQa = process.env.RPG_PARTY_QA === '1';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
 const permanent = scopeEnvForRealm(env, await resolveRealm(env, 'permanent'));
@@ -54,6 +57,7 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   for(let i=0;i<14;i++){const sample=makeGear({id:`recovery-fixture:${id}:${i}`,tgId:id,cls:baseClass,slot:i<12?'boots':'ring',tier:1,rng:()=>.2,now,source:i<6?'atlas':'elite',forceRarity:'common',prefix:'試玩'});await insertEquipStmt(env.DB,sample).run();}
   for (const material of ['atlas_shard', 'atlas_iron', 'atlas_ember', 'atlas_venom']) db.prepare('INSERT INTO rpg_atlas_materials(char_id,material,quantity) VALUES(?,?,100)').run(id, material);
 }
+const partyQaFixtures=partyQa?await seedPartyQa(env,permanent,now):[];
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
 let sweeping=false;
@@ -63,12 +67,16 @@ sweepTimer.unref();
 let workshopRunning=false;
 const workshopTimer=setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
 workshopTimer.unref();
+// Only this opt-in, disposable preview checks due party work. Actual round deadlines stay unchanged.
+let partySweeping=false;
+const partySweepTimer=partyQa?setInterval(async()=>{if(partySweeping)return;partySweeping=true;try{await Party.sweep(permanent,Date.now());}catch(error){console.error('isolated party sweep',error.message);}finally{partySweeping=false;}},1000):null;
+partySweepTimer?.unref();
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','skill-career','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','skill-career','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -76,8 +84,13 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa }));
+      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,partySweepMs:partyQa?1000:null }));
       return;
+    }
+    if (partyQa && url.pathname === '/__preview/party-qa/state') {
+      if(req.method!=='GET'){res.writeHead(405);res.end();return;}
+      res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});
+      res.end(JSON.stringify(partyQaSnapshot(env,partyQaFixtures)));return;
     }
     if (url.pathname.startsWith('/app/api/')) {
       let body = '';
@@ -108,6 +121,6 @@ server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({
   url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, ephemeral: true,
   notice: '本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
 })));
-function close() { clearInterval(sweepTimer);clearInterval(workshopTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
+function close() { clearInterval(sweepTimer);clearInterval(workshopTimer);if(partySweepTimer)clearInterval(partySweepTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
 process.once('SIGINT', close);
 process.once('SIGTERM', close);

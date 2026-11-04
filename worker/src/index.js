@@ -14,6 +14,7 @@ import * as HALL from './services/hero-hall.js';
 import {bossExchange} from './services/boss-exchange.js';
 import * as SP from './services/special.js';
 import * as SKILL_CAREER from './services/skill-career.js';
+import * as PARTY_SCENE from './services/party-scene.js';
 import * as PARTY from './services/party.js';
 import * as STAR_RING from './services/star-ring.js';
 import * as STAR_RING_COSMETICS from './services/star-ring-cosmetics.js';
@@ -161,6 +162,7 @@ const routes = {
   'POST /rpg/background/notice-status': (env,b)=>BACKGROUND.status(env,tgOf(b),b),
   'POST /rpg/auto-enhance/status': async(env,b)=>({ok:true,job:await AUTO.view(env,tgOf(b))}),
   'POST /rpg/skill-career': (env,b,now)=>SKILL_CAREER.view(env,tgOf(b),now),
+  'POST /rpg/party/scene': (env,b,now)=>PARTY_SCENE.view(env,tgOf(b),b,now),
   'POST /rpg/expedition/me': (env,b,now)=>SP.view(env,tgOf(b),now),
   'POST /rpg/expedition/action': (env,b,now)=>SP.action(env,tgOf(b),b,now),
   'POST /rpg/expedition/share': (env,b,now)=>SP.share(env,tgOf(b),b,now),
@@ -415,7 +417,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -425,7 +427,7 @@ export async function handle(request, env) {
       return json(await route(env,routeBody,now));
     }
     env=await prepareRealmEnv(request,env);
-    if(url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'){
+    if(url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'){
       const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
       const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
       if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);
