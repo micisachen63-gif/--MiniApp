@@ -9,6 +9,8 @@ import { CurrentClientRequest } from '../test/client-request.js';
 import { handle } from '../src/index.js';
 import * as Player from '../src/services/player.js';
 import * as AtlasBackground from '../src/services/atlas-background.js';
+import * as AutoEnhance from '../src/services/auto-enhance.js';
+import * as AutoReroll from '../src/services/auto-reroll.js';
 import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
 import {makeGear} from '../src/game/gear.js';
 import {insertEquipStmt} from '../src/db.js';
@@ -41,7 +43,7 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   const id = player.char.tg_id, db = env.DB.sqlite;
   db.prepare('UPDATE rpg_characters SET level=15,gold=50000,last_settle_at=? WHERE tg_id=?').run(now, id);
   db.prepare("UPDATE rpg_equipment SET enhance_level=7 WHERE tg_id=? AND slot='weapon'").run(id);
-  for (const item of ['red_1', 'blue_1']) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,500) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=500').run(id, item);
+  for (const [item,quantity] of [['red_1',500],['blue_1',500],['scroll_w',20],['scroll_a',20]]) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,?) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=excluded.quantity').run(id,item,quantity);
   for(const collection of equipmentCollectionCatalog(baseClass).filter(c=>c.tier===1))for(const r of collection.requirements){const item=makeGear({id:`collection-fixture:${id}:${r.slot}`,tgId:id,cls:baseClass,slot:r.slot,kind:r.kind,tier:1,rng:()=>.2,now,source:'local-collection-fixture',forceRarity:'common'});item.enhance_level=r.slot==='weapon'?4:r.minEnhance;await insertEquipStmt(env.DB,item).run();}
   // Disposable surplus lets the same real API exercise archive, salvage and reroll.
   for(let i=0;i<14;i++){const sample=makeGear({id:`recovery-fixture:${id}:${i}`,tgId:id,cls:baseClass,slot:i<12?'boots':'ring',tier:1,rng:()=>.2,now,source:i<6?'atlas':'elite',forceRarity:'common',prefix:'試玩'});await insertEquipStmt(env.DB,sample).run();}
@@ -52,12 +54,16 @@ const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; ch
 let sweeping=false;
 const sweepTimer=setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
 sweepTimer.unref();
+// The same production step functions, with real due times, in disposable local data.
+let workshopRunning=false;
+const workshopTimer=setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
+workshopTimer.unref();
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -97,6 +103,6 @@ server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({
   url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, ephemeral: true,
   notice: '本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
 })));
-function close() { clearInterval(sweepTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
+function close() { clearInterval(sweepTimer);clearInterval(workshopTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
 process.once('SIGINT', close);
 process.once('SIGTERM', close);
