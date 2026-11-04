@@ -12,6 +12,7 @@ import { questEventStatements, activityEventStatements, isPermanentQuestRealm } 
 import {readAtlasTalents} from './atlas-talents.js';
 import { projectAtlasScene } from '../game/atlas-scene.js';
 import { materializeAtlasEquipment, atlasInventoryDrops } from '../game/atlas-loot.js';
+import { ATLAS_SUPPLY_RULES_VERSION, ATLAS_POTION_KEYS, atlasSupplyPolicyForCharacter, isVersionedAtlasSupplies } from '../game/atlas-supplies.js';
 
 export const ATLAS_RECIPES=Object.freeze([
  {id:'temper',name:'精鐵淬鍊',description:'提高這件裝備的基礎能力 3%；強化值原樣保留。',cost:{atlas_shard:12,atlas_iron:4},stat:'base_stat'},
@@ -25,6 +26,38 @@ const ensure=(env,now)=>{if(!enabled(env))throw new GameError('atlas_unavailable
 const integer=(value,min,max,label)=>{if(!Number.isInteger(value)||value<min||value>max)throw new GameError('atlas_input',`${label}超出有效範圍`);return value;};
 const requestId=body=>{const id=String(body.requestId||'');if(!/^[\w:-]{6,96}$/.test(id))throw new GameError('request','需要有效的操作編號');return id;};
 const parse=value=>typeof value==='string'?JSON.parse(value):value;
+const potionItems=inventory=>Object.fromEntries(ATLAS_POTION_KEYS.map(key=>[key,inventory[key]||0]));
+const potionCount=(items,kind)=>ATLAS_POTION_KEYS.filter(key=>key.startsWith(kind+'_')).reduce((sum,key)=>sum+(items[key]||0),0);
+const supplyLedgerKey=key=>key==='red_1'?'hp':key==='blue_1'?'mp':key;
+function requestedSupplies(value){
+ const input=value??{};
+ if(typeof input!=='object'||Array.isArray(input))throw new GameError('atlas_input','請填寫有效的攜帶藥水數量');
+ const itemized=Object.hasOwn(input,'items');
+ // Legacy clients may include restore hints; those remain ignored, never trusted.
+ const allowed=itemized?['items']:['hp','mp','hpRestore','mpRestore'];
+ if(Object.keys(input).some(key=>!allowed.includes(key)))throw new GameError('atlas_input','攜帶藥水格式無效；喝水設定請在補給頁保存');
+ if(!itemized){
+  const signature={hp:integer(input.hp??0,0,500,'紅水數量'),mp:integer(input.mp??0,0,500,'藍水數量')};
+  return {signature,items:potionItems({red_1:signature.hp,blue_1:signature.mp})};
+ }
+ const items=input.items;
+ if(!items||typeof items!=='object'||Array.isArray(items)||Object.keys(items).some(key=>!ATLAS_POTION_KEYS.includes(key)))throw new GameError('atlas_input','請選擇有效的紅水或藍水種類');
+ const normalized=Object.fromEntries(ATLAS_POTION_KEYS.map(key=>[key,integer(Object.hasOwn(items,key)?items[key]:0,0,500,POTIONS[key].name)]));
+ integer(potionCount(normalized,'red'),0,500,'紅水合計');
+ integer(potionCount(normalized,'blue'),0,500,'藍水合計');
+ return {signature:{items:normalized},items:normalized};
+}
+function supplyView(supplies){
+ const view={hp:supplies.hp,mp:supplies.mp};
+ if(isVersionedAtlasSupplies(supplies))Object.assign(view,{
+  supplyRulesVersion:supplies.supplyRulesVersion,items:{...supplies.items},initialItems:{...supplies.initialItems},usedItems:{...supplies.usedItems},policy:{...supplies.policy},
+ });
+ return view;
+}
+function availableSupplies(player){
+ const items=potionItems(player.inv);
+ return {hp:items.red_1,mp:items.blue_1,totals:{hp:potionCount(items,'red'),mp:potionCount(items,'blue')},items,policy:atlasSupplyPolicyForCharacter(player.char),supplyRulesVersion:ATLAS_SUPPLY_RULES_VERSION};
+}
 const profileFor=(row,baseClass)=>{
  const build=getAtlasBuild(row?.build_id)||getAtlasCatalog().builds.find(x=>x.baseClass===baseClass);
  return {buildId:build.id,supportIds:row?parse(row.supports_json):[...build.recommendedSupports],automation:row?.automation||build.recommendedAutomation||'balanced',revision:row?.rev||0};
@@ -46,7 +79,8 @@ export async function catalog(env,charId=null,now=Date.now()){
  const open=enabled(env);
  const old=!open&&charId?await env.DB.prepare('SELECT * FROM rpg_live_characters WHERE tg_id=?').bind(charId).first():null;
  const visible=open||!!old?.atlas_run_id;
- return {ok:true,enabled:visible,canStart:canStart(env,now),realmId:realmId(env),catalog:{...getAtlasCatalog(),enabled:visible,canStart:canStart(env,now),recipes:ATLAS_RECIPES,maxCraftsPerItem:3}};
+ return {ok:true,enabled:visible,canStart:canStart(env,now),realmId:realmId(env),catalog:{...getAtlasCatalog(),enabled:visible,canStart:canStart(env,now),recipes:ATLAS_RECIPES,maxCraftsPerItem:3,
+  supplyRules:{version:ATLAS_SUPPLY_RULES_VERSION,maxPerKind:500,potions:ATLAS_POTION_KEYS.map(id=>({id,name:POTIONS[id].name,kind:id.startsWith('red_')?'red':'blue',heal:POTIONS[id].heal}))}}};
 }
 
 export function runView(row,now,realmCutoff=null){
@@ -57,7 +91,7 @@ export function runView(row,now,realmCutoff=null){
   startedAt:s.startedAt*1000,endsAt,processedAt:s.processedAt*1000,
   progress:{ratio:row.status==='completed'?1:Math.min(1,s.elapsedSeconds/s.durationSeconds),elapsedSeconds:target,processedSeconds:s.elapsedSeconds,catchingUp:row.status==='running'&&s.elapsedSeconds<target},
   report:{gold:s.totals.gold,exp:s.totals.exp,materials:{...s.totals.materials},...(s.ruleset_version==='atlas-v4'?{equipment:s.totals.equipment||0,items:{...s.totals.items}}:{}),kills:s.metrics.kills,deaths:row.status==='failed'?1:0,used:{hp:s.supplies.hpUsed,mp:s.supplies.mpUsed},reason:s.stopReason,metrics:s.metrics},
-  supplies:{hp:s.supplies.hp,mp:s.supplies.mp},stopRequested:row.stop_at!=null};
+  supplies:supplyView(s.supplies),stopRequested:row.stop_at!=null};
 }
 
 export async function status(env,charId,now){
@@ -76,7 +110,7 @@ export async function status(env,charId,now){
  return {ok:true,scene,enabled:enabled(env)||!!p.char.atlas_run_id,canStart:canStart(env,now),realmId:realmId(env),characterId:charId,profile:profileFor(profile,p.char.base_class),run:runView(run,now,env.REALM_CONTEXT?.cutoffAt),
   materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,talents:await readAtlasTalents(db,p.char),profileSaved:!!profile,
   availableMapIds:getAtlasCatalog().maps.filter(m=>m.minLevel<=p.char.level&&m.prerequisites.every(id=>completed[id]>0)).map(m=>m.id),
-  supplies:{hp:p.inv.red_1||0,mp:p.inv.blue_1||0},
+  supplies:availableSupplies(p),
   equipment:p.equipment.map(e=>({id:e.id,name:e.name,slot:e.slot,enhanceLevel:e.enhance_level,baseStat:e.base_stat,crafts:counts[e.id]||0,tradeLocked:!!e.trade_id})),now};
 }
 
@@ -106,7 +140,7 @@ export async function start(env,charId,body,now){
  if(!ATLAS_QUEUE_MODES.some(mode=>mode.id===queueMode))throw new GameError('atlas_invalid_queue','不支援的出征方式');
  if(queueMode==='duration'&&body.mapCount!=null)throw new GameError('atlas_invalid_queue','持續探索不使用張數上限');
  const mapCount=queueMode==='count'?integer(body.mapCount??1,1,ATLAS_MAX_MAP_COUNT,'地圖數量'):null,durationMinutes=integer(body.durationMinutes??60,1,480,'出征時間');
- const supplies={hp:integer(body.supplies?.hp??0,0,500,'紅水數量'),mp:integer(body.supplies?.mp??0,0,500,'藍水數量')};
+ const requested=requestedSupplies(body.supplies),supplies=requested.signature,items=requested.items;
  // Keep the exact legacy signature for count runs, including response-loss retries.
  const signature=JSON.stringify({...(queueMode==='duration'?{queueMode}:{}),charId,mapId:map.id,mapCount,durationMinutes,supplies});
  if(await receipt(db,account,id,'start',signature))return status(env,charId,now);
@@ -127,7 +161,7 @@ export async function start(env,charId,body,now){
   if(work.char.level<map.minLevel)throw new GameError('atlas_level',`這張星圖需要 ${map.minLevel} 級`);
   const cleared=(await ctx.db.prepare('SELECT map_id FROM rpg_atlas_progress WHERE char_id=? AND completions>0').bind(charId).all()).results.map(r=>r.map_id);
   if(map.prerequisites.some(key=>!cleared.includes(key)))throw new GameError('atlas_locked','請先完成前一張教學星圖');
-  if((work.inv.red_1||0)<supplies.hp||(work.inv.blue_1||0)<supplies.mp)throw new GameError('insufficient','攜帶的紅水或藍水超過背包數量');
+  if(ATLAS_POTION_KEYS.some(key=>(work.inv[key]||0)<items[key]))throw new GameError('insufficient','攜帶的紅水或藍水超過背包數量');
   const row=await ctx.db.prepare('SELECT * FROM rpg_atlas_profiles WHERE char_id=?').bind(charId).first(),profile=profileFor(row,work.char.base_class);
   const stats=computeStats(work.char,work.equipment.filter(e=>e.is_equipped));
   let balanceProfile;
@@ -135,9 +169,9 @@ export async function start(env,charId,body,now){
   const talentState=await readAtlasTalents(ctx.db,work.char);
   const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,talentIds:talentState.allocatedIds,
    snapshot:{...stats,characterId:charId,baseClass:work.char.base_class,classPath:work.char.class_path||'',hp:Math.max(1,Math.min(work.char.hp,stats.maxHp)),mp:Math.max(0,Math.min(work.char.mp,stats.maxMp))},
-   supplies:{...supplies,hpRestore:POTIONS.red_1.heal,mpRestore:POTIONS.blue_1.heal}});
-  work.inv.red_1=(work.inv.red_1||0)-supplies.hp;work.inv.blue_1=(work.inv.blue_1||0)-supplies.mp;
-  return {ledger:[...['hp','mp'].filter(k=>supplies[k]>0).map(k=>({event_id:`atlas:${runId}:reserve:${k}`,tg_id:charId,type:'星圖補給保留',item:k==='hp'?'red_1':'blue_1',item_delta:-supplies[k]}))],extra:[
+   supplies:{items,policy:atlasSupplyPolicyForCharacter(work.char)}});
+  for(const key of ATLAS_POTION_KEYS)if(items[key]>0)work.inv[key]=(work.inv[key]||0)-items[key];
+  return {ledger:ATLAS_POTION_KEYS.filter(key=>items[key]>0).map(key=>({event_id:`atlas:${runId}:reserve:${supplyLedgerKey(key)}`,tg_id:charId,type:'星圖補給保留',item:key,item_delta:-items[key]})),extra:[
    ctx.db.prepare('INSERT INTO rpg_atlas_runs(id,realm_id,account_id,char_id,status,state_json,started_at,updated_at) VALUES(?,?,?,?,?,?,?,?)').bind(runId,realmId(env),account,charId,'running',JSON.stringify(state),state.startedAt*1000,now),
    ctx.db.prepare('UPDATE rpg_characters SET atlas_run_id=? WHERE tg_id=? AND atlas_run_id IS NULL').bind(runId,charId),guardStmt(ctx.db),
    receiptStmt(ctx.db,account,id,'start',signature,{runId},now),
@@ -184,12 +218,15 @@ export async function settle(env,charId,body,now){
   work.char.last_settle_at=Math.max(Number(work.char.last_settle_at)||0,now);
   const done=next.status!=='running';
   if(done){
-   work.inv.red_1=(work.inv.red_1||0)+next.supplies.hp;work.inv.blue_1=(work.inv.blue_1||0)+next.supplies.mp;
+   const remaining=isVersionedAtlasSupplies(next.supplies)?next.supplies.items:{red_1:next.supplies.hp,blue_1:next.supplies.mp};
+   for(const [key,quantity]of Object.entries(remaining))if(quantity>0){
+    work.inv[key]=(work.inv[key]||0)+quantity;
+    entries.push({event_id:`atlas:${run.id}:refund:${supplyLedgerKey(key)}`,tg_id:charId,type:'星圖補給歸還',item:key,item_delta:quantity});
+   }
    const finalStats=computeStats(work.char,work.equipment.filter(e=>e.is_equipped));
    const talentLife=next.talentSnapshot?.spent>0;
    work.char.hp=Math.max(1,Math.min(finalStats.maxHp,Math.floor(talentLife?next.hero.hp/next.snapshot.maxHp*finalStats.maxHp:next.hero.hp)));
    work.char.mp=Math.max(0,Math.min(finalStats.maxMp,Math.floor(talentLife&&next.snapshot.maxMp?next.hero.mp/next.snapshot.maxMp*finalStats.maxMp:next.hero.mp)));
-   for(const [kind,key]of [['hp','red_1'],['mp','blue_1']])if(next.supplies[kind])entries.push({event_id:`atlas:${run.id}:refund:${kind}`,tg_id:charId,type:'星圖補給歸還',item:key,item_delta:next.supplies[kind]});
   }
   const persistedStatus=next.status==='dead'?'failed':next.status;
   extra.push(db.prepare('UPDATE rpg_atlas_runs SET status=?,state_json=?,updated_at=?,rev=rev+1 WHERE id=? AND rev=? AND status=\'running\'').bind(persistedStatus,JSON.stringify(next),now,run.id,run.rev),guardStmt(db));

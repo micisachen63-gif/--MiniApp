@@ -40,7 +40,8 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   const id = player.char.tg_id, db = env.DB.sqlite;
   db.prepare('UPDATE rpg_characters SET level=15,gold=50000,last_settle_at=? WHERE tg_id=?').run(now, id);
   db.prepare("UPDATE rpg_equipment SET enhance_level=7 WHERE tg_id=? AND slot='weapon'").run(id);
-  for (const [item,quantity] of [['red_1',500],['blue_1',500],['scroll_w',20],['scroll_a',20]]) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,?) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=excluded.quantity').run(id,item,quantity);
+  // Owned higher-tier bottles verify real reservation/consumption/refund without buying locked shop stock.
+  for (const [item,quantity] of [['red_1',500],['red_2',30],['red_3',12],['red_4',4],['blue_1',500],['blue_2',30],['blue_3',12],['blue_4',4],['scroll_w',20],['scroll_a',20]]) db.prepare('INSERT INTO rpg_inventory(tg_id,item,quantity) VALUES(?,?,?) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=excluded.quantity').run(id,item,quantity);
   for(const collection of equipmentCollectionCatalog(baseClass).filter(c=>c.tier===1))for(const r of collection.requirements){const item=makeGear({id:`collection-fixture:${id}:${r.slot}`,tgId:id,cls:baseClass,slot:r.slot,kind:r.kind,tier:1,rng:()=>.2,now,source:'local-collection-fixture',forceRarity:'common'});item.enhance_level=r.slot==='weapon'?4:r.minEnhance;await insertEquipStmt(env.DB,item).run();}
   // Disposable surplus lets the same real API exercise archive, salvage and reroll.
   for(let i=0;i<14;i++){const sample=makeGear({id:`recovery-fixture:${id}:${i}`,tgId:id,cls:baseClass,slot:i<12?'boots':'ring',tier:1,rng:()=>.2,now,source:i<6?'atlas':'elite',forceRarity:'common',prefix:'試玩'});await insertEquipStmt(env.DB,sample).run();}

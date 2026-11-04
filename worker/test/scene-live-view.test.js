@@ -37,6 +37,16 @@ test('scene rejects missing or cross-character / cross-realm data instead of ret
   }
   const data = snapshot(); data.live.activeRunId = 'different-run'; assert.equal(api.normalize(data).active, false);
 });
+test('camp HUD uses all-tier totals while legacy counters and current-run reserves retain their meanings', () => {
+  const api=viewApi(),data=snapshot();
+  data.live.supplies={hp:20,mp:15,totals:{hp:47,mp:34},items:{red_1:20,red_2:27,blue_1:15,blue_2:19}};
+  const active=api.normalize(data);assert.equal(active.supplies.hp,4);assert.equal(active.supplies.mp,2);
+  data.live.activeRunId=null;data.run.active=false;const before=JSON.stringify(data),camp=api.normalize(data);
+  assert.equal(camp.supplies.hp,47);assert.equal(camp.supplies.mp,34);assert.equal(camp.supplies.items.red_2,27);
+  assert.equal(JSON.stringify(data),before,'rendering cannot rewrite compatibility counters in the response');
+  delete data.live.supplies.totals;assert.equal(api.normalize(data).supplies.hp,20);
+  data.live.supplies.totals={hp:-1,mp:NaN};assert.equal(api.normalize(data).supplies.hp,20);assert.equal(api.normalize(data).supplies.mp,15);
+});
 test('exact map and monster whitelist refuses lookalikes, wrong rank and higher-mode art', () => {
   const api = viewApi(), map = snapshot().run.map, enemy = snapshot().run.enemies[0];
   assert.equal(api.enemyAsset(map, enemy).spriteId, 'moon_hare');

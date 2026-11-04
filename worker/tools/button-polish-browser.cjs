@@ -8,8 +8,8 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const crypto = require('node:crypto');
 
-const origin = 'http://127.0.0.1:9703';
-const api = 'http://127.0.0.1:9702';
+const origin = process.env.BUTTON_SCENE_ORIGIN || 'http://127.0.0.1:9703';
+const api = process.env.BUTTON_API_ORIGIN || 'http://127.0.0.1:9702';
 const runName=process.env.BUTTON_POLISH_QA_RUN||'browser';
 assert(/^[a-z0-9-]+$/.test(runName),'QA run name must be a simple directory name.');
 const output = path.resolve('.release-sync/button-polish-20261104',runName);

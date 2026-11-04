@@ -42,3 +42,26 @@ test('benchmark distinguishes active income from an unattended window and unavai
   assert.equal(defeated.status, 'dead');
   assert.equal(defeated.nextUpgradeActiveSeconds, null);
 });
+
+test('itemized calibration charges actual high-tier and mixed-tier stock at saved prices while legacy prices remain configurable', () => {
+  const build = ATLAS_BUILDS.find(row => row.id === 'sword_whirlwind');
+  const input = fixture(build, 'laurel_warden', 'itemized-cost');
+  const base = { ...input, queueMode: 'duration', durationSeconds: 60, automation: 'burst',
+    snapshot: { ...input.snapshot, atk: 1, def: 1000000, maxHp: 10000, hp: 1, maxMp: 10000, mp: 1, mpRegenPerSecond: 0 } };
+  const policy = { hpPreference: 'auto', mpPreference: 'auto', hpThresholdPct: 80, mpThresholdPct: 80, autoBlue: true };
+  for (const [items, expectedCost] of [
+    [{ red_4: 3, blue_4: 2 }, 219],
+    [{ red_1: 1, red_2: 2, red_4: 1, blue_1: 1, blue_3: 2, blue_4: 1 }, 179],
+  ]) {
+    // This boss has no restoration encounters; low initial HP/MP and ample
+    // defense ensure all these reserved bottles are actually used in combat.
+    const { state, summary } = benchmarkAtlasRun({ ...base, supplies: { items, policy } }, { supplyPrices: { hp: 0, mp: 0 } });
+    for (const [key, count] of Object.entries(items)) assert.equal(state.supplies.usedItems[key], count, key);
+    assert.equal(summary.supplyGoldSpent, expectedCost);
+    assert.equal(summary.netGold, summary.grossGold - expectedCost);
+    assert.equal(summary.netGoldPerActiveHour, summary.netGold * 3600 / summary.elapsedSeconds);
+  }
+  const legacy = benchmarkAtlasRun({ ...base, supplies: { hp: 2, mp: 3 } }, { supplyPrices: { hp: 17, mp: 19 } }).summary;
+  assert.ok(legacy.hpUsed > 0);
+  assert.equal(legacy.supplyGoldSpent, legacy.hpUsed * 17 + legacy.mpUsed * 19);
+});

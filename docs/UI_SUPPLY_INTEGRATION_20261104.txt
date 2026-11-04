@@ -1,0 +1,110 @@
+星穹之旅｜主戰鬥按鈕與 Atlas 分階補給合流
+日期：2026-11-04
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-ui-supply-integration-20261104
+分支：codex/ui-supply-integration-20261104
+
+一、目的與基線
+
+本批把已完成的立體按鈕與 Atlas 八階補給整合至同一主戰鬥視窗，保留兩個來源提交。
+共同基線：0219f9d899547af254cf3ddf63f9ff66c5344959（PR46）。
+補給父提交：b0415217239fa55c9ef8f3f33ae9959dff4fa148（PR48）。
+按鈕父提交：b8197b3ddb20fab044df508daccbae86c57c819b（PR47）。
+2026-11-04T09:51:34Z 已重新 fetch main；origin/main=3c6729aa9167223a3a915c5dc19fcc075cbad0ed，仍為本樹祖先，兩個遠端來源分支 SHA 與上述相符。
+
+PR48 已完成 non-force push，遠端 SHA 與本機相同；原先工具回覆不明的推送阻礙已解除。
+PR48 完整 CI run41808339254、required Worker and BOT tests job126500903227 與全部步驟 completed/success。
+來源：https://github.com/micisachen63-gif/--MiniApp/pull/48
+CI：https://github.com/micisachen63-gif/--MiniApp/actions/runs/41808339254
+來源 PR47 的按鈕提交、原 CI 與原工作樹保留。本批新合流提交及其 PR/CI，以本批 local-submission、push、pr、ci-final 收據為準，不能拿來源 CI 冒充合流 CI。
+
+二、合流內容
+
+1. 保留八種既有藥水的各階庫存、攜帶量、當趟消耗與精確退還；每色攜帶合計上限500。
+2. 保留 atlas-supplies-v1 的伺服器快照、原版自訂門檻、指定藥水、最低階優先及 autoBlue 關閉規則。
+3. 保留舊 v1–v4 出征、原 request signature、原子扣還與防重收據；背包 hp/mp 保留初階原義，totals 供全階 HUD 使用。
+4. 保留兩張金屬琺瑯 WebP、盾形導航、主要/次要/危險/停用/焦點狀態，以及窄版文字與觸控尺寸。
+5. CSS 合流保留補給專用9行與完整按鈕追加段；AI_HANDOVER 同時保留兩批歷史，未選單邊覆蓋。
+6. button-polish-browser 僅增加 BUTTON_SCENE_ORIGIN / BUTTON_API_ORIGIN 環境覆寫，9703/9702原預設保留，可驗本批9723/9722。
+7. 沒有更改遊戲引擎、補給價格/恢復量、資料庫 migration、角色/FX素材、catalog或queue。
+
+三、驗收與來源一致性
+
+A. 合流相關測試
+18份測試共230/230通過，fail/cancelled/skipped/todo皆0，Node24.7.0、concurrency2。
+完成時1054個程式來源SHA前後一致。
+證據：
+.release-sync/ui-supply-20261104/focused-final-2026-11-04T09-40-56-223Z.json
+.release-sync/ui-supply-20261104/focused-final-2026-11-04T09-40-56-223Z.log
+
+其後只修正 atlas-supply-browser.cjs 的兩項驗收工具問題；其餘1053個來源檔、應用程式與CSS均未改。
+最終 harness SHA256：
+1ad0f783f5b18fad9973eb69efdf4985c27798ed388f48b67429e3704882d428
+來源核對：
+.release-sync/ui-supply-20261104/post-gate-harness-final.json
+不將230項測試稱作最後 harness 版本重跑；最後 harness 已由下列真Chrome完整驗證。
+
+B. 合流按鈕真Chrome
+320×740、390×844、1280×900，共30/30通過；blockedWrites、pageErrors、HTTP問題、failedAssets皆0。
+兩張材質實際載入，44px以上操作區、文字/捲動/確認視窗與導航可達，sourceStable=true。
+證據：
+.release-sync/button-polish-20261104/combined-20261104/results.json
+後續僅供應驗收工具更動，未重跑未受影響的按鈕30組，也未冒稱更改了它的驗收來源。
+
+C. 合流補給真Chrome最終成功
+2026-11-04T10:08:38.582Z～10:09:44.113Z，exit0、12/12、pass=true、sourceStable=true。
+320×780、390×844、1280×900八個輸入欄均44px，dialog/body/form橫向overflow全0。
+真實保存二階紅藍水與80%門檻；保留草稿/取消/返回焦點；當趟設定不受下一趟auto/75%/35%/blue-off設定變更影響。
+第一趟提交17秒，blue_2實際用1瓶、其他七階0；逐物品退款後blue_2由26變25，其餘七階不減。
+第二趟確認新設定且八階消耗0；完成另一組八階精確退款。此趟未觸發紅水消耗，不宣稱瀏覽器已量到跨階紅水使用；最低階規則另由相關單元/服務測試保護。
+兩個stop回覆均HTTP200、ok=true、status=stopped（processed19/29）；沒有遺留本工具active run。
+pageErrors=[]、badResponses=[]；九檔來源快照包含harness自身，前後及目前SHA相同。
+同一preview延續真實庫存，未重啟、重seed或重置資料。
+證據：
+.release-sync/atlas-supply-20261104/browser/2026-11-04T10-08-38-581Z/results.json
+
+四、保留的問題與精確修正
+
+第一次補給Chrome：前8項過，首17秒尚未消耗藥水，原工具立即要求非零而失敗。
+純讀同一run在174秒已消耗blue_2=3，最後自然completed180秒時blue_2=4。旅行期間不喝水，遭遇也受每趟seed影響，第一段15秒不是喝水保證。
+未保存第一次15秒當下的完整血魔，不補造當時數值。只把第一趟等待改為同run且已提交至少15秒且真實消耗>0，180秒真時間上限；保留非零/指定階/退款全部斷言，timeout保存權威快照。未改遊戲門檻、seed或快轉時鐘。
+證據：
+.release-sync/atlas-supply-20261104/browser/2026-11-04T09-42-40-081Z/results.json
+.release-sync/ui-supply-20261104/first-consumption-wait-diagnosis.json
+.release-sync/ui-supply-20261104/first-failure-run-refund.json
+
+第二次補給Chrome：12項通過，第二stop已成功，但之後status唯讀遭session的stale_response保護拒絕，最後退款比較未執行，因此整輪仍記失敗。
+純讀已確認該run stopped；沒有重送stop。
+原因：UI的HTTP回覆可早於session寫入後refresh完成，後者更新ticket/floor，使先發的核對讀取過期。
+只新增stop後專用readStoppedStatus：固定account/realm/character/epoch/owned run；讀前後與回覆身份均核對；在frame內只對code=stale_response且uncertain=false最多重讀一次。其他錯誤或第二次stale仍失敗。
+通用call、me、正式session guard及寫入流程均不改；不呼叫sync/force refresh，不重試寫入。
+最終成功輪確實在10:09:12.199Z觸發一次此stale；expected/observed context與run完全相同，唯讀重讀一次即完成退款核對，收據保留完整錯誤欄位及兩個stop必要回覆。
+證據：
+.release-sync/atlas-supply-20261104/browser/2026-11-04T09-54-27-627Z/results.json
+.release-sync/ui-supply-20261104/second-stop-stale-readonly.json
+.release-sync/ui-supply-20261104/read-stopped-status.patch
+.release-sync/ui-supply-20261104/read-stopped-status-source.json
+
+五、預覽與接手
+
+合流預覽：http://127.0.0.1:9723/，記憶體API9722，launcher PID39316。
+兩端isolated/ephemeral、productionAccess=false；準確程序以preview-process.json並核對命令列為準。
+原9703/9702按鈕與9713/9712補給預覽及其工作樹保留。
+.release-sync/ui-supply-20261104/preview-process.json
+.release-sync/ui-supply-20261104/preview-ready.json
+.release-sync/ui-supply-20261104/source-review.json
+
+沿用StarJournal-AtlasSupply-Checkpoint-30m，每30分鐘記錄本線最新工作樹；原StarJournal-NonCharacter-Checkpoint-30m亦保留。
+10:03:17Z直接查Windows：兩者Enabled/Ready/LastTaskResult0；補給線最後10:02:34Z成功、下次10:32:33Z。
+本線入口：
+D:/StarJournal/handoff/non-character/atlas-supply-20261104/STATUS.json
+D:/StarJournal/handoff/non-character/atlas-supply-20261104/LATEST.md
+主入口：
+D:/StarJournal/START_HERE.md
+D:/StarJournal/handoff/non-character/LATEST.md
+
+六、未完成範圍
+
+整合完成前不更新正式機；本批不合併main、不部署、不跑遠端migration、不改Secrets、正式旗標或正式玩家資料。
+仍待完整舊技能/轉職、天使、命運、交易、Boss/組隊/塔/星環、衣櫥與完整帳務頁面遷移；逐擊/施法事件、舊屬性與效果相容、高階600級/16覺醒、正式平衡及完整季末跨庫移轉。
+正式Telegram入口與真實手機尚未驗收；320px主場資訊卡局部覆蓋角色仍留主場/角色布局工作。角色/FX由其他工作線處理。
+下一批應使用本次已合流的提交為基線，先讀最新STATUS與CI收據，避免重新實作或誤用分開的來源分支。
