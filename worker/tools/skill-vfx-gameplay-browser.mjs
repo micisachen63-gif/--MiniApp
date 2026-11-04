@@ -24,9 +24,9 @@ const require=createRequire(import.meta.url);
 const dependencyRoot=process.env.CODEX_PRIMARY_RUNTIME_NODE_MODULES||path.resolve('../star-journal-scene-integration-20261104/.release-sync/browser-tools/node_modules');
 const {chromium}=require(path.join(dependencyRoot,'playwright'));
 const argv=process.argv.slice(2),group=argv.find(a=>a.startsWith('--modes='))?.slice(8),selected=argv.find(a=>a.startsWith('--mode='))?.slice(7),phone=argv.includes('--phone'),smoke=argv.includes('--smoke');
-if(argv.some(a=>!/^--(?:mode=(?:idle-native|idle-summon|idle-support|party|pk|boss|ring)|modes=(?:idle-native|idle-summon|idle-support|party|pk|boss|ring)(?:,(?:idle-native|idle-summon|idle-support|party|pk|boss|ring))*|phone|smoke)$/.test(a)))throw Error('Use --mode=... [--phone] or --smoke');
+if(argv.some(a=>!/^--(?:mode=(?:idle-native|idle-summon|idle-support|party|pk|pk-support|boss|ring)|modes=(?:idle-native|idle-summon|idle-support|party|pk|pk-support|boss|ring)(?:,(?:idle-native|idle-summon|idle-support|party|pk|pk-support|boss|ring))*|phone|smoke)$/.test(a)))throw Error('Use --mode=... [--phone] or --smoke');
 if(group&&selected)throw Error('Choose --mode or --modes');
-const modes=group?group.split(','):selected?[selected]:smoke?['idle-native']:['idle-native','idle-summon','idle-support','party','pk','boss','ring'];
+const modes=group?group.split(','):selected?[selected]:smoke?['idle-native']:['idle-native','idle-summon','idle-support','party','pk','pk-support','boss','ring'];
 const widths=selected?[phone?390:1280]:smoke?[390]:[390,1280];
 const root=path.resolve('worker/public'),out=path.resolve(process.env.SKILL_VFX_GAMEPLAY_QA_DIR||'.release-sync/skill-vfx-all-20261104/gameplay-'+new Date().toISOString().replace(/[:.]/g,'-'));
 const mime={'.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json','.svg':'image/svg+xml','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.mp4':'video/mp4','.woff2':'font/woff2'};
@@ -52,9 +52,15 @@ async function fixture(mode){
   if(mode==='idle-summon')await seed(env,'111','mage','B211','skill_18_1');
   if(mode==='idle-support')await seed(env,'111','archer','A111','skill_03_3');
   if(mode==='boss')await seed(env,'111','mage','A111','skill_05_1');
-  if(mode==='pk'){
-   await seed(env,'111','thief','A211','skill_thief_04');
-   await seed(env,'222','sword','B111','skill_02_1');who='222';
+  if(mode==='pk'||mode==='pk-support'){
+   if(mode==='pk-support'){
+    await seed(env,'111','sword','B111','skill_02_3');
+    await seed(env,'222','sword','B111');
+   }else{
+    await seed(env,'111','thief','A211','skill_thief_04');
+    await seed(env,'222','sword','B111','skill_02_1');
+   }
+   who='222';
    runId=(await PK.challenge(env,{tgId:'111',target:{tgId:'222'},origin:'app'},clock)).id;
   }
   if(mode==='ring'){
@@ -67,7 +73,7 @@ async function fixture(mode){
  }
  Object.assign(f.env,{ENVIRONMENT:'development',ALLOW_DEV_AUTH:'true',ALLOW_DEBUG_TIME:'true',ATLAS_ENABLED:'true'});
  if(mode==='boss')await Boss.spawnDue(f.env,clock);
- return {...f,who,runId,clock:()=>clock,advance(ms){clock+=ms;},setClock(value){clock=value;}};
+ return {...f,qaMode:mode,who,runId,clock:()=>clock,advance(ms){clock+=ms;},setClock(value){clock=value;}};
 }
 function descriptors(value,out=[]){
  if(!value||typeof value!=='object')return out;
@@ -86,7 +92,7 @@ async function serve(f,receiptLog){
     let body='';for await(const b of req){body+=b;if(body.length>1048576)throw Error('Request too large');}
     const response=await handle(new CurrentClientRequest('http://local'+req.url,{method:req.method,headers:{...req.headers,'Content-Type':'application/json','X-Debug-Now':String(f.clock())},...(req.method==='GET'?{}:{body})}),f.env);
     const text=await response.text();let data;try{data=JSON.parse(text);}catch{}
-    receiptLog.push({action:u.pathname.slice('/app/api/'.length),status:response.status,at:f.clock(),vfx:descriptors(data),...(data?.error?{error:data.error,message:data.message}:{})});
+    receiptLog.push({action:u.pathname.slice('/app/api/'.length),status:response.status,at:f.clock(),vfx:descriptors(data),...(f.qaMode==='pk-support'&&u.pathname.endsWith('/pk/accept')&&data?.pk?{pkReceipt:{id:data.pk.id,status:data.pk.status,log:data.pk.log}}:{}),...(data?.error?{error:data.error,message:data.message}:{})});
     res.writeHead(response.status,{'Content-Type':'application/json','Cache-Control':'no-store'});res.end(text);return;
    }
    const file=path.resolve(root,'.'+(u.pathname==='/'?'/index.html':decodeURIComponent(u.pathname)));
@@ -109,18 +115,88 @@ async function waitDraw(frame,mode){
  while(Date.now()<deadline){value=await inspect(frame);const rows=[...(value?.active||[]),...(value?.completed||[])];if(rows.some(r=>r.mode===mode&&r.accepted>0&&r.drawCalls>0))return value;await frame.waitForTimeout(80);}
  throw Error('No actual VFX draw for '+mode+': '+JSON.stringify(value));
 }
+
+async function scrollBattle(field,page){
+ // Animated battle containers never become "stable" for locator auto-wait.
+ // Native instant scrolling changes only viewport position, not the simulation.
+ await field.evaluate(node=>node.scrollIntoView({block:'center',inline:'nearest',behavior:'instant'}));
+ const box=await field.boundingBox();
+ assert(box&&box.width>0&&box.height>0,'visible battle geometry');
+ const viewport=page.viewportSize(),x=Math.max(0,box.x),y=Math.max(0,box.y);
+ const clip={x,y,width:Math.min(box.x+box.width,viewport.width)-x,height:Math.min(box.y+box.height,viewport.height)-y};
+ assert(clip.width>40&&clip.height>40,'battle intersects the real viewport');
+ return {box,clip};
+}
+async function verifyPkSupport(page,f,pk){
+ const steps=pk?.log?.steps||[];
+ const target=steps.find(step=>step.vfx?.skillId==='special:skill_02_3'&&step.vfx.kind==='cast'&&step.vfx.presentationMode==='support');
+ assert(target,'true pk/accept must resolve the equipped pure-shield skill');
+ const descriptor=target.vfx,actor=descriptor.actorId,enemy=actor==='a'?'b':'a';
+ assert.equal(descriptor.source,'committed-combat');
+ assert.deepEqual(descriptor.targetIds,[actor]);
+ assert.equal(target.after.hp[enemy],target.before.hp[enemy],'the pure shield cast must not damage the opponent');
+ const actualSelfHealing=target.after.hp[actor]-target.before.hp[actor];
+ assert(actualSelfHealing>=0,'a shield cast does not inflict self damage');
+ const stored=f.db.prepare('SELECT id,status,log_json FROM rpg_pk WHERE id=?').get(pk.id);
+ assert.equal(stored.status,'done');
+ const persisted=JSON.parse(stored.log_json),persistedSteps=persisted.steps||persisted.log||[];
+ const storedStep=persistedSteps.find(step=>step.vfx?.eventId===descriptor.eventId);
+ assert(storedStep,'accepted cast exists in committed SQLite log_json');
+ assert.deepEqual(storedStep.vfx,descriptor);assert.deepEqual(storedStep.after,target.after);
+ await page.evaluate(async()=>{window.__SkillVfxQAGeometry=(await import('/skill-vfx-legacy.mjs')).legacyDomGeometry;window.__SkillVfxSupportProbe=null;});
+ const handle=await page.waitForFunction(({eventId,actor,enemy})=>{
+  const row=(window.RpgLegacySkillVFX?.inspect?.().active||[]).find(row=>row.mode==='pk'&&row.lastEvent?.eventId===eventId);
+  if(!row||!row.player?.active)return false;
+  const previous=window.__SkillVfxSupportProbe;
+  if(!previous||previous.eventId!==eventId){window.__SkillVfxSupportProbe={eventId,drawFrames:row.drawFrames};return false;}
+  if(row.drawFrames<=previous.drawFrames||!row.lastRender?.drawCalls)return false;
+  // Snapshot identity, DOM, geometry and pixels in this same browser callback.
+  // Returning the value avoids a later evaluate racing the following replay step.
+  const arena=document.querySelector('.pkarena');
+  const targets=['a','b'].map(id=>({id,node:document.querySelector('#pk_'+id+' img')}));
+  const geometry=window.__SkillVfxQAGeometry(arena,document.querySelector('#pk_'+actor+' img'),targets,{actorId:actor});
+  const sides=Object.fromEntries(['a','b'].map(id=>{
+   const node=document.querySelector('#pk_'+id),damage=node.querySelector('.pkdmg'),hp=node.querySelector('.bar.hp');
+   return [id,{className:node.className,attack:node.classList.contains('atk'),hit:node.classList.contains('hitme'),
+    hpText:hp.querySelector('b').textContent,hpWidth:Number.parseFloat(hp.querySelector('i').style.width),
+    damageText:damage.textContent,damageVisible:damage.classList.contains('on')}];
+  }));
+  const canvas=arena.querySelector('.legacy-skill-vfx'),pixels=canvas.getContext('2d').getImageData(0,0,canvas.width,canvas.height).data;
+  let alphaPixels=0;for(let i=3;i<pixels.length;i+=4)if(pixels[i]>0)alphaPixels++;
+  if(!alphaPixels)return false;
+  return {event:row.lastEvent,drawCalls:row.drawCalls,lastRender:row.lastRender,geometry,sides,alphaPixels,label:document.querySelector('#pkres').textContent};
+ },{eventId:descriptor.eventId,actor,enemy},{timeout:30000});
+ const frame=await handle.jsonValue();await handle.dispose();
+ assert.equal(frame.sides[actor].attack,false,'support must not use an offensive portrait pose');
+ for(const id of ['a','b']){
+  assert.equal(frame.sides[id].hit,false,'pure shield causes no hit cue');
+  const visibleHeal=id===actor&&actualSelfHealing>0;
+  assert.equal(frame.sides[id].damageVisible,visibleHeal,'floating numbers must match actual HP changes');
+  if(visibleHeal){assert(frame.sides[id].damageText.startsWith('+'));assert.equal(Number(frame.sides[id].damageText.replace(/[^0-9.]/g,'')),actualSelfHealing);}
+  const expected=target.after.hp[id]/pk.log.max[id]*100;
+  assert(Math.abs(frame.sides[id].hpWidth-expected)<.001,'DOM HP bar equals the actual receipt for '+id);
+ }
+ assert(frame.label.includes('施展支援技能'));assert(frame.alphaPixels>0,'actual VFX alpha is visible');
+ const beneficiary=frame.geometry.targets.find(value=>value.id===actor).point;
+ for(const command of frame.event.commands){assert.equal(command.mode,'support');assert(Math.hypot(command.from.x-beneficiary.x,command.from.y-beneficiary.y)<.01);assert.deepEqual(command.from,command.to);}
+ return {skillId:descriptor.skillId,eventId:descriptor.eventId,actorId:actor,enemyId:enemy,
+  source:'committed-combat',actualSelfHealing,before:target.before,after:target.after,max:pk.log.max,
+  sqlite:{id:stored.id,status:stored.status,matchingEventId:storedStep.vfx.eventId,
+   logSha256:createHash('sha256').update(stored.log_json).digest('hex')},frame};
+}
+
 await fs.mkdir(out,{recursive:true});
-const sourcePaths=["worker/public/skill-vfx-legacy.mjs","worker/public/skill-vfx-engine.mjs","worker/public/skill-vfx-catalog.json","worker/public/skill-vfx-recipes.json","worker/public/app.js","worker/public/battle.js","worker/public/expedition/combat-playback.js","worker/public/expedition/hero-art-playback.js","worker/public/star-ring-heroes.js","worker/src/game/skill-vfx-events.js","worker/src/game/special.js","worker/src/game/idle.js","worker/src/game/idle-combat.js","worker/src/game/special-idle.js","worker/src/game/boss.js","worker/src/game/pk.js","worker/src/game/star-ring.js","worker/src/services/party.js","worker/src/services/pk.js","worker/src/services/star-ring.js"];
+const sourcePaths=["worker/tools/skill-vfx-gameplay-browser.mjs","worker/public/index.html","worker/public/skill-vfx-legacy.mjs","worker/public/skill-vfx-engine.mjs","worker/public/skill-vfx-catalog.json","worker/public/skill-vfx-recipes.json","worker/public/app.js","worker/public/battle.js","worker/public/expedition/combat-playback.js","worker/public/expedition/hero-art-playback.js","worker/public/star-ring-heroes.js","worker/src/game/skill-vfx-events.js","worker/src/game/special.js","worker/src/game/idle.js","worker/src/game/idle-combat.js","worker/src/game/special-idle.js","worker/src/game/boss.js","worker/src/game/pk.js","worker/src/game/star-ring.js","worker/src/services/party.js","worker/src/services/pk.js","worker/src/services/star-ring.js"];
 const fingerprint=async()=>Promise.all(sourcePaths.map(async file=>({path:file,sha256:createHash('sha256').update(await fs.readFile(file)).digest('hex')})));
 const sourceFiles=await fingerprint();
-const evidence={schemaVersion:1,sourceFiles,source:'real-isolated-api',isolated:true,ephemeral:true,productionAccess:false,clockMode:'fixed-test',startedAt:new Date().toISOString(),cases:[],errors:[],badResponses:[],instrumentation:'Expose existing app controllers only; no response or combat/event substitution.'};
+const evidence={schemaVersion:1,sourceFiles,source:'real-isolated-api',isolated:true,ephemeral:true,productionAccess:false,clockMode:'fixed-test',startedAt:new Date().toISOString(),cases:[],errors:[],badResponses:[],instrumentation:'Expose existing app controllers and read-only renderer geometry for QA; no response or combat/event substitution.'};
 const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
 try{
  for(const mode of modes)for(const width of widths){
   const name=mode+'-'+width,f=await fixture(mode),receipts=[],server=await serve(f,receipts),page=await browser.newPage({viewport:{width,height:width===390?844:900},deviceScaleFactor:1});
   const errors=[],badResponses=[];page.on('pageerror',e=>errors.push(e.message));page.on('response',r=>{if(r.url().startsWith(server.origin)&&r.status()>=400)badResponses.push({url:r.url().slice(server.origin.length),status:r.status()});});
   await page.route('**/*',route=>route.request().url().startsWith(server.origin)?route.continue():route.abort());
-  page.setDefaultTimeout(20000);let stage=page;
+  page.setDefaultTimeout(20000);let stage=page,supportEvidence=null;
   try{
    await page.goto(server.origin+'/?devTg='+f.who,{waitUntil:'domcontentloaded'});
    await page.locator('[data-select]').first().click();
@@ -142,31 +218,34 @@ try{
     await stage.locator('[data-sr-action="start"]').click();await stage.locator('.sr-battle').waitFor();
     f.advance(RingEngine.BEAT_MS*3);await stage.locator('[data-sr-action="refresh"]').click();
     await waitDraw(stage,'star-ring');
-   }else if(mode==='pk'){
+   }else if(mode==='pk'||mode==='pk-support'){
     await page.evaluate(async()=>{__SkillVfxQA.state.tab='trade';__SkillVfxQA.state.social='pk';const data=await __SkillVfxQA.api('pk/list');__SkillVfxQA.state.pks={pending:data.pending,history:data.history,today:data.today};__SkillVfxQA.render();});
     await page.locator('[data-pacc]').first().click();
     // The existing confirmation sheet, when present, is part of the real accept action.
+    const acceptance=page.waitForResponse(response=>response.url().endsWith('/app/api/pk/accept'));
     await page.locator('#sheet').getByRole('button',{name:'開打！',exact:true}).click();
-    await waitDraw(page,'pk');
+    const accepted=await (await acceptance).json();
+    if(mode==='pk-support')supportEvidence=await verifyPkSupport(page,f,accepted.pk);
+    else await waitDraw(page,'pk');
    }else if(mode==='boss'){
     await page.evaluate(async()=>{__SkillVfxQA.state.tab='boss';await __SkillVfxQA.loadBoss();__SkillVfxQA.render();});
     await page.locator('#atk').click();await waitDraw(page,'boss');
    }
    const battlefield=stage.locator('[data-legacy-vfx]').first();
-   if(await battlefield.count())await battlefield.scrollIntoViewIfNeeded();
+   let battleCapture=null;if(await battlefield.count())battleCapture=await scrollBattle(battlefield,page);
    const first=await inspect(stage);
-   if(await battlefield.count())await battlefield.screenshot({path:path.join(out,name+'-battle.png')});
+   if(battleCapture)await page.screenshot({path:path.join(out,name+'-battle.png'),clip:battleCapture.clip});
    await page.screenshot({path:path.join(out,name+'-release.png'),fullPage:true});
    await page.waitForTimeout(400);
    await page.screenshot({path:path.join(out,name+'-effect.png'),fullPage:true});
    const result=await inspect(stage);
    assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(badResponses.length,0,JSON.stringify(badResponses));
    assert(receipts.some(r=>r.vfx.length),'actual API response contains canonical descriptors');
-   const record={mode,width,status:'passed',testClock:f.clock(),first,result,receipts,errors,badResponses,screenshots:[name+'-battle.png',name+'-release.png',name+'-effect.png']};
+   const record={mode:mode==='pk-support'?'pk':mode,...(mode==='pk-support'?{variant:'pure-support',sourceMode:mode}:{}),width,status:'passed',testClock:f.clock(),first,result,receipts,errors,badResponses,battleCapture,...(supportEvidence?{supportEvidence}:{}),screenshots:[name+'-battle.png',name+'-release.png',name+'-effect.png']};
    evidence.cases.push(record);console.log(JSON.stringify({mode,width,passed:true,apiDescriptors:receipts.reduce((n,r)=>n+r.vfx.length,0)}));
   }catch(error){
    await page.screenshot({path:path.join(out,name+'-failure.png'),fullPage:true}).catch(()=>{});
-   evidence.cases.push({mode,width,status:'failed',error:String(error),stack:error.stack,inspect:await inspect(stage).catch(()=>null),receipts,errors,badResponses,body:(await page.locator('body').innerText().catch(()=>'' )).slice(-8000)});
+   evidence.cases.push({mode:mode==='pk-support'?'pk':mode,...(mode==='pk-support'?{variant:'pure-support',sourceMode:mode}:{}),width,status:'failed',error:String(error),stack:error.stack,inspect:await inspect(stage).catch(()=>null),receipts,errors,badResponses,body:(await page.locator('body').innerText().catch(()=>'' )).slice(-8000)});
    throw error;
   }finally{
    evidence.errors.push(...errors);evidence.badResponses.push(...badResponses);

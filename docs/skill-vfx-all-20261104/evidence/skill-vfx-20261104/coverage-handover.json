@@ -1,0 +1,229 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "completedAt": "2026-11-04T08:24:11.020Z",
+  "frozenHead": "c05b888a6ac00494bfefd60162cf2f0aa4aa88be",
+  "manifest": {
+    "path": "worker/public/skill-vfx-coverage.json",
+    "sha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8",
+    "summary": {
+      "implementedIdentities": 196,
+      "visualFamilies": 28,
+      "bySystem": {
+        "native": 124,
+        "special": 60,
+        "atlas": 12
+      },
+      "immediateDamageIdentities": 171,
+      "nonDirectCastIdentities": 25,
+      "recipePresent": 196,
+      "resolverObserved": 196,
+      "committedEventObserved": 196,
+      "presentationObserved": 196,
+      "browserObserved": 196,
+      "controlledBrowserReplayObserved": 184,
+      "gameplayBrowserObserved": 24,
+      "resolverAndPresentationObserved": 196,
+      "plannedExcluded": 16,
+      "supports": 6,
+      "allocatableTalents": 120,
+      "origins": 4
+    }
+  },
+  "gameplay": {
+    "casesByMode": {
+      "idle": 6,
+      "pk": 4,
+      "boss": 2,
+      "party": 2,
+      "star-ring": 2,
+      "atlas": 16
+    },
+    "summary": {
+      "cases": 126,
+      "browserIdentities": 24,
+      "excludedScenarios": 5
+    },
+    "sourcePreservation": "Star-ring observations retain deterministic-projection; no projection is counted as a committed write."
+  },
+  "requiredEvidenceFiles": [
+    {
+      "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+    },
+    {
+      "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+      "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241"
+    },
+    {
+      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+      "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc"
+    },
+    {
+      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+      "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade"
+    },
+    {
+      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
+      "sha256": "b92ec412dbb565ceff9b83f3297d9fa0998f3d003b2bf6b600a2bde8e90be6b4"
+    },
+    {
+      "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+      "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf"
+    }
+  ],
+  "restorePolicy": {
+    "evidenceDirFlagSupported": false,
+    "supportedOverride": "build-skill-vfx-coverage.mjs accepts repeatable --evidence=relative/file.json; the normalizer accepts repeatable --gameplay=path and --atlas=path plus --out=path.",
+    "recommended": "Archive these 10 evidence files byte-for-byte with a path map. In a fresh checkout restore each to its recorded .release-sync path before running coverage --check. Canonical receipts carry embedded source paths; simply pointing --evidence at renamed copies does not resolve those source dependencies.",
+    "doNot": "Do not rewrite embedded source paths or SHA values to make a report pass.",
+    "byteExact": "Restore the archived canonical receipts unchanged and run --check to reproduce this exact manifest SHA.",
+    "renormalization": "Re-running the browser normalizer writes a new generatedAt and therefore a new receipt SHA. Run the coverage builder again afterward; this is a fresh report, not a byte-identical reproduction."
+  },
+  "commands": {
+    "normalizeBrowser": "node worker/tools/build-skill-vfx-browser-evidence.mjs --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json --atlas=.release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+    "rebuildCoverage": "node worker/tools/build-skill-vfx-coverage.mjs --require-legacy-completion",
+    "verifyCoverage": "node worker/tools/build-skill-vfx-coverage.mjs --check --require-legacy-completion",
+    "verifyCatalog": "node worker/tools/build-skill-vfx-catalog.mjs --check",
+    "verifyRecipes": "node worker/tools/build-skill-vfx-recipes.mjs --check",
+    "tests": "node --test worker/test/skill-vfx-coverage.test.js worker/test/skill-vfx-browser-evidence.test.js",
+    "verifyAll196": "node -e \"const fs=require('fs'),a=require('assert/strict'),m=JSON.parse(fs.readFileSync('worker/public/skill-vfx-coverage.json'));a.equal(m.skills.length,196);for(const s of m.skills)for(const k of ['resolver','commit','presentation','browser'])a.equal(s.evidence[k].observed,true,s.id+':'+k);console.log('196/196 resolver+commit+presentation+browser');\""
+  },
+  "verification": {
+    "checks": [
+      {
+        "command": "node worker/tools/build-skill-vfx-browser-evidence.mjs --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json --gameplay=.release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json --atlas=.release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "exitCode": 0,
+        "durationMs": 533
+      },
+      {
+        "command": "node worker/tools/build-skill-vfx-coverage.mjs --require-legacy-completion",
+        "exitCode": 0,
+        "durationMs": 769
+      },
+      {
+        "command": "node worker/tools/build-skill-vfx-coverage.mjs --check --require-legacy-completion",
+        "exitCode": 0,
+        "durationMs": 455
+      },
+      {
+        "command": "node worker/tools/build-skill-vfx-catalog.mjs --check",
+        "exitCode": 0,
+        "durationMs": 263
+      },
+      {
+        "command": "node worker/tools/build-skill-vfx-recipes.mjs --check",
+        "exitCode": 0,
+        "durationMs": 403
+      },
+      {
+        "command": "node -e \"const fs=require('fs'),assert=require('assert/strict'),crypto=require('crypto');const p='worker/public/skill-vfx-coverage.json',m=JSON.parse(fs.readFileSync(p)),a=JSON.parse(fs.readFileSync('.release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json'));assert.equal(m.skills.length,196);for(const s of m.skills)for(const layer of ['resolver','commit','presentation','browser'])assert.equal(s.evidence[layer].observed,true,s.id+':'+layer);assert.equal(a.cases.length,16);assert.ok(a.cases.every(c=>c.passed));assert.equal(a.errors.length,0);assert.equal(a.badResponses.length,0);assert.deepEqual(a.sourceChangedDuring,[]);const norm=JSON.parse(fs.readFileSync('.release-sync/skill-vfx-20261104/gameplay-coverage-browser.json'));console.log(JSON.stringify({status:'passed',summary:m.summary,manifestSha256:crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex'),atlasCases:a.cases.length,normalizedSummary:norm.summary,gameplayCasesByMode:Object.fromEntries(['idle','pk','boss','party','star-ring','atlas'].map(mode=>[mode,norm.cases.filter(c=>c.mode===mode&&c.evidenceKind==='browser-gameplay-api').length])),archiveRequired:m.sourceFiles.filter(f=>f.path.startsWith('.release-sync/'))}));\"",
+        "exitCode": 0,
+        "durationMs": 263
+      }
+    ],
+    "integrityTests": {
+      "path": ".release-sync/skill-vfx-20261104/coverage-validation.json",
+      "tests": 9,
+      "pass": 9,
+      "fail": 0
+    },
+    "identityBrowser": {
+      "path": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/results.json",
+      "identities": 184,
+      "legacyFamilies": 26,
+      "phone": 8,
+      "reducedMotion": 4,
+      "screenshots": 40,
+      "pageErrors": 0,
+      "httpErrors": 0,
+      "sourceChanges": 0
+    },
+    "atlasBrowser": {
+      "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+      "cases": 16,
+      "identities": 12,
+      "pageErrors": 0,
+      "httpErrors": 0,
+      "sourceChanges": 0
+    }
+  },
+  "visualEvidence": {
+    "directory": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z",
+    "contactSheet": "identity-contact-sheet.jpg",
+    "capturePolicy": "Actual RAF animation/draw/hash evidence is measured first. Representative screenshots explicitly use controlled progress 0.66 of the same accepted commands.",
+    "reviewed": [
+      "identity-contact-sheet.jpg",
+      "families/special_skill_18_1-desktop.png",
+      "mobile/special_skill_23_2-phone.png",
+      "mobile/special_skill_09_1-phone.png"
+    ]
+  },
+  "audit": {
+    "implemented": {
+      "native": 124,
+      "special": 60,
+      "atlas": 12
+    },
+    "special": {
+      "immediateAttack": 36,
+      "nonDirect": 24,
+      "buff": 3,
+      "heal": 5,
+      "shieldOrDefensive": 15,
+      "pureDelayedSummon": 1
+    },
+    "modifiers": {
+      "supports": 6,
+      "allocatableTalentNodes": 120,
+      "originNodes": 4,
+      "independentCasts": false
+    },
+    "plannedExcluded": 16,
+    "semantics": [
+      "special:skill_18_1 initial cast is local summon with no enemy impact; only observed later ticks may impact.",
+      "native:mage:B2 and atlas:archer_beast retain their real immediate damage despite sharing summon imagery.",
+      "special:skill_thief_06 arms the next attack bonus; no invented independent counter.",
+      "special:skill_02_3 may later reflect actually absorbed shield damage.",
+      "special:skill_09_1 preserves both enemy hit and actual allied healing.",
+      "special:skill_24_2 requires a genuinely downed teammate; no solo/PK revival claimed."
+    ],
+    "atlasReview": "Independent read-only v4 engine/service/session review found no concrete defect in activity/observer argument ordering, atomic ledger publication or foreground preferScene timing. Later scene async sprite/layout race was fixed and verified by root/backend."
+  },
+  "boundaries": {
+    "browserIdentities": "184 legacy identities are controlled browser receipt replays of real SQLite committed service events. 24 identities also have exact-source full API browser observations, including all 12 Atlas identities.",
+    "modes": "32 current API/browser scenarios cover 6 idle, 4 PK (including pure support), 2 boss, 2 party, 2 star-ring and 16 Atlas. This is not a claim of every identity in every mode.",
+    "historicalExcluded": "Four older PK/boss scenarios have stale app.js hashes; one older pure-support desktop QA assertion failed. They remain explicitly excluded and are superseded by current passing captures.",
+    "production": "No production deploy or push performed by this workstream."
+  },
+  "ownedProgramFiles": [
+    "worker/tools/build-skill-vfx-coverage.mjs",
+    "worker/tools/build-skill-vfx-browser-evidence.mjs",
+    "worker/tools/skill-vfx-identity-browser.mjs",
+    "worker/test/skill-vfx-coverage.test.js",
+    "worker/test/skill-vfx-browser-evidence.test.js",
+    "worker/tools/build-skill-vfx-recipes.mjs"
+  ],
+  "ownedGeneratedFiles": [
+    "worker/public/skill-vfx-coverage.json",
+    "worker/public/skill-vfx-catalog.json",
+    "worker/public/skill-vfx-recipes.json",
+    "worker/art-production/skill-vfx-20261104/catalog-audit.json"
+  ]
+}

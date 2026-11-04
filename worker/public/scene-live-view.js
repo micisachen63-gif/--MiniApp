@@ -139,7 +139,7 @@
     let disposed = false, model = null, context = '', appearance = null, actorGeneration = 0, mapGeneration = 0, currentMap = '', currentRoom = '', currentRun = '', lastRevision = null;
     let groundReady = false, mapLoading = false, groundImage = null, width = 0, height = 0, actorIssue = '', mapIssue = '', syncError = lastSyncError, assetIssues = new Map(), seenEvents = new Set();
     const doc = global.document;
-    let vfxPlayer = null, vfxBridge = null, vfxCanvas = null, vfxInit = null, vfxIssue = '', vfxLayout = '', vfxSize = '', vfxLastTrace = null, vfxTraceSequence = 0;
+    let vfxPlayer = null, vfxBridge = null, vfxCanvas = null, vfxInit = null, vfxIssue = '', vfxLayout = '', vfxLayoutChanges = 0, vfxSize = '', vfxLastTrace = null, vfxTraceSequence = 0;
     const vfxController = new AbortController();
     doc.documentElement.classList.add('rpg-live-scene');
     const panel = doc.createElement('section'); panel.className = 'scene-live-panel'; panel.id = 'scene-live-status'; panel.setAttribute('aria-label', '出征狀態');
@@ -372,24 +372,37 @@
         ground.setOrigin(0).setScale(scale); hooks.setWorld(world); camera.setBounds(0, 0, world.w, world.h);
       }
       const world = hooks.getWorld(); hero.setPosition(world.w / 2, world.h * .6);
-      const alive = [...entities.values()].filter(entity => entity.sprite?.active);
-      alive.forEach((entity, index) => {
-        const angle = -Math.PI + (index + 1) / (alive.length + 1) * Math.PI, radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
-        const horizontalRadius = Math.min(radius, width * .3);
-        entity.sprite.setPosition(hero.x + Math.cos(angle) * horizontalRadius, hero.y + Math.sin(angle) * radius * .7);
-        entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(entity.sprite.x > hero.x).setDepth(entity.sprite.y);
+      // Reserve positions for the whole committed encounter, including art
+      // still loading. Materializing one sprite must not move the others or
+      // invalidate a real cast waiting for its target's geometry.
+      const roster = [...entities.values()];
+      const slots = roster.map((entity, index) => {
+        const angle = -Math.PI + (index + 1) / (roster.length + 1) * Math.PI;
+        const radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
+        return { entity, x: hero.x + Math.cos(angle) * Math.min(radius, width * .3),
+          y: hero.y + Math.sin(angle) * radius * .7 };
       });
+      for (const { entity, x, y } of slots) {
+        if (!entity.sprite?.active) continue;
+        entity.sprite.setPosition(x, y);
+        entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(x > hero.x).setDepth(y);
+      }
       // A committed snapshot repositions the whole encounter at once. The art
       // demo's lerped follow otherwise leaves actors off-screen after map/size
       // changes even though their world coordinates and visibility are valid.
       camera.stopFollow().centerOn(hero.x, hero.y);
       hero.setDepth(hero.y); drawBars();
-      const layoutKey = JSON.stringify([width, height, world.w, world.h, hero.x, hero.y, alive.map(entity => [entity.enemy.id, entity.sprite.x, entity.sprite.y])]);
-      if (vfxLayout && vfxLayout !== layoutKey) vfxBridge?.clear('layout-changed');
-      vfxLayout = layoutKey; syncVfxCanvas();
+      const layoutKey = JSON.stringify([width, height, world.w, world.h, hero.x, hero.y, slots.map(slot => [slot.entity.enemy.id, slot.x, slot.y])]);
+      // setMap already invalidates the old scene. The first ready background
+      // establishes this map's real geometry; pending casts may then resolve it.
+      if (groundReady) {
+        if (vfxLayout && vfxLayout !== layoutKey) { vfxLayoutChanges++; vfxBridge?.clear('layout-changed'); }
+        vfxLayout = layoutKey;
+      }
+      syncVfxCanvas();
     }
     function setMap(map) {
-      vfxBridge?.clear('map-changed');
+      vfxBridge?.clear('map-changed'); vfxLayout = '';
       ++mapGeneration; currentMap = map ? [map.id, map.themeId, map.kind].join(':') : ''; currentRoom = ''; assetIssues.clear(); releaseAssets(); mapIssue = '';
       if (!map) { layout(); return; }
       const asset = mapAsset(map), generation = mapGeneration;
@@ -542,7 +555,7 @@
       apply, refreshHUD: refreshHud, ingestCombatTrace,
       showSyncError(message) { syncError = message; status(); },
       update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); },
-      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
+      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
       dispose() { if (disposed) return; disposed = true; ++mapGeneration; vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); clearActor(); releaseAssets(); panel.remove(); viewers.delete(view); },
     };
     const pagehideVfx = () => view.dispose();

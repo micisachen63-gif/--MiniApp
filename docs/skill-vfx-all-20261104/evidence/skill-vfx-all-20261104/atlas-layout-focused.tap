@@ -1,0 +1,208 @@
+TAP version 13
+# Subtest: live WebGL readability suspends released frames and resumes the new actor
+ok 1 - live WebGL readability suspends released frames and resumes the new actor
+  ---
+  duration_ms: 6.975
+  type: 'test'
+  ...
+# Subtest: live Canvas readability suspends released frames and resumes the new actor
+ok 2 - live Canvas readability suspends released frames and resumes the new actor
+  ---
+  duration_ms: 5.9605
+  type: 'test'
+  ...
+# Subtest: switch, appearance upgrade, async cancellation, null and shutdown detach frames before release
+ok 3 - switch, appearance upgrade, async cancellation, null and shutdown detach frames before release
+  ---
+  duration_ms: 64.0102
+  type: 'test'
+  ...
+# Subtest: return to camp releases the map only after the ground image is detached
+ok 4 - return to camp releases the map only after the ground image is detached
+  ---
+  duration_ms: 7.359
+  type: 'test'
+  ...
+# Subtest: portrait ground cover and viewport changes keep the real actor bounds above the HUD immediately
+ok 5 - portrait ground cover and viewport changes keep the real actor bounds above the HUD immediately
+  ---
+  duration_ms: 15.4889
+  type: 'test'
+  ...
+# Subtest: art preview retains its active silhouette and visibility toggle
+ok 6 - art preview retains its active silhouette and visibility toggle
+  ---
+  duration_ms: 2.2959
+  type: 'test'
+  ...
+# Subtest: same-actor snapshots retry a failed load without duplicating an in-flight actor request
+ok 7 - same-actor snapshots retry a failed load without duplicating an in-flight actor request
+  ---
+  duration_ms: 11.9555
+  type: 'test'
+  ...
+# Subtest: a late actor failure cannot invalidate the newer character or trigger its reload
+ok 8 - a late actor failure cannot invalidate the newer character or trigger its reload
+  ---
+  duration_ms: 20.5746
+  type: 'test'
+  ...
+# Subtest: same-run snapshots recover a failed background and keep an in-flight load intact
+ok 9 - same-run snapshots recover a failed background and keep an in-flight load intact
+  ---
+  duration_ms: 10.7769
+  type: 'test'
+  ...
+# Subtest: same-enemy snapshots recover metadata and spritesheet failures without duplicate loads
+ok 10 - same-enemy snapshots recover metadata and spritesheet failures without duplicate loads
+  ---
+  duration_ms: 17.9858
+  type: 'test'
+  ...
+# Subtest: connection failure labels the last snapshot and a successful snapshot clears only that warning
+ok 11 - connection failure labels the last snapshot and a successful snapshot clears only that warning
+  ---
+  duration_ms: 4.5975
+  type: 'test'
+  ...
+# Subtest: survey summaries show committed loot and completed encounters without simulating progress
+ok 12 - survey summaries show committed loot and completed encounters without simulating progress
+  ---
+  duration_ms: 12.8908
+  type: 'test'
+  ...
+# Subtest: legacy reports do not invent zero equipment, item or encounter totals
+ok 13 - legacy reports do not invent zero equipment, item or encounter totals
+  ---
+  duration_ms: 4.6996
+  type: 'test'
+  ...
+# Subtest: delayed enemy sprites retain their committed slots without cancelling pending VFX geometry
+ok 14 - delayed enemy sprites retain their committed slots without cancelling pending VFX geometry
+  ---
+  duration_ms: 10.8787
+  type: 'test'
+  ...
+# Subtest: first ground readiness preserves pending geometry while a later real viewport resize invalidates it
+ok 15 - first ground readiness preserves pending geometry while a later real viewport resize invalidates it
+  ---
+  duration_ms: 14.7833
+  type: 'test'
+  ...
+# Subtest: casts wait for the real actor marker and start the VFX release phase once
+ok 16 - casts wait for the real actor marker and start the VFX release phase once
+  ---
+  duration_ms: 10.0394
+  type: 'test'
+  ...
+# Subtest: all four directions retain the same projected body height and mirror the source once
+ok 17 - all four directions retain the same projected body height and mirror the source once
+  ---
+  duration_ms: 3.8614
+  type: 'test'
+  ...
+# Subtest: periodic hits use actual targets and impact presentation without any actor attack
+ok 18 - periodic hits use actual targets and impact presentation without any actor attack
+  ---
+  duration_ms: 0.7908
+  type: 'test'
+  ...
+# Subtest: targetless trap casts place a caster ring and never invent an enemy impact
+ok 19 - targetless trap casts place a caster ring and never invent an enemy impact
+  ---
+  duration_ms: 1.0616
+  type: 'test'
+  ...
+# Subtest: expired, previous-room, unknown-live-skill and missing-target traces do not animate
+ok 20 - expired, previous-room, unknown-live-skill and missing-target traces do not animate
+  ---
+  duration_ms: 0.8446
+  type: 'test'
+  ...
+# Subtest: a real snapshot target may wait for sprites without changing the committed timestamp
+ok 21 - a real snapshot target may wait for sprites without changing the committed timestamp
+  ---
+  duration_ms: 1.1429
+  type: 'test'
+  ...
+# Subtest: asset waits expire on the real clock and discard a room that changes during loading
+ok 22 - asset waits expire on the real clock and discard a room that changes during loading
+  ---
+  duration_ms: 1.2663
+  type: 'test'
+  ...
+# Subtest: context and actor generation changes cancel a marker wait
+ok 23 - context and actor generation changes cancel a marker wait
+  ---
+  duration_ms: 1.7089
+  type: 'test'
+  ...
+# Subtest: hidden and destroyed scenes cancel pending work and do not restart an actor
+ok 24 - hidden and destroyed scenes cancel pending work and do not restart an actor
+  ---
+  duration_ms: 1.0777
+  type: 'test'
+  ...
+# Subtest: casts are bounded by a single actor sequence while later effects do not restart it
+ok 25 - casts are bounded by a single actor sequence while later effects do not restart it
+  ---
+  duration_ms: 0.9789
+  type: 'test'
+  ...
+# Subtest: replaying an accepted trace after clear never replays the actor or VFX
+ok 26 - replaying an accepted trace after clear never replays the actor or VFX
+  ---
+  duration_ms: 2.1977
+  type: 'test'
+  ...
+# Subtest: an externally restarted actor clip cannot release a stale token
+ok 27 - an externally restarted actor clip cannot release a stale token
+  ---
+  duration_ms: 1.2421
+  type: 'test'
+  ...
+# Subtest: native markers and origins win without fetching any fallback
+ok 28 - native markers and origins win without fetching any fallback
+  ---
+  duration_ms: 0.3216
+  type: 'test'
+  ...
+# Subtest: a missing authored marker is never replaced by duration/2
+ok 29 - a missing authored marker is never replaced by duration/2
+  ---
+  duration_ms: 1.679
+  type: 'test'
+  ...
+# Subtest: reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation
+ok 30 - reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation
+  ---
+  duration_ms: 12.0385
+  type: 'test'
+  ...
+# Subtest: stale asset or metadata SHA rejects the fallback
+ok 31 - stale asset or metadata SHA rejects the fallback
+  ---
+  duration_ms: 8.4841
+  type: 'test'
+  ...
+# Subtest: source frame changes and a conflicting native marker reject stale supplemental points
+ok 32 - source frame changes and a conflicting native marker reject stale supplemental points
+  ---
+  duration_ms: 0.8193
+  type: 'test'
+  ...
+# Subtest: cross-origin profile asset URLs are never fetched
+ok 33 - cross-origin profile asset URLs are never fetched
+  ---
+  duration_ms: 0.3513
+  type: 'test'
+  ...
+1..33
+# tests 33
+# suites 0
+# pass 33
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 343.527

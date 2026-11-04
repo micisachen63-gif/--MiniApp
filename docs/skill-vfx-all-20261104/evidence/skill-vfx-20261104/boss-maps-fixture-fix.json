@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "generatedAt": "2026-11-04T08:31:35.762Z",
+  "reason": "The old map-only DOM fixture passed an empty object to bindBoss. Added only querySelector returning null for the absent .bossbox; all original twelve-map and asset-file assertions are preserved.",
+  "changedFiles": [
+    "worker/test/boss-maps.test.js"
+  ],
+  "command": "C:\\Program Files\\nodejs\\node.EXE --test --test-reporter=tap worker/test/boss-maps.test.js worker/test/boss-ui-refresh.test.js worker/test/skill-vfx-legacy-app.test.js",
+  "exitCode": 0,
+  "tests": 11,
+  "passed": 11,
+  "failed": 0,
+  "runtimeUnchanged": true,
+  "runtimeBefore": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0",
+  "runtimeAfter": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0",
+  "sourceFiles": [
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/test/boss-maps.test.js",
+      "sha256": "a241d5e9916c6fc46350b1831be82994c5c7f3f4913f956e2413ed86949a5990"
+    },
+    {
+      "path": "worker/test/boss-ui-refresh.test.js",
+      "sha256": "200ef060f216a331bc09dbb3367702f76579ba48045122ce02b18a6ab8509011"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-app.test.js",
+      "sha256": "b7205bf0833e3073d6ab14440815c417b574ea68023f14c6acffab5d6dd68554"
+    }
+  ],
+  "tap": ".release-sync/skill-vfx-20261104/boss-maps-fixture-fix.tap",
+  "countMetadata": "Parsed from original completed TAP; execution was not repeated"
+}

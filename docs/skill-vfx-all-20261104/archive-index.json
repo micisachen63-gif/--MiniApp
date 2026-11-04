@@ -1,0 +1,421 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T08:35:39.057Z",
+  "scope": "skill-vfx-current-evidence-archive",
+  "pathMapping": "Strip .release-sync/ and place the remainder under docs/skill-vfx-all-20261104/evidence/",
+  "canonicalEvidence": [
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b",
+      "bytes": 326090
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-committed-service-events.json",
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d",
+      "bytes": 1859032
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-coverage-browser.json",
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139",
+      "bytes": 818642
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-coverage-events.json",
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb",
+      "bytes": 5910664
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded",
+      "bytes": 273175
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+      "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+      "bytes": 1012553
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+      "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc",
+      "bytes": 79800
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+      "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+      "bytes": 227324
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
+      "sha256": "b92ec412dbb565ceff9b83f3297d9fa0998f3d003b2bf6b600a2bde8e90be6b4",
+      "bytes": 96588
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+      "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+      "bytes": 77065
+    }
+  ],
+  "supplementaryEvidence": [
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/coverage-handover.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/coverage-handover.json",
+      "sha256": "e311a1ef582cd53ee1d00f481a142841c58c8f04e69545e59400ef175805a536",
+      "bytes": 12168
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/coverage-validation.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/coverage-validation.json",
+      "sha256": "b383b9556eef48d7acf2adfb7cc16e023162b2266959cfb883852ba2c7179ca6",
+      "bytes": 2564
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-frontend-freeze.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-frontend-freeze.json",
+      "sha256": "f39c139a3f9ac3e5766278651a255974717e9f8d78390ff72a76361e5d497aaa",
+      "bytes": 3592
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-frontend-handover.txt",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-frontend-handover.txt",
+      "sha256": "26d49a58603fcbb3a8d88dcc660fa6b2fb64dbdf82f1adc47e1fef45fef2eef6",
+      "bytes": 9831
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-backend-validation.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-backend-validation.json",
+      "sha256": "bfdddfeb21ffae245225be82d59be41d335c840bbad54e608af5b5b1dfa97e06",
+      "bytes": 9151
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-backend-tests.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-backend-tests.tap",
+      "sha256": "f9f96f52dd3c59012837315e9e80a3217296eb91fbcc94630926ad46712a7129",
+      "bytes": 37849
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/legacy-service-tests.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/legacy-service-tests.tap",
+      "sha256": "43b879fb6337adc5e3546c6d6542fda8648f56f3a15fe908a1f75710193795e5",
+      "bytes": 1813
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/atlas-merge-tests.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/atlas-merge-tests.tap",
+      "sha256": "c71cdcde472882952d3c7c28022793f8a6b17f019cd224b21d591262edee1fc7",
+      "bytes": 40110
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/atlas-merge-tests.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/atlas-merge-tests.json",
+      "sha256": "298f765e28f29729be404f2e7aa17ea7bb1c54183be7e2bd9ac66ece725119ce",
+      "bytes": 1821
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/atlas-layout-focused.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/atlas-layout-focused.tap",
+      "sha256": "3677d0f42b4ae54a557009f60b2e4ba1a69e75cb13f8c74b0208987d033caf65",
+      "bytes": 7534
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/atlas-layout-focused-validation.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/atlas-layout-focused-validation.json",
+      "sha256": "6644deb6b9e3038bb15da1bde36f1a055ff3dc595fd24129339c48d9d5700b25",
+      "bytes": 3231
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/boss-maps-fixture-fix.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/boss-maps-fixture-fix.json",
+      "sha256": "c252382d3c2800c29b19bab84f39ddae6fb12c6f3ea05f674d0cc1b9a20e022a",
+      "bytes": 1572
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/boss-maps-fixture-fix.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/boss-maps-fixture-fix.tap",
+      "sha256": "872e465edee1509f963dddc114ba5c4f13cdea2a1d3971783b886c88abd630b2",
+      "bytes": 2633
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/results.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/results.json",
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139",
+      "bytes": 818642
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_1-desktop.png",
+      "sha256": "8262fe0a67bed2c9031282e34b20e5bde1e0f569f1d231a8c169c3169c42f67a",
+      "bytes": 288369
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_2-desktop.png",
+      "sha256": "ab454c89b3857ef7ef14fa47c2f887f7f88b601ebdae7108d9e4595a2e650fb2",
+      "bytes": 278243
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_3-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_01_3-desktop.png",
+      "sha256": "12000fe8d6aacccf91df4b5e98f42d9c90d7fd24982a7833163c6bdeb84f25d9",
+      "bytes": 310247
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_02_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_02_1-desktop.png",
+      "sha256": "3858f749d5d44037f80c212f8c006db8a4b16c1fe4757db1a9f4c3695078825c",
+      "bytes": 306007
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_02_3-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_02_3-desktop.png",
+      "sha256": "56e881792671f2389ad6843b0ff46e55e70f32cd16564074d074b530984fa7a0",
+      "bytes": 275477
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_03_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_03_1-desktop.png",
+      "sha256": "e68254b4a452ba1fbc263387c7644c08a132e89df6d0f7a247d2020019154f73",
+      "bytes": 275960
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_03_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_03_2-desktop.png",
+      "sha256": "274bf410c60df0e58704bea7fac0d9692f7f68b0a1aeb160dd8ceda04496aa97",
+      "bytes": 306945
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_04_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_04_1-desktop.png",
+      "sha256": "e09ed9f46579e7754125e16f85bbdfb0accb0239de82ee0483d3123ed2a17a0d",
+      "bytes": 294838
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_04_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_04_2-desktop.png",
+      "sha256": "51cdc5fbc3dcfabe05ac5696124db332f5c87d7454cbb65344b1dfa211bff959",
+      "bytes": 297719
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_1-desktop.png",
+      "sha256": "301a8072d7b3556bdb0a81a3788d7b100ef15590552cd50116d8fda659432d61",
+      "bytes": 291952
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_2-desktop.png",
+      "sha256": "18efd0d61752eabd775d601b3321e4c23b53ae9d803081d6223a3146dd3f6973",
+      "bytes": 325142
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_3-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_05_3-desktop.png",
+      "sha256": "9a2141ac89ec68487ee2e5ac9dc5b124831ed60c93cdd17d351f5498854f5142",
+      "bytes": 281251
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_06_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_06_1-desktop.png",
+      "sha256": "5737522310829cce98244bc2c01a438601b2321803fafd1f44f8111f748ed8e0",
+      "bytes": 298056
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_06_3-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_06_3-desktop.png",
+      "sha256": "2bb4204cb7247619e50ca94f14247387e61065580b5f8aeaffde577f17623114",
+      "bytes": 331412
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_07_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_07_1-desktop.png",
+      "sha256": "3382927c346f3a812ea221413475d08239dc018a7f4d6c95effdd784217966db",
+      "bytes": 301470
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_08_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_08_1-desktop.png",
+      "sha256": "9b93cee54ff0785239164513e179c9f8ac7c1f3d96c5aaf02d7bfe903d7ae0ac",
+      "bytes": 293325
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_09_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_09_1-desktop.png",
+      "sha256": "4e7383b6872d25e965c32d63a42fbce90184f32a993ae48d98ae7dda5e01a133",
+      "bytes": 312439
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_11_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_11_1-desktop.png",
+      "sha256": "2003a947ca813fb016a3a157f8857aace3cb16528409046d2ed2409ccea9dfaf",
+      "bytes": 279839
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_12_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_12_1-desktop.png",
+      "sha256": "795059e162492fa9068bcce392f453a71bfd3d998a4722995e5f2636ff0c75d7",
+      "bytes": 276019
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_14_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_14_1-desktop.png",
+      "sha256": "79c863782d57474e413fe0b143bb19b889cd6c2225e9304daebfb273ed209020",
+      "bytes": 292553
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_15_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_15_1-desktop.png",
+      "sha256": "777b29ae93d904ac46da36f562cf7890dbb038ff1256dca850270d531271f1bb",
+      "bytes": 303997
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_18_1-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_18_1-desktop.png",
+      "sha256": "521773c4080157f233ff64593ddd60c28913d750107438fa1b81d676a1e84d88",
+      "bytes": 274259
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_18_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_18_2-desktop.png",
+      "sha256": "e77d6b7c509389b918eba766532a69e1d79e1e5fc7aaa1b0da9e1284e4c14c3b",
+      "bytes": 306575
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_23_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_23_2-desktop.png",
+      "sha256": "e8688e2fe68d7ef314ba62fd65ff2549c204c63887eb53796e7b48bcf5591c07",
+      "bytes": 351929
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_24_2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_24_2-desktop.png",
+      "sha256": "de629c07ffaeb8a1e22abf797864967c47280cb897f910a376d76e0738e4c1d9",
+      "bytes": 304946
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_thief_01-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_thief_01-desktop.png",
+      "sha256": "b379759fd558d51906d3b0f30b6e9a3df3467c4e760e842dac0d4963b85857f1",
+      "bytes": 265742
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_thief_04-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/special_skill_thief_04-desktop.png",
+      "sha256": "a7ba2f54cccb41c6a0ac3739a0b4983afee72938353eb324adf6b86e80a81553",
+      "bytes": 262911
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/native_sword_A2-desktop.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/families/native_sword_A2-desktop.png",
+      "sha256": "9cee549cfbc0a0b4cae43320df803539618c01eaded6e7bd102987faf133db6d",
+      "bytes": 289371
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_sword_A1-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_sword_A1-phone.png",
+      "sha256": "00116e8fcf4a817fe7e259aac29d403bde5277255a23468269eff65ef57c444f",
+      "bytes": 142385
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_archer_A2-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_archer_A2-phone.png",
+      "sha256": "575e26f68e9e95782ce6f792374553a208b59ccf4aac5a70aa93fe585a0739c0",
+      "bytes": 132764
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_mage_B2-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_mage_B2-phone.png",
+      "sha256": "9eb9eeb9b3ea84d7e989f79bf8b243cd167bf7d11c7e5ce3873dfe667fd52e76",
+      "bytes": 143331
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_thief_A2-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_thief_A2-phone.png",
+      "sha256": "496e1de8bce0a53d957ac7f0ef4a1b7430644447f30fe2156933daa6be64fd3e",
+      "bytes": 127025
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_09_1-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_09_1-phone.png",
+      "sha256": "5e8d1d736cf4d1d49235af4f2d259f672b29c34400703508106fbff0e187365d",
+      "bytes": 148322
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_18_1-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_18_1-phone.png",
+      "sha256": "5fa27bf2c2de1e6236b91dc7945a27908cffbf68c5134a91ff25454c839a5384",
+      "bytes": 133779
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_23_2-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_23_2-phone.png",
+      "sha256": "ba8e0e70f149082a42177c044702ff7e896159801df526efcc31143f931089ef",
+      "bytes": 169265
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_24_2-phone.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_24_2-phone.png",
+      "sha256": "184e5d7e004bcb6464450b3b362c39f634b29020c6e611fe60f2e5a856bb82ce",
+      "bytes": 144994
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_sword_base-reduced.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_sword_base-reduced.png",
+      "sha256": "9509ac9e4f790a98ace5b0b04abb656df9fb8aa782daa5f6e83976de8804963b",
+      "bytes": 133612
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_mage_base-reduced.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/native_mage_base-reduced.png",
+      "sha256": "54715a3e6f8c4e277a696bac1113d07f150235087fb766cdf282a3e4049129e6",
+      "bytes": 133635
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_18_1-reduced.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_18_1-reduced.png",
+      "sha256": "fb50b40f17d579deb56a3078bed97b80b1fbcca7809572a2ceda3f2e08662089",
+      "bytes": 127913
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_23_2-reduced.png",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/mobile/special_skill_23_2-reduced.png",
+      "sha256": "a47de7716dca125d8fc64ecc953609c7e4c7658ace2fea3f78f079815aa2aa7a",
+      "bytes": 148498
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/identity-contact-sheet.jpg",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/identity-contact-sheet.jpg",
+      "sha256": "76eae7ecc4f8bbe2f4a0c0212d266b8574f438f96590748f637fc805fb2ebe73",
+      "bytes": 413798
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/worker.tap",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/worker.tap",
+      "sha256": "d753d7eaa6a6b13d6ad96a1cbc3c0eaa491980b4df023771c3b02278f0779a20",
+      "bytes": 16903
+    },
+    {
+      "originalPath": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/validation.json",
+      "archivePath": "docs/skill-vfx-all-20261104/evidence/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/validation.json",
+      "sha256": "47099b678e8538199cbe450bce91e52a5fc20476ec4e0988ceee97bdda201789",
+      "bytes": 8033
+    }
+  ],
+  "missingOptional": [],
+  "summary": {
+    "canonicalFiles": 10,
+    "supplementaryFiles": 57,
+    "totalFiles": 67,
+    "totalBytes": 22034694,
+    "identityScreenshots": 40
+  },
+  "updatedAt": "2026-11-04T08:39:45.924Z"
+}

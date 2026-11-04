@@ -1,0 +1,110 @@
+StarJournal legacy skill VFX frontend handover
+Updated: 2026-11-04 08:32 UTC
+Owner: /root/legacy_frontend
+Worktree: D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-20261104
+Branch: codex/skill-vfx-20261104
+Status: frontend runtime/tests/QA tool frozen. Final ring/PK/pure-support real MiniApp browser work completed; root owns overall gate and commit.
+No push, deploy, production DB mutation, source character artwork changes, other worktree edits or global task termination performed.
+
+COMPLETED
+1. Added worker/public/skill-vfx-legacy.mjs, explicit descriptor-only validation/planning and real Canvas player layer.
+   Canonical IDs must be in catalog, source must be committed-combat (or explicitly opted-in ring deterministic-projection), actor and every target must resolve to supplied scene geometry.
+   No skill identity is inferred from labels, class summary, damage values or hit count.
+   Per-receipt dedup, max 12 commands, max 512 remembered IDs, context/character/realm admission gates, pending load cancellation, visibility/layout/pagehide cleanup and bounded diagnostic history.
+   Browser inspection: window.RpgLegacySkillVFX.inspect().
+   Actual scene root has [data-legacy-vfx], overlay canvas .legacy-skill-vfx.
+2. Minimal engine support override and non-damaging summon mode:
+   Pure support and ancillary heal/shield/buff use each real beneficiary position.
+   Only special:skill_18_1 uses non-damaging local summon. Native mage B2 and Atlas beast keep their actual direct attack semantics.
+   Periodic and reflection use impact-only, never a new summon/cast.
+3. Ordinary idle: consumes round.vfxEvents and hit.vfxEventId once at existing native release hooks.
+   Aggregate-minute descriptor does not assert individual skill damage per hit; later fragments no longer replay the old skill FX.
+4. Party dungeon/tower: explicit event.vfx / vfxEvents, actual actor/target DOM positions, native release geometry, full bounded tail, exact HP/MP snapshot logic unchanged.
+5. PK: explicit log step descriptors, a/b exact actors and targets, once per step, cleanup on skip/finish/character or realm changes.
+   Support/summon do not use the offensive portrait motion; periodic-only receipts never add a cast. Target hit cue/negative number require actual positive HP loss, so no false -0. Mixed support plus true periodic damage still shows actual damage and actual healing.
+6. Boss: explicit action descriptors plus final result.vfxEvents reflection; visible receipt animation retained before refreshed result view, actual Canvas actor/boss geometry, navigation/hidden/receipt replacement cancellation.
+7. Star ring: deterministic projection source remains explicit; once per beat, cosmetic loops strip VFX.
+   System/null periodic and boss-container reflection descriptors have an effect-only queue keyed by their exact descriptor actorId. A real residual impact can belong to a now-downed actor without starting a native cast.
+   A validated true cast that precedes death within the same beat may replay once from the final downed snapshot. Later cosmetic cycles retain their downed-actor restrictions.
+   Wave mismatch/missing actual target is rejected rather than mapped to a new enemy.
+
+OWNED SOURCE FILES
+worker/public/skill-vfx-legacy.mjs (new)
+worker/public/skill-vfx-engine.mjs
+worker/public/battle.js
+worker/public/expedition/combat-playback.js
+worker/public/expedition/hero-art-playback.js
+worker/public/star-ring-heroes.js
+worker/public/app.js
+
+OWNED TEST / VERIFICATION FILES
+worker/test/skill-vfx-legacy.test.js (new, 13 tests including all184 actual player dispatch)
+worker/test/skill-vfx-legacy-harness.js (new controlled Canvas/RAF test surface)
+worker/test/skill-vfx-legacy-app.test.js (new, 4 boss receipt/lifecycle + 2 full PK consumer tests across 7 scenarios)
+worker/test/skill-vfx-engine.test.js (2 new non-damaging summon/ancillary support tests)
+worker/test/combat-playback.test.js (2 new true descriptor/cleanup tests; VM dependencies injected)
+worker/test/hero-art-contained.test.js (new defensive release geometry getter test)
+worker/test/star-ring-heroes.test.js (5 new projection/effect-only/no-guess/downed-cast tests)
+worker/tools/skill-vfx-legacy-presentation-check.mjs (new real resolver descriptor -> actual player proof)
+
+VERIFIED
+- Initial focused batch: 77 / 77 passed, preserved .release-sync/skill-vfx-20261104/legacy-frontend-focused-tests.log
+  Includes engine, helper, party, hero-art, ring, PK snapshots, boss refresh, idle pacing.
+- Additional boss consumer: 4 / 4 passed; party's same 9 tests rerun passed.
+- Ring final periodic/reflection and same-beat death fixes: 14 / 14 passed.
+- Final app/PK focused run: 11 / 11 passed, including 6 complete replay modes (heal/buff/summon/pulse/blocked/direct) and mixed support+periodic hit.
+- Unique final focused test count: 87 across initial batch and required scoped reruns, no failed or skipped tests.
+- Frozen 7 source hashes plus verification-file hashes: .release-sync/skill-vfx-20261104/legacy-frontend-freeze.json
+- Real resolver presentation receipt:
+  .release-sync/skill-vfx-20261104/legacy-coverage-presentation.json
+  status passed, 184 / 184 accepted, 3644 actual Canvas draw commands.
+  160 full, 23 support, 1 summon; source rows 124 idle + 60 resolver.
+  Source SHA checked, original descriptors unchanged; destroy leaves 0 active / 0 RAF.
+  Explicitly controlled test geometry, NOT browser-pixel evidence and NOT all-five-mode gameplay evidence.
+- Root reported real MiniApp idle native/support/summon desktop+mobile and PK/boss/party desktop+mobile passed before this handover. Final PK non-offensive edge behavior and final ring source still need root browser acceptance.
+  Root separately runs full real API/SQLite/browser checks. Coverage audit separately runs all184 browser fixture replay.
+
+REMAINING / HANDOFF
+- Completed by this agent: final ring and PK desktop/mobile acceptance, plus real pure-support PK desktop/mobile. Phone battle PNGs actually viewed; see FINAL BROWSER QA below.
+- Root: final combined test/gate, source-aware evidence index, docs and local commit (no push/deploy).
+- coverage_audit: fold resolver, committed service, presentation and browser fixture receipts separately into manifest; avoid claiming a static import or unit Canvas draw is live gameplay proof.
+- New source changes invalidate matching hashes; regenerate only affected evidence.
+- No further frontend runtime changes anticipated. If browser reports a concrete issue, reopen only that consumer.
+
+UI / QA NOTES
+- Ordinary idle exists in the legacy home modal: window.RpgExpeditionHost.openTab('home'), not the default Atlas journey homepage.
+- PK accept flow: [data-pacc] -> confirm button text '開打！' -> real pk/accept -> replay.
+  Completed duel [data-pview] -> real pk/get -> replay. Arena .pkarena; actors #pk_a img / #pk_b img.
+- Boss: .bossbox / #bcv; action #atk; consume actual boss/attack result.
+- Scroll [data-legacy-vfx] into view before screenshot if a refresh button scrolled the battle out of frame.
+- app/source code unchanged by this handover document.
+
+FINAL BROWSER QA (2026-11-04 08:22 UTC)
+Modified only worker/tools/skill-vfx-gameplay-browser.mjs in this follow-up, never runtime.
+Tool is frozen at SHA256 b5ad0077e174b97898b6b157fc031bd6bd9cf30045eaf438f6bda1dd0c1b57c8.
+- .release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json:
+  passed cases ring390, ring1280, pk390, pk1280, pk pure-support390; 0 page/HTTP errors, sourceChangedDuring [].
+  The sixth case preserves a failed QA assumption about passive healing; do not relabel it passed.
+- .release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json:
+  final pure-support1280 passed, 0 page/HTTP errors, sourceChangedDuring [].
+  It uses the actual pk/accept response and matching rpg_pk.log_json event, exact DOM HP/CSS/recipient geometry, and an atomic visible-alpha snapshot.
+- Real pure support identity special:skill_02_3; enemy HP unchanged on the cast, self healing allowed only if present in actual before/after HP.
+- Renderer snapshot, DOM state and pixels are captured in one browser callback to avoid a later replay-step race.
+- Source kind remains committed-combat for PK and deterministic-projection for running ring.
+- Required screenshots actually inspected: ring390 battle/effect, pk390 battle, support390 battle. Also inspected support1280 battle.
+- Both batches have visual-review.txt recording the exact observations and timestamp boundaries.
+- Historical 08:00 scroll-stability QA timeout and 08:13 cross-frame readback QA failure remain preserved. No failed historical record was overwritten.
+- All six requested dimensions/variants now have passed cases; root/coverage_audit have the exact paths.
+
+FULL-GATE FIXTURE FOLLOW-UP (2026-11-04 08:32 UTC)
+- Full Worker gate exposed an old boss-map-only DOM fixture calling bindBoss({}) without querySelector.
+- Only worker/test/boss-maps.test.js changed: bindBoss receives {querySelector:()=>null}.
+- All original assertions for the twelve distinct Greek maps and existing map asset files remain intact.
+- Runtime was not changed or weakened.
+- Focused command: node --test --test-reporter=tap worker/test/boss-maps.test.js worker/test/boss-ui-refresh.test.js worker/test/skill-vfx-legacy-app.test.js
+- Result: 11 / 11 passed, zero fail/skip; git diff --check passed.
+- Receipt: .release-sync/skill-vfx-20261104/boss-maps-fixture-fix.json
+- Original TAP: .release-sync/skill-vfx-20261104/boss-maps-fixture-fix.tap
+- app.js before/after SHA256: 05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0
+- boss-maps.test.js final SHA256: a241d5e9916c6fc46350b1831be82994c5c7f3f4913f956e2413ed86949a5990
+- Test source is frozen again. Browser evidence remains applicable; no browser rerun was performed.

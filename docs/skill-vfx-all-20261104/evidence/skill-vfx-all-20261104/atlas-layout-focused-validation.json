@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-04T08:13:08.132Z",
+  "completedAt": "2026-11-04T08:13:08.557Z",
+  "exitCode": 0,
+  "sourceBefore": [
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/test/scene-live-lifecycle.test.js",
+      "sha256": "33f6ed49024c2dac97f39a02bf6856a05c7ea29f1371e7596a9304d79a235ebe"
+    },
+    {
+      "path": "worker/test/skill-vfx-actor-bridge.test.js",
+      "sha256": "845906e9120c4be22f049012335192ac2145d36569210dee0b4dee6aca1c8c7a"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/test/scene-live-lifecycle.test.js",
+      "sha256": "33f6ed49024c2dac97f39a02bf6856a05c7ea29f1371e7596a9304d79a235ebe"
+    },
+    {
+      "path": "worker/test/skill-vfx-actor-bridge.test.js",
+      "sha256": "845906e9120c4be22f049012335192ac2145d36569210dee0b4dee6aca1c8c7a"
+    }
+  ],
+  "changedDuringGate": [],
+  "tap": {
+    "path": ".release-sync/skill-vfx-all-20261104/atlas-layout-focused.tap",
+    "sha256": "3677d0f42b4ae54a557009f60b2e4ba1a69e75cb13f8c74b0208987d033caf65",
+    "bytes": 7534
+  },
+  "summary": [
+    "# tests 33",
+    "# pass 33",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0"
+  ],
+  "tail": [
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: a missing authored marker is never replaced by duration/2",
+    "ok 29 - a missing authored marker is never replaced by duration/2",
+    "  ---",
+    "  duration_ms: 1.679",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation",
+    "ok 30 - reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation",
+    "  ---",
+    "  duration_ms: 12.0385",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: stale asset or metadata SHA rejects the fallback",
+    "ok 31 - stale asset or metadata SHA rejects the fallback",
+    "  ---",
+    "  duration_ms: 8.4841",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: source frame changes and a conflicting native marker reject stale supplemental points",
+    "ok 32 - source frame changes and a conflicting native marker reject stale supplemental points",
+    "  ---",
+    "  duration_ms: 0.8193",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: cross-origin profile asset URLs are never fetched",
+    "ok 33 - cross-origin profile asset URLs are never fetched",
+    "  ---",
+    "  duration_ms: 0.3513",
+    "  type: 'test'",
+    "  ...",
+    "1..33",
+    "# tests 33",
+    "# suites 0",
+    "# pass 33",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 343.527",
+    ""
+  ]
+}

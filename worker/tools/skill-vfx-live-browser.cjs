@@ -82,24 +82,26 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
    entry.panel=await frame.evaluate(()=>{const panel=document.querySelector('#scene-live-status');return {collapsed:panel?.dataset.collapsed,expanded:panel?.querySelector('[data-live-collapse]')?.getAttribute('aria-expanded'),rect:panel?.getBoundingClientRect().toJSON()};});
    if(item.width<600)assert.equal(entry.panel.collapsed,'true','Fresh phone scene must begin with compact status');
    const observed=new Map();let release=null,effect=null,releaseReceipt=null,subscriptionCursor=traceBefore;
-   const deadline=Date.now()+36000;
+   // Foreground sync is throttled and can skip one 15s boundary while its read is in flight.
+   // Observe multiple real cadences; committed event age limits remain unchanged.
+   const deadline=Date.now()+(foregroundAuto?80000:36000);
+   let nextManualSettle=0;
    while(Date.now()<deadline&&(!release||(passive[item.build]&&!effect))){
-    await sleep(foregroundAuto?100:900);
-    if(!foregroundAuto)await call('atlas/settle',{runId:currentRun});
+    await sleep(60);
+    if(!foregroundAuto&&Date.now()>=nextManualSettle){
+     await call('atlas/settle',{runId:currentRun});nextManualSettle=Date.now()+900;
+    }
     const traceBatch=await frame.evaluate(cursor=>window.__skillVfxQa.traces.slice(cursor),subscriptionCursor);subscriptionCursor+=traceBatch.length;
     for(const itemTrace of traceBatch){const receipt={build:item.build,width:item.width,trigger:entry.trigger,...itemTrace};receipts.push(receipt);entry.traceCount++;for(const e of receipt.trace.events)observed.set(e.eventId,{event:e,receipt});}
-    if(foregroundAuto&&!traceBatch.length)continue;
-    const samplingStarted=Date.now();
-    await sleep(90);
-    const early=await view(),earlyEffect=early.vfx?.lastEffect;
-    if(!effect&&earlyEffect&&observed.has(earlyEffect.eventId)&&observed.get(earlyEffect.eventId).event.type==='skill_effect'
-      &&early.vfx.acceptedEffects>0&&early.vfx.player.active>0&&early.vfx.player.drawCalls>0){
-     effect={...earlyEffect,actor:early.actorAnimation,player:early.vfx.player};
+    // Poll the real player continuously even when no NEW receipt arrives:
+    // asset verification and the authored actor marker may finish later.
+    const v=await view(),last=v.vfx?.lastRelease,lastEffect=v.vfx?.lastEffect;
+    if(!effect&&lastEffect&&observed.has(lastEffect.eventId)&&observed.get(lastEffect.eventId).event.type==='skill_effect'
+      &&v.vfx.acceptedEffects>0&&v.vfx.player.active>0&&v.vfx.player.drawCalls>0){
+     effect={...lastEffect,actor:v.actorAnimation,player:v.vfx.player};
      if(passive[item.build])await page.screenshot({path:path.join(evidenceDir,item.width+'-'+item.build+'-effect.png'),fullPage:true});
     }
-    await sleep(Math.max(0,650-(Date.now()-samplingStarted)));
-    const v=await view(),last=v.vfx?.lastRelease;
-    if(!release&&last&&observed.has(last.eventId)){
+    if(!release&&last&&observed.has(last.eventId)&&v.vfx.player.active>0&&v.vfx.player.drawCalls>0){
      const found=observed.get(last.eventId);
      if(found.event.type==='skill_cast'&&found.event.skillId==='atlas:'+item.build){
       release={...last,actor:v.actorAnimation,player:v.vfx.player,geometry:v.geometry};releaseReceipt=found.receipt.trace;
@@ -107,7 +109,7 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
       assert(last.actorElapsedMs-last.markerMs<150,'Unexpected release-marker overshoot');
       assert(Number.isFinite(last.from?.x)&&Number.isFinite(last.from?.y)&&last.bodyHeight>0,'Missing projected release geometry');
       assert.equal(last.startProgress,.22,'Recipe must begin at release phase');
-      assert(v.vfx.player.active>0,'No actual VFX instance after release');
+      assert(v.vfx.player.active>0&&v.vfx.player.drawCalls>0,'No actual drawn VFX instance after release');
       assert(v.geometry.enemies.length>0||item.build==='archer_trap','No real target sprites');
       await page.screenshot({path:path.join(evidenceDir,item.width+'-'+item.build+'-release.png'),fullPage:true});
      }

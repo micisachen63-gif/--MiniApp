@@ -1,0 +1,3085 @@
+{
+  "schemaVersion": 1,
+  "sourceFiles": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "b5ad0077e174b97898b6b157fc031bd6bd9cf30045eaf438f6bda1dd0c1b57c8"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "source": "real-isolated-api",
+  "isolated": true,
+  "ephemeral": true,
+  "productionAccess": false,
+  "clockMode": "fixed-test",
+  "startedAt": "2026-11-04T08:17:57.325Z",
+  "cases": [
+    {
+      "mode": "pk",
+      "variant": "pure-support",
+      "sourceMode": "pk-support",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:p11122ac4a8c:222",
+            "received": 3,
+            "accepted": 3,
+            "rejected": 0,
+            "commands": 3,
+            "drawFrames": 3,
+            "drawCalls": 72,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+              "skillId": "special:skill_02_3",
+              "actorId": "a",
+              "source": "committed-combat",
+              "presentationMode": "impact",
+              "targetIds": [
+                "b"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 129.15625,
+                "y": 75.480877585902
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 129.15625,
+                    "y": 75.480877585902
+                  },
+                  "to": {
+                    "x": 378.828125,
+                    "y": 78.99161607826963
+                  },
+                  "targets": [
+                    {
+                      "x": 378.828125,
+                      "y": 78.99161607826963
+                    }
+                  ],
+                  "mode": "impact",
+                  "bodyHeight": 175.53692461837684,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 2,
+              "drawCalls": 42,
+              "frameMs": 3.2999999970197678,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 3,
+            "pending": 0,
+            "player": {
+              "active": 2,
+              "drawCalls": 42,
+              "frameMs": 3.2999999970197678,
+              "manual": false,
+              "width": 490,
+              "height": 265,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:p11122ac4a8c:222",
+            "received": 8,
+            "accepted": 8,
+            "rejected": 0,
+            "commands": 8,
+            "drawFrames": 40,
+            "drawCalls": 1064,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:p11122ac4a8c:3:0:a",
+              "skillId": "native:sword:B111",
+              "actorId": "a",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "b"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 129.15625,
+                "y": 75.480877585902
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 129.15625,
+                    "y": 75.480877585902
+                  },
+                  "to": {
+                    "x": 378.828125,
+                    "y": 78.99161607826963
+                  },
+                  "targets": [
+                    {
+                      "x": 378.828125,
+                      "y": 78.99161607826963
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 175.53692461837684,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 27,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 2,
+            "remembered": 8,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 27,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 490,
+              "height": 265,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 2,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/accept",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:0:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:0:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:1:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:1:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:2:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:2:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:3:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:3:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:4:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:4:1:b:reflect:pk:p11122ac4a8c:4:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:4:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:5:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:5:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:6:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:6:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:7:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:7:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:8:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:8:1:b:reflect:pk:p11122ac4a8c:8:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:8:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:9:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:9:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:10:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:10:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:11:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:11:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:12:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:12:1:b:reflect:pk:p11122ac4a8c:12:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:12:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:13:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:13:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:14:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:14:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:15:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            }
+          ],
+          "pkReceipt": {
+            "id": "p11122ac4a8c",
+            "status": "done",
+            "log": {
+              "first": "a",
+              "hp": {
+                "a": 1537,
+                "b": 0
+              },
+              "mp": {
+                "a": 94,
+                "b": 150
+              },
+              "max": {
+                "a": 3090,
+                "b": 3189
+              },
+              "maxMp": {
+                "a": 390,
+                "b": 390
+              },
+              "initial": {
+                "hp": {
+                  "a": 3090,
+                  "b": 3189
+                },
+                "mp": {
+                  "a": 390,
+                  "b": 390
+                }
+              },
+              "ko": true,
+              "steps": [
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:0:0:a",
+                    "skillId": "special:skill_02_3",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421200000,
+                    "targetKind": "self",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "support",
+                    "enemyTargetIds": [],
+                    "allyTargetIds": [
+                      "a"
+                    ]
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": "skill_02_3",
+                  "label": "聖盾反震",
+                  "spentMp": 26,
+                  "hp": 3189,
+                  "before": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 3189
+                    },
+                    "mp": {
+                      "a": 390,
+                      "b": 390
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 3189
+                    },
+                    "mp": {
+                      "a": 364,
+                      "b": 390
+                    }
+                  },
+                  "healed": 0
+                },
+                {
+                  "by": "b",
+                  "vfxEvents": [
+                    {
+                      "schemaVersion": 1,
+                      "source": "committed-combat",
+                      "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+                      "skillId": "special:skill_02_3",
+                      "kind": "effect",
+                      "actorId": "a",
+                      "atMs": 1791421200000,
+                      "targetKind": "enemy",
+                      "targetIds": [
+                        "b"
+                      ],
+                      "presentationMode": "impact",
+                      "enemyTargetIds": [
+                        "b"
+                      ],
+                      "allyTargetIds": [],
+                      "effectKind": "reflect"
+                    }
+                  ],
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:0:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421200000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 3090,
+                  "before": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 3189
+                    },
+                    "mp": {
+                      "a": 364,
+                      "b": 390
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 3105
+                    },
+                    "mp": {
+                      "a": 364,
+                      "b": 374
+                    }
+                  },
+                  "healed": 0,
+                  "heal": 66,
+                  "self": 3105
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:1:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421230000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 276,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2829,
+                  "before": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 3105
+                    },
+                    "mp": {
+                      "a": 364,
+                      "b": 374
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 2829
+                    },
+                    "mp": {
+                      "a": 348,
+                      "b": 374
+                    }
+                  },
+                  "healed": 0,
+                  "heal": 64,
+                  "self": 3090
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:1:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421230000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 56,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 3034,
+                  "before": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 2829
+                    },
+                    "mp": {
+                      "a": 348,
+                      "b": 374
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 3034,
+                      "b": 2895
+                    },
+                    "mp": {
+                      "a": 348,
+                      "b": 358
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 2895
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:2:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421260000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 281,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2614,
+                  "before": {
+                    "hp": {
+                      "a": 3034,
+                      "b": 2895
+                    },
+                    "mp": {
+                      "a": 348,
+                      "b": 358
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 2614
+                    },
+                    "mp": {
+                      "a": 332,
+                      "b": 358
+                    }
+                  },
+                  "healed": 56,
+                  "heal": 64,
+                  "self": 3090
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:2:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421260000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 312,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2778,
+                  "before": {
+                    "hp": {
+                      "a": 3090,
+                      "b": 2614
+                    },
+                    "mp": {
+                      "a": 332,
+                      "b": 358
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2778,
+                      "b": 2680
+                    },
+                    "mp": {
+                      "a": 332,
+                      "b": 342
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 2680
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:3:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421290000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 306,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2374,
+                  "before": {
+                    "hp": {
+                      "a": 2778,
+                      "b": 2680
+                    },
+                    "mp": {
+                      "a": 332,
+                      "b": 342
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2842,
+                      "b": 2374
+                    },
+                    "mp": {
+                      "a": 316,
+                      "b": 342
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2842
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:3:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421290000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 314,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2528,
+                  "before": {
+                    "hp": {
+                      "a": 2842,
+                      "b": 2374
+                    },
+                    "mp": {
+                      "a": 316,
+                      "b": 342
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2528,
+                      "b": 2440
+                    },
+                    "mp": {
+                      "a": 316,
+                      "b": 326
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 2440
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:4:0:a",
+                    "skillId": "special:skill_02_3",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421320000,
+                    "targetKind": "self",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "support",
+                    "enemyTargetIds": [],
+                    "allyTargetIds": [
+                      "a"
+                    ]
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": "skill_02_3",
+                  "label": "聖盾反震",
+                  "spentMp": 26,
+                  "hp": 2440,
+                  "before": {
+                    "hp": {
+                      "a": 2528,
+                      "b": 2440
+                    },
+                    "mp": {
+                      "a": 316,
+                      "b": 326
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2592,
+                      "b": 2440
+                    },
+                    "mp": {
+                      "a": 290,
+                      "b": 326
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2592
+                },
+                {
+                  "by": "b",
+                  "vfxEvents": [
+                    {
+                      "schemaVersion": 1,
+                      "source": "committed-combat",
+                      "eventId": "pk:p11122ac4a8c:4:1:b:reflect:pk:p11122ac4a8c:4:0:a:0",
+                      "skillId": "special:skill_02_3",
+                      "kind": "effect",
+                      "actorId": "a",
+                      "atMs": 1791421320000,
+                      "targetKind": "enemy",
+                      "targetIds": [
+                        "b"
+                      ],
+                      "presentationMode": "impact",
+                      "enemyTargetIds": [
+                        "b"
+                      ],
+                      "allyTargetIds": [],
+                      "effectKind": "reflect"
+                    }
+                  ],
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:4:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421320000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2592,
+                  "before": {
+                    "hp": {
+                      "a": 2592,
+                      "b": 2440
+                    },
+                    "mp": {
+                      "a": 290,
+                      "b": 326
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2592,
+                      "b": 2356
+                    },
+                    "mp": {
+                      "a": 290,
+                      "b": 310
+                    }
+                  },
+                  "healed": 0,
+                  "heal": 66,
+                  "self": 2356
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:5:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421350000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 290,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2066,
+                  "before": {
+                    "hp": {
+                      "a": 2592,
+                      "b": 2356
+                    },
+                    "mp": {
+                      "a": 290,
+                      "b": 310
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2656,
+                      "b": 2066
+                    },
+                    "mp": {
+                      "a": 274,
+                      "b": 310
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2656
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:5:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421350000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 46,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2610,
+                  "before": {
+                    "hp": {
+                      "a": 2656,
+                      "b": 2066
+                    },
+                    "mp": {
+                      "a": 274,
+                      "b": 310
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2610,
+                      "b": 2132
+                    },
+                    "mp": {
+                      "a": 274,
+                      "b": 294
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 2132
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:6:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421380000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 283,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1849,
+                  "before": {
+                    "hp": {
+                      "a": 2610,
+                      "b": 2132
+                    },
+                    "mp": {
+                      "a": 274,
+                      "b": 294
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2674,
+                      "b": 1849
+                    },
+                    "mp": {
+                      "a": 258,
+                      "b": 294
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2674
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:6:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421380000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 280,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2394,
+                  "before": {
+                    "hp": {
+                      "a": 2674,
+                      "b": 1849
+                    },
+                    "mp": {
+                      "a": 258,
+                      "b": 294
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2394,
+                      "b": 1915
+                    },
+                    "mp": {
+                      "a": 258,
+                      "b": 278
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 1915
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:7:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421410000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 412,
+                  "crit": true,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1503,
+                  "before": {
+                    "hp": {
+                      "a": 2394,
+                      "b": 1915
+                    },
+                    "mp": {
+                      "a": 258,
+                      "b": 278
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2458,
+                      "b": 1503
+                    },
+                    "mp": {
+                      "a": 242,
+                      "b": 278
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2458
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:7:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421410000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 312,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2146,
+                  "before": {
+                    "hp": {
+                      "a": 2458,
+                      "b": 1503
+                    },
+                    "mp": {
+                      "a": 242,
+                      "b": 278
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2146,
+                      "b": 1569
+                    },
+                    "mp": {
+                      "a": 242,
+                      "b": 262
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 1569
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:8:0:a",
+                    "skillId": "special:skill_02_3",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421440000,
+                    "targetKind": "self",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "support",
+                    "enemyTargetIds": [],
+                    "allyTargetIds": [
+                      "a"
+                    ]
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": "skill_02_3",
+                  "label": "聖盾反震",
+                  "spentMp": 26,
+                  "hp": 1569,
+                  "before": {
+                    "hp": {
+                      "a": 2146,
+                      "b": 1569
+                    },
+                    "mp": {
+                      "a": 242,
+                      "b": 262
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2210,
+                      "b": 1569
+                    },
+                    "mp": {
+                      "a": 216,
+                      "b": 262
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2210
+                },
+                {
+                  "by": "b",
+                  "vfxEvents": [
+                    {
+                      "schemaVersion": 1,
+                      "source": "committed-combat",
+                      "eventId": "pk:p11122ac4a8c:8:1:b:reflect:pk:p11122ac4a8c:8:0:a:0",
+                      "skillId": "special:skill_02_3",
+                      "kind": "effect",
+                      "actorId": "a",
+                      "atMs": 1791421440000,
+                      "targetKind": "enemy",
+                      "targetIds": [
+                        "b"
+                      ],
+                      "presentationMode": "impact",
+                      "enemyTargetIds": [
+                        "b"
+                      ],
+                      "allyTargetIds": [],
+                      "effectKind": "reflect"
+                    }
+                  ],
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:8:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421440000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2210,
+                  "before": {
+                    "hp": {
+                      "a": 2210,
+                      "b": 1569
+                    },
+                    "mp": {
+                      "a": 216,
+                      "b": 262
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2210,
+                      "b": 1485
+                    },
+                    "mp": {
+                      "a": 216,
+                      "b": 246
+                    }
+                  },
+                  "healed": 0,
+                  "heal": 66,
+                  "self": 1485
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:9:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421470000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 281,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1204,
+                  "before": {
+                    "hp": {
+                      "a": 2210,
+                      "b": 1485
+                    },
+                    "mp": {
+                      "a": 216,
+                      "b": 246
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2274,
+                      "b": 1204
+                    },
+                    "mp": {
+                      "a": 200,
+                      "b": 246
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2274
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:9:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421470000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 18,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 2256,
+                  "before": {
+                    "hp": {
+                      "a": 2274,
+                      "b": 1204
+                    },
+                    "mp": {
+                      "a": 200,
+                      "b": 246
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2256,
+                      "b": 1270
+                    },
+                    "mp": {
+                      "a": 200,
+                      "b": 230
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 1270
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:10:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421500000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 296,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 974,
+                  "before": {
+                    "hp": {
+                      "a": 2256,
+                      "b": 1270
+                    },
+                    "mp": {
+                      "a": 200,
+                      "b": 230
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 2320,
+                      "b": 974
+                    },
+                    "mp": {
+                      "a": 184,
+                      "b": 230
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 2320
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:10:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421500000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 447,
+                  "crit": true,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1873,
+                  "before": {
+                    "hp": {
+                      "a": 2320,
+                      "b": 974
+                    },
+                    "mp": {
+                      "a": 184,
+                      "b": 230
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1873,
+                      "b": 1040
+                    },
+                    "mp": {
+                      "a": 184,
+                      "b": 214
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 1040
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:11:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421530000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 262,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 778,
+                  "before": {
+                    "hp": {
+                      "a": 1873,
+                      "b": 1040
+                    },
+                    "mp": {
+                      "a": 184,
+                      "b": 214
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1937,
+                      "b": 778
+                    },
+                    "mp": {
+                      "a": 168,
+                      "b": 214
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 1937
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:11:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421530000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 268,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1669,
+                  "before": {
+                    "hp": {
+                      "a": 1937,
+                      "b": 778
+                    },
+                    "mp": {
+                      "a": 168,
+                      "b": 214
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1669,
+                      "b": 844
+                    },
+                    "mp": {
+                      "a": 168,
+                      "b": 198
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 844
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:12:0:a",
+                    "skillId": "special:skill_02_3",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421560000,
+                    "targetKind": "self",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "support",
+                    "enemyTargetIds": [],
+                    "allyTargetIds": [
+                      "a"
+                    ]
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": "skill_02_3",
+                  "label": "聖盾反震",
+                  "spentMp": 26,
+                  "hp": 844,
+                  "before": {
+                    "hp": {
+                      "a": 1669,
+                      "b": 844
+                    },
+                    "mp": {
+                      "a": 168,
+                      "b": 198
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1733,
+                      "b": 844
+                    },
+                    "mp": {
+                      "a": 142,
+                      "b": 198
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 1733
+                },
+                {
+                  "by": "b",
+                  "vfxEvents": [
+                    {
+                      "schemaVersion": 1,
+                      "source": "committed-combat",
+                      "eventId": "pk:p11122ac4a8c:12:1:b:reflect:pk:p11122ac4a8c:12:0:a:0",
+                      "skillId": "special:skill_02_3",
+                      "kind": "effect",
+                      "actorId": "a",
+                      "atMs": 1791421560000,
+                      "targetKind": "enemy",
+                      "targetIds": [
+                        "b"
+                      ],
+                      "presentationMode": "impact",
+                      "enemyTargetIds": [
+                        "b"
+                      ],
+                      "allyTargetIds": [],
+                      "effectKind": "reflect"
+                    }
+                  ],
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:12:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421560000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 0,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1733,
+                  "before": {
+                    "hp": {
+                      "a": 1733,
+                      "b": 844
+                    },
+                    "mp": {
+                      "a": 142,
+                      "b": 198
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1733,
+                      "b": 760
+                    },
+                    "mp": {
+                      "a": 142,
+                      "b": 182
+                    }
+                  },
+                  "healed": 0,
+                  "heal": 66,
+                  "self": 760
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:13:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421590000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 305,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 455,
+                  "before": {
+                    "hp": {
+                      "a": 1733,
+                      "b": 760
+                    },
+                    "mp": {
+                      "a": 142,
+                      "b": 182
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1797,
+                      "b": 455
+                    },
+                    "mp": {
+                      "a": 126,
+                      "b": 182
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 1797
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:13:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421590000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 32,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1765,
+                  "before": {
+                    "hp": {
+                      "a": 1797,
+                      "b": 455
+                    },
+                    "mp": {
+                      "a": 126,
+                      "b": 182
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1765,
+                      "b": 521
+                    },
+                    "mp": {
+                      "a": 126,
+                      "b": 166
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 521
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:14:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421620000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 301,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 220,
+                  "before": {
+                    "hp": {
+                      "a": 1765,
+                      "b": 521
+                    },
+                    "mp": {
+                      "a": 126,
+                      "b": 166
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1829,
+                      "b": 220
+                    },
+                    "mp": {
+                      "a": 110,
+                      "b": 166
+                    }
+                  },
+                  "healed": 64,
+                  "heal": 64,
+                  "self": 1829
+                },
+                {
+                  "by": "b",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:14:1:b",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "b",
+                    "atMs": 1791421620000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "a"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "a"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 292,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 1537,
+                  "before": {
+                    "hp": {
+                      "a": 1829,
+                      "b": 220
+                    },
+                    "mp": {
+                      "a": 110,
+                      "b": 166
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1537,
+                      "b": 286
+                    },
+                    "mp": {
+                      "a": 110,
+                      "b": 150
+                    }
+                  },
+                  "healed": 66,
+                  "heal": 66,
+                  "self": 286
+                },
+                {
+                  "by": "a",
+                  "vfx": {
+                    "schemaVersion": 1,
+                    "source": "committed-combat",
+                    "eventId": "pk:p11122ac4a8c:15:0:a",
+                    "skillId": "native:sword:B111",
+                    "kind": "cast",
+                    "actorId": "a",
+                    "atMs": 1791421650000,
+                    "targetKind": "enemy",
+                    "targetIds": [
+                      "b"
+                    ],
+                    "presentationMode": "full",
+                    "enemyTargetIds": [
+                      "b"
+                    ],
+                    "allyTargetIds": []
+                  },
+                  "dmg": 286,
+                  "crit": false,
+                  "skill": true,
+                  "skillId": null,
+                  "label": "神聖制裁 · 聖療 · 精進",
+                  "spentMp": 16,
+                  "hp": 0,
+                  "before": {
+                    "hp": {
+                      "a": 1537,
+                      "b": 286
+                    },
+                    "mp": {
+                      "a": 110,
+                      "b": 150
+                    }
+                  },
+                  "after": {
+                    "hp": {
+                      "a": 1537,
+                      "b": 0
+                    },
+                    "mp": {
+                      "a": 94,
+                      "b": 150
+                    }
+                  },
+                  "healed": 0
+                }
+              ]
+            }
+          }
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:0:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:0:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:1:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:1:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:2:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:2:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:3:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:3:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:4:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:4:1:b:reflect:pk:p11122ac4a8c:4:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:4:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:5:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:5:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:6:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:6:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:7:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:7:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:8:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:8:1:b:reflect:pk:p11122ac4a8c:8:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:8:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:9:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:9:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:10:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:10:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:11:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:11:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:12:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_02_3",
+              "eventId": "pk:p11122ac4a8c:12:1:b:reflect:pk:p11122ac4a8c:12:0:a:0",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:12:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:13:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:13:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:14:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:14:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:p11122ac4a8c:15:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 395,
+          "y": 536.890625,
+          "width": 490,
+          "height": 265.109375
+        },
+        "clip": {
+          "x": 395,
+          "y": 536.890625,
+          "width": 490,
+          "height": 265.109375
+        }
+      },
+      "supportEvidence": {
+        "skillId": "special:skill_02_3",
+        "eventId": "pk:p11122ac4a8c:0:0:a",
+        "actorId": "a",
+        "enemyId": "b",
+        "source": "committed-combat",
+        "actualSelfHealing": 0,
+        "before": {
+          "hp": {
+            "a": 3090,
+            "b": 3189
+          },
+          "mp": {
+            "a": 390,
+            "b": 390
+          }
+        },
+        "after": {
+          "hp": {
+            "a": 3090,
+            "b": 3189
+          },
+          "mp": {
+            "a": 364,
+            "b": 390
+          }
+        },
+        "max": {
+          "a": 3090,
+          "b": 3189
+        },
+        "sqlite": {
+          "id": "p11122ac4a8c",
+          "status": "done",
+          "matchingEventId": "pk:p11122ac4a8c:0:0:a",
+          "logSha256": "598ef92cddd05e0e55e5df3c1c81d5b4f278c95acfc4ec0a69ec9244ee144e29"
+        },
+        "frame": {
+          "event": {
+            "eventId": "pk:p11122ac4a8c:0:0:a",
+            "skillId": "special:skill_02_3",
+            "actorId": "a",
+            "source": "committed-combat",
+            "presentationMode": "support",
+            "targetIds": [
+              "a"
+            ],
+            "damageModel": null,
+            "from": {
+              "x": 129.15625,
+              "y": 75.480877585902
+            },
+            "commands": [
+              {
+                "from": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "to": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "targets": [
+                  {
+                    "x": 111.15625,
+                    "y": 78.99161607826963
+                  }
+                ],
+                "mode": "support",
+                "bodyHeight": 175.53692461837684,
+                "supportKind": "shield"
+              }
+            ]
+          },
+          "drawCalls": 20,
+          "lastRender": {
+            "active": 1,
+            "drawCalls": 20,
+            "frameMs": 2,
+            "manual": false
+          },
+          "geometry": {
+            "actorId": "a",
+            "from": {
+              "x": 129.15625,
+              "y": 75.480877585902
+            },
+            "foot": {
+              "x": 111.15625,
+              "y": 175.53692461837684
+            },
+            "bodyHeight": 175.53692461837684,
+            "targets": [
+              {
+                "id": "a",
+                "point": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              },
+              {
+                "id": "b",
+                "point": {
+                  "x": 378.828125,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              }
+            ]
+          },
+          "sides": {
+            "a": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,090 / 3,090",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            },
+            "b": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,189 / 3,189",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            }
+          },
+          "alphaPixels": 22904,
+          "label": "第 1 回合 · 特效驗收111施展支援技能"
+        }
+      },
+      "screenshots": [
+        "pk-support-1280-battle.png",
+        "pk-support-1280-release.png",
+        "pk-support-1280-effect.png"
+      ]
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "instrumentation": "Expose existing app controllers and read-only renderer geometry for QA; no response or combat/event substitution.",
+  "status": "passed",
+  "completedAt": "2026-11-04T08:18:14.214Z",
+  "sourceFilesAfter": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "b5ad0077e174b97898b6b157fc031bd6bd9cf30045eaf438f6bda1dd0c1b57c8"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "sourceChangedDuring": []
+}

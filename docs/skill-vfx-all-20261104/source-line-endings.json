@@ -1,0 +1,556 @@
+{
+  "schemaVersion": 1,
+  "scope": "captured-skill-vfx-source-line-endings",
+  "generatedAt": "2026-11-04T09:07:39.371Z",
+  "sourceManifest": "worker/public/skill-vfx-coverage.json",
+  "sourceManifestSha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8",
+  "sourceFiles": [
+    {
+      "path": "worker/public/app.js",
+      "eol": "crlf",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "eol": "crlf",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "eol": "crlf",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "eol": "crlf",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "eol": "crlf",
+      "sha256": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3"
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "eol": "crlf",
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1"
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "eol": "crlf",
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "eol": "lf",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "eol": "crlf",
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "eol": "lf",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "eol": "lf",
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "eol": "lf",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "eol": "lf",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "eol": "lf",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "eol": "crlf",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "eol": "crlf",
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "eol": "lf",
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "eol": "crlf",
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "eol": "crlf",
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "eol": "crlf",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "eol": "crlf",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "eol": "crlf",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "eol": "crlf",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "eol": "lf",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "eol": "crlf",
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "eol": "crlf",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "eol": "crlf",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "eol": "crlf",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "eol": "crlf",
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "eol": "crlf",
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a"
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "eol": "crlf",
+      "sha256": "432409c923c7730c71cfd6d59752e76c525f796ea271333b4270e555cf0e6ea4"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "eol": "crlf",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "eol": "crlf",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "eol": "crlf",
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "eol": "crlf",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-harness.js",
+      "eol": "lf",
+      "sha256": "6a7482536148376a9a4fdce4d81d707ddad8a10ab660ead8277298fb903b1b09"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-browser-evidence.mjs",
+      "eol": "lf",
+      "sha256": "a682a30325b4f767e1d4f4ec5aa5c1eaf92d0f4bcc3b6b126b77c62ef9a8ac26"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-catalog.mjs",
+      "eol": "lf",
+      "sha256": "a874b0d4563615baa8fc93072b07151ca633dfa518a77db1446681a17634e2e0"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-coverage.mjs",
+      "eol": "lf",
+      "sha256": "dd0dbde03c34167cd8c30445c607e3d82eab4c7c6acc48a79ec21f0f6b33d204"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-recipes.mjs",
+      "eol": "lf",
+      "sha256": "3b61ab3c674f8e2746a5fe03b62d58e47923b94235b88d167498fc3ca23acde8"
+    },
+    {
+      "path": "worker/tools/skill-vfx-identity-browser.mjs",
+      "eol": "lf",
+      "sha256": "b94d2738a5205c05d619ac4cd97e5143a9e6c0ea27ad212a061b3799871cc26b"
+    },
+    {
+      "path": "worker/tools/skill-vfx-legacy-presentation-check.mjs",
+      "eol": "lf",
+      "sha256": "6e603d9cf7ae260bb1e09f5535d3c31033ef1aba60d39f96d90c871ba7fb9451"
+    },
+    {
+      "path": "worker/tools/skill-vfx-live-browser.cjs",
+      "eol": "lf",
+      "sha256": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820"
+    }
+  ],
+  "manifest": {
+    "path": "worker/public/skill-vfx-coverage.json",
+    "eol": "lf",
+    "sha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8"
+  },
+  "attributes": {
+    "path": ".gitattributes",
+    "existedBefore": true,
+    "beforeSha256": "bb280554d3d6edae731072ee1bd9077608fbe4ebf049165f1989f0d9b673d850",
+    "beforeLineCount": 10,
+    "addedRuleCount": 44,
+    "skippedEquivalent": [],
+    "afterLineCount": 56,
+    "afterSha256": "6c87db907853384ec26383c072da13771d08969cc04ca30a3b57edcf1316ea0c",
+    "preservedExistingBytes": true
+  },
+  "verification": {
+    "readBackCount": 44,
+    "matched": 44,
+    "sourceShaUnchanged": 43,
+    "manifestShaUnchanged": true,
+    "readBack": [
+      {
+        "path": "worker/public/app.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/battle.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/expedition/combat-playback.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/expedition/hero-art-playback.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/scene-live-session.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/scene-live-view.css",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/scene-live-view.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-actor-bridge.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-actor-profiles.json",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-catalog.json",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-combat-adapter.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-engine.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-legacy.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-recipes.json",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/star-ring-heroes.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/atlas-catalog.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/atlas-combat-observer.js",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/atlas-engine.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/atlas-talents.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/boss.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/idle-combat.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/idle.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/pk.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/skill-vfx-events.js",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/special-data.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/special-idle.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/special.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/star-ring.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/game/stats.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/atlas.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/boss.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/party.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/pk.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/player.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/src/services/star-ring.js",
+        "text": "set",
+        "eol": "crlf",
+        "expectedEol": "crlf",
+        "matched": true
+      },
+      {
+        "path": "worker/test/skill-vfx-legacy-harness.js",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/build-skill-vfx-browser-evidence.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/build-skill-vfx-catalog.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/build-skill-vfx-coverage.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/build-skill-vfx-recipes.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/skill-vfx-identity-browser.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/skill-vfx-legacy-presentation-check.mjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/tools/skill-vfx-live-browser.cjs",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      },
+      {
+        "path": "worker/public/skill-vfx-coverage.json",
+        "text": "set",
+        "eol": "lf",
+        "expectedEol": "lf",
+        "matched": true
+      }
+    ]
+  }
+}

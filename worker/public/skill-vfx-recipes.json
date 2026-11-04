@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "b633c3cdf4b8df6d8e689b21a8e585cc320bba3e",
+  "sourceCommit": "0f8dfbc2ea1a81e4cfe22d817e06231fb2b1e61a",
   "scope": "presentation-only",
   "summary": {
     "skillIdentities": 196,
@@ -21,7 +21,7 @@
     "identity": "Skill identities and route names are not counts of independently painted assets.",
     "planned": "The 16 planned awakening skills are excluded; no implemented server IDs exist.",
     "support": "Passive talents and support modifiers do not independently cast.",
-    "live": "Only explicit committed combat events may be passed through the future event adapter. Scene summaries are not connected."
+    "live": "Only explicit authoritative cast/effect descriptors may drive playback. Per-identity and per-mode evidence is tracked in skill-vfx-coverage.json; summaries never create casts."
   },
   "skills": [
     {

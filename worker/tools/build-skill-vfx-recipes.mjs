@@ -10,7 +10,7 @@ const result={schemaVersion:VFX_VERSION,sourceCommit:catalog.sourceCommit,scope:
   identity:'Skill identities and route names are not counts of independently painted assets.',
   planned:'The 16 planned awakening skills are excluded; no implemented server IDs exist.',
   support:'Passive talents and support modifiers do not independently cast.',
-  live:'Only explicit committed combat events may be passed through the future event adapter. Scene summaries are not connected.'},
+  live:'Only explicit authoritative cast/effect descriptors may drive playback. Per-identity and per-mode evidence is tracked in skill-vfx-coverage.json; summaries never create casts.'},
  skills:catalog.skills.map(skill=>({id:skill.id,sourceId:skill.sourceId,name:skill.name,system:skill.system,baseClass:skill.baseClass,kind:skill.kind,source:skill.source,recipe:recipeFor(skill)}))};
 const target=new URL('../public/skill-vfx-recipes.json',import.meta.url);
 if(process.argv.includes('--check')){
