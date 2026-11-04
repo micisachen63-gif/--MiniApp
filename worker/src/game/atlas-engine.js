@@ -5,6 +5,10 @@ import {
 } from './atlas-catalog.js';
 import {applyAtlasTalentSnapshot} from './atlas-talents.js';
 import {
+  AtlasEffectsError, createAtlasEffects, validateAtlasEffects,
+  atlasOutgoingDamage, atlasIncomingDamage, atlasManaCost, atlasExperienceMultiplier,
+} from './atlas-effects.js';
+import {
   AtlasSupplyError, createAtlasSupplyState, validateAtlasSupplyState,
   isVersionedAtlasSupplies, drinkAtlasHp, drinkAtlasMp,
 } from './atlas-supplies.js';
@@ -28,6 +32,10 @@ const fail = (code, message) => { throw new AtlasRuleError(code, message); };
 function supplyRules(operation) {
   try { return operation(); }
   catch (error) { if (error instanceof AtlasSupplyError) fail(error.code, error.message); throw error; }
+}
+function effectsRules(operation) {
+  try { return operation(); }
+  catch (error) { if (error instanceof AtlasEffectsError) fail(error.code, error.message); throw error; }
 }
 const clone = value => structuredClone(value);
 const round = value => Math.round(value * 1000) / 1000;
@@ -188,6 +196,8 @@ export function createAtlasRun(input) {
     },
     events: [],
   };
+  const effects = effectsRules(() => createAtlasEffects(input.effectsRulesVersion, input.snapshot, mapSnapshot, seed));
+  if (effects) { state.effects = effects; state.metrics.freeCasts = 0; }
   initializeAtlasContent(state, input.snapshot);
   return state;
 }
@@ -259,7 +269,12 @@ function dealDamage(state, enemy, amount, source, critical = false, activities) 
   const mitigation = source === 'dot' ? 1 : 100 / (100 + enemy.def * 4);
   const critChance = clamp(.05 + state.snapshot.pct.critPct + (state.skill.critChance || 0), 0, .8);
   const crit = critical && random(state) < critChance ? 1.7 : 1;
-  const damage = Math.min(enemy.hp, Math.max(1, Math.round(amount * mitigation * crit)));
+  // Keep the exact legacy arithmetic order when no elemental actor is present.
+  // Native elemental damage receives critical raw damage, before physical DEF.
+  const resolved = state.effects?.actor.element
+    ? atlasOutgoingDamage(state, amount * crit, source) * mitigation
+    : amount * mitigation * crit;
+  const damage = Math.min(enemy.hp, Math.max(1, Math.round(resolved)));
   enemy.hp -= damage;
   state.metrics.damage += damage;
   if (source === 'dot') state.metrics.dotDamage += damage;
@@ -293,8 +308,10 @@ function skillDamage(state, enemy, index = 0) {
 
 function cast(state, activities) {
   const { hero, skill, snapshot } = state;
-  hero.mp = round(hero.mp - skill.cost);
-  state.metrics.manaSpent += skill.cost; state.metrics.casts++;
+  const spent = atlasManaCost(state, skill.cost);
+  hero.mp = round(hero.mp - spent);
+  state.metrics.manaSpent += spent; state.metrics.casts++;
+  if (state.effects && spent === 0) state.metrics.freeCasts++;
   shield(state, skill.supportShieldFraction + (skill.shieldFraction || 0));
   if (snapshot.pct.healPerCastPct > 0) hero.hp = Math.min(snapshot.maxHp, hero.hp + Math.round(snapshot.maxHp * Math.min(.2, snapshot.pct.healPerCastPct)));
   if (skill.mechanic === 'trap') {
@@ -387,7 +404,7 @@ function enemyActions(state, activities) {
   for (const enemy of alive(state)) {
     if (enemy.hp <= 0 || enemy.nextAttackAt > state.elapsedSeconds) continue;
     drinkHp(state);
-    let damage = Math.max(1, Math.round(enemy.atk * snapshot.taken * (100 / (100 + snapshot.def * 2))));
+    let damage = Math.max(1, Math.round(atlasIncomingDamage(state, enemy.atk) * snapshot.taken * (100 / (100 + snapshot.def * 2))));
     const blocked = skill.mechanic === 'counter' && random(state) < skill.blockChance;
     if (blocked) {
       const prevented = Math.round(damage * skill.blockReduction);
@@ -420,7 +437,7 @@ function reward(state, rewards, kind, activities) {
     sequence, mapId: state.mapId, mapIndex: state.mapIndex, roomIndex: state.roomIndex,
     kind, elapsedSeconds: state.elapsedSeconds,
     gold: Math.floor((completion ? spec.completionGold : spec.roomGold) * goldMultiplier),
-    exp: Math.floor((completion ? spec.completionExp : spec.roomExp) * experienceMultiplier),
+    exp: Math.floor((completion ? spec.completionExp : spec.roomExp) * experienceMultiplier * atlasExperienceMultiplier(state)),
     materials,
   };
   applyAtlasContentRewards(state, record, activities);
@@ -495,6 +512,7 @@ function tick(state, rewards, activities) {
 export function advanceAtlasRun(run, nowSeconds, options = {}) {
   if (!run || !ATLAS_SUPPORTED_RULESETS.includes(run.ruleset_version)) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
   supplyRules(() => validateAtlasSupplyState(run.supplies, run.elapsedSeconds));
+  effectsRules(() => validateAtlasEffects(run));
   const now = number(nowSeconds, 'nowSeconds', 0, Number.MAX_SAFE_INTEGER, undefined);
   const maxSteps = number(options.maxSteps, 'maxSteps', 1, ATLAS_MAX_ADVANCE_STEPS, ATLAS_MAX_ADVANCE_STEPS, true);
   if (now < run.startedAt) fail('atlas_clock_before_start', '結算時間早於出發');
