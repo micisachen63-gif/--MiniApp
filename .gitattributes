@@ -60,3 +60,11 @@ worker/public/scene-social-preview.css text eol=crlf
 worker/tools/scene-live-preview.mjs text eol=crlf
 worker/tools/button-polish-browser.cjs text eol=crlf
 worker/test/scene-preview-assets.test.js text eol=crlf
+
+# Preserve the exact LF sources used by the target/contact VFX evidence.
+worker/public/skill-vfx-preview.mjs text eol=lf
+worker/public/skill-vfx-preview.css text eol=lf
+worker/public/preview-skill-vfx.html text eol=lf
+worker/test/skill-vfx-target-timing.test.js text eol=lf
+worker/tools/skill-vfx-target-browser.cjs text eol=lf
+worker/tools/skill-vfx-five-target-receipt.mjs text eol=lf

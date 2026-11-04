@@ -53,10 +53,22 @@ export function buildEffectFrame(skill,progress,options={}) {
  const family=supporting?(supportKind==='shield'?'shield':supportKind==='heal'?'heal':recipe.family==='time'?'time':'buff'):recipe.family;
  const body=clamp(finite(options.bodyHeight,150),36,480),scale=body/150;
  const from=point(options.from,{x:160,y:240}),dir=DIR[options.direction]??0;
+ const local=(supporting&&options.presentationMode!=='impact')||['placement','summon'].includes(options.presentationMode);
  let to=point(options.to,{x:from.x+Math.cos(dir)*body*1.7,y:from.y+Math.sin(dir)*body*1.7});
- if((supporting&&options.presentationMode!=='impact')||['placement','summon'].includes(options.presentationMode))to={...from};
- const theta=Math.atan2(to.y-from.y,to.x-from.x)||dir;
- const targets=(Array.isArray(options.targets)?options.targets:[]).filter(p=>Number.isFinite(p?.x)&&Number.isFinite(p?.y)).slice(0,5);
+ if(local)to={...from};
+ // Supplied recipients are authoritative, including an explicitly empty list.
+ // Match the live adapter's bound; near neighbours remain separate recipients.
+ const explicitTargets=Array.isArray(options.targets),targets=[];
+ for(const p of explicitTargets?options.targets:[to]){
+   if(!Number.isFinite(p?.x)||!Number.isFinite(p?.y)||targets.some(q=>q.x===p.x&&q.y===p.y))continue;
+   targets.push({x:p.x,y:p.y});if(targets.length===32)break;
+ }
+ if(!local&&targets.length)to={...targets[0]};
+ const theta=to.x===from.x&&to.y===from.y?dir:Math.atan2(to.y-from.y,to.x-from.x);
+ if(!local&&!explicitTargets&&options.showcaseTargets&&options.presentationMode!=='impact'){
+   if(family==='volley')for(const side of [-1,1])targets.push({x:to.x+Math.sin(theta)*side*26*scale,y:to.y-Math.cos(theta)*side*26*scale});
+   if(family==='lightning')targets.push({x:to.x+45*scale,y:to.y-62*scale},{x:to.x+83*scale,y:to.y+25*scale});
+ }
  const seed=hash32(String(options.seed??recipe.variant)+skill.id),low=options.quality==='low';
  const layers=[],geometry=[]; const limit=low?48:94;
  function sprite(cell,x,y,w,h=w,rotation=0,alpha=1,blend='screen') {
@@ -64,18 +76,21 @@ export function buildEffectFrame(skill,progress,options={}) {
    layers.push({cell,x,y,w:w*scale,h:h*scale,rotation,alpha:clamp(alpha),blend,flipX:recipe.baseClass==='sword'&&cell===1});
  }
  function ring(p,r,alpha,tilt=.38,width=1.3,color=recipe.colors[0],rotation=0) {
-   if(alpha<=.004)return;geometry.push({kind:'ring',x:p.x,y:p.y,r:r*scale,tilt,width:width*scale,alpha:clamp(alpha),color,rotation});
+   if(alpha<=.004||geometry.length>=64)return;geometry.push({kind:'ring',x:p.x,y:p.y,r:r*scale,tilt,width:width*scale,alpha:clamp(alpha),color,rotation});
  }
  function line(points,alpha,width=2,color=recipe.colors[0],glow=10) {
-   if(alpha<=.004)return;geometry.push({kind:'line',points,width:width*scale,alpha:clamp(alpha),color,glow:glow*scale});
+   if(alpha<=.004||geometry.length>=64)return;geometry.push({kind:'line',points,width:width*scale,alpha:clamp(alpha),color,glow:glow*scale});
  }
- function burst(p,k,power=1,angle=0) {
+ function burst(p,k,power=1,angle=0,part='all') {
    if(k<=0||k>=1)return;const fade=Math.pow(1-k,1.7),radius=(22+out(k)*88)*power;
-   const impactCell=recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:['frost','shield'].includes(family)?5:8):2;
-   sprite(impactCell,p.x,p.y,(38+out(k)*152)*power,(38+out(k)*152)*power,angle,fade*.93);
-   ring(p,radius,fade*.5,.72,1.3);
+   if(part!=='detail'){
+     const impactCell=recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:['frost','shield'].includes(family)?5:8):2;
+     sprite(impactCell,p.x,p.y,(38+out(k)*152)*power,(38+out(k)*152)*power,angle,fade*.93);
+     ring(p,radius,fade*.5,.72,1.3);
+   }
+   if(part==='core'||layers.length>=limit)return;
    const n=low?7:13;
-   for(let i=0;i<n;i++){
+   for(let i=0;i<n&&layers.length<limit;i++){
      const a=i/n*TAU+rand(seed,i)*.5+angle,r=radius*(.6+rand(seed,i+100)*.7)*scale;
      const px=p.x+Math.cos(a)*r,py=p.y+Math.sin(a)*r*.7;
      const size=(7+rand(seed,i+200)*13)*(1-k)*power;
@@ -83,14 +98,21 @@ export function buildEffectFrame(skill,progress,options={}) {
      sprite(particleCell,px,py,size,size,a,fade*(.4+rand(seed,i+300)*.5));
    }
  }
- function projectile(a,b,start,end,offset=0,cell=0,size=85,bend=0) {
+ function projectile(a,b,start,end,offset=0,cell=0,size=85,bend=0,part='all',contact=null) {
    const q=(t-start)/(end-start);if(q<0||q>1)return;
-   const p=curve(a,b,smooth(q),bend),prev=curve(a,b,clamp(smooth(q)-.03),bend);
-   const angle=Math.atan2(p.y-prev.y,p.x-prev.x)||theta;
-   const points=Array.from({length:7},(_,i)=>curve(a,b,clamp(smooth(q)-i*.025),bend));
+   function position(value){
+     if(!contact)return curve(a,b,smooth(value),bend);
+     const split=(contact.at-start)/(end-start);
+     return value<=split?curve(a,contact.point,smooth(value/split),bend):curve(contact.point,b,smooth((value-split)/(1-split)));
+   }
+   const tail=back=>contact?position(clamp(q-back)):curve(a,b,clamp(smooth(q)-back),bend);
+   const p=position(q),prev=tail(.03),dx=p.x-prev.x,dy=p.y-prev.y;
+   const angle=dx===0&&dy===0?theta:Math.atan2(dy,dx);
+   if(part!=='detail')sprite(cell,p.x,p.y+offset*scale,size,size*.72,angle,.92*pulse(q,-.08,1.12));
+   if(part==='core')return;
+   const points=Array.from({length:7},(_,i)=>tail(i*.025));
    line(points,Math.sin(Math.PI*q)*.8,3,recipe.colors[0],8);
-   sprite(cell,p.x,p.y+offset*scale,size,size*.72,angle,.92*pulse(q,-.08,1.12));
-   for(let i=0;i<(low?3:6);i++){const z=curve(a,b,clamp(smooth(q)-i*.045),bend);sprite(8,z.x,z.y+Math.sin(i*2+t*24)*4*scale,8*(1-i/8),8*(1-i/8),angle,(1-i/7)*pulse(q,-.1,1.12)*.5);}
+   for(let i=0;i<(low?3:6)&&layers.length<limit;i++){const z=tail(i*.045);sprite(8,z.x,z.y+Math.sin(i*2+t*24)*4*scale,8*(1-i/8),8*(1-i/8),angle,(1-i/7)*pulse(q,-.1,1.12)*.5);}
  }
  function slash(p,start,end,angle=theta,power=1) {
    const q=(t-start)/(end-start);if(q<=0||q>=1)return;
@@ -109,16 +131,20 @@ export function buildEffectFrame(skill,progress,options={}) {
  const composite=options.blendMode==='source-over'?'source-over':null;
  function finish(){const edge=Math.min(1,t/.045,(1-t)/.13);for(const l of layers)l.alpha*=edge;for(const g of geometry)g.alpha*=edge;return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};}
  if(t<=0||t>=1)return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
+ if(!local&&!targets.length)return finish();
  if(options.reducedMotion){
-   const p=['placement','summon'].includes(options.presentationMode)||(supporting&&options.presentationMode!=='impact')?from:to,a=pulse(t,0,1)*.65;
+   const a=pulse(t,0,1)*.65;
    const cell=supporting||options.presentationMode==='summon'?4:recipe.baseClass==='mage'?(['fireball','meteor'].includes(family)?2:family==='frost'?5:8):2;
-   sprite(cell,p.x,p.y,92,92,0,a);ring({x:p.x,y:p.y+(options.presentationMode==='placement'?0:body*.3)},43,a*.4,.38);
+   for(const p of local?[from]:targets){
+     sprite(cell,p.x,p.y,92,92,0,a);ring({x:p.x,y:p.y+(options.presentationMode==='placement'?0:body*.3)},43,a*.4,.38);
+   }
    return {recipe,progress:t,layers,geometry,bodyHeight:body,composite};
  }
  // Recorded passive hits have no new actor wind-up; trap placement has no hit.
  if(options.presentationMode==='impact'){
-   const points=[to,...targets.filter(p=>Math.hypot(p.x-to.x,p.y-to.y)>3)].slice(0,5);
-   for(const p of points)burst(p,t,.78,theta);
+   // Reserve one visible contact for every recipient before spending on sparks.
+   for(const p of targets)burst(p,t,.78,theta,'core');
+   for(const p of targets)burst(p,t,.78,theta,'detail');
    return finish();
  }
  if(options.presentationMode==='placement'){
@@ -137,21 +163,38 @@ export function buildEffectFrame(skill,progress,options={}) {
    return finish();
  }
  // Wind-up is an actual expanding rune and inward-moving motes, not a static full-frame flash.
- const charge=pulse(t,0,.38);
- sprite(3,ground.x,ground.y,80+smooth(t/.22)*32,30+smooth(t/.22)*12,0,charge*.52);
- ring(ground,lerp(24,57,smooth(t/.22)),charge*.4,.36,1);
- sprite(8,from.x,from.y,18+charge*28,18+charge*28,-t,charge*.53);
- for(let i=0;i<(low?4:7);i++){const a=i/7*TAU+recipe.variant%10,r=(68-48*smooth(t/.22))*scale;sprite(8,from.x+Math.cos(a)*r,from.y+Math.sin(a)*r*.5,7,7,a,charge*.4);}
+ function windup(){
+   const charge=pulse(t,0,.38);
+   sprite(3,ground.x,ground.y,80+smooth(t/.22)*32,30+smooth(t/.22)*12,0,charge*.52);
+   ring(ground,lerp(24,57,smooth(t/.22)),charge*.4,.36,1);
+   sprite(8,from.x,from.y,18+charge*28,18+charge*28,-t,charge*.53);
+   for(let i=0;i<(low?4:7);i++){const a=i/7*TAU+recipe.variant%10,r=(68-48*smooth(t/.22))*scale;sprite(8,from.x+Math.cos(a)*r,from.y+Math.sin(a)*r*.5,7,7,a,charge*.4);}
+ }
+ // Fan-out families reserve recipient cores before any ornamental draw calls.
+ if(family!=='volley'&&family!=='lightning')windup();
  const hit=(t-recipe.impactAt)/(1-recipe.impactAt);
  switch(family){
    case 'pierce': case 'snipe': {
      const extended=family==='pierce'?{x:to.x+(to.x-from.x)*.22,y:to.y+(to.y-from.y)*.22}:to;
-     projectile(from,extended,.19,.65,0,0,family==='snipe'?105:80);
+     // A piercing shot contacts the real target before continuing beyond it.
+     projectile(from,extended,.22,family==='pierce'?.65:recipe.impactAt,0,0,family==='snipe'?105:80,0,'all',family==='pierce'?{point:to,at:recipe.impactAt}:null);
      if(family==='snipe'){ring(to,47,pulse(t,.1,.62),1,1);line([{x:to.x-34*scale,y:to.y},{x:to.x+34*scale,y:to.y}],pulse(t,.1,.58)*.4,.8);}
      burst(to,hit,family==='snipe'?1.05:.8,theta);break;
    }
    case 'volley': {
-     for(let i=0;i<3;i++){const dest=targets[i]||{x:to.x+Math.sin(theta)*((i-1)*26)*scale,y:to.y-Math.cos(theta)*((i-1)*26)*scale};projectile(from,dest,.18+i*.07,.52+i*.07,0,0,65,(i-1)*22*scale);burst(dest,(t-(.52+i*.07))/.32,.59,theta);}
+     const shots=targets.map((dest,i)=>{
+       const spread=targets.length>1?i/(targets.length-1):0,arrival=recipe.impactAt+spread*Math.min(.16,(targets.length-1)*.07);
+       return {dest,arrival,start:arrival-(recipe.impactAt-.22),bend:targets.length>1?(spread-.5)*44*scale:0};
+     });
+     for(const shot of shots){
+       projectile(from,shot.dest,shot.start,shot.arrival,0,0,65,shot.bend,'core');
+       if(t>=shot.arrival)burst(shot.dest,Math.max(.002,(t-shot.arrival)/Math.min(.32,1-shot.arrival)),.59,theta,'core');
+     }
+     windup();
+     for(const shot of shots){
+       projectile(from,shot.dest,shot.start,shot.arrival,0,0,65,shot.bend,'detail');
+       if(t>=shot.arrival)burst(shot.dest,Math.max(.002,(t-shot.arrival)/Math.min(.32,1-shot.arrival)),.59,theta,'detail');
+     }
      break;
    }
    case 'rain': {
@@ -160,16 +203,31 @@ export function buildEffectFrame(skill,progress,options={}) {
      break;
    }
    case 'lightning': {
-     const chain=[from,to,...targets.filter(p=>Math.hypot(p.x-to.x,p.y-to.y)>3)].slice(0,5);
-     if(chain.length===2&&options.showcaseTargets){chain.push({x:to.x+45*scale,y:to.y-62*scale},{x:to.x+83*scale,y:to.y+25*scale});}
-     for(let i=1;i<chain.length;i++){
-       const k=(t-(.29+i*.075))/.3,alpha=pulse(k,0,1);if(alpha<=0)continue;
-       const a=chain[i-1],b=chain[i],pts=Array.from({length:11},(_,j)=>{const p=curve(a,b,j/10);if(j>0&&j<10){p.x+=(rand(seed+Math.floor(t*10),j+i*20)-.5)*22*scale;p.y+=(rand(seed,j+i*40)-.5)*22*scale;}return p;});
-       line(pts,alpha*.6,7,recipe.colors[2],17);line(pts,alpha,2,recipe.colors[1],6);sprite(8,b.x,b.y,44,44,t,alpha);burst(b,clamp(k-.3)*1.4,.65);
-     }break;
+     const stagger=Math.min(.24,(targets.length-1)*.075);
+     const arcs=targets.map((dest,i)=>{
+       const spread=targets.length>1?i/(targets.length-1):0,arrival=recipe.impactAt+spread*stagger;
+       const start=i?recipe.impactAt+(i-1)/(targets.length-1)*stagger:arrival-.12,alpha=pulse(t,start,arrival+.3),a=i?targets[i-1]:from;
+       const head=curve(a,dest,smooth((t-start)/(arrival-start)));
+       const points=Array.from({length:11},(_,j)=>{const p=curve(a,head,j/10);if(j>0&&j<10){p.x+=(rand(seed+Math.floor(t*10),j+(i+1)*20)-.5)*22*scale;p.y+=(rand(seed,j+(i+1)*40)-.5)*22*scale;}return p;});
+       return {dest,arrival,alpha,head,points,impact:(t-arrival)/.3};
+     });
+     // Caster is not a target; compressed staggering keeps every contact in-clip.
+     for(const arc of arcs){
+       if(arc.alpha<=.004)continue;
+       line(arc.points,arc.alpha,2,recipe.colors[1],6);
+       if(t>=arc.arrival)burst(arc.dest,Math.max(.002,arc.impact),.65,theta,'core');
+       else sprite(8,arc.head.x,arc.head.y,44,44,t,arc.alpha);
+     }
+     windup();
+     for(const arc of arcs){
+       if(arc.alpha<=.004)continue;
+       line(arc.points,arc.alpha*.6,7,recipe.colors[2],17);
+       if(t>=arc.arrival)burst(arc.dest,Math.max(.002,arc.impact),.65,theta,'detail');
+     }
+     break;
    }
    case 'fireball': {
-     projectile(from,to,.2,.58,0,0,110,-17*scale);burst(to,hit,1.12,theta);
+     projectile(from,to,.22,recipe.impactAt,0,0,110,-17*scale);burst(to,hit,1.12,theta);
      sprite(0,to.x,to.y-20*scale,138,90,-Math.PI/2,pulse(t,.57,.93)*.65);break;
    }
    case 'meteor': {

@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-04T10:35:53.413Z",
+  "before": {
+    "worker/src/game/atlas-engine.js": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+    "worker/src/game/atlas-combat-observer.js": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+    "worker/src/game/atlas-catalog.js": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+    "worker/src/game/atlas-talents.js": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+    "worker/src/services/atlas.js": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+    "worker/public/scene-live-session.js": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3",
+    "worker/public/scene-live-view.js": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02",
+    "worker/public/scene-live-view.css": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1",
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-combat-adapter.mjs": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337",
+    "worker/public/skill-vfx-actor-bridge.mjs": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-actor-profiles.json": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+    "worker/tools/skill-vfx-live-browser.cjs": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820",
+    "worker/tools/skill-vfx-browser.cjs": "0a319d73f742ae7b36a4017e666059a998400ff9ac1ff91e452b4ead6b9397d1",
+    "worker/public/skill-vfx-preview.mjs": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac",
+    "worker/public/skill-vfx-preview.css": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+  },
+  "steps": [
+    {
+      "name": "workshop-full-final",
+      "args": [
+        "worker/tools/skill-vfx-browser.cjs"
+      ],
+      "startedAt": "2026-11-04T10:35:53.416Z",
+      "status": "passed",
+      "finishedAt": "2026-11-04T10:36:41.066Z",
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "atlas-live-final",
+      "args": [
+        "worker/tools/skill-vfx-live-browser.cjs"
+      ],
+      "startedAt": "2026-11-04T10:36:41.069Z",
+      "status": "passed",
+      "finishedAt": "2026-11-04T10:41:31.207Z",
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "after": {
+    "worker/src/game/atlas-engine.js": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+    "worker/src/game/atlas-combat-observer.js": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+    "worker/src/game/atlas-catalog.js": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+    "worker/src/game/atlas-talents.js": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+    "worker/src/services/atlas.js": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+    "worker/public/scene-live-session.js": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3",
+    "worker/public/scene-live-view.js": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02",
+    "worker/public/scene-live-view.css": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1",
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-combat-adapter.mjs": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337",
+    "worker/public/skill-vfx-actor-bridge.mjs": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-actor-profiles.json": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+    "worker/tools/skill-vfx-live-browser.cjs": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820",
+    "worker/tools/skill-vfx-browser.cjs": "0a319d73f742ae7b36a4017e666059a998400ff9ac1ff91e452b4ead6b9397d1",
+    "worker/public/skill-vfx-preview.mjs": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac",
+    "worker/public/skill-vfx-preview.css": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+  },
+  "sourceStable": true,
+  "finishedAt": "2026-11-04T10:41:31.211Z",
+  "passed": true
+}

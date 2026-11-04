@@ -1,0 +1,2025 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-04T10:46:03.515Z",
+  "origin": "http://127.0.0.1:9664",
+  "scope": "Read-only workshop target rendering; not a game API or damage test.",
+  "sourcesBefore": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-preview.mjs": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac",
+    "worker/public/skill-vfx-preview.css": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a",
+    "worker/tools/skill-vfx-target-browser.cjs": "f34a7a8392b96b0045efa9d4c487da929a944ac3bb9c1d01e15636457645a0c0"
+  },
+  "cases": [
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        575,
+        573
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        575
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        575,
+        573
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        575
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1036.96875,
+          "width": 119,
+          "height": 44,
+          "top": 1036.96875,
+          "right": 288,
+          "bottom": 1080.96875,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        399
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        374
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        561,
+        508,
+        441,
+        366
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        574,
+        576,
+        524,
+        460,
+        364
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        399
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        374
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        561,
+        508,
+        441,
+        366
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 320,
+      "height": 740,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        573,
+        576,
+        524,
+        460,
+        364
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 169,
+          "y": 1008.375,
+          "width": 119,
+          "height": 44,
+          "top": 1008.375,
+          "right": 288,
+          "bottom": 1052.375,
+          "left": 169
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        575,
+        574
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        575
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        575,
+        574
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        575
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        398
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        371
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        560,
+        508,
+        441,
+        368
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        567,
+        566,
+        510,
+        456,
+        355
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        398
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        371
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        560,
+        508,
+        441,
+        368
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 390,
+      "height": 844,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        567,
+        566,
+        510,
+        456,
+        355
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 204,
+          "y": 961.984375,
+          "width": 154,
+          "height": 44,
+          "top": 961.984375,
+          "right": 358,
+          "bottom": 1005.984375,
+          "left": 204
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "native:archer:A22",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        576
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        553
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        535
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        573,
+        575,
+        529
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "high",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        571,
+        573,
+        541
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "right",
+      "pixels": [
+        553
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 1,
+      "direction": "up",
+      "pixels": [
+        535
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "right",
+      "pixels": [
+        576,
+        576,
+        573,
+        575,
+        529
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    },
+    {
+      "width": 1280,
+      "height": 900,
+      "skillId": "atlas:mage_chain",
+      "quality": "low",
+      "targetCount": 5,
+      "direction": "up",
+      "pixels": [
+        576,
+        576,
+        571,
+        573,
+        541
+      ],
+      "layout": {
+        "overflow": false,
+        "markers": [
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          },
+          {
+            "inside": true
+          }
+        ],
+        "control": {
+          "x": 505,
+          "y": 996.890625,
+          "width": 108,
+          "height": 44,
+          "top": 996.890625,
+          "right": 613,
+          "bottom": 1040.890625,
+          "left": 505
+        }
+      },
+      "passed": true
+    }
+  ],
+  "controls": [
+    {
+      "width": 320,
+      "selectThree": true,
+      "playRaf": true,
+      "pause": true,
+      "rejectUnsupportedCount": true
+    },
+    {
+      "width": 320,
+      "skillId": "native:archer:A22",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        575,
+        574,
+        574,
+        575,
+        575
+      ]
+    },
+    {
+      "width": 320,
+      "skillId": "atlas:mage_chain",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        274,
+        278,
+        278,
+        263,
+        274
+      ]
+    },
+    {
+      "width": 320,
+      "supportLocal": true
+    },
+    {
+      "width": 390,
+      "selectThree": true,
+      "playRaf": true,
+      "pause": true,
+      "rejectUnsupportedCount": true
+    },
+    {
+      "width": 390,
+      "skillId": "native:archer:A22",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        575,
+        575,
+        575,
+        575,
+        575
+      ]
+    },
+    {
+      "width": 390,
+      "skillId": "atlas:mage_chain",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        274,
+        279,
+        279,
+        262,
+        274
+      ]
+    },
+    {
+      "width": 390,
+      "supportLocal": true
+    },
+    {
+      "width": 1280,
+      "selectThree": true,
+      "playRaf": true,
+      "pause": true,
+      "rejectUnsupportedCount": true
+    },
+    {
+      "width": 1280,
+      "skillId": "native:archer:A22",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        576,
+        576,
+        576,
+        576,
+        576
+      ]
+    },
+    {
+      "width": 1280,
+      "skillId": "atlas:mage_chain",
+      "reducedMotionTargets": 5,
+      "pixels": [
+        471,
+        464,
+        464,
+        469,
+        471
+      ]
+    },
+    {
+      "width": 1280,
+      "supportLocal": true
+    }
+  ],
+  "screenshots": [
+    "320-volley-stage.png",
+    "320-chain-stage.png",
+    "320-workshop.png",
+    "390-volley-stage.png",
+    "390-chain-stage.png",
+    "390-workshop.png",
+    "1280-volley-stage.png",
+    "1280-chain-stage.png",
+    "1280-workshop.png"
+  ],
+  "pageErrors": [],
+  "httpErrors": [],
+  "blockedRequests": [],
+  "screenshotChecks": [
+    {
+      "width": 320,
+      "skillId": "native:archer:A22",
+      "drawCalls": 61,
+      "nonTransparent": 3502,
+      "progress": 0.66
+    },
+    {
+      "width": 320,
+      "skillId": "atlas:mage_chain",
+      "drawCalls": 85,
+      "nonTransparent": 11220,
+      "progress": 0.67
+    },
+    {
+      "width": 390,
+      "skillId": "native:archer:A22",
+      "drawCalls": 61,
+      "nonTransparent": 3528,
+      "progress": 0.66
+    },
+    {
+      "width": 390,
+      "skillId": "atlas:mage_chain",
+      "drawCalls": 85,
+      "nonTransparent": 11487,
+      "progress": 0.67
+    },
+    {
+      "width": 1280,
+      "skillId": "native:archer:A22",
+      "drawCalls": 61,
+      "nonTransparent": 7830,
+      "progress": 0.66
+    },
+    {
+      "width": 1280,
+      "skillId": "atlas:mage_chain",
+      "drawCalls": 85,
+      "nonTransparent": 23957,
+      "progress": 0.67
+    }
+  ],
+  "sourcesAfter": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-preview.mjs": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac",
+    "worker/public/skill-vfx-preview.css": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a",
+    "worker/tools/skill-vfx-target-browser.cjs": "f34a7a8392b96b0045efa9d4c487da929a944ac3bb9c1d01e15636457645a0c0"
+  },
+  "status": "passed",
+  "finishedAt": "2026-11-04T10:46:19.975Z",
+  "summary": {
+    "cases": 48,
+    "controls": 12,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "blockedRequests": 0,
+    "status": "passed"
+  }
+}

@@ -1,0 +1,2493 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-04T10:43:02.916Z",
+  "finishedAt": "2026-11-04T10:43:03.042Z",
+  "classification": "isolated-real-SQLite-committed-Atlas-receipt-for-controlled-Canvas-replay",
+  "limitation": "This is not full five-target MiniApp UI evidence. The fresh database character and prerequisite clears are synthetic setup; Atlas configure/start/settle, encounter selection, target selection, damage and commit are real unchanged game code.",
+  "isolated": true,
+  "productionAccess": false,
+  "networkRequestsAllowed": false,
+  "fixture": {
+    "accountId": "81995",
+    "characterId": "81995",
+    "baseClass": "mage",
+    "classPath": "A",
+    "level": 45,
+    "seededPrerequisiteMaps": [
+      "laurel_intro",
+      "pillar_intro",
+      "grove_intro",
+      "laurel_warden",
+      "laurel_survey"
+    ],
+    "equipment": "Unmodified ordinary character-creation starter set",
+    "balanceProfileOverride": null,
+    "mapId": "pillar_survey",
+    "encounterId": "ambush",
+    "buildId": "mage_chain",
+    "supportIds": [
+      "wide"
+    ],
+    "catalogBaseEnemies": 4,
+    "encounterExtraEnemies": 1,
+    "serverTargetCap": 5,
+    "seed": 2,
+    "seedSearch": {
+      "first": 1,
+      "lastExamined": 2,
+      "maximum": 4096
+    },
+    "fixtureStartAtMs": 1791421200000,
+    "committedAtMs": 1791421217000
+  },
+  "assertions": {
+    "availableMapPassed": true,
+    "serviceCreatedExactProbeState": true,
+    "stateRewardsActivitiesAndRngEqualWithoutObserver": true,
+    "unpublishedBeforeCommit": true,
+    "unchangedBeforeCommit": true,
+    "realRunCommitCount": 1,
+    "committedStateEqualsObserverOff": true,
+    "sourceInputsUnchanged": true,
+    "uniqueActualTargetCount": 5,
+    "uniqueActualHitCount": 5,
+    "actualEnemyIds": [
+      "0:0:0",
+      "0:0:1",
+      "0:0:2",
+      "0:0:3",
+      "0:0:4"
+    ],
+    "selectedEventIndex": 0
+  },
+  "originalCombatTrace": {
+    "schemaVersion": 1,
+    "source": "committed-combat",
+    "context": {
+      "accountId": "81995",
+      "realmId": "permanent",
+      "characterId": "81995",
+      "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+    },
+    "revision": 1,
+    "committedAtMs": 1791421217000,
+    "resolutionMs": 1000,
+    "events": [
+      {
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "type": "skill_cast",
+        "actorId": "81995",
+        "skillId": "atlas:mage_chain",
+        "atMs": 1791421216000,
+        "resolvedAtMs": 1791421216000,
+        "scheduledAtMs": 1791421215001,
+        "resolutionMs": 1000,
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "targetIds": [
+          "0:0:0",
+          "0:0:1",
+          "0:0:2",
+          "0:0:3",
+          "0:0:4"
+        ],
+        "hits": [
+          {
+            "targetId": "0:0:0",
+            "damage": 135,
+            "critical": false,
+            "hpBefore": 1742,
+            "hpAfter": 1607,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:1",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1877,
+            "hpAfter": 1762,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:2",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1702,
+            "hpAfter": 1587,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:3",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1735,
+            "hpAfter": 1620,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:4",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1836,
+            "hpAfter": 1721,
+            "source": "skill"
+          }
+        ],
+        "mpBefore": 343,
+        "mpSpent": 17,
+        "mpAfter": 326
+      }
+    ],
+    "limit": 128,
+    "dropped": 0,
+    "total": 1
+  },
+  "selectedEvent": {
+    "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+    "type": "skill_cast",
+    "actorId": "81995",
+    "skillId": "atlas:mage_chain",
+    "atMs": 1791421216000,
+    "resolvedAtMs": 1791421216000,
+    "scheduledAtMs": 1791421215001,
+    "resolutionMs": 1000,
+    "mapIndex": 0,
+    "roomIndex": 0,
+    "targetIds": [
+      "0:0:0",
+      "0:0:1",
+      "0:0:2",
+      "0:0:3",
+      "0:0:4"
+    ],
+    "hits": [
+      {
+        "targetId": "0:0:0",
+        "damage": 135,
+        "critical": false,
+        "hpBefore": 1742,
+        "hpAfter": 1607,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:1",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1877,
+        "hpAfter": 1762,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:2",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1702,
+        "hpAfter": 1587,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:3",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1735,
+        "hpAfter": 1620,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:4",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1836,
+        "hpAfter": 1721,
+        "source": "skill"
+      }
+    ],
+    "mpBefore": 343,
+    "mpSpent": 17,
+    "mpAfter": 326
+  },
+  "originalServiceResponse": {
+    "ok": true,
+    "scene": {
+      "schemaVersion": 1,
+      "realmId": "permanent",
+      "accountId": "81995",
+      "characterId": "81995",
+      "serverNow": 1791421217000,
+      "character": {
+        "id": "81995",
+        "name": "五目標提交測試",
+        "baseClass": "mage",
+        "gender": "f",
+        "classPath": "A",
+        "level": 45,
+        "revision": 3,
+        "appearanceKey": "adv1_mage_A_f"
+      },
+      "live": {
+        "revision": 3,
+        "updatedAt": 1791421217000,
+        "hp": 710,
+        "mp": 343,
+        "maxHp": 710,
+        "maxMp": 343,
+        "gold": 50000,
+        "exp": 0,
+        "experience": {
+          "current": 0,
+          "required": 957666,
+          "ratio": 0,
+          "maxLevel": false
+        },
+        "activeRunId": "f13e0000-0000-4000-8000-000000000005",
+        "partyId": null,
+        "supplies": {
+          "hp": 80,
+          "mp": 80
+        }
+      },
+      "run": {
+        "id": "f13e0000-0000-4000-8000-000000000005",
+        "realmId": "permanent",
+        "characterId": "81995",
+        "revision": 1,
+        "committedAt": 1791421217000,
+        "active": true,
+        "rulesetVersion": "atlas-v4",
+        "status": "running",
+        "startedAt": 1791421200000,
+        "processedAt": 1791421217000,
+        "processedSeconds": 17,
+        "map": {
+          "id": "pillar_survey",
+          "name": "雅典娜百柱神殿・深域調查",
+          "themeId": 2,
+          "kind": "survey"
+        },
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "transitionSeconds": 0,
+        "hero": {
+          "hp": 674,
+          "mp": 328.058,
+          "maxHp": 710,
+          "maxMp": 343,
+          "shield": 0
+        },
+        "supplies": {
+          "hp": 20,
+          "mp": 20,
+          "hpUsed": 0,
+          "mpUsed": 0
+        },
+        "enemies": [
+          {
+            "id": "0:0:0",
+            "name": "百柱石像",
+            "rank": "normal",
+            "hp": 1607,
+            "maxHp": 1742
+          },
+          {
+            "id": "0:0:1",
+            "name": "百柱石像",
+            "rank": "normal",
+            "hp": 1762,
+            "maxHp": 1877
+          },
+          {
+            "id": "0:0:2",
+            "name": "百柱石像",
+            "rank": "normal",
+            "hp": 1587,
+            "maxHp": 1702
+          },
+          {
+            "id": "0:0:3",
+            "name": "百柱石像",
+            "rank": "normal",
+            "hp": 1620,
+            "maxHp": 1735
+          },
+          {
+            "id": "0:0:4",
+            "name": "百柱石像",
+            "rank": "normal",
+            "hp": 1721,
+            "maxHp": 1836
+          }
+        ],
+        "events": [
+          {
+            "id": "f13e0000-0000-4000-8000-000000000005:[15,\"room_entered\",null,0,0,null]",
+            "type": "room_entered",
+            "at": 15,
+            "atMs": 1791421215000,
+            "rank": "normal",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "enemies": 5
+          },
+          {
+            "id": "f13e0000-0000-4000-8000-000000000005:[15,\"encounter\",null,0,0,null,\"ambush\",null,null,null]",
+            "type": "encounter",
+            "at": 15,
+            "atMs": 1791421215000,
+            "encounterId": "ambush",
+            "name": "石廊伏擊",
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "hpRestored": 0,
+            "mpRestored": 0
+          }
+        ],
+        "eventHistory": {
+          "limit": 24,
+          "complete": false
+        },
+        "report": {
+          "gold": 0,
+          "exp": 0,
+          "materials": {},
+          "equipment": 0,
+          "items": {},
+          "kills": 0,
+          "deaths": 0,
+          "used": {
+            "hp": 0,
+            "mp": 0
+          },
+          "reason": null,
+          "metrics": {
+            "combatSeconds": 2,
+            "packCombatSeconds": 2,
+            "eliteCombatSeconds": 0,
+            "bossCombatSeconds": 0,
+            "travelSeconds": 15,
+            "damage": 595,
+            "dotDamage": 0,
+            "petDamage": 0,
+            "counterDamage": 0,
+            "damageTaken": 36,
+            "shieldAbsorbed": 0,
+            "blockedDamage": 0,
+            "blocks": 0,
+            "casts": 1,
+            "basicAttacks": 0,
+            "manaSpent": 17,
+            "manaDenied": 0,
+            "kills": 0,
+            "roomsCleared": 0,
+            "mapsCompleted": 0,
+            "hpRestored": 0,
+            "mpRestored": 0,
+            "executeHits": 0,
+            "comboBursts": 0,
+            "trapsTriggered": 0,
+            "encountersSeen": 1,
+            "encountersCompleted": 0,
+            "safeCompletions": 0,
+            "survivalSeconds": 17
+          }
+        }
+      }
+    },
+    "enabled": true,
+    "canStart": true,
+    "realmId": "permanent",
+    "characterId": "81995",
+    "profile": {
+      "buildId": "mage_chain",
+      "supportIds": [
+        "wide"
+      ],
+      "automation": "balanced",
+      "revision": 0
+    },
+    "run": {
+      "id": "f13e0000-0000-4000-8000-000000000005",
+      "status": "running",
+      "mapId": "pillar_survey",
+      "buildId": "mage_chain",
+      "queueMode": "count",
+      "mapCount": 1,
+      "completedMaps": 0,
+      "startedAt": 1791421200000,
+      "endsAt": 1791424800000,
+      "processedAt": 1791421217000,
+      "progress": {
+        "ratio": 0.004722222222222222,
+        "elapsedSeconds": 17,
+        "processedSeconds": 17,
+        "catchingUp": false
+      },
+      "report": {
+        "gold": 0,
+        "exp": 0,
+        "materials": {},
+        "equipment": 0,
+        "items": {},
+        "kills": 0,
+        "deaths": 0,
+        "used": {
+          "hp": 0,
+          "mp": 0
+        },
+        "reason": null,
+        "metrics": {
+          "combatSeconds": 2,
+          "packCombatSeconds": 2,
+          "eliteCombatSeconds": 0,
+          "bossCombatSeconds": 0,
+          "travelSeconds": 15,
+          "damage": 595,
+          "dotDamage": 0,
+          "petDamage": 0,
+          "counterDamage": 0,
+          "damageTaken": 36,
+          "shieldAbsorbed": 0,
+          "blockedDamage": 0,
+          "blocks": 0,
+          "casts": 1,
+          "basicAttacks": 0,
+          "manaSpent": 17,
+          "manaDenied": 0,
+          "kills": 0,
+          "roomsCleared": 0,
+          "mapsCompleted": 0,
+          "hpRestored": 0,
+          "mpRestored": 0,
+          "executeHits": 0,
+          "comboBursts": 0,
+          "trapsTriggered": 0,
+          "encountersSeen": 1,
+          "encountersCompleted": 0,
+          "safeCompletions": 0,
+          "survivalSeconds": 17
+        }
+      },
+      "supplies": {
+        "hp": 20,
+        "mp": 20
+      },
+      "stopRequested": false
+    },
+    "materials": {},
+    "completedMaps": {
+      "grove_intro": 1,
+      "laurel_intro": 1,
+      "laurel_survey": 1,
+      "laurel_warden": 1,
+      "pillar_intro": 1
+    },
+    "talents": {
+      "version": "atlas-talents-v1",
+      "allocatedIds": [],
+      "spent": 0,
+      "totalPoints": 9,
+      "availablePoints": 9,
+      "effects": {},
+      "effectText": "尚未配置天賦",
+      "revision": 0,
+      "tutorialStep": 0,
+      "catalog": {
+        "version": "atlas-talents-v1",
+        "baseClass": "mage",
+        "nodes": [
+          {
+            "id": "origin",
+            "name": "命運起點",
+            "kind": "origin",
+            "cost": 0,
+            "minLevel": 1,
+            "x": 450,
+            "y": 60,
+            "effects": {},
+            "description": "從起點沿連線配置天賦；每個節點消耗一點。"
+          },
+          {
+            "id": "mage_chain_1",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 150,
+            "y": 160,
+            "name": "主技能傷害修習 1",
+            "effects": {
+              "skillDamagePct": 0.025
+            },
+            "description": "主技能傷害 +2.5%"
+          },
+          {
+            "id": "mage_chain_2",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 185,
+            "y": 252,
+            "name": "最大魔力修習 2",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_chain_3",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 150,
+            "y": 344,
+            "name": "最大生命修習 3",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_chain_4",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 185,
+            "y": 436,
+            "name": "主技能傷害修習 4",
+            "effects": {
+              "skillDamagePct": 0.025
+            },
+            "description": "主技能傷害 +2.5%"
+          },
+          {
+            "id": "mage_chain_5",
+            "branch": "mage_chain",
+            "kind": "notable",
+            "cost": 1,
+            "minLevel": 20,
+            "x": 150,
+            "y": 528,
+            "name": "雷鏈清場精通",
+            "effects": {
+              "skillDamagePct": 0.06
+            },
+            "description": "主技能傷害 +6%"
+          },
+          {
+            "id": "mage_chain_6",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 30,
+            "x": 185,
+            "y": 620,
+            "name": "最大生命修習 6",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_chain_7",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 40,
+            "x": 150,
+            "y": 712,
+            "name": "主技能傷害修習 7",
+            "effects": {
+              "skillDamagePct": 0.025
+            },
+            "description": "主技能傷害 +2.5%"
+          },
+          {
+            "id": "mage_chain_8",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 50,
+            "x": 185,
+            "y": 804,
+            "name": "最大魔力修習 8",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_chain_9",
+            "branch": "mage_chain",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 60,
+            "x": 150,
+            "y": 896,
+            "name": "最大生命修習 9",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_chain_10",
+            "branch": "mage_chain",
+            "kind": "keystone",
+            "cost": 1,
+            "minLevel": 80,
+            "x": 185,
+            "y": 988,
+            "name": "無盡雷潮",
+            "effects": {
+              "skillDamagePct": 0.25,
+              "mpCostPct": 0.2
+            },
+            "description": "主技能傷害 +25%、技能耗魔 +20%"
+          },
+          {
+            "id": "mage_frost_1",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 450,
+            "y": 160,
+            "name": "護盾效果修習 1",
+            "effects": {
+              "shieldPct": 0.025
+            },
+            "description": "護盾效果 +2.5%"
+          },
+          {
+            "id": "mage_frost_2",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 485,
+            "y": 252,
+            "name": "最大魔力修習 2",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_frost_3",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 450,
+            "y": 344,
+            "name": "最大生命修習 3",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_frost_4",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 485,
+            "y": 436,
+            "name": "護盾效果修習 4",
+            "effects": {
+              "shieldPct": 0.025
+            },
+            "description": "護盾效果 +2.5%"
+          },
+          {
+            "id": "mage_frost_5",
+            "branch": "mage_frost",
+            "kind": "notable",
+            "cost": 1,
+            "minLevel": 20,
+            "x": 450,
+            "y": 528,
+            "name": "冰盾消磨精通",
+            "effects": {
+              "shieldPct": 0.06
+            },
+            "description": "護盾效果 +6%"
+          },
+          {
+            "id": "mage_frost_6",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 30,
+            "x": 485,
+            "y": 620,
+            "name": "最大生命修習 6",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_frost_7",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 40,
+            "x": 450,
+            "y": 712,
+            "name": "護盾效果修習 7",
+            "effects": {
+              "shieldPct": 0.025
+            },
+            "description": "護盾效果 +2.5%"
+          },
+          {
+            "id": "mage_frost_8",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 50,
+            "x": 485,
+            "y": 804,
+            "name": "最大魔力修習 8",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_frost_9",
+            "branch": "mage_frost",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 60,
+            "x": 450,
+            "y": 896,
+            "name": "最大生命修習 9",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_frost_10",
+            "branch": "mage_frost",
+            "kind": "keystone",
+            "cost": 1,
+            "minLevel": 80,
+            "x": 485,
+            "y": 988,
+            "name": "冰鏡誓言",
+            "effects": {
+              "shieldPct": 0.35,
+              "atkPct": -0.1
+            },
+            "description": "護盾效果 +35%、攻擊 −10%"
+          },
+          {
+            "id": "mage_arcane_1",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 750,
+            "y": 160,
+            "name": "最大魔力修習 1",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_arcane_2",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 1,
+            "x": 785,
+            "y": 252,
+            "name": "最大魔力修習 2",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_arcane_3",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 750,
+            "y": 344,
+            "name": "最大生命修習 3",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_arcane_4",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 10,
+            "x": 785,
+            "y": 436,
+            "name": "最大魔力修習 4",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_arcane_5",
+            "branch": "mage_arcane",
+            "kind": "notable",
+            "cost": 1,
+            "minLevel": 20,
+            "x": 750,
+            "y": 528,
+            "name": "秘法燃魔精通",
+            "effects": {
+              "maxMpPct": 0.06
+            },
+            "description": "最大魔力 +6%"
+          },
+          {
+            "id": "mage_arcane_6",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 30,
+            "x": 785,
+            "y": 620,
+            "name": "最大生命修習 6",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_arcane_7",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 40,
+            "x": 750,
+            "y": 712,
+            "name": "最大魔力修習 7",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_arcane_8",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 50,
+            "x": 785,
+            "y": 804,
+            "name": "最大魔力修習 8",
+            "effects": {
+              "maxMpPct": 0.025
+            },
+            "description": "最大魔力 +2.5%"
+          },
+          {
+            "id": "mage_arcane_9",
+            "branch": "mage_arcane",
+            "kind": "minor",
+            "cost": 1,
+            "minLevel": 60,
+            "x": 750,
+            "y": 896,
+            "name": "最大生命修習 9",
+            "effects": {
+              "maxHpPct": 0.025
+            },
+            "description": "最大生命 +2.5%"
+          },
+          {
+            "id": "mage_arcane_10",
+            "branch": "mage_arcane",
+            "kind": "keystone",
+            "cost": 1,
+            "minLevel": 80,
+            "x": 785,
+            "y": 988,
+            "name": "燃魂秘典",
+            "effects": {
+              "maxMpPct": 0.3,
+              "takenPct": 0.1
+            },
+            "description": "最大魔力 +30%、承受傷害 +10%"
+          }
+        ],
+        "edges": [
+          [
+            "origin",
+            "mage_chain_1"
+          ],
+          [
+            "mage_chain_1",
+            "mage_chain_2"
+          ],
+          [
+            "mage_chain_2",
+            "mage_chain_3"
+          ],
+          [
+            "mage_chain_3",
+            "mage_chain_4"
+          ],
+          [
+            "mage_chain_4",
+            "mage_chain_5"
+          ],
+          [
+            "mage_chain_5",
+            "mage_chain_6"
+          ],
+          [
+            "mage_chain_6",
+            "mage_chain_7"
+          ],
+          [
+            "mage_chain_7",
+            "mage_chain_8"
+          ],
+          [
+            "mage_chain_8",
+            "mage_chain_9"
+          ],
+          [
+            "mage_chain_9",
+            "mage_chain_10"
+          ],
+          [
+            "origin",
+            "mage_frost_1"
+          ],
+          [
+            "mage_frost_1",
+            "mage_frost_2"
+          ],
+          [
+            "mage_frost_2",
+            "mage_frost_3"
+          ],
+          [
+            "mage_frost_3",
+            "mage_frost_4"
+          ],
+          [
+            "mage_frost_4",
+            "mage_frost_5"
+          ],
+          [
+            "mage_frost_5",
+            "mage_frost_6"
+          ],
+          [
+            "mage_frost_6",
+            "mage_frost_7"
+          ],
+          [
+            "mage_frost_7",
+            "mage_frost_8"
+          ],
+          [
+            "mage_frost_8",
+            "mage_frost_9"
+          ],
+          [
+            "mage_frost_9",
+            "mage_frost_10"
+          ],
+          [
+            "origin",
+            "mage_arcane_1"
+          ],
+          [
+            "mage_arcane_1",
+            "mage_arcane_2"
+          ],
+          [
+            "mage_arcane_2",
+            "mage_arcane_3"
+          ],
+          [
+            "mage_arcane_3",
+            "mage_arcane_4"
+          ],
+          [
+            "mage_arcane_4",
+            "mage_arcane_5"
+          ],
+          [
+            "mage_arcane_5",
+            "mage_arcane_6"
+          ],
+          [
+            "mage_arcane_6",
+            "mage_arcane_7"
+          ],
+          [
+            "mage_arcane_7",
+            "mage_arcane_8"
+          ],
+          [
+            "mage_arcane_8",
+            "mage_arcane_9"
+          ],
+          [
+            "mage_arcane_9",
+            "mage_arcane_10"
+          ],
+          [
+            "mage_chain_4",
+            "mage_frost_4"
+          ],
+          [
+            "mage_frost_4",
+            "mage_arcane_4"
+          ],
+          [
+            "mage_chain_8",
+            "mage_frost_8"
+          ],
+          [
+            "mage_frost_8",
+            "mage_arcane_8"
+          ]
+        ],
+        "branches": [
+          {
+            "id": "mage_chain",
+            "name": "雷鏈清場",
+            "mainSkill": "連鎖閃電",
+            "strengths": [
+              "清群"
+            ],
+            "weaknesses": [
+              "耗魔",
+              "單體"
+            ]
+          },
+          {
+            "id": "mage_frost",
+            "name": "冰盾消磨",
+            "mainSkill": "霜壁脈衝",
+            "strengths": [
+              "護盾",
+              "緩速"
+            ],
+            "weaknesses": [
+              "輸出速度"
+            ]
+          },
+          {
+            "id": "mage_arcane",
+            "name": "秘法燃魔",
+            "mainSkill": "秘法聚束",
+            "strengths": [
+              "單體爆發"
+            ],
+            "weaknesses": [
+              "耗魔"
+            ]
+          }
+        ],
+        "effectLabels": {
+          "atkPct": "攻擊",
+          "defPct": "防禦",
+          "maxHpPct": "最大生命",
+          "maxMpPct": "最大魔力",
+          "critPct": "暴擊機率",
+          "dotPct": "持續傷害",
+          "summonPct": "召喚傷害",
+          "shieldPct": "護盾效果",
+          "mpEfficiencyPct": "法力效率",
+          "mpCostPct": "技能耗魔",
+          "skillHastePct": "技能冷卻縮減",
+          "attackSpeedPct": "攻擊速度",
+          "takenPct": "承受傷害",
+          "skillDamagePct": "主技能傷害"
+        },
+        "maxPoints": 24,
+        "resetGold": 0,
+        "balanceStatus": "prototype"
+      }
+    },
+    "profileSaved": true,
+    "availableMapIds": [
+      "laurel_intro",
+      "pillar_intro",
+      "grove_intro",
+      "laurel_warden",
+      "laurel_survey",
+      "pillar_survey"
+    ],
+    "supplies": {
+      "hp": 80,
+      "mp": 80
+    },
+    "equipment": [
+      {
+        "id": "edcb8ae7d9f2",
+        "name": "月桂法杖",
+        "slot": "weapon",
+        "enhanceLevel": 0,
+        "baseStat": 10,
+        "crafts": 0,
+        "tradeLocked": false
+      },
+      {
+        "id": "a167b453f928",
+        "name": "月桂法袍",
+        "slot": "armor",
+        "enhanceLevel": 0,
+        "baseStat": 4,
+        "crafts": 0,
+        "tradeLocked": false
+      }
+    ],
+    "now": 1791421217000,
+    "combatTrace": {
+      "schemaVersion": 1,
+      "source": "committed-combat",
+      "context": {
+        "accountId": "81995",
+        "realmId": "permanent",
+        "characterId": "81995",
+        "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+      },
+      "revision": 1,
+      "committedAtMs": 1791421217000,
+      "resolutionMs": 1000,
+      "events": [
+        {
+          "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+          "type": "skill_cast",
+          "actorId": "81995",
+          "skillId": "atlas:mage_chain",
+          "atMs": 1791421216000,
+          "resolvedAtMs": 1791421216000,
+          "scheduledAtMs": 1791421215001,
+          "resolutionMs": 1000,
+          "mapIndex": 0,
+          "roomIndex": 0,
+          "targetIds": [
+            "0:0:0",
+            "0:0:1",
+            "0:0:2",
+            "0:0:3",
+            "0:0:4"
+          ],
+          "hits": [
+            {
+              "targetId": "0:0:0",
+              "damage": 135,
+              "critical": false,
+              "hpBefore": 1742,
+              "hpAfter": 1607,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:1",
+              "damage": 115,
+              "critical": false,
+              "hpBefore": 1877,
+              "hpAfter": 1762,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:2",
+              "damage": 115,
+              "critical": false,
+              "hpBefore": 1702,
+              "hpAfter": 1587,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:3",
+              "damage": 115,
+              "critical": false,
+              "hpBefore": 1735,
+              "hpAfter": 1620,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:4",
+              "damage": 115,
+              "critical": false,
+              "hpBefore": 1836,
+              "hpAfter": 1721,
+              "source": "skill"
+            }
+          ],
+          "mpBefore": 343,
+          "mpSpent": 17,
+          "mpAfter": 326
+        }
+      ],
+      "limit": 128,
+      "dropped": 0,
+      "total": 1
+    }
+  },
+  "beforeRun": {
+    "id": "f13e0000-0000-4000-8000-000000000005",
+    "realm_id": "permanent",
+    "account_id": "81995",
+    "char_id": "81995",
+    "status": "running",
+    "state_json": "{\"ruleset_version\":\"atlas-v4\",\"runId\":\"f13e0000-0000-4000-8000-000000000005\",\"realmId\":\"permanent\",\"seed\":\"2\",\"encounterRng\":3903278070,\"combatRng\":1274500553,\"lootRng\":263199519,\"startedAt\":1791421200,\"processedAt\":1791421200,\"durationSeconds\":3600,\"elapsedSeconds\":0,\"status\":\"running\",\"stopReason\":null,\"endedAt\":null,\"snapshot\":{\"characterId\":\"81995\",\"baseClass\":\"mage\",\"level\":45,\"atk\":177,\"def\":48,\"maxHp\":710,\"maxMp\":343,\"taken\":0.7,\"attackSpeedMultiplier\":1,\"hitAttackMultiplier\":1,\"pct\":{\"critPct\":0,\"dotPct\":0.0411,\"summonPct\":0,\"shieldPct\":0,\"mpEfficiencyPct\":0,\"mpCostPct\":0,\"skillHastePct\":0,\"lifestealPct\":0,\"healPerCastPct\":0,\"skillDamagePct\":0},\"hp\":710,\"mp\":343,\"mpRegenPerSecond\":2.058},\"balanceProfile\":{\"id\":\"prototype-20261101\",\"status\":\"prototype\",\"enemyHpMultiplier\":1,\"enemyDamageMultiplier\":1,\"enemyDefenseMultiplier\":1,\"rewardMultiplier\":1,\"travelMultiplier\":1,\"goldMultiplier\":1,\"experienceMultiplier\":1},\"talentSnapshot\":{\"version\":\"atlas-talents-v1\",\"allocatedIds\":[],\"spent\":0,\"totalPoints\":9,\"availablePoints\":9,\"effects\":{},\"effectText\":\"尚未配置天賦\"},\"buildId\":\"mage_chain\",\"supports\":[\"wide\"],\"automation\":\"balanced\",\"skill\":{\"id\":\"mage_chain\",\"baseClass\":\"mage\",\"name\":\"雷鏈清場\",\"mainSkill\":\"連鎖閃電\",\"description\":\"閃電跳躍清群；密集施放會消耗更多藍水。\",\"strengths\":[\"清群\"],\"weaknesses\":[\"耗魔\",\"單體\"],\"tags\":[\"area\"],\"mechanic\":\"strike\",\"coefficient\":1.65,\"targets\":5,\"secondaryMultiplier\":0.85,\"cost\":17,\"cooldown\":3,\"recommendedSupports\":[\"rapid\",\"economy\"],\"recommendedAutomation\":\"balanced\",\"damageMultiplier\":0.76,\"durationMultiplier\":1,\"costMultiplier\":1.3,\"cooldownMultiplier\":1,\"supportShieldFraction\":0},\"mapId\":\"pillar_survey\",\"map\":{\"id\":\"pillar_survey\",\"name\":\"雅典娜百柱神殿・深域調查\",\"themeId\":2,\"themeName\":\"雅典娜百柱神殿\",\"emoji\":\"🏛️\",\"kind\":\"survey\",\"minLevel\":45,\"prerequisites\":[\"laurel_survey\"],\"available\":true,\"enemyName\":\"百柱石像\",\"eliteName\":\"神殿禁衛百夫長\",\"roomCount\":6,\"packRooms\":5,\"travelSeconds\":7,\"entrySeconds\":15,\"enemy\":{\"count\":4,\"hp\":1800,\"atk\":100,\"def\":16,\"attackInterval\":4.5},\"elite\":{\"count\":1,\"hp\":9000,\"atk\":240,\"def\":24,\"attackInterval\":4.5},\"rewards\":{\"roomGold\":100,\"roomExp\":260,\"completionGold\":250,\"completionExp\":700,\"material\":\"atlas_ember\"},\"dropTier\":5,\"loot\":{\"rulesVersion\":\"atlas-loot-v1\",\"equipmentEverySeconds\":600,\"scrollEverySeconds\":300,\"maxEquipment\":48,\"maxScrolls\":96,\"roomEquipmentChance\":0.1,\"completionEquipmentChance\":0.5,\"roomScrollChance\":0.18,\"completionScrollChance\":0.65,\"weaponScrollChance\":0.4},\"encounters\":{\"chance\":0.4,\"maxPerMap\":2,\"pool\":[{\"id\":\"elite_hunt\",\"name\":\"禁衛巡獵\",\"weight\":20,\"hpMultiplier\":1.12,\"attackMultiplier\":1.08,\"goldBonus\":0.5,\"shardBonus\":1,\"equipmentChanceBonus\":0.15},{\"id\":\"treasure\",\"name\":\"神殿藏寶\",\"weight\":40,\"goldBonus\":0.5,\"shardBonus\":2,\"materialBonus\":1,\"equipmentChanceBonus\":0.2},{\"id\":\"spring\",\"name\":\"聖壇泉水\",\"weight\":15,\"hpFraction\":0.14,\"mpFraction\":0.2},{\"id\":\"ambush\",\"name\":\"石廊伏擊\",\"weight\":25,\"extraEnemies\":1,\"attackIntervalMultiplier\":0.85,\"firstAttackSeconds\":2,\"goldBonus\":0.25,\"shardBonus\":1}]},\"hints\":[\"此區裝備產出固定為T5，不會隨角色等級提高。\",\"巡獵、藏寶、泉水與伏擊會改變這趟探索；完成房間才取得收益。\",\"建議先檢查實際裝備、天賦與補給，再延長調查時間。\"]},\"queueMode\":\"count\",\"mapCount\":1,\"mapIndex\":0,\"roomIndex\":0,\"transitionSeconds\":15,\"enemies\":[],\"hero\":{\"hp\":710,\"mp\":343,\"shield\":0,\"nextActionAt\":0,\"nextSkillAt\":0,\"combo\":0,\"pets\":[],\"traps\":[]},\"supplies\":{\"hp\":20,\"mp\":20,\"hpInitial\":20,\"mpInitial\":20,\"hpUsed\":0,\"mpUsed\":0,\"hpRestore\":50,\"mpRestore\":40,\"lastHpAt\":-1,\"lastMpAt\":-1},\"rewardSequence\":0,\"totals\":{\"gold\":0,\"exp\":0,\"materials\":{},\"equipment\":0,\"items\":{}},\"metrics\":{\"combatSeconds\":0,\"packCombatSeconds\":0,\"eliteCombatSeconds\":0,\"bossCombatSeconds\":0,\"travelSeconds\":0,\"damage\":0,\"dotDamage\":0,\"petDamage\":0,\"counterDamage\":0,\"damageTaken\":0,\"shieldAbsorbed\":0,\"blockedDamage\":0,\"blocks\":0,\"casts\":0,\"basicAttacks\":0,\"manaSpent\":0,\"manaDenied\":0,\"kills\":0,\"roomsCleared\":0,\"mapsCompleted\":0,\"hpRestored\":0,\"mpRestored\":0,\"executeHits\":0,\"comboBursts\":0,\"trapsTriggered\":0,\"encountersSeen\":0,\"encountersCompleted\":0,\"safeCompletions\":0,\"survivalSeconds\":0},\"events\":[],\"content\":{\"version\":\"atlas-content-v1\",\"classPath\":\"A\",\"rng\":{\"encounter\":130501213,\"equipment\":2755687656,\"scroll\":3573742649},\"encountersThisMap\":0,\"roomEncounter\":null,\"mapHpDamage\":0,\"survival\":{\"fromElapsed\":0,\"throughElapsed\":0,\"seconds\":0}}}",
+    "started_at": 1791421200000,
+    "updated_at": 1791421200000,
+    "stop_at": null,
+    "rev": 0
+  },
+  "afterRun": {
+    "id": "f13e0000-0000-4000-8000-000000000005",
+    "realm_id": "permanent",
+    "account_id": "81995",
+    "char_id": "81995",
+    "status": "running",
+    "state_json": "{\"ruleset_version\":\"atlas-v4\",\"runId\":\"f13e0000-0000-4000-8000-000000000005\",\"realmId\":\"permanent\",\"seed\":\"2\",\"encounterRng\":2859039155,\"combatRng\":967583520,\"lootRng\":263199519,\"startedAt\":1791421200,\"processedAt\":1791421217,\"durationSeconds\":3600,\"elapsedSeconds\":17,\"status\":\"running\",\"stopReason\":null,\"endedAt\":null,\"snapshot\":{\"characterId\":\"81995\",\"baseClass\":\"mage\",\"level\":45,\"atk\":177,\"def\":48,\"maxHp\":710,\"maxMp\":343,\"taken\":0.7,\"attackSpeedMultiplier\":1,\"hitAttackMultiplier\":1,\"pct\":{\"critPct\":0,\"dotPct\":0.0411,\"summonPct\":0,\"shieldPct\":0,\"mpEfficiencyPct\":0,\"mpCostPct\":0,\"skillHastePct\":0,\"lifestealPct\":0,\"healPerCastPct\":0,\"skillDamagePct\":0},\"hp\":710,\"mp\":343,\"mpRegenPerSecond\":2.058},\"balanceProfile\":{\"id\":\"prototype-20261101\",\"status\":\"prototype\",\"enemyHpMultiplier\":1,\"enemyDamageMultiplier\":1,\"enemyDefenseMultiplier\":1,\"rewardMultiplier\":1,\"travelMultiplier\":1,\"goldMultiplier\":1,\"experienceMultiplier\":1},\"talentSnapshot\":{\"version\":\"atlas-talents-v1\",\"allocatedIds\":[],\"spent\":0,\"totalPoints\":9,\"availablePoints\":9,\"effects\":{},\"effectText\":\"尚未配置天賦\"},\"buildId\":\"mage_chain\",\"supports\":[\"wide\"],\"automation\":\"balanced\",\"skill\":{\"id\":\"mage_chain\",\"baseClass\":\"mage\",\"name\":\"雷鏈清場\",\"mainSkill\":\"連鎖閃電\",\"description\":\"閃電跳躍清群；密集施放會消耗更多藍水。\",\"strengths\":[\"清群\"],\"weaknesses\":[\"耗魔\",\"單體\"],\"tags\":[\"area\"],\"mechanic\":\"strike\",\"coefficient\":1.65,\"targets\":5,\"secondaryMultiplier\":0.85,\"cost\":17,\"cooldown\":3,\"recommendedSupports\":[\"rapid\",\"economy\"],\"recommendedAutomation\":\"balanced\",\"damageMultiplier\":0.76,\"durationMultiplier\":1,\"costMultiplier\":1.3,\"cooldownMultiplier\":1,\"supportShieldFraction\":0},\"mapId\":\"pillar_survey\",\"map\":{\"id\":\"pillar_survey\",\"name\":\"雅典娜百柱神殿・深域調查\",\"themeId\":2,\"themeName\":\"雅典娜百柱神殿\",\"emoji\":\"🏛️\",\"kind\":\"survey\",\"minLevel\":45,\"prerequisites\":[\"laurel_survey\"],\"available\":true,\"enemyName\":\"百柱石像\",\"eliteName\":\"神殿禁衛百夫長\",\"roomCount\":6,\"packRooms\":5,\"travelSeconds\":7,\"entrySeconds\":15,\"enemy\":{\"count\":4,\"hp\":1800,\"atk\":100,\"def\":16,\"attackInterval\":4.5},\"elite\":{\"count\":1,\"hp\":9000,\"atk\":240,\"def\":24,\"attackInterval\":4.5},\"rewards\":{\"roomGold\":100,\"roomExp\":260,\"completionGold\":250,\"completionExp\":700,\"material\":\"atlas_ember\"},\"dropTier\":5,\"loot\":{\"rulesVersion\":\"atlas-loot-v1\",\"equipmentEverySeconds\":600,\"scrollEverySeconds\":300,\"maxEquipment\":48,\"maxScrolls\":96,\"roomEquipmentChance\":0.1,\"completionEquipmentChance\":0.5,\"roomScrollChance\":0.18,\"completionScrollChance\":0.65,\"weaponScrollChance\":0.4},\"encounters\":{\"chance\":0.4,\"maxPerMap\":2,\"pool\":[{\"id\":\"elite_hunt\",\"name\":\"禁衛巡獵\",\"weight\":20,\"hpMultiplier\":1.12,\"attackMultiplier\":1.08,\"goldBonus\":0.5,\"shardBonus\":1,\"equipmentChanceBonus\":0.15},{\"id\":\"treasure\",\"name\":\"神殿藏寶\",\"weight\":40,\"goldBonus\":0.5,\"shardBonus\":2,\"materialBonus\":1,\"equipmentChanceBonus\":0.2},{\"id\":\"spring\",\"name\":\"聖壇泉水\",\"weight\":15,\"hpFraction\":0.14,\"mpFraction\":0.2},{\"id\":\"ambush\",\"name\":\"石廊伏擊\",\"weight\":25,\"extraEnemies\":1,\"attackIntervalMultiplier\":0.85,\"firstAttackSeconds\":2,\"goldBonus\":0.25,\"shardBonus\":1}]},\"hints\":[\"此區裝備產出固定為T5，不會隨角色等級提高。\",\"巡獵、藏寶、泉水與伏擊會改變這趟探索；完成房間才取得收益。\",\"建議先檢查實際裝備、天賦與補給，再延長調查時間。\"]},\"queueMode\":\"count\",\"mapCount\":1,\"mapIndex\":0,\"roomIndex\":0,\"transitionSeconds\":0,\"enemies\":[{\"id\":\"0:0:0\",\"name\":\"百柱石像\",\"rank\":\"normal\",\"maxHp\":1742,\"hp\":1607,\"atk\":100,\"def\":16,\"attackInterval\":3.8249999999999997,\"nextAttackAt\":20.825,\"chilledUntil\":0,\"dots\":[]},{\"id\":\"0:0:1\",\"name\":\"百柱石像\",\"rank\":\"normal\",\"maxHp\":1877,\"hp\":1762,\"atk\":100,\"def\":16,\"attackInterval\":3.8249999999999997,\"nextAttackAt\":17.25,\"chilledUntil\":0,\"dots\":[]},{\"id\":\"0:0:2\",\"name\":\"百柱石像\",\"rank\":\"normal\",\"maxHp\":1702,\"hp\":1587,\"atk\":100,\"def\":16,\"attackInterval\":3.8249999999999997,\"nextAttackAt\":17.5,\"chilledUntil\":0,\"dots\":[]},{\"id\":\"0:0:3\",\"name\":\"百柱石像\",\"rank\":\"normal\",\"maxHp\":1735,\"hp\":1620,\"atk\":100,\"def\":16,\"attackInterval\":3.8249999999999997,\"nextAttackAt\":17.75,\"chilledUntil\":0,\"dots\":[]},{\"id\":\"0:0:4\",\"name\":\"百柱石像\",\"rank\":\"normal\",\"maxHp\":1836,\"hp\":1721,\"atk\":100,\"def\":16,\"attackInterval\":3.8249999999999997,\"nextAttackAt\":18,\"chilledUntil\":0,\"dots\":[]}],\"hero\":{\"hp\":674,\"mp\":328.058,\"shield\":0,\"nextActionAt\":17.000999999999998,\"nextSkillAt\":18.000999999999998,\"combo\":0,\"pets\":[],\"traps\":[]},\"supplies\":{\"hp\":20,\"mp\":20,\"hpInitial\":20,\"mpInitial\":20,\"hpUsed\":0,\"mpUsed\":0,\"hpRestore\":50,\"mpRestore\":40,\"lastHpAt\":-1,\"lastMpAt\":-1},\"rewardSequence\":0,\"totals\":{\"gold\":0,\"exp\":0,\"materials\":{},\"equipment\":0,\"items\":{}},\"metrics\":{\"combatSeconds\":2,\"packCombatSeconds\":2,\"eliteCombatSeconds\":0,\"bossCombatSeconds\":0,\"travelSeconds\":15,\"damage\":595,\"dotDamage\":0,\"petDamage\":0,\"counterDamage\":0,\"damageTaken\":36,\"shieldAbsorbed\":0,\"blockedDamage\":0,\"blocks\":0,\"casts\":1,\"basicAttacks\":0,\"manaSpent\":17,\"manaDenied\":0,\"kills\":0,\"roomsCleared\":0,\"mapsCompleted\":0,\"hpRestored\":0,\"mpRestored\":0,\"executeHits\":0,\"comboBursts\":0,\"trapsTriggered\":0,\"encountersSeen\":1,\"encountersCompleted\":0,\"safeCompletions\":0,\"survivalSeconds\":17},\"events\":[{\"at\":15,\"type\":\"room_entered\",\"mapIndex\":0,\"roomIndex\":0,\"rank\":\"normal\",\"enemies\":5},{\"at\":15,\"type\":\"encounter\",\"encounterId\":\"ambush\",\"name\":\"石廊伏擊\",\"mapIndex\":0,\"roomIndex\":0,\"hpRestored\":0,\"mpRestored\":0}],\"content\":{\"version\":\"atlas-content-v1\",\"classPath\":\"A\",\"rng\":{\"encounter\":3268833395,\"equipment\":2755687656,\"scroll\":3573742649},\"encountersThisMap\":1,\"roomEncounter\":{\"id\":\"ambush\",\"name\":\"石廊伏擊\",\"completed\":false},\"mapHpDamage\":36,\"survival\":{\"fromElapsed\":0,\"throughElapsed\":17,\"seconds\":17}}}",
+    "started_at": 1791421200000,
+    "updated_at": 1791421217000,
+    "stop_at": null,
+    "rev": 1
+  },
+  "observerOff": {
+    "rewards": [],
+    "activities": [],
+    "steps": 17,
+    "processedAt": 1791421217,
+    "stillCatchingUp": false,
+    "stateSha256": "5efc1b1eafa2a8f8596112bc91f3d098d477613b6f96659c15cc67eb5b991352"
+  },
+  "sourceFiles": [
+    {
+      "path": "worker/migrations/0001_init.sql",
+      "bytes": 5848,
+      "sha256": "f4904dee420af5b4004a627918809a21af17989bc44628d2ea02f446ccfaf3b2"
+    },
+    {
+      "path": "worker/migrations/0002_app_access.sql",
+      "bytes": 335,
+      "sha256": "60d460d7640e8ea9308342bf0e30685ab656c686e9d25d19485388f6cecb0747"
+    },
+    {
+      "path": "worker/migrations/0003_gear_v04_trade.sql",
+      "bytes": 5238,
+      "sha256": "bf31dfabd1afeba75479f3601c5eb695d96247f2c380a68e1f0e485b51ff3ae2"
+    },
+    {
+      "path": "worker/migrations/0004_v05_share_pk.sql",
+      "bytes": 3507,
+      "sha256": "c28d03b6d40a745e97c14cd74e2f3c7bbbe185e14397f24515a23f5cb804f53f"
+    },
+    {
+      "path": "worker/migrations/0005_allow_equipment_retrade.sql",
+      "bytes": 258,
+      "sha256": "6797a9b8f300610b2441e2398d2ccdf4a5acb559d1fa722357101e5226ae0bf9"
+    },
+    {
+      "path": "worker/migrations/0006_enhancement_share_kind.sql",
+      "bytes": 1107,
+      "sha256": "05252ece0ae1aa27965525bb6ddb18b7b9236ec1e15970b6f222f7700b98b755"
+    },
+    {
+      "path": "worker/migrations/0007_outbox_leases_and_trade_idempotency.sql",
+      "bytes": 837,
+      "sha256": "22cd81d880136ddd5283a5c031b864af3125c29661de873dbe629e0430e30f1f"
+    },
+    {
+      "path": "worker/migrations/0008_expand_gear_tiers_12.sql",
+      "bytes": 2033,
+      "sha256": "6892db054eda11c7ebda3a15dd981244c7ff0984272681e3447ca3a94e1541a9"
+    },
+    {
+      "path": "worker/migrations/0009_multi_character_accounts.sql",
+      "bytes": 903,
+      "sha256": "c042f89891e5584053b223a298c8b278ade74adeeda44118d557a17675dcf967"
+    },
+    {
+      "path": "worker/migrations/0010_special_skills_parties.sql",
+      "bytes": 1397,
+      "sha256": "2685b62036f841ffdd0f4a872688b8b58c44d2b4b5eae7a6720dbc610b4408cc"
+    },
+    {
+      "path": "worker/migrations/0011_equipment_affixes.sql",
+      "bytes": 147,
+      "sha256": "b7c7d60333c8e286e142056f5e77682354e3e128fe9722004c444c2d103373df"
+    },
+    {
+      "path": "worker/migrations/0012_auto_enhance.sql",
+      "bytes": 1148,
+      "sha256": "7607c1b2cdb255fcf48edeb2f562b5a9a65168c295407c505df00f44f36acf38"
+    },
+    {
+      "path": "worker/migrations/0013_outbox_backoff.sql",
+      "bytes": 545,
+      "sha256": "9171d3613e51ff30008793fdd64e7cfed16dcee8cf099fa53311cd9a165e00dc"
+    },
+    {
+      "path": "worker/migrations/0014_idle_combat.sql",
+      "bytes": 241,
+      "sha256": "8511c4139a6c2f8142eb33c8bc8457b8c2b8ec91d310853d5715884dd0a62aed"
+    },
+    {
+      "path": "worker/migrations/0015_daily_journal.sql",
+      "bytes": 920,
+      "sha256": "7672474c8f8f30c6bb3d2c9d86bf5fe6d6489608471feb4e62000b54f2146108"
+    },
+    {
+      "path": "worker/migrations/0016_guardian_sigils.sql",
+      "bytes": 7458,
+      "sha256": "266c7b395276f6cc8b90744ea2e3040ff49f7fc631f3ce75b55cfb474958e6ee"
+    },
+    {
+      "path": "worker/migrations/0017_guardian_trade_share.sql",
+      "bytes": 856,
+      "sha256": "93be78d088589b82157f989f17f542e638d5ca1bff22c0dcf4f6cc3b0ec6f276"
+    },
+    {
+      "path": "worker/migrations/0018_collection_blessings.sql",
+      "bytes": 1610,
+      "sha256": "679578b5cf2df3d187794b20789bd2829974545d90671256261fb441910aa0d9"
+    },
+    {
+      "path": "worker/migrations/0019_guardian_auto.sql",
+      "bytes": 1220,
+      "sha256": "1e45ad66a038298a5ac5500e27439b03493de9a3bad7734480a4e913892b06e7"
+    },
+    {
+      "path": "worker/migrations/0020_operation_notice_dismissals.sql",
+      "bytes": 430,
+      "sha256": "a1e63cf858d8a1c539a77a3224c77ba760023b0a6986427f90c0727fbbd190c4"
+    },
+    {
+      "path": "worker/migrations/0021_guardian_single_draw.sql",
+      "bytes": 264,
+      "sha256": "a6a3b46c3419dc4ea5b66155f9c349a0334ebe12e6d0e592179054d2d29597b3"
+    },
+    {
+      "path": "worker/migrations/0022_auto_reroll.sql",
+      "bytes": 1773,
+      "sha256": "ffa6d5702a468679b3ed509536443a2a566169e9cf81ea4f0289453ee4a57953"
+    },
+    {
+      "path": "worker/migrations/0023_background_operations.sql",
+      "bytes": 2437,
+      "sha256": "6d495963de2e80b2fdea0c27e4adbfb5424cd217828c1936ffd7cb0a78e6f460"
+    },
+    {
+      "path": "worker/migrations/0024_market_exchange.sql",
+      "bytes": 6089,
+      "sha256": "456f1cf1d8bb9f7c08dd83ebd4ce5ed04aa88da3a2849bdde7e1d921f37db780"
+    },
+    {
+      "path": "worker/migrations/0025_thief_empty_database.sql",
+      "bytes": 25086,
+      "sha256": "ae52ecb62b188ad260367b299858597e11141925ef99efd6be40ce6697f4661a"
+    },
+    {
+      "path": "worker/migrations/0026_fate_chapter.sql",
+      "bytes": 1968,
+      "sha256": "39710e62363f84b9f9e19a6e893607baecb4aead8e703af0a28ebbae772a2cfe"
+    },
+    {
+      "path": "worker/migrations/0027_fate_gifts.sql",
+      "bytes": 766,
+      "sha256": "1f7be7bd9ac023ff54b5567e6ee7a435e6f6b1b6c1e67fbf396e3aead8838993"
+    },
+    {
+      "path": "worker/migrations/0028_fate_shared_choices.sql",
+      "bytes": 2350,
+      "sha256": "d3469973663cf6fd21a27814f806fea36151c731978ec88af69dc0efc5d718e1"
+    },
+    {
+      "path": "worker/migrations/0029_star_ring_expedition.sql",
+      "bytes": 1935,
+      "sha256": "6cde70ae19c84d8f66c81db1681499030f732b7c11c3577d1774b3de4513c15c"
+    },
+    {
+      "path": "worker/migrations/0030_star_ring_cosmetics.sql",
+      "bytes": 668,
+      "sha256": "291928cebaa40ed0cde6d0736f814fb5d87c2263405a8d172f416b355166ed7a"
+    },
+    {
+      "path": "worker/migrations/0031_star_ring_guardian_backpack.sql",
+      "bytes": 1170,
+      "sha256": "1706526e69573589387159119240f1c874886fcd44cbfd5cea54d3886e036346"
+    },
+    {
+      "path": "worker/migrations/0032_star_ring_guardian_configuration.sql",
+      "bytes": 779,
+      "sha256": "290d0db363a7cc67633e9fc11cdc5c75ddc8af77d69fb0a160da5d439b9b1eff"
+    },
+    {
+      "path": "worker/migrations/0033_admin_console.sql",
+      "bytes": 1294,
+      "sha256": "c4bd23e83f46d69c74862ba23494c7e9c57084f76ca3aee031946a6c95616eed"
+    },
+    {
+      "path": "worker/migrations/0034_character_deletion.sql",
+      "bytes": 17439,
+      "sha256": "0cd4570b6d726264597a97007bb9da9ed8a7d238399349bc2fdc2939380637b2"
+    },
+    {
+      "path": "worker/migrations/0035_realm_identity.sql",
+      "bytes": 4566,
+      "sha256": "f502205a451c461b0a9e5619d737b0a0c3ef0b5ddc780d2b75682f01e3ff7c40"
+    },
+    {
+      "path": "worker/migrations/0036_atlas_foundation.sql",
+      "bytes": 3544,
+      "sha256": "fc676825a765a7a5dcc6b61365c201833e1bffde27501d512e1ee7b06266fb4b"
+    },
+    {
+      "path": "worker/migrations/0037_atlas_quests.sql",
+      "bytes": 3668,
+      "sha256": "80cd62d7ebc8d908fe893fad941230fabcd01eba489cc1e277c153f8bc0292a4"
+    },
+    {
+      "path": "worker/migrations/0038_atlas_talents.sql",
+      "bytes": 415,
+      "sha256": "5948ae5cf91aa2ac8349b4acef8f623fb8bfa9c5fe6b08d23be9d90448fdf5e7"
+    },
+    {
+      "path": "worker/migrations/0039_scene_chat.sql",
+      "bytes": 867,
+      "sha256": "b1220c432346640711a580a64d2bceeb5f81187efcdd59760ed75455d6bd0043"
+    },
+    {
+      "path": "worker/migrations/0040_equipment_collection.sql",
+      "bytes": 968,
+      "sha256": "9df89efac454362c6331b7424f6f5df6443284eee648b8c57433ab08f22f8f98"
+    },
+    {
+      "path": "worker/migrations/0041_atlas_activity_quests.sql",
+      "bytes": 1942,
+      "sha256": "ef25959d541721d76679c654bfa98ebb0449e6c745b705caf9043197f268148c"
+    },
+    {
+      "path": "worker/migrations/0042_equipment_recovery.sql",
+      "bytes": 1005,
+      "sha256": "39967cddb12a741d1e7ce0fe165ad4a32744c93058336c620415d4442a069baf"
+    },
+    {
+      "path": "worker/migrations/0043_atlas_background.sql",
+      "bytes": 430,
+      "sha256": "b03574d77e35e4770a3d094fb796c40d089f1082ae1909411a2311503a49a04b"
+    },
+    {
+      "path": "worker/public/gear-names.json",
+      "bytes": 14538,
+      "sha256": "62d1264ef92655bcdd42e232bb929388942bd076c402670c72a8ff2dee9943a2"
+    },
+    {
+      "path": "worker/public/star-ring-gear-art.js",
+      "bytes": 1436,
+      "sha256": "3314be193e98c7983b54eeef645d79ce2fbb5c7f7e98ee63df57c3788632c29d"
+    },
+    {
+      "path": "worker/public/thief-gear-art.js",
+      "bytes": 2245,
+      "sha256": "4df3881a274677f570e73d3deb2b6a033bdf95e9c97dd28e79b760dfaa5dbc61"
+    },
+    {
+      "path": "worker/src/db.js",
+      "bytes": 11529,
+      "sha256": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2"
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "bytes": 4713,
+      "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
+    },
+    {
+      "path": "worker/src/game/affixes.js",
+      "bytes": 5680,
+      "sha256": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "bytes": 15546,
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "bytes": 3586,
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016"
+    },
+    {
+      "path": "worker/src/game/atlas-content.js",
+      "bytes": 10185,
+      "sha256": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "bytes": 29486,
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01"
+    },
+    {
+      "path": "worker/src/game/atlas-loot.js",
+      "bytes": 2428,
+      "sha256": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e"
+    },
+    {
+      "path": "worker/src/game/atlas-quests.js",
+      "bytes": 12594,
+      "sha256": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99"
+    },
+    {
+      "path": "worker/src/game/atlas-scene.js",
+      "bytes": 7285,
+      "sha256": "9275ebd1f6b5dde9ce832e9560c5a41d2978b2a17ab5687ce6e198ad297b0ee6"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "bytes": 8153,
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/auto-blue.js",
+      "bytes": 635,
+      "sha256": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "bytes": 13891,
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "bytes": 4817,
+      "sha256": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60"
+    },
+    {
+      "path": "worker/src/game/collection-blessings.js",
+      "bytes": 2135,
+      "sha256": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896"
+    },
+    {
+      "path": "worker/src/game/combat-passives.js",
+      "bytes": 1323,
+      "sha256": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf"
+    },
+    {
+      "path": "worker/src/game/constants.js",
+      "bytes": 37894,
+      "sha256": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598"
+    },
+    {
+      "path": "worker/src/game/daily.js",
+      "bytes": 595,
+      "sha256": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc"
+    },
+    {
+      "path": "worker/src/game/elements.js",
+      "bytes": 1251,
+      "sha256": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1"
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "bytes": 10938,
+      "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+    },
+    {
+      "path": "worker/src/game/enhance-preview.js",
+      "bytes": 588,
+      "sha256": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07"
+    },
+    {
+      "path": "worker/src/game/enhance.js",
+      "bytes": 3334,
+      "sha256": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c"
+    },
+    {
+      "path": "worker/src/game/equipment-collection.js",
+      "bytes": 3318,
+      "sha256": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd"
+    },
+    {
+      "path": "worker/src/game/formulas.js",
+      "bytes": 1497,
+      "sha256": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62"
+    },
+    {
+      "path": "worker/src/game/gear-art.js",
+      "bytes": 263,
+      "sha256": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c"
+    },
+    {
+      "path": "worker/src/game/gear-growth.js",
+      "bytes": 1324,
+      "sha256": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a"
+    },
+    {
+      "path": "worker/src/game/gear-quality.js",
+      "bytes": 799,
+      "sha256": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a"
+    },
+    {
+      "path": "worker/src/game/gear.js",
+      "bytes": 11214,
+      "sha256": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691"
+    },
+    {
+      "path": "worker/src/game/guardian-assist.js",
+      "bytes": 2229,
+      "sha256": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c"
+    },
+    {
+      "path": "worker/src/game/guardian-effects.js",
+      "bytes": 2145,
+      "sha256": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-config.js",
+      "bytes": 7556,
+      "sha256": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-settings.json",
+      "bytes": 1555,
+      "sha256": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "bytes": 5005,
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle-skill-rotation.js",
+      "bytes": 708,
+      "sha256": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "bytes": 20525,
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "bytes": 1263,
+      "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "bytes": 11463,
+      "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+    },
+    {
+      "path": "worker/src/game/monster-data.js",
+      "bytes": 69643,
+      "sha256": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be"
+    },
+    {
+      "path": "worker/src/game/monster-readiness.js",
+      "bytes": 3732,
+      "sha256": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef"
+    },
+    {
+      "path": "worker/src/game/monsters.js",
+      "bytes": 5072,
+      "sha256": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb"
+    },
+    {
+      "path": "worker/src/game/potion-choice.js",
+      "bytes": 1333,
+      "sha256": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284"
+    },
+    {
+      "path": "worker/src/game/pve-balance.js",
+      "bytes": 2117,
+      "sha256": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "bytes": 783,
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    },
+    {
+      "path": "worker/src/game/share.js",
+      "bytes": 5423,
+      "sha256": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405"
+    },
+    {
+      "path": "worker/src/game/shop.js",
+      "bytes": 4027,
+      "sha256": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b"
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "bytes": 1546,
+      "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "bytes": 4299,
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "bytes": 19116,
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "bytes": 7349,
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "bytes": 19011,
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring-cosmetics.js",
+      "bytes": 974,
+      "sha256": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471"
+    },
+    {
+      "path": "worker/src/game/star-ring-gear.js",
+      "bytes": 5658,
+      "sha256": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "bytes": 2579,
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "bytes": 14052,
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "bytes": 4555,
+      "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "bytes": 5730,
+      "sha256": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc"
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "bytes": 1447,
+      "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "bytes": 6632,
+      "sha256": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562"
+    },
+    {
+      "path": "worker/src/game/time.js",
+      "bytes": 1152,
+      "sha256": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6"
+    },
+    {
+      "path": "worker/src/game/tower-progression.js",
+      "bytes": 2139,
+      "sha256": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3"
+    },
+    {
+      "path": "worker/src/game/trade.js",
+      "bytes": 1666,
+      "sha256": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17"
+    },
+    {
+      "path": "worker/src/realm/asset-preservation.js",
+      "bytes": 6120,
+      "sha256": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f"
+    },
+    {
+      "path": "worker/src/services/atlas-quests.js",
+      "bytes": 20914,
+      "sha256": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc"
+    },
+    {
+      "path": "worker/src/services/atlas-talents.js",
+      "bytes": 7668,
+      "sha256": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "bytes": 25096,
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a"
+    },
+    {
+      "path": "worker/src/services/guardian-sigil.js",
+      "bytes": 27987,
+      "sha256": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205"
+    },
+    {
+      "path": "worker/src/services/party-presence.js",
+      "bytes": 2605,
+      "sha256": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "bytes": 40301,
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/share.js",
+      "bytes": 19194,
+      "sha256": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd"
+    },
+    {
+      "path": "worker/src/services/star-ring-gear.js",
+      "bytes": 1273,
+      "sha256": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d"
+    },
+    {
+      "path": "worker/src/services/trade.js",
+      "bytes": 34028,
+      "sha256": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756"
+    },
+    {
+      "path": "worker/src/views.js",
+      "bytes": 11352,
+      "sha256": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218"
+    },
+    {
+      "path": "worker/test/d1-shim.js",
+      "bytes": 2145,
+      "sha256": "2a3520f2c998c64a4a64ac6a13d9aa1c5ec5af2e01d5bc67015c2fb9ae80e9e0"
+    },
+    {
+      "path": "worker/test/helpers.js",
+      "bytes": 1294,
+      "sha256": "67555f8c11bf9379841ddb98754b525f0c5b6e5868d84ed337f9bc3e56555972"
+    },
+    {
+      "path": "worker/tools/skill-vfx-five-target-receipt.mjs",
+      "bytes": 14920,
+      "sha256": "6fa80a3b81945199a10f75c76d524785a38c5025991b157cd794b759658feda1"
+    }
+  ],
+  "sourceFilesAfter": [
+    {
+      "path": "worker/migrations/0001_init.sql",
+      "bytes": 5848,
+      "sha256": "f4904dee420af5b4004a627918809a21af17989bc44628d2ea02f446ccfaf3b2"
+    },
+    {
+      "path": "worker/migrations/0002_app_access.sql",
+      "bytes": 335,
+      "sha256": "60d460d7640e8ea9308342bf0e30685ab656c686e9d25d19485388f6cecb0747"
+    },
+    {
+      "path": "worker/migrations/0003_gear_v04_trade.sql",
+      "bytes": 5238,
+      "sha256": "bf31dfabd1afeba75479f3601c5eb695d96247f2c380a68e1f0e485b51ff3ae2"
+    },
+    {
+      "path": "worker/migrations/0004_v05_share_pk.sql",
+      "bytes": 3507,
+      "sha256": "c28d03b6d40a745e97c14cd74e2f3c7bbbe185e14397f24515a23f5cb804f53f"
+    },
+    {
+      "path": "worker/migrations/0005_allow_equipment_retrade.sql",
+      "bytes": 258,
+      "sha256": "6797a9b8f300610b2441e2398d2ccdf4a5acb559d1fa722357101e5226ae0bf9"
+    },
+    {
+      "path": "worker/migrations/0006_enhancement_share_kind.sql",
+      "bytes": 1107,
+      "sha256": "05252ece0ae1aa27965525bb6ddb18b7b9236ec1e15970b6f222f7700b98b755"
+    },
+    {
+      "path": "worker/migrations/0007_outbox_leases_and_trade_idempotency.sql",
+      "bytes": 837,
+      "sha256": "22cd81d880136ddd5283a5c031b864af3125c29661de873dbe629e0430e30f1f"
+    },
+    {
+      "path": "worker/migrations/0008_expand_gear_tiers_12.sql",
+      "bytes": 2033,
+      "sha256": "6892db054eda11c7ebda3a15dd981244c7ff0984272681e3447ca3a94e1541a9"
+    },
+    {
+      "path": "worker/migrations/0009_multi_character_accounts.sql",
+      "bytes": 903,
+      "sha256": "c042f89891e5584053b223a298c8b278ade74adeeda44118d557a17675dcf967"
+    },
+    {
+      "path": "worker/migrations/0010_special_skills_parties.sql",
+      "bytes": 1397,
+      "sha256": "2685b62036f841ffdd0f4a872688b8b58c44d2b4b5eae7a6720dbc610b4408cc"
+    },
+    {
+      "path": "worker/migrations/0011_equipment_affixes.sql",
+      "bytes": 147,
+      "sha256": "b7c7d60333c8e286e142056f5e77682354e3e128fe9722004c444c2d103373df"
+    },
+    {
+      "path": "worker/migrations/0012_auto_enhance.sql",
+      "bytes": 1148,
+      "sha256": "7607c1b2cdb255fcf48edeb2f562b5a9a65168c295407c505df00f44f36acf38"
+    },
+    {
+      "path": "worker/migrations/0013_outbox_backoff.sql",
+      "bytes": 545,
+      "sha256": "9171d3613e51ff30008793fdd64e7cfed16dcee8cf099fa53311cd9a165e00dc"
+    },
+    {
+      "path": "worker/migrations/0014_idle_combat.sql",
+      "bytes": 241,
+      "sha256": "8511c4139a6c2f8142eb33c8bc8457b8c2b8ec91d310853d5715884dd0a62aed"
+    },
+    {
+      "path": "worker/migrations/0015_daily_journal.sql",
+      "bytes": 920,
+      "sha256": "7672474c8f8f30c6bb3d2c9d86bf5fe6d6489608471feb4e62000b54f2146108"
+    },
+    {
+      "path": "worker/migrations/0016_guardian_sigils.sql",
+      "bytes": 7458,
+      "sha256": "266c7b395276f6cc8b90744ea2e3040ff49f7fc631f3ce75b55cfb474958e6ee"
+    },
+    {
+      "path": "worker/migrations/0017_guardian_trade_share.sql",
+      "bytes": 856,
+      "sha256": "93be78d088589b82157f989f17f542e638d5ca1bff22c0dcf4f6cc3b0ec6f276"
+    },
+    {
+      "path": "worker/migrations/0018_collection_blessings.sql",
+      "bytes": 1610,
+      "sha256": "679578b5cf2df3d187794b20789bd2829974545d90671256261fb441910aa0d9"
+    },
+    {
+      "path": "worker/migrations/0019_guardian_auto.sql",
+      "bytes": 1220,
+      "sha256": "1e45ad66a038298a5ac5500e27439b03493de9a3bad7734480a4e913892b06e7"
+    },
+    {
+      "path": "worker/migrations/0020_operation_notice_dismissals.sql",
+      "bytes": 430,
+      "sha256": "a1e63cf858d8a1c539a77a3224c77ba760023b0a6986427f90c0727fbbd190c4"
+    },
+    {
+      "path": "worker/migrations/0021_guardian_single_draw.sql",
+      "bytes": 264,
+      "sha256": "a6a3b46c3419dc4ea5b66155f9c349a0334ebe12e6d0e592179054d2d29597b3"
+    },
+    {
+      "path": "worker/migrations/0022_auto_reroll.sql",
+      "bytes": 1773,
+      "sha256": "ffa6d5702a468679b3ed509536443a2a566169e9cf81ea4f0289453ee4a57953"
+    },
+    {
+      "path": "worker/migrations/0023_background_operations.sql",
+      "bytes": 2437,
+      "sha256": "6d495963de2e80b2fdea0c27e4adbfb5424cd217828c1936ffd7cb0a78e6f460"
+    },
+    {
+      "path": "worker/migrations/0024_market_exchange.sql",
+      "bytes": 6089,
+      "sha256": "456f1cf1d8bb9f7c08dd83ebd4ce5ed04aa88da3a2849bdde7e1d921f37db780"
+    },
+    {
+      "path": "worker/migrations/0025_thief_empty_database.sql",
+      "bytes": 25086,
+      "sha256": "ae52ecb62b188ad260367b299858597e11141925ef99efd6be40ce6697f4661a"
+    },
+    {
+      "path": "worker/migrations/0026_fate_chapter.sql",
+      "bytes": 1968,
+      "sha256": "39710e62363f84b9f9e19a6e893607baecb4aead8e703af0a28ebbae772a2cfe"
+    },
+    {
+      "path": "worker/migrations/0027_fate_gifts.sql",
+      "bytes": 766,
+      "sha256": "1f7be7bd9ac023ff54b5567e6ee7a435e6f6b1b6c1e67fbf396e3aead8838993"
+    },
+    {
+      "path": "worker/migrations/0028_fate_shared_choices.sql",
+      "bytes": 2350,
+      "sha256": "d3469973663cf6fd21a27814f806fea36151c731978ec88af69dc0efc5d718e1"
+    },
+    {
+      "path": "worker/migrations/0029_star_ring_expedition.sql",
+      "bytes": 1935,
+      "sha256": "6cde70ae19c84d8f66c81db1681499030f732b7c11c3577d1774b3de4513c15c"
+    },
+    {
+      "path": "worker/migrations/0030_star_ring_cosmetics.sql",
+      "bytes": 668,
+      "sha256": "291928cebaa40ed0cde6d0736f814fb5d87c2263405a8d172f416b355166ed7a"
+    },
+    {
+      "path": "worker/migrations/0031_star_ring_guardian_backpack.sql",
+      "bytes": 1170,
+      "sha256": "1706526e69573589387159119240f1c874886fcd44cbfd5cea54d3886e036346"
+    },
+    {
+      "path": "worker/migrations/0032_star_ring_guardian_configuration.sql",
+      "bytes": 779,
+      "sha256": "290d0db363a7cc67633e9fc11cdc5c75ddc8af77d69fb0a160da5d439b9b1eff"
+    },
+    {
+      "path": "worker/migrations/0033_admin_console.sql",
+      "bytes": 1294,
+      "sha256": "c4bd23e83f46d69c74862ba23494c7e9c57084f76ca3aee031946a6c95616eed"
+    },
+    {
+      "path": "worker/migrations/0034_character_deletion.sql",
+      "bytes": 17439,
+      "sha256": "0cd4570b6d726264597a97007bb9da9ed8a7d238399349bc2fdc2939380637b2"
+    },
+    {
+      "path": "worker/migrations/0035_realm_identity.sql",
+      "bytes": 4566,
+      "sha256": "f502205a451c461b0a9e5619d737b0a0c3ef0b5ddc780d2b75682f01e3ff7c40"
+    },
+    {
+      "path": "worker/migrations/0036_atlas_foundation.sql",
+      "bytes": 3544,
+      "sha256": "fc676825a765a7a5dcc6b61365c201833e1bffde27501d512e1ee7b06266fb4b"
+    },
+    {
+      "path": "worker/migrations/0037_atlas_quests.sql",
+      "bytes": 3668,
+      "sha256": "80cd62d7ebc8d908fe893fad941230fabcd01eba489cc1e277c153f8bc0292a4"
+    },
+    {
+      "path": "worker/migrations/0038_atlas_talents.sql",
+      "bytes": 415,
+      "sha256": "5948ae5cf91aa2ac8349b4acef8f623fb8bfa9c5fe6b08d23be9d90448fdf5e7"
+    },
+    {
+      "path": "worker/migrations/0039_scene_chat.sql",
+      "bytes": 867,
+      "sha256": "b1220c432346640711a580a64d2bceeb5f81187efcdd59760ed75455d6bd0043"
+    },
+    {
+      "path": "worker/migrations/0040_equipment_collection.sql",
+      "bytes": 968,
+      "sha256": "9df89efac454362c6331b7424f6f5df6443284eee648b8c57433ab08f22f8f98"
+    },
+    {
+      "path": "worker/migrations/0041_atlas_activity_quests.sql",
+      "bytes": 1942,
+      "sha256": "ef25959d541721d76679c654bfa98ebb0449e6c745b705caf9043197f268148c"
+    },
+    {
+      "path": "worker/migrations/0042_equipment_recovery.sql",
+      "bytes": 1005,
+      "sha256": "39967cddb12a741d1e7ce0fe165ad4a32744c93058336c620415d4442a069baf"
+    },
+    {
+      "path": "worker/migrations/0043_atlas_background.sql",
+      "bytes": 430,
+      "sha256": "b03574d77e35e4770a3d094fb796c40d089f1082ae1909411a2311503a49a04b"
+    },
+    {
+      "path": "worker/public/gear-names.json",
+      "bytes": 14538,
+      "sha256": "62d1264ef92655bcdd42e232bb929388942bd076c402670c72a8ff2dee9943a2"
+    },
+    {
+      "path": "worker/public/star-ring-gear-art.js",
+      "bytes": 1436,
+      "sha256": "3314be193e98c7983b54eeef645d79ce2fbb5c7f7e98ee63df57c3788632c29d"
+    },
+    {
+      "path": "worker/public/thief-gear-art.js",
+      "bytes": 2245,
+      "sha256": "4df3881a274677f570e73d3deb2b6a033bdf95e9c97dd28e79b760dfaa5dbc61"
+    },
+    {
+      "path": "worker/src/db.js",
+      "bytes": 11529,
+      "sha256": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2"
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "bytes": 4713,
+      "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
+    },
+    {
+      "path": "worker/src/game/affixes.js",
+      "bytes": 5680,
+      "sha256": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "bytes": 15546,
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "bytes": 3586,
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016"
+    },
+    {
+      "path": "worker/src/game/atlas-content.js",
+      "bytes": 10185,
+      "sha256": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "bytes": 29486,
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01"
+    },
+    {
+      "path": "worker/src/game/atlas-loot.js",
+      "bytes": 2428,
+      "sha256": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e"
+    },
+    {
+      "path": "worker/src/game/atlas-quests.js",
+      "bytes": 12594,
+      "sha256": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99"
+    },
+    {
+      "path": "worker/src/game/atlas-scene.js",
+      "bytes": 7285,
+      "sha256": "9275ebd1f6b5dde9ce832e9560c5a41d2978b2a17ab5687ce6e198ad297b0ee6"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "bytes": 8153,
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/auto-blue.js",
+      "bytes": 635,
+      "sha256": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "bytes": 13891,
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "bytes": 4817,
+      "sha256": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60"
+    },
+    {
+      "path": "worker/src/game/collection-blessings.js",
+      "bytes": 2135,
+      "sha256": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896"
+    },
+    {
+      "path": "worker/src/game/combat-passives.js",
+      "bytes": 1323,
+      "sha256": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf"
+    },
+    {
+      "path": "worker/src/game/constants.js",
+      "bytes": 37894,
+      "sha256": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598"
+    },
+    {
+      "path": "worker/src/game/daily.js",
+      "bytes": 595,
+      "sha256": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc"
+    },
+    {
+      "path": "worker/src/game/elements.js",
+      "bytes": 1251,
+      "sha256": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1"
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "bytes": 10938,
+      "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+    },
+    {
+      "path": "worker/src/game/enhance-preview.js",
+      "bytes": 588,
+      "sha256": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07"
+    },
+    {
+      "path": "worker/src/game/enhance.js",
+      "bytes": 3334,
+      "sha256": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c"
+    },
+    {
+      "path": "worker/src/game/equipment-collection.js",
+      "bytes": 3318,
+      "sha256": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd"
+    },
+    {
+      "path": "worker/src/game/formulas.js",
+      "bytes": 1497,
+      "sha256": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62"
+    },
+    {
+      "path": "worker/src/game/gear-art.js",
+      "bytes": 263,
+      "sha256": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c"
+    },
+    {
+      "path": "worker/src/game/gear-growth.js",
+      "bytes": 1324,
+      "sha256": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a"
+    },
+    {
+      "path": "worker/src/game/gear-quality.js",
+      "bytes": 799,
+      "sha256": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a"
+    },
+    {
+      "path": "worker/src/game/gear.js",
+      "bytes": 11214,
+      "sha256": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691"
+    },
+    {
+      "path": "worker/src/game/guardian-assist.js",
+      "bytes": 2229,
+      "sha256": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c"
+    },
+    {
+      "path": "worker/src/game/guardian-effects.js",
+      "bytes": 2145,
+      "sha256": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-config.js",
+      "bytes": 7556,
+      "sha256": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-settings.json",
+      "bytes": 1555,
+      "sha256": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "bytes": 5005,
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle-skill-rotation.js",
+      "bytes": 708,
+      "sha256": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "bytes": 20525,
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "bytes": 1263,
+      "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "bytes": 11463,
+      "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+    },
+    {
+      "path": "worker/src/game/monster-data.js",
+      "bytes": 69643,
+      "sha256": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be"
+    },
+    {
+      "path": "worker/src/game/monster-readiness.js",
+      "bytes": 3732,
+      "sha256": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef"
+    },
+    {
+      "path": "worker/src/game/monsters.js",
+      "bytes": 5072,
+      "sha256": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb"
+    },
+    {
+      "path": "worker/src/game/potion-choice.js",
+      "bytes": 1333,
+      "sha256": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284"
+    },
+    {
+      "path": "worker/src/game/pve-balance.js",
+      "bytes": 2117,
+      "sha256": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "bytes": 783,
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    },
+    {
+      "path": "worker/src/game/share.js",
+      "bytes": 5423,
+      "sha256": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405"
+    },
+    {
+      "path": "worker/src/game/shop.js",
+      "bytes": 4027,
+      "sha256": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b"
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "bytes": 1546,
+      "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "bytes": 4299,
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "bytes": 19116,
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "bytes": 7349,
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "bytes": 19011,
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring-cosmetics.js",
+      "bytes": 974,
+      "sha256": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471"
+    },
+    {
+      "path": "worker/src/game/star-ring-gear.js",
+      "bytes": 5658,
+      "sha256": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "bytes": 2579,
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "bytes": 14052,
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "bytes": 4555,
+      "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "bytes": 5730,
+      "sha256": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc"
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "bytes": 1447,
+      "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "bytes": 6632,
+      "sha256": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562"
+    },
+    {
+      "path": "worker/src/game/time.js",
+      "bytes": 1152,
+      "sha256": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6"
+    },
+    {
+      "path": "worker/src/game/tower-progression.js",
+      "bytes": 2139,
+      "sha256": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3"
+    },
+    {
+      "path": "worker/src/game/trade.js",
+      "bytes": 1666,
+      "sha256": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17"
+    },
+    {
+      "path": "worker/src/realm/asset-preservation.js",
+      "bytes": 6120,
+      "sha256": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f"
+    },
+    {
+      "path": "worker/src/services/atlas-quests.js",
+      "bytes": 20914,
+      "sha256": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc"
+    },
+    {
+      "path": "worker/src/services/atlas-talents.js",
+      "bytes": 7668,
+      "sha256": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "bytes": 25096,
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a"
+    },
+    {
+      "path": "worker/src/services/guardian-sigil.js",
+      "bytes": 27987,
+      "sha256": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205"
+    },
+    {
+      "path": "worker/src/services/party-presence.js",
+      "bytes": 2605,
+      "sha256": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "bytes": 40301,
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/share.js",
+      "bytes": 19194,
+      "sha256": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd"
+    },
+    {
+      "path": "worker/src/services/star-ring-gear.js",
+      "bytes": 1273,
+      "sha256": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d"
+    },
+    {
+      "path": "worker/src/services/trade.js",
+      "bytes": 34028,
+      "sha256": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756"
+    },
+    {
+      "path": "worker/src/views.js",
+      "bytes": 11352,
+      "sha256": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218"
+    },
+    {
+      "path": "worker/test/d1-shim.js",
+      "bytes": 2145,
+      "sha256": "2a3520f2c998c64a4a64ac6a13d9aa1c5ec5af2e01d5bc67015c2fb9ae80e9e0"
+    },
+    {
+      "path": "worker/test/helpers.js",
+      "bytes": 1294,
+      "sha256": "67555f8c11bf9379841ddb98754b525f0c5b6e5868d84ed337f9bc3e56555972"
+    },
+    {
+      "path": "worker/tools/skill-vfx-five-target-receipt.mjs",
+      "bytes": 14920,
+      "sha256": "6fa80a3b81945199a10f75c76d524785a38c5025991b157cd794b759658feda1"
+    }
+  ],
+  "nodeVersion": "v24.7.0"
+}

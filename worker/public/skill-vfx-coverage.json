@@ -6,7 +6,7 @@
   "sourceFiles": [
     {
       "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
-      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+      "sha256": "2b078015478a6f91d6a39938726517b7b59812e639fe8c945ff89eb99da69aa0"
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
@@ -14,7 +14,7 @@
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
-      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+      "sha256": "5f1f9b5aff085d86491750280574d9ba2638b728cdeacc400e468cc42148c0ac"
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
@@ -22,27 +22,15 @@
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
-      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+      "sha256": "f78f6cc41fc20eed29680f26fe6dc13c4bc9511ae514eb801daca8b6967c3ebd"
     },
     {
-      "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
-      "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241"
+      "path": ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+      "sha256": "74d0ec5b241b78f7a558f147b79159e9e9938c89347a4dab85c0198e660a1580"
     },
     {
-      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
-      "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc"
-    },
-    {
-      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
-      "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade"
-    },
-    {
-      "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
-      "sha256": "b92ec412dbb565ceff9b83f3297d9fa0998f3d003b2bf6b600a2bde8e90be6b4"
-    },
-    {
-      "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
-      "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf"
+      "path": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+      "sha256": "d0586c9c909d22ef581330aa50f064cb469a8f93cd31e04b72a4d587c998d0b3"
     },
     {
       "path": "worker/public/app.js",
@@ -138,7 +126,7 @@
     },
     {
       "path": "worker/public/skill-vfx-engine.mjs",
-      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
     },
     {
       "path": "worker/public/skill-vfx-legacy.mjs",
@@ -289,7 +277,7 @@
     "presentationObserved": 196,
     "browserObserved": 196,
     "controlledBrowserReplayObserved": 184,
-    "gameplayBrowserObserved": 24,
+    "gameplayBrowserObserved": 23,
     "resolverAndPresentationObserved": 196,
     "plannedExcluded": 16,
     "supports": 6,
@@ -341,11 +329,11 @@
             {
               "skillId": "atlas:sword_whirlwind",
               "source": "committed-combat",
-              "eventCount": 4,
+              "eventCount": 5,
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:sword_whirlwind:1280:0:resolver",
+              "caseId": "024f28d2ad18:sword_whirlwind:1280:0:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -355,7 +343,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:sword_whirlwind:390:12:resolver",
+              "caseId": "024f28d2ad18:sword_whirlwind:390:12:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -366,11 +354,11 @@
             {
               "skillId": "atlas:sword_whirlwind",
               "source": "committed-combat",
-              "eventCount": 4,
+              "eventCount": 5,
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:sword_whirlwind:1280:0:commit",
+              "caseId": "024f28d2ad18:sword_whirlwind:1280:0:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -380,7 +368,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:sword_whirlwind:390:12:commit",
+              "caseId": "024f28d2ad18:sword_whirlwind:390:12:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -395,7 +383,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:sword_whirlwind:1280:0:presentation",
+              "caseId": "024f28d2ad18:sword_whirlwind:1280:0:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -405,7 +393,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:sword_whirlwind:390:12:presentation",
+              "caseId": "024f28d2ad18:sword_whirlwind:390:12:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -422,7 +410,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:sword_whirlwind:1280:0:browser",
+              "caseId": "024f28d2ad18:sword_whirlwind:1280:0:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -432,7 +420,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:sword_whirlwind:390:12:browser",
+              "caseId": "024f28d2ad18:sword_whirlwind:390:12:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -514,11 +502,11 @@
             {
               "skillId": "atlas:sword_bleed",
               "source": "committed-combat",
-              "eventCount": 3,
+              "eventCount": 2,
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:sword_bleed:1280:1:resolver",
+              "caseId": "024f28d2ad18:sword_bleed:1280:1:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -529,11 +517,11 @@
             {
               "skillId": "atlas:sword_bleed",
               "source": "committed-combat",
-              "eventCount": 3,
+              "eventCount": 2,
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:sword_bleed:1280:1:commit",
+              "caseId": "024f28d2ad18:sword_bleed:1280:1:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -548,7 +536,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:sword_bleed:1280:1:presentation",
+              "caseId": "024f28d2ad18:sword_bleed:1280:1:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -565,7 +553,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:sword_bleed:1280:1:browser",
+              "caseId": "024f28d2ad18:sword_bleed:1280:1:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -653,7 +641,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:sword_counter:1280:2:resolver",
+              "caseId": "024f28d2ad18:sword_counter:1280:2:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -668,7 +656,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:sword_counter:1280:2:commit",
+              "caseId": "024f28d2ad18:sword_counter:1280:2:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -683,7 +671,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:sword_counter:1280:2:presentation",
+              "caseId": "024f28d2ad18:sword_counter:1280:2:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -700,7 +688,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:sword_counter:1280:2:browser",
+              "caseId": "024f28d2ad18:sword_counter:1280:2:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -784,7 +772,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:archer_pierce:1280:3:resolver",
+              "caseId": "024f28d2ad18:archer_pierce:1280:3:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -799,7 +787,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:archer_pierce:1280:3:commit",
+              "caseId": "024f28d2ad18:archer_pierce:1280:3:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -814,7 +802,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:archer_pierce:1280:3:presentation",
+              "caseId": "024f28d2ad18:archer_pierce:1280:3:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -831,7 +819,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:archer_pierce:1280:3:browser",
+              "caseId": "024f28d2ad18:archer_pierce:1280:3:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -917,7 +905,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:archer_beast:1280:4:resolver",
+              "caseId": "024f28d2ad18:archer_beast:1280:4:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -927,7 +915,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:archer_beast:390:13:resolver",
+              "caseId": "024f28d2ad18:archer_beast:390:13:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -942,7 +930,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:archer_beast:1280:4:commit",
+              "caseId": "024f28d2ad18:archer_beast:1280:4:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -952,7 +940,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:archer_beast:390:13:commit",
+              "caseId": "024f28d2ad18:archer_beast:390:13:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -967,7 +955,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:archer_beast:1280:4:presentation",
+              "caseId": "024f28d2ad18:archer_beast:1280:4:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -977,7 +965,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:archer_beast:390:13:presentation",
+              "caseId": "024f28d2ad18:archer_beast:390:13:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -994,7 +982,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:archer_beast:1280:4:browser",
+              "caseId": "024f28d2ad18:archer_beast:1280:4:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1004,7 +992,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:archer_beast:390:13:browser",
+              "caseId": "024f28d2ad18:archer_beast:390:13:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1090,7 +1078,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:archer_trap:1280:5:resolver",
+              "caseId": "024f28d2ad18:archer_trap:1280:5:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1105,7 +1093,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:archer_trap:1280:5:commit",
+              "caseId": "024f28d2ad18:archer_trap:1280:5:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1120,7 +1108,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:archer_trap:1280:5:presentation",
+              "caseId": "024f28d2ad18:archer_trap:1280:5:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1137,7 +1125,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:archer_trap:1280:5:browser",
+              "caseId": "024f28d2ad18:archer_trap:1280:5:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1221,7 +1209,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:mage_chain:1280:6:resolver",
+              "caseId": "024f28d2ad18:mage_chain:1280:6:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1231,7 +1219,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:mage_chain:390:14:resolver",
+              "caseId": "024f28d2ad18:mage_chain:390:14:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1246,7 +1234,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:mage_chain:1280:6:commit",
+              "caseId": "024f28d2ad18:mage_chain:1280:6:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1256,7 +1244,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:mage_chain:390:14:commit",
+              "caseId": "024f28d2ad18:mage_chain:390:14:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1271,7 +1259,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:mage_chain:1280:6:presentation",
+              "caseId": "024f28d2ad18:mage_chain:1280:6:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1281,7 +1269,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:mage_chain:390:14:presentation",
+              "caseId": "024f28d2ad18:mage_chain:390:14:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1298,7 +1286,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:mage_chain:1280:6:browser",
+              "caseId": "024f28d2ad18:mage_chain:1280:6:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1308,7 +1296,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:mage_chain:390:14:browser",
+              "caseId": "024f28d2ad18:mage_chain:390:14:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1394,7 +1382,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:mage_frost:1280:7:resolver",
+              "caseId": "024f28d2ad18:mage_frost:1280:7:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1409,7 +1397,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:mage_frost:1280:7:commit",
+              "caseId": "024f28d2ad18:mage_frost:1280:7:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1424,7 +1412,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:mage_frost:1280:7:presentation",
+              "caseId": "024f28d2ad18:mage_frost:1280:7:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1441,7 +1429,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:mage_frost:1280:7:browser",
+              "caseId": "024f28d2ad18:mage_frost:1280:7:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1525,7 +1513,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:mage_arcane:1280:8:resolver",
+              "caseId": "024f28d2ad18:mage_arcane:1280:8:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1540,7 +1528,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:mage_arcane:1280:8:commit",
+              "caseId": "024f28d2ad18:mage_arcane:1280:8:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1555,7 +1543,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:mage_arcane:1280:8:presentation",
+              "caseId": "024f28d2ad18:mage_arcane:1280:8:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1572,7 +1560,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:mage_arcane:1280:8:browser",
+              "caseId": "024f28d2ad18:mage_arcane:1280:8:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1658,7 +1646,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:thief_poison:1280:9:resolver",
+              "caseId": "024f28d2ad18:thief_poison:1280:9:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1673,7 +1661,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:thief_poison:1280:9:commit",
+              "caseId": "024f28d2ad18:thief_poison:1280:9:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1688,7 +1676,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:thief_poison:1280:9:presentation",
+              "caseId": "024f28d2ad18:thief_poison:1280:9:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1705,7 +1693,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:thief_poison:1280:9:browser",
+              "caseId": "024f28d2ad18:thief_poison:1280:9:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1789,7 +1777,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:thief_execute:1280:10:resolver",
+              "caseId": "024f28d2ad18:thief_execute:1280:10:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1804,7 +1792,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:thief_execute:1280:10:commit",
+              "caseId": "024f28d2ad18:thief_execute:1280:10:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1819,7 +1807,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:thief_execute:1280:10:presentation",
+              "caseId": "024f28d2ad18:thief_execute:1280:10:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1836,7 +1824,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:thief_execute:1280:10:browser",
+              "caseId": "024f28d2ad18:thief_execute:1280:10:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1920,7 +1908,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:thief_combo:1280:11:resolver",
+              "caseId": "024f28d2ad18:thief_combo:1280:11:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1930,7 +1918,7 @@
               "mode": "atlas",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "71bd98e749fe:thief_combo:390:15:resolver",
+              "caseId": "024f28d2ad18:thief_combo:390:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1945,7 +1933,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:thief_combo:1280:11:commit",
+              "caseId": "024f28d2ad18:thief_combo:1280:11:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1955,7 +1943,7 @@
               "mode": "atlas",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "71bd98e749fe:thief_combo:390:15:commit",
+              "caseId": "024f28d2ad18:thief_combo:390:15:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1970,7 +1958,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:thief_combo:1280:11:presentation",
+              "caseId": "024f28d2ad18:thief_combo:1280:11:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -1980,7 +1968,7 @@
               "mode": "atlas",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "71bd98e749fe:thief_combo:390:15:presentation",
+              "caseId": "024f28d2ad18:thief_combo:390:15:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -1997,7 +1985,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:thief_combo:1280:11:browser",
+              "caseId": "024f28d2ad18:thief_combo:1280:11:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -2007,7 +1995,7 @@
               "mode": "atlas",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "71bd98e749fe:thief_combo:390:15:browser",
+              "caseId": "024f28d2ad18:thief_combo:390:15:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -2737,17 +2725,17 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:2:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:8:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "special:skill_02_1",
               "source": "committed-combat",
-              "eventCount": 2,
+              "eventCount": 1,
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:1280:3:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:9:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -2772,17 +2760,17 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:2:commit",
+              "caseId": "5ebeb8261ce7:pk:390:8:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "special:skill_02_1",
               "source": "committed-combat",
-              "eventCount": 2,
+              "eventCount": 1,
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:1280:3:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:9:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -2807,7 +2795,7 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:pk:390:2:presentation",
+              "caseId": "5ebeb8261ce7:pk:390:8:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -2817,7 +2805,7 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:pk:1280:3:presentation",
+              "caseId": "5ebeb8261ce7:pk:1280:9:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -2844,7 +2832,7 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:pk:390:2:browser",
+              "caseId": "5ebeb8261ce7:pk:390:8:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -2854,7 +2842,7 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:pk:1280:3:browser",
+              "caseId": "5ebeb8261ce7:pk:1280:9:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -3243,7 +3231,7 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:4:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:10:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -3253,7 +3241,7 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "84219350e113:pk:1280:0:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:11:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -3278,7 +3266,7 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:4:commit",
+              "caseId": "5ebeb8261ce7:pk:390:10:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -3288,7 +3276,7 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "84219350e113:pk:1280:0:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:11:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -3313,7 +3301,7 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:pk:390:4:presentation",
+              "caseId": "5ebeb8261ce7:pk:390:10:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -3323,7 +3311,7 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "84219350e113:pk:1280:0:presentation",
+              "caseId": "5ebeb8261ce7:pk:1280:11:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -3350,7 +3338,7 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:pk:390:4:browser",
+              "caseId": "5ebeb8261ce7:pk:390:10:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -3360,7 +3348,7 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "84219350e113:pk:1280:0:browser",
+              "caseId": "5ebeb8261ce7:pk:1280:11:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -3527,16 +3515,6 @@
               "evidenceKind": "engine-resolver-fixture",
               "caseId": "special:skill_03_1",
               "evidencePath": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json"
-            },
-            {
-              "skillId": "special:skill_03_1",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
         },
@@ -3680,10 +3658,8 @@
             ],
             "clock": "deterministic running projection or committed checkpoint; source remains explicit"
           },
-          "observedLayers": [
-            "resolver"
-          ],
-          "state": "local-observation-only"
+          "observedLayers": [],
+          "state": "not-individually-verified"
         }
       ],
       "production": "not-deployed-by-this-workstream"
@@ -3966,7 +3942,7 @@
               "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-support:390:4:resolver",
+              "caseId": "5ebeb8261ce7:idle-support:390:4:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -3976,7 +3952,7 @@
               "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-support:1280:5:resolver",
+              "caseId": "5ebeb8261ce7:idle-support:1280:5:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -4001,7 +3977,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-support:390:4:commit",
+              "caseId": "5ebeb8261ce7:idle-support:390:4:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4011,7 +3987,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-support:1280:5:commit",
+              "caseId": "5ebeb8261ce7:idle-support:1280:5:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -4036,7 +4012,7 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-support:390:4:presentation",
+              "caseId": "5ebeb8261ce7:idle-support:390:4:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4046,7 +4022,7 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-support:1280:5:presentation",
+              "caseId": "5ebeb8261ce7:idle-support:1280:5:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -4073,7 +4049,7 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-support:390:4:browser",
+              "caseId": "5ebeb8261ce7:idle-support:390:4:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4083,7 +4059,7 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-support:1280:5:browser",
+              "caseId": "5ebeb8261ce7:idle-support:1280:5:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -4889,7 +4865,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:390:4:resolver",
+              "caseId": "5ebeb8261ce7:party:390:6:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4899,27 +4875,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:1280:5:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "special:skill_05_1",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "special:skill_05_1",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:party:1280:7:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4929,7 +4885,7 @@
               "mode": "boss",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:boss:390:6:resolver",
+              "caseId": "5ebeb8261ce7:boss:390:12:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4939,7 +4895,27 @@
               "mode": "boss",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:boss:1280:7:resolver",
+              "caseId": "5ebeb8261ce7:boss:1280:13:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -4964,7 +4940,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:390:4:commit",
+              "caseId": "5ebeb8261ce7:party:390:6:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4974,7 +4950,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:1280:5:commit",
+              "caseId": "5ebeb8261ce7:party:1280:7:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4984,7 +4960,7 @@
               "mode": "boss",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:boss:390:6:commit",
+              "caseId": "5ebeb8261ce7:boss:390:12:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -4994,7 +4970,7 @@
               "mode": "boss",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:boss:1280:7:commit",
+              "caseId": "5ebeb8261ce7:boss:1280:13:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -5014,32 +4990,42 @@
             },
             {
               "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "eventCount": 1,
+              "mode": "boss",
+              "layer": "presentation",
+              "evidenceKind": "presentation",
+              "caseId": "5ebeb8261ce7:boss:390:12:presentation",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "eventCount": 1,
+              "mode": "boss",
+              "layer": "presentation",
+              "evidenceKind": "presentation",
+              "caseId": "5ebeb8261ce7:boss:1280:13:presentation",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
               "source": "deterministic-projection",
               "eventCount": 1,
               "mode": "star-ring",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:ring:1280:1:presentation",
+              "caseId": "5ebeb8261ce7:ring:390:14:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "special:skill_05_1",
-              "source": "committed-combat",
+              "source": "deterministic-projection",
               "eventCount": 1,
-              "mode": "boss",
+              "mode": "star-ring",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:boss:390:6:presentation",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "special:skill_05_1",
-              "source": "committed-combat",
-              "eventCount": 1,
-              "mode": "boss",
-              "layer": "presentation",
-              "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:boss:1280:7:presentation",
+              "caseId": "5ebeb8261ce7:ring:1280:15:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -5061,32 +5047,42 @@
             },
             {
               "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "eventCount": 1,
+              "mode": "boss",
+              "layer": "browser",
+              "evidenceKind": "browser-gameplay-api",
+              "caseId": "5ebeb8261ce7:boss:390:12:browser",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "eventCount": 1,
+              "mode": "boss",
+              "layer": "browser",
+              "evidenceKind": "browser-gameplay-api",
+              "caseId": "5ebeb8261ce7:boss:1280:13:browser",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_05_1",
               "source": "deterministic-projection",
               "eventCount": 1,
               "mode": "star-ring",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:ring:1280:1:browser",
+              "caseId": "5ebeb8261ce7:ring:390:14:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "special:skill_05_1",
-              "source": "committed-combat",
+              "source": "deterministic-projection",
               "eventCount": 1,
-              "mode": "boss",
+              "mode": "star-ring",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:boss:390:6:browser",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "special:skill_05_1",
-              "source": "committed-combat",
-              "eventCount": 1,
-              "mode": "boss",
-              "layer": "browser",
-              "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:boss:1280:7:browser",
+              "caseId": "5ebeb8261ce7:ring:1280:15:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -10897,22 +10893,12 @@
             },
             {
               "skillId": "special:skill_18_1",
-              "source": "deterministic-projection",
+              "source": "committed-combat",
               "eventCount": 1,
-              "mode": "star-ring",
+              "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "special:skill_18_1",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:idle-summon:390:2:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -10922,17 +10908,27 @@
               "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-summon:390:2:resolver",
+              "caseId": "5ebeb8261ce7:idle-summon:1280:3:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "special:skill_18_1",
-              "source": "committed-combat",
+              "source": "deterministic-projection",
               "eventCount": 1,
-              "mode": "idle",
+              "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-summon:1280:3:resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_18_1",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -10957,7 +10953,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-summon:390:2:commit",
+              "caseId": "5ebeb8261ce7:idle-summon:390:2:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -10967,7 +10963,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-summon:1280:3:commit",
+              "caseId": "5ebeb8261ce7:idle-summon:1280:3:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -10992,7 +10988,7 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-summon:390:2:presentation",
+              "caseId": "5ebeb8261ce7:idle-summon:390:2:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -11002,7 +10998,17 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-summon:1280:3:presentation",
+              "caseId": "5ebeb8261ce7:idle-summon:1280:3:presentation",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_18_1",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "presentation",
+              "evidenceKind": "presentation",
+              "caseId": "5ebeb8261ce7:ring:390:14:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -11029,7 +11035,7 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-summon:390:2:browser",
+              "caseId": "5ebeb8261ce7:idle-summon:390:2:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -11039,7 +11045,17 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-summon:1280:3:browser",
+              "caseId": "5ebeb8261ce7:idle-summon:1280:3:browser",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "special:skill_18_1",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "browser",
+              "evidenceKind": "browser-gameplay-api",
+              "caseId": "5ebeb8261ce7:ring:390:14:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -11143,9 +11159,11 @@
             "clock": "deterministic running projection or committed checkpoint; source remains explicit"
           },
           "observedLayers": [
-            "resolver"
+            "resolver",
+            "presentation",
+            "browser"
           ],
-          "state": "local-observation-only"
+          "state": "browser-observed"
         }
       ],
       "production": "not-deployed-by-this-workstream"
@@ -14506,7 +14524,7 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:2:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:8:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -14516,7 +14534,7 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:1280:3:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:9:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -14541,7 +14559,7 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:2:commit",
+              "caseId": "5ebeb8261ce7:pk:390:8:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -14551,7 +14569,7 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:1280:3:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:9:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -14576,7 +14594,7 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:pk:390:2:presentation",
+              "caseId": "5ebeb8261ce7:pk:390:8:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -14603,7 +14621,7 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:pk:390:2:browser",
+              "caseId": "5ebeb8261ce7:pk:390:8:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -16400,7 +16418,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:390:4:resolver",
+              "caseId": "5ebeb8261ce7:party:390:6:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -16410,7 +16428,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:1280:5:resolver",
+              "caseId": "5ebeb8261ce7:party:1280:7:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -16435,7 +16453,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:390:4:commit",
+              "caseId": "5ebeb8261ce7:party:390:6:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -16445,7 +16463,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:1280:5:commit",
+              "caseId": "5ebeb8261ce7:party:1280:7:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -16470,7 +16488,7 @@
               "mode": "party",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "c6c9c97395b6:party:390:4:presentation",
+              "caseId": "5ebeb8261ce7:party:390:6:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -16480,7 +16498,7 @@
               "mode": "party",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "c6c9c97395b6:party:1280:5:presentation",
+              "caseId": "5ebeb8261ce7:party:1280:7:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -16507,7 +16525,7 @@
               "mode": "party",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "c6c9c97395b6:party:390:4:browser",
+              "caseId": "5ebeb8261ce7:party:390:6:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -16517,7 +16535,7 @@
               "mode": "party",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "c6c9c97395b6:party:1280:5:browser",
+              "caseId": "5ebeb8261ce7:party:1280:7:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -20095,7 +20113,7 @@
               "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-native:390:0:resolver",
+              "caseId": "5ebeb8261ce7:idle-native:390:0:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -20105,7 +20123,7 @@
               "mode": "idle",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:idle-native:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:idle-native:1280:1:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -20130,7 +20148,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-native:390:0:commit",
+              "caseId": "5ebeb8261ce7:idle-native:390:0:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -20140,7 +20158,7 @@
               "mode": "idle",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:idle-native:1280:1:commit",
+              "caseId": "5ebeb8261ce7:idle-native:1280:1:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -20165,7 +20183,7 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-native:390:0:presentation",
+              "caseId": "5ebeb8261ce7:idle-native:390:0:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -20175,7 +20193,7 @@
               "mode": "idle",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:idle-native:1280:1:presentation",
+              "caseId": "5ebeb8261ce7:idle-native:1280:1:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -20202,7 +20220,7 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-native:390:0:browser",
+              "caseId": "5ebeb8261ce7:idle-native:390:0:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -20212,7 +20230,7 @@
               "mode": "idle",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:idle-native:1280:1:browser",
+              "caseId": "5ebeb8261ce7:idle-native:1280:1:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -22075,22 +22093,12 @@
             },
             {
               "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
+              "source": "committed-combat",
+              "eventCount": 2,
+              "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:8:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -22100,37 +22108,47 @@
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:2:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:9:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
               "source": "committed-combat",
-              "eventCount": 2,
+              "eventCount": 23,
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:1280:3:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:10:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
               "source": "committed-combat",
-              "eventCount": 27,
+              "eventCount": 25,
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:4:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:11:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
-              "source": "committed-combat",
-              "eventCount": 27,
-              "mode": "pk",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "84219350e113:pk:1280:0:resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -22155,7 +22173,7 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:2:commit",
+              "caseId": "5ebeb8261ce7:pk:390:8:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -22165,27 +22183,27 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:1280:3:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:9:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
               "source": "committed-combat",
-              "eventCount": 27,
+              "eventCount": 23,
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:4:commit",
+              "caseId": "5ebeb8261ce7:pk:390:10:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
               "source": "committed-combat",
-              "eventCount": 27,
+              "eventCount": 25,
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "84219350e113:pk:1280:0:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:11:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -22205,22 +22223,12 @@
             },
             {
               "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
+              "source": "committed-combat",
               "eventCount": 1,
-              "mode": "star-ring",
+              "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:ring:390:0:presentation",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "presentation",
-              "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:ring:1280:1:presentation",
+              "caseId": "5ebeb8261ce7:pk:1280:9:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -22230,17 +22238,17 @@
               "mode": "pk",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:pk:1280:3:presentation",
+              "caseId": "5ebeb8261ce7:pk:1280:11:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
-              "source": "committed-combat",
+              "source": "deterministic-projection",
               "eventCount": 1,
-              "mode": "pk",
+              "mode": "star-ring",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "84219350e113:pk:1280:0:presentation",
+              "caseId": "5ebeb8261ce7:ring:1280:15:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -22262,22 +22270,12 @@
             },
             {
               "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
+              "source": "committed-combat",
               "eventCount": 1,
-              "mode": "star-ring",
+              "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:ring:390:0:browser",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:sword:B111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "browser",
-              "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:ring:1280:1:browser",
+              "caseId": "5ebeb8261ce7:pk:1280:9:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -22287,17 +22285,17 @@
               "mode": "pk",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:pk:1280:3:browser",
+              "caseId": "5ebeb8261ce7:pk:1280:11:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:sword:B111",
-              "source": "committed-combat",
+              "source": "deterministic-projection",
               "eventCount": 1,
-              "mode": "pk",
+              "mode": "star-ring",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "84219350e113:pk:1280:0:browser",
+              "caseId": "5ebeb8261ce7:ring:1280:15:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -25349,7 +25347,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:390:4:resolver",
+              "caseId": "5ebeb8261ce7:party:390:6:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -25359,7 +25357,7 @@
               "mode": "party",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "c6c9c97395b6:party:1280:5:resolver",
+              "caseId": "5ebeb8261ce7:party:1280:7:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -25384,7 +25382,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:390:4:commit",
+              "caseId": "5ebeb8261ce7:party:390:6:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -25394,7 +25392,7 @@
               "mode": "party",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "c6c9c97395b6:party:1280:5:commit",
+              "caseId": "5ebeb8261ce7:party:1280:7:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -25419,7 +25417,7 @@
               "mode": "party",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "c6c9c97395b6:party:390:4:presentation",
+              "caseId": "5ebeb8261ce7:party:390:6:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -25429,7 +25427,7 @@
               "mode": "party",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "c6c9c97395b6:party:1280:5:presentation",
+              "caseId": "5ebeb8261ce7:party:1280:7:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -25456,7 +25454,7 @@
               "mode": "party",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "c6c9c97395b6:party:390:4:browser",
+              "caseId": "5ebeb8261ce7:party:390:6:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -25466,7 +25464,7 @@
               "mode": "party",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "c6c9c97395b6:party:1280:5:browser",
+              "caseId": "5ebeb8261ce7:party:1280:7:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -27814,7 +27812,17 @@
               "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "native:archer:A111",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -35187,22 +35195,12 @@
             },
             {
               "skillId": "native:mage:A111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
+              "source": "committed-combat",
+              "eventCount": 4,
+              "mode": "boss",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:mage:A111",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:boss:390:12:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -35212,17 +35210,27 @@
               "mode": "boss",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:boss:390:6:resolver",
+              "caseId": "5ebeb8261ce7:boss:1280:13:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:mage:A111",
-              "source": "committed-combat",
-              "eventCount": 4,
-              "mode": "boss",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d42edfa2100d:boss:1280:7:resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "source": "deterministic-projection",
+              "eventCount": 1,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -35247,7 +35255,7 @@
               "mode": "boss",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:boss:390:6:commit",
+              "caseId": "5ebeb8261ce7:boss:390:12:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -35257,7 +35265,7 @@
               "mode": "boss",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d42edfa2100d:boss:1280:7:commit",
+              "caseId": "5ebeb8261ce7:boss:1280:13:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -35282,7 +35290,7 @@
               "mode": "boss",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:boss:390:6:presentation",
+              "caseId": "5ebeb8261ce7:boss:390:12:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -35292,7 +35300,7 @@
               "mode": "boss",
               "layer": "presentation",
               "evidenceKind": "presentation",
-              "caseId": "d42edfa2100d:boss:1280:7:presentation",
+              "caseId": "5ebeb8261ce7:boss:1280:13:presentation",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -35319,7 +35327,7 @@
               "mode": "boss",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:boss:390:6:browser",
+              "caseId": "5ebeb8261ce7:boss:390:12:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -35329,7 +35337,7 @@
               "mode": "boss",
               "layer": "browser",
               "evidenceKind": "browser-gameplay-api",
-              "caseId": "d42edfa2100d:boss:1280:7:browser",
+              "caseId": "5ebeb8261ce7:boss:1280:13:browser",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -38153,7 +38161,7 @@
               "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
@@ -38163,7 +38171,7 @@
               "mode": "star-ring",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -43660,42 +43668,42 @@
             },
             {
               "skillId": "native:thief:A211",
-              "source": "deterministic-projection",
-              "eventCount": 2,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:390:0:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:thief:A211",
-              "source": "deterministic-projection",
-              "eventCount": 2,
-              "mode": "star-ring",
-              "layer": "resolver",
-              "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:ring:1280:1:resolver",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
-            },
-            {
-              "skillId": "native:thief:A211",
               "source": "committed-combat",
               "eventCount": 3,
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:390:2:resolver",
+              "caseId": "5ebeb8261ce7:pk:390:8:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:thief:A211",
               "source": "committed-combat",
-              "eventCount": 3,
+              "eventCount": 1,
               "mode": "pk",
               "layer": "resolver",
               "evidenceKind": "real-resolver",
-              "caseId": "d1492c432eae:pk:1280:3:resolver",
+              "caseId": "5ebeb8261ce7:pk:1280:9:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "source": "deterministic-projection",
+              "eventCount": 2,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:390:14:resolver",
+              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "source": "deterministic-projection",
+              "eventCount": 2,
+              "mode": "star-ring",
+              "layer": "resolver",
+              "evidenceKind": "real-resolver",
+              "caseId": "5ebeb8261ce7:ring:1280:15:resolver",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -43720,17 +43728,17 @@
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:390:2:commit",
+              "caseId": "5ebeb8261ce7:pk:390:8:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             },
             {
               "skillId": "native:thief:A211",
               "source": "committed-combat",
-              "eventCount": 3,
+              "eventCount": 1,
               "mode": "pk",
               "layer": "commit",
               "evidenceKind": "committed-api",
-              "caseId": "d1492c432eae:pk:1280:3:commit",
+              "caseId": "5ebeb8261ce7:pk:1280:9:commit",
               "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
@@ -43747,23 +43755,13 @@
               "evidenceKind": "presentation",
               "caseId": "native:thief:A211",
               "evidencePath": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json"
-            },
-            {
-              "skillId": "native:thief:A211",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "presentation",
-              "evidenceKind": "presentation",
-              "caseId": "d1492c432eae:ring:390:0:presentation",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
         },
         "browser": {
           "observed": true,
           "controlledReplayObserved": true,
-          "gameplayObserved": true,
+          "gameplayObserved": false,
           "cases": [
             {
               "skillId": "native:thief:A211",
@@ -43774,16 +43772,6 @@
               "evidenceKind": "browser-receipt-replay",
               "caseId": "native:thief:A211:desktop",
               "evidencePath": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json"
-            },
-            {
-              "skillId": "native:thief:A211",
-              "source": "deterministic-projection",
-              "eventCount": 1,
-              "mode": "star-ring",
-              "layer": "browser",
-              "evidenceKind": "browser-gameplay-api",
-              "caseId": "d1492c432eae:ring:390:0:browser",
-              "evidencePath": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
             }
           ]
         }
@@ -43888,11 +43876,9 @@
             "clock": "deterministic running projection or committed checkpoint; source remains explicit"
           },
           "observedLayers": [
-            "resolver",
-            "presentation",
-            "browser"
+            "resolver"
           ],
-          "state": "browser-observed"
+          "state": "local-observation-only"
         }
       ],
       "production": "not-deployed-by-this-workstream"
@@ -47841,7 +47827,7 @@
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
-      "generatedAt": "2026-11-04T07:48:05.170Z",
+      "generatedAt": "2026-11-04T10:32:33.224Z",
       "sourceFiles": [
         {
           "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
@@ -47853,7 +47839,7 @@
         },
         {
           "path": "worker/public/skill-vfx-engine.mjs",
-          "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+          "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
         },
         {
           "path": "worker/public/skill-vfx-legacy.mjs",
@@ -47872,7 +47858,7 @@
     },
     {
       "path": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
-      "generatedAt": "2026-11-04T07:53:04.709Z",
+      "generatedAt": "2026-11-04T10:33:24.574Z",
       "sourceFiles": [
         {
           "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
@@ -47932,7 +47918,7 @@
         },
         {
           "path": "worker/public/skill-vfx-engine.mjs",
-          "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+          "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
         },
         {
           "path": "worker/public/skill-vfx-legacy.mjs",
@@ -47991,27 +47977,15 @@
     },
     {
       "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
-      "generatedAt": "2026-11-04T08:24:08.351Z",
+      "generatedAt": "2026-11-04T10:46:20.116Z",
       "sourceFiles": [
         {
-          "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
-          "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241"
+          "path": ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+          "sha256": "74d0ec5b241b78f7a558f147b79159e9e9938c89347a4dab85c0198e660a1580"
         },
         {
-          "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
-          "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc"
-        },
-        {
-          "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
-          "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade"
-        },
-        {
-          "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
-          "sha256": "b92ec412dbb565ceff9b83f3297d9fa0998f3d003b2bf6b600a2bde8e90be6b4"
-        },
-        {
-          "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
-          "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf"
+          "path": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+          "sha256": "d0586c9c909d22ef581330aa50f064cb469a8f93cd31e04b72a4d587c998d0b3"
         },
         {
           "path": "worker/public/app.js",
@@ -48059,7 +48033,7 @@
         },
         {
           "path": "worker/public/skill-vfx-engine.mjs",
-          "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+          "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
         },
         {
           "path": "worker/public/skill-vfx-legacy.mjs",

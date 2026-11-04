@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T11:02:15.988Z",
+  "status": "passed",
+  "scope": "Portable evidence for the multi-target rendering and contact-timing presentation delta; this archive did not rerun browser or gameplay tests.",
+  "baseCommit": "ccedf3545cbef4bdc66b949aad077ef6d2ea44fa",
+  "engineSha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+  "coverage": {
+    "path": "worker/public/skill-vfx-coverage.json",
+    "sha256": "b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e",
+    "summary": {
+      "implementedIdentities": 196,
+      "visualFamilies": 28,
+      "bySystem": {
+        "native": 124,
+        "special": 60,
+        "atlas": 12
+      },
+      "immediateDamageIdentities": 171,
+      "nonDirectCastIdentities": 25,
+      "recipePresent": 196,
+      "resolverObserved": 196,
+      "committedEventObserved": 196,
+      "presentationObserved": 196,
+      "browserObserved": 196,
+      "controlledBrowserReplayObserved": 184,
+      "gameplayBrowserObserved": 23,
+      "resolverAndPresentationObserved": 196,
+      "plannedExcluded": 16,
+      "supports": 6,
+      "allocatableTalents": 120,
+      "origins": 4
+    }
+  },
+  "currentChecks": {
+    "engine": {
+      "report": ".release-sync/skill-vfx-targets-20261104/engine-final-focused-agent.json",
+      "tap": ".release-sync/skill-vfx-targets-20261104/engine-final-focused-agent.tap",
+      "tests": 23,
+      "pass": 23,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "sourceStable": true
+    },
+    "targetsTiming": {
+      "report": ".release-sync/skill-vfx-targets-20261104/targets-timing-final.json",
+      "tap": ".release-sync/skill-vfx-targets-20261104/targets-timing-final.tap",
+      "tests": 20,
+      "pass": 20,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "exitCode": 0,
+      "sourceStable": true
+    },
+    "targetedWorkshop": {
+      "report": ".release-sync/skill-vfx-targets-20261104/target-browser/results.json",
+      "cases": 48,
+      "controls": 12,
+      "screenshotChecks": 6,
+      "status": "passed"
+    },
+    "fullWorkshop": {
+      "report": ".release-sync/skill-vfx-targets-20261104/workshop-final/results.json",
+      "catalogSkills": 196,
+      "directionCases": 784,
+      "phaseEntries": 12,
+      "phasesPerEntry": 3,
+      "phaseProgress": [
+        0.18,
+        0.5,
+        0.82
+      ],
+      "phaseSamples": 36,
+      "phaseCountingNote": "12 representative-skill entries, each containing 3 phase samples; not 36 independent cases.",
+      "mobileCases": 16,
+      "uiChecks": 14,
+      "status": "passed"
+    },
+    "identityReplay": {
+      "report": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/identity-browser/results.json",
+      "identities": 184,
+      "uniqueIdentities": 184,
+      "visualFamilies": 26,
+      "phoneCases": 8,
+      "reducedMotionCases": 4,
+      "pageErrors": 0,
+      "httpErrors": 0,
+      "actualAnimatedDraw": true,
+      "allCleaned": true,
+      "screenshots": 40,
+      "changedSources": []
+    },
+    "gameplay": {
+      "legacyReport": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+      "legacyCases": 16,
+      "legacyPassedField": "cases[].status === passed; all case/global errors and badResponses empty",
+      "atlasReport": ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+      "atlasCases": 16,
+      "atlasPassedField": "cases[].passed === true",
+      "actualApiUiCases": 32,
+      "uniqueGameplayIdentities": 23
+    },
+    "fiveTargetCommitted": {
+      "report": ".release-sync/skill-vfx-targets-20261104/five-target/results.json",
+      "execution": ".release-sync/skill-vfx-targets-20261104/five-target/execution.json",
+      "seed": 2,
+      "mapId": "pillar_survey",
+      "encounterId": "ambush",
+      "targets": 5,
+      "hits": 5,
+      "observerOffIdentical": true,
+      "unpublishedBeforeCommit": true,
+      "sourceInputsUnchanged": true
+    },
+    "fiveTargetControlledReplay": {
+      "report": ".release-sync/skill-vfx-targets-20261104/five-target-replay/results.json",
+      "cases": [
+        {
+          "name": "desktop",
+          "pass": true,
+          "frames": 69,
+          "targetIds": [
+            "0:0:0",
+            "0:0:1",
+            "0:0:2",
+            "0:0:3",
+            "0:0:4"
+          ],
+          "snapshots": [
+            {
+              "label": "all-five-confirmed-contacts-real-RAF",
+              "atMs": 889.2000000029802,
+              "frame": 44,
+              "file": "desktop-raf-all-five.png",
+              "bytes": 74420,
+              "sha256": "db2a8c81a1ed5b79a9354fec9fa62980df5ccba06af5eb41543ea1a4de369417",
+              "capture": "Actual canvas pixels captured in the real player onRender callback; no seek or manual frame override."
+            }
+          ]
+        },
+        {
+          "name": "phone",
+          "pass": true,
+          "frames": 77,
+          "targetIds": [
+            "0:0:0",
+            "0:0:1",
+            "0:0:2",
+            "0:0:3",
+            "0:0:4"
+          ],
+          "snapshots": [
+            {
+              "label": "all-five-confirmed-contacts-real-RAF",
+              "atMs": 856.5,
+              "frame": 48,
+              "file": "phone-raf-all-five.png",
+              "bytes": 37978,
+              "sha256": "b3743a8a59be5ab546fe859b234faa1db4c6fc90deb16c9f7f32e8d8df22d001",
+              "capture": "Actual canvas pixels captured in the real player onRender callback; no seek or manual frame override."
+            }
+          ]
+        }
+      ],
+      "receiptUnchanged": true
+    },
+    "controlledVisualFrames": {
+      "report": ".release-sync/skill-vfx-targets-20261104/visual-final/report.json",
+      "phaseFrames": 12,
+      "wholeWorkshopFrames": 4,
+      "archivedStageImages": [
+        ".release-sync/skill-vfx-targets-20261104/visual-final/1280-volley-74-stage.png",
+        ".release-sync/skill-vfx-targets-20261104/visual-final/1280-chain-67-stage.png",
+        ".release-sync/skill-vfx-targets-20261104/visual-final/390-volley-74-stage.png",
+        ".release-sync/skill-vfx-targets-20261104/visual-final/390-chain-67-stage.png"
+      ],
+      "sourceStable": true
+    },
+    "protectedSources": {
+      "report": ".release-sync/skill-vfx-targets-20261104/protected-source-check.json",
+      "matched": 153,
+      "total": 153,
+      "gitSnapshot": "precommit; report preserves the status and attributes observed at capture time"
+    },
+    "deltaExecution": {
+      "report": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/execution.json",
+      "steps": [
+        {
+          "id": "catalog-check",
+          "exitCode": 0,
+          "durationMs": 216
+        },
+        {
+          "id": "recipes-build",
+          "exitCode": 0,
+          "durationMs": 90
+        },
+        {
+          "id": "recipes-check",
+          "exitCode": 0,
+          "durationMs": 80
+        },
+        {
+          "id": "presentation",
+          "exitCode": 0,
+          "durationMs": 160
+        },
+        {
+          "id": "identity",
+          "exitCode": 0,
+          "durationMs": 51522
+        },
+        {
+          "id": "gameplay",
+          "exitCode": 0,
+          "durationMs": 123963
+        }
+      ],
+      "sourceChanges": []
+    },
+    "rootBrowserExecution": {
+      "report": ".release-sync/skill-vfx-targets-20261104/root-browser-execution.json",
+      "steps": [
+        {
+          "name": "workshop-full-final",
+          "exitCode": 0
+        },
+        {
+          "name": "atlas-live-final",
+          "exitCode": 0
+        }
+      ],
+      "sourceStable": true
+    },
+    "finalValidationExecution": {
+      "report": ".release-sync/skill-vfx-targets-20261104/final-validation-execution.json",
+      "steps": [
+        {
+          "name": "target-browser-capture-fixed",
+          "args": [
+            "worker/tools/skill-vfx-target-browser.cjs"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "error": null,
+          "durationMs": 16905
+        },
+        {
+          "name": "normalize",
+          "args": [
+            "worker/tools/build-skill-vfx-browser-evidence.mjs",
+            "--gameplay=.release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+            "--atlas=.release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+            "--out=.release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "error": null,
+          "durationMs": 147
+        },
+        {
+          "name": "coverage-build",
+          "args": [
+            "worker/tools/build-skill-vfx-coverage.mjs",
+            "--require-legacy-completion"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "error": null,
+          "durationMs": 239
+        },
+        {
+          "name": "coverage-check",
+          "args": [
+            "worker/tools/build-skill-vfx-coverage.mjs",
+            "--check",
+            "--require-legacy-completion"
+          ],
+          "exitCode": 0,
+          "signal": null,
+          "error": null,
+          "durationMs": 216
+        }
+      ]
+    }
+  },
+  "historicalEvidence": {
+    "targetTimingBaseline": {
+      "report": ".release-sync/skill-vfx-targets-20261104/targets-timing-baseline.json",
+      "tap": ".release-sync/skill-vfx-targets-20261104/targets-timing-baseline.tap",
+      "tests": 20,
+      "pass": 2,
+      "fail": 18,
+      "cancelled": 0,
+      "skipped": 0,
+      "classification": "Expected failing baseline on old renderer; not current passing evidence"
+    },
+    "targetTimingIntermediate": {
+      "report": ".release-sync/skill-vfx-targets-20261104/targets-timing-post-fix.json",
+      "tap": ".release-sync/skill-vfx-targets-20261104/targets-timing-post-fix.tap",
+      "tests": 20,
+      "pass": 19,
+      "fail": 1,
+      "cancelled": 0,
+      "skipped": 0,
+      "classification": "Intermediate candidate; original result retained without rewriting"
+    },
+    "previousCanonicalReceipts": {
+      "index": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/index.json",
+      "count": 5,
+      "classification": "Original raw bytes copied before canonical updates"
+    },
+    "browserCaptureHistory": {
+      "reports": [
+        ".release-sync/skill-vfx-targets-20261104/target-browser-initial/results.json",
+        ".release-sync/skill-vfx-targets-20261104/target-browser-before-capture-fix/results.json"
+      ],
+      "classification": "Earlier capture/selector states; not current final browser results"
+    }
+  },
+  "limitations": [
+    "Coverage distinguishes recipe, resolver, committed event, presentation and browser layers. The 184 identity browser observations are controlled receipt replay; 23 unique identities are supported by 32 actual local API/UI cases.",
+    "The five-target fixture uses a synthetic Lv45 character and prerequisite clears in disposable SQLite. Configure/start/settle, encounter selection and hits are real unchanged game code. Its browser proof is controlled receipt replay, not a full five-enemy MiniApp UI run.",
+    "Five-target replay uses controlled admission time and target coordinates, with real requestAnimationFrame and Canvas drawing. Its two PNGs were captured from real player render callbacks.",
+    "Visual-final phase screenshots are controlled manual workshop frames, not live combat evidence. Only four selected stage PNGs are archived, plus the two real-RAF five-target replay PNGs; other report-referenced screenshots remain outside this portable selection.",
+    "Desktop Chrome and phone-sized viewports do not constitute Telegram physical-device or mobile GPU performance validation.",
+    "Historical receipts and intermediate failing checks preserve their original sources and results. They are not relabelled as evidence for the new renderer.",
+    "Protected-source and orchestration Git metadata are precommit observations. This package does not claim a commit, PR merge or deployment."
+  ],
+  "restore": {
+    "command": "node docs/skill-vfx-targets-20261104/restore-evidence.cjs",
+    "upgradeKnownCommand": "node docs/skill-vfx-targets-20261104/restore-evidence.cjs --upgrade-known",
+    "default": "Create missing files and verify identical existing files only. Refuse all unknown differing bytes before writing.",
+    "explicitUpgrade": "Only the indexed known previous hashes of the five canonical evidence paths may be replaced.",
+    "requiredCoveragePaths": [
+      ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+      ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json"
+    ]
+  }
+}

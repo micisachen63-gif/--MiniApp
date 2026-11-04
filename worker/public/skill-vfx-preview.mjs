@@ -6,7 +6,7 @@ const KIND={attack:'攻擊',heal:'治療',shield:'防護',buff:'增益',control:
 const FAMILY={slash:'弧光斬擊',whirlwind:'環形旋斬',bleed:'裂傷刀光',shield:'防護結界',counter:'盾鋒反擊',pierce:'穿透彈道',volley:'扇形連射',rain:'天降箭雨',snipe:'蓄勢狙擊',beast:'靈獸協擊',summon:'召喚契約',trap:'棘網引爆',lightning:'連鎖雷電',frost:'冰晶脈衝',fireball:'火球爆破',meteor:'隕石墜擊',arcane:'奧術聚束',beam:'秘法光束',heal:'生命回流',holy:'神聖光柱',buff:'強化光環',poison:'淬毒殘響',execute:'交叉處決',combo:'三重刃影',dash:'突進斬擊',shadow:'暗影殘像',time:'時空法環',curse:'咒印擴散'};
 const SYMBOL={sword:'⚔',archer:'⌁',mage:'✦',thief:'⟡'};
 const canvas=$('[data-vfx-canvas]'),stage=$('[data-stage]'),loading=$('[data-loading]');
-let catalog,player,selected,classFilter='sword',systemFilter='all',search='',direction='right',progress=.58,quality='high',bodyHeight=130,layout={},playing=false,frame=0,startTime=0,loopWait=0,selectionEpoch=0,ready=false,destroyed=false,resizeObserver;
+let catalog,player,selected,classFilter='sword',systemFilter='all',search='',direction='right',targetCount=1,progress=.58,quality='high',bodyHeight=130,layout={},playing=false,frame=0,startTime=0,loopWait=0,selectionEpoch=0,ready=false,destroyed=false,resizeObserver;
 let resolveReady,rejectReady;const readyPromise=new Promise((resolve,reject)=>{resolveReady=resolve;rejectReady=reject;});
 function error(message){const el=$('[data-error]');el.textContent=message;el.hidden=false;}
 function clearError(){$('[data-error]').hidden=true;}
@@ -27,10 +27,16 @@ function renderList(){
 function placeMarkers(){
  const w=stage.clientWidth,h=stage.clientHeight,angle={right:0,left:Math.PI,up:-Math.PI/2,down:Math.PI/2}[direction];
  bodyHeight=w<500?88:132;const distance=Math.min(w*.43,h*.43),cx=w*.5,cy=h*.49;
- layout={from:{x:cx-Math.cos(angle)*distance*.5,y:cy-Math.sin(angle)*distance*.5},to:{x:cx+Math.cos(angle)*distance*.5,y:cy+Math.sin(angle)*distance*.5}};
- const caster=$('[data-caster-marker]'),target=$('[data-target-marker]');
- for(const [node,p] of [[caster,layout.from],[target,layout.to]]){node.style.left=p.x+'px';node.style.top=p.y+'px';node.style.width=bodyHeight*.5+'px';node.style.height=bodyHeight*.7+'px';}
- target.style.opacity=selected&&recipeFor(selected).support?'.27':'1';
+ const from={x:cx-Math.cos(angle)*distance*.5,y:cy-Math.sin(angle)*distance*.5},to={x:cx+Math.cos(angle)*distance*.5,y:cy+Math.sin(angle)*distance*.5};
+ const support=selected&&recipeFor(selected).support,count=support?1:targetCount;
+ const crossSize=Math.abs(Math.cos(angle))>.5?h:w,spacing=Math.min(bodyHeight*.62,(crossSize-144)/Math.max(1,count-1));
+ const targets=[0,-1,1,-2,2].slice(0,count).map(offset=>({x:to.x-Math.sin(angle)*offset*spacing,y:to.y+Math.cos(angle)*offset*spacing}));
+ layout={from,to,targets};stage.dataset.previewTargets=String(count);
+ const caster=$('[data-caster-marker]');caster.style.left=from.x+'px';caster.style.top=from.y+'px';caster.style.width=bodyHeight*.5+'px';caster.style.height=bodyHeight*.7+'px';
+ const markers=$$('[data-target-marker]');
+ while(markers.length<count){const marker=markers[0].cloneNode(true);stage.insertBefore(marker,canvas);markers.push(marker);}
+ markers.forEach((node,index)=>{node.hidden=index>=count;if(node.hidden)return;const p=targets[index];node.style.left=p.x+'px';node.style.top=p.y+'px';node.style.width=bodyHeight*.5+'px';node.style.height=bodyHeight*(count>1?.42:.7)+'px';node.style.opacity=support?'.27':'1';node.querySelector('small').textContent=count===1?'試煉晶核':'晶核 '+(index+1);});
+ const control=$('[data-target-count]');control.value=String(support?1:targetCount);control.disabled=!!support;control.title=support?'此技能作用於自身':'切換展示靶標，不改變技能規則';
  text('[data-scale-label]',bodyHeight+' px · 四向等比');setPressed('[data-direction]','direction');
 }
 function effectOptions(extra={}){return {skillId:selected.id,...layout,bodyHeight,direction,quality,seed:selected.id,showcaseTargets:false,blendMode:['light','checker'].includes(stage.dataset.background)?'source-over':'screen',...extra};}
@@ -47,6 +53,7 @@ async function selectSkill(id){
  try{await player.prepare(skill.baseClass);if(destroyed||epoch!==selectionEpoch)return{accepted:false,reason:'superseded'};loading.hidden=true;return await seek(.58);}catch(e){if(epoch===selectionEpoch){loading.textContent='素材尚未就緒，請稍後重新載入。';error(e.message);}return{accepted:false,reason:'asset_failed'};}
 }
 async function setDirection(value){if(!['up','down','left','right'].includes(value))return{accepted:false,reason:'invalid_direction'};direction=value;stopPlayback();placeMarkers();return seek(progress);}
+async function setTargetCount(value){const count=Number(value);if(![1,3,5].includes(count))return{accepted:false,reason:'invalid_target_count'};targetCount=count;stopPlayback();placeMarkers();return seek(progress);}
 async function play(){
  if(!player||!selected||destroyed||document.hidden)return{accepted:false,reason:'not_ready'};stopPlayback();const epoch=selectionEpoch;clearError();
  const result=await player.play(effectOptions());if(!result.accepted)return result;if(epoch!==selectionEpoch)return{accepted:false,reason:'superseded'};
@@ -65,10 +72,10 @@ function showAudit(type){if(!catalog)return;const content=$('[data-audit-content
  else{text('[data-audit-title]','覺醒技能規劃');text('[data-audit-description]','以下 16 招仍屬設計提案，尚無實裝的伺服器技能身份，因此未計入 196 筆技能映射，也不列為已完成動畫。');for(const base of Object.keys(CLASS)){content.append(el('h3','audit-class-title',CLASS[base]));const grid=el('div','audit-grid');for(const s of catalog.planned.filter(s=>s.baseClass===base))grid.append(buildAuditCard(s));content.append(grid);}}
  $('[data-audit-dialog]').showModal();
 }
-function inspect(){return{ready,selectedSkillId:selected?.id,skillId:selected?.id,direction,progress,bodyHeight,layout,playing,skillCount:catalog?.skills.length||0,catalogIds:catalog?.skills.map(s=>s.id)||[],recipe:selected?recipeFor(selected):null,player:player?.stats(),canvasSelector:'[data-vfx-canvas]',error:$('[data-error]').hidden?null:$('[data-error]').textContent};}
+function inspect(){return{ready,selectedSkillId:selected?.id,skillId:selected?.id,direction,targetCount,effectiveTargetCount:layout.targets?.length||0,progress,bodyHeight,layout,playing,skillCount:catalog?.skills.length||0,catalogIds:catalog?.skills.map(s=>s.id)||[],recipe:selected?recipeFor(selected):null,player:player?.stats(),canvasSelector:'[data-vfx-canvas]',error:$('[data-error]').hidden?null:$('[data-error]').textContent};}
 function destroy(){if(destroyed)return;stopPlayback();destroyed=true;ready=false;selectionEpoch++;resizeObserver?.disconnect();document.removeEventListener('visibilitychange',visibility);window.removeEventListener('pagehide',destroy);player?.destroy();}
 function visibility(){if(document.hidden){stopPlayback();$('[data-loop]').checked=false;}}
-window.__VFX_PREVIEW__={ready:readyPromise,selectSkill,setDirection,seek,play,inspect,destroy};
+window.__VFX_PREVIEW__={ready:readyPromise,selectSkill,setDirection,setTargetCount,seek,play,inspect,destroy};
 async function init(){
  const response=await fetch('/skill-vfx-catalog.json');if(!response.ok)throw new Error('無法載入技能目錄 ('+response.status+')');catalog=await response.json();validateCatalog(catalog);text('[data-total]',catalog.skills.length);
  player=createVfxPlayer(canvas,{catalog,quality,onRender:stats=>{text('[data-render-state]',stats.active?'播放中':'可逐幀檢視');},onError:e=>{if(!destroyed)error(e.message);}});
@@ -77,6 +84,7 @@ async function init(){
  $('[data-search]').addEventListener('input',e=>{search=e.target.value;renderList();});$('[data-skill-select]').addEventListener('change',e=>selectSkill(e.target.value));
  $$('[data-direction]').forEach(button=>button.addEventListener('click',()=>setDirection(button.dataset.direction)));
  $('[data-play]').addEventListener('click',()=>play());$('[data-pause]').addEventListener('click',()=>seek(progress));$('[data-step]').addEventListener('click',()=>seek(Math.min(1,progress+1000/30/recipeFor(selected).durationMs)));$('[data-progress]').addEventListener('input',e=>seek(Number(e.target.value)/1000));
+ $('[data-target-count]').addEventListener('change',e=>setTargetCount(e.target.value));
  $('[data-bg]').addEventListener('change',e=>{stage.dataset.background=e.target.value;seek(progress);});$('[data-quality]').addEventListener('change',e=>{quality=e.target.value;seek(progress);});
  $$('[data-audit]').forEach(b=>b.addEventListener('click',()=>showAudit(b.dataset.audit)));$('[data-close-dialog]').addEventListener('click',()=>$('[data-audit-dialog]').close());
  document.addEventListener('visibilitychange',visibility);window.addEventListener('pagehide',destroy);

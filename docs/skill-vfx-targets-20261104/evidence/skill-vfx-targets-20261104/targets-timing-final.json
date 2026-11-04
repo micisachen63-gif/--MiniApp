@@ -1,0 +1,23 @@
+{
+  "kind": "final-focused-target-timing",
+  "startedAt": "2026-11-04T10:28:02.489Z",
+  "finishedAt": "2026-11-04T10:28:02.835Z",
+  "exitCode": 0,
+  "before": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/test/skill-vfx-target-timing.test.js": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+  },
+  "after": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/test/skill-vfx-target-timing.test.js": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+  },
+  "sourceStable": true,
+  "tap": ".release-sync/skill-vfx-targets-20261104/targets-timing-final.tap",
+  "baseline": ".release-sync/skill-vfx-targets-20261104/targets-timing-baseline.json",
+  "priorCandidate": ".release-sync/skill-vfx-targets-20261104/targets-timing-post-fix.json",
+  "testClarification": "The first post-fix run 19/20 failed because a travelling lightning line endpoint was classified as a landed hit. The final assertion checks only actual impact rings for off-target hits; target completeness still uses ring/line endpoint contacts, and explicitly empty target lists still forbid any arc or hit.",
+  "scope": "32 is the presentation adapter safety boundary, not a gameplay skill target cap. Only this new test file was run.",
+  "error": null
+}
