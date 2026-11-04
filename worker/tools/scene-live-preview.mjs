@@ -31,6 +31,7 @@ const origin = `http://127.0.0.1:${port}`;
 const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${apiPort}/app/api/`, accountId: '90101', realmId: 'permanent' };
 const injected = `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
+const buttonMaterialPrefix = '/ui/button-materials/';
 const virtualSocial = new Set([
   'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js',
   'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
@@ -64,10 +65,10 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
-    if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath)) {
+    if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!requestPath.startsWith(buttonMaterialPrefix) && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
       res.writeHead(404); res.end('Asset not found'); return;
     }
-    const bound = await composeResponse(requestPath, grokRoot);
+    const bound = requestPath.startsWith(buttonMaterialPrefix) ? null : await composeResponse(requestPath, grokRoot);
     if (bound) {
       let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injected).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
       if(bound.type.startsWith('text/html'))body=body.replace('<script src="'+socialPrefix+'scene-social-preview.js"></script>','<script src="'+socialPrefix+'scene-window-manager.js"></script><script src="'+socialPrefix+'scene-social-preview.js"></script>');
@@ -76,7 +77,8 @@ const server = http.createServer(async (req, res) => {
       res.end(req.method === 'HEAD' ? undefined : body); return;
     }
     let file;
-    if (requestPath.startsWith(socialPrefix)) {
+    if (requestPath.startsWith(buttonMaterialPrefix)) file = await realFile(publicRoot, requestPath.slice(1));
+    else if (requestPath.startsWith(socialPrefix)) {
       const name = requestPath.slice(socialPrefix.length);
       if (virtualSocial.has(name)) file = await realFile(publicRoot, name);
       else if (angelFiles.has(name)) file = await realFile(publicRoot, `art/hud-angels-20261102/${name}`);
