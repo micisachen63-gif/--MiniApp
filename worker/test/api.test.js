@@ -140,10 +140,15 @@ test('unattacked boss vanishes after 30 min; attacked-but-alive boss flees', asy
 });
 
 test('cron settles everyone and queues DMs (town / low supply), deduped per day', async () => {
-  const { call, env, sql } = mk(); const t0 = taipeiAt(D, 8);
+  const { call, env, sql, one } = mk(); const t0 = taipeiAt(D, 8);
   await create(call, '6001', '丁丁', 'sword', t0);
-  sql("UPDATE rpg_inventory SET quantity = 0 WHERE tg_id='6001' AND item='red_1'"); sql("UPDATE rpg_characters SET level = 20 WHERE tg_id='6001'");
+  // Pin combat inputs so the notification/dedupe scenario does not depend on starter gear rolls.
+  sql("UPDATE rpg_inventory SET quantity = 0 WHERE tg_id='6001' AND item LIKE 'red_%'");
+  sql("UPDATE rpg_equipment SET base_stat = CASE slot WHEN 'weapon' THEN 14 ELSE 10 END, element_stat = 0, bonus_json = '{}', affix_json = NULL, affixes_json = '[]' WHERE tg_id='6001'");
+  sql("UPDATE rpg_characters SET level = 20, hp = 100 WHERE tg_id='6001'");
   const r = await runCron(env, t0 + 12 * H); assert.equal(r.settled, 1);
+  assert.equal(r.errors, 0);
+  assert.equal(one("SELECT idle_state FROM rpg_characters WHERE tg_id='6001'").idle_state, 'town_no_red');
   await runCron(env, t0 + 12.5 * H);
   const dms = (await call('/rpg/outbox/claim', { limit: 50 }, t0 + 13 * H)).items.filter((i) => i.target === 'dm');
   assert.equal(dms.filter((i) => i.kind === 'town_no_red').length, 1);

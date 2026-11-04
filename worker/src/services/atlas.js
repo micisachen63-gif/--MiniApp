@@ -10,6 +10,7 @@ import { requireBackpackAccess } from './party-presence.js';
 import { applyEquipmentAbilityPatch } from '../realm/asset-preservation.js';
 import { questEventStatements, isPermanentQuestRealm } from './atlas-quests.js';
 import {readAtlasTalents} from './atlas-talents.js';
+import { projectAtlasScene } from '../game/atlas-scene.js';
 
 export const ATLAS_RECIPES=Object.freeze([
  {id:'temper',name:'精鐵淬鍊',description:'提高這件裝備的基礎能力 3%；強化值原樣保留。',cost:{atlas_shard:12,atlas_iron:4},stat:'base_stat'},
@@ -60,7 +61,7 @@ export function runView(row,now,realmCutoff=null){
 
 export async function status(env,charId,now){
  const db=env.DB,p=await playerFor(env,charId);
- if(!enabled(env)&&!Object.hasOwn(p.char,'atlas_run_id'))return {ok:true,enabled:false,canStart:false,realmId:realmId(env),characterId:charId,run:null,materials:{},now};
+ if(!enabled(env)&&!Object.hasOwn(p.char,'atlas_run_id'))return {ok:true,enabled:false,canStart:false,realmId:realmId(env),characterId:charId,run:null,materials:{},now,scene:projectAtlasScene({player:p,realmId:realmId(env),now})};
  const [profile,run,materials,progress,crafts]=await Promise.all([
   db.prepare('SELECT * FROM rpg_atlas_profiles WHERE char_id=?').bind(charId).first(),
   db.prepare('SELECT * FROM rpg_atlas_runs WHERE char_id=? ORDER BY started_at DESC,rowid DESC LIMIT 1').bind(charId).first(),
@@ -70,7 +71,8 @@ export async function status(env,charId,now){
  ]);
  const completed=Object.fromEntries(progress.results.map(r=>[r.map_id,r.completions]));
  const counts=Object.fromEntries(crafts.results.map(r=>[r.item_id,r.crafts]));
- return {ok:true,enabled:enabled(env)||!!p.char.atlas_run_id,canStart:canStart(env,now),realmId:realmId(env),characterId:charId,profile:profileFor(profile,p.char.base_class),run:runView(run,now,env.REALM_CONTEXT?.cutoffAt),
+ const scene=projectAtlasScene({player:p,run,realmId:realmId(env),now});
+ return {ok:true,scene,enabled:enabled(env)||!!p.char.atlas_run_id,canStart:canStart(env,now),realmId:realmId(env),characterId:charId,profile:profileFor(profile,p.char.base_class),run:runView(run,now,env.REALM_CONTEXT?.cutoffAt),
   materials:Object.fromEntries(materials.results.map(r=>[r.material,r.quantity])),completedMaps:completed,talents:await readAtlasTalents(db,p.char),profileSaved:!!profile,
   availableMapIds:getAtlasCatalog().maps.filter(m=>m.minLevel<=p.char.level&&m.prerequisites.every(id=>completed[id]>0)).map(m=>m.id),
   supplies:{hp:p.inv.red_1||0,mp:p.inv.blue_1||0},

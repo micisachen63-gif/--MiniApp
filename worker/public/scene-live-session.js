@@ -1,0 +1,164 @@
+/* One context for the local scene and its real Atlas windows. Reads never settle. */
+(() => {
+  'use strict';
+  const READS = new Set(['meta','characters','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','chat/state']);
+  function create(options = {}) {
+    const send = options.fetch || globalThis.fetch.bind(globalThis);
+    const endpoint = options.endpoint;
+    const listeners = new Set(), controllers = new Set();
+    let context = { accountId: String(options.accountId || '90101'), realmId: options.realmId || 'permanent', characterId: options.characterId == null ? null : String(options.characterId) };
+    let epoch = 0, sequence = 0, applied = 0, floor = 0, snapshot = null, flight = null, disposed = false, timer = null, selecting = false, lastError = '';
+    const contextError = () => Object.assign(new Error('角色或世界已切換，已忽略先前回應'), { code: 'context_changed', uncertain: false });
+    const staleError = () => Object.assign(new Error('已收到較新的戰況'), { code: 'stale_response', uncertain: false });
+    function emit(value) {
+      snapshot = value;
+      for (const listener of listeners) { try { listener(value); } catch (error) { options.onListenerError?.(error); } }
+      options.onSnapshot?.(value);
+    }
+    function setContext(next = {}) {
+      epoch++;
+      for (const controller of controllers) controller.abort();
+      controllers.clear(); flight = null; applied = 0; floor = 0; lastError = '';
+      context = { ...context, ...next };
+      context.accountId = String(context.accountId);
+      context.characterId = context.characterId == null ? null : String(context.characterId);
+      emit(null);
+      return getContext();
+    }
+    function getContext() { return { ...context, epoch }; }
+    function accept(scene, ticket) {
+      if (!scene || scene.schemaVersion !== 1) throw Object.assign(new Error('戰況格式尚未就緒，請重新同步'), { code: 'invalid_scene', uncertain: false });
+      if (String(scene.accountId) !== context.accountId || scene.realmId !== context.realmId || (context.characterId && String(scene.characterId) !== context.characterId)) throw contextError();
+      if (scene.run && (String(scene.run.characterId) !== String(scene.characterId) || scene.run.realmId !== scene.realmId)) throw contextError();
+      if (ticket < applied || ticket < floor) throw staleError();
+      const previous = snapshot;
+      if (previous && previous.characterId === scene.characterId && previous.realmId === scene.realmId) {
+        if (Number(scene.live?.revision) < Number(previous.live?.revision)) throw staleError();
+        if (scene.run?.id && scene.run.id === previous.run?.id && Number(scene.run.revision) < Number(previous.run.revision)) throw staleError();
+      }
+      context.characterId = String(scene.characterId);
+      applied = ticket; lastError = ''; emit(scene);
+      return scene;
+    }
+    async function request(action, body = {}, requestOptions = {}) {
+      if (disposed) throw contextError();
+      if (!/^[a-z][a-z0-9/-]*$/.test(action)) throw new Error('Invalid local action');
+      const generation = epoch, captured = { ...context }, ticket = ++sequence, read = READS.has(action);
+      if (!read) floor = ticket;
+      const controller = new AbortController(); controllers.add(controller);
+      const deadline = setTimeout(() => controller.abort(), options.timeoutMs || 10000);
+      const external = requestOptions.signal, abort = () => controller.abort();
+      if (external?.aborted) controller.abort(); else external?.addEventListener('abort', abort, { once: true });
+      let response, data;
+      try {
+        try {
+          response = await send(endpoint + action, {
+            method: 'POST', mode: 'cors', credentials: 'omit',
+            headers: { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': captured.accountId, 'X-Realm-Id': captured.realmId },
+            body: JSON.stringify({ ...body, ...(captured.characterId && !['characters','select'].includes(action) ? { selectedCharacterId: captured.characterId } : {}) }), signal: controller.signal,
+          });
+          data = await response.json();
+        } catch (cause) {
+          if (generation !== epoch || disposed) throw contextError();
+          throw Object.assign(new Error('本機遊戲服務尚未連線，請重新同步'), { cause, uncertain: !read, code: controller.signal.aborted ? 'request_aborted' : 'connection_failed' });
+        }
+        if (generation !== epoch || disposed) throw contextError();
+        if (!response.ok || data.ok === false) {
+          const error = Object.assign(new Error(data.message || '資料暫時無法同步'), { code: data.error, status: response.status, uncertain: !read && response.status >= 500 });
+          if (data.error === 'character_changed') {
+            setContext({ characterId: null });
+            queueMicrotask(() => { if (!disposed && !selecting) void refresh().catch(() => {}); });
+          }
+          throw error;
+        }
+        if (data.scene) {
+          if (read) accept(data.scene, ticket);
+          else {
+            // The receipt confirms the write even when its attached projection
+            // was superseded. Ignore that projection and read the newest one.
+            try { accept(data.scene, ticket); }
+            catch (error) { lastError = error.message; }
+          }
+        }
+        // A successful write remains successful even when the subsequent read is offline.
+        if (!read && action !== 'select') {
+          await refresh({ force: true }).catch(error => { if (generation === epoch) lastError = error.message; });
+        }
+        if (generation !== epoch || disposed) throw contextError();
+        return data;
+      } finally {
+        clearTimeout(deadline);
+        controllers.delete(controller); external?.removeEventListener('abort', abort);
+      }
+    }
+    function refresh({ force = false } = {}) {
+      if (disposed) return Promise.reject(contextError());
+      if (selecting) return Promise.resolve(snapshot);
+      if (flight && !force) return flight.promise;
+      if (flight && force) flight.controller.abort();
+      if (force) floor = sequence + 1;
+      const controller = new AbortController(), generation = epoch, entry = { controller, promise: null };
+      entry.promise = request('atlas/status', {}, { signal: controller.signal }).then(data => {
+        if (generation !== epoch) throw contextError();
+        if (!data.scene) throw Object.assign(new Error('出征服務缺少場景資料'), { code: 'invalid_scene', uncertain: false });
+        return snapshot;
+      }).catch(error => {
+        if (generation === epoch && error.code !== 'stale_response' && error.code !== 'context_changed' && error.code !== 'request_aborted') {
+          lastError = error.message;
+          options.onError?.(error);
+        }
+        throw error;
+      }).finally(() => { if (flight === entry) flight = null; });
+      flight = entry;
+      return entry.promise;
+    }
+    async function selectCharacter(characterId) {
+      if (selecting) throw Object.assign(new Error('正在切換角色'), { code: 'selection_busy', uncertain: false });
+      const target = String(characterId);
+      if (!target) throw new Error('請選擇角色');
+      selecting = true; setContext({ characterId: null });
+      const generation = epoch;
+      try {
+        const data = await request('select', { charId: target });
+        if (generation !== epoch) throw contextError();
+        if (String(data.selected) !== target || data.realmId !== context.realmId) throw contextError();
+        setContext({ characterId: target });
+        return data;
+      } finally {
+        selecting = false;
+        // Discovery is read-only, including after a lost selection response.
+        if (!disposed) await refresh({ force: true }).catch(() => {});
+      }
+    }
+    function start() {
+      if (timer || disposed) return;
+      const run = () => { if (!selecting && !options.isHidden?.()) void refresh().catch(() => {}); };
+      run(); timer = (options.setInterval || globalThis.setInterval)(run, options.pollMs || 15000);
+    }
+    function dispose() {
+      if (disposed) return; disposed = true;
+      if (timer) (options.clearInterval || globalThis.clearInterval)(timer);
+      timer = null; epoch++;
+      for (const controller of controllers) controller.abort();
+      controllers.clear(); flight = null; emit(null); listeners.clear();
+    }
+    return { request, refresh, setContext, getContext, selectCharacter, start, dispose,
+      getSnapshot: () => snapshot, getError: () => lastError,
+      subscribe(listener) { listeners.add(listener); listener(snapshot); return () => listeners.delete(listener); },
+    };
+  }
+  const api = { create };
+  globalThis.RpgSceneSession = api;
+  const config = globalThis.__RpgScenePreviewConfig;
+  if (!config?.live || !globalThis.document || !/^http:\/\/127\.0\.0\.1:\d+$/.test(globalThis.location?.origin || '')) return;
+  if (!/^http:\/\/127\.0\.0\.1:\d+\/app\/api\/$/.test(config.endpoint || '')) throw new Error('Local scene endpoint must use loopback');
+  const session = create({ endpoint: config.endpoint, accountId: config.accountId || '90101', realmId: config.realmId || 'permanent',
+    isHidden: () => document.hidden,
+    onSnapshot: value => window.dispatchEvent(new CustomEvent('rpg:scene-state', { detail: value })),
+    onError: error => window.dispatchEvent(new CustomEvent('rpg:scene-error', { detail: { message: error.message, code: error.code } })),
+  });
+  Object.assign(api, session);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) void session.refresh().catch(() => {}); });
+  window.addEventListener('pagehide', () => session.dispose(), { once: true });
+  session.start();
+})();

@@ -5,12 +5,12 @@
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function mount(body,host,initial='talents'){
   let disposed=false,route=initial,catalog=null,state=null,preview=null,selected=null,zoom=75,reviewed=false,busy=false,loading=true,error='',seq=0,confirming=null,pending=null,signature='';
-  const scope=String(host.actor.tgId),key=`scene:atlas-pending:permanent:${scope}`;
+  const scope=String(host.actor.tgId),realmId=host.realmId||'permanent',contextEpoch=host.getContext?.().epoch,key=`scene:atlas-pending:${realmId}:${scope}`;
   try{pending=JSON.parse(sessionStorage.getItem(key)||'null');if(pending&&!['atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft'].includes(pending.action))pending=null;}catch{}
   const locked=()=>!!state?.run&&state.run.status==='running'||!!host.actor.partyId||!state?.canStart;
-  const isCurrent=()=>!disposed&&String(host.getActor()?.tgId)===scope;
+  const isCurrent=()=>!disposed&&String(host.getActor()?.tgId)===scope&&(!host.getContext||(host.getContext().realmId===realmId&&host.getContext().epoch===contextEpoch));
   async function refresh(){
-   try{const [c,s]=await Promise.all([catalog?Promise.resolve(null):host.request('atlas/catalog'),host.request('atlas/status')]);if(!isCurrent())return;if(c)catalog=c.catalog;if(preview&&preview.baseRevision!==s.talents.revision)preview=null;state=s;error='';}
+   try{const [c,s]=await Promise.all([catalog?Promise.resolve(null):host.request('atlas/catalog'),host.request('atlas/status')]);if(!isCurrent())return;host.actor={...host.getActor()};if(c)catalog=c.catalog;if(preview&&preview.baseRevision!==s.talents.revision)preview=null;state=s;error='';}
    catch(e){if(isCurrent())error=e.message;}
    finally{if(isCurrent()){loading=false;paint();}}
   }

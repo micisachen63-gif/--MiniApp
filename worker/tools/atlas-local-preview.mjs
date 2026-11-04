@@ -15,8 +15,10 @@ import { initializeRealmIdentity, resolveRealm, scopeEnvForRealm } from '../src/
 import { CATALOG } from '../test/realm-test-helpers.js';
 
 const argv = process.argv.slice(2);
-if (argv.some(value => !/^--port=\d+$/.test(value)) || argv.length > 1) throw Error('Use --port=9642 only');
-const port = Number(argv[0]?.split('=')[1] || 9642);
+if (argv.some(value => !/^--(?:port=\d+|preview-origin=http:\/\/127\.0\.0\.1:\d+)$/.test(value)) || argv.length > 2 || new Set(argv.map(v=>v.split('=')[0])).size!==argv.length) throw Error('Use --port=9642 [--preview-origin=http://127.0.0.1:9593]');
+const port = Number(argv.find(v=>v.startsWith('--port='))?.split('=')[1] || 9642);
+const previewOrigin=argv.find(v=>v.startsWith('--preview-origin='))?.slice('--preview-origin='.length)||'http://127.0.0.1:9593';
+const previewPort=Number(new URL(previewOrigin).port);if(!Number.isInteger(previewPort)||previewPort<1024||previewPort>65535)throw Error('Invalid preview origin');
 if (!Number.isSafeInteger(port) || port < 1024 || port > 65535) throw Error('Invalid local port');
 // Deny network requests from any game handler, including notification delivery.
 globalThis.fetch = async () => { throw Error('Outbound requests disabled in isolated Atlas preview'); };
@@ -46,8 +48,7 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const previewOrigin='http://127.0.0.1:9593';
-    const socialPaths=new Set(['equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send'].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
