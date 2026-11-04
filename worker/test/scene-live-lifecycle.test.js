@@ -43,7 +43,7 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
   }
   const node = () => {
     const children = [], selectors = new Map();
-    return { children, textContent: '', style: {}, dataset: {}, classList: { add() {}, toggle() {} }, setAttribute() {}, removeAttribute() {}, appendChild(child) { children.push(child); }, replaceChildren() {}, remove() {}, querySelector(selector) { if (!selectors.has(selector)) selectors.set(selector, node()); return selectors.get(selector); } };
+    return { children, textContent: '', style: {}, dataset: {}, classList: { add() {}, toggle() {} }, setAttribute() {}, removeAttribute() {}, appendChild(child) { children.push(child); }, replaceChildren(...items) { children.splice(0, children.length, ...items); }, remove() {}, querySelector(selector) { if (!selectors.has(selector)) selectors.set(selector, node()); return selectors.get(selector); } };
   };
   const document = { documentElement: node(), body: node(), createElement: node, querySelector: () => null, getElementById: () => null };
   const handlers = new Map();
@@ -268,4 +268,42 @@ test('connection failure labels the last snapshot and a successful snapshot clea
   h.window.dispatchEvent({ type: 'rpg:scene-state', detail: state });
   assert.equal(connection.hidden, true); assert.equal(connection.textContent, ''); assert.equal(view.inspect().syncError, null);
   assert.equal(view.inspect().actorIssue, actorIssue, 'connection recovery must not hide missing artwork');
+});
+
+test('survey summaries show committed loot and completed encounters without simulating progress', async () => {
+  const h = harness(), view = h.window.RpgSceneLiveView.mount(h.scene, h.hooks), state = expedition();
+  state.run.map = { id: 'laurel_survey', themeId: 1, kind: 'survey', name: '月桂調查' };
+  state.run.report = { gold: 35, exp: 60, kills: 3, equipment: 2, items: { scroll_w: 1, scroll_a: 2 }, metrics: { encountersSeen: 8, encountersCompleted: 4 } };
+  state.run.events = [
+    { id: 'spring', type: 'encounter', encounterId: 'spring', name: '月桂清泉', hpRestored: 14, mpRestored: 6 },
+    { id: 'spring-complete', type: 'encounter_completed', encounterId: 'spring' },
+    { id: 'equipment', type: 'loot_equipment', itemId: 'committed-item' },
+    { id: 'scroll', type: 'loot_scroll', item: 'scroll_a', quantity: 2 },
+  ];
+  view.apply(state); h.pending.shift().finish(); await flush(); h.render();
+  const panel = h.window.document.body.children[0], report = panel.querySelector('[data-live-report]'), events = panel.querySelector('[data-live-events]');
+  assert.equal(view.inspect().mapReady, true);
+  assert.match(report.textContent, /裝備 2 件/);
+  assert.match(report.textContent, /道具 3 件.*武器強化卷 × 1、防具強化卷 × 2/);
+  assert.match(report.textContent, /完成遭遇 4 次/);
+  assert.ok(!report.textContent.includes('8 次'), 'encounters seen are not counted as completed');
+  assert.deepEqual(events.children.map(item => item.textContent), ['遇到月桂清泉 · 回復生命 14 / 魔力 6', '完成遭遇：補給泉水', '取得裝備 1 件', '取得防具強化卷 × 2']);
+  const text = report.textContent, eventCount = events.children.length;
+  for (let i = 0; i < 10; i++) view.update(15000);
+  assert.equal(report.textContent, text);
+  assert.equal(events.children.length, eventCount);
+  assert.equal(view.inspect().hp, 50, 'animation time never advances committed HP');
+  state.run.active = false; state.run.status = 'completed'; state.live.activeRunId = null;
+  view.apply(state);
+  assert.equal(report.textContent, text, 'returned expeditions retain their actual report');
+  view.dispose();
+});
+
+test('legacy reports do not invent zero equipment, item or encounter totals', async () => {
+  const h = harness(), view = h.window.RpgSceneLiveView.mount(h.scene, h.hooks), state = expedition();
+  state.run.report.metrics = { encountersSeen: 9 };
+  view.apply(state); h.pending.shift().finish(); await flush();
+  const report = h.window.document.body.children[0].querySelector('[data-live-report]');
+  assert.equal(report.textContent, '本趟累計：金幣 0 · 經驗 0');
+  view.dispose();
 });

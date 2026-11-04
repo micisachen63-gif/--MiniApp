@@ -6,6 +6,7 @@ import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
 import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
+import * as EQUIPMENT_RECOVERY from './services/equipment-recovery.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
@@ -43,6 +44,7 @@ import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
 import * as ATLAS from './services/atlas.js';
+import * as ATLAS_BACKGROUND from './services/atlas-background.js';
 import * as ATLAS_QUESTS from './services/atlas-quests.js';
 import * as SCENE_CHAT from './services/scene-chat.js';
 import {listRealmCatalog,resolveRealm,scopeEnvForRealm} from './realm/index.js';
@@ -196,6 +198,9 @@ const routes = {
   'POST /rpg/me': (env, b, now) => me(env, tgOf(b), now, {summary:b.summary===true}),
   'POST /rpg/create': async (env, b, now) => { const tg = tgOf(b); await P.createCharacter(env, { ...b, tgId: tg }, now); return me(env, tg, now); },
   'POST /rpg/monster-exchange': act((w,c,b)=>monsterExchange(w,c,b)),
+  'POST /rpg/equipment-recovery':(env,b,now)=>EQUIPMENT_RECOVERY.view(env,tgOf(b),now),
+  'POST /rpg/equipment-recovery/preview':(env,b,now)=>EQUIPMENT_RECOVERY.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-recovery/action':(env,b,now)=>EQUIPMENT_RECOVERY.action(env,tgOf(b),b,now),
   'POST /rpg/equipment-collection':(env,b,now)=>EQUIPMENT_COLLECTION.view(env,tgOf(b),now),
   'POST /rpg/equipment-collection/preview':(env,b,now)=>EQUIPMENT_COLLECTION.preview(env,tgOf(b),b,now),
   'POST /rpg/equipment-collection/submit':(env,b,now)=>EQUIPMENT_COLLECTION.submit(env,tgOf(b),b,now),
@@ -406,7 +411,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if(url.pathname.startsWith('/rpg/atlas/')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery'))&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -439,7 +444,7 @@ async function scheduledRealms(event,env){
     const context=await resolveRealm(env,realm.id);
     if(context.phase!=='ACTIVE')continue;
     const scoped=scopeEnvForRealm(env,context);
-    if(event.cron==='* * * * *')await Promise.all([PARTY.sweep(scoped,event.scheduledTime),AUTO.sweep(scoped,event.scheduledTime),GUARDIAN_AUTO.sweep(scoped,event.scheduledTime),REROLL_AUTO.sweep(scoped,event.scheduledTime),STAR_RING.sweep(scoped,event.scheduledTime),FATE_SHARED.sweep(scoped,event.scheduledTime).then(()=>FATE.sweep(scoped,event.scheduledTime))]);
+    if(event.cron==='* * * * *')await Promise.all([PARTY.sweep(scoped,event.scheduledTime),AUTO.sweep(scoped,event.scheduledTime),GUARDIAN_AUTO.sweep(scoped,event.scheduledTime),REROLL_AUTO.sweep(scoped,event.scheduledTime),STAR_RING.sweep(scoped,event.scheduledTime),FATE_SHARED.sweep(scoped,event.scheduledTime).then(()=>FATE.sweep(scoped,event.scheduledTime)),ATLAS_BACKGROUND.sweep(scoped,event.scheduledTime).then(result=>{if(result.errors.length)console.warn('atlas sweep',context.id,JSON.stringify(result));}).catch(error=>console.warn('atlas sweep',context.id,error.code||'internal'))]);
     else console.log('cron',context.id,JSON.stringify(await runCron(scoped,event.scheduledTime)));
   }
 }

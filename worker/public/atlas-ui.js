@@ -181,10 +181,10 @@
       paintNav();
     }
     function open(name) {
-      if (!groups.some(group => group.id === name) && !['talents','chat','progression','gearbook'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
+      if (!groups.some(group => group.id === name) && !['talents','chat','progression','gearbook','recovery'].includes(name) && !(name==='quests'&&context.realmId==='permanent')) return;
       if (!validCharacter()) {host.chooseCharacter(); return;}
       if (context.tab !== 'atlas') host.home();
-      if(name!=='gearbook'){gearbookView?.dispose();gearbookView=null;}focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
+      if(name!==panel||!['gearbook','recovery'].includes(name)){gearbookView?.dispose();gearbookView=null;}focusReturn = document.activeElement; panel = name; lastPanelKey = ''; overlay.hidden = false;syncWindowState();overlay.querySelector('.atlas-panel-body').scrollTop=0;
       paint(); overlay.querySelector('.atlas-panel-card').focus({preventScroll:true});
       if(name==='chat')void chatClient?.refresh();else if (name==='quests')void client.refreshQuests();else if (['expedition','build','workshop','records','talents','progression'].includes(name)) void refreshAll();
     }
@@ -194,7 +194,7 @@
     }
     function questPreview() {
       if(context.realmId!=='permanent'||!validCharacter())return '';
-      const state=client.state,quests=state.quests?.quests||[],next=quests.find(item=>item.claimable)||quests.find(item=>item.category==='tutorial'&&!item.claimed)||quests.find(item=>!item.claimed&&(!item.expiresAt||item.expiresAt>state.quests.now)),claimable=quests.filter(item=>item.claimable).length;
+      const state=client.state,quests=state.quests?.quests||[],next=quests.find(item=>item.claimable)||quests.find(item=>item.category==='tutorial'&&!item.claimed)||quests.find(item=>!item.claimed&&!item.locked&&(!item.expiresAt||item.expiresAt>state.quests.now)),claimable=quests.filter(item=>item.claimable).length;
       if(state.catalog?.enabled===false)return '<div class="atlas-quest-preview"><small>永久世界委託</small><p>新星圖開放後，可查看教學與長期目標。</p></div>';
       return `<div class="atlas-quest-preview"><small>永久世界委託${claimable?' · '+number(claimable)+' 項可領獎':''}</small><strong>${esc(next?.title|| (state.questsLoading?'正在讀取下一個目標':state.questError?'委託暫未同步':'查看教學與長期目標'))}</strong>${next?`<p>${number(next.progress)} / ${number(next.target)} ${esc(next.unit||'')} ${next.claimable?'· 已達成':''}</p>`:''}<button type="button" data-atlas-open-quests ${state.busy?'disabled':''}>${claimable?'查看與領取獎勵':'查看任務與教學'} ${icon('arrow')}</button></div>`;
     }
@@ -256,17 +256,40 @@
       });
       return content+routeCards([['bag','鍛造與詞綴重鑄','從裝備詳情開啟強化、自動強化與重鑄','forge'],['shop','商店與補給','購買藥水、材料、裝備與回收道具','forge'],['background','背景工坊','查看目前角色的自動作業','forge']])+`<div class="atlas-preservation"><b>強化成果繼續保留</b><p>既有裝備的強化 +N 不會因介面或能力調整而重置。</p></div>`;
     }
+    function loadRecoveryUI(){
+     if(window.RpgEquipmentRecovery)return Promise.resolve(window.RpgEquipmentRecovery);
+     if(window.__RpgEquipmentRecoveryLoading)return window.__RpgEquipmentRecoveryLoading;
+     window.__RpgEquipmentRecoveryLoading=new Promise((resolve,reject)=>{
+      const script=document.createElement('script'),base=document.querySelector('script[src*="atlas-ui.js"]')?.src||document.baseURI;
+      script.src=new URL('equipment-recovery-ui.js?v=idle-content-20261104',base).href;
+      const failed=()=>{window.__RpgEquipmentRecoveryLoading=null;script.remove();reject(Error('典藏介面載入失敗，請重試'));};
+      script.onload=()=>window.RpgEquipmentRecovery?resolve(window.RpgEquipmentRecovery):failed();script.onerror=failed;document.head.append(script);
+     });return window.__RpgEquipmentRecoveryLoading;
+    }
+    const questGroupsOpen = new Map();
     function questsPanel() {
       return dataState(()=>{
         const state=client.state;
         if(context.realmId!=='permanent')return empty('永久世界的委託','切換至永久環境，可查看這個帳號的教學與長期目標。');
         if(state.quests?.enabled===false)return empty('永久委託尚未開放','新玩法開放後，可在此查看教學與長期目標；既有冒險仍可繼續。');
         if(!state.quests)return empty(state.questsLoading?'正在讀取委託':'委託暫未同步',state.questError||'進度由伺服器記錄，載入後即可查看下一步。','<button type="button" class="atlas-primary" data-atlas-quests-refresh>重新讀取</button>');
-        const rewardsHtml=rewards=>{if(!rewards)return '獎勵待同步';const materialNames=entries(state.catalog.materials);return [...Object.entries(rewards.materials||{}).filter(([,n])=>n>0).map(([id,n])=>`${esc(materialNames.find(row=>idOf(row)===id)?.name||id)} ×${number(n)}`),...(rewards.gold>0?[`金幣 ${number(rewards.gold)}`]:[]),...(rewards.exp>0?[`經驗 ${number(rewards.exp)}`]:[])].join(' · ')||'無額外獎勵';};
+        const rewardsHtml=rewards=>{if(!rewards)return '獎勵待同步';const materialNames=entries(state.catalog.materials);return [...Object.entries(rewards.materials||{}).filter(([,n])=>n>0).map(([id,n])=>esc(materialNames.find(row=>idOf(row)===id)?.name||id)+' ×'+number(n)),...(rewards.gold>0?['金幣 '+number(rewards.gold)]:[]),...(rewards.exp>0?['經驗 '+number(rewards.exp)]:[])].join(' · ')||'無額外獎勵';};
         const rows=state.quests.quests||[];
-        const currentPeriod=quest=>!['daily','weekly'].includes(quest.category)||quest.periodKey===rows.filter(row=>row.id===quest.id).map(row=>row.periodKey).sort().at(-1);
-        const visibleRows=rows.filter(quest=>currentPeriod(quest)||quest.progress>0||quest.claimed);
-        return `<div class="atlas-section-top"><div><small>一段旅程，一個可以達成的目標</small><h3>永久世界委託</h3></div><button type="button" class="atlas-icon-button" data-atlas-quests-refresh aria-label="更新永久任務">${icon('refresh')}</button></div><p class="atlas-panel-intro">教學帶你完成第一次構築、出征與製作；每日、每週與長期目標持續累積。同環境帳號共用進度與領獎次數，材料送給領獎時的角色。</p>${state.questError?`<div class="atlas-error">${esc(state.questError)}</div>`:''}${[['tutorial','旅人教學'],['daily','每日委託'],['weekly','每週試煉'],['longterm','長期踏查']].map(([category,title])=>{const group=visibleRows.filter(row=>row.category===category);if(!group.length)return '';return `<section class="atlas-quest-group"><h4>${title}</h4>${group.map(quest=>{const expired=quest.expiresAt&&quest.expiresAt<=state.quests.now,current=currentPeriod(quest),progress=quest.target>0?Math.max(0,Math.min(100,100*quest.progress/quest.target)):0;return `<article class="atlas-quest-card ${quest.claimed?'is-claimed':''}"><div><small>${quest.category==='daily'?esc(quest.periodKey)+' · ':quest.category==='weekly'?esc(quest.periodKey.replace('-W',' 年第 '))+' 週 · ':''}${quest.claimed?'已領取':quest.claimable?'已達成 · 可領獎':expired||!current?'先前期別':'進行中'}</small><h5>${esc(quest.title)}</h5><p>${esc(quest.description)}</p><div class="atlas-progress"><span style="width:${progress}%"></span></div><span class="atlas-quest-count">${number(quest.progress)} / ${number(quest.target)} ${esc(quest.unit||'')}</span><p class="atlas-quest-reward">${rewardsHtml(quest.rewards)}</p>${quest.expiresAt&&!quest.claimed?`<p class="atlas-quest-deadline">已完成獎勵可補領至 ${new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(quest.expiresAt))}</p>`:''}</div><div class="atlas-quest-actions">${quest.claimed?'<span>已領取</span>':quest.claimable?`<button type="button" class="atlas-primary" data-quest-claim="${esc(quest.id)}" data-quest-period="${esc(quest.periodKey)}" ${state.busy?'disabled':''}>領取獎勵</button>`:quest.action&&current&&!expired?`<button type="button" data-quest-go="${esc(quest.id)}" data-quest-period="${esc(quest.periodKey)}" ${state.busy?'disabled':''}>前往目標 ${icon('arrow')}</button>`:expired?'<span>已過補領期限</span>':current?'<span>持續探索即可累積</span>':'<span>可同步此期已完成的探索</span>'}</div></article>`;}).join('')}</section>`;}).join('')||empty('目前沒有開放的委託','新目標開放後會出現在這裡。')}`;
+        const currentPeriod=q=>!['daily','weekly'].includes(q.category)||q.periodKey===rows.filter(row=>row.id===q.id).map(row=>row.periodKey).sort().at(-1);
+        const visibleRows=rows.filter(q=>currentPeriod(q)||q.progress>0||q.claimed);
+        const amount=(q,n)=>q.unit==='秒'?(n<60?number(n)+'秒':number(Math.floor(n/60))+'分'+(n%60?' '+number(n%60)+'秒':'')):number(n);
+        const groups=[['tutorial','旅人教學'],['investigation','地區調查鏈'],['daily','每日活動'],['weekly','每週目標'],['longterm','長期踏查']];
+        const cards=groups.map(([category,title])=>{
+          const group=visibleRows.filter(q=>q.category===category);if(!group.length)return '';
+          const ready=group.filter(q=>q.claimable).length,expanded=questGroupsOpen.has(category)?questGroupsOpen.get(category):['daily','investigation'].includes(category)||ready>0||category==='tutorial'&&group.some(q=>!q.claimed);
+          return `<details class="atlas-quest-group" data-quest-category="${category}" ${expanded?'open':''}><summary><strong>${title}</strong> · ${number(group.length)} 項${ready?' · '+number(ready)+' 項可領取':''}</summary>${group.map(q=>{
+            const expired=q.expiresAt&&q.expiresAt<=state.quests.now,current=currentPeriod(q),progress=q.target>0?Math.max(0,Math.min(100,100*q.progress/q.target)):0;
+            const status=q.claimed?'已領取':q.locked?'等待前一步':q.claimable?'已達成 · 可領獎':expired||!current?'先前期別':'進行中';
+            const button=q.claimed?'<span>已領取</span>':q.locked?'<span>先完成前一步領取</span>':q.claimable?`<button type="button" class="atlas-primary" data-quest-claim="${esc(q.id)}" data-quest-period="${esc(q.periodKey)}" ${state.busy?'disabled':''}>領取獎勵</button>`:q.action&&current&&!expired?`<button type="button" data-quest-go="${esc(q.id)}" data-quest-period="${esc(q.periodKey)}" ${state.busy?'disabled':''}>前往目標 ${icon('arrow')}</button>`:expired?'<span>已過補領期限</span>':current?'<span>持續探索即可累積</span>':'<span>可同步此期已完成的探索</span>';
+            return `<article class="atlas-quest-card ${q.claimed?'is-claimed':''}"><div><small>${q.periodKey==='lifetime'?'':esc(q.periodKey)+' · '}${status}</small><h5>${esc(q.title)}</h5><p>${esc(q.description)}</p>${q.lockedReason?`<p class="atlas-quest-deadline">${esc(q.lockedReason)}</p>`:''}<div class="atlas-progress"><span style="width:${progress}%"></span></div><span class="atlas-quest-count">${amount(q,q.progress)} / ${amount(q,q.target)} ${q.unit==='秒'?'':esc(q.unit||'')}</span><p class="atlas-quest-reward">${rewardsHtml(q.rewards)}</p>${q.expiresAt&&!q.claimed?`<p class="atlas-quest-deadline">已完成獎勵可補領至 ${new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date(q.expiresAt))}</p>`:''}</div><div class="atlas-quest-actions">${button}</div></article>`;
+          }).join('')}</details>`;
+        }).join('');
+        return `<div class="atlas-section-top"><div><small>每段探索，都有真實累積</small><h3>永久世界委託</h3></div><button type="button" class="atlas-icon-button" data-atlas-quests-refresh aria-label="更新永久任務">${icon('refresh')}</button></div><p class="atlas-panel-intro">教學、三區調查、每日活動、每週與長期目標分開查看。同環境帳號共用進度，材料送給領獎角色。調查依序領取，離線已累積的進度保留；每日與每週依實際活動的台北時間計算。</p>${state.questError?`<div class="atlas-error">${esc(state.questError)}</div>`:''}${cards||empty('目前沒有開放的委託','新目標開放後會出現在這裡。')}`;
       });
     }
     function expeditionPanel() {
@@ -282,15 +305,23 @@
       if(panel==='quests')return questsPanel();
       if(panel==='expedition')return expeditionPanel();
       if(panel==='build')return dataState(()=>`<button type="button" class="atlas-primary" data-atlas-open-talents>天賦星盤 · 可用 ${number(client.state.snapshot.talents?.availablePoints??0)} 點</button><p class="atlas-panel-intro">技能決定出手方式，輔助改變節奏。選出適合下一張星圖的配置。</p><form data-atlas-build>${buildFields()}${automationField()}<div class="atlas-form-footer"><span>${running()?'探索中，結束後可調整配置':'儲存後套用於下一趟探索'}</span><button type="submit" class="atlas-primary" ${running()||client.state.busy||!canStart()?'disabled':''}>儲存構築</button></div></form>`)+`<div class="atlas-preservation"><b>原有強化等級保留</b><p>裝備的 +N 維持原值；目前能力與詞綴可在裝備詳情查看。</p></div>${routeCards([['bag','裝備與背包','穿戴、查看能力與原有強化等級','build'],['class','職業與傳承','轉職、分支與成長路線','build'],['skills','原生與特殊戰技','學習、進修與自動施放配置','build']])}`;
-      if(panel==='workshop')return '<button type="button" class="atlas-primary" data-atlas-open-gearbook>裝備收藏冊 · 集滿獲得永久能力</button>'+workshopPanel();
+      if(panel==='workshop')return '<button type="button" class="atlas-primary" data-atlas-open-recovery>典藏與精煉 · 讓舊裝備與重複品繼續派上用場</button><button type="button" class="atlas-primary" data-atlas-open-gearbook>裝備收藏冊 · 集滿獲得永久能力</button>'+workshopPanel();
       if(panel==='companions')return `<p class="atlas-panel-intro">帶著守護啟程，也為另一段人生留一盞星燈。</p>${routeCards([['guardian:summon','抽取天使','召喚、查看結果與原有抽取紀錄','angel'],['guardian:inventory','天使管理','啟用、鎖定、合成與守護配置','angel'],['fate','命運旅章與輪迴','繼續此世、開啟新人生與查看進度','book'],['fate:archive','靈魂旅誌','翻閱過往人生與旅章紀錄','book'],['fate:gift','星輝匣','查看、領取與開啟輪迴贈禮','angel']])}`;
       if(panel==='social')return `<p class="atlas-panel-intro">與同一環境的旅人同行，交換彼此需要的收穫。</p>${routeCards([['party','組隊冒險','尋找隊伍、討伐、轉職試煉與爬塔','social'],['star-ring','星環遠征','原有五人遠征與進行中戰況','map'],['trade','雙人交易與集會','邀請、託管、確認交易與紀錄','social'],['exchange','交易所','搜尋、上架與查看成交紀錄','forge'],['hall','英雄殿堂','查看角色與公開穿戴','social']])}`;
       return `${dataState(()=>`<div class="atlas-section-top"><h3>最近一趟星圖</h3><button type="button" class="atlas-icon-button" data-atlas-refresh aria-label="更新戰報">${icon('refresh')}</button></div>${reportHtml(client.state.snapshot?.run?.report,client.state.catalog)}`)}${routeCards([['collection','地圖圖鑑與收藏','材料、徽記與收藏祝福','book'],['journal','旅團日誌','原有委託進度與領獎','book'],['home','掛機戰報與帳本','查看原有結算、掉落與操作紀錄','book']])}`;
     }
     function paintPanel() {
       if(!panel||overlay.hidden)return;
-      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='chat'?'聊天':panel==='talents'?'天賦星盤':panel==='progression'?'冒險成長路線':panel==='gearbook'?'裝備收藏冊':'永久世界委託');
-      if(panel==='gearbook'){if(!gearbookView){const body=overlay.querySelector('.atlas-panel-body'),scope=contextKey(client.state.context);body.innerHTML='';gearbookView=window.RpgEquipmentCollection.mount(body,{request:host.request,characterId:character().tgId,realmId:context.realmId,current:()=>scope===contextKey(client.state.context)&&panel==='gearbook',onChanged:()=>{void refreshAll();void host.refresh?.();}});}return;}
+      const group=groups.find(item=>item.id===panel);overlay.querySelector('#atlas-panel-title').textContent=group?.name||(panel==='chat'?'聊天':panel==='talents'?'天賦星盤':panel==='progression'?'冒險成長路線':panel==='gearbook'?'裝備收藏冊':panel==='recovery'?'典藏與精煉':'永久世界委託');
+      if(panel==='gearbook'){if(!gearbookView){const body=overlay.querySelector('.atlas-panel-body'),scope=contextKey(client.state.context);body.innerHTML='<button type="button" class="atlas-primary" data-open-recovery>典藏與精煉 · 首次典藏、重複回收與材料重洗</button><div data-legacy-collection></div>';body.querySelector('[data-open-recovery]').onclick=()=>open('recovery');gearbookView=window.RpgEquipmentCollection.mount(body.querySelector('[data-legacy-collection]'),{request:host.request,characterId:character().tgId,realmId:context.realmId,current:()=>scope===contextKey(client.state.context)&&panel==='gearbook',onChanged:()=>{void refreshAll();void host.refresh?.();}});}return;}
+      if(panel==='recovery'){
+        if(!gearbookView){
+          const body=overlay.querySelector('.atlas-panel-body'),scope=contextKey(client.state.context);let cancelled=false;
+          body.textContent='正在載入典藏與精煉…';gearbookView={dispose(){cancelled=true;}};
+          const current=()=>!cancelled&&panel==='recovery'&&scope===contextKey(client.state.context)&&body.isConnected;
+          void loadRecoveryUI().then(()=>{if(!current())return;gearbookView=window.RpgEquipmentRecovery.mount(body,{request:host.request,characterId:character().tgId,realmId:context.realmId,current,getContext:()=>client.state.context,onLegacy:()=>open('gearbook'),onChanged:()=>{void refreshAll();void host.refresh?.();}});}).catch(error=>{if(!current())return;body.textContent=error.message;const retry=document.createElement('button');retry.type='button';retry.textContent='重新載入';retry.onclick=()=>{gearbookView=null;paintPanel();};body.append(retry);});
+        }return;
+      }
       if(panel==='chat'&&chatClient){const body=overlay.querySelector('.atlas-panel-body');if(!body.querySelector('[data-scene-chat-panel]'))chatPanel=window.RpgSceneChatUI.mountPanel(body,chatClient);chatPanel.update();lastPanelKey='';return;}
       const state=client.state,scope=contextKey(state.context);
       if(draftScope!==scope){draftScope=scope;draftRun={};draftCraft={};}
@@ -304,6 +335,7 @@
       if(focusedName){const controls=[...body.querySelectorAll(`[name="${CSS.escape(focusedName)}"]`)];(controls.find(node=>node.value===focusedValue)||controls[0])?.focus({preventScroll:true});}
     }
     function bindPanel(body) {
+      body.querySelector('[data-atlas-open-recovery]')?.addEventListener('click',()=>open('recovery'));
       body.querySelector('[data-atlas-open-gearbook]')?.addEventListener('click',()=>open('gearbook'));
       body.querySelectorAll('[data-atlas-open-talents]').forEach(button=>button.onclick=()=>open('talents'));
       body.querySelectorAll('[data-talent-node]').forEach(node=>{const select=()=>{if(node.dataset.talentNode==='origin'){talentSelected='origin';lastPanelKey='';paintPanel();return;}void previewTalent(node.dataset.talentNode);};node.onclick=select;node.onkeydown=event=>{if(['Enter',' '].includes(event.key)){event.preventDefault();select();}};});
@@ -320,9 +352,10 @@
       body.querySelector('[data-talent-reset]')?.addEventListener('click',async()=>{const scope=contextKey(client.state.context);if(!await host.confirm('重新配置天賦','試作期間免費洗點，清空目前節點並返還全部天賦點。裝備、強化與等級維持原樣。','確認洗點')||scope!==contextKey(client.state.context))return;const result=await operate('atlas/talents/action',{kind:'reset'});if(result){talentSelected=null;talentEffectsReviewed=false;lastPanelKey='';paintPanel();host.toast('天賦點已返還。');}});
       body.querySelectorAll('[data-atlas-route]').forEach(button=>button.onclick=()=>route(button.dataset.atlasRoute));
       body.querySelectorAll('[data-atlas-refresh]').forEach(button=>button.onclick=()=>refreshAll());
+      body.querySelectorAll('[data-quest-category]').forEach(details=>details.ontoggle=()=>{if(details.isConnected)questGroupsOpen.set(details.dataset.questCategory,details.open);});
       body.querySelectorAll('[data-atlas-quests-refresh]').forEach(button=>button.onclick=()=>client.refreshQuests());
       body.querySelectorAll('[data-quest-claim]').forEach(button=>button.onclick=async()=>{const result=await operate('atlas/quests/claim',{questId:button.dataset.questClaim,periodKey:button.dataset.questPeriod});if(result)host.toast(result.rewardCharacterId&&String(result.rewardCharacterId)!==String(client.state.context.characterId)?'這筆獎勵已入帳到原領獎角色；帳號紀錄已同步。':result.alreadyClaimed?'這項委託已領取，已同步帳號紀錄。':'委託獎勵已送入目前角色的材料庫。');});
-      body.querySelectorAll('[data-quest-go]').forEach(button=>button.onclick=()=>{const quest=client.state.quests?.quests?.find(row=>row.id===button.dataset.questGo&&row.periodKey===button.dataset.questPeriod);if(!quest)return;if(quest.action==='maps'){if(quest.mapId)draftRun.mapId=quest.mapId;open('expedition');}else if(quest.action==='loadout')open('build');else if(quest.action==='craft')open('workshop');});
+      body.querySelectorAll('[data-quest-go]').forEach(button=>button.onclick=()=>{const quest=client.state.quests?.quests?.find(row=>row.id===button.dataset.questGo&&row.periodKey===button.dataset.questPeriod);if(!quest)return;if(quest.action==='maps'){if(quest.mapId)draftRun.mapId=quest.mapId;open('expedition');}else if(quest.action==='loadout')open('build');else if(quest.action==='craft')open('workshop');else if(quest.action==='gearbook')open('gearbook');else if(quest.action==='recovery')open('recovery');});
       body.querySelector('[data-atlas-recover]')?.addEventListener('click',()=>{const pending=client.state.pending;if(pending)void operate(pending.action,pending.payload);});
       body.querySelector('[data-atlas-settle]')?.addEventListener('click',()=>operate('atlas/settle',{runId:client.state.snapshot.run.id}));
       body.querySelector('[data-atlas-stop]')?.addEventListener('click',async()=>{const scope=contextKey(client.state.context),runId=client.state.snapshot.run.id;if(await host.confirm('停止探索','已完成部分會依探索規則結算。確定停止目前這一趟？','停止探索')&&scope===contextKey(client.state.context))await operate('atlas/stop',{runId});});

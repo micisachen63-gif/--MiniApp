@@ -17,29 +17,28 @@ function deferred() {
 }
 
 function scene({ characterId = 'a', realmId = 'permanent', accountId = '90101',
-  revision = 1, runRevision = 1, runId = 'run-a', name = '目前角色' } = {}) {
+  revision = 1, runRevision = 1, runId = 'run-a', name = '目前角色', serverNow = 60000, processedAt = 0 } = {}) {
   return {
-    schemaVersion: 1, accountId, realmId, characterId,
+    schemaVersion: 1, accountId, realmId, characterId, serverNow,
     character: { name, baseClass: 'sword', gender: 'f', classPath: '', level: 15 },
-    live: { revision, hp: 90, maxHp: 100, mp: 35, maxMp: 50, partyId: null },
-    activeRunId: runId,
+    live: { revision, hp: 90, maxHp: 100, mp: 35, maxMp: 50, partyId: null, activeRunId: runId },
     run: runId ? {
-      id: runId, characterId, realmId, revision: runRevision, status: 'running',
+      id: runId, characterId, realmId, revision: runRevision, status: 'running', active: true, processedAt,
       hero: { hp: 30, maxHp: 100, mp: 12, maxMp: 50 },
     } : null,
   };
 }
 
 function clock() {
-  let next = 0;
+  let next = 0, at = 0;
   const intervals = new Map(), deadlines = new Map();
   return {
-    intervals, deadlines,
+    intervals, deadlines, now: () => at, advance(ms) { at += ms; },
     setTimeout(fn, ms) { const id = ++next; deadlines.set(id, { fn, ms }); return id; },
     clearTimeout(id) { deadlines.delete(id); },
     setInterval(fn, ms) { const id = ++next; intervals.set(id, { fn, ms }); return id; },
     clearInterval(id) { intervals.delete(id); },
-    tick() { for (const { fn } of [...intervals.values()]) fn(); },
+    tick() { at += 15000; for (const { fn } of [...intervals.values()]) fn(); },
   };
 }
 
@@ -71,7 +70,7 @@ function harness(extra = {}) {
   };
   vm.runInNewContext(source, sandbox, { filename: 'scene-live-session.js' });
   const client = sandbox.RpgSceneSession.create({
-    endpoint, fetch: net.fetch, accountId: '90101', realmId: 'permanent', characterId: 'a',
+    endpoint, fetch: net.fetch, accountId: '90101', realmId: 'permanent', characterId: 'a', now: time.now,
     onSnapshot: value => snapshots.push(value), onError: error => errors.push(error), ...extra,
   });
   return { client, time, net, snapshots, errors };
@@ -331,7 +330,7 @@ test('browser visibility and pagehide keep one poller and never poll after dispo
   document.dispatchEvent({ type: 'visibilitychange' });
   time.tick();
   assert.equal(net.calls.length, 1);
-  net.calls[0].reply({ ok: true, scene: scene() });
+  net.calls[0].reply({ ok: true, scene: scene({ runId: null }) });
   await drain();
   document.hidden = true;
   time.tick(); time.tick();
@@ -425,4 +424,205 @@ test('Atlas window clears the acknowledged pending write even if its own refresh
   assert.match(h.body.innerHTML, /戰況讀取暫時離線/);
   assert.doesNotMatch(h.body.innerHTML, /上一筆操作尚未確認/);
   h.view.dispose();
+});
+
+test('visible synchronization settles one confirmed active run and applies its committed scene directly', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const pending = h.client.sync();
+  assert.equal(h.client.sync(), pending, 'visibility and timer share one in-flight pass');
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  assert.deepEqual(h.net.calls.map(call => call.action), ['atlas/status', 'atlas/settle']);
+  assert.deepEqual(h.net.calls[1].body, { runId: 'run-a', selectedCharacterId: 'a' });
+  const committed = scene({ revision: 2, runRevision: 2, processedAt: 15000 });
+  h.net.calls[1].reply({ ok: true, scene: committed, run: { progress: { catchingUp: true } } });
+  await pending;
+  assert.equal(h.client.getSnapshot().run.processedAt, 15000);
+  assert.equal(h.net.calls.length, 2, 'even a catching-up run gets one chunk and no redundant status');
+});
+
+test('historical, mismatched and already-current runs never trigger an automatic write', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const historical = scene(); historical.run.active = false;
+  const mismatched = scene(); mismatched.live.activeRunId = 'another-run';
+  const finished = scene(); finished.run.status = 'completed';
+  for (const value of [scene({ runId: null }), historical, mismatched, finished, scene({ processedAt: 60000 })]) {
+    const pending = h.client.sync();
+    h.net.calls.at(-1).reply({ ok: true, scene: value });
+    await pending;
+  }
+  assert.ok(h.net.calls.every(call => call.action === 'atlas/status'));
+});
+
+test('window refreshes and rapid resume events do not speed up the automatic settlement cadence', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const first = h.client.sync();
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await first;
+  for (const method of ['refresh', 'sync', 'refresh', 'sync']) {
+    const pending = h.client[method]();
+    h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+    await pending;
+  }
+  assert.equal(h.net.calls.filter(call => call.action === 'atlas/settle').length, 1);
+  h.time.advance(15000);
+  const next = h.client.sync();
+  h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await drain();
+  assert.equal(h.net.calls.at(-1).action, 'atlas/settle');
+  h.net.calls.at(-1).reply({ ok: true, scene: scene({ revision: 3, runRevision: 3 }) });
+  await next;
+  assert.equal(h.net.calls.filter(call => call.action === 'atlas/settle').length, 2);
+});
+
+test('hidden pages cannot begin or finish discovery into an automatic settlement', async t => {
+  let hidden = true;
+  const h = harness({ isHidden: () => hidden });
+  t.after(() => h.client.dispose());
+  await h.client.sync();
+  assert.equal(h.net.calls.length, 0);
+  hidden = false;
+  const interrupted = h.client.sync();
+  hidden = true;
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await interrupted;
+  assert.equal(h.net.calls.length, 1);
+  hidden = false;
+  const resumed = h.client.sync();
+  h.net.calls[1].reply({ ok: true, scene: scene() });
+  await drain();
+  assert.equal(h.net.calls[2].action, 'atlas/settle');
+  h.net.calls[2].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await resumed;
+});
+
+test('automatic settlement receipts cannot cross a character or realm epoch', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const old = outcome(h.client.sync());
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  assert.equal(h.net.calls[1].action, 'atlas/settle');
+  h.client.setContext({ characterId: 'b', realmId: 'season' });
+  assert.equal(h.net.calls[1].options.signal.aborted, true);
+  const current = h.client.sync();
+  h.net.calls[2].reply({ ok: true, scene: scene({ characterId: 'b', realmId: 'season', runId: 'run-b' }) });
+  await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 99, runRevision: 99 }) });
+  assert.equal((await old).error.code, 'context_changed');
+  assert.equal(h.client.sync(), current, 'old finally cannot clear the new context flight');
+  assert.equal(h.net.calls[3].body.runId, 'run-b');
+  assert.equal(h.net.calls[3].body.selectedCharacterId, 'b');
+  assert.equal(h.net.calls[3].options.headers['X-Realm-Id'], 'season');
+  h.net.calls[3].reply({ ok: true, scene: scene({ characterId: 'b', realmId: 'season', runId: 'run-b', revision: 2, runRevision: 2 }) });
+  await current;
+  assert.equal(h.client.getSnapshot().characterId, 'b');
+  assert.ok(!h.snapshots.some(value => value?.live.revision === 99));
+});
+
+test('automatic discovery waits for manual writes and never replays an unknown manual operation', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const manual = outcome(h.client.request('atlas/start', { requestId: 'manual-start-1' }));
+  const pending = h.client.sync();
+  h.net.calls[1].reply({ ok: true, scene: scene() });
+  await pending;
+  assert.deepEqual(h.net.calls.map(call => call.action), ['atlas/start', 'atlas/status']);
+  h.net.calls[0].fail();
+  assert.equal((await manual).error.uncertain, true);
+  h.time.advance(15000);
+  const recovered = h.client.sync();
+  h.net.calls[2].reply({ ok: true, scene: scene({ runId: null, revision: 2 }) });
+  await recovered;
+  assert.deepEqual(h.net.calls.map(call => call.action), ['atlas/start', 'atlas/status', 'atlas/status']);
+});
+
+test('an unknown automatic settlement waits for fresh discovery and never retries in the same pass', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const first = outcome(h.client.sync());
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  h.net.calls[1].fail();
+  assert.equal((await first).error.uncertain, true);
+  assert.equal(h.errors.length, 1);
+  assert.equal(h.net.calls.length, 2);
+  h.time.advance(15000);
+  const next = h.client.sync();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  const completed = scene({ revision: 2, runRevision: 2 });
+  completed.run.status = 'completed'; completed.run.active = false; completed.live.activeRunId = null;
+  h.net.calls[2].reply({ ok: true, scene: completed });
+  await next;
+  assert.equal(h.net.calls.length, 3, 'server completion discovered after the lost receipt is not settled again');
+  assert.equal(h.client.getError(), '');
+});
+
+test('an invalid settlement scene falls back to a read without replaying the acknowledged write', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const pending = h.client.sync();
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ characterId: 'wrong-character' }) });
+  await drain();
+  assert.equal(h.net.calls[2].action, 'atlas/status');
+  h.net.calls[2].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await pending;
+  assert.equal(h.client.getSnapshot().characterId, 'a');
+  assert.equal(h.net.calls.filter(call => call.action === 'atlas/settle').length, 1);
+});
+
+test('the visible page timer discovers and advances a run every fifteen seconds', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  h.client.start();
+  assert.equal([...h.time.intervals.values()][0].ms, 15000);
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await drain();
+  h.time.tick();
+  h.net.calls[2].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
+  await drain();
+  h.net.calls[3].reply({ ok: true, scene: scene({ revision: 3, runRevision: 3 }) });
+  await drain();
+  assert.deepEqual(h.net.calls.map(call => call.action), ['atlas/status', 'atlas/settle', 'atlas/status', 'atlas/settle']);
+  h.client.dispose();
+  h.time.tick();
+  assert.equal(h.net.calls.length, 4);
+});
+
+test('an automatic settlement timeout is visible and is not immediately retried', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  const pending = outcome(h.client.sync());
+  h.net.calls[0].reply({ ok: true, scene: scene() });
+  await drain();
+  for (const { fn } of [...h.time.deadlines.values()]) fn();
+  assert.equal(h.net.calls[1].options.signal.aborted, true);
+  h.net.calls[1].fail(Error('aborted'));
+  const result = await pending;
+  assert.equal(result.error.code, 'request_aborted');
+  assert.equal(result.error.uncertain, true);
+  assert.equal(h.errors.length, 1);
+  assert.equal(h.client.getError(), result.error.message);
+  assert.equal(h.net.calls.length, 2);
+});
+
+test('equipment recovery discovery and previews are readonly while actions retain uncertain outcomes', async t => {
+  const h = harness();
+  t.after(() => h.client.dispose());
+  for (const action of ['equipment-recovery', 'equipment-recovery/preview', 'equipment-recovery/action']) {
+    const pending = outcome(h.client.request(action, { itemIds: ['item-a'] }));
+    h.net.calls.at(-1).fail();
+    const result = await pending;
+    assert.equal(result.error.uncertain, action.endsWith('/action'));
+  }
+  assert.deepEqual(h.net.calls.map(call => call.action), ['equipment-recovery', 'equipment-recovery/preview', 'equipment-recovery/action']);
 });

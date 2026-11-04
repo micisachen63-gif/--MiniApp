@@ -4,6 +4,12 @@ import {
   ATLAS_AUTOMATION, ATLAS_SUPPORTED_RULESETS, ATLAS_QUEUE_MODES, getAtlasBuild, getAtlasMap,
 } from './atlas-catalog.js';
 import {applyAtlasTalentSnapshot} from './atlas-talents.js';
+import {
+  initializeAtlasContent, hasAtlasContent, selectAtlasEncounter, applyAtlasEncounter,
+  completeAtlasEncounter, recordAtlasKill, recordAtlasDamage, recordAtlasCompletion,
+  resetAtlasMapContent, applyAtlasContentRewards, recordAtlasSurvival, finalizeAtlasActivities,
+} from './atlas-content.js';
+export { finalizeAtlasActivities } from './atlas-content.js';
 
 /** Pure rules only. The API must authorize the realm/character, enforce map
  * minLevel/prerequisites, reserve supplies, pause legacy idle, and atomically
@@ -124,7 +130,7 @@ export function createAtlasRun(input) {
   if (!build || build.baseClass !== snapshot.baseClass) fail('atlas_invalid_build', '流派與角色職業不符');
   if (!map || !map.available) fail('atlas_invalid_map', '星圖尚未開放');
   if (input.ruleset_version && input.ruleset_version !== ATLAS_RULESET_VERSION) fail('atlas_ruleset_unsupported', '不支援的星圖規則版本');
-  const startedAt = number(input.startedAt ?? input.startAt, 'startAt', 0, Number.MAX_SAFE_INTEGER - ATLAS_MAX_DURATION_SECONDS, undefined);
+  const startedAt = number(input.startedAt ?? input.startAt, 'startAt', 0, Number.MAX_SAFE_INTEGER - ATLAS_MAX_DURATION_SECONDS, undefined, true);
   const durationSeconds = number(input.durationSeconds, 'durationSeconds', 1, ATLAS_MAX_DURATION_SECONDS, ATLAS_MAX_DURATION_SECONDS, true);
   const queueMode = input.queueMode ?? 'count';
   if (!ATLAS_QUEUE_MODES.some(mode => mode.id === queueMode)) fail('atlas_invalid_queue', '不支援的出征方式');
@@ -146,7 +152,7 @@ export function createAtlasRun(input) {
   mapSnapshot.travelSeconds = Math.ceil(mapSnapshot.travelSeconds * profile.travelMultiplier);
   const hp = number(input.supplies?.hp, 'supplies.hp', 0, 10000, 0, true);
   const mp = number(input.supplies?.mp, 'supplies.mp', 0, 10000, 0, true);
-  return {
+  const state = {
     ruleset_version: ATLAS_RULESET_VERSION, runId: identifier(input.runId, 'runId'), realmId: identifier(input.realmId, 'realmId'),
     seed, encounterRng: hash(`encounter:${seed}`), combatRng: hash(`combat:${seed}`), lootRng: hash(`loot:${seed}`),
     startedAt, processedAt: startedAt, durationSeconds, elapsedSeconds: 0,
@@ -173,6 +179,8 @@ export function createAtlasRun(input) {
     },
     events: [],
   };
+  initializeAtlasContent(state, input.snapshot);
+  return state;
 }
 
 const alive = state => state.enemies.filter(enemy => enemy.hp > 0);
@@ -185,20 +193,24 @@ function finish(state, status, reason) {
   event(state, status, { reason });
 }
 function spawnRoom(state) {
-  const elite = state.roomIndex >= state.map.packRooms;
+  const encounter = selectAtlasEncounter(state);
+  const elite = state.roomIndex >= state.map.packRooms || encounter?.id === 'elite_hunt';
   const spec = elite ? state.map.elite : state.map.enemy;
   const rank = state.map.kind === 'boss' ? 'boss' : elite ? 'elite' : 'normal';
-  state.enemies = Array.from({ length: spec.count }, (_, index) => {
-    const maxHp = Math.max(1, Math.round(spec.hp * (.94 + random(state, 'encounterRng') * .12)));
+  const count = encounter ? Math.min(6, spec.count + (encounter.extraEnemies || 0)) : spec.count;
+  const attackInterval = encounter ? spec.attackInterval * (encounter.attackIntervalMultiplier || 1) : spec.attackInterval;
+  state.enemies = Array.from({ length: count }, (_, index) => {
+    const maxHp = Math.max(1, Math.round(spec.hp * (encounter?.hpMultiplier || 1) * (.94 + random(state, 'encounterRng') * .12)));
     return { id: `${state.mapIndex}:${state.roomIndex}:${index}`, name: elite ? state.map.eliteName : state.map.enemyName,
-      rank, maxHp, hp: maxHp, atk: spec.atk, def: spec.def,
-      attackInterval: spec.attackInterval,
-      nextAttackAt: state.elapsedSeconds + spec.attackInterval + index * .25,
+      rank, maxHp, hp: maxHp, atk: encounter ? Math.max(1, Math.round(spec.atk * (encounter.attackMultiplier || 1))) : spec.atk, def: spec.def,
+      attackInterval,
+      nextAttackAt: state.elapsedSeconds + (encounter?.firstAttackSeconds || attackInterval) + index * .25,
       chilledUntil: 0, dots: [] };
   });
   state.hero.nextActionAt = state.elapsedSeconds + .001;
   state.hero.traps = [];
-  event(state, 'room_entered', { mapIndex: state.mapIndex, roomIndex: state.roomIndex, rank, enemies: spec.count });
+  event(state, 'room_entered', { mapIndex: state.mapIndex, roomIndex: state.roomIndex, rank, enemies: count });
+  applyAtlasEncounter(state, encounter);
 }
 
 function shield(state, fraction) {
@@ -231,7 +243,7 @@ function applyDot(state, enemy, source, duration, damage) {
   enemy.dots.push({ source, remaining: Math.ceil(duration), damage: Math.max(1, Math.round(damage)), appliedAt: state.elapsedSeconds });
 }
 
-function dealDamage(state, enemy, amount, source, critical = false) {
+function dealDamage(state, enemy, amount, source, critical = false, activities) {
   if (!enemy || enemy.hp <= 0) return 0;
   const mitigation = source === 'dot' ? 1 : 100 / (100 + enemy.def * 4);
   const critChance = clamp(.05 + state.snapshot.pct.critPct + (state.skill.critChance || 0), 0, .8);
@@ -247,6 +259,7 @@ function dealDamage(state, enemy, amount, source, critical = false) {
     state.metrics.kills++;
     // Death credit is common to direct hits, poison, pets, traps, and counters.
     event(state, 'enemy_defeated', { enemyId: enemy.id, source });
+    recordAtlasKill(state, activities, enemy);
     if (state.skill.mechanic === 'poison') {
       const target = alive(state)[0];
       if (target) for (const dot of enemy.dots.filter(row => row.source === 'poison').slice(-2)) {
@@ -267,7 +280,7 @@ function skillDamage(state, enemy, index = 0) {
   return amount;
 }
 
-function cast(state) {
+function cast(state, activities) {
   const { hero, skill, snapshot } = state;
   hero.mp = round(hero.mp - skill.cost);
   state.metrics.manaSpent += skill.cost; state.metrics.casts++;
@@ -280,7 +293,7 @@ function cast(state) {
   const targets = alive(state).slice(0, skill.targets);
   for (let index = 0; index < targets.length; index++) {
     const enemy = targets[index];
-    dealDamage(state, enemy, skillDamage(state, enemy, index), 'skill', true);
+    dealDamage(state, enemy, skillDamage(state, enemy, index), 'skill', true, activities);
     if ((skill.mechanic === 'poison' || skill.mechanic === 'bleed') && enemy.hp > 0) {
       applyDot(state, enemy, skill.mechanic, skill.dotDuration * skill.durationMultiplier,
         snapshot.atk * skill.dotCoefficient * skill.damageMultiplier * clamp(1 + snapshot.pct.dotPct, .1, 4));
@@ -299,13 +312,13 @@ function cast(state) {
       state.metrics.comboBursts++;
       for (let index = 0; index < 2; index++) {
         const target = alive(state)[0];
-        if (target) dealDamage(state, target, snapshot.atk * skill.coefficient * skill.damageMultiplier, 'skill', true);
+        if (target) dealDamage(state, target, snapshot.atk * skill.coefficient * skill.damageMultiplier, 'skill', true, activities);
       }
     }
   }
 }
 
-function heroActions(state) {
+function heroActions(state, activities) {
   const { hero, skill, snapshot } = state;
   const interval = 2 / snapshot.attackSpeedMultiplier;
   // Native speed affects event timestamps, not the number of settlement requests.
@@ -319,21 +332,21 @@ function heroActions(state) {
       (state.automation === 'balanced' ? enemies.length > 1 || hero.mp >= snapshot.maxMp * .35 : hero.mp >= snapshot.maxMp * .5);
     if (ready && strategyAllows && hero.mp < skill.cost && skill.cost <= snapshot.maxMp && (state.automation === 'burst' || strong)) drinkMp(state);
     if (ready && strategyAllows && hero.mp >= skill.cost) {
-      cast(state); hero.nextSkillAt = actionAt + skill.cooldown;
+      cast(state, activities); hero.nextSkillAt = actionAt + skill.cooldown;
     } else {
       if (ready && strategyAllows && hero.mp < skill.cost) state.metrics.manaDenied++;
       state.metrics.basicAttacks++;
-      dealDamage(state, enemies[0], snapshot.atk * .7, 'basic', true);
+      dealDamage(state, enemies[0], snapshot.atk * .7, 'basic', true, activities);
     }
   }
 }
 
-function periodic(state) {
+function periodic(state, activities) {
   for (const enemy of state.enemies) {
     if (enemy.hp <= 0) continue;
     for (const dot of [...enemy.dots]) {
       if (dot.appliedAt >= state.elapsedSeconds) continue;
-      dealDamage(state, enemy, dot.damage, 'dot');
+      dealDamage(state, enemy, dot.damage, 'dot', false, activities);
       dot.remaining--;
       if (enemy.hp <= 0) break;
     }
@@ -343,7 +356,7 @@ function periodic(state) {
     pet.remaining--;
     if (pet.nextAttackAt <= state.elapsedSeconds) {
       const enemy = alive(state)[0];
-      if (enemy) dealDamage(state, enemy, pet.damage, 'pet');
+      if (enemy) dealDamage(state, enemy, pet.damage, 'pet', false, activities);
       pet.nextAttackAt += 2;
     }
   }
@@ -351,12 +364,12 @@ function periodic(state) {
   for (const trap of state.hero.traps) {
     if (trap.triggerAt > state.elapsedSeconds) continue;
     state.metrics.trapsTriggered++;
-    for (const enemy of alive(state).slice(0, trap.targets)) dealDamage(state, enemy, trap.damage, 'trap', true);
+    for (const enemy of alive(state).slice(0, trap.targets)) dealDamage(state, enemy, trap.damage, 'trap', true, activities);
   }
   state.hero.traps = state.hero.traps.filter(trap => trap.triggerAt > state.elapsedSeconds);
 }
 
-function enemyActions(state) {
+function enemyActions(state, activities) {
   const { hero, snapshot, skill } = state;
   for (const enemy of alive(state)) {
     if (enemy.hp <= 0 || enemy.nextAttackAt > state.elapsedSeconds) continue;
@@ -371,15 +384,16 @@ function enemyActions(state) {
     hero.shield -= absorbed; damage -= absorbed; state.metrics.shieldAbsorbed += absorbed;
     const actual = Math.min(hero.hp, damage);
     hero.hp -= actual; state.metrics.damageTaken += actual;
+    recordAtlasDamage(state, actual);
     enemy.nextAttackAt += enemy.attackInterval * (enemy.chilledUntil > state.elapsedSeconds ? 1.5 : 1);
     if (hero.hp <= 0) { finish(state, 'dead', 'hp_depleted'); return; }
     if (blocked) for (const target of alive(state).slice(0, 3)) {
-      dealDamage(state, target, snapshot.atk * skill.counterCoefficient * skill.damageMultiplier, 'counter', true);
+      dealDamage(state, target, snapshot.atk * skill.counterCoefficient * skill.damageMultiplier, 'counter', true, activities);
     }
   }
 }
 
-function reward(state, rewards, kind) {
+function reward(state, rewards, kind, activities) {
   const spec = state.map.rewards;
   const completion = kind === 'completion';
   const goldMultiplier = state.balanceProfile.goldMultiplier ?? state.balanceProfile.rewardMultiplier;
@@ -396,24 +410,28 @@ function reward(state, rewards, kind) {
     exp: Math.floor((completion ? spec.completionExp : spec.roomExp) * experienceMultiplier),
     materials,
   };
+  applyAtlasContentRewards(state, record, activities);
   state.totals.gold += record.gold; state.totals.exp += record.exp;
   for (const [key, amount] of Object.entries(materials)) state.totals.materials[key] = (state.totals.materials[key] || 0) + amount;
   rewards.push(record);
 }
 
-function clearRoom(state, rewards) {
+function clearRoom(state, rewards, activities) {
   if (state.enemies.length === 0 || alive(state).length) return false;
   state.metrics.roomsCleared++;
-  reward(state, rewards, 'room');
+  reward(state, rewards, 'room', activities);
+  completeAtlasEncounter(state, activities);
   state.roomIndex++;
   state.hero.traps = [];
   if (state.roomIndex >= state.map.roomCount) {
     state.metrics.mapsCompleted++;
-    reward(state, rewards, 'completion');
+    reward(state, rewards, 'completion', activities);
+    recordAtlasCompletion(state, activities);
     event(state, 'map_completed', { mapIndex: state.mapIndex });
     if (state.queueMode !== 'duration' && state.metrics.mapsCompleted >= state.mapCount) finish(state, 'completed', 'queue_completed');
     else {
       state.mapIndex++; state.roomIndex = 0; state.enemies = [];
+      resetAtlasMapContent(state);
       state.transitionSeconds = state.map.entrySeconds;
     }
   } else {
@@ -422,7 +440,7 @@ function clearRoom(state, rewards) {
   return true;
 }
 
-function tick(state, rewards) {
+function tick(state, rewards, activities) {
   state.elapsedSeconds++; state.processedAt = state.startedAt + state.elapsedSeconds;
   state.hero.mp = Math.min(state.snapshot.maxMp, round(state.hero.mp + state.snapshot.mpRegenPerSecond));
   if (state.transitionSeconds > 0) {
@@ -440,14 +458,14 @@ function tick(state, rewards) {
   if (!state.enemies.length) spawnRoom(state);
   state.metrics.combatSeconds++;
   if (state.map.kind === 'boss') state.metrics.bossCombatSeconds++;
-  else if (state.roomIndex >= state.map.packRooms) state.metrics.eliteCombatSeconds++;
+  else if (hasAtlasContent(state) ? state.enemies.some(enemy => enemy.rank !== 'normal') : state.roomIndex >= state.map.packRooms) state.metrics.eliteCombatSeconds++;
   else state.metrics.packCombatSeconds++;
-  periodic(state);
-  if (clearRoom(state, rewards)) return;
-  heroActions(state);
-  if (clearRoom(state, rewards)) return;
-  enemyActions(state);
-  if (state.status === 'running') clearRoom(state, rewards);
+  periodic(state, activities);
+  if (clearRoom(state, rewards, activities)) return;
+  heroActions(state, activities);
+  if (clearRoom(state, rewards, activities)) return;
+  enemyActions(state, activities);
+  if (state.status === 'running') clearRoom(state, rewards, activities);
 }
 
 /** Returns only newly earned receipts. Commit them in the SAME transaction as
@@ -462,13 +480,17 @@ export function advanceAtlasRun(run, nowSeconds, options = {}) {
   const maxSteps = number(options.maxSteps, 'maxSteps', 1, ATLAS_MAX_ADVANCE_STEPS, ATLAS_MAX_ADVANCE_STEPS, true);
   if (now < run.startedAt) fail('atlas_clock_before_start', '結算時間早於出發');
   const state = clone(run);
-  const rewards = [];
+  const rewards = [], activities = [];
   const target = Math.min(Math.floor(now - state.startedAt), state.durationSeconds);
   let steps = 0;
   while (state.status === 'running' && state.elapsedSeconds < target && steps < maxSteps) {
-    tick(state, rewards); steps++;
+    tick(state, rewards, activities); steps++;
     if (state.status === 'running' && state.elapsedSeconds >= state.durationSeconds) finish(state, state.queueMode === 'duration' ? 'completed' : 'expired', 'duration_reached');
+    recordAtlasSurvival(state, activities);
+    // Reserve room for one complete tick below the 4096-row activity transaction limit.
+    if (activities.length >= 4000) break;
   }
-  return { state, rewards, steps, processedAt: state.processedAt,
+  finalizeAtlasActivities(state, activities);
+  return { state, rewards, activities, steps, processedAt: state.processedAt,
     stillCatchingUp: state.status === 'running' && state.elapsedSeconds < target };
 }
