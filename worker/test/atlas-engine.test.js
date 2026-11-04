@@ -32,8 +32,8 @@ test('catalog retains all twelve legacy themes and twelve distinct class build m
   assert.equal(ATLAS_THEMES.length, 12);
   assert.equal(ATLAS_BUILDS.length, 12);
   for (const baseClass of ['sword', 'archer', 'mage', 'thief']) assert.equal(ATLAS_BUILDS.filter(build => build.baseClass === baseClass).length, 3);
-  assert.equal(ATLAS_MAPS.length, 4);
-  assert.deepEqual(ATLAS_MAPS.at(-1).prerequisites, ['grove_intro']);
+  assert.equal(ATLAS_MAPS.length, 7);
+  assert.deepEqual(ATLAS_MAPS.find(map => map.id === 'laurel_warden').prerequisites, ['grove_intro']);
   const catalog = getAtlasCatalog();
   catalog.builds[0].coefficient = 999;
   assert.notEqual(getAtlasCatalog().builds[0].coefficient, 999);
@@ -133,8 +133,12 @@ test('death stops the entire queue and never consumes remaining supplies on retr
 });
 
 test('defeat in a later room preserves only already cleared room receipts', () => {
-  const result = settle(make({ seed: 'partial-death', snapshot: snapshot('thief'), buildId: 'thief_poison',
-    supports: ['lasting', 'wide'], mapId: 'grove_intro', mapCount: 3, supplies: { hp: 5, mp: 5 } }));
+  const run = make({ seed: 'partial-death', snapshot: snapshot('thief'), buildId: 'thief_poison',
+    supports: ['lasting', 'wide'], mapId: 'grove_intro', mapCount: 3, supplies: { hp: 5, mp: 5 } });
+  // Keep this partial-room-death fixture free of the new beneficial spring;
+  // v4 encounter success/failure is covered separately in atlas-content.test.js.
+  run.map.encounters.chance = 0;
+  const result = settle(run);
   assert.equal(result.state.status, 'dead');
   assert.ok(result.state.metrics.roomsCleared > 0);
   assert.equal(result.rewards.length, result.state.metrics.roomsCleared);

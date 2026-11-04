@@ -21,6 +21,16 @@ const logStmt = (db, id, tg, action, details, now) => db.prepare('INSERT INTO rp
   .bind(id, tg == null ? null : String(tg), action, details == null ? null : JSON.stringify(details), now);
 const lockStmt = (db, t, set, binds, now) => db.prepare(`UPDATE rpg_trades SET ${set}, rev = rev + 1, updated_at = ?, expires_at = ? WHERE id = ? AND rev = ? AND status = 'open'`).bind(...binds, now, now + TRADE.idleMs, t.id, t.rev);
 
+function escrowEquipmentStmt(db, tradeId, owner, item) {
+  // A recovery/reroll may commit after the initial read. Lock exactly the row
+  // whose full snapshot will be recorded, or let the ordinary conflict path
+  // read it again. This also preserves history after the item changes owner.
+  const fields = Object.keys(item);
+  const snapshot = fields.map(key => '"' + key.replaceAll('"', '""') + '" IS ?').join(' AND ');
+  return db.prepare('UPDATE rpg_equipment SET trade_id = ? WHERE id = ? AND tg_id = ? AND trade_id IS NULL AND is_equipped = 0 AND bound = 0 AND ' + snapshot)
+    .bind(tradeId, item.id, owner, ...fields.map(key => item[key]));
+}
+
 async function load(db, id) {
   const t = await db.prepare('SELECT * FROM rpg_trades WHERE id = ?').bind(String(id)).first(); if (!t) return null;
   const lines = (await db.prepare('SELECT * FROM rpg_trade_items WHERE trade_id = ?').bind(t.id).all()).results || [];
@@ -127,7 +137,7 @@ export async function openTradeStmts(env, { aTg, bTg, origin = 'share', shareId 
       .bind(id, a, o, origin, shareId, requestId, now, now, now + TRADE.idleMs, TRADE.maxOpenPerPlayer, TRADE.maxOpenPerPlayer),
     guardStmt(db), logStmt(db, id, a, 'open', { with: o, origin, shareId }, now)];
   if (preEquip) stmts.push(
-    db.prepare('UPDATE rpg_equipment SET trade_id = ? WHERE id = ? AND tg_id = ? AND trade_id IS NULL AND is_equipped = 0 AND bound = 0').bind(id, preEquip.id, a), guardStmt(db),
+    escrowEquipmentStmt(db, id, a, preEquip), guardStmt(db),
     db.prepare("INSERT INTO rpg_trade_items (trade_id,side,kind,ref,qty,snapshot_json) VALUES (?,'a','equip',?,1,?)").bind(id, preEquip.id, JSON.stringify(preEquip)),
     logStmt(db, id, a, 'add', { equip: preEquip.id, name: preEquip.name, pre: true }, now), bumpRevStmt(db, a, now));
   if(preSigil){const guards=await checkSigil(db,preSigil,a,o);stmts.push(...guards,
@@ -185,7 +195,7 @@ export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = nu
     if (equipId) {
       const e = await db.prepare('SELECT * FROM rpg_equipment WHERE id = ?').bind(String(equipId)).first(); checkEquipLine(e, tg);
       return { stmts: [...base,
-        db.prepare('UPDATE rpg_equipment SET trade_id = ? WHERE id = ? AND tg_id = ? AND trade_id IS NULL AND is_equipped = 0 AND bound = 0').bind(t.id, e.id, tg), guardStmt(db),
+        escrowEquipmentStmt(db, t.id, tg, e), guardStmt(db),
         db.prepare("INSERT INTO rpg_trade_items (trade_id,side,kind,ref,qty,snapshot_json) VALUES (?,?,'equip',?,1,?)").bind(t.id, s, e.id, JSON.stringify(e)),
         logStmt(db, t.id, tg, 'add', { equip: e.id, name: e.name }, now), ...updateNote(db, t, now)], result: { added: e.id } };
     }

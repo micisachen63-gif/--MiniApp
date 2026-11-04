@@ -2,7 +2,7 @@ import { GameError } from '../game/classes.js';
 import { taipeiDay, isoWeek } from '../game/time.js';
 import { getAtlasBuild, getAtlasMap } from '../game/atlas-catalog.js';
 import {
-  ATLAS_QUEST_RULES_VERSION, questTimestamp, questInstance, questInstances, questClaimWindowOpen,
+  ATLAS_QUEST_RULES_VERSION, ATLAS_ACTIVITY_KINDS, questTimestamp, questInstance, questInstances, questClaimWindowOpen,
 } from '../game/atlas-quests.js';
 import { ledgerStmt, classifyDbError } from '../db.js';
 
@@ -66,22 +66,89 @@ export function questEventStatements(db, { accountId, charId, events, realmId: e
   ];
 }
 
+export const MAX_ATLAS_ACTIVITY_EVENTS = 4096;
+export const MAX_ATLAS_ACTIVITY_JSON_BYTES = 500000;
+/** Add to the source operation's atomic batch. quantity is a count, except
+ * survival which is actual living exploration seconds. Producers split survival
+ * at Taipei midnight and keep source IDs stable across settlement partitions.
+ * The helper never derives progress from a browser counter or a polling time.
+ * Bound each JSON parameter by UTF-8 bytes, including brackets and commas. All
+ * insert/guard pairs must remain in the source operation's SAME atomic batch.
+ */
+export function activityEventStatements(db, { accountId, charId, events, realmId: eventRealm = 'permanent' }, now) {
+  if (eventRealm !== 'permanent') return [];
+  questTimestamp(now);
+  accountId = id(accountId, '帳號'); charId = id(charId, '角色');
+  if (!Array.isArray(events) || events.length > MAX_ATLAS_ACTIVITY_EVENTS) throw new GameError('atlas_quest_event', '活動事件批次無效');
+  if (!events.length) return [];
+  const chunks = [], encoder = new TextEncoder();
+  let rows = [], bytes = 2; // Array brackets are part of the bound parameter.
+  const flush = () => { chunks.push('[' + rows.join(',') + ']'); rows = []; bytes = 2; };
+  for (const event of events) {
+    if (!event || !ATLAS_ACTIVITY_KINDS.includes(event.kind)) throw new GameError('atlas_quest_event', '活動事件種類無效');
+    const sourceId = id(event.sourceId, '事件來源', 240), occurredAt = questTimestamp(event.occurredAt, '事件時間');
+    if (occurredAt > now || !Number.isSafeInteger(event.quantity) || event.quantity < 1 || event.quantity > 1000000) throw new GameError('atlas_quest_event', '活動事件的時間或數量無效');
+    const map = event.mapId == null ? null : getAtlasMap(event.mapId), build = event.buildId == null ? null : getAtlasBuild(event.buildId);
+    const combat = !['collection','reclaim'].includes(event.kind);
+    if ((event.mapId != null && !map) || (event.buildId != null && !build) || (combat && (!map || !build))) throw new GameError('atlas_quest_event', '活動事件的地圖或流派無效');
+    const tag = event.tag == null ? null : id(event.tag, '遭遇標記', 80);
+    const row = { sourceId, accountId, charId, kind: event.kind, quantity: event.quantity,
+      mapId: map?.id || null, themeId: map?.themeId || null, buildId: build?.id || null, tag,
+      occurredAt, dayKey: taipeiDay(occurredAt), weekKey: isoWeek(occurredAt), recordedAt: now };
+    row.signature = JSON.stringify([accountId,charId,row.kind,row.quantity,row.mapId,row.themeId,row.buildId,tag,occurredAt]);
+    const serialized = JSON.stringify(row), rowBytes = encoder.encode(serialized).byteLength;
+    if (rowBytes + 2 > MAX_ATLAS_ACTIVITY_JSON_BYTES) throw new GameError('atlas_quest_event', '活動事件內容過大');
+    if (bytes + rowBytes + (rows.length ? 1 : 0) > MAX_ATLAS_ACTIVITY_JSON_BYTES) flush();
+    bytes += rowBytes + (rows.length ? 1 : 0);
+    rows.push(serialized);
+  }
+  if (rows.length) flush();
+  return chunks.flatMap(json => [
+    db.prepare(`INSERT INTO rpg_atlas_activity_events(source_id,account_id,char_id,kind,quantity,map_id,theme_id,build_id,tag,occurred_at,day_key,week_key,signature,recorded_at)
+      SELECT json_extract(value,'$.sourceId'),json_extract(value,'$.accountId'),json_extract(value,'$.charId'),json_extract(value,'$.kind'),json_extract(value,'$.quantity'),
+       json_extract(value,'$.mapId'),json_extract(value,'$.themeId'),json_extract(value,'$.buildId'),json_extract(value,'$.tag'),json_extract(value,'$.occurredAt'),
+       json_extract(value,'$.dayKey'),json_extract(value,'$.weekKey'),json_extract(value,'$.signature'),json_extract(value,'$.recordedAt')
+      FROM json_each(?) WHERE 1 ON CONFLICT(account_id,kind,source_id) DO NOTHING`).bind(json),
+    db.prepare(`INSERT INTO rpg_atlas_quest_guard(ok) SELECT NULL WHERE EXISTS(
+      SELECT 1 FROM json_each(?) j LEFT JOIN rpg_atlas_activity_events e
+      ON e.account_id=json_extract(j.value,'$.accountId') AND e.kind=json_extract(j.value,'$.kind') AND e.source_id=json_extract(j.value,'$.sourceId')
+      WHERE e.signature IS NOT json_extract(j.value,'$.signature'))`).bind(json),
+  ]);
+}
+async function activityReady(db) {
+  return Boolean(await db.prepare("SELECT 1 FROM sqlite_master WHERE type='table' AND name='rpg_atlas_activity_events'").first());
+}
+
+
 function progressSQL(accountId, instance) {
   const criteria = instance.criteria, where = ['account_id=?', 'kind=?'], bindings = [accountId, criteria.kind];
   if (instance.endAt !== null) { where.push('occurred_at>=?', 'occurred_at<?'); bindings.push(instance.startAt, instance.endAt); }
   if (criteria.mapId) { where.push('map_id=?'); bindings.push(criteria.mapId); }
   if (criteria.themeId) { where.push('theme_id=?'); bindings.push(criteria.themeId); }
-  const count = criteria.mode === 'distinct_theme' ? 'COUNT(DISTINCT theme_id)' : criteria.mode === 'distinct_build' ? 'COUNT(DISTINCT build_id)' : 'COUNT(*)';
-  return { sql: `SELECT ${count} AS progress FROM rpg_atlas_quest_events WHERE ${where.join(' AND ')}`, bindings };
+  if (criteria.tag) { where.push('tag=?'); bindings.push(criteria.tag); }
+  const table = criteria.activity ? 'rpg_atlas_activity_events' : 'rpg_atlas_quest_events';
+  if (criteria.mode === 'qualified_theme') {
+    return { sql: `SELECT COUNT(*) AS progress FROM (SELECT theme_id FROM ${table} WHERE ${where.join(' AND ')} AND theme_id IS NOT NULL GROUP BY theme_id HAVING SUM(quantity)>=?)`, bindings: [...bindings, criteria.minimumQuantity] };
+  }
+  const count = criteria.mode === 'distinct_theme' ? 'COUNT(DISTINCT theme_id)' : criteria.mode === 'distinct_build' ? 'COUNT(DISTINCT build_id)' : criteria.activity ? 'COALESCE(SUM(quantity),0)' : 'COUNT(*)';
+  return { sql: `SELECT ${count} AS progress FROM ${table} WHERE ${where.join(' AND ')}`, bindings };
+}
+function prerequisiteSQL(accountId, instance) {
+  const required = instance.prerequisites || [];
+  return required.length ? { sql: `SELECT COUNT(DISTINCT quest_id) AS completed FROM rpg_atlas_quest_claims WHERE account_id=? AND period_key='lifetime' AND quest_id IN (${required.map(() => '?').join(',')})`, bindings: [accountId, ...required], target: required.length } : null;
 }
 const claimKey = (questId, period) => `${questId}:${period}`;
-function publicQuest(instance, progress, claimed, now) {
+function publicQuest(instance, progress, claimed, now, claimedKeys) {
+  const prerequisites = (instance.prerequisites || []).map(questId => ({ questId, title: questInstance(questId, 'lifetime').title, claimed: claimedKeys.has(claimKey(questId, 'lifetime')) }));
+  const locked = prerequisites.some(row => !row.claimed);
   return {
     id: instance.id, questId: instance.id, title: instance.title, description: instance.description,
     category: instance.category, action: instance.action, mapId: instance.mapId,
+    chainId: instance.chainId || null, chainTitle: instance.chainTitle || null, chainStep: instance.chainStep || null, prerequisites, locked,
+    lockedReason: locked ? '先領取「' + prerequisites.filter(row => !row.claimed).map(row => row.title).join('、') + '」；已累積進度保留。' : null,
     periodKey: instance.periodKey, progress, target: instance.target, unit: instance.unit,
     completed: progress >= instance.target, claimed,
-    claimable: !claimed && progress >= instance.target && questClaimWindowOpen(instance, now),
+    claimable: !claimed && !locked && progress >= instance.target && questClaimWindowOpen(instance, now),
     rewards: structuredClone(instance.rewards), expiresAt: instance.expiresAt,
   };
 }
@@ -93,7 +160,8 @@ export async function view(env, charId, now) {
   const base = { ok: true, enabled: false, realmId: realmId(env), accountId: actor.accountId, characterId: actor.charId,
     rulesVersion: ATLAS_QUEST_RULES_VERSION, balanceStatus: 'prototype', quests: [], materials: {}, now };
   if (!open(env) || !await actualPermanent(env)) return base;
-  const instances = questInstances(now);
+  const ready = await activityReady(env.DB);
+  const instances = questInstances(now).filter(instance => !instance.criteria.activity || ready);
   const statements = instances.map(instance => { const query = progressSQL(actor.accountId, instance); return env.DB.prepare(query.sql).bind(...query.bindings); });
   const periods = [...new Set(instances.map(row => row.periodKey))];
   const [progress, claims, materials] = await Promise.all([
@@ -103,7 +171,7 @@ export async function view(env, charId, now) {
   ]);
   const claimed = new Set(claims.results.map(row => claimKey(row.quest_id, row.period_key)));
   return { ...base, enabled: true,
-    quests: instances.map((instance, index) => publicQuest(instance, Number(progress[index].results[0]?.progress || 0), claimed.has(claimKey(instance.id, instance.periodKey)), now)),
+    quests: instances.map((instance, index) => publicQuest(instance, Number(progress[index].results[0]?.progress || 0), claimed.has(claimKey(instance.id, instance.periodKey)), now, claimed)),
     materials: Object.fromEntries(materials.results.map(row => [row.material, row.quantity])),
   };
 }
@@ -153,6 +221,9 @@ export async function claim(env, charId, body, now) {
   if (earned) return recordReplay(env, actor, requestId, earned, now);
   if (!open(env)) throw unavailable();
   const instance = questInstance(questId, periodKey);
+  if (instance.criteria.activity && !await activityReady(db)) throw new GameError('atlas_activity_unavailable', '活動委託資料尚未準備完成', 503);
+  const prerequisite = prerequisiteSQL(actor.accountId, instance);
+  if (prerequisite && Number(await db.prepare(prerequisite.sql).bind(...prerequisite.bindings).first('completed')) < prerequisite.target) throw new GameError('atlas_quest_locked', '請先領取前一步調查委託，已累積進度會保留', 409);
   if (!questClaimWindowOpen(instance, now)) throw new GameError('atlas_quest_expired', '這期委託尚未開始或已超過補領期限');
   if (actor.activeCharId !== actor.charId) throw new GameError('character_changed', '請先選擇要收取材料的角色', 409);
   const query = progressSQL(actor.accountId, instance);
@@ -160,9 +231,10 @@ export async function claim(env, charId, body, now) {
   if (progress < instance.target) throw new GameError('atlas_quest_incomplete', '任務尚未完成');
   const saved = { account_id: actor.accountId, quest_id: questId, period_key: periodKey,
     receipt_id: `atlas:quest:${actor.accountId}:${questId}:${periodKey}`,
-    reward_char_id: actor.charId, rules_version: ATLAS_QUEST_RULES_VERSION,
+    reward_char_id: actor.charId, rules_version: instance.rulesVersion || ATLAS_QUEST_RULES_VERSION,
     rewards_json: JSON.stringify(instance.rewards), claimed_at: now };
   const statements = [
+    ...(prerequisite ? [db.prepare(`INSERT INTO rpg_atlas_quest_guard(ok) SELECT NULL WHERE (${prerequisite.sql})<?`).bind(...prerequisite.bindings, prerequisite.target)] : []),
     db.prepare(`INSERT INTO rpg_atlas_quest_guard(ok) SELECT NULL WHERE NOT EXISTS(
       SELECT 1 FROM rpg_live_characters c JOIN rpg_accounts a ON a.account_tg_id=c.account_tg_id
       WHERE c.tg_id=? AND c.account_tg_id=? AND a.active_char_id=c.tg_id)`).bind(actor.charId, actor.accountId),

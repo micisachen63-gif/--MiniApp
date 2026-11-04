@@ -168,3 +168,22 @@ test('UI trigger, prototype buffs and default portrait are guarded without disab
   const bound=bindUi(source);vm.runInNewContext(bound,{window,Image:function(){},pushChat(){},setInterval(){}});window.UI.trigger(0);
   assert.equal(window.calls,0);assert.equal(bindUi(bound),bound);
 });
+
+test('all survey maps reuse only their exact theme and normal or elite assets', () => {
+  const api = viewApi();
+  const cases = [
+    ['laurel_survey', 1, '月光野兔', 'moon_hare', '阿耳忒彌斯巡林長', 'artemis_ranger'],
+    ['pillar_survey', 2, '百柱石像', 'temple_statue', '神殿禁衛百夫長', 'temple_centurion'],
+    ['grove_survey', 3, '潘神幼獸', 'pan_cub', '狂暴潘神衛士', 'pan_warden'],
+  ];
+  for (const [id, themeId, normal, normalSprite, elite, eliteSprite] of cases) {
+    const map = { id, themeId, kind: 'survey' };
+    assert.equal(api.mapAsset(map).sourceMap, themeId);
+    assert.equal(api.enemyAsset(map, { rank: 'normal', name: normal }).spriteId, normalSprite);
+    assert.equal(api.enemyAsset(map, { rank: 'elite', name: elite }).spriteId, eliteSprite);
+    assert.equal(api.enemyAsset(map, { rank: 'normal', name: elite }), null);
+    assert.equal(api.enemyAsset(map, { rank: 'boss', name: elite }), null);
+    assert.equal(api.mapAsset({ ...map, themeId: themeId + 1 }), null);
+    assert.equal(api.mapAsset({ ...map, kind: 'tutorial' }), null);
+  }
+});

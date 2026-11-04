@@ -1,0 +1,134 @@
+const assert=require('node:assert/strict');
+const fs=require('node:fs/promises');
+const path=require('node:path');
+const {chromium}=require(path.resolve('.release-sync/browser-tools/node_modules/playwright'));
+const origin=process.env.IDLE_SCENE_ORIGIN||'http://127.0.0.1:9683';
+const api=process.env.IDLE_API_ORIGIN||'http://127.0.0.1:9682';
+const dir=path.resolve('.release-sync/idle-content-20261104/browser');
+(async()=>{
+ await fs.mkdir(dir,{recursive:true});
+ const health=await fetch(origin+'/__preview/health').then(r=>r.json());
+ assert(health.isolated&&health.productionAccess===false&&health.apiReady);
+ const browser=await chromium.launch({channel:'chrome',headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});
+ const page=await browser.newPage({viewport:{width:390,height:844},deviceScaleFactor:1});
+ const errors=[],badResponses=[],actions=[],evidence={startedAt:new Date().toISOString(),origin,api,checks:[],screenshots:[]};
+ page.on('pageerror',e=>errors.push(e.message));
+ page.on('response',r=>{if(r.status()>=400)badResponses.push({url:r.url(),status:r.status()});});
+ page.on('request',r=>{if(r.url().startsWith(api+'/app/api/'))actions.push({action:r.url().split('/app/api/')[1],body:r.postDataJSON()});});
+ let frame;
+ const call=(action,body={})=>frame.evaluate(({action,body})=>window.RpgSceneSession.request(action,body),{action,body});
+ const state=()=>frame.evaluate(()=>window.RpgSceneSession.getSnapshot());
+ const recovery=()=>call('equipment-recovery');
+ const close=async()=>{const b=frame.locator('.scene-social-card > header [aria-label="關閉視窗"]');if(await b.count())await b.click();};
+ const open=async()=>{await frame.evaluate(()=>window.UI.toggle('recovery'));await frame.locator('[data-recovery-mode="archive"]').waitFor({timeout:20000});await frame.locator('[data-recovery-item]').first().waitFor({timeout:20000});};
+ const select=async id=>{const input=frame.locator('[data-recovery-item='+JSON.stringify(id)+']');await input.check();};
+ const screenshot=async name=>{await page.screenshot({path:path.join(dir,name),fullPage:true});evidence.screenshots.push(name);};
+ const confirm=async()=>{await frame.locator('[data-recovery-ack]').check();if(await frame.locator('[data-recovery-high]').count())await frame.locator('[data-recovery-high]').check();await frame.locator('[data-recovery-confirm]').click();};
+ const result=()=>frame.locator('.recovery-success').waitFor({timeout:20000});
+ try{
+  await page.goto(origin+'/',{waitUntil:'domcontentloaded'});
+  await page.waitForSelector('iframe');
+  for(let i=0;i<100;i++){frame=page.frames().find(f=>f.url().includes('/scene-bound-20261102/scene.html'));if(frame)break;await page.waitForTimeout(100);}
+  assert(frame,'live battle frame is mounted');
+  await frame.waitForFunction(()=>window.RpgSceneSession?.getSnapshot()?.characterId,{},{timeout:30000});
+  await frame.waitForFunction(()=>window.RpgSceneLiveView?.inspect?.()[0]?.characterVisible,{},{timeout:45000});
+  const initial=await state();evidence.characterId=initial.characterId;
+  await open();
+  let before=await recovery();assert(before.enabled&&before.items.length>14);
+  const first=before.items.find(e=>e.source==='atlas'&&!e.blockedReason&&!e.highValue&&!e.legacyNeeded&&!e.archived);
+  assert(first,'safe real archive candidate');
+  await select(first.id);await frame.locator('[data-recovery-preview]').click();
+  await frame.locator('[data-recovery-confirm]').waitFor();
+  assert(await frame.locator('[data-recovery-confirm]').isDisabled());
+  assert.equal((await recovery()).items.length,before.items.length,'preview has zero consumption');
+  await screenshot('390-archive-preview.png');
+  await confirm();await result();
+  let after=await recovery();assert(!after.items.some(e=>e.id===first.id));assert.equal(after.archivedCount,before.archivedCount+1);
+  evidence.checks.push({name:'first archive preview/confirmation',pass:true,archived:after.archivedCount});
+  await frame.locator('[data-recovery-mode="salvage"]').click();await frame.locator('[data-recovery-suggest]').click();
+  const selected=await frame.locator('[data-recovery-item]:checked').evaluateAll(nodes=>nodes.map(n=>n.dataset.recoveryItem));
+  // Selected items can span pages; the approved server preview is authoritative.
+  await frame.locator('[data-recovery-preview]').click();await frame.locator('[data-recovery-confirm]').waitFor();
+  const previewText=await frame.locator('.recovery-confirm').innerText();
+  const consumed=await frame.locator('.recovery-confirm-list li').count();
+  assert(consumed>=10&&consumed<=50,'bounded suggested duplicate batch');
+  assert.equal(await frame.locator('[data-recovery-high]').count(),0,'safe suggestion excludes high-value items');
+  before=await recovery();await screenshot('390-salvage-preview.png');
+  let intercepted=false;const writtenBodies=[];
+  await page.route(api+'/app/api/equipment-recovery/action',async route=>{
+   const b=route.request().postDataJSON();writtenBodies.push(b);
+   if(!intercepted){intercepted=true;const response=await route.fetch();assert.equal(response.status(),200);await route.abort('failed');}
+   else await route.continue();
+  });
+  await confirm();await frame.waitForFunction(()=>{const b=document.querySelector('[data-recovery-retry]');return b&&!b.disabled;},{},{timeout:20000});
+  const committed=await recovery();assert.equal(committed.items.length,before.items.length-consumed);
+  assert(committed.dust>before.dust);
+  await close();await open();await frame.locator('[data-recovery-retry]').waitFor();
+  await screenshot('390-recover-lost-response.png');
+  await frame.locator('[data-recovery-retry]').click();await result();
+  after=await recovery();assert.equal(after.dust,committed.dust);assert.equal(after.items.length,committed.items.length);
+  assert.equal(writtenBodies.length,2);assert.deepEqual(writtenBodies[1],writtenBodies[0]);
+  await page.unroute(api+'/app/api/equipment-recovery/action');
+  evidence.checks.push({name:'batch salvage and lost-response receipt recovery',pass:true,consumed,dust:after.dust,samePayload:true,previewText});
+  await frame.locator('[data-recovery-mode="reforge"]').click();
+  const target=after.items.find(e=>e.enhance>0&&!e.blockedReason&&e.reforgeCost?.dust<=after.dust);
+  assert(target,'an actual enhanced item is affordable after salvage');
+  await select(target.id);await frame.locator('[data-recovery-preview]').click();await frame.locator('[data-recovery-confirm]').waitFor();
+  assert.equal(await frame.locator('[data-recovery-high]').count(),0,'non-consuming reforge has one clear acknowledgement');
+  await screenshot('390-reforge-preview.png');await confirm();await result();
+  const reforged=await recovery(),changed=reforged.items.find(e=>e.id===target.id);
+  assert.equal(changed.enhance,target.enhance);assert.equal(changed.source,target.source);
+  assert.equal(reforged.dust,after.dust-target.reforgeCost.dust);
+  evidence.checks.push({name:'material sink rerolls real equipment while preserving enhancement',pass:true,itemId:target.id,enhance:changed.enhance,remainingDust:reforged.dust});
+  await frame.locator('[data-recovery-mode="archive"]').click();
+  const valuable=reforged.items.find(e=>e.highValue&&!e.blockedReason&&!e.archived);
+  if(valuable){
+   await select(valuable.id);await frame.locator('[data-recovery-preview]').click();await frame.locator('[data-recovery-high]').waitFor();
+   await frame.locator('[data-recovery-ack]').check();assert(await frame.locator('[data-recovery-confirm]').isDisabled());
+   await frame.locator('[data-recovery-high]').check();assert(!(await frame.locator('[data-recovery-confirm]').isDisabled()));
+   await frame.locator('[data-recovery-cancel]').click();assert((await recovery()).items.some(e=>e.id===valuable.id));
+   evidence.checks.push({name:'high-value second confirmation and cancel preserve gear',pass:true});
+  }
+  await frame.locator('[data-recovery-legacy]').click();
+  await frame.waitForFunction(()=>document.querySelector('.scene-social-body')?.innerText.includes('永久能力'),{},{timeout:15000});
+  evidence.checks.push({name:'legacy collection remains reachable in same modal',pass:true});
+  await close();
+  const quest=await call('atlas/quests');evidence.questCounts={quests:quest.quests?.length,groups:quest.groups?.length,total:quest.totalCount};
+  await frame.locator('#quest').click();
+  await frame.waitForFunction(()=>document.querySelector('.scene-social-body')?.innerText.includes('地區調查'),{},{timeout:15000});
+  await screenshot('390-quest-chains.png');await close();
+  await frame.locator('[data-live-expedition]').click();
+  const form=frame.locator('[data-guide-start]');await form.waitFor({timeout:20000});
+  const mapIds=await form.locator('select[name=mapId] option').evaluateAll(nodes=>nodes.map(n=>n.value));
+  assert.equal(mapIds.length,7);assert(mapIds.includes('grove_survey'));
+  await form.locator('[name=minutes]').fill('3');await form.locator('[name=hp]').fill('20');await form.locator('[name=mp]').fill('20');
+  await form.locator('button').click();await frame.locator('[data-guide-confirm]').click();
+  await frame.waitForFunction(()=>window.RpgSceneSession.getSnapshot()?.run?.active,{},{timeout:20000});await close();
+  const atStart=await state(),settleCount=actions.filter(a=>a.action==='atlas/settle').length;
+  await frame.waitForFunction(()=>window.RpgSceneSession.getSnapshot()?.run?.processedSeconds>=12,{},{timeout:40000});
+  const progressed=await state();assert(progressed.run.revision>atStart.run.revision);
+  assert(actions.filter(a=>a.action==='atlas/settle').length>settleCount,'automatic foreground sync calls settle');
+  await screenshot('390-automatic-expedition.png');
+  evidence.checks.push({name:'automatic progression without manual settle',pass:true,processedSeconds:progressed.run.processedSeconds,runId:progressed.run.id,maps:mapIds});
+  await page.setViewportSize({width:1280,height:900});await page.waitForTimeout(750);
+  await screenshot('1280-automatic-expedition.png');
+  await frame.locator('[data-live-expedition]').click();await frame.locator('[data-guide-stop]').waitFor();await frame.locator('[data-guide-stop]').click();await frame.locator('[data-guide-confirm]').click();
+  await frame.waitForFunction(()=>window.RpgSceneSession.getSnapshot()?.run?.active===false,{},{timeout:20000});await close();
+  await open();await screenshot('1280-recovery-overview.png');
+  const dimensions=await frame.locator('.scene-social-dialog').evaluate(el=>({width:el.getBoundingClientRect().width,scrollWidth:el.scrollWidth,clientWidth:el.clientWidth}));
+  assert(dimensions.scrollWidth<=dimensions.clientWidth+1);
+  evidence.checks.push({name:'desktop modal fits and battle remains behind it',pass:true,dimensions});
+  evidence.finishedAt=new Date().toISOString();evidence.pageErrors=errors;evidence.badResponses=badResponses;
+  assert.deepEqual(errors,[]);assert.deepEqual(badResponses,[]);
+  evidence.ok=true;
+ }catch(error){
+  evidence.ok=false;evidence.error={message:error.message,stack:error.stack};evidence.pageErrors=errors;evidence.badResponses=badResponses;
+  try{await screenshot('failure.png');evidence.visibleText=await frame?.locator('body').innerText();}catch{}
+  process.exitCode=1;
+ }finally{
+  evidence.requestCounts=Object.fromEntries([...new Set(actions.map(a=>a.action))].map(action=>[action,actions.filter(a=>a.action===action).length]));
+  await fs.writeFile(path.join(dir,'results.json'),JSON.stringify(evidence,null,2)+'\n');
+  console.log(JSON.stringify({ok:evidence.ok,checks:evidence.checks,error:evidence.error,pageErrors:errors,badResponses,dir}));
+  await browser.close();
+ }
+})();
