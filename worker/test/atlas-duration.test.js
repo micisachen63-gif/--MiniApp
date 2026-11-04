@@ -199,6 +199,9 @@ test('legacy count request signature replays after upgrade without starting or r
   await Atlas.start(env, id, legacy, T0);
   const record = saved(db, id), state = JSON.parse(record.state_json);
   state.ruleset_version = 'atlas-v1';
+  // This fixture represents a saved run from before equipment effects existed.
+  delete state.effects;
+  delete state.metrics.freeCasts;
   delete state.queueMode;
   delete state.balanceProfile.goldMultiplier;
   delete state.balanceProfile.experienceMultiplier;

@@ -4,6 +4,7 @@ import { applyExp } from '../game/idle.js';
 import { POTIONS } from '../game/constants.js';
 import { getAtlasCatalog, getAtlasBuild, getAtlasMap, ATLAS_AUTOMATION, ATLAS_SUPPORTS, ATLAS_MAX_MAP_COUNT, ATLAS_QUEUE_MODES } from '../game/atlas-catalog.js';
 import { createAtlasRun, advanceAtlasRun, finalizeAtlasActivities, AtlasRuleError } from '../game/atlas-engine.js';
+import { ATLAS_EFFECTS_RULES_VERSION } from '../game/atlas-effects.js';
 import { loadPlayer, clonePlayer, persistStatements, guardStmt, ledgerBatchStmts, classifyDbError } from '../db.js';
 import { withPlayer } from './player.js';
 import { requireBackpackAccess } from './party-presence.js';
@@ -91,7 +92,8 @@ export function runView(row,now,realmCutoff=null){
   startedAt:s.startedAt*1000,endsAt,processedAt:s.processedAt*1000,
   progress:{ratio:row.status==='completed'?1:Math.min(1,s.elapsedSeconds/s.durationSeconds),elapsedSeconds:target,processedSeconds:s.elapsedSeconds,catchingUp:row.status==='running'&&s.elapsedSeconds<target},
   report:{gold:s.totals.gold,exp:s.totals.exp,materials:{...s.totals.materials},...(s.ruleset_version==='atlas-v4'?{equipment:s.totals.equipment||0,items:{...s.totals.items}}:{}),kills:s.metrics.kills,deaths:row.status==='failed'?1:0,used:{hp:s.supplies.hpUsed,mp:s.supplies.mpUsed},reason:s.stopReason,metrics:s.metrics},
-  supplies:supplyView(s.supplies),stopRequested:row.stop_at!=null};
+  supplies:supplyView(s.supplies),stopRequested:row.stop_at!=null,
+   ...(s.effects?{equipmentEffects:{version:s.effects.version,actor:structuredClone(s.effects.actor),enemyElement:s.effects.enemy.element}}:{})};
 }
 
 export async function status(env,charId,now){
@@ -167,7 +169,7 @@ export async function start(env,charId,body,now){
   let balanceProfile;
   if(env.ATLAS_PROFILE_JSON){try{balanceProfile=JSON.parse(env.ATLAS_PROFILE_JSON);}catch{throw new GameError('atlas_config','星圖平衡設定無效',503);}}
   const talentState=await readAtlasTalents(ctx.db,work.char);
-  const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,talentIds:talentState.allocatedIds,
+  const state=createAtlasRun({runId,realmId:realmId(env),seed,startAt:Math.floor(now/1000),durationSeconds,queueMode,mapCount,mapId:map.id,buildId:profile.buildId,supports:profile.supportIds,automation:profile.automation,profile:balanceProfile,talentIds:talentState.allocatedIds,effectsRulesVersion:ATLAS_EFFECTS_RULES_VERSION,
    snapshot:{...stats,characterId:charId,baseClass:work.char.base_class,classPath:work.char.class_path||'',hp:Math.max(1,Math.min(work.char.hp,stats.maxHp)),mp:Math.max(0,Math.min(work.char.mp,stats.maxMp))},
    supplies:{items,policy:atlasSupplyPolicyForCharacter(work.char)}});
   for(const key of ATLAS_POTION_KEYS)if(items[key]>0)work.inv[key]=(work.inv[key]||0)-items[key];
