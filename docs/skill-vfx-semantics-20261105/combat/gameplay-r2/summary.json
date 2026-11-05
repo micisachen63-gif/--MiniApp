@@ -1,0 +1,513 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-05T06:07:05.643Z",
+  "completedAt": "2026-11-05T06:09:21.634Z",
+  "head": "f1826a8838b1e552b46e6dee9f28bf3fafc992ed",
+  "headAfter": "f1826a8838b1e552b46e6dee9f28bf3fafc992ed",
+  "exitCode": 0,
+  "harnessSha256": "d5b920aaf6d5a590f990815d93e4850ce22c0aeb867075f38dc96616ac2a60e6",
+  "realApiCases": 16,
+  "apiDescriptorObservations": 240,
+  "uniqueEventsWithinCases": 118,
+  "realApiIdentityCount": 14,
+  "realApiIdentities": [
+    "native:archer:B1",
+    "native:mage:A111",
+    "native:mage:B211",
+    "native:sword:A111",
+    "native:sword:B1",
+    "native:sword:B111",
+    "native:thief:A211",
+    "special:skill_02_1",
+    "special:skill_02_3",
+    "special:skill_03_1",
+    "special:skill_03_3",
+    "special:skill_05_1",
+    "special:skill_18_1",
+    "special:skill_thief_04"
+  ],
+  "sourceFileCount": 24,
+  "sourceUnchanged": true,
+  "sourceChanged": [],
+  "sourceBefore": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "d5b920aaf6d5a590f990815d93e4850ce22c0aeb867075f38dc96616ac2a60e6"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "d5b920aaf6d5a590f990815d93e4850ce22c0aeb867075f38dc96616ac2a60e6"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    }
+  ],
+  "pageErrors": 0,
+  "httpErrors": 0,
+  "screenshots": 48,
+  "missingScreenshots": [],
+  "cases": [
+    {
+      "mode": "idle-native",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "native:sword:A111"
+      ],
+      "screenshots": [
+        "idle-native-390-battle.png",
+        "idle-native-390-release.png",
+        "idle-native-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-native",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "native:sword:A111"
+      ],
+      "screenshots": [
+        "idle-native-1280-battle.png",
+        "idle-native-1280-release.png",
+        "idle-native-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-summon",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "special:skill_18_1"
+      ],
+      "screenshots": [
+        "idle-summon-390-battle.png",
+        "idle-summon-390-release.png",
+        "idle-summon-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-summon",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "special:skill_18_1"
+      ],
+      "screenshots": [
+        "idle-summon-1280-battle.png",
+        "idle-summon-1280-release.png",
+        "idle-summon-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-support",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "special:skill_03_3"
+      ],
+      "screenshots": [
+        "idle-support-390-battle.png",
+        "idle-support-390-release.png",
+        "idle-support-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-support",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 2,
+      "uniqueEvents": 1,
+      "skillIds": [
+        "special:skill_03_3"
+      ],
+      "screenshots": [
+        "idle-support-1280-battle.png",
+        "idle-support-1280-release.png",
+        "idle-support-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "party",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 24,
+      "uniqueEvents": 3,
+      "skillIds": [
+        "native:archer:B1",
+        "native:sword:B1",
+        "special:skill_05_1"
+      ],
+      "screenshots": [
+        "party-390-battle.png",
+        "party-390-release.png",
+        "party-390-effect.png"
+      ]
+    },
+    {
+      "mode": "party",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 18,
+      "uniqueEvents": 3,
+      "skillIds": [
+        "native:archer:B1",
+        "native:sword:B1",
+        "special:skill_05_1"
+      ],
+      "screenshots": [
+        "party-1280-battle.png",
+        "party-1280-release.png",
+        "party-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "pk",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 16,
+      "uniqueEvents": 8,
+      "skillIds": [
+        "native:sword:B111",
+        "native:thief:A211",
+        "special:skill_02_1",
+        "special:skill_thief_04"
+      ],
+      "screenshots": [
+        "pk-390-battle.png",
+        "pk-390-release.png",
+        "pk-390-effect.png"
+      ]
+    },
+    {
+      "mode": "pk",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 12,
+      "uniqueEvents": 6,
+      "skillIds": [
+        "native:sword:B111",
+        "native:thief:A211",
+        "special:skill_02_1",
+        "special:skill_thief_04"
+      ],
+      "screenshots": [
+        "pk-1280-battle.png",
+        "pk-1280-release.png",
+        "pk-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "pk-support",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 52,
+      "uniqueEvents": 26,
+      "skillIds": [
+        "native:sword:B111",
+        "special:skill_02_3"
+      ],
+      "screenshots": [
+        "pk-support-390-battle.png",
+        "pk-support-390-release.png",
+        "pk-support-390-effect.png"
+      ]
+    },
+    {
+      "mode": "pk-support",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 80,
+      "uniqueEvents": 40,
+      "skillIds": [
+        "native:sword:B111",
+        "special:skill_02_3"
+      ],
+      "screenshots": [
+        "pk-support-1280-battle.png",
+        "pk-support-1280-release.png",
+        "pk-support-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 5,
+      "uniqueEvents": 5,
+      "skillIds": [
+        "native:mage:A111",
+        "special:skill_05_1"
+      ],
+      "screenshots": [
+        "boss-390-battle.png",
+        "boss-390-release.png",
+        "boss-390-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 5,
+      "uniqueEvents": 5,
+      "skillIds": [
+        "native:mage:A111",
+        "special:skill_05_1"
+      ],
+      "screenshots": [
+        "boss-1280-battle.png",
+        "boss-1280-release.png",
+        "boss-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "ring",
+      "width": 390,
+      "status": "passed",
+      "apiDescriptors": 8,
+      "uniqueEvents": 8,
+      "skillIds": [
+        "native:mage:A111",
+        "native:mage:B211",
+        "native:sword:B111",
+        "native:thief:A211",
+        "special:skill_03_1",
+        "special:skill_05_1",
+        "special:skill_18_1"
+      ],
+      "screenshots": [
+        "ring-390-battle.png",
+        "ring-390-release.png",
+        "ring-390-effect.png"
+      ]
+    },
+    {
+      "mode": "ring",
+      "width": 1280,
+      "status": "passed",
+      "apiDescriptors": 8,
+      "uniqueEvents": 8,
+      "skillIds": [
+        "native:mage:A111",
+        "native:mage:B211",
+        "native:sword:B111",
+        "native:thief:A211",
+        "special:skill_03_1",
+        "special:skill_05_1",
+        "special:skill_18_1"
+      ],
+      "screenshots": [
+        "ring-1280-battle.png",
+        "ring-1280-release.png",
+        "ring-1280-effect.png"
+      ]
+    }
+  ],
+  "resultsSha256": "842864e14f9aa8467a5f010a70ae2ee1a2d52a84814adbf71f02c219aa86c468",
+  "manualReview": [
+    {
+      "path": "party-390-battle.png",
+      "observed": "Phone party arena shows the golden holy skill impact on the real named boss."
+    }
+  ],
+  "limitations": [
+    "Synthetic isolated SQLite accounts with an explicit fixed clock, no production access.",
+    "Desktop Chrome in phone and desktop viewports, not physical device GPU verification.",
+    "Observed API identity coverage for these sixteen cases is not every catalogue identity in every mode."
+  ]
+}

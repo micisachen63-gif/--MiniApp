@@ -1,0 +1,872 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-05T06:03:42.163Z",
+  "sourceCommit": "f1826a8838b1e552b46e6dee9f28bf3fafc992ed",
+  "status": "passed-for-atlas-with-documented-metadata-drift",
+  "coverageInput": "docs/skill-vfx-semantics-20261105/atlas/results.json",
+  "run": {
+    "startedAt": "2026-11-05T05:55:05.293Z",
+    "finishedAt": "2026-11-05T05:59:56.275Z",
+    "harnessExitCode": 0,
+    "rawHarnessStatus": "passed",
+    "rawWrapperStatus": "failed-or-drifted",
+    "cases": 16,
+    "desktopCases": 12,
+    "phoneCases": 4,
+    "committedApiReceipts": 201,
+    "uniqueEventCount": 25,
+    "eventCounts": {
+      "skill_cast": 18,
+      "skill_effect": 7
+    },
+    "castIdentities": [
+      "atlas:archer_beast",
+      "atlas:archer_pierce",
+      "atlas:archer_trap",
+      "atlas:mage_arcane",
+      "atlas:mage_chain",
+      "atlas:mage_frost",
+      "atlas:sword_bleed",
+      "atlas:sword_counter",
+      "atlas:sword_whirlwind",
+      "atlas:thief_combo",
+      "atlas:thief_execute",
+      "atlas:thief_poison"
+    ],
+    "pageErrors": 0,
+    "badResponses": 0,
+    "releaseMarkerOvershootMs": {
+      "min": 0.01000000000055934,
+      "max": 71.65000000000299
+    },
+    "runtimeSources": {
+      "count": 17,
+      "changed": []
+    },
+    "broaderSources": {
+      "count": 186,
+      "unchanged": 185,
+      "changed": [
+        "worker/public/skill-vfx-semantic-audit.json"
+      ]
+    },
+    "sharedInputs": {
+      "count": 9,
+      "changedDuring": [],
+      "changedSincePreviewStart": [],
+      "frozen": false
+    },
+    "fixture": "long-targets",
+    "isolated": true,
+    "ephemeral": true,
+    "productionAccess": false
+  },
+  "metadataDrift": {
+    "path": "worker/public/skill-vfx-semantic-audit.json",
+    "beforeSha256": "c68479168563ae2ecb333ea1a8e6c081dec90e55f6f3beb60b02b43e62639086",
+    "afterSha256": "88ced5ae0d4927b631b4542f2a5f796dfa4302c0f87c9d201365439facd699aa",
+    "inAtlas17CapturedInputs": false,
+    "headAuditMatchesRunStart": true,
+    "changesFromHead": [
+      {
+        "path": "coverage.renderEvidence.references",
+        "before": [],
+        "after": [
+          {
+            "path": "docs/skill-vfx-semantics-20261105/semantic-browser/results.json",
+            "exists": true,
+            "bytes": 161708,
+            "sha256": "07d08d2151ee0713e6f453a9251e3d527c393ce61cf4df5008c38282b929513f",
+            "verification": "reference-recorded-only; content and success are not interpreted by this generator"
+          },
+          {
+            "path": "docs/skill-vfx-semantics-20261105/semantic-browser/visual-review.json",
+            "exists": true,
+            "bytes": 2293,
+            "sha256": "17a532306f969fc894608e5c0bee5e688f5451a166d706585f6be9d1b03d4f6b",
+            "verification": "reference-recorded-only; content and success are not interpreted by this generator"
+          }
+        ]
+      }
+    ],
+    "classification": "Semantic audit evidence references changed during browser QA. This audit report is outside the 17 Atlas capture inputs. Original broader drift status is preserved."
+  },
+  "interruptedAttempt": {
+    "status": "interrupted-no-complete-receipt",
+    "completedCaseLogCount": 12,
+    "expectedCases": 16,
+    "exactExitCode": null,
+    "exactTerminationTime": null,
+    "completeReceipt": false,
+    "eligibleForCoverage": false,
+    "sourceChangedSinceRunStart": [
+      "worker/public/skill-vfx-legacy.mjs"
+    ],
+    "sharedChangedSinceRunStart": [],
+    "originalScreenshotsRetainedIn": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final"
+  },
+  "caseSummary": [
+    {
+      "build": "sword_whirlwind",
+      "width": 1280,
+      "height": 900,
+      "trigger": "foreground-auto",
+      "passed": true,
+      "traceCount": 2,
+      "releaseEventId": "94edd54d-5bc5-4e2d-9643-f0cbac9f0093:combat:25:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 58.32000000000005,
+      "drawCallsAtRelease": 24,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "sword_bleed",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 14,
+      "releaseEventId": "9e0bada9-a7ef-43b8-9a58-305c519bfa36:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 36.64999999999998,
+      "drawCallsAtRelease": 16,
+      "delayedEffectKind": "dot",
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "sword_counter",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "3df5f8de-4256-4b18-9af6-f76451658dfb:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 49.99000000000012,
+      "drawCallsAtRelease": 14,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "archer_pierce",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "4d37d40e-c854-4eed-9c6a-97e56054b9ab:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 6.649999999999977,
+      "drawCallsAtRelease": 20,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "archer_beast",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "21d0f0a5-ee7b-48f4-a772-1d9833f3d69b:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 33.32000000000107,
+      "drawCallsAtRelease": 7,
+      "delayedEffectKind": "pet",
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "archer_trap",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 14,
+      "releaseEventId": "6bdac0b5-4960-4057-aadf-0c2a0f01acba:combat:13:cast:1",
+      "releaseMode": "placement",
+      "releaseMarkerOvershootMs": 36.670000000001096,
+      "drawCallsAtRelease": 5,
+      "delayedEffectKind": "trap",
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "mage_chain",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "03985c24-4792-4ca8-89f0-92851e6691bf:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 53.350000000002865,
+      "drawCallsAtRelease": 17,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "mage_frost",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "cbb40c6e-47d9-418f-b2af-a76db8fa1158:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 11.679999999998813,
+      "drawCallsAtRelease": 29,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "mage_arcane",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "199e064b-d4eb-43d6-a537-35469e0f6634:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 68.31000000000358,
+      "drawCallsAtRelease": 26,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "thief_poison",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 15,
+      "releaseEventId": "fab71607-4747-40f3-990a-96e09b5baa47:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 46.669999999998254,
+      "drawCallsAtRelease": 16,
+      "delayedEffectKind": "dot",
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "thief_execute",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "ddfed400-2a62-4f76-9009-0d93d3352260:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 71.65000000000299,
+      "drawCallsAtRelease": 27,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "thief_combo",
+      "width": 1280,
+      "height": 900,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 13,
+      "releaseEventId": "4175023a-197b-446c-ac75-0b2d12a91ebc:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 5.009999999994761,
+      "drawCallsAtRelease": 22,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "height": 844,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 14,
+      "releaseEventId": "011e955e-917d-4c75-886a-eff45ebc9621:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 26.67999999999995,
+      "drawCallsAtRelease": 24,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "archer_beast",
+      "width": 390,
+      "height": 844,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 14,
+      "releaseEventId": "c02221fc-ff04-430d-a881-9ca79314dc0f:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 4.990000000000123,
+      "drawCallsAtRelease": 7,
+      "delayedEffectKind": "pet",
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "mage_chain",
+      "width": 390,
+      "height": 844,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 12,
+      "releaseEventId": "49c5861a-17f2-4572-96ae-2136a9caaf4e:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 0.01000000000055934,
+      "drawCallsAtRelease": 17,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    },
+    {
+      "build": "thief_combo",
+      "width": 390,
+      "height": 844,
+      "trigger": "explicit-settle",
+      "passed": true,
+      "traceCount": 12,
+      "releaseEventId": "cd20e0fd-3401-4ab3-9383-6f2c3ea97914:combat:13:cast:1",
+      "releaseMode": "full",
+      "releaseMarkerOvershootMs": 33.35000000000002,
+      "drawCallsAtRelease": 22,
+      "delayedEffectKind": null,
+      "duplicateAddedPresentations": 0,
+      "activeAfterStop": 0,
+      "pendingAfterStop": 0
+    }
+  ],
+  "visualReview": {
+    "method": "Representative screenshot inspection after scripted assertions",
+    "reviewed": [
+      "390-sword_whirlwind-release.png",
+      "1280-mage_chain-release.png"
+    ],
+    "observations": [
+      "Phone whirlwind release shows authored vortex beside the attacking actor; compact status and bottom HUD remain inside the viewport.",
+      "Desktop chain spell release visibly connects the caster to an actual enemy target."
+    ],
+    "allScreenshotsIndividuallyReviewed": false
+  },
+  "files": [
+    {
+      "path": "1280-archer_beast-effect.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-archer_beast-effect.png",
+      "bytes": 1752608,
+      "sha256": "253eec1f0d96002e66ee27a7c9a81d9c23fd810b594776c3fc2db91965568a5a"
+    },
+    {
+      "path": "1280-archer_beast-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-archer_beast-release.png",
+      "bytes": 1751337,
+      "sha256": "482361d8c8b4a9a86b2b74e1e283a8f3b25d113b6292574ded8ebacb7155fd36"
+    },
+    {
+      "path": "1280-archer_pierce-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-archer_pierce-release.png",
+      "bytes": 1746685,
+      "sha256": "b18b368f4416daef16344fb94263905568ffc203c5992b300f215f2bcb35cefe"
+    },
+    {
+      "path": "1280-archer_trap-effect.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-archer_trap-effect.png",
+      "bytes": 1750721,
+      "sha256": "be5bd58f9dff0563656b645325ac842d60f1d94e0239420193009543e29909a4"
+    },
+    {
+      "path": "1280-archer_trap-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-archer_trap-release.png",
+      "bytes": 1753533,
+      "sha256": "80e5897e9cc00b8a3550271dd16475eb51d44256f916ca248b00fbbb86d413c4"
+    },
+    {
+      "path": "1280-mage_arcane-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-mage_arcane-release.png",
+      "bytes": 1751984,
+      "sha256": "e84898db0de0479df85fd78861d63611eb11fd69cdbe0c5bf345c79fc1b59d67"
+    },
+    {
+      "path": "1280-mage_chain-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-mage_chain-release.png",
+      "bytes": 1742976,
+      "sha256": "b126911a5803891041283d1c4e5357e2374217ed67e6816031522ea363338789"
+    },
+    {
+      "path": "1280-mage_frost-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-mage_frost-release.png",
+      "bytes": 1756641,
+      "sha256": "8546bdca371952453ef81d37eb537c3811c72f92269b140681967ec952bd750a"
+    },
+    {
+      "path": "1280-sword_bleed-effect.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-sword_bleed-effect.png",
+      "bytes": 1747745,
+      "sha256": "bb24b4e5c3ec7a347966003aede517f9d84a753604e090756bb72f775e3d4731"
+    },
+    {
+      "path": "1280-sword_bleed-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-sword_bleed-release.png",
+      "bytes": 1748857,
+      "sha256": "12a6f20afd881cfb710f3f50168834feb8266e1b96780abd24fb62fb2ed709b6"
+    },
+    {
+      "path": "1280-sword_counter-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-sword_counter-release.png",
+      "bytes": 1757863,
+      "sha256": "3ffedbae3cabbe80b0dbdcd37a6691be401cf9375044ebff4528f64053f8ab01"
+    },
+    {
+      "path": "1280-sword_whirlwind-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-sword_whirlwind-release.png",
+      "bytes": 1763699,
+      "sha256": "68e75b9c47de1675353cc5286df9644269c913d40aa429fcbcf366ece1552c21"
+    },
+    {
+      "path": "1280-thief_combo-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-thief_combo-release.png",
+      "bytes": 1741284,
+      "sha256": "ec0eaf4de4c191f86f9ebabcd50233e02100a3ee27fe697d6bf8a46e88007876"
+    },
+    {
+      "path": "1280-thief_execute-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-thief_execute-release.png",
+      "bytes": 1744343,
+      "sha256": "b866f1d664a3a870e02a1b92c71d16715bb0377063c2e93e5b0d2795caf48758"
+    },
+    {
+      "path": "1280-thief_poison-effect.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-thief_poison-effect.png",
+      "bytes": 1739411,
+      "sha256": "cb4f85d4c53729fa67b658cf3935998891ec4c4639bb4acd9306589999595dec"
+    },
+    {
+      "path": "1280-thief_poison-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/1280-thief_poison-release.png",
+      "bytes": 1737717,
+      "sha256": "a3da171b309dd3c03debd8ce191a30d47e42172c545f271b60f9252539be3f40"
+    },
+    {
+      "path": "390-archer_beast-effect.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/390-archer_beast-effect.png",
+      "bytes": 601379,
+      "sha256": "7f1b1cf4a173d317074ce8b1bea00d2d322f5e54270afe5851d69d8aa7784cfc"
+    },
+    {
+      "path": "390-archer_beast-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/390-archer_beast-release.png",
+      "bytes": 606885,
+      "sha256": "4668bb22104597eaf2a60aca12c4a0daeeb1c4e357b40a32efe53387d58c88ed"
+    },
+    {
+      "path": "390-mage_chain-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/390-mage_chain-release.png",
+      "bytes": 604517,
+      "sha256": "a783abc66dd989484fddf0eb05d481875aefe760835135811fccbb70cbf70c25"
+    },
+    {
+      "path": "390-sword_whirlwind-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/390-sword_whirlwind-release.png",
+      "bytes": 611274,
+      "sha256": "0e50114f2f437f2431434f47b74f13b98cd262e60ffdec6547743c280a94d988"
+    },
+    {
+      "path": "390-thief_combo-release.png",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/390-thief_combo-release.png",
+      "bytes": 602112,
+      "sha256": "991989c6a607b66c65f72fb36c7632e259daf3bd413850fde34d55a99108647d"
+    },
+    {
+      "path": "browser.stderr.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/browser.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "browser.stdout.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/browser.stdout.log",
+      "bytes": 4890,
+      "sha256": "b5e7c39b0729b38b87d0e1cb3281c00732d82d14c6dc1fc096aeea91c532a10d"
+    },
+    {
+      "path": "checkpoint.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/checkpoint.json",
+      "bytes": 1052430,
+      "sha256": "cb9912c72e6ccd700999c11ccb157762b8679e3650984553a4f1274edcbd2b6a"
+    },
+    {
+      "path": "execution-start.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/execution-start.json",
+      "bytes": 37505,
+      "sha256": "c9c5c624491463f7b1a76780253811d3c7875cc7ff5097819ea522fafc3d1915"
+    },
+    {
+      "path": "execution.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/execution.json",
+      "bytes": 37216,
+      "sha256": "f69aeca091c4be99d785e288cc0ad1e19d2844ec59c730be2e230079166e285e"
+    },
+    {
+      "path": "interrupted-attempt/browser.stderr.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/browser.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "interrupted-attempt/browser.stdout.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/browser.stdout.log",
+      "bytes": 3621,
+      "sha256": "57c13fd5c9d5c34f277631e1854168e54653cde46b654c15c6fe16068ad8de6e"
+    },
+    {
+      "path": "interrupted-attempt/execution-start.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/execution-start.json",
+      "bytes": 37328,
+      "sha256": "cfa55419e361108fbd48203c9d6dadca3d43cbefb9c14ee40581cbb7337c67b6"
+    },
+    {
+      "path": "interrupted-attempt/interruption-observation.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/interruption-observation.json",
+      "bytes": 46169,
+      "sha256": "794da60a2a2f5beee3319a746d889ba7e55ae6e6e662323ae3de73179a24d5fe"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/preview-controls.js",
+      "bytes": 7212,
+      "sha256": "32334d84ac438605acf437e685e29884459f49749ca56838c164853f703e1afe"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.html",
+      "bytes": 2517,
+      "sha256": "c4b463f51dd7353cca0193ee05fcedf724a09d1a54bab123797c41c165ac7bc2"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.js",
+      "bytes": 27772,
+      "sha256": "9e8a075db6aea050519bddd7ea7aa9f5ddf2dfc1dd6ed434b1e1c4246e560577"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/dark-ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/dark-ui.js",
+      "bytes": 1978,
+      "sha256": "fecff8bdc8c89c1d35fe6ee805864200ba14346152cf0b1ce1dfe9d2eabd7925"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/hud-v2.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/hud-v2.js",
+      "bytes": 7183,
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/preview.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/preview.html",
+      "bytes": 1272,
+      "sha256": "aadc8ce7b5a0e1da47e4d4ff4f494d90a0267537e77430d7e7405c7b44021371"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/preview.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/preview.js",
+      "bytes": 7030,
+      "sha256": "faf0ee5aecc66b7f10dd9c1e7217cd0f16991e3694f1b71f021435829dcbafe7"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "bytes": 2151,
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-after-interruption/ui-proto/ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-after-interruption/ui-proto/ui.js",
+      "bytes": 19281,
+      "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/characters-v1/preview-controls.js",
+      "bytes": 7212,
+      "sha256": "32334d84ac438605acf437e685e29884459f49749ca56838c164853f703e1afe"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html",
+      "bytes": 2517,
+      "sha256": "c4b463f51dd7353cca0193ee05fcedf724a09d1a54bab123797c41c165ac7bc2"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js",
+      "bytes": 27772,
+      "sha256": "9e8a075db6aea050519bddd7ea7aa9f5ddf2dfc1dd6ed434b1e1c4246e560577"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/dark-ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/dark-ui.js",
+      "bytes": 1978,
+      "sha256": "fecff8bdc8c89c1d35fe6ee805864200ba14346152cf0b1ce1dfe9d2eabd7925"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/hud-v2.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/hud-v2.js",
+      "bytes": 7183,
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/preview.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/preview.html",
+      "bytes": 1272,
+      "sha256": "aadc8ce7b5a0e1da47e4d4ff4f494d90a0267537e77430d7e7405c7b44021371"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/preview.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/preview.js",
+      "bytes": 7030,
+      "sha256": "faf0ee5aecc66b7f10dd9c1e7217cd0f16991e3694f1b71f021435829dcbafe7"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "bytes": 2151,
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "interrupted-attempt/shared-inputs-before/ui-proto/ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/shared-inputs-before/ui-proto/ui.js",
+      "bytes": 19281,
+      "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719"
+    },
+    {
+      "path": "preview-start/shared-inputs.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs.json",
+      "bytes": 4342,
+      "sha256": "884f404f504f773e21c77e7bcea3861cec85962de60f935d74de901405202a83"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/characters-v1/preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/characters-v1/preview-controls.js",
+      "bytes": 7212,
+      "sha256": "32334d84ac438605acf437e685e29884459f49749ca56838c164853f703e1afe"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/characters-v1/scene.html",
+      "bytes": 2517,
+      "sha256": "c4b463f51dd7353cca0193ee05fcedf724a09d1a54bab123797c41c165ac7bc2"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/characters-v1/scene.js",
+      "bytes": 27772,
+      "sha256": "9e8a075db6aea050519bddd7ea7aa9f5ddf2dfc1dd6ed434b1e1c4246e560577"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/dark-ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/dark-ui.js",
+      "bytes": 1978,
+      "sha256": "fecff8bdc8c89c1d35fe6ee805864200ba14346152cf0b1ce1dfe9d2eabd7925"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/hud-v2.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/hud-v2.js",
+      "bytes": 7183,
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/preview.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/preview.html",
+      "bytes": 1272,
+      "sha256": "aadc8ce7b5a0e1da47e4d4ff4f494d90a0267537e77430d7e7405c7b44021371"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/preview.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/preview.js",
+      "bytes": 7030,
+      "sha256": "faf0ee5aecc66b7f10dd9c1e7217cd0f16991e3694f1b71f021435829dcbafe7"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "bytes": 2151,
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "preview-start/shared-inputs/ui-proto/ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/preview-start-2026-11-05T05-42-28-755Z/shared-inputs/ui-proto/ui.js",
+      "bytes": 19281,
+      "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719"
+    },
+    {
+      "path": "process.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/process.json",
+      "bytes": 263,
+      "sha256": "c8d9079b23aead8e6877a7a53ef998a7b42fac65dc98a4c206d0b0e8e8e34e7e"
+    },
+    {
+      "path": "results.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/results.json",
+      "bytes": 1052425,
+      "sha256": "7b494e5fb9f88106b2b8e37457b403c87bd5add9a0a33febd135e7044a8434a7"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/characters-v1/preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/characters-v1/preview-controls.js",
+      "bytes": 7212,
+      "sha256": "32334d84ac438605acf437e685e29884459f49749ca56838c164853f703e1afe"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/characters-v1/scene.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/characters-v1/scene.html",
+      "bytes": 2517,
+      "sha256": "c4b463f51dd7353cca0193ee05fcedf724a09d1a54bab123797c41c165ac7bc2"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/characters-v1/scene.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/characters-v1/scene.js",
+      "bytes": 27772,
+      "sha256": "9e8a075db6aea050519bddd7ea7aa9f5ddf2dfc1dd6ed434b1e1c4246e560577"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/dark-ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/dark-ui.js",
+      "bytes": 1978,
+      "sha256": "fecff8bdc8c89c1d35fe6ee805864200ba14346152cf0b1ce1dfe9d2eabd7925"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/hud-v2.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/hud-v2.js",
+      "bytes": 7183,
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/preview.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/preview.html",
+      "bytes": 1272,
+      "sha256": "aadc8ce7b5a0e1da47e4d4ff4f494d90a0267537e77430d7e7405c7b44021371"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/preview.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/preview.js",
+      "bytes": 7030,
+      "sha256": "faf0ee5aecc66b7f10dd9c1e7217cd0f16991e3694f1b71f021435829dcbafe7"
+    },
+    {
+      "path": "shared-inputs-after/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "bytes": 2151,
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "shared-inputs-after/ui-proto/ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-after/ui-proto/ui.js",
+      "bytes": 19281,
+      "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/characters-v1/preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/characters-v1/preview-controls.js",
+      "bytes": 7212,
+      "sha256": "32334d84ac438605acf437e685e29884459f49749ca56838c164853f703e1afe"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/characters-v1/scene.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html",
+      "bytes": 2517,
+      "sha256": "c4b463f51dd7353cca0193ee05fcedf724a09d1a54bab123797c41c165ac7bc2"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/characters-v1/scene.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js",
+      "bytes": 27772,
+      "sha256": "9e8a075db6aea050519bddd7ea7aa9f5ddf2dfc1dd6ed434b1e1c4246e560577"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/dark-ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/dark-ui.js",
+      "bytes": 1978,
+      "sha256": "fecff8bdc8c89c1d35fe6ee805864200ba14346152cf0b1ce1dfe9d2eabd7925"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/hud-v2.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/hud-v2.js",
+      "bytes": 7183,
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/preview.html",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/preview.html",
+      "bytes": 1272,
+      "sha256": "aadc8ce7b5a0e1da47e4d4ff4f494d90a0267537e77430d7e7405c7b44021371"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/preview.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/preview.js",
+      "bytes": 7030,
+      "sha256": "faf0ee5aecc66b7f10dd9c1e7217cd0f16991e3694f1b71f021435829dcbafe7"
+    },
+    {
+      "path": "shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js",
+      "bytes": 2151,
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "shared-inputs-before/ui-proto/ui.js",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final-r2/shared-inputs-before/ui-proto/ui.js",
+      "bytes": 19281,
+      "sha256": "38f81f81d28b84c3d7b06ff1405912071641018c15eca8e9d025aff46b704719"
+    },
+    {
+      "path": "tool-recovery/atlas-checkpoint-tool-change.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-checkpoint-tool-change.json",
+      "bytes": 551,
+      "sha256": "a375dfde48bbc4304ef152ed3ba9db4c03368d9effaf12a8d4d7138a5b243a8d"
+    },
+    {
+      "path": "tool-recovery/atlas-recovery-launch.json",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-recovery-launch.json",
+      "bytes": 404,
+      "sha256": "a33ece5f8dc3527f3a1b117d107b38ddf918eba229cbd4ec97b3ee9bca32efbf"
+    },
+    {
+      "path": "tool-recovery/atlas-recovery-launcher.stderr.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-recovery-launcher.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "tool-recovery/atlas-recovery-launcher.stdout.log",
+      "source": ".release-sync/skill-vfx-semantics-20261105/atlas-recovery-launcher.stdout.log",
+      "bytes": 1139,
+      "sha256": "06158960047bc2df35451588aa40ef3673b8dbcefed50886c1e7e8d39d76e8a6"
+    }
+  ]
+}

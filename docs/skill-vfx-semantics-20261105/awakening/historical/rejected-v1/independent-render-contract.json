@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "scope": "read-only frame-plan and mocked renderer contract; no browser pixels",
+  "sourceFiles": [
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "before": "3cd8a19a1f19cd477ec0efc25a27ee4c082ae2068d34013917d6ea9cff256a52",
+      "after": "3cd8a19a1f19cd477ec0efc25a27ee4c082ae2068d34013917d6ea9cff256a52"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "before": "bb44e3fd062f92790f1c85a4dacd7d3fc355e51c299013194cbbeef820d6d389",
+      "after": "bb44e3fd062f92790f1c85a4dacd7d3fc355e51c299013194cbbeef820d6d389"
+    }
+  ],
+  "statistics": {
+    "profiles": 16,
+    "framePlans": 5120,
+    "mockedSpriteDraws": 14696,
+    "maxLayers": 19,
+    "maxGeometry": 27,
+    "contractIssues": [],
+    "assetFilesExist": true
+  },
+  "sampling": {
+    "directions": [
+      "right",
+      "left",
+      "up",
+      "down"
+    ],
+    "targetCounts": [
+      1,
+      3
+    ],
+    "qualities": [
+      "high",
+      "low"
+    ],
+    "reducedMotion": [
+      false,
+      true
+    ],
+    "progress": [
+      0,
+      0.001,
+      0.1,
+      0.25,
+      0.4,
+      0.63,
+      0.8,
+      0.95,
+      0.999,
+      1
+    ]
+  },
+  "findings": [
+    "Semantic subjects use explicit 3x3 cells and 418px crop rectangles; hawk uses its full 840px image.",
+    "All line/ring and sprite fields match drawEffectFrame; coordinates, widths, rotations, alpha and crop arguments are finite.",
+    "Both time endpoints are empty; reduced motion uses a fixed composition with an opacity envelope.",
+    "Main subject sequence remains identical between high and low quality at progress 0.63; observed budgets stay below low limits.",
+    "Subjects remain upright with left-facing mirroring; motion paths use direction axes, while falling sword and sky arrows retain vertical gravity."
+  ],
+  "limitations": [
+    "Read-only source and frame-plan review with a mocked Canvas draw interface.",
+    "No browser pixel or physical device performance claim; separate browser QA is still required.",
+    "These 16 planned awakening previews do not add implemented combat skills."
+  ],
+  "savedAt": "2026-11-05T05:59:54.670Z"
+}

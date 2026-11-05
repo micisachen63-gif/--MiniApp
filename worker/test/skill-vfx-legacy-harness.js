@@ -5,7 +5,10 @@ export function legacySurface({ reduced = false, autoLoad = true } = {}) {
   const frames = new Map(), images = [], docListeners = new Map(), mediaListeners = new Map(), resizeObservers = [];
   const media = { matches: reduced, addEventListener: (name, fn) => mediaListeners.set(name, fn),
     removeEventListener: name => mediaListeners.delete(name) };
-  const context = new Proxy({ drawImage() { drawCalls++; } }, { get(target, key) {
+  // Count raster paints as well as atlas sprites; semantic cracks and waves use paths.
+  // Clearing or transforming the canvas is not proof of a visible effect.
+  const paints = Object.fromEntries(['drawImage', 'fill', 'stroke', 'fillRect', 'strokeRect'].map(name => [name, () => { drawCalls++; }]));
+  const context = new Proxy(paints, { get(target, key) {
     if (key in target) return target[key];
     if (['canvas', 'globalAlpha', 'lineWidth'].includes(key)) return target[key];
     return () => {};

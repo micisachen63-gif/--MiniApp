@@ -1,0 +1,7126 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-05T05:37:47.954Z",
+  "scope": "current-name-semantic-workshop-pixels",
+  "sourceFiles": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.mjs",
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    {
+      "path": "worker/public/preview-skill-vfx.html",
+      "sha256": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.css",
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    {
+      "path": "worker/tools/skill-vfx-semantic-browser.mjs",
+      "sha256": "40b2d99737ad61a979deee87f05187ac3a98f220bdeac6ef3b6e0cae7a490130"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/fire-spirit.webp",
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    }
+  ],
+  "coverage": [
+    {
+      "id": "atlas:sword_whirlwind",
+      "direction": "right",
+      "pixels": 11069,
+      "signature": 3199646741,
+      "recipe": "atlas:sword_whirlwind"
+    },
+    {
+      "id": "atlas:sword_whirlwind",
+      "direction": "left",
+      "pixels": 11058,
+      "signature": 475083859,
+      "recipe": "atlas:sword_whirlwind"
+    },
+    {
+      "id": "atlas:sword_whirlwind",
+      "direction": "up",
+      "pixels": 11072,
+      "signature": 3225089096,
+      "recipe": "atlas:sword_whirlwind"
+    },
+    {
+      "id": "atlas:sword_whirlwind",
+      "direction": "down",
+      "pixels": 11071,
+      "signature": 2955378190,
+      "recipe": "atlas:sword_whirlwind"
+    },
+    {
+      "id": "atlas:sword_bleed",
+      "direction": "right",
+      "pixels": 7001,
+      "signature": 3224217615,
+      "recipe": "atlas:sword_bleed"
+    },
+    {
+      "id": "atlas:sword_bleed",
+      "direction": "left",
+      "pixels": 6811,
+      "signature": 1057926015,
+      "recipe": "atlas:sword_bleed"
+    },
+    {
+      "id": "atlas:sword_bleed",
+      "direction": "up",
+      "pixels": 6507,
+      "signature": 4278070046,
+      "recipe": "atlas:sword_bleed"
+    },
+    {
+      "id": "atlas:sword_bleed",
+      "direction": "down",
+      "pixels": 7305,
+      "signature": 2670412075,
+      "recipe": "atlas:sword_bleed"
+    },
+    {
+      "id": "atlas:sword_counter",
+      "direction": "right",
+      "pixels": 5705,
+      "signature": 290591738,
+      "recipe": "atlas:sword_counter"
+    },
+    {
+      "id": "atlas:sword_counter",
+      "direction": "left",
+      "pixels": 5780,
+      "signature": 1505709505,
+      "recipe": "atlas:sword_counter"
+    },
+    {
+      "id": "atlas:sword_counter",
+      "direction": "up",
+      "pixels": 5840,
+      "signature": 3613257419,
+      "recipe": "atlas:sword_counter"
+    },
+    {
+      "id": "atlas:sword_counter",
+      "direction": "down",
+      "pixels": 5752,
+      "signature": 149682663,
+      "recipe": "atlas:sword_counter"
+    },
+    {
+      "id": "atlas:archer_pierce",
+      "direction": "right",
+      "pixels": 3138,
+      "signature": 1017493393,
+      "recipe": "atlas:archer_pierce"
+    },
+    {
+      "id": "atlas:archer_pierce",
+      "direction": "left",
+      "pixels": 3099,
+      "signature": 1813418976,
+      "recipe": "atlas:archer_pierce"
+    },
+    {
+      "id": "atlas:archer_pierce",
+      "direction": "up",
+      "pixels": 3154,
+      "signature": 842968761,
+      "recipe": "atlas:archer_pierce"
+    },
+    {
+      "id": "atlas:archer_pierce",
+      "direction": "down",
+      "pixels": 3124,
+      "signature": 3013009756,
+      "recipe": "atlas:archer_pierce"
+    },
+    {
+      "id": "atlas:archer_beast",
+      "direction": "right",
+      "pixels": 7194,
+      "signature": 4202501523,
+      "recipe": "atlas:archer_beast"
+    },
+    {
+      "id": "atlas:archer_beast",
+      "direction": "left",
+      "pixels": 7203,
+      "signature": 2489759591,
+      "recipe": "atlas:archer_beast"
+    },
+    {
+      "id": "atlas:archer_beast",
+      "direction": "up",
+      "pixels": 6770,
+      "signature": 1491123546,
+      "recipe": "atlas:archer_beast"
+    },
+    {
+      "id": "atlas:archer_beast",
+      "direction": "down",
+      "pixels": 6711,
+      "signature": 470090985,
+      "recipe": "atlas:archer_beast"
+    },
+    {
+      "id": "atlas:archer_trap",
+      "direction": "right",
+      "pixels": 10239,
+      "signature": 1487633925,
+      "recipe": "atlas:archer_trap"
+    },
+    {
+      "id": "atlas:archer_trap",
+      "direction": "left",
+      "pixels": 10240,
+      "signature": 3745270182,
+      "recipe": "atlas:archer_trap"
+    },
+    {
+      "id": "atlas:archer_trap",
+      "direction": "up",
+      "pixels": 10224,
+      "signature": 634658714,
+      "recipe": "atlas:archer_trap"
+    },
+    {
+      "id": "atlas:archer_trap",
+      "direction": "down",
+      "pixels": 10253,
+      "signature": 3153908838,
+      "recipe": "atlas:archer_trap"
+    },
+    {
+      "id": "atlas:mage_chain",
+      "direction": "right",
+      "pixels": 3400,
+      "signature": 3266425994,
+      "recipe": "atlas:mage_chain"
+    },
+    {
+      "id": "atlas:mage_chain",
+      "direction": "left",
+      "pixels": 3340,
+      "signature": 3354884561,
+      "recipe": "atlas:mage_chain"
+    },
+    {
+      "id": "atlas:mage_chain",
+      "direction": "up",
+      "pixels": 3348,
+      "signature": 2633641959,
+      "recipe": "atlas:mage_chain"
+    },
+    {
+      "id": "atlas:mage_chain",
+      "direction": "down",
+      "pixels": 3417,
+      "signature": 1196585624,
+      "recipe": "atlas:mage_chain"
+    },
+    {
+      "id": "atlas:mage_frost",
+      "direction": "right",
+      "pixels": 17186,
+      "signature": 4197271670,
+      "recipe": "atlas:mage_frost"
+    },
+    {
+      "id": "atlas:mage_frost",
+      "direction": "left",
+      "pixels": 17194,
+      "signature": 1278122538,
+      "recipe": "atlas:mage_frost"
+    },
+    {
+      "id": "atlas:mage_frost",
+      "direction": "up",
+      "pixels": 17183,
+      "signature": 1365542134,
+      "recipe": "atlas:mage_frost"
+    },
+    {
+      "id": "atlas:mage_frost",
+      "direction": "down",
+      "pixels": 17171,
+      "signature": 237449132,
+      "recipe": "atlas:mage_frost"
+    },
+    {
+      "id": "atlas:mage_arcane",
+      "direction": "right",
+      "pixels": 8702,
+      "signature": 796020565,
+      "recipe": "atlas:mage_arcane"
+    },
+    {
+      "id": "atlas:mage_arcane",
+      "direction": "left",
+      "pixels": 8669,
+      "signature": 1444039236,
+      "recipe": "atlas:mage_arcane"
+    },
+    {
+      "id": "atlas:mage_arcane",
+      "direction": "up",
+      "pixels": 8777,
+      "signature": 981899430,
+      "recipe": "atlas:mage_arcane"
+    },
+    {
+      "id": "atlas:mage_arcane",
+      "direction": "down",
+      "pixels": 8575,
+      "signature": 2382038596,
+      "recipe": "atlas:mage_arcane"
+    },
+    {
+      "id": "atlas:thief_poison",
+      "direction": "right",
+      "pixels": 6899,
+      "signature": 2856001279,
+      "recipe": "atlas:thief_poison"
+    },
+    {
+      "id": "atlas:thief_poison",
+      "direction": "left",
+      "pixels": 6762,
+      "signature": 3742800969,
+      "recipe": "atlas:thief_poison"
+    },
+    {
+      "id": "atlas:thief_poison",
+      "direction": "up",
+      "pixels": 6590,
+      "signature": 2022426193,
+      "recipe": "atlas:thief_poison"
+    },
+    {
+      "id": "atlas:thief_poison",
+      "direction": "down",
+      "pixels": 6999,
+      "signature": 3587418693,
+      "recipe": "atlas:thief_poison"
+    },
+    {
+      "id": "atlas:thief_execute",
+      "direction": "right",
+      "pixels": 10889,
+      "signature": 1127923354,
+      "recipe": "atlas:thief_execute"
+    },
+    {
+      "id": "atlas:thief_execute",
+      "direction": "left",
+      "pixels": 11089,
+      "signature": 2174851171,
+      "recipe": "atlas:thief_execute"
+    },
+    {
+      "id": "atlas:thief_execute",
+      "direction": "up",
+      "pixels": 11023,
+      "signature": 2563680950,
+      "recipe": "atlas:thief_execute"
+    },
+    {
+      "id": "atlas:thief_execute",
+      "direction": "down",
+      "pixels": 10782,
+      "signature": 3667766686,
+      "recipe": "atlas:thief_execute"
+    },
+    {
+      "id": "atlas:thief_combo",
+      "direction": "right",
+      "pixels": 7039,
+      "signature": 2667798739,
+      "recipe": "atlas:thief_combo"
+    },
+    {
+      "id": "atlas:thief_combo",
+      "direction": "left",
+      "pixels": 7063,
+      "signature": 1504939242,
+      "recipe": "atlas:thief_combo"
+    },
+    {
+      "id": "atlas:thief_combo",
+      "direction": "up",
+      "pixels": 7135,
+      "signature": 250400852,
+      "recipe": "atlas:thief_combo"
+    },
+    {
+      "id": "atlas:thief_combo",
+      "direction": "down",
+      "pixels": 7053,
+      "signature": 94259077,
+      "recipe": "atlas:thief_combo"
+    },
+    {
+      "id": "special:skill_01_1",
+      "direction": "right",
+      "pixels": 5963,
+      "signature": 310658027,
+      "recipe": "special:skill_01_1"
+    },
+    {
+      "id": "special:skill_01_1",
+      "direction": "left",
+      "pixels": 5916,
+      "signature": 1810676939,
+      "recipe": "special:skill_01_1"
+    },
+    {
+      "id": "special:skill_01_1",
+      "direction": "up",
+      "pixels": 5906,
+      "signature": 1129186693,
+      "recipe": "special:skill_01_1"
+    },
+    {
+      "id": "special:skill_01_1",
+      "direction": "down",
+      "pixels": 6021,
+      "signature": 2875718733,
+      "recipe": "special:skill_01_1"
+    },
+    {
+      "id": "special:skill_01_2",
+      "direction": "right",
+      "pixels": 4628,
+      "signature": 2690520240,
+      "recipe": "special:skill_01_2"
+    },
+    {
+      "id": "special:skill_01_2",
+      "direction": "left",
+      "pixels": 4636,
+      "signature": 487407794,
+      "recipe": "special:skill_01_2"
+    },
+    {
+      "id": "special:skill_01_2",
+      "direction": "up",
+      "pixels": 4608,
+      "signature": 3247609132,
+      "recipe": "special:skill_01_2"
+    },
+    {
+      "id": "special:skill_01_2",
+      "direction": "down",
+      "pixels": 4600,
+      "signature": 501058775,
+      "recipe": "special:skill_01_2"
+    },
+    {
+      "id": "special:skill_01_3",
+      "direction": "right",
+      "pixels": 10975,
+      "signature": 3025025682,
+      "recipe": "special:skill_01_3"
+    },
+    {
+      "id": "special:skill_01_3",
+      "direction": "left",
+      "pixels": 11030,
+      "signature": 3245124165,
+      "recipe": "special:skill_01_3"
+    },
+    {
+      "id": "special:skill_01_3",
+      "direction": "up",
+      "pixels": 11007,
+      "signature": 1262350871,
+      "recipe": "special:skill_01_3"
+    },
+    {
+      "id": "special:skill_01_3",
+      "direction": "down",
+      "pixels": 10859,
+      "signature": 1747065901,
+      "recipe": "special:skill_01_3"
+    },
+    {
+      "id": "special:skill_02_1",
+      "direction": "right",
+      "pixels": 5497,
+      "signature": 239212250,
+      "recipe": "special:skill_02_1"
+    },
+    {
+      "id": "special:skill_02_1",
+      "direction": "left",
+      "pixels": 5747,
+      "signature": 1963670785,
+      "recipe": "special:skill_02_1"
+    },
+    {
+      "id": "special:skill_02_1",
+      "direction": "up",
+      "pixels": 5689,
+      "signature": 891617214,
+      "recipe": "special:skill_02_1"
+    },
+    {
+      "id": "special:skill_02_1",
+      "direction": "down",
+      "pixels": 5623,
+      "signature": 3653055033,
+      "recipe": "special:skill_02_1"
+    },
+    {
+      "id": "special:skill_02_2",
+      "direction": "right",
+      "pixels": 7175,
+      "signature": 1858060898,
+      "recipe": "special:skill_02_2"
+    },
+    {
+      "id": "special:skill_02_2",
+      "direction": "left",
+      "pixels": 7179,
+      "signature": 3319443795,
+      "recipe": "special:skill_02_2"
+    },
+    {
+      "id": "special:skill_02_2",
+      "direction": "up",
+      "pixels": 7175,
+      "signature": 3771106369,
+      "recipe": "special:skill_02_2"
+    },
+    {
+      "id": "special:skill_02_2",
+      "direction": "down",
+      "pixels": 7181,
+      "signature": 3089951687,
+      "recipe": "special:skill_02_2"
+    },
+    {
+      "id": "special:skill_02_3",
+      "direction": "right",
+      "pixels": 6063,
+      "signature": 2562357675,
+      "recipe": "special:skill_02_3"
+    },
+    {
+      "id": "special:skill_02_3",
+      "direction": "left",
+      "pixels": 6070,
+      "signature": 2538794995,
+      "recipe": "special:skill_02_3"
+    },
+    {
+      "id": "special:skill_02_3",
+      "direction": "up",
+      "pixels": 6105,
+      "signature": 2001052604,
+      "recipe": "special:skill_02_3"
+    },
+    {
+      "id": "special:skill_02_3",
+      "direction": "down",
+      "pixels": 6105,
+      "signature": 2808805434,
+      "recipe": "special:skill_02_3"
+    },
+    {
+      "id": "special:skill_03_1",
+      "direction": "right",
+      "pixels": 3242,
+      "signature": 1171081037,
+      "recipe": "special:skill_03_1"
+    },
+    {
+      "id": "special:skill_03_1",
+      "direction": "left",
+      "pixels": 3201,
+      "signature": 2135626954,
+      "recipe": "special:skill_03_1"
+    },
+    {
+      "id": "special:skill_03_1",
+      "direction": "up",
+      "pixels": 3262,
+      "signature": 1874037936,
+      "recipe": "special:skill_03_1"
+    },
+    {
+      "id": "special:skill_03_1",
+      "direction": "down",
+      "pixels": 3231,
+      "signature": 587678661,
+      "recipe": "special:skill_03_1"
+    },
+    {
+      "id": "special:skill_03_2",
+      "direction": "right",
+      "pixels": 13538,
+      "signature": 369948256,
+      "recipe": "special:skill_03_2"
+    },
+    {
+      "id": "special:skill_03_2",
+      "direction": "left",
+      "pixels": 13555,
+      "signature": 3689436936,
+      "recipe": "special:skill_03_2"
+    },
+    {
+      "id": "special:skill_03_2",
+      "direction": "up",
+      "pixels": 13542,
+      "signature": 3885594599,
+      "recipe": "special:skill_03_2"
+    },
+    {
+      "id": "special:skill_03_2",
+      "direction": "down",
+      "pixels": 13553,
+      "signature": 1601113009,
+      "recipe": "special:skill_03_2"
+    },
+    {
+      "id": "special:skill_03_3",
+      "direction": "right",
+      "pixels": 8131,
+      "signature": 322511618,
+      "recipe": "special:skill_03_3"
+    },
+    {
+      "id": "special:skill_03_3",
+      "direction": "left",
+      "pixels": 8130,
+      "signature": 1032735204,
+      "recipe": "special:skill_03_3"
+    },
+    {
+      "id": "special:skill_03_3",
+      "direction": "up",
+      "pixels": 8145,
+      "signature": 741563677,
+      "recipe": "special:skill_03_3"
+    },
+    {
+      "id": "special:skill_03_3",
+      "direction": "down",
+      "pixels": 8136,
+      "signature": 3248244482,
+      "recipe": "special:skill_03_3"
+    },
+    {
+      "id": "special:skill_04_1",
+      "direction": "right",
+      "pixels": 9142,
+      "signature": 4057275274,
+      "recipe": "special:skill_04_1"
+    },
+    {
+      "id": "special:skill_04_1",
+      "direction": "left",
+      "pixels": 9082,
+      "signature": 2814477631,
+      "recipe": "special:skill_04_1"
+    },
+    {
+      "id": "special:skill_04_1",
+      "direction": "up",
+      "pixels": 9321,
+      "signature": 2892443678,
+      "recipe": "special:skill_04_1"
+    },
+    {
+      "id": "special:skill_04_1",
+      "direction": "down",
+      "pixels": 9266,
+      "signature": 2965874559,
+      "recipe": "special:skill_04_1"
+    },
+    {
+      "id": "special:skill_04_2",
+      "direction": "right",
+      "pixels": 9177,
+      "signature": 3265483400,
+      "recipe": "special:skill_04_2"
+    },
+    {
+      "id": "special:skill_04_2",
+      "direction": "left",
+      "pixels": 9156,
+      "signature": 592416193,
+      "recipe": "special:skill_04_2"
+    },
+    {
+      "id": "special:skill_04_2",
+      "direction": "up",
+      "pixels": 9175,
+      "signature": 1962794028,
+      "recipe": "special:skill_04_2"
+    },
+    {
+      "id": "special:skill_04_2",
+      "direction": "down",
+      "pixels": 9166,
+      "signature": 3048724705,
+      "recipe": "special:skill_04_2"
+    },
+    {
+      "id": "special:skill_04_3",
+      "direction": "right",
+      "pixels": 11330,
+      "signature": 2422745331,
+      "recipe": "special:skill_04_3"
+    },
+    {
+      "id": "special:skill_04_3",
+      "direction": "left",
+      "pixels": 11405,
+      "signature": 2723392841,
+      "recipe": "special:skill_04_3"
+    },
+    {
+      "id": "special:skill_04_3",
+      "direction": "up",
+      "pixels": 11500,
+      "signature": 566166321,
+      "recipe": "special:skill_04_3"
+    },
+    {
+      "id": "special:skill_04_3",
+      "direction": "down",
+      "pixels": 11563,
+      "signature": 3676809850,
+      "recipe": "special:skill_04_3"
+    },
+    {
+      "id": "special:skill_05_1",
+      "direction": "right",
+      "pixels": 7649,
+      "signature": 1291520507,
+      "recipe": "special:skill_05_1"
+    },
+    {
+      "id": "special:skill_05_1",
+      "direction": "left",
+      "pixels": 7612,
+      "signature": 976713989,
+      "recipe": "special:skill_05_1"
+    },
+    {
+      "id": "special:skill_05_1",
+      "direction": "up",
+      "pixels": 7645,
+      "signature": 4081454197,
+      "recipe": "special:skill_05_1"
+    },
+    {
+      "id": "special:skill_05_1",
+      "direction": "down",
+      "pixels": 7556,
+      "signature": 601377582,
+      "recipe": "special:skill_05_1"
+    },
+    {
+      "id": "special:skill_05_2",
+      "direction": "right",
+      "pixels": 16686,
+      "signature": 1912933007,
+      "recipe": "special:skill_05_2"
+    },
+    {
+      "id": "special:skill_05_2",
+      "direction": "left",
+      "pixels": 16690,
+      "signature": 1953384127,
+      "recipe": "special:skill_05_2"
+    },
+    {
+      "id": "special:skill_05_2",
+      "direction": "up",
+      "pixels": 16699,
+      "signature": 245772588,
+      "recipe": "special:skill_05_2"
+    },
+    {
+      "id": "special:skill_05_2",
+      "direction": "down",
+      "pixels": 16690,
+      "signature": 1623931012,
+      "recipe": "special:skill_05_2"
+    },
+    {
+      "id": "special:skill_05_3",
+      "direction": "right",
+      "pixels": 2653,
+      "signature": 2423992543,
+      "recipe": "special:skill_05_3"
+    },
+    {
+      "id": "special:skill_05_3",
+      "direction": "left",
+      "pixels": 2708,
+      "signature": 198086337,
+      "recipe": "special:skill_05_3"
+    },
+    {
+      "id": "special:skill_05_3",
+      "direction": "up",
+      "pixels": 2651,
+      "signature": 3521189392,
+      "recipe": "special:skill_05_3"
+    },
+    {
+      "id": "special:skill_05_3",
+      "direction": "down",
+      "pixels": 2438,
+      "signature": 899470286,
+      "recipe": "special:skill_05_3"
+    },
+    {
+      "id": "special:skill_06_1",
+      "direction": "right",
+      "pixels": 5577,
+      "signature": 893947707,
+      "recipe": "special:skill_06_1"
+    },
+    {
+      "id": "special:skill_06_1",
+      "direction": "left",
+      "pixels": 5447,
+      "signature": 2533148690,
+      "recipe": "special:skill_06_1"
+    },
+    {
+      "id": "special:skill_06_1",
+      "direction": "up",
+      "pixels": 5417,
+      "signature": 3072278221,
+      "recipe": "special:skill_06_1"
+    },
+    {
+      "id": "special:skill_06_1",
+      "direction": "down",
+      "pixels": 5497,
+      "signature": 191050741,
+      "recipe": "special:skill_06_1"
+    },
+    {
+      "id": "special:skill_06_2",
+      "direction": "right",
+      "pixels": 8380,
+      "signature": 1488407603,
+      "recipe": "special:skill_06_2"
+    },
+    {
+      "id": "special:skill_06_2",
+      "direction": "left",
+      "pixels": 8379,
+      "signature": 4101768227,
+      "recipe": "special:skill_06_2"
+    },
+    {
+      "id": "special:skill_06_2",
+      "direction": "up",
+      "pixels": 8381,
+      "signature": 1117946697,
+      "recipe": "special:skill_06_2"
+    },
+    {
+      "id": "special:skill_06_2",
+      "direction": "down",
+      "pixels": 8352,
+      "signature": 1123252053,
+      "recipe": "special:skill_06_2"
+    },
+    {
+      "id": "special:skill_06_3",
+      "direction": "right",
+      "pixels": 10863,
+      "signature": 794103816,
+      "recipe": "special:skill_06_3"
+    },
+    {
+      "id": "special:skill_06_3",
+      "direction": "left",
+      "pixels": 10823,
+      "signature": 55836254,
+      "recipe": "special:skill_06_3"
+    },
+    {
+      "id": "special:skill_06_3",
+      "direction": "up",
+      "pixels": 10613,
+      "signature": 273921929,
+      "recipe": "special:skill_06_3"
+    },
+    {
+      "id": "special:skill_06_3",
+      "direction": "down",
+      "pixels": 10803,
+      "signature": 340598708,
+      "recipe": "special:skill_06_3"
+    },
+    {
+      "id": "special:skill_07_1",
+      "direction": "right",
+      "pixels": 11235,
+      "signature": 2094388134,
+      "recipe": "special:skill_07_1"
+    },
+    {
+      "id": "special:skill_07_1",
+      "direction": "left",
+      "pixels": 11250,
+      "signature": 3757763858,
+      "recipe": "special:skill_07_1"
+    },
+    {
+      "id": "special:skill_07_1",
+      "direction": "up",
+      "pixels": 11213,
+      "signature": 3392178216,
+      "recipe": "special:skill_07_1"
+    },
+    {
+      "id": "special:skill_07_1",
+      "direction": "down",
+      "pixels": 11201,
+      "signature": 2538559833,
+      "recipe": "special:skill_07_1"
+    },
+    {
+      "id": "special:skill_07_2",
+      "direction": "right",
+      "pixels": 7343,
+      "signature": 4180498951,
+      "recipe": "special:skill_07_2"
+    },
+    {
+      "id": "special:skill_07_2",
+      "direction": "left",
+      "pixels": 7342,
+      "signature": 3601918568,
+      "recipe": "special:skill_07_2"
+    },
+    {
+      "id": "special:skill_07_2",
+      "direction": "up",
+      "pixels": 7326,
+      "signature": 2778016984,
+      "recipe": "special:skill_07_2"
+    },
+    {
+      "id": "special:skill_07_2",
+      "direction": "down",
+      "pixels": 7333,
+      "signature": 2656744124,
+      "recipe": "special:skill_07_2"
+    },
+    {
+      "id": "special:skill_08_1",
+      "direction": "right",
+      "pixels": 6564,
+      "signature": 847895719,
+      "recipe": "special:skill_08_1"
+    },
+    {
+      "id": "special:skill_08_1",
+      "direction": "left",
+      "pixels": 6469,
+      "signature": 3557100102,
+      "recipe": "special:skill_08_1"
+    },
+    {
+      "id": "special:skill_08_1",
+      "direction": "up",
+      "pixels": 6468,
+      "signature": 2849573949,
+      "recipe": "special:skill_08_1"
+    },
+    {
+      "id": "special:skill_08_1",
+      "direction": "down",
+      "pixels": 6498,
+      "signature": 2909755522,
+      "recipe": "special:skill_08_1"
+    },
+    {
+      "id": "special:skill_08_2",
+      "direction": "right",
+      "pixels": 6485,
+      "signature": 3014394752,
+      "recipe": "special:skill_08_2"
+    },
+    {
+      "id": "special:skill_08_2",
+      "direction": "left",
+      "pixels": 6682,
+      "signature": 2449144360,
+      "recipe": "special:skill_08_2"
+    },
+    {
+      "id": "special:skill_08_2",
+      "direction": "up",
+      "pixels": 6722,
+      "signature": 1057447339,
+      "recipe": "special:skill_08_2"
+    },
+    {
+      "id": "special:skill_08_2",
+      "direction": "down",
+      "pixels": 6530,
+      "signature": 1666040455,
+      "recipe": "special:skill_08_2"
+    },
+    {
+      "id": "special:skill_09_1",
+      "direction": "right",
+      "pixels": 7410,
+      "signature": 3886415608,
+      "recipe": "special:skill_09_1"
+    },
+    {
+      "id": "special:skill_09_1",
+      "direction": "left",
+      "pixels": 7397,
+      "signature": 3859544747,
+      "recipe": "special:skill_09_1"
+    },
+    {
+      "id": "special:skill_09_1",
+      "direction": "up",
+      "pixels": 7372,
+      "signature": 4235074617,
+      "recipe": "special:skill_09_1"
+    },
+    {
+      "id": "special:skill_09_1",
+      "direction": "down",
+      "pixels": 7417,
+      "signature": 1564478723,
+      "recipe": "special:skill_09_1"
+    },
+    {
+      "id": "special:skill_09_2",
+      "direction": "right",
+      "pixels": 7520,
+      "signature": 2821421999,
+      "recipe": "special:skill_09_2"
+    },
+    {
+      "id": "special:skill_09_2",
+      "direction": "left",
+      "pixels": 7516,
+      "signature": 1247322108,
+      "recipe": "special:skill_09_2"
+    },
+    {
+      "id": "special:skill_09_2",
+      "direction": "up",
+      "pixels": 7501,
+      "signature": 734595981,
+      "recipe": "special:skill_09_2"
+    },
+    {
+      "id": "special:skill_09_2",
+      "direction": "down",
+      "pixels": 7512,
+      "signature": 962588690,
+      "recipe": "special:skill_09_2"
+    },
+    {
+      "id": "special:skill_10_1",
+      "direction": "right",
+      "pixels": 9515,
+      "signature": 736409844,
+      "recipe": "special:skill_10_1"
+    },
+    {
+      "id": "special:skill_10_1",
+      "direction": "left",
+      "pixels": 9510,
+      "signature": 4285999646,
+      "recipe": "special:skill_10_1"
+    },
+    {
+      "id": "special:skill_10_1",
+      "direction": "up",
+      "pixels": 9497,
+      "signature": 1978426125,
+      "recipe": "special:skill_10_1"
+    },
+    {
+      "id": "special:skill_10_1",
+      "direction": "down",
+      "pixels": 9515,
+      "signature": 1498041295,
+      "recipe": "special:skill_10_1"
+    },
+    {
+      "id": "special:skill_10_2",
+      "direction": "right",
+      "pixels": 6373,
+      "signature": 2457361941,
+      "recipe": "special:skill_10_2"
+    },
+    {
+      "id": "special:skill_10_2",
+      "direction": "left",
+      "pixels": 6622,
+      "signature": 1176792413,
+      "recipe": "special:skill_10_2"
+    },
+    {
+      "id": "special:skill_10_2",
+      "direction": "up",
+      "pixels": 6593,
+      "signature": 1471751545,
+      "recipe": "special:skill_10_2"
+    },
+    {
+      "id": "special:skill_10_2",
+      "direction": "down",
+      "pixels": 6534,
+      "signature": 742287983,
+      "recipe": "special:skill_10_2"
+    },
+    {
+      "id": "special:skill_11_1",
+      "direction": "right",
+      "pixels": 4843,
+      "signature": 1683560441,
+      "recipe": "special:skill_11_1"
+    },
+    {
+      "id": "special:skill_11_1",
+      "direction": "left",
+      "pixels": 4833,
+      "signature": 4268057536,
+      "recipe": "special:skill_11_1"
+    },
+    {
+      "id": "special:skill_11_1",
+      "direction": "up",
+      "pixels": 4827,
+      "signature": 3442519234,
+      "recipe": "special:skill_11_1"
+    },
+    {
+      "id": "special:skill_11_1",
+      "direction": "down",
+      "pixels": 4842,
+      "signature": 409079621,
+      "recipe": "special:skill_11_1"
+    },
+    {
+      "id": "special:skill_11_2",
+      "direction": "right",
+      "pixels": 11625,
+      "signature": 1719817898,
+      "recipe": "special:skill_11_2"
+    },
+    {
+      "id": "special:skill_11_2",
+      "direction": "left",
+      "pixels": 11631,
+      "signature": 2486749773,
+      "recipe": "special:skill_11_2"
+    },
+    {
+      "id": "special:skill_11_2",
+      "direction": "up",
+      "pixels": 11645,
+      "signature": 131100628,
+      "recipe": "special:skill_11_2"
+    },
+    {
+      "id": "special:skill_11_2",
+      "direction": "down",
+      "pixels": 11610,
+      "signature": 2028474210,
+      "recipe": "special:skill_11_2"
+    },
+    {
+      "id": "special:skill_12_1",
+      "direction": "right",
+      "pixels": 4875,
+      "signature": 3337687491,
+      "recipe": "special:skill_12_1"
+    },
+    {
+      "id": "special:skill_12_1",
+      "direction": "left",
+      "pixels": 4907,
+      "signature": 870120435,
+      "recipe": "special:skill_12_1"
+    },
+    {
+      "id": "special:skill_12_1",
+      "direction": "up",
+      "pixels": 4949,
+      "signature": 2013699067,
+      "recipe": "special:skill_12_1"
+    },
+    {
+      "id": "special:skill_12_1",
+      "direction": "down",
+      "pixels": 4916,
+      "signature": 18713181,
+      "recipe": "special:skill_12_1"
+    },
+    {
+      "id": "special:skill_12_2",
+      "direction": "right",
+      "pixels": 9586,
+      "signature": 2532689688,
+      "recipe": "special:skill_12_2"
+    },
+    {
+      "id": "special:skill_12_2",
+      "direction": "left",
+      "pixels": 9594,
+      "signature": 25253672,
+      "recipe": "special:skill_12_2"
+    },
+    {
+      "id": "special:skill_12_2",
+      "direction": "up",
+      "pixels": 9569,
+      "signature": 2730211710,
+      "recipe": "special:skill_12_2"
+    },
+    {
+      "id": "special:skill_12_2",
+      "direction": "down",
+      "pixels": 9590,
+      "signature": 1316247266,
+      "recipe": "special:skill_12_2"
+    },
+    {
+      "id": "special:skill_13_1",
+      "direction": "right",
+      "pixels": 12597,
+      "signature": 2271202351,
+      "recipe": "special:skill_13_1"
+    },
+    {
+      "id": "special:skill_13_1",
+      "direction": "left",
+      "pixels": 12811,
+      "signature": 1304059656,
+      "recipe": "special:skill_13_1"
+    },
+    {
+      "id": "special:skill_13_1",
+      "direction": "up",
+      "pixels": 12704,
+      "signature": 3728820769,
+      "recipe": "special:skill_13_1"
+    },
+    {
+      "id": "special:skill_13_1",
+      "direction": "down",
+      "pixels": 12250,
+      "signature": 1615785435,
+      "recipe": "special:skill_13_1"
+    },
+    {
+      "id": "special:skill_13_2",
+      "direction": "right",
+      "pixels": 11954,
+      "signature": 4290002278,
+      "recipe": "special:skill_13_2"
+    },
+    {
+      "id": "special:skill_13_2",
+      "direction": "left",
+      "pixels": 11927,
+      "signature": 190071064,
+      "recipe": "special:skill_13_2"
+    },
+    {
+      "id": "special:skill_13_2",
+      "direction": "up",
+      "pixels": 12072,
+      "signature": 4199564924,
+      "recipe": "special:skill_13_2"
+    },
+    {
+      "id": "special:skill_13_2",
+      "direction": "down",
+      "pixels": 11985,
+      "signature": 1266037218,
+      "recipe": "special:skill_13_2"
+    },
+    {
+      "id": "special:skill_14_1",
+      "direction": "right",
+      "pixels": 9200,
+      "signature": 3149431198,
+      "recipe": "special:skill_14_1"
+    },
+    {
+      "id": "special:skill_14_1",
+      "direction": "left",
+      "pixels": 9193,
+      "signature": 3094787848,
+      "recipe": "special:skill_14_1"
+    },
+    {
+      "id": "special:skill_14_1",
+      "direction": "up",
+      "pixels": 9208,
+      "signature": 1957199506,
+      "recipe": "special:skill_14_1"
+    },
+    {
+      "id": "special:skill_14_1",
+      "direction": "down",
+      "pixels": 9195,
+      "signature": 3973745172,
+      "recipe": "special:skill_14_1"
+    },
+    {
+      "id": "special:skill_14_2",
+      "direction": "right",
+      "pixels": 10293,
+      "signature": 637867272,
+      "recipe": "special:skill_14_2"
+    },
+    {
+      "id": "special:skill_14_2",
+      "direction": "left",
+      "pixels": 10279,
+      "signature": 3235910591,
+      "recipe": "special:skill_14_2"
+    },
+    {
+      "id": "special:skill_14_2",
+      "direction": "up",
+      "pixels": 10272,
+      "signature": 778033618,
+      "recipe": "special:skill_14_2"
+    },
+    {
+      "id": "special:skill_14_2",
+      "direction": "down",
+      "pixels": 10262,
+      "signature": 1915130030,
+      "recipe": "special:skill_14_2"
+    },
+    {
+      "id": "special:skill_15_1",
+      "direction": "right",
+      "pixels": 9558,
+      "signature": 2529850925,
+      "recipe": "special:skill_15_1"
+    },
+    {
+      "id": "special:skill_15_1",
+      "direction": "left",
+      "pixels": 9584,
+      "signature": 14692492,
+      "recipe": "special:skill_15_1"
+    },
+    {
+      "id": "special:skill_15_1",
+      "direction": "up",
+      "pixels": 9567,
+      "signature": 4284851011,
+      "recipe": "special:skill_15_1"
+    },
+    {
+      "id": "special:skill_15_1",
+      "direction": "down",
+      "pixels": 9514,
+      "signature": 3816576989,
+      "recipe": "special:skill_15_1"
+    },
+    {
+      "id": "special:skill_15_2",
+      "direction": "right",
+      "pixels": 9903,
+      "signature": 3255115880,
+      "recipe": "special:skill_15_2"
+    },
+    {
+      "id": "special:skill_15_2",
+      "direction": "left",
+      "pixels": 9893,
+      "signature": 2738684743,
+      "recipe": "special:skill_15_2"
+    },
+    {
+      "id": "special:skill_15_2",
+      "direction": "up",
+      "pixels": 9967,
+      "signature": 2886667165,
+      "recipe": "special:skill_15_2"
+    },
+    {
+      "id": "special:skill_15_2",
+      "direction": "down",
+      "pixels": 9954,
+      "signature": 468565611,
+      "recipe": "special:skill_15_2"
+    },
+    {
+      "id": "special:skill_16_1",
+      "direction": "right",
+      "pixels": 15944,
+      "signature": 475335783,
+      "recipe": "special:skill_16_1"
+    },
+    {
+      "id": "special:skill_16_1",
+      "direction": "left",
+      "pixels": 15913,
+      "signature": 3894782986,
+      "recipe": "special:skill_16_1"
+    },
+    {
+      "id": "special:skill_16_1",
+      "direction": "up",
+      "pixels": 15951,
+      "signature": 4022423810,
+      "recipe": "special:skill_16_1"
+    },
+    {
+      "id": "special:skill_16_1",
+      "direction": "down",
+      "pixels": 15946,
+      "signature": 2692680387,
+      "recipe": "special:skill_16_1"
+    },
+    {
+      "id": "special:skill_16_2",
+      "direction": "right",
+      "pixels": 11526,
+      "signature": 957207914,
+      "recipe": "special:skill_16_2"
+    },
+    {
+      "id": "special:skill_16_2",
+      "direction": "left",
+      "pixels": 11528,
+      "signature": 230786193,
+      "recipe": "special:skill_16_2"
+    },
+    {
+      "id": "special:skill_16_2",
+      "direction": "up",
+      "pixels": 11543,
+      "signature": 2782833064,
+      "recipe": "special:skill_16_2"
+    },
+    {
+      "id": "special:skill_16_2",
+      "direction": "down",
+      "pixels": 11533,
+      "signature": 2345797255,
+      "recipe": "special:skill_16_2"
+    },
+    {
+      "id": "special:skill_17_1",
+      "direction": "right",
+      "pixels": 10315,
+      "signature": 2522182618,
+      "recipe": "special:skill_17_1"
+    },
+    {
+      "id": "special:skill_17_1",
+      "direction": "left",
+      "pixels": 10288,
+      "signature": 257188829,
+      "recipe": "special:skill_17_1"
+    },
+    {
+      "id": "special:skill_17_1",
+      "direction": "up",
+      "pixels": 10265,
+      "signature": 3764763258,
+      "recipe": "special:skill_17_1"
+    },
+    {
+      "id": "special:skill_17_1",
+      "direction": "down",
+      "pixels": 10289,
+      "signature": 1920475054,
+      "recipe": "special:skill_17_1"
+    },
+    {
+      "id": "special:skill_17_2",
+      "direction": "right",
+      "pixels": 9558,
+      "signature": 2944685539,
+      "recipe": "special:skill_17_2"
+    },
+    {
+      "id": "special:skill_17_2",
+      "direction": "left",
+      "pixels": 9566,
+      "signature": 4241951572,
+      "recipe": "special:skill_17_2"
+    },
+    {
+      "id": "special:skill_17_2",
+      "direction": "up",
+      "pixels": 9512,
+      "signature": 4240684277,
+      "recipe": "special:skill_17_2"
+    },
+    {
+      "id": "special:skill_17_2",
+      "direction": "down",
+      "pixels": 9486,
+      "signature": 907048154,
+      "recipe": "special:skill_17_2"
+    },
+    {
+      "id": "special:skill_18_1",
+      "direction": "right",
+      "pixels": 6937,
+      "signature": 290371925,
+      "recipe": "special:skill_18_1"
+    },
+    {
+      "id": "special:skill_18_1",
+      "direction": "left",
+      "pixels": 6992,
+      "signature": 2058483477,
+      "recipe": "special:skill_18_1"
+    },
+    {
+      "id": "special:skill_18_1",
+      "direction": "up",
+      "pixels": 6507,
+      "signature": 2591091289,
+      "recipe": "special:skill_18_1"
+    },
+    {
+      "id": "special:skill_18_1",
+      "direction": "down",
+      "pixels": 6478,
+      "signature": 498320415,
+      "recipe": "special:skill_18_1"
+    },
+    {
+      "id": "special:skill_18_2",
+      "direction": "right",
+      "pixels": 10093,
+      "signature": 2212308201,
+      "recipe": "special:skill_18_2"
+    },
+    {
+      "id": "special:skill_18_2",
+      "direction": "left",
+      "pixels": 10052,
+      "signature": 2826512038,
+      "recipe": "special:skill_18_2"
+    },
+    {
+      "id": "special:skill_18_2",
+      "direction": "up",
+      "pixels": 10123,
+      "signature": 3874795998,
+      "recipe": "special:skill_18_2"
+    },
+    {
+      "id": "special:skill_18_2",
+      "direction": "down",
+      "pixels": 10147,
+      "signature": 2617486050,
+      "recipe": "special:skill_18_2"
+    },
+    {
+      "id": "special:skill_19_1",
+      "direction": "right",
+      "pixels": 5304,
+      "signature": 1521926300,
+      "recipe": "special:skill_19_1"
+    },
+    {
+      "id": "special:skill_19_1",
+      "direction": "left",
+      "pixels": 5518,
+      "signature": 506532219,
+      "recipe": "special:skill_19_1"
+    },
+    {
+      "id": "special:skill_19_1",
+      "direction": "up",
+      "pixels": 5531,
+      "signature": 1938926442,
+      "recipe": "special:skill_19_1"
+    },
+    {
+      "id": "special:skill_19_1",
+      "direction": "down",
+      "pixels": 5474,
+      "signature": 2769161558,
+      "recipe": "special:skill_19_1"
+    },
+    {
+      "id": "special:skill_19_2",
+      "direction": "right",
+      "pixels": 7621,
+      "signature": 3718251361,
+      "recipe": "special:skill_19_2"
+    },
+    {
+      "id": "special:skill_19_2",
+      "direction": "left",
+      "pixels": 7708,
+      "signature": 866304046,
+      "recipe": "special:skill_19_2"
+    },
+    {
+      "id": "special:skill_19_2",
+      "direction": "up",
+      "pixels": 7592,
+      "signature": 4114321016,
+      "recipe": "special:skill_19_2"
+    },
+    {
+      "id": "special:skill_19_2",
+      "direction": "down",
+      "pixels": 7786,
+      "signature": 4281673990,
+      "recipe": "special:skill_19_2"
+    },
+    {
+      "id": "special:skill_20_1",
+      "direction": "right",
+      "pixels": 12642,
+      "signature": 54838223,
+      "recipe": "special:skill_20_1"
+    },
+    {
+      "id": "special:skill_20_1",
+      "direction": "left",
+      "pixels": 12570,
+      "signature": 2112271479,
+      "recipe": "special:skill_20_1"
+    },
+    {
+      "id": "special:skill_20_1",
+      "direction": "up",
+      "pixels": 12713,
+      "signature": 1160901866,
+      "recipe": "special:skill_20_1"
+    },
+    {
+      "id": "special:skill_20_1",
+      "direction": "down",
+      "pixels": 12595,
+      "signature": 503679917,
+      "recipe": "special:skill_20_1"
+    },
+    {
+      "id": "special:skill_20_2",
+      "direction": "right",
+      "pixels": 12887,
+      "signature": 464238587,
+      "recipe": "special:skill_20_2"
+    },
+    {
+      "id": "special:skill_20_2",
+      "direction": "left",
+      "pixels": 12853,
+      "signature": 623690419,
+      "recipe": "special:skill_20_2"
+    },
+    {
+      "id": "special:skill_20_2",
+      "direction": "up",
+      "pixels": 12851,
+      "signature": 282112324,
+      "recipe": "special:skill_20_2"
+    },
+    {
+      "id": "special:skill_20_2",
+      "direction": "down",
+      "pixels": 13039,
+      "signature": 2877820404,
+      "recipe": "special:skill_20_2"
+    },
+    {
+      "id": "special:skill_21_1",
+      "direction": "right",
+      "pixels": 10030,
+      "signature": 2012565305,
+      "recipe": "special:skill_21_1"
+    },
+    {
+      "id": "special:skill_21_1",
+      "direction": "left",
+      "pixels": 10015,
+      "signature": 3559023417,
+      "recipe": "special:skill_21_1"
+    },
+    {
+      "id": "special:skill_21_1",
+      "direction": "up",
+      "pixels": 10095,
+      "signature": 735380271,
+      "recipe": "special:skill_21_1"
+    },
+    {
+      "id": "special:skill_21_1",
+      "direction": "down",
+      "pixels": 10056,
+      "signature": 4235193117,
+      "recipe": "special:skill_21_1"
+    },
+    {
+      "id": "special:skill_21_2",
+      "direction": "right",
+      "pixels": 8725,
+      "signature": 1978254950,
+      "recipe": "special:skill_21_2"
+    },
+    {
+      "id": "special:skill_21_2",
+      "direction": "left",
+      "pixels": 8716,
+      "signature": 3512263472,
+      "recipe": "special:skill_21_2"
+    },
+    {
+      "id": "special:skill_21_2",
+      "direction": "up",
+      "pixels": 8728,
+      "signature": 3082098167,
+      "recipe": "special:skill_21_2"
+    },
+    {
+      "id": "special:skill_21_2",
+      "direction": "down",
+      "pixels": 8699,
+      "signature": 3506095348,
+      "recipe": "special:skill_21_2"
+    },
+    {
+      "id": "special:skill_22_1",
+      "direction": "right",
+      "pixels": 11107,
+      "signature": 1525050539,
+      "recipe": "special:skill_22_1"
+    },
+    {
+      "id": "special:skill_22_1",
+      "direction": "left",
+      "pixels": 11154,
+      "signature": 1478632557,
+      "recipe": "special:skill_22_1"
+    },
+    {
+      "id": "special:skill_22_1",
+      "direction": "up",
+      "pixels": 11120,
+      "signature": 25347535,
+      "recipe": "special:skill_22_1"
+    },
+    {
+      "id": "special:skill_22_1",
+      "direction": "down",
+      "pixels": 10941,
+      "signature": 2486410192,
+      "recipe": "special:skill_22_1"
+    },
+    {
+      "id": "special:skill_22_2",
+      "direction": "right",
+      "pixels": 10854,
+      "signature": 1279923758,
+      "recipe": "special:skill_22_2"
+    },
+    {
+      "id": "special:skill_22_2",
+      "direction": "left",
+      "pixels": 10863,
+      "signature": 3289143433,
+      "recipe": "special:skill_22_2"
+    },
+    {
+      "id": "special:skill_22_2",
+      "direction": "up",
+      "pixels": 10846,
+      "signature": 2313254161,
+      "recipe": "special:skill_22_2"
+    },
+    {
+      "id": "special:skill_22_2",
+      "direction": "down",
+      "pixels": 10844,
+      "signature": 2125257298,
+      "recipe": "special:skill_22_2"
+    },
+    {
+      "id": "special:skill_23_1",
+      "direction": "right",
+      "pixels": 3582,
+      "signature": 3831339402,
+      "recipe": "special:skill_23_1"
+    },
+    {
+      "id": "special:skill_23_1",
+      "direction": "left",
+      "pixels": 3542,
+      "signature": 1660119259,
+      "recipe": "special:skill_23_1"
+    },
+    {
+      "id": "special:skill_23_1",
+      "direction": "up",
+      "pixels": 3506,
+      "signature": 612259408,
+      "recipe": "special:skill_23_1"
+    },
+    {
+      "id": "special:skill_23_1",
+      "direction": "down",
+      "pixels": 3444,
+      "signature": 723099530,
+      "recipe": "special:skill_23_1"
+    },
+    {
+      "id": "special:skill_23_2",
+      "direction": "right",
+      "pixels": 13460,
+      "signature": 2578072343,
+      "recipe": "special:skill_23_2"
+    },
+    {
+      "id": "special:skill_23_2",
+      "direction": "left",
+      "pixels": 13506,
+      "signature": 1006625750,
+      "recipe": "special:skill_23_2"
+    },
+    {
+      "id": "special:skill_23_2",
+      "direction": "up",
+      "pixels": 13638,
+      "signature": 2400383652,
+      "recipe": "special:skill_23_2"
+    },
+    {
+      "id": "special:skill_23_2",
+      "direction": "down",
+      "pixels": 13518,
+      "signature": 2075899835,
+      "recipe": "special:skill_23_2"
+    },
+    {
+      "id": "special:skill_24_1",
+      "direction": "right",
+      "pixels": 9642,
+      "signature": 2297196183,
+      "recipe": "special:skill_24_1"
+    },
+    {
+      "id": "special:skill_24_1",
+      "direction": "left",
+      "pixels": 9631,
+      "signature": 2622559123,
+      "recipe": "special:skill_24_1"
+    },
+    {
+      "id": "special:skill_24_1",
+      "direction": "up",
+      "pixels": 9625,
+      "signature": 1012418143,
+      "recipe": "special:skill_24_1"
+    },
+    {
+      "id": "special:skill_24_1",
+      "direction": "down",
+      "pixels": 9592,
+      "signature": 1280347632,
+      "recipe": "special:skill_24_1"
+    },
+    {
+      "id": "special:skill_24_2",
+      "direction": "right",
+      "pixels": 8364,
+      "signature": 480149122,
+      "recipe": "special:skill_24_2"
+    },
+    {
+      "id": "special:skill_24_2",
+      "direction": "left",
+      "pixels": 8379,
+      "signature": 4207028139,
+      "recipe": "special:skill_24_2"
+    },
+    {
+      "id": "special:skill_24_2",
+      "direction": "up",
+      "pixels": 8376,
+      "signature": 2868614237,
+      "recipe": "special:skill_24_2"
+    },
+    {
+      "id": "special:skill_24_2",
+      "direction": "down",
+      "pixels": 8373,
+      "signature": 1275716083,
+      "recipe": "special:skill_24_2"
+    },
+    {
+      "id": "special:skill_thief_01",
+      "direction": "right",
+      "pixels": 10670,
+      "signature": 1433016269,
+      "recipe": "special:skill_thief_01"
+    },
+    {
+      "id": "special:skill_thief_01",
+      "direction": "left",
+      "pixels": 10660,
+      "signature": 2865232562,
+      "recipe": "special:skill_thief_01"
+    },
+    {
+      "id": "special:skill_thief_01",
+      "direction": "up",
+      "pixels": 10662,
+      "signature": 1243079627,
+      "recipe": "special:skill_thief_01"
+    },
+    {
+      "id": "special:skill_thief_01",
+      "direction": "down",
+      "pixels": 10667,
+      "signature": 234083067,
+      "recipe": "special:skill_thief_01"
+    },
+    {
+      "id": "special:skill_thief_02",
+      "direction": "right",
+      "pixels": 10547,
+      "signature": 1436676934,
+      "recipe": "special:skill_thief_02"
+    },
+    {
+      "id": "special:skill_thief_02",
+      "direction": "left",
+      "pixels": 10537,
+      "signature": 665716282,
+      "recipe": "special:skill_thief_02"
+    },
+    {
+      "id": "special:skill_thief_02",
+      "direction": "up",
+      "pixels": 10504,
+      "signature": 1545475088,
+      "recipe": "special:skill_thief_02"
+    },
+    {
+      "id": "special:skill_thief_02",
+      "direction": "down",
+      "pixels": 10615,
+      "signature": 1823984388,
+      "recipe": "special:skill_thief_02"
+    },
+    {
+      "id": "special:skill_thief_03",
+      "direction": "right",
+      "pixels": 11029,
+      "signature": 2755869990,
+      "recipe": "special:skill_thief_03"
+    },
+    {
+      "id": "special:skill_thief_03",
+      "direction": "left",
+      "pixels": 11116,
+      "signature": 2000204202,
+      "recipe": "special:skill_thief_03"
+    },
+    {
+      "id": "special:skill_thief_03",
+      "direction": "up",
+      "pixels": 11102,
+      "signature": 1383979525,
+      "recipe": "special:skill_thief_03"
+    },
+    {
+      "id": "special:skill_thief_03",
+      "direction": "down",
+      "pixels": 10879,
+      "signature": 1749988438,
+      "recipe": "special:skill_thief_03"
+    },
+    {
+      "id": "special:skill_thief_04",
+      "direction": "right",
+      "pixels": 7967,
+      "signature": 985649470,
+      "recipe": "special:skill_thief_04"
+    },
+    {
+      "id": "special:skill_thief_04",
+      "direction": "left",
+      "pixels": 7868,
+      "signature": 36063280,
+      "recipe": "special:skill_thief_04"
+    },
+    {
+      "id": "special:skill_thief_04",
+      "direction": "up",
+      "pixels": 7615,
+      "signature": 2500160486,
+      "recipe": "special:skill_thief_04"
+    },
+    {
+      "id": "special:skill_thief_04",
+      "direction": "down",
+      "pixels": 8106,
+      "signature": 3811057212,
+      "recipe": "special:skill_thief_04"
+    },
+    {
+      "id": "special:skill_thief_05",
+      "direction": "right",
+      "pixels": 2468,
+      "signature": 3284300112,
+      "recipe": "special:skill_thief_05"
+    },
+    {
+      "id": "special:skill_thief_05",
+      "direction": "left",
+      "pixels": 2465,
+      "signature": 1307315462,
+      "recipe": "special:skill_thief_05"
+    },
+    {
+      "id": "special:skill_thief_05",
+      "direction": "up",
+      "pixels": 2425,
+      "signature": 2918271702,
+      "recipe": "special:skill_thief_05"
+    },
+    {
+      "id": "special:skill_thief_05",
+      "direction": "down",
+      "pixels": 2383,
+      "signature": 145002329,
+      "recipe": "special:skill_thief_05"
+    },
+    {
+      "id": "special:skill_thief_06",
+      "direction": "right",
+      "pixels": 6443,
+      "signature": 3223198387,
+      "recipe": "special:skill_thief_06"
+    },
+    {
+      "id": "special:skill_thief_06",
+      "direction": "left",
+      "pixels": 6451,
+      "signature": 2123267206,
+      "recipe": "special:skill_thief_06"
+    },
+    {
+      "id": "special:skill_thief_06",
+      "direction": "up",
+      "pixels": 6444,
+      "signature": 2693403879,
+      "recipe": "special:skill_thief_06"
+    },
+    {
+      "id": "special:skill_thief_06",
+      "direction": "down",
+      "pixels": 6468,
+      "signature": 2446805945,
+      "recipe": "special:skill_thief_06"
+    },
+    {
+      "id": "native:sword:base",
+      "direction": "right",
+      "pixels": 5581,
+      "signature": 1229213677,
+      "recipe": "native:sword:base"
+    },
+    {
+      "id": "native:sword:base",
+      "direction": "left",
+      "pixels": 5609,
+      "signature": 862842445,
+      "recipe": "native:sword:base"
+    },
+    {
+      "id": "native:sword:base",
+      "direction": "up",
+      "pixels": 5640,
+      "signature": 3053732233,
+      "recipe": "native:sword:base"
+    },
+    {
+      "id": "native:sword:base",
+      "direction": "down",
+      "pixels": 5780,
+      "signature": 44326995,
+      "recipe": "native:sword:base"
+    },
+    {
+      "id": "native:sword:A",
+      "direction": "right",
+      "pixels": 11169,
+      "signature": 3865952351,
+      "recipe": "native:sword:A"
+    },
+    {
+      "id": "native:sword:A",
+      "direction": "left",
+      "pixels": 11146,
+      "signature": 808190662,
+      "recipe": "native:sword:A"
+    },
+    {
+      "id": "native:sword:A",
+      "direction": "up",
+      "pixels": 11175,
+      "signature": 4234020402,
+      "recipe": "native:sword:A"
+    },
+    {
+      "id": "native:sword:A",
+      "direction": "down",
+      "pixels": 11150,
+      "signature": 777509976,
+      "recipe": "native:sword:A"
+    },
+    {
+      "id": "native:sword:B",
+      "direction": "right",
+      "pixels": 12337,
+      "signature": 1337844543,
+      "recipe": "native:sword:B"
+    },
+    {
+      "id": "native:sword:B",
+      "direction": "left",
+      "pixels": 12349,
+      "signature": 1051155782,
+      "recipe": "native:sword:B"
+    },
+    {
+      "id": "native:sword:B",
+      "direction": "up",
+      "pixels": 12336,
+      "signature": 3931350753,
+      "recipe": "native:sword:B"
+    },
+    {
+      "id": "native:sword:B",
+      "direction": "down",
+      "pixels": 12386,
+      "signature": 2260080802,
+      "recipe": "native:sword:B"
+    },
+    {
+      "id": "native:sword:A1",
+      "direction": "right",
+      "pixels": 11191,
+      "signature": 2064204303,
+      "recipe": "native:sword:A1"
+    },
+    {
+      "id": "native:sword:A1",
+      "direction": "left",
+      "pixels": 11167,
+      "signature": 3404675803,
+      "recipe": "native:sword:A1"
+    },
+    {
+      "id": "native:sword:A1",
+      "direction": "up",
+      "pixels": 11193,
+      "signature": 3495482378,
+      "recipe": "native:sword:A1"
+    },
+    {
+      "id": "native:sword:A1",
+      "direction": "down",
+      "pixels": 11168,
+      "signature": 1468780740,
+      "recipe": "native:sword:A1"
+    },
+    {
+      "id": "native:sword:A2",
+      "direction": "right",
+      "pixels": 6339,
+      "signature": 715666193,
+      "recipe": "native:sword:A2"
+    },
+    {
+      "id": "native:sword:A2",
+      "direction": "left",
+      "pixels": 6356,
+      "signature": 1012591094,
+      "recipe": "native:sword:A2"
+    },
+    {
+      "id": "native:sword:A2",
+      "direction": "up",
+      "pixels": 6320,
+      "signature": 43082504,
+      "recipe": "native:sword:A2"
+    },
+    {
+      "id": "native:sword:A2",
+      "direction": "down",
+      "pixels": 6432,
+      "signature": 1359760524,
+      "recipe": "native:sword:A2"
+    },
+    {
+      "id": "native:sword:B1",
+      "direction": "right",
+      "pixels": 7355,
+      "signature": 964909671,
+      "recipe": "native:sword:B1"
+    },
+    {
+      "id": "native:sword:B1",
+      "direction": "left",
+      "pixels": 7354,
+      "signature": 1510718603,
+      "recipe": "native:sword:B1"
+    },
+    {
+      "id": "native:sword:B1",
+      "direction": "up",
+      "pixels": 7323,
+      "signature": 2383661308,
+      "recipe": "native:sword:B1"
+    },
+    {
+      "id": "native:sword:B1",
+      "direction": "down",
+      "pixels": 7375,
+      "signature": 2867226566,
+      "recipe": "native:sword:B1"
+    },
+    {
+      "id": "native:sword:B2",
+      "direction": "right",
+      "pixels": 15170,
+      "signature": 1519839899,
+      "recipe": "native:sword:B2"
+    },
+    {
+      "id": "native:sword:B2",
+      "direction": "left",
+      "pixels": 15182,
+      "signature": 900675167,
+      "recipe": "native:sword:B2"
+    },
+    {
+      "id": "native:sword:B2",
+      "direction": "up",
+      "pixels": 15160,
+      "signature": 443189873,
+      "recipe": "native:sword:B2"
+    },
+    {
+      "id": "native:sword:B2",
+      "direction": "down",
+      "pixels": 15198,
+      "signature": 2251233562,
+      "recipe": "native:sword:B2"
+    },
+    {
+      "id": "native:sword:A11",
+      "direction": "right",
+      "pixels": 11169,
+      "signature": 2518085799,
+      "recipe": "native:sword:A11"
+    },
+    {
+      "id": "native:sword:A11",
+      "direction": "left",
+      "pixels": 11146,
+      "signature": 2701495686,
+      "recipe": "native:sword:A11"
+    },
+    {
+      "id": "native:sword:A11",
+      "direction": "up",
+      "pixels": 11175,
+      "signature": 2908935422,
+      "recipe": "native:sword:A11"
+    },
+    {
+      "id": "native:sword:A11",
+      "direction": "down",
+      "pixels": 11150,
+      "signature": 3790982173,
+      "recipe": "native:sword:A11"
+    },
+    {
+      "id": "native:sword:A12",
+      "direction": "right",
+      "pixels": 11330,
+      "signature": 1011925268,
+      "recipe": "native:sword:A12"
+    },
+    {
+      "id": "native:sword:A12",
+      "direction": "left",
+      "pixels": 11290,
+      "signature": 816336224,
+      "recipe": "native:sword:A12"
+    },
+    {
+      "id": "native:sword:A12",
+      "direction": "up",
+      "pixels": 11314,
+      "signature": 1506643293,
+      "recipe": "native:sword:A12"
+    },
+    {
+      "id": "native:sword:A12",
+      "direction": "down",
+      "pixels": 11300,
+      "signature": 2746927607,
+      "recipe": "native:sword:A12"
+    },
+    {
+      "id": "native:sword:A21",
+      "direction": "right",
+      "pixels": 6913,
+      "signature": 3610318625,
+      "recipe": "native:sword:A21"
+    },
+    {
+      "id": "native:sword:A21",
+      "direction": "left",
+      "pixels": 7033,
+      "signature": 2229752953,
+      "recipe": "native:sword:A21"
+    },
+    {
+      "id": "native:sword:A21",
+      "direction": "up",
+      "pixels": 7020,
+      "signature": 1980173546,
+      "recipe": "native:sword:A21"
+    },
+    {
+      "id": "native:sword:A21",
+      "direction": "down",
+      "pixels": 6952,
+      "signature": 3347765729,
+      "recipe": "native:sword:A21"
+    },
+    {
+      "id": "native:sword:A22",
+      "direction": "right",
+      "pixels": 6858,
+      "signature": 3317517350,
+      "recipe": "native:sword:A22"
+    },
+    {
+      "id": "native:sword:A22",
+      "direction": "left",
+      "pixels": 7032,
+      "signature": 3052226615,
+      "recipe": "native:sword:A22"
+    },
+    {
+      "id": "native:sword:A22",
+      "direction": "up",
+      "pixels": 6840,
+      "signature": 1908260507,
+      "recipe": "native:sword:A22"
+    },
+    {
+      "id": "native:sword:A22",
+      "direction": "down",
+      "pixels": 6863,
+      "signature": 3744725981,
+      "recipe": "native:sword:A22"
+    },
+    {
+      "id": "native:sword:B11",
+      "direction": "right",
+      "pixels": 9475,
+      "signature": 3175141720,
+      "recipe": "native:sword:B11"
+    },
+    {
+      "id": "native:sword:B11",
+      "direction": "left",
+      "pixels": 9363,
+      "signature": 2468380735,
+      "recipe": "native:sword:B11"
+    },
+    {
+      "id": "native:sword:B11",
+      "direction": "up",
+      "pixels": 9283,
+      "signature": 4035857785,
+      "recipe": "native:sword:B11"
+    },
+    {
+      "id": "native:sword:B11",
+      "direction": "down",
+      "pixels": 9247,
+      "signature": 4035645605,
+      "recipe": "native:sword:B11"
+    },
+    {
+      "id": "native:sword:B12",
+      "direction": "right",
+      "pixels": 7599,
+      "signature": 3837031585,
+      "recipe": "native:sword:B12"
+    },
+    {
+      "id": "native:sword:B12",
+      "direction": "left",
+      "pixels": 7581,
+      "signature": 1741877581,
+      "recipe": "native:sword:B12"
+    },
+    {
+      "id": "native:sword:B12",
+      "direction": "up",
+      "pixels": 7557,
+      "signature": 2860386182,
+      "recipe": "native:sword:B12"
+    },
+    {
+      "id": "native:sword:B12",
+      "direction": "down",
+      "pixels": 7596,
+      "signature": 1897427800,
+      "recipe": "native:sword:B12"
+    },
+    {
+      "id": "native:sword:B21",
+      "direction": "right",
+      "pixels": 15836,
+      "signature": 1746625201,
+      "recipe": "native:sword:B21"
+    },
+    {
+      "id": "native:sword:B21",
+      "direction": "left",
+      "pixels": 15849,
+      "signature": 3538132140,
+      "recipe": "native:sword:B21"
+    },
+    {
+      "id": "native:sword:B21",
+      "direction": "up",
+      "pixels": 15810,
+      "signature": 579557673,
+      "recipe": "native:sword:B21"
+    },
+    {
+      "id": "native:sword:B21",
+      "direction": "down",
+      "pixels": 15860,
+      "signature": 1280488465,
+      "recipe": "native:sword:B21"
+    },
+    {
+      "id": "native:sword:B22",
+      "direction": "right",
+      "pixels": 6167,
+      "signature": 196545382,
+      "recipe": "native:sword:B22"
+    },
+    {
+      "id": "native:sword:B22",
+      "direction": "left",
+      "pixels": 6913,
+      "signature": 2428354555,
+      "recipe": "native:sword:B22"
+    },
+    {
+      "id": "native:sword:B22",
+      "direction": "up",
+      "pixels": 6296,
+      "signature": 1217607899,
+      "recipe": "native:sword:B22"
+    },
+    {
+      "id": "native:sword:B22",
+      "direction": "down",
+      "pixels": 6461,
+      "signature": 445632617,
+      "recipe": "native:sword:B22"
+    },
+    {
+      "id": "native:sword:A111",
+      "direction": "right",
+      "pixels": 11232,
+      "signature": 3449104047,
+      "recipe": "native:sword:A111"
+    },
+    {
+      "id": "native:sword:A111",
+      "direction": "left",
+      "pixels": 11260,
+      "signature": 2903940263,
+      "recipe": "native:sword:A111"
+    },
+    {
+      "id": "native:sword:A111",
+      "direction": "up",
+      "pixels": 11336,
+      "signature": 1987493302,
+      "recipe": "native:sword:A111"
+    },
+    {
+      "id": "native:sword:A111",
+      "direction": "down",
+      "pixels": 11210,
+      "signature": 3076853615,
+      "recipe": "native:sword:A111"
+    },
+    {
+      "id": "native:sword:A112",
+      "direction": "right",
+      "pixels": 11953,
+      "signature": 4187390583,
+      "recipe": "native:sword:A112"
+    },
+    {
+      "id": "native:sword:A112",
+      "direction": "left",
+      "pixels": 11931,
+      "signature": 3658282150,
+      "recipe": "native:sword:A112"
+    },
+    {
+      "id": "native:sword:A112",
+      "direction": "up",
+      "pixels": 11950,
+      "signature": 2290967504,
+      "recipe": "native:sword:A112"
+    },
+    {
+      "id": "native:sword:A112",
+      "direction": "down",
+      "pixels": 11950,
+      "signature": 2396796899,
+      "recipe": "native:sword:A112"
+    },
+    {
+      "id": "native:sword:A121",
+      "direction": "right",
+      "pixels": 11356,
+      "signature": 1978186762,
+      "recipe": "native:sword:A121"
+    },
+    {
+      "id": "native:sword:A121",
+      "direction": "left",
+      "pixels": 11356,
+      "signature": 2845410219,
+      "recipe": "native:sword:A121"
+    },
+    {
+      "id": "native:sword:A121",
+      "direction": "up",
+      "pixels": 11379,
+      "signature": 1770497513,
+      "recipe": "native:sword:A121"
+    },
+    {
+      "id": "native:sword:A121",
+      "direction": "down",
+      "pixels": 11331,
+      "signature": 302258629,
+      "recipe": "native:sword:A121"
+    },
+    {
+      "id": "native:sword:A122",
+      "direction": "right",
+      "pixels": 12455,
+      "signature": 1288165747,
+      "recipe": "native:sword:A122"
+    },
+    {
+      "id": "native:sword:A122",
+      "direction": "left",
+      "pixels": 12428,
+      "signature": 1166979442,
+      "recipe": "native:sword:A122"
+    },
+    {
+      "id": "native:sword:A122",
+      "direction": "up",
+      "pixels": 12454,
+      "signature": 2801691916,
+      "recipe": "native:sword:A122"
+    },
+    {
+      "id": "native:sword:A122",
+      "direction": "down",
+      "pixels": 12439,
+      "signature": 1023002543,
+      "recipe": "native:sword:A122"
+    },
+    {
+      "id": "native:sword:A211",
+      "direction": "right",
+      "pixels": 7126,
+      "signature": 1160836079,
+      "recipe": "native:sword:A211"
+    },
+    {
+      "id": "native:sword:A211",
+      "direction": "left",
+      "pixels": 7497,
+      "signature": 3406575511,
+      "recipe": "native:sword:A211"
+    },
+    {
+      "id": "native:sword:A211",
+      "direction": "up",
+      "pixels": 7414,
+      "signature": 3593620268,
+      "recipe": "native:sword:A211"
+    },
+    {
+      "id": "native:sword:A211",
+      "direction": "down",
+      "pixels": 7247,
+      "signature": 353631966,
+      "recipe": "native:sword:A211"
+    },
+    {
+      "id": "native:sword:A212",
+      "direction": "right",
+      "pixels": 8465,
+      "signature": 1883740035,
+      "recipe": "native:sword:A212"
+    },
+    {
+      "id": "native:sword:A212",
+      "direction": "left",
+      "pixels": 8568,
+      "signature": 2476720239,
+      "recipe": "native:sword:A212"
+    },
+    {
+      "id": "native:sword:A212",
+      "direction": "up",
+      "pixels": 8382,
+      "signature": 525466340,
+      "recipe": "native:sword:A212"
+    },
+    {
+      "id": "native:sword:A212",
+      "direction": "down",
+      "pixels": 8235,
+      "signature": 601556989,
+      "recipe": "native:sword:A212"
+    },
+    {
+      "id": "native:sword:A221",
+      "direction": "right",
+      "pixels": 7568,
+      "signature": 2461844721,
+      "recipe": "native:sword:A221"
+    },
+    {
+      "id": "native:sword:A221",
+      "direction": "left",
+      "pixels": 7887,
+      "signature": 1719812653,
+      "recipe": "native:sword:A221"
+    },
+    {
+      "id": "native:sword:A221",
+      "direction": "up",
+      "pixels": 7928,
+      "signature": 1552089210,
+      "recipe": "native:sword:A221"
+    },
+    {
+      "id": "native:sword:A221",
+      "direction": "down",
+      "pixels": 7505,
+      "signature": 2288515933,
+      "recipe": "native:sword:A221"
+    },
+    {
+      "id": "native:sword:A222",
+      "direction": "right",
+      "pixels": 8619,
+      "signature": 4006643315,
+      "recipe": "native:sword:A222"
+    },
+    {
+      "id": "native:sword:A222",
+      "direction": "left",
+      "pixels": 8784,
+      "signature": 1189065309,
+      "recipe": "native:sword:A222"
+    },
+    {
+      "id": "native:sword:A222",
+      "direction": "up",
+      "pixels": 8464,
+      "signature": 3893325388,
+      "recipe": "native:sword:A222"
+    },
+    {
+      "id": "native:sword:A222",
+      "direction": "down",
+      "pixels": 8449,
+      "signature": 613342723,
+      "recipe": "native:sword:A222"
+    },
+    {
+      "id": "native:sword:B111",
+      "direction": "right",
+      "pixels": 9657,
+      "signature": 2693933792,
+      "recipe": "native:sword:B111"
+    },
+    {
+      "id": "native:sword:B111",
+      "direction": "left",
+      "pixels": 9427,
+      "signature": 2337986257,
+      "recipe": "native:sword:B111"
+    },
+    {
+      "id": "native:sword:B111",
+      "direction": "up",
+      "pixels": 9254,
+      "signature": 354457600,
+      "recipe": "native:sword:B111"
+    },
+    {
+      "id": "native:sword:B111",
+      "direction": "down",
+      "pixels": 9242,
+      "signature": 1847836321,
+      "recipe": "native:sword:B111"
+    },
+    {
+      "id": "native:sword:B112",
+      "direction": "right",
+      "pixels": 11449,
+      "signature": 50891347,
+      "recipe": "native:sword:B112"
+    },
+    {
+      "id": "native:sword:B112",
+      "direction": "left",
+      "pixels": 11331,
+      "signature": 2171417207,
+      "recipe": "native:sword:B112"
+    },
+    {
+      "id": "native:sword:B112",
+      "direction": "up",
+      "pixels": 11243,
+      "signature": 1024719573,
+      "recipe": "native:sword:B112"
+    },
+    {
+      "id": "native:sword:B112",
+      "direction": "down",
+      "pixels": 11208,
+      "signature": 591794477,
+      "recipe": "native:sword:B112"
+    },
+    {
+      "id": "native:sword:B121",
+      "direction": "right",
+      "pixels": 7757,
+      "signature": 1745247305,
+      "recipe": "native:sword:B121"
+    },
+    {
+      "id": "native:sword:B121",
+      "direction": "left",
+      "pixels": 7745,
+      "signature": 1359985361,
+      "recipe": "native:sword:B121"
+    },
+    {
+      "id": "native:sword:B121",
+      "direction": "up",
+      "pixels": 7659,
+      "signature": 3678485336,
+      "recipe": "native:sword:B121"
+    },
+    {
+      "id": "native:sword:B121",
+      "direction": "down",
+      "pixels": 7698,
+      "signature": 4187441616,
+      "recipe": "native:sword:B121"
+    },
+    {
+      "id": "native:sword:B122",
+      "direction": "right",
+      "pixels": 10113,
+      "signature": 787932521,
+      "recipe": "native:sword:B122"
+    },
+    {
+      "id": "native:sword:B122",
+      "direction": "left",
+      "pixels": 10118,
+      "signature": 2434776515,
+      "recipe": "native:sword:B122"
+    },
+    {
+      "id": "native:sword:B122",
+      "direction": "up",
+      "pixels": 10113,
+      "signature": 1737298048,
+      "recipe": "native:sword:B122"
+    },
+    {
+      "id": "native:sword:B122",
+      "direction": "down",
+      "pixels": 10121,
+      "signature": 2226144823,
+      "recipe": "native:sword:B122"
+    },
+    {
+      "id": "native:sword:B211",
+      "direction": "right",
+      "pixels": 16226,
+      "signature": 2937444946,
+      "recipe": "native:sword:B211"
+    },
+    {
+      "id": "native:sword:B211",
+      "direction": "left",
+      "pixels": 16239,
+      "signature": 3378185946,
+      "recipe": "native:sword:B211"
+    },
+    {
+      "id": "native:sword:B211",
+      "direction": "up",
+      "pixels": 16228,
+      "signature": 1607968212,
+      "recipe": "native:sword:B211"
+    },
+    {
+      "id": "native:sword:B211",
+      "direction": "down",
+      "pixels": 16260,
+      "signature": 1884260461,
+      "recipe": "native:sword:B211"
+    },
+    {
+      "id": "native:sword:B212",
+      "direction": "right",
+      "pixels": 18545,
+      "signature": 3538082892,
+      "recipe": "native:sword:B212"
+    },
+    {
+      "id": "native:sword:B212",
+      "direction": "left",
+      "pixels": 18550,
+      "signature": 3160262338,
+      "recipe": "native:sword:B212"
+    },
+    {
+      "id": "native:sword:B212",
+      "direction": "up",
+      "pixels": 18507,
+      "signature": 1311495397,
+      "recipe": "native:sword:B212"
+    },
+    {
+      "id": "native:sword:B212",
+      "direction": "down",
+      "pixels": 18572,
+      "signature": 1018129995,
+      "recipe": "native:sword:B212"
+    },
+    {
+      "id": "native:sword:B221",
+      "direction": "right",
+      "pixels": 7326,
+      "signature": 1561768726,
+      "recipe": "native:sword:B221"
+    },
+    {
+      "id": "native:sword:B221",
+      "direction": "left",
+      "pixels": 7841,
+      "signature": 1342789635,
+      "recipe": "native:sword:B221"
+    },
+    {
+      "id": "native:sword:B221",
+      "direction": "up",
+      "pixels": 7540,
+      "signature": 2943104517,
+      "recipe": "native:sword:B221"
+    },
+    {
+      "id": "native:sword:B221",
+      "direction": "down",
+      "pixels": 7349,
+      "signature": 4130511053,
+      "recipe": "native:sword:B221"
+    },
+    {
+      "id": "native:sword:B222",
+      "direction": "right",
+      "pixels": 10081,
+      "signature": 519617437,
+      "recipe": "native:sword:B222"
+    },
+    {
+      "id": "native:sword:B222",
+      "direction": "left",
+      "pixels": 10423,
+      "signature": 2643568164,
+      "recipe": "native:sword:B222"
+    },
+    {
+      "id": "native:sword:B222",
+      "direction": "up",
+      "pixels": 10286,
+      "signature": 2711202342,
+      "recipe": "native:sword:B222"
+    },
+    {
+      "id": "native:sword:B222",
+      "direction": "down",
+      "pixels": 10308,
+      "signature": 1381469308,
+      "recipe": "native:sword:B222"
+    },
+    {
+      "id": "native:archer:base",
+      "direction": "right",
+      "pixels": 2588,
+      "signature": 1935068621,
+      "recipe": "native:archer:base"
+    },
+    {
+      "id": "native:archer:base",
+      "direction": "left",
+      "pixels": 2531,
+      "signature": 994439157,
+      "recipe": "native:archer:base"
+    },
+    {
+      "id": "native:archer:base",
+      "direction": "up",
+      "pixels": 2607,
+      "signature": 1966720068,
+      "recipe": "native:archer:base"
+    },
+    {
+      "id": "native:archer:base",
+      "direction": "down",
+      "pixels": 2559,
+      "signature": 97467661,
+      "recipe": "native:archer:base"
+    },
+    {
+      "id": "native:archer:A",
+      "direction": "right",
+      "pixels": 12067,
+      "signature": 680911467,
+      "recipe": "native:archer:A"
+    },
+    {
+      "id": "native:archer:A",
+      "direction": "left",
+      "pixels": 12100,
+      "signature": 4185835588,
+      "recipe": "native:archer:A"
+    },
+    {
+      "id": "native:archer:A",
+      "direction": "up",
+      "pixels": 12109,
+      "signature": 1491804161,
+      "recipe": "native:archer:A"
+    },
+    {
+      "id": "native:archer:A",
+      "direction": "down",
+      "pixels": 12130,
+      "signature": 2994048671,
+      "recipe": "native:archer:A"
+    },
+    {
+      "id": "native:archer:B",
+      "direction": "right",
+      "pixels": 9306,
+      "signature": 1169107751,
+      "recipe": "native:archer:B"
+    },
+    {
+      "id": "native:archer:B",
+      "direction": "left",
+      "pixels": 9313,
+      "signature": 337987847,
+      "recipe": "native:archer:B"
+    },
+    {
+      "id": "native:archer:B",
+      "direction": "up",
+      "pixels": 9286,
+      "signature": 250387344,
+      "recipe": "native:archer:B"
+    },
+    {
+      "id": "native:archer:B",
+      "direction": "down",
+      "pixels": 9540,
+      "signature": 956568775,
+      "recipe": "native:archer:B"
+    },
+    {
+      "id": "native:archer:A1",
+      "direction": "right",
+      "pixels": 3073,
+      "signature": 1508411346,
+      "recipe": "native:archer:A1"
+    },
+    {
+      "id": "native:archer:A1",
+      "direction": "left",
+      "pixels": 3078,
+      "signature": 3313188611,
+      "recipe": "native:archer:A1"
+    },
+    {
+      "id": "native:archer:A1",
+      "direction": "up",
+      "pixels": 3081,
+      "signature": 3766550406,
+      "recipe": "native:archer:A1"
+    },
+    {
+      "id": "native:archer:A1",
+      "direction": "down",
+      "pixels": 3052,
+      "signature": 978409982,
+      "recipe": "native:archer:A1"
+    },
+    {
+      "id": "native:archer:A2",
+      "direction": "right",
+      "pixels": 5148,
+      "signature": 3558422272,
+      "recipe": "native:archer:A2"
+    },
+    {
+      "id": "native:archer:A2",
+      "direction": "left",
+      "pixels": 5128,
+      "signature": 1627283122,
+      "recipe": "native:archer:A2"
+    },
+    {
+      "id": "native:archer:A2",
+      "direction": "up",
+      "pixels": 5792,
+      "signature": 389545139,
+      "recipe": "native:archer:A2"
+    },
+    {
+      "id": "native:archer:A2",
+      "direction": "down",
+      "pixels": 5742,
+      "signature": 548478008,
+      "recipe": "native:archer:A2"
+    },
+    {
+      "id": "native:archer:B1",
+      "direction": "right",
+      "pixels": 12646,
+      "signature": 3131103419,
+      "recipe": "native:archer:B1"
+    },
+    {
+      "id": "native:archer:B1",
+      "direction": "left",
+      "pixels": 12837,
+      "signature": 1951388142,
+      "recipe": "native:archer:B1"
+    },
+    {
+      "id": "native:archer:B1",
+      "direction": "up",
+      "pixels": 12774,
+      "signature": 2700186369,
+      "recipe": "native:archer:B1"
+    },
+    {
+      "id": "native:archer:B1",
+      "direction": "down",
+      "pixels": 12491,
+      "signature": 3357069088,
+      "recipe": "native:archer:B1"
+    },
+    {
+      "id": "native:archer:B2",
+      "direction": "right",
+      "pixels": 9157,
+      "signature": 854087230,
+      "recipe": "native:archer:B2"
+    },
+    {
+      "id": "native:archer:B2",
+      "direction": "left",
+      "pixels": 9148,
+      "signature": 304158168,
+      "recipe": "native:archer:B2"
+    },
+    {
+      "id": "native:archer:B2",
+      "direction": "up",
+      "pixels": 9185,
+      "signature": 2790629338,
+      "recipe": "native:archer:B2"
+    },
+    {
+      "id": "native:archer:B2",
+      "direction": "down",
+      "pixels": 9177,
+      "signature": 152815904,
+      "recipe": "native:archer:B2"
+    },
+    {
+      "id": "native:archer:A11",
+      "direction": "right",
+      "pixels": 3645,
+      "signature": 3075268075,
+      "recipe": "native:archer:A11"
+    },
+    {
+      "id": "native:archer:A11",
+      "direction": "left",
+      "pixels": 3667,
+      "signature": 2494228251,
+      "recipe": "native:archer:A11"
+    },
+    {
+      "id": "native:archer:A11",
+      "direction": "up",
+      "pixels": 3594,
+      "signature": 2619074539,
+      "recipe": "native:archer:A11"
+    },
+    {
+      "id": "native:archer:A11",
+      "direction": "down",
+      "pixels": 3469,
+      "signature": 3040773802,
+      "recipe": "native:archer:A11"
+    },
+    {
+      "id": "native:archer:A12",
+      "direction": "right",
+      "pixels": 3464,
+      "signature": 347422070,
+      "recipe": "native:archer:A12"
+    },
+    {
+      "id": "native:archer:A12",
+      "direction": "left",
+      "pixels": 3427,
+      "signature": 3156524698,
+      "recipe": "native:archer:A12"
+    },
+    {
+      "id": "native:archer:A12",
+      "direction": "up",
+      "pixels": 3473,
+      "signature": 3822339091,
+      "recipe": "native:archer:A12"
+    },
+    {
+      "id": "native:archer:A12",
+      "direction": "down",
+      "pixels": 3430,
+      "signature": 2625258518,
+      "recipe": "native:archer:A12"
+    },
+    {
+      "id": "native:archer:A21",
+      "direction": "right",
+      "pixels": 4964,
+      "signature": 2531380416,
+      "recipe": "native:archer:A21"
+    },
+    {
+      "id": "native:archer:A21",
+      "direction": "left",
+      "pixels": 4961,
+      "signature": 4102450303,
+      "recipe": "native:archer:A21"
+    },
+    {
+      "id": "native:archer:A21",
+      "direction": "up",
+      "pixels": 4996,
+      "signature": 1776773441,
+      "recipe": "native:archer:A21"
+    },
+    {
+      "id": "native:archer:A21",
+      "direction": "down",
+      "pixels": 4969,
+      "signature": 216400676,
+      "recipe": "native:archer:A21"
+    },
+    {
+      "id": "native:archer:A22",
+      "direction": "right",
+      "pixels": 5407,
+      "signature": 1778403310,
+      "recipe": "native:archer:A22"
+    },
+    {
+      "id": "native:archer:A22",
+      "direction": "left",
+      "pixels": 5386,
+      "signature": 1453617874,
+      "recipe": "native:archer:A22"
+    },
+    {
+      "id": "native:archer:A22",
+      "direction": "up",
+      "pixels": 6229,
+      "signature": 3895368422,
+      "recipe": "native:archer:A22"
+    },
+    {
+      "id": "native:archer:A22",
+      "direction": "down",
+      "pixels": 6185,
+      "signature": 3586137947,
+      "recipe": "native:archer:A22"
+    },
+    {
+      "id": "native:archer:B11",
+      "direction": "right",
+      "pixels": 14368,
+      "signature": 2500234508,
+      "recipe": "native:archer:B11"
+    },
+    {
+      "id": "native:archer:B11",
+      "direction": "left",
+      "pixels": 14710,
+      "signature": 194335623,
+      "recipe": "native:archer:B11"
+    },
+    {
+      "id": "native:archer:B11",
+      "direction": "up",
+      "pixels": 14717,
+      "signature": 1495168125,
+      "recipe": "native:archer:B11"
+    },
+    {
+      "id": "native:archer:B11",
+      "direction": "down",
+      "pixels": 15088,
+      "signature": 2345133511,
+      "recipe": "native:archer:B11"
+    },
+    {
+      "id": "native:archer:B12",
+      "direction": "right",
+      "pixels": 13337,
+      "signature": 159624240,
+      "recipe": "native:archer:B12"
+    },
+    {
+      "id": "native:archer:B12",
+      "direction": "left",
+      "pixels": 13329,
+      "signature": 2933059143,
+      "recipe": "native:archer:B12"
+    },
+    {
+      "id": "native:archer:B12",
+      "direction": "up",
+      "pixels": 13113,
+      "signature": 957430353,
+      "recipe": "native:archer:B12"
+    },
+    {
+      "id": "native:archer:B12",
+      "direction": "down",
+      "pixels": 13790,
+      "signature": 261392078,
+      "recipe": "native:archer:B12"
+    },
+    {
+      "id": "native:archer:B21",
+      "direction": "right",
+      "pixels": 9414,
+      "signature": 472250708,
+      "recipe": "native:archer:B21"
+    },
+    {
+      "id": "native:archer:B21",
+      "direction": "left",
+      "pixels": 9403,
+      "signature": 2483910057,
+      "recipe": "native:archer:B21"
+    },
+    {
+      "id": "native:archer:B21",
+      "direction": "up",
+      "pixels": 9439,
+      "signature": 2521862314,
+      "recipe": "native:archer:B21"
+    },
+    {
+      "id": "native:archer:B21",
+      "direction": "down",
+      "pixels": 9415,
+      "signature": 1766025005,
+      "recipe": "native:archer:B21"
+    },
+    {
+      "id": "native:archer:B22",
+      "direction": "right",
+      "pixels": 10830,
+      "signature": 3911678103,
+      "recipe": "native:archer:B22"
+    },
+    {
+      "id": "native:archer:B22",
+      "direction": "left",
+      "pixels": 10821,
+      "signature": 2551587491,
+      "recipe": "native:archer:B22"
+    },
+    {
+      "id": "native:archer:B22",
+      "direction": "up",
+      "pixels": 10828,
+      "signature": 2401454253,
+      "recipe": "native:archer:B22"
+    },
+    {
+      "id": "native:archer:B22",
+      "direction": "down",
+      "pixels": 10824,
+      "signature": 959475727,
+      "recipe": "native:archer:B22"
+    },
+    {
+      "id": "native:archer:A111",
+      "direction": "right",
+      "pixels": 4375,
+      "signature": 3428927455,
+      "recipe": "native:archer:A111"
+    },
+    {
+      "id": "native:archer:A111",
+      "direction": "left",
+      "pixels": 4312,
+      "signature": 979290112,
+      "recipe": "native:archer:A111"
+    },
+    {
+      "id": "native:archer:A111",
+      "direction": "up",
+      "pixels": 4330,
+      "signature": 2644950833,
+      "recipe": "native:archer:A111"
+    },
+    {
+      "id": "native:archer:A111",
+      "direction": "down",
+      "pixels": 3985,
+      "signature": 2815423599,
+      "recipe": "native:archer:A111"
+    },
+    {
+      "id": "native:archer:A112",
+      "direction": "right",
+      "pixels": 6614,
+      "signature": 689140278,
+      "recipe": "native:archer:A112"
+    },
+    {
+      "id": "native:archer:A112",
+      "direction": "left",
+      "pixels": 6581,
+      "signature": 3117866469,
+      "recipe": "native:archer:A112"
+    },
+    {
+      "id": "native:archer:A112",
+      "direction": "up",
+      "pixels": 6521,
+      "signature": 4111805265,
+      "recipe": "native:archer:A112"
+    },
+    {
+      "id": "native:archer:A112",
+      "direction": "down",
+      "pixels": 6406,
+      "signature": 3312901130,
+      "recipe": "native:archer:A112"
+    },
+    {
+      "id": "native:archer:A121",
+      "direction": "right",
+      "pixels": 3778,
+      "signature": 2595139489,
+      "recipe": "native:archer:A121"
+    },
+    {
+      "id": "native:archer:A121",
+      "direction": "left",
+      "pixels": 3731,
+      "signature": 3989904819,
+      "recipe": "native:archer:A121"
+    },
+    {
+      "id": "native:archer:A121",
+      "direction": "up",
+      "pixels": 3889,
+      "signature": 1992453432,
+      "recipe": "native:archer:A121"
+    },
+    {
+      "id": "native:archer:A121",
+      "direction": "down",
+      "pixels": 3683,
+      "signature": 1676272640,
+      "recipe": "native:archer:A121"
+    },
+    {
+      "id": "native:archer:A122",
+      "direction": "right",
+      "pixels": 5920,
+      "signature": 183869846,
+      "recipe": "native:archer:A122"
+    },
+    {
+      "id": "native:archer:A122",
+      "direction": "left",
+      "pixels": 5876,
+      "signature": 1542033706,
+      "recipe": "native:archer:A122"
+    },
+    {
+      "id": "native:archer:A122",
+      "direction": "up",
+      "pixels": 5899,
+      "signature": 2963915107,
+      "recipe": "native:archer:A122"
+    },
+    {
+      "id": "native:archer:A122",
+      "direction": "down",
+      "pixels": 5792,
+      "signature": 2676859604,
+      "recipe": "native:archer:A122"
+    },
+    {
+      "id": "native:archer:A211",
+      "direction": "right",
+      "pixels": 5405,
+      "signature": 3320593250,
+      "recipe": "native:archer:A211"
+    },
+    {
+      "id": "native:archer:A211",
+      "direction": "left",
+      "pixels": 5385,
+      "signature": 4218208256,
+      "recipe": "native:archer:A211"
+    },
+    {
+      "id": "native:archer:A211",
+      "direction": "up",
+      "pixels": 5462,
+      "signature": 3129745740,
+      "recipe": "native:archer:A211"
+    },
+    {
+      "id": "native:archer:A211",
+      "direction": "down",
+      "pixels": 5337,
+      "signature": 356585167,
+      "recipe": "native:archer:A211"
+    },
+    {
+      "id": "native:archer:A212",
+      "direction": "right",
+      "pixels": 9831,
+      "signature": 3335950127,
+      "recipe": "native:archer:A212"
+    },
+    {
+      "id": "native:archer:A212",
+      "direction": "left",
+      "pixels": 9855,
+      "signature": 885448878,
+      "recipe": "native:archer:A212"
+    },
+    {
+      "id": "native:archer:A212",
+      "direction": "up",
+      "pixels": 9845,
+      "signature": 3995733489,
+      "recipe": "native:archer:A212"
+    },
+    {
+      "id": "native:archer:A212",
+      "direction": "down",
+      "pixels": 9853,
+      "signature": 3661484015,
+      "recipe": "native:archer:A212"
+    },
+    {
+      "id": "native:archer:A221",
+      "direction": "right",
+      "pixels": 5386,
+      "signature": 4257984376,
+      "recipe": "native:archer:A221"
+    },
+    {
+      "id": "native:archer:A221",
+      "direction": "left",
+      "pixels": 5375,
+      "signature": 2612132973,
+      "recipe": "native:archer:A221"
+    },
+    {
+      "id": "native:archer:A221",
+      "direction": "up",
+      "pixels": 5491,
+      "signature": 1006774723,
+      "recipe": "native:archer:A221"
+    },
+    {
+      "id": "native:archer:A221",
+      "direction": "down",
+      "pixels": 5350,
+      "signature": 3582274961,
+      "recipe": "native:archer:A221"
+    },
+    {
+      "id": "native:archer:A222",
+      "direction": "right",
+      "pixels": 8199,
+      "signature": 2552944762,
+      "recipe": "native:archer:A222"
+    },
+    {
+      "id": "native:archer:A222",
+      "direction": "left",
+      "pixels": 8200,
+      "signature": 2455818057,
+      "recipe": "native:archer:A222"
+    },
+    {
+      "id": "native:archer:A222",
+      "direction": "up",
+      "pixels": 8212,
+      "signature": 1741308443,
+      "recipe": "native:archer:A222"
+    },
+    {
+      "id": "native:archer:A222",
+      "direction": "down",
+      "pixels": 8207,
+      "signature": 1425026695,
+      "recipe": "native:archer:A222"
+    },
+    {
+      "id": "native:archer:B111",
+      "direction": "right",
+      "pixels": 13059,
+      "signature": 3675215906,
+      "recipe": "native:archer:B111"
+    },
+    {
+      "id": "native:archer:B111",
+      "direction": "left",
+      "pixels": 13038,
+      "signature": 2447326671,
+      "recipe": "native:archer:B111"
+    },
+    {
+      "id": "native:archer:B111",
+      "direction": "up",
+      "pixels": 13159,
+      "signature": 3022417211,
+      "recipe": "native:archer:B111"
+    },
+    {
+      "id": "native:archer:B111",
+      "direction": "down",
+      "pixels": 13104,
+      "signature": 2312030559,
+      "recipe": "native:archer:B111"
+    },
+    {
+      "id": "native:archer:B112",
+      "direction": "right",
+      "pixels": 17825,
+      "signature": 3846339441,
+      "recipe": "native:archer:B112"
+    },
+    {
+      "id": "native:archer:B112",
+      "direction": "left",
+      "pixels": 18273,
+      "signature": 798527969,
+      "recipe": "native:archer:B112"
+    },
+    {
+      "id": "native:archer:B112",
+      "direction": "up",
+      "pixels": 17660,
+      "signature": 3186220300,
+      "recipe": "native:archer:B112"
+    },
+    {
+      "id": "native:archer:B112",
+      "direction": "down",
+      "pixels": 17189,
+      "signature": 3669320611,
+      "recipe": "native:archer:B112"
+    },
+    {
+      "id": "native:archer:B121",
+      "direction": "right",
+      "pixels": 13339,
+      "signature": 1648204953,
+      "recipe": "native:archer:B121"
+    },
+    {
+      "id": "native:archer:B121",
+      "direction": "left",
+      "pixels": 13343,
+      "signature": 4095501705,
+      "recipe": "native:archer:B121"
+    },
+    {
+      "id": "native:archer:B121",
+      "direction": "up",
+      "pixels": 13375,
+      "signature": 4284049828,
+      "recipe": "native:archer:B121"
+    },
+    {
+      "id": "native:archer:B121",
+      "direction": "down",
+      "pixels": 13300,
+      "signature": 734886516,
+      "recipe": "native:archer:B121"
+    },
+    {
+      "id": "native:archer:B122",
+      "direction": "right",
+      "pixels": 15805,
+      "signature": 4272092699,
+      "recipe": "native:archer:B122"
+    },
+    {
+      "id": "native:archer:B122",
+      "direction": "left",
+      "pixels": 15980,
+      "signature": 3306266696,
+      "recipe": "native:archer:B122"
+    },
+    {
+      "id": "native:archer:B122",
+      "direction": "up",
+      "pixels": 15786,
+      "signature": 3288390634,
+      "recipe": "native:archer:B122"
+    },
+    {
+      "id": "native:archer:B122",
+      "direction": "down",
+      "pixels": 16464,
+      "signature": 1699625865,
+      "recipe": "native:archer:B122"
+    },
+    {
+      "id": "native:archer:B211",
+      "direction": "right",
+      "pixels": 11051,
+      "signature": 4282670444,
+      "recipe": "native:archer:B211"
+    },
+    {
+      "id": "native:archer:B211",
+      "direction": "left",
+      "pixels": 11833,
+      "signature": 1283539132,
+      "recipe": "native:archer:B211"
+    },
+    {
+      "id": "native:archer:B211",
+      "direction": "up",
+      "pixels": 11330,
+      "signature": 1394329093,
+      "recipe": "native:archer:B211"
+    },
+    {
+      "id": "native:archer:B211",
+      "direction": "down",
+      "pixels": 11231,
+      "signature": 1089491127,
+      "recipe": "native:archer:B211"
+    },
+    {
+      "id": "native:archer:B212",
+      "direction": "right",
+      "pixels": 10410,
+      "signature": 1742067747,
+      "recipe": "native:archer:B212"
+    },
+    {
+      "id": "native:archer:B212",
+      "direction": "left",
+      "pixels": 10412,
+      "signature": 3339172237,
+      "recipe": "native:archer:B212"
+    },
+    {
+      "id": "native:archer:B212",
+      "direction": "up",
+      "pixels": 10438,
+      "signature": 99512302,
+      "recipe": "native:archer:B212"
+    },
+    {
+      "id": "native:archer:B212",
+      "direction": "down",
+      "pixels": 10396,
+      "signature": 3946777729,
+      "recipe": "native:archer:B212"
+    },
+    {
+      "id": "native:archer:B221",
+      "direction": "right",
+      "pixels": 10886,
+      "signature": 2227485844,
+      "recipe": "native:archer:B221"
+    },
+    {
+      "id": "native:archer:B221",
+      "direction": "left",
+      "pixels": 10862,
+      "signature": 474317014,
+      "recipe": "native:archer:B221"
+    },
+    {
+      "id": "native:archer:B221",
+      "direction": "up",
+      "pixels": 10924,
+      "signature": 4242128688,
+      "recipe": "native:archer:B221"
+    },
+    {
+      "id": "native:archer:B221",
+      "direction": "down",
+      "pixels": 10868,
+      "signature": 4136693544,
+      "recipe": "native:archer:B221"
+    },
+    {
+      "id": "native:archer:B222",
+      "direction": "right",
+      "pixels": 13390,
+      "signature": 2482784618,
+      "recipe": "native:archer:B222"
+    },
+    {
+      "id": "native:archer:B222",
+      "direction": "left",
+      "pixels": 13386,
+      "signature": 3409802802,
+      "recipe": "native:archer:B222"
+    },
+    {
+      "id": "native:archer:B222",
+      "direction": "up",
+      "pixels": 13499,
+      "signature": 1360159881,
+      "recipe": "native:archer:B222"
+    },
+    {
+      "id": "native:archer:B222",
+      "direction": "down",
+      "pixels": 13459,
+      "signature": 4106074994,
+      "recipe": "native:archer:B222"
+    },
+    {
+      "id": "native:mage:base",
+      "direction": "right",
+      "pixels": 5840,
+      "signature": 1355140713,
+      "recipe": "native:mage:base"
+    },
+    {
+      "id": "native:mage:base",
+      "direction": "left",
+      "pixels": 5887,
+      "signature": 651319959,
+      "recipe": "native:mage:base"
+    },
+    {
+      "id": "native:mage:base",
+      "direction": "up",
+      "pixels": 5840,
+      "signature": 1284381696,
+      "recipe": "native:mage:base"
+    },
+    {
+      "id": "native:mage:base",
+      "direction": "down",
+      "pixels": 5763,
+      "signature": 3490939322,
+      "recipe": "native:mage:base"
+    },
+    {
+      "id": "native:mage:A",
+      "direction": "right",
+      "pixels": 4160,
+      "signature": 2115073206,
+      "recipe": "native:mage:A"
+    },
+    {
+      "id": "native:mage:A",
+      "direction": "left",
+      "pixels": 4194,
+      "signature": 1279974004,
+      "recipe": "native:mage:A"
+    },
+    {
+      "id": "native:mage:A",
+      "direction": "up",
+      "pixels": 4310,
+      "signature": 2252348207,
+      "recipe": "native:mage:A"
+    },
+    {
+      "id": "native:mage:A",
+      "direction": "down",
+      "pixels": 4059,
+      "signature": 2074956575,
+      "recipe": "native:mage:A"
+    },
+    {
+      "id": "native:mage:B",
+      "direction": "right",
+      "pixels": 8989,
+      "signature": 3567727063,
+      "recipe": "native:mage:B"
+    },
+    {
+      "id": "native:mage:B",
+      "direction": "left",
+      "pixels": 8913,
+      "signature": 1848531384,
+      "recipe": "native:mage:B"
+    },
+    {
+      "id": "native:mage:B",
+      "direction": "up",
+      "pixels": 9091,
+      "signature": 817662846,
+      "recipe": "native:mage:B"
+    },
+    {
+      "id": "native:mage:B",
+      "direction": "down",
+      "pixels": 8864,
+      "signature": 3340376786,
+      "recipe": "native:mage:B"
+    },
+    {
+      "id": "native:mage:A1",
+      "direction": "right",
+      "pixels": 9566,
+      "signature": 654425727,
+      "recipe": "native:mage:A1"
+    },
+    {
+      "id": "native:mage:A1",
+      "direction": "left",
+      "pixels": 9555,
+      "signature": 1124037292,
+      "recipe": "native:mage:A1"
+    },
+    {
+      "id": "native:mage:A1",
+      "direction": "up",
+      "pixels": 9548,
+      "signature": 366528122,
+      "recipe": "native:mage:A1"
+    },
+    {
+      "id": "native:mage:A1",
+      "direction": "down",
+      "pixels": 9521,
+      "signature": 2970328942,
+      "recipe": "native:mage:A1"
+    },
+    {
+      "id": "native:mage:A2",
+      "direction": "right",
+      "pixels": 16665,
+      "signature": 3678660636,
+      "recipe": "native:mage:A2"
+    },
+    {
+      "id": "native:mage:A2",
+      "direction": "left",
+      "pixels": 16655,
+      "signature": 2555811538,
+      "recipe": "native:mage:A2"
+    },
+    {
+      "id": "native:mage:A2",
+      "direction": "up",
+      "pixels": 16670,
+      "signature": 3983931899,
+      "recipe": "native:mage:A2"
+    },
+    {
+      "id": "native:mage:A2",
+      "direction": "down",
+      "pixels": 16667,
+      "signature": 4090054013,
+      "recipe": "native:mage:A2"
+    },
+    {
+      "id": "native:mage:B1",
+      "direction": "right",
+      "pixels": 10552,
+      "signature": 2593225759,
+      "recipe": "native:mage:B1"
+    },
+    {
+      "id": "native:mage:B1",
+      "direction": "left",
+      "pixels": 10537,
+      "signature": 800339869,
+      "recipe": "native:mage:B1"
+    },
+    {
+      "id": "native:mage:B1",
+      "direction": "up",
+      "pixels": 10499,
+      "signature": 677023399,
+      "recipe": "native:mage:B1"
+    },
+    {
+      "id": "native:mage:B1",
+      "direction": "down",
+      "pixels": 10528,
+      "signature": 2924721447,
+      "recipe": "native:mage:B1"
+    },
+    {
+      "id": "native:mage:B2",
+      "direction": "right",
+      "pixels": 8981,
+      "signature": 782858041,
+      "recipe": "native:mage:B2"
+    },
+    {
+      "id": "native:mage:B2",
+      "direction": "left",
+      "pixels": 9036,
+      "signature": 1870498792,
+      "recipe": "native:mage:B2"
+    },
+    {
+      "id": "native:mage:B2",
+      "direction": "up",
+      "pixels": 8723,
+      "signature": 1865550528,
+      "recipe": "native:mage:B2"
+    },
+    {
+      "id": "native:mage:B2",
+      "direction": "down",
+      "pixels": 8830,
+      "signature": 2065375427,
+      "recipe": "native:mage:B2"
+    },
+    {
+      "id": "native:mage:A11",
+      "direction": "right",
+      "pixels": 7603,
+      "signature": 2315634969,
+      "recipe": "native:mage:A11"
+    },
+    {
+      "id": "native:mage:A11",
+      "direction": "left",
+      "pixels": 7639,
+      "signature": 2767884041,
+      "recipe": "native:mage:A11"
+    },
+    {
+      "id": "native:mage:A11",
+      "direction": "up",
+      "pixels": 7648,
+      "signature": 358399666,
+      "recipe": "native:mage:A11"
+    },
+    {
+      "id": "native:mage:A11",
+      "direction": "down",
+      "pixels": 7574,
+      "signature": 1772342082,
+      "recipe": "native:mage:A11"
+    },
+    {
+      "id": "native:mage:A12",
+      "direction": "right",
+      "pixels": 9569,
+      "signature": 3800739199,
+      "recipe": "native:mage:A12"
+    },
+    {
+      "id": "native:mage:A12",
+      "direction": "left",
+      "pixels": 9588,
+      "signature": 737930558,
+      "recipe": "native:mage:A12"
+    },
+    {
+      "id": "native:mage:A12",
+      "direction": "up",
+      "pixels": 9565,
+      "signature": 2560891482,
+      "recipe": "native:mage:A12"
+    },
+    {
+      "id": "native:mage:A12",
+      "direction": "down",
+      "pixels": 9545,
+      "signature": 659358434,
+      "recipe": "native:mage:A12"
+    },
+    {
+      "id": "native:mage:A21",
+      "direction": "right",
+      "pixels": 16911,
+      "signature": 2626417354,
+      "recipe": "native:mage:A21"
+    },
+    {
+      "id": "native:mage:A21",
+      "direction": "left",
+      "pixels": 16914,
+      "signature": 1710474781,
+      "recipe": "native:mage:A21"
+    },
+    {
+      "id": "native:mage:A21",
+      "direction": "up",
+      "pixels": 16938,
+      "signature": 2381814152,
+      "recipe": "native:mage:A21"
+    },
+    {
+      "id": "native:mage:A21",
+      "direction": "down",
+      "pixels": 16910,
+      "signature": 707126132,
+      "recipe": "native:mage:A21"
+    },
+    {
+      "id": "native:mage:A22",
+      "direction": "right",
+      "pixels": 19408,
+      "signature": 1954925003,
+      "recipe": "native:mage:A22"
+    },
+    {
+      "id": "native:mage:A22",
+      "direction": "left",
+      "pixels": 19427,
+      "signature": 2036291027,
+      "recipe": "native:mage:A22"
+    },
+    {
+      "id": "native:mage:A22",
+      "direction": "up",
+      "pixels": 19377,
+      "signature": 659410901,
+      "recipe": "native:mage:A22"
+    },
+    {
+      "id": "native:mage:A22",
+      "direction": "down",
+      "pixels": 19364,
+      "signature": 3041684631,
+      "recipe": "native:mage:A22"
+    },
+    {
+      "id": "native:mage:B11",
+      "direction": "right",
+      "pixels": 10514,
+      "signature": 3926803009,
+      "recipe": "native:mage:B11"
+    },
+    {
+      "id": "native:mage:B11",
+      "direction": "left",
+      "pixels": 10502,
+      "signature": 388800190,
+      "recipe": "native:mage:B11"
+    },
+    {
+      "id": "native:mage:B11",
+      "direction": "up",
+      "pixels": 10473,
+      "signature": 1752969000,
+      "recipe": "native:mage:B11"
+    },
+    {
+      "id": "native:mage:B11",
+      "direction": "down",
+      "pixels": 10502,
+      "signature": 4084204384,
+      "recipe": "native:mage:B11"
+    },
+    {
+      "id": "native:mage:B12",
+      "direction": "right",
+      "pixels": 2659,
+      "signature": 1897376045,
+      "recipe": "native:mage:B12"
+    },
+    {
+      "id": "native:mage:B12",
+      "direction": "left",
+      "pixels": 2736,
+      "signature": 1225681633,
+      "recipe": "native:mage:B12"
+    },
+    {
+      "id": "native:mage:B12",
+      "direction": "up",
+      "pixels": 2704,
+      "signature": 229011609,
+      "recipe": "native:mage:B12"
+    },
+    {
+      "id": "native:mage:B12",
+      "direction": "down",
+      "pixels": 2754,
+      "signature": 1235517773,
+      "recipe": "native:mage:B12"
+    },
+    {
+      "id": "native:mage:B21",
+      "direction": "right",
+      "pixels": 12159,
+      "signature": 1863110874,
+      "recipe": "native:mage:B21"
+    },
+    {
+      "id": "native:mage:B21",
+      "direction": "left",
+      "pixels": 12199,
+      "signature": 3045874045,
+      "recipe": "native:mage:B21"
+    },
+    {
+      "id": "native:mage:B21",
+      "direction": "up",
+      "pixels": 12332,
+      "signature": 4147896905,
+      "recipe": "native:mage:B21"
+    },
+    {
+      "id": "native:mage:B21",
+      "direction": "down",
+      "pixels": 12351,
+      "signature": 2406558071,
+      "recipe": "native:mage:B21"
+    },
+    {
+      "id": "native:mage:B22",
+      "direction": "right",
+      "pixels": 11949,
+      "signature": 1696065754,
+      "recipe": "native:mage:B22"
+    },
+    {
+      "id": "native:mage:B22",
+      "direction": "left",
+      "pixels": 12003,
+      "signature": 190115292,
+      "recipe": "native:mage:B22"
+    },
+    {
+      "id": "native:mage:B22",
+      "direction": "up",
+      "pixels": 12109,
+      "signature": 1135769822,
+      "recipe": "native:mage:B22"
+    },
+    {
+      "id": "native:mage:B22",
+      "direction": "down",
+      "pixels": 11973,
+      "signature": 478703194,
+      "recipe": "native:mage:B22"
+    },
+    {
+      "id": "native:mage:A111",
+      "direction": "right",
+      "pixels": 8720,
+      "signature": 4260242720,
+      "recipe": "native:mage:A111"
+    },
+    {
+      "id": "native:mage:A111",
+      "direction": "left",
+      "pixels": 8706,
+      "signature": 39909895,
+      "recipe": "native:mage:A111"
+    },
+    {
+      "id": "native:mage:A111",
+      "direction": "up",
+      "pixels": 8680,
+      "signature": 1292043848,
+      "recipe": "native:mage:A111"
+    },
+    {
+      "id": "native:mage:A111",
+      "direction": "down",
+      "pixels": 8573,
+      "signature": 1812662634,
+      "recipe": "native:mage:A111"
+    },
+    {
+      "id": "native:mage:A112",
+      "direction": "right",
+      "pixels": 7910,
+      "signature": 2540629275,
+      "recipe": "native:mage:A112"
+    },
+    {
+      "id": "native:mage:A112",
+      "direction": "left",
+      "pixels": 8032,
+      "signature": 3834743318,
+      "recipe": "native:mage:A112"
+    },
+    {
+      "id": "native:mage:A112",
+      "direction": "up",
+      "pixels": 7970,
+      "signature": 861985730,
+      "recipe": "native:mage:A112"
+    },
+    {
+      "id": "native:mage:A112",
+      "direction": "down",
+      "pixels": 7978,
+      "signature": 97055769,
+      "recipe": "native:mage:A112"
+    },
+    {
+      "id": "native:mage:A121",
+      "direction": "right",
+      "pixels": 11217,
+      "signature": 1995236364,
+      "recipe": "native:mage:A121"
+    },
+    {
+      "id": "native:mage:A121",
+      "direction": "left",
+      "pixels": 11182,
+      "signature": 2003434729,
+      "recipe": "native:mage:A121"
+    },
+    {
+      "id": "native:mage:A121",
+      "direction": "up",
+      "pixels": 11180,
+      "signature": 1457327992,
+      "recipe": "native:mage:A121"
+    },
+    {
+      "id": "native:mage:A121",
+      "direction": "down",
+      "pixels": 11130,
+      "signature": 2502426360,
+      "recipe": "native:mage:A121"
+    },
+    {
+      "id": "native:mage:A122",
+      "direction": "right",
+      "pixels": 11045,
+      "signature": 3431493067,
+      "recipe": "native:mage:A122"
+    },
+    {
+      "id": "native:mage:A122",
+      "direction": "left",
+      "pixels": 11057,
+      "signature": 543473750,
+      "recipe": "native:mage:A122"
+    },
+    {
+      "id": "native:mage:A122",
+      "direction": "up",
+      "pixels": 11049,
+      "signature": 2275295948,
+      "recipe": "native:mage:A122"
+    },
+    {
+      "id": "native:mage:A122",
+      "direction": "down",
+      "pixels": 11019,
+      "signature": 2186657216,
+      "recipe": "native:mage:A122"
+    },
+    {
+      "id": "native:mage:A211",
+      "direction": "right",
+      "pixels": 17218,
+      "signature": 2389210747,
+      "recipe": "native:mage:A211"
+    },
+    {
+      "id": "native:mage:A211",
+      "direction": "left",
+      "pixels": 17222,
+      "signature": 1854578523,
+      "recipe": "native:mage:A211"
+    },
+    {
+      "id": "native:mage:A211",
+      "direction": "up",
+      "pixels": 17267,
+      "signature": 2034552004,
+      "recipe": "native:mage:A211"
+    },
+    {
+      "id": "native:mage:A211",
+      "direction": "down",
+      "pixels": 17216,
+      "signature": 3687624194,
+      "recipe": "native:mage:A211"
+    },
+    {
+      "id": "native:mage:A212",
+      "direction": "right",
+      "pixels": 17378,
+      "signature": 3858196059,
+      "recipe": "native:mage:A212"
+    },
+    {
+      "id": "native:mage:A212",
+      "direction": "left",
+      "pixels": 17364,
+      "signature": 1471545976,
+      "recipe": "native:mage:A212"
+    },
+    {
+      "id": "native:mage:A212",
+      "direction": "up",
+      "pixels": 17407,
+      "signature": 2716755565,
+      "recipe": "native:mage:A212"
+    },
+    {
+      "id": "native:mage:A212",
+      "direction": "down",
+      "pixels": 17369,
+      "signature": 1121480817,
+      "recipe": "native:mage:A212"
+    },
+    {
+      "id": "native:mage:A221",
+      "direction": "right",
+      "pixels": 19434,
+      "signature": 3092562652,
+      "recipe": "native:mage:A221"
+    },
+    {
+      "id": "native:mage:A221",
+      "direction": "left",
+      "pixels": 19429,
+      "signature": 411031284,
+      "recipe": "native:mage:A221"
+    },
+    {
+      "id": "native:mage:A221",
+      "direction": "up",
+      "pixels": 19407,
+      "signature": 2819998162,
+      "recipe": "native:mage:A221"
+    },
+    {
+      "id": "native:mage:A221",
+      "direction": "down",
+      "pixels": 19441,
+      "signature": 1152140543,
+      "recipe": "native:mage:A221"
+    },
+    {
+      "id": "native:mage:A222",
+      "direction": "right",
+      "pixels": 16075,
+      "signature": 481972739,
+      "recipe": "native:mage:A222"
+    },
+    {
+      "id": "native:mage:A222",
+      "direction": "left",
+      "pixels": 16074,
+      "signature": 326679632,
+      "recipe": "native:mage:A222"
+    },
+    {
+      "id": "native:mage:A222",
+      "direction": "up",
+      "pixels": 16105,
+      "signature": 1464110844,
+      "recipe": "native:mage:A222"
+    },
+    {
+      "id": "native:mage:A222",
+      "direction": "down",
+      "pixels": 16075,
+      "signature": 1264507077,
+      "recipe": "native:mage:A222"
+    },
+    {
+      "id": "native:mage:B111",
+      "direction": "right",
+      "pixels": 10559,
+      "signature": 562400527,
+      "recipe": "native:mage:B111"
+    },
+    {
+      "id": "native:mage:B111",
+      "direction": "left",
+      "pixels": 10582,
+      "signature": 452871991,
+      "recipe": "native:mage:B111"
+    },
+    {
+      "id": "native:mage:B111",
+      "direction": "up",
+      "pixels": 10640,
+      "signature": 1209854395,
+      "recipe": "native:mage:B111"
+    },
+    {
+      "id": "native:mage:B111",
+      "direction": "down",
+      "pixels": 10556,
+      "signature": 451877662,
+      "recipe": "native:mage:B111"
+    },
+    {
+      "id": "native:mage:B112",
+      "direction": "right",
+      "pixels": 11667,
+      "signature": 23659658,
+      "recipe": "native:mage:B112"
+    },
+    {
+      "id": "native:mage:B112",
+      "direction": "left",
+      "pixels": 11657,
+      "signature": 826439500,
+      "recipe": "native:mage:B112"
+    },
+    {
+      "id": "native:mage:B112",
+      "direction": "up",
+      "pixels": 11627,
+      "signature": 2738340682,
+      "recipe": "native:mage:B112"
+    },
+    {
+      "id": "native:mage:B112",
+      "direction": "down",
+      "pixels": 11626,
+      "signature": 1508896092,
+      "recipe": "native:mage:B112"
+    },
+    {
+      "id": "native:mage:B121",
+      "direction": "right",
+      "pixels": 3705,
+      "signature": 280588196,
+      "recipe": "native:mage:B121"
+    },
+    {
+      "id": "native:mage:B121",
+      "direction": "left",
+      "pixels": 3831,
+      "signature": 1930763471,
+      "recipe": "native:mage:B121"
+    },
+    {
+      "id": "native:mage:B121",
+      "direction": "up",
+      "pixels": 3723,
+      "signature": 1227482218,
+      "recipe": "native:mage:B121"
+    },
+    {
+      "id": "native:mage:B121",
+      "direction": "down",
+      "pixels": 3633,
+      "signature": 148310892,
+      "recipe": "native:mage:B121"
+    },
+    {
+      "id": "native:mage:B122",
+      "direction": "right",
+      "pixels": 5608,
+      "signature": 2425604155,
+      "recipe": "native:mage:B122"
+    },
+    {
+      "id": "native:mage:B122",
+      "direction": "left",
+      "pixels": 5653,
+      "signature": 9856555,
+      "recipe": "native:mage:B122"
+    },
+    {
+      "id": "native:mage:B122",
+      "direction": "up",
+      "pixels": 5725,
+      "signature": 2576571798,
+      "recipe": "native:mage:B122"
+    },
+    {
+      "id": "native:mage:B122",
+      "direction": "down",
+      "pixels": 5720,
+      "signature": 3849442567,
+      "recipe": "native:mage:B122"
+    },
+    {
+      "id": "native:mage:B211",
+      "direction": "right",
+      "pixels": 18477,
+      "signature": 3965429097,
+      "recipe": "native:mage:B211"
+    },
+    {
+      "id": "native:mage:B211",
+      "direction": "left",
+      "pixels": 18477,
+      "signature": 266471164,
+      "recipe": "native:mage:B211"
+    },
+    {
+      "id": "native:mage:B211",
+      "direction": "up",
+      "pixels": 19590,
+      "signature": 1263419337,
+      "recipe": "native:mage:B211"
+    },
+    {
+      "id": "native:mage:B211",
+      "direction": "down",
+      "pixels": 19437,
+      "signature": 3346910588,
+      "recipe": "native:mage:B211"
+    },
+    {
+      "id": "native:mage:B212",
+      "direction": "right",
+      "pixels": 15086,
+      "signature": 330678915,
+      "recipe": "native:mage:B212"
+    },
+    {
+      "id": "native:mage:B212",
+      "direction": "left",
+      "pixels": 15090,
+      "signature": 2328660792,
+      "recipe": "native:mage:B212"
+    },
+    {
+      "id": "native:mage:B212",
+      "direction": "up",
+      "pixels": 15204,
+      "signature": 4177851004,
+      "recipe": "native:mage:B212"
+    },
+    {
+      "id": "native:mage:B212",
+      "direction": "down",
+      "pixels": 15734,
+      "signature": 2656388799,
+      "recipe": "native:mage:B212"
+    },
+    {
+      "id": "native:mage:B221",
+      "direction": "right",
+      "pixels": 14728,
+      "signature": 3147810528,
+      "recipe": "native:mage:B221"
+    },
+    {
+      "id": "native:mage:B221",
+      "direction": "left",
+      "pixels": 15025,
+      "signature": 3783810892,
+      "recipe": "native:mage:B221"
+    },
+    {
+      "id": "native:mage:B221",
+      "direction": "up",
+      "pixels": 15122,
+      "signature": 1928907923,
+      "recipe": "native:mage:B221"
+    },
+    {
+      "id": "native:mage:B221",
+      "direction": "down",
+      "pixels": 14846,
+      "signature": 4256745565,
+      "recipe": "native:mage:B221"
+    },
+    {
+      "id": "native:mage:B222",
+      "direction": "right",
+      "pixels": 9010,
+      "signature": 4107612047,
+      "recipe": "native:mage:B222"
+    },
+    {
+      "id": "native:mage:B222",
+      "direction": "left",
+      "pixels": 9022,
+      "signature": 1922680248,
+      "recipe": "native:mage:B222"
+    },
+    {
+      "id": "native:mage:B222",
+      "direction": "up",
+      "pixels": 9126,
+      "signature": 2495653847,
+      "recipe": "native:mage:B222"
+    },
+    {
+      "id": "native:mage:B222",
+      "direction": "down",
+      "pixels": 9068,
+      "signature": 740042761,
+      "recipe": "native:mage:B222"
+    },
+    {
+      "id": "native:thief:base",
+      "direction": "right",
+      "pixels": 5429,
+      "signature": 808671060,
+      "recipe": "native:thief:base"
+    },
+    {
+      "id": "native:thief:base",
+      "direction": "left",
+      "pixels": 5524,
+      "signature": 3559109231,
+      "recipe": "native:thief:base"
+    },
+    {
+      "id": "native:thief:base",
+      "direction": "up",
+      "pixels": 5626,
+      "signature": 53017151,
+      "recipe": "native:thief:base"
+    },
+    {
+      "id": "native:thief:base",
+      "direction": "down",
+      "pixels": 5459,
+      "signature": 272015393,
+      "recipe": "native:thief:base"
+    },
+    {
+      "id": "native:thief:A",
+      "direction": "right",
+      "pixels": 6457,
+      "signature": 739788961,
+      "recipe": "native:thief:A"
+    },
+    {
+      "id": "native:thief:A",
+      "direction": "left",
+      "pixels": 6459,
+      "signature": 2849070692,
+      "recipe": "native:thief:A"
+    },
+    {
+      "id": "native:thief:A",
+      "direction": "up",
+      "pixels": 6395,
+      "signature": 1842739049,
+      "recipe": "native:thief:A"
+    },
+    {
+      "id": "native:thief:A",
+      "direction": "down",
+      "pixels": 6395,
+      "signature": 1549285650,
+      "recipe": "native:thief:A"
+    },
+    {
+      "id": "native:thief:B",
+      "direction": "right",
+      "pixels": 2516,
+      "signature": 3233196415,
+      "recipe": "native:thief:B"
+    },
+    {
+      "id": "native:thief:B",
+      "direction": "left",
+      "pixels": 2556,
+      "signature": 321260987,
+      "recipe": "native:thief:B"
+    },
+    {
+      "id": "native:thief:B",
+      "direction": "up",
+      "pixels": 2498,
+      "signature": 636467406,
+      "recipe": "native:thief:B"
+    },
+    {
+      "id": "native:thief:B",
+      "direction": "down",
+      "pixels": 2373,
+      "signature": 906993889,
+      "recipe": "native:thief:B"
+    },
+    {
+      "id": "native:thief:A1",
+      "direction": "right",
+      "pixels": 6008,
+      "signature": 151813694,
+      "recipe": "native:thief:A1"
+    },
+    {
+      "id": "native:thief:A1",
+      "direction": "left",
+      "pixels": 6122,
+      "signature": 3305404701,
+      "recipe": "native:thief:A1"
+    },
+    {
+      "id": "native:thief:A1",
+      "direction": "up",
+      "pixels": 6155,
+      "signature": 1774845835,
+      "recipe": "native:thief:A1"
+    },
+    {
+      "id": "native:thief:A1",
+      "direction": "down",
+      "pixels": 5951,
+      "signature": 2638223502,
+      "recipe": "native:thief:A1"
+    },
+    {
+      "id": "native:thief:A2",
+      "direction": "right",
+      "pixels": 7870,
+      "signature": 437369132,
+      "recipe": "native:thief:A2"
+    },
+    {
+      "id": "native:thief:A2",
+      "direction": "left",
+      "pixels": 7780,
+      "signature": 80839739,
+      "recipe": "native:thief:A2"
+    },
+    {
+      "id": "native:thief:A2",
+      "direction": "up",
+      "pixels": 7491,
+      "signature": 3191681886,
+      "recipe": "native:thief:A2"
+    },
+    {
+      "id": "native:thief:A2",
+      "direction": "down",
+      "pixels": 8029,
+      "signature": 4290487348,
+      "recipe": "native:thief:A2"
+    },
+    {
+      "id": "native:thief:B1",
+      "direction": "right",
+      "pixels": 3033,
+      "signature": 90314232,
+      "recipe": "native:thief:B1"
+    },
+    {
+      "id": "native:thief:B1",
+      "direction": "left",
+      "pixels": 2973,
+      "signature": 632327461,
+      "recipe": "native:thief:B1"
+    },
+    {
+      "id": "native:thief:B1",
+      "direction": "up",
+      "pixels": 2993,
+      "signature": 2991178483,
+      "recipe": "native:thief:B1"
+    },
+    {
+      "id": "native:thief:B1",
+      "direction": "down",
+      "pixels": 2850,
+      "signature": 365166603,
+      "recipe": "native:thief:B1"
+    },
+    {
+      "id": "native:thief:B2",
+      "direction": "right",
+      "pixels": 8538,
+      "signature": 203329420,
+      "recipe": "native:thief:B2"
+    },
+    {
+      "id": "native:thief:B2",
+      "direction": "left",
+      "pixels": 8304,
+      "signature": 1371931210,
+      "recipe": "native:thief:B2"
+    },
+    {
+      "id": "native:thief:B2",
+      "direction": "up",
+      "pixels": 8347,
+      "signature": 2187602331,
+      "recipe": "native:thief:B2"
+    },
+    {
+      "id": "native:thief:B2",
+      "direction": "down",
+      "pixels": 8577,
+      "signature": 668016252,
+      "recipe": "native:thief:B2"
+    },
+    {
+      "id": "native:thief:A11",
+      "direction": "right",
+      "pixels": 7359,
+      "signature": 1838246269,
+      "recipe": "native:thief:A11"
+    },
+    {
+      "id": "native:thief:A11",
+      "direction": "left",
+      "pixels": 7521,
+      "signature": 905333409,
+      "recipe": "native:thief:A11"
+    },
+    {
+      "id": "native:thief:A11",
+      "direction": "up",
+      "pixels": 7727,
+      "signature": 4197213625,
+      "recipe": "native:thief:A11"
+    },
+    {
+      "id": "native:thief:A11",
+      "direction": "down",
+      "pixels": 7297,
+      "signature": 1956383452,
+      "recipe": "native:thief:A11"
+    },
+    {
+      "id": "native:thief:A12",
+      "direction": "right",
+      "pixels": 6594,
+      "signature": 2318742960,
+      "recipe": "native:thief:A12"
+    },
+    {
+      "id": "native:thief:A12",
+      "direction": "left",
+      "pixels": 6715,
+      "signature": 3535379068,
+      "recipe": "native:thief:A12"
+    },
+    {
+      "id": "native:thief:A12",
+      "direction": "up",
+      "pixels": 6824,
+      "signature": 3219101707,
+      "recipe": "native:thief:A12"
+    },
+    {
+      "id": "native:thief:A12",
+      "direction": "down",
+      "pixels": 6578,
+      "signature": 1233154052,
+      "recipe": "native:thief:A12"
+    },
+    {
+      "id": "native:thief:A21",
+      "direction": "right",
+      "pixels": 8664,
+      "signature": 64461168,
+      "recipe": "native:thief:A21"
+    },
+    {
+      "id": "native:thief:A21",
+      "direction": "left",
+      "pixels": 8422,
+      "signature": 3570144644,
+      "recipe": "native:thief:A21"
+    },
+    {
+      "id": "native:thief:A21",
+      "direction": "up",
+      "pixels": 8194,
+      "signature": 1306679279,
+      "recipe": "native:thief:A21"
+    },
+    {
+      "id": "native:thief:A21",
+      "direction": "down",
+      "pixels": 8577,
+      "signature": 1428332942,
+      "recipe": "native:thief:A21"
+    },
+    {
+      "id": "native:thief:A22",
+      "direction": "right",
+      "pixels": 8170,
+      "signature": 3811285493,
+      "recipe": "native:thief:A22"
+    },
+    {
+      "id": "native:thief:A22",
+      "direction": "left",
+      "pixels": 7705,
+      "signature": 358404916,
+      "recipe": "native:thief:A22"
+    },
+    {
+      "id": "native:thief:A22",
+      "direction": "up",
+      "pixels": 7694,
+      "signature": 1741668603,
+      "recipe": "native:thief:A22"
+    },
+    {
+      "id": "native:thief:A22",
+      "direction": "down",
+      "pixels": 8097,
+      "signature": 4100680774,
+      "recipe": "native:thief:A22"
+    },
+    {
+      "id": "native:thief:B11",
+      "direction": "right",
+      "pixels": 3174,
+      "signature": 2107526218,
+      "recipe": "native:thief:B11"
+    },
+    {
+      "id": "native:thief:B11",
+      "direction": "left",
+      "pixels": 3145,
+      "signature": 3087836815,
+      "recipe": "native:thief:B11"
+    },
+    {
+      "id": "native:thief:B11",
+      "direction": "up",
+      "pixels": 3139,
+      "signature": 3667819191,
+      "recipe": "native:thief:B11"
+    },
+    {
+      "id": "native:thief:B11",
+      "direction": "down",
+      "pixels": 2926,
+      "signature": 2748721147,
+      "recipe": "native:thief:B11"
+    },
+    {
+      "id": "native:thief:B12",
+      "direction": "right",
+      "pixels": 3196,
+      "signature": 2599589713,
+      "recipe": "native:thief:B12"
+    },
+    {
+      "id": "native:thief:B12",
+      "direction": "left",
+      "pixels": 3232,
+      "signature": 2767428035,
+      "recipe": "native:thief:B12"
+    },
+    {
+      "id": "native:thief:B12",
+      "direction": "up",
+      "pixels": 2854,
+      "signature": 2841008681,
+      "recipe": "native:thief:B12"
+    },
+    {
+      "id": "native:thief:B12",
+      "direction": "down",
+      "pixels": 2711,
+      "signature": 2289415893,
+      "recipe": "native:thief:B12"
+    },
+    {
+      "id": "native:thief:B21",
+      "direction": "right",
+      "pixels": 9234,
+      "signature": 3369359942,
+      "recipe": "native:thief:B21"
+    },
+    {
+      "id": "native:thief:B21",
+      "direction": "left",
+      "pixels": 9068,
+      "signature": 391953667,
+      "recipe": "native:thief:B21"
+    },
+    {
+      "id": "native:thief:B21",
+      "direction": "up",
+      "pixels": 9172,
+      "signature": 3162618134,
+      "recipe": "native:thief:B21"
+    },
+    {
+      "id": "native:thief:B21",
+      "direction": "down",
+      "pixels": 9398,
+      "signature": 2014329150,
+      "recipe": "native:thief:B21"
+    },
+    {
+      "id": "native:thief:B22",
+      "direction": "right",
+      "pixels": 10841,
+      "signature": 830247449,
+      "recipe": "native:thief:B22"
+    },
+    {
+      "id": "native:thief:B22",
+      "direction": "left",
+      "pixels": 10925,
+      "signature": 693782580,
+      "recipe": "native:thief:B22"
+    },
+    {
+      "id": "native:thief:B22",
+      "direction": "up",
+      "pixels": 10793,
+      "signature": 1576622641,
+      "recipe": "native:thief:B22"
+    },
+    {
+      "id": "native:thief:B22",
+      "direction": "down",
+      "pixels": 10961,
+      "signature": 1205629999,
+      "recipe": "native:thief:B22"
+    },
+    {
+      "id": "native:thief:A111",
+      "direction": "right",
+      "pixels": 7712,
+      "signature": 3077911853,
+      "recipe": "native:thief:A111"
+    },
+    {
+      "id": "native:thief:A111",
+      "direction": "left",
+      "pixels": 7929,
+      "signature": 362719446,
+      "recipe": "native:thief:A111"
+    },
+    {
+      "id": "native:thief:A111",
+      "direction": "up",
+      "pixels": 8355,
+      "signature": 2878896381,
+      "recipe": "native:thief:A111"
+    },
+    {
+      "id": "native:thief:A111",
+      "direction": "down",
+      "pixels": 7717,
+      "signature": 3180567625,
+      "recipe": "native:thief:A111"
+    },
+    {
+      "id": "native:thief:A112",
+      "direction": "right",
+      "pixels": 9022,
+      "signature": 502061457,
+      "recipe": "native:thief:A112"
+    },
+    {
+      "id": "native:thief:A112",
+      "direction": "left",
+      "pixels": 9071,
+      "signature": 542838452,
+      "recipe": "native:thief:A112"
+    },
+    {
+      "id": "native:thief:A112",
+      "direction": "up",
+      "pixels": 8928,
+      "signature": 1022808257,
+      "recipe": "native:thief:A112"
+    },
+    {
+      "id": "native:thief:A112",
+      "direction": "down",
+      "pixels": 9012,
+      "signature": 2246088254,
+      "recipe": "native:thief:A112"
+    },
+    {
+      "id": "native:thief:A121",
+      "direction": "right",
+      "pixels": 6948,
+      "signature": 2990338152,
+      "recipe": "native:thief:A121"
+    },
+    {
+      "id": "native:thief:A121",
+      "direction": "left",
+      "pixels": 7314,
+      "signature": 713233179,
+      "recipe": "native:thief:A121"
+    },
+    {
+      "id": "native:thief:A121",
+      "direction": "up",
+      "pixels": 7468,
+      "signature": 810714253,
+      "recipe": "native:thief:A121"
+    },
+    {
+      "id": "native:thief:A121",
+      "direction": "down",
+      "pixels": 6885,
+      "signature": 834725844,
+      "recipe": "native:thief:A121"
+    },
+    {
+      "id": "native:thief:A122",
+      "direction": "right",
+      "pixels": 8595,
+      "signature": 4240802068,
+      "recipe": "native:thief:A122"
+    },
+    {
+      "id": "native:thief:A122",
+      "direction": "left",
+      "pixels": 8707,
+      "signature": 3842759059,
+      "recipe": "native:thief:A122"
+    },
+    {
+      "id": "native:thief:A122",
+      "direction": "up",
+      "pixels": 8547,
+      "signature": 861471557,
+      "recipe": "native:thief:A122"
+    },
+    {
+      "id": "native:thief:A122",
+      "direction": "down",
+      "pixels": 8428,
+      "signature": 2269683659,
+      "recipe": "native:thief:A122"
+    },
+    {
+      "id": "native:thief:A211",
+      "direction": "right",
+      "pixels": 11083,
+      "signature": 2325748888,
+      "recipe": "native:thief:A211"
+    },
+    {
+      "id": "native:thief:A211",
+      "direction": "left",
+      "pixels": 11453,
+      "signature": 1375709477,
+      "recipe": "native:thief:A211"
+    },
+    {
+      "id": "native:thief:A211",
+      "direction": "up",
+      "pixels": 11374,
+      "signature": 3653495755,
+      "recipe": "native:thief:A211"
+    },
+    {
+      "id": "native:thief:A211",
+      "direction": "down",
+      "pixels": 10766,
+      "signature": 2768367945,
+      "recipe": "native:thief:A211"
+    },
+    {
+      "id": "native:thief:A212",
+      "direction": "right",
+      "pixels": 9694,
+      "signature": 3060773926,
+      "recipe": "native:thief:A212"
+    },
+    {
+      "id": "native:thief:A212",
+      "direction": "left",
+      "pixels": 9452,
+      "signature": 2074262921,
+      "recipe": "native:thief:A212"
+    },
+    {
+      "id": "native:thief:A212",
+      "direction": "up",
+      "pixels": 9079,
+      "signature": 3948481600,
+      "recipe": "native:thief:A212"
+    },
+    {
+      "id": "native:thief:A212",
+      "direction": "down",
+      "pixels": 9639,
+      "signature": 43666733,
+      "recipe": "native:thief:A212"
+    },
+    {
+      "id": "native:thief:A221",
+      "direction": "right",
+      "pixels": 4506,
+      "signature": 2930553666,
+      "recipe": "native:thief:A221"
+    },
+    {
+      "id": "native:thief:A221",
+      "direction": "left",
+      "pixels": 4440,
+      "signature": 1370974259,
+      "recipe": "native:thief:A221"
+    },
+    {
+      "id": "native:thief:A221",
+      "direction": "up",
+      "pixels": 4804,
+      "signature": 4003011209,
+      "recipe": "native:thief:A221"
+    },
+    {
+      "id": "native:thief:A221",
+      "direction": "down",
+      "pixels": 4330,
+      "signature": 963796335,
+      "recipe": "native:thief:A221"
+    },
+    {
+      "id": "native:thief:A222",
+      "direction": "right",
+      "pixels": 10488,
+      "signature": 3012311963,
+      "recipe": "native:thief:A222"
+    },
+    {
+      "id": "native:thief:A222",
+      "direction": "left",
+      "pixels": 10257,
+      "signature": 1135464882,
+      "recipe": "native:thief:A222"
+    },
+    {
+      "id": "native:thief:A222",
+      "direction": "up",
+      "pixels": 10094,
+      "signature": 1789178789,
+      "recipe": "native:thief:A222"
+    },
+    {
+      "id": "native:thief:A222",
+      "direction": "down",
+      "pixels": 10435,
+      "signature": 2663798137,
+      "recipe": "native:thief:A222"
+    },
+    {
+      "id": "native:thief:B111",
+      "direction": "right",
+      "pixels": 3950,
+      "signature": 1232748507,
+      "recipe": "native:thief:B111"
+    },
+    {
+      "id": "native:thief:B111",
+      "direction": "left",
+      "pixels": 4029,
+      "signature": 4058860027,
+      "recipe": "native:thief:B111"
+    },
+    {
+      "id": "native:thief:B111",
+      "direction": "up",
+      "pixels": 3920,
+      "signature": 362108947,
+      "recipe": "native:thief:B111"
+    },
+    {
+      "id": "native:thief:B111",
+      "direction": "down",
+      "pixels": 3453,
+      "signature": 3579986057,
+      "recipe": "native:thief:B111"
+    },
+    {
+      "id": "native:thief:B112",
+      "direction": "right",
+      "pixels": 4767,
+      "signature": 1510889194,
+      "recipe": "native:thief:B112"
+    },
+    {
+      "id": "native:thief:B112",
+      "direction": "left",
+      "pixels": 4772,
+      "signature": 3835833760,
+      "recipe": "native:thief:B112"
+    },
+    {
+      "id": "native:thief:B112",
+      "direction": "up",
+      "pixels": 4740,
+      "signature": 758446951,
+      "recipe": "native:thief:B112"
+    },
+    {
+      "id": "native:thief:B112",
+      "direction": "down",
+      "pixels": 4754,
+      "signature": 1141922278,
+      "recipe": "native:thief:B112"
+    },
+    {
+      "id": "native:thief:B121",
+      "direction": "right",
+      "pixels": 2893,
+      "signature": 4247198094,
+      "recipe": "native:thief:B121"
+    },
+    {
+      "id": "native:thief:B121",
+      "direction": "left",
+      "pixels": 2962,
+      "signature": 2398851247,
+      "recipe": "native:thief:B121"
+    },
+    {
+      "id": "native:thief:B121",
+      "direction": "up",
+      "pixels": 2792,
+      "signature": 709177045,
+      "recipe": "native:thief:B121"
+    },
+    {
+      "id": "native:thief:B121",
+      "direction": "down",
+      "pixels": 2642,
+      "signature": 3704761833,
+      "recipe": "native:thief:B121"
+    },
+    {
+      "id": "native:thief:B122",
+      "direction": "right",
+      "pixels": 5690,
+      "signature": 2801255098,
+      "recipe": "native:thief:B122"
+    },
+    {
+      "id": "native:thief:B122",
+      "direction": "left",
+      "pixels": 5726,
+      "signature": 1536868669,
+      "recipe": "native:thief:B122"
+    },
+    {
+      "id": "native:thief:B122",
+      "direction": "up",
+      "pixels": 5660,
+      "signature": 691130186,
+      "recipe": "native:thief:B122"
+    },
+    {
+      "id": "native:thief:B122",
+      "direction": "down",
+      "pixels": 5560,
+      "signature": 2013172801,
+      "recipe": "native:thief:B122"
+    },
+    {
+      "id": "native:thief:B211",
+      "direction": "right",
+      "pixels": 10695,
+      "signature": 3032051348,
+      "recipe": "native:thief:B211"
+    },
+    {
+      "id": "native:thief:B211",
+      "direction": "left",
+      "pixels": 10755,
+      "signature": 3472316128,
+      "recipe": "native:thief:B211"
+    },
+    {
+      "id": "native:thief:B211",
+      "direction": "up",
+      "pixels": 10925,
+      "signature": 4046789016,
+      "recipe": "native:thief:B211"
+    },
+    {
+      "id": "native:thief:B211",
+      "direction": "down",
+      "pixels": 10892,
+      "signature": 2147303135,
+      "recipe": "native:thief:B211"
+    },
+    {
+      "id": "native:thief:B212",
+      "direction": "right",
+      "pixels": 11084,
+      "signature": 1106910376,
+      "recipe": "native:thief:B212"
+    },
+    {
+      "id": "native:thief:B212",
+      "direction": "left",
+      "pixels": 11082,
+      "signature": 2770748557,
+      "recipe": "native:thief:B212"
+    },
+    {
+      "id": "native:thief:B212",
+      "direction": "up",
+      "pixels": 10831,
+      "signature": 1593371566,
+      "recipe": "native:thief:B212"
+    },
+    {
+      "id": "native:thief:B212",
+      "direction": "down",
+      "pixels": 11219,
+      "signature": 3046484546,
+      "recipe": "native:thief:B212"
+    },
+    {
+      "id": "native:thief:B221",
+      "direction": "right",
+      "pixels": 4273,
+      "signature": 198990167,
+      "recipe": "native:thief:B221"
+    },
+    {
+      "id": "native:thief:B221",
+      "direction": "left",
+      "pixels": 4278,
+      "signature": 3639973412,
+      "recipe": "native:thief:B221"
+    },
+    {
+      "id": "native:thief:B221",
+      "direction": "up",
+      "pixels": 3869,
+      "signature": 226005732,
+      "recipe": "native:thief:B221"
+    },
+    {
+      "id": "native:thief:B221",
+      "direction": "down",
+      "pixels": 3558,
+      "signature": 3262060899,
+      "recipe": "native:thief:B221"
+    },
+    {
+      "id": "native:thief:B222",
+      "direction": "right",
+      "pixels": 10207,
+      "signature": 556339157,
+      "recipe": "native:thief:B222"
+    },
+    {
+      "id": "native:thief:B222",
+      "direction": "left",
+      "pixels": 9846,
+      "signature": 1596336025,
+      "recipe": "native:thief:B222"
+    },
+    {
+      "id": "native:thief:B222",
+      "direction": "up",
+      "pixels": 9553,
+      "signature": 564196133,
+      "recipe": "native:thief:B222"
+    },
+    {
+      "id": "native:thief:B222",
+      "direction": "down",
+      "pixels": 9943,
+      "signature": 2814602223,
+      "recipe": "native:thief:B222"
+    }
+  ],
+  "phaseChecks": [
+    {
+      "id": "atlas:sword_whirlwind",
+      "pixels": 9861,
+      "signature": 768346904
+    },
+    {
+      "id": "atlas:sword_bleed",
+      "pixels": 1741,
+      "signature": 2452506367
+    },
+    {
+      "id": "atlas:sword_counter",
+      "pixels": 5497,
+      "signature": 2199580777
+    },
+    {
+      "id": "atlas:archer_pierce",
+      "pixels": 2341,
+      "signature": 193802310
+    },
+    {
+      "id": "atlas:archer_beast",
+      "pixels": 6740,
+      "signature": 308172286
+    },
+    {
+      "id": "atlas:archer_trap",
+      "pixels": 5586,
+      "signature": 2535106764
+    },
+    {
+      "id": "atlas:mage_chain",
+      "pixels": 2165,
+      "signature": 3576293967
+    },
+    {
+      "id": "atlas:mage_frost",
+      "pixels": 13856,
+      "signature": 1522092276
+    },
+    {
+      "id": "atlas:mage_arcane",
+      "pixels": 9062,
+      "signature": 4088102882
+    },
+    {
+      "id": "atlas:thief_poison",
+      "pixels": 1558,
+      "signature": 3337070865
+    },
+    {
+      "id": "atlas:thief_execute",
+      "pixels": 4547,
+      "signature": 4161427187
+    },
+    {
+      "id": "atlas:thief_combo",
+      "pixels": 3067,
+      "signature": 4155071919
+    },
+    {
+      "id": "special:skill_01_1",
+      "pixels": 1685,
+      "signature": 123287218
+    },
+    {
+      "id": "special:skill_01_2",
+      "pixels": 2669,
+      "signature": 421784201
+    },
+    {
+      "id": "special:skill_01_3",
+      "pixels": 4793,
+      "signature": 3631930228
+    },
+    {
+      "id": "special:skill_02_1",
+      "pixels": 1968,
+      "signature": 3625476298
+    },
+    {
+      "id": "special:skill_02_2",
+      "pixels": 7419,
+      "signature": 1568920453
+    },
+    {
+      "id": "special:skill_02_3",
+      "pixels": 4674,
+      "signature": 1121133350
+    },
+    {
+      "id": "special:skill_03_1",
+      "pixels": 2453,
+      "signature": 227826726
+    },
+    {
+      "id": "special:skill_03_2",
+      "pixels": 8677,
+      "signature": 1944801351
+    },
+    {
+      "id": "special:skill_03_3",
+      "pixels": 8100,
+      "signature": 3877795767
+    },
+    {
+      "id": "special:skill_04_1",
+      "pixels": 8267,
+      "signature": 2482015697
+    },
+    {
+      "id": "special:skill_04_2",
+      "pixels": 6962,
+      "signature": 428570615
+    },
+    {
+      "id": "special:skill_04_3",
+      "pixels": 9204,
+      "signature": 821722460
+    },
+    {
+      "id": "special:skill_05_1",
+      "pixels": 3931,
+      "signature": 3675309311
+    },
+    {
+      "id": "special:skill_05_2",
+      "pixels": 11290,
+      "signature": 155021177
+    },
+    {
+      "id": "special:skill_05_3",
+      "pixels": 1918,
+      "signature": 1749716729
+    },
+    {
+      "id": "special:skill_06_1",
+      "pixels": 2758,
+      "signature": 3149372888
+    },
+    {
+      "id": "special:skill_06_2",
+      "pixels": 8409,
+      "signature": 2135259024
+    },
+    {
+      "id": "special:skill_06_3",
+      "pixels": 10081,
+      "signature": 1582147275
+    },
+    {
+      "id": "special:skill_07_1",
+      "pixels": 10054,
+      "signature": 1574555728
+    },
+    {
+      "id": "special:skill_07_2",
+      "pixels": 7580,
+      "signature": 1865164860
+    },
+    {
+      "id": "special:skill_08_1",
+      "pixels": 2704,
+      "signature": 793408362
+    },
+    {
+      "id": "special:skill_08_2",
+      "pixels": 2099,
+      "signature": 2531886783
+    },
+    {
+      "id": "special:skill_09_1",
+      "pixels": 7378,
+      "signature": 3626687314
+    },
+    {
+      "id": "special:skill_09_2",
+      "pixels": 7644,
+      "signature": 1127073461
+    },
+    {
+      "id": "special:skill_10_1",
+      "pixels": 8266,
+      "signature": 2589550594
+    },
+    {
+      "id": "special:skill_10_2",
+      "pixels": 2562,
+      "signature": 3226830984
+    },
+    {
+      "id": "special:skill_11_1",
+      "pixels": 3450,
+      "signature": 874195649
+    },
+    {
+      "id": "special:skill_11_2",
+      "pixels": 11560,
+      "signature": 2119766842
+    },
+    {
+      "id": "special:skill_12_1",
+      "pixels": 4667,
+      "signature": 91937360
+    },
+    {
+      "id": "special:skill_12_2",
+      "pixels": 9101,
+      "signature": 3026832515
+    },
+    {
+      "id": "special:skill_13_1",
+      "pixels": 9443,
+      "signature": 1696230335
+    },
+    {
+      "id": "special:skill_13_2",
+      "pixels": 11245,
+      "signature": 749358452
+    },
+    {
+      "id": "special:skill_14_1",
+      "pixels": 4123,
+      "signature": 3736106307
+    },
+    {
+      "id": "special:skill_14_2",
+      "pixels": 5501,
+      "signature": 10526349
+    },
+    {
+      "id": "special:skill_15_1",
+      "pixels": 5481,
+      "signature": 1813768072
+    },
+    {
+      "id": "special:skill_15_2",
+      "pixels": 4858,
+      "signature": 3207893011
+    },
+    {
+      "id": "special:skill_16_1",
+      "pixels": 11818,
+      "signature": 649703767
+    },
+    {
+      "id": "special:skill_16_2",
+      "pixels": 10317,
+      "signature": 1302330851
+    },
+    {
+      "id": "special:skill_17_1",
+      "pixels": 9652,
+      "signature": 412388341
+    },
+    {
+      "id": "special:skill_17_2",
+      "pixels": 8975,
+      "signature": 4266171858
+    },
+    {
+      "id": "special:skill_18_1",
+      "pixels": 6448,
+      "signature": 2013809395
+    },
+    {
+      "id": "special:skill_18_2",
+      "pixels": 10143,
+      "signature": 3048794639
+    },
+    {
+      "id": "special:skill_19_1",
+      "pixels": 2408,
+      "signature": 4034289822
+    },
+    {
+      "id": "special:skill_19_2",
+      "pixels": 7833,
+      "signature": 1873717011
+    },
+    {
+      "id": "special:skill_20_1",
+      "pixels": 12407,
+      "signature": 434559189
+    },
+    {
+      "id": "special:skill_20_2",
+      "pixels": 11719,
+      "signature": 3503383635
+    },
+    {
+      "id": "special:skill_21_1",
+      "pixels": 4893,
+      "signature": 1539357690
+    },
+    {
+      "id": "special:skill_21_2",
+      "pixels": 8626,
+      "signature": 838500898
+    },
+    {
+      "id": "special:skill_22_1",
+      "pixels": 4793,
+      "signature": 3852923192
+    },
+    {
+      "id": "special:skill_22_2",
+      "pixels": 8956,
+      "signature": 447470970
+    },
+    {
+      "id": "special:skill_23_1",
+      "pixels": 3406,
+      "signature": 589398614
+    },
+    {
+      "id": "special:skill_23_2",
+      "pixels": 12104,
+      "signature": 3393665364
+    },
+    {
+      "id": "special:skill_24_1",
+      "pixels": 6039,
+      "signature": 3982449264
+    },
+    {
+      "id": "special:skill_24_2",
+      "pixels": 8098,
+      "signature": 1170390253
+    },
+    {
+      "id": "special:skill_thief_01",
+      "pixels": 9727,
+      "signature": 781994902
+    },
+    {
+      "id": "special:skill_thief_02",
+      "pixels": 9955,
+      "signature": 934334895
+    },
+    {
+      "id": "special:skill_thief_03",
+      "pixels": 4475,
+      "signature": 3793122901
+    },
+    {
+      "id": "special:skill_thief_04",
+      "pixels": 2266,
+      "signature": 2066853187
+    },
+    {
+      "id": "special:skill_thief_05",
+      "pixels": 2178,
+      "signature": 3616682655
+    },
+    {
+      "id": "special:skill_thief_06",
+      "pixels": 4906,
+      "signature": 1714788974
+    },
+    {
+      "id": "native:sword:base",
+      "pixels": 1634,
+      "signature": 1912555760
+    },
+    {
+      "id": "native:sword:A",
+      "pixels": 9988,
+      "signature": 2610014912
+    },
+    {
+      "id": "native:sword:B",
+      "pixels": 8039,
+      "signature": 3308879944
+    },
+    {
+      "id": "native:sword:A1",
+      "pixels": 10009,
+      "signature": 570236518
+    },
+    {
+      "id": "native:sword:A2",
+      "pixels": 4189,
+      "signature": 4094714424
+    },
+    {
+      "id": "native:sword:B1",
+      "pixels": 7393,
+      "signature": 1463350893
+    },
+    {
+      "id": "native:sword:B2",
+      "pixels": 9731,
+      "signature": 2757516787
+    },
+    {
+      "id": "native:sword:A11",
+      "pixels": 9912,
+      "signature": 1745660368
+    },
+    {
+      "id": "native:sword:A12",
+      "pixels": 10045,
+      "signature": 3437771311
+    },
+    {
+      "id": "native:sword:A21",
+      "pixels": 4659,
+      "signature": 361090239
+    },
+    {
+      "id": "native:sword:A22",
+      "pixels": 4440,
+      "signature": 1871197138
+    },
+    {
+      "id": "native:sword:B11",
+      "pixels": 6862,
+      "signature": 208027927
+    },
+    {
+      "id": "native:sword:B12",
+      "pixels": 7355,
+      "signature": 1319507234
+    },
+    {
+      "id": "native:sword:B21",
+      "pixels": 10134,
+      "signature": 1327996750
+    },
+    {
+      "id": "native:sword:B22",
+      "pixels": 2286,
+      "signature": 4016933708
+    },
+    {
+      "id": "native:sword:A111",
+      "pixels": 9969,
+      "signature": 1108919524
+    },
+    {
+      "id": "native:sword:A112",
+      "pixels": 10385,
+      "signature": 2804823860
+    },
+    {
+      "id": "native:sword:A121",
+      "pixels": 10011,
+      "signature": 1832712823
+    },
+    {
+      "id": "native:sword:A122",
+      "pixels": 10619,
+      "signature": 1208742135
+    },
+    {
+      "id": "native:sword:A211",
+      "pixels": 4933,
+      "signature": 3167306456
+    },
+    {
+      "id": "native:sword:A212",
+      "pixels": 5939,
+      "signature": 584169522
+    },
+    {
+      "id": "native:sword:A221",
+      "pixels": 5638,
+      "signature": 1712932784
+    },
+    {
+      "id": "native:sword:A222",
+      "pixels": 6157,
+      "signature": 1040008789
+    },
+    {
+      "id": "native:sword:B111",
+      "pixels": 7287,
+      "signature": 1807695819
+    },
+    {
+      "id": "native:sword:B112",
+      "pixels": 8719,
+      "signature": 2153581589
+    },
+    {
+      "id": "native:sword:B121",
+      "pixels": 8639,
+      "signature": 313114176
+    },
+    {
+      "id": "native:sword:B122",
+      "pixels": 10520,
+      "signature": 3248788627
+    },
+    {
+      "id": "native:sword:B211",
+      "pixels": 10594,
+      "signature": 1506764318
+    },
+    {
+      "id": "native:sword:B212",
+      "pixels": 12994,
+      "signature": 762034065
+    },
+    {
+      "id": "native:sword:B221",
+      "pixels": 2553,
+      "signature": 1425975155
+    },
+    {
+      "id": "native:sword:B222",
+      "pixels": 4262,
+      "signature": 3548035117
+    },
+    {
+      "id": "native:archer:base",
+      "pixels": 2271,
+      "signature": 4016065292
+    },
+    {
+      "id": "native:archer:A",
+      "pixels": 9735,
+      "signature": 1104845143
+    },
+    {
+      "id": "native:archer:B",
+      "pixels": 8440,
+      "signature": 759311195
+    },
+    {
+      "id": "native:archer:A1",
+      "pixels": 2272,
+      "signature": 390435512
+    },
+    {
+      "id": "native:archer:A2",
+      "pixels": 5240,
+      "signature": 4129136635
+    },
+    {
+      "id": "native:archer:B1",
+      "pixels": 9434,
+      "signature": 1112859754
+    },
+    {
+      "id": "native:archer:B2",
+      "pixels": 4181,
+      "signature": 378061036
+    },
+    {
+      "id": "native:archer:A11",
+      "pixels": 3000,
+      "signature": 123313492
+    },
+    {
+      "id": "native:archer:A12",
+      "pixels": 3133,
+      "signature": 1247599919
+    },
+    {
+      "id": "native:archer:A21",
+      "pixels": 4603,
+      "signature": 566748726
+    },
+    {
+      "id": "native:archer:A22",
+      "pixels": 5400,
+      "signature": 1381514156
+    },
+    {
+      "id": "native:archer:B11",
+      "pixels": 9945,
+      "signature": 2294796233
+    },
+    {
+      "id": "native:archer:B12",
+      "pixels": 10018,
+      "signature": 2211188142
+    },
+    {
+      "id": "native:archer:B21",
+      "pixels": 4432,
+      "signature": 1095158786
+    },
+    {
+      "id": "native:archer:B22",
+      "pixels": 6219,
+      "signature": 189295146
+    },
+    {
+      "id": "native:archer:A111",
+      "pixels": 3734,
+      "signature": 110930923
+    },
+    {
+      "id": "native:archer:A112",
+      "pixels": 4961,
+      "signature": 1885791139
+    },
+    {
+      "id": "native:archer:A121",
+      "pixels": 4293,
+      "signature": 2987488127
+    },
+    {
+      "id": "native:archer:A122",
+      "pixels": 4529,
+      "signature": 1191977535
+    },
+    {
+      "id": "native:archer:A211",
+      "pixels": 4976,
+      "signature": 159490406
+    },
+    {
+      "id": "native:archer:A212",
+      "pixels": 7555,
+      "signature": 1732007565
+    },
+    {
+      "id": "native:archer:A221",
+      "pixels": 4958,
+      "signature": 787634626
+    },
+    {
+      "id": "native:archer:A222",
+      "pixels": 6653,
+      "signature": 1298153091
+    },
+    {
+      "id": "native:archer:B111",
+      "pixels": 12644,
+      "signature": 2018649078
+    },
+    {
+      "id": "native:archer:B112",
+      "pixels": 11106,
+      "signature": 3170237962
+    },
+    {
+      "id": "native:archer:B121",
+      "pixels": 12520,
+      "signature": 2882563894
+    },
+    {
+      "id": "native:archer:B122",
+      "pixels": 10911,
+      "signature": 2004810370
+    },
+    {
+      "id": "native:archer:B211",
+      "pixels": 6481,
+      "signature": 248371108
+    },
+    {
+      "id": "native:archer:B212",
+      "pixels": 6052,
+      "signature": 3928349433
+    },
+    {
+      "id": "native:archer:B221",
+      "pixels": 5936,
+      "signature": 947455443
+    },
+    {
+      "id": "native:archer:B222",
+      "pixels": 12916,
+      "signature": 3605282022
+    },
+    {
+      "id": "native:mage:base",
+      "pixels": 3131,
+      "signature": 1589346289
+    },
+    {
+      "id": "native:mage:A",
+      "pixels": 2724,
+      "signature": 1588321920
+    },
+    {
+      "id": "native:mage:B",
+      "pixels": 5246,
+      "signature": 1524579493
+    },
+    {
+      "id": "native:mage:A1",
+      "pixels": 4816,
+      "signature": 2951901241
+    },
+    {
+      "id": "native:mage:A2",
+      "pixels": 12558,
+      "signature": 375343215
+    },
+    {
+      "id": "native:mage:B1",
+      "pixels": 9672,
+      "signature": 1075705719
+    },
+    {
+      "id": "native:mage:B2",
+      "pixels": 8097,
+      "signature": 1034968835
+    },
+    {
+      "id": "native:mage:A11",
+      "pixels": 3616,
+      "signature": 3534801876
+    },
+    {
+      "id": "native:mage:A12",
+      "pixels": 5522,
+      "signature": 1551055454
+    },
+    {
+      "id": "native:mage:A21",
+      "pixels": 13221,
+      "signature": 3760454805
+    },
+    {
+      "id": "native:mage:A22",
+      "pixels": 13535,
+      "signature": 2000617807
+    },
+    {
+      "id": "native:mage:B11",
+      "pixels": 9889,
+      "signature": 3513550768
+    },
+    {
+      "id": "native:mage:B12",
+      "pixels": 3122,
+      "signature": 1691079083
+    },
+    {
+      "id": "native:mage:B21",
+      "pixels": 8952,
+      "signature": 2472877665
+    },
+    {
+      "id": "native:mage:B22",
+      "pixels": 9711,
+      "signature": 3409654404
+    },
+    {
+      "id": "native:mage:A111",
+      "pixels": 4526,
+      "signature": 864350095
+    },
+    {
+      "id": "native:mage:A112",
+      "pixels": 6091,
+      "signature": 4062103034
+    },
+    {
+      "id": "native:mage:A121",
+      "pixels": 5952,
+      "signature": 2745017678
+    },
+    {
+      "id": "native:mage:A122",
+      "pixels": 8104,
+      "signature": 1725024532
+    },
+    {
+      "id": "native:mage:A211",
+      "pixels": 13437,
+      "signature": 2567648975
+    },
+    {
+      "id": "native:mage:A212",
+      "pixels": 13569,
+      "signature": 846759453
+    },
+    {
+      "id": "native:mage:A221",
+      "pixels": 13788,
+      "signature": 3528873774
+    },
+    {
+      "id": "native:mage:A222",
+      "pixels": 12876,
+      "signature": 2920716063
+    },
+    {
+      "id": "native:mage:B111",
+      "pixels": 9790,
+      "signature": 945564268
+    },
+    {
+      "id": "native:mage:B112",
+      "pixels": 10624,
+      "signature": 521273961
+    },
+    {
+      "id": "native:mage:B121",
+      "pixels": 3875,
+      "signature": 1649726909
+    },
+    {
+      "id": "native:mage:B122",
+      "pixels": 4572,
+      "signature": 1958813355
+    },
+    {
+      "id": "native:mage:B211",
+      "pixels": 9374,
+      "signature": 627220200
+    },
+    {
+      "id": "native:mage:B212",
+      "pixels": 10282,
+      "signature": 193629846
+    },
+    {
+      "id": "native:mage:B221",
+      "pixels": 9751,
+      "signature": 1766718853
+    },
+    {
+      "id": "native:mage:B222",
+      "pixels": 8590,
+      "signature": 9818347
+    },
+    {
+      "id": "native:thief:base",
+      "pixels": 3846,
+      "signature": 3721930771
+    },
+    {
+      "id": "native:thief:A",
+      "pixels": 2199,
+      "signature": 1690338
+    },
+    {
+      "id": "native:thief:B",
+      "pixels": 2060,
+      "signature": 154756394
+    },
+    {
+      "id": "native:thief:A1",
+      "pixels": 3868,
+      "signature": 1413878746
+    },
+    {
+      "id": "native:thief:A2",
+      "pixels": 2223,
+      "signature": 3093336510
+    },
+    {
+      "id": "native:thief:B1",
+      "pixels": 2465,
+      "signature": 656807888
+    },
+    {
+      "id": "native:thief:B2",
+      "pixels": 4793,
+      "signature": 1331966060
+    },
+    {
+      "id": "native:thief:A11",
+      "pixels": 5296,
+      "signature": 3376070882
+    },
+    {
+      "id": "native:thief:A12",
+      "pixels": 4644,
+      "signature": 3485178109
+    },
+    {
+      "id": "native:thief:A21",
+      "pixels": 3118,
+      "signature": 3872491413
+    },
+    {
+      "id": "native:thief:A22",
+      "pixels": 2376,
+      "signature": 1644467310
+    },
+    {
+      "id": "native:thief:B11",
+      "pixels": 2542,
+      "signature": 2449496794
+    },
+    {
+      "id": "native:thief:B12",
+      "pixels": 3051,
+      "signature": 1695202651
+    },
+    {
+      "id": "native:thief:B21",
+      "pixels": 5212,
+      "signature": 3244465984
+    },
+    {
+      "id": "native:thief:B22",
+      "pixels": 10601,
+      "signature": 3590362635
+    },
+    {
+      "id": "native:thief:A111",
+      "pixels": 5627,
+      "signature": 973193400
+    },
+    {
+      "id": "native:thief:A112",
+      "pixels": 6239,
+      "signature": 4031665638
+    },
+    {
+      "id": "native:thief:A121",
+      "pixels": 4998,
+      "signature": 215020979
+    },
+    {
+      "id": "native:thief:A122",
+      "pixels": 6147,
+      "signature": 1648317837
+    },
+    {
+      "id": "native:thief:A211",
+      "pixels": 8016,
+      "signature": 374209026
+    },
+    {
+      "id": "native:thief:A212",
+      "pixels": 3292,
+      "signature": 2513758001
+    },
+    {
+      "id": "native:thief:A221",
+      "pixels": 3567,
+      "signature": 1395316532
+    },
+    {
+      "id": "native:thief:A222",
+      "pixels": 4627,
+      "signature": 1413255236
+    },
+    {
+      "id": "native:thief:B111",
+      "pixels": 3377,
+      "signature": 264923170
+    },
+    {
+      "id": "native:thief:B112",
+      "pixels": 3424,
+      "signature": 2298731667
+    },
+    {
+      "id": "native:thief:B121",
+      "pixels": 1899,
+      "signature": 2751515237
+    },
+    {
+      "id": "native:thief:B122",
+      "pixels": 4246,
+      "signature": 3349369661
+    },
+    {
+      "id": "native:thief:B211",
+      "pixels": 6794,
+      "signature": 3974557824
+    },
+    {
+      "id": "native:thief:B212",
+      "pixels": 7111,
+      "signature": 3303882424
+    },
+    {
+      "id": "native:thief:B221",
+      "pixels": 3544,
+      "signature": 3429046324
+    },
+    {
+      "id": "native:thief:B222",
+      "pixels": 6119,
+      "signature": 3034026084
+    }
+  ],
+  "mobileChecks": [
+    {
+      "width": 320,
+      "id": "special:skill_13_1",
+      "pixels": 5679,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:mage:B21",
+      "pixels": 5491,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:mage:B22",
+      "pixels": 5397,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:mage:B222",
+      "pixels": 4140,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_19_2",
+      "pixels": 3564,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_thief_02",
+      "pixels": 4738,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_18_2",
+      "pixels": 4549,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_thief_06",
+      "pixels": 2768,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_16_2",
+      "pixels": 5275,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:archer:base",
+      "pixels": 1167,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:thief:B",
+      "pixels": 1147,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:thief:B121",
+      "pixels": 1333,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:thief:B122",
+      "pixels": 2582,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:mage:B121",
+      "pixels": 1624,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:thief:A211",
+      "pixels": 5012,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_20_1",
+      "pixels": 5683,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_23_2",
+      "pixels": 6143,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:archer:B122",
+      "pixels": 7178,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_01_2",
+      "pixels": 1960,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:sword:A1",
+      "pixels": 5014,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:sword:B112",
+      "pixels": 5104,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:sword:B111",
+      "pixels": 4205,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "native:mage:A111",
+      "pixels": 3950,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 320,
+      "id": "special:skill_05_3",
+      "pixels": 1306,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_13_1",
+      "pixels": 5740,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:mage:B21",
+      "pixels": 5550,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:mage:B22",
+      "pixels": 5443,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:mage:B222",
+      "pixels": 4158,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_19_2",
+      "pixels": 3541,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_thief_02",
+      "pixels": 4746,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_18_2",
+      "pixels": 4552,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_thief_06",
+      "pixels": 2772,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_16_2",
+      "pixels": 5263,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:archer:base",
+      "pixels": 1163,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:thief:B",
+      "pixels": 1171,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:thief:B121",
+      "pixels": 1333,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:thief:B122",
+      "pixels": 2571,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:mage:B121",
+      "pixels": 1608,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:thief:A211",
+      "pixels": 5014,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_20_1",
+      "pixels": 5691,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_23_2",
+      "pixels": 6153,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:archer:B122",
+      "pixels": 7276,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_01_2",
+      "pixels": 1959,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:sword:A1",
+      "pixels": 5032,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:sword:B112",
+      "pixels": 5095,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:sword:B111",
+      "pixels": 4203,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "native:mage:A111",
+      "pixels": 3953,
+      "body": 88,
+      "overflow": false
+    },
+    {
+      "width": 390,
+      "id": "special:skill_05_3",
+      "pixels": 1408,
+      "body": 88,
+      "overflow": false
+    }
+  ],
+  "reducedChecks": [
+    {
+      "id": "special:skill_13_1",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 6,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3589,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "native:mage:B222",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3593,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "special:skill_18_2",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0.10000002384185791,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3596,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "native:archer:base",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3599,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "native:thief:B122",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0.09999999403953552,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3602,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "special:skill_20_1",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3605,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "special:skill_01_2",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0.19999998807907104,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3608,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    },
+    {
+      "id": "native:sword:B111",
+      "active": 0,
+      "drawCalls": 3,
+      "frameMs": 0,
+      "manual": true,
+      "width": 356,
+      "height": 318,
+      "dpr": 1,
+      "loadedAtlases": 7,
+      "pendingLoads": 0,
+      "generation": 3611,
+      "destroyed": false,
+      "reducedMotion": true,
+      "maxActive": 8
+    }
+  ],
+  "screenshots": [
+    "workshop-320.png",
+    "workshop-390.png",
+    "catalog-sword-1.png",
+    "catalog-sword-2.png",
+    "catalog-sword-3.png",
+    "catalog-archer-1.png",
+    "catalog-archer-2.png",
+    "catalog-archer-3.png",
+    "catalog-mage-1.png",
+    "catalog-mage-2.png",
+    "catalog-mage-3.png",
+    "catalog-thief-1.png",
+    "catalog-thief-2.png",
+    "catalog-thief-3.png",
+    "semantic-focus-32.png",
+    "semantic-focus-57.png",
+    "semantic-focus-76.png"
+  ],
+  "errors": [],
+  "httpErrors": [],
+  "consoleErrors": [],
+  "limitations": [
+    "Local headless Chrome and viewport emulation; not Telegram or physical mobile GPU validation.",
+    "Gallery stills show controlled frame progress; live RAF is separately sampled.",
+    "Profile uniqueness is data coverage; pixel checks and named visual review are separate evidence."
+  ],
+  "origin": "http://127.0.0.1:60588",
+  "browser": "156.0.8078.80",
+  "liveRaf": {
+    "active": 1,
+    "drawCalls": 10,
+    "frameMs": 0.30000001192092896,
+    "manual": false,
+    "width": 906,
+    "height": 390,
+    "dpr": 1,
+    "loadedAtlases": 7,
+    "pendingLoads": 0,
+    "generation": 3338,
+    "destroyed": false,
+    "reducedMotion": false,
+    "maxActive": 8
+  },
+  "sourceFilesAfter": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.mjs",
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    {
+      "path": "worker/public/preview-skill-vfx.html",
+      "sha256": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.css",
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    {
+      "path": "worker/tools/skill-vfx-semantic-browser.mjs",
+      "sha256": "40b2d99737ad61a979deee87f05187ac3a98f220bdeac6ef3b6e0cae7a490130"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/fire-spirit.webp",
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    }
+  ],
+  "completedAt": "2026-11-05T05:38:46.755Z",
+  "summary": {
+    "identities": 196,
+    "directionCases": 784,
+    "temporalCases": 196,
+    "mobileCases": 48,
+    "reducedMotionCases": 8,
+    "screenshots": 17,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "sourceDrift": 0
+  }
+}

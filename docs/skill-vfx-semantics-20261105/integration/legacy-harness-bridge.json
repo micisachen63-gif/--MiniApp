@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-05T05:39:27.340Z",
+  "reason": "The old harness counted only drawImage. The groundwave produced 14 real strokes at the original 170ms sample and player reported 14 draw calls.",
+  "runtimeModified": false,
+  "original184IdentityAssertionsRetained": true,
+  "files": [
+    {
+      "path": "worker/test/skill-vfx-legacy-harness.js",
+      "before": "6a7482536148376a9a4fdce4d81d707ddad8a10ab660ead8277298fb903b1b09",
+      "after": "c98317910e5c118f070b95bacbf66dad04481ac1b7d939cbdfabb71e4cc534af"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "before": "e220dbca882aab4fd32ecb46c36352c709d4659d4b51846d0b5f8576b697bc1d",
+      "after": "52c32558f9ca38ddabc159371287778b55cfc23f6a9013ccc2ea6bed58a20d33"
+    }
+  ]
+}

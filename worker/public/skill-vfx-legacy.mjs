@@ -192,7 +192,11 @@ export async function createLegacyVfxLayer(scene, { catalog: providedCatalog, co
         const result = validateLegacyDescriptor(raw, catalog, { allowProjection });
         if (!result.accepted) continue;
         keys.add(result.skill.baseClass);
-        for (const extra of recipeFor(result.skill).art.additional) keys.add(extra.replace(/\.webp$/, ''));
+        for (const extra of recipeFor(result.skill).art.additional) {
+          // The shared sheet filename differs from its public player preparation key.
+          const key = extra.replace(/\.webp$/, '');
+          keys.add(key === 'semantic-atlas' ? 'semantic' : key);
+        }
       }
       const results = await Promise.allSettled([...keys].map(key => player.prepare(key)));
       return results.every(result => result.status === 'fulfilled');

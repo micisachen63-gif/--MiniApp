@@ -1,0 +1,321 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "generatedAt": "2026-11-05T07:07:34.379Z",
+  "worktree": "D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-semantic-integration-20261105",
+  "branch": "codex/skill-vfx-semantic-integration-20261105",
+  "baseBeforeFinalSave": "f1826a8838b1e552b46e6dee9f28bf3fafc992ed",
+  "scope": {
+    "implementedSkillIdentities": 196,
+    "plannedAwakeningVisuals": 16,
+    "plannedAwakeningMechanicsImplemented": 0,
+    "localOnly": true,
+    "productionChanged": false
+  },
+  "liveSkillCoverage": {
+    "implementedIdentities": 196,
+    "visualFamilies": 28,
+    "bySystem": {
+      "native": 124,
+      "special": 60,
+      "atlas": 12
+    },
+    "immediateDamageIdentities": 171,
+    "nonDirectCastIdentities": 25,
+    "recipePresent": 196,
+    "resolverObserved": 196,
+    "committedEventObserved": 196,
+    "presentationObserved": 196,
+    "browserObserved": 196,
+    "controlledBrowserReplayObserved": 184,
+    "gameplayBrowserObserved": 23,
+    "resolverAndPresentationObserved": 196,
+    "plannedExcluded": 16,
+    "supports": 6,
+    "allocatableTalents": 120,
+    "origins": 4
+  },
+  "semanticCanvas": {
+    "identities": 196,
+    "directionCases": 784,
+    "temporalCases": 196,
+    "mobileCases": 48,
+    "reducedMotionCases": 8,
+    "screenshots": 17,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "sourceDrift": 0,
+    "receipt": {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/results.json",
+      "bytes": 161708,
+      "sha256": "07d08d2151ee0713e6f453a9251e3d527c393ce61cf4df5008c38282b929513f"
+    }
+  },
+  "controlledIdentityBrowser": {
+    "identities": 184,
+    "uniqueIdentities": 184,
+    "visualFamilies": 26,
+    "phoneCases": 8,
+    "reducedMotionCases": 4,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "actualAnimatedDraw": true,
+    "allCleaned": true,
+    "screenshots": 40,
+    "changedSources": [],
+    "receipt": {
+      "path": "docs/skill-vfx-semantics-20261105/combat/canonical/legacy-coverage-browser.json",
+      "bytes": 1583948,
+      "sha256": "c2ffa803225c1fd82438fc4a1905638cc937810651bb214fbec9b3e48b1c7a42"
+    },
+    "scope": "Real SQLite committed receipts replayed through actual browser RAF; not 184 independent API UI scenarios"
+  },
+  "gameplay": {
+    "miniAppScenarios": 16,
+    "atlasScenarios": 16,
+    "totalScenarios": 32,
+    "strictEventToDrawIdentities": 23,
+    "normalizedEventCases": 126,
+    "rawMiniAppApiIdentities": 14,
+    "receipt": {
+      "path": "docs/skill-vfx-semantics-20261105/combat/canonical/gameplay-coverage-browser.json",
+      "bytes": 313487,
+      "sha256": "1f80b0e127a3b0f325f047aa78ea77117d04cffe615e9c22713b5332acd01eea"
+    }
+  },
+  "awakening": {
+    "presentationRevision": "ornate-v2",
+    "completedAt": "2026-11-05T07:02:20.709Z",
+    "desktopDirections": 64,
+    "desktopStages": 256,
+    "lowQualityDirections": 64,
+    "reducedDirections": 64,
+    "mobileDirections": 64,
+    "endpointChecks": 32,
+    "screenshots": 33,
+    "nodeTests": {
+      "passed": 11,
+      "total": 11
+    },
+    "browserErrors": [],
+    "networkFailures": [],
+    "sourceCount": 21,
+    "sourcesStableDuringAndAfterRun": true,
+    "currentSources": [
+      {
+        "path": "worker/public/skill-vfx-engine.mjs",
+        "bytes": 46706,
+        "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+      },
+      {
+        "path": "worker/public/skill-vfx-semantics.mjs",
+        "bytes": 22636,
+        "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+      },
+      {
+        "path": "worker/public/skill-vfx-catalog.json",
+        "bytes": 450626,
+        "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+      },
+      {
+        "path": "worker/public/awakening-vfx-data.mjs",
+        "bytes": 8727,
+        "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+      },
+      {
+        "path": "worker/public/awakening-vfx-engine.mjs",
+        "bytes": 30437,
+        "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+      },
+      {
+        "path": "worker/public/awakening-vfx-preview.html",
+        "bytes": 6214,
+        "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+      },
+      {
+        "path": "worker/public/awakening-vfx-preview.css",
+        "bytes": 16294,
+        "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+      },
+      {
+        "path": "worker/public/awakening-vfx-preview.mjs",
+        "bytes": 12999,
+        "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+      },
+      {
+        "path": "worker/tools/awakening-vfx-preview-server.mjs",
+        "bytes": 2790,
+        "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+      },
+      {
+        "path": "worker/test/awakening-vfx-engine.test.js",
+        "bytes": 9318,
+        "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+      },
+      {
+        "path": "worker/tools/awakening-vfx-browser.mjs",
+        "bytes": 18368,
+        "sha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+        "bytes": 668976,
+        "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+        "bytes": 669942,
+        "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+        "bytes": 697614,
+        "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+        "bytes": 586874,
+        "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+        "bytes": 591828,
+        "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+      },
+      {
+        "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+        "bytes": 112014,
+        "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+      },
+      {
+        "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "bytes": 481434,
+        "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+      },
+      {
+        "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "bytes": 524642,
+        "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+      },
+      {
+        "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "bytes": 487604,
+        "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+      },
+      {
+        "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "bytes": 499362,
+        "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+      }
+    ],
+    "receipt": {
+      "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+      "bytes": 22081,
+      "sha256": "d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a"
+    },
+    "audit": {
+      "path": "worker/public/awakening-vfx-audit.json",
+      "bytes": 68557,
+      "sha256": "769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f"
+    },
+    "archivedUnitReceipt": {
+      "tests": 11,
+      "passed": 11,
+      "exitCode": 0,
+      "sourceStable": true
+    },
+    "previewOnly": true,
+    "sourceId": null
+  },
+  "materials": {
+    "sourcePngs": 4,
+    "runtimeWebps": 4,
+    "sourceBytes": 6611077,
+    "runtimeBytes": 1993042,
+    "totalBytes": 8604119,
+    "alphaPixelsCompared": 6290064,
+    "alphaMismatchCount": 0,
+    "delivery": {
+      "path": "worker/art-production/awakening-vfx-20261105/delivery-verification.json",
+      "bytes": 22729,
+      "sha256": "5d64e95cb620efce9d4f25c458adf89e9ea8adf1a5d25d9dd39b8eeee525f4b8"
+    },
+    "provenance": {
+      "path": "worker/art-production/awakening-vfx-20261105/provenance.json",
+      "bytes": 22074,
+      "sha256": "716efb8051f1f0fea4582e8195ecf5cb382ad45a6ce2dc0e5a569cda825a0d51"
+    }
+  },
+  "frozenRuntime": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "bytes": 16937,
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    }
+  ],
+  "staticChecks": [
+    {
+      "path": "docs/skill-vfx-semantics-20261105/static-checks/coverage-final-check.json",
+      "bytes": 1378,
+      "sha256": "418e94fa4022be881bd8ee28941337062d9dd3d1cc15f79189659e64262810f8"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/static-checks/semantic-audit-final-check.json",
+      "bytes": 1002,
+      "sha256": "7c9c043f44b255ac7494f378094cb462cde2a8329e53ef4206ef82a7cf4549f2"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/static-checks/preview-health.json",
+      "bytes": 1590,
+      "sha256": "c8d63676849fee0c6063aef1c93dc10e538b4ae71a7070a43474b75fb117ded9"
+    }
+  ],
+  "archives": [
+    {
+      "path": "docs/skill-vfx-semantics-20261105/foundation-manifest.json",
+      "bytes": 12720,
+      "sha256": "027609203e2919219766e3977463d9ede390e4f7685092ab1d236a5afd8ce2e0"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/combat/manifest.json",
+      "bytes": 28633,
+      "sha256": "ca48d416d9a579aad7054ba69847b419a5dfa25918c343fe2a930e2760373bb3"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/atlas/manifest.json",
+      "bytes": 38105,
+      "sha256": "7fff8e9f4db1cb24aa92b868abbb44b5e6148eb522d96e0e268d337ae7bdee37"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/awakening/manifest.json",
+      "bytes": 43870,
+      "sha256": "6f15f76f016b6747f33262a3c125dcd44e580414116a1d51e59db48d27c711ef"
+    }
+  ],
+  "evidencePolicy": [
+    "Historical failures and superseded passes remain archived, but are not counted as current acceptance.",
+    "The old complete/pass=true receipt with a browser error is explicitly rejected and the validator regression demonstrates rejection.",
+    "Atlas outer metadata drift is preserved; the 17 actual capture inputs and 9 shared inputs were stable in that run.",
+    "Engine unit, integration boundary, controlled replay, real API and browser rendering results are distinct gates."
+  ],
+  "environmentLimitations": [
+    "Local Chrome software rendering and phone viewport; no physical phone GPU or Telegram device claim.",
+    "Awakening gameplay mechanics remain unimplemented; visual preview generates no damage, MP, cooldown or unlock events."
+  ],
+  "localCommitRecordedIn": "D:/StarJournal/handoff/skill-vfx/STATUS.json"
+}

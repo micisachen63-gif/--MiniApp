@@ -1,0 +1,347 @@
+{
+  "schemaVersion": 1,
+  "tool": "image_gen.imagegen",
+  "purpose": "16 dedicated ornate awakening VFX centerpieces; replacing user-rejected procedural preview v1",
+  "background": "transparent RGBA",
+  "artDirection": "Premium painterly high-fantasy magic; four 2x2 atlases, each cell a unique skill centerpiece",
+  "layout": {
+    "grid": [
+      2,
+      2
+    ],
+    "order": [
+      "elite",
+      "expert",
+      "nightmare",
+      "hell"
+    ]
+  },
+  "generationPrompts": {
+    "sword": "Create a production-quality TRANSPARENT GAME VFX SPRITE ATLAS, exactly 2 columns × 2 rows, four equal square cells, no text, no frames, no UI, no backdrop. This is the spectacular ultimate-awakening spell art for a premium high-fantasy RPG, NOT small minimalist icons. Each cell must contain one LARGE, highly detailed, dimensional hand-painted magical effect with dramatic layered energy, crystalline highlights, intricate luminous ornament and strong readable silhouette. Full RGBA transparency outside the artwork; isolated glow with clean falloff to alpha zero. Keep a clearly transparent gutter and at least 9% safe transparent padding inside EACH cell, no overlap across cells. All cells same visual scale. Color palette warm antique gold, ivory and scarlet with very dark shadow depth inside objects; brilliant high dynamic range look. NO typography, characters, character portraits, ground, horizon, scenery or opaque panels. Top-left: WAR GOD ARMOR BREAK — a huge ornate golden warblade shattering an embossed bronze armored breastplate, three sweeping blade-energy crescents exploding outward, floating fragmented armor plates, a radiant crown crest. Top-right: BASTION ECHO — a magnificent three-dimensional layered cyan-silver fortress shield with articulated wing-like shield plates, a central glowing blue gemstone, incoming force breaking into a broad rippling shockwave, rich metallic relief. Bottom-left: BLOOD OATH TIDE — an elaborate crimson oath sigil made of interlocking blood-red blades and scarlet crystalline shards, powerful curling tidal ribbons of red energy surrounding a central double-edged sword, hot rose inner glow, no gore. Bottom-right: JUDGMENT OF THE GODS — a monumental ornate ivory-gold divine greatsword pointing DOWN, its pommel supported by six sweeping celestial feathered energy wings and a luminous segmented holy crown, a dense golden sunburst around the blade impact, premium fantasy cinematic grandeur. Each composition should feel worthy of a rare ultimate skill, rich sculptural texture rather than flat line art. Center each entire composition safely within its own cell. Transparent background.",
+    "archer": "Create a production-quality TRANSPARENT GAME VFX SPRITE ATLAS, exactly 2 columns × 2 rows, four equal square cells, no text, no grid, no frames, no UI or backdrop. Four SPECTACULAR fairy-ranger ultimate-awakening spell illustrations for a premium hand-painted 2.5D high-fantasy RPG. Rich dimensional lighting, sharp finely painted silhouettes, layered magical silk and glittering volumetric energy, elaborate organic filigree. These must be substantial cinematic spell centerpieces, NOT tiny icons or thin vector rings. Full RGBA transparency outside each artwork, soft isolated glow falling cleanly to alpha zero. At least 9% transparent safe padding within EVERY cell and visibly transparent gutters; no cell bleeds. No humanoid character, scenery, ground, words, symbols resembling writing or flat panels. TOP LEFT: STAR PURSUIT VOLLEY — a regal crystalline crescent longbow with luminous silver-blue feathered limbs, a bundle of five brilliant comet arrows aimed diagonally right, star constellation crystals and sweeping aurora trails. TOP RIGHT: SPIRITS HUNT TOGETHER — three impressive spectral animal spirits charging together toward the RIGHT: a powerful emerald wolf in front, a majestic antlered ivory-gold stag beside it, and an azure hunting hawk with expansive wings above; they remain visually distinct and anatomically readable, surrounded by curling forest-spirit energy ribbons, luminous leaf particles. BOTTOM LEFT: ECLIPSE HUNT MARK — a dramatic three-dimensional black-violet eclipsed moon with silver crescent rim, an ornate thorn-and-feather hunting mark encircling it, a radiant emerald arrow crossing the eclipse, spectral fangs and lunar crystal fragments, deep but transparent negative spaces. BOTTOM RIGHT: FIRMAMENT JUDGMENT — a grand floating celestial bow-gate, enormous sweeping golden and cyan feathered energy wings, a luminous star crystal at its crown, seven long brilliant divine arrows pointing down in an elegant fan, powerful bright central arrow and rich layered sky-blue energy. Each cell must have a distinct large visual centerpiece and beautiful painted material detail. Centered safe compositions on true transparent background.",
+    "mage": "Create a production-quality TRANSPARENT GAME VFX SPRITE ATLAS, exactly 2 columns × 2 rows, four equally sized square cells. Four spectacular ARCHMAGE ULTIMATE-AWAKENING spell centerpieces, premium cinematic high-fantasy game VFX, exquisitely painted 2.5D depth, very rich materials, brilliant luminous volumes, fine crystalline details and bold silhouettes. NOT minimalist icons, NOT line-art diagrams, NOT flat magic circles. True RGBA transparency outside each effect, isolated light bloom falling off cleanly to alpha zero; substantial transparent gutters and at least 9% safe transparent margin inside each cell. No words, borders, grid, UI, humanoid, ground or scenery. TOP LEFT: STELLAR THUNDER RESONANCE — a huge faceted electric-blue star crystal with an intricate floating gold astrolabe, five brilliant satellite starstones connected by thick branching violet-white lightning, plasma curls and floating electric crystal chips. TOP RIGHT: FROST MIRROR RETURN — an ornate majestic ice mirror with a thick sculptural rim of layered frost crystals, luminous teal reflective core, a powerful stream of light absorbed into it and three beautiful flowing cyan ribbons curling back out, suspended ice petals and prismatic glints, elegant snowy blue white composition. BOTTOM LEFT: ELEMENTAL DISINTEGRATION — a spectacular fractured central prism suspended inside FOUR visually distinct energy arms: molten orange fire, sharp cyan ice, branching purple-white lightning, and emerald nature leaves; swirling toward the center and then bursting into bright multicolored crystal fragments; strong dimensional central core, controlled balanced composition. BOTTOM RIGHT: PRIMORDIAL SUPERNOVA — an awe-inspiring dense white-gold newborn star core exploding through layered indigo-violet cosmic plasma petals, enormous radiant eight-point starburst, concentric dimensional wavefronts and sharp luminous star fragments, the grandeur of a miniature celestial cataclysm, beautiful sophisticated cosmic colors. No opaque square galaxy backgrounds: every composition fully isolated on transparency and entirely contained in its own cell. Exaggerated ultimate-skill spectacle with exceptional painted detail.",
+    "thief": "Create a production-quality TRANSPARENT GAME VFX SPRITE ATLAS, exactly 2 columns × 2 rows, four equal square cells. Four spectacular NIGHT ASSASSIN ULTIMATE-AWAKENING spell centerpieces for a premium hand-painted 2.5D high-fantasy RPG. Dramatic sculptural shapes, intricate blades, luminous smoke ribbons, rich deep violet shadow volumes, razor-sharp cyan and silver highlights; dazzling and dangerous cinematic magic, not flat icons or thin geometric lines. Full RGBA transparency outside the artwork; isolated glow fades cleanly to alpha zero. At least 9% transparent padding inside every cell, clear transparent gutters, no overlap. No text, no UI, no borders, ground or scenery. TOP LEFT: SHADOW ASSAULT CHAIN — three ethereal hooded assassin SHADOW APPARITIONS with luminous violet eyes, clawed ornamental spectral daggers and flowing shredded smoke cloaks, arranged as a forceful diagonal sequence lunging toward the RIGHT, clearly magical summons rather than character portraits; interlinked curved blade trails and crystalline shadow shards. TOP RIGHT: VENOM BLOSSOM — an exquisite enormous five-petalled lotus made of curved dark metal poison daggers and emerald liquid-crystal blades, luminous lime venom beads suspended at petal tips, rich toxic emerald mist curls and golden-green filigree, a bright jewel at its center. BOTTOM LEFT: DARK MOON EXECUTION — a magnificent sharp silver-lilac crescent moon enclosing two huge ornate crossed black-violet execution daggers, layered dark lunar wings and a crisp white-violet impact star, elegant luminous moon fragments, powerful distinct silhouette. BOTTOM RIGHT: ETERNAL NIGHT DOUBLES — a grand trio of towering spectral assassin doubles rising out of deep violet-black smoke, central apparition larger with outstretched twin scythe-like blades, two distinct flanking shadow figures and ornate purple phantom wing ribbons, many fine starlit edges and ember-like violet glints, majestic ultimate summon. Preserve rich shadow depth while keeping forms readable on dark game backgrounds. All four isolated compositions centered safely within their cells, true transparent background, maximum painterly material quality."
+  },
+  "paddingPrompt": "Refine this exact four-spell 2-by-2 transparent RPG VFX atlas for production use. Preserve the beautiful artwork, each of the four subjects, ornate painterly material quality, rich colors and exact quadrant order. CRITICAL CHANGE: SHRINK EACH ENTIRE COMPOSITION BY 25 PERCENT around the CENTER OF ITS OWN QUADRANT, leaving a WIDE, COMPLETELY EMPTY TRANSPARENT GUTTER along the center horizontal and vertical axes AND all four outside edges. All four square cells must be equal and precisely aligned. Each individual artwork including its bloom, smoke, feathers, weapon tips and particles must fit fully inside the central 72% of its cell, with the outer 14% on EVERY side of EVERY cell truly transparent. Complete any previously clipped feather/weapon/crest edges. Nothing may cross into a neighboring cell. Remove all loose colored haze or isolated stray specks in the gutters, while preserving the luminous magical bloom tightly around each subject. Keep the final canvas square with substantial transparent outside margins; DO NOT crop the sheet tightly around the art. No extra objects, no text, no outlines of cells, no borders, no checkerboard. True RGBA alpha background. This is an asset layout/padding refinement, not a redesign: retain the four premium cinematic illustrations in crisp detail.",
+  "archerCleanupPrompt": "Remove the unwanted gray-white FOG BACKGROUND from this exact transparent four-cell VFX atlas. Keep all FOUR existing colorful spell illustrations exactly in their present quadrants, preserve their intricate details and same sizes/positions. The broad gray/white cloudy layer spread across the canvas and joining the four artworks is a BACKGROUND ERROR: DELETE IT COMPLETELY. This is strict background removal and clean isolation. Only keep the actual bow and arrows with their narrow colored trails, the wolf/stag/hawk trio with their tightly localized spirit ribbons, the purple eclipse hunting emblem, and the blue-gold winged bow with downward arrows. Absolutely NO white/gray mist, clouds, paper, opaque panels, checkerboard, or haze anywhere between the four designs. Large gutters between all cells and the entire outside margin must have fully ZERO alpha. Keep the canvas square and maintain the generous transparent padding. Soft colored glows may remain only immediately around each individual object, falling rapidly to full transparency without reaching another cell. Four isolated premium game effect cutouts on true RGBA transparency. Do not enlarge the illustrations or crop the outer transparent margin. No text or added design elements.",
+  "originalCandidates": [
+    {
+      "key": "sword",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-88805bbd-2983-4793-ae38-ca058f08058a.png",
+      "bytes": 3402583,
+      "sha256": "db9dd938d2a789dbce1a78090b0abc83385d0ae357750c671160de75b0118e05",
+      "size": [
+        1263,
+        1246
+      ],
+      "mode": "RGBA",
+      "status": "layout-rejected-for-uneven-size-and-cross-cell-alpha"
+    },
+    {
+      "key": "archer",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-539321a3-f2cf-4097-9a91-b60bc7c9a5c5.png",
+      "bytes": 3195745,
+      "sha256": "91a28a70911ef126a44fb5fc78006e9c061abfb6ced90d5aeb9921e4ff974624",
+      "size": [
+        1300,
+        1209
+      ],
+      "mode": "RGBA",
+      "status": "layout-rejected-for-uneven-size-and-cross-cell-alpha"
+    },
+    {
+      "key": "mage",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-a26a55dc-5096-4d10-8135-cb67f0b4910b.png",
+      "bytes": 3233198,
+      "sha256": "49db72f5cb1764ee128583436f08861e962ac93d00a54dcde345f659506eefc9",
+      "size": [
+        1288,
+        1221
+      ],
+      "mode": "RGBA",
+      "status": "layout-rejected-for-uneven-size-and-cross-cell-alpha"
+    },
+    {
+      "key": "thief",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-59b7f000-071e-48d0-9b3e-84c3856916dc.png",
+      "bytes": 3048228,
+      "sha256": "59fb2e7243fe7df40faf03513c671783a7c9d52a5d3127db98987bc6a0362842",
+      "size": [
+        1261,
+        1247
+      ],
+      "mode": "RGBA",
+      "status": "layout-rejected-for-uneven-size-and-cross-cell-alpha"
+    }
+  ],
+  "selectedCandidates": [
+    {
+      "key": "sword",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-986d614c-6306-402e-ac72-ced7173f15f5.png",
+      "bytes": 1641225,
+      "sha256": "8171fe7842c5658fcb89dc5d7dc87e1762984ea5456424ccce73206076e3ce19",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sourcePath": "worker/art-production/awakening-vfx-20261105/source/sword-awakening-atlas.png",
+      "runtimePath": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp"
+    },
+    {
+      "key": "archer",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-71d5932c-f962-45d8-b0bd-2f00be44a717.png",
+      "bytes": 1719292,
+      "sha256": "a7a6d76c12400e5ba8d3f3bd398d0f05131065667f3a532518ed2ea7292767fd",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sourcePath": "worker/art-production/awakening-vfx-20261105/source/archer-awakening-atlas.png",
+      "runtimePath": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp"
+    },
+    {
+      "key": "mage",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-7ef2fb40-004d-402d-849f-77c532903fc3.png",
+      "bytes": 1604062,
+      "sha256": "add78e7680dd3fee1eb6f9510f98c6e651f82ea775e8283ee531c55155927689",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sourcePath": "worker/art-production/awakening-vfx-20261105/source/mage-awakening-atlas.png",
+      "runtimePath": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp"
+    },
+    {
+      "key": "thief",
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-62aa414d-8ef2-45df-93c5-069942b5d407.png",
+      "bytes": 1646498,
+      "sha256": "c61dca58d58034d4ab85aafabd2b3645e870cad3ca10ff991e29284e0a5ea6b4",
+      "size": [
+        1254,
+        1254
+      ],
+      "mode": "RGBA",
+      "sourcePath": "worker/art-production/awakening-vfx-20261105/source/thief-awakening-atlas.png",
+      "runtimePath": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp"
+    }
+  ],
+  "rejectedIntermediate": {
+    "key": "archer-rejected-padding",
+    "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-2a28ccc8-eeb7-4f9f-9e2c-287efda4e687.png",
+    "reason": "Large gray-white fog background; corrected with imagegen before integration.",
+    "bytes": 2723473,
+    "sha256": "a02610cc1a41f1533d8ca4e7dc121d7e8a8da886dc7aff4b3aa0848fbdbb19ed",
+    "size": [
+      1254,
+      1254
+    ],
+    "mode": "RGBA"
+  },
+  "formatConversion": {
+    "operation": "PNG to WebP only; no pixel editing, crop or resize",
+    "sharp": "0.35.5",
+    "quality": 92,
+    "alphaQuality": 100,
+    "effort": 6
+  },
+  "integration": {
+    "sourceRoot": "worker/art-production/awakening-vfx-20261105/source",
+    "runtimeRoot": "worker/public/art/awakening-vfx-20261105",
+    "runtimePattern": "<class>-awakening-atlas.webp",
+    "sourcePattern": "<class>-awakening-atlas.png"
+  },
+  "status": "verified-delivered",
+  "cellSkills": {
+    "sword": [
+      "戰神破勢",
+      "壁壘回響",
+      "血誓狂潮",
+      "諸神斷罪"
+    ],
+    "archer": [
+      "逐星連矢",
+      "群靈共獵",
+      "月蝕獵印",
+      "蒼穹裁決"
+    ],
+    "mage": [
+      "星雷共鳴",
+      "霜鏡回流",
+      "元素裂解",
+      "太初星爆"
+    ],
+    "thief": [
+      "影襲連鎖",
+      "淬毒散華",
+      "暗月處決",
+      "永夜分身"
+    ]
+  },
+  "deliveryEvidence": "worker/art-production/awakening-vfx-20261105/delivery-verification.json",
+  "recordedAt": "2026-11-05T06:18:30.700Z",
+  "verifiedAt": "2026-11-05T06:35:42.742Z",
+  "deliveryVerification": {
+    "path": "worker/art-production/awakening-vfx-20261105/delivery-verification.json",
+    "sha256": "5d64e95cb620efce9d4f25c458adf89e9ea8adf1a5d25d9dd39b8eeee525f4b8",
+    "status": "passed",
+    "filesVerified": 8,
+    "sourceBytes": 6611077,
+    "runtimeBytes": 1993042,
+    "totalBytes": 8604119,
+    "alphaPixelsCompared": 6290064,
+    "alphaMismatchCount": 0
+  },
+  "deliveredAssets": [
+    {
+      "class": "sword",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/sword-awakening-atlas.png",
+        "bytes": 1641225,
+        "sha256": "8171fe7842c5658fcb89dc5d7dc87e1762984ea5456424ccce73206076e3ce19",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "bytes": 481434,
+        "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 5
+      }
+    },
+    {
+      "class": "archer",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/archer-awakening-atlas.png",
+        "bytes": 1719292,
+        "sha256": "a7a6d76c12400e5ba8d3f3bd398d0f05131065667f3a532518ed2ea7292767fd",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 18
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "bytes": 524642,
+        "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 6
+      }
+    },
+    {
+      "class": "mage",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/mage-awakening-atlas.png",
+        "bytes": 1604062,
+        "sha256": "add78e7680dd3fee1eb6f9510f98c6e651f82ea775e8283ee531c55155927689",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "bytes": 487604,
+        "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 5
+      }
+    },
+    {
+      "class": "thief",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/thief-awakening-atlas.png",
+        "bytes": 1646498,
+        "sha256": "c61dca58d58034d4ab85aafabd2b3645e870cad3ca10ff991e29284e0a5ea6b4",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "bytes": 499362,
+        "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 6
+      }
+    }
+  ]
+}

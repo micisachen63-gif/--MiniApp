@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "exitCode": 0,
+  "status": "exited",
+  "execution": {
+    "action_fingerprint": "",
+    "attempt": 1,
+    "child_process_ids": [],
+    "command_hash": "",
+    "execution_id": "7P_eG-8Ga0CxH63dAZgOY8Ti",
+    "finished_at": "2026-11-05T06:42:32.351Z",
+    "input_fingerprint": "",
+    "lifecycle_state": "completed",
+    "pid": 23132,
+    "process_id": 23132,
+    "retry_policy": "never_after_start",
+    "retry_safe": false,
+    "side_effect_class": "process",
+    "side_effect_possible": true,
+    "started_at": "2026-11-05T06:42:31.942Z",
+    "stderr_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_digest": "744d1a2175b305fea7044b919e0cd43d05164171250b4f55a5292c779c3ba45e"
+  },
+  "stdout": "{\"status\":\"passed\",\"mode\":\"check\",\"path\":\"worker/public/skill-vfx-coverage.json\",\"summary\":{\"implementedIdentities\":196,\"visualFamilies\":28,\"bySystem\":{\"native\":124,\"special\":60,\"atlas\":12},\"immediateDamageIdentities\":171,\"nonDirectCastIdentities\":25,\"recipePresent\":196,\"resolverObserved\":196,\"committedEventObserved\":196,\"presentationObserved\":196,\"browserObserved\":196,\"controlledBrowserReplayObserved\":184,\"gameplayBrowserObserved\":23,\"resolverAndPresentationObserved\":196,\"plannedExcluded\":16,\"supports\":6,\"allocatableTalents\":120,\"origins\":4}}\n",
+  "stderr": ""
+}

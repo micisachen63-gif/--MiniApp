@@ -1,6 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { semanticFor } from '../public/skill-vfx-semantics.mjs';
 import { createLegacyVfxLayer, legacyDescriptors, validateLegacyDescriptor, planLegacyVfx, legacyDomGeometry } from '../public/skill-vfx-legacy.mjs';
 import { legacySurface, geometryFor } from './skill-vfx-legacy-harness.js';
 
@@ -18,8 +19,8 @@ test('all 184 canonical legacy identities dispatch into the real player using on
   assert.equal(legacySkills.length, 184);
   const surface = legacySurface(), layer = await surface.create({ catalog, mode: 'party', contextKey: 'all-identities' });
   const rows = legacySkills.map(skill => descriptor(skill.id));
-  await layer.prepare(rows);
   try {
+    assert.equal(await layer.prepare(rows), true, 'all declared textures must finish preloading');
     for (const raw of rows) {
       const before = JSON.stringify(raw), count = surface.drawCalls();
       const result = await layer.play(raw, geometryFor(raw));
@@ -32,7 +33,31 @@ test('all 184 canonical legacy identities dispatch into the real player using on
     }
     assert.equal(layer.stats().accepted, 184);
     assert.equal(layer.stats().commands, 184);
-    assert.equal(layer.stats().player.loadedAtlases, 6);
+    assert.equal(layer.stats().player.loadedAtlases, 7);
+  } finally { layer.destroy(); }
+});
+
+test('semantic companions preload one shared sheet and play all 25 identities without late image loads', async () => {
+  const semanticSkills = legacySkills.filter(skill => semanticFor(skill).asset === 'semantic');
+  assert.equal(semanticSkills.length, 25);
+  const surface = legacySurface(), layer = await surface.create({ catalog, mode: 'party', contextKey: 'semantic-preload' });
+  const rows = semanticSkills.map(skill => descriptor(skill.id));
+  try {
+    assert.equal(await layer.prepare(rows), true, 'the actual player accepts every declared preload');
+    assert.equal(surface.images.filter(image => image.src === '/art/skill-vfx-20261104/semantic-atlas.webp').length, 1);
+    const imageCount = surface.images.length;
+    assert.equal(imageCount, new Set(semanticSkills.map(skill => skill.baseClass)).size + 1);
+    assert.equal(layer.stats().accepted, 0, 'preparing images does not fabricate a cast');
+    for (const raw of rows) {
+      assert.equal(await layer.prepare([raw]), true, raw.skillId + ': repeated preload stays fulfilled');
+      const before = surface.drawCalls(), result = await layer.play(raw, geometryFor(raw));
+      assert.equal(result.accepted, true, raw.skillId + ': ' + result.reason);
+      surface.advance(170);
+      assert.ok(surface.drawCalls() > before, raw.skillId + ': the real engine paints after preparation');
+      assert.equal(surface.images.length, imageCount, raw.skillId + ': play must not discover an unloaded image');
+      layer.clear('next-semantic');
+    }
+    assert.equal(layer.stats().accepted, 25);
   } finally { layer.destroy(); }
 });
 

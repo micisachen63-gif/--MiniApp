@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark light">
+  <title>覺醒星圖 · 星穹旅誌</title>
+  <link rel="stylesheet" href="/awakening-vfx-preview.css">
+</head>
+<body>
+  <div class="sky-dust" aria-hidden="true"></div>
+  <header class="masthead">
+    <a class="brand" href="/awakening-vfx-preview.html"><span class="brand-star" aria-hidden="true">✧</span><span>星穹旅誌<small>STAR JOURNAL / AWAKENING ATELIER</small></span></a>
+    <a class="workshop-link" href="http://127.0.0.1:9864/preview-skill-vfx.html">現有技能工坊 <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><p class="eyebrow">THE NEXT CONSTELLATION</p><h1>覺醒星圖<span>十六式，逐光而生。</span></h1><p class="intro-copy">專屬覺醒美術，層層展開。從蓄勢聚光、主體降臨，到爆發與漫天餘韻。</p></div>
+      <div class="status-badge"><span aria-hidden="true"></span>覺醒視覺預覽<small>待機制接入 · 16 招</small></div>
+    </section>
+    <nav class="class-tabs" aria-label="選擇職業" id="classTabs"></nav>
+    <div class="atelier">
+      <aside class="skill-panel">
+        <div class="panel-heading"><span id="classHeading">劍士覺醒</span><small>SELECT A CONSTELLATION</small></div>
+        <label class="mobile-picker" for="mobileSkill">選擇覺醒技能<select id="mobileSkill"></select></label>
+        <div id="skillList" class="skill-list"></div>
+        <p class="sidebar-note">四個階段，一次完整覺醒。<br>下方時間軸可停在任何瞬間。</p>
+      </aside>
+      <section class="studio" aria-label="覺醒動畫預覽">
+        <div class="stage-heading"><div><p id="skillMode" class="eyebrow">菁英覺醒</p><h2 id="skillName">戰神破勢</h2></div><span class="duration-chip" id="duration">演出 3.2 秒</span></div>
+        <div class="stage" id="stage" data-background="night">
+          <div class="stage-grid" aria-hidden="true"></div><div class="stage-orbit" aria-hidden="true"></div>
+          <canvas id="effectCanvas" aria-label="覺醒特效畫布"></canvas>
+          <div id="artStatus" class="art-status" role="status"><span aria-hidden="true">✦</span><strong>正在載入覺醒素材</strong><p>專屬美術與光影就緒後，即可播放完整演出。</p></div>
+          <div class="figure caster" id="casterMarker" aria-hidden="true"><svg viewBox="0 0 50 90"><path d="M25 10 37 24 30 41 38 70 25 82 12 70 20 41 13 24Z"/><path d="M25 23 25 67M15 55 35 55"/></svg><span>施術端</span></div>
+          <div class="figure target" id="targetMarker0" aria-hidden="true"><svg viewBox="0 0 50 90"><path d="M25 15 38 42 25 70 12 42Z"/><path d="M25 15 25 70M12 42 38 42"/></svg><span>預覽目標</span></div>
+          <div class="figure target secondary" id="targetMarker1" aria-hidden="true"><svg viewBox="0 0 50 90"><path d="M25 15 38 42 25 70 12 42Z"/></svg></div>
+          <div class="figure target secondary" id="targetMarker2" aria-hidden="true"><svg viewBox="0 0 50 90"><path d="M25 15 38 42 25 70 12 42Z"/></svg></div>
+          <div class="stage-topline"><span id="phaseLabel">三刃連斬</span><span id="motionLabel">完整演出</span></div>
+          <div class="stage-bottomline"><span id="directionLabel">朝右 · 等比顯示</span><span id="renderStatus" role="status">素材載入中</span></div>
+        </div>
+        <div class="timeline">
+          <div class="transport"><button id="playButton" class="primary-button" type="button" aria-label="播放演出">▶ 播放</button><button id="restartButton" type="button">↺ 重播</button><button id="stepButton" type="button" title="前進一格（演出時間 1/60 秒）">單格 ›</button><label class="check-control"><input id="loopToggle" type="checkbox">循環</label><output id="timeDisplay">0.00 / 3.20 s</output></div>
+          <label class="sr-only" for="seek">演出進度</label><input id="seek" type="range" min="0" max="1000" step="1" value="620" aria-label="演出進度">
+          <div id="phaseButtons" class="phase-buttons"></div>
+        </div>
+        <div class="settings">
+          <fieldset class="direction-controls"><legend>演出方向</legend><div id="directionButtons"><button type="button" data-direction="left" aria-label="朝左">←</button><button type="button" data-direction="up" aria-label="朝上">↑</button><button type="button" data-direction="down" aria-label="朝下">↓</button><button type="button" data-direction="right" aria-label="朝右" aria-pressed="true">→</button></div></fieldset>
+          <label>預覽目標<select id="targetCount"><option value="1">單一目標</option><option value="3">三個目標</option></select></label>
+          <label>舞台底色<select id="background"><option value="night">深夜星空</option><option value="light">霧白底色</option><option value="checker">透明棋盤</option></select></label>
+          <label>畫面品質<select id="quality"><option value="high">完整細節</option><option value="low">精簡細節</option></select></label>
+          <label class="check-control reduced"><input id="reducedMotion" type="checkbox">減少動態<small>關鍵構圖柔和淡入淡出</small></label>
+        </div>
+      </section>
+    </div>
+    <section class="notes" aria-label="技能構想與視覺設計"><div><p class="eyebrow">ORIGINAL CONCEPT</p><h3>覺醒構想</h3><p id="concept"></p></div><div><p class="eyebrow">VISUAL DIRECTION</p><h3>專屬構圖</h3><p id="visualDescription"></p></div><div class="boundary-note"><span class="note-star" aria-hidden="true">✦</span><p>這裡展示覺醒的美術演出。技能機制仍待接入；演出秒數僅用於預覽播放，未設定傷害係數、法力消耗或冷卻。</p></div></section>
+    <footer><span>STAR JOURNAL · AWAKENING VISUAL STUDY</span><span id="previewIdentity">16 招覺醒 · 美術演出預覽</span></footer>
+  </main>
+  <div id="errorMessage" class="error-message" role="alert" hidden></div>
+  <script type="module" src="/awakening-vfx-preview.mjs"></script>
+</body>
+</html>

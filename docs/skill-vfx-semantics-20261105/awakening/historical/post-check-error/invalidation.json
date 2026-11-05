@@ -1,0 +1,10 @@
+{
+  "status": "post-check-error-not-current",
+  "finalAccepted": false,
+  "originalPassFlag": true,
+  "reason": "Late ResizeObserver error after contact sheet setContent occurred after the old last assertion. The original receipt and screenshots remain unchanged.",
+  "browserErrors": [
+    "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')"
+  ],
+  "diagnostic": ".release-sync/awakening-vfx-20261105/ornate-v2-diagnostics/contact-sheet-lifecycle-error.json"
+}

@@ -39,7 +39,19 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
  const view=()=>frame.evaluate(()=>window.RpgSceneLiveView.inspect()[0]);
  async function ready(id){await frame.waitForFunction(id=>{const v=window.RpgSceneLiveView?.inspect?.()[0];return v?.characterId===id&&v.characterVisible&&v.actorIssue==='';},String(id),{timeout:45000});}
  async function stop(){const s=await state();if(s.run?.active)await call('atlas/stop',{runId:s.run.id,requestId:crypto.randomUUID()});currentRun=null;}
+ async function persistEvidence(final=false,finalSamples){
+  const sourceFilesAfter=await sourceFingerprints(),sourceChangedDuring=sourceFiles.filter((file,i)=>file.sha256!==sourceFilesAfter[i]?.sha256).map(file=>file.path);
+  const samples=finalSamples??(frame?await frame.evaluate(()=>window.__skillVfxQa?.samples||[]).catch(()=>[]):[]);
+  const expectedCases=inspectOnly||chosen||smoke?1:16;
+  const complete=cases.length===expectedCases&&cases.every(entry=>entry.passed===true)&&errors.length===0&&badResponses.length===0&&sourceChangedDuring.length===0;
+  const status=final?(complete?'passed':'failed'):'in-progress';
+  const evidence={status,generatedAt:new Date().toISOString(),expectedCases,sourceFiles,sourceFilesAfter,sourceChangedDuring,mode:inspectOnly?'inspection':smoke?'smoke':chosen?'selected':'full',health,apiHealth,cases,receipts,samples,errors,badResponses};
+  const output=path.join(evidenceDir,final?'results.json':'checkpoint.json'),temporary=output+'.tmp';
+  await fs.writeFile(temporary,JSON.stringify(evidence,null,2));await fs.rename(temporary,output);
+  return evidence;
+ }
  try{
+  await persistEvidence();
   await page.goto(sceneOrigin+'/',{waitUntil:'domcontentloaded',timeout:30000});
   frame=await(await page.locator('#demo').elementHandle()).contentFrame();
   await frame.waitForFunction(()=>window.RpgSceneSession?.getSnapshot?.()&&window.RpgSceneLiveView?.inspect?.().length,{},{timeout:45000});
@@ -141,7 +153,7 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
    assert.equal(replay.after.accepted,replay.before.accepted,'Duplicate committed receipt started another presentation');
    await stop();await sleep(120);
    const cleared=await view();assert.equal(cleared.activeRunId,null);assert.equal(cleared.vfx.player.active,0);assert.equal(cleared.vfx.pendingCasts,0);
-   entry.clear=cleared.vfx;entry.passed=true;cases.push(entry);
+   entry.clear=cleared.vfx;entry.passed=true;cases.push(entry);await persistEvidence();
    console.log(JSON.stringify({stage:'passed-live-case',build:item.build,width:item.width,traceCount:entry.traceCount,releaseId:release.eventId,effectId:effect?.eventId||null}));
   }
   assert.equal(errors.length,0,JSON.stringify(errors));assert.equal(badResponses.length,0,JSON.stringify(badResponses));
@@ -153,8 +165,7 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
  }finally{
   const samples=frame?await frame.evaluate(()=>{const q=window.__skillVfxQa;if(q?.timer)clearInterval(q.timer);return q?.samples||[];}).catch(()=>[]):[];
   if(currentRun&&frame)await stop().catch(()=>{});
-  const sourceFilesAfter=await sourceFingerprints(),sourceChangedDuring=sourceFiles.filter((file,i)=>file.sha256!==sourceFilesAfter[i]?.sha256).map(file=>file.path);
-  await fs.writeFile(path.join(evidenceDir,'results.json'),JSON.stringify({generatedAt:new Date().toISOString(),sourceFiles,sourceFilesAfter,sourceChangedDuring,mode:inspectOnly?'inspection':smoke?'smoke':chosen?'selected':'full',health,apiHealth,cases,receipts,samples,errors,badResponses},null,2));
+  const result=await persistEvidence(true,samples);if(result.status!=='passed')process.exitCode=1;
   await browser.close();
  }
 })().catch(error=>{console.error(error.stack);process.exitCode=1;});

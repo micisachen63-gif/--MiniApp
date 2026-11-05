@@ -13,9 +13,11 @@ import { fileURLToPath } from 'node:url';
 
 const ROOT = fileURLToPath(new URL('../../', import.meta.url)), PUBLIC = join(ROOT, 'worker/public');
 const args = process.argv.slice(2);
-assert.ok(args.every(arg => /^--(?:smoke|fixtures=.+|out=.+)$/.test(arg)), 'Use [--smoke] [--fixtures=path] [--out=path]');
+assert.ok(args.every(arg => /^--(?:smoke|only=.+|fixtures=.+|out=.+)$/.test(arg)), 'Use [--smoke | --only=skill-id] [--fixtures=path] [--out=path]');
 const smoke = args.includes('--smoke');
 const chosen = name => args.find(arg => arg.startsWith('--' + name + '='))?.slice(name.length + 3);
+const onlyId = chosen('only') || null;
+assert.ok(!(smoke && onlyId), '--smoke and --only are separate selections');
 const fixturePath = chosen('fixtures') || '.release-sync/skill-vfx-20261104/legacy-committed-service-events.json';
 const out = resolve(ROOT, chosen('out') || '.release-sync/skill-vfx-20261104/identity-browser-' + new Date().toISOString().replace(/[:.]/g, '-'));
 const digest = data => createHash('sha256').update(data).digest('hex');
@@ -89,6 +91,7 @@ function installQa({ Engine, Legacy, catalog, heroArt, monsterArt }) {
   }
   async function run(input) {
     close(); const raw = input.event, skill = known.get(raw.skillId); if (!skill) fail('Unknown identity');
+    last = { caseId: input.caseId, skillId: raw.skillId, phase: 'geometry' };
     title.textContent = skill.name; identity.textContent = raw.skillId;
     badge.textContent = raw.presentationMode + ' / ' + raw.source;
     const phone = innerWidth < 600, nodes = new Map();
@@ -137,17 +140,53 @@ function installQa({ Engine, Legacy, catalog, heroArt, monsterArt }) {
     }
     const removed = expectedIds[0];
     if (removed && Legacy.planLegacyVfx(raw, { ...geometry, targets: geometry.targets.filter(target => target.id !== removed) }, catalog, { allowProjection: true }).accepted) fail('Missing geometry was guessed');
-    let actualPlayer = null;
+    let actualPlayer = null, playStartedAt = 0, observeRaf = false;
+    const callbackSamples = [], frameObservations = [];
+    const observedStats = () => {
+      const stats = current.stats();
+      return { commands: stats.commands, drawFrames: stats.drawFrames, drawCalls: stats.drawCalls,
+        lastRender: stats.lastRender, playerActive: stats.player.active, pendingLoads: stats.player.pendingLoads };
+    };
+    const sample = () => {
+      const sampledAt = performance.now(), snapshot = pixels();
+      return { elapsedMs: sampledAt - playStartedAt, sampleDurationMs: performance.now() - sampledAt,
+        pixels: snapshot, stats: observedStats() };
+    };
+    const recordFrame = rendered => {
+      if (!observeRaf || rendered.manual || callbackSamples.length >= 2 || frameObservations.length >= 8) return;
+      const observed = { ...sample(), render: { ...rendered } };
+      frameObservations.push(observed);
+      if (rendered.drawCalls > 0 && observed.pixels.pixels > 0) callbackSamples.push(observed);
+    };
     current = await Legacy.createLegacyVfxLayer(stage, {
       catalog, mode: ['idle','pk','boss','party','star-ring'].includes(input.sourceMode) ? input.sourceMode : 'party',
       contextKey: 'identity-qa:' + input.caseId, allowProjection: raw.source === 'deterministic-projection',
-      playerFactory(canvas, options) { actualPlayer = Engine.createVfxPlayer(canvas, options); return actualPlayer; },
+      playerFactory(canvas, options) {
+        actualPlayer = Engine.createVfxPlayer(canvas, { ...options, onRender(rendered) {
+          options.onRender?.(rendered);
+          recordFrame(rendered);
+        } });
+        return actualPlayer;
+      },
     });
+    last.phase = 'preparing';
     if (!current || !await current.prepare([raw])) fail('Failed to prepare VFX');
+    last.phase = 'playing'; playStartedAt = performance.now(); observeRaf = true;
     const played = await current.play(raw, geometry); if (!played.accepted) fail('Player rejected: ' + played.reason);
-    await frames(2); const firstPixels = pixels(), firstStats = current.stats();
-    await frames(2); const secondPixels = pixels(), secondStats = current.stats();
-    if (!secondStats.drawFrames || secondStats.drawCalls <= 0 || secondStats.lastRender?.manual || !secondPixels.pixels) fail('No actual animated Canvas draw');
+    // Keep the former deferred samples as timing diagnostics. Admission uses
+    // pixels taken synchronously inside real RAF paints, before a later clear.
+    await frames(2); const deferredFirst = sample();
+    await frames(2); const deferredSecond = sample();
+    observeRaf = false;
+    const timing = { sampling: 'same-raf-onRender', elapsedMs: performance.now() - playStartedAt,
+      originalSampling: 'two RAF waits, pixels, two RAF waits, pixels',
+      deferredFirst, deferredSecond, frameObservations };
+    const first = callbackSamples[0], second = callbackSamples[1];
+    last = { ...last, phase: 'actual-raf-assertions', timing, callbackSampleCount: callbackSamples.length };
+    if (!first || !second || !first.stats.drawFrames || !second.stats.drawFrames ||
+      first.stats.drawCalls <= 0 || second.stats.drawCalls <= 0 || first.render.manual || second.render.manual ||
+      !first.pixels.pixels || !second.pixels.pixels) fail('No actual animated Canvas draw');
+    const firstPixels = first.pixels, secondPixels = second.pixels, secondStats = second.stats;
     if (firstPixels.hash === secondPixels.hash) fail('Animation did not progress across browser frames');
     const commandCount = secondStats.commands;
     const duplicate = await current.play(raw, geometry);
@@ -171,7 +210,8 @@ function installQa({ Engine, Legacy, catalog, heroArt, monsterArt }) {
     last = {
       id: raw.skillId, caseId: input.caseId, sourceMode: input.sourceMode, presentationMode: raw.presentationMode,
       expectedIds, geometry, playerCommands: current.stats().lastEvent?.commands, commandCount,
-      live: { firstPixels, secondPixels, drawFrames: secondStats.drawFrames, drawCalls: secondStats.drawCalls, animated: firstPixels.hash !== secondPixels.hash, manual: false },
+      live: { firstPixels, secondPixels, drawFrames: secondStats.drawFrames, drawCalls: secondStats.drawCalls, animated: firstPixels.hash !== secondPixels.hash, manual: false, sampling: 'same-raf-onRender' },
+      timing,
       snapshotPixels: pixels(), captureMode: input.capture ? 'controlled-frame' : 'actual-raf', captureProgress: input.capture ? .66 : null,
       reducedMotion: matchMedia('(prefers-reduced-motion: reduce)').matches,
       viewport: { width: innerWidth, height: innerHeight },
@@ -204,7 +244,7 @@ function pageHtml() {
 const MIME = { '.mjs': 'text/javascript; charset=utf-8', '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json; charset=utf-8', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg' };
 const sourceFiles = [], errors = [], badResponses = [], cases = [], screenshots = [], extras = [];
-let browser = null, server = null, origin = null, report = null, failure = null;
+let browser = null, server = null, origin = null, report = null, failure = null, failedCase = null;
 try {
   await mkdir(join(out, 'families'), { recursive: true }); await mkdir(join(out, 'mobile'), { recursive: true });
   const fixtureFull = resolve(ROOT, fixturePath); assert.ok(inside(ROOT, fixtureFull), 'Fixture must stay in worktree');
@@ -221,7 +261,8 @@ try {
     indexed.set(skill.id, observed.find(c => c.sourceMode === 'idle') || observed[0]);
   }
   const smokeIds = ['native:sword:base','native:archer:base','native:mage:base','native:thief:base','special:skill_09_1','special:skill_18_1','special:skill_23_2','special:skill_24_2'];
-  const selected = smoke ? skills.filter(skill => smokeIds.includes(skill.id)) : skills;
+  if (onlyId) assert.ok(skills.some(skill => skill.id === onlyId), 'Unknown --only identity: ' + onlyId);
+  const selected = onlyId ? skills.filter(skill => skill.id === onlyId) : smoke ? skills.filter(skill => smokeIds.includes(skill.id)) : skills;
   const families = new Map();
   for (const skill of selected) if (!families.has(skill.family)) families.set(skill.family, skill.id);
   if (selected.some(skill => skill.id === 'special:skill_18_1')) families.set('summon', 'special:skill_18_1');
@@ -277,9 +318,18 @@ try {
   const browserVersion = await browser.version();
   async function runCase(skill, { variant = 'desktop', capture = false } = {}) {
     const fixtureCase = indexed.get(skill.id), caseId = skill.id + ':' + variant;
-    const result = await page.evaluate(input => window.SkillVfxIdentityQA.run(input), {
-      caseId, sourceMode: fixtureCase.sourceMode, event: fixtureCase.event, capture,
-    });
+    let result;
+    try {
+      result = await page.evaluate(input => window.SkillVfxIdentityQA.run(input), {
+        caseId, sourceMode: fixtureCase.sourceMode, event: fixtureCase.event, capture,
+      });
+    } catch (error) {
+      let observed = null, inspectionError = null;
+      try { observed = await page.evaluate(() => window.SkillVfxIdentityQA.inspect()); }
+      catch (failure) { inspectionError = failure.message; }
+      failedCase = { skillId: skill.id, name: skill.name, caseId, variant, observed, inspectionError };
+      throw error;
+    }
     let screenshot = null;
     if (capture) {
       const safe = skill.id.replace(/[^a-zA-Z0-9_-]/g, '_') + '-' + variant + '.png';
@@ -301,9 +351,9 @@ try {
   }
   const phoneIds = ['native:sword:A1','native:archer:A2','native:mage:B2','native:thief:A2','special:skill_09_1','special:skill_18_1','special:skill_23_2','special:skill_24_2'];
   await page.setViewportSize({ width: 390, height: 844 });
-  for (const id of phoneIds.filter(id => !smoke || smokeIds.includes(id))) extras.push(await runCase(skills.find(skill => skill.id === id), { variant: 'phone', capture: true }));
+  for (const id of phoneIds.filter(id => onlyId ? id === onlyId : !smoke || smokeIds.includes(id))) extras.push(await runCase(skills.find(skill => skill.id === id), { variant: 'phone', capture: true }));
   await page.emulateMedia({ reducedMotion: 'reduce' });
-  for (const id of ['native:sword:base','native:mage:base','special:skill_18_1','special:skill_23_2']) extras.push(await runCase(skills.find(skill => skill.id === id), { variant: 'reduced', capture: true }));
+  for (const id of ['native:sword:base','native:mage:base','special:skill_18_1','special:skill_23_2'].filter(id => !onlyId || id === onlyId)) extras.push(await runCase(skills.find(skill => skill.id === id), { variant: 'reduced', capture: true }));
   assert.equal(errors.length, 0, 'Page errors'); assert.equal(badResponses.length, 0, 'HTTP failures');
   await page.emulateMedia({ reducedMotion: 'no-preference' }); await page.setViewportSize({ width: 1280, height: 900 });
   const escape = text => String(text).replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('"', '&quot;');
@@ -316,7 +366,8 @@ try {
   for (const file of sourceFiles) if (digest(await readFile(resolve(ROOT, file.path))) !== file.sha256) changedSources.push(file.path);
   assert.deepEqual(changedSources, [], 'Source changed during browser acceptance');
   report = {
-    schemaVersion: 1, status: smoke ? 'smoke-passed' : 'passed', generatedAt: new Date().toISOString(),
+    schemaVersion: 1, status: onlyId ? 'focused-passed' : smoke ? 'smoke-passed' : 'passed', generatedAt: new Date().toISOString(),
+    selection: onlyId ? { only: onlyId } : { smoke },
     scope: 'controlled-browser-receipt-replay', sourceFixture: fixturePath, sourceFiles,
     environment: { browser: browserVersion, renderer: 'headless Chrome / SwiftShader', origin, externalRequests: false, productionAccess: false, gameApiWrites: 0 },
     summary: { identities: cases.length, uniqueIdentities: new Set(cases.map(row => row.skillId)).size, visualFamilies: families.size,
@@ -336,12 +387,12 @@ try {
   failure = error;
   report = { schemaVersion: 1, status: 'failed', generatedAt: new Date().toISOString(), scope: 'controlled-browser-receipt-replay',
     sourceFixture: fixturePath, sourceFiles, summary: { completed: cases.length, extraCompleted: extras.length }, cases, extraCases: extras,
-    screenshots, errors, badResponses, failure: { message: error.message, stack: error.stack } };
+    screenshots, errors, badResponses, failedCase, failure: { message: error.message, stack: error.stack } };
 } finally {
   if (browser) await browser.close();
   if (server) await new Promise(resolveClose => server.close(resolveClose));
   await mkdir(out, { recursive: true }); await writeFile(join(out, 'results.json'), JSON.stringify(report, null, 2) + '\n');
-  if (!smoke && report?.status === 'passed') await writeFile(join(ROOT, '.release-sync/skill-vfx-20261104/legacy-coverage-browser.json'), JSON.stringify(report, null, 2) + '\n');
+  if (!smoke && !onlyId && report?.status === 'passed') await writeFile(join(ROOT, '.release-sync/skill-vfx-20261104/legacy-coverage-browser.json'), JSON.stringify(report, null, 2) + '\n');
   console.log(JSON.stringify({ status: report?.status, output: normalized(relative(ROOT, out)), summary: report?.summary, error: failure?.message }));
 }
 if (failure) { console.error(failure.stack); process.exitCode = 1; }

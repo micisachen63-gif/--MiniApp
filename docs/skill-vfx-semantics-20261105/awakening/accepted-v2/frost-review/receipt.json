@@ -1,0 +1,4737 @@
+{
+  "scope": "awakening-vfx-frost-visual-review",
+  "presentationRevision": "ornate-v2",
+  "startedAt": "2026-11-05T06:51:38.542Z",
+  "finishedAt": "2026-11-05T06:51:45.864Z",
+  "base": "http://127.0.0.1:9894",
+  "complete": true,
+  "pass": true,
+  "previewOnly": true,
+  "sourceId": null,
+  "liveCatalogSkills": 196,
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 9318,
+      "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 18132,
+      "sha256": "2d6e99a6917e3e474482b729586601da85f052ffd4c2fc4a285d0d05d275884e"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "counts": {
+    "desktopDirections": 0,
+    "desktopStages": 0,
+    "lowQualityDirections": 0,
+    "reducedDirections": 0,
+    "mobileDirections": 0,
+    "endpointChecks": 0
+  },
+  "checks": [],
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/desktop-frost-29.png",
+      "bytes": 256966,
+      "sha256": "c9ac7b15729d6aa0c1e23d955ca89df0352f5f04ac57dfd19d7224e88c67d19c"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/desktop-frost-68.png",
+      "bytes": 301866,
+      "sha256": "0f360c095c1037d1773588b602019685686084b0acce2a3b01953f035e0e5c4a"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/desktop-frost-80.png",
+      "bytes": 301300,
+      "sha256": "2ac7ed78c7f4b71d79d02d4bd92f9d31b603d629d41998da7e4eb21ab9e32161"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/mobile-frost-right.png",
+      "bytes": 263904,
+      "sha256": "bc38fcbcdfdc7f2c2aefac335873cbc587145a26b4356d7ff94667eb8e0ad1fe"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/mobile-frost-left.png",
+      "bytes": 263734,
+      "sha256": "f4ab1c9c16d18a04a25cb19922bc4478da2d23adeb8a62e1d16b09c2ff074660"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/mobile-frost-up.png",
+      "bytes": 264448,
+      "sha256": "5dce5004bbd2b12c5b9cd53864f07584229334279d733884ff8fcb4a9cfa4a13"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/mobile-frost-down.png",
+      "bytes": 264629,
+      "sha256": "346b287af23826c32dfe56aaf07c128f8632ed1b4c68061d04e725bce6b30a1f"
+    }
+  ],
+  "browserErrors": [],
+  "networkFailures": [],
+  "notes": [
+    "These are automated canvas, layout, identity and control checks. A screenshot contact sheet is supplied for independent visual review.",
+    "No awakening gameplay event is generated.",
+    "The rejected-v1 geometry-only presentation has no browser approval. This receipt covers dedicated painted ornate-v2 only."
+  ],
+  "cases": [
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.29,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "入光吸收",
+      "visible": 14457,
+      "edge": 0,
+      "pixelHash": "51c83d17",
+      "bounds": [
+        362,
+        128,
+        722,
+        366
+      ],
+      "canvas": [
+        1061,
+        520
+      ],
+      "css": [
+        1060.8125,
+        518
+      ],
+      "pageOverflow": false,
+      "progress": 0.29,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 1061,
+      "height": 520,
+      "dpr": 1,
+      "renderCount": 3,
+      "drawCalls": 34,
+      "frameMs": 0.4000000059604645,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 25,
+        "geometryCount": 9,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 113.04347826086958,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.68,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 21251,
+      "edge": 0,
+      "pixelHash": "49fac9f3",
+      "bounds": [
+        322,
+        86,
+        712,
+        432
+      ],
+      "canvas": [
+        1061,
+        520
+      ],
+      "css": [
+        1060.8125,
+        518
+      ],
+      "pageOverflow": false,
+      "progress": 0.68,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 1061,
+      "height": 520,
+      "dpr": 1,
+      "renderCount": 4,
+      "drawCalls": 59,
+      "frameMs": 1,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 46,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 113.04347826086958,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.8,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "冰華消融",
+      "visible": 21193,
+      "edge": 0,
+      "pixelHash": "5cb67110",
+      "bounds": [
+        318,
+        86,
+        712,
+        432
+      ],
+      "canvas": [
+        1061,
+        520
+      ],
+      "css": [
+        1060.8125,
+        518
+      ],
+      "pageOverflow": false,
+      "progress": 0.8,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 1061,
+      "height": 520,
+      "dpr": 1,
+      "renderCount": 5,
+      "drawCalls": 62,
+      "frameMs": 3.600000023841858,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 49,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 113.04347826086958,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.29,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "入光吸收",
+      "visible": 6295,
+      "edge": 0,
+      "pixelHash": "1e108a88",
+      "bounds": [
+        68,
+        118,
+        304,
+        274
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.29,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 7,
+      "drawCalls": 34,
+      "frameMs": 0.6000000238418579,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 25,
+        "geometryCount": 9,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.68,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 9267,
+      "edge": 0,
+      "pixelHash": "81ce7dfe",
+      "bounds": [
+        42,
+        90,
+        298,
+        318
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.68,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 8,
+      "drawCalls": 59,
+      "frameMs": 1.199999988079071,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 46,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.8,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "冰華消融",
+      "visible": 9244,
+      "edge": 0,
+      "pixelHash": "5d7dfc56",
+      "bounds": [
+        38,
+        90,
+        298,
+        318
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.8,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 9,
+      "drawCalls": 62,
+      "frameMs": 1.5,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 49,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "left",
+      "t": 0.29,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "入光吸收",
+      "visible": 6280,
+      "edge": 0,
+      "pixelHash": "4ab78da6",
+      "bounds": [
+        52,
+        118,
+        284,
+        274
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.29,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 11,
+      "drawCalls": 34,
+      "frameMs": 0.800000011920929,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 25,
+        "geometryCount": 9,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "left",
+      "t": 0.68,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 9391,
+      "edge": 0,
+      "pixelHash": "f81c4f99",
+      "bounds": [
+        58,
+        92,
+        316,
+        318
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.68,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 12,
+      "drawCalls": 59,
+      "frameMs": 0.9000000059604645,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 46,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "left",
+      "t": 0.8,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "冰華消融",
+      "visible": 9365,
+      "edge": 0,
+      "pixelHash": "826642e6",
+      "bounds": [
+        58,
+        92,
+        318,
+        318
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.8,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 13,
+      "drawCalls": 62,
+      "frameMs": 1.300000011920929,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 49,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "up",
+      "t": 0.29,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "入光吸收",
+      "visible": 6567,
+      "edge": 0,
+      "pixelHash": "b0c1a6a5",
+      "bounds": [
+        68,
+        78,
+        284,
+        284
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.29,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 15,
+      "drawCalls": 34,
+      "frameMs": 1.2000000178813934,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 25,
+        "geometryCount": 9,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "up",
+      "t": 0.68,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 9446,
+      "edge": 0,
+      "pixelHash": "a0555084",
+      "bounds": [
+        52,
+        100,
+        308,
+        328
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.68,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 16,
+      "drawCalls": 59,
+      "frameMs": 1.300000011920929,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 46,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "up",
+      "t": 0.8,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "冰華消融",
+      "visible": 9681,
+      "edge": 0,
+      "pixelHash": "5ac1a0eb",
+      "bounds": [
+        52,
+        100,
+        308,
+        344
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.8,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 17,
+      "drawCalls": 62,
+      "frameMs": 1.0999999940395355,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 49,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "down",
+      "t": 0.29,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "入光吸收",
+      "visible": 6332,
+      "edge": 0,
+      "pixelHash": "4733dab3",
+      "bounds": [
+        68,
+        118,
+        284,
+        330
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.29,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 19,
+      "drawCalls": 34,
+      "frameMs": 0.6000000238418579,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 25,
+        "geometryCount": 9,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "down",
+      "t": 0.68,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 9308,
+      "edge": 0,
+      "pixelHash": "eeb11fbe",
+      "bounds": [
+        52,
+        82,
+        308,
+        308
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.68,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 20,
+      "drawCalls": 59,
+      "frameMs": 0.5,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 46,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "down",
+      "t": 0.8,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "冰華消融",
+      "visible": 9591,
+      "edge": 0,
+      "pixelHash": "6b01687b",
+      "bounds": [
+        52,
+        66,
+        308,
+        308
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.8,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 21,
+      "drawCalls": 62,
+      "frameMs": 1,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 49,
+        "geometryCount": 13,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 13,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "mage",
+        "thief",
+        "semantic",
+        "awakening-archer",
+        "hawk",
+        "awakening-mage",
+        "awakening-thief"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    }
+  ],
+  "requiresIndependentVisualReview": true,
+  "sourcesAfter": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 9318,
+      "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 18132,
+      "sha256": "2d6e99a6917e3e474482b729586601da85f052ffd4c2fc4a285d0d05d275884e"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ]
+}

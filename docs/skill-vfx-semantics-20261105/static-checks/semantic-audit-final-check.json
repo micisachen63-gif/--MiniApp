@@ -1,0 +1,26 @@
+{
+  "ok": true,
+  "exitCode": 0,
+  "status": "exited",
+  "execution": {
+    "action_fingerprint": "",
+    "attempt": 1,
+    "child_process_ids": [],
+    "command_hash": "",
+    "execution_id": "ZFc05Y97aFf-EQiaEy1mak2D",
+    "finished_at": "2026-11-05T06:42:36.610Z",
+    "input_fingerprint": "",
+    "lifecycle_state": "completed",
+    "pid": 45140,
+    "process_id": 45140,
+    "retry_policy": "never_after_start",
+    "retry_safe": false,
+    "side_effect_class": "process",
+    "side_effect_possible": true,
+    "started_at": "2026-11-05T06:42:36.446Z",
+    "stderr_digest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdout_digest": "2b7d1b1b22876c94182da6acb48765abac5d601bb4da64f81ab9bae14460fd76"
+  },
+  "stdout": "{\"status\":\"passed-data-validation\",\"mode\":\"check\",\"identities\":196,\"assetsPresent\":7,\"assetsExpected\":7,\"missingAssets\":[],\"browserPassClaimed\":false,\"output\":\"worker/public/skill-vfx-semantic-audit.json\"}\n",
+  "stderr": ""
+}

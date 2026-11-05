@@ -1,0 +1,4594 @@
+TAP version 13
+# Subtest: all 12 legacy v3 builds and two seeds retain the original pre-observer full results
+ok 1 - all 12 legacy v3 builds and two seeds retain the original pre-observer full results
+  ---
+  duration_ms: 53.5545
+  type: 'test'
+  ...
+# Subtest: committed v4 baseline keeps all six RNG streams, activity and equipment receipts identical with tracing
+ok 2 - committed v4 baseline keeps all six RNG streams, activity and equipment receipts identical with tracing
+  ---
+  duration_ms: 78.6672
+  type: 'test'
+  ...
+# Subtest: real Atlas casts expose IDs, actual hit outcomes and millisecond resolution without invented coordinates
+ok 3 - real Atlas casts expose IDs, actual hit outcomes and millisecond resolution without invented coordinates
+  ---
+  duration_ms: 7.5594
+  type: 'test'
+  ...
+# Subtest: event IDs and complete records survive arbitrary settlement chunks and JSON persistence
+ok 4 - event IDs and complete records survive arbitrary settlement chunks and JSON persistence
+  ---
+  duration_ms: 64.5043
+  type: 'test'
+  ...
+# Subtest: third-cast combo retargeting records the three actual capped hits as one cast
+ok 5 - third-cast combo retargeting records the three actual capped hits as one cast
+  ---
+  duration_ms: 0.6544
+  type: 'test'
+  ...
+# Subtest: trap placement has no target and only the later real trigger records damaging effects
+ok 6 - trap placement has no target and only the later real trigger records damaging effects
+  ---
+  duration_ms: 0.887
+  type: 'test'
+  ...
+# Subtest: a hawk follow-up is a pet effect and never an additional summon cast
+ok 7 - a hawk follow-up is a pet effect and never an additional summon cast
+  ---
+  duration_ms: 0.5378
+  type: 'test'
+  ...
+# Subtest: poison and bleed tick only after application and report actual non-critical damage
+ok 8 - poison and bleed tick only after application and report actual non-critical damage
+  ---
+  duration_ms: 1.373
+  type: 'test'
+  ...
+# Subtest: only successful surviving block responses are recorded as counter effects
+ok 9 - only successful surviving block responses are recorded as counter effects
+  ---
+  duration_ms: 0.7142
+  type: 'test'
+  ...
+# Subtest: basic attacks never masquerade as native skills or paid Atlas casts
+ok 10 - basic attacks never masquerade as native skills or paid Atlas casts
+  ---
+  duration_ms: 0.6568
+  type: 'test'
+  ...
+# Subtest: recent-event caps drop only observations and never change simulation or event identity
+ok 11 - recent-event caps drop only observations and never change simulation or event identity
+  ---
+  duration_ms: 5.745
+  type: 'test'
+  ...
+# Subtest: saved v1 and v2 runs can be observed without a migration or extra persisted fields
+ok 12 - saved v1 and v2 runs can be observed without a migration or extra persisted fields
+  ---
+  duration_ms: 3.2504
+  type: 'test'
+  ...
+# (node:18700) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: a trace becomes observable only after the real CAS transaction commits
+ok 13 - a trace becomes observable only after the real CAS transaction commits
+  ---
+  duration_ms: 68.9822
+  type: 'test'
+  ...
+# Subtest: status stays read-only and never exposes or reconstructs combatTrace
+ok 14 - status stays read-only and never exposes or reconstructs combatTrace
+  ---
+  duration_ms: 58.8002
+  type: 'test'
+  ...
+# Subtest: no-op and already-committed settlement reads have no trace and perform no writes
+ok 15 - no-op and already-committed settlement reads have no trace and perform no writes
+  ---
+  duration_ms: 55.4815
+  type: 'test'
+  ...
+# Subtest: three real CAS guard failures publish no trace and roll back every table
+ok 16 - three real CAS guard failures publish no trace and roll back every table
+  ---
+  duration_ms: 52.571
+  type: 'test'
+  ...
+# Subtest: a genuine concurrent commit discards the failed attempt and publishes only its successful remainder
+ok 17 - a genuine concurrent commit discards the failed attempt and publishes only its successful remainder
+  ---
+  duration_ms: 45.292
+  type: 'test'
+  ...
+# Subtest: a late reward failure rolls back the state and does not publish its computed cast events
+ok 18 - a late reward failure rolls back the state and does not publish its computed cast events
+  ---
+  duration_ms: 44.9381
+  type: 'test'
+  ...
+# Subtest: a committed response loss never replays combatTrace through status or a retry
+ok 19 - a committed response loss never replays combatTrace through status or a retry
+  ---
+  duration_ms: 49.8819
+  type: 'test'
+  ...
+# Subtest: post-commit status may read a newer scene without relabelling or mixing the earlier trace
+ok 20 - post-commit status may read a newer scene without relabelling or mixing the earlier trace
+  ---
+  duration_ms: 48.1554
+  type: 'test'
+  ...
+# Subtest: legacy v4 fixtures pin the committed pre-effects sources and both supply histories for all twelve builds
+ok 21 - legacy v4 fixtures pin the committed pre-effects sources and both supply histories for all twelve builds
+  ---
+  duration_ms: 3.75
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/sword_whirlwind preserves original bytes, receipts and RNG through JSON resume
+ok 22 - saved v4 legacy-starter/sword_whirlwind preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 22.6754
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/sword_bleed preserves original bytes, receipts and RNG through JSON resume
+ok 23 - saved v4 legacy-starter/sword_bleed preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 18.7151
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/sword_counter preserves original bytes, receipts and RNG through JSON resume
+ok 24 - saved v4 legacy-starter/sword_counter preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 15.0889
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/archer_pierce preserves original bytes, receipts and RNG through JSON resume
+ok 25 - saved v4 legacy-starter/archer_pierce preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 13.7268
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/archer_beast preserves original bytes, receipts and RNG through JSON resume
+ok 26 - saved v4 legacy-starter/archer_beast preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 19.8429
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/archer_trap preserves original bytes, receipts and RNG through JSON resume
+ok 27 - saved v4 legacy-starter/archer_trap preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 20.7161
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/mage_chain preserves original bytes, receipts and RNG through JSON resume
+ok 28 - saved v4 legacy-starter/mage_chain preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 15.7062
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/mage_frost preserves original bytes, receipts and RNG through JSON resume
+ok 29 - saved v4 legacy-starter/mage_frost preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 14.2077
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/mage_arcane preserves original bytes, receipts and RNG through JSON resume
+ok 30 - saved v4 legacy-starter/mage_arcane preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 13.1148
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/thief_poison preserves original bytes, receipts and RNG through JSON resume
+ok 31 - saved v4 legacy-starter/thief_poison preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 18.5435
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/thief_execute preserves original bytes, receipts and RNG through JSON resume
+ok 32 - saved v4 legacy-starter/thief_execute preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 13.0123
+  type: 'test'
+  ...
+# Subtest: saved v4 legacy-starter/thief_combo preserves original bytes, receipts and RNG through JSON resume
+ok 33 - saved v4 legacy-starter/thief_combo preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 14.0018
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/sword_whirlwind preserves original bytes, receipts and RNG through JSON resume
+ok 34 - saved v4 atlas-supplies-v1/sword_whirlwind preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 18.5316
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/sword_bleed preserves original bytes, receipts and RNG through JSON resume
+ok 35 - saved v4 atlas-supplies-v1/sword_bleed preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 17.7103
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/sword_counter preserves original bytes, receipts and RNG through JSON resume
+ok 36 - saved v4 atlas-supplies-v1/sword_counter preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 16.3051
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/archer_pierce preserves original bytes, receipts and RNG through JSON resume
+ok 37 - saved v4 atlas-supplies-v1/archer_pierce preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 16.5056
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/archer_beast preserves original bytes, receipts and RNG through JSON resume
+ok 38 - saved v4 atlas-supplies-v1/archer_beast preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 16.367
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/archer_trap preserves original bytes, receipts and RNG through JSON resume
+ok 39 - saved v4 atlas-supplies-v1/archer_trap preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 15.0503
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/mage_chain preserves original bytes, receipts and RNG through JSON resume
+ok 40 - saved v4 atlas-supplies-v1/mage_chain preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 16.7367
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/mage_frost preserves original bytes, receipts and RNG through JSON resume
+ok 41 - saved v4 atlas-supplies-v1/mage_frost preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 17.1771
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/mage_arcane preserves original bytes, receipts and RNG through JSON resume
+ok 42 - saved v4 atlas-supplies-v1/mage_arcane preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 18.4378
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/thief_poison preserves original bytes, receipts and RNG through JSON resume
+ok 43 - saved v4 atlas-supplies-v1/thief_poison preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 16.8047
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/thief_execute preserves original bytes, receipts and RNG through JSON resume
+ok 44 - saved v4 atlas-supplies-v1/thief_execute preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 15.1997
+  type: 'test'
+  ...
+# Subtest: saved v4 atlas-supplies-v1/thief_combo preserves original bytes, receipts and RNG through JSON resume
+ok 45 - saved v4 atlas-supplies-v1/thief_combo preserves original bytes, receipts and RNG through JSON resume
+  ---
+  duration_ms: 15.6531
+  type: 'test'
+  ...
+# (node:41604) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: new departures snapshot real enhanced equipment and native per-hit elements, ignoring client effects
+ok 46 - new departures snapshot real enhanced equipment and native per-hit elements, ignoring client effects
+  ---
+  duration_ms: 64.1203
+  type: 'test'
+  ...
+# Subtest: real equipment changes affect only the next departure and old request replay never resnapshots or charges again
+ok 47 - real equipment changes affect only the next departure and old request replay never resnapshots or charges again
+  ---
+  duration_ms: 64.5198
+  type: 'test'
+  ...
+# Subtest: experience is rounded once in each receipt, conserved through concurrent settlement, and never multiplied into gold
+ok 48 - experience is rounded once in each receipt, conserved through concurrent settlement, and never multiplied into gold
+  ---
+  duration_ms: 71.9372
+  type: 'test'
+  ...
+# Subtest: a late refund failure rolls back effects RNG, rewards and every asset, then retries the identical saved simulation
+ok 49 - a late refund failure rolls back effects RNG, rewards and every asset, then retries the identical saved simulation
+  ---
+  duration_ms: 51.2512
+  type: 'test'
+  ...
+# Subtest: a lost response after the effects settlement commits cannot reroll free casts or issue experience twice
+ok 50 - a lost response after the effects settlement commits cannot reroll free casts or issue experience twice
+  ---
+  duration_ms: 50.9904
+  type: 'test'
+  ...
+# Subtest: invalid server-derived effects reject departure before reserving items or creating a receipt
+ok 51 - invalid server-derived effects reject departure before reserving items or creating a receipt
+  ---
+  duration_ms: 39.567
+  type: 'test'
+  ...
+# Subtest: unsupported or incomplete persisted effects fail settlement without repairing the run or changing assets
+ok 52 - unsupported or incomplete persisted effects fail settlement without repairing the run or changing assets
+  ---
+  duration_ms: 58.8022
+  type: 'test'
+  ...
+# Subtest: server computed native element values retain +N, per-hit scaling and input immutability
+ok 53 - server computed native element values retain +N, per-hit scaling and input immutability
+  ---
+  duration_ms: 5.2696
+  type: 'test'
+  ...
+# Subtest: element matchups, native weapon cap and favorable-only elemPct use the shared formula
+ok 54 - element matchups, native weapon cap and favorable-only elemPct use the shared formula
+  ---
+  duration_ms: 0.4635
+  type: 'test'
+  ...
+# Subtest: point-only, rate-only and dual resistance inputs apply one canonical reduction
+ok 55 - point-only, rate-only and dual resistance inputs apply one canonical reduction
+  ---
+  duration_ms: 0.3217
+  type: 'test'
+  ...
+# Subtest: native percentage caps and zero enemy resistance are frozen without retuning bosses
+ok 56 - native percentage caps and zero enemy resistance are frozen without retuning bosses
+  ---
+  duration_ms: 1.3041
+  type: 'test'
+  ...
+# Subtest: invalid source numbers and unknown effect versions reject creation before a run exists
+ok 57 - invalid source numbers and unknown effect versions reject creation before a run exists
+  ---
+  duration_ms: 3.1207
+  type: 'test'
+  ...
+# Subtest: persisted new effect state is validated without repairing or mutating corrupt snapshots
+ok 58 - persisted new effect state is validated without repairing or mutating corrupt snapshots
+  ---
+  duration_ms: 4.0633
+  type: 'test'
+  ...
+# Subtest: neutral new effects preserve all twelve builds and the original combat/loot RNG sequences
+ok 59 - neutral new effects preserve all twelve builds and the original combat/loot RNG sequences
+  ---
+  duration_ms: 49.9628
+  type: 'test'
+  ...
+# Subtest: actual basic and skill hits apply elements once after critical raw damage and before DEF
+ok 60 - actual basic and skill hits apply elements once after critical raw damage and before DEF
+  ---
+  duration_ms: 1.9717
+  type: 'test'
+  ...
+# Subtest: DOT, pets and block-triggered counters keep matchups without repeated flat weapon bonuses
+ok 61 - DOT, pets and block-triggered counters keep matchups without repeated flat weapon bonuses
+  ---
+  duration_ms: 1.0896
+  type: 'test'
+  ...
+# Subtest: a delayed trap applies its direct weapon element bonus at trigger, not again at placement
+ok 62 - a delayed trap applies its direct weapon element bonus at trigger, not again at placement
+  ---
+  duration_ms: 0.5974
+  type: 'test'
+  ...
+# Subtest: incoming resistance precedes shield absorption and only actual HP loss is counted
+ok 63 - incoming resistance precedes shield absorption and only actual HP loss is counted
+  ---
+  duration_ms: 0.3951
+  type: 'test'
+  ...
+# Subtest: 100% free multi-target casts roll once, keep cooldown/healing, and do not move critical RNG
+ok 64 - 100% free multi-target casts roll once, keep cooldown/healing, and do not move critical RNG
+  ---
+  duration_ms: 0.5354
+  type: 'test'
+  ...
+# Subtest: free casts never bypass mana affordability, strategy or cooldown gates
+ok 65 - free casts never bypass mana affordability, strategy or cooldown gates
+  ---
+  duration_ms: 1.119
+  type: 'test'
+  ...
+# Subtest: free-mana boundary is strict and zero chance consumes no dedicated random number
+ok 66 - free-mana boundary is strict and zero chance consumes no dedicated random number
+  ---
+  duration_ms: 0.2657
+  type: 'test'
+  ...
+# Subtest: expPct multiplies room and completion EXP before one final floor and no other reward
+ok 67 - expPct multiplies room and completion EXP before one final floor and no other reward
+  ---
+  duration_ms: 1.2991
+  type: 'test'
+  ...
+# Subtest: new effects replay deterministically across twelve builds, arbitrary chunks and JSON persistence
+ok 68 - new effects replay deterministically across twelve builds, arbitrary chunks and JSON persistence
+  ---
+  duration_ms: 165.0807
+  type: 'test'
+  ...
+# Subtest: catalog retains all twelve legacy themes and twelve distinct class build mechanisms
+ok 69 - catalog retains all twelve legacy themes and twelve distinct class build mechanisms
+  ---
+  duration_ms: 1.6784
+  type: 'test'
+  ...
+# Subtest: snapshots preserve server stats including enhanced gear and do not apply native hit scaling twice
+ok 70 - snapshots preserve server stats including enhanced gear and do not apply native hit scaling twice
+  ---
+  duration_ms: 6.7087
+  type: 'test'
+  ...
+# Subtest: settlement uses elapsed seconds, is pure, and retries cannot reroll combat or receipts
+ok 71 - settlement uses elapsed seconds, is pure, and retries cannot reroll combat or receipts
+  ---
+  duration_ms: 3.4564
+  type: 'test'
+  ...
+# Subtest: all builds produce identical full state and reward order under arbitrary settlement partitions
+ok 72 - all builds produce identical full state and reward order under arbitrary settlement partitions
+  ---
+  duration_ms: 41.976
+  type: 'test'
+  ...
+# Subtest: bounded chunks retain overdue seconds and equal uninterrupted simulation including JSON persistence
+ok 73 - bounded chunks retain overdue seconds and equal uninterrupted simulation including JSON persistence
+  ---
+  duration_ms: 3.3947
+  type: 'test'
+  ...
+# Subtest: eight hour limit is absolute across calls and years offline cannot farm unbounded rewards
+ok 74 - eight hour limit is absolute across calls and years offline cannot farm unbounded rewards
+  ---
+  duration_ms: 25.6478
+  type: 'test'
+  ...
+# Subtest: death stops the entire queue and never consumes remaining supplies on retries
+ok 75 - death stops the entire queue and never consumes remaining supplies on retries
+  ---
+  duration_ms: 0.7617
+  type: 'test'
+  ...
+# Subtest: defeat in a later room preserves only already cleared room receipts
+ok 76 - defeat in a later room preserves only already cleared room receipts
+  ---
+  duration_ms: 0.8847
+  type: 'test'
+  ...
+# Subtest: a final poison tick credits the boss, completion, and guaranteed core exactly once
+ok 77 - a final poison tick credits the boss, completion, and guaranteed core exactly once
+  ---
+  duration_ms: 4.0981
+  type: 'test'
+  ...
+# Subtest: a skill above maximum mana falls back without burning unusable blue supplies
+ok 78 - a skill above maximum mana falls back without burning unusable blue supplies
+  ---
+  duration_ms: 0.5861
+  type: 'test'
+  ...
+# Subtest: supports and automation alter targets, mana budgets, and combat outcomes rather than labels
+ok 79 - supports and automation alter targets, mana budgets, and combat outcomes rather than labels
+  ---
+  duration_ms: 4.7508
+  type: 'test'
+  ...
+# Subtest: poison, shields, block counters, summons, traps, execute and combos are exercised by real encounters
+ok 80 - poison, shields, block counters, summons, traps, execute and combos are exercised by real encounters
+  ---
+  duration_ms: 3.8858
+  type: 'test'
+  ...
+# Subtest: stronger existing equipment improves fixed maps without secretly increasing enemy health
+ok 81 - stronger existing equipment improves fixed maps without secretly increasing enemy health
+  ---
+  duration_ms: 2.6377
+  type: 'test'
+  ...
+# Subtest: invalid cross-class loadouts, unsupported versions and non-finite values fail before simulation
+ok 82 - invalid cross-class loadouts, unsupported versions and non-finite values fail before simulation
+  ---
+  duration_ms: 3.788
+  type: 'test'
+  ...
+# (node:29236) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: HTTP scene polling keeps realm and authenticated character identity and performs zero writes
+ok 83 - HTTP scene polling keeps realm and authenticated character identity and performs zero writes
+  ---
+  duration_ms: 110.3745
+  type: 'test'
+  ...
+# Subtest: a stale scene context is rejected and read-only discovery follows an explicit real character selection
+ok 84 - a stale scene context is rejected and read-only discovery follows an explicit real character selection
+  ---
+  duration_ms: 113.8139
+  type: 'test'
+  ...
+# (node:8608) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: scene actor IDs match existing catalog identities and never substitute an unknown actor
+ok 85 - scene actor IDs match existing catalog identities and never substitute an unknown actor
+  ---
+  duration_ms: 0.6861
+  type: 'test'
+  ...
+# Subtest: scene status reads do not settle idle time, change assets, or enable a disabled Atlas
+ok 86 - scene status reads do not settle idle time, change assets, or enable a disabled Atlas
+  ---
+  duration_ms: 50.2443
+  type: 'test'
+  ...
+# Subtest: an active scene uses committed battle HP, enemies and time instead of the live character row or wall clock
+ok 87 - an active scene uses committed battle HP, enemies and time instead of the live character row or wall clock
+  ---
+  duration_ms: 57.5027
+  type: 'test'
+  ...
+# Subtest: a defeated expedition remains a zero-HP report after the live character returns with at least one HP
+ok 88 - a defeated expedition remains a zero-HP report after the live character returns with at least one HP
+  ---
+  duration_ms: 43.688
+  type: 'test'
+  ...
+# Subtest: event IDs survive sliding windows and revisions, and cannot masquerade as per-hit damage
+ok 89 - event IDs survive sliding windows and revisions, and cannot masquerade as per-hit damage
+  ---
+  duration_ms: 47.6869
+  type: 'test'
+  ...
+# Subtest: rolled-back combat never appears in the scene projection
+ok 90 - rolled-back combat never appears in the scene projection
+  ---
+  duration_ms: 53.0979
+  type: 'test'
+  ...
+# Subtest: scene experience uses the same required EXP as me and preserves overflow at an advancement gate
+ok 91 - scene experience uses the same required EXP as me and preserves overflow at an advancement gate
+  ---
+  duration_ms: 47.9673
+  type: 'test'
+  ...
+# Subtest: scene experience preserves the existing max-level presentation without serializing Infinity
+ok 92 - scene experience preserves the existing max-level presentation without serializing Infinity
+  ---
+  duration_ms: 44.0085
+  type: 'test'
+  ...
+# Subtest: server policy snapshots normalize native per-character preferences without changing unrelated saved state
+ok 93 - server policy snapshots normalize native per-character preferences without changing unrelated saved state
+  ---
+  duration_ms: 1.308
+  type: 'test'
+  ...
+# Subtest: new supply snapshots preserve per-item quantities, server restoration/prices, policy and original inputs
+ok 94 - new supply snapshots preserve per-item quantities, server restoration/prices, policy and original inputs
+  ---
+  duration_ms: 2.5044
+  type: 'test'
+  ...
+# Subtest: partial, invalid and over-budget versioned supplies fail instead of silently becoming legacy supplies
+ok 95 - partial, invalid and over-budget versioned supplies fail instead of silently becoming legacy supplies
+  ---
+  duration_ms: 3.8519
+  type: 'test'
+  ...
+# Subtest: automatic consumption exhausts the lowest owned tiers in order, including gaps, without converting item identity
+ok 96 - automatic consumption exhausts the lowest owned tiers in order, including gaps, without converting item identity
+  ---
+  duration_ms: 2.5308
+  type: 'test'
+  ...
+# Subtest: explicit HP and MP choices remain exclusive after their reserved stock runs out
+ok 97 - explicit HP and MP choices remain exclusive after their reserved stock runs out
+  ---
+  duration_ms: 0.806
+  type: 'test'
+  ...
+# Subtest: combat thresholds match native boundaries: HP strictly below, MP at or below; travel never drinks
+ok 98 - combat thresholds match native boundaries: HP strictly below, MP at or below; travel never drinks
+  ---
+  duration_ms: 1.1259
+  type: 'test'
+  ...
+# Subtest: disabling blue potions prevents threshold drinking and emergency skill drinking while HP remains active
+ok 99 - disabling blue potions prevents threshold drinking and emergency skill drinking while HP remains active
+  ---
+  duration_ms: 0.7969
+  type: 'test'
+  ...
+# Subtest: normal balanced combat can reserve a bottle for an affordable skill, with at most one bottle per color per second
+ok 100 - normal balanced combat can reserve a bottle for an affordable skill, with at most one bottle per color per second
+  ---
+  duration_ms: 0.7665
+  type: 'test'
+  ...
+# Subtest: new persisted supply snapshots replay identical state, rewards and activities for every build across JSON chunks
+ok 101 - new persisted supply snapshots replay identical state, rewards and activities for every build across JSON chunks
+  ---
+  duration_ms: 130.6206
+  type: 'test'
+  ...
+# Subtest: consumption uses the restoration snapshot and caps recovery at the actual missing resource
+ok 102 - consumption uses the restoration snapshot and caps recovery at the actual missing resource
+  ---
+  duration_ms: 1.2431
+  type: 'test'
+  ...
+# Subtest: unknown or corrupted supply versions are rejected before advancing and cannot downgrade to legacy rules
+ok 103 - unknown or corrupted supply versions are rejected before advancing and cannot downgrade to legacy rules
+  ---
+  duration_ms: 1.1095
+  type: 'test'
+  ...
+# Subtest: unversioned create callers keep the exact legacy shape and original threshold/strategy behavior
+ok 104 - unversioned create callers keep the exact legacy shape and original threshold/strategy behavior
+  ---
+  duration_ms: 0.4098
+  type: 'test'
+  ...
+# (node:37144) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: status reads all potion grades and saved next-run policy without changing any game table
+ok 105 - status reads all potion grades and saved next-run policy without changing any game table
+  ---
+  duration_ms: 57.5574
+  type: 'test'
+  ...
+# Subtest: itemized departure reserves exact grades once and canonical request replay cannot recharge or retune it
+ok 106 - itemized departure reserves exact grades once and canonical request replay cannot recharge or retune it
+  ---
+  duration_ms: 60.9491
+  type: 'test'
+  ...
+# Subtest: high-grade-only supplies actually heal, honor disabled blue, and refund the original items exactly once
+ok 107 - high-grade-only supplies actually heal, honor disabled blue, and refund the original items exactly once
+  ---
+  duration_ms: 75.1988
+  type: 'test'
+  ...
+# Subtest: saved settings change the next dispatch only and replay still returns the original operation
+ok 108 - saved settings change the next dispatch only and replay still returns the original operation
+  ---
+  duration_ms: 79.8601
+  type: 'test'
+  ...
+# Subtest: invalid, mixed or insufficient itemized requests leave all inventory, receipts and game tables untouched
+ok 109 - invalid, mixed or insufficient itemized requests leave all inventory, receipts and game tables untouched
+  ---
+  duration_ms: 88.8269
+  type: 'test'
+  ...
+# Subtest: competing departures cannot spend the same itemized stock twice
+ok 110 - competing departures cannot spend the same itemized stock twice
+  ---
+  duration_ms: 54.1648
+  type: 'test'
+  ...
+# Subtest: failure at a later reserve ledger row rolls back every grade, the run and its request receipt
+ok 111 - failure at a later reserve ledger row rolls back every grade, the run and its request receipt
+  ---
+  duration_ms: 44.8938
+  type: 'test'
+  ...
+# Subtest: failure during itemized refunds rolls back rewards, run progress and every inventory refund together
+ok 112 - failure during itemized refunds rolls back rewards, run progress and every inventory refund together
+  ---
+  duration_ms: 49.2459
+  type: 'test'
+  ...
+# Subtest: lost start and settlement responses do not duplicate high-grade charges, refunds or receipts
+ok 113 - lost start and settlement responses do not duplicate high-grade charges, refunds or receipts
+  ---
+  duration_ms: 56.2016
+  type: 'test'
+  ...
+# Subtest: manual stop, fatal combat and a newly imposed realm cutoff all return the exact unused grades once
+    # Subtest: stop-disabled
+    ok 1 - stop-disabled
+      ---
+      duration_ms: 49.0945
+      type: 'test'
+      ...
+    # Subtest: death
+    ok 2 - death
+      ---
+      duration_ms: 49.9723
+      type: 'test'
+      ...
+    # Subtest: realm-cutoff
+    ok 3 - realm-cutoff
+      ---
+      duration_ms: 44.5859
+      type: 'test'
+      ...
+    1..3
+ok 114 - manual stop, fatal combat and a newly imposed realm cutoff all return the exact unused grades once
+  ---
+  duration_ms: 144.2916
+  type: 'test'
+  ...
+# Subtest: legacy request identity and ignored restore overrides remain compatible after itemized support
+ok 115 - legacy request identity and ignored restore overrides remain compatible after itemized support
+  ---
+  duration_ms: 43.1313
+  type: 'test'
+  ...
+# Subtest: a real frozen v1 snapshot and a pre-upgrade v4 snapshot retain legacy supply settlement and never gain new policy
+    # Subtest: atlas-v1
+    ok 1 - atlas-v1
+      ---
+      duration_ms: 47.7349
+      type: 'test'
+      ...
+    # Subtest: atlas-v4
+    ok 2 - atlas-v4
+      ---
+      duration_ms: 49.1209
+      type: 'test'
+      ...
+    1..2
+ok 116 - a real frozen v1 snapshot and a pre-upgrade v4 snapshot retain legacy supply settlement and never gain new policy
+  ---
+  duration_ms: 97.6492
+  type: 'test'
+  ...
+# (node:54820) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Boss pure routes use authenticated accounts and explicit realm/character scope without behavior or gameplay writes
+ok 117 - Boss pure routes use authenticated accounts and explicit realm/character scope without behavior or gameplay writes
+  ---
+  duration_ms: 125.7003
+  type: 'test'
+  ...
+# Subtest: All scoped Boss routes require authorization, explicit realm and selected character before any write
+ok 118 - All scoped Boss routes require authorization, explicit realm and selected character before any write
+  ---
+  duration_ms: 111.0625
+  type: 'test'
+  ...
+# Subtest: Boss service routing resolves the account active character and rejects stale or foreign identifiers
+ok 119 - Boss service routing resolves the account active character and rejects stale or foreign identifiers
+  ---
+  duration_ms: 126.6995
+  type: 'test'
+  ...
+# Subtest: Frozen Boss reads stay pure across due state and all scoped mutations are fenced on both surfaces
+ok 120 - Frozen Boss reads stay pure across due state and all scoped mutations are fenced on both surfaces
+  ---
+  duration_ms: 110.2015
+  type: 'test'
+  ...
+# Subtest: A committed-but-disconnected attack is confirmed by its original tuple after a window boundary and cannot be resent into the next one
+ok 121 - A committed-but-disconnected attack is confirmed by its original tuple after a window boundary and cannot be resent into the next one
+  ---
+  duration_ms: 99.3732
+  type: 'test'
+  ...
+# Subtest: Exchange routes return and verify the exact original signature with trusted App/Service namespaces and same-ID recovery
+ok 122 - Exchange routes return and verify the exact original signature with trusted App/Service namespaces and same-ID recovery
+  ---
+  duration_ms: 101.5086
+  type: 'test'
+  ...
+# Subtest: Legacy route confirmation uses exact quantities and reports the same typed signature on commit and receipt
+ok 123 - Legacy route confirmation uses exact quantities and reports the same typed signature on commit and receipt
+  ---
+  duration_ms: 84.3266
+  type: 'test'
+  ...
+# Subtest: Old App Boss routes continue working without the new mandatory scene body fields
+ok 124 - Old App Boss routes continue working without the new mandatory scene body fields
+  ---
+  duration_ms: 97.095
+  type: 'test'
+  ...
+# Subtest: Service scoped exchange uses its own raw ID namespace and exact body while App cannot claim that receipt
+ok 125 - Service scoped exchange uses its own raw ID namespace and exact body while App cannot claim that receipt
+  ---
+  duration_ms: 93.3877
+  type: 'test'
+  ...
+# (node:21492) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Boss scene and original attack receipt remain SELECT-only across expiry and pending settlement
+ok 126 - Boss scene and original attack receipt remain SELECT-only across expiry and pending settlement
+  ---
+  duration_ms: 58.2645
+  type: 'test'
+  ...
+# Subtest: Boss scene selects the newest persisted instance and retains an explicitly selected old boss
+ok 127 - Boss scene selects the newest persisted instance and retains an explicitly selected old boss
+  ---
+  duration_ms: 42.4116
+  type: 'test'
+  ...
+# Subtest: Boss scene reports exact personal windows, damage, recovery time and account cap without disabling attacks at the cap
+ok 128 - Boss scene reports exact personal windows, damage, recovery time and account cap without disabling attacks at the cap
+  ---
+  duration_ms: 37.3669
+  type: 'test'
+  ...
+# Subtest: Essence inventory belongs to the selected character while daily kills belong to the account and reset at Taipei midnight
+ok 129 - Essence inventory belongs to the selected character while daily kills belong to the account and reset at Taipei midnight
+  ---
+  duration_ms: 42.1418
+  type: 'test'
+  ...
+# Subtest: Boss exchange scene preserves original catalog and exact whole-inventory legacy confirmation
+ok 130 - Boss exchange scene preserves original catalog and exact whole-inventory legacy confirmation
+  ---
+  duration_ms: 40.4187
+  type: 'test'
+  ...
+# Subtest: Frozen boss scene and receipts remain readable with all mutation choices fenced
+ok 131 - Frozen boss scene and receipts remain readable with all mutation choices fenced
+  ---
+  duration_ms: 40.75
+  type: 'test'
+  ...
+# Subtest: Committed monster materials gain display names only in the scene projection
+ok 132 - Committed monster materials gain display names only in the scene projection
+  ---
+  duration_ms: 38.2268
+  type: 'test'
+  ...
+# Subtest: Attack receipt exposes only facts in the original tuple and never reconstructs battle details
+ok 133 - Attack receipt exposes only facts in the original tuple and never reconstructs battle details
+  ---
+  duration_ms: 45.1979
+  type: 'test'
+  ...
+# Subtest: Missing attack receipts permit only explicit original-window recovery while that boss remains attackable
+ok 134 - Missing attack receipts permit only explicit original-window recovery while that boss remains attackable
+  ---
+  duration_ms: 34.4059
+  type: 'test'
+  ...
+# Subtest: Receipt inputs require typed original identities and explicit canonical legacy counts
+ok 135 - Receipt inputs require typed original identities and explicit canonical legacy counts
+  ---
+  duration_ms: 36.881
+  type: 'test'
+  ...
+# (node:52848) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Stale expectedWin is rejected before any attack, expiry maintenance, idle settlement or outbox write
+ok 136 - Stale expectedWin is rejected before any attack, expiry maintenance, idle settlement or outbox write
+  ---
+  duration_ms: 55.7919
+  type: 'test'
+  ...
+# Subtest: Scoped attack commits one original tuple and an explicit same-window retry returns only stored damage evidence
+ok 137 - Scoped attack commits one original tuple and an explicit same-window retry returns only stored damage evidence
+  ---
+  duration_ms: 48.2565
+  type: 'test'
+  ...
+# Subtest: Racing scoped attacks cannot consume supplies or deal damage twice in one original window
+ok 138 - Racing scoped attacks cannot consume supplies or deal damage twice in one original window
+  ---
+  duration_ms: 43.9561
+  type: 'test'
+  ...
+# Subtest: Original attack and exchange entrypoints retain their old response and duplicate semantics
+ok 139 - Original attack and exchange entrypoints retain their old response and duplicate semantics
+  ---
+  duration_ms: 45.945
+  type: 'test'
+  ...
+# Subtest: Scoped exchange stores exact signature, typed costs and original output in the same atomic batch
+ok 140 - Scoped exchange stores exact signature, typed costs and original output in the same atomic batch
+  ---
+  duration_ms: 47.0848
+  type: 'test'
+  ...
+# Subtest: Racing exchange requests with one original ID grant once and return one committed result
+ok 141 - Racing exchange requests with one original ID grant once and return one committed result
+  ---
+  duration_ms: 48.8673
+  type: 'test'
+  ...
+# Subtest: A committed random relic is recovered exactly even after that equipment is sold or changed
+ok 142 - A committed random relic is recovered exactly even after that equipment is sold or changed
+  ---
+  duration_ms: 43.0405
+  type: 'test'
+  ...
+# Subtest: Legacy exchange consumes exactly the confirmed full quantities and its signature is typed and canonical
+ok 143 - Legacy exchange consumes exactly the confirmed full quantities and its signature is typed and canonical
+  ---
+  duration_ms: 42.2748
+  type: 'test'
+  ...
+# Subtest: Legacy commit rejects a concurrent mat_3 grant that does not change character rev
+ok 144 - Legacy commit rejects a concurrent mat_3 grant that does not change character rev
+  ---
+  duration_ms: 43.337
+  type: 'test'
+  ...
+# Subtest: Legacy commit rejects a concurrent mat_4 grant that does not change character rev
+ok 145 - Legacy commit rejects a concurrent mat_4 grant that does not change character rev
+  ---
+  duration_ms: 45.5114
+  type: 'test'
+  ...
+# Subtest: Failure of the receipt INSERT rolls back payment and the random equipment together
+ok 146 - Failure of the receipt INSERT rolls back payment and the random equipment together
+  ---
+  duration_ms: 44.0609
+  type: 'test'
+  ...
+# Subtest: Incomplete old receipts remain unverified and cannot authorize resending a legacy or relic exchange
+ok 147 - Incomplete old receipts remain unverified and cannot authorize resending a legacy or relic exchange
+  ---
+  duration_ms: 43.0569
+  type: 'test'
+  ...
+# Subtest: Malformed result exchange evidence is never reported as a confirmed success
+ok 148 - Malformed result exchange evidence is never reported as a confirmed success
+  ---
+  duration_ms: 39.8459
+  type: 'test'
+  ...
+# Subtest: Malformed cost exchange evidence is never reported as a confirmed success
+ok 149 - Malformed cost exchange evidence is never reported as a confirmed success
+  ---
+  duration_ms: 48.8387
+  type: 'test'
+  ...
+# Subtest: Malformed ledger exchange evidence is never reported as a confirmed success
+ok 150 - Malformed ledger exchange evidence is never reported as a confirmed success
+  ---
+  duration_ms: 45.0364
+  type: 'test'
+  ...
+# Subtest: Malformed signature exchange evidence is never reported as a confirmed success
+ok 151 - Malformed signature exchange evidence is never reported as a confirmed success
+  ---
+  duration_ms: 38.2483
+  type: 'test'
+  ...
+# Subtest: Malformed empty exchange evidence is never reported as a confirmed success
+ok 152 - Malformed empty exchange evidence is never reported as a confirmed success
+  ---
+  duration_ms: 45.0211
+  type: 'test'
+  ...
+# Subtest: Scoped exchange-success guards every attempted write after a concurrent active-character switch without a revision bump
+ok 153 - Scoped exchange-success guards every attempted write after a concurrent active-character switch without a revision bump
+  ---
+  duration_ms: 53.3662
+  type: 'test'
+  ...
+# Subtest: Scoped exchange-insufficient guards every attempted write after a concurrent active-character switch without a revision bump
+ok 154 - Scoped exchange-insufficient guards every attempted write after a concurrent active-character switch without a revision bump
+  ---
+  duration_ms: 39.9911
+  type: 'test'
+  ...
+# Subtest: Scoped exchange-material-changed guards every attempted write after a concurrent active-character switch without a revision bump
+ok 155 - Scoped exchange-material-changed guards every attempted write after a concurrent active-character switch without a revision bump
+  ---
+  duration_ms: 43.8607
+  type: 'test'
+  ...
+# Subtest: Scoped attack-success guards every attempted write after a concurrent active-character switch without a revision bump
+ok 156 - Scoped attack-success guards every attempted write after a concurrent active-character switch without a revision bump
+  ---
+  duration_ms: 48.278
+  type: 'test'
+  ...
+# Subtest: Scoped attack-down guards every attempted write after a concurrent active-character switch without a revision bump
+ok 157 - Scoped attack-down guards every attempted write after a concurrent active-character switch without a revision bump
+  ---
+  duration_ms: 39.9879
+  type: 'test'
+  ...
+# Subtest: A character switch after a killing hit cannot let later settlement or loot writes escape the scoped guard
+ok 158 - A character switch after a killing hit cannot let later settlement or loot writes escape the scoped guard
+  ---
+  duration_ms: 40.4249
+  type: 'test'
+  ...
+# (node:5116) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+ok 159 - all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+  ---
+  duration_ms: 545.5931
+  type: 'test'
+  ...
+# Subtest: all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+ok 160 - all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+  ---
+  duration_ms: 356.1432
+  type: 'test'
+  ...
+# Subtest: a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+ok 161 - a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+  ---
+  duration_ms: 39.0052
+  type: 'test'
+  ...
+# Subtest: party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+ok 162 - party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+  ---
+  duration_ms: 58.3647
+  type: 'test'
+  ...
+# Subtest: PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+ok 163 - PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+  ---
+  duration_ms: 49.0947
+  type: 'test'
+  ...
+# Subtest: 432 pre-change complete legacy outcomes stay equal after excluding presentation-only fields
+ok 164 - 432 pre-change complete legacy outcomes stay equal after excluding presentation-only fields
+  ---
+  duration_ms: 47.9014
+  type: 'test'
+  ...
+# Subtest: all 124 native identities resolve in idle and boss, and every one emits in a balanced duel
+ok 165 - all 124 native identities resolve in idle and boss, and every one emits in a balanced duel
+  ---
+  duration_ms: 20.7098
+  type: 'test'
+  ...
+# Subtest: all 60 special identities describe real resolved target roles, including 24 zero-direct-damage actions
+ok 166 - all 60 special identities describe real resolved target roles, including 24 zero-direct-damage actions
+  ---
+  duration_ms: 0.6641
+  type: 'test'
+  ...
+# Subtest: hybrid attacks retain the enemy as primary and only list their true healing recipients separately
+ok 167 - hybrid attacks retain the enemy as primary and only list their true healing recipients separately
+  ---
+  duration_ms: 0.4119
+  type: 'test'
+  ...
+# Subtest: summon placement does no immediate hit; scheduled pulses preserve exact source identity and deduplicate naturally
+ok 168 - summon placement does no immediate hit; scheduled pulses preserve exact source identity and deduplicate naturally
+  ---
+  duration_ms: 0.5459
+  type: 'test'
+  ...
+# Subtest: DOT refresh and native poison origin remain separate from the summon and from new casts
+ok 169 - DOT refresh and native poison origin remain separate from the summon and from new casts
+  ---
+  duration_ms: 0.4707
+  type: 'test'
+  ...
+# Subtest: shield reflection is emitted only for actual damage, while thief counter remains a next-action buff
+ok 170 - shield reflection is emitted only for actual damage, while thief counter remains a next-action buff
+  ---
+  duration_ms: 0.6186
+  type: 'test'
+  ...
+# Subtest: idle exposes one aggregate-minute cast, links it once, and never labels ordinary or elite hits as another skill cast
+ok 171 - idle exposes one aggregate-minute cast, links it once, and never labels ordinary or elite hits as another skill cast
+  ---
+  duration_ms: 1.7359
+  type: 'test'
+  ...
+# Subtest: star-ring projection and committed checkpoint remain distinct sources with identical combat and stable events
+ok 172 - star-ring projection and committed checkpoint remain distinct sources with identical combat and stable events
+  ---
+  duration_ms: 7.4968
+  type: 'test'
+  ...
+# party sweep realm_read_only
+# (node:4288) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: App party scene uses authenticated account, selected character and realm without settlement, rewards or behavior writes
+ok 173 - App party scene uses authenticated account, selected character and realm without settlement, rewards or behavior writes
+  ---
+  duration_ms: 120.9462
+  type: 'test'
+  ...
+# Subtest: App party scene rejects missing auth, mismatched or unknown realms and stale or foreign selections without writes
+ok 174 - App party scene rejects missing auth, mismatched or unknown realms and stale or foreign selections without writes
+  ---
+  duration_ms: 75.0202
+  type: 'test'
+  ...
+# Subtest: character switching invalidates old party windows and does not let a forged body keep ownership of the previous character
+ok 175 - character switching invalidates old party windows and does not let a forged body keep ownership of the previous character
+  ---
+  duration_ms: 107.8847
+  type: 'test'
+  ...
+# Subtest: frozen realms retain due parties and pure reads while existing mutation routes remain fenced
+ok 176 - frozen realms retain due parties and pure reads while existing mutation routes remain fenced
+  ---
+  duration_ms: 116.7702
+  type: 'test'
+  ...
+# Subtest: Service party scene requires authentication and explicit realm and resolves an owned active account character
+ok 177 - Service party scene requires authentication and explicit realm and resolves an owned active account character
+  ---
+  duration_ms: 91.7037
+  type: 'test'
+  ...
+# Subtest: a legacy identifier fallback cannot expose a character whose recorded owner is another account
+ok 178 - a legacy identifier fallback cannot expose a character whose recorded owner is another account
+  ---
+  duration_ms: 80.0934
+  type: 'test'
+  ...
+# (node:54084) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: party snapshot shares the legacy projection, while due scene reads never advance; the existing sweep advances independently
+ok 179 - party snapshot shares the legacy projection, while due scene reads never advance; the existing sweep advances independently
+  ---
+  duration_ms: 92.0921
+  type: 'test'
+  ...
+# Subtest: an expired current lobby stays visible without cleanup and disappears only after the existing scheduler writes
+ok 180 - an expired current lobby stays visible without cleanup and disappears only after the existing scheduler writes
+  ---
+  duration_ms: 52.4055
+  type: 'test'
+  ...
+# Subtest: won results do not grant or invent rewards; an explicit claim retains the authoritative idempotent receipt
+ok 181 - won results do not grant or invent rewards; an explicit claim retains the authoritative idempotent receipt
+  ---
+  duration_ms: 71.0697
+  type: 'test'
+  ...
+# Subtest: directory paging reaches every dungeon, excludes other modes and expired lobbies, and exposes only public member fields
+ok 182 - directory paging reaches every dungeon, excludes other modes and expired lobbies, and exposes only public member fields
+  ---
+  duration_ms: 97.2845
+  type: 'test'
+  ...
+# Subtest: the seven-day boundary follows actual endedAt, while an owner may still read their older history
+ok 183 - the seven-day boundary follows actual endedAt, while an owner may still read their older history
+  ---
+  duration_ms: 69.0495
+  type: 'test'
+  ...
+# Subtest: party skill costs and cooldowns use the departure actor, and pure reads reveal the exact queued teammate selection
+ok 184 - party skill costs and cooldowns use the departure actor, and pure reads reveal the exact queued teammate selection
+  ---
+  duration_ms: 49.8555
+  type: 'test'
+  ...
+# Subtest: trial catalog and real cooperation roles are preserved without adding tower or expedition entry points
+ok 185 - trial catalog and real cooperation roles are preserved without adding tower or expedition entry points
+  ---
+  duration_ms: 49.294
+  type: 'test'
+  ...
+# Subtest: read-only worlds and occupied accounts expose accurate create blockers while remaining SELECT-only
+ok 186 - read-only worlds and occupied accounts expose accurate create blockers while remaining SELECT-only
+  ---
+  duration_ms: 44.2682
+  type: 'test'
+  ...
+# Subtest: Atlas ownership and level/trial requirements are projected without settling the character
+ok 187 - Atlas ownership and level/trial requirements are projected without settling the character
+  ---
+  duration_ms: 57.8209
+  type: 'test'
+  ...
+# Subtest: party scene issues only SELECT statements, including detailed rewards, and invalid inputs do not initialize state
+ok 188 - party scene issues only SELECT statements, including detailed rewards, and invalid inputs do not initialize state
+  ---
+  duration_ms: 51.9144
+  type: 'test'
+  ...
+# Subtest: one account cannot take two lobby seats, and departure requires three valid account seats
+ok 189 - one account cannot take two lobby seats, and departure requires three valid account seats
+  ---
+  duration_ms: 41.3575
+  type: 'test'
+  ...
+# Subtest: all skill target groups follow the existing mechanical target rules, with explicit self and enemy choices
+ok 190 - all skill target groups follow the existing mechanical target rules, with explicit self and enemy choices
+  ---
+  duration_ms: 39.4245
+  type: 'test'
+  ...
+# Subtest: dungeon book previews use the authoritative pool, preserving legacy jobs and legal thief branches with high-level fallback
+ok 191 - dungeon book previews use the authoritative pool, preserving legacy jobs and legal thief branches with high-level fallback
+  ---
+  duration_ms: 87.5059
+  type: 'test'
+  ...
+# Subtest: ineligible saved loadouts remain visible and are classified from the departure actor, never from a newer live character branch
+ok 192 - ineligible saved loadouts remain visible and are classified from the departure actor, never from a newer live character branch
+  ---
+  duration_ms: 58.3243
+  type: 'test'
+  ...
+# (node:26140) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Boss projection is the sole opening/refresh read and frozen realms remain readable with disabled writes
+ok 193 - Boss projection is the sole opening/refresh read and frozen realms remain readable with disabled writes
+  ---
+  duration_ms: 3.3154
+  type: 'test'
+  ...
+# Subtest: attack confirms the exact boss/window and actual risk without an invented request ID
+ok 194 - attack confirms the exact boss/window and actual risk without an invented request ID
+  ---
+  duration_ms: 18.0522
+  type: 'test'
+  ...
+# Subtest: unknown attacks survive refresh, reopen, full client reload and A/B/A with the original tuple intact
+ok 195 - unknown attacks survive refresh, reopen, full client reload and A/B/A with the original tuple intact
+  ---
+  duration_ms: 3.0393
+  type: 'test'
+  ...
+# Subtest: a missing original attack stays pending; only an explicitly confirmed newer-window attack is a new operation
+ok 196 - a missing original attack stays pending; only an explicitly confirmed newer-window attack is a new operation
+  ---
+  duration_ms: 6.3403
+  type: 'test'
+  ...
+# Subtest: receipt echo mismatch, missing fields or stale revision cannot resolve an unknown attack
+ok 197 - receipt echo mismatch, missing fields or stale revision cannot resolve an unknown attack
+  ---
+  duration_ms: 9.6932
+  type: 'test'
+  ...
+# Subtest: committed attack row requires acknowledgement and remains explicitly partial evidence
+ok 198 - committed attack row requires acknowledgement and remains explicitly partial evidence
+  ---
+  duration_ms: 1.4825
+  type: 'test'
+  ...
+# Subtest: an attack response that replays the committed row is accepted without invented full combat details
+ok 199 - an attack response that replays the committed row is accepted without invented full combat details
+  ---
+  duration_ms: 1.9285
+  type: 'test'
+  ...
+# Subtest: full scoped attack success remains acknowledged when its later scene refresh fails
+ok 200 - full scoped attack success remains acknowledged when its later scene refresh fails
+  ---
+  duration_ms: 1.28
+  type: 'test'
+  ...
+# Subtest: account, realm, character and epoch isolate delayed reads and unknown write replies, including A/B/A
+ok 201 - account, realm, character and epoch isolate delayed reads and unknown write replies, including A/B/A
+  ---
+  duration_ms: 3.1165
+  type: 'test'
+  ...
+# Subtest: stale or malformed successful write revisions retain original pending operations
+ok 202 - stale or malformed successful write revisions retain original pending operations
+  ---
+  duration_ms: 11.0355
+  type: 'test'
+  ...
+# Subtest: legacy or corrupt ledger errors preserve the original exchange for pure receipt lookup
+ok 203 - legacy or corrupt ledger errors preserve the original exchange for pure receipt lookup
+  ---
+  duration_ms: 2.2046
+  type: 'test'
+  ...
+# Subtest: older refreshes and lower revisions cannot replace current data or keep a stale confirmation live
+ok 204 - older refreshes and lower revisions cannot replace current data or keep a stale confirmation live
+  ---
+  duration_ms: 1.0086
+  type: 'test'
+  ...
+# Subtest: newer scene revisions invalidate in-flight historical receipt recovery until fresh evidence is read
+ok 205 - newer scene revisions invalidate in-flight historical receipt recovery until fresh evidence is read
+  ---
+  duration_ms: 1.4738
+  type: 'test'
+  ...
+# Subtest: legacy confirmation uses exact canonical source counts and all materials; missing or coerced counts never default to zero
+ok 206 - legacy confirmation uses exact canonical source counts and all materials; missing or coerced counts never default to zero
+  ---
+  duration_ms: 1.5184
+  type: 'test'
+  ...
+# Subtest: a changed canonical material count cancels an open all-materials confirmation
+ok 207 - a changed canonical material count cancels an open all-materials confirmation
+  ---
+  duration_ms: 1.1242
+  type: 'test'
+  ...
+# Subtest: exchange missing receipt never sends automatically; explicit recovery retains the original raw ID/body and result contract
+ok 208 - exchange missing receipt never sends automatically; explicit recovery retains the original raw ID/body and result contract
+  ---
+  duration_ms: 3.278
+  type: 'test'
+  ...
+# Subtest: partial legacy ledgers, altered signatures and invalid exchange outputs never permit recovery or acknowledgement
+ok 209 - partial legacy ledgers, altered signatures and invalid exchange outputs never permit recovery or acknowledgement
+  ---
+  duration_ms: 7.2224
+  type: 'test'
+  ...
+# Subtest: relic receipts preserve the original random gear; missing equipment never counts as a completed exchange
+ok 210 - relic receipts preserve the original random gear; missing equipment never counts as a completed exchange
+  ---
+  duration_ms: 3.1423
+  type: 'test'
+  ...
+# Subtest: confirmation cancel and Back restore the exact attack/exchange source button without sending a write
+ok 211 - confirmation cancel and Back restore the exact attack/exchange source button without sending a write
+  ---
+  duration_ms: 10.2792
+  type: 'test'
+  ...
+# Subtest: unknown focus goes once to the pure lookup; polling and reopen preserve later focus and scroll
+ok 212 - unknown focus goes once to the pure lookup; polling and reopen preserve later focus and scroll
+  ---
+  duration_ms: 6.6991
+  type: 'test'
+  ...
+# Subtest: a queued reveal cannot take focus after later user focus, disposal, scope change or detach
+    # Subtest: focus
+    ok 1 - focus
+      ---
+      duration_ms: 4.9199
+      type: 'test'
+      ...
+    # Subtest: dispose
+    ok 2 - dispose
+      ---
+      duration_ms: 3.7126
+      type: 'test'
+      ...
+    # Subtest: context
+    ok 3 - context
+      ---
+      duration_ms: 4.0851
+      type: 'test'
+      ...
+    # Subtest: detached
+    ok 4 - detached
+      ---
+      duration_ms: 4.8303
+      type: 'test'
+      ...
+    1..4
+ok 213 - a queued reveal cannot take focus after later user focus, disposal, scope change or detach
+  ---
+  duration_ms: 18.1857
+  type: 'test'
+  ...
+# Subtest: all settled statuses, account-wide daily limit and actual committed core quantity render without blocking attacks at the cap
+ok 214 - all settled statuses, account-wide daily limit and actual committed core quantity render without blocking attacks at the cap
+  ---
+  duration_ms: 3.0979
+  type: 'test'
+  ...
+# Subtest: historical attack-row UI never manufactures counter, crit or HP values
+ok 215 - historical attack-row UI never manufactures counter, crit or HP values
+  ---
+  duration_ms: 5.9703
+  type: 'test'
+  ...
+# Subtest: canonical backend projection and scoped exchange/receipt output drive the UI without aliases or mock-only fields
+ok 216 - canonical backend projection and scoped exchange/receipt output drive the UI without aliases or mock-only fields
+  ---
+  duration_ms: 85.4296
+  type: 'test'
+  ...
+# Subtest: live WebGL readability suspends released frames and resumes the new actor
+ok 217 - live WebGL readability suspends released frames and resumes the new actor
+  ---
+  duration_ms: 4.4577
+  type: 'test'
+  ...
+# Subtest: live Canvas readability suspends released frames and resumes the new actor
+ok 218 - live Canvas readability suspends released frames and resumes the new actor
+  ---
+  duration_ms: 1.9965
+  type: 'test'
+  ...
+# Subtest: switch, appearance upgrade, async cancellation, null and shutdown detach frames before release
+ok 219 - switch, appearance upgrade, async cancellation, null and shutdown detach frames before release
+  ---
+  duration_ms: 25.0814
+  type: 'test'
+  ...
+# Subtest: return to camp releases the map only after the ground image is detached
+ok 220 - return to camp releases the map only after the ground image is detached
+  ---
+  duration_ms: 3.9411
+  type: 'test'
+  ...
+# Subtest: portrait ground cover and viewport changes keep the real actor bounds above the HUD immediately
+ok 221 - portrait ground cover and viewport changes keep the real actor bounds above the HUD immediately
+  ---
+  duration_ms: 3.5778
+  type: 'test'
+  ...
+# Subtest: art preview retains its active silhouette and visibility toggle
+ok 222 - art preview retains its active silhouette and visibility toggle
+  ---
+  duration_ms: 1.09
+  type: 'test'
+  ...
+# Subtest: same-actor snapshots retry a failed load without duplicating an in-flight actor request
+ok 223 - same-actor snapshots retry a failed load without duplicating an in-flight actor request
+  ---
+  duration_ms: 4.8006
+  type: 'test'
+  ...
+# Subtest: a late actor failure cannot invalidate the newer character or trigger its reload
+ok 224 - a late actor failure cannot invalidate the newer character or trigger its reload
+  ---
+  duration_ms: 3.5426
+  type: 'test'
+  ...
+# Subtest: same-run snapshots recover a failed background and keep an in-flight load intact
+ok 225 - same-run snapshots recover a failed background and keep an in-flight load intact
+  ---
+  duration_ms: 5.602
+  type: 'test'
+  ...
+# Subtest: same-enemy snapshots recover metadata and spritesheet failures without duplicate loads
+ok 226 - same-enemy snapshots recover metadata and spritesheet failures without duplicate loads
+  ---
+  duration_ms: 7.7413
+  type: 'test'
+  ...
+# Subtest: connection failure labels the last snapshot and a successful snapshot clears only that warning
+ok 227 - connection failure labels the last snapshot and a successful snapshot clears only that warning
+  ---
+  duration_ms: 2.6727
+  type: 'test'
+  ...
+# Subtest: survey summaries show committed loot and completed encounters without simulating progress
+ok 228 - survey summaries show committed loot and completed encounters without simulating progress
+  ---
+  duration_ms: 5.1409
+  type: 'test'
+  ...
+# Subtest: legacy reports do not invent zero equipment, item or encounter totals
+ok 229 - legacy reports do not invent zero equipment, item or encounter totals
+  ---
+  duration_ms: 2.3656
+  type: 'test'
+  ...
+# Subtest: delayed enemy sprites retain their committed slots without cancelling pending VFX geometry
+ok 230 - delayed enemy sprites retain their committed slots without cancelling pending VFX geometry
+  ---
+  duration_ms: 4.377
+  type: 'test'
+  ...
+# Subtest: first ground readiness preserves pending geometry while a later real viewport resize invalidates it
+ok 231 - first ground readiness preserves pending geometry while a later real viewport resize invalidates it
+  ---
+  duration_ms: 5.2802
+  type: 'test'
+  ...
+# Subtest: refreshes coalesce and use only readonly Atlas status with the selected context
+ok 232 - refreshes coalesce and use only readonly Atlas status with the selected context
+  ---
+  duration_ms: 3.1153
+  type: 'test'
+  ...
+# Subtest: a forced newer read rejects a late response even if abort is ignored
+ok 233 - a forced newer read rejects a late response even if abort is ignored
+  ---
+  duration_ms: 1.093
+  type: 'test'
+  ...
+# Subtest: newer HTTP requests cannot roll back live or same-run committed revisions
+ok 234 - newer HTTP requests cannot roll back live or same-run committed revisions
+  ---
+  duration_ms: 1.4733
+  type: 'test'
+  ...
+# Subtest: A to B to A invalidates both old epochs and clears the scene before discovery
+ok 235 - A to B to A invalidates both old epochs and clears the scene before discovery
+  ---
+  duration_ms: 1.2426
+  type: 'test'
+  ...
+# Subtest: mismatched account, realm, character, or nested run identity is rejected
+ok 236 - mismatched account, realm, character, or nested run identity is rejected
+  ---
+  duration_ms: 1.4141
+  type: 'test'
+  ...
+# Subtest: request callers cannot overwrite the active selectedCharacterId
+ok 237 - request callers cannot overwrite the active selectedCharacterId
+  ---
+  duration_ms: 1.1286
+  type: 'test'
+  ...
+# Subtest: an acknowledged write stays successful when its follow-up readonly refresh fails
+ok 238 - an acknowledged write stays successful when its follow-up readonly refresh fails
+  ---
+  duration_ms: 7.0796
+  type: 'test'
+  ...
+# Subtest: an acknowledged write with an obsolete scene keeps its receipt and refreshes
+ok 239 - an acknowledged write with an obsolete scene keeps its receipt and refreshes
+  ---
+  duration_ms: 1.2307
+  type: 'test'
+  ...
+# Subtest: a lost mutation response is uncertain and never automatically replayed
+ok 240 - a lost mutation response is uncertain and never automatically replayed
+  ---
+  duration_ms: 1.6022
+  type: 'test'
+  ...
+# Subtest: failed explicit selection discovers the active character with a read and never retries selection
+ok 241 - failed explicit selection discovers the active character with a read and never retries selection
+  ---
+  duration_ms: 3.0365
+  type: 'test'
+  ...
+# Subtest: server character_changed clears the old scene and performs readonly active-character discovery
+ok 242 - server character_changed clears the old scene and performs readonly active-character discovery
+  ---
+  duration_ms: 1.9806
+  type: 'test'
+  ...
+# Subtest: browser visibility and pagehide keep one poller and never poll after disposal
+ok 243 - browser visibility and pagehide keep one poller and never poll after disposal
+  ---
+  duration_ms: 2.5125
+  type: 'test'
+  ...
+# Subtest: a mounted Atlas window rejects late reads after realm or A to B to A epoch changes
+ok 244 - a mounted Atlas window rejects late reads after realm or A to B to A epoch changes
+  ---
+  duration_ms: 3.3983
+  type: 'test'
+  ...
+# Subtest: Atlas window clears the acknowledged pending write even if its own refresh fails
+ok 245 - Atlas window clears the acknowledged pending write even if its own refresh fails
+  ---
+  duration_ms: 1.6374
+  type: 'test'
+  ...
+# Subtest: visible synchronization settles one confirmed active run and applies its committed scene directly
+ok 246 - visible synchronization settles one confirmed active run and applies its committed scene directly
+  ---
+  duration_ms: 1.8288
+  type: 'test'
+  ...
+# Subtest: historical, mismatched and already-current runs never trigger an automatic write
+ok 247 - historical, mismatched and already-current runs never trigger an automatic write
+  ---
+  duration_ms: 1.025
+  type: 'test'
+  ...
+# Subtest: window refreshes and rapid resume events do not speed up the automatic settlement cadence
+ok 248 - window refreshes and rapid resume events do not speed up the automatic settlement cadence
+  ---
+  duration_ms: 1.7917
+  type: 'test'
+  ...
+# Subtest: hidden pages cannot begin or finish discovery into an automatic settlement
+ok 249 - hidden pages cannot begin or finish discovery into an automatic settlement
+  ---
+  duration_ms: 1.4336
+  type: 'test'
+  ...
+# Subtest: automatic settlement receipts cannot cross a character or realm epoch
+ok 250 - automatic settlement receipts cannot cross a character or realm epoch
+  ---
+  duration_ms: 1.1435
+  type: 'test'
+  ...
+# Subtest: automatic discovery waits for manual writes and never replays an unknown manual operation
+ok 251 - automatic discovery waits for manual writes and never replays an unknown manual operation
+  ---
+  duration_ms: 0.8439
+  type: 'test'
+  ...
+# Subtest: an unknown automatic settlement waits for fresh discovery and never retries in the same pass
+ok 252 - an unknown automatic settlement waits for fresh discovery and never retries in the same pass
+  ---
+  duration_ms: 1.1776
+  type: 'test'
+  ...
+# Subtest: an invalid settlement scene falls back to a read without replaying the acknowledged write
+ok 253 - an invalid settlement scene falls back to a read without replaying the acknowledged write
+  ---
+  duration_ms: 1.1911
+  type: 'test'
+  ...
+# Subtest: the visible page timer discovers and advances a run every fifteen seconds
+ok 254 - the visible page timer discovers and advances a run every fifteen seconds
+  ---
+  duration_ms: 1.8378
+  type: 'test'
+  ...
+# Subtest: an automatic settlement timeout is visible and is not immediately retried
+ok 255 - an automatic settlement timeout is visible and is not immediately retried
+  ---
+  duration_ms: 0.9848
+  type: 'test'
+  ...
+# Subtest: equipment recovery discovery and previews are readonly while actions retain uncertain outcomes
+ok 256 - equipment recovery discovery and previews are readonly while actions retain uncertain outcomes
+  ---
+  duration_ms: 0.7812
+  type: 'test'
+  ...
+# Subtest: skill-career pure reads do not create a mutation barrier or a follow-up scene request
+ok 257 - skill-career pure reads do not create a mutation barrier or a follow-up scene request
+  ---
+  duration_ms: 0.7029
+  type: 'test'
+  ...
+# Subtest: an offline skill-career read is not an uncertain write and is never retried automatically
+ok 258 - an offline skill-career read is not an uncertain write and is never retried automatically
+  ---
+  duration_ms: 0.6235
+  type: 'test'
+  ...
+# Subtest: party scene is a pure read with no mutation barrier or implicit Atlas follow-up
+ok 259 - party scene is a pure read with no mutation barrier or implicit Atlas follow-up
+  ---
+  duration_ms: 0.6769
+  type: 'test'
+  ...
+# Subtest: offline party projection is a read; party creation and tactics remain uncertain writes
+ok 260 - offline party projection is a read; party creation and tactics remain uncertain writes
+  ---
+  duration_ms: 0.7181
+  type: 'test'
+  ...
+# Subtest: tower scene and receipt are pure reads without an Atlas mutation barrier or implicit follow-up
+ok 261 - tower scene and receipt are pure reads without an Atlas mutation barrier or implicit follow-up
+  ---
+  duration_ms: 0.7429
+  type: 'test'
+  ...
+# Subtest: offline pure tower reads are never uncertain writes; legacy status and actions remain mutations
+ok 262 - offline pure tower reads are never uncertain writes; legacy status and actions remain mutations
+  ---
+  duration_ms: 0.7361
+  type: 'test'
+  ...
+# Subtest: Boss scene and receipts are pure reads without a mutation barrier or implicit Atlas follow-up
+ok 263 - Boss scene and receipts are pure reads without a mutation barrier or implicit Atlas follow-up
+  ---
+  duration_ms: 0.6988
+  type: 'test'
+  ...
+# Subtest: offline Boss projection/receipt are reads; legacy current and all attacks/exchanges remain uncertain mutations
+ok 264 - offline Boss projection/receipt are reads; legacy current and all attacks/exchanges remain uncertain mutations
+  ---
+  duration_ms: 0.7971
+  type: 'test'
+  ...
+# Subtest: Boss scoped wire binds body realm and selected character to the captured header context
+    # Subtest: boss/scene
+    ok 1 - boss/scene
+      ---
+      duration_ms: 3.0295
+      type: 'test'
+      ...
+    # Subtest: boss/receipt
+    ok 2 - boss/receipt
+      ---
+      duration_ms: 0.9231
+      type: 'test'
+      ...
+    # Subtest: boss/attack-scoped
+    ok 3 - boss/attack-scoped
+      ---
+      duration_ms: 0.9833
+      type: 'test'
+      ...
+    # Subtest: boss/exchange-scoped
+    ok 4 - boss/exchange-scoped
+      ---
+      duration_ms: 1.1243
+      type: 'test'
+      ...
+    1..4
+ok 265 - Boss scoped wire binds body realm and selected character to the captured header context
+  ---
+  duration_ms: 6.5508
+  type: 'test'
+  ...
+# Subtest: Boss scoped wire keeps each captured realm across A to B to A and rejects both old epochs
+    # Subtest: boss/scene
+    ok 1 - boss/scene
+      ---
+      duration_ms: 1.15
+      type: 'test'
+      ...
+    # Subtest: boss/receipt
+    ok 2 - boss/receipt
+      ---
+      duration_ms: 0.8706
+      type: 'test'
+      ...
+    # Subtest: boss/attack-scoped
+    ok 3 - boss/attack-scoped
+      ---
+      duration_ms: 0.937
+      type: 'test'
+      ...
+    # Subtest: boss/exchange-scoped
+    ok 4 - boss/exchange-scoped
+      ---
+      duration_ms: 0.8534
+      type: 'test'
+      ...
+    1..4
+ok 266 - Boss scoped wire keeps each captured realm across A to B to A and rejects both old epochs
+  ---
+  duration_ms: 4.183
+  type: 'test'
+  ...
+# Subtest: Star Ring scene/receipt are pure reads; legacy list/get and scoped writes retain mutation semantics
+ok 267 - Star Ring scene/receipt are pure reads; legacy list/get and scoped writes retain mutation semantics
+  ---
+  duration_ms: 1.1732
+  type: 'test'
+  ...
+# Subtest: all six Star Ring endpoints serialize the same captured realm in body/header and preserve false/null
+    # Subtest: star-ring/scene
+    ok 1 - star-ring/scene
+      ---
+      duration_ms: 1.1562
+      type: 'test'
+      ...
+    # Subtest: star-ring/receipt
+    ok 2 - star-ring/receipt
+      ---
+      duration_ms: 1.0328
+      type: 'test'
+      ...
+    # Subtest: star-ring/create-scoped
+    ok 3 - star-ring/create-scoped
+      ---
+      duration_ms: 1.0498
+      type: 'test'
+      ...
+    # Subtest: star-ring/action-scoped
+    ok 4 - star-ring/action-scoped
+      ---
+      duration_ms: 1.0156
+      type: 'test'
+      ...
+    # Subtest: star-ring/shop-scoped
+    ok 5 - star-ring/shop-scoped
+      ---
+      duration_ms: 1.0052
+      type: 'test'
+      ...
+    # Subtest: star-ring/cosmetics/equip-scoped
+    ok 6 - star-ring/cosmetics/equip-scoped
+      ---
+      duration_ms: 0.9545
+      type: 'test'
+      ...
+    1..6
+ok 268 - all six Star Ring endpoints serialize the same captured realm in body/header and preserve false/null
+  ---
+  duration_ms: 6.7537
+  type: 'test'
+  ...
+# Subtest: Star Ring wire isolates captured realms through A/B/A; neither old epoch starts a new Atlas refresh
+    # Subtest: star-ring/scene
+    ok 1 - star-ring/scene
+      ---
+      duration_ms: 2.5827
+      type: 'test'
+      ...
+    # Subtest: star-ring/receipt
+    ok 2 - star-ring/receipt
+      ---
+      duration_ms: 1.0961
+      type: 'test'
+      ...
+    # Subtest: star-ring/create-scoped
+    ok 3 - star-ring/create-scoped
+      ---
+      duration_ms: 1.0546
+      type: 'test'
+      ...
+    # Subtest: star-ring/action-scoped
+    ok 4 - star-ring/action-scoped
+      ---
+      duration_ms: 0.9562
+      type: 'test'
+      ...
+    # Subtest: star-ring/shop-scoped
+    ok 5 - star-ring/shop-scoped
+      ---
+      duration_ms: 0.8829
+      type: 'test'
+      ...
+    # Subtest: star-ring/cosmetics/equip-scoped
+    ok 6 - star-ring/cosmetics/equip-scoped
+      ---
+      duration_ms: 0.9667
+      type: 'test'
+      ...
+    1..6
+ok 269 - Star Ring wire isolates captured realms through A/B/A; neither old epoch starts a new Atlas refresh
+  ---
+  duration_ms: 8.1134
+  type: 'test'
+  ...
+# Subtest: scene uses committed expedition vitals and supplies, then live camp values after return
+ok 270 - scene uses committed expedition vitals and supplies, then live camp values after return
+  ---
+  duration_ms: 2.1454
+  type: 'test'
+  ...
+# Subtest: scene rejects missing or cross-character / cross-realm data instead of retaining another actor
+ok 271 - scene rejects missing or cross-character / cross-realm data instead of retaining another actor
+  ---
+  duration_ms: 0.6555
+  type: 'test'
+  ...
+# Subtest: camp HUD uses all-tier totals while legacy counters and current-run reserves retain their meanings
+ok 272 - camp HUD uses all-tier totals while legacy counters and current-run reserves retain their meanings
+  ---
+  duration_ms: 1.3478
+  type: 'test'
+  ...
+# Subtest: exact map and monster whitelist refuses lookalikes, wrong rank and higher-mode art
+ok 273 - exact map and monster whitelist refuses lookalikes, wrong rank and higher-mode art
+  ---
+  duration_ms: 0.711
+  type: 'test'
+  ...
+# Subtest: sprite metadata uses actual selected frame count and rejects untrusted image paths
+ok 274 - sprite metadata uses actual selected frame count and rejects untrusted image paths
+  ---
+  duration_ms: 0.8046
+  type: 'test'
+  ...
+# Subtest: art preview never mounts the live scene adapter
+ok 275 - art preview never mounts the live scene adapter
+  ---
+  duration_ms: 0.764
+  type: 'test'
+  ...
+# Subtest: experience bar distinguishes a genuine zero, partial progress, maximum level and missing data
+ok 276 - experience bar distinguishes a genuine zero, partial progress, maximum level and missing data
+  ---
+  duration_ms: 0.5557
+  type: 'test'
+  ...
+# Subtest: live binding suppresses every simulated combat entry and initial fake HUD / texture preload
+ok 277 - live binding suppresses every simulated combat entry and initial fake HUD / texture preload
+  ---
+  duration_ms: 1.4366
+  type: 'test'
+  ...
+# Subtest: same response binding preserves original art-review behavior when config.live is false
+ok 278 - same response binding preserves original art-review behavior when config.live is false
+  ---
+  duration_ms: 0.8752
+  type: 'test'
+  ...
+# Subtest: live viewport resize measures the parent before Phaser can restore cached phone dimensions
+ok 279 - live viewport resize measures the parent before Phaser can restore cached phone dimensions
+  ---
+  duration_ms: 1.2899
+  type: 'test'
+  ...
+# Subtest: changed required source hooks fail visibly instead of silently returning simulated battle
+ok 280 - changed required source hooks fail visibly instead of silently returning simulated battle
+  ---
+  duration_ms: 0.8428
+  type: 'test'
+  ...
+# Subtest: candidate orb updater and HUD scripts cannot restore manual numbers or fake potion actions in live mode
+ok 281 - candidate orb updater and HUD scripts cannot restore manual numbers or fake potion actions in live mode
+  ---
+  duration_ms: 2.5982
+  type: 'test'
+  ...
+# Subtest: scene HTML loads one shared session before the renderer and social adapter
+ok 282 - scene HTML loads one shared session before the renderer and social adapter
+  ---
+  duration_ms: 0.2716
+  type: 'test'
+  ...
+# Subtest: UI trigger, prototype buffs and default portrait are guarded without disabling art review
+ok 283 - UI trigger, prototype buffs and default portrait are guarded without disabling art review
+  ---
+  duration_ms: 0.7523
+  type: 'test'
+  ...
+# Subtest: all survey maps reuse only their exact theme and normal or elite assets
+ok 284 - all survey maps reuse only their exact theme and normal or elite assets
+  ---
+  duration_ms: 0.5581
+  type: 'test'
+  ...
+# Subtest: party window discovery and page changes only call the pure party projection
+ok 285 - party window discovery and page changes only call the pure party projection
+  ---
+  duration_ms: 5.4336
+  type: 'test'
+  ...
+# Subtest: frozen realm remains readable and blocks every party mutation locally
+ok 286 - frozen realm remains readable and blocks every party mutation locally
+  ---
+  duration_ms: 1.5516
+  type: 'test'
+  ...
+# Subtest: unknown creation survives closing and reopening; refresh and recovery never replay it
+ok 287 - unknown creation survives closing and reopening; refresh and recovery never replay it
+  ---
+  duration_ms: 1.973
+  type: 'test'
+  ...
+# Subtest: a definite failed join clears pending, reads state once, and never retries the write
+ok 288 - a definite failed join clears pending, reads state once, and never retries the write
+  ---
+  duration_ms: 4.7848
+  type: 'test'
+  ...
+# Subtest: late A-to-B-to-A reads cannot overwrite the new A panel even if abort is ignored
+ok 289 - late A-to-B-to-A reads cannot overwrite the new A panel even if abort is ignored
+  ---
+  duration_ms: 1.0625
+  type: 'test'
+  ...
+# Subtest: late successful writes after A-to-B-to-A retain the pending operation for explicit readback
+ok 290 - late successful writes after A-to-B-to-A retain the pending operation for explicit readback
+  ---
+  duration_ms: 1.1307
+  type: 'test'
+  ...
+# Subtest: late definite errors from a previous epoch cannot clear the current A pending warning
+ok 291 - late definite errors from a previous epoch cannot clear the current A pending warning
+  ---
+  duration_ms: 1.0603
+  type: 'test'
+  ...
+# Subtest: older character revisions and older party revisions keep the latest accepted snapshot
+ok 292 - older character revisions and older party revisions keep the latest accepted snapshot
+  ---
+  duration_ms: 1.6393
+  type: 'test'
+  ...
+# Subtest: account realm and character mismatches are rejected before data enters the panel
+ok 293 - account realm and character mismatches are rejected before data enters the panel
+  ---
+  duration_ms: 1.1114
+  type: 'test'
+  ...
+# Subtest: a refreshed party state invalidates a consequential confirmation before it can submit
+ok 294 - a refreshed party state invalidates a consequential confirmation before it can submit
+  ---
+  duration_ms: 2.4026
+  type: 'test'
+  ...
+# Subtest: tactical writes preserve the selected party round skill and ally; stale round is never silently retried
+ok 295 - tactical writes preserve the selected party round skill and ally; stale round is never silently retried
+  ---
+  duration_ms: 3.0541
+  type: 'test'
+  ...
+# Subtest: an acknowledged write remains acknowledged when its subsequent read goes offline
+ok 296 - an acknowledged write remains acknowledged when its subsequent read goes offline
+  ---
+  duration_ms: 1.2034
+  type: 'test'
+  ...
+# Subtest: malformed successful receipts remain uncertain and cannot unlock another party write
+ok 297 - malformed successful receipts remain uncertain and cannot unlock another party write
+  ---
+  duration_ms: 0.9812
+  type: 'test'
+  ...
+# Subtest: ally targeting excludes departed unknown and downed members, while resurrection only targets known downed allies
+ok 298 - ally targeting excludes departed unknown and downed members, while resurrection only targets known downed allies
+  ---
+  duration_ms: 12.9103
+  type: 'test'
+  ...
+# Subtest: enemy and group-wide targets are explicit in the UI but retain the existing server actor-id contract
+ok 299 - enemy and group-wide targets are explicit in the UI but retain the existing server actor-id contract
+  ---
+  duration_ms: 0.716
+  type: 'test'
+  ...
+# Subtest: unsupported continuation writes are outside this integration batch
+ok 300 - unsupported continuation writes are outside this integration batch
+  ---
+  duration_ms: 1.0958
+  type: 'test'
+  ...
+# Subtest: party actions and reward requests persist the exact server requestId, while creation makes no idempotency claim
+ok 301 - party actions and reward requests persist the exact server requestId, while creation makes no idempotency claim
+  ---
+  duration_ms: 2.2843
+  type: 'test'
+  ...
+# Subtest: an unknown tactical write can only be acknowledged against its original party, including after viewing another party
+ok 302 - an unknown tactical write can only be acknowledged against its original party, including after viewing another party
+  ---
+  duration_ms: 1.0384
+  type: 'test'
+  ...
+# Subtest: an unknown reward survives closing and A-to-B-to-A, and reading another party never clears its warning
+ok 303 - an unknown reward survives closing and A-to-B-to-A, and reading another party never clears its warning
+  ---
+  duration_ms: 1.0819
+  type: 'test'
+  ...
+# Subtest: an unknown creation is checked against current-party discovery rather than an unrelated selected party
+ok 304 - an unknown creation is checked against current-party discovery rather than an unrelated selected party
+  ---
+  duration_ms: 0.9796
+  type: 'test'
+  ...
+# Subtest: dungeon skill display uses only authoritative IDs and never includes same-level books outside that pool
+ok 305 - dungeon skill display uses only authoritative IDs and never includes same-level books outside that pool
+  ---
+  duration_ms: 0.5502
+  type: 'test'
+  ...
+# Subtest: dungeon skill display retains a real lower-level thief fallback supplied by the server
+ok 306 - dungeon skill display retains a real lower-level thief fallback supplied by the server
+  ---
+  duration_ms: 1.2143
+  type: 'test'
+  ...
+# Subtest: an empty authoritative trial pool is distinguished from missing or incomplete drop data
+ok 307 - an empty authoritative trial pool is distinguished from missing or incomplete drop data
+  ---
+  duration_ms: 0.4948
+  type: 'test'
+  ...
+# Subtest: an ineligible retained loadout remains intact but cannot be submitted as a tactical skill
+ok 308 - an ineligible retained loadout remains intact but cannot be submitted as a tactical skill
+  ---
+  duration_ms: 0.6106
+  type: 'test'
+  ...
+# Subtest: tactical special skills require the battle snapshot learned set and explicit eligibility
+ok 309 - tactical special skills require the battle snapshot learned set and explicit eligibility
+  ---
+  duration_ms: 0.7998
+  type: 'test'
+  ...
+# Subtest: native attacks and role skills keep their own rules without inheriting special-skill qualification checks
+ok 310 - native attacks and role skills keep their own rules without inheriting special-skill qualification checks
+  ---
+  duration_ms: 0.6985
+  type: 'test'
+  ...
+# Subtest: a newly unknown write reveals its recovery controls once and later polling preserves user scroll and focus
+ok 311 - a newly unknown write reveals its recovery controls once and later polling preserves user scroll and focus
+  ---
+  duration_ms: 6.5589
+  type: 'test'
+  ...
+# Subtest: a known successful write never jumps to the transient pending controls
+ok 312 - a known successful write never jumps to the transient pending controls
+  ---
+  duration_ms: 3.4689
+  type: 'test'
+  ...
+# Subtest: queued recovery focus respects disposal context and root connection even if cancellation is ignored
+    # Subtest: dispose
+    ok 1 - dispose
+      ---
+      duration_ms: 1.999
+      type: 'test'
+      ...
+    # Subtest: context
+    ok 2 - context
+      ---
+      duration_ms: 1.8614
+      type: 'test'
+      ...
+    # Subtest: detached
+    ok 3 - detached
+      ---
+      duration_ms: 2.1272
+      type: 'test'
+      ...
+    1..3
+ok 313 - queued recovery focus respects disposal context and root connection even if cancellation is ignored
+  ---
+  duration_ms: 6.4588
+  type: 'test'
+  ...
+# Subtest: an old pending frame cannot steal or cancel the one-time reveal for a newer operation
+ok 314 - an old pending frame cannot steal or cancel the one-time reveal for a newer operation
+  ---
+  duration_ms: 4.1811
+  type: 'test'
+  ...
+# Subtest: tower and dungeon clients keep independent pending storage and never cross-acknowledge the same character
+ok 315 - tower and dungeon clients keep independent pending storage and never cross-acknowledge the same character
+  ---
+  duration_ms: 1.4718
+  type: 'test'
+  ...
+# Subtest: tower projections reject dungeon parties and mutations cannot be acknowledged with a different party kind
+ok 316 - tower projections reject dungeon parties and mutations cannot be acknowledged with a different party kind
+  ---
+  duration_ms: 0.9172
+  type: 'test'
+  ...
+# Subtest: tower creation uses the original three start floors and cannot create a dungeon in tower mode
+ok 317 - tower creation uses the original three start floors and cannot create a dungeon in tower mode
+  ---
+  duration_ms: 1.12
+  type: 'test'
+  ...
+# Subtest: tower tactical recovery stays tied to its original tower and cannot be acknowledged from a different selected team
+ok 318 - tower tactical recovery stays tied to its original tower and cannot be acknowledged from a different selected team
+  ---
+  duration_ms: 1.1888
+  type: 'test'
+  ...
+# Subtest: tower daily use changes invalidate a ready start confirmation while countdowns follow server time
+ok 319 - tower daily use changes invalidate a ready start confirmation while countdowns follow server time
+  ---
+  duration_ms: 1.0206
+  type: 'test'
+  ...
+# Subtest: tower lost and ended partial completions keep reward controls and original per-area server gates visible
+    # Subtest: lost
+    ok 1 - lost
+      ---
+      duration_ms: 8.5275
+      type: 'test'
+      ...
+    # Subtest: ended
+    ok 2 - ended
+      ---
+      duration_ms: 3.7737
+      type: 'test'
+      ...
+    1..2
+ok 320 - tower lost and ended partial completions keep reward controls and original per-area server gates visible
+  ---
+  duration_ms: 12.657
+  type: 'test'
+  ...
+# Subtest: another-kind occupancy gives explicit own-character and character-switch navigation without exposing dungeon actions as tower actions
+ok 321 - another-kind occupancy gives explicit own-character and character-switch navigation without exposing dungeon actions as tower actions
+  ---
+  duration_ms: 2.6981
+  type: 'test'
+  ...
+# Subtest: dedicated button materials resolve only to public and retain GET/HEAD MIME and headers
+ok 322 - dedicated button materials resolve only to public and retain GET/HEAD MIME and headers
+  ---
+  duration_ms: 3.1995
+  type: 'test'
+  ...
+# Subtest: button material route refuses similar prefixes, decoded traversal, backslashes and NUL before filesystem access
+ok 323 - button material route refuses similar prefixes, decoded traversal, backslashes and NUL before filesystem access
+  ---
+  duration_ms: 1.3091
+  type: 'test'
+  ...
+# Subtest: missing files, directories and realpaths outside public never fall back to generated art
+ok 324 - missing files, directories and realpaths outside public never fall back to generated art
+  ---
+  duration_ms: 1.7391
+  type: 'test'
+  ...
+# Subtest: pure read, Chinese search and exact confirmed learning/progression consume once
+ok 325 - pure read, Chinese search and exact confirmed learning/progression consume once
+  ---
+  duration_ms: 30.686
+  type: 'test'
+  ...
+# Subtest: loadout, order, auto, cast/cancel reuse original operations; qualified cap and manual-only are enforced
+ok 326 - loadout, order, auto, cast/cancel reuse original operations; qualified cap and manual-only are enforced
+  ---
+  duration_ms: 41.1812
+  type: 'test'
+  ...
+# Subtest: recycle validates quantity, exact rewards and cancellation; redeem is explicitly confirmed
+ok 327 - recycle validates quantity, exact rewards and cancellation; redeem is explicitly confirmed
+  ---
+  duration_ms: 13.8837
+  type: 'test'
+  ...
+# Subtest: career renders server reasons and projections; confirms exact advance/reselect and unequips
+ok 328 - career renders server reasons and projections; confirms exact advance/reselect and unequips
+  ---
+  duration_ms: 19.8602
+  type: 'test'
+  ...
+# Subtest: career change leaves ineligible slot visible and removable, never falsely enables cast or auto
+ok 329 - career change leaves ineligible slot visible and removable, never falsely enables cast or auto
+  ---
+  duration_ms: 4.4204
+  type: 'test'
+  ...
+# Subtest: unknown result survives close, navigation and epoch changes with one original write; recovery only reads
+ok 330 - unknown result survives close, navigation and epoch changes with one original write; recovery only reads
+  ---
+  duration_ms: 6.2379
+  type: 'test'
+  ...
+# Subtest: late reads and late success/409 writes after A→B→A or navigation cannot alter new scope
+ok 331 - late reads and late success/409 writes after A→B→A or navigation cannot alter new scope
+  ---
+  duration_ms: 8.2839
+  type: 'test'
+  ...
+# Subtest: acknowledged write stays acknowledged if refresh fails; old revision is refused and confirmations invalidate
+ok 332 - acknowledged write stays acknowledged if refresh fails; old revision is refused and confirmations invalidate
+  ---
+  duration_ms: 13.2645
+  type: 'test'
+  ...
+# Subtest: IME and search drafts survive repaint/back; disposal aborts reads and removes delegated handlers
+ok 333 - IME and search drafts survive repaint/back; disposal aborts reads and removes delegated handlers
+  ---
+  duration_ms: 5.4417
+  type: 'test'
+  ...
+# Subtest: party/read-only restrictions disable consuming actions; duplicate confirmation cannot double-submit
+ok 334 - party/read-only restrictions disable consuming actions; duplicate confirmation cannot double-submit
+  ---
+  duration_ms: 11.3324
+  type: 'test'
+  ...
+# Subtest: original mode/budget settings are independent of supplies and use server backpack permission
+ok 335 - original mode/budget settings are independent of supplies and use server backpack permission
+  ---
+  duration_ms: 6.9652
+  type: 'test'
+  ...
+# Subtest: multiple ineligible slots have a complete clear path and confirmation becomes visibly focused
+ok 336 - multiple ineligible slots have a complete clear path and confirmation becomes visibly focused
+  ---
+  duration_ms: 4.9338
+  type: 'test'
+  ...
+# Subtest: redeem costs come from the projection and cannot silently fall back to a rarity guess
+ok 337 - redeem costs come from the projection and cannot silently fall back to a rarity guess
+  ---
+  duration_ms: 4.265
+  type: 'test'
+  ...
+# Subtest: a newer same-character scene fences an already-running read until a fresh snapshot arrives
+ok 338 - a newer same-character scene fences an already-running read until a fresh snapshot arrives
+  ---
+  duration_ms: 3.2277
+  type: 'test'
+  ...
+# (node:2740) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: pure scene is the only mount/read authority and frozen or historical views cannot prepare writes
+ok 339 - pure scene is the only mount/read authority and frozen or historical views cannot prepare writes
+  ---
+  duration_ms: 20.8411
+  type: 'test'
+  ...
+# Subtest: create, action ready=false, shop and cosmetic null preserve complete typed canonical bodies
+    # Subtest: create
+    ok 1 - create
+      ---
+      duration_ms: 1.8214
+      type: 'test'
+      ...
+    # Subtest: action
+    ok 2 - action
+      ---
+      duration_ms: 1.1732
+      type: 'test'
+      ...
+    # Subtest: shop
+    ok 3 - shop
+      ---
+      duration_ms: 1.2856
+      type: 'test'
+      ...
+    # Subtest: cosmetic
+    ok 4 - cosmetic
+      ---
+      duration_ms: 1.0767
+      type: 'test'
+      ...
+    1..4
+ok 340 - create, action ready=false, shop and cosmetic null preserve complete typed canonical bodies
+  ---
+  duration_ms: 5.9364
+  type: 'test'
+  ...
+# Subtest: unknown operation survives pure refresh, reopen, reload and A/B/A with its original request ID
+ok 341 - unknown operation survives pure refresh, reopen, reload and A/B/A with its original request ID
+  ---
+  duration_ms: 2.4108
+  type: 'test'
+  ...
+# Subtest: not_found is not acknowledgement; only explicit same-ID same-body confirmation recovers each kind
+    # Subtest: create
+    ok 1 - create
+      ---
+      duration_ms: 8.9435
+      type: 'test'
+      ...
+    # Subtest: action
+    ok 2 - action
+      ---
+      duration_ms: 2.315
+      type: 'test'
+      ...
+    # Subtest: shop
+    ok 3 - shop
+      ---
+      duration_ms: 2.3895
+      type: 'test'
+      ...
+    # Subtest: cosmetic
+    ok 4 - cosmetic
+      ---
+      duration_ms: 2.3636
+      type: 'test'
+      ...
+    1..4
+ok 342 - not_found is not acknowledgement; only explicit same-ID same-body confirmation recovers each kind
+  ---
+  duration_ms: 16.8052
+  type: 'test'
+  ...
+# Subtest: mismatched identity, signature, original result, typed cost or receipt version cannot clear pending
+ok 343 - mismatched identity, signature, original result, typed cost or receipt version cannot clear pending
+  ---
+  duration_ms: 21.8336
+  type: 'test'
+  ...
+# Subtest: matching receipt requires explicit acknowledgement; original random gear and zero-cost already-owned cosmetics are retained
+ok 344 - matching receipt requires explicit acknowledgement; original random gear and zero-cost already-owned cosmetics are retained
+  ---
+  duration_ms: 3.0979
+  type: 'test'
+  ...
+# Subtest: a newer receipt raises the revision floor; only a fresh scene permits acknowledgement
+ok 345 - a newer receipt raises the revision floor; only a fresh scene permits acknowledgement
+  ---
+  duration_ms: 1.7924
+  type: 'test'
+  ...
+# Subtest: scene party revision never goes backwards, and changes invalidate open confirmations
+ok 346 - scene party revision never goes backwards, and changes invalidate open confirmations
+  ---
+  duration_ms: 1.4113
+  type: 'test'
+  ...
+# Subtest: A/B/A blocks late 200, late 409 and late receipt without clearing the original operation
+    # Subtest: 200
+    ok 1 - 200
+      ---
+      duration_ms: 1.2094
+      type: 'test'
+      ...
+    # Subtest: 409
+    ok 2 - 409
+      ---
+      duration_ms: 1.093
+      type: 'test'
+      ...
+    # Subtest: receipt
+    ok 3 - receipt
+      ---
+      duration_ms: 5.5099
+      type: 'test'
+      ...
+    1..3
+ok 347 - A/B/A blocks late 200, late 409 and late receipt without clearing the original operation
+  ---
+  duration_ms: 8.2467
+  type: 'test'
+  ...
+# Subtest: recovery is disabled when original evidence is incomplete or realm becomes frozen
+ok 348 - recovery is disabled when original evidence is incomplete or realm becomes frozen
+  ---
+  duration_ms: 3.2161
+  type: 'test'
+  ...
+# Subtest: deep links distinguish report and explicit join intent; invitations never copy dev identity
+ok 349 - deep links distinguish report and explicit join intent; invitations never copy dev identity
+  ---
+  duration_ms: 1.5171
+  type: 'test'
+  ...
+# Subtest: cancel and Back restore the exact action source without posting; current actor spend is labelled
+ok 350 - cancel and Back restore the exact action source without posting; current actor spend is labelled
+  ---
+  duration_ms: 19.2971
+  type: 'test'
+  ...
+# Subtest: unknown reveal focuses pure lookup once; poll, visibility, reload and reopen never retry or steal later focus
+ok 351 - unknown reveal focuses pure lookup once; poll, visibility, reload and reopen never retry or steal later focus
+  ---
+  duration_ms: 13.5957
+  type: 'test'
+  ...
+# Subtest: queued unknown reveal cannot override later focus, dispose, detach, hidden document or A/B/A
+    # Subtest: focus
+    ok 1 - focus
+      ---
+      duration_ms: 6.406
+      type: 'test'
+      ...
+    # Subtest: dispose
+    ok 2 - dispose
+      ---
+      duration_ms: 6.3235
+      type: 'test'
+      ...
+    # Subtest: detached
+    ok 3 - detached
+      ---
+      duration_ms: 5.9006
+      type: 'test'
+      ...
+    # Subtest: hidden
+    ok 4 - hidden
+      ---
+      duration_ms: 8.3064
+      type: 'test'
+      ...
+    # Subtest: context
+    ok 5 - context
+      ---
+      duration_ms: 8.36
+      type: 'test'
+      ...
+    1..5
+ok 352 - queued unknown reveal cannot override later focus, dispose, detach, hidden document or A/B/A
+  ---
+  duration_ms: 36.1937
+  type: 'test'
+  ...
+# Subtest: invitation load and report load perform no join; explicit join-ready needs confirmation
+ok 353 - invitation load and report load perform no join; explicit join-ready needs confirmation
+  ---
+  duration_ms: 7.5358
+  type: 'test'
+  ...
+# Subtest: due twelve-hour projection keeps saved stages/rewards distinct from battle snapshot and current HP
+ok 354 - due twelve-hour projection keeps saved stages/rewards distinct from battle snapshot and current HP
+  ---
+  duration_ms: 3.0891
+  type: 'test'
+  ...
+# Subtest: cosmetic tab uses original preview art, equipped status and explicit null unequip without legacy API calls
+ok 355 - cosmetic tab uses original preview art, equipped status and explicit null unequip without legacy API calls
+  ---
+  duration_ms: 3.3458
+  type: 'test'
+  ...
+# Subtest: actual SQLite scene, original operations and typed receipts drive the UI with original random gear identity
+ok 356 - actual SQLite scene, original operations and typed receipts drive the UI with original random gear identity
+  ---
+  duration_ms: 106.8323
+  type: 'test'
+  ...
+# Subtest: historical report to shop clears the report query before permitting current actor spending
+ok 357 - historical report to shop clears the report query before permitting current actor spending
+  ---
+  duration_ms: 10.7381
+  type: 'test'
+  ...
+# Subtest: acknowledging a committed create opens its original party with only a pure read
+ok 358 - acknowledging a committed create opens its original party with only a pure read
+  ---
+  duration_ms: 2.0434
+  type: 'test'
+  ...
+# Subtest: opening uses explicit legacy reads once; scene updates never poll or erase form drafts
+ok 359 - opening uses explicit legacy reads once; scene updates never poll or erase form drafts
+  ---
+  duration_ms: 3.2872
+  type: 'test'
+  ...
+# Subtest: only server offers are purchasable; quantities, gold and hold limits are validated before a write
+ok 360 - only server offers are purchasable; quantities, gold and hold limits are validated before a write
+  ---
+  duration_ms: 15.1127
+  type: 'test'
+  ...
+# Subtest: purchase preview and cancel retain quantities; the exact confirmed body is sent once
+ok 361 - purchase preview and cancel retain quantities; the exact confirmed body is sent once
+  ---
+  duration_ms: 1.9819
+  type: 'test'
+  ...
+# Subtest: changed price is re-presented for approval instead of spending the old preview
+ok 362 - changed price is re-presented for approval instead of spending the old preview
+  ---
+  duration_ms: 1.501
+  type: 'test'
+  ...
+# Subtest: settings expose only supported rules, allow owned locked potions, and preserve unsaved choices
+ok 363 - settings expose only supported rules, allow owned locked potions, and preserve unsaved choices
+  ---
+  duration_ms: 1.2807
+  type: 'test'
+  ...
+# Subtest: refill uses real selected shop prices, preserves partial funding, and rejects unavailable potion purchases
+ok 364 - refill uses real selected shop prices, preserves partial funding, and rejects unavailable potion purchases
+  ---
+  duration_ms: 1.465
+  type: 'test'
+  ...
+# Subtest: uncertain refill cannot be resent; read-back and explicit acknowledgement do not create another mutation
+ok 365 - uncertain refill cannot be resent; read-back and explicit acknowledgement do not create another mutation
+  ---
+  duration_ms: 2.3045
+  type: 'test'
+  ...
+# Subtest: lost settings response is resolved by reading the desired values, never by replaying settings
+ok 366 - lost settings response is resolved by reading the desired values, never by replaying settings
+  ---
+  duration_ms: 1.5019
+  type: 'test'
+  ...
+# Subtest: unknown purchase survives remount and retries its original ID and quantity despite edited drafts
+ok 367 - unknown purchase survives remount and retries its original ID and quantity despite edited drafts
+  ---
+  duration_ms: 1.8442
+  type: 'test'
+  ...
+# Subtest: a rejection during recovery does not falsely clear an earlier uncertain purchase
+ok 368 - a rejection during recovery does not falsely clear an earlier uncertain purchase
+  ---
+  duration_ms: 1.837
+  type: 'test'
+  ...
+# Subtest: definite first rejection clears only its pending operation without changing drafts
+ok 369 - definite first rejection clears only its pending operation without changing drafts
+  ---
+  duration_ms: 1.2237
+  type: 'test'
+  ...
+# Subtest: late reads cannot paint a different context, including rapid A-B-A
+ok 370 - late reads cannot paint a different context, including rapid A-B-A
+  ---
+  duration_ms: 0.7864
+  type: 'test'
+  ...
+# Subtest: a write reply after disposal retains pending recovery and never notifies another window
+ok 371 - a write reply after disposal retains pending recovery and never notifies another window
+  ---
+  duration_ms: 1.1725
+  type: 'test'
+  ...
+# Subtest: foreign mutation responses stay unresolved and cannot replace the visible player
+ok 372 - foreign mutation responses stay unresolved and cannot replace the visible player
+  ---
+  duration_ms: 1.531
+  type: 'test'
+  ...
+# Subtest: rendering escapes server names and separates inventory, reserved Atlas supplies and confirmation totals
+ok 373 - rendering escapes server names and separates inventory, reserved Atlas supplies and confirmation totals
+  ---
+  duration_ms: 3.7687
+  type: 'test'
+  ...
+# Subtest: mounted shop keeps the same search input throughout IME composition and filters only after compositionend
+ok 374 - mounted shop keeps the same search input throughout IME composition and filters only after compositionend
+  ---
+  duration_ms: 9.4123
+  type: 'test'
+  ...
+# Subtest: native change emitted while removing the focused search input cannot reenter DOM rendering
+ok 375 - native change emitted while removing the focused search input cannot reenter DOM rendering
+  ---
+  duration_ms: 3.5801
+  type: 'test'
+  ...
+# Subtest: tiered settings explain next-run behavior while the current reserve shows its own immutable policy and exact bottles
+ok 376 - tiered settings explain next-run behavior while the current reserve shows its own immutable policy and exact bottles
+  ---
+  duration_ms: 2.4935
+  type: 'test'
+  ...
+# Subtest: live tiered reserve updates keep edited settings and ignore a legacy projection for the same run
+ok 377 - live tiered reserve updates keep edited settings and ignore a legacy projection for the same run
+  ---
+  duration_ms: 0.98
+  type: 'test'
+  ...
+# Subtest: old reserve replies never invent a per-tier policy and tier labels remain escaped
+ok 378 - old reserve replies never invent a per-tier policy and tier labels remain escaped
+  ---
+  duration_ms: 1.6394
+  type: 'test'
+  ...
+# Subtest: workshop opens and refreshes through the pure projection; frozen realms stay readable without sending a mutation
+ok 379 - workshop opens and refreshes through the pure projection; frozen realms stay readable without sending a mutation
+  ---
+  duration_ms: 3.1537
+  type: 'test'
+  ...
+# Subtest: unknown imprint redemption and title operations retain their exact raw request body across reopen and ordinary refresh
+    # Subtest: imprint
+    ok 1 - imprint
+      ---
+      duration_ms: 2.3064
+      type: 'test'
+      ...
+    # Subtest: redeem
+    ok 2 - redeem
+      ---
+      duration_ms: 1.1148
+      type: 'test'
+      ...
+    # Subtest: title
+    ok 3 - title
+      ---
+      duration_ms: 1.0009
+      type: 'test'
+      ...
+    1..3
+ok 380 - unknown imprint redemption and title operations retain their exact raw request body across reopen and ordinary refresh
+  ---
+  duration_ms: 4.9111
+  type: 'test'
+  ...
+# Subtest: a matching pure receipt reveals the committed result but requires explicit acknowledgement to clear pending
+ok 381 - a matching pure receipt reveals the committed result but requires explicit acknowledgement to clear pending
+  ---
+  duration_ms: 5.9593
+  type: 'test'
+  ...
+# Subtest: not found never clears or replays the original operation; cancelling recovery keeps the original warning and cost
+ok 382 - not found never clears or replays the original operation; cancelling recovery keeps the original warning and cost
+  ---
+  duration_ms: 2.0505
+  type: 'test'
+  ...
+# Subtest: explicit recovery sends the exact original ID and signature once; another lost response retains the same pending
+ok 383 - explicit recovery sends the exact original ID and signature once; another lost response retains the same pending
+  ---
+  duration_ms: 2.6282
+  type: 'test'
+  ...
+# Subtest: a successful same-ID manual recovery stays acknowledged even if its follow-up projection fails
+ok 384 - a successful same-ID manual recovery stays acknowledged even if its follow-up projection fails
+  ---
+  duration_ms: 1.7641
+  type: 'test'
+  ...
+# Subtest: a definite failure of manual recovery cannot erase an older request that may still commit
+ok 385 - a definite failure of manual recovery cannot erase an older request that may still commit
+  ---
+  duration_ms: 1.6929
+  type: 'test'
+  ...
+# Subtest: an initial definite validation failure is cleared and read once, with no automatic retry
+ok 386 - an initial definite validation failure is cleared and read once, with no automatic retry
+  ---
+  duration_ms: 1.284
+  type: 'test'
+  ...
+# Subtest: wrong receipt identities targets and ledger debits never clear pending or authorize recovery
+ok 387 - wrong receipt identities targets and ledger debits never clear pending or authorize recovery
+  ---
+  duration_ms: 2.343
+  type: 'test'
+  ...
+# Subtest: a receipt signature error preserves the original body and does not grant a manual replay
+ok 388 - a receipt signature error preserves the original body and does not grant a manual replay
+  ---
+  duration_ms: 1.273
+  type: 'test'
+  ...
+# Subtest: malformed action successes and wrong redemption items remain uncertain
+    # Subtest: imprint
+    ok 1 - imprint
+      ---
+      duration_ms: 1.1253
+      type: 'test'
+      ...
+    # Subtest: redeem
+    ok 2 - redeem
+      ---
+      duration_ms: 1.1703
+      type: 'test'
+      ...
+    # Subtest: title
+    ok 3 - title
+      ---
+      duration_ms: 1.191
+      type: 'test'
+      ...
+    1..3
+ok 389 - malformed action successes and wrong redemption items remain uncertain
+  ---
+  duration_ms: 3.9593
+  type: 'test'
+  ...
+# Subtest: late A-to-B-to-A projections cannot replace the new panel even when abort is ignored
+ok 390 - late A-to-B-to-A projections cannot replace the new panel even when abort is ignored
+  ---
+  duration_ms: 1.2024
+  type: 'test'
+  ...
+# Subtest: late successful and definite-failed writes from a prior epoch leave the pending warning owned by the new A panel
+    # Subtest: success
+    ok 1 - success
+      ---
+      duration_ms: 2.3126
+      type: 'test'
+      ...
+    # Subtest: failure
+    ok 2 - failure
+      ---
+      duration_ms: 0.8275
+      type: 'test'
+      ...
+    1..2
+ok 391 - late successful and definite-failed writes from a prior epoch leave the pending warning owned by the new A panel
+  ---
+  duration_ms: 3.5689
+  type: 'test'
+  ...
+# Subtest: a late receipt from a previous epoch cannot unlock a newly opened A workshop
+ok 392 - a late receipt from a previous epoch cannot unlock a newly opened A workshop
+  ---
+  duration_ms: 2.7309
+  type: 'test'
+  ...
+# Subtest: older revisions mismatched identities and superseded reads keep the latest valid projection
+ok 393 - older revisions mismatched identities and superseded reads keep the latest valid projection
+  ---
+  duration_ms: 1.1789
+  type: 'test'
+  ...
+# Subtest: a changed quote invalidates confirmation and a higher live revision blocks receipt acknowledgement until refreshed
+ok 394 - a changed quote invalidates confirmation and a higher live revision blocks receipt acknowledgement until refreshed
+  ---
+  duration_ms: 2.2817
+  type: 'test'
+  ...
+# Subtest: read-only or stale data blocks same-ID recovery even after a not-found receipt
+ok 395 - read-only or stale data blocks same-ID recovery even after a not-found receipt
+  ---
+  duration_ms: 1.4246
+  type: 'test'
+  ...
+# Subtest: stored requests with foreign identity or altered allowed fields are not replayable
+ok 396 - stored requests with foreign identity or altered allowed fields are not replayable
+  ---
+  duration_ms: 6.3501
+  type: 'test'
+  ...
+# Subtest: unknown workshop recovery is revealed only once per pending operation and polling preserves user focus and scroll
+ok 397 - unknown workshop recovery is revealed only once per pending operation and polling preserves user focus and scroll
+  ---
+  duration_ms: 18.9216
+  type: 'test'
+  ...
+# Subtest: queued workshop recovery cannot steal focus after dispose context change or detachment even if RAF cancellation is ignored
+    # Subtest: dispose
+    ok 1 - dispose
+      ---
+      duration_ms: 4.1308
+      type: 'test'
+      ...
+    # Subtest: context
+    ok 2 - context
+      ---
+      duration_ms: 3.3766
+      type: 'test'
+      ...
+    # Subtest: detached
+    ok 3 - detached
+      ---
+      duration_ms: 4.8479
+      type: 'test'
+      ...
+    1..3
+ok 398 - queued workshop recovery cannot steal focus after dispose context change or detachment even if RAF cancellation is ignored
+  ---
+  duration_ms: 12.8636
+  type: 'test'
+  ...
+# Subtest: normal confirmation defaults to cancel and cancellation sends nothing; locked items and titles stay disabled
+ok 399 - normal confirmation defaults to cancel and cancellation sends nothing; locked items and titles stay disabled
+  ---
+  duration_ms: 3.6382
+  type: 'test'
+  ...
+# Subtest: coerced or unsafe costs and ledger amounts never count as a matching successful operation
+ok 400 - coerced or unsafe costs and ledger amounts never count as a matching successful operation
+  ---
+  duration_ms: 6.2024
+  type: 'test'
+  ...
+# Subtest: cancelling original-ID recovery and using Back return focus to the original retry button without another POST
+ok 401 - cancelling original-ID recovery and using Back return focus to the original retry button without another POST
+  ---
+  duration_ms: 10.1504
+  type: 'test'
+  ...
+# Subtest: casts wait for the real actor marker and start the VFX release phase once
+ok 402 - casts wait for the real actor marker and start the VFX release phase once
+  ---
+  duration_ms: 5.7619
+  type: 'test'
+  ...
+# Subtest: all four directions retain the same projected body height and mirror the source once
+ok 403 - all four directions retain the same projected body height and mirror the source once
+  ---
+  duration_ms: 2.5097
+  type: 'test'
+  ...
+# Subtest: periodic hits use actual targets and impact presentation without any actor attack
+ok 404 - periodic hits use actual targets and impact presentation without any actor attack
+  ---
+  duration_ms: 0.4372
+  type: 'test'
+  ...
+# Subtest: targetless trap casts place a caster ring and never invent an enemy impact
+ok 405 - targetless trap casts place a caster ring and never invent an enemy impact
+  ---
+  duration_ms: 0.5702
+  type: 'test'
+  ...
+# Subtest: expired, previous-room, unknown-live-skill and missing-target traces do not animate
+ok 406 - expired, previous-room, unknown-live-skill and missing-target traces do not animate
+  ---
+  duration_ms: 0.3718
+  type: 'test'
+  ...
+# Subtest: a real snapshot target may wait for sprites without changing the committed timestamp
+ok 407 - a real snapshot target may wait for sprites without changing the committed timestamp
+  ---
+  duration_ms: 0.6115
+  type: 'test'
+  ...
+# Subtest: asset waits expire on the real clock and discard a room that changes during loading
+ok 408 - asset waits expire on the real clock and discard a room that changes during loading
+  ---
+  duration_ms: 0.8469
+  type: 'test'
+  ...
+# Subtest: context and actor generation changes cancel a marker wait
+ok 409 - context and actor generation changes cancel a marker wait
+  ---
+  duration_ms: 1.0645
+  type: 'test'
+  ...
+# Subtest: hidden and destroyed scenes cancel pending work and do not restart an actor
+ok 410 - hidden and destroyed scenes cancel pending work and do not restart an actor
+  ---
+  duration_ms: 0.6858
+  type: 'test'
+  ...
+# Subtest: casts are bounded by a single actor sequence while later effects do not restart it
+ok 411 - casts are bounded by a single actor sequence while later effects do not restart it
+  ---
+  duration_ms: 0.6255
+  type: 'test'
+  ...
+# Subtest: replaying an accepted trace after clear never replays the actor or VFX
+ok 412 - replaying an accepted trace after clear never replays the actor or VFX
+  ---
+  duration_ms: 1.0024
+  type: 'test'
+  ...
+# Subtest: an externally restarted actor clip cannot release a stale token
+ok 413 - an externally restarted actor clip cannot release a stale token
+  ---
+  duration_ms: 0.289
+  type: 'test'
+  ...
+# Subtest: native markers and origins win without fetching any fallback
+ok 414 - native markers and origins win without fetching any fallback
+  ---
+  duration_ms: 0.1209
+  type: 'test'
+  ...
+# Subtest: a missing authored marker is never replaced by duration/2
+ok 415 - a missing authored marker is never replaced by duration/2
+  ---
+  duration_ms: 0.8345
+  type: 'test'
+  ...
+# Subtest: reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation
+ok 416 - reviewed fallback requires matching metadata, image bytes and current frame geometry without mutation
+  ---
+  duration_ms: 7.2939
+  type: 'test'
+  ...
+# Subtest: stale asset or metadata SHA rejects the fallback
+ok 417 - stale asset or metadata SHA rejects the fallback
+  ---
+  duration_ms: 2.2724
+  type: 'test'
+  ...
+# Subtest: source frame changes and a conflicting native marker reject stale supplemental points
+ok 418 - source frame changes and a conflicting native marker reject stale supplemental points
+  ---
+  duration_ms: 0.7068
+  type: 'test'
+  ...
+# Subtest: cross-origin profile asset URLs are never fetched
+ok 419 - cross-origin profile asset URLs are never fetched
+  ---
+  duration_ms: 0.3359
+  type: 'test'
+  ...
+# Subtest: passing independent mode retains matching producer hashes; received-only events never claim browser playback
+ok 420 - passing independent mode retains matching producer hashes; received-only events never claim browser playback
+  ---
+  duration_ms: 14.5169
+  type: 'test'
+  ...
+# Subtest: stale mode sources and mismatched target observations fail closed
+ok 421 - stale mode sources and mismatched target observations fail closed
+  ---
+  duration_ms: 1.3808
+  type: 'test'
+  ...
+# Subtest: a real deterministic projection may prove drawing but cannot prove a committed write
+ok 422 - a real deterministic projection may prove drawing but cannot prove a committed write
+  ---
+  duration_ms: 1.0305
+  type: 'test'
+  ...
+# Subtest: Atlas evidence binds committed revision, run identity and real release draw before adding all four layers
+ok 423 - Atlas evidence binds committed revision, run identity and real release draw before adding all four layers
+  ---
+  duration_ms: 0.773
+  type: 'test'
+  ...
+# Subtest: accepts a committed cast and forwards presentation only
+ok 424 - accepts a committed cast and forwards presentation only
+  ---
+  duration_ms: 1.6267
+  type: 'test'
+  ...
+# Subtest: rejects summaries, synthetic sources, and unsupported versions
+ok 425 - rejects summaries, synthetic sources, and unsupported versions
+  ---
+  duration_ms: 0.2058
+  type: 'test'
+  ...
+# Subtest: requires an exact account, realm, character, and dispatch context
+ok 426 - requires an exact account, realm, character, and dispatch context
+  ---
+  duration_ms: 0.1824
+  type: 'test'
+  ...
+# Subtest: rejects missing metadata, invalid revisions, and invalid timestamps
+ok 427 - rejects missing metadata, invalid revisions, and invalid timestamps
+  ---
+  duration_ms: 0.1782
+  type: 'test'
+  ...
+# Subtest: rejects invalid coordinates, directions, body sizes, targets, and seed
+ok 428 - rejects invalid coordinates, directions, body sizes, targets, and seed
+  ---
+  duration_ms: 0.8408
+  type: 'test'
+  ...
+# Subtest: rejects expired and implausibly future events
+ok 429 - rejects expired and implausibly future events
+  ---
+  duration_ms: 0.2149
+  type: 'test'
+  ...
+# Subtest: rejects unknown skill IDs before onCast or player.play
+ok 430 - rejects unknown skill IDs before onCast or player.play
+  ---
+  duration_ms: 0.3182
+  type: 'test'
+  ...
+# Subtest: explicit skill allowlist can narrow the player catalog
+ok 431 - explicit skill allowlist can narrow the player catalog
+  ---
+  duration_ms: 0.1966
+  type: 'test'
+  ...
+# Subtest: prevents duplicate events while asset loading and after acceptance
+ok 432 - prevents duplicate events while asset loading and after acceptance
+  ---
+  duration_ms: 0.2582
+  type: 'test'
+  ...
+# Subtest: permits distinct events in one revision and rejects lower revisions
+ok 433 - permits distinct events in one revision and rejects lower revisions
+  ---
+  duration_ms: 0.2641
+  type: 'test'
+  ...
+# Subtest: simultaneously admitted immediate casts retain their accepted outcomes
+ok 434 - simultaneously admitted immediate casts retain their accepted outcomes
+  ---
+  duration_ms: 0.2613
+  type: 'test'
+  ...
+# Subtest: context change aborts an authored release hook without starting the old cast
+ok 435 - context change aborts an authored release hook without starting the old cast
+  ---
+  duration_ms: 0.2452
+  type: 'test'
+  ...
+# Subtest: late asset completion cannot render after switching characters
+ok 436 - late asset completion cannot render after switching characters
+  ---
+  duration_ms: 0.1497
+  type: 'test'
+  ...
+# Subtest: reapplying the same context preserves replay protection and animations
+ok 437 - reapplying the same context preserves replay protection and animations
+  ---
+  duration_ms: 0.1357
+  type: 'test'
+  ...
+# Subtest: context changes reset dispatch revision and seen IDs
+ok 438 - context changes reset dispatch revision and seen IDs
+  ---
+  duration_ms: 0.2718
+  type: 'test'
+  ...
+# Subtest: event expiry during a release hook prevents playback
+ok 439 - event expiry during a release hook prevents playback
+  ---
+  duration_ms: 0.142
+  type: 'test'
+  ...
+# Subtest: canStart rejects an event that ages out while textures load
+ok 440 - canStart rejects an event that ages out while textures load
+  ---
+  duration_ms: 0.1037
+  type: 'test'
+  ...
+# Subtest: a newer pending revision prevents stale cast admission
+ok 441 - a newer pending revision prevents stale cast admission
+  ---
+  duration_ms: 0.1
+  type: 'test'
+  ...
+# Subtest: onCast may supply authored geometry but cannot change the skill ID
+ok 442 - onCast may supply authored geometry but cannot change the skill ID
+  ---
+  duration_ms: 0.6179
+  type: 'test'
+  ...
+# Subtest: invalid hook geometry and hook failures do not reach the player
+ok 443 - invalid hook geometry and hook failures do not reach the player
+  ---
+  duration_ms: 0.2303
+  type: 'test'
+  ...
+# Subtest: a rejected player result does not advance the accepted revision or consume an ID
+ok 444 - a rejected player result does not advance the accepted revision or consume an ID
+  ---
+  duration_ms: 0.168
+  type: 'test'
+  ...
+# Subtest: bounded replay memory rejects overload instead of evicting recent IDs
+ok 445 - bounded replay memory rejects overload instead of evicting recent IDs
+  ---
+  duration_ms: 0.1698
+  type: 'test'
+  ...
+# Subtest: clear cancels playback while retaining accepted event replay protection
+ok 446 - clear cancels playback while retaining accepted event replay protection
+  ---
+  duration_ms: 0.1453
+  type: 'test'
+  ...
+# Subtest: destroy is idempotent and rejects all further events
+ok 447 - destroy is idempotent and rejects all further events
+  ---
+  duration_ms: 0.1016
+  type: 'test'
+  ...
+# Subtest: without an active dispatch context, no event can play
+ok 448 - without an active dispatch context, no event can play
+  ---
+  duration_ms: 0.1076
+  type: 'test'
+  ...
+# Subtest: preview server is read-only and rejects traversal and out-of-root links
+ok 449 - preview server is read-only and rejects traversal and out-of-root links
+  ---
+  duration_ms: 52.5403
+  type: 'test'
+  ...
+# Subtest: an authored release presentation starts at its phase without counting the actor windup twice
+ok 450 - an authored release presentation starts at its phase without counting the actor windup twice
+  ---
+  duration_ms: 0.2708
+  type: 'test'
+  ...
+# Subtest: presentation timing cannot revive an expired real event
+ok 451 - presentation timing cannot revive an expired real event
+  ---
+  duration_ms: 0.164
+  type: 'test'
+  ...
+# Subtest: placement presentation is separate from caller-supplied event timing
+ok 452 - placement presentation is separate from caller-supplied event timing
+  ---
+  duration_ms: 0.1272
+  type: 'test'
+  ...
+# Subtest: raw presentation fields are ignored without a trusted presentation hook
+ok 453 - raw presentation fields are ignored without a trusted presentation hook
+  ---
+  duration_ms: 0.0794
+  type: 'test'
+  ...
+# Subtest: rejects invalid presentation hook clocks and modes
+ok 454 - rejects invalid presentation hook clocks and modes
+  ---
+  duration_ms: 0.271
+  type: 'test'
+  ...
+# Subtest: committed effects use their own hook and do not replay the actor attack
+ok 455 - committed effects use their own hook and do not replay the actor attack
+  ---
+  duration_ms: 0.1678
+  type: 'test'
+  ...
+# Subtest: one-second committed effects default to a fresh impact clock and retain replay checks
+ok 456 - one-second committed effects default to a fresh impact clock and retain replay checks
+  ---
+  duration_ms: 0.1938
+  type: 'test'
+  ...
+# Subtest: context switching cancels an awaited effect hook as well as cast hooks
+ok 457 - context switching cancels an awaited effect hook as well as cast hooks
+  ---
+  duration_ms: 0.1529
+  type: 'test'
+  ...
+# Subtest: an effect hook cannot request a new full cast presentation
+ok 458 - an effect hook cannot request a new full cast presentation
+  ---
+  duration_ms: 0.0918
+  type: 'test'
+  ...
+# Subtest: all implemented identities have explicit cast semantics; passive and planned entries never become casts
+ok 459 - all implemented identities have explicit cast semantics; passive and planned entries never become casts
+  ---
+  duration_ms: 6.7093
+  type: 'test'
+  ...
+# Subtest: same visual family does not override real damage, summon, trap or counter mechanics
+ok 460 - same visual family does not override real damage, summon, trap or counter mechanics
+  ---
+  duration_ms: 0.1856
+  type: 'test'
+  ...
+# Subtest: mixed heal attacks, real ally targets and revival conditions remain explicit
+ok 461 - mixed heal attacks, real ally targets and revival conditions remain explicit
+  ---
+  duration_ms: 0.1112
+  type: 'test'
+  ...
+# Subtest: evidence stays individual, layer-specific and mode-specific; source labels are never promoted
+ok 462 - evidence stays individual, layer-specific and mode-specific; source labels are never promoted
+  ---
+  duration_ms: 3.3598
+  type: 'test'
+  ...
+# Subtest: stale, unfinished, unknown/planned or fingerprint-free evidence cannot make coverage green
+ok 463 - stale, unfinished, unknown/planned or fingerprint-free evidence cannot make coverage green
+  ---
+  duration_ms: 2.1026
+  type: 'test'
+  ...
+# Subtest: catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+ok 464 - catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+  ---
+  duration_ms: 3.5584
+  type: 'test'
+  ...
+# Subtest: all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+ok 465 - all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+  ---
+  duration_ms: 149.2604
+  type: 'test'
+  ...
+# Subtest: clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+ok 466 - clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+  ---
+  duration_ms: 11.4033
+  type: 'test'
+  ...
+# Subtest: directional projectiles actually travel toward the selected direction at a common body scale
+ok 467 - directional projectiles actually travel toward the selected direction at a common body scale
+  ---
+  duration_ms: 0.3626
+  type: 'test'
+  ...
+# Subtest: pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+ok 468 - pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+  ---
+  duration_ms: 2.271
+  type: 'test'
+  ...
+# Subtest: damaging shield and time skills retain a visible target impact rather than only a caster ornament
+ok 469 - damaging shield and time skills retain a visible target impact rather than only a caster ornament
+  ---
+  duration_ms: 0.5693
+  type: 'test'
+  ...
+# Subtest: beasts and summons stay upright in every direction and mirror only when traveling left
+ok 470 - beasts and summons stay upright in every direction and mirror only when traveling left
+  ---
+  duration_ms: 2.9613
+  type: 'test'
+  ...
+# Subtest: draw plans use valid atlas rectangles and leave the canvas save stack balanced
+ok 471 - draw plans use valid atlas rectangles and leave the canvas save stack balanced
+  ---
+  duration_ms: 0.5444
+  type: 'test'
+  ...
+# Subtest: clear prevents a cast waiting on an atlas from reappearing after character changes
+ok 472 - clear prevents a cast waiting on an atlas from reappearing after character changes
+  ---
+  duration_ms: 1.6345
+  type: 'test'
+  ...
+# Subtest: a later manual frame supersedes an earlier atlas load without stale redraw
+ok 473 - a later manual frame supersedes an earlier atlas load without stale redraw
+  ---
+  duration_ms: 1.2094
+  type: 'test'
+  ...
+# Subtest: player capacity bounds concurrent casts and reuses only one atlas load per class
+ok 474 - player capacity bounds concurrent casts and reuses only one atlas load per class
+  ---
+  duration_ms: 1.0359
+  type: 'test'
+  ...
+# Subtest: invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+ok 475 - invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+  ---
+  duration_ms: 3.7076
+  type: 'test'
+  ...
+# Subtest: destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+ok 476 - destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+  ---
+  duration_ms: 0.8756
+  type: 'test'
+  ...
+# Subtest: destroy also cancels a manual frame awaiting its atlas without reporting an application error
+ok 477 - destroy also cancels a manual frame awaiting its atlas without reporting an application error
+  ---
+  duration_ms: 0.607
+  type: 'test'
+  ...
+# Subtest: hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+ok 478 - hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+  ---
+  duration_ms: 1.1712
+  type: 'test'
+  ...
+# Subtest: late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+ok 479 - late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+  ---
+  duration_ms: 0.7099
+  type: 'test'
+  ...
+# Subtest: recorded passive hits render only actual targets without another summon or caster charge
+ok 480 - recorded passive hits render only actual targets without another summon or caster charge
+  ---
+  duration_ms: 0.4601
+  type: 'test'
+  ...
+# Subtest: trap placement has no remote enemy impact and remains independent of unknown target coordinates
+ok 481 - trap placement has no remote enemy impact and remains independent of unknown target coordinates
+  ---
+  duration_ms: 0.2927
+  type: 'test'
+  ...
+# Subtest: release-aligned playback uses effective duration including reduced motion
+ok 482 - release-aligned playback uses effective duration including reduced motion
+  ---
+  duration_ms: 1.3901
+  type: 'test'
+  ...
+# Subtest: impact and placement clips are bounded and account for asset loading and presentation delay
+ok 483 - impact and placement clips are bounded and account for asset loading and presentation delay
+  ---
+  duration_ms: 0.6621
+  type: 'test'
+  ...
+# Subtest: trap placement stays centered on the supplied foot point at every body scale and facing
+ok 484 - trap placement stays centered on the supplied foot point at every body scale and facing
+  ---
+  duration_ms: 0.5465
+  type: 'test'
+  ...
+# Subtest: non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+ok 485 - non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+  ---
+  duration_ms: 1.3033
+  type: 'test'
+  ...
+# Subtest: ancillary support on a direct attack has support geometry only at the supplied beneficiary
+ok 486 - ancillary support on a direct attack has support geometry only at the supplied beneficiary
+  ---
+  duration_ms: 0.5664
+  type: 'test'
+  ...
+# (node:30668) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: merged Atlas observation reports actual paid or free mana without changing native effects, RNG or rewards
+ok 487 - merged Atlas observation reports actual paid or free mana without changing native effects, RNG or rewards
+  ---
+  duration_ms: 39.315
+  type: 'test'
+  ...
+# Subtest: Star Ring v1 uncached pure scene never labels forecast VFX as a committed event
+ok 488 - Star Ring v1 uncached pure scene never labels forecast VFX as a committed event
+  ---
+  duration_ms: 112.2879
+  type: 'test'
+  ...
+# Subtest: Star Ring v2 uncached pure scene never labels forecast VFX as a committed event
+ok 489 - Star Ring v2 uncached pure scene never labels forecast VFX as a committed event
+  ---
+  duration_ms: 86.4123
+  type: 'test'
+  ...
+# Subtest: Star Ring v3 uncached pure scene never labels forecast VFX as a committed event
+ok 490 - Star Ring v3 uncached pure scene never labels forecast VFX as a committed event
+  ---
+  duration_ms: 90.0812
+  type: 'test'
+  ...
+# Subtest: boss receipt player consumes actual action casts and final-hit reflection effects outside actions in order
+ok 491 - boss receipt player consumes actual action casts and final-hit reflection effects outside actions in order
+  ---
+  duration_ms: 2.2672
+  type: 'test'
+  ...
+# Subtest: old boss damage summaries never become guessed skill events
+ok 492 - old boss damage summaries never become guessed skill events
+  ---
+  duration_ms: 0.6545
+  type: 'test'
+  ...
+# Subtest: boss context changing during receipt preparation prevents delayed VFX and cleans the layer
+ok 493 - boss context changing during receipt preparation prevents delayed VFX and cleans the layer
+  ---
+  duration_ms: 3.0426
+  type: 'test'
+  ...
+# Subtest: boss context changing while the optional module loads never creates a stale canvas
+ok 494 - boss context changing while the optional module loads never creates a stale canvas
+  ---
+  duration_ms: 0.6915
+  type: 'test'
+  ...
+# Subtest: complete PK replay keeps support/summon/pulse receipts distinct from attacks and shows only real HP loss
+ok 495 - complete PK replay keeps support/summon/pulse receipts distinct from attacks and shows only real HP loss
+  ---
+  duration_ms: 9.6598
+  type: 'test'
+  ...
+# Subtest: a PK support cast with a simultaneous real periodic hit shows that hit without a caster attack pose
+ok 496 - a PK support cast with a simultaneous real periodic hit shows that hit without a caster attack pose
+  ---
+  duration_ms: 1.1368
+  type: 'test'
+  ...
+# Subtest: all 184 canonical legacy identities dispatch into the real player using only their explicit descriptor
+ok 497 - all 184 canonical legacy identities dispatch into the real player using only their explicit descriptor
+  ---
+  duration_ms: 23.0579
+  type: 'test'
+  ...
+# Subtest: legacy records and cosmetic loop events never acquire a guessed skill identity
+ok 498 - legacy records and cosmetic loop events never acquire a guessed skill identity
+  ---
+  duration_ms: 0.6032
+  type: 'test'
+  ...
+# Subtest: deterministic star ring projections are explicit opt-in and retain their source in diagnostics
+ok 499 - deterministic star ring projections are explicit opt-in and retain their source in diagnostics
+  ---
+  duration_ms: 0.8901
+  type: 'test'
+  ...
+# Subtest: missing or malformed actor/target geometry never receives a fallback target
+ok 500 - missing or malformed actor/target geometry never receives a fallback target
+  ---
+  duration_ms: 0.1788
+  type: 'test'
+  ...
+# Subtest: support spells appear on the exact healed or guarded teammate, not on the caster
+ok 501 - support spells appear on the exact healed or guarded teammate, not on the caster
+  ---
+  duration_ms: 0.8873
+  type: 'test'
+  ...
+# Subtest: mixed direct damage and sustain keep the attack on enemies and the healing on actual beneficiaries
+ok 502 - mixed direct damage and sustain keep the attack on enemies and the healing on actual beneficiaries
+  ---
+  duration_ms: 0.2234
+  type: 'test'
+  ...
+# Subtest: only the truly non-damaging contract selects summon mode; native summon-family damage remains full
+ok 503 - only the truly non-damaging contract selects summon mode; native summon-family damage remains full
+  ---
+  duration_ms: 0.0956
+  type: 'test'
+  ...
+# Subtest: a real periodic effect is impact-only and never restarts a cast
+ok 504 - a real periodic effect is impact-only and never restarts a cast
+  ---
+  duration_ms: 0.6337
+  type: 'test'
+  ...
+# Subtest: repeated aggregate hit links are admitted once, including after clearing a visible clip
+ok 505 - repeated aggregate hit links are admitted once, including after clearing a visible clip
+  ---
+  duration_ms: 0.6514
+  type: 'test'
+  ...
+# Subtest: an actor/context switch during atlas loading cancels the pending event without later drawing
+ok 506 - an actor/context switch during atlas loading cancels the pending event without later drawing
+  ---
+  duration_ms: 0.5919
+  type: 'test'
+  ...
+# Subtest: hide, resize and destroy clean up effects and preserve receipt admission
+ok 507 - hide, resize and destroy clean up effects and preserve receipt admission
+  ---
+  duration_ms: 0.8806
+  type: 'test'
+  ...
+# Subtest: reduced motion remains visible and bounded for attack, support, summon and passive receipt modes
+ok 508 - reduced motion remains visible and bounded for attack, support, summon and passive receipt modes
+  ---
+  duration_ms: 0.702
+  type: 'test'
+  ...
+# Subtest: DOM projection respects visible contain geometry and CSS scaling without using placeholder coordinates
+ok 509 - DOM projection respects visible contain geometry and CSS scaling without using placeholder coordinates
+  ---
+  duration_ms: 0.488
+  type: 'test'
+  ...
+# Subtest: successful write trace follows its accepted scene and precedes the forced refresh
+ok 510 - successful write trace follows its accepted scene and precedes the forced refresh
+  ---
+  duration_ms: 3.9414
+  type: 'test'
+  ...
+# Subtest: a newer attached scene never rewrites the original committed trace revision
+ok 511 - a newer attached scene never rewrites the original committed trace revision
+  ---
+  duration_ms: 0.9951
+  type: 'test'
+  ...
+# Subtest: status is read-only presentation and never publishes a trace attached to a read
+ok 512 - status is read-only presentation and never publishes a trace attached to a read
+  ---
+  duration_ms: 0.7419
+  type: 'test'
+  ...
+# Subtest: a superseded write projection remains successful but its trace is not published
+ok 513 - a superseded write projection remains successful but its trace is not published
+  ---
+  duration_ms: 0.8421
+  type: 'test'
+  ...
+# Subtest: mismatched dispatch and impossible future trace revisions are not published
+ok 514 - mismatched dispatch and impossible future trace revisions are not published
+  ---
+  duration_ms: 1.8792
+  type: 'test'
+  ...
+# Subtest: stop may publish a committed trace and subscriber errors cannot undo the write receipt
+ok 515 - stop may publish a committed trace and subscriber errors cannot undo the write receipt
+  ---
+  duration_ms: 0.8099
+  type: 'test'
+  ...
+# Subtest: a context switch inside snapshot listeners prevents trace delivery from that request
+ok 516 - a context switch inside snapshot listeners prevents trace delivery from that request
+  ---
+  duration_ms: 1.1698
+  type: 'test'
+  ...
+# Subtest: v4 foreground sync publishes the accepted committed trace once without a redundant forced read
+ok 517 - v4 foreground sync publishes the accepted committed trace once without a redundant forced read
+  ---
+  duration_ms: 0.9607
+  type: 'test'
+  ...
+# Subtest: pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 518 - pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 4.8275
+  type: 'test'
+  ...
+# Subtest: snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 519 - snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 0.9429
+  type: 'test'
+  ...
+# Subtest: fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 520 - fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 0.9855
+  type: 'test'
+  ...
+# Subtest: piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+ok 521 - piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+  ---
+  duration_ms: 0.4917
+  type: 'test'
+  ...
+# Subtest: volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 522 - volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 11.9086
+  type: 'test'
+  ...
+# Subtest: volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 523 - volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 10.9234
+  type: 'test'
+  ...
+# Subtest: volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 524 - volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 8.9288
+  type: 'test'
+  ...
+# Subtest: volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 525 - volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 21.8089
+  type: 'test'
+  ...
+# Subtest: lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 526 - lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 11.2293
+  type: 'test'
+  ...
+# Subtest: lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 527 - lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 11.3486
+  type: 'test'
+  ...
+# Subtest: lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 528 - lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 9.1234
+  type: 'test'
+  ...
+# Subtest: lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 529 - lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 24.5376
+  type: 'test'
+  ...
+# Subtest: volley primary contact follows its declared .57 impact phase even with a large actual target set
+ok 530 - volley primary contact follows its declared .57 impact phase even with a large actual target set
+  ---
+  duration_ms: 1.8999
+  type: 'test'
+  ...
+# Subtest: explicit single, pair and empty target sets never create an extra volley or lightning destination
+ok 531 - explicit single, pair and empty target sets never create an extra volley or lightning destination
+  ---
+  duration_ms: 0.6573
+  type: 'test'
+  ...
+# Subtest: exact duplicate destinations are normalized before volley and lightning distribution
+ok 532 - exact duplicate destinations are normalized before volley and lightning distribution
+  ---
+  duration_ms: 2.6491
+  type: 'test'
+  ...
+# Subtest: impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 533 - impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 1.5723
+  type: 'test'
+  ...
+# Subtest: reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 534 - reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 1.2787
+  type: 'test'
+  ...
+# Subtest: reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 535 - reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 1.3099
+  type: 'test'
+  ...
+# Subtest: impact and reduced-motion rendering honor empty and deduplicated actual target lists
+ok 536 - impact and reduced-motion rendering honor empty and deduplicated actual target lists
+  ---
+  duration_ms: 0.5904
+  type: 'test'
+  ...
+# Subtest: local support, trap placement and non-damaging summon never expand onto remote targets
+ok 537 - local support, trap placement and non-damaging summon never expand onto remote targets
+  ---
+  duration_ms: 1.3249
+  type: 'test'
+  ...
+# (node:26200) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: owner can switch away from and back into a snapshot expedition without clearing its lock or awarding ordinary idle EXP
+ok 538 - owner can switch away from and back into a snapshot expedition without clearing its lock or awarding ordinary idle EXP
+  ---
+  duration_ms: 48.7744
+  type: 'test'
+  ...
+# Subtest: short combat still locks character switching and foreign characters remain inaccessible
+ok 539 - short combat still locks character switching and foreign characters remain inaccessible
+  ---
+  duration_ms: 33.2045
+  type: 'test'
+  ...
+# Subtest: existing three-person lobby listing recognizes a long expedition instead of trying to load a nonexistent short-party row
+ok 540 - existing three-person lobby listing recognizes a long expedition instead of trying to load a nonexistent short-party row
+  ---
+  duration_ms: 32.8667
+  type: 'test'
+  ...
+# Subtest: only authenticated application actions expose expedition controls and currency stays bound
+ok 541 - only authenticated application actions expose expedition controls and currency stays bound
+  ---
+  duration_ms: 0.1996
+  type: 'test'
+  ...
+# Subtest: a completion link opens its exact owned character rewards read-only after switching, and rejects another account
+ok 542 - a completion link opens its exact owned character rewards read-only after switching, and rejects another account
+  ---
+  duration_ms: 61.9498
+  type: 'test'
+  ...
+# (node:55240) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: full twelve-hour expedition while playing repeated dungeons: all six combats and thirty reward receipts match an isolated expedition exactly
+ok 543 - full twelve-hour expedition while playing repeated dungeons: all six combats and thirty reward receipts match an isolated expedition exactly
+  ---
+  duration_ms: 866.5119
+  type: 'test'
+  ...
+# Subtest: full twelve-hour expedition while playing one daily tower and repeated dungeons: all six combats and thirty reward receipts match an isolated expedition exactly
+ok 544 - full twelve-hour expedition while playing one daily tower and repeated dungeons: all six combats and thirty reward receipts match an isolated expedition exactly
+  ---
+  duration_ms: 688.7781
+  type: 'test'
+  ...
+# Subtest: published v1 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+ok 545 - published v1 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+  ---
+  duration_ms: 80.243
+  type: 'test'
+  ...
+# Subtest: published v1 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+ok 546 - published v1 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+  ---
+  duration_ms: 121.1004
+  type: 'test'
+  ...
+# Subtest: published v2 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+ok 547 - published v2 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+  ---
+  duration_ms: 92.4895
+  type: 'test'
+  ...
+# Subtest: published v2 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+ok 548 - published v2 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+  ---
+  duration_ms: 123.0908
+  type: 'test'
+  ...
+# Subtest: published v3 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+ok 549 - published v3 running expedition permits the SAME three characters to create, join, finish dungeon without replacing its snapshot
+  ---
+  duration_ms: 77.3728
+  type: 'test'
+  ...
+# Subtest: published v3 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+ok 550 - published v3 running expedition permits the SAME three characters to create, join, finish tower without replacing its snapshot
+  ---
+  duration_ms: 122.3998
+  type: 'test'
+  ...
+# Subtest: unstarted expedition lobby cannot lend its seat; failed creation cannot damage either team
+ok 551 - unstarted expedition lobby cannot lend its seat; failed creation cannot damage either team
+  ---
+  duration_ms: 59.3925
+  type: 'test'
+  ...
+# Subtest: checkpoint during foreground combat awards EXP/items once without healing, changing live cooldowns, clearing the short lock or modifying either combat snapshot
+ok 552 - checkpoint during foreground combat awards EXP/items once without healing, changing live cooldowns, clearing the short lock or modifying either combat snapshot
+  ---
+  duration_ms: 88.8447
+  type: 'test'
+  ...
+# Subtest: expedition completes during a short battle, preserving its HP/MP, lock and last-settle time; short completion never resurrects an ended expedition
+ok 553 - expedition completes during a short battle, preserving its HP/MP, lock and last-settle time; short completion never resurrects an ended expedition
+  ---
+  duration_ms: 148.0361
+  type: 'test'
+  ...
+# Subtest: leaving the background expedition during foreground combat does not cancel, unlock or stop that battle
+ok 554 - leaving the background expedition during foreground combat does not cancel, unlock or stop that battle
+  ---
+  duration_ms: 123.7246
+  type: 'test'
+  ...
+# Subtest: cancel restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 555 - cancel restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 69.4201
+  type: 'test'
+  ...
+# Subtest: member-leave restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 556 - member-leave restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 58.9117
+  type: 'test'
+  ...
+# Subtest: lobby-expiry restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 557 - lobby-expiry restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 62.5601
+  type: 'test'
+  ...
+# Subtest: combat-leave restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 558 - combat-leave restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 58.2717
+  type: 'test'
+  ...
+# Subtest: delayed-combat-sweep restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 559 - delayed-combat-sweep restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 66.8847
+  type: 'test'
+  ...
+# Subtest: defeat restores the background reservation without ending the expedition or awarding ordinary idle EXP
+ok 560 - defeat restores the background reservation without ending the expedition or awarding ordinary idle EXP
+  ---
+  duration_ms: 70.5206
+  type: 'test'
+  ...
+# Subtest: concurrent foreground turns and background checkpoint catches preserve both receipts and can recover after optimistic conflicts
+ok 561 - concurrent foreground turns and background checkpoint catches preserve both receipts and can recover after optimistic conflicts
+  ---
+  duration_ms: 174.8776
+  type: 'test'
+  ...
+# Subtest: two concurrent short-party creations can borrow a running slot only once and never leave an orphan room
+ok 562 - two concurrent short-party creations can borrow a running slot only once and never leave an orphan room
+  ---
+  duration_ms: 77.2262
+  type: 'test'
+  ...
+# Subtest: a ready short lobby can auto-start at its deadline while its members remain on the same background expedition
+ok 563 - a ready short lobby can auto-start at its deadline while its members remain on the same background expedition
+  ---
+  duration_ms: 73.8578
+  type: 'test'
+  ...
+# Subtest: expedition completion while the short party is still recruiting preserves that lobby and allows a subsequent normal start
+ok 564 - expedition completion while the short party is still recruiting preserves that lobby and allows a subsequent normal start
+  ---
+  duration_ms: 209.0973
+  type: 'test'
+  ...
+# (node:51504) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: App and Service scene/receipt resolve captured realm and authenticated current actor without behavior or gameplay writes
+ok 565 - App and Service scene/receipt resolve captured realm and authenticated current actor without behavior or gameplay writes
+  ---
+  duration_ms: 129.4373
+  type: 'test'
+  ...
+# Subtest: All six routes require authorization, matching realm header/body and explicit selected character before any write
+ok 566 - All six routes require authorization, matching realm header/body and explicit selected character before any write
+  ---
+  duration_ms: 98.5423
+  type: 'test'
+  ...
+# Subtest: Selected old-character report is read-only while identity stays on the current actor
+ok 567 - Selected old-character report is read-only while identity stays on the current actor
+  ---
+  duration_ms: 105.6592
+  type: 'test'
+  ...
+# Subtest: Frozen realm scene/receipt remain pure across due deadlines and all four mutations are fenced
+ok 568 - Frozen realm scene/receipt remain pure across due deadlines and all four mutations are fenced
+  ---
+  duration_ms: 92.3399
+  type: 'test'
+  ...
+# Subtest: Disconnected purchases recover exact original result with trusted App/Service namespaces and no second debit
+ok 569 - Disconnected purchases recover exact original result with trusted App/Service namespaces and no second debit
+  ---
+  duration_ms: 89.6022
+  type: 'test'
+  ...
+# (node:51948) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Star Ring v1 scene never settles a due stage or twelve-hour completion
+ok 570 - Star Ring v1 scene never settles a due stage or twelve-hour completion
+  ---
+  duration_ms: 157.8609
+  type: 'test'
+  ...
+# Subtest: Star Ring v2 scene never settles a due stage or twelve-hour completion
+ok 571 - Star Ring v2 scene never settles a due stage or twelve-hour completion
+  ---
+  duration_ms: 138.8226
+  type: 'test'
+  ...
+# Subtest: Star Ring v3 scene never settles a due stage or twelve-hour completion
+ok 572 - Star Ring v3 scene never settles a due stage or twelve-hour completion
+  ---
+  duration_ms: 122.5488
+  type: 'test'
+  ...
+# Subtest: Expired lobby remains persisted and frozen worlds allow only pure scene and receipt evidence
+ok 573 - Expired lobby remains persisted and frozen worlds allow only pure scene and receipt evidence
+  ---
+  duration_ms: 63.6123
+  type: 'test'
+  ...
+# Subtest: Pure departure controls reflect original active character, HP, revival, presence, daily and guardian-trade gates
+ok 574 - Pure departure controls reflect original active character, HP, revival, presence, daily and guardian-trade gates
+  ---
+  duration_ms: 88.9081
+  type: 'test'
+  ...
+# Subtest: Same-account old-character reports preserve current actor identity and reject foreign or nonparticipant recipients
+ok 575 - Same-account old-character reports preserve current actor identity and reject foreign or nonparticipant recipients
+  ---
+  duration_ms: 65.4155
+  type: 'test'
+  ...
+# Subtest: Pure scene keeps running membership and live dungeon HP/MP separate
+ok 576 - Pure scene keeps running membership and live dungeon HP/MP separate
+  ---
+  duration_ms: 96.357
+  type: 'test'
+  ...
+# Subtest: Pure scene keeps running membership and live tower HP/MP separate
+ok 577 - Pure scene keeps running membership and live tower HP/MP separate
+  ---
+  duration_ms: 98.5906
+  type: 'test'
+  ...
+# Subtest: Shop projection uses original currencies, prices and already-owned zero-cost rules without inventory repair
+ok 578 - Shop projection uses original currencies, prices and already-owned zero-cost rules without inventory repair
+  ---
+  duration_ms: 44.4075
+  type: 'test'
+  ...
+# (node:35040) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: Scoped create and every original action store complete typed results with the original authority
+ok 579 - Scoped create and every original action store complete typed results with the original authority
+  ---
+  duration_ms: 107.4261
+  type: 'test'
+  ...
+# Subtest: Action receipts reject a changed ready flag, tactic, party or kind; simultaneous originals commit once
+ok 580 - Action receipts reject a changed ready flag, tactic, party or kind; simultaneous originals commit once
+  ---
+  duration_ms: 67.4088
+  type: 'test'
+  ...
+# Subtest: Shop recovers original random gear after sale and class change without reroll or a second cost
+ok 581 - Shop recovers original random gear after sale and class change without reroll or a second cost
+  ---
+  duration_ms: 55.1164
+  type: 'test'
+  ...
+# Subtest: Supplies, core exchange, already-owned cosmetic and null equip retain original costs and stored results
+ok 582 - Supplies, core exchange, already-owned cosmetic and null equip retain original costs and stored results
+  ---
+  duration_ms: 64.5131
+  type: 'test'
+  ...
+# Subtest: Missing and legacy-only evidence stays pure and never upgrades an original op-only row into a typed receipt
+ok 583 - Missing and legacy-only evidence stays pure and never upgrades an original op-only row into a typed receipt
+  ---
+  duration_ms: 56.1195
+  type: 'test'
+  ...
+# Subtest: Namespace, malformed payload and historical recipient cannot redirect a scoped mutation
+ok 584 - Namespace, malformed payload and historical recipient cannot redirect a scoped mutation
+  ---
+  duration_ms: 58.6911
+  type: 'test'
+  ...
+# Subtest: Corrupt receipt, altered original purchase and missing debit are rejected without reconstructing rewards
+ok 585 - Corrupt receipt, altered original purchase and missing debit are rejected without reconstructing rewards
+  ---
+  duration_ms: 55.7587
+  type: 'test'
+  ...
+# Subtest: Injected final-batch failure rolls back purchase, costs, equipment and new receipt together
+ok 586 - Injected final-batch failure rolls back purchase, costs, equipment and new receipt together
+  ---
+  duration_ms: 60.5729
+  type: 'test'
+  ...
+# Subtest: Switching current actor before final create authority prevents all its writes and receipt
+ok 587 - Switching current actor before final create authority prevents all its writes and receipt
+  ---
+  duration_ms: 45.5851
+  type: 'test'
+  ...
+# Subtest: Switching current actor before final shop authority prevents all its writes and receipt
+ok 588 - Switching current actor before final shop authority prevents all its writes and receipt
+  ---
+  duration_ms: 52.1874
+  type: 'test'
+  ...
+# Subtest: Switching current actor before final cosmetic authority prevents all its writes and receipt
+ok 589 - Switching current actor before final cosmetic authority prevents all its writes and receipt
+  ---
+  duration_ms: 49.1985
+  type: 'test'
+  ...
+# Subtest: Start preparation commits per original member, but a later actor switch rolls back departure and final receipt
+ok 590 - Start preparation commits per original member, but a later actor switch rolls back departure and final receipt
+  ---
+  duration_ms: 74.3984
+  type: 'test'
+  ...
+# Subtest: A scoped guard also stops the first preparatory write after an actor switch
+ok 591 - A scoped guard also stops the first preparatory write after an actor switch
+  ---
+  duration_ms: 45.6495
+  type: 'test'
+  ...
+# Subtest: Committed original checkpoint survives a later scoped failure; explicit same-ID retry cannot duplicate its rewards
+ok 592 - Committed original checkpoint survives a later scoped failure; explicit same-ID retry cannot duplicate its rewards
+  ---
+  duration_ms: 116.9755
+  type: 'test'
+  ...
+# (node:54800) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: v1 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 593 - v1 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 117.1965
+  type: 'test'
+  ...
+# Subtest: v2 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 594 - v2 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 78.9876
+  type: 'test'
+  ...
+# Subtest: v3 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 595 - v3 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 78.6564
+  type: 'test'
+  ...
+# Subtest: normal loadout and automatic validations still reject invalid configurations during expedition
+ok 596 - normal loadout and automatic validations still reject invalid configurations during expedition
+  ---
+  duration_ms: 69.5162
+  type: 'test'
+  ...
+# Subtest: new dungeon uses the changed skills, blocks edits in combat and restores expedition editing after ending
+ok 597 - new dungeon uses the changed skills, blocks edits in combat and restores expedition editing after ending
+  ---
+  duration_ms: 80.4494
+  type: 'test'
+  ...
+# Subtest: new tower uses the changed skills, blocks edits in combat and restores expedition editing after ending
+ok 598 - new tower uses the changed skills, blocks edits in combat and restores expedition editing after ending
+  ---
+  duration_ms: 85.0193
+  type: 'test'
+  ...
+# Subtest: fake membership cannot grant expedition skill edit permissions
+ok 599 - fake membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 83.2822
+  type: 'test'
+  ...
+# Subtest: left membership cannot grant expedition skill edit permissions
+ok 600 - left membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 102.1443
+  type: 'test'
+  ...
+# Subtest: finished membership cannot grant expedition skill edit permissions
+ok 601 - finished membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 75.657
+  type: 'test'
+  ...
+# Subtest: foreground membership cannot grant expedition skill edit permissions
+ok 602 - foreground membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 69.813
+  type: 'test'
+  ...
+# Subtest: skill edit rechecks finished race inside the atomic commit
+ok 603 - skill edit rechecks finished race inside the atomic commit
+  ---
+  duration_ms: 63.1122
+  type: 'test'
+  ...
+# Subtest: skill edit rechecks foreground race inside the atomic commit
+ok 604 - skill edit rechecks foreground race inside the atomic commit
+  ---
+  duration_ms: 73.4037
+  type: 'test'
+  ...
+# Subtest: manual casting and cancellation retain their original party locks
+ok 605 - manual casting and cancellation retain their original party locks
+  ---
+  duration_ms: 66.1667
+  type: 'test'
+  ...
+# Subtest: v1 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 606 - v1 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1014.5464
+  type: 'test'
+  ...
+# Subtest: v2 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 607 - v2 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1185.0886
+  type: 'test'
+  ...
+# Subtest: v3 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 608 - v3 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1364.1597
+  type: 'test'
+  ...
+# (node:23792) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: running v1, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 609 - running v1, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 656.6542
+  type: 'test'
+  ...
+# Subtest: running v1, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 610 - running v1, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 637.1725
+  type: 'test'
+  ...
+# Subtest: running v2, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 611 - running v2, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 559.0848
+  type: 'test'
+  ...
+# Subtest: running v2, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 612 - running v2, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 566.94
+  type: 'test'
+  ...
+# Subtest: running v3, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 613 - running v3, online: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 653.1018
+  type: 'test'
+  ...
+# Subtest: running v3, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+ok 614 - running v3, offline: next receipt tops up old checkpoints once; sold old gear and original receipts remain untouched
+  ---
+  duration_ms: 807.7634
+  type: 'test'
+  ...
+# Subtest: pre-guarantee legacy stages receive eight missing items, with rollback/retry keeping awards and catchup receipt atomic
+ok 615 - pre-guarantee legacy stages receive eight missing items, with rollback/retry keeping awards and catchup receipt atomic
+  ---
+  duration_ms: 279.5046
+  type: 'test'
+  ...
+# Subtest: completed and departed legacy histories do not get retroactive awards
+ok 616 - completed and departed legacy histories do not get retroactive awards
+  ---
+  duration_ms: 427.684
+  type: 'test'
+  ...
+# Subtest: volume gear retains exact combat stats, affixes, tradeability and conversion marker; only new reward buyback changes
+ok 617 - volume gear retains exact combat stats, affixes, tradeability and conversion marker; only new reward buyback changes
+  ---
+  duration_ms: 169.1777
+  type: 'test'
+  ...
+# Subtest: mixed old/new gear sells through real service at displayed prices once; long expedition IDs remain batch-sellable
+ok 618 - mixed old/new gear sells through real service at displayed prices once; long expedition IDs remain batch-sellable
+  ---
+  duration_ms: 158.9396
+  type: 'test'
+  ...
+# Subtest: five already-paid old stages catch up at final settlement without changing other rewards or paid-stage records
+ok 619 - five already-paid old stages catch up at final settlement without changing other rewards or paid-stage records
+  ---
+  duration_ms: 673.2655
+  type: 'test'
+  ...
+# (node:51028) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: new expeditions use v2 pools; a defeated species projects the exact next authored species while settlement remains server-only
+ok 620 - new expeditions use v2 pools; a defeated species projects the exact next authored species while settlement remains server-only
+  ---
+  duration_ms: 197.7977
+  type: 'test'
+  ...
+# Subtest: v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants
+ok 621 - v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants
+  ---
+  duration_ms: 671.4707
+  type: 'test'
+  ...
+# Subtest: five accounts depart once per character Taipei date; lobby does not consume quota
+ok 622 - five accounts depart once per character Taipei date; lobby does not consume quota
+  ---
+  duration_ms: 73.4936
+  type: 'test'
+  ...
+# Subtest: membership and leader authority checked; forbidden payload cannot provide power/rewards/clock
+ok 623 - membership and leader authority checked; forbidden payload cannot provide power/rewards/clock
+  ---
+  duration_ms: 58.2054
+  type: 'test'
+  ...
+# Subtest: server projection deterministic; same beats become checkpoint state and rewards only at boundary
+ok 624 - server projection deterministic; same beats become checkpoint state and rewards only at boundary
+  ---
+  duration_ms: 87.6243
+  type: 'test'
+  ...
+# Subtest: a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards
+ok 625 - a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards
+  ---
+  duration_ms: 64.2921
+  type: 'test'
+  ...
+# Subtest: offline twelve-hour catchup grants six stages once and canonical private completion once
+ok 626 - offline twelve-hour catchup grants six stages once and canonical private completion once
+  ---
+  duration_ms: 137.9724
+  type: 'test'
+  ...
+# Subtest: parallel catchup cannot duplicate ledger, equipment, inventory or completion DM
+ok 627 - parallel catchup cannot duplicate ledger, equipment, inventory or completion DM
+  ---
+  duration_ms: 164.7063
+  type: 'test'
+  ...
+# Subtest: leave keeps completed stages only, no refund, survivors continue and leader transfers
+ok 628 - leave keeps completed stages only, no refund, survivors continue and leader transfers
+  ---
+  duration_ms: 138.251
+  type: 'test'
+  ...
+# Subtest: idle disabled while running; completion resumes only from true end time; EXP preserves advancement gate
+ok 629 - idle disabled while running; completion resumes only from true end time; EXP preserves advancement gate
+  ---
+  duration_ms: 127.872
+  type: 'test'
+  ...
+# Subtest: advanced eligibility retains three distinct non-guard duties and all existing classes
+ok 630 - advanced eligibility retains three distinct non-guard duties and all existing classes
+  ---
+  duration_ms: 99.4693
+  type: 'test'
+  ...
+# Subtest: lobby expiry releases presence; cancellation never charges daily quota
+ok 631 - lobby expiry releases presence; cancellation never charges daily quota
+  ---
+  duration_ms: 56.7476
+  type: 'test'
+  ...
+# Subtest: Taipei quota uses start date; cross-midnight run still blocks second run and next day becomes eligible only when free
+ok 632 - Taipei quota uses start date; cross-midnight run still blocks second run and next day becomes eligible only when free
+  ---
+  duration_ms: 114.2446
+  type: 'test'
+  ...
+# Subtest: immutable snapshot survives changed live equipment/skills; own EXP baseline independent of teammate
+ok 633 - immutable snapshot survives changed live equipment/skills; own EXP baseline independent of teammate
+  ---
+  duration_ms: 58.1026
+  type: 'test'
+  ...
+# Subtest: shop is bound currency debit and request-id replay safe including concurrent purchases
+ok 634 - shop is bound currency debit and request-id replay safe including concurrent purchases
+  ---
+  duration_ms: 62.1653
+  type: 'test'
+  ...
+# Subtest: low level/unpromoted characters cannot enter
+ok 635 - low level/unpromoted characters cannot enter
+  ---
+  duration_ms: 34.7072
+  type: 'test'
+  ...
+# Subtest: all nine ten-level tiers require actual character level at create and join
+ok 636 - all nine ten-level tiers require actual character level at create and join
+  ---
+  duration_ms: 539.194
+  type: 'test'
+  ...
+# Subtest: Lv50 foundation roles work at their true level without unlocking high-level skills
+ok 637 - Lv50 foundation roles work at their true level without unlocking high-level skills
+  ---
+  duration_ms: 152.3607
+  type: 'test'
+  ...
+# Subtest: continuous waves still have real events after hour one and all six enemies are new
+ok 638 - continuous waves still have real events after hour one and all six enemies are new
+  ---
+  duration_ms: 63.1273
+  type: 'test'
+  ...
+# Subtest: queued tactic is not retroactive and persists per-stage when catching up offline
+ok 639 - queued tactic is not retroactive and persists per-stage when catching up offline
+  ---
+  duration_ms: 164.5058
+  type: 'test'
+  ...
+# Subtest: create request replay returns the same room, rejects changed config and survives response races
+ok 640 - create request replay returns the same room, rejects changed config and survives response races
+  ---
+  duration_ms: 39.0681
+  type: 'test'
+  ...
+# Subtest: mid-stage departure preserves exact earlier projected history
+ok 641 - mid-stage departure preserves exact earlier projected history
+  ---
+  duration_ms: 69.4132
+  type: 'test'
+  ...
+# Subtest: Lv40 entry works and Lv39 is rejected without spending quota
+ok 642 - Lv40 entry works and Lv39 is rejected without spending quota
+  ---
+  duration_ms: 74.9491
+  type: 'test'
+  ...
+# Subtest: advanced rewards improve tokens and independent gear chances without 100-percent scrolls
+ok 643 - advanced rewards improve tokens and independent gear chances without 100-percent scrolls
+  ---
+  duration_ms: 89.1552
+  type: 'test'
+  ...
+# Subtest: long presence reserves characters while same-owner characters can use other teams
+ok 644 - long presence reserves characters while same-owner characters can use other teams
+  ---
+  duration_ms: 73.557
+  type: 'test'
+  ...
+# Subtest: same owner cannot occupy two seats in one expedition, while each character quota stays separate
+ok 645 - same owner cannot occupy two seats in one expedition, while each character quota stays separate
+  ---
+  duration_ms: 51.0323
+  type: 'test'
+  ...
+# Subtest: species attacks have true venom, shield-break, mana drain, interrupts, cleave and cleansable curse
+ok 646 - species attacks have true venom, shield-break, mana drain, interrupts, cleave and cleansable curse
+  ---
+  duration_ms: 52.897
+  type: 'test'
+  ...
+# Subtest: run engine version is fixed and result snapshots keep equipment only once at departure
+ok 647 - run engine version is fixed and result snapshots keep equipment only once at departure
+  ---
+  duration_ms: 202.7341
+  type: 'test'
+  ...
+# Subtest: hourly catalog has twelve original monsters and twelve distinct maps with verified-only optional videos
+ok 648 - hourly catalog has twelve original monsters and twelve distinct maps with verified-only optional videos
+  ---
+  duration_ms: 0.393
+  type: 'test'
+  ...
+# Subtest: all twelve exact hourly boundaries switch scene, species and art while rewards stay at six two-hour checkpoints
+ok 649 - all twelve exact hourly boundaries switch scene, species and art while rewards stay at six two-hour checkpoints
+  ---
+  duration_ms: 469.084
+  type: 'test'
+  ...
+# Subtest: late offline twelve-hour settlement replays all twelve areas with no extra grants, quota or notifications
+ok 650 - late offline twelve-hour settlement replays all twelve areas with no extra grants, quota or notifications
+  ---
+  duration_ms: 151.9632
+  type: 'test'
+  ...
+# Subtest: gear-shop lottery uses private server entropy instead of a player-selected request ID, then replays its receipt
+ok 651 - gear-shop lottery uses private server entropy instead of a player-selected request ID, then replays its receipt
+  ---
+  duration_ms: 71.2315
+  type: 'test'
+  ...
+# Subtest: withdrawn lobby member may rejoin with another owned character without holding two seats
+ok 652 - withdrawn lobby member may rejoin with another owned character without holding two seats
+  ---
+  duration_ms: 80.4913
+  type: 'test'
+  ...
+# Subtest: a fully withdrawn expedition freezes progress at retreat instead of drifting to completion later
+ok 653 - a fully withdrawn expedition freezes progress at retreat instead of drifting to completion later
+  ---
+  duration_ms: 140.3244
+  type: 'test'
+  ...
+# Subtest: v3 actual kills settle EXP, personal drops and boss cores atomically; full offline catchup equals staged online polling and replay grants nothing twice
+ok 654 - v3 actual kills settle EXP, personal drops and boss cores atomically; full offline catchup equals staged online polling and replay grants nothing twice
+  ---
+  duration_ms: 249.3467
+  type: 'test'
+  ...
+# Subtest: v3 hourly polls cannot award before checkpoint; stage-at-a-time catchup matches a full twelve-hour private expected replay
+ok 655 - v3 hourly polls cannot award before checkpoint; stage-at-a-time catchup matches a full twelve-hour private expected replay
+  ---
+  duration_ms: 598.8149
+  type: 'test'
+  ...
+# Subtest: core redemption uses only bound cores and a retry-safe private receipt; competing purchases cannot overspend
+ok 656 - core redemption uses only bound cores and a retry-safe private receipt; competing purchases cannot overspend
+  ---
+  duration_ms: 64.6274
+  type: 'test'
+  ...
+# Subtest: v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores
+ok 657 - v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores
+  ---
+  duration_ms: 137.1418
+  type: 'test'
+  ...
+# Subtest: advanced Lv40 no-guard team starts, fights and settles all six stages exactly once
+ok 658 - advanced Lv40 no-guard team starts, fights and settles all six stages exactly once
+  ---
+  duration_ms: 197.8333
+  type: 'test'
+  ...
+# Subtest: advanced Lv90 no-guard team starts, fights and settles all six stages exactly once
+ok 659 - advanced Lv90 no-guard team starts, fights and settles all six stages exactly once
+  ---
+  duration_ms: 200.826
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing control without charging departure
+ok 660 - advanced still rejects missing control without charging departure
+  ---
+  duration_ms: 92.0613
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing breach without charging departure
+ok 661 - advanced still rejects missing breach without charging departure
+  ---
+  duration_ms: 67.393
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing aid without charging departure
+ok 662 - advanced still rejects missing aid without charging departure
+  ---
+  duration_ms: 55.1893
+  type: 'test'
+  ...
+# Subtest: optional guard never consumes the sole healer when only three simultaneous duties fit
+ok 663 - optional guard never consumes the sole healer when only three simultaneous duties fit
+  ---
+  duration_ms: 64.6282
+  type: 'test'
+  ...
+# Subtest: optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot
+ok 664 - optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot
+  ---
+  duration_ms: 180.1035
+  type: 'test'
+  ...
+# Subtest: already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts
+ok 665 - already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts
+  ---
+  duration_ms: 187.058
+  type: 'test'
+  ...
+# Subtest: already running legacy standard expedition gets fair future grades without rewriting earlier receipts
+ok 666 - already running legacy standard expedition gets fair future grades without rewriting earlier receipts
+  ---
+  duration_ms: 162.1199
+  type: 'test'
+  ...
+# (node:27212) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: App tower scene isolates authenticated account, selected character and realm without settlement, rewards or behavior writes
+ok 667 - App tower scene isolates authenticated account, selected character and realm without settlement, rewards or behavior writes
+  ---
+  duration_ms: 161.6053
+  type: 'test'
+  ...
+# Subtest: both App tower reads reject missing auth, mismatched realms and stale or foreign selections without writes
+ok 668 - both App tower reads reject missing auth, mismatched realms and stale or foreign selections without writes
+  ---
+  duration_ms: 100.5281
+  type: 'test'
+  ...
+# Subtest: both tower reads resolve the current owned account character on Service and reject stale windows after switching
+ok 669 - both tower reads resolve the current owned account character on Service and reject stale windows after switching
+  ---
+  duration_ms: 150.3762
+  type: 'test'
+  ...
+# Subtest: frozen tower reads keep due rows and pending settlement unchanged while native mutations remain fenced
+ok 670 - frozen tower reads keep due rows and pending settlement unchanged while native mutations remain fenced
+  ---
+  duration_ms: 118.0577
+  type: 'test'
+  ...
+# Subtest: App receipt matches only the raw original request in its own namespace; explicit same-ID recovery charges once
+ok 671 - App receipt matches only the raw original request in its own namespace; explicit same-ID recovery charges once
+  ---
+  duration_ms: 97.1877
+  type: 'test'
+  ...
+# Subtest: corrupt historical receipt results remain explicit errors without writes on both HTTP surfaces
+ok 672 - corrupt historical receipt results remain explicit errors without writes on both HTTP surfaces
+  ---
+  duration_ms: 94.5096
+  type: 'test'
+  ...
+# Subtest: a legacy identifier fallback cannot expose tower or workshop receipts for a character owned by another account
+ok 673 - a legacy identifier fallback cannot expose tower or workshop receipts for a character owned by another account
+  ---
+  duration_ms: 80.7124
+  type: 'test'
+  ...
+# (node:40152) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: tower scene uses SELECT-only committed player, daily and workshop data without idle settlement
+ok 674 - tower scene uses SELECT-only committed player, daily and workshop data without idle settlement
+  ---
+  duration_ms: 68.4702
+  type: 'test'
+  ...
+# Subtest: tower scene directory stays tower-only and every page remains reachable; own old history can still be read
+ok 675 - tower scene directory stays tower-only and every page remains reachable; own old history can still be read
+  ---
+  duration_ms: 83.0242
+  type: 'test'
+  ...
+# Subtest: due combat and actor strategy are read without advancing; the original sweep owns progression
+ok 676 - due combat and actor strategy are read without advancing; the original sweep owns progression
+  ---
+  duration_ms: 78.5126
+  type: 'test'
+  ...
+# Subtest: expired recruiting tower remains visible without cleanup or daily charge until the original sweep
+ok 677 - expired recruiting tower remains visible without cleanup or daily charge until the original sweep
+  ---
+  duration_ms: 54.7374
+  type: 'test'
+  ...
+# Subtest: v2 lost exposes actual partial reward without granting and original reward cannot pay twice
+ok 678 - v2 lost exposes actual partial reward without granting and original reward cannot pay twice
+  ---
+  duration_ms: 70.5382
+  type: 'test'
+  ...
+# Subtest: v2 ended exposes actual partial reward without granting and original reward cannot pay twice
+ok 679 - v2 ended exposes actual partial reward without granting and original reward cannot pay twice
+  ---
+  duration_ms: 68.4759
+  type: 'test'
+  ...
+# Subtest: legacy tower rewards remain won-only and keep their original ten badges even in a higher area
+ok 680 - legacy tower rewards remain won-only and keep their original ten badges even in a higher area
+  ---
+  duration_ms: 60.6327
+  type: 'test'
+  ...
+# Subtest: three-area level and previous-clear gates match original admissions and selected-team join eligibility
+ok 681 - three-area level and previous-clear gates match original admissions and selected-team join eligibility
+  ---
+  duration_ms: 88.5494
+  type: 'test'
+  ...
+# Subtest: daily usage changes on real departure, is per character, and resets exactly at Taipei midnight
+ok 682 - daily usage changes on real departure, is per character, and resets exactly at Taipei midnight
+  ---
+  duration_ms: 73.5981
+  type: 'test'
+  ...
+# Subtest: fifteen-minute cutoff is only observed by scene; original sweep grants real completed floors without future turns
+ok 683 - fifteen-minute cutoff is only observed by scene; original sweep grants real completed floors without future turns
+  ---
+  duration_ms: 66.7557
+  type: 'test'
+  ...
+# Subtest: cross-kind occupancy is visible and does not broaden either scene endpoint
+ok 684 - cross-kind occupancy is visible and does not broaden either scene endpoint
+  ---
+  duration_ms: 78.9363
+  type: 'test'
+  ...
+# Subtest: workshop exposes actual investment stats and protected equipment without hiding trade or processing items
+ok 685 - workshop exposes actual investment stats and protected equipment without hiding trade or processing items
+  ---
+  duration_ms: 66.2383
+  type: 'test'
+  ...
+# Subtest: workshop follows original lobby access and combat protection; insufficient badges disable only priced actions
+ok 686 - workshop follows original lobby access and combat protection; insufficient badges disable only priced actions
+  ---
+  duration_ms: 69.6409
+  type: 'test'
+  ...
+# Subtest: frozen realm can read due combat, earned rewards and workshop but advertises no writes
+ok 687 - frozen realm can read due combat, earned rewards and workshop but advertises no writes
+  ---
+  duration_ms: 53.553
+  type: 'test'
+  ...
+# Subtest: exact receipt read is pure and not-found permits only explicit retry with the same id and body
+ok 688 - exact receipt read is pure and not-found permits only explicit retry with the same id and body
+  ---
+  duration_ms: 49.3315
+  type: 'test'
+  ...
+# Subtest: receipt honors route-selected app namespace, original raw signature and historical quantities
+ok 689 - receipt honors route-selected app namespace, original raw signature and historical quantities
+  ---
+  duration_ms: 39.4787
+  type: 'test'
+  ...
+# Subtest: title removal keeps empty-string signature distinct from null and imprint receipt preserves exact target and step
+ok 690 - title removal keeps empty-string signature distinct from null and imprint receipt preserves exact target and step
+  ---
+  duration_ms: 44.5511
+  type: 'test'
+  ...
+# Subtest: corrupt receipt JSON, empty results and mismatched operation targets stay explicitly unconfirmed
+ok 691 - corrupt receipt JSON, empty results and mismatched operation targets stay explicitly unconfirmed
+  ---
+  duration_ms: 56.0004
+  type: 'test'
+  ...
+# Subtest: receipt rejects stale selected characters and malformed lookup parameters without writes
+ok 692 - receipt rejects stale selected characters and malformed lookup parameters without writes
+  ---
+  duration_ms: 41.4147
+  type: 'test'
+  ...
+1..692
+# tests 753
+# suites 0
+# pass 753
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 41492.6248

@@ -75,3 +75,48 @@ worker/tools/build-skill-vfx-semantic-audit.mjs text eol=lf
 worker/tools/skill-vfx-semantic-browser.mjs text eol=lf
 worker/test/skill-vfx-semantic-engine.test.js text eol=lf
 worker/test/skill-vfx-semantics.test.js text eol=lf
+worker/public/awakening-vfx-* text eol=lf
+worker/tools/awakening-vfx-* text eol=lf
+worker/tools/build-awakening-vfx-* text eol=lf
+worker/test/awakening-vfx-* text eol=lf
+worker/tools/skill-vfx-resolver-evidence.mjs text eol=lf
+docs/skill-vfx-semantics-20261105/** -text
+worker/art-production/awakening-vfx-20261105/*.json text eol=lf
+worker/art-production/skill-vfx-semantics-20261105/*.json text eol=lf
+worker/test/skill-vfx-legacy.test.js text eol=crlf
+
+# Immutable historical source snapshots and raw failure output keep exact bytes.
+# Only those archived blobs are opaque; runtime and audit manifests remain diffable.
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/awakening/source/awakening-plan-20261102.txt -diff
+docs/skill-vfx-semantics-20261105/combat/regression/legacy-preload-red.tap -diff
+docs/skill-vfx-semantics-20261105/engine/engine-first-failure.tap -diff

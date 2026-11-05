@@ -1,0 +1,17 @@
+{
+  "scope": "awakening-contact-sheet-lifecycle-diagnostic",
+  "runtimeChanged": false,
+  "sequence": [
+    "open real preview",
+    "viewport 390→1440",
+    "setContent replaces stage without navigation/disposal"
+  ],
+  "errors": [
+    {
+      "message": "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')",
+      "stack": "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')\n    at ResizeObserver.resize (http://127.0.0.1:9894/awakening-vfx-preview.mjs:38:39)"
+    }
+  ],
+  "diagnosis": "The existing ResizeObserver callback resize() reads #stage after the QA harness replaced the DOM. setContent does not fire pagehide and the existing application already has pagehide disposal.",
+  "harnessFix": "Navigate to about:blank (pagehide disposal) before resizing/replacing DOM; assert no errors after sheet and browser cleanup."
+}

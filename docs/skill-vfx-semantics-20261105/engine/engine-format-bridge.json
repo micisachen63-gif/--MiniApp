@@ -1,0 +1,27 @@
+{
+  "at": "2026-11-05T05:34:05.012Z",
+  "change": "Remove one additional LF at EOF in each file; all executable characters identical.",
+  "bridge": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "beforeSha256": "35d6f16b0e21bfdb81cfa6a438f34caaa3031d6d2ae03ef50179b6ebae95f356",
+      "afterSha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f",
+      "beforeBytes": 46707,
+      "afterBytes": 46706,
+      "trimEndEqual": true
+    },
+    {
+      "path": "worker/test/skill-vfx-engine.test.js",
+      "beforeSha256": "d7c4c80f338f7725829fc0113f1de1f51805930da00a8d4b7dc4f3325079b585",
+      "afterSha256": "90545841dae0f259aaa08ba90d3ca9b748052128a6f876bcd71182ce38501ea3",
+      "beforeBytes": 28227,
+      "afterBytes": 28226,
+      "trimEndEqual": true
+    }
+  ],
+  "diffCheck": {
+    "status": 0,
+    "stdout": "",
+    "stderr": "warning: in the working copy of 'worker/test/skill-vfx-engine.test.js', LF will be replaced by CRLF the next time Git touches it\n"
+  }
+}

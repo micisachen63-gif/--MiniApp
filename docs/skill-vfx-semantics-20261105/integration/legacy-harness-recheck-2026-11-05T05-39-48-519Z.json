@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-05T05:39:49.075Z",
+  "args": [
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "worker/test/skill-vfx-legacy.test.js"
+  ],
+  "exitCode": 0,
+  "log": ".release-sync/skill-vfx-semantics-20261105/legacy-harness-recheck-2026-11-05T05-39-48-519Z.tap",
+  "sha256": "bcd682c1678770018531a84ca4d99835bc7957e5553996b60acf82996642ef99",
+  "summary": [
+    "# tests 13",
+    "# pass 13",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 441.7541"
+  ],
+  "failures": []
+}

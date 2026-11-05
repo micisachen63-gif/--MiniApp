@@ -1,0 +1,443 @@
+{
+  "profile": {
+    "id": "preview:awakening:archer:hell",
+    "sourceCatalogId": "planned:archer:hell",
+    "sourceId": null,
+    "implemented": false,
+    "previewOnly": true,
+    "status": "planned-visual-preview",
+    "baseClass": "archer",
+    "classLabel": "妖精",
+    "mode": "hell",
+    "modeLabel": "地獄",
+    "name": "蒼穹裁決",
+    "composition": "sky-judgment",
+    "durationMs": 4000,
+    "colors": [
+      "#9dddf2",
+      "#fff4c6"
+    ],
+    "presentationRevision": "ornate-v2",
+    "art": {
+      "asset": "awakening-archer",
+      "grid": [
+        2,
+        2
+      ],
+      "cell": 3,
+      "scale": 3.85,
+      "pose": "rain",
+      "rays": 16,
+      "trail": "skyfall"
+    },
+    "modeAccent": "#f7a978",
+    "concept": "在範圍與單體之間選擇。",
+    "description": "蒼穹弓門在高處展翼；單靶呈現集中光矢，三靶呈現分區箭雨，均由天弧引導落點。",
+    "phases": [
+      {
+        "label": "天弓開門",
+        "start": 0,
+        "end": 0.24
+      },
+      {
+        "label": "裁決聚矢",
+        "start": 0.24,
+        "end": 0.48
+      },
+      {
+        "label": "天穹落箭",
+        "start": 0.48,
+        "end": 0.78
+      },
+      {
+        "label": "長空餘光",
+        "start": 0.78,
+        "end": 1
+      }
+    ],
+    "subjectLabels": [
+      "蒼穹裁決專屬主體"
+    ],
+    "motionAssets": []
+  },
+  "body": 113.04347826086958,
+  "from": {
+    "x": 530.5,
+    "y": 341.3913043478261
+  },
+  "to": {
+    "x": 530.5,
+    "y": 178.6086956521739
+  },
+  "canvas": [
+    1061,
+    520
+  ],
+  "stats": {
+    "id": "preview:awakening:archer:hell",
+    "progress": 0.36,
+    "direction": "up",
+    "targetCount": 1,
+    "quality": "high",
+    "reducedMotion": false,
+    "playing": false,
+    "loop": false,
+    "ready": true,
+    "width": 1061,
+    "height": 520,
+    "dpr": 1,
+    "renderCount": 4,
+    "drawCalls": 32,
+    "frameMs": 3,
+    "presentationRevision": "ornate-v2",
+    "sourceId": null,
+    "previewOnly": true,
+    "implemented": false,
+    "profileCount": 16,
+    "composition": "sky-judgment",
+    "metrics": {
+      "layerCount": 25,
+      "geometryCount": 7,
+      "subjectCount": 1,
+      "movingActorCount": 0,
+      "paintPasses": 6,
+      "layerBudget": 150,
+      "geometryBudget": 7,
+      "principalScreenRatio": 0.8020833333333334
+    },
+    "bodyHeight": 113.04347826086958,
+    "loadedAssets": [
+      "awakening-sword",
+      "sword",
+      "archer",
+      "mage",
+      "thief",
+      "hawk",
+      "semantic",
+      "awakening-archer",
+      "awakening-mage",
+      "awakening-thief"
+    ],
+    "assetDimensions": {
+      "awakening-sword": {
+        "width": 1254,
+        "height": 1254
+      },
+      "sword": {
+        "width": 1254,
+        "height": 1254
+      },
+      "archer": {
+        "width": 1254,
+        "height": 1254
+      },
+      "mage": {
+        "width": 1254,
+        "height": 1254
+      },
+      "thief": {
+        "width": 1254,
+        "height": 1254
+      },
+      "hawk": {
+        "width": 840,
+        "height": 840
+      },
+      "semantic": {
+        "width": 1254,
+        "height": 1254
+      },
+      "awakening-archer": {
+        "width": 1254,
+        "height": 1254
+      },
+      "awakening-mage": {
+        "width": 1254,
+        "height": 1254
+      },
+      "awakening-thief": {
+        "width": 1254,
+        "height": 1254
+      }
+    },
+    "principalBounds": {
+      "awakening-sword": [
+        {
+          "x": 0.21052631578947367,
+          "y": 0.21052631578947367,
+          "width": 0.6331738437001595,
+          "height": 0.6108452950558214,
+          "alphaSampleRatio": 0.2794738123250436,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.14354066985645933,
+          "y": 0.1850079744816587,
+          "width": 0.6491228070175439,
+          "height": 0.6555023923444976,
+          "alphaSampleRatio": 0.3182279199967544,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.21371610845295055,
+          "y": 0.1722488038277512,
+          "width": 0.6140350877192983,
+          "height": 0.6108452950558214,
+          "alphaSampleRatio": 0.2690575682583472,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.1467304625199362,
+          "y": 0.16267942583732056,
+          "width": 0.645933014354067,
+          "height": 0.6331738437001595,
+          "alphaSampleRatio": 0.30679743600146053,
+          "cellPixels": [
+            627,
+            627
+          ]
+        }
+      ],
+      "awakening-archer": [
+        {
+          "x": 0.20414673046251994,
+          "y": 0.20733652312599682,
+          "width": 0.6682615629984051,
+          "height": 0.6363636363636364,
+          "alphaSampleRatio": 0.2822731145279727,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.11802232854864433,
+          "y": 0.19457735247208932,
+          "width": 0.7001594896331739,
+          "height": 0.6076555023923444,
+          "alphaSampleRatio": 0.29933263012698286,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.21690590111642744,
+          "y": 0.14992025518341306,
+          "width": 0.6491228070175439,
+          "height": 0.6299840510366826,
+          "alphaSampleRatio": 0.2777191772485699,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.10207336523125997,
+          "y": 0.1467304625199362,
+          "width": 0.7033492822966507,
+          "height": 0.6331738437001595,
+          "alphaSampleRatio": 0.31855247677390564,
+          "cellPixels": [
+            627,
+            627
+          ]
+        }
+      ],
+      "awakening-mage": [
+        {
+          "x": 0.23285486443381181,
+          "y": 0.21690590111642744,
+          "width": 0.6363636363636364,
+          "height": 0.6108452950558214,
+          "alphaSampleRatio": 0.26113635441600064,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.10207336523125997,
+          "y": 0.22647527910685805,
+          "width": 0.6874003189792663,
+          "height": 0.6076555023923444,
+          "alphaSampleRatio": 0.24433039879913993,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.22966507177033493,
+          "y": 0.18181818181818182,
+          "width": 0.6331738437001595,
+          "height": 0.6108452950558214,
+          "alphaSampleRatio": 0.31235547081017484,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.11164274322169059,
+          "y": 0.18181818181818182,
+          "width": 0.6618819776714514,
+          "height": 0.6108452950558214,
+          "alphaSampleRatio": 0.3070814231814678,
+          "cellPixels": [
+            627,
+            627
+          ]
+        }
+      ],
+      "awakening-thief": [
+        {
+          "x": 0.22328548644338117,
+          "y": 0.23604465709728867,
+          "width": 0.7033492822966507,
+          "height": 0.5980861244019139,
+          "alphaSampleRatio": 0.27983893869933874,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.11483253588516747,
+          "y": 0.20733652312599682,
+          "width": 0.6650717703349283,
+          "height": 0.6682615629984051,
+          "alphaSampleRatio": 0.2703253681690941,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.22328548644338117,
+          "y": 0.1339712918660287,
+          "width": 0.6555023923444976,
+          "height": 0.6267942583732058,
+          "alphaSampleRatio": 0.2872936021745304,
+          "cellPixels": [
+            627,
+            627
+          ]
+        },
+        {
+          "x": 0.09888357256778309,
+          "y": 0.11802232854864433,
+          "width": 0.6746411483253588,
+          "height": 0.6618819776714514,
+          "alphaSampleRatio": 0.3205201022353848,
+          "cellPixels": [
+            627,
+            627
+          ]
+        }
+      ]
+    },
+    "errors": [],
+    "pendingAnimationFrame": false
+  },
+  "overall": {
+    "count": 81169,
+    "bounds": [
+      356,
+      2,
+      702,
+      392
+    ],
+    "edge": 1,
+    "maxEdge": 17
+  },
+  "passes": [
+    {
+      "pass": "atmosphere",
+      "count": 64180,
+      "bounds": [
+        356,
+        124,
+        701,
+        372
+      ],
+      "edge": 0,
+      "maxEdge": 0,
+      "nearEdgeLayers": []
+    },
+    {
+      "pass": "gathering",
+      "count": 10422,
+      "bounds": [
+        431,
+        2,
+        631,
+        351
+      ],
+      "edge": 1,
+      "maxEdge": 17,
+      "nearEdgeLayers": []
+    },
+    {
+      "pass": "radiance",
+      "count": 74538,
+      "bounds": [
+        366,
+        110,
+        696,
+        388
+      ],
+      "edge": 0,
+      "maxEdge": 0,
+      "nearEdgeLayers": []
+    },
+    {
+      "pass": "principal-subject",
+      "count": 66463,
+      "bounds": [
+        371,
+        106,
+        690,
+        392
+      ],
+      "edge": 0,
+      "maxEdge": 0,
+      "nearEdgeLayers": []
+    },
+    {
+      "pass": "foreground-burst",
+      "count": 254,
+      "bounds": [
+        516,
+        81,
+        524,
+        130
+      ],
+      "edge": 0,
+      "maxEdge": 0,
+      "nearEdgeLayers": []
+    },
+    {
+      "pass": "afterglow",
+      "count": 0,
+      "bounds": [
+        1061,
+        520,
+        -1,
+        -1
+      ],
+      "edge": 0,
+      "maxEdge": 0,
+      "nearEdgeLayers": []
+    }
+  ]
+}

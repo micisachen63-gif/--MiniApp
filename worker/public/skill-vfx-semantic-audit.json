@@ -43,7 +43,22 @@
       "browser": "not-asserted-by-this-generator",
       "humanVisualReview": "not-asserted-by-this-generator",
       "noteZh": "配方覆蓋與唯一簽章不等於畫面已驗收。本工具不執行Canvas、瀏覽器、戰鬥或測試；素材存在與SHA一致也不等於圖像品質通過。",
-      "references": []
+      "references": [
+        {
+          "path": "docs/skill-vfx-semantics-20261105/semantic-browser/results.json",
+          "exists": true,
+          "bytes": 161708,
+          "sha256": "07d08d2151ee0713e6f453a9251e3d527c393ce61cf4df5008c38282b929513f",
+          "verification": "reference-recorded-only; content and success are not interpreted by this generator"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/semantic-browser/visual-review.json",
+          "exists": true,
+          "bytes": 2293,
+          "sha256": "17a532306f969fc894608e5c0bee5e688f5451a166d706585f6be9d1b03d4f6b",
+          "verification": "reference-recorded-only; content and success are not interpreted by this generator"
+        }
+      ]
     }
   },
   "composition": {
