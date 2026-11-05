@@ -227,10 +227,10 @@ try {
   if (selected.some(skill => skill.id === 'special:skill_18_1')) families.set('summon', 'special:skill_18_1');
   const sourcePaths = [...new Set([
     normalized(relative(ROOT, fixtureFull)), 'worker/tools/skill-vfx-identity-browser.mjs',
-    'worker/public/skill-vfx-legacy.mjs', 'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-catalog.json',
+    'worker/public/skill-vfx-legacy.mjs', 'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp', 'worker/public/skill-vfx-catalog.json',
     ...fixture.sourceFiles.map(file => file.path),
     ...Object.values(HERO_ART).map(path => 'worker/public' + path), ...MONSTER_ART.map(path => 'worker/public' + path),
-    ...['sword-atlas.webp','archer-atlas.webp','mage-atlas.webp','thief-atlas.webp','hawk.webp','fire-spirit.webp'].map(name => 'worker/public/art/skill-vfx-20261104/' + name),
+    ...['sword-atlas.webp','archer-atlas.webp','mage-atlas.webp','thief-atlas.webp','hawk.webp','fire-spirit.webp','semantic-atlas.webp'].map(name => 'worker/public/art/skill-vfx-20261104/' + name),
   ])].sort();
   for (const path of sourcePaths) {
     const bytes = await readFile(resolve(ROOT, path)); sourceFiles.push({ path, sha256: digest(bytes), bytes: bytes.length });
@@ -239,9 +239,9 @@ try {
   const staleFixtures = fixture.sourceFiles.filter(file => sourceHash.get(file.path) !== file.sha256);
   assert.equal(staleFixtures.length, 0, 'Fixture is stale for: ' + staleFixtures.map(file => file.path).join(', '));
   const screenshotFiles = new Map();
-  const staticAllow = new Set(['/skill-vfx-engine.mjs','/skill-vfx-legacy.mjs','/skill-vfx-catalog.json',
+  const staticAllow = new Set(['/skill-vfx-engine.mjs','/skill-vfx-semantics.mjs','/skill-vfx-legacy.mjs','/skill-vfx-catalog.json',
     ...Object.values(HERO_ART), ...MONSTER_ART,
-    ...['sword-atlas.webp','archer-atlas.webp','mage-atlas.webp','thief-atlas.webp','hawk.webp','fire-spirit.webp'].map(name => '/art/skill-vfx-20261104/' + name)]);
+    ...['sword-atlas.webp','archer-atlas.webp','mage-atlas.webp','thief-atlas.webp','hawk.webp','fire-spirit.webp','semantic-atlas.webp'].map(name => '/art/skill-vfx-20261104/' + name)]);
   let gallery = '';
   server = createServer(async (req, res) => {
     try {

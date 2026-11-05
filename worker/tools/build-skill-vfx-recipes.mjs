@@ -4,7 +4,7 @@ import {recipeFor,validateCatalog,VFX_VERSION} from '../public/skill-vfx-engine.
 const catalog=JSON.parse(await readFile(new URL('../public/skill-vfx-catalog.json',import.meta.url),'utf8'));
 const check=validateCatalog(catalog);
 const result={schemaVersion:VFX_VERSION,sourceCommit:catalog.sourceCommit,scope:'presentation-only',
- summary:{skillIdentities:catalog.skills.length,visualFamilies:check.families.length,classAtlases:4,atlasCells:36,summonAssets:2,directions:['up','down','left','right']},
+ summary:{skillIdentities:catalog.skills.length,visualFamilies:check.families.length,classAtlases:4,atlasCells:36,summonAssets:2,semanticProfiles:catalog.skills.length,semanticAtlases:1,semanticAtlasCells:9,directions:['up','down','left','right']},
  policies:{gender:'Same skill identity shares VFX; character size is provided by the caller.',
   combat:'No damage, targets, resource changes or cooldowns are calculated by the renderer.',
   identity:'Skill identities and route names are not counts of independently painted assets.',

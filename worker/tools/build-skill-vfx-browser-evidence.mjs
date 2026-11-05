@@ -13,7 +13,7 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const SELF = 'worker/tools/build-skill-vfx-browser-evidence.mjs';
 const SHARED = [
-  'worker/public/skill-vfx-legacy.mjs', 'worker/public/skill-vfx-engine.mjs',
+  'worker/public/skill-vfx-legacy.mjs', 'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp',
   'worker/public/skill-vfx-catalog.json', 'worker/public/skill-vfx-recipes.json',
   'worker/src/game/skill-vfx-events.js', 'worker/src/game/special.js',
 ];
@@ -27,7 +27,7 @@ const MODE_FILES = {
 const ATLAS_REQUIRED = [
   'worker/src/game/atlas-engine.js', 'worker/src/game/atlas-combat-observer.js', 'worker/src/services/atlas.js',
   'worker/public/scene-live-session.js', 'worker/public/scene-live-view.js',
-  'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-actor-bridge.mjs',
+  'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp', 'worker/public/skill-vfx-actor-bridge.mjs',
   'worker/public/skill-vfx-combat-adapter.mjs', 'worker/public/skill-vfx-catalog.json', 'worker/public/skill-vfx-recipes.json',
 ];
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');

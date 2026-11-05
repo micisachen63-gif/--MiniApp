@@ -242,7 +242,7 @@ function main(args) {
   const receipts = receiptPaths.map(path => ({ path, value: json(path) }));
   const hashFile = path => digest(readFileSync(workspacePath(path)));
   const evidence = collectEvidence(receipts, hashFile, new Set(catalog.skills.map(skill => skill.id)));
-  const dependencies = [...new Set([CATALOG, RECIPES, 'worker/public/skill-vfx-engine.mjs',
+  const dependencies = [...new Set([CATALOG, RECIPES, 'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp',
     'worker/tools/build-skill-vfx-coverage.mjs', 'worker/tools/build-skill-vfx-catalog.mjs', 'worker/tools/build-skill-vfx-recipes.mjs',
     'worker/src/game/skill-vfx-events.js', 'worker/src/game/special.js', 'worker/src/game/special-data.js', 'worker/src/game/stats.js',
     ...Object.values(COVERAGE_PATHS).flatMap(mode => [...mode.producer, ...mode.publication, ...mode.consumer]),

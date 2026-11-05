@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { buildEffectFrame, createVfxPlayer, drawEffectFrame, recipeFor, validateCatalog } from '../public/skill-vfx-engine.mjs';
+import { semanticFor } from '../public/skill-vfx-semantics.mjs';
 
 const catalog = JSON.parse(readFileSync(new URL('../public/skill-vfx-catalog.json', import.meta.url), 'utf8'));
 const byId = new Map(catalog.skills.map(skill => [skill.id, skill]));
@@ -167,13 +168,14 @@ test('beasts and summons stay upright in every direction and mirror only when tr
   const summons = catalog.skills.filter(skill => ['beast', 'summon'].includes(skill.family));
   assert.ok(summons.some(skill => skill.family === 'beast') && summons.some(skill => skill.family === 'summon'));
   const classAtlas = { width: 900, height: 900, complete: true };
-  const extras = { hawk: { width: 512, height: 512, complete: true }, 'fire-spirit': { width: 512, height: 512, complete: true } };
+  const extras = { hawk: { width: 512, height: 512, complete: true }, 'fire-spirit': { width: 512, height: 512, complete: true }, semantic: { width: 1254, height: 1254, complete: true } };
   for (const skill of summons) for (const direction of directions) for (const progress of [.3, .5, .7]) {
     const frame = buildEffectFrame(skill, progress, { direction, from: { x: 400, y: 300 }, bodyHeight: 150, seed: 'upright-spirit' });
     const spirits = frame.layers.filter(layer => layer.asset);
     assert.ok(spirits.length > 0, skill.id + '/' + direction + ': visible summon');
     for (const spirit of spirits) {
-      assert.equal(spirit.asset, skill.family === 'beast' ? 'hawk' : 'fire-spirit');
+      assert.equal(spirit.asset, semanticFor(skill).asset, 'named subjects must use their authored material');
+      assert.equal(spirit.cell, semanticFor(skill).cell ?? 0, 'semantic subjects select their own atlas cell');
       assert.ok(Number.isFinite(spirit.rotation) && Math.abs(spirit.rotation) < Math.PI / 4, skill.id + '/' + direction + ': body stays upright instead of rotating upside down');
       assert.equal(Boolean(spirit.flipX), direction === 'left', skill.id + '/' + direction + ': correct horizontal facing');
       assert.ok(spirit.w > 0 && spirit.h > 0, 'mirroring must not use a negative destination size');

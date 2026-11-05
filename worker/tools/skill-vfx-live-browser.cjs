@@ -6,7 +6,8 @@ if(!playwright)playwright=require('playwright');
 const args=process.argv.slice(2);if(args.some(a=>!/^--(?:smoke|inspect-only|phone|build=[a-z_]+)$/.test(a)))throw Error('Use [--smoke] [--inspect-only] [--build=atlas_build_id] [--phone]');
 const phone=args.includes('--phone');
 const inspectOnly=args.includes('--inspect-only'),smoke=args.includes('--smoke'),chosen=args.find(a=>a.startsWith('--build='))?.slice(8);
-const sceneOrigin='http://127.0.0.1:9667',apiOrigin='http://127.0.0.1:9666';
+const sceneOrigin=process.env.SKILL_VFX_SCENE_ORIGIN||'http://127.0.0.1:9667',apiOrigin=process.env.SKILL_VFX_API_ORIGIN||'http://127.0.0.1:9666';
+for(const [value,ports]of [[sceneOrigin,['9667','9867']],[apiOrigin,['9666','9866']]]){const url=new URL(value);assert(url.protocol==='http:'&&url.hostname==='127.0.0.1'&&ports.includes(url.port)&&url.pathname==='/'&&!url.search&&!url.hash&&!url.username&&!url.password,'Only explicit isolated loopback VFX previews are allowed');}
 const evidenceDir=path.resolve(process.env.SKILL_VFX_LIVE_QA_DIR||'.release-sync/skill-vfx-20261104/live-'+new Date().toISOString().replace(/[:.]/g,'-'));
 const builds=['sword_whirlwind','sword_bleed','sword_counter','archer_pierce','archer_beast','archer_trap','mage_chain','mage_frost','mage_arcane','thief_poison','thief_execute','thief_combo'];
 if(chosen&&!builds.includes(chosen))throw Error('Unknown Atlas build');
@@ -16,7 +17,7 @@ const sleep=ms=>new Promise(r=>setTimeout(r,ms));
 const sourcePaths=[
  'worker/src/game/atlas-engine.js','worker/src/game/atlas-combat-observer.js','worker/src/game/atlas-catalog.js','worker/src/game/atlas-talents.js','worker/src/services/atlas.js',
  'worker/public/scene-live-session.js','worker/public/scene-live-view.js','worker/public/scene-live-view.css',
- 'worker/public/skill-vfx-engine.mjs','worker/public/skill-vfx-combat-adapter.mjs','worker/public/skill-vfx-actor-bridge.mjs',
+ 'worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp','worker/public/skill-vfx-combat-adapter.mjs','worker/public/skill-vfx-actor-bridge.mjs',
  'worker/public/skill-vfx-catalog.json','worker/public/skill-vfx-recipes.json','worker/public/skill-vfx-actor-profiles.json',
  'worker/tools/skill-vfx-live-browser.cjs'
 ];
@@ -25,7 +26,7 @@ async function sourceFingerprints(){const rows=[];for(const file of sourcePaths)
  await fs.mkdir(evidenceDir,{recursive:true});
  const sourceFiles=await sourceFingerprints();
  const health=await(await fetch(sceneOrigin+'/__preview/health')).json(),apiHealth=await(await fetch(apiOrigin+'/__preview/health')).json();
- assert(health.isolated&&health.ephemeral&&health.productionAccess===false&&health.apiReady&&health.apiOrigin===apiOrigin,'Only the isolated 9667/9666 preview is allowed');
+ assert(health.isolated&&health.ephemeral&&health.productionAccess===false&&health.apiReady&&health.apiOrigin===apiOrigin,'Only the matching isolated VFX preview is allowed');
  assert(apiHealth.isolated&&apiHealth.ephemeral&&apiHealth.productionAccess===false);
  if(!inspectOnly)assert.equal(apiHealth.vfxFixture,'long-targets','Start scene-live-preview with --vfx-fixture=long-targets for reproducible live targets');
  const browser=await playwright.chromium.launch({...process.env.ATLAS_BROWSER_EXECUTABLE?{executablePath:process.env.ATLAS_BROWSER_EXECUTABLE}:{channel:'chrome'},headless:true,args:['--use-angle=swiftshader','--enable-unsafe-swiftshader']});

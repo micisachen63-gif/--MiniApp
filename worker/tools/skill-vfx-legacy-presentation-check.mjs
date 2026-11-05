@@ -48,7 +48,7 @@ try{
   layer.clear('next-identity');
  }
 }finally{layer.destroy();}
-const sourcePaths=[inputPath,'worker/public/skill-vfx-catalog.json','worker/public/skill-vfx-engine.mjs',
+const sourcePaths=[inputPath,'worker/public/skill-vfx-catalog.json','worker/public/skill-vfx-engine.mjs', 'worker/public/skill-vfx-semantics.mjs', 'worker/public/art/skill-vfx-20261104/semantic-atlas.webp',
  'worker/public/skill-vfx-legacy.mjs','worker/test/skill-vfx-legacy-harness.js',
  'worker/tools/skill-vfx-legacy-presentation-check.mjs'];
 const byPresentationMode={},bySourceMode={};

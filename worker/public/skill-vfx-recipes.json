@@ -8,6 +8,9 @@
     "classAtlases": 4,
     "atlasCells": 36,
     "summonAssets": 2,
+    "semanticProfiles": 196,
+    "semanticAtlases": 1,
+    "semanticAtlasCells": 9,
     "directions": [
       "up",
       "down",
@@ -45,11 +48,24 @@
         "durationMs": 1540,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:sword_whirlwind",
+          "label": "旋風斬",
+          "element": "steel",
+          "motif": "blade",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/storm/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -108,11 +124,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#fff3d2",
-          "#da5949"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:sword_bleed",
+          "label": "裂傷斬",
+          "element": "blood",
+          "motif": "blade",
+          "style": "inherit",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "blood/blade/inherit/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -171,11 +200,24 @@
         "durationMs": 1320,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:sword_counter",
+          "label": "盾鋒",
+          "element": "steel",
+          "motif": "shield",
+          "style": "inherit",
+          "accent": "halo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/inherit/halo/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -234,11 +276,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:archer_pierce",
+          "label": "貫穿箭",
+          "element": "wind",
+          "motif": "wing",
+          "style": "inherit",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/inherit/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -297,11 +352,24 @@
         "durationMs": 2010,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:archer_beast",
+          "label": "召喚獵鷹",
+          "element": "nature",
+          "motif": "beast",
+          "style": "summon",
+          "accent": "orbit",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "nature/beast/summon/orbit/1/base/hawk/-",
+          "asset": "hawk",
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -362,11 +430,24 @@
         "durationMs": 1800,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:archer_trap",
+          "label": "棘網陷阱",
+          "element": "nature",
+          "motif": "web",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "nature/web/cage/glyph/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -425,11 +506,24 @@
         "durationMs": 1320,
         "impactAt": 0.4,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#a5dbff",
+          "#fffde0",
+          "#626de7"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:mage_chain",
+          "label": "連鎖閃電",
+          "element": "lightning",
+          "motif": "rune",
+          "style": "inherit",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "lightning/rune/inherit/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -488,11 +582,24 @@
         "durationMs": 1690,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:mage_frost",
+          "label": "霜壁脈衝",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "ice/snowflake/cage/halo/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -551,11 +658,24 @@
         "durationMs": 1540,
         "impactAt": 0.4,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:mage_arcane",
+          "label": "秘法聚束",
+          "element": "arcane",
+          "motif": "rune",
+          "style": "inherit",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "arcane/rune/inherit/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -614,11 +734,24 @@
         "durationMs": 1630,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#a5e567",
+          "#f5ffd5",
+          "#428259"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:thief_poison",
+          "label": "淬毒刃",
+          "element": "poison",
+          "motif": "blade",
+          "style": "inherit",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "poison/blade/inherit/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -677,11 +810,24 @@
         "durationMs": 1380,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:thief_execute",
+          "label": "終結刃",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "rays",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "shadow/blade/crosscut/rays/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -740,11 +886,24 @@
         "durationMs": 1640,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "atlas:thief_combo",
+          "label": "鏡刃",
+          "element": "shadow",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "shadow/mirror/mirror/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -805,11 +964,24 @@
         "durationMs": 1150,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_01_1",
+          "label": "裂甲重斬",
+          "element": "steel",
+          "motif": "blade",
+          "style": "inherit",
+          "accent": "shards",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/inherit/shards/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -870,11 +1042,24 @@
         "durationMs": 1900,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_01_2",
+          "label": "血性戰吼",
+          "element": "blood",
+          "motif": "crown",
+          "style": "groundwave",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "blood/crown/groundwave/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -935,11 +1120,24 @@
         "durationMs": 1350,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_01_3",
+          "label": "斬殺追擊",
+          "element": "blood",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "blood/blade/crosscut/trail/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1000,11 +1198,24 @@
         "durationMs": 1610,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_02_1",
+          "label": "破勢盾擊",
+          "element": "steel",
+          "motif": "shield",
+          "style": "groundwave",
+          "accent": "rays",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/groundwave/rays/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1065,11 +1276,24 @@
         "durationMs": 1640,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_02_2",
+          "label": "守護誓約",
+          "element": "holy",
+          "motif": "seal",
+          "style": "inherit",
+          "accent": "halo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "holy/seal/inherit/halo/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1130,11 +1354,24 @@
         "durationMs": 1320,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_02_3",
+          "label": "聖盾反震",
+          "element": "holy",
+          "motif": "shield",
+          "style": "mirror",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "holy/shield/mirror/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1195,11 +1432,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_03_1",
+          "label": "穿風箭",
+          "element": "wind",
+          "motif": "wing",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/comet/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1260,11 +1510,24 @@
         "durationMs": 1800,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_03_2",
+          "label": "風縛箭陣",
+          "element": "wind",
+          "motif": "web",
+          "style": "cage",
+          "accent": "orbit",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "wind/web/cage/orbit/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1325,11 +1588,24 @@
         "durationMs": 1930,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_03_3",
+          "label": "疾風祝福",
+          "element": "wind",
+          "motif": "wing",
+          "style": "inherit",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/inherit/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1390,11 +1666,24 @@
         "durationMs": 1980,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_04_1",
+          "label": "獵鷹標記",
+          "element": "nature",
+          "motif": "eye",
+          "style": "inherit",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "nature/eye/inherit/glyph/1/base/hawk/-",
+          "asset": "hawk",
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1457,11 +1746,24 @@
         "durationMs": 1890,
         "impactAt": 0.32,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#37a595"
+          "#81e3ed",
+          "#f2ffff",
+          "#358fb7"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_04_2",
+          "label": "生命之泉",
+          "element": "water",
+          "motif": "drop",
+          "style": "fountain",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "water/drop/fountain/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1522,11 +1824,24 @@
         "durationMs": 2040,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_04_3",
+          "label": "靈獸撲擊",
+          "element": "nature",
+          "motif": "beast",
+          "style": "pack",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "nature/beast/pack/trail/2/base/semantic/5",
+          "asset": "semantic",
+          "cell": 5
+        },
         "phases": [
           {
             "id": "charge",
@@ -1560,7 +1875,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -1589,11 +1904,24 @@
         "durationMs": 1530,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_05_1",
+          "label": "灼炎爆破",
+          "element": "fire",
+          "motif": "sun",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "fire/sun/sunburst/shards/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1654,11 +1982,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_05_2",
+          "label": "寒冰封鎖",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "ice/snowflake/cage/glyph/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1719,11 +2060,24 @@
         "durationMs": 1290,
         "impactAt": 0.4,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#a5dbff",
+          "#fffde0",
+          "#626de7"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_05_3",
+          "label": "雷霆穿刺",
+          "element": "lightning",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "rays",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "lightning/blade/comet/rays/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1784,11 +2138,24 @@
         "durationMs": 1570,
         "impactAt": 0.4,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_06_1",
+          "label": "奧術脈衝",
+          "element": "arcane",
+          "motif": "rune",
+          "style": "groundwave",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "arcane/rune/groundwave/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1849,11 +2216,24 @@
         "durationMs": 1640,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_06_2",
+          "label": "法力護幕",
+          "element": "arcane",
+          "motif": "shield",
+          "style": "inherit",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "arcane/shield/inherit/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1914,11 +2294,24 @@
         "durationMs": 1880,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_06_3",
+          "label": "時序回響",
+          "element": "time",
+          "motif": "clock",
+          "style": "clock",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "time/clock/clock/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -1979,11 +2372,24 @@
         "durationMs": 1510,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_07_1",
+          "label": "血刃風暴",
+          "element": "blood",
+          "motif": "blade",
+          "style": "storm",
+          "accent": "trail",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "blood/blade/storm/trail/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2044,11 +2450,24 @@
         "durationMs": 1550,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_07_2",
+          "label": "不屈血誓",
+          "element": "blood",
+          "motif": "seal",
+          "style": "inherit",
+          "accent": "halo",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "blood/seal/inherit/halo/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2109,11 +2528,24 @@
         "durationMs": 1550,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_08_1",
+          "label": "瞬影三連",
+          "element": "steel",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/crosscut/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2174,11 +2606,24 @@
         "durationMs": 1090,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_08_2",
+          "label": "劍心破界",
+          "element": "steel",
+          "motif": "sun",
+          "style": "inherit",
+          "accent": "rays",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "steel/sun/inherit/rays/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2239,11 +2684,24 @@
         "durationMs": 1810,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_09_1",
+          "label": "聖光裁決",
+          "element": "holy",
+          "motif": "blade",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "holy/blade/starfall/rays/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2304,11 +2762,24 @@
         "durationMs": 1610,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_09_2",
+          "label": "庇護之環",
+          "element": "holy",
+          "motif": "shield",
+          "style": "inherit",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "holy/shield/inherit/halo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2369,11 +2840,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_10_1",
+          "label": "堡壘援護",
+          "element": "steel",
+          "motif": "shield",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/cage/glyph/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2434,11 +2918,24 @@
         "durationMs": 1060,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_10_2",
+          "label": "震地破陣",
+          "element": "steel",
+          "motif": "crack",
+          "style": "groundwave",
+          "accent": "shards",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "steel/crack/groundwave/shards/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2499,11 +2996,24 @@
         "durationMs": 1300,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_11_1",
+          "label": "貫星狙擊",
+          "element": "star",
+          "motif": "eye",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "star/eye/comet/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2564,11 +3074,24 @@
         "durationMs": 1930,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_11_2",
+          "label": "鷹眼獵殺",
+          "element": "wind",
+          "motif": "eye",
+          "style": "inherit",
+          "accent": "glyph",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "wind/eye/inherit/glyph/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2629,11 +3152,24 @@
         "durationMs": 1610,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_12_1",
+          "label": "風舞連射",
+          "element": "wind",
+          "motif": "wing",
+          "style": "storm",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/storm/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2694,11 +3230,24 @@
         "durationMs": 1610,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_12_2",
+          "label": "風之壁障",
+          "element": "wind",
+          "motif": "shield",
+          "style": "storm",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "wind/shield/storm/halo/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2759,11 +3308,24 @@
         "durationMs": 1980,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_13_1",
+          "label": "群狼突襲",
+          "element": "nature",
+          "motif": "beast",
+          "style": "pack",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "nature/beast/pack/trail/3/base/semantic/0",
+          "asset": "semantic",
+          "cell": 0
+        },
         "phases": [
           {
             "id": "charge",
@@ -2797,7 +3359,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -2826,11 +3388,24 @@
         "durationMs": 1890,
         "impactAt": 0.32,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_13_2",
+          "label": "森靈回春",
+          "element": "nature",
+          "motif": "leaf",
+          "style": "tree",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "nature/leaf/tree/ripple/3/base/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -2863,7 +3438,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -2891,11 +3468,24 @@
         "durationMs": 1800,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_14_1",
+          "label": "月影爆雷",
+          "element": "lunar",
+          "motif": "moon",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "lunar/moon/sunburst/shards/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -2956,11 +3546,24 @@
         "durationMs": 1770,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_14_2",
+          "label": "封魔陷阱",
+          "element": "arcane",
+          "motif": "web",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "arcane/web/cage/glyph/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3021,11 +3624,24 @@
         "durationMs": 1940,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_15_1",
+          "label": "天火流星",
+          "element": "fire",
+          "motif": "flame",
+          "style": "starfall",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "fire/flame/starfall/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3086,11 +3702,24 @@
         "durationMs": 1600,
         "impactAt": 0.4,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_15_2",
+          "label": "元素崩解",
+          "element": "arcane",
+          "motif": "rune",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "arcane/rune/sunburst/shards/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3151,11 +3780,24 @@
         "durationMs": 1750,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_16_1",
+          "label": "冰晶風暴",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "storm",
+          "accent": "shards",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "ice/snowflake/storm/shards/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3216,11 +3858,24 @@
         "durationMs": 1610,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_16_2",
+          "label": "極寒護甲",
+          "element": "ice",
+          "motif": "shield",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "ice/shield/cage/halo/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3281,11 +3936,24 @@
         "durationMs": 1880,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_17_1",
+          "label": "時裂衝擊",
+          "element": "time",
+          "motif": "crack",
+          "style": "clock",
+          "accent": "glyph",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "time/crack/clock/glyph/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3346,11 +4014,24 @@
         "durationMs": 1910,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_17_2",
+          "label": "時間加速",
+          "element": "time",
+          "motif": "clock",
+          "style": "clock",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "time/clock/clock/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3411,11 +4092,24 @@
         "durationMs": 2080,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_18_1",
+          "label": "火靈契約",
+          "element": "fire",
+          "motif": "flame",
+          "style": "summon",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "fire/flame/summon/glyph/1/base/fire-spirit/-",
+          "asset": "fire-spirit",
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3478,11 +4172,24 @@
         "durationMs": 1600,
         "impactAt": 0.57,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_18_2",
+          "label": "使魔替身",
+          "element": "shadow",
+          "motif": "soul",
+          "style": "smoke",
+          "accent": "echo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "shadow/soul/smoke/echo/1/base/semantic/8",
+          "asset": "semantic",
+          "cell": 8
+        },
         "phases": [
           {
             "id": "charge",
@@ -3515,7 +4222,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -3543,11 +4252,24 @@
         "durationMs": 1120,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_19_1",
+          "label": "泰坦破軍",
+          "element": "steel",
+          "motif": "crown",
+          "style": "groundwave",
+          "accent": "shards",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "steel/crown/groundwave/shards/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3608,11 +4330,24 @@
         "durationMs": 1930,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_19_2",
+          "label": "英雄戰旗",
+          "element": "steel",
+          "motif": "banner",
+          "style": "banner",
+          "accent": "halo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/banner/banner/halo/1/base/semantic/4",
+          "asset": "semantic",
+          "cell": 4
+        },
         "phases": [
           {
             "id": "charge",
@@ -3645,7 +4380,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -3673,11 +4410,24 @@
         "durationMs": 1860,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_20_1",
+          "label": "世界樹審判",
+          "element": "nature",
+          "motif": "thorn",
+          "style": "tree",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "nature/thorn/tree/rays/5/base/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -3710,7 +4460,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -3738,11 +4490,24 @@
         "durationMs": 1950,
         "impactAt": 0.32,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_20_2",
+          "label": "森羅復甦",
+          "element": "nature",
+          "motif": "leaf",
+          "style": "tree",
+          "accent": "ripple",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "nature/leaf/tree/ripple/5/base/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -3775,7 +4540,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -3803,11 +4570,24 @@
         "durationMs": 1540,
         "impactAt": 0.4,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_21_1",
+          "label": "星界崩裂",
+          "element": "star",
+          "motif": "star",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "star/star/sunburst/shards/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3868,11 +4648,24 @@
         "durationMs": 1550,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_21_2",
+          "label": "時空庇護",
+          "element": "time",
+          "motif": "clock",
+          "style": "clock",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "time/clock/clock/halo/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3933,11 +4726,24 @@
         "durationMs": 1320,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_22_1",
+          "label": "神域斬決",
+          "element": "holy",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "holy/blade/crosscut/rays/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -3998,11 +4804,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_22_2",
+          "label": "不滅軍勢",
+          "element": "steel",
+          "motif": "shield",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/cage/halo/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4063,11 +4882,24 @@
         "durationMs": 1610,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_23_1",
+          "label": "星穹獵殺",
+          "element": "star",
+          "motif": "wing",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "star/wing/comet/trail/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4128,11 +4960,24 @@
         "durationMs": 1920,
         "impactAt": 0.32,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_23_2",
+          "label": "世界樹恩典",
+          "element": "holy",
+          "motif": "leaf",
+          "style": "tree",
+          "accent": "halo",
+          "multiplicity": 7,
+          "routeAccent": "base",
+          "signatureKey": "holy/leaf/tree/halo/7/base/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -4165,7 +5010,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -4193,11 +5040,24 @@
         "durationMs": 1940,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_24_1",
+          "label": "諸神隕滅",
+          "element": "holy",
+          "motif": "sun",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "holy/sun/starfall/rays/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4258,11 +5118,24 @@
         "durationMs": 1950,
         "impactAt": 0.32,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_24_2",
+          "label": "命運逆轉",
+          "element": "time",
+          "motif": "soul",
+          "style": "clock",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "time/soul/clock/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4324,11 +5197,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_thief_01",
+          "label": "破綻標記",
+          "element": "shadow",
+          "motif": "eye",
+          "style": "inherit",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "shadow/eye/inherit/glyph/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4390,11 +5276,24 @@
         "durationMs": 1690,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_thief_02",
+          "label": "煙幕幻步",
+          "element": "shadow",
+          "motif": "soul",
+          "style": "smoke",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "shadow/soul/smoke/trail/2/base/semantic/8",
+          "asset": "semantic",
+          "cell": 8
+        },
         "phases": [
           {
             "id": "charge",
@@ -4427,7 +5326,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -4456,11 +5357,24 @@
         "durationMs": 1320,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_thief_03",
+          "label": "無聲處刑",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "shards",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "shadow/blade/crosscut/shards/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4522,11 +5436,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#a5e567",
+          "#f5ffd5",
+          "#428259"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_thief_04",
+          "label": "淬毒祕術",
+          "element": "poison",
+          "motif": "serpent",
+          "style": "serpent",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "poison/serpent/serpent/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4588,11 +5515,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "special:skill_thief_05",
+          "label": "穿心飛刃",
+          "element": "steel",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/comet/trail/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4654,11 +5594,24 @@
         "durationMs": 1410,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": true,
+        "semantic": {
+          "id": "special:skill_thief_06",
+          "label": "鏡影反制",
+          "element": "shadow",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "shadow/mirror/mirror/halo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4726,11 +5679,24 @@
         "durationMs": 1060,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:base",
+          "label": "強力斬",
+          "element": "steel",
+          "motif": "blade",
+          "style": "inherit",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/inherit/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4798,11 +5764,24 @@
         "durationMs": 1480,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A",
+          "label": "旋風斬",
+          "element": "steel",
+          "motif": "blade",
+          "style": "storm",
+          "accent": "orbit",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/storm/orbit/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4870,11 +5849,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B",
+          "label": "盾擊",
+          "element": "steel",
+          "motif": "shield",
+          "style": "inherit",
+          "accent": "shards",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/inherit/shards/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -4942,11 +5934,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A1",
+          "label": "血之狂怒",
+          "element": "blood",
+          "motif": "blade",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "blood/blade/storm/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5014,11 +6019,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A2",
+          "label": "一閃",
+          "element": "steel",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "echo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/comet/echo/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5086,11 +6104,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B1",
+          "label": "神聖制裁",
+          "element": "holy",
+          "motif": "blade",
+          "style": "starfall",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "holy/blade/starfall/glyph/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5158,11 +6189,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B2",
+          "label": "不動如山",
+          "element": "steel",
+          "motif": "crown",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "steel/crown/cage/halo/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5230,11 +6274,24 @@
         "durationMs": 1540,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A11",
+          "label": "血之狂怒 · 血契",
+          "element": "blood",
+          "motif": "seal",
+          "style": "storm",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "blood/seal/storm/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5302,11 +6359,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A12",
+          "label": "血之狂怒 · 怒潮",
+          "element": "blood",
+          "motif": "drop",
+          "style": "storm",
+          "accent": "ripple",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "blood/drop/storm/ripple/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5374,11 +6444,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A21",
+          "label": "一閃 · 劍意",
+          "element": "steel",
+          "motif": "soul",
+          "style": "comet",
+          "accent": "glyph",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "steel/soul/comet/glyph/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5446,11 +6529,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A22",
+          "label": "一閃 · 裂空",
+          "element": "void",
+          "motif": "rift",
+          "style": "comet",
+          "accent": "shards",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "void/rift/comet/shards/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5518,11 +6614,24 @@
         "durationMs": 1810,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B11",
+          "label": "神聖制裁 · 聖療",
+          "element": "holy",
+          "motif": "drop",
+          "style": "fountain",
+          "accent": "ripple",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "holy/drop/fountain/ripple/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5590,11 +6699,24 @@
         "durationMs": 1780,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B12",
+          "label": "神聖制裁 · 庇護",
+          "element": "holy",
+          "motif": "shield",
+          "style": "inherit",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "holy/shield/inherit/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5662,11 +6784,24 @@
         "durationMs": 1550,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B21",
+          "label": "不動如山 · 壁壘",
+          "element": "steel",
+          "motif": "shield",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "steel/shield/cage/glyph/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5734,11 +6869,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B22",
+          "label": "不動如山 · 反攻",
+          "element": "steel",
+          "motif": "blade",
+          "style": "groundwave",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/groundwave/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5806,11 +6954,24 @@
         "durationMs": 1510,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A111",
+          "label": "血之狂怒 · 血契 · 精進",
+          "element": "blood",
+          "motif": "seal",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "blood/seal/storm/rays/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5878,11 +7039,24 @@
         "durationMs": 1480,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A112",
+          "label": "血之狂怒 · 血契 · 守望",
+          "element": "blood",
+          "motif": "seal",
+          "style": "storm",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "blood/seal/storm/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -5950,11 +7124,24 @@
         "durationMs": 1540,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A121",
+          "label": "血之狂怒 · 怒潮 · 精進",
+          "element": "blood",
+          "motif": "drop",
+          "style": "storm",
+          "accent": "trail",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "blood/drop/storm/trail/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6022,11 +7209,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A122",
+          "label": "血之狂怒 · 怒潮 · 守望",
+          "element": "blood",
+          "motif": "drop",
+          "style": "storm",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "blood/drop/storm/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6094,11 +7294,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A211",
+          "label": "一閃 · 劍意 · 精進",
+          "element": "steel",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "assault",
+          "signatureKey": "steel/blade/comet/rays/3/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6166,11 +7379,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A212",
+          "label": "一閃 · 劍意 · 守望",
+          "element": "steel",
+          "motif": "soul",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "ward",
+          "signatureKey": "steel/soul/comet/halo/3/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6238,11 +7464,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A221",
+          "label": "一閃 · 裂空 · 精進",
+          "element": "void",
+          "motif": "rift",
+          "style": "comet",
+          "accent": "shards",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "void/rift/comet/shards/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6310,11 +7549,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:A222",
+          "label": "一閃 · 裂空 · 守望",
+          "element": "void",
+          "motif": "rift",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "void/rift/comet/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6382,11 +7634,24 @@
         "durationMs": 1780,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B111",
+          "label": "神聖制裁 · 聖療 · 精進",
+          "element": "holy",
+          "motif": "drop",
+          "style": "fountain",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "assault",
+          "signatureKey": "holy/drop/fountain/rays/4/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6454,11 +7719,24 @@
         "durationMs": 1810,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B112",
+          "label": "神聖制裁 · 聖療 · 守望",
+          "element": "holy",
+          "motif": "drop",
+          "style": "fountain",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "holy/drop/fountain/halo/5/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6526,11 +7804,24 @@
         "durationMs": 1750,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B121",
+          "label": "神聖制裁 · 庇護 · 精進",
+          "element": "holy",
+          "motif": "shield",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "assault",
+          "signatureKey": "holy/shield/starfall/rays/4/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6598,11 +7889,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#f2df9a",
-          "#f8ffe8",
-          "#d64c43"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B122",
+          "label": "神聖制裁 · 庇護 · 守望",
+          "element": "holy",
+          "motif": "shield",
+          "style": "starfall",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "holy/shield/starfall/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6670,11 +7974,24 @@
         "durationMs": 1640,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B211",
+          "label": "不動如山 · 壁壘 · 精進",
+          "element": "steel",
+          "motif": "crown",
+          "style": "cage",
+          "accent": "shards",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "steel/crown/cage/shards/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6742,11 +8059,24 @@
         "durationMs": 1610,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B212",
+          "label": "不動如山 · 壁壘 · 守望",
+          "element": "steel",
+          "motif": "crown",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 8,
+          "routeAccent": "ward",
+          "signatureKey": "steel/crown/cage/halo/8/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6814,11 +8144,24 @@
         "durationMs": 1550,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B221",
+          "label": "不動如山 · 反攻 · 精進",
+          "element": "steel",
+          "motif": "blade",
+          "style": "groundwave",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "steel/blade/groundwave/rays/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6886,11 +8229,24 @@
         "durationMs": 1580,
         "impactAt": 0.32,
         "colors": [
-          "#ffc774",
-          "#fff3d2",
-          "#d64c43"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:sword:B222",
+          "label": "不動如山 · 反攻 · 守望",
+          "element": "steel",
+          "motif": "shield",
+          "style": "groundwave",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "steel/shield/groundwave/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -6958,11 +8314,24 @@
         "durationMs": 1580,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:base",
+          "label": "二連射",
+          "element": "wind",
+          "motif": "wing",
+          "style": "double-shot",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/double-shot/trail/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7030,11 +8399,24 @@
         "durationMs": 1860,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A",
+          "label": "箭雨",
+          "element": "wind",
+          "motif": "wing",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/starfall/rays/7/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7102,11 +8484,24 @@
         "durationMs": 2070,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B",
+          "label": "獵鷹助攻",
+          "element": "nature",
+          "motif": "wing",
+          "style": "pack",
+          "accent": "echo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "nature/wing/pack/echo/1/base/hawk/-",
+          "asset": "hawk",
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7176,11 +8571,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A1",
+          "label": "穿透狙擊",
+          "element": "star",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "star/blade/comet/glyph/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7248,11 +8656,24 @@
         "durationMs": 1520,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A2",
+          "label": "疾風連射",
+          "element": "wind",
+          "motif": "wing",
+          "style": "storm",
+          "accent": "echo",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/storm/echo/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7320,11 +8741,24 @@
         "durationMs": 2040,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B1",
+          "label": "野獸之王",
+          "element": "nature",
+          "motif": "crown",
+          "style": "pack",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "nature/crown/pack/rays/3/base/semantic/0",
+          "asset": "semantic",
+          "cell": 0
+        },
         "phases": [
           {
             "id": "charge",
@@ -7358,7 +8792,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -7394,11 +8828,24 @@
         "durationMs": 1860,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B2",
+          "label": "爆裂陷阱",
+          "element": "fire",
+          "motif": "web",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "fire/web/sunburst/shards/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7466,11 +8913,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A11",
+          "label": "星風聖射・秘技",
+          "element": "wind",
+          "motif": "star",
+          "style": "comet",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "wind/star/comet/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7538,11 +8998,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A12",
+          "label": "蒼穹裁決者・秘技",
+          "element": "holy",
+          "motif": "wing",
+          "style": "starfall",
+          "accent": "glyph",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "holy/wing/starfall/glyph/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7610,11 +9083,24 @@
         "durationMs": 1610,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A21",
+          "label": "暴風先知・秘技",
+          "element": "wind",
+          "motif": "crown",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "wind/crown/storm/rays/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7682,11 +9168,24 @@
         "durationMs": 1580,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A22",
+          "label": "天羽御風者・秘技",
+          "element": "wind",
+          "motif": "wing",
+          "style": "storm",
+          "accent": "echo",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "wind/wing/storm/echo/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7754,11 +9253,24 @@
         "durationMs": 2010,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B11",
+          "label": "萬獸祭司・秘技",
+          "element": "nature",
+          "motif": "beast",
+          "style": "pack",
+          "accent": "glyph",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "nature/beast/pack/glyph/4/base/semantic/5",
+          "asset": "semantic",
+          "cell": 5
+        },
         "phases": [
           {
             "id": "charge",
@@ -7792,7 +9304,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -7828,11 +9340,24 @@
         "durationMs": 1980,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B12",
+          "label": "古森召靈師・秘技",
+          "element": "nature",
+          "motif": "leaf",
+          "style": "summon",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "nature/leaf/summon/halo/3/base/semantic/5",
+          "asset": "semantic",
+          "cell": 5
+        },
         "phases": [
           {
             "id": "charge",
@@ -7866,7 +9391,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -7902,11 +9427,24 @@
         "durationMs": 1830,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B21",
+          "label": "皎月巡狩・秘技",
+          "element": "lunar",
+          "motif": "moon",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "lunar/moon/cage/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -7974,11 +9512,24 @@
         "durationMs": 1860,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B22",
+          "label": "荊棘影衛・秘技",
+          "element": "nature",
+          "motif": "thorn",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "base",
+          "signatureKey": "nature/thorn/cage/halo/6/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8046,11 +9597,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A111",
+          "label": "永恆風冠・終章",
+          "element": "wind",
+          "motif": "crown",
+          "style": "comet",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "wind/crown/comet/rays/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8118,11 +9682,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A112",
+          "label": "群星神弓・終章",
+          "element": "star",
+          "motif": "star",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "star/star/comet/halo/5/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8190,11 +9767,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A121",
+          "label": "蒼穹神判・終章",
+          "element": "holy",
+          "motif": "wing",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "holy/wing/starfall/rays/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8262,11 +9852,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A122",
+          "label": "聖光獵星・終章",
+          "element": "holy",
+          "motif": "star",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "holy/star/comet/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8334,11 +9937,24 @@
         "durationMs": 1580,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A211",
+          "label": "太初風皇・終章",
+          "element": "wind",
+          "motif": "crown",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "wind/crown/storm/rays/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8406,11 +10022,24 @@
         "durationMs": 1610,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A212",
+          "label": "九霄御風・終章",
+          "element": "wind",
+          "motif": "wing",
+          "style": "storm",
+          "accent": "halo",
+          "multiplicity": 9,
+          "routeAccent": "ward",
+          "signatureKey": "wind/wing/storm/halo/9/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8478,11 +10107,24 @@
         "durationMs": 1550,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A221",
+          "label": "天羽聖主・終章",
+          "element": "holy",
+          "motif": "wing",
+          "style": "storm",
+          "accent": "rays",
+          "multiplicity": 6,
+          "routeAccent": "assault",
+          "signatureKey": "holy/wing/storm/rays/6/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8550,11 +10192,24 @@
         "durationMs": 1520,
         "impactAt": 0.57,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:A222",
+          "label": "嵐靈神使・終章",
+          "element": "wind",
+          "motif": "soul",
+          "style": "storm",
+          "accent": "halo",
+          "multiplicity": 7,
+          "routeAccent": "ward",
+          "signatureKey": "wind/soul/storm/halo/7/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8622,11 +10277,24 @@
         "durationMs": 1980,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B111",
+          "label": "太古森皇・終章",
+          "element": "nature",
+          "motif": "crown",
+          "style": "tree",
+          "accent": "glyph",
+          "multiplicity": 6,
+          "routeAccent": "assault",
+          "signatureKey": "nature/crown/tree/glyph/6/assault/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -8660,7 +10328,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -8696,11 +10364,24 @@
         "durationMs": 2010,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B112",
+          "label": "萬獸神尊・終章",
+          "element": "nature",
+          "motif": "beast",
+          "style": "pack",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "nature/beast/pack/halo/5/ward/semantic/0",
+          "asset": "semantic",
+          "cell": 0
+        },
         "phases": [
           {
             "id": "charge",
@@ -8734,7 +10415,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -8770,11 +10451,24 @@
         "durationMs": 2070,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B121",
+          "label": "世界樹祭主・終章",
+          "element": "nature",
+          "motif": "leaf",
+          "style": "tree",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "nature/leaf/tree/rays/7/assault/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -8808,7 +10502,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -8844,11 +10538,24 @@
         "durationMs": 2040,
         "impactAt": 0.32,
         "colors": [
-          "#73edbc",
-          "#e6ffd1",
-          "#37a595"
+          "#f6df91",
+          "#fffde3",
+          "#c9984f"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B122",
+          "label": "精靈祖靈・終章",
+          "element": "holy",
+          "motif": "soul",
+          "style": "summon",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "holy/soul/summon/halo/4/ward/semantic/5",
+          "asset": "semantic",
+          "cell": 5
+        },
         "phases": [
           {
             "id": "charge",
@@ -8882,7 +10589,7 @@
             3
           ],
           "additional": [
-            "hawk.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -8918,11 +10625,24 @@
         "durationMs": 1800,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B211",
+          "label": "永夜月神・終章",
+          "element": "lunar",
+          "motif": "moon",
+          "style": "cage",
+          "accent": "echo",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "lunar/moon/cage/echo/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -8990,11 +10710,24 @@
         "durationMs": 1770,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B212",
+          "label": "銀月聖獵・終章",
+          "element": "lunar",
+          "motif": "eye",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "lunar/eye/cage/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9062,11 +10795,24 @@
         "durationMs": 1830,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B221",
+          "label": "荊棘聖王・終章",
+          "element": "nature",
+          "motif": "thorn",
+          "style": "cage",
+          "accent": "rays",
+          "multiplicity": 8,
+          "routeAccent": "assault",
+          "signatureKey": "nature/thorn/cage/rays/8/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9134,11 +10880,24 @@
         "durationMs": 1860,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6ffd1",
-          "#428f87"
+          "#79db9b",
+          "#eaffce",
+          "#32876d"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:archer:B222",
+          "label": "幽林守護・終章",
+          "element": "nature",
+          "motif": "shield",
+          "style": "tree",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "nature/shield/tree/halo/6/ward/semantic/3",
+          "asset": "semantic",
+          "cell": 3
+        },
         "phases": [
           {
             "id": "charge",
@@ -9171,7 +10930,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -9206,11 +10967,24 @@
         "durationMs": 1470,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:base",
+          "label": "火球術",
+          "element": "fire",
+          "motif": "flame",
+          "style": "inherit",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "fire/flame/inherit/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9278,11 +11052,24 @@
         "durationMs": 1350,
         "impactAt": 0.4,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#a5dbff",
+          "#fffde0",
+          "#626de7"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A",
+          "label": "連鎖閃電",
+          "element": "lightning",
+          "motif": "rune",
+          "style": "inherit",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "lightning/rune/inherit/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9350,11 +11137,24 @@
         "durationMs": 1570,
         "impactAt": 0.4,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#bda0ff",
+          "#f7eaff",
+          "#7650c4"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B",
+          "label": "奧術飛彈",
+          "element": "arcane",
+          "motif": "star",
+          "style": "comet",
+          "accent": "echo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "arcane/star/comet/echo/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9422,11 +11222,24 @@
         "durationMs": 1940,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A1",
+          "label": "隕石術",
+          "element": "fire",
+          "motif": "star",
+          "style": "starfall",
+          "accent": "rays",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "fire/star/starfall/rays/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9494,11 +11307,24 @@
         "durationMs": 1750,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A2",
+          "label": "暴風雪",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "storm",
+          "accent": "ripple",
+          "multiplicity": 7,
+          "routeAccent": "base",
+          "signatureKey": "ice/snowflake/storm/ripple/7/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9566,11 +11392,24 @@
         "durationMs": 1910,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B1",
+          "label": "時間扭曲",
+          "element": "time",
+          "motif": "clock",
+          "style": "clock",
+          "accent": "orbit",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "time/clock/clock/orbit/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9638,11 +11477,24 @@
         "durationMs": 2050,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B2",
+          "label": "召喚火精靈",
+          "element": "fire",
+          "motif": "flame",
+          "style": "summon",
+          "accent": "echo",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "fire/flame/summon/echo/1/base/fire-spirit/-",
+          "asset": "fire-spirit",
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9712,11 +11564,24 @@
         "durationMs": 1470,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A11",
+          "label": "星炎大賢者・奧義",
+          "element": "fire",
+          "motif": "star",
+          "style": "sunburst",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "fire/star/sunburst/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9784,11 +11649,24 @@
         "durationMs": 1880,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A12",
+          "label": "天隕魔導師・奧義",
+          "element": "fire",
+          "motif": "crown",
+          "style": "starfall",
+          "accent": "shards",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "fire/crown/starfall/shards/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9856,11 +11734,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A21",
+          "label": "永霜詠唱者・奧義",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "cage",
+          "accent": "glyph",
+          "multiplicity": 7,
+          "routeAccent": "base",
+          "signatureKey": "ice/snowflake/cage/glyph/7/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -9928,11 +11819,24 @@
         "durationMs": 1750,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A22",
+          "label": "極光冰術師・奧義",
+          "element": "ice",
+          "motif": "star",
+          "style": "aurora",
+          "accent": "trail",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "ice/star/aurora/trail/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10000,11 +11904,24 @@
         "durationMs": 1880,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B11",
+          "label": "時序預言者・奧義",
+          "element": "time",
+          "motif": "eye",
+          "style": "clock",
+          "accent": "glyph",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "time/eye/clock/glyph/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10072,11 +11989,24 @@
         "durationMs": 1910,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B12",
+          "label": "虛空旅法師・奧義",
+          "element": "void",
+          "motif": "rift",
+          "style": "void",
+          "accent": "orbit",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "void/rift/void/orbit/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10144,11 +12074,24 @@
         "durationMs": 2140,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B21",
+          "label": "星靈召喚師・奧義",
+          "element": "star",
+          "motif": "soul",
+          "style": "summon",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "star/soul/summon/rays/3/base/semantic/1",
+          "asset": "semantic",
+          "cell": 1
+        },
         "phases": [
           {
             "id": "charge",
@@ -10182,7 +12125,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -10218,11 +12161,24 @@
         "durationMs": 2110,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B22",
+          "label": "深淵契約者・奧義",
+          "element": "void",
+          "motif": "seal",
+          "style": "summon",
+          "accent": "glyph",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "void/seal/summon/glyph/2/base/semantic/2",
+          "asset": "semantic",
+          "cell": 2
+        },
         "phases": [
           {
             "id": "charge",
@@ -10256,7 +12212,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -10292,11 +12248,24 @@
         "durationMs": 1440,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A111",
+          "label": "日冕焚界",
+          "element": "fire",
+          "motif": "sun",
+          "style": "sunburst",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "fire/sun/sunburst/rays/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10364,11 +12333,24 @@
         "durationMs": 1470,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A112",
+          "label": "熾天裁決",
+          "element": "fire",
+          "motif": "wing",
+          "style": "starfall",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "fire/wing/starfall/halo/5/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10436,11 +12418,24 @@
         "durationMs": 1970,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A121",
+          "label": "星核崩滅",
+          "element": "star",
+          "motif": "star",
+          "style": "sunburst",
+          "accent": "shards",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "star/star/sunburst/shards/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10508,11 +12503,24 @@
         "durationMs": 1940,
         "impactAt": 0.57,
         "colors": [
-          "#ffac66",
-          "#f3f2ff",
-          "#da5949"
+          "#ffb15e",
+          "#fff0cc",
+          "#d64c35"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A122",
+          "label": "隕日終審",
+          "element": "fire",
+          "motif": "sun",
+          "style": "starfall",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "fire/sun/starfall/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10580,11 +12588,24 @@
         "durationMs": 1690,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A211",
+          "label": "永霜王域",
+          "element": "ice",
+          "motif": "snowflake",
+          "style": "cage",
+          "accent": "rays",
+          "multiplicity": 8,
+          "routeAccent": "assault",
+          "signatureKey": "ice/snowflake/cage/rays/8/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10652,11 +12673,24 @@
         "durationMs": 1660,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A212",
+          "label": "零界封絕",
+          "element": "ice",
+          "motif": "shield",
+          "style": "cage",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "ice/shield/cage/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10724,11 +12758,24 @@
         "durationMs": 1720,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A221",
+          "label": "極光聖降",
+          "element": "ice",
+          "motif": "star",
+          "style": "aurora",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "assault",
+          "signatureKey": "ice/star/aurora/rays/5/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10796,11 +12843,24 @@
         "durationMs": 1750,
         "impactAt": 0.57,
         "colors": [
-          "#8fdcff",
-          "#f3f2ff",
-          "#739ce2"
+          "#8bdfff",
+          "#efffff",
+          "#579ad2"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:A222",
+          "label": "蒼穹冰葬",
+          "element": "ice",
+          "motif": "soul",
+          "style": "starfall",
+          "accent": "shards",
+          "multiplicity": 8,
+          "routeAccent": "ward",
+          "signatureKey": "ice/soul/starfall/shards/8/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10868,11 +12928,24 @@
         "durationMs": 1970,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B111",
+          "label": "時序崩解",
+          "element": "time",
+          "motif": "clock",
+          "style": "clock",
+          "accent": "shards",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "time/clock/clock/shards/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -10940,11 +13013,24 @@
         "durationMs": 1940,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#8bdbd6",
+          "#fff5c7",
+          "#548cb9"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B112",
+          "label": "命運斷章",
+          "element": "time",
+          "motif": "seal",
+          "style": "clock",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "time/seal/clock/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11012,11 +13098,24 @@
         "durationMs": 1880,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B121",
+          "label": "虛空湮滅",
+          "element": "void",
+          "motif": "rift",
+          "style": "void",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "void/rift/void/rays/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11084,11 +13183,24 @@
         "durationMs": 1910,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B122",
+          "label": "次元裂隙",
+          "element": "void",
+          "motif": "rift",
+          "style": "void",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "void/rift/void/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11156,11 +13268,24 @@
         "durationMs": 2110,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B211",
+          "label": "萬靈降臨",
+          "element": "star",
+          "motif": "soul",
+          "style": "summon",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "star/soul/summon/rays/7/assault/semantic/1",
+          "asset": "semantic",
+          "cell": 1
+        },
         "phases": [
           {
             "id": "charge",
@@ -11194,7 +13319,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -11230,11 +13355,24 @@
         "durationMs": 2140,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B212",
+          "label": "星界御令",
+          "element": "star",
+          "motif": "crown",
+          "style": "summon",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "star/crown/summon/halo/4/ward/semantic/1",
+          "asset": "semantic",
+          "cell": 1
+        },
         "phases": [
           {
             "id": "charge",
@@ -11268,7 +13406,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -11304,11 +13442,24 @@
         "durationMs": 2080,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B221",
+          "label": "深淵魔召",
+          "element": "void",
+          "motif": "beast",
+          "style": "summon",
+          "accent": "shards",
+          "multiplicity": 4,
+          "routeAccent": "assault",
+          "signatureKey": "void/beast/summon/shards/4/assault/semantic/2",
+          "asset": "semantic",
+          "cell": 2
+        },
         "phases": [
           {
             "id": "charge",
@@ -11342,7 +13493,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -11378,11 +13529,24 @@
         "durationMs": 2050,
         "impactAt": 0.32,
         "colors": [
-          "#9bcaff",
-          "#f3f2ff",
-          "#9770e9"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:mage:B222",
+          "label": "冥界開門",
+          "element": "void",
+          "motif": "rift",
+          "style": "void",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "void/rift/void/halo/6/ward/semantic/6",
+          "asset": "semantic",
+          "cell": 6
+        },
         "phases": [
           {
             "id": "charge",
@@ -11416,7 +13580,7 @@
             3
           ],
           "additional": [
-            "fire-spirit.webp"
+            "semantic-atlas.webp"
           ]
         },
         "visualOnly": true
@@ -11452,11 +13616,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:base",
+          "label": "迅刃突刺",
+          "element": "steel",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/comet/trail/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11524,11 +13701,24 @@
         "durationMs": 1580,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A",
+          "label": "交錯刃擊",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "trail",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "shadow/blade/crosscut/trail/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11596,11 +13786,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B",
+          "label": "迴旋飛刃",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "echo",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "shadow/blade/orbit/echo/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11668,11 +13871,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A1",
+          "label": "斷影背刺",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "glyph",
+          "multiplicity": 1,
+          "routeAccent": "base",
+          "signatureKey": "shadow/blade/comet/glyph/1/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11740,11 +13956,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#a5e567",
+          "#f5ffd5",
+          "#428259"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A2",
+          "label": "蝕骨毒刃",
+          "element": "poison",
+          "motif": "blade",
+          "style": "serpent",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "poison/blade/serpent/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11812,11 +14041,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#e3c49a",
+          "#fff5dc",
+          "#a77859"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B1",
+          "label": "千刃迴旋",
+          "element": "steel",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "rays",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "steel/blade/orbit/rays/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11884,11 +14126,24 @@
         "durationMs": 1660,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B2",
+          "label": "鏡影連襲",
+          "element": "shadow",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "echo",
+          "multiplicity": 2,
+          "routeAccent": "base",
+          "signatureKey": "shadow/mirror/mirror/echo/2/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -11956,11 +14211,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A11",
+          "label": "夜幕斷罪",
+          "element": "shadow",
+          "motif": "seal",
+          "style": "crosscut",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "shadow/seal/crosscut/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12028,11 +14296,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A12",
+          "label": "幽影獵襲",
+          "element": "shadow",
+          "motif": "soul",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "shadow/soul/comet/trail/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12100,11 +14381,24 @@
         "durationMs": 1540,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#a5e567",
+          "#f5ffd5",
+          "#428259"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A21",
+          "label": "蝕毒連刃",
+          "element": "poison",
+          "motif": "blade",
+          "style": "serpent",
+          "accent": "echo",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "poison/blade/serpent/echo/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12172,11 +14466,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A22",
+          "label": "血棘穿刺",
+          "element": "blood",
+          "motif": "thorn",
+          "style": "comet",
+          "accent": "rays",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "blood/thorn/comet/rays/3/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12244,11 +14551,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B11",
+          "label": "疾風刃旋",
+          "element": "wind",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "trail",
+          "multiplicity": 5,
+          "routeAccent": "base",
+          "signatureKey": "wind/blade/orbit/trail/5/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12316,11 +14636,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B12",
+          "label": "星芒追刃",
+          "element": "star",
+          "motif": "blade",
+          "style": "comet",
+          "accent": "echo",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "star/blade/comet/echo/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12388,11 +14721,24 @@
         "durationMs": 1630,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B21",
+          "label": "鏡影刃舞",
+          "element": "shadow",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "trail",
+          "multiplicity": 4,
+          "routeAccent": "base",
+          "signatureKey": "shadow/mirror/mirror/trail/4/base/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12460,11 +14806,24 @@
         "durationMs": 1600,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B22",
+          "label": "暮光幻襲",
+          "element": "lunar",
+          "motif": "wing",
+          "style": "smoke",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "base",
+          "signatureKey": "lunar/wing/smoke/halo/3/base/semantic/8",
+          "asset": "semantic",
+          "cell": 8
+        },
         "phases": [
           {
             "id": "charge",
@@ -12497,7 +14856,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -12532,11 +14893,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A111",
+          "label": "冥夜裁決",
+          "element": "void",
+          "motif": "seal",
+          "style": "crosscut",
+          "accent": "rays",
+          "multiplicity": 4,
+          "routeAccent": "assault",
+          "signatureKey": "void/seal/crosscut/rays/4/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12604,11 +14978,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A112",
+          "label": "終焉斷影",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "crosscut",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "shadow/blade/crosscut/halo/5/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12676,11 +15063,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A121",
+          "label": "虛影穿襲",
+          "element": "void",
+          "motif": "rift",
+          "style": "comet",
+          "accent": "trail",
+          "multiplicity": 4,
+          "routeAccent": "assault",
+          "signatureKey": "void/rift/comet/trail/4/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12748,11 +15148,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A122",
+          "label": "無聲獵魂",
+          "element": "shadow",
+          "motif": "soul",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "shadow/soul/comet/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12820,11 +15233,24 @@
         "durationMs": 1630,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#a5e567",
+          "#f5ffd5",
+          "#428259"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A211",
+          "label": "九首蝕毒",
+          "element": "poison",
+          "motif": "serpent",
+          "style": "serpent",
+          "accent": "rays",
+          "multiplicity": 9,
+          "routeAccent": "assault",
+          "signatureKey": "poison/serpent/serpent/rays/9/assault/semantic/7",
+          "asset": "semantic",
+          "cell": 7
+        },
         "phases": [
           {
             "id": "charge",
@@ -12857,7 +15283,9 @@
             3,
             3
           ],
-          "additional": []
+          "additional": [
+            "semantic-atlas.webp"
+          ]
         },
         "visualOnly": true
       }
@@ -12892,11 +15320,24 @@
         "durationMs": 1600,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A212",
+          "label": "冥蛇噬影",
+          "element": "shadow",
+          "motif": "serpent",
+          "style": "serpent",
+          "accent": "halo",
+          "multiplicity": 3,
+          "routeAccent": "ward",
+          "signatureKey": "shadow/serpent/serpent/halo/3/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -12964,11 +15405,24 @@
         "durationMs": 1540,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#ed627b",
+          "#ffe5df",
+          "#982449"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A221",
+          "label": "血棘王刃",
+          "element": "blood",
+          "motif": "thorn",
+          "style": "orbit",
+          "accent": "shards",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "blood/thorn/orbit/shards/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13036,11 +15490,24 @@
         "durationMs": 1570,
         "impactAt": 0.57,
         "colors": [
-          "#86e8aa",
-          "#e6dfff",
-          "#428f87"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:A222",
+          "label": "蝕魂收割",
+          "element": "void",
+          "motif": "soul",
+          "style": "crosscut",
+          "accent": "halo",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "void/soul/crosscut/halo/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13108,11 +15575,24 @@
         "durationMs": 1210,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#8fe7d2",
+          "#effffa",
+          "#3796ac"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B111",
+          "label": "風暴千刃",
+          "element": "wind",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "rays",
+          "multiplicity": 9,
+          "routeAccent": "assault",
+          "signatureKey": "wind/blade/orbit/rays/9/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13180,11 +15660,24 @@
         "durationMs": 1180,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B112",
+          "label": "疾影穿梭",
+          "element": "shadow",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "trail",
+          "multiplicity": 6,
+          "routeAccent": "ward",
+          "signatureKey": "shadow/blade/orbit/trail/6/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13252,11 +15745,24 @@
         "durationMs": 1240,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B121",
+          "label": "星隕刃雨",
+          "element": "star",
+          "motif": "blade",
+          "style": "blade-rain",
+          "accent": "rays",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "star/blade/blade-rain/rays/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13324,11 +15830,24 @@
         "durationMs": 1270,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b7bcff",
+          "#fff3ff",
+          "#7562cd"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B122",
+          "label": "星軌追獵",
+          "element": "star",
+          "motif": "star",
+          "style": "comet",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "star/star/comet/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13396,11 +15915,24 @@
         "durationMs": 1600,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b597df",
+          "#f0e4ff",
+          "#694677"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B211",
+          "label": "千面鏡殺",
+          "element": "shadow",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "rays",
+          "multiplicity": 8,
+          "routeAccent": "assault",
+          "signatureKey": "shadow/mirror/mirror/rays/8/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13468,11 +16000,24 @@
         "durationMs": 1630,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#b382f2",
+          "#e9d8ff",
+          "#593584"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B212",
+          "label": "鏡界穿行",
+          "element": "void",
+          "motif": "mirror",
+          "style": "mirror",
+          "accent": "halo",
+          "multiplicity": 5,
+          "routeAccent": "ward",
+          "signatureKey": "void/mirror/mirror/halo/5/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13540,11 +16085,24 @@
         "durationMs": 1690,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B221",
+          "label": "暮光織刃",
+          "element": "lunar",
+          "motif": "blade",
+          "style": "orbit",
+          "accent": "echo",
+          "multiplicity": 7,
+          "routeAccent": "assault",
+          "signatureKey": "lunar/blade/orbit/echo/7/assault/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
@@ -13612,11 +16170,24 @@
         "durationMs": 1660,
         "impactAt": 0.57,
         "colors": [
-          "#bb9aff",
-          "#e6dfff",
-          "#6adbb8"
+          "#c2d4f7",
+          "#fbfcff",
+          "#7074b1"
         ],
         "support": false,
+        "semantic": {
+          "id": "native:thief:B222",
+          "label": "黑月幻刃",
+          "element": "lunar",
+          "motif": "moon",
+          "style": "crosscut",
+          "accent": "halo",
+          "multiplicity": 4,
+          "routeAccent": "ward",
+          "signatureKey": "lunar/moon/crosscut/halo/4/ward/geometry/-",
+          "asset": null,
+          "cell": null
+        },
         "phases": [
           {
             "id": "charge",
