@@ -1,8 +1,8 @@
 /* One context for the local scene and its real Atlas windows. Reads never settle. */
 (() => {
   'use strict';
-  const READS = new Set(['meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
-  const SCOPED_REALM_ACTIONS = new Set(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','guardian/scene','guardian/receipt','guardian/action-scoped']);
+  const READS = new Set(['meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','fate/scene','fate/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
+  const SCOPED_REALM_ACTIONS = new Set(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','guardian/scene','guardian/receipt','guardian/action-scoped','fate/scene','fate/receipt','fate/action-scoped']);
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
     const endpoint = options.endpoint;

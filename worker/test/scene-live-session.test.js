@@ -903,3 +903,55 @@ test('Guardian A/B/A late 200 and 409 replies retain their captured realm and ca
     assert.equal((await current).marker,'current-a'); assert.equal(h.client.getContext().epoch,2);
   });
 });
+
+const fateScopedWireCases = [
+  ['fate/scene',{before:null,giftStatus:'claimed',giftAfter:null,readSequence:0}],
+  ['fate/receipt',{kind:'choice',lifeId:'exact-life',index:0,answer:0,requestId:'sf_original_choice'}],
+  ...[
+    {kind:'start',mode:'random',country:'TW',showSign:false,socialInvite:false},
+    {kind:'choice',lifeId:'exact-life',index:0,answer:0},
+    {kind:'choice',lifeId:'exact-life',index:1,answer:1},
+    {kind:'keep',code:'exact-original-code'},
+    {kind:'gift-claim',expectedMilestones:[4,8]},
+    {kind:'gift-open',giftId:'exact-original-gift'},
+  ].map((payload,index)=>['fate/action-scoped',{...payload,requestId:'sf_original_'+index}]),
+];
+test('Fate scene and receipt are pure reads; legacy me/state and scoped actions keep uncertain mutation semantics',async t=>{
+  const h=harness();t.after(()=>h.client.dispose());
+  const refresh=h.client.refresh(),projection=h.client.request('fate/scene'),receipt=h.client.request('fate/receipt',{kind:'gift-open',giftId:'exact-gift',requestId:'sf_original_open'});
+  assert.deepEqual(h.net.calls.map(call=>call.action),['atlas/status','fate/scene','fate/receipt']);
+  h.net.calls[1].reply({ok:true,fate:{state:{active:null}}});h.net.calls[2].reply({ok:true,found:false,recoveryAllowed:false,result:null,receipt:null});
+  assert.equal((await projection).fate.state.active,null);assert.equal((await receipt).found,false);
+  h.net.calls[0].reply({ok:true,scene:scene()});assert.equal((await refresh).characterId,'a');assert.equal(h.net.calls.length,3);
+  for(const action of ['fate/scene','fate/receipt','fate/me','fate/state','fate/action-scoped']){
+    const task=outcome(h.client.request(action));h.net.calls.at(-1).fail();const result=await task;
+    assert.equal(result.error.uncertain,!['fate/scene','fate/receipt'].includes(action),action);
+  }
+});
+test('Fate wire preserves explicit false, answer zero, null cursor, complete milestone list and exact IDs in captured realm',async t=>{
+  for(const[action,payload]of fateScopedWireCases)await t.test(action+':'+(payload.kind||'scene')+':'+String(payload.answer),async t=>{
+    const h=harness({realmId:'season',characterId:'season-a'});t.after(()=>h.client.dispose());
+    const body={...payload,realmId:'forged-realm',selectedCharacterId:'foreign'},before=plain(body),task=h.client.request(action,body),call=h.net.calls.at(-1);
+    assert.equal(call.options.headers['X-Realm-Id'],'season');assert.equal(call.options.headers['X-Dev-Tg-Id'],'90101');
+    assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId:'season',selectedCharacterId:'season-a'});assert.deepEqual(body,before);
+    call.reply({ok:true});await drain();
+    if(action==='fate/action-scoped'){const follow=h.net.calls.at(-1);assert.equal(follow.action,'atlas/status');assert.deepEqual(follow.body,{selectedCharacterId:'season-a'});follow.reply({ok:true,scene:scene({realmId:'season',characterId:'season-a',runId:null})});}
+    assert.equal((await task).ok,true);assert.equal(h.net.calls.length,action==='fate/action-scoped'?2:1);
+  });
+});
+test('Fate A/B/A late 200 or 409 cannot change current context or launch an Atlas refresh for another epoch',async t=>{
+  for(const action of ['fate/scene','fate/receipt','fate/action-scoped'])await t.test(action,async t=>{
+    const h=harness();t.after(()=>h.client.dispose());const payload={kind:'gift-open',giftId:'original-gift',requestId:'sf_original_a_b_a'};
+    const first=outcome(h.client.request(action,payload)),firstCall=h.net.calls.at(-1);
+    h.client.setContext({realmId:'season',characterId:'season-a'});const middle=outcome(h.client.request(action,payload)),middleCall=h.net.calls.at(-1);
+    h.client.setContext({realmId:'permanent',characterId:'a'});const current=h.client.request(action,payload),currentCall=h.net.calls.at(-1);
+    for(const[call,realmId,characterId]of [[firstCall,'permanent','a'],[middleCall,'season','season-a'],[currentCall,'permanent','a']]){
+      assert.equal(call.options.headers['X-Realm-Id'],realmId);assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId,selectedCharacterId:characterId});
+    }
+    firstCall.reply({ok:true,marker:'old-a'});middleCall.reply({ok:false,error:'late conflict',code:'request_reused'},409);
+    for(const value of [await first,await middle]){assert.equal(value.ok,false);assert.equal(value.error.code,'context_changed');}
+    assert.equal(h.net.calls.length,3);currentCall.reply({ok:true,marker:'current-a'});await drain();
+    if(action==='fate/action-scoped'){const follow=h.net.calls.at(-1);assert.equal(follow.action,'atlas/status');follow.reply({ok:true,scene:scene({runId:null})});}
+    assert.equal((await current).marker,'current-a');assert.equal(h.client.getContext().epoch,2);
+  });
+});

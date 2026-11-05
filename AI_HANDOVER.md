@@ -1,3 +1,48 @@
+# 命運 F1 主浮窗整合（2026-11-05）
+
+本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f1-integration-20261105
+分支：codex/fate-f1-integration-20261105；承接天使 4dc91d920a49d0e1c93687bf3b3c872356c324b3。
+完整報告：docs/FATE_F1_SCENE_INTEGRATION_20261105.txt。
+
+本文件於本機提交前保存。精確最終HEAD、乾淨工作樹及提交後完整Worker／BOT結果，以 .release-sync/fate-f1-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json 及 D:/StarJournal/handoff/non-character/fate-f1-integration-20261105/FINAL_STATUS.md 為準。前批3444或focused不取代本批完整gate。
+
+## 已完成
+
+- 冒險「命運旅章」與營地「四世星輝匣」共用近透明單浮窗：旅章／此世／旅誌／星輝匣／紀錄。
+- 原random人生、國家／版本故事、選項0／1、完成旅誌、紀念保存／匯入、真正四世claim及精確giftId原open接通。原2活躍小時／90秒／台北午夜至06暫停／帳號每日4次／原RNG與獎池保持。
+- fate/scene、receipt純SELECT；action-scoped沿5種原權威。captured realm／account／actor與每次原batch guard、可信namespace、claim proof CAS及typed receipt同批；缺receipt不能推論前置完全零寫。
+- pending完整原ID／body持久化；unknown、切角、重掛不自動重送／換ID。不可變原收據與新scene freshness分離，已驗結果在後續刷新後仍能確認，不倒退scene或重抽。
+- F1拒生日／profile欄位。F2為生日／個人檔案／每日旅箋，F3為合作社交。
+
+## 驗收與來源
+
+- 後端222；最新UI／story／session194；preview attach18；真client/session/SQLite bridge4各有原收據，集合重疊不相加。最終HEAD完整gate另看成功收據。
+- fresh02完整11段／19checks／31圖、4真原人生、9成功原Fate操作；27組Fate純讀各驗雙96表不變。正常UI select本身會沿原流程結算，不能把整段scope稱零寫。
+- 原gift fb005b7f26d94671821f8a4f4d7c5b37，一次claim／一次open，原結果scroll_w×2＋scroll_a×2。失聯後純收據恢復、再純刷新仍可ack，沒有第二次consume或重抽。
+- acceptance-summary-01.json SHA d3cbacecb3b5d7a01143c9c12804ceb7e205f6cbe1b90c3c77f3a48f2ece9282。原11段綁freeze05（2368根來源／343每段）；最後只修賽季世界label，freeze06唯一展示差異，UI c80bd475…。
+- 最後label純展示bridge02另25checks／5圖通過，2368來源穩定、整段雙DB／clock／commands不變；root另目視賽季標籤與卷軸收據2圖（root總6）。結果SHA94510466aaa498c7f9525aa8ac7637bb952dce6a660d978053b806387bd93d9f。
+- bridge01 host資料fetch失敗保持failed，空錯誤殼不算內容驗收；其Node九筆原收據查核可繼承。02為嚴格唯讀binding展示真API結果，不等同完整場景／browser wire重測；原11段仍綁freeze05。
+- root原圖4／UI目視21有重疊；review逐圖有邊界。原gift-recovered截圖為ack後摘要，卷軸結果由原operation／ledger／receipt證明。
+- 瀏覽器外部請求／asset capture gaps零，未啟dispatcher，最終outbox永久0／賽季0。只固定9份共享文字快照，圖像依實際HTTP原件，不宣稱全域art凍結。
+
+## 保留失敗與預覽接續
+
+原UI收據ack freshness、story根路徑404、root driver未展開lifeSchedule及empty attach process.exit故障的red／failed均保留，修正與新來源另記。舊API44296隨UI17812停止而消失，缺全量raw DB，不能忠實還原；原life29c1e8c7729c418092fbdf2f74b941c8僅start成功、choice未送，不計新四世。舊life1-tail已撤銷未執行。
+
+新獨立API18496：http://127.0.0.1:9792；只attach的UI19272：http://127.0.0.1:9793。空白期實際UI停止／重掛已證明API／DB／clock不變。保留現有程序；重連先查最新STATUS與原PID，不直接重啟或seed／重放任何成功操作。這是隔離記憶體資料與開發clock，不是正式Telegram／真機，也不是持久DB備份。
+
+## 下一批與工作界線
+
+正式下一批計畫在外部NEXT_BATCH_PLAN.json，綁F1最終HEAD與完整gate、35來源。F2先處理私人intent不落瀏覽器／收據、刪除後不留私人note、generation防delete/recreate ABA，以及原daily分段交易；Fate daily沒有金幣／物品獎勵。F2尚未實作；F3與交易／衣櫥／帳務、第四重選、Lv600／覺醒、完整季末與真機／平衡／逐擊事件／角色FX等待辦保留。
+
+每30分鐘沿用既有本機checkpoint排程；重要里程碑立即記錄。主STATUS／LATEST、批次STATUS／FINAL_STATUS及START_HERE為接手入口；生成時間不是完成時間。禁止共享全域agent_workflow／task_control、kill全部Node或改其他工作樹／角色／FX／grok素材。
+
+本批只本機提交，未push／新PR／CI／merge／deploy，正式DB／Secrets／migration不動。先前Party發布自動審查的精確提交及目的地授權界線維持，不以後代分支規避。
+
+---
+
+## 前序已提交交接（歷史原文保留）
+
 # 天使／守護天使主浮窗整合（2026-11-05）
 
 本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-angel-integration-20261105

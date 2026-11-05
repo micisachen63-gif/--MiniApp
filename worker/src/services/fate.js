@@ -14,13 +14,13 @@ const parse=(s,fallback=null)=>{try{return JSON.parse(s)}catch{return fallback}}
 const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','selectedCharacterId','tgId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
 async function fingerprint(kind,b){const a=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify({kind,body:canonical(b)})));return [...new Uint8Array(a)].map(n=>n.toString(16).padStart(2,'0')).join('');}
-async function mutation(env,tg,b,now,kind,fn){
+async function mutation(env,tg,b,now,kind,fn,options={}){
  if(typeof b.requestId!=='string'||!/^[A-Za-z0-9:_-]{6,90}$/.test(b.requestId))throw new GameError('request','需要有效的操作編號');
  const c=await owner(env.DB,tg),db=env.DB,hash=await fingerprint(kind,{...b,_character:String(tg)});
  for(let attempt=0;attempt<4;attempt++){
   const old=await db.prepare('SELECT payload_hash,result_json FROM rpg_fate_operations WHERE account_id=? AND request_id=?').bind(c.account,b.requestId).first();
   if(old){if(old.payload_hash!==hash)throw new GameError('request_changed','這個操作編號已用於不同的選擇，請更新畫面',409);return {ok:true,result:parse(old.result_json),replayed:true};}
-  const {stmts=[],result={}}=await fn(c,db);stmts.push(db.prepare('INSERT INTO rpg_fate_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,hash,JSON.stringify(result),now));
+  const {stmts=[],result={}}=await fn(c,db);stmts.push(db.prepare('INSERT INTO rpg_fate_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,hash,JSON.stringify(result),now));if(options.receipt)stmts.push(options.receipt(result));
   try{await db.batch(stmts);return {ok:true,result};}catch(e){const classified=classifyDbError(e);if(attempt<3&&(classified?.code==='conflict'||/UNIQUE constraint failed: rpg_fate_/.test(String(e.message))))continue;throw classified||e;}
  }
  throw new GameError('conflict','旅章正同步中，請稍後重試',409);
@@ -62,7 +62,7 @@ export async function history(env,tg,b,now){
  const memorials=(await env.DB.prepare('SELECT code,created_at FROM rpg_fate_memorials WHERE char_id=? ORDER BY created_at DESC LIMIT 30').bind(String(tg)).all()).results||[];
  return {ok:true,entries:rows.slice(0,10).map(r=>({id:r.id,code:r.code,at:r.completed_at,draft:parse(r.state_json)})),next:rows.length>10?rows[9].started_at:null,memorials:memorials.map(r=>({code:r.code,at:r.created_at})),now};
 }
-export async function start(env,tg,b,now){
+export async function start(env,tg,b,now,options={}){
  const country=b.country??'TW';if(country!=='TW'&&!Object.hasOwn(COUNTRY_METADATA_V9,country))throw new GameError('fate_country','請選擇已開放的出生地。');if(country!=='TW')await ensureCountryPack(country);const version=country==='TW'?8:9;
  await progressRow(env,await activeRow(env.DB,tg),now);
  const castSink=[];
@@ -77,7 +77,7 @@ export async function start(env,tg,b,now){
   identityZodiac??=generatedZodiac(seed);draft.identityZodiac=identityZodiac;if(b.mode!=='birthday'&&b.showSign!==false)draft.zodiac=identityZodiac;
   const socialCast=await snapshotSocialCast(db,c.account,draft,castSink);if(socialCast)draft.socialCast=socialCast;
   return {stmts:[db.prepare('INSERT INTO rpg_fate_starts(account_id,day,count) VALUES(?,?,1) ON CONFLICT(account_id,day) DO UPDATE SET count=count+1 WHERE count<4').bind(c.account,day),guardStmt(db),db.prepare("INSERT INTO rpg_fate_lives(id,char_id,account_id,state_json,status,started_at,next_at) VALUES(?,?,?,?,'active',?,?)").bind(id,String(tg),c.account,JSON.stringify(draft),now,lifeSchedule(now,draft)[0])],result:{lifeId:id}};
- });
+ },options);
  // The life commits independently. A missing eligible partner or an unavailable
  // membership service must never block a two-hour life or consume another start.
  // Replaying the same start repairs an interrupted schedule via UNIQUE(life_id).
@@ -88,14 +88,14 @@ if(b.socialInvite===true){
  }
  return response;
 }
-export async function choose(env,tg,b,now){
+export async function choose(env,tg,b,now,options={}){
  return mutation(env,tg,b,now,'choice',async(c,db)=>{
   const row=await db.prepare('SELECT * FROM rpg_fate_lives WHERE id=? AND char_id=?').bind(String(b.lifeId),String(tg)).first();if(!row||row.status!=='active')throw new GameError('fate_finished','這一世已經落款，請更新旅章',409);
   let v;try{v=chooseLife(parse(row.state_json),b.answer,now,b.index);}catch(e){throw new GameError('fate_choice',e.message,409)}
   return {stmts:[db.prepare('UPDATE rpg_fate_lives SET state_json=?,next_at=?,rev=rev+1 WHERE id=? AND char_id=? AND rev=? AND status=\'active\'').bind(JSON.stringify(v.draft),v.nextAt,row.id,String(tg),row.rev),guardStmt(db)],result:{lifeId:row.id,index:b.index,answer:b.answer}};
- });
+ },options);
 }
-export async function keep(env,tg,b,now){await ensureCountryCodes([b.code]);if(!decodeResult(b.code))throw new GameError('fate_code','這張旅人來信無法辨識');return mutation(env,tg,b,now,'keep',async(c,db)=>({stmts:[db.prepare('INSERT OR IGNORE INTO rpg_fate_memorials(char_id,code,created_at) VALUES(?,?,?)').bind(String(tg),b.code,now)],result:{saved:true,countsAsLife:false}}));}
+export async function keep(env,tg,b,now,options={}){await ensureCountryCodes([b.code]);if(!decodeResult(b.code))throw new GameError('fate_code','這張旅人來信無法辨識');return mutation(env,tg,b,now,'keep',async(c,db)=>({stmts:[db.prepare('INSERT OR IGNORE INTO rpg_fate_memorials(char_id,code,created_at) VALUES(?,?,?)').bind(String(tg),b.code,now)],result:{saved:true,countsAsLife:false}}),options);}
 export async function profileView(env,tg,full=true){const c=await owner(env.DB,tg),r=await env.DB.prepare('SELECT * FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();return r?{saved:true,rev:r.rev,coverage:parse(r.chart_json)?.coverage,updatedAt:r.updated_at,...(full?{birth:parse(r.birth_json)}:{})}:{saved:false,rev:0,coverage:'inspiration'};}
 export async function saveProfile(env,tg,b,now){
  if(b.consent!==true)throw new GameError('birth_consent','請先同意將出生資料儲存於自己的帳號，供每日旅箋使用');
