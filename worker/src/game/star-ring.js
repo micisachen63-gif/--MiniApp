@@ -1,6 +1,7 @@
 // Server-authoritative, deterministic expedition simulation. No browser clock/power/loot input.
 import {rngFor} from './rng.js';
 import {roleSkills,assignRoles,castRole} from './party-roles.js';
+import {nativeCastVfx} from './skill-vfx-events.js';
 import {combatActor,autoPartyAction,castSpecial,validateCast,periodic,receiveDamage,damageEnemy,performThiefNativeStrikes,valueOf,SKILL_MAP} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 import {computeStats,idleStats,standardStats} from './stats.js';
@@ -149,7 +150,7 @@ function nextArea(b,state,hourIndex){
  finishArea(b,state);b.hourIndex=hourIndex;b.scene=sceneFor(state,hourIndex);b.enemy=enemyFor(state,hourIndex,b.strength);b.hourStartWave=b.waves;
  if(usesPools(state)){b.poolSeen={elite:false,boss:false};b.enemy=null;spawnPooled(b,state);}
 }
-function monsterAttack(b,beat,at,pressure,tactic,missing,events){
+function monsterAttack(b,beat,at,pressure,tactic,missing,events,vfxSource,runId){
  const e=b.enemy;if(e.hp<=0)return;
  if(e.interrupted){events.push({actorId:'boss',label:`${e.spell}已被打斷`,interrupted:true});return;}
  const factor=(tactic==='deep'?1.18:tactic==='steady'?.8:1)*(1+missing*.2)*(e.rank?({normal:.85,elite:1.1,boss:1.3})[e.rank]:1),front=b.actors.filter(a=>a.hp>0).slice().sort((a,c)=>c.maxHp-a.maxHp)[0];
@@ -160,8 +161,9 @@ function monsterAttack(b,beat,at,pressure,tactic,missing,events){
  for(const a of b.actors){
   const cleave=mechanic==='cleave'?(a.id===front?.id?1.6:1.05):mechanic==='swoop'&&e.windup?(a.id===weakest?.id?1.8:.55):1;
   const curse=(a.debuffs||[]).some(d=>d.type==='party-curse'&&d.until>at)?1.25:1,chill=(a.debuffs||[]).some(d=>d.type==='ring-chill'&&d.until>at)?1.15:1;
-  const damage=receiveDamage(a,pressure*factor*heavy*cleave*curse*chill*(1-valueOf(e,'enemyNextReduce',at)),b.actors,e,at);
-  events.push({actorId:'boss',targetId:a.id,label:e.windup?e.spell:e.basicAttack||({venom:'晶螯突刺',shield:'鑄衛槌擊',drain:'銀針穿刺',song:'哀歌殘響',cleave:'棘冠撕咬',curse:'審判斬擊',swoop:'銅羽散射',hollow:'星燈灼光',torrent:'晶鰻尾擊',gust:'石翼拍擊',tide:'深冠衝撞',unravel:'星線切割'})[mechanic],damage});
+  const reactions={eventId:'ring:'+runId+':'+b.sequence+':counter:'+a.id,effects:[],source:vfxSource,enemyId:e.id||'boss',encounterId:e.id};
+  const damage=receiveDamage(a,pressure*factor*heavy*cleave*curse*chill*(1-valueOf(e,'enemyNextReduce',at)),b.actors,e,at,{vfx:reactions});
+  events.push({actorId:'boss',...(reactions.effects.length?{vfxEvents:reactions.effects}:{}),targetId:a.id,label:e.windup?e.spell:e.basicAttack||({venom:'晶螯突刺',shield:'鑄衛槌擊',drain:'銀針穿刺',song:'哀歌殘響',cleave:'棘冠撕咬',curse:'審判斬擊',swoop:'銅羽散射',hollow:'星燈灼光',torrent:'晶鰻尾擊',gust:'石翼拍擊',tide:'深冠衝撞',unravel:'星線切割'})[mechanic],damage});
   if(mechanic==='venom'&&e.windup&&a.hp>0){a.debuffs=(a.debuffs||[]).filter(d=>d.type!=='ring-venom');a.debuffs.push({type:'ring-venom',until:at+90000});events.push({actorId:'boss',targetId:a.id,label:'晶毒附著',status:'ring-venom'});}
   if((mechanic==='drain'&&beat%6===5||mechanic==='torrent'&&e.windup)&&a.hp>0){const lost=Math.min(a.mp,Math.ceil(a.maxMp*(mechanic==='torrent'?.15:.2)));a.mp-=lost;events.push({actorId:'boss',targetId:a.id,label:e.spell,drainedMp:lost});}
   if(['torrent','tide'].includes(mechanic)&&e.windup&&a.hp>0){a.debuffs=(a.debuffs||[]).filter(d=>d.type!=='ring-chill');a.debuffs.push({type:'ring-chill',until:at+90000});events.push({actorId:'boss',targetId:a.id,label:'濕寒侵襲',status:'ring-chill'});}
@@ -176,7 +178,7 @@ export function coverageForExpedition(state,actors,roles=['guard','breach','aid'
  return state.optionalGuard===true&&roles.includes('guard')&&match.missing.some(r=>r!=='guard')
   ?coverage(actors,[...roles.filter(r=>r!=='guard'),'guard']):match;
 }
-export function simulateStage(state,index,beats=BEATS){
+export function simulateStage(state,index,beats=BEATS,{vfxSource='committed-combat'}={}){
  if(state.engineVersion!=null&&![1,2,3].includes(state.engineVersion))throw new GameError('engine_version','這趟遠征需要對應版本的戰鬥引擎',409);
  const initial=index?state.results[index-1]?.actors:state.actors;
  const stageStart=state.startedAt+index*STAGE_MS;
@@ -204,12 +206,14 @@ export function simulateStage(state,index,beats=BEATS){
   b.enemy.damageBudget=state.difficulty==='advanced'&&currentMatch.missing.some(r=>r!=='guard'||state.optionalGuard!==true)?0:Infinity;
   b.enemy.windup=encounterWindup(def,localBeat);b.enemy.interrupted=false;b.enemy.interruptible=true;
   if(b.enemy.hp<=0){b.enemy.hp=b.enemy.maxHp;b.enemy.buffs=[];b.enemy.dots=[];b.enemy.shield=['shield','hollow','tide','unravel'].includes(b.enemy.mechanic)?Math.round(b.enemy.maxHp*(b.enemy.mechanic==='hollow'?.22:.18)):0;for(const a of b.actors){a.hp=Math.min(a.maxHp,a.hp+a.maxHp*.02);a.mp=Math.min(a.maxMp,a.mp+a.maxMp*.04);}}
-  const events=arrival;periodic(b.actors,b.enemy,at);
+  const events=arrival;const beforePeriodic=b.enemy.hp,periodicVfx=periodic(b.actors,b.enemy,at,{vfx:{eventId:'ring:'+state.id+':'+index+':'+beat+':periodic',source:vfxSource,enemyId:b.enemy.id||'boss',encounterId:b.enemy.id||state.id+':'+hourIndex}});
+  if(periodicVfx?.length)events.push({actorId:null,label:'召喚／持續傷害',damage:beforePeriodic-b.enemy.hp,vfxEvents:periodicVfx});
   for(const a of b.actors){a.debuffs=(a.debuffs||[]).filter(d=>d.until>at);if(a.debuffs.some(d=>d.type==='ring-venom')){const damage=receiveDamage(a,a.maxHp*.025,b.actors,b.enemy,at,{elementApplied:true,defApplied:true});events.push({actorId:'boss',targetId:a.id,label:'晶毒侵蝕',damage,status:'ring-venom'});}}
   for(const a of b.actors){
    if(a.hp<=0){a.hp=Math.ceil(a.maxHp*.3);a.mp=Math.ceil(a.maxMp*.25);a.wounds=(a.wounds||0)+1;events.push({actorId:a.id,label:'補給救援',healed:a.hp});continue;}
    a.mp=Math.min(a.maxMp,a.mp+Math.ceil(a.maxMp*.1));
    let action=autoPartyAction(a,b.actors,b.enemy,at,b),result;
+   const observation={eventId:'ring:'+state.id+':'+index+':'+beat+':'+a.id,effects:[],source:vfxSource,atMs:at,enemyId:b.enemy.id||'boss',encounterId:b.enemy.id||state.id+':'+hourIndex};
    const assignedDuty=Object.entries(currentMatch.assignment).find(([,id])=>id===a.id)?.[0];
    const aidNeeded=b.actors.some(t=>(t.debuffs||[]).some(d=>['ring-venom','ring-chill','party-curse'].includes(d.type)));
    const duty=assignedDuty||(aidNeeded&&rolesOf(a).includes('aid')?'aid':undefined);
@@ -222,20 +226,22 @@ export function simulateStage(state,index,beats=BEATS){
    try{
     if(!result&&action.skillId!=='attack'&&action.skillId!=='defend'){
      const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,at);
-     result=castSpecial(a,b.actors,b.enemy,skill,action.targetId,at,rng,b);
+     result=castSpecial(a,b.actors,b.enemy,skill,action.targetId,at,rng,b,observation);
     }
    }catch{result=null;}
    if(!result){
     const cast=a.mp>=(a.skill?.cost||0),mult=cast?(a.skill?.mult||1.5):1.5;
-    if(a.base==='thief')result=performThiefNativeStrikes(a,b.enemy,at,{cast,baseRaw:a.atk*mult,rng,actionId:`${state.seed}:${index}:${beat}:${a.id}`});
-    else result={damage:damageEnemy(b.enemy,a.atk*mult*(1+valueOf(a,'atkUp',at))*(1+valueOf(a,'damageUp',at))*(rng()<a.crit?1.5:1),{},at,a)};
+    if(a.base==='thief')result=performThiefNativeStrikes(a,b.enemy,at,{cast,baseRaw:a.atk*mult,rng,actionId:`${state.seed}:${index}:${beat}:${a.id}`,observation});
+    else result={damage:damageEnemy(b.enemy,a.atk*mult*(1+valueOf(a,'atkUp',at))*(1+valueOf(a,'damageUp',at))*(rng()<a.crit?1.5:1),{},at,a,observation)};
     if(cast)spendMana(a,a.skill?.cost||0,rng);
     restoreOnAction(a,result.damage||0,{cast,enabled:true});action={skillId:'attack'};
+    if(cast&&!result.vfx){const visual=nativeCastVfx(a,observation);if(visual)result.vfx=visual;}
    }
+   if(observation.effects.length)result.vfxEvents=observation.effects;
    const c=b.contribution[a.id]??={damage:0,healing:0,roles:0};c.damage+=result.damage||0;c.healing+=result.healed||0;c.roles+=action.skillId.startsWith('role_')?1:0;
-   events.push({actorId:a.id,skillId:action.skillId,label:result.label||SKILL_MAP[action.skillId]?.name||a.skill?.name||'戰技',damage:result.damage||0,healed:result.healed||0,...(result.restoredMp?{restoredMp:result.restoredMp}:{}),...(result.cleansed?{cleansed:result.cleansed}:{}),...(result.shieldBroken?{shieldBroken:result.shieldBroken}:{})});
+   events.push({actorId:a.id,...(result.vfxEvents?.length?{vfxEvents:result.vfxEvents}:{}),...(result.vfx?{vfx:result.vfx}:{}),skillId:action.skillId,label:result.label||SKILL_MAP[action.skillId]?.name||a.skill?.name||'戰技',damage:result.damage||0,healed:result.healed||0,...(result.restoredMp?{restoredMp:result.restoredMp}:{}),...(result.cleansed?{cleansed:result.cleansed}:{}),...(result.shieldBroken?{shieldBroken:result.shieldBroken}:{})});
   }
-  monsterAttack(b,localBeat,at,pressure,tactic,currentMatch.missing.length,events);
+  monsterAttack(b,localBeat,at,pressure,tactic,currentMatch.missing.length,events,vfxSource,state.id);
   if(b.enemy.hp<=0){b.waves++;if(b.waves>=b.objective)resolvedBeat??=beat;events.push({actorId:'boss',label:`已擊退第 ${b.waves} 波`,wave:b.waves});if(hasRankRewards(state)&&b.enemy.rank!=='normal')(b.defeats??=[]).push({hourIndex:b.hourIndex,serial:b.poolSerial,id:b.enemy.id,name:b.enemy.name,rank:b.enemy.rank,at});}
   b.events=events;b.actors.forEach(a=>{a.buffs=a.buffs.filter(x=>x.until>at&&(x.uses==null||x.uses>0));});
  }

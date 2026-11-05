@@ -1,0 +1,87 @@
+{
+  "generatedAt": "2026-11-04T08:33:08.030Z",
+  "capturePolicy": "Composite of existing true API browser captures; specified battle crops only. No synthetic effects or retouching.",
+  "files": [
+    {
+      "title": "Atlas｜出血後續命中",
+      "note": "真實 settle 收據・桌面",
+      "file": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-sword_bleed-effect.png",
+      "crop": [
+        300,
+        70,
+        680,
+        450
+      ],
+      "sha256": "c8fe11d73c2c5e26be5a63616c74a0265b4a4b24cdd0042f4ad39594606d9717",
+      "bytes": 1741966
+    },
+    {
+      "title": "Atlas｜陷阱實際觸發",
+      "note": "放置與命中分開・桌面",
+      "file": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-archer_trap-effect.png",
+      "crop": [
+        300,
+        70,
+        680,
+        450
+      ],
+      "sha256": "3b1cd15f26365ebe05a39edda20f64fadfdc0f969bca2af7d90b2f46e50b1826",
+      "bytes": 1742574
+    },
+    {
+      "title": "Atlas｜手機獸伴",
+      "note": "真實召喚傷害・戰場裁切",
+      "file": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/390-archer_beast-effect.png",
+      "crop": [
+        0,
+        70,
+        390,
+        430
+      ],
+      "sha256": "e1a4db017b87efb0237ea4bca1ad6f60b1f8b77582e267d3f0bc69ca91552392",
+      "bytes": 598380
+    },
+    {
+      "title": "隊伍｜真實受益者與目標",
+      "note": "Party.view 成功收據",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/party-390-battle.png",
+      "sha256": "b3b9370af2edfb06f3c8ab788b1eedfb55f47ae6bdc7c21b8a69019ec44f2a30",
+      "bytes": 178307
+    },
+    {
+      "title": "世界王｜技能與反射",
+      "note": "boss/attack 成功收據",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/boss-390-battle.png",
+      "sha256": "be943536f668a9058c0e5f73b86edc144f832fb53fcd811e0aba7a813c247142",
+      "bytes": 191086
+    },
+    {
+      "title": "星環｜攻擊投影",
+      "note": "deterministic-projection・明確來源",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/ring-390-battle.png",
+      "sha256": "14ba19cf8378245c3d595e2758ebd5b8b419e934e4ad3022400cbbad35f540ed",
+      "bytes": 270118
+    },
+    {
+      "title": "PK｜真實傷害斬擊",
+      "note": "pk/accept 已保存戰鬥紀錄",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/pk-390-battle.png",
+      "sha256": "e8c6071d9472484012e5efa0a525294b35bc82d2a7d871b273e4e0b26dd37aae",
+      "bytes": 139840
+    },
+    {
+      "title": "PK｜純支援護盾",
+      "note": "施法者受益・敵人無假受擊",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/pk-support-390-battle.png",
+      "sha256": "93d56afb862e2673e8c26e78c4667a9923b6a6207e4ba7d9149d92e2d2c36fad",
+      "bytes": 130722
+    },
+    {
+      "title": "掛機｜火靈契約",
+      "note": "本地召喚・後續傷害獨立",
+      "file": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-summon-390-battle.png",
+      "sha256": "6ec7da7102a1d4677c3a4116aeb9e81a8f131a191902269b6fe7f7defc3e91bb",
+      "bytes": 319492
+    }
+  ]
+}

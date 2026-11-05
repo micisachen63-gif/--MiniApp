@@ -1557,16 +1557,44 @@
         <div class="muted mt">我的輸出：${fmt(me.damage)}（${me.hits || 0} 次）${myRank >= 0 ? ` · 第 ${myRank + 1} 名` : ''}</div></div>
       ${bossPlayerVitals()}<div class="card"><h3>🏆 傷害排行 · 前 30 名</h3><div class="rank">${(b.top || []).slice(0, 30).map((t, i) => `<div class="${String(t.tgId) === String(S.me.character.tgId) ? 'me' : ''}"><span>${['🥇', '🥈', '🥉'][i] || i + 1}</span><span>${esc(t.name)}</span><span>${fmt(t.damage)}</span></div>`).join('') || '<div class="muted">還沒有人出手，搶頭香！</div>'}</div></div>`;
   }
+  let legacySkillVfxPromise=null;
+  const loadLegacySkillVfx=()=>legacySkillVfxPromise||(legacySkillVfxPromise=import('/skill-vfx-legacy.mjs').catch(error=>{legacySkillVfxPromise=null;throw error;}));
   const BF = { hitT: -9, dmg: 0, crit: false, result: null, bossId: null, charId: null };
+  let bossVfxCleanup=null;
+  async function playBossSkillReceipt(scene,boss,result,actorId,getGeometry,onCast){
+    const raw=[...(result.actions||[]).flatMap(action=>[action.vfx,...(action.vfxEvents||[])]),...(result.vfxEvents||[])].filter(Boolean);
+    if(!scene||!raw.length)return;
+    const realm=S.realmId||'permanent',receipt=result;let stopped=false,layer=null,timer=0,release=null;
+    const valid=()=>!stopped&&scene.isConnected&&!document.hidden&&S.tab==='boss'&&String(S.me?.character?.tgId)===String(actorId)&&(S.realmId||'permanent')===realm&&BF.result===receipt;
+    const wait=ms=>new Promise(resolve=>{release=resolve;timer=setTimeout(()=>{release=null;resolve();},ms);});
+    const cleanup=()=>{if(stopped)return;stopped=true;clearTimeout(timer);release?.();release=null;layer?.destroy();};
+    bossVfxCleanup?.();bossVfxCleanup=cleanup;
+    try{
+      const api=await loadLegacySkillVfx();if(!valid())return;
+      layer=await api.createLegacyVfxLayer(scene,{mode:'boss',contextKey:'boss:'+realm+':'+actorId+':'+boss.id,isCurrent:valid});
+      await layer?.prepare(raw);if(!valid())return;
+      for(const descriptor of raw){
+        if(!valid())return;
+        if(descriptor.actorId!==String(actorId))continue;
+        if(descriptor.kind==='cast'){onCast?.();await wait(200);if(!valid())return;}
+        const geometry=getGeometry();if(!geometry)continue;
+        const played=await layer?.play(descriptor,geometry,{canStart:valid});
+        if(played?.accepted)await wait(played.remainingMs);
+      }
+    }catch{/* Missing optional artwork never changes the committed boss result. */}
+    finally{cleanup();if(bossVfxCleanup===cleanup)bossVfxCleanup=null;}
+  }
   let bossWaitingCleanup = null;
   function bindBoss(view) {
     const b = S.boss;
     if (!b) { bossWaitingCleanup = window.RpgBossWaiting.mount(view.querySelector('.boss-wait')); return; }
+    let bossGeometry=null,bossCastAt=-Infinity;
+    const bossSurface=view.querySelector('.bossbox');
     drawers.push({ c: $('#bcv', view), fn: (ctx, w, h, t) => {
       const mapId = Math.max(1,Math.min(12,Number(b ? b.mapId : S.me.character.mapId)||1));
       const bi = artImg('map', V2 ? `myth${String(mapId).padStart(2,'0')}` : mapId);
       if (bi) { const s = Math.max(w / bi.width, h / bi.height); ctx.drawImage(bi, (w - bi.width * s) / 2, h - bi.height * s, bi.width * s, bi.height * s); } else if(!V2)A.scene(ctx,w,h,{mapId:Math.min(4,mapId),t});else{const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#122337');bg.addColorStop(1,'#08131e');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);}
-      const gy = h * 0.92; const k = t - BF.hitT;
+      const gy = h * 0.92; const k = t - BF.hitT,actorK=t-bossCastAt;
       const heroFigure = BATTLE ? window.RpgBattle.visibleBounds(heroSprite()) : [0,0,1,1];
       const bossArtKey=b&&(BOSS_ANIM[b.spriteKey||b.name]||expansion?.spec(b.spriteKey||b.name)?b.spriteKey||b.name:b.mapId);
       const bossSheet = b ? bossAnimSprite(bossArtKey) : null;
@@ -1583,7 +1611,18 @@
       const bossAction=k>.15&&k<.45?'hurt':casting?'cast':attacking?'attack':'idle';
       if (b&&b.hp>0&&b.status==='active') { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011') && !expansion?.spec(bossArtKey), sheet: bossSheet })) {if(!V2)A.boss(ctx,bx,gy,1.15,{mapId:b.mapId,t,hurt:k>.15&&k<.45});else{ctx.save();ctx.textAlign='center';ctx.font='13px serif';ctx.fillStyle='#ddc991';const meta=IMG_LOAD[artSrc('boss',bossArtKey)];ctx.fillText(meta?.failed&&meta.attempt>=3?'首領畫像暫未載入，重新開啟可重試':'正在描繪首領…',w*.68,h*.55);ctx.restore();}} }
       else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
-      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action: b&&b.hp>0&&b.status==='active'&&k < 0.4 ? 'attack' : 'idle', p: k / 0.4 })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action: b&&b.hp>0&&b.status==='active'&&k < 0.4 ? 'attack' : 'idle', p: k / 0.4 }));
+      const heroAttacking=b&&b.hp>0&&b.status==='active'&&((actorK>=0&&actorK<.4)||(k>=0&&k<.4)),heroPhase=(actorK>=0&&actorK<.4?actorK:k)/.4;
+      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action:heroAttacking?'attack':'idle', p:heroPhase })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action:heroAttacking?'attack':'idle', p:heroPhase }));
+      // These coordinates are the same CSS-space placement used by the sprites above.
+      // They are presentation anchors, never independently simulated combat positions.
+      const heroImage=heroSprite(),heroWidth=heroImage?.width&&heroImage?.height?120*heroImage.width/heroImage.height:120;
+      const heroBodyHeight=120*(heroFigure[3]-heroFigure[1]),heroBodyX=w*.24+heroWidth*((heroFigure[0]+heroFigure[2])*.5-.5);
+      const heroFoot={x:heroBodyX,y:gy-120*(1-heroFigure[3])},heroBody={x:heroBodyX,y:heroFoot.y-heroBodyHeight*.55};
+      const enemyFoot=bossY-bossHeight*(1-(bossLayout?bossLayout.feet:bossFigure[3]));
+      const enemyPoint={x:bx,y:enemyFoot-bossHeight*bossBody*.55};
+      bossGeometry={actorId:String(S.me.character.tgId),from:{x:heroBody.x+(heroAttacking?Math.sin(Math.min(1,heroPhase)*Math.PI)*12:0),y:heroBody.y},
+        foot:heroFoot,bodyHeight:heroBodyHeight,direction:'right',
+        targets:[{id:String(S.me.character.tgId),point:heroBody,bodyHeight:heroBodyHeight},{id:'boss',point:enemyPoint,bodyHeight:bossHeight*bossBody}]};
       window.RpgGuardianSigil?.draw(ctx,S.me.guardian,w*.24,gy-120*heroFigure[3],48);
       if(b&&b.hp>0&&b.status==='active'&&casting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
         if(expansion?.spec(bossArtKey)&&window.RpgSkillFX?.drawMonster){const meta=expansion.spec(bossArtKey);window.RpgSkillFX.drawMonster(ctx,phase-4,{x:bx-bossHeight*.12,y:gy-bossHeight*.48},{x:w*.24,y:gy-70},window.RpgSkillFX.monsterProfile(b.spell || meta.spell,true));}
@@ -1606,6 +1645,7 @@
         if (S.me.character.tgId !== attacker) return;
         const r = j.result || {};if(r.killed)S.lastBoss={...b,status:'killed',hp:0}; BF.hitT = performance.now() / 1000; BF.dmg = r.damage || 0; BF.crit = (r.crits || 0) > 0; BF.result = r; BF.bossId = b.id; BF.charId = attacker;
         toast(`⚔️ 連擊共造成 ${fmt(r.damage)} 傷害${r.crits ? `（${r.crits} 次爆擊）` : ''}${r.killed ? ' · 🎉 首領倒下！' : ''}${r.downed ? ' · 你被打倒了' : ''}`); haptic('ok');
+        await playBossSkillReceipt(bossSurface,b,r,String(attacker),()=>bossGeometry,()=>{bossCastAt=performance.now()/1000;});
         render(); setTimeout(refreshMe, 1500);
       } catch (e) { toast(e.message, true); haptic('error'); render(); }
       finally { S.busy = false; }
@@ -1853,37 +1893,63 @@
     if(Number.isFinite(step.directDamage)&&Math.abs(step.directDamage-total)>.001)return [];
     return rows;
   }
+  function pkStepPresentation(step) {
+    const receipts=[step.vfx,...(Array.isArray(step.vfxEvents)?step.vfxEvents:[])].filter(value=>value&&typeof value==='object');
+    if(!receipts.length)return {attack:true,label:step.skill?'施展技能':'發動攻擊'};
+    const casts=receipts.filter(raw=>raw.kind==='cast'&&raw.actorId===step.by);
+    if(casts.some(raw=>raw.presentationMode==='full'))return {attack:true,label:step.skill?'施展技能':'發動攻擊'};
+    if(casts.some(raw=>raw.presentationMode==='summon'))return {attack:false,label:'施展召喚'};
+    if(casts.some(raw=>raw.presentationMode==='support'))return {attack:false,label:'施展支援技能'};
+    return {attack:false,label:'持續效果結算'};
+  }
   function pkReplay(p) {
     const lg = p.log || {}; const steps = lg.steps || []; const max = lg.max || { a: 1, b: 1 };
     const maxMp = lg.maxMp;
     let state = { hp: { ...(lg.initial?.hp || max) }, mp: { ...(lg.initial?.mp || maxMp || {}) } };
     const side = (x, k) => `<div class="pkf" id="pk_${k}"><img src="${artSrc('portrait', heroKey(x.baseClass, x.gender, x.classPath))}" alt=""><b>${esc(x.name)}</b><small>Lv.${x.level} ${esc(x.className || '')}</small>${bar('hp', state.hp[k], max[k], `生命值 ${fmt(state.hp[k])} / ${fmt(max[k])}`)}${maxMp ? bar('mp', state.mp[k], maxMp[k], `魔力 ${fmt(state.mp[k])} / ${fmt(maxMp[k])}`) : ''}<div class="pkdmg"></div></div>`;
     const c = sheet(`<h2>⚔️ ${esc(p.a.name)} vs ${esc(p.b.name)}</h2><div class="muted">決鬥重播 · 傷害與血量依本場紀錄</div><div class="pkarena">${side(p.a, 'a')}<div class="pkvs">VS</div>${side(p.b, 'b')}</div><div class="pkres muted" id="pkres">${p.rounds} 回合…</div><div class="row mt"><button class="btn ghost" data-skip>跳過</button><button class="btn" data-x>關閉</button></div>`);
-    const resultNode = c.querySelector('#pkres'); let i = 0, tm = 0, ended = false;
-    const active = () => !ended && c.isConnected && !$('#sheet').hidden && c.querySelector('#pkres') === resultNode;
-    const cancel = () => { clearTimeout(tm); ended = true; }; sheetPlaybackCancel = cancel;
+    const resultNode = c.querySelector('#pkres'); let i = 0, tm = 0, ended = false,legacy=null,legacyApi=null;
+    const replayActor=String(S.me?.character?.tgId||''),replayRealm=S.realmId||'permanent',arena=c.querySelector('.pkarena');
+    const active = () => !ended && c.isConnected && !$('#sheet').hidden && c.querySelector('#pkres') === resultNode&&String(S.me?.character?.tgId||'')===replayActor&&(S.realmId||'permanent')===replayRealm;
+    const cancel = () => { clearTimeout(tm); ended = true;legacy?.destroy(); }; sheetPlaybackCancel = cancel;
     const set = (k) => { for (const kind of ['hp', 'mp']) { const el = c.querySelector(`#pk_${k} .bar.${kind}`); const limit = kind === 'hp' ? max[k] : maxMp?.[k]; if (el && Number.isFinite(state[kind][k])) { el.querySelector('i').style.width = `${pct(state[kind][k], limit)}%`; el.querySelector('b').textContent = `${kind.toUpperCase()} ${fmt(state[kind][k])} / ${fmt(limit)}`; } } };
     const finish = () => { if (!active()) return cancel(); clearTimeout(tm); if (lg.hp) state.hp = { ...lg.hp }; if (lg.mp) state.mp = { ...lg.mp }; set('a'); set('b'); const w = p.winner === 'a' ? p.a : p.b, l = p.winner === 'a' ? p.b : p.a;
       c.querySelectorAll('.pkf').forEach(el => el.classList.remove('atk','hitme'));
       c.querySelector(`#pk_${p.winner}`).classList.add('win'); c.querySelector(`#pk_${p.winner === 'a' ? 'b' : 'a'}`).classList.add('lose');
       resultNode.className = 'pkres'; resultNode.innerHTML = `🏆 <b>${esc(w.name)}</b> 勝！${lg.ko ? `${p.rounds} 回合擊倒` : `${p.rounds} 回合判定`}<br>${p.drop ? `💥 ${esc(l.name)} 掉落【${esc(p.drop.name)}】→ ${esc(w.name)}（已解除綁定，可交易買回）` : p.wardUsed ? `🧿 ${esc(l.name)} 的守護符擋下了掉裝` : `${esc(l.name)} 沒有掉裝備`}`;
-      ended = true; if (sheetPlaybackCancel === cancel) sheetPlaybackCancel = null;
+      ended = true;legacy?.destroy(); if (sheetPlaybackCancel === cancel) sheetPlaybackCancel = null;
+    };
+    const playStepVfx=entry=>{
+      if(!legacy||!active())return 0;
+      let remaining=0;
+      const targets=['a','b'].map(id=>({id,node:c.querySelector('#pk_'+id+' img')}));
+      for(const descriptor of legacyApi.legacyDescriptors(entry)){
+        if(!['a','b'].includes(descriptor.actorId))continue;
+        const actor=c.querySelector('#pk_'+descriptor.actorId+' img');
+        const geometry=legacyApi.legacyDomGeometry(arena,actor,targets,{actorId:descriptor.actorId});
+        remaining=Math.max(remaining,legacy.timing(descriptor)?.remainingMs||0);
+        void legacy.play(descriptor,geometry,{canStart:active});
+      }
+      return remaining;
     };
     const step = () => {
       if (!active()) return cancel(); if (i >= steps.length || document.hidden) return finish();
       const s = steps[i++], tgt = s.by === 'a' ? 'b' : 'a', f = c.querySelector(`#pk_${tgt}`), atk = c.querySelector(`#pk_${s.by}`);
-      c.querySelectorAll('.pkf').forEach(el => { el.classList.remove('atk','hitme'); const d = el.querySelector('.pkdmg'); d.className = 'pkdmg'; d.style.color = ''; }); void atk.offsetWidth; atk.classList.add('atk');
+      const presentation=pkStepPresentation(s);
+      c.querySelectorAll('.pkf').forEach(el => { el.classList.remove('atk','hitme'); const d = el.querySelector('.pkdmg'); d.className = 'pkdmg'; d.style.color = ''; });
+      if(presentation.attack){void atk.offsetWidth;atk.classList.add('atk');}
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const strikes=pkNativeStrikes(s,p[s.by]);
+      const strikes=presentation.attack?pkNativeStrikes(s,p[s.by]):[];let vfxRemaining=0,vfxReleased=false;
+      const releaseVfx=()=>{if(!vfxReleased){vfxReleased=true;vfxRemaining=playStepVfx(s);}};
       if(strikes.length){
         const done=()=>{
           if(!active())return cancel();
           state=pkFrame(state,s);set('a');set('b');
           if(state.healed>0){const heal=atk.querySelector('.pkdmg');heal.textContent=`+${fmt(state.healed)}`;heal.className='pkdmg on';heal.style.color='#8dffad';}
-          resultNode.textContent=`第 ${Math.ceil(i/2)} 回合 · ${p[s.by].name}${s.skill?'施展技能':'發動攻擊'} · ${strikes.length} 擊（${strikes.map(row=>fmt(row.damage)).join('＋')}）${s.periodicDamage>0?` · 持續傷害 ${fmt(s.periodicDamage)}`:''}${state.healed>0?` · 回復 ${fmt(state.healed)} 生命值`:''}`;
-          tm=setTimeout(step,reduced?80:300);
+          resultNode.textContent=`第 ${Math.ceil(i/2)} 回合 · ${p[s.by].name}${presentation.label} · ${strikes.length} 擊（${strikes.map(row=>fmt(row.damage)).join('＋')}）${s.periodicDamage>0?` · 持續傷害 ${fmt(s.periodicDamage)}`:''}${state.healed>0?` · 回復 ${fmt(state.healed)} 生命值`:''}`;
+          tm=setTimeout(step,Math.max(reduced?80:300,vfxRemaining));
         };
-        if(reduced){tm=setTimeout(()=>{if(!active())return cancel();const d=f.querySelector('.pkdmg');d.textContent=`${strikes.length}擊`;d.className='pkdmg on';done();},40);return;}
+        if(reduced){tm=setTimeout(()=>{if(!active())return cancel();releaseVfx();if(strikes.some(row=>row.damage>0)){const d=f.querySelector('.pkdmg');d.textContent=`${strikes.length}擊`;d.className='pkdmg on';}done();},40);return;}
         let strikeIndex=0;
         const poke=()=>{
           if(!active())return cancel();
@@ -1891,22 +1957,32 @@
           const row=strikes[strikeIndex++];
           tm=setTimeout(()=>{
             if(!active())return cancel();
-            f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${row.crit?'💥':''}−${fmt(row.damage)}`;d.className=`pkdmg on${row.crit?' crit':''}${s.skill?' skill':''}`;
+            releaseVfx();if(row.damage>0){f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${row.crit?'💥':''}−${fmt(row.damage)}`;d.className=`pkdmg on${row.crit?' crit':''}${s.skill?' skill':''}`;}
             if(strikeIndex<strikes.length)tm=setTimeout(poke,180);else done();
           },180);
         };
         poke();return;
       }
       tm = setTimeout(() => {
-        if (!active()) return cancel(); state = pkFrame(state, s); set('a'); set('b'); f.classList.add('hitme');
-        const d = f.querySelector('.pkdmg'); d.textContent = `${s.crit ? '💥' : ''}−${fmt(state.damage)}`; d.className = `pkdmg on${s.crit ? ' crit' : ''}${s.skill ? ' skill' : ''}`;
+        if (!active()) return cancel();releaseVfx(); state = pkFrame(state, s); set('a'); set('b');
+        if(state.damage>0){f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${s.crit?'💥':''}−${fmt(state.damage)}`;d.className=`pkdmg on${s.crit?' crit':''}${s.skill?' skill':''}`;}
         if (state.healed > 0) { const heal = atk.querySelector('.pkdmg'); heal.textContent = `+${fmt(state.healed)}`; heal.className = 'pkdmg on'; heal.style.color = '#8dffad'; }
-        resultNode.textContent = `第 ${Math.ceil(i / 2)} 回合 · ${s.by === 'a' ? p.a.name : p.b.name}${s.skill ? '施展技能' : '發動攻擊'}${state.healed > 0 ? ` · 回復 ${fmt(state.healed)} 生命值` : ''}`;
-        tm = setTimeout(step, reduced ? 80 : s.crit ? 520 : 300);
+        resultNode.textContent = `第 ${Math.ceil(i / 2)} 回合 · ${s.by === 'a' ? p.a.name : p.b.name}${presentation.label}${state.healed > 0 ? ` · 回復 ${fmt(state.healed)} 生命值` : ''}`;
+        tm = setTimeout(step, Math.max(reduced ? 80 : s.crit ? 520 : 300,vfxRemaining));
       }, reduced ? 40 : 180);
     };
     c.querySelector('[data-x]').onclick = closeSheet; c.querySelector('[data-skip]').onclick = finish;
-    tm = setTimeout(step, 500);
+    const startReplay=async()=>{
+      if(steps.some(entry=>entry.vfx||entry.vfxEvents?.length)){
+        try{
+          legacyApi=await loadLegacySkillVfx();if(!active())return;
+          legacy=await legacyApi.createLegacyVfxLayer(arena,{mode:'pk',contextKey:'pk:'+replayRealm+':'+p.id+':'+replayActor,isCurrent:active});
+          await legacy?.prepare(steps.flatMap(legacyApi.legacyDescriptors));
+        }catch{legacy?.destroy();legacy=null;}
+      }
+      if(active())tm=setTimeout(step,500);
+    };
+    void startReplay();
   }
   async function playerPicker() {
     const r = S.meta.pk || {}; const me = S.me.character;
@@ -2191,6 +2267,7 @@
     guardianController?.cleanup();guardianController=null;guardianActor=null;
     if(S.tab!=='shop'||S.shopTab!=='sell'||S.choosing||S.creating)window.RpgMarketSell?.reset();
     bossWaitingCleanup?.(); bossWaitingCleanup = null;
+    bossVfxCleanup?.();bossVfxCleanup=null;
     const oldAway=document.querySelector('.expedition-away');
     awayCleanup?.();awayCleanup=null;
     drawers = []; const view = $('#view');

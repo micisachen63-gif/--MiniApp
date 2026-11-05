@@ -46,8 +46,19 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
     return { children, textContent: '', style: {}, dataset: {}, classList: { add() {}, toggle() {} }, setAttribute() {}, removeAttribute() {}, appendChild(child) { children.push(child); }, replaceChildren(...items) { children.splice(0, children.length, ...items); }, remove() {}, querySelector(selector) { if (!selectors.has(selector)) selectors.set(selector, node()); return selectors.get(selector); } };
   };
   const document = { documentElement: node(), body: node(), createElement: node, querySelector: () => null, getElementById: () => null };
-  const handlers = new Map();
-  const window = { document, __RpgScenePreviewConfig: { live }, addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); }, dispatchEvent(event) { for (const callback of handlers.get(event.type) || []) callback(event); } };
+  const handlers = new Map(), sceneEvents = new Map();
+  const window = {
+    document, __RpgScenePreviewConfig: { live },
+    addEventListener(type, callback) { if (!handlers.has(type)) handlers.set(type, []); handlers.get(type).push(callback); },
+    removeEventListener(type, callback) { handlers.set(type, (handlers.get(type) || []).filter(value => value !== callback)); },
+    dispatchEvent(event) { for (const callback of handlers.get(event.type) || []) callback(event); },
+    // This frame-lifetime fixture has no VFX art catalog. The independent
+    // renderer may fail its optional bootstrap without changing actor frames.
+    fetch: async url => {
+      if (url !== '/skill-vfx-catalog.json') throw Error('Unexpected fixture fetch: ' + url);
+      return { ok: false, status: 404 };
+    },
+  };
   const graphics = { mask: null, clear() {}, fillStyle() { return this; }, fillRect() { return this; }, setMask(mask) { this.mask = mask; }, clearMask() { this.mask = null; } };
   const layer = { length: 0, mask: null, setDepth() {}, setMask(mask) { this.mask = mask; }, clearMask() { this.mask = null; } };
   const listeners = new Map(), queue = [];
@@ -61,7 +72,11 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
   const scene = {
     game: { renderer: { gl: webgl ? {} : null } }, scale: { width: 390, height: 844 },
     cameras: { main: camera }, sys: { displayList: {} },
-    events: { once(event, fn) { if (event === 'shutdown') shutdown.push(fn); } },
+    events: {
+      once(event, fn) { if (event === 'shutdown') shutdown.push(fn); },
+      on(event, fn) { if (!sceneEvents.has(event)) sceneEvents.set(event, new Set()); sceneEvents.get(event).add(fn); return this; },
+      off(event, fn) { sceneEvents.get(event)?.delete(fn); return this; },
+    },
     add: { layer: () => layer, image: (x, y, key, frame) => new Image(key, frame).setPosition(x, y), sprite: (x, y, key) => new Image(key).setPosition(x, y) },
     make: { image: ({ key, frame }) => new Image(key, frame) },
     anims: { exists: key => animations.has(key), create(value) { animations.set(value.key, value); }, generateFrameNumbers: key => [{ key, frame: 0 }], remove: key => animations.delete(key) },
@@ -102,7 +117,12 @@ function harness({ live = true, webgl = true, strictRelease = true, manualLoads 
   };
   vm.runInNewContext(readabilitySource, { window, document });
   const readability = window.RpgHeroReadability.mount(scene, { hero, monsters: () => monsters, ready: () => animator.ready, hpGraphics: graphics });
-  vm.runInNewContext(viewSource, { window, Intl, Number, Object, Set, Map, String, Error, Date });
+  vm.runInNewContext(viewSource, { window, Intl, Number, Object, Set, Map, String, Error, Date, AbortController }, {
+    importModuleDynamically(specifier) {
+      if (!['/skill-vfx-engine.mjs', '/skill-vfx-actor-bridge.mjs'].includes(specifier)) throw Error('Unexpected fixture import: ' + specifier);
+      return import(new URL('../public/' + specifier.slice(1), import.meta.url).href);
+    },
+  });
   const hooks = { hero, ground, animator, hpGraphics: graphics, resetReadability: () => readability.reset(), setMonsters: value => { monsters = value; }, getWorld: () => world, setWorld: value => { world = value; }, ui: { setHP() {}, setMP() {}, setXP() {}, target() {}, toggle() {} } };
   const render = () => { for (const image of images) if (image.active && image.visible && image.alpha > 0) image.getBounds(); };
   return { scene, window, hero, ground, animator, readability, graphics, layer, hooks, pending, loads, images, texture, render, shutdown };
@@ -306,4 +326,78 @@ test('legacy reports do not invent zero equipment, item or encounter totals', as
   const report = h.window.document.body.children[0].querySelector('[data-live-report]');
   assert.equal(report.textContent, '本趟累計：金幣 0 · 經驗 0');
   view.dispose();
+});
+
+function delayedMappedEncounter() {
+  const h = harness({ manualLoads: true });
+  h.window.fetch = async url => {
+    if (url === '/skill-vfx-catalog.json') return { ok: false, status: 404 };
+    assert.equal(url, '/map1/meta.json');
+    return { ok: true, json: async () => Object.fromEntries(['moon_hare', 'artemis_ranger'].map(name => [name + '_idle', {
+      file: name + '_idle.webp', cellW: 100, cellH: 100, frames: 2, ox: .5, oy: .9, frameInfo: [{ h: 80 }, { h: 80 }],
+    }])) };
+  };
+  const state = expedition([
+    { id: '0:0:0', name: '月光野兔', rank: 'normal', hp: 70, maxHp: 70 },
+    { id: '0:0:1', name: '阿耳忒彌斯巡林長', rank: 'elite', hp: 140, maxHp: 140 },
+  ]);
+  state.run.mapIndex = 0; state.run.roomIndex = 0;
+  const view = h.window.RpgSceneLiveView.mount(h.scene, h.hooks);
+  view.apply(state);
+  return { h, view, state };
+}
+
+test('delayed enemy sprites retain their committed slots without cancelling pending VFX geometry', async () => {
+  const { h, view, state } = delayedMappedEncounter(), committed = JSON.stringify(state);
+  try {
+    h.pending.shift().finish(); await flush();
+    const ground = h.loads.find(load => load.kind === 'image');
+    const first = h.loads.find(load => load.key.endsWith('-moon_hare-idle'));
+    const second = h.loads.find(load => load.key.endsWith('-artemis_ranger-idle'));
+    assert.ok(ground && first && second, 'distinct real assets can finish independently');
+    ground.finish(); await flush(); view.update(16);
+    const baseline = view.inspect();
+    assert.equal(baseline.mapReady, true); assert.equal(baseline.spriteCount, 0);
+    assert.ok(Number.isSafeInteger(baseline.vfx.layoutChanges));
+    first.finish(); await flush(); view.update(16); h.render();
+    const partial = view.inspect(), target = partial.geometry.enemies.find(enemy => enemy.id === '0:0:0');
+    assert.equal(partial.spriteCount, 1); assert.ok(target);
+    assert.equal(partial.geometry.enemies.some(enemy => enemy.id === '0:0:1'), false, 'a reserved slot is not a materialized target');
+    assert.equal(partial.vfx.layoutChanges, baseline.vfx.layoutChanges, 'first sprite readiness must not cancel a geometry wait');
+    const position = enemy => [enemy.x, enemy.y, enemy.scaleX, enemy.scaleY, enemy.screenAnchor.x, enemy.screenAnchor.y];
+    const before = position(target);
+    second.finish(); await flush(); view.update(16); h.render();
+    const complete = view.inspect(), retained = complete.geometry.enemies.find(enemy => enemy.id === '0:0:0');
+    assert.equal(complete.spriteCount, 2);
+    assert.deepEqual(position(retained), before, 'an already visible target never jumps when a later sprite appears');
+    assert.equal(complete.vfx.layoutChanges, baseline.vfx.layoutChanges, 'asset completion does not invalidate the committed encounter layout');
+    assert.equal(JSON.stringify(state), committed, 'presentation readiness never edits the committed snapshot');
+  } finally { view.dispose(); }
+});
+
+test('first ground readiness preserves pending geometry while a later real viewport resize invalidates it', async () => {
+  const { h, view, state } = delayedMappedEncounter(), committed = JSON.stringify(state);
+  try {
+    h.pending.shift().finish(); await flush();
+    const ground = h.loads.find(load => load.kind === 'image');
+    const sprites = h.loads.filter(load => load.kind === 'spritesheet');
+    assert.ok(ground); assert.equal(sprites.length, 2);
+    for (const sprite of sprites) { sprite.finish(); await flush(); }
+    view.update(16); h.render();
+    const waiting = view.inspect();
+    assert.equal(waiting.mapReady, false); assert.equal(waiting.spriteCount, 2);
+    assert.ok(Number.isSafeInteger(waiting.vfx.layoutChanges));
+    const previousWorld = [waiting.geometry.world.width, waiting.geometry.world.height];
+    ground.finish(); await flush(); view.update(16); h.render();
+    const ready = view.inspect();
+    assert.equal(ready.mapReady, true);
+    assert.notDeepEqual([ready.geometry.world.width, ready.geometry.world.height], previousWorld, 'real background dimensions change the world, exercising the original cancellation race');
+    assert.equal(ready.vfx.layoutChanges, waiting.vfx.layoutChanges, 'initial ground materialization establishes a baseline without cancelling pending geometry');
+    h.scene.scale.width = 1280; h.scene.scale.height = 900; view.update(16); h.render();
+    const resized = view.inspect();
+    assert.ok(resized.vfx.layoutChanges > ready.vfx.layoutChanges, 'a genuine ready-scene viewport change still invalidates old geometry');
+    view.update(16);
+    assert.equal(view.inspect().vfx.layoutChanges, resized.vfx.layoutChanges, 'an unchanged animation frame does not repeatedly invalidate geometry');
+    assert.equal(JSON.stringify(state), committed, 'layout changes cannot advance HP, enemies or rewards');
+  } finally { view.dispose(); }
 });

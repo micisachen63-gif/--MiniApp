@@ -1,3 +1,4 @@
+import {specialCastVfx,nativeCastVfx,vfxOrigin,effectVfx} from './skill-vfx-events.js';
 import {masteredSkill,masteredMechanics,outputMultiplier,utilityMultiplier} from './skill-mastery.js';
 import {THIEF_MECHANICS,addThiefPoison,armThiefCounter,triggerThiefCounter,nextThiefStrikeCount,thiefPrimaryMechanics,applyThiefPrimary} from './thief-skills.js';
 import {elementalDamage} from './elements.js';
@@ -55,9 +56,9 @@ const buff=(a,type,value,now,seconds=60,uses=null)=>{a.buffs??=[];a.buffs=a.buff
 export function valueOf(a,type,now){return (a.buffs||[]).filter(b=>b.type===type&&b.until>now&&(b.uses==null||b.uses>0)).reduce((n,b)=>Math.max(n,b.value),0);}
 const consume=(a,type)=>{for(const b of a.buffs||[])if(b.type===type&&b.uses!=null)b.uses--;};
 const lowest=team=>team.filter(a=>a.hp>0).sort((a,b)=>a.hp/a.maxHp-b.hp/b.maxHp)[0];
-export function damageEnemy(enemy,raw,m,now,actor=null){
+export function damageEnemy(enemy,raw,m,now,actor=null,observation=null){
  raw=actor?elementalDamage(raw*guardianDamageMultiplier(actor),actor,enemy):raw;
- if(enemy.combatant){return receiveDamage(enemy,raw*(enemy.damageScale??1)*(1+valueOf(enemy,'mark',now)),[enemy],actor||{},now,{elementApplied:true,defMultiplier:(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0)),shieldBonus:m.shieldBonus||0});}
+ if(enemy.combatant){return receiveDamage(enemy,raw*(enemy.damageScale??1)*(1+valueOf(enemy,'mark',now)),[enemy],actor||{},now,{elementApplied:true,defMultiplier:(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0)),shieldBonus:m.shieldBonus||0,vfx:observation});}
  const def=enemy.def*(1-valueOf(enemy,'breakDef',now))*(1-(m.penetrate||0));
  let amount=Math.max(1,Math.round(raw*100/(100+Math.max(0,def))*(1+valueOf(enemy,'mark',now))));
  let shield=enemy.shield||0;if(shield){const absorbed=Math.min(shield,amount*(1+(m.shieldBonus||0)));enemy.shield-=absorbed;amount=Math.max(0,amount-absorbed/(1+(m.shieldBonus||0)));}
@@ -65,32 +66,35 @@ export function damageEnemy(enemy,raw,m,now,actor=null){
 }
 // A native action pays mana once in its adapter, then resolves genuinely independent strikes.
 // Special books do not call this scheduler. No extra polling, SQL, rewards or player requests.
-export function performThiefNativeStrikes(actor,enemy,now,{cast=true,baseRaw,rng=()=>.5,critMultiplier=1.5,variance=false,actionId=null}={}){
+export function performThiefNativeStrikes(actor,enemy,now,{cast=true,baseRaw,rng=()=>.5,critMultiplier=1.5,variance=false,actionId=null,observation=null}={}){
  const count=nextThiefStrikeCount(actor),strikes=[];let damage=0;
  for(let index=0;index<count&&actor.hp>0&&enemy.hp>0&&(enemy.damageBudget??Infinity)>0;index++){
   const crit=rng()<Math.min(.8,(actor.crit||.05)+valueOf(actor,'critUp',now)),m=thiefPrimaryMechanics(actor,enemy,now,{cast});
   let raw=baseRaw*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now))*(1-valueOf(actor,'enemyNextReduce',now));
   if(crit)raw*=critMultiplier;if(variance)raw*=.9+rng()*.2;
-  const beforeHp=enemy.hp,dealt=damageEnemy(enemy,raw*m.damageMultiplier,m,now,actor);
+  const beforeHp=enemy.hp,dealt=damageEnemy(enemy,raw*m.damageMultiplier,m,now,actor,observation);
   damage+=dealt;strikes.push({index,crit,damage:dealt,beforeHp,afterHp:enemy.hp});
   if(dealt)for(const type of ['nextDamage','critUp','enemyNextReduce'])consume(actor,type);
  }
  const statuses=applyThiefPrimary(actor,enemy,now,{cast,damage,actionId});
- return {damage,crit:strikes.some(s=>s.crit),strikes,attackSpeedMultiplier:actor.attackSpeedMultiplier||1.8,...(statuses.length?{statuses}:{})};
+ const visual=cast?nativeCastVfx(actor,observation?{...observation,atMs:observation.atMs??now}:null):null;
+ if(visual&&statuses.some(s=>s.type==='poison')){const dot=enemy.dots?.find(d=>d.kind==='thiefPoison'&&String(d.owner)===String(actor.id));if(dot)dot.vfxOrigin=vfxOrigin(visual);}
+ return {...(visual?{vfx:visual}:{}),damage,crit:strikes.some(s=>s.crit),strikes,attackSpeedMultiplier:actor.attackSpeedMultiplier||1.8,...(statuses.length?{statuses}:{})};
 }
-export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={}){
+export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context={},observation=null){
  const original=mechanics[s.id];if(!original)throw new GameError('skill','技能未定義');
  const m=masteredMechanics(s,original);
+ const finish=(result,resolution)=>{const visual=specialCastVfx(actor,s,m,resolution,observation?{...observation,atMs:observation.atMs??now}:null);return visual?{...result,vfx:visual}:result;};
  let target=m.lowest?lowest(team):team.find(a=>a.id===targetId)||actor;
- if(m.revive){if(context.revived)throw new GameError('revive','每隊每場只能復活一次');if(!target||target.hp>0)throw new GameError('target','請選擇倒地的隊友');target.hp=Math.ceil(target.maxHp*.25*outputMultiplier(s));context.revived=true;return {damage:0,healed:target.hp,revived:true,targets:[target.id]};}
- if(m.accelerate){if((target.acceleratedUntil||0)>now)throw new GameError('accelerate','此隊友的加速保護尚未結束');const ids=Object.keys(target.special.cooldowns).filter(id=>(target.special.cooldowns[id]||0)>now&&SKILL_MAP[id]?.advancementTier<4);if(!ids.length)throw new GameError('target','隊友沒有冷卻中的非終極技能');const id=ids.sort((a,b)=>target.special.cooldowns[b]-target.special.cooldowns[a])[0];target.special.cooldowns[id]=Math.max(now,target.special.cooldowns[id]-Math.round(30000*utilityMultiplier(s)));target.acceleratedUntil=now+180000;return {damage:0,accelerated:id};}
+ if(m.revive){if(context.revived)throw new GameError('revive','每隊每場只能復活一次');if(!target||target.hp>0)throw new GameError('target','請選擇倒地的隊友');target.hp=Math.ceil(target.maxHp*.25*outputMultiplier(s));context.revived=true;return finish({damage:0,healed:target.hp,revived:true,targets:[target.id]},{targets:[target],target,coefficient:0});}
+ if(m.accelerate){if((target.acceleratedUntil||0)>now)throw new GameError('accelerate','此隊友的加速保護尚未結束');const ids=Object.keys(target.special.cooldowns).filter(id=>(target.special.cooldowns[id]||0)>now&&SKILL_MAP[id]?.advancementTier<4);if(!ids.length)throw new GameError('target','隊友沒有冷卻中的非終極技能');const id=ids.sort((a,b)=>target.special.cooldowns[b]-target.special.cooldowns[a])[0];target.special.cooldowns[id]=Math.max(now,target.special.cooldowns[id]-Math.round(30000*utilityMultiplier(s)));target.acceleratedUntil=now+180000;return finish({damage:0,accelerated:id},{targets:[target],target,coefficient:0});}
  if(!target||target.hp<=0)throw new GameError('target','隊友已倒地，請選擇其他目標');
  let coef=m.singleCoefficient??skillCoefficient(s);let raw=actor.atk*coef*(1+valueOf(actor,'atkUp',now))*(1+valueOf(actor,'damageUp',now))*(1+valueOf(actor,'nextDamage',now))*(1-valueOf(actor,'enemyNextReduce',now));
  if(s.advancementTier<4)raw*=1+valueOf(actor,'echo',now);
  if(m.execute&&enemy.hp/enemy.maxHp<=m.execute)raw*=1+m.executeBonus;
  if(m.uninterruptBonus&&!enemy.interruptible)raw*=1+m.uninterruptBonus;
  const crit=rng()<Math.min(.8,(actor.crit||.05)+valueOf(actor,'critUp',now));if(crit)raw*=1.5;
- const damage=coef>0?damageEnemy(enemy,raw,m,now,actor):0;
+ const damage=coef>0?damageEnemy(enemy,raw,m,now,actor,observation):0;
  if(damage){consume(actor,'nextDamage');consume(actor,'critUp');consume(actor,'enemyNextReduce');if(s.advancementTier<4)consume(actor,'echo');}
  if(m.breakDef)buff(enemy,'breakDef',m.breakDef,now);if(m.mark)buff(enemy,'mark',m.mark,now);
  if(m.interrupt&&enemy.windup&&enemy.interruptible)enemy.interrupted=true;
@@ -113,21 +117,27 @@ export function performSkill(actor,team,enemy,s,targetId,now,rng=()=>.5,context=
  if(m.thiefCounter)armThiefCounter(actor,now,m.thiefCounter);
  if(m.dot)enemy.dots=(enemy.dots||[]).concat({owner:actor.id,source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.dot*(1+(actor.affixPct?.dotPct||0)),left:m.dotCount,next:now+30000});
  if(m.summon)actor.summon={source:{element:actor.element,weaponElem:0,affixPct:actor.affixPct,base:actor.base,guardian:actor.guardian},damage:actor.atk*m.summon*(1+(actor.affixPct?.summonPct||0)),left:m.summonCount,next:now+30000};
- return {damage,healed,shielded,targets:targets.map(a=>a.id),crit:damage>0&&crit};
+ const result=finish({damage,healed,shielded,targets:targets.map(a=>a.id),crit:damage>0&&crit},{targets,target,coefficient:coef});
+ const origin=vfxOrigin(result.vfx);
+ if(origin){if(m.dot&&enemy.dots?.length)enemy.dots.at(-1).vfxOrigin=origin;if(m.summon&&actor.summon)actor.summon.vfxOrigin=origin;
+  if(m.thiefPoison){const dot=enemy.dots?.find(d=>d.kind==='thiefPoison'&&String(d.owner)===String(actor.id));if(dot)dot.vfxOrigin=origin;}
+  if(m.reflect){const reflect=actor.buffs.find(b=>b.type==='reflect');if(reflect)reflect.vfxOrigin=origin;}}
+ return result;
 }
-export function receiveDamage(a,raw,team,enemy,now,{guarded=false,elementApplied=false,defMultiplier=1,defApplied=false,shieldBonus=0}={}){
+export function receiveDamage(a,raw,team,enemy,now,{guarded=false,elementApplied=false,defMultiplier=1,defApplied=false,shieldBonus=0,vfx=null}={}){
  if(a.hp<=0)return 0;
  if(!guarded&&!elementApplied)raw=elementalDamage(raw,enemy,a,{bonus:false});
  const defense=defApplied?1:(a.defenseScale??100)/((a.defenseScale??100)+Math.max(0,a.def*defMultiplier));
  let amount=guarded?raw:raw*takenMultiplier(a)*defense*(1-valueOf(a,'reduce',now))*(1-valueOf(a,'nextReduce',now))*(1+valueOf(a,'takenUp',now));if(!guarded)consume(a,'nextReduce');
- if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true});}}
- const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now);consume(a,'reflect');damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
+ if(!guarded){const guard=team.find(x=>x.id!==a.id&&x.hp>0&&x.guard?.target===a.id&&x.guard.until>now);if(guard){const share=amount*guard.guard.pct;amount-=share;guard.guard=null;receiveDamage(guard,share,team,enemy,now,{guarded:true,vfx});}}
+ const shield=(a.buffs||[]).find(x=>x.type==='shield'&&x.until>now&&x.value>0);if(shield){const absorbed=Math.min(shield.value,amount*(1+shieldBonus));shield.value-=absorbed;amount-=absorbed/(1+shieldBonus);if(absorbed&&valueOf(a,'reflect',now)){const reflected=valueOf(a,'reflect',now),origin=a.buffs.find(b=>b.type==='reflect')?.vfxOrigin;consume(a,'reflect');const reflectedDamage=damageEnemy(enemy,reflected,{},now,{...a,weaponElem:0});
+  if(vfx?.effects&&origin){const visual=effectVfx(origin,{...vfx,eventId:vfx.eventId+':reflect:'+origin.eventId+':'+vfx.effects.length,atMs:now,enemyId:enemy.id||vfx.enemyId,effectKind:'reflect',damage:reflectedDamage});if(visual)vfx.effects.push(visual);}}if(absorbed&&valueOf(a,'shieldSlow',now))buff(enemy,'enemyNextReduce',valueOf(a,'shieldSlow',now),now,60,1);}
  const taken=Math.min(a.hp,Math.round(Math.max(0,amount)));a.hp-=taken;
  if(a.hp<=0&&valueOf(a,'lastStand',now)){a.hp=1;consume(a,'lastStand');}triggerThiefCounter(a,taken,now);return taken;
 }
 // Executing a cast is atomic in the caller's player/party transaction.
-export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,context={}){
- const result=performSkill(actor,team,enemy,skill,targetId,now,rng,context);
+export function castSpecial(actor,team,enemy,skill,targetId,now,rng=()=>.5,context={},observation=null){
+ const result=performSkill(actor,team,enemy,skill,targetId,now,rng,context,observation);
  const sustain=restoreOnAction(actor,result.damage,{cast:true,enabled:enemy.hp>0&&context.applySustain!==false});
  const spentMp=spendMana(actor,skill.mp,rng);actor.special.cooldowns[skill.id]=now+skill.cooldownSeconds*1000;
  return {...result,healed:(result.healed||0)+sustain.healed,selfHealed:sustain.healed,spentMp};
@@ -138,10 +148,12 @@ export function combatActor(c,s,{id=c.tg_id,hp=c.hp??s.maxHp,mp=c.mp??s.maxMp}={
   atk:s.atk,def:s.def,taken:s.taken,attackSpeedMultiplier:s.attackSpeedMultiplier||1,skill:{...s.skill},element:s.element,weaponElem:s.weaponElem,elementResist:s.elementResist,
   crit:.05+(s.pct.critPct||0),affixPct:{...s.pct},special:structuredClone(specialState(c)),buffs:[],actions:0};
 }
-export function periodic(team,enemy,now,{sustain=true}={}){
- for(const d of enemy.dots||[])while(d.left>0&&d.next<=now&&(!d.until||d.next<=d.until)){const damage=damageEnemy(enemy,d.damage,{},now,d.source),owner=team.find(a=>a.id===d.owner);if(sustain&&owner)restoreOnAction(owner,damage,{enabled:enemy.hp>0});d.left--;d.next+=30000;}
+export function periodic(team,enemy,now,{sustain=true,vfx=null}={}){
+ const visuals=[];
+ for(const d of enemy.dots||[])while(d.left>0&&d.next<=now&&(!d.until||d.next<=d.until)){const scheduledAt=d.next,damage=damageEnemy(enemy,d.damage,{},now,d.source),owner=team.find(a=>a.id===d.owner);if(sustain&&owner)restoreOnAction(owner,damage,{enabled:enemy.hp>0});if(vfx&&d.vfxOrigin){const visual=effectVfx(d.vfxOrigin,{...vfx,eventId:vfx.eventId+':dot:'+d.vfxOrigin.eventId+':'+scheduledAt,atMs:now,effectKind:'dot',damage});if(visual)visuals.push(visual);}d.left--;d.next+=30000;}
  enemy.dots=(enemy.dots||[]).filter(d=>d.kind!=='thiefPoison'||d.left>0&&d.until>now&&enemy.hp>0);
- for(const a of team){if(a.hp<=0)continue;const s=a.summon;while(s?.left>0&&s.next<=now){const damage=damageEnemy(enemy,s.damage,{},now,s.source);if(sustain)restoreOnAction(a,damage,{enabled:enemy.hp>0});s.left--;s.next+=30000;}}
+ for(const a of team){if(a.hp<=0)continue;const s=a.summon;while(s?.left>0&&s.next<=now){const scheduledAt=s.next,damage=damageEnemy(enemy,s.damage,{},now,s.source);if(sustain)restoreOnAction(a,damage,{enabled:enemy.hp>0});if(vfx&&s.vfxOrigin){const visual=effectVfx(s.vfxOrigin,{...vfx,eventId:vfx.eventId+':pet:'+s.vfxOrigin.eventId+':'+scheduledAt,atMs:now,effectKind:'pet',damage});if(visual)visuals.push(visual);}s.left--;s.next+=30000;}}
+ if(vfx)return visuals;
 }
 
 

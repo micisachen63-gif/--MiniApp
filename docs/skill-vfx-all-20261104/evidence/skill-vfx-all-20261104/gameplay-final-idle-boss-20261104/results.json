@@ -1,0 +1,2849 @@
+{
+  "schemaVersion": 1,
+  "sourceFiles": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "581280ee8d86968320279bee5974c18de50cf204bf209d2e49a54513d59311d0"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "source": "real-isolated-api",
+  "isolated": true,
+  "ephemeral": true,
+  "productionAccess": false,
+  "clockMode": "fixed-test",
+  "startedAt": "2026-11-04T08:11:07.728Z",
+  "cases": [
+    {
+      "mode": "idle-native",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 5,
+            "drawCalls": 80,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 196.24660609525793,
+                "y": 407.7308068669596
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 196.24660609525793,
+                    "y": 407.7308068669596
+                  },
+                  "to": {
+                    "x": 165.91974881329114,
+                    "y": 342.06086794133773
+                  },
+                  "targets": [
+                    {
+                      "x": 165.91974881329114,
+                      "y": 342.06086794133773
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 172.29749979424128,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 10,
+            "drawCalls": 165,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 196.24660609525793,
+                "y": 407.7308068669596
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 196.24660609525793,
+                    "y": 407.7308068669596
+                  },
+                  "to": {
+                    "x": 165.91974881329114,
+                    "y": 342.06086794133773
+                  },
+                  "targets": [
+                    {
+                      "x": 165.91974881329114,
+                      "y": 342.06086794133773
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 172.29749979424128,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "native:sword:A111",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:A111",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        },
+        "clip": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        }
+      },
+      "screenshots": [
+        "idle-native-390-battle.png",
+        "idle-native-390-release.png",
+        "idle-native-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-native",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 4,
+            "drawCalls": 34,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 205.5741794990091,
+                "y": 294.4869370520791
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 205.5741794990091,
+                    "y": 294.4869370520791
+                  },
+                  "to": {
+                    "x": 759.7822010869565,
+                    "y": 225.68244368843415
+                  },
+                  "targets": [
+                    {
+                      "x": 759.7822010869565,
+                      "y": 225.68244368843415
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 180.34368471117807,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 6,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 6,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 8,
+            "drawCalls": 68,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 205.5741794990091,
+                "y": 294.4869370520791
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 205.5741794990091,
+                    "y": 294.4869370520791
+                  },
+                  "to": {
+                    "x": 759.7822010869565,
+                    "y": 225.68244368843415
+                  },
+                  "targets": [
+                    {
+                      "x": 759.7822010869565,
+                      "y": 225.68244368843415
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 180.34368471117807,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "native:sword:A111",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:A111",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        },
+        "clip": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        }
+      },
+      "screenshots": [
+        "idle-native-1280-battle.png",
+        "idle-native-1280-release.png",
+        "idle-native-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-summon",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 3,
+            "drawCalls": 15,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 102.83466072140057,
+                "y": 373.31072656487606
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 102.83466072140057,
+                    "y": 373.31072656487606
+                  },
+                  "to": {
+                    "x": 75.17741297468355,
+                    "y": 413.65822745339904
+                  },
+                  "targets": [
+                    {
+                      "x": 75.17741297468355,
+                      "y": 413.65822745339904
+                    }
+                  ],
+                  "mode": "summon",
+                  "bodyHeight": 135.37755590285695,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 15,
+            "drawCalls": 75,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 102.83466072140057,
+                "y": 373.31072656487606
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 102.83466072140057,
+                    "y": 373.31072656487606
+                  },
+                  "to": {
+                    "x": 75.17741297468355,
+                    "y": 413.65822745339904
+                  },
+                  "targets": [
+                    {
+                      "x": 75.17741297468355,
+                      "y": 413.65822745339904
+                    }
+                  ],
+                  "mode": "summon",
+                  "bodyHeight": 135.37755590285695,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 3,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 3,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "special:skill_18_1",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "summon"
+            },
+            {
+              "skillId": "special:skill_18_1",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "summon"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        },
+        "clip": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        }
+      },
+      "screenshots": [
+        "idle-summon-390-battle.png",
+        "idle-summon-390-release.png",
+        "idle-summon-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-summon",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 4,
+            "drawCalls": 20,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 117.98080725116068,
+                "y": 263.1851292816682
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 117.98080725116068,
+                    "y": 263.1851292816682
+                  },
+                  "to": {
+                    "x": 90.59949048913043,
+                    "y": 303.6826456617272
+                  },
+                  "targets": [
+                    {
+                      "x": 90.59949048913043,
+                      "y": 303.6826456617272
+                    }
+                  ],
+                  "mode": "summon",
+                  "bodyHeight": 135.44118616702778,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 15,
+            "drawCalls": 75,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 117.98080725116068,
+                "y": 263.1851292816682
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 117.98080725116068,
+                    "y": 263.1851292816682
+                  },
+                  "to": {
+                    "x": 90.59949048913043,
+                    "y": 303.6826456617272
+                  },
+                  "targets": [
+                    {
+                      "x": 90.59949048913043,
+                      "y": 303.6826456617272
+                    }
+                  ],
+                  "mode": "summon",
+                  "bodyHeight": 135.44118616702778,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 3,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 3,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "special:skill_18_1",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "summon"
+            },
+            {
+              "skillId": "special:skill_18_1",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "summon"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        },
+        "clip": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        }
+      },
+      "screenshots": [
+        "idle-summon-1280-battle.png",
+        "idle-summon-1280-release.png",
+        "idle-summon-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-support",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 3,
+            "drawCalls": 60,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 144.5274551477432,
+                "y": 401.4101791221217
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 114.13240934927252,
+                    "y": 413.5526665296053
+                  },
+                  "to": {
+                    "x": 114.13240934927252,
+                    "y": 413.5526665296053
+                  },
+                  "targets": [
+                    {
+                      "x": 114.13240934927252,
+                      "y": 413.5526665296053
+                    }
+                  ],
+                  "mode": "support",
+                  "bodyHeight": 159.6346833881579,
+                  "supportKind": "shield"
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 42,
+            "drawCalls": 500,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 144.5274551477432,
+                "y": 401.4101791221217
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 114.13240934927252,
+                    "y": 413.5526665296053
+                  },
+                  "to": {
+                    "x": 114.13240934927252,
+                    "y": 413.5526665296053
+                  },
+                  "targets": [
+                    {
+                      "x": 114.13240934927252,
+                      "y": 413.5526665296053
+                    }
+                  ],
+                  "mode": "support",
+                  "bodyHeight": 159.6346833881579,
+                  "supportKind": "shield"
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false,
+              "width": 314,
+              "height": 568,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "special:skill_03_3",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_03_3",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "support"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        },
+        "clip": {
+          "x": 37,
+          "y": 171.171875,
+          "width": 316,
+          "height": 570
+        }
+      },
+      "screenshots": [
+        "idle-support-390-battle.png",
+        "idle-support-390-release.png",
+        "idle-support-390-effect.png"
+      ]
+    },
+    {
+      "mode": "idle-support",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421260001,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 3,
+            "drawCalls": 60,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 180.77850037121772,
+                "y": 291.39105520148024
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 150.78088397150455,
+                    "y": 303.6647550367273
+                  },
+                  "to": {
+                    "x": 150.78088397150455,
+                    "y": 303.6647550367273
+                  },
+                  "targets": [
+                    {
+                      "x": 150.78088397150455,
+                      "y": 303.6647550367273
+                    }
+                  ],
+                  "mode": "support",
+                  "bodyHeight": 159.51303127122964,
+                  "supportKind": "shield"
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.5,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.5,
+              "manual": false,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "idle",
+            "contextKey": "idle:111:idle-round:111:1791421260000",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 25,
+            "drawCalls": 340,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ],
+              "damageModel": "aggregate-minute",
+              "from": {
+                "x": 180.77850037121772,
+                "y": 291.39105520148024
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 150.78088397150455,
+                    "y": 303.6647550367273
+                  },
+                  "to": {
+                    "x": 150.78088397150455,
+                    "y": 303.6647550367273
+                  },
+                  "targets": [
+                    {
+                      "x": 150.78088397150455,
+                      "y": 303.6647550367273
+                    }
+                  ],
+                  "mode": "support",
+                  "bodyHeight": 159.51303127122964,
+                  "supportKind": "shield"
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 1,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false,
+              "width": 918,
+              "height": 458,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 1,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "shop",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": [
+            {
+              "skillId": "special:skill_03_3",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "support"
+            },
+            {
+              "skillId": "special:skill_03_3",
+              "eventId": "idle-round:111:1791421260000:cast",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "111"
+              ],
+              "presentationMode": "support"
+            }
+          ]
+        },
+        {
+          "action": "fate/gifts/summary",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421260001,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        },
+        "clip": {
+          "x": 180,
+          "y": 258.578125,
+          "width": 920,
+          "height": 460
+        }
+      },
+      "screenshots": [
+        "idle-support-1280-battle.png",
+        "idle-support-1280-release.png",
+        "idle-support-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 2,
+            "drawCalls": 36,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 89.81681784825354,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 89.81681784825354,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 185.47834101382486,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 185.47834101382486,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.3999999910593033,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.3999999910593033,
+              "manual": false,
+              "width": 340,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 2,
+            "accepted": 2,
+            "rejected": 0,
+            "commands": 2,
+            "drawFrames": 33,
+            "drawCalls": 472,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:1",
+              "skillId": "native:mage:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 92.1113201038841,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 92.1113201038841,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 185.47834101382486,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 185.47834101382486,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.09999999403953552,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 2,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.09999999403953552,
+              "manual": false,
+              "width": 340,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss/attack",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "boss:b2026100809:111:0:0",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:1",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:2",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:3",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:4",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 23,
+          "y": 329.3125,
+          "width": 344,
+          "height": 254
+        },
+        "clip": {
+          "x": 23,
+          "y": 329.3125,
+          "width": 344,
+          "height": 254
+        }
+      },
+      "screenshots": [
+        "boss-390-battle.png",
+        "boss-390-release.png",
+        "boss-390-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 2,
+            "drawCalls": 36,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 238.25684977841445,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 238.25684977841445,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 665,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 665,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.4000000059604645,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.4000000059604645,
+              "manual": false,
+              "width": 950,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 3,
+            "accepted": 3,
+            "rejected": 0,
+            "commands": 3,
+            "drawFrames": 36,
+            "drawCalls": 522,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:2",
+              "skillId": "native:mage:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 231.33976857625598,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 231.33976857625598,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 665,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 665,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 3,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.10000000894069672,
+              "manual": false,
+              "width": 950,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss/attack",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "boss:b2026100809:111:0:0",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:1",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:2",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:3",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:4",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "battleCapture": {
+        "box": {
+          "x": 163,
+          "y": 360.9375,
+          "width": 954,
+          "height": 254
+        },
+        "clip": {
+          "x": 163,
+          "y": 360.9375,
+          "width": 954,
+          "height": 254
+        }
+      },
+      "screenshots": [
+        "boss-1280-battle.png",
+        "boss-1280-release.png",
+        "boss-1280-effect.png"
+      ]
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "instrumentation": "Expose existing app controllers only; no response or combat/event substitution.",
+  "status": "passed",
+  "completedAt": "2026-11-04T08:12:12.931Z",
+  "sourceFilesAfter": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "581280ee8d86968320279bee5974c18de50cf204bf209d2e49a54513d59311d0"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "sourceChangedDuring": []
+}

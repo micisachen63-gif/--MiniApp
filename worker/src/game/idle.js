@@ -1,3 +1,4 @@
+import {nativeCastVfx} from './skill-vfx-events.js';
 import {potionPreference,potionKeyFor,potionStock,potionHealing,potionTierFor} from './potion-choice.js';
 import {idleBalanceFrom} from './pve-balance.js';
 export {potionTierFor} from './potion-choice.js';
@@ -117,7 +118,8 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     beginAssistBattle(c,inv,use,price=>{report.guardianStonesBought=(report.guardianStonesBought||0)+1;report.guardianStoneGoldSpent=(report.guardianStoneGoldSpent||0)+price;});
     const guardianActor=idleGuardianActor(c);
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
-    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map,c),use,potions:POTIONS,day,rng});
+    const vfxObservation={eventId:'idle-round:'+c.tg_id+':'+t+':cast',source:'committed-combat',atMs:t,damageModel:'aggregate-minute',enemyId:combat.enemies[combat.target===1?1:0]?.id};
+    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map,c),use,potions:POTIONS,day,rng,vfx:i===ticks?vfxObservation:null});
     let cast = !!special?.selected;
     if (!special?.selected && needsBlue(c,c.mp,s.maxMp,s.skill.cost)) { const target=blueTarget(c,s.maxMp,s.skill.cost); let k; do { k=choosePotion(inv,'blue',mapTier,c); if(!k)break; use(k); c.mp=Math.min(s.maxMp,c.mp+POTIONS[k].heal); } while(c.mp<target); }
     if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
@@ -196,7 +198,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     c.exp += gain; report.exp_gained += gain;
     goldAcc += dailyGold(c.level) * IDLE.goldPerDayPct / MAX_SETTLE_TICKS * eff;
     killAcc += kills;
-    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,strikePlan,attackSpeedMultiplier:s.attackSpeedMultiplier,record:i===ticks});
+    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,vfx:i===ticks?(special?.vfx||(cast?nativeCastVfx(c,vfxObservation):null)):null,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,strikePlan,attackSpeedMultiplier:s.attackSpeedMultiplier,record:i===ticks});
     if(thiefTarget&&!combat.enemies.some(e=>e.id===thiefTarget))clearThiefIdleNative(c);
     if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;if(thiefNative.statuses.length)round.statuses=thiefNative.statuses;}
     for(const [key,qty]of Object.entries(monsterMaterialPlan(round,materialRng,dropsToday,inv))){inv[key]=(inv[key]||0)+qty;report.drops[key]=(report.drops[key]||0)+qty;}

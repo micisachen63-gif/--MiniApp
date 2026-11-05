@@ -1,0 +1,797 @@
+{
+  "schemaVersion": 1,
+  "scope": "Asset technical verification; not gameplay integration or animated visual approval",
+  "processing": "PNG-to-WebP format encoding; summons receive transparent canvas padding only; no keying/matte/paint changes",
+  "assets": [
+    {
+      "name": "sword",
+      "runtime": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/sword-atlas-v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "cellSize": [
+        418,
+        418
+      ],
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558",
+      "sourceSha256": "dccea19e773702010dab4c24b6ccecf0ea575139328ac258ce0b27f68c0281c0",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "webpAlphaIdentical": true,
+      "seamAlphaMax": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "cells": [
+        {
+          "index": 0,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "bboxAlpha32": [
+            81,
+            134,
+            371,
+            275
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 1,
+          "rect": [
+            418,
+            0,
+            836,
+            418
+          ],
+          "bboxAlpha32": [
+            76,
+            63,
+            369,
+            359
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 2,
+          "rect": [
+            836,
+            0,
+            1254,
+            418
+          ],
+          "bboxAlpha32": [
+            50,
+            66,
+            368,
+            320
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 3,
+          "rect": [
+            0,
+            418,
+            418,
+            836
+          ],
+          "bboxAlpha32": [
+            48,
+            33,
+            379,
+            357
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 4,
+          "rect": [
+            418,
+            418,
+            836,
+            836
+          ],
+          "bboxAlpha32": [
+            75,
+            31,
+            342,
+            355
+          ],
+          "edgeAlphaMax": 3
+        },
+        {
+          "index": 5,
+          "rect": [
+            836,
+            418,
+            1254,
+            836
+          ],
+          "bboxAlpha32": [
+            55,
+            76,
+            371,
+            305
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 6,
+          "rect": [
+            0,
+            836,
+            418,
+            1254
+          ],
+          "bboxAlpha32": [
+            96,
+            15,
+            340,
+            339
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 7,
+          "rect": [
+            418,
+            836,
+            836,
+            1254
+          ],
+          "bboxAlpha32": [
+            37,
+            29,
+            382,
+            343
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 8,
+          "rect": [
+            836,
+            836,
+            1254,
+            1254
+          ],
+          "bboxAlpha32": [
+            124,
+            83,
+            285,
+            275
+          ],
+          "edgeAlphaMax": 1
+        }
+      ],
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/sword-atlas.webp"
+    },
+    {
+      "name": "mage",
+      "runtime": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/mage-atlas-v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "cellSize": [
+        418,
+        418
+      ],
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb",
+      "sourceSha256": "adc492ba04ad52ae055b65f2f5f05a2ffd79ea495fc3e712c33b89efaade68e7",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "webpAlphaIdentical": true,
+      "seamAlphaMax": [
+        1,
+        1,
+        1,
+        1
+      ],
+      "cells": [
+        {
+          "index": 0,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "bboxAlpha32": [
+            54,
+            123,
+            388,
+            290
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 1,
+          "rect": [
+            418,
+            0,
+            836,
+            418
+          ],
+          "bboxAlpha32": [
+            54,
+            36,
+            351,
+            351
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 2,
+          "rect": [
+            836,
+            0,
+            1254,
+            418
+          ],
+          "bboxAlpha32": [
+            31,
+            49,
+            368,
+            364
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 3,
+          "rect": [
+            0,
+            418,
+            418,
+            836
+          ],
+          "bboxAlpha32": [
+            44,
+            26,
+            392,
+            369
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 4,
+          "rect": [
+            418,
+            418,
+            836,
+            836
+          ],
+          "bboxAlpha32": [
+            57,
+            11,
+            360,
+            377
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 5,
+          "rect": [
+            836,
+            418,
+            1254,
+            836
+          ],
+          "bboxAlpha32": [
+            39,
+            69,
+            378,
+            321
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 6,
+          "rect": [
+            0,
+            836,
+            418,
+            1254
+          ],
+          "bboxAlpha32": [
+            84,
+            15,
+            344,
+            348
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 7,
+          "rect": [
+            418,
+            836,
+            836,
+            1254
+          ],
+          "bboxAlpha32": [
+            29,
+            28,
+            372,
+            337
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 8,
+          "rect": [
+            836,
+            836,
+            1254,
+            1254
+          ],
+          "bboxAlpha32": [
+            101,
+            94,
+            297,
+            288
+          ],
+          "edgeAlphaMax": 2
+        }
+      ],
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/mage-atlas.webp"
+    },
+    {
+      "name": "archer",
+      "runtime": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/archer-atlas-v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "cellSize": [
+        418,
+        418
+      ],
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d",
+      "sourceSha256": "8d27d108fbd2bc2015deedd68bd244a00496f767c99d1ec0e230def25d69c334",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "webpAlphaIdentical": true,
+      "seamAlphaMax": [
+        1,
+        1,
+        1,
+        32
+      ],
+      "cells": [
+        {
+          "index": 0,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "bboxAlpha32": [
+            42,
+            145,
+            388,
+            284
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 1,
+          "rect": [
+            418,
+            0,
+            836,
+            418
+          ],
+          "bboxAlpha32": [
+            61,
+            59,
+            339,
+            354
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 2,
+          "rect": [
+            836,
+            0,
+            1254,
+            418
+          ],
+          "bboxAlpha32": [
+            27,
+            44,
+            379,
+            370
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 3,
+          "rect": [
+            0,
+            418,
+            418,
+            836
+          ],
+          "bboxAlpha32": [
+            42,
+            30,
+            381,
+            365
+          ],
+          "edgeAlphaMax": 23
+        },
+        {
+          "index": 4,
+          "rect": [
+            418,
+            418,
+            836,
+            836
+          ],
+          "bboxAlpha32": [
+            67,
+            21,
+            346,
+            367
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 5,
+          "rect": [
+            836,
+            418,
+            1254,
+            836
+          ],
+          "bboxAlpha32": [
+            29,
+            75,
+            384,
+            282
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 6,
+          "rect": [
+            0,
+            836,
+            418,
+            1254
+          ],
+          "bboxAlpha32": [
+            113,
+            0,
+            323,
+            356
+          ],
+          "edgeAlphaMax": 32
+        },
+        {
+          "index": 7,
+          "rect": [
+            418,
+            836,
+            836,
+            1254
+          ],
+          "bboxAlpha32": [
+            24,
+            28,
+            385,
+            355
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 8,
+          "rect": [
+            836,
+            836,
+            1254,
+            1254
+          ],
+          "bboxAlpha32": [
+            115,
+            91,
+            306,
+            293
+          ],
+          "edgeAlphaMax": 1
+        }
+      ],
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/archer-atlas.webp"
+    },
+    {
+      "name": "thief",
+      "runtime": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/thief-atlas-v2.png",
+      "size": [
+        1254,
+        1254
+      ],
+      "grid": [
+        3,
+        3
+      ],
+      "cellSize": [
+        418,
+        418
+      ],
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05",
+      "sourceSha256": "59154083dad859021bc5d91471f3b3c76733d4bc8d6d77a4135204ec5bab2709",
+      "alphaRange": [
+        0,
+        255
+      ],
+      "webpAlphaIdentical": true,
+      "seamAlphaMax": [
+        1,
+        1,
+        2,
+        2
+      ],
+      "cells": [
+        {
+          "index": 0,
+          "rect": [
+            0,
+            0,
+            418,
+            418
+          ],
+          "bboxAlpha32": [
+            47,
+            130,
+            376,
+            257
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 1,
+          "rect": [
+            418,
+            0,
+            836,
+            418
+          ],
+          "bboxAlpha32": [
+            29,
+            55,
+            382,
+            367
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 2,
+          "rect": [
+            836,
+            0,
+            1254,
+            418
+          ],
+          "bboxAlpha32": [
+            44,
+            56,
+            363,
+            361
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 3,
+          "rect": [
+            0,
+            418,
+            418,
+            836
+          ],
+          "bboxAlpha32": [
+            40,
+            20,
+            391,
+            363
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 4,
+          "rect": [
+            418,
+            418,
+            836,
+            836
+          ],
+          "bboxAlpha32": [
+            41,
+            6,
+            366,
+            382
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 5,
+          "rect": [
+            836,
+            418,
+            1254,
+            836
+          ],
+          "bboxAlpha32": [
+            44,
+            94,
+            359,
+            286
+          ],
+          "edgeAlphaMax": 1
+        },
+        {
+          "index": 6,
+          "rect": [
+            0,
+            836,
+            418,
+            1254
+          ],
+          "bboxAlpha32": [
+            99,
+            11,
+            343,
+            363
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 7,
+          "rect": [
+            418,
+            836,
+            836,
+            1254
+          ],
+          "bboxAlpha32": [
+            25,
+            16,
+            395,
+            364
+          ],
+          "edgeAlphaMax": 2
+        },
+        {
+          "index": 8,
+          "rect": [
+            836,
+            836,
+            1254,
+            1254
+          ],
+          "bboxAlpha32": [
+            133,
+            118,
+            278,
+            266
+          ],
+          "edgeAlphaMax": 2
+        }
+      ],
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/thief-atlas.webp"
+    },
+    {
+      "name": "hawk",
+      "runtime": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/hawk-v1.png",
+      "size": [
+        840,
+        840
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "paddingPixels": 213,
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825",
+      "sourceSha256": "439545f0cb5a7508c89baade00bd724aec35c3f203c70a531e121a6313ee127b",
+      "webpAlphaIdentical": true,
+      "direction": "right",
+      "sourceBBoxAlpha8": [
+        96,
+        151,
+        1130,
+        1045
+      ],
+      "outerEdgeAlphaMax": 0,
+      "runtimeResize": {
+        "from": [
+          1680,
+          1680
+        ],
+        "to": [
+          840,
+          840
+        ],
+        "filter": "LANCZOS",
+        "motherRetained": true
+      },
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/hawk.webp"
+    },
+    {
+      "name": "fire-spirit",
+      "runtime": "worker/public/art/skill-vfx-20261104/fire-spirit.webp",
+      "selectedSource": "worker/art-production/skill-vfx-20261104/source/fire-spirit-v1.png",
+      "size": [
+        840,
+        840
+      ],
+      "sourceSize": [
+        1254,
+        1254
+      ],
+      "paddingPixels": 213,
+      "bytes": 94338,
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617",
+      "sourceSha256": "9cbd99c35e03c865b6a19e7d65725648860bf708b2ea6c6b4cd852c71a335a83",
+      "webpAlphaIdentical": true,
+      "direction": "right",
+      "sourceBBoxAlpha8": [
+        212,
+        114,
+        1067,
+        1157
+      ],
+      "outerEdgeAlphaMax": 0,
+      "runtimeResize": {
+        "from": [
+          1680,
+          1680
+        ],
+        "to": [
+          840,
+          840
+        ],
+        "filter": "LANCZOS",
+        "motherRetained": true
+      },
+      "buildScratchPath": "/workspace/scratch/89c265cf998e/vfx-art-staging/fire-spirit.webp"
+    }
+  ]
+}

@@ -1,0 +1,387 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-04T06:36:38.300Z",
+  "coreCommit": "4e95579292f8e417501f8b60d497c0bd945825fc",
+  "branch": "codex/skill-vfx-20261104",
+  "baseCommit": "13ab05a41a7eb115859159ac761cc2b40d2b6446",
+  "scope": {
+    "catalogSkillIdentities": 196,
+    "liveAtlasBuilds": 12,
+    "actorDirectionsReviewed": 16,
+    "fallbackProfiles": 12,
+    "authoredMarkers": 4,
+    "authoredAnchors": 12
+  },
+  "gate": {
+    "counts": {
+      "tests": 175,
+      "suites": 0,
+      "pass": 175,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "duration_ms": 1656.0602
+    },
+    "startedAt": "2026-11-04T06:30:18.626Z",
+    "finishedAt": "2026-11-04T06:30:20.344Z",
+    "inputFiles": 24,
+    "changedDuringGate": [],
+    "tap": {
+      "bytes": 41060,
+      "sha256": "bbd03f9f2b1e7bb7ce9808aa476c1b2431289feb60fe28ac7f5bee9637c6dc68"
+    }
+  },
+  "postGateFormatting": {
+    "at": "2026-11-04T06:34:29.294Z",
+    "path": "worker/test/atlas-combat-trace-service.test.js",
+    "change": "Remove one extra blank line at EOF only; no assertions or runtime changed",
+    "normalizedEqual": true,
+    "before": "7994400e8fe968c2bb142211c62ec7243bbfc7b5b58adfb40410ea0dc44dac7a",
+    "after": "6604dee0e421b9e3eeda08177b51d8cc27f301ae19fadd3106969a57ebaffc70"
+  },
+  "sourceAtCoreCommit": {
+    "worker/test/atlas-engine.test.js": "d725f39c530a5979307bbf6dc05d2b95f99855c04db7fec31a01872c9e9c1a61",
+    "worker/test/atlas-service.test.js": "d94c4523633f84325a7c3e48677292156ff30f962c0aa617580c9279ad92fb95",
+    "worker/test/atlas-combat-observer.test.js": "a129ac928f19614ba99db24200123f1f0ead2797c9e55751c51e75e74116040a",
+    "worker/test/atlas-combat-trace-service.test.js": "6604dee0e421b9e3eeda08177b51d8cc27f301ae19fadd3106969a57ebaffc70",
+    "worker/test/skill-vfx-engine.test.js": "87f6fb54c42d36d189a8753086a7fe2334d7512d3070447c738826ecffae86a4",
+    "worker/test/skill-vfx-combat-adapter.test.js": "40184ce73259559ccc70b89b53c98496bc475d51087925389b89df5827309c41",
+    "worker/test/skill-vfx-actor-bridge.test.js": "845906e9120c4be22f049012335192ac2145d36569210dee0b4dee6aca1c8c7a",
+    "worker/test/skill-vfx-scene-session.test.js": "fe54ebe32fb6bbb638daebf03f3f85fa0e465a9b1235adb084e27f96ef2e20e7",
+    "worker/test/scene-live-view.test.js": "47f7b283e6a20bd84bcee17893db70ad7a9a9a607080abd0199f0a011b634058",
+    "worker/test/scene-live-lifecycle.test.js": "d9c40d5cded0f267c739b2c3bd4e704481dc15b80cfd41942a72960d054f901f",
+    "worker/test/scene-live-session.test.js": "3816f7ec6a9f9bd9d7258532dbf857758374818fd87ce58bd21124caf346b1bd",
+    "worker/src/game/atlas-combat-observer.js": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+    "worker/src/game/atlas-engine.js": "93de2425fdf1cf50a4fc28379c45b178a58aa3bc2c37a9f3425fec0af5bd454e",
+    "worker/src/services/atlas.js": "36fd0f33420d4173d91205d77fde06ef1359b298f24f36dc8c7019739a0f50f0",
+    "worker/public/skill-vfx-actor-bridge.mjs": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3",
+    "worker/public/skill-vfx-actor-profiles.json": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+    "worker/public/skill-vfx-combat-adapter.mjs": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337",
+    "worker/public/skill-vfx-engine.mjs": "c119000f543ff6545f01d0ac2d88b39f1155b7d9e988482d003b5721682b3d82",
+    "worker/public/skill-vfx-catalog.json": "73459fecec22608cf836ba43ffe50f757d5c244f68aa53554eafc9f1910aa3e3",
+    "worker/public/scene-live-session.js": "6bc611dff5fdbf649677bd9adc333a7906ce5f6e80baf9c017db9975f2f00014",
+    "worker/public/scene-live-view.js": "53107aabcc90244b2bbca41360eb3af8e70a9907bbc9f48d2526c0b771002621",
+    "worker/tools/atlas-local-preview.mjs": "c68f088cdf0acbab0e486a94629cfe8ac6103557fb9eaf8124076b86843b7863",
+    "worker/tools/scene-live-preview.mjs": "e68731c8246795145cfd6bb24ab42e3a0601cb990ea7665deef68ed6d4ca9984",
+    "worker/tools/skill-vfx-live-browser.cjs": "f0dfb35f2e47093af9fd4d9026e82201cc9e39a55e8374696fb718a505769438"
+  },
+  "browser": [
+    {
+      "name": "full",
+      "generatedAt": "2026-11-04T06:20:37.804Z",
+      "passed": 16,
+      "errors": 0,
+      "httpErrors": 0,
+      "cases": [
+        {
+          "build": "sword_whirlwind",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 375,
+          "overshootMs": 60.009999999999195,
+          "effectKind": null
+        },
+        {
+          "build": "sword_bleed",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 375,
+          "overshootMs": 44.99000000000086,
+          "effectKind": "dot"
+        },
+        {
+          "build": "sword_counter",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 375,
+          "overshootMs": 16.669999999998254,
+          "effectKind": null
+        },
+        {
+          "build": "archer_pierce",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 500,
+          "overshootMs": 35,
+          "effectKind": null
+        },
+        {
+          "build": "archer_beast",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 500,
+          "overshootMs": 14.980000000000246,
+          "effectKind": "pet"
+        },
+        {
+          "build": "archer_trap",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "placement",
+          "markerMs": 500,
+          "overshootMs": 34.990000000000805,
+          "effectKind": "trap"
+        },
+        {
+          "build": "mage_chain",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 480,
+          "overshootMs": 41.65999999999326,
+          "effectKind": null
+        },
+        {
+          "build": "mage_frost",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 480,
+          "overshootMs": 25.009999999997603,
+          "effectKind": null
+        },
+        {
+          "build": "mage_arcane",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 480,
+          "overshootMs": 6.659999999997694,
+          "effectKind": null
+        },
+        {
+          "build": "thief_poison",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 440,
+          "overshootMs": 13.340000000002306,
+          "effectKind": "dot"
+        },
+        {
+          "build": "thief_execute",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 440,
+          "overshootMs": 41.67000000000115,
+          "effectKind": null
+        },
+        {
+          "build": "thief_combo",
+          "width": 1280,
+          "height": 900,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 440,
+          "overshootMs": 28.320000000004086,
+          "effectKind": null
+        },
+        {
+          "build": "sword_whirlwind",
+          "width": 390,
+          "height": 844,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 375,
+          "overshootMs": 23.349999999997067,
+          "effectKind": null
+        },
+        {
+          "build": "archer_beast",
+          "width": 390,
+          "height": 844,
+          "direction": "left",
+          "authority": "vfx-visual-review",
+          "mode": "full",
+          "markerMs": 500,
+          "overshootMs": 5.000000000002899,
+          "effectKind": "pet"
+        },
+        {
+          "build": "mage_chain",
+          "width": 390,
+          "height": 844,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 480,
+          "overshootMs": 6.680000000004611,
+          "effectKind": null
+        },
+        {
+          "build": "thief_combo",
+          "width": 390,
+          "height": 844,
+          "direction": "left",
+          "authority": "source",
+          "mode": "full",
+          "markerMs": 440,
+          "overshootMs": 1.6700000000011528,
+          "effectKind": null
+        }
+      ],
+      "receiptCount": 164,
+      "sampleCount": 586
+    },
+    {
+      "name": "trap-desktop",
+      "generatedAt": "2026-11-04T06:28:40.384Z",
+      "passed": 1,
+      "errors": 0,
+      "httpErrors": 0,
+      "cases": [
+        {
+          "build": "archer_trap",
+          "width": 1280,
+          "height": 900,
+          "direction": "down",
+          "authority": "source",
+          "mode": "placement",
+          "markerMs": 400,
+          "overshootMs": 8.350000000000023,
+          "effectKind": "trap"
+        }
+      ],
+      "receiptCount": 12,
+      "sampleCount": 50
+    },
+    {
+      "name": "trap-phone",
+      "generatedAt": "2026-11-04T06:29:53.359Z",
+      "passed": 1,
+      "errors": 0,
+      "httpErrors": 0,
+      "cases": [
+        {
+          "build": "archer_trap",
+          "width": 390,
+          "height": 844,
+          "direction": "down",
+          "authority": "source",
+          "mode": "placement",
+          "markerMs": 400,
+          "overshootMs": 18.329999999999927,
+          "effectKind": "trap"
+        }
+      ],
+      "receiptCount": 10,
+      "sampleCount": 51
+    }
+  ],
+  "visualReview": {
+    "trapGroundFix": "Removed double anatomical offset; placement now uses the supplied logical foot/ground anchor, including reduced motion.",
+    "reviewed": "Four desktop classes, corrected trap placement and three-target impact, representative phone screenshots and corrected phone trap.",
+    "limits": [
+      "Mobile status panel obscures parts of left/center enemies; side enemies are partly clipped.",
+      "Screenshots do not establish every phase or every enemy hit is visible.",
+      "Full real-API matrix aimed left; selected trap checks also cover its actual facing. Four-direction art/profile QA is separate.",
+      "Headless Chrome SwiftShader and mobile viewport, not physical GPU/Telegram acceptance."
+    ]
+  },
+  "integration": {
+    "currentRuleset": "atlas-v3",
+    "nextCommittedBaseline": "e4908c02f858c27d992a8efb0199a9c3c9a2cd1e",
+    "activeOtherWorktree": "star-journal-unified-ui-20261104",
+    "merged": false,
+    "notes": "Preserve v4 activities parameters/content RNG/atomic ledger; background settle has no trace replay. Do not overwrite active UI work."
+  },
+  "production": {
+    "deployed": false,
+    "mainMerged": false,
+    "remoteMigrations": false,
+    "originalCharactersChanged": false
+  },
+  "artifacts": [
+    {
+      "path": "docs/skill-vfx-live-20261104/tests.tap",
+      "source": ".release-sync/skill-vfx-20261104/combat-integration-tests.tap",
+      "bytes": 41060,
+      "sha256": "bbd03f9f2b1e7bb7ce9808aa476c1b2431289feb60fe28ac7f5bee9637c6dc68"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/test-validation.json",
+      "source": ".release-sync/skill-vfx-20261104/combat-integration-validation.json",
+      "bytes": 6541,
+      "sha256": "89c3e497ec2a993c4faacc528b20ef60e70121c0fc7e38913d61725d569b4bf0"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/post-gate-formatting.json",
+      "source": ".release-sync/skill-vfx-20261104/post-gate-formatting.json",
+      "bytes": 374,
+      "sha256": "ed9b0d07ea272d7484c750b7f5e1a6d0c3c088a30fef3afbf7107047f390ebb6"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/browser-results.json",
+      "source": ".release-sync/skill-vfx-20261104/live-2026-11-04T06-15-41-789Z/results.json",
+      "bytes": 2718038,
+      "sha256": "670b247625ec16ba0ec89e5d46653c8b170a6ff8480923569c64b50c87ea6915"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/browser-trap-desktop.json",
+      "source": ".release-sync/skill-vfx-20261104/live-trap-ground-desktop/results.json",
+      "bytes": 201280,
+      "sha256": "5d7e958399e12047441dcc33d8952d99b970bf4a3d867766a73e6981b51781c8"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/browser-trap-phone.json",
+      "source": ".release-sync/skill-vfx-20261104/live-trap-ground-phone/results.json",
+      "bytes": 194571,
+      "sha256": "e70d0857b0cf1acc033babcfec23761a1d612e15e864407d6a11aa858c3f9a91"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/live-contact-sheet.jpg",
+      "source": ".release-sync/skill-vfx-20261104/live-2026-11-04T06-15-41-789Z/live-contact-sheet.jpg",
+      "bytes": 1538080,
+      "sha256": "ba4fab48b88aef00f290652d78008def03ce18b05b2baf06ae87f98f53be968a"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/trap-ground-desktop.png",
+      "source": ".release-sync/skill-vfx-20261104/live-trap-ground-desktop/1280-archer_trap-release.png",
+      "bytes": 1762052,
+      "sha256": "dffd1b29f2bab8ef2dc9a80e5cfdc08983a021215dd3d56b7914296ed905288f"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/trap-impact-desktop.png",
+      "source": ".release-sync/skill-vfx-20261104/live-trap-ground-desktop/1280-archer_trap-effect.png",
+      "bytes": 1765766,
+      "sha256": "0fca4828116bf0ccaa1681147630e3850d4b3cbc65391d3f2b1ce680ae472016"
+    },
+    {
+      "path": "docs/skill-vfx-live-20261104/trap-ground-phone.png",
+      "source": ".release-sync/skill-vfx-20261104/live-trap-ground-phone/390-archer_trap-release.png",
+      "bytes": 597270,
+      "sha256": "0a1ad69c1b7cb3e6f44d29402045595be5fcf7aa2a42fed3ee3dedf7c55fa76a"
+    }
+  ]
+}

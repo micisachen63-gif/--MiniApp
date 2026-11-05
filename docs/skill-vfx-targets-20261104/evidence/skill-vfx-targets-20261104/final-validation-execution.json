@@ -1,0 +1,56 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-04T10:46:03.087Z",
+  "engineBefore": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+  "steps": [
+    {
+      "name": "target-browser-capture-fixed",
+      "args": [
+        "worker/tools/skill-vfx-target-browser.cjs"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "durationMs": 16905
+    },
+    {
+      "name": "normalize",
+      "args": [
+        "worker/tools/build-skill-vfx-browser-evidence.mjs",
+        "--gameplay=.release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+        "--atlas=.release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+        "--out=.release-sync/skill-vfx-20261104/gameplay-coverage-browser.json"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "durationMs": 147
+    },
+    {
+      "name": "coverage-build",
+      "args": [
+        "worker/tools/build-skill-vfx-coverage.mjs",
+        "--require-legacy-completion"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "durationMs": 239
+    },
+    {
+      "name": "coverage-check",
+      "args": [
+        "worker/tools/build-skill-vfx-coverage.mjs",
+        "--check",
+        "--require-legacy-completion"
+      ],
+      "exitCode": 0,
+      "signal": null,
+      "error": null,
+      "durationMs": 216
+    }
+  ],
+  "engineAfter": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+  "finishedAt": "2026-11-04T10:46:20.600Z",
+  "passed": true
+}

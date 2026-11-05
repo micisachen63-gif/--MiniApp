@@ -1,0 +1,9 @@
+# Preserve all captured evidence bytes across platforms.
+.gitattributes text eol=lf
+*.cjs text eol=lf
+*.json -text
+*.tap -text -diff
+*.png -text
+*.log -text -diff
+# Copies of original scripts are evidence bytes, not editable source templates.
+evidence/** -text

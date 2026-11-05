@@ -8,8 +8,14 @@ const fs = require('node:fs/promises');
 const path = require('node:path');
 const crypto = require('node:crypto');
 
-const origin = process.env.BUTTON_SCENE_ORIGIN || 'http://127.0.0.1:9703';
-const api = process.env.BUTTON_API_ORIGIN || 'http://127.0.0.1:9702';
+const origin = process.env.BUTTON_SCENE_ORIGIN || process.env.BUTTON_POLISH_SCENE_ORIGIN || 'http://127.0.0.1:9703';
+const api = process.env.BUTTON_API_ORIGIN || process.env.BUTTON_POLISH_API_ORIGIN || 'http://127.0.0.1:9702';
+for (const value of [origin,api]) {
+  const endpoint = new URL(value);
+  assert(endpoint.protocol==='http:'&&endpoint.hostname==='127.0.0.1'&&endpoint.origin===value&&Number(endpoint.port)>=1024,
+    'Button QA accepts explicit loopback origins only.');
+}
+assert.notEqual(origin,api,'Scene and API must use separate loopback origins.');
 const runName=process.env.BUTTON_POLISH_QA_RUN||'browser';
 assert(/^[a-z0-9-]+$/.test(runName),'QA run name must be a simple directory name.');
 const output = path.resolve('.release-sync/button-polish-20261104',runName);

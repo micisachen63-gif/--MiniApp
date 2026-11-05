@@ -1,0 +1,79 @@
+{
+  "schemaVersion": 1,
+  "task": "actor VFX release fallback profiles",
+  "reviewedAt": "2026-11-04T05:57:21Z",
+  "reviewedBy": "assistant visual inspection of existing source frames and technical overlays",
+  "state": "complete-within-vfx-worktree",
+  "publicFile": "worker/public/skill-vfx-actor-profiles.json",
+  "sourceFiles": [
+    "D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+    "D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+    "D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/character-preview-actors/mage.json",
+    "D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/character-preview-actors/thief.json"
+  ],
+  "contract": {
+    "fallbackOnly": true,
+    "sourceMetadataAndReleaseImageShaRequired": true,
+    "sourceNativeMarkerAndAnchorPriority": true,
+    "pointSpace": "release-frame crop-local source pixels, before clipMirrorX XOR frame.mirrorX",
+    "normalization": "BODY 300; 480x512 tile; foot [240,470]",
+    "variableDurations": true,
+    "uniformFps": "8 for sword side; 10 for archer side; null otherwise"
+  },
+  "selectedTiming": [
+    {
+      "actorId": "sword",
+      "directions": [
+        "right",
+        "left"
+      ],
+      "releaseFrame": 3,
+      "releaseAtMs": 375,
+      "reason": "First full forward blade extension after raised-sword windup."
+    },
+    {
+      "actorId": "archer",
+      "directions": [
+        "right",
+        "left"
+      ],
+      "releaseFrame": 5,
+      "releaseAtMs": 500,
+      "reason": "First frame with a clearly separated arrow in flight; release point remains on bow grip."
+    }
+  ],
+  "visualQa": {
+    "reviewed": true,
+    "images": [
+      "release-points-sword-archer.jpg",
+      "release-points-mage-thief.jpg"
+    ],
+    "results": "All 16 direction points checked against normalized source artwork. Twelve gold points are authored VFX fallbacks; four cyan points are native source anchors.",
+    "note": "Technical contact sheets and crosshairs only; no new character artwork."
+  },
+  "counts": {
+    "reviewedDirections": 16,
+    "profileEntries": 12,
+    "authoredMarkers": 4,
+    "authoredAnchors": 12,
+    "nativeCompleteDirections": 4,
+    "pendingDirections": 0
+  },
+  "remainingForParent": [
+    "Wire the supplied JSON through same-origin route and actor bridge.",
+    "Verify live clip selection, event cancellation, source fingerprint mismatch, and effect origin during integrated playback.",
+    "Keep source actor approval/readiness partial-candidate; these VFX fallbacks do not approve source artwork."
+  ],
+  "rebuild": {
+    "inventory": "node worker/art-production/skill-vfx-actor-20261104/inspect-release-sources.mjs",
+    "candidate": "python worker/art-production/skill-vfx-actor-20261104/build-actor-profiles.py",
+    "finalizeAfterVisualQa": "python worker/art-production/skill-vfx-actor-20261104/build-actor-profiles.py --finalize",
+    "changedSourceRule": "Re-review source frames and anchor overlay whenever metadata or image SHA changes. Never run --finalize blindly after inventory refresh."
+  },
+  "scope": {
+    "modifiedOriginalCharacterFiles": false,
+    "modifiedCatalogOrQueue": false,
+    "gitCommitCreated": false,
+    "fullSuiteRun": false
+  }
+}

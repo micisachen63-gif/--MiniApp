@@ -8,3 +8,63 @@ worker/public/expedition/review.css text eol=lf
 worker/public/fate/** text eol=lf
 worker/public/fate-entry.js text eol=lf
 worker/public/fate-entry.css text eol=lf
+
+# Pin captured VFX source line endings for byte-level evidence checks.
+worker/public/app.js text eol=crlf
+worker/public/battle.js text eol=crlf
+worker/public/expedition/combat-playback.js text eol=crlf
+worker/public/expedition/hero-art-playback.js text eol=crlf
+worker/public/scene-live-session.js text eol=crlf
+worker/public/scene-live-view.css text eol=crlf
+worker/public/scene-live-view.js text eol=crlf
+worker/public/skill-vfx-actor-bridge.mjs text eol=lf
+worker/public/skill-vfx-actor-profiles.json text eol=crlf
+worker/public/skill-vfx-catalog.json text eol=lf
+worker/public/skill-vfx-combat-adapter.mjs text eol=lf
+worker/public/skill-vfx-engine.mjs text eol=lf
+worker/public/skill-vfx-legacy.mjs text eol=lf
+worker/public/skill-vfx-recipes.json text eol=lf
+worker/public/star-ring-heroes.js text eol=crlf
+worker/src/game/atlas-catalog.js text eol=crlf
+worker/src/game/atlas-combat-observer.js text eol=lf
+worker/src/game/atlas-engine.js text eol=crlf
+worker/src/game/atlas-talents.js text eol=crlf
+worker/src/game/boss.js text eol=crlf
+worker/src/game/idle-combat.js text eol=crlf
+worker/src/game/idle.js text eol=crlf
+worker/src/game/pk.js text eol=crlf
+worker/src/game/skill-vfx-events.js text eol=lf
+worker/src/game/special-data.js text eol=crlf
+worker/src/game/special-idle.js text eol=crlf
+worker/src/game/special.js text eol=crlf
+worker/src/game/star-ring.js text eol=crlf
+worker/src/game/stats.js text eol=crlf
+worker/src/services/atlas.js text eol=crlf
+worker/src/services/boss.js text eol=crlf
+worker/src/services/party.js text eol=crlf
+worker/src/services/pk.js text eol=crlf
+worker/src/services/player.js text eol=crlf
+worker/src/services/star-ring.js text eol=crlf
+worker/test/skill-vfx-legacy-harness.js text eol=lf
+worker/tools/build-skill-vfx-browser-evidence.mjs text eol=lf
+worker/tools/build-skill-vfx-catalog.mjs text eol=lf
+worker/tools/build-skill-vfx-coverage.mjs text eol=lf
+worker/tools/build-skill-vfx-recipes.mjs text eol=lf
+worker/tools/skill-vfx-identity-browser.mjs text eol=lf
+worker/tools/skill-vfx-legacy-presentation-check.mjs text eol=lf
+worker/tools/skill-vfx-live-browser.cjs text eol=lf
+worker/public/skill-vfx-coverage.json text eol=lf
+
+# Reconstruct verified button source CRLF bytes on every checkout.
+worker/public/scene-social-preview.css text eol=crlf
+worker/tools/scene-live-preview.mjs text eol=crlf
+worker/tools/button-polish-browser.cjs text eol=crlf
+worker/test/scene-preview-assets.test.js text eol=crlf
+
+# Preserve the exact LF sources used by the target/contact VFX evidence.
+worker/public/skill-vfx-preview.mjs text eol=lf
+worker/public/skill-vfx-preview.css text eol=lf
+worker/public/preview-skill-vfx.html text eol=lf
+worker/test/skill-vfx-target-timing.test.js text eol=lf
+worker/tools/skill-vfx-target-browser.cjs text eol=lf
+worker/tools/skill-vfx-five-target-receipt.mjs text eol=lf

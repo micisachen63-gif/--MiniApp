@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "archivedAt": "2026-11-04T09:41:08.212Z",
+  "entries": [
+    {
+      "source": ".release-sync/button-polish-20261104/vfx-merge-ui-20261104/results.json",
+      "destination": "docs/button-vfx-20261104/ui-initial.json",
+      "bytes": 1192811,
+      "sha256": "91048f8add655f3a24e49cd0c706a77e8f0abd0a685cac1a3f36d99a81f6b46f"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/collapse-qa-final-2026-11-04T09-37-02-553Z/results.json",
+      "destination": "docs/button-vfx-20261104/ui-targeted-final.json",
+      "bytes": 262101,
+      "sha256": "c0d907eb8f94c1a82fdb3a12830a00841bc1224c838db355a536cf3fc0147144"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/collapse-qa-final-2026-11-04T09-37-02-553Z/1280-navigation.png",
+      "destination": "docs/button-vfx-20261104/navigation-desktop.png",
+      "bytes": 27228,
+      "sha256": "9dc764111c7e6ced6a8c73a353f2830eda2cf3276f18c964d64ca407e56fd6cf"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/collapse-qa-final-2026-11-04T09-37-02-553Z/390-navigation.png",
+      "destination": "docs/button-vfx-20261104/navigation-phone.png",
+      "bytes": 23344,
+      "sha256": "07a3660af8b5be614fda1c993c660efc17c39705d2708914f16ad7acd15dfaeb"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/collapse-qa-final-2026-11-04T09-37-02-553Z/390-page.png",
+      "destination": "docs/button-vfx-20261104/phone-final.png",
+      "bytes": 194354,
+      "sha256": "634259655dc2750404fdc366ea5b2b3d7cf550fe3ab4cfd238a451549a4d114f"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/collapse-qa-final-2026-11-04T09-37-02-553Z/1280-page.png",
+      "destination": "docs/button-vfx-20261104/desktop-final.png",
+      "bytes": 469716,
+      "sha256": "da2e1a929fe69173d2104100e770a89281d0fc40588f3e4a80954fa0e65394d3"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/integration-audit.json",
+      "destination": "docs/button-vfx-20261104/source-and-assets.json",
+      "bytes": 1508,
+      "sha256": "3c96aff06f63e0a4c566976fee1ab3e6bf650df7e262177c7efeef15e00bdcc7"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/vfx-phone-final/results.json",
+      "destination": "docs/button-vfx-20261104/vfx-phone.json",
+      "bytes": 114767,
+      "sha256": "6a1bbfcbfd074c635101b53d9307a2b92f20c82ac291745f5e14c48e26f1ce04"
+    },
+    {
+      "source": ".release-sync/button-vfx-20261104/vfx-phone-execution.json",
+      "destination": "docs/button-vfx-20261104/vfx-phone-execution.json",
+      "bytes": 249,
+      "sha256": "a87b84ecb7dd28a7fecd53f19165ed6ead22eb6cf6758b27ec1fbd7232afa827"
+    },
+    {
+      "source": "node --test --test-reporter=tap worker/test/scene-preview-assets.test.js",
+      "destination": "docs/button-vfx-20261104/asset-route-tests.tap",
+      "bytes": 896,
+      "sha256": "715396876ede0af33390cbc2d3f7c27ca5db216b49152810bf000552b3df51f7"
+    }
+  ]
+}

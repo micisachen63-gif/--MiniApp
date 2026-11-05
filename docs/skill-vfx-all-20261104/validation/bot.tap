@@ -1,0 +1,1245 @@
+TAP version 13
+# Subtest: admin link /start sends private matching-code approval without game entry
+ok 1 - admin link /start sends private matching-code approval without game entry
+  ---
+  duration_ms: 3.7871
+  type: 'test'
+  ...
+# Subtest: admin link /start@StarJournalRpgBot sends private matching-code approval without game entry
+ok 2 - admin link /start@StarJournalRpgBot sends private matching-code approval without game entry
+  ---
+  duration_ms: 0.7923
+  type: 'test'
+  ...
+# Subtest: admin link /START@starjournalrpgbot sends private matching-code approval without game entry
+ok 3 - admin link /START@starjournalrpgbot sends private matching-code approval without game entry
+  ---
+  duration_ms: 0.4964
+  type: 'test'
+  ...
+# Subtest: admin start for another bot is ignored before membership or gameplay
+ok 4 - admin start for another bot is ignored before membership or gameplay
+  ---
+  duration_ms: 1.3716
+  type: 'test'
+  ...
+# Subtest: admin login group entry never reveals challenge or creates an approval button
+ok 5 - admin login group entry never reveals challenge or creates an approval button
+  ---
+  duration_ms: 0.8342
+  type: 'test'
+  ...
+# Subtest: foreign private chat and bot identities cannot approve
+ok 6 - foreign private chat and bot identities cannot approve
+  ---
+  duration_ms: 0.5339
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"member","user":{"id":712345678,"is_bot":false}}
+ok 7 - fresh start refuses non-authoritative administrator identity {"status":"member","user":{"id":712345678,"is_bot":false}}
+  ---
+  duration_ms: 0.6462
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"left","user":{"id":712345678,"is_bot":false}}
+ok 8 - fresh start refuses non-authoritative administrator identity {"status":"left","user":{"id":712345678,"is_bot":false}}
+  ---
+  duration_ms: 0.4714
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"restricted","is_member":true,"user":{"id":712345678,"is_bot":false}}
+ok 9 - fresh start refuses non-authoritative administrator identity {"status":"restricted","is_member":true,"user":{"id":712345678,"is_bot":false}}
+  ---
+  duration_ms: 0.4309
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"administrator","user":{"id":999,"is_bot":false}}
+ok 10 - fresh start refuses non-authoritative administrator identity {"status":"administrator","user":{"id":999,"is_bot":false}}
+  ---
+  duration_ms: 0.6186
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"creator","user":{"id":712345678,"is_bot":true}}
+ok 11 - fresh start refuses non-authoritative administrator identity {"status":"creator","user":{"id":712345678,"is_bot":true}}
+  ---
+  duration_ms: 0.3889
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity {"status":"administrator"}
+ok 12 - fresh start refuses non-authoritative administrator identity {"status":"administrator"}
+  ---
+  duration_ms: 0.3259
+  type: 'test'
+  ...
+# Subtest: fresh start refuses non-authoritative administrator identity null
+ok 13 - fresh start refuses non-authoritative administrator identity null
+  ---
+  duration_ms: 0.2003
+  type: 'test'
+  ...
+# Subtest: creator is allowed and repeated links freshly recheck permissions instead of ordinary membership cache
+ok 14 - creator is allowed and repeated links freshly recheck permissions instead of ordinary membership cache
+  ---
+  duration_ms: 0.4635
+  type: 'test'
+  ...
+# Subtest: failed membership lookup is private, retry-friendly and has no approval/game calls
+ok 15 - failed membership lookup is private, retry-friendly and has no approval/game calls
+  ---
+  duration_ms: 0.4269
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin_
+ok 16 - malformed/noncanonical start payload is consumed without gameplay: admin_
+  ---
+  duration_ms: 0.1782
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin_83vASNFZ4mrze8
+ok 17 - malformed/noncanonical start payload is consumed without gameplay: admin_83vASNFZ4mrze8
+  ---
+  duration_ms: 0.1413
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin_q83vASNFZ4mrze
+ok 18 - malformed/noncanonical start payload is consumed without gameplay: admin_q83vASNFZ4mrze
+  ---
+  duration_ms: 0.1367
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin_q83vASNFZ4mrze
+ok 19 - malformed/noncanonical start payload is consumed without gameplay: admin_q83vASNFZ4mrze
+  ---
+  duration_ms: 0.1275
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin:q83vASNFZ4mrze
+ok 20 - malformed/noncanonical start payload is consumed without gameplay: admin:q83vASNFZ4mrze
+  ---
+  duration_ms: 0.1185
+  type: 'test'
+  ...
+# Subtest: malformed/noncanonical start payload is consumed without gameplay: admin
+ok 21 - malformed/noncanonical start payload is consumed without gameplay: admin
+  ---
+  duration_ms: 0.1167
+  type: 'test'
+  ...
+# Subtest: malformed or obsolete approval button is consumed privately: adm:approve:
+ok 22 - malformed or obsolete approval button is consumed privately: adm:approve:
+  ---
+  duration_ms: 0.3962
+  type: 'test'
+  ...
+# Subtest: malformed or obsolete approval button is consumed privately: adm:old:q83vASNFZ4
+ok 23 - malformed or obsolete approval button is consumed privately: adm:old:q83vASNFZ4
+  ---
+  duration_ms: 0.2548
+  type: 'test'
+  ...
+# Subtest: malformed or obsolete approval button is consumed privately: adm:approve:q83vAS
+ok 24 - malformed or obsolete approval button is consumed privately: adm:approve:q83vAS
+  ---
+  duration_ms: 0.1782
+  type: 'test'
+  ...
+# Subtest: malformed or obsolete approval button is consumed privately: adm:approve:q83vAS
+ok 25 - malformed or obsolete approval button is consumed privately: adm:approve:q83vAS
+  ---
+  duration_ms: 0.1896
+  type: 'test'
+  ...
+# Subtest: approval forwards original Telegram account and exact challenge only, then removes private button
+ok 26 - approval forwards original Telegram account and exact challenge only, then removes private button
+  ---
+  duration_ms: 0.472
+  type: 'test'
+  ...
+# Subtest: Worker refusal or uncertain reply never shows approved and preserves retry without game entry 403
+ok 27 - Worker refusal or uncertain reply never shows approved and preserves retry without game entry 403
+  ---
+  duration_ms: 0.4835
+  type: 'test'
+  ...
+# Subtest: Worker refusal or uncertain reply never shows approved and preserves retry without game entry 409
+ok 28 - Worker refusal or uncertain reply never shows approved and preserves retry without game entry 409
+  ---
+  duration_ms: 0.2151
+  type: 'test'
+  ...
+# Subtest: Worker refusal or uncertain reply never shows approved and preserves retry without game entry 0
+ok 29 - Worker refusal or uncertain reply never shows approved and preserves retry without game entry 0
+  ---
+  duration_ms: 0.2008
+  type: 'test'
+  ...
+# Subtest: malformed success body cannot produce approved UI
+ok 30 - malformed success body cannot produce approved UI
+  ---
+  duration_ms: 0.5252
+  type: 'test'
+  ...
+# Subtest: lost approval response may retry same exact challenge after adapter restart without reward/game operation
+ok 31 - lost approval response may retry same exact challenge after adapter restart without reward/game operation
+  ---
+  duration_ms: 0.4908
+  type: 'test'
+  ...
+# Subtest: duplicate approval delivery is idempotent same challenge/account and only edits original private card
+ok 32 - duplicate approval delivery is idempotent same challenge/account and only edits original private card
+  ---
+  duration_ms: 0.2277
+  type: 'test'
+  ...
+# Subtest: expired Telegram callbacks do not attempt Worker authorization
+ok 33 - expired Telegram callbacks do not attempt Worker authorization
+  ---
+  duration_ms: 0.3001
+  type: 'test'
+  ...
+# Subtest: general fate events are private messages: sent to the account chat, no mention tag, acked once
+ok 34 - general fate events are private messages: sent to the account chat, no mention tag, acked once
+  ---
+  duration_ms: 6.1876
+  type: 'test'
+  ...
+# Subtest: a private notice for another account is dropped; 403 is reported as a permanent failure and key is released
+ok 35 - a private notice for another account is dropped; 403 is reported as a permanent failure and key is released
+  ---
+  duration_ms: 0.8221
+  type: 'test'
+  ...
+# Subtest: legacy group-queued personal events go private to the canonical owner without a mention
+ok 36 - legacy group-queued personal events go private to the canonical owner without a mention
+  ---
+  duration_ms: 0.3864
+  type: 'test'
+  ...
+# Subtest: legacy personal queue cannot choose a private recipient from its stale payload or group destination
+ok 37 - legacy personal queue cannot choose a private recipient from its stale payload or group destination
+  ---
+  duration_ms: 1.4469
+  type: 'test'
+  ...
+# Subtest: 403 for an old group-queued personal notice never falls back to a group photo or text
+ok 38 - 403 for an old group-queued personal notice never falls back to a group photo or text
+  ---
+  duration_ms: 0.6173
+  type: 'test'
+  ...
+# Subtest: cast notice tags the player in the group once, quiet at night
+ok 39 - cast notice tags the player in the group once, quiet at night
+  ---
+  duration_ms: 1.4337
+  type: 'test'
+  ...
+# Subtest: boss spawn card uses the exact boss art by spriteKey and adds the collection material line
+ok 40 - boss spawn card uses the exact boss art by spriteKey and adds the collection material line
+  ---
+  duration_ms: 19.3438
+  type: 'test'
+  ...
+# Subtest: a rejected boss art URL falls back to the old per-map image instead of failing the card
+ok 41 - a rejected boss art URL falls back to the old per-map image instead of failing the card
+  ---
+  duration_ms: 2.437
+  type: 'test'
+  ...
+# Subtest: boss loot text shows the map collection material only when present
+ok 42 - boss loot text shows the map collection material only when present
+  ---
+  duration_ms: 0.3804
+  type: 'test'
+  ...
+# Subtest: cloud factory retains all six slash commands
+ok 43 - cloud factory retains all six slash commands
+  ---
+  duration_ms: 2.1288
+  type: 'test'
+  ...
+# Subtest: JP completed life survives private Telegram join gate and resume callback
+ok 44 - JP completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 39.7487
+  type: 'test'
+  ...
+# Subtest: KR completed life survives private Telegram join gate and resume callback
+ok 45 - KR completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 26.311
+  type: 'test'
+  ...
+# Subtest: US completed life survives private Telegram join gate and resume callback
+ok 46 - US completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 32.9371
+  type: 'test'
+  ...
+# Subtest: CA completed life survives private Telegram join gate and resume callback
+ok 47 - CA completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 30.117
+  type: 'test'
+  ...
+# Subtest: GB completed life survives private Telegram join gate and resume callback
+ok 48 - GB completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 28.5325
+  type: 'test'
+  ...
+# Subtest: DE completed life survives private Telegram join gate and resume callback
+ok 49 - DE completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 27.6878
+  type: 'test'
+  ...
+# Subtest: FR completed life survives private Telegram join gate and resume callback
+ok 50 - FR completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 31.2291
+  type: 'test'
+  ...
+# Subtest: AU completed life survives private Telegram join gate and resume callback
+ok 51 - AU completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 22.706
+  type: 'test'
+  ...
+# Subtest: IN completed life survives private Telegram join gate and resume callback
+ok 52 - IN completed life survives private Telegram join gate and resume callback
+  ---
+  duration_ms: 25.6694
+  type: 'test'
+  ...
+# Subtest: f3 public prologue retains story across join gate, grants only verified member and keeps account ID
+ok 53 - f3 public prologue retains story across join gate, grants only verified member and keeps account ID
+  ---
+  duration_ms: 1.2541
+  type: 'test'
+  ...
+# Subtest: f5 public prologue retains story across join gate, grants only verified member and keeps account ID
+ok 54 - f5 public prologue retains story across join gate, grants only verified member and keeps account ID
+  ---
+  duration_ms: 36.964
+  type: 'test'
+  ...
+# Subtest: fate membership handoff cannot trigger from group or a different BOT suffix
+ok 55 - fate membership handoff cannot trigger from group or a different BOT suffix
+  ---
+  duration_ms: 1.0823
+  type: 'test'
+  ...
+# Subtest: formal f4 public story carries only its cosmetic code into the fate game screen
+ok 56 - formal f4 public story carries only its cosmetic code into the fate game screen
+  ---
+  duration_ms: 11.9506
+  type: 'test'
+  ...
+# Subtest: formal f5 public story carries only its cosmetic code into the fate game screen
+ok 57 - formal f5 public story carries only its cosmetic code into the fate game screen
+  ---
+  duration_ms: 9.681
+  type: 'test'
+  ...
+# Subtest: unsupported cosmetic code versions do not grant or enter a player account
+ok 58 - unsupported cosmetic code versions do not grant or enter a player account
+  ---
+  duration_ms: 0.8229
+  type: 'test'
+  ...
+# Subtest: private start deep link bag preserves requested MiniApp screen
+ok 59 - private start deep link bag preserves requested MiniApp screen
+  ---
+  duration_ms: 15.8763
+  type: 'test'
+  ...
+# Subtest: private start deep link shop preserves requested MiniApp screen
+ok 60 - private start deep link shop preserves requested MiniApp screen
+  ---
+  duration_ms: 1.4632
+  type: 'test'
+  ...
+# Subtest: private start deep link guardian preserves requested MiniApp screen
+ok 61 - private start deep link guardian preserves requested MiniApp screen
+  ---
+  duration_ms: 1.4108
+  type: 'test'
+  ...
+# Subtest: private start deep link boss preserves requested MiniApp screen
+ok 62 - private start deep link boss preserves requested MiniApp screen
+  ---
+  duration_ms: 0.8536
+  type: 'test'
+  ...
+# Subtest: private start deep link fate preserves requested MiniApp screen
+ok 63 - private start deep link fate preserves requested MiniApp screen
+  ---
+  duration_ms: 0.8374
+  type: 'test'
+  ...
+# Subtest: wrong group and wrong bot suffix do not execute RPG actions
+ok 64 - wrong group and wrong bot suffix do not execute RPG actions
+  ---
+  duration_ms: 0.3144
+  type: 'test'
+  ...
+# Subtest: membership lookup failures retain durable draft and never call gameplay
+ok 65 - membership lookup failures retain durable draft and never call gameplay
+  ---
+  duration_ms: 0.4866
+  type: 'test'
+  ...
+# Subtest: completed toggle receipt survives adapter restart and reuses exact result
+ok 66 - completed toggle receipt survives adapter restart and reuses exact result
+  ---
+  duration_ms: 3.8431
+  type: 'test'
+  ...
+# Subtest: unknown non-idempotent toggle is not dispatched again after lost acknowledgement
+ok 67 - unknown non-idempotent toggle is not dispatched again after lost acknowledgement
+  ---
+  duration_ms: 1.991
+  type: 'test'
+  ...
+# Subtest: known idempotent operation keeps exact original request ID after lost acknowledgement
+ok 68 - known idempotent operation keeps exact original request ID after lost acknowledgement
+  ---
+  duration_ms: 0.9979
+  type: 'test'
+  ...
+# Subtest: explicit recovery receipt finishes ambiguous operation without reexecuting business
+ok 69 - explicit recovery receipt finishes ambiguous operation without reexecuting business
+  ---
+  duration_ms: 1.1623
+  type: 'test'
+  ...
+# Subtest: same operation with changed body rejects before dispatch
+ok 70 - same operation with changed body rejects before dispatch
+  ---
+  duration_ms: 3.8266
+  type: 'test'
+  ...
+# Subtest: read routes are fresh and no operation receipt is stored
+ok 71 - read routes are fresh and no operation receipt is stored
+  ---
+  duration_ms: 0.3096
+  type: 'test'
+  ...
+# Subtest: boss 1 uses exact existing public portrait and keeps attack buttons
+ok 72 - boss 1 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 4.9885
+  type: 'test'
+  ...
+# Subtest: boss 2 uses exact existing public portrait and keeps attack buttons
+ok 73 - boss 2 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.4532
+  type: 'test'
+  ...
+# Subtest: boss 3 uses exact existing public portrait and keeps attack buttons
+ok 74 - boss 3 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2727
+  type: 'test'
+  ...
+# Subtest: boss 4 uses exact existing public portrait and keeps attack buttons
+ok 75 - boss 4 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2174
+  type: 'test'
+  ...
+# Subtest: boss 5 uses exact existing public portrait and keeps attack buttons
+ok 76 - boss 5 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2774
+  type: 'test'
+  ...
+# Subtest: boss 6 uses exact existing public portrait and keeps attack buttons
+ok 77 - boss 6 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2345
+  type: 'test'
+  ...
+# Subtest: boss 7 uses exact existing public portrait and keeps attack buttons
+ok 78 - boss 7 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2011
+  type: 'test'
+  ...
+# Subtest: boss 8 uses exact existing public portrait and keeps attack buttons
+ok 79 - boss 8 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.3197
+  type: 'test'
+  ...
+# Subtest: boss 9 uses exact existing public portrait and keeps attack buttons
+ok 80 - boss 9 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2925
+  type: 'test'
+  ...
+# Subtest: boss 10 uses exact existing public portrait and keeps attack buttons
+ok 81 - boss 10 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.2869
+  type: 'test'
+  ...
+# Subtest: boss 11 uses exact existing public portrait and keeps attack buttons
+ok 82 - boss 11 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.228
+  type: 'test'
+  ...
+# Subtest: boss 12 uses exact existing public portrait and keeps attack buttons
+ok 83 - boss 12 uses exact existing public portrait and keeps attack buttons
+  ---
+  duration_ms: 0.318
+  type: 'test'
+  ...
+# Subtest: unknown share photo send never falls back to duplicate text
+ok 84 - unknown share photo send never falls back to duplicate text
+  ---
+  duration_ms: 1.0457
+  type: 'test'
+  ...
+# Subtest: async party renderer sends complete bytes and persists dirty revision across restart
+ok 85 - async party renderer sends complete bytes and persists dirty revision across restart
+  ---
+  duration_ms: 1.3305
+  type: 'test'
+  ...
+# Subtest: unknown new party animation upload cannot create photo or text fallback
+ok 86 - unknown new party animation upload cannot create photo or text fallback
+  ---
+  duration_ms: 0.3482
+  type: 'test'
+  ...
+# Subtest: resolved PK retains original message ID and animation key
+ok 87 - resolved PK retains original message ID and animation key
+  ---
+  duration_ms: 0.8212
+  type: 'test'
+  ...
+# Subtest: latest blessed boss/weapon preserves gold-border art and both buttons after adapter restart
+ok 88 - latest blessed boss/weapon preserves gold-border art and both buttons after adapter restart
+  ---
+  duration_ms: 0.8434
+  type: 'test'
+  ...
+# Subtest: latest blessed boss/armor preserves gold-border art and both buttons after adapter restart
+ok 89 - latest blessed boss/armor preserves gold-border art and both buttons after adapter restart
+  ---
+  duration_ms: 0.5089
+  type: 'test'
+  ...
+# Subtest: latest blessed elite/weapon preserves gold-border art and both buttons after adapter restart
+ok 90 - latest blessed elite/weapon preserves gold-border art and both buttons after adapter restart
+  ---
+  duration_ms: 0.3947
+  type: 'test'
+  ...
+# Subtest: latest blessed elite/armor preserves gold-border art and both buttons after adapter restart
+ok 91 - latest blessed elite/armor preserves gold-border art and both buttons after adapter restart
+  ---
+  duration_ms: 0.3896
+  type: 'test'
+  ...
+# Subtest: guardian melee keeps actual ability photo and trade/draw buttons
+ok 92 - guardian melee keeps actual ability photo and trade/draw buttons
+  ---
+  duration_ms: 0.8199
+  type: 'test'
+  ...
+# Subtest: guardian ranged keeps actual ability photo and trade/draw buttons
+ok 93 - guardian ranged keeps actual ability photo and trade/draw buttons
+  ---
+  duration_ms: 0.2889
+  type: 'test'
+  ...
+# Subtest: guardian magic keeps actual ability photo and trade/draw buttons
+ok 94 - guardian magic keeps actual ability photo and trade/draw buttons
+  ---
+  duration_ms: 0.23
+  type: 'test'
+  ...
+# Subtest: guardian loot keeps actual ability photo and trade/draw buttons
+ok 95 - guardian loot keeps actual ability photo and trade/draw buttons
+  ---
+  duration_ms: 0.1961
+  type: 'test'
+  ...
+# Subtest: async save cannot silently acknowledge unsaved BOT state
+ok 96 - async save cannot silently acknowledge unsaved BOT state
+  ---
+  duration_ms: 0.3795
+  type: 'test'
+  ...
+# Subtest: fate sends canonical illustrated private event, live countdown and game links once across restart
+ok 97 - fate sends canonical illustrated private event, live countdown and game links once across restart
+  ---
+  duration_ms: 8.4021
+  type: 'test'
+  ...
+# Subtest: main MiniApp fate card opens fate directly
+ok 98 - main MiniApp fate card opens fate directly
+  ---
+  duration_ms: 0.7708
+  type: 'test'
+  ...
+# Subtest: v7 fourth through ninth decisions are actually delivered once; out-of-range notices are rejected
+ok 99 - v7 fourth through ninth decisions are actually delivered once; out-of-range notices are rejected
+  ---
+  duration_ms: 2.394
+  type: 'test'
+  ...
+# Subtest: answered, mismatched and expired fate events are acknowledged without sending
+ok 100 - answered, mismatched and expired fate events are acknowledged without sending
+  ---
+  duration_ms: 0.7063
+  type: 'test'
+  ...
+# Subtest: night pending event waits until six without being discarded; answered night event is discarded
+ok 101 - night pending event waits until six without being discarded; answered night event is discarded
+  ---
+  duration_ms: 0.6855
+  type: 'test'
+  ...
+# Subtest: unknown Telegram delivery persists uncertainty and never sends fallback or duplicate after restart
+ok 102 - unknown Telegram delivery persists uncertainty and never sends fallback or duplicate after restart
+  ---
+  duration_ms: 0.4654
+  type: 'test'
+  ...
+# Subtest: definite Telegram rejection leaves event retryable under outbox backoff
+ok 103 - definite Telegram rejection leaves event retryable under outbox backoff
+  ---
+  duration_ms: 0.4948
+  type: 'test'
+  ...
+# Subtest: delayed fate notification displays actual deadline remainder instead of restarting its 90-second choice
+ok 104 - delayed fate notification displays actual deadline remainder instead of restarting its 90-second choice
+  ---
+  duration_ms: 0.5513
+  type: 'test'
+  ...
+# Subtest: variable-lifespan fate notification preserves the actual age beyond ninety
+ok 105 - variable-lifespan fate notification preserves the actual age beyond ninety
+  ---
+  duration_ms: 0.496
+  type: 'test'
+  ...
+# Subtest: Taiwan event uses the canonical country art while retaining the live account and chosen-event link
+ok 106 - Taiwan event uses the canonical country art while retaining the live account and chosen-event link
+  ---
+  duration_ms: 0.3803
+  type: 'test'
+  ...
+# Subtest: shared fate revalidates live participants and sends one illustrated invitation with escaped genuine mentions
+ok 107 - shared fate revalidates live participants and sends one illustrated invitation with escaped genuine mentions
+  ---
+  duration_ms: 7.9801
+  type: 'test'
+  ...
+# Subtest: shared fate discards stale, mismatched, expired and non-authoritative participants without mentioning anyone
+ok 108 - shared fate discards stale, mismatched, expired and non-authoritative participants without mentioning anyone
+  ---
+  duration_ms: 2.8045
+  type: 'test'
+  ...
+# Subtest: shared fate night pause defers delivery, and main MiniApp link still opens fate
+ok 109 - shared fate night pause defers delivery, and main MiniApp link still opens fate
+  ---
+  duration_ms: 1.5026
+  type: 'test'
+  ...
+# Subtest: shared fate persists uncertain send before Telegram and never retries a lost response after restart
+ok 110 - shared fate persists uncertain send before Telegram and never retries a lost response after restart
+  ---
+  duration_ms: 0.9019
+  type: 'test'
+  ...
+# Subtest: shared fate only definite Telegram rejection releases the durable intent for leased backoff
+ok 111 - shared fate only definite Telegram rejection releases the durable intent for leased backoff
+  ---
+  duration_ms: 0.6943
+  type: 'test'
+  ...
+# Subtest: deadline cards precede older nonurgent cards and expensive housekeeping; fast drain preserves maintenance cadence
+ok 112 - deadline cards precede older nonurgent cards and expensive housekeeping; fast drain preserves maintenance cadence
+  ---
+  duration_ms: 0.9556
+  type: 'test'
+  ...
+# Subtest: red capsule notice has photo caption and exactly like/draw buttons
+ok 113 - red capsule notice has photo caption and exactly like/draw buttons
+  ---
+  duration_ms: 22.0057
+  type: 'test'
+  ...
+# Subtest: group outbox sends the real equipment photo once with a usable gacha link
+ok 114 - group outbox sends the real equipment photo once with a usable gacha link
+  ---
+  duration_ms: 5.3289
+  type: 'test'
+  ...
+# Subtest: liking a gacha announcement keeps its draw link and updates the count
+ok 115 - liking a gacha announcement keeps its draw link and updates the count
+  ---
+  duration_ms: 1.6865
+  type: 'test'
+  ...
+# Subtest: a new battle with a lower revision edits the existing card and stale high-revision old battle cannot overwrite it
+ok 116 - a new battle with a lower revision edits the existing card and stale high-revision old battle cannot overwrite it
+  ---
+  duration_ms: 2.4498
+  type: 'test'
+  ...
+# Subtest: an in-flight old edit queues the next battle under the same card and flush after restart uses the new callbacks
+ok 117 - an in-flight old edit queues the next battle under the same card and flush after restart uses the new callbacks
+  ---
+  duration_ms: 1.0469
+  type: 'test'
+  ...
+# Subtest: a deferred animation edit must not replace a queued newer battle
+ok 118 - a deferred animation edit must not replace a queued newer battle
+  ---
+  duration_ms: 0.8276
+  type: 'test'
+  ...
+# Subtest: restoring only the server message address edits the old message and duplicate persisted dirty work is drained
+ok 119 - restoring only the server message address edits the old message and duplicate persisted dirty work is drained
+  ---
+  duration_ms: 0.5471
+  type: 'test'
+  ...
+# Subtest: a missing or uncertain Telegram edit does not repost a second group card
+ok 120 - a missing or uncertain Telegram edit does not repost a second group card
+  ---
+  duration_ms: 1.455
+  type: 'test'
+  ...
+# Subtest: group caption exposes duties, progress and real timing without obsolete default-defense text
+ok 121 - group caption exposes duties, progress and real timing without obsolete default-defense text
+  ---
+  duration_ms: 1.3716
+  type: 'test'
+  ...
+# Subtest: group skill menu has direct role callbacks and forwards server-validated round and request id
+ok 122 - group skill menu has direct role callbacks and forwards server-validated round and request id
+  ---
+  duration_ms: 1.2966
+  type: 'test'
+  ...
+# Subtest: blessed scroll group notification: elite
+ok 123 - blessed scroll group notification: elite
+  ---
+  duration_ms: 6.009
+  type: 'test'
+  ...
+# Subtest: blessed scroll group notification: boss
+ok 124 - blessed scroll group notification: boss
+  ---
+  duration_ms: 0.4588
+  type: 'test'
+  ...
+# Subtest: retired boss materials never appear as undefined and essence matches map tier
+ok 125 - retired boss materials never appear as undefined and essence matches map tier
+  ---
+  duration_ms: 0.7733
+  type: 'test'
+  ...
+# Subtest: early advancement proof remains visible only on its actual boss
+ok 126 - early advancement proof remains visible only on its actual boss
+  ---
+  duration_ms: 0.2471
+  type: 'test'
+  ...
+# Subtest: RPG: background enhancement completion is sent privately and only then acknowledged
+ok 127 - RPG: background enhancement completion is sent privately and only then acknowledged
+  ---
+  duration_ms: 25.1229
+  type: 'test'
+  ...
+# Subtest: RPG: failed notification reports its leased item for backoff without acknowledging delivery
+ok 128 - RPG: failed notification reports its leased item for backoff without acknowledging delivery
+  ---
+  duration_ms: 0.8985
+  type: 'test'
+  ...
+# Subtest: RPG: alternate-character trade notification names the other player
+ok 129 - RPG: alternate-character trade notification names the other player
+  ---
+  duration_ms: 0.9879
+  type: 'test'
+  ...
+# Subtest: RPG: single share remains queued after Telegram failure and is delivered on retry
+ok 130 - RPG: single share remains queued after Telegram failure and is delivered on retry
+  ---
+  duration_ms: 1.4843
+  type: 'test'
+  ...
+# Subtest: RPG: failed send preserves every share until its individual card is delivered
+ok 131 - RPG: failed send preserves every share until its individual card is delivered
+  ---
+  duration_ms: 1.6977
+  type: 'test'
+  ...
+# Subtest: RPG: failed share-card edit stays dirty and retries successfully
+ok 132 - RPG: failed share-card edit stays dirty and retries successfully
+  ---
+  duration_ms: 1.1617
+  type: 'test'
+  ...
+# Subtest: RPG: duplicated share outbox does not enqueue the same item twice
+ok 133 - RPG: duplicated share outbox does not enqueue the same item twice
+  ---
+  duration_ms: 0.5227
+  type: 'test'
+  ...
+# Subtest: daily journal posts one illustrated group card and registers its actual message ID
+ok 134 - daily journal posts one illustrated group card and registers its actual message ID
+  ---
+  duration_ms: 6.4179
+  type: 'test'
+  ...
+# Subtest: already registered card is not posted again after restart
+ok 135 - already registered card is not posted again after restart
+  ---
+  duration_ms: 0.6733
+  type: 'test'
+  ...
+# Subtest: successful TG send with failed DB registration retries saved ID without duplicate card
+ok 136 - successful TG send with failed DB registration retries saved ID without duplicate card
+  ---
+  duration_ms: 1.3453
+  type: 'test'
+  ...
+# Subtest: TG send failure is reported for backoff and no message is registered
+ok 137 - TG send failure is reported for backoff and no message is registered
+  ---
+  duration_ms: 0.7415
+  type: 'test'
+  ...
+# Subtest: current group callback binds user, chat and message, responds privately in popup
+ok 138 - current group callback binds user, chat and message, responds privately in popup
+  ---
+  duration_ms: 1.8987
+  type: 'test'
+  ...
+# Subtest: old-day or private callbacks cannot report group checkin
+ok 139 - old-day or private callbacks cannot report group checkin
+  ---
+  duration_ms: 1.3815
+  type: 'test'
+  ...
+# Subtest: showcase caption and buttons explain display-only, with no trade invitation
+ok 140 - showcase caption and buttons explain display-only, with no trade invitation
+  ---
+  duration_ms: 23.5544
+  type: 'test'
+  ...
+# Subtest: ordinary trade cards retain their existing trade invitation
+ok 141 - ordinary trade cards retain their existing trade invitation
+  ---
+  duration_ms: 0.2617
+  type: 'test'
+  ...
+# Subtest: long expedition completion privately sends original art, rewards and a direct battle-screen button only once
+ok 142 - long expedition completion privately sends original art, rewards and a direct battle-screen button only once
+  ---
+  duration_ms: 27.2858
+  type: 'test'
+  ...
+# Subtest: group or invalid expedition destinations are never broadcast
+ok 143 - group or invalid expedition destinations are never broadcast
+  ---
+  duration_ms: 0.5728
+  type: 'test'
+  ...
+# Subtest: private 403 and uncertain sends never fall back to the group or duplicate an uncertain photo
+ok 144 - private 403 and uncertain sends never fall back to the group or duplicate an uncertain photo
+  ---
+  duration_ms: 1.3453
+  type: 'test'
+  ...
+# Subtest: a definitely rejected image falls back to readable private text with the same button
+ok 145 - a definitely rejected image falls back to readable private text with the same button
+  ---
+  duration_ms: 1.7443
+  type: 'test'
+  ...
+# Subtest: recruitment sends original art to the group with the exact authenticated room deep link; restart/retry does not repost
+ok 146 - recruitment sends original art to the group with the exact authenticated room deep link; restart/retry does not repost
+  ---
+  duration_ms: 7.1805
+  type: 'test'
+  ...
+# Subtest: joins, readiness and closure edit one group card rather than sending new posts
+ok 147 - joins, readiness and closure edit one group card rather than sending new posts
+  ---
+  duration_ms: 1.2785
+  type: 'test'
+  ...
+# Subtest: expired, closed, invalid and private-target recruitment rows never broadcast a fresh invite
+ok 148 - expired, closed, invalid and private-target recruitment rows never broadcast a fresh invite
+  ---
+  duration_ms: 2.7642
+  type: 'test'
+  ...
+# Subtest: definitely rejected images fall back to group text retaining the room link
+ok 149 - definitely rejected images fall back to group text retaining the room link
+  ---
+  duration_ms: 1.3019
+  type: 'test'
+  ...
+# Subtest: uncertain sends cannot duplicate across persisted restarts and are not acknowledged as delivered
+ok 150 - uncertain sends cannot duplicate across persisted restarts and are not acknowledged as delivered
+  ---
+  duration_ms: 0.8199
+  type: 'test'
+  ...
+# Subtest: existing legacy URL button is repaired in place at the same room revision, and not re-edited on subsequent maintenance
+ok 151 - existing legacy URL button is repaired in place at the same room revision, and not re-edited on subsequent maintenance
+  ---
+  duration_ms: 0.6445
+  type: 'test'
+  ...
+# Subtest: running cards use supported private start link when Main Mini App is disabled
+ok 152 - running cards use supported private start link when Main Mini App is disabled
+  ---
+  duration_ms: 0.69
+  type: 'test'
+  ...
+# Subtest: private ring start retains exact target room in a normal authenticated web_app button without joining in the BOT
+ok 153 - private ring start retains exact target room in a normal authenticated web_app button without joining in the BOT
+  ---
+  duration_ms: 2.5502
+  type: 'test'
+  ...
+# Subtest: foreign chat and nonmember callbacks never call the game admission API
+ok 154 - foreign chat and nonmember callbacks never call the game admission API
+  ---
+  duration_ms: 2.1132
+  type: 'test'
+  ...
+# Subtest: BOT class choices use authoritative gate and keep thief closed without metadata
+ok 155 - BOT class choices use authoritative gate and keep thief closed without metadata
+  ---
+  duration_ms: 1.8672
+  type: 'test'
+  ...
+# Subtest: BOT naming menu hides unreleased thief and displays it only after server approval
+ok 156 - BOT naming menu hides unreleased thief and displays it only after server approval
+  ---
+  duration_ms: 4.3388
+  type: 'test'
+  ...
+# Subtest: stale thief buttons are rejected before create at class, gender and final confirmation steps
+ok 157 - stale thief buttons are rejected before create at class, gender and final confirmation steps
+  ---
+  duration_ms: 4.2325
+  type: 'test'
+  ...
+# Subtest: metadata failure cannot open thief, while approved thief reaches gender selection
+ok 158 - metadata failure cannot open thief, while approved thief reaches gender selection
+  ---
+  duration_ms: 0.9158
+  type: 'test'
+  ...
+# Subtest: BOT media refuses missing thief identity instead of drawing a sword hero
+ok 159 - BOT media refuses missing thief identity instead of drawing a sword hero
+  ---
+  duration_ms: 0.9701
+  type: 'test'
+  ...
+# Subtest: creation metadata remains a fresh read when the same Telegram update is retried
+ok 160 - creation metadata remains a fresh read when the same Telegram update is retried
+  ---
+  duration_ms: 0.6791
+  type: 'test'
+  ...
+# Cloud bot cycle failed
+# (node:33732) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: real coordinator deduplicates webhook updates and keeps an earlier wake scheduled during draining
+ok 161 - real coordinator deduplicates webhook updates and keeps an earlier wake scheduled during draining
+  ---
+  duration_ms: 35.5096
+  type: 'test'
+  ...
+# Subtest: real coordinator schedules one-second backlog work and returns to ten-second idle cadence
+ok 162 - real coordinator schedules one-second backlog work and returns to ten-second idle cadence
+  ---
+  duration_ms: 2.2868
+  type: 'test'
+  ...
+# Subtest: restart retains unknown updates, authenticated inspection exposes no payloads, and manual closure is atomic
+ok 163 - restart retains unknown updates, authenticated inspection exposes no payloads, and manual closure is atomic
+  ---
+  duration_ms: 8.1543
+  type: 'test'
+  ...
+# Subtest: outbox precedes inbox callbacks and full batches drain promptly without starving handled updates
+ok 164 - outbox precedes inbox callbacks and full batches drain promptly without starving handled updates
+  ---
+  duration_ms: 2.8582
+  type: 'test'
+  ...
+# Subtest: idle coordinator honors bounded media wake without creating per-second steady polling
+ok 165 - idle coordinator honors bounded media wake without creating per-second steady polling
+  ---
+  duration_ms: 1.2486
+  type: 'test'
+  ...
+# Subtest: outbox failure cannot starve player inbox commands or leave a fast retry loop
+ok 166 - outbox failure cannot starve player inbox commands or leave a fast retry loop
+  ---
+  duration_ms: 2.4848
+  type: 'test'
+  ...
+# Subtest: initialization preserves both verified receipts on metadata-only history without changing main or checkout
+ok 167 - initialization preserves both verified receipts on metadata-only history without changing main or checkout
+  ---
+  duration_ms: 5230.0927
+  type: 'test'
+  ...
+# Subtest: append succeeds with main protected and retains the other service, lineage and exact source identity
+ok 168 - append succeeds with main protected and retains the other service, lineage and exact source identity
+  ---
+  duration_ms: 6414.6937
+  type: 'test'
+  ...
+# Subtest: concurrent other-service update is preserved; same-service replacement is refused; uncertain retry is idempotent
+ok 169 - concurrent other-service update is preserved; same-service replacement is refused; uncertain retry is idempotent
+  ---
+  duration_ms: 9561.5299
+  type: 'test'
+  ...
+# Subtest: failed receipt publication leaves source intact and can recover without another deployment
+ok 170 - failed receipt publication leaves source intact and can recover without another deployment
+  ---
+  duration_ms: 11586.9428
+  type: 'test'
+  ...
+# Subtest: invalid reports and receipt sources outside main are rejected before publication
+ok 171 - invalid reports and receipt sources outside main are rejected before publication
+  ---
+  duration_ms: 4198.2423
+  type: 'test'
+  ...
+# Subtest: a cold Telegram adapter loads a valid country prologue before the join gate
+ok 172 - a cold Telegram adapter loads a valid country prologue before the join gate
+  ---
+  duration_ms: 40.3901
+  type: 'test'
+  ...
+# Subtest: membership entry rejects unauthenticated calls before any coordinator or Telegram access
+ok 173 - membership entry rejects unauthenticated calls before any coordinator or Telegram access
+  ---
+  duration_ms: 28.5611
+  type: 'test'
+  ...
+# Subtest: membership is bounded to four unique canonical accounts and a configured fixed group
+ok 174 - membership is bounded to four unique canonical accounts and a configured fixed group
+  ---
+  duration_ms: 6.3692
+  type: 'test'
+  ...
+# Subtest: membership uses no retry, fixed group and bounded timeout; restricted requires explicit current membership
+ok 175 - membership uses no retry, fixed group and bounded timeout; restricted requires explicit current membership
+  ---
+  duration_ms: 4.9675
+  type: 'test'
+  ...
+# Subtest: unknown Telegram errors fail closed independently without leaking details
+ok 176 - unknown Telegram errors fail closed independently without leaking details
+  ---
+  duration_ms: 0.6496
+  type: 'test'
+  ...
+# Subtest: localized JPEG contains the same three life-status lines and discussion question as browser sharing
+ok 177 - localized JPEG contains the same three life-status lines and discussion question as browser sharing
+  ---
+  duration_ms: 82.0921
+  type: 'test'
+  ...
+# Subtest: JP real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 178 - JP real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2660.455
+  type: 'test'
+  ...
+# Subtest: KR real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 179 - KR real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2519.1117
+  type: 'test'
+  ...
+# Subtest: US real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 180 - US real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2175.6892
+  type: 'test'
+  ...
+# Subtest: CA real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 181 - CA real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2361.0444
+  type: 'test'
+  ...
+# Subtest: GB real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 182 - GB real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2248.1181
+  type: 'test'
+  ...
+# Subtest: DE real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 183 - DE real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2273.1196
+  type: 'test'
+  ...
+# Subtest: FR real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 184 - FR real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2208.3132
+  type: 'test'
+  ...
+# Subtest: AU real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 185 - AU real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2362.7224
+  type: 'test'
+  ...
+# Subtest: IN real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+ok 186 - IN real illustrated JPEG and prepared Telegram share preserve country, sign and privacy
+  ---
+  duration_ms: 2320.7047
+  type: 'test'
+  ...
+# Subtest: prepared TG photo uses the HMAC account, no chat-send API and no private birth data
+ok 187 - prepared TG photo uses the HMAC account, no chat-send API and no private birth data
+  ---
+  duration_ms: 88.1095
+  type: 'test'
+  ...
+# Subtest: preparation rejects forged/stale/future HMAC, wrong origin, invalid story/format without Telegram calls
+ok 188 - preparation rejects forged/stale/future HMAC, wrong origin, invalid story/format without Telegram calls
+  ---
+  duration_ms: 20.4711
+  type: 'test'
+  ...
+# Subtest: TG errors and network failures are sanitized; only prepare is ever called
+ok 189 - TG errors and network failures are sanitized; only prepare is ever called
+  ---
+  duration_ms: 87.4432
+  type: 'test'
+  ...
+# Subtest: JPEG GET/HEAD/OPTIONS expose download headers, deterministic cache and strict formats
+ok 190 - JPEG GET/HEAD/OPTIONS expose download headers, deterministic cache and strict formats
+  ---
+  duration_ms: 50.1955
+  type: 'test'
+  ...
+# Subtest: actual shared WASM renderer produces decodable 1080px JPEG for both formats under Telegram limit
+ok 191 - actual shared WASM renderer produces decodable 1080px JPEG for both formats under Telegram limit
+  ---
+  duration_ms: 7566.5647
+  type: 'test'
+  ...
+# Subtest: TG card metadata retains each public zodiac and incarnation while hidden code remains anonymous
+ok 192 - TG card metadata retains each public zodiac and incarnation while hidden code remains anonymous
+  ---
+  duration_ms: 259.2402
+  type: 'test'
+  ...
+# Subtest: Taiwan JPEG asset path is explicitly whitelisted and shares a cache revision with browser native downloads
+ok 193 - Taiwan JPEG asset path is explicitly whitelisted and shares a cache revision with browser native downloads
+  ---
+  duration_ms: 0.9423
+  type: 'test'
+  ...
+# Subtest: Taiwan JPEG SVG paints the same two fitted identity rows while legacy identities stay on one line
+ok 194 - Taiwan JPEG SVG paints the same two fitted identity rows while legacy identities stay on one line
+  ---
+  duration_ms: 41.6922
+  type: 'test'
+  ...
+# Subtest: v5 variable-life JPEG routes and native preparation use the same public codec without exposing player data
+ok 195 - v5 variable-life JPEG routes and native preparation use the same public codec without exposing player data
+  ---
+  duration_ms: 44.5175
+  type: 'test'
+  ...
+# Subtest: v7 variable-length life shares its gender, zodiac and actual ending through JPEG/native preparation without private data
+ok 196 - v7 variable-length life shares its gender, zodiac and actual ending through JPEG/native preparation without private data
+  ---
+  duration_ms: 155.9795
+  type: 'test'
+  ...
+# Subtest: v8 Taiwan code uses the local JPEG route and prepared TG image without exposing private birth information
+ok 197 - v8 Taiwan code uses the local JPEG route and prepared TG image without exposing private birth information
+  ---
+  duration_ms: 39.0318
+  type: 'test'
+  ...
+# (node:49568) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: burst drains sequentially in ID order within the count bound, then becomes idle
+ok 198 - burst drains sequentially in ID order within the count bound, then becomes idle
+  ---
+  duration_ms: 10.2837
+  type: 'test'
+  ...
+# Subtest: time budget yields after slow work without dropping queued updates
+ok 199 - time budget yields after slow work without dropping queued updates
+  ---
+  duration_ms: 0.9995
+  type: 'test'
+  ...
+# Subtest: ambiguous update is never automatically replayed; later queued updates still progress
+ok 200 - ambiguous update is never automatically replayed; later queued updates still progress
+  ---
+  duration_ms: 1.4618
+  type: 'test'
+  ...
+# Subtest: inspection reconciles known game receipts without exposing bodies or retrying Telegram sends
+ok 201 - inspection reconciles known game receipts without exposing bodies or retrying Telegram sends
+  ---
+  duration_ms: 1.4521
+  type: 'test'
+  ...
+# Subtest: read-only verification retries only bounded transport failures, never definite errors
+ok 202 - read-only verification retries only bounded transport failures, never definite errors
+  ---
+  duration_ms: 1.8854
+  type: 'test'
+  ...
+# Subtest: verification excludes Cloudflare metadata and ignored history but retains real runtime assets
+ok 203 - verification excludes Cloudflare metadata and ignored history but retains real runtime assets
+  ---
+  duration_ms: 0.5295
+  type: 'test'
+  ...
+# Subtest: an unrecorded version, binding or schedule blocks publication instead of overwriting another window
+ok 204 - an unrecorded version, binding or schedule blocks publication instead of overwriting another window
+  ---
+  duration_ms: 4.175
+  type: 'test'
+  ...
+# Subtest: one shared release lock excludes concurrent services/checkouts and releases on success or failure
+ok 205 - one shared release lock excludes concurrent services/checkouts and releases on success or failure
+  ---
+  duration_ms: 11.6839
+  type: 'test'
+  ...
+1..205
+# tests 205
+# suites 0
+# pass 205
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 38206.6564

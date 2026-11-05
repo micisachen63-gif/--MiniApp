@@ -23,7 +23,8 @@ import { initializeRealmIdentity, resolveRealm, scopeEnvForRealm } from '../src/
 import { CATALOG } from '../test/realm-test-helpers.js';
 
 const argv = process.argv.slice(2);
-if (argv.some(value => !/^--(?:port=\d+|preview-origin=http:\/\/127\.0\.0\.1:\d+)$/.test(value)) || argv.length > 2 || new Set(argv.map(v=>v.split('=')[0])).size!==argv.length) throw Error('Use --port=9642 [--preview-origin=http://127.0.0.1:9593]');
+if (argv.some(value => !/^--(?:port=\d+|preview-origin=http:\/\/127\.0\.0\.1:\d+|vfx-fixture=long-targets)$/.test(value)) || argv.length > 3 || new Set(argv.map(v=>v.split('=')[0])).size!==argv.length) throw Error('Use --port=9642 [--preview-origin=http://127.0.0.1:9593] [--vfx-fixture=long-targets]');
+const vfxFixture = argv.includes('--vfx-fixture=long-targets');
 const port = Number(argv.find(v=>v.startsWith('--port='))?.split('=')[1] || 9642);
 const previewOrigin=argv.find(v=>v.startsWith('--preview-origin='))?.slice('--preview-origin='.length)||'http://127.0.0.1:9593';
 const previewPort=Number(new URL(previewOrigin).port);if(!Number.isInteger(previewPort)||previewPort<1024||previewPort>65535)throw Error('Invalid preview origin');
@@ -32,6 +33,8 @@ if (!Number.isSafeInteger(port) || port < 1024 || port > 65535) throw Error('Inv
 globalThis.fetch = async () => { throw Error('Outbound requests disabled in isolated Atlas preview'); };
 const env = {
   DB: freshDb(), DB_SEASON: freshDb(), REALM_CATALOG_JSON: JSON.stringify(CATALOG),
+  // Explicit local QA only: keep real targets alive long enough to inspect release/impact.
+  ...(vfxFixture ? { ATLAS_PROFILE_JSON: JSON.stringify({ id: 'local-vfx-long-targets', enemyHpMultiplier: 20 }) } : {}),
   CURRENT_SEASON_ID: 'season_2026_01', ENVIRONMENT: 'development',
   ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true', EQUIPMENT_RECOVERY_ENABLED:'true',
 };
@@ -76,7 +79,7 @@ const starRingQaSeed=starRingQa?await seedStarRingQa(env,permanent,now):null;
 const starRingQaClock=starRingQa?createStarRingQaController(env,permanent,starRingQaSeed,now):null;
 const qaClock=towerQaClock||bossQaClock||starRingQaClock;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
-const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
+const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.mjs': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
 let sweeping=false;
 const sweepTimer=(towerQa||bossQa||starRingQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
 sweepTimer?.unref();
@@ -101,7 +104,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,towerQa,bossQa,starRingQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
+      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,vfxFixture:vfxFixture?'long-targets':null,skillCareerQa,partyQa,towerQa,bossQa,starRingQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
       return;
     }
     if (partyQa && url.pathname === '/__preview/party-qa/state') {

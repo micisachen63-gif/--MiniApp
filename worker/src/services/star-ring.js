@@ -27,7 +27,7 @@ const projections=new Map();
 function projected(p,index,beats,now){
  const key=`${p.id}:${p.rev}:${index}:${beats}`,hit=projections.get(key);
  if(hit&&now-hit.at>=0&&now-hit.at<120000)return hit.battle;
- const battle=Engine.simulateStage(p.state,index,beats);
+ const battle=Engine.simulateStage(p.state,index,beats,{vfxSource:'deterministic-projection'});
  for(const[k,v]of projections)if(now-v.at>=120000||now<v.at)projections.delete(k);
  projections.set(key,{at:now,battle});while(projections.size>48)projections.delete(projections.keys().next().value);
  return battle;
@@ -150,7 +150,7 @@ async function advance(env,id,now){
   // Grade only future checkpoints with the current policy; stored battles/receipts stay immutable.
   if(due>s.results.length)s.guardRatingVersion=2;
   for(let i=s.results.length;i<due;i++){
-   const result=Engine.simulateStage(s,i);s.results.push(result);fresh.push({index:i,result});
+   const result=Engine.simulateStage(s,i,undefined,{vfxSource:'committed-combat'});s.results.push(result);fresh.push({index:i,result});
    s.log.unshift({at:s.startedAt+(i+1)*Engine.STAGE_MS,text:`${Engine.STAGES[i].name}完成，評價 ${result.grade}；${i===5?'十二小時遠征結束，戰利品已結算':result.defeated?Engine.usesPools(s)?`已擊退 ${result.waves} 波魔物，穿越兩片邊境`:'已擊退'+Engine.STAGES[i].enemyName:'整頓補給後繼續前行'}。`});
    if(s.nextTactic){s.tactic=s.nextTactic;delete s.nextTactic;}s.stageTactics[i+1]=s.tactic;
   }
@@ -187,7 +187,7 @@ export async function view(env,id,tg,now){await advance(env,id,now);return readV
 // SELECT-only counterpart. Its simulation is a preview, never a checkpoint or reward.
 // New scoped readers do not share the old isolate-wide cache across realm databases.
 export async function readView(env,id,tg,now,{cache=false}={}){const p=await load(env.DB,id),s=p.state,index=Math.min(5,s.results.length),isRunning=p.status==='running',beats=isRunning?Math.floor(Math.max(0,now-s.startedAt-index*Engine.STAGE_MS)/Engine.BEAT_MS):0;
- const b=isRunning?(cache?projected(p,index,beats,now):Engine.simulateStage(p.state,index,beats)):s.results.at(-1)||null;
+ const b=isRunning?(cache?projected(p,index,beats,now):Engine.simulateStage(p.state,index,beats,{vfxSource:'deterministic-projection'})):s.results.at(-1)||null;
  const hourIndex=b?.hourIndex??0,scene=s.startedAt?Engine.sceneFor(s,hourIndex):{...Engine.SCENES[hourIndex],startsAt:null,endsAt:null};
  const members=p.members.map(m=>{const a=b?.actors.find(a=>a.id===m.char_id)||s.actors.find(a=>a.id===m.char_id);return {id:m.char_id,name:a?.name||m.name,base:a?.base||m.base_class,classPath:a?.path||m.class_path,gender:a?.gender||m.gender,level:a?.level||m.level,roles:a?.roles||Engine.rolesOf(m),ready:!!m.ready,left:m.left_at!=null,hp:a?.hp||0,maxHp:a?.maxHp||0,mp:a?.mp||0,maxMp:a?.maxMp||0,guardian:a?.guardian||null,aura:equippedAura(m),contribution:b?.contribution[m.char_id]||null};});
  // Next species is selected with the same seeded encounter stream as replay.

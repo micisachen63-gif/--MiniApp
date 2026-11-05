@@ -1,0 +1,10 @@
+# Preserve immutable verification bytes across Windows and other checkouts.
+evidence/** -text -diff
+validation/** -text -diff
+gameplay-screenshots/** -text -diff
+archive-index.json -text
+combat-contact-sheet-sources.json -text
+final-validation.json -text
+restore-evidence.cjs -text
+ARCHIVE.txt -text
+source-line-endings.json -text

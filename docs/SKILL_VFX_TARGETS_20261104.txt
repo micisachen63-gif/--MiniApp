@@ -1,0 +1,86 @@
+星旅日誌｜技能特效多目標與接觸時序續作
+批次：skill-vfx-targets-20261104
+日期：2026-11-04（Asia/Taipei）
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104
+分支：codex/skill-vfx-20261104
+起點：ccedf3545cbef4bdc66b949aad077ef6d2ea44fa
+最終提交、服務與排程：D:/StarJournal/handoff/skill-vfx/STATUS.json 及 LATEST.md
+
+一、此次交付
+延續「技能的部分繼續」要求，在既有196個技能身份、28個視覺家族及六張透明材質上，改善多目標動畫完整度和彈體接觸節奏。本輪為呈現層修改，沒有新增遊戲技能或更動戰鬥結算。前批精美按鈕與特效素材保留。
+
+1. 真實 targets 陣列為呈現依據，包括空陣列。只有完全同座標才去重，彼此接近但不同的目標仍保留。實戰不再依技能上限補出不存在的敵人。只有明確 showcaseTargets 且未提供實際 targets 時，才可建立展示靶標。
+2. 連射逐一涵蓋所有實際目標；第一個接觸時點為動畫正規化時間0.57，末目標不晚於0.73。目標數不再被舊三靶展示形狀截斷。
+3. 雷鏈施法者不占敵方目標名額；五個真目標都會出現接觸效果。後段接續前段抵達時間，首目標0.40、末目標不晚於0.64。
+4. impact-only及減少動態模式也保留每個實際目標的接觸效果，先保留核心命中，再配置裝飾粒子。
+5. 狙擊、火球、貫穿在0.22釋放，彈體中心於0.57抵達指定接觸點，與既有recipe impactAt對齊；貫穿可繼續前進至0.65。
+6. 治療、護盾、增益、陷阱的原落點與非傷害召喚語義保留。其他完整模式家族維持既有AoE設計，本輪沒有宣稱逐一重校全部家族的每個藝術接觸時點。
+7. 維持每幀低品質48／高品質94個sprite及64個geometry的預算。adapter支援上限32只是輸入邊界測試；目前Atlas真實遊戲目標上限為5，不能宣稱32敵實戰。
+
+二、技能與天賦範圍
+124原生＋60特殊＋12 Atlas＝196個已實作技能身份，28個視覺家族。
+6個support、120個可配置天賦與4個origin仍按原設計修改技能／數值，不另捏造攻擊動畫身份。
+16個規劃覺醒尚未有遊戲機制，不納入已完成數字。
+目前原生弓手A2資料上限4、A22/A221/A222上限5，但舊戰鬥呼叫通常仍提供一個enemyId；工坊4／5靶與呈現契約驗證不能冒充已觀察到原生四／五敵實戰。
+這批以真正Atlas五敵遭遇另補真提交收據及原生Canvas播放證據。
+
+三、工坊
+http://127.0.0.1:9664/preview-skill-vfx.html
+新增「展示靶標」1／3／5切換，四方向與320／390／1280尺寸均保持靶點、標籤及畫面邊界正確。
+治療／護盾等本地效果顯示一個受益者並停用不適用的靶標選項；切回攻擊仍保留使用者選擇。
+新增setTargetCount API及inspect中的targetCount、effectiveTargetCount與layout，供可重現驗收使用。
+控制項維持44px操作區，手機檢視資訊以兩欄排列。
+整合戰鬥預覽：http://127.0.0.1:9667/；9666為隔離記憶體API，long-targets fixture，productionAccess=false。
+以上URL要在專案電腦開啟；既有其他工作線服務沒有被停止或替換。
+
+四、本版驗收與證據邊界
+1. 最終引擎既有23/23測試與新增目標／時序20/20測試通過，同一引擎SHA。
+2. 完整工坊196身份×四方向＝784項；另12組階段檢查、16項手機檢查與14項控制檢查通過。零頁面、HTTP與console錯誤。
+3. 新多目標工坊矩陣48/48與12項操作通過：320／390／1280、連射／雷鏈、低／高品質、1／5靶、右／上方向；包含實際Canvas像素、靶點與操作狀態。
+4. 184個舊技能的真提交事件受控瀏覽器重播全部通過。
+5. 真API／UI測試：舊模式16情境與Atlas16情境，共32情境通過；這次觀察到23個不同技能身份。前版的24是前版收據統計，不沿用為本版數字。
+6. coverage四層resolver／committed-event／presentation／browser均為196/196。其中184受控重播與23個本次真API觀察身份是不同證據維度，不可相加成207，也不可宣稱196在所有模式逐一實戰。
+7. 獨立五敵證據：合法Lv45 mage A、既有pillar_survey ambush、seed2、mage_chain＋wide、正常起始裝備。使用原服務configure/start/settle及新SQLite資料庫，沒有改敵人HP。首份指定cast具有五個唯一targetIds和五筆正傷害命中；CAS提交前不發布、已提交狀態、observer on/off收益／活動／steps／RNG等價皆確認。
+8. 五敵Canvas補驗：保留原始eventId、revision、context、source及五個命中，僅adapter admission clock對準原event.atMs，將五個ID映射至工坊五點。真createCombatVfxAdapter→createVfxPlayer→requestAnimationFrame→原生Canvas，桌機1280×900與手機viewport390×844均五點命中、實際描邊及非透明像素通過（69／77個RAF render samples）。重複收據與clear後重送均拒絕，無新增draw；最後destroy。這是「真SQLite收據→受控admission／幾何→真Canvas RAF重播」，不是完整五敵MiniApp UI實戰，也不是實體手機GPU測試。
+9. 153個受保護來源（backend、技能目錄、actor profiles與按鈕相關檔）與起點相同。驗收wrapper記錄各自輸入前後SHA穩定。
+10. coverage build及--check --require-legacy-completion通過。本輪沒有重新執行整套Worker或BOT；前批完整測試與失敗重驗只保留原版本歸屬。
+
+五、迭代中保留的原始結果
+新增回歸在舊引擎為2 pass／18 fail，作為問題重現。第一候選為19/20，一個斷言把移動中的雷段端點誤作已命中，改為觀察接觸環後最終20/20；實際目標覆蓋斷言仍保留。
+第一輪工坊select誤同時命中stage資料屬性，改為data-preview-targets分離後，完整48＋12通過。
+一次完整工坊被外層30秒命令時限終止，沒有成功報告；不算通過。後續在足夠時限重跑完整工坊，結果見workshop-final。
+早期連射截圖在媒體設定與seek之間出現空白，屬截圖時序問題；可能與媒體變更clear競態相關，未把推測說成已精確追蹤根因。新capture在媒體穩定後等待RAF並斷言像素及drawCalls；最終48＋12重新通過，另12張stage／4張完整工坊獨立capture皆非空白，來源SHA一致。
+原始失敗與最終結果分別保存，不用最新檔案覆蓋歷史而失去可稽核性。
+
+六、檔案與還原
+隨Git保存的本版完整證據：docs/skill-vfx-targets-20261104/
+入口：validation-summary.json、archive-index.json、restore-evidence.cjs。
+忽略區原始工作：.release-sync/skill-vfx-targets-20261104/
+新測試：worker/test/skill-vfx-target-timing.test.js
+新工坊QA：worker/tools/skill-vfx-target-browser.cjs
+新五敵真收據產生器：worker/tools/skill-vfx-five-target-receipt.mjs（預設拒絕覆蓋既有輸出；重跑請指定新--out）
+
+新checkout在工作樹根目錄執行：
+  node docs/skill-vfx-targets-20261104/restore-evidence.cjs
+  node worker/tools/build-skill-vfx-coverage.mjs --check --require-legacy-completion
+
+restore先核對封存SHA及路徑，只補缺失檔／接受已相同檔；現有不同檔預設拒絕。
+從前版證據明確升級本版時可用--upgrade-known，但僅允許索引白名單中已知舊canonical SHA；未知差異仍拒絕。
+不要用舊docs/skill-vfx-all-20261104的restore覆蓋本版canonical。舊封存維持原狀。
+證據JSON/TAP/PNG以本資料夾.gitattributes固定原bytes；本輪code的LF由根.gitattributes固定，以免Windows checkout導致誤判來源變動。
+影像可從visual-final與five-target-replay原始報告對照，雷鏈五敵真RAF PNG和受控工坊示意PNG有不同證據用途。
+
+七、關鍵指紋
+engine：669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0
+coverage：b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e
+recipes（未改）：e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a
+新增回歸：c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db
+五敵原始真收據：a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9
+
+八、進度與接手
+Windows既有StarJournal-SkillVFX-Checkpoint-30m持續每30分鐘更新handoff/skill-vfx；手動里程碑與完工checkpoint另保存。
+先讀D:/StarJournal/handoff/skill-vfx/LATEST.md及STATUS.json，區分自動checkpoint時間、人工updatedAt、activeBatch與finalCommit。
+再讀本文件及本版validation-summary，不要重啟已完成的196技能製作或重跑既有驗收來取代接手。
+本批未完成項目僅屬範圍外：16規劃覺醒的遊戲機制、角色美術核准工作線、實體裝置／正式Telegram驗收及正式發布。
+後續若繼續逐招美術精修，按實際觀察選擇下一批家族；不要把本批三種彈體時序改進描述成全部家族均重新校準。
+正式環境維持凍結：沒有push、合main、部署、遠端migration、正式D1／玩家／Secrets變動。

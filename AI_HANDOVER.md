@@ -1,3 +1,29 @@
+# 技能特效與穩定主浮窗合流（2026-11-05，本機合流已驗證）
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-semantic-integration-20261105
+分支：codex/skill-vfx-semantic-integration-20261105。
+本機基線為星環4d21478b7287e305aa7d0cab9740207042bc05df，合入技能特效bec26a0dac10dd0430fb76d05180b68dc03f57cb。精確本機merge提交看.release-sync/skill-vfx-semantics-20261105/local-merge-receipt.json。本批語意精修與新素材尚待原VFX線提供精確commit後合入，不冒稱完成。
+
+本批保留星環、Boss、爬塔、組隊、技能轉職、Atlas元素與八階補給的既有整合，同時接回VFX真實提交事件、逐技能配方與專屬素材。兩項交界修正：observer採實際paid/free耗魔，不把免費施法顯示為付費；星環新版uncached純讀投影明示deterministic-projection，已提交結果仍為committed-combat。遊戲數值與RNG不因呈現觀測改變。預覽保留最新路由/PID/QA設定，加回VFX白名單；按鈕QA同時支援兩種既有origin參數。
+
+## 本次合流驗證
+
+- 2026-11-05 13:27:02台灣時間完成47檔focused：753/753通過，0 fail/cancel/skip/todo，Node24.7.0、concurrency1。
+- 371份遊戲／前端／測試來源在測試前後SHA完全相同。收據focused-2026-11-05T05-26-20-194Z.json與完整同名TAP位於本線.release-sync；TAP SHA256 b70afba73f7713b592ea27607ee863f3e3f621114ddd26e0f2a29be9a3d6f4e9。
+- 新增4項跨批回歸已包含在753內：12種Atlas乘0/35%/100%免費施法共36情境；星環v1/v2/v3純讀全DB不變、投影與實存事件來源正確。完整state/rewards/activities/RNG保持。
+- 此為針對合流交界、所有VFX核心、Atlas新舊效果／補給與最新主浮窗端點的驗證，不是完整Worker/BOT gate，也不是本次browser／真手機驗收。所有前批證據各自保留原版本歸屬，不能直接把舊196 browser覆蓋冒充新合流版本已重驗。
+- 16份技能catalog來源中15份原始bytes相同；special.js差異是VFX觀測鉤子。直接import兩方及天使當時來源驗證124原生＋60特殊＋12Atlas、6支援、124天賦節點（含4origin）的名稱與數值完全相同，沒有新增已實裝技能。16規劃覺醒仍排除。
+
+## 待接續與界線
+
+待原VFX工作線語意精修與semantic-atlas新素材的精確提交，再合入本樹並重驗受影響範圍、啟動獨立新port預覽。當前skill-vfx-coverage.json與既有docs素材驗收屬bec26a0來源，不能冒稱本批已完成全目錄browser重驗；要由新來源與新收據重建覆蓋。
+
+天使分支另有人施工，本批不寫入其工作樹、不停任何既有預覽。未push／PR／部署／合main／改正式DB或Secrets。禁止共享全域MCP agent_workflow/task_control；本線證據與進度僅寫自己的.release-sync，主線STATUS不改。
+
+---
+
+## 原整合來源與技能特效來源交接
+
 # 星環遠征主浮窗整合（2026-11-05）
 
 本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-star-ring-integration-20261105
@@ -236,6 +262,14 @@ Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件�
 2026-11-04 主場按鈕與Atlas分階補給合流：獨立codex/ui-supply-integration-20261104保留補給b041521與按鈕b8197b3兩個父提交，9723場景／9722隔離API，原兩樹與預覽保留。CSS兩段、兩張金屬WebP、八階補給及舊run/原子扣還完整保留；唯一文件衝突已同時保留兩批。來源PR48已推送且精確b041521完整Worker/BOT CI41808339254成功。合流230/230相關測試、按鈕Chrome30/30、最終補給Chrome12/12通過；後續僅修browser工具的實際喝水等待與stop後已知stale唯讀重讀，其餘1053來源不變。最終真blue_2用1瓶，兩趟停止與各8階退款成功；實際觸發一次stale_response，固定同context/run後只重讀唯讀status一次，未重試寫入或關閉guard。完整失敗/修正/成功證據見docs/UI_SUPPLY_INTEGRATION_20261104.txt；合流提交、草稿PR與精確HEAD CI以.release-sync/ui-supply-20261104收據及D:/StarJournal/handoff/non-character/atlas-supply-20261104/STATUS.json為準。30分鐘排程沿用且18:02台灣時間成功。正式機凍結，角色/FX、遠端migration/資料/Secrets不動；其餘舊功能/逐擊事件/舊效果/高階成長/正式登入真機/平衡/季末移轉及320px角色局部遮擋仍待後續。下列兩批文字為合流前歷史紀錄。
 
 2026-11-04 Atlas 分階補給整合：codex/atlas-supply-integration-20261104以PR46／0219f9d為基線，獨立9713場景／9712記憶體API。八種紅藍水逐階攜帶／消耗／精確退還，各色500上限，當趟設定與效果快照atlas-supplies-v1；原版門檻、最低階優先／指定種類與autoBlue關閉均已接通，舊v1–v4存檔與舊請求收據保持。hp/mp背包欄位保留starter原義，新增totals供新HUD，當趟總數及逐階明細同步。227項必要測試全過、1051來源hash穩定；320/390/1280真Chrome12項實際操作通過，另完成最終文案與44px視覺驗收。詳docs/ATLAS_SUPPLY_INTEGRATION_20261104.txt；本批Git/PR/CI及30分鐘交接讀D:/StarJournal/handoff/non-character/atlas-supply-20261104/STATUS.json與LATEST.md。按鈕美術仍在另一工作樹，未提交內容未併入；不覆寫其STATUS/預覽。未部署／合併／遠端migration／正式資料變動，角色與FX素材未改。
+
+## 技能特效來源交接（原批驗收保留版本歸屬）
+
+2026-11-04 技能續作（多目標與命中時序）：本分支codex/skill-vfx-20261104自ccedf35延續，連射依真targets、不補假敵；雷鏈完整五目標且施法者不占名額；impact-only／reduced-motion完整保留每個命中；狙擊／火球／貫穿中心抵達與impactAt同步。工坊新增1／3／5靶及手機布局。既有23＋新增20測試、完整196×4方向784項與12階段組／16手機／14控制、新48畫面＋12操作、184真提交重播、32真API情境均通過；本版實際API觀察23身份，四層196/196。另合法SQLite五敵真提交→受控adapter admission／幾何→真Canvas RAF桌機／手機viewport均5/5，不能稱完整五敵MiniApp或實機GPU驗收。153受保護來源不變，既有按鈕與六張美術材質保留。本批不重跑整套Worker／BOT，舊驗收保留版本歸屬。必讀docs/SKILL_VFX_TARGETS_20261104.txt及docs/skill-vfx-targets-20261104/validation-summary.json；本版精確bytes封存與restore-evidence.cjs可接新checkout，舊all封存勿覆蓋本版canonical。最終本機commit、服務及30分鐘交接以D:/StarJournal/handoff/skill-vfx/STATUS.json與LATEST.md為準。16規劃覺醒仍排除；正式環境凍結，未push／合main／部署／遠端migration／改正式資料。以下保留各批原歷史。
+
+2026-11-04 按鈕與技能特效合流：本分支保留196技能特效成果，整合b8197b3的金屬琺瑯素材與五入口盾形按鈕，目標為既有9667場景／9666隔離API。當前整合驗收、版本與30分鐘交接以D:/StarJournal/handoff/skill-vfx/STATUS.json及LATEST.md為準；以下各來源工作線的驗收保留其原版本歸屬，不當作本次合流已重跑的結果。正式環境維持凍結。
+
+2026-11-04 全技能特效本機完成（本分支 codex/skill-vfx-20261104）：124原生＋60特殊＋12Atlas＝196身份，28視覺家族、6透明WebP及6PNG原稿已完成；resolver／committed-event／presentation／browser四層196/196。已接掛機、組隊、PK、世界王、星環與Atlas真事件，治療／護盾／召喚／持續效果依真受益者與實際命中呈現；不偽造支援攻擊或重播舊收據。已本機合入v4 e4908c0與統一UI0219f9d，merge HEAD c05b888；legacy核心19578b4。修正首載貼圖layout取消trace、手機遮擋／站位、ring同beat與PK純support。184真SQLite提交receipt受控RAF重播全過，真API／UI32情境全過（idle6／PK4／boss2／party2／ring2／Atlas16），涵蓋24真API身份；不宣稱196在每模式逐一UI實測。Worker完整284檔2861項首輪2854pass／7舊契約fail；4測試修正後ring63／boss11全過，674runtime及279其他測試SHA未改；另1測試僅刪EOF空白並證明trimEnd等價、重驗通過，原golden保持；BOT完整23檔205/205。採完整首輪＋全部失敗檔重驗＋SHA證明的組合驗證，不冒稱單次全綠，原失敗保留。必讀docs/SKILL_VFX_ALL_20261104.txt、docs/skill-vfx-all-20261104/final-validation.json與archive-index.json；證據可由restore-evidence.cjs還原；43來源換行與manifest LF已用精確.gitattributes保留。最新完成提交／服務／30分鐘排程看D:/StarJournal/handoff/skill-vfx/STATUS.json及LATEST.md。9664工坊、9667場景／9666隔離API；既有其他預覽不動。6support／120可配置天賦＋4origin為modifier；16規劃覺醒排除，原角色美術核准與正式Telegram／真機GPU驗收不在本線。未push／合main／部署／遠端migration／改正式資料，整合完成前正式環境維持凍結。本段是此技能特效分支最新狀態，後文保留各工作線原歷史說明。
 
 2026-11-04 立體按鈕材質整合：codex/button-polish-20261104疊PR46（0219f9d）；前批PR46已依使用者同意完成push與exact HEAD CI success，維持draft未合併。本批新增午夜藍琺瑯／香檳金透明WebP兩款，共67154 bytes；五入口盾形導航手機64px／桌面72px、主要動作52px、次要46px、最小44px操作區，原生文字／SVG、按下凹陷／焦點／disabled／選取／危險色皆保留。手機回收sticky遮擋修正，≤360px主場四字按鈕與補給均衡換行並收短8px。隔離9703場景／9702記憶體API，PID43116；正式機與角色／FX素材未動。素材路由3/3及真HTTP SHA通過；CSS e15e5e3的320／390／1280真Chrome30/30、60截圖、0頁面／HTTP／素材錯誤且source穩定；最後窄版CSS 138422f另驗320單案，12/12通過、44px命中區／完整詞語／無溢出、來源穩定。不把前批2910或舊CSS結果冒充本批最後完整gate；新提交／草稿PR／精確HEAD CI及服務狀態讀D:/StarJournal/handoff/non-character/STATUS.json與.release-sync/button-polish-20261104收據。必讀docs/BUTTON_MATERIAL_UI_POLISH_20261104.txt與worker/public/ui/button-materials/manifest.json。320極窄主場資訊卡與角色局部交疊仍留後續布局整合；完整舊功能遷移／真機登入／高階成長／舊效果／正式平衡／季末移轉仍待後續，整合完成前不更新正式機。
 

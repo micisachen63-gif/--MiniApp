@@ -1,0 +1,391 @@
+TAP version 13
+# Subtest: published v1 full twelve-hour snapshots remain byte-for-byte identical at low, high and final tiers
+ok 1 - published v1 full twelve-hour snapshots remain byte-for-byte identical at low, high and final tiers
+  ---
+  duration_ms: 843.152
+  type: 'test'
+  ...
+# Subtest: twelve exclusive four-species pools contain two normals, an elite and the original map boss
+ok 2 - twelve exclusive four-species pools contain two normals, an elite and the original map boss
+  ---
+  duration_ms: 11.1629
+  type: 'test'
+  ...
+# Subtest: independent encounter seeds vary first species, elite/boss timings and subsequent order without adjacent identical species
+ok 3 - independent encounter seeds vary first species, elite/boss timings and subsequent order without adjacent identical species
+  ---
+  duration_ms: 73.0512
+  type: 'test'
+  ...
+# Subtest: projection and complete replay see the same real species, stats and actions; previewing next wave never mutates a snapshot
+ok 4 - projection and complete replay see the same real species, stats and actions; previewing next wave never mutates a snapshot
+  ---
+  duration_ms: 64.844
+  type: 'test'
+  ...
+# Subtest: low damage parties still encounter an elite and boss via seeded time windows, and old runs do not enter a pool
+ok 5 - low damage parties still encounter an elite and boss via seeded time windows, and old runs do not enter a pool
+  ---
+  duration_ms: 23.0768
+  type: 'test'
+  ...
+# Subtest: full v2 twelve-hour settlement remains bounded and preserves the six checkpoints and reward caps
+ok 6 - full v2 twelve-hour settlement remains bounded and preserves the six checkpoints and reward caps
+  ---
+  duration_ms: 129.4079
+  type: 'test'
+  ...
+# Subtest: every next-wave preview agrees with the subsequent actual spawn, including the final combat beat before an hourly transition
+ok 7 - every next-wave preview agrees with the subsequent actual spawn, including the final combat beat before an hourly transition
+  ---
+  duration_ms: 2304.8705
+  type: 'test'
+  ...
+# ECONOMY_AUDIT [{"difficulty":"normal","ordinaryScrolls":4.4939,"luckyChance":0.0363,"guardian50LuckyChance":0.0525,"cores":12,"bonusMinutes":144,"guaranteedExchangePerRun":0.2},{"difficulty":"advanced","ordinaryScrolls":4.4939,"luckyChance":0.0587,"guardian50LuckyChance":0.0868,"cores":12,"bonusMinutes":144,"guaranteedExchangePerRun":0.2}]
+# Subtest: v2 published battles AND every actor reward retain 36 independent historical hashes
+ok 8 - v2 published battles AND every actor reward retain 36 independent historical hashes
+  ---
+  duration_ms: 984.2097
+  type: 'test'
+  ...
+# Subtest: v3 records actual deaths without changing any v2 combat decision or timing
+ok 9 - v3 records actual deaths without changing any v2 combat decision or timing
+  ---
+  duration_ms: 264.1434
+  type: 'test'
+  ...
+# Subtest: sightings and living retreats grant nothing; only valid actual rank kills count
+ok 10 - sightings and living retreats grant nothing; only valid actual rank kills count
+  ---
+  duration_ms: 16.484
+  type: 'test'
+  ...
+# Subtest: hour caps, duplicate deaths and wrong-stage entries cannot exceed 144 minutes, 12 cores, six ordinary scrolls or one lucky scroll
+ok 11 - hour caps, duplicate deaths and wrong-stage entries cannot exceed 144 minutes, 12 cores, six ordinary scrolls or one lucky scroll
+  ---
+  duration_ms: 3.2828
+  type: 'test'
+  ...
+# Subtest: v3 adds only bounded EXP and rank items while preserving base equipment, tokens and legacy loot rolls
+ok 12 - v3 adds only bounded EXP and rank items while preserving base equipment, tokens and legacy loot rolls
+  ---
+  duration_ms: 1.9321
+  type: 'test'
+  ...
+# Subtest: seeded personal loot is stable regardless of query order, prior result count, or public run id
+ok 13 - seeded personal loot is stable regardless of query order, prior result count, or public run id
+  ---
+  duration_ms: 1.8152
+  type: 'test'
+  ...
+# Subtest: core and both 100% scrolls are non-tradeable and core shop only consumes the exclusive currency
+ok 14 - core and both 100% scrolls are non-tradeable and core shop only consumes the exclusive currency
+  ---
+  duration_ms: 0.3755
+  type: 'test'
+  ...
+# Subtest: 10,000 independent runs match economy expectations; guardian modifies chance, never fixed cores or XP
+ok 15 - 10,000 independent runs match economy expectations; guardian modifies chance, never fixed cores or XP
+  ---
+  duration_ms: 4804.2364
+  type: 'test'
+  ...
+# Subtest: public reward catalog, core art, inventory path and preview all match authoritative production rules
+ok 16 - public reward catalog, core art, inventory path and preview all match authoritative production rules
+  ---
+  duration_ms: 4.434
+  type: 'test'
+  ...
+# (node:34112) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node --trace-warnings ...` to show where the warning was created)
+# Subtest: new expeditions use v2 pools; a defeated species projects the exact next authored species while settlement remains server-only
+ok 17 - new expeditions use v2 pools; a defeated species projects the exact next authored species while settlement remains server-only
+  ---
+  duration_ms: 422.8214
+  type: 'test'
+  ...
+# Subtest: v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants
+ok 18 - v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants
+  ---
+  duration_ms: 1370.8825
+  type: 'test'
+  ...
+# Subtest: five accounts depart once per character Taipei date; lobby does not consume quota
+ok 19 - five accounts depart once per character Taipei date; lobby does not consume quota
+  ---
+  duration_ms: 121.7384
+  type: 'test'
+  ...
+# Subtest: membership and leader authority checked; forbidden payload cannot provide power/rewards/clock
+ok 20 - membership and leader authority checked; forbidden payload cannot provide power/rewards/clock
+  ---
+  duration_ms: 122.7504
+  type: 'test'
+  ...
+# Subtest: server projection deterministic; same beats become checkpoint state and rewards only at boundary
+ok 21 - server projection deterministic; same beats become checkpoint state and rewards only at boundary
+  ---
+  duration_ms: 162.3129
+  type: 'test'
+  ...
+# Subtest: a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards
+ok 22 - a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards
+  ---
+  duration_ms: 118.5057
+  type: 'test'
+  ...
+# Subtest: offline twelve-hour catchup grants six stages once and canonical private completion once
+ok 23 - offline twelve-hour catchup grants six stages once and canonical private completion once
+  ---
+  duration_ms: 221.7213
+  type: 'test'
+  ...
+# Subtest: parallel catchup cannot duplicate ledger, equipment, inventory or completion DM
+ok 24 - parallel catchup cannot duplicate ledger, equipment, inventory or completion DM
+  ---
+  duration_ms: 286.4861
+  type: 'test'
+  ...
+# Subtest: leave keeps completed stages only, no refund, survivors continue and leader transfers
+ok 25 - leave keeps completed stages only, no refund, survivors continue and leader transfers
+  ---
+  duration_ms: 229.1058
+  type: 'test'
+  ...
+# Subtest: idle disabled while running; completion resumes only from true end time; EXP preserves advancement gate
+ok 26 - idle disabled while running; completion resumes only from true end time; EXP preserves advancement gate
+  ---
+  duration_ms: 262.1557
+  type: 'test'
+  ...
+# Subtest: advanced eligibility retains three distinct non-guard duties and all existing classes
+ok 27 - advanced eligibility retains three distinct non-guard duties and all existing classes
+  ---
+  duration_ms: 187.6583
+  type: 'test'
+  ...
+# Subtest: lobby expiry releases presence; cancellation never charges daily quota
+ok 28 - lobby expiry releases presence; cancellation never charges daily quota
+  ---
+  duration_ms: 99.26
+  type: 'test'
+  ...
+# Subtest: Taipei quota uses start date; cross-midnight run still blocks second run and next day becomes eligible only when free
+ok 29 - Taipei quota uses start date; cross-midnight run still blocks second run and next day becomes eligible only when free
+  ---
+  duration_ms: 224.2762
+  type: 'test'
+  ...
+# Subtest: immutable snapshot survives changed live equipment/skills; own EXP baseline independent of teammate
+ok 30 - immutable snapshot survives changed live equipment/skills; own EXP baseline independent of teammate
+  ---
+  duration_ms: 109.8068
+  type: 'test'
+  ...
+# Subtest: shop is bound currency debit and request-id replay safe including concurrent purchases
+ok 31 - shop is bound currency debit and request-id replay safe including concurrent purchases
+  ---
+  duration_ms: 98.9381
+  type: 'test'
+  ...
+# Subtest: low level/unpromoted characters cannot enter
+ok 32 - low level/unpromoted characters cannot enter
+  ---
+  duration_ms: 67.7783
+  type: 'test'
+  ...
+# Subtest: all nine ten-level tiers require actual character level at create and join
+ok 33 - all nine ten-level tiers require actual character level at create and join
+  ---
+  duration_ms: 914.921
+  type: 'test'
+  ...
+# Subtest: Lv50 foundation roles work at their true level without unlocking high-level skills
+ok 34 - Lv50 foundation roles work at their true level without unlocking high-level skills
+  ---
+  duration_ms: 285.156
+  type: 'test'
+  ...
+# Subtest: continuous waves still have real events after hour one and all six enemies are new
+ok 35 - continuous waves still have real events after hour one and all six enemies are new
+  ---
+  duration_ms: 122.4473
+  type: 'test'
+  ...
+# Subtest: queued tactic is not retroactive and persists per-stage when catching up offline
+ok 36 - queued tactic is not retroactive and persists per-stage when catching up offline
+  ---
+  duration_ms: 217.92
+  type: 'test'
+  ...
+# Subtest: create request replay returns the same room, rejects changed config and survives response races
+ok 37 - create request replay returns the same room, rejects changed config and survives response races
+  ---
+  duration_ms: 67.1185
+  type: 'test'
+  ...
+# Subtest: mid-stage departure preserves exact earlier projected history
+ok 38 - mid-stage departure preserves exact earlier projected history
+  ---
+  duration_ms: 127.2751
+  type: 'test'
+  ...
+# Subtest: Lv40 entry works and Lv39 is rejected without spending quota
+ok 39 - Lv40 entry works and Lv39 is rejected without spending quota
+  ---
+  duration_ms: 105.1397
+  type: 'test'
+  ...
+# Subtest: advanced rewards improve tokens and independent gear chances without 100-percent scrolls
+ok 40 - advanced rewards improve tokens and independent gear chances without 100-percent scrolls
+  ---
+  duration_ms: 117.9488
+  type: 'test'
+  ...
+# Subtest: long presence reserves characters while same-owner characters can use other teams
+ok 41 - long presence reserves characters while same-owner characters can use other teams
+  ---
+  duration_ms: 96.63
+  type: 'test'
+  ...
+# Subtest: same owner cannot occupy two seats in one expedition, while each character quota stays separate
+ok 42 - same owner cannot occupy two seats in one expedition, while each character quota stays separate
+  ---
+  duration_ms: 96.4798
+  type: 'test'
+  ...
+# Subtest: species attacks have true venom, shield-break, mana drain, interrupts, cleave and cleansable curse
+ok 43 - species attacks have true venom, shield-break, mana drain, interrupts, cleave and cleansable curse
+  ---
+  duration_ms: 99.8427
+  type: 'test'
+  ...
+# Subtest: run engine version is fixed and result snapshots keep equipment only once at departure
+ok 44 - run engine version is fixed and result snapshots keep equipment only once at departure
+  ---
+  duration_ms: 240.3784
+  type: 'test'
+  ...
+# Subtest: hourly catalog has twelve original monsters and twelve distinct maps with verified-only optional videos
+ok 45 - hourly catalog has twelve original monsters and twelve distinct maps with verified-only optional videos
+  ---
+  duration_ms: 0.408
+  type: 'test'
+  ...
+# Subtest: all twelve exact hourly boundaries switch scene, species and art while rewards stay at six two-hour checkpoints
+ok 46 - all twelve exact hourly boundaries switch scene, species and art while rewards stay at six two-hour checkpoints
+  ---
+  duration_ms: 651.9068
+  type: 'test'
+  ...
+# Subtest: late offline twelve-hour settlement replays all twelve areas with no extra grants, quota or notifications
+ok 47 - late offline twelve-hour settlement replays all twelve areas with no extra grants, quota or notifications
+  ---
+  duration_ms: 198.5579
+  type: 'test'
+  ...
+# Subtest: gear-shop lottery uses private server entropy instead of a player-selected request ID, then replays its receipt
+ok 48 - gear-shop lottery uses private server entropy instead of a player-selected request ID, then replays its receipt
+  ---
+  duration_ms: 90.9662
+  type: 'test'
+  ...
+# Subtest: withdrawn lobby member may rejoin with another owned character without holding two seats
+ok 49 - withdrawn lobby member may rejoin with another owned character without holding two seats
+  ---
+  duration_ms: 102.3646
+  type: 'test'
+  ...
+# Subtest: a fully withdrawn expedition freezes progress at retreat instead of drifting to completion later
+ok 50 - a fully withdrawn expedition freezes progress at retreat instead of drifting to completion later
+  ---
+  duration_ms: 138.363
+  type: 'test'
+  ...
+# Subtest: v3 actual kills settle EXP, personal drops and boss cores atomically; full offline catchup equals staged online polling and replay grants nothing twice
+ok 51 - v3 actual kills settle EXP, personal drops and boss cores atomically; full offline catchup equals staged online polling and replay grants nothing twice
+  ---
+  duration_ms: 327.9561
+  type: 'test'
+  ...
+# Subtest: v3 hourly polls cannot award before checkpoint; stage-at-a-time catchup matches a full twelve-hour private expected replay
+ok 52 - v3 hourly polls cannot award before checkpoint; stage-at-a-time catchup matches a full twelve-hour private expected replay
+  ---
+  duration_ms: 886.1894
+  type: 'test'
+  ...
+# Subtest: core redemption uses only bound cores and a retry-safe private receipt; competing purchases cannot overspend
+ok 53 - core redemption uses only bound cores and a retry-safe private receipt; competing purchases cannot overspend
+  ---
+  duration_ms: 93.4239
+  type: 'test'
+  ...
+# Subtest: v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores
+ok 54 - v3 leaving before settlement discards unbanked rank rewards and cannot restart or rejoin to farm cores
+  ---
+  duration_ms: 175.9659
+  type: 'test'
+  ...
+# Subtest: advanced Lv40 no-guard team starts, fights and settles all six stages exactly once
+ok 55 - advanced Lv40 no-guard team starts, fights and settles all six stages exactly once
+  ---
+  duration_ms: 211.7325
+  type: 'test'
+  ...
+# Subtest: advanced Lv90 no-guard team starts, fights and settles all six stages exactly once
+ok 56 - advanced Lv90 no-guard team starts, fights and settles all six stages exactly once
+  ---
+  duration_ms: 254.5441
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing control without charging departure
+ok 57 - advanced still rejects missing control without charging departure
+  ---
+  duration_ms: 84.6209
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing breach without charging departure
+ok 58 - advanced still rejects missing breach without charging departure
+  ---
+  duration_ms: 82.6451
+  type: 'test'
+  ...
+# Subtest: advanced still rejects missing aid without charging departure
+ok 59 - advanced still rejects missing aid without charging departure
+  ---
+  duration_ms: 72.2161
+  type: 'test'
+  ...
+# Subtest: optional guard never consumes the sole healer when only three simultaneous duties fit
+ok 60 - optional guard never consumes the sole healer when only three simultaneous duties fit
+  ---
+  duration_ms: 96.5926
+  type: 'test'
+  ...
+# Subtest: optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot
+ok 61 - optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot
+  ---
+  duration_ms: 275.3058
+  type: 'test'
+  ...
+# Subtest: already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts
+ok 62 - already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts
+  ---
+  duration_ms: 216.8102
+  type: 'test'
+  ...
+# Subtest: already running legacy standard expedition gets fair future grades without rewriting earlier receipts
+ok 63 - already running legacy standard expedition gets fair future grades without rewriting earlier receipts
+  ---
+  duration_ms: 237.5017
+  type: 'test'
+  ...
+1..63
+# tests 63
+# suites 0
+# pass 63
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 11094.7745

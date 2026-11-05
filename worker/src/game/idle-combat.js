@@ -21,15 +21,16 @@ export function idleCombatState(char) {
   state.enemies=state.enemies.map(e=>({...monsterIdentity(mapId,e.name),...e}));
   return state;
 }
-export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillName='',crit=false,elite=false,eliteMonster=null,strikePlan=null,attackSpeedMultiplier=1,record=true}) {
+export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillName='',crit=false,elite=false,eliteMonster=null,strikePlan=null,attackSpeedMultiplier=1,record=true,vfx=null}) {
   const round={id:`idle-round:${char.tg_id}:${at}`,at,mapId:state.mapId,before:record?copy(state.enemies):null,events:[],defeated:[],kills:0};
+  if(record&&cast&&vfx)round.vfxEvents=[structuredClone(vfx)];
   // Presentation only: replay one authored spell from the committed starting wave.
   // This is not another damage event and must never change character HP/MP or rewards.
   if(record){const enemy=state.enemies[Math.floor(at/60000)%state.enemies.length];round.presentation={monsterActions:[{sourceId:enemy.id,spriteKey:enemy.spriteKey,name:enemy.name,spell:enemy.spell,behavior:enemy.behavior,action:'cast',attackDirection:-1,cosmetic:true}]};}
   // The original kills/minute efficiency becomes a damage budget. Kills now require HP reaching zero.
   // Fractional progress remains on the same enemy between minutes instead of being rounded away.
   const damageBudget=Math.max(0,killsBudget)*idleMonsterHp(state.mapId);
-  let remaining=Math.floor(damageBudget+(state.remainder||0)),target=state.target===1?1:0;
+  let remaining=Math.floor(damageBudget+(state.remainder||0)),target=state.target===1?1:0,vfxLinked=false;
   state.remainder=damageBudget+(state.remainder||0)-remaining;
   const plan=char.base_class==='thief'&&Array.isArray(strikePlan)&&strikePlan.length>0&&strikePlan.length<=9?strikePlan:null;
   if(plan){round.strikes=[];round.attackSpeedMultiplier=attackSpeedMultiplier;round.damage=remaining;}
@@ -42,7 +43,7 @@ export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillNam
       const enemy=state.enemies[target],damage=Math.min(enemy.hp,amount),before=enemy.hp;
       enemy.hp-=damage;amount-=damage;
       if(strikeResult)strikeResult.hits.push({targetId:enemy.id,beforeHp:before,afterHp:enemy.hp,damage});
-      if(record)round.events.push({type:'hit',targetId:enemy.id,enemy:copy(enemy),beforeHp:before,afterHp:enemy.hp,damage,crit:plan?!!plan[strike].crit:crit,...(plan?{attackSpeedMultiplier}:{}),skill:cast&&strike===0,skillName:cast&&strike===0?skillName:'普通攻擊',strike});
+      if(record){const link=vfx&&!vfxLinked&&vfx.targetKind==='enemy';round.events.push({type:'hit',targetId:enemy.id,enemy:copy(enemy),beforeHp:before,afterHp:enemy.hp,damage,crit:plan?!!plan[strike].crit:crit,...(plan?{attackSpeedMultiplier}:{}),...(link?{vfxEventId:vfx.eventId}:{}),skill:cast&&strike===0,skillName:cast&&strike===0?skillName:'普通攻擊',strike});if(link)vfxLinked=true;}
       if(enemy.hp===0){round.defeated.push(copy(enemy));round.kills++;state.enemies[target]=spawn(state,char);if(record)round.events.push({type:'spawn',slot:target,enemy:copy(state.enemies[target])});target=1-target;}
     }
     if(strikeResult)round.strikes.push(strikeResult);
@@ -55,6 +56,6 @@ export function resolveIdleCombat(state,char,{at,killsBudget,cast=false,skillNam
     round.eliteKills=1;
   }
   state.target=target;round.after=record?copy(state.enemies):null;
-  if(round.events.length>60){round.events=[];round.summarized=true;}
+  if(round.events.length>60){round.events=[];round.summarized=true;delete round.vfxEvents;}
   state.round=record?round:null;return round;
 }

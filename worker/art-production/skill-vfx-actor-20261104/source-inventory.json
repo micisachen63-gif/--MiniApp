@@ -1,0 +1,1953 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T05:55:54.057Z",
+  "sourceRoot": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1",
+  "readOnlySources": true,
+  "actors": [
+    {
+      "id": "sword",
+      "key": "sword_f",
+      "gender": "f",
+      "approved": false,
+      "readiness": "partial-candidate",
+      "metadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+      "metadataSha256": "75d6a228dad082dae3c45b13f6303fc930a114f0ca2f427b69a5f5d6ae2f3cf4",
+      "attack": {
+        "up": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 373,
+          "loop": false,
+          "hitFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                24,
+                62,
+                282,
+                449
+              ],
+              "anchor": [
+                156,
+                447
+              ],
+              "bodyHeight": 373,
+              "durationMs": 130,
+              "label": "windup"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                381,
+                147,
+                371,
+                365
+              ],
+              "anchor": [
+                186,
+                363
+              ],
+              "bodyHeight": 373,
+              "durationMs": 80,
+              "label": "swing"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                752,
+                182,
+                394,
+                330
+              ],
+              "anchor": [
+                183,
+                328
+              ],
+              "bodyHeight": 373,
+              "durationMs": 90,
+              "label": "contact"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                1157,
+                135,
+                278,
+                376
+              ],
+              "anchor": [
+                133,
+                374
+              ],
+              "bodyHeight": 373,
+              "durationMs": 160,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 460,
+          "uniformFps": null
+        },
+        "down": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 409,
+          "loop": false,
+          "hitFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                23,
+                528,
+                319,
+                487
+              ],
+              "anchor": [
+                157,
+                485
+              ],
+              "bodyHeight": 409,
+              "durationMs": 130,
+              "label": "windup"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                394,
+                615,
+                330,
+                407
+              ],
+              "anchor": [
+                144,
+                405
+              ],
+              "bodyHeight": 409,
+              "durationMs": 80,
+              "label": "swing"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                724,
+                653,
+                368,
+                381
+              ],
+              "anchor": [
+                217,
+                379
+              ],
+              "bodyHeight": 409,
+              "durationMs": 90,
+              "label": "contact"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+              "rect": [
+                1112,
+                609,
+                328,
+                413
+              ],
+              "anchor": [
+                194,
+                411
+              ],
+              "bodyHeight": 409,
+              "durationMs": 160,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 460,
+          "uniformFps": null
+        },
+        "right": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 430.08,
+          "loop": false,
+          "timingSource": "preview-authored 1000ms",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                0,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                544,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1088,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1632,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "4",
+              "sourceFrameIndex": 3
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                0,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "5",
+              "sourceFrameIndex": 4
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                544,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "6",
+              "sourceFrameIndex": 5
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1088,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "7",
+              "sourceFrameIndex": 6
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1632,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "8",
+              "sourceFrameIndex": 7
+            }
+          ],
+          "frameCount": 8,
+          "durationMs": 1000,
+          "uniformFps": 8
+        },
+        "left": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 430.08,
+          "loop": false,
+          "mirrorX": true,
+          "timingSource": "preview-authored 1000ms",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                0,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                544,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1088,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1632,
+                0,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "4",
+              "sourceFrameIndex": 3
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                0,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "5",
+              "sourceFrameIndex": 4
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                544,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "6",
+              "sourceFrameIndex": 5
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1088,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "7",
+              "sourceFrameIndex": 6
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+              "rect": [
+                1632,
+                544,
+                544,
+                544
+              ],
+              "anchor": [
+                272,
+                490
+              ],
+              "bodyHeight": 430.08,
+              "durationMs": 125,
+              "label": "8",
+              "sourceFrameIndex": 7
+            }
+          ],
+          "frameCount": 8,
+          "durationMs": 1000,
+          "uniformFps": 8
+        }
+      }
+    },
+    {
+      "id": "archer",
+      "key": "archer_f",
+      "gender": "f",
+      "approved": false,
+      "readiness": "partial-candidate",
+      "metadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+      "metadataSha256": "abbfd95fb30486f5de0ce558d1dae628c3a988057cb42def58da4c69b4dfe0d3",
+      "attack": {
+        "up": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 443,
+          "loop": false,
+          "hitFrame": 2,
+          "releaseFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                34,
+                11,
+                325,
+                537
+              ],
+              "anchor": [
+                123,
+                535
+              ],
+              "bodyHeight": 443,
+              "durationMs": 180,
+              "label": "raise"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                414,
+                9,
+                319,
+                539
+              ],
+              "anchor": [
+                121.5,
+                537
+              ],
+              "bodyHeight": 443,
+              "durationMs": 220,
+              "label": "draw"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                762,
+                9,
+                320,
+                541
+              ],
+              "anchor": [
+                115.5,
+                539
+              ],
+              "bodyHeight": 443,
+              "durationMs": 120,
+              "label": "release"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                1135,
+                39,
+                305,
+                510
+              ],
+              "anchor": [
+                115.5,
+                508
+              ],
+              "bodyHeight": 443,
+              "durationMs": 180,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 700,
+          "uniformFps": null
+        },
+        "down": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 465,
+          "loop": false,
+          "hitFrame": 2,
+          "releaseFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                38,
+                555,
+                320,
+                500
+              ],
+              "anchor": [
+                169,
+                498
+              ],
+              "bodyHeight": 465,
+              "durationMs": 180,
+              "label": "raise"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                414,
+                553,
+                319,
+                505
+              ],
+              "anchor": [
+                170.25,
+                503
+              ],
+              "bodyHeight": 465,
+              "durationMs": 220,
+              "label": "draw"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                769,
+                570,
+                312,
+                488
+              ],
+              "anchor": [
+                150.75,
+                486
+              ],
+              "bodyHeight": 465,
+              "durationMs": 120,
+              "label": "release"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+              "rect": [
+                1126,
+                559,
+                317,
+                497
+              ],
+              "anchor": [
+                167.5,
+                495
+              ],
+              "bodyHeight": 465,
+              "durationMs": 180,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 700,
+          "uniformFps": null
+        },
+        "right": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 630.5,
+          "loop": false,
+          "timingSource": "preview-authored; original source has no timing",
+          "sourceFacing": "right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_1-dccc08185fb4.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "1"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_2-95dc013149fc.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "2"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_3-50cb5ede10a6.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "3"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_4-9c938b225515.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "4"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_5-6d637fa7ea1f.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "5"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_6-68cefa210092.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "6"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_7-a0ed6f82b564.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "7"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_8-7c29c6079427.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "8"
+            }
+          ],
+          "frameCount": 8,
+          "durationMs": 800,
+          "uniformFps": 10
+        },
+        "left": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 630.5,
+          "loop": false,
+          "mirrorX": true,
+          "timingSource": "preview-authored; original source has no timing",
+          "sourceFacing": "right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_1-dccc08185fb4.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "1"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_2-95dc013149fc.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "2"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_3-50cb5ede10a6.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "3"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_4-9c938b225515.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "4"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_5-6d637fa7ea1f.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "5"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_6-68cefa210092.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "6"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_7-a0ed6f82b564.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "7"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_8-7c29c6079427.webp",
+              "rect": [
+                0,
+                0,
+                768,
+                896
+              ],
+              "anchor": [
+                384,
+                840
+              ],
+              "bodyHeight": 630.5,
+              "durationMs": 100,
+              "label": "8"
+            }
+          ],
+          "frameCount": 8,
+          "durationMs": 800,
+          "uniformFps": 10
+        }
+      }
+    },
+    {
+      "id": "mage",
+      "key": "mage_f",
+      "gender": "f",
+      "approved": false,
+      "readiness": "partial-candidate",
+      "metadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/mage.json",
+      "metadataSha256": "b781aede9567d154fcd72bf95f27a3d53a82fcc713bbdd9f716201ee84317d33",
+      "attack": {
+        "up": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 446,
+          "loop": false,
+          "releaseFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                0,
+                0,
+                362,
+                543
+              ],
+              "anchor": [
+                190,
+                514
+              ],
+              "bodyHeight": 446,
+              "durationMs": 200,
+              "label": "gather"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                362,
+                0,
+                362,
+                543
+              ],
+              "anchor": [
+                180,
+                516
+              ],
+              "bodyHeight": 446,
+              "durationMs": 280,
+              "label": "raise-focus"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                724,
+                0,
+                362,
+                543
+              ],
+              "anchor": [
+                181,
+                517
+              ],
+              "bodyHeight": 446,
+              "durationMs": 280,
+              "label": "release"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                1086,
+                0,
+                362,
+                543
+              ],
+              "anchor": [
+                171,
+                517
+              ],
+              "bodyHeight": 446,
+              "durationMs": 240,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 1000,
+          "uniformFps": null
+        },
+        "down": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 447,
+          "loop": false,
+          "releaseFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                0,
+                543,
+                362,
+                543
+              ],
+              "anchor": [
+                207,
+                497
+              ],
+              "bodyHeight": 447,
+              "durationMs": 200,
+              "label": "gather"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                362,
+                543,
+                362,
+                543
+              ],
+              "anchor": [
+                198,
+                496
+              ],
+              "bodyHeight": 447,
+              "durationMs": 280,
+              "label": "raise-focus"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                724,
+                543,
+                362,
+                543
+              ],
+              "anchor": [
+                198,
+                498
+              ],
+              "bodyHeight": 447,
+              "durationMs": 280,
+              "label": "release"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+              "rect": [
+                1086,
+                543,
+                362,
+                543
+              ],
+              "anchor": [
+                195,
+                496
+              ],
+              "bodyHeight": 447,
+              "durationMs": 240,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 1000,
+          "uniformFps": null
+        },
+        "right": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 673,
+          "loop": false,
+          "releaseFrame": 2,
+          "releaseAnchorPx": [
+            483,
+            215
+          ],
+          "timingSource": "registry",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                0,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 200,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                674,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 280,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                1348,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 280,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                2022,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 240,
+              "label": "4",
+              "sourceFrameIndex": 3
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 1000,
+          "uniformFps": null
+        },
+        "left": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 673,
+          "loop": false,
+          "mirrorX": true,
+          "releaseFrame": 2,
+          "releaseAnchorPx": [
+            483,
+            215
+          ],
+          "timingSource": "registry",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                0,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 200,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                674,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 280,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                1348,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 280,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp",
+              "rect": [
+                2022,
+                0,
+                674,
+                864
+              ],
+              "anchor": [
+                300.5,
+                774
+              ],
+              "bodyHeight": 673,
+              "durationMs": 240,
+              "label": "4",
+              "sourceFrameIndex": 3
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 1000,
+          "uniformFps": null
+        }
+      }
+    },
+    {
+      "id": "thief",
+      "key": "thief_f",
+      "gender": "f",
+      "approved": false,
+      "readiness": "partial-candidate",
+      "metadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/thief.json",
+      "metadataSha256": "b838111de877787ce5944bb7bd1fc69c5c3ce6a23b3561d90dac6b72271bc77e",
+      "attack": {
+        "up": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 435,
+          "loop": false,
+          "hitFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                18,
+                101,
+                365,
+                443
+              ],
+              "anchor": [
+                177,
+                439
+              ],
+              "bodyHeight": 435,
+              "durationMs": 100,
+              "label": "windup"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                399,
+                93,
+                319,
+                450
+              ],
+              "anchor": [
+                162.5,
+                446
+              ],
+              "bodyHeight": 435,
+              "durationMs": 80,
+              "label": "lunge"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                736,
+                66,
+                332,
+                475
+              ],
+              "anchor": [
+                150,
+                471
+              ],
+              "bodyHeight": 435,
+              "durationMs": 90,
+              "label": "contact"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                1078,
+                100,
+                358,
+                439
+              ],
+              "anchor": [
+                197.5,
+                435
+              ],
+              "bodyHeight": 435,
+              "durationMs": 150,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 420,
+          "uniformFps": null
+        },
+        "down": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 459,
+          "loop": false,
+          "hitFrame": 2,
+          "timingSource": "delivery metadata suggestion",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                10,
+                583,
+                415,
+                452
+              ],
+              "anchor": [
+                170.5,
+                448
+              ],
+              "bodyHeight": 459,
+              "durationMs": 100,
+              "label": "windup"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                478,
+                577,
+                254,
+                463
+              ],
+              "anchor": [
+                79.5,
+                459
+              ],
+              "bodyHeight": 459,
+              "durationMs": 80,
+              "label": "lunge"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                776,
+                594,
+                271,
+                448
+              ],
+              "anchor": [
+                155,
+                444
+              ],
+              "bodyHeight": 459,
+              "durationMs": 90,
+              "label": "contact"
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+              "rect": [
+                1073,
+                569,
+                375,
+                467
+              ],
+              "anchor": [
+                194.5,
+                463
+              ],
+              "bodyHeight": 459,
+              "durationMs": 150,
+              "label": "recover"
+            }
+          ],
+          "frameCount": 4,
+          "durationMs": 420,
+          "uniformFps": null
+        },
+        "right": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 456,
+          "loop": false,
+          "releaseFrame": 6,
+          "releaseAnchorPx": [
+            286,
+            248
+          ],
+          "timingSource": "registry",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 100,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 65,
+              "label": "4",
+              "sourceFrameIndex": 3
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 65,
+              "label": "5",
+              "sourceFrameIndex": 4
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "6",
+              "sourceFrameIndex": 5
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 90,
+              "label": "7",
+              "sourceFrameIndex": 6
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 80,
+              "label": "8",
+              "sourceFrameIndex": 7
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 80,
+              "label": "9",
+              "sourceFrameIndex": 8
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 90,
+              "label": "10",
+              "sourceFrameIndex": 9
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 110,
+              "label": "11",
+              "sourceFrameIndex": 10
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 110,
+              "label": "12",
+              "sourceFrameIndex": 11
+            }
+          ],
+          "frameCount": 12,
+          "durationMs": 1000,
+          "uniformFps": null
+        },
+        "left": {
+          "approved": false,
+          "readiness": "candidate",
+          "bodyHeight": 456,
+          "loop": false,
+          "mirrorX": true,
+          "releaseFrame": 6,
+          "releaseAnchorPx": [
+            286,
+            248
+          ],
+          "timingSource": "registry",
+          "authoredEffects": true,
+          "sourceFacing": "three-quarter-right",
+          "frames": [
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 100,
+              "label": "1",
+              "sourceFrameIndex": 0
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "2",
+              "sourceFrameIndex": 1
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "3",
+              "sourceFrameIndex": 2
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                0,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 65,
+              "label": "4",
+              "sourceFrameIndex": 3
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 65,
+              "label": "5",
+              "sourceFrameIndex": 4
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 70,
+              "label": "6",
+              "sourceFrameIndex": 5
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 90,
+              "label": "7",
+              "sourceFrameIndex": 6
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                640,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 80,
+              "label": "8",
+              "sourceFrameIndex": 7
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                0,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 80,
+              "label": "9",
+              "sourceFrameIndex": 8
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                640,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 90,
+              "label": "10",
+              "sourceFrameIndex": 9
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1280,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 110,
+              "label": "11",
+              "sourceFrameIndex": 10
+            },
+            {
+              "url": "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp",
+              "rect": [
+                1920,
+                1280,
+                640,
+                640
+              ],
+              "anchor": [
+                320.5,
+                600
+              ],
+              "bodyHeight": 456,
+              "durationMs": 110,
+              "label": "12",
+              "sourceFrameIndex": 11
+            }
+          ],
+          "frameCount": 12,
+          "durationMs": 1000,
+          "uniformFps": null
+        }
+      }
+    }
+  ],
+  "assets": {
+    "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+      "sha256": "280ea68ad196fee5a4d09de781d140b35fd2d342eedc34ee132b91f4777b6f19",
+      "bytes": 1759591
+    },
+    "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\sword-hero_sword_f_attack-3737c669bafd.webp",
+      "sha256": "3737c669bafd5b41645fe895534ea2cf78094cb1fbaa383c4b10dc9f03c2e960",
+      "bytes": 1504994
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+      "sha256": "22cdfb7772b53af712cfee8eca1601917d6c4d88883fc13b35fb2fafdbd604c4",
+      "bytes": 2055212
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_1-dccc08185fb4.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_1-dccc08185fb4.webp",
+      "sha256": "dccc08185fb4311c8717eca0f588b0ed76b463cd54a9afec1e483bacb7f3b136",
+      "bytes": 76314
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_2-95dc013149fc.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_2-95dc013149fc.webp",
+      "sha256": "95dc013149fc61fed97e9c5b29ff7533462ebc216c8b6c5cf6f8e2d1ad7b6546",
+      "bytes": 77176
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_3-50cb5ede10a6.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_3-50cb5ede10a6.webp",
+      "sha256": "50cb5ede10a6d3a8b2491a26802c0c9f7a33c81fe86fff7b89951d296f8cc4b0",
+      "bytes": 80856
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_4-9c938b225515.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_4-9c938b225515.webp",
+      "sha256": "9c938b225515eb11945a01ffda585707b6962d453b589baf6d90adcfeea5c4f7",
+      "bytes": 80668
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_5-6d637fa7ea1f.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_5-6d637fa7ea1f.webp",
+      "sha256": "6d637fa7ea1ffe0d4376047fb445935f98f5935c98434da91a19e59be80178ad",
+      "bytes": 79372
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_6-68cefa210092.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_6-68cefa210092.webp",
+      "sha256": "68cefa210092d3bf4839ff4be32741efb4dab610df5e65cfdc7cd143dbb03ac4",
+      "bytes": 73558
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_7-a0ed6f82b564.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_7-a0ed6f82b564.webp",
+      "sha256": "a0ed6f82b564e16a9c131fd62091883e4496592fdd35c7b4a667374986ded281",
+      "bytes": 82246
+    },
+    "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_8-7c29c6079427.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\archer-hero_archer_base_f_attack_8-7c29c6079427.webp",
+      "sha256": "7c29c6079427488d6d58a0a7b76ebe8aa6ee88bbea3c867ff394c2e64c80449c",
+      "bytes": 77086
+    },
+    "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+      "sha256": "7989217eee8bde679b5809fd5fa50fd36c3e5e7ee1690cc25a2cbc308962deaa",
+      "bytes": 2107151
+    },
+    "/ui-generated-20261030/characters-v1/assets/mage-character-c6d5952cf353.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\mage-character-c6d5952cf353.webp",
+      "sha256": "c6d5952cf353732d9bc417294db6628747df3a2b1dd32bd0ccb58bb905ca5665",
+      "bytes": 1775968
+    },
+    "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+      "sha256": "3cd0b5ad674798520895557572a32079495a867251b749af03a8509cc9a9856b",
+      "bytes": 1684951
+    },
+    "/ui-generated-20261030/characters-v1/assets/thief-character-78c3f23d8dfb.webp": {
+      "path": "D:\\StarJournal\\grok-assets\\ui-generated-20261030\\characters-v1\\assets\\thief-character-78c3f23d8dfb.webp",
+      "sha256": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42",
+      "bytes": 2959670
+    }
+  }
+}

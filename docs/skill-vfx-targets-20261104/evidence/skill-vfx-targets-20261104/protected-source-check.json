@@ -1,0 +1,987 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-04T10:55:33.287Z",
+  "base": "ccedf3545cbef4bdc66b949aad077ef6d2ea44fa",
+  "protectedSources": [
+    {
+      "path": "worker/src/views.js.20261010-gacha-v1.bak",
+      "expected": "fd7342b4a98667164a75b63b0c8b73a5434de613c70276fb7abc3448349f87ed",
+      "actual": "fd7342b4a98667164a75b63b0c8b73a5434de613c70276fb7abc3448349f87ed",
+      "matched": true
+    },
+    {
+      "path": "worker/src/views.js",
+      "expected": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218",
+      "actual": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/trade.js",
+      "expected": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756",
+      "actual": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/tower.js",
+      "expected": "0f4b40e74cd0ddf7a0beb3209c067208f53fbab04f3aa79051551ccf844127f3",
+      "actual": "0f4b40e74cd0ddf7a0beb3209c067208f53fbab04f3aa79051551ccf844127f3",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/tower-daily.js",
+      "expected": "887a4292b52f6337d90deae5e5640bf7ebcbf4abee2cac30037ef23a0ad11b1c",
+      "actual": "887a4292b52f6337d90deae5e5640bf7ebcbf4abee2cac30037ef23a0ad11b1c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "expected": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae",
+      "actual": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/star-ring-gear.js",
+      "expected": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d",
+      "actual": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/star-ring-cosmetics.js",
+      "expected": "56e1b54c96ecd34e8550d405c4b5609ad52c9d402d1f62e581a83a7e6cbd4c22",
+      "actual": "56e1b54c96ecd34e8550d405c4b5609ad52c9d402d1f62e581a83a7e6cbd4c22",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/special.js",
+      "expected": "8b5b28daede8cd4a6a7dd5d0bbb7154147511ab8ea57a4f46092e0c6727d2959",
+      "actual": "8b5b28daede8cd4a6a7dd5d0bbb7154147511ab8ea57a4f46092e0c6727d2959",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/skill-learning.js",
+      "expected": "c6e620d82f3658fe2b46839f0e9f6a461fda0443c29b348811b66a09d04467fa",
+      "actual": "c6e620d82f3658fe2b46839f0e9f6a461fda0443c29b348811b66a09d04467fa",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/share.js",
+      "expected": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd",
+      "actual": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/scene-chat.js",
+      "expected": "be92353804bf92b66239ed03ea7b324fc553b632efc3f51a335b4fb4c0cc438a",
+      "actual": "be92353804bf92b66239ed03ea7b324fc553b632efc3f51a335b4fb4c0cc438a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/player.js.20261010-gacha-v1.bak",
+      "expected": "f26653754e8f0bf35a046a8394c453a705f798e03330ce9ad8c01662ef3f1cd8",
+      "actual": "f26653754e8f0bf35a046a8394c453a705f798e03330ce9ad8c01662ef3f1cd8",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "expected": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c",
+      "actual": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "expected": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c",
+      "actual": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "expected": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d",
+      "actual": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/party-repeat.js",
+      "expected": "bbcf24217fc75f2473c92e8d56abdb67ecac78e4c0d17acc7a54a9f918f49e17",
+      "actual": "bbcf24217fc75f2473c92e8d56abdb67ecac78e4c0d17acc7a54a9f918f49e17",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/party-presence.js",
+      "expected": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0",
+      "actual": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/party-card.js",
+      "expected": "4b66de537e9acdca64815acf4be67e751ddeb0e68ed4f60b967f858da2324d1c",
+      "actual": "4b66de537e9acdca64815acf4be67e751ddeb0e68ed4f60b967f858da2324d1c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/operation-notices.js",
+      "expected": "c0a705a7d97f419b1a8e791073413f070c545f6ac9d5babde3376ef2e2b3b8f3",
+      "actual": "c0a705a7d97f419b1a8e791073413f070c545f6ac9d5babde3376ef2e2b3b8f3",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/monster-exchange.js",
+      "expected": "c31631edebb4032089a059b668401a31a324ee6b534442aa11eab7f581cee9f2",
+      "actual": "c31631edebb4032089a059b668401a31a324ee6b534442aa11eab7f581cee9f2",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/market-exchange.js",
+      "expected": "c064121e125887b746cbf7dfb578ae12b01a31634eefcf643c6bf71f82379139",
+      "actual": "c064121e125887b746cbf7dfb578ae12b01a31634eefcf643c6bf71f82379139",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/market-exchange-history.js",
+      "expected": "0a4efe90a77c6e646c136b774b548d8a9386ed2cf6d9322651a5c283364f0143",
+      "actual": "0a4efe90a77c6e646c136b774b548d8a9386ed2cf6d9322651a5c283364f0143",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/journal.js",
+      "expected": "eed6682a993ef61645a81a5a67c37398649274d12cef6406807edaf173f0c981",
+      "actual": "eed6682a993ef61645a81a5a67c37398649274d12cef6406807edaf173f0c981",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/home-activity.js",
+      "expected": "3d8232080b6f32f59f275af9b60a3b60f5d48fd0320957fb6c71a14c4761dd44",
+      "actual": "3d8232080b6f32f59f275af9b60a3b60f5d48fd0320957fb6c71a14c4761dd44",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/hero-hall.js",
+      "expected": "0786cf9ba6fc92b0d469693aeb9fcad3cb34d5286b38709d1d20cdf3cd5ff49a",
+      "actual": "0786cf9ba6fc92b0d469693aeb9fcad3cb34d5286b38709d1d20cdf3cd5ff49a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/guardian-sigil.js",
+      "expected": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205",
+      "actual": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/guardian-shop.js",
+      "expected": "2f7b7de46563a216d9e62adcc6a6090b1e55520d867bb527f2cbf37d803103dc",
+      "actual": "2f7b7de46563a216d9e62adcc6a6090b1e55520d867bb527f2cbf37d803103dc",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/guardian-auto.js",
+      "expected": "a59cbca9d62711523e5d037a249fe8ffd1222470697ce30e50ccc5a7b7b6b39d",
+      "actual": "a59cbca9d62711523e5d037a249fe8ffd1222470697ce30e50ccc5a7b7b6b39d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/forge-receipt.js",
+      "expected": "b23fcd4662ea61a41e65e7330b792c8fd2f2de65bbce07f64da8fe9d76965c60",
+      "actual": "b23fcd4662ea61a41e65e7330b792c8fd2f2de65bbce07f64da8fe9d76965c60",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/fate.js",
+      "expected": "f3cae11ea0efa15e29b22b322b89056e36f7e34b28a427e2c6dbfce5243a843e",
+      "actual": "f3cae11ea0efa15e29b22b322b89056e36f7e34b28a427e2c6dbfce5243a843e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/fate-social.js",
+      "expected": "b0468aa6f2171e05727f5b1c1a005af334ecb8fef9a505c867aa2acce714fddf",
+      "actual": "b0468aa6f2171e05727f5b1c1a005af334ecb8fef9a505c867aa2acce714fddf",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/fate-shared.js",
+      "expected": "2ffe6283fcda1665e9d1674f9ee0ea9b36e31ab1f213aeac2713927ff709bc20",
+      "actual": "2ffe6283fcda1665e9d1674f9ee0ea9b36e31ab1f213aeac2713927ff709bc20",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/fate-quests.js",
+      "expected": "159c3e736fb6c3eb57ffacefc6de658923931eedad33b7c09c8f0d28919c7bb2",
+      "actual": "159c3e736fb6c3eb57ffacefc6de658923931eedad33b7c09c8f0d28919c7bb2",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/fate-gifts.js",
+      "expected": "0b020e170865b907232e1c37ae6ccbca0c073e70e4b4e828baf8b8e624380f1e",
+      "actual": "0b020e170865b907232e1c37ae6ccbca0c073e70e4b4e828baf8b8e624380f1e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/equipment-recovery.js",
+      "expected": "e27e084e6e1b11dfb0450a154198d74b2dbbc7d8e4379e87d9a6bedde3836928",
+      "actual": "e27e084e6e1b11dfb0450a154198d74b2dbbc7d8e4379e87d9a6bedde3836928",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/equipment-collection.js",
+      "expected": "8a2f2289b9dd4d945529a9e928429afaf1d3c0751ea81490d051540e71107f8e",
+      "actual": "8a2f2289b9dd4d945529a9e928429afaf1d3c0751ea81490d051540e71107f8e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/collection-blessings.js",
+      "expected": "299bd5cb1bca69328818ad69c1d863d9779641bf4752ac08a8b74fbd28a5d6ac",
+      "actual": "299bd5cb1bca69328818ad69c1d863d9779641bf4752ac08a8b74fbd28a5d6ac",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/character-delete.js",
+      "expected": "51edda5e2afd61fbbf947236efa03a268b09893b5b98810f6f528d024de91f3b",
+      "actual": "51edda5e2afd61fbbf947236efa03a268b09893b5b98810f6f528d024de91f3b",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "expected": "432409c923c7730c71cfd6d59752e76c525f796ea271333b4270e555cf0e6ea4",
+      "actual": "432409c923c7730c71cfd6d59752e76c525f796ea271333b4270e555cf0e6ea4",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/boss-exchange.js",
+      "expected": "1c00edfec0205e44e5c567d609a9b03f09dadc5589c9214c4eaf37a7d13e86ae",
+      "actual": "1c00edfec0205e44e5c567d609a9b03f09dadc5589c9214c4eaf37a7d13e86ae",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/background-operations.js",
+      "expected": "aa2d4b458507c5ab9e416f387aacde60092ec8812ead72934d0e9c49087a5ed4",
+      "actual": "aa2d4b458507c5ab9e416f387aacde60092ec8812ead72934d0e9c49087a5ed4",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/auto-reroll.js",
+      "expected": "97b4effe0baeeb7a128ad43ae5908cda33265aa1557623b12cd74c63c4483951",
+      "actual": "97b4effe0baeeb7a128ad43ae5908cda33265aa1557623b12cd74c63c4483951",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/auto-enhance.js",
+      "expected": "45840bb0a03ee9e8e5df1fe704773507cc30775ac2297350e3e0c5be536e67c4",
+      "actual": "45840bb0a03ee9e8e5df1fe704773507cc30775ac2297350e3e0c5be536e67c4",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "expected": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+      "actual": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/atlas-talents.js",
+      "expected": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de",
+      "actual": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/atlas-quests.js",
+      "expected": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc",
+      "actual": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc",
+      "matched": true
+    },
+    {
+      "path": "worker/src/services/atlas-background.js",
+      "expected": "87ba3d0fa825ac17eea0ba4f9bb01c2900abeb52f872f6372e3e42a1877ba005",
+      "actual": "87ba3d0fa825ac17eea0ba4f9bb01c2900abeb52f872f6372e3e42a1877ba005",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/index.js",
+      "expected": "ecccd05c28cfa61a39e82450eee3f26fdc34924c5441e1827ae5b2393fa28177",
+      "actual": "ecccd05c28cfa61a39e82450eee3f26fdc34924c5441e1827ae5b2393fa28177",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/identity.js",
+      "expected": "f43e56bd62b4d8df96193d177b3a99c0fc36373157ad0fb8a10853d95fff4e7f",
+      "actual": "f43e56bd62b4d8df96193d177b3a99c0fc36373157ad0fb8a10853d95fff4e7f",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/guarded-db.js",
+      "expected": "f81d9fba7ebd83f32416845a27470af0c6a1f2f9aa960e6be19eefa5f5decb7a",
+      "actual": "f81d9fba7ebd83f32416845a27470af0c6a1f2f9aa960e6be19eefa5f5decb7a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/errors.js",
+      "expected": "03b99a625cacbb02c4baccba97144ce8bc7f215861bf360207395414a4eda562",
+      "actual": "03b99a625cacbb02c4baccba97144ce8bc7f215861bf360207395414a4eda562",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/catalog.js",
+      "expected": "96b576732ec2e3c2eca5a4083502522538c1bd8e575e769637f98eb104bc6b35",
+      "actual": "96b576732ec2e3c2eca5a4083502522538c1bd8e575e769637f98eb104bc6b35",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/background.js",
+      "expected": "f6fbdacfdfb294471cbc323834254ea1361a7f8821e824b1fd9f22fa7695e822",
+      "actual": "f6fbdacfdfb294471cbc323834254ea1361a7f8821e824b1fd9f22fa7695e822",
+      "matched": true
+    },
+    {
+      "path": "worker/src/realm/asset-preservation.js",
+      "expected": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f",
+      "actual": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f",
+      "matched": true
+    },
+    {
+      "path": "worker/src/index.js.20261010-gacha-v1.bak",
+      "expected": "fe05a8f330fdb60644d8dba204ad33663051657a09e54833c7f629436b6d21f9",
+      "actual": "fe05a8f330fdb60644d8dba204ad33663051657a09e54833c7f629436b6d21f9",
+      "matched": true
+    },
+    {
+      "path": "worker/src/index.js",
+      "expected": "7e31a47d7ba8956e03c659218a762e47cff61357313716e21d2b6af6a763c126",
+      "actual": "7e31a47d7ba8956e03c659218a762e47cff61357313716e21d2b6af6a763c126",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/trade.js",
+      "expected": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17",
+      "actual": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/tower-progression.js",
+      "expected": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3",
+      "actual": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/time.js",
+      "expected": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6",
+      "actual": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "expected": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562",
+      "actual": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "expected": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9",
+      "actual": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "expected": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc",
+      "actual": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "expected": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6",
+      "actual": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "expected": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910",
+      "actual": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "expected": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261",
+      "actual": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "expected": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f",
+      "actual": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/star-ring-pools.js",
+      "expected": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1",
+      "actual": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/star-ring-gear.js",
+      "expected": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4",
+      "actual": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/star-ring-cosmetics.js",
+      "expected": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471",
+      "actual": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "expected": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36",
+      "actual": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "expected": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1",
+      "actual": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "expected": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d",
+      "actual": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "expected": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa",
+      "actual": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "expected": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728",
+      "actual": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/shop.js.20261010-gacha-v1.bak",
+      "expected": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5",
+      "actual": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/shop.js",
+      "expected": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b",
+      "actual": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/share.js",
+      "expected": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405",
+      "actual": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "expected": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69",
+      "actual": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/pve-balance.js",
+      "expected": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683",
+      "actual": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/potion-choice.js",
+      "expected": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284",
+      "actual": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "expected": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621",
+      "actual": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/party-stamina.js",
+      "expected": "d6b6d3028d58327c499b8ae7fdaa24cda6f64d966f766db583f7607bb2e0369c",
+      "actual": "d6b6d3028d58327c499b8ae7fdaa24cda6f64d966f766db583f7607bb2e0369c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/party-roles.js",
+      "expected": "73bdf6a0b4bebdba501c146a8d5e902c577e5e2b1571af5e1fabaf4ccd61597b",
+      "actual": "73bdf6a0b4bebdba501c146a8d5e902c577e5e2b1571af5e1fabaf4ccd61597b",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/monsters.js",
+      "expected": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb",
+      "actual": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/monster-readiness.js",
+      "expected": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef",
+      "actual": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/monster-data.js",
+      "expected": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be",
+      "actual": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/monster-art-compatibility.js",
+      "expected": "d98dd61c7d7281bcb5f3f4a55e46d8a45bc4ab1fca905471ebf35357b77a74de",
+      "actual": "d98dd61c7d7281bcb5f3f4a55e46d8a45bc4ab1fca905471ebf35357b77a74de",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "expected": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef",
+      "actual": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "expected": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0",
+      "actual": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/lineage.js",
+      "expected": "9096b63ffe95478fa4d3b18e759917cf4663a9d7298fdd940aa25c447418f222",
+      "actual": "9096b63ffe95478fa4d3b18e759917cf4663a9d7298fdd940aa25c447418f222",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "expected": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15",
+      "actual": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/idle-skill-rotation.js",
+      "expected": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432",
+      "actual": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "expected": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20",
+      "actual": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-settings.json",
+      "expected": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69",
+      "actual": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-config.js",
+      "expected": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b",
+      "actual": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/guardian-effects.js",
+      "expected": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7",
+      "actual": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/guardian-assist.js",
+      "expected": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c",
+      "actual": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/gear.js",
+      "expected": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691",
+      "actual": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/gear-quality.js",
+      "expected": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a",
+      "actual": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/gear-growth.js",
+      "expected": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a",
+      "actual": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/gear-art.js",
+      "expected": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c",
+      "actual": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/formulas.js",
+      "expected": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62",
+      "actual": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/fate-reminders.js",
+      "expected": "065440370c290dc7346daf054deafc4a9354700d606bd828a5e62a9fa8e01911",
+      "actual": "065440370c290dc7346daf054deafc4a9354700d606bd828a5e62a9fa8e01911",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/fate-chart.js",
+      "expected": "5fb53f73aad8d6a5df055104d7dc2f4c1758e47aff7e623a1eecc21419057fc5",
+      "actual": "5fb53f73aad8d6a5df055104d7dc2f4c1758e47aff7e623a1eecc21419057fc5",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/fate-birth.js",
+      "expected": "98172d7f7fbe4706df8a1617b2eedea179779c8b76d4fbf138a66e9eedd758c2",
+      "actual": "98172d7f7fbe4706df8a1617b2eedea179779c8b76d4fbf138a66e9eedd758c2",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/equipment-recovery.js",
+      "expected": "430c873a58482afba3c566ab967e76188803890540f898876e28708f6a1a6e4e",
+      "actual": "430c873a58482afba3c566ab967e76188803890540f898876e28708f6a1a6e4e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/equipment-collection.js",
+      "expected": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd",
+      "actual": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/enhance.js",
+      "expected": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c",
+      "actual": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/enhance-preview.js",
+      "expected": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07",
+      "actual": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "expected": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd",
+      "actual": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/elements.js",
+      "expected": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1",
+      "actual": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/dungeon-art.js",
+      "expected": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d",
+      "actual": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/daily.js",
+      "expected": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc",
+      "actual": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/constants.js.backup-elf-redesign-20261010",
+      "expected": "15dc3e0162e8dcb0549ab3c51b0ee030ce237d06f40fe03ff5986fcfa49b3f9f",
+      "actual": "15dc3e0162e8dcb0549ab3c51b0ee030ce237d06f40fe03ff5986fcfa49b3f9f",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/constants.js",
+      "expected": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598",
+      "actual": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/combat-passives.js",
+      "expected": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf",
+      "actual": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/collection-blessings.js",
+      "expected": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896",
+      "actual": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "expected": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60",
+      "actual": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "expected": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c",
+      "actual": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/boss-economy.js",
+      "expected": "482ee6c3e05b9a4ac706450a663815eb3cf26f786e3a5bc725ace16dd587cfd5",
+      "actual": "482ee6c3e05b9a4ac706450a663815eb3cf26f786e3a5bc725ace16dd587cfd5",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/auto-reroll-targets.js",
+      "expected": "1ff7898da118d73ec3acccce7c257971f9399a9ab32a11c6a5c737fc719f06c8",
+      "actual": "1ff7898da118d73ec3acccce7c257971f9399a9ab32a11c6a5c737fc719f06c8",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/auto-blue.js",
+      "expected": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634",
+      "actual": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "expected": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+      "actual": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-scene.js",
+      "expected": "9275ebd1f6b5dde9ce832e9560c5a41d2978b2a17ab5687ce6e198ad297b0ee6",
+      "actual": "9275ebd1f6b5dde9ce832e9560c5a41d2978b2a17ab5687ce6e198ad297b0ee6",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-quests.js",
+      "expected": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99",
+      "actual": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-loot.js",
+      "expected": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e",
+      "actual": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "expected": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+      "actual": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-content.js",
+      "expected": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5",
+      "actual": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "expected": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+      "actual": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "expected": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+      "actual": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/atlas-balance.js",
+      "expected": "8667dd11594fd0855831afac9c7a32c038de1d967835ae74a6e87a1730281dde",
+      "actual": "8667dd11594fd0855831afac9c7a32c038de1d967835ae74a6e87a1730281dde",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/affixes.js",
+      "expected": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d",
+      "actual": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "expected": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d",
+      "actual": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d",
+      "matched": true
+    },
+    {
+      "path": "worker/src/fate-public.js",
+      "expected": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6",
+      "actual": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6",
+      "matched": true
+    },
+    {
+      "path": "worker/src/db.js",
+      "expected": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2",
+      "actual": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2",
+      "matched": true
+    },
+    {
+      "path": "worker/src/auto-enhance-runner.js",
+      "expected": "2e4d8eac945d5f16e29427859725d002e9699a02fec1f3ac3e063fb248e5ab84",
+      "actual": "2e4d8eac945d5f16e29427859725d002e9699a02fec1f3ac3e063fb248e5ab84",
+      "matched": true
+    },
+    {
+      "path": "worker/src/auth.js",
+      "expected": "a03f4f3343836bcae248086a6ce181655550d7fff52e665b0d05874e8113fddf",
+      "actual": "a03f4f3343836bcae248086a6ce181655550d7fff52e665b0d05874e8113fddf",
+      "matched": true
+    },
+    {
+      "path": "worker/src/app.js.20261010-gacha-v1.bak",
+      "expected": "c6d29d3273d6e83a2369aa1149a649ab76988617f439efaa2ec6babd7b5263f3",
+      "actual": "c6d29d3273d6e83a2369aa1149a649ab76988617f439efaa2ec6babd7b5263f3",
+      "matched": true
+    },
+    {
+      "path": "worker/src/app.js",
+      "expected": "7d41c8b2f648f5d8d9183b6690dc031346cf1abe3d80fe09908f4dc3b735cde8",
+      "actual": "7d41c8b2f648f5d8d9183b6690dc031346cf1abe3d80fe09908f4dc3b735cde8",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/pairing.js",
+      "expected": "4bb1e53dc2a3bd2edbc7596550ba62942b96834b3fce77196fcf9ec66e52533c",
+      "actual": "4bb1e53dc2a3bd2edbc7596550ba62942b96834b3fce77196fcf9ec66e52533c",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/index.js",
+      "expected": "36b7b88e6458e8608685518a061cfddbd08824ab13e3c3f1325bad29ceb687d1",
+      "actual": "36b7b88e6458e8608685518a061cfddbd08824ab13e3c3f1325bad29ceb687d1",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/grants.js",
+      "expected": "d702c05b92320ef9aec746ad8687e37aa396081165a2c8a4bb475f9ed83b75cf",
+      "actual": "d702c05b92320ef9aec746ad8687e37aa396081165a2c8a4bb475f9ed83b75cf",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/data.js",
+      "expected": "d06124f44225d73faf10406ce3fa13281309b24ea644a073aa638f7347295621",
+      "actual": "d06124f44225d73faf10406ce3fa13281309b24ea644a073aa638f7347295621",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/catalog.js",
+      "expected": "5757f52fa19a098b4b292c82355742098967602b152d2042c4cb88f49a9c20b1",
+      "actual": "5757f52fa19a098b4b292c82355742098967602b152d2042c4cb88f49a9c20b1",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/behavior.js",
+      "expected": "180c7da40fd1eacd05d4529cf0be5e0c1b855234ff90356e4271184ba79716c0",
+      "actual": "180c7da40fd1eacd05d4529cf0be5e0c1b855234ff90356e4271184ba79716c0",
+      "matched": true
+    },
+    {
+      "path": "worker/src/admin/auth.js",
+      "expected": "96057ba1b3d4b24d450d14aa671435e3964cbf6abee2da61147793320dcff2b8",
+      "actual": "96057ba1b3d4b24d450d14aa671435e3964cbf6abee2da61147793320dcff2b8",
+      "matched": true
+    },
+    {
+      "path": "worker/src/accounts.js",
+      "expected": "784b31069c612e4e3e2574accbdca6e51589ddd4091a04da0a5f106db865c584",
+      "actual": "784b31069c612e4e3e2574accbdca6e51589ddd4091a04da0a5f106db865c584",
+      "matched": true
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "expected": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+      "actual": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+      "matched": true
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "expected": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+      "actual": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+      "matched": true
+    },
+    {
+      "path": "worker/public/scene-social-preview.css",
+      "expected": "6b93e25f8aef4dc45da33a08f0b422f9288957852855b6fae16fc9fcf22ea488",
+      "actual": "6b93e25f8aef4dc45da33a08f0b422f9288957852855b6fae16fc9fcf22ea488",
+      "matched": true
+    },
+    {
+      "path": "worker/public/ui/button-materials/button-plate.webp",
+      "expected": "4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57",
+      "actual": "4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57",
+      "matched": true
+    },
+    {
+      "path": "worker/public/ui/button-materials/nav-plate.webp",
+      "expected": "c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b",
+      "actual": "c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b",
+      "matched": true
+    }
+  ],
+  "files": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 30147,
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+      "crlf": 0,
+      "lf": 370
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.mjs",
+      "bytes": 15257,
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac",
+      "crlf": 0,
+      "lf": 94
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.css",
+      "bytes": 18493,
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677",
+      "crlf": 0,
+      "lf": 12
+    },
+    {
+      "path": "worker/public/preview-skill-vfx.html",
+      "bytes": 7831,
+      "sha256": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a",
+      "crlf": 0,
+      "lf": 34
+    },
+    {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "bytes": 1546114,
+      "sha256": "b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e",
+      "crlf": 0,
+      "lf": 48126
+    },
+    {
+      "path": "worker/test/skill-vfx-target-timing.test.js",
+      "bytes": 13319,
+      "sha256": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db",
+      "crlf": 0,
+      "lf": 202
+    },
+    {
+      "path": "worker/tools/skill-vfx-target-browser.cjs",
+      "bytes": 9908,
+      "sha256": "f34a7a8392b96b0045efa9d4c487da929a944ac3bb9c1d01e15636457645a0c0",
+      "crlf": 0,
+      "lf": 110
+    },
+    {
+      "path": "worker/tools/skill-vfx-five-target-receipt.mjs",
+      "bytes": 14920,
+      "sha256": "6fa80a3b81945199a10f75c76d524785a38c5025991b157cd794b759658feda1",
+      "crlf": 0,
+      "lf": 256
+    }
+  ],
+  "head": "ccedf3545cbef4bdc66b949aad077ef6d2ea44fa",
+  "branch": "codex/skill-vfx-20261104",
+  "gitStatus": " M worker/public/preview-skill-vfx.html\n M worker/public/skill-vfx-coverage.json\n M worker/public/skill-vfx-engine.mjs\n M worker/public/skill-vfx-preview.css\n M worker/public/skill-vfx-preview.mjs\n?? worker/test/skill-vfx-target-timing.test.js\n?? worker/tools/skill-vfx-five-target-receipt.mjs\n?? worker/tools/skill-vfx-target-browser.cjs\n",
+  "gitattributes": "# Keep schema fixtures identical across Windows and cloud checkouts.\r\nworker/migrations/*.sql text eol=lf\r\nworker/public/art/ui/armory-specializations-20261016/*.svg text eol=lf\r\nworker/public/expedition/index.html text eol=lf\r\nworker/public/expedition/live.js text eol=lf\r\nworker/public/expedition/party-tactics.js text eol=lf\r\nworker/public/expedition/review.css text eol=lf\r\nworker/public/fate/** text eol=lf\r\nworker/public/fate-entry.js text eol=lf\r\nworker/public/fate-entry.css text eol=lf\r\n\r\n# Pin captured VFX source line endings for byte-level evidence checks.\r\nworker/public/app.js text eol=crlf\r\nworker/public/battle.js text eol=crlf\r\nworker/public/expedition/combat-playback.js text eol=crlf\r\nworker/public/expedition/hero-art-playback.js text eol=crlf\r\nworker/public/scene-live-session.js text eol=crlf\r\nworker/public/scene-live-view.css text eol=crlf\r\nworker/public/scene-live-view.js text eol=crlf\r\nworker/public/skill-vfx-actor-bridge.mjs text eol=lf\r\nworker/public/skill-vfx-actor-profiles.json text eol=crlf\r\nworker/public/skill-vfx-catalog.json text eol=lf\r\nworker/public/skill-vfx-combat-adapter.mjs text eol=lf\r\nworker/public/skill-vfx-engine.mjs text eol=lf\r\nworker/public/skill-vfx-legacy.mjs text eol=lf\r\nworker/public/skill-vfx-recipes.json text eol=lf\r\nworker/public/star-ring-heroes.js text eol=crlf\r\nworker/src/game/atlas-catalog.js text eol=crlf\r\nworker/src/game/atlas-combat-observer.js text eol=lf\r\nworker/src/game/atlas-engine.js text eol=crlf\r\nworker/src/game/atlas-talents.js text eol=crlf\r\nworker/src/game/boss.js text eol=crlf\r\nworker/src/game/idle-combat.js text eol=crlf\r\nworker/src/game/idle.js text eol=crlf\r\nworker/src/game/pk.js text eol=crlf\r\nworker/src/game/skill-vfx-events.js text eol=lf\r\nworker/src/game/special-data.js text eol=crlf\r\nworker/src/game/special-idle.js text eol=crlf\r\nworker/src/game/special.js text eol=crlf\r\nworker/src/game/star-ring.js text eol=crlf\r\nworker/src/game/stats.js text eol=crlf\r\nworker/src/services/atlas.js text eol=crlf\r\nworker/src/services/boss.js text eol=crlf\r\nworker/src/services/party.js text eol=crlf\r\nworker/src/services/pk.js text eol=crlf\r\nworker/src/services/player.js text eol=crlf\r\nworker/src/services/star-ring.js text eol=crlf\r\nworker/test/skill-vfx-legacy-harness.js text eol=lf\r\nworker/tools/build-skill-vfx-browser-evidence.mjs text eol=lf\r\nworker/tools/build-skill-vfx-catalog.mjs text eol=lf\r\nworker/tools/build-skill-vfx-coverage.mjs text eol=lf\r\nworker/tools/build-skill-vfx-recipes.mjs text eol=lf\r\nworker/tools/skill-vfx-identity-browser.mjs text eol=lf\r\nworker/tools/skill-vfx-legacy-presentation-check.mjs text eol=lf\r\nworker/tools/skill-vfx-live-browser.cjs text eol=lf\r\nworker/public/skill-vfx-coverage.json text eol=lf\r\n\r\n# Reconstruct verified button source CRLF bytes on every checkout.\r\nworker/public/scene-social-preview.css text eol=crlf\r\nworker/tools/scene-live-preview.mjs text eol=crlf\r\nworker/tools/button-polish-browser.cjs text eol=crlf\r\nworker/test/scene-preview-assets.test.js text eol=crlf\r\n"
+}

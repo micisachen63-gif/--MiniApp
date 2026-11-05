@@ -5,13 +5,14 @@ import {createHash} from 'node:crypto';
 import * as E from '../src/game/star-ring.js';
 import {POOL_MONSTERS,encounterSchedule,selectEncounter} from '../src/game/star-ring-pools.js';
 import {mkChar,T0} from './helpers.js';
+import {stringifyStarRingGameplay} from './star-ring-vfx-assertions.js';
 function state(tier=90,version=2,seed='pool-test',tactic='balanced'){
  const actors=['sword:B2','mage:A1','thief:A1','archer:B1','sword:A1'].map((spec,i)=>{const[base_class,class_path]=spec.split(':');return E.snapshot({char:mkChar({tg_id:String(i+1),base_class,class_path:tier>=90?class_path:class_path[0],level:tier}),equipment:[]});});
  return {id:'golden-v1',engineVersion:version,tier,tactic,difficulty:'normal',seed,startedAt:T0,endsAt:T0+E.DURATION,actors,results:[],stageTactics:[tactic],departed:{}};
 }
 test('published v1 full twelve-hour snapshots remain byte-for-byte identical at low, high and final tiers',()=>{
  const cases=JSON.parse(readFileSync(new URL('star-ring-v1-golden.json',import.meta.url)));
- for(const c of cases){const s=state(c.tier,1,`legacy-${c.tier}-${c.tactic}`,c.tactic);for(let i=0;i<6;i++){const r=E.simulateStage(s,i);assert.equal(createHash('sha256').update(JSON.stringify(r)).digest('hex'),c.hash[i],`${c.tier}/${c.tactic}/${i}`);s.results.push(r);}}
+ for(const c of cases){const s=state(c.tier,1,`legacy-${c.tier}-${c.tactic}`,c.tactic);for(let i=0;i<6;i++){const r=E.simulateStage(s,i);assert.equal(createHash('sha256').update(stringifyStarRingGameplay(r)).digest('hex'),c.hash[i],`${c.tier}/${c.tactic}/${i}`);s.results.push(r);}}
 });
 test('twelve exclusive four-species pools contain two normals, an elite and the original map boss',()=>{
  assert.equal(POOL_MONSTERS.length,36);const ids=new Set();for(let h=0;h<12;h++){const p=E.encounterPool(h);assert.deepEqual(p.map(x=>x.rank),['normal','normal','elite','boss']);assert.equal(p[3].enemyId,E.HOURLY_ENCOUNTERS[h].enemyId);for(const m of p){assert.ok(!ids.has(m.enemyId));ids.add(m.enemyId);assert.ok(m.spell&&m.behavior&&m.mechanic);}}assert.equal(ids.size,48);

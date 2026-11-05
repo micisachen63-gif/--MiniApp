@@ -1,0 +1,296 @@
+{
+  "report": [
+    {
+      "skillId": "special:skill_03_2",
+      "recipe": {
+        "id": "special:skill_03_2",
+        "family": "rain",
+        "baseClass": "archer",
+        "kind": "attack",
+        "tier": 1,
+        "variant": 2522940024,
+        "durationMs": 1800,
+        "impactAt": 0.57,
+        "colors": [
+          "#73edbc",
+          "#e6ffd1",
+          "#37a595"
+        ],
+        "support": false,
+        "phases": [
+          {
+            "id": "charge",
+            "label": "蓄力",
+            "from": 0,
+            "to": 0.22
+          },
+          {
+            "id": "release",
+            "label": "釋放",
+            "from": 0.22,
+            "to": 0.57
+          },
+          {
+            "id": "impact",
+            "label": "命中",
+            "from": 0.57,
+            "to": 0.7999999999999999
+          },
+          {
+            "id": "dissolve",
+            "label": "消散",
+            "from": 0.7999999999999999,
+            "to": 1
+          }
+        ],
+        "art": {
+          "atlas": "archer-atlas.webp",
+          "grid": [
+            3,
+            3
+          ],
+          "additional": []
+        },
+        "visualOnly": true
+      },
+      "layout": {
+        "from": {
+          "x": 453,
+          "y": 274.95
+        },
+        "to": {
+          "x": 453,
+          "y": 107.25
+        }
+      },
+      "bodyHeight": 132,
+      "phases": [
+        {
+          "phase": 0.5,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 7861,
+          "bbox": {
+            "left": 377,
+            "top": 0,
+            "right": 528,
+            "bottom": 181
+          },
+          "filename": "special_skill_03_2-up-500.png"
+        },
+        {
+          "phase": 0.6299999999999999,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 10831,
+          "bbox": {
+            "left": 366,
+            "top": 51,
+            "right": 528,
+            "bottom": 181
+          },
+          "filename": "special_skill_03_2-up-630.png"
+        }
+      ]
+    },
+    {
+      "skillId": "special:skill_20_1",
+      "recipe": {
+        "id": "special:skill_20_1",
+        "family": "rain",
+        "baseClass": "archer",
+        "kind": "attack",
+        "tier": 3,
+        "variant": 370769098,
+        "durationMs": 1860,
+        "impactAt": 0.57,
+        "colors": [
+          "#73edbc",
+          "#e6ffd1",
+          "#37a595"
+        ],
+        "support": false,
+        "phases": [
+          {
+            "id": "charge",
+            "label": "蓄力",
+            "from": 0,
+            "to": 0.22
+          },
+          {
+            "id": "release",
+            "label": "釋放",
+            "from": 0.22,
+            "to": 0.57
+          },
+          {
+            "id": "impact",
+            "label": "命中",
+            "from": 0.57,
+            "to": 0.7999999999999999
+          },
+          {
+            "id": "dissolve",
+            "label": "消散",
+            "from": 0.7999999999999999,
+            "to": 1
+          }
+        ],
+        "art": {
+          "atlas": "archer-atlas.webp",
+          "grid": [
+            3,
+            3
+          ],
+          "additional": []
+        },
+        "visualOnly": true
+      },
+      "layout": {
+        "from": {
+          "x": 453,
+          "y": 274.95
+        },
+        "to": {
+          "x": 453,
+          "y": 107.25
+        }
+      },
+      "bodyHeight": 132,
+      "phases": [
+        {
+          "phase": 0.5,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 8483,
+          "bbox": {
+            "left": 366,
+            "top": 0,
+            "right": 528,
+            "bottom": 181
+          },
+          "filename": "special_skill_20_1-up-500.png"
+        },
+        {
+          "phase": 0.6299999999999999,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 11385,
+          "bbox": {
+            "left": 377,
+            "top": 60,
+            "right": 540,
+            "bottom": 181
+          },
+          "filename": "special_skill_20_1-up-630.png"
+        }
+      ]
+    },
+    {
+      "skillId": "native:archer:A",
+      "recipe": {
+        "id": "native:archer:A",
+        "family": "rain",
+        "baseClass": "archer",
+        "kind": "attack",
+        "tier": 1,
+        "variant": 2951485706,
+        "durationMs": 1860,
+        "impactAt": 0.57,
+        "colors": [
+          "#73edbc",
+          "#e6ffd1",
+          "#37a595"
+        ],
+        "support": false,
+        "phases": [
+          {
+            "id": "charge",
+            "label": "蓄力",
+            "from": 0,
+            "to": 0.22
+          },
+          {
+            "id": "release",
+            "label": "釋放",
+            "from": 0.22,
+            "to": 0.57
+          },
+          {
+            "id": "impact",
+            "label": "命中",
+            "from": 0.57,
+            "to": 0.7999999999999999
+          },
+          {
+            "id": "dissolve",
+            "label": "消散",
+            "from": 0.7999999999999999,
+            "to": 1
+          }
+        ],
+        "art": {
+          "atlas": "archer-atlas.webp",
+          "grid": [
+            3,
+            3
+          ],
+          "additional": []
+        },
+        "visualOnly": true
+      },
+      "layout": {
+        "from": {
+          "x": 453,
+          "y": 274.95
+        },
+        "to": {
+          "x": 453,
+          "y": 107.25
+        }
+      },
+      "bodyHeight": 132,
+      "phases": [
+        {
+          "phase": 0.5,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 7911,
+          "bbox": {
+            "left": 377,
+            "top": 0,
+            "right": 528,
+            "bottom": 181
+          },
+          "filename": "native_archer_A-up-500.png"
+        },
+        {
+          "phase": 0.6299999999999999,
+          "canvas": {
+            "width": 906,
+            "height": 390
+          },
+          "pixels": 11082,
+          "bbox": {
+            "left": 363,
+            "top": 61,
+            "right": 534,
+            "bottom": 181
+          },
+          "filename": "native_archer_A-up-630.png"
+        }
+      ]
+    }
+  ],
+  "errors": []
+}

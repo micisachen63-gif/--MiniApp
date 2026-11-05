@@ -1,0 +1,219 @@
+StarJournal｜技能特效製作與接續說明
+版本日期：2026-11-04
+本文件路徑：docs/SKILL_VFX_20261104.txt
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-20261104
+分支：codex/skill-vfx-20261104
+資料來源提交：b633c3cdf4b8df6d8e689b21a8e585cc320bba3e
+核心功能提交：6c028e1ed355451da892319181fba0dee53dfa02
+最後交付提交與即時進度：以 D:\StarJournal\handoff\skill-vfx\STATUS.json 為準。
+
+一、這次完成的內容
+
+已依目前遊戲程式匯出技能與天賦，再為196個實裝技能身份建立可播放的動畫配方。四職使用四張3×3透明圖集，共36格素材，另有獵鷹與火精靈兩張召喚素材；引擎組合28種視覺家族，處理蓄力、釋放、命中／生效及消散。
+
+196是遊戲技能身份數，並非196張獨立繪製圖片。原生路線、技能書與Atlas技能各保留自己的ID、名稱、分類、seed與時間配方；同類動作共用圖集元素。天賦與支援技能按遊戲機制列為被動修改，不虛構成各自施放的攻擊。16招覺醒提案仍屬規劃，未計入實裝技能或已完成動畫。
+
+本線提供本機素材、可操作預覽與待接入的純呈現介面。正式戰鬥事件尚未接入，未部署或合併到main。
+
+二、目前技能／天賦核對結果
+
+- 職業原生路線技能：124，四職各31。
+- 特殊技能書：60，原三職54＋已發布盜賊6。
+- Atlas主技能：12，四職各3。
+- 合計：196。按職業分為劍士52、妖精52、法師52、盜賊40。
+- 支援技能：6。
+- 可配置天賦：120，四職各30；加4個起點共124節點。
+- 核心天賦：12，已包含在120個可配置節點內。
+- 每職最多天賦點數：24。
+- 規劃覺醒：16，獨立放在planned且implemented=false。
+
+資料由worker/src/game的權威模組匯出，包含atlas-catalog、atlas-talents、special-data、thief-skills、classes、constants與advanced-specializations等；16個來源檔雜湊見catalog-audit.json。性別外觀共用技能身份。
+
+build-skill-vfx-catalog.mjs --check 會核對目前模組與輸出，不因Git HEAD單純前進就把catalog誤判為過期。visualElement只表示美術方向，不取代裝備或戰鬥事件中的真實傷害元素。原生技能名稱帶召喚意象但實際機制為直接攻擊時，kind仍保留attack。
+
+三、可直接使用的預覽
+
+網址：
+http://127.0.0.1:9664/preview-skill-vfx.html
+
+健康檢查：
+http://127.0.0.1:9664/__vfx/health
+
+本次服務PID為50200；PID是本次紀錄，後續以健康檢查及preview-server.json為準。
+工作樹內啟動指令：
+node worker/tools/skill-vfx-preview-server.mjs
+
+先檢查既有9664服務，避免重複啟動。服務只綁127.0.0.1，只供應worker/public靜態檔案，只接受GET／HEAD，沒有遊戲API或正式資料庫連線。服務重啟不會改動其他工作線的Node程序。
+
+介面支援：
+- 四職、Atlas／原生職業／技能書來源篩選與名稱／ID搜尋。
+- 桌機技能清單、手機技能下拉選單。
+- 播放、暫停、循環、拖曳時間軸及以30 fps時間步長逐步前進。
+- 上下左右四方向，桌機132px／手機88px角色參照身高，各方向等比。
+- 夜色、黑底、淺色及透明格背景；淺色與格線以source-over檢查alpha。
+- 完整／精簡粒子品質及prefers-reduced-motion。
+- 120天賦、6支援、16規劃的核對視窗。
+場景中的施法點與試煉晶核為預覽參照物，尚未接上其他工作線的角色動畫。
+
+四、程式與素材位置
+
+worker/public/
+  preview-skill-vfx.html
+  skill-vfx-preview.css
+  skill-vfx-preview.mjs
+  skill-vfx-engine.mjs
+  skill-vfx-combat-adapter.mjs
+  skill-vfx-catalog.json
+  skill-vfx-recipes.json
+
+worker/tools/
+  build-skill-vfx-catalog.mjs
+  build-skill-vfx-recipes.mjs
+  skill-vfx-preview-server.mjs
+  skill-vfx-browser.cjs
+
+worker/test/
+  skill-vfx-engine.test.js
+  skill-vfx-combat-adapter.test.js
+
+worker/public/art/skill-vfx-20261104/ 執行用透明WebP：
+  sword-atlas.webp       1254×1254，668976 bytes
+  mage-atlas.webp        1254×1254，697614 bytes
+  archer-atlas.webp      1254×1254，669942 bytes
+  thief-atlas.webp       1254×1254，586874 bytes
+  hawk.webp              840×840，112014 bytes
+  fire-spirit.webp       840×840，94338 bytes
+合計2,829,758 bytes，約2.83 MB。每個檔案均以expected SHA256、尺寸與解碼驗證後原子落地。
+
+四張圖集均為3×3，每格418×418，格號：
+0彈體、1弧形斬擊、2命中爆光、3法環、4盾／印記、5碎片、6光柱／煙羽、7漩渦／場域、8核心亮點。
+劍士斬擊來源方向不同，由引擎水平鏡像統一。獵鷹與火精靈保持直立，左向以水平鏡像呈現，垂直方向沿軌跡移動並輕微傾斜。
+
+28個動畫家族：
+slash、whirlwind、bleed、shield、counter、pierce、volley、rain、snipe、beast、summon、trap、lightning、frost、fireball、meteor、arcane、beam、heal、holy、buff、poison、execute、combo、dash、shadow、time、curse。
+
+奧術飛彈／脈衝與持續光束使用不同時間形態；法師火系爆破使用火系碎光，冰系保留冰晶。護盾、治療與增益依實際kind在施法者處生效，不能用技能名稱或家族去假造敵人受擊。
+
+五、美術來源與再製資料
+
+worker/art-production/skill-vfx-20261104/ 保存：
+- catalog-audit.json：遊戲資料來源核對。
+- provenance.json：生成提示、選用來源、runtime雜湊及處理說明。
+- asset-qa.json：透明度、邊界與尺寸檢查。
+- cropped-source-over-proof-final.jpg：四職36格在深底正常alpha合成的QA圖。
+- summons-source-over-proof.jpg：兩個召喚素材的QA圖。
+- build-runtime-proofs.py、runtime-proof-receipt.json：可重跑的runtime圖像QA及收據。
+- source/：選用PNG原稿，byte-for-byte保留原始生成輸出。
+
+選用六張原稿：
+sword-atlas-v2.png、mage-atlas-v2.png、archer-atlas-v2.png、thief-atlas-v2.png、hawk-v1.png、fire-spirit-v1.png。
+6/6選用原稿已完整保存，合計8,909,088 bytes；原始PNG位元組未重編碼。source-materialization-receipt.json及delivery-verification.json記錄六份來源與六份runtime的SHA256、尺寸、解碼結果，pendingTransferFiles為空。另有verify-delivery.py可重做檔案交付核對。1680px召喚透明畫布中間圖只留在生成歷程／scratch，D槽source/內六張PNG是選用原稿。
+
+四張未選用atlas v1僅留作生成歷程；provenance已將originalSourceFile設為null、unselectedHistoryOnly=true，明記未交付D工作樹。不要把scratch歷史路徑當成本機來源文件。
+
+使用內建imagegen生成及定向修正alpha，沒有呼叫外部付費生圖API。技術轉檔只做格線裁切基準、尺寸／透明畫布處理及WebP編碼；沒有以程式重繪素材或色鍵去背。獵鷹／火精靈runtime縮為840px以降低解碼記憶體。可見的淡色光暈是素材的一部分；妖精圖集第6格上緣有輕微alpha光暈紀錄，正常尺寸source-over總覽未見硬矩形背景。
+
+六、驗收與證據
+
+驗收資料亦已複製到可隨Git保存的docs/skill-vfx-20261104/：
+validation-summary.json、tests.tap、browser-results.json、family-animation-contact-sheet.png、edge-review.json。
+上述原始.release-sync目錄另保留完整截圖；docs版本可供後續重新checkout時查閱。
+
+最終程式驗收：
+- engine 16項＋adapter／server 26項，合計42/42通過。
+- 0 fail、0 skip、0 cancel。
+- catalog --check 與 recipes --check 均exit0。
+- 17,248個計算影格涵蓋196身份×四向×11相位×2品質；另驗所有beast／summon技能四向與三個時點。
+- 計算測試涵蓋有限數值、格號、邊界透明、時序變化、確定性、四向比例、純支援效果、載入取消、clear／destroy、並行上限與reduced-motion。
+
+最終TAP：
+.release-sync/skill-vfx-20261104/tests.tap
+SHA256：15adfd4ab9904c28ca4178ab80865f135f6e2037f0bf894e7b1f5144c597ba55
+9181 bytes。
+
+最終瀏覽器驗收：
+.release-sync/skill-vfx-20261104/browser-2026-11-04T05-06-13-667Z/results.json
+同目錄family-contact-sheet.png為28家族總覽，另有desktop-*、phone-*與兩種背景截圖。
+
+結果：
+- 196/196技能，784/784四向案例。
+- 12個代表技能×3相位，共36/36。
+- 手機4個代表技能×四向，共16/16。
+- 14條實際UI控件全部通過。
+- Page／HTTP／console errors全部0。
+- Reduced motion播放750ms後active=0。
+- Destroy後active=0、loadedAtlases=0、pendingLoads=0、destroyed=true。
+
+三個預期箭雨入場觸頂：
+special:skill_03_2、special:skill_20_1、native:archer:A，在up、phase0.5從畫布上緣進場；phase0.63的命中效果完整，不是命中裁切。
+專項證據：
+.release-sync/skill-vfx-20261104/browser-2026-11-04T05-00-30-578Z/edge-review/
+
+已人工檢視28家族總覽、桌機／手機預覽、source-over素材QA與箭雨命中圖；784案例是自動渲染檢查，不宣稱784張全部逐一人工觀感評分。本輪使用本機Chrome軟體渲染與手機尺寸viewport，不等同實機GPU效能測試。
+
+必要時重跑（在本工作樹）：
+node --test --test-reporter=tap worker/test/skill-vfx-engine.test.js worker/test/skill-vfx-combat-adapter.test.js
+node worker/tools/build-skill-vfx-catalog.mjs --check
+node worker/tools/build-skill-vfx-recipes.mjs --check
+
+瀏覽器QA復用既有Playwright依賴：
+D:\StarJournal\worktree-snapshots\star-journal-scene-integration-20261104\.release-sync\browser-tools\node_modules
+只為該指令設定CODEX_PRIMARY_RUNTIME_NODE_MODULES指向此位置，再執行：
+node worker/tools/skill-vfx-browser.cjs
+不需重新安裝、不改全域環境或停止其他瀏覽器工作線。
+
+七、接入真實戰鬥前尚待完成
+
+現有scene資料只有room_entered、enemy_defeated、map_completed、completed、stopped、dead、exhausted、timed_out等摘要。scene-preview-bindings亦刻意阻擋原型castSkill／hit／projectileTo在live模式使用。這些摘要沒有精確的施放技能、時間、目標與釋放點，不可從HP差額或敵人死亡去猜測逐擊事件。
+
+已備的skill-vfx-combat-adapter.mjs只接受明確的schema1 committed-combat skill_cast。它校驗帳號、realm、角色及dispatch上下文、技能身份、時序與revision，防重送／過期事件；context切換、clear與destroy會中止等待中的播放。onCast可等待真正角色動畫的釋放標記，再傳入座標、方向與bodyHeight。
+以createCombatVfxAdapter(player,{context,onCast})建立，onCast可省略。公開方法為ingest(event)、setContext(context或null)、clear()、destroy()、stats()。ingest為非同步，成功回傳{accepted:true,eventId,instanceId}，拒絕回傳{accepted:false,reason}。
+
+最小事件欄位為{schemaVersion:1,source:"committed-combat",type:"skill_cast",eventId,skillId,context:{accountId,realmId,characterId,dispatchId},revision,atMs,from:{x,y},to:{x,y}}。eventId、skillId及context四欄皆為非空字串，context必須與目前設定完全相同；revision與atMs須為非負安全整數，座標須為有限數值且在允許範圍內。atMs與options.now使用相同的毫秒時基，預設為Date.now；預設接受最多5秒前、250ms後的事件。同revision的不同eventId可接受；低於已接受或等待中最高revision的事件會拒絕。
+
+targets、direction、bodyHeight與seed可省略，分別預設為空陣列、依from/to推導、options.bodyHeight（預設128）、eventId的確定性雜湊。onCast(event,{signal,isCurrent,context})可等待角色釋放標記，再回傳{from,to,targets,direction,bodyHeight}中的欄位覆寫呈現資料，或回傳false取消。即使使用hook，事件最初仍須提供合法from/to；等待時間會計入ageMs與過期檢查。
+
+clear()取消待播並清空畫面，但保留已接受事件的防重紀錄與revision；setContext()在上下文實際變更時重設防重狀態。destroy()終止adapter並呼叫player.clear()，不會銷毀共用player；頁面或場景確定釋放播放器時，仍須另呼叫player.destroy()。
+
+本案player.hasSkill()提供技能核對；換用自訂player時須保留此方法或傳入skillIds／isKnownSkill。committed-combat是事件格式標記，真正的權威結算與事件來源保證由上游提供，adapter本身只校驗格式、上下文與播放時序。
+
+下一步順序：
+1. 在權威結算完成後提供逐次skill_cast事件與足夠的來源／目標資料；保留既有summary用途。
+2. 對接角色動畫的release marker、releaseOrigin與bodyHeight，把VFX位置綁到實際角色釋放點。
+3. 在scene帳號／realm／角色／dispatch切換時同步adapter context並清理舊實例。
+4. 用真正戰鬥事件測試快照重播、遲到事件、多目標及頁面生命週期。
+5. 維持正式環境凍結，後續整合與發布依本專案既有流程處理。
+
+不要修改grok-assets、character-production、角色queue/catalog或其他工作樹的未提交內容。這次只建立呈現層，不改傷害、耗魔、冷卻、掉落、獎勵、API、D1或migrations。
+
+八、每30分鐘本機交接
+
+固定入口：
+D:\StarJournal\handoff\skill-vfx\LATEST.md
+D:\StarJournal\handoff\skill-vfx\STATUS.json
+D:\StarJournal\handoff\skill-vfx\history\
+
+Windows工作名稱：
+StarJournal-SkillVFX-Checkpoint-30m
+每30分鐘PT30M，另有登入觸發；目前使用者InteractiveToken、最低權限、IgnoreNew、StartWhenAvailable。此排程與角色及non-character工作線分開。
+
+STATUS是對話維護的實際語意進度；排程只保存STATUS、Git摘要與指定驗收資料，不會自己理解新工作、不執行測試或製作新素材。LATEST分列快照生成時間與人工updatedAt；沒有新進度時會明寫未偵測新進展。原子保存history後再更新LATEST，可在對話中斷後接續。
+
+電腦關機、睡眠或使用者登出時不執行；恢復可執行後透過StartWhenAvailable／登入觸發接續。既有SCHEDULE.json是安裝收據，不能拿它當成後續即時狀態。
+
+更新STATUS後可立即執行（工作目錄D:\StarJournal）：
+node handoff/skill-vfx/.tooling/checkpoint-progress.mjs --root=D:/StarJournal "--git=C:/Users/User/Documents/ChatGPT/tools/git/cmd/git.exe"
+
+2026-11-04T05:15:04Z即時查詢結果：上次自動執行04:54:42Z、LastTaskResult=0、漏跑0次，當時下次執行05:24:41Z；查詢收據亦列入docs/skill-vfx-20261104/validation-summary.json。
+
+即時查詢：
+schtasks /Query /TN "StarJournal-SkillVFX-Checkpoint-30m" /V /FO LIST
+
+九、新對話的接手指令
+
+請透過MCP先讀 D:\StarJournal\handoff\skill-vfx\LATEST.md 與 STATUS.json，
+再讀既有 worktree-snapshots\star-journal-skill-vfx-20261104 內的AGENTS.md、
+AI_HANDOVER.md與docs\SKILL_VFX_20261104.txt。
+核對Git狀態及已保存的來源／驗收收據，沿unfinished與nextSteps接續。
+保留已完成素材與配方，不重生、不重跑無關測試、不覆蓋其他工作線，
+並維持正式環境凍結。

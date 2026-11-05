@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "compiledAt": "2026-11-04T05:18:11Z",
+  "implementationCommit": "6c028e1ed355451da892319181fba0dee53dfa02",
+  "catalog": {
+    "implemented": 196,
+    "families": 28,
+    "classAtlases": 4,
+    "atlasCells": 36,
+    "summonAssets": 2,
+    "supports": 6,
+    "allocatableTalents": 120,
+    "planned": 16
+  },
+  "unit": {
+    "passed": 42,
+    "failed": 0,
+    "engine": 16,
+    "adapterAndServer": 26,
+    "tap": "tests.tap",
+    "tapSha256": "15adfd4ab9904c28ca4178ab80865f135f6e2037f0bf894e7b1f5144c597ba55"
+  },
+  "browser": {
+    "report": "browser-results.json",
+    "skills": 196,
+    "directions": 784,
+    "multiPhaseFrames": 36,
+    "mobileCases": 16,
+    "uiChecks": 14,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "consoleErrors": 0,
+    "expectedEntryEdgeContacts": 3,
+    "impactClippingObserved": false
+  },
+  "visualReview": {
+    "contactSheet": "family-animation-contact-sheet.png",
+    "scope": "28 family overview, representative desktop/mobile views, source-over art proofs and rain impact review; not individual aesthetic grading of all 784 cases"
+  },
+  "limitations": [
+    "Browser QA used local Chrome software rendering and mobile viewports, not physical-device GPU benchmarks.",
+    "Three rain/up cases enter through the top edge at phase 0.5; impact at phase 0.63 is fully visible.",
+    "No live committed combat events or character release markers are connected."
+  ],
+  "scheduler": {
+    "checkedAt": "2026-11-04T05:15:04Z",
+    "taskName": "StarJournal-SkillVFX-Checkpoint-30m",
+    "lastTaskResult": 0,
+    "lastRunAt": "2026-11-04T04:54:42.000Z",
+    "nextRunAt": "2026-11-04T05:24:41.000Z",
+    "missedRuns": 0
+  }
+}

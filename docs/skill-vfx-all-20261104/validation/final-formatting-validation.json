@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "sourcePath": "worker/test/scene-live-lifecycle.test.js",
+  "before": {
+    "path": "worker/test/scene-live-lifecycle.test.js",
+    "bytes": 30594,
+    "sha256": "33f6ed49024c2dac97f39a02bf6856a05c7ea29f1371e7596a9304d79a235ebe"
+  },
+  "after": {
+    "path": "worker/test/scene-live-lifecycle.test.js",
+    "bytes": 30592,
+    "sha256": "4ce53b8d2c9d76062af4d36e166e83a034573a159c1ba2cc07d905145b8ee2fa"
+  },
+  "trimEndEqual": true,
+  "trimEndSha256": "a6a6a2c4d1c7f61da2b3daae17a2864faf524314a512cdf7c0e063fe644d0ab6",
+  "removedBytes": 2,
+  "removedTailHex": "0d0a",
+  "change": "Removed exactly one redundant CRLF at EOF; retained the preceding final CRLF.",
+  "startedAt": "2026-11-04T09:03:57.873Z",
+  "completedAt": "2026-11-04T09:03:58.145Z",
+  "test": {
+    "command": "node --test --test-reporter=tap test/scene-live-lifecycle.test.js",
+    "cwd": "worker",
+    "exitCode": 0,
+    "signal": null,
+    "error": null
+  },
+  "counts": {
+    "tests": 15,
+    "suites": 0,
+    "pass": 15,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 213.9276
+  },
+  "tap": {
+    "path": ".release-sync/skill-vfx-all-20261104/final-formatting.tap",
+    "bytes": 3650,
+    "sha256": "bd9baa8b2a40c56563d5e05cc4ffdd700a15be0b402b3a6a8ed1d56aebffedd2"
+  },
+  "sourceAfterTest": {
+    "path": "worker/test/scene-live-lifecycle.test.js",
+    "bytes": 30592,
+    "sha256": "4ce53b8d2c9d76062af4d36e166e83a034573a159c1ba2cc07d905145b8ee2fa"
+  },
+  "sourceUnchangedDuringTest": true,
+  "priorSourceAudit": {
+    "path": ".release-sync/skill-vfx-all-20261104/final-source-audit.json",
+    "bytes": 212651,
+    "sha256": "7147018b9de1e984c41ded03c4b277603bada481a040a6ea7e8bf59682fa9906"
+  },
+  "priorSourceAuditBackup": {
+    "path": ".release-sync/skill-vfx-all-20261104/final-source-audit-before-formatting.json",
+    "bytes": 212651,
+    "sha256": "7147018b9de1e984c41ded03c4b277603bada481a040a6ea7e8bf59682fa9906"
+  },
+  "backupByteIdentical": true
+}

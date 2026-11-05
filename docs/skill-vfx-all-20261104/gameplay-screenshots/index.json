@@ -1,0 +1,3119 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "generatedAt": "2026-11-04T08:56:31.379Z",
+  "scope": "Portable byte-exact original screenshots for the 32 adopted browser-gameplay-api scenarios; one PNG per scenario.",
+  "sourceManifest": {
+    "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+    "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+  },
+  "policies": [
+    "Every source scenario is independently passed and adopted by the coverage manifest.",
+    "Images are copied byte for byte; no render, crop, redraw, recompression or browser rerun.",
+    "All paths are relative to the repository except archivePath, which is relative to this index.",
+    "Actual RAF observations accompany each selection; sequential screenshot timing is not claimed to be atomic.",
+    "Support HP and CSS assertions belong to the separate atomic probe; later screenshot HP may include real reflection."
+  ],
+  "exclusions": [
+    {
+      "sourceResultPath": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+      "caseIndexes": [
+        0,
+        1,
+        2,
+        3
+      ],
+      "reason": "Four stale app.js source cases excluded by the adopted manifest."
+    },
+    {
+      "sourceResultPath": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+      "caseIndexes": [
+        5
+      ],
+      "reason": "Failed older desktop pure-support scenario; replaced by the passed 08:17 case."
+    }
+  ],
+  "summary": {
+    "scenarios": 32,
+    "pngFiles": 32,
+    "pngBytes": 30380943,
+    "modes": {
+      "party": 2,
+      "star-ring": 2,
+      "pk": 4,
+      "idle": 6,
+      "boss": 2,
+      "atlas": 16
+    }
+  },
+  "cases": [
+    {
+      "id": "c6c9c97395b6:party:390:4:browser",
+      "mode": "party",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:B1",
+      "observedIdentities": [
+        "native:sword:B1",
+        "native:archer:B1"
+      ],
+      "variant": "party",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+        "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc",
+        "caseIndex": 4,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 4,
+          "mode": "party",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/party-390-battle.png",
+        "sha256": "b3b9370af2edfb06f3c8ab788b1eedfb55f47ae6bdc7c21b8a69019ec44f2a30",
+        "bytes": 178307,
+        "width": 338,
+        "height": 261
+      },
+      "archivePath": "party/party-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/party/party-390-battle.png",
+      "archiveSha256": "b3b9370af2edfb06f3c8ab788b1eedfb55f47ae6bdc7c21b8a69019ec44f2a30",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[4].first",
+          "cases[4].result"
+        ],
+        "first": [
+          {
+            "mode": "party",
+            "accepted": 1,
+            "drawCalls": 158,
+            "drawFrames": 7,
+            "lastEvent": {
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "skillId": "native:sword:B1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "party",
+            "accepted": 2,
+            "drawCalls": 1006,
+            "drawFrames": 45,
+            "lastEvent": {
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "skillId": "native:archer:B1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "p61107755830f45c:1:1:cast:111",
+            "drawCalls": 158,
+            "drawFrames": 7,
+            "manual": false
+          },
+          {
+            "eventId": "p61107755830f45c:1:1:cast:222",
+            "drawCalls": 1006,
+            "drawFrames": 45,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "c6c9c97395b6:party:1280:5:browser",
+      "mode": "party",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:B1",
+      "observedIdentities": [
+        "native:sword:B1",
+        "native:archer:B1"
+      ],
+      "variant": "party",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json",
+        "sha256": "2c29edab03d0fc2695ac7592536f3f9833a5c617dc2a9ea3c804617643c687bc",
+        "caseIndex": 5,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 5,
+          "mode": "party",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/party-1280-battle.png",
+        "sha256": "4fbc324841f5dd49fac3a0d70a530fc98c7e8c212ef199418bb1040e7b6b31cd",
+        "bytes": 540073,
+        "width": 1020,
+        "height": 306
+      },
+      "archivePath": "party/party-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/party/party-1280-battle.png",
+      "archiveSha256": "4fbc324841f5dd49fac3a0d70a530fc98c7e8c212ef199418bb1040e7b6b31cd",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[5].first",
+          "cases[5].result"
+        ],
+        "first": [
+          {
+            "mode": "party",
+            "accepted": 1,
+            "drawCalls": 115,
+            "drawFrames": 5,
+            "lastEvent": {
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "skillId": "native:sword:B1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "party",
+            "accepted": 2,
+            "drawCalls": 1097,
+            "drawFrames": 76,
+            "lastEvent": {
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "skillId": "native:archer:B1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 19,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+            "drawCalls": 115,
+            "drawFrames": 5,
+            "manual": false
+          },
+          {
+            "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+            "drawCalls": 1097,
+            "drawFrames": 76,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d1492c432eae:ring:390:0:browser",
+      "mode": "star-ring",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:B111",
+      "observedIdentities": [
+        "native:thief:A211",
+        "native:sword:B111"
+      ],
+      "variant": "ring",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "deterministic-projection"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+        "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+        "caseIndex": 0,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 0,
+          "mode": "ring",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/ring-390-effect.png",
+        "sha256": "8b206d9206022d36b445ada06a4c9c3c2878e3e15d0582c546b98ddd06ed47e1",
+        "bytes": 513510,
+        "width": 390,
+        "height": 1032
+      },
+      "archivePath": "star-ring/ring-390-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/star-ring/ring-390-effect.png",
+      "archiveSha256": "8b206d9206022d36b445ada06a4c9c3c2878e3e15d0582c546b98ddd06ed47e1",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the original later effect image: visually inspected and contains the native attack VFX; the early battle crop is quiet.",
+      "timeSemantics": "Original screenshot taken after the release capture and the existing 400 ms playback wait, before the result inspector. It may show a later event than first.lastEvent. Draw counters are surrounding observations, not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[0].first",
+          "cases[0].result"
+        ],
+        "first": [
+          {
+            "mode": "star-ring",
+            "accepted": 2,
+            "drawCalls": 15,
+            "drawFrames": 1,
+            "lastEvent": {
+              "eventId": "ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:2:periodic:dot:ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:1:444:1791421260000",
+              "skillId": "native:thief:A211",
+              "source": "deterministic-projection",
+              "presentationMode": "impact",
+              "targetIds": [
+                "sr2_01_a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 15,
+              "frameMs": 1.9000000059604645,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "star-ring",
+            "accepted": 4,
+            "drawCalls": 614,
+            "drawFrames": 32,
+            "lastEvent": {
+              "eventId": "ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:2:111",
+              "skillId": "native:sword:B111",
+              "source": "deterministic-projection",
+              "presentationMode": "full",
+              "targetIds": [
+                "sr2_01_a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:2:periodic:dot:ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:1:444:1791421260000",
+            "drawCalls": 15,
+            "drawFrames": 1,
+            "manual": false
+          },
+          {
+            "eventId": "ring:ring:76820e03559f4a1ab8d9b8833435ce72:0:2:111",
+            "drawCalls": 614,
+            "drawFrames": 32,
+            "manual": false
+          }
+        ]
+      },
+      "sourceSemantics": "deterministic-projection; not a committed damage write",
+      "visibilityNote": "Original full-page capture; the native effect is visible in the battlefield."
+    },
+    {
+      "id": "d1492c432eae:ring:1280:1:browser",
+      "mode": "star-ring",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:B111",
+      "observedIdentities": [
+        "special:skill_05_1",
+        "native:sword:B111"
+      ],
+      "variant": "ring",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "deterministic-projection"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+        "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+        "caseIndex": 1,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 1,
+          "mode": "ring",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/ring-1280-effect.png",
+        "sha256": "5eff60088b8b21f6bf209b3a43394a0e9ab3463e351514888c51c235c607cfd6",
+        "bytes": 1232506,
+        "width": 1280,
+        "height": 983
+      },
+      "archivePath": "star-ring/ring-1280-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/star-ring/ring-1280-effect.png",
+      "archiveSha256": "5eff60088b8b21f6bf209b3a43394a0e9ab3463e351514888c51c235c607cfd6",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the original later effect image: visually inspected and contains the native attack VFX; the early battle crop is quiet.",
+      "timeSemantics": "Original screenshot taken after the release capture and the existing 400 ms playback wait, before the result inspector. It may show a later event than first.lastEvent. Draw counters are surrounding observations, not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[1].first",
+          "cases[1].result"
+        ],
+        "first": [
+          {
+            "mode": "star-ring",
+            "accepted": 1,
+            "drawCalls": 60,
+            "drawFrames": 4,
+            "lastEvent": {
+              "eventId": "ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:2:periodic:dot:ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:0:333:1791421260000",
+              "skillId": "special:skill_05_1",
+              "source": "deterministic-projection",
+              "presentationMode": "impact",
+              "targetIds": [
+                "sr2_01_b"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 15,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "star-ring",
+            "accepted": 4,
+            "drawCalls": 687,
+            "drawFrames": 35,
+            "lastEvent": {
+              "eventId": "ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:2:111",
+              "skillId": "native:sword:B111",
+              "source": "deterministic-projection",
+              "presentationMode": "full",
+              "targetIds": [
+                "sr2_01_b"
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:2:periodic:dot:ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:0:333:1791421260000",
+            "drawCalls": 60,
+            "drawFrames": 4,
+            "manual": false
+          },
+          {
+            "eventId": "ring:ring:1bc6e990c21e4e33b3ad03f2a4e76321:0:2:111",
+            "drawCalls": 687,
+            "drawFrames": 35,
+            "manual": false
+          }
+        ]
+      },
+      "sourceSemantics": "deterministic-projection; not a committed damage write",
+      "visibilityNote": "Original full-page modal image shows the VFX but clips the lower battlefield. No crop, redraw or additional capture was made."
+    },
+    {
+      "id": "d1492c432eae:pk:390:2:browser",
+      "mode": "pk",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_thief_04",
+      "observedIdentities": [
+        "special:skill_thief_04",
+        "special:skill_02_1"
+      ],
+      "variant": "pk",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+        "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+        "caseIndex": 2,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 2,
+          "mode": "pk",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/pk-390-battle.png",
+        "sha256": "e8c6071d9472484012e5efa0a525294b35bc82d2a7d871b273e4e0b26dd37aae",
+        "bytes": 139840,
+        "width": 360,
+        "height": 314
+      },
+      "archivePath": "pk/pk-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/pk/pk-390-battle.png",
+      "archiveSha256": "e8c6071d9472484012e5efa0a525294b35bc82d2a7d871b273e4e0b26dd37aae",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[2].first",
+          "cases[2].result"
+        ],
+        "first": [
+          {
+            "mode": "pk",
+            "accepted": 1,
+            "drawCalls": 22,
+            "drawFrames": 2,
+            "lastEvent": {
+              "eventId": "pk:pe75a0a44f07:0:0:a",
+              "skillId": "special:skill_thief_04",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "b"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 11,
+              "frameMs": 2.1000000089406967,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "pk",
+            "accepted": 2,
+            "drawCalls": 658,
+            "drawFrames": 28,
+            "lastEvent": {
+              "eventId": "pk:pe75a0a44f07:0:1:b",
+              "skillId": "special:skill_02_1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 25,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "pk:pe75a0a44f07:0:0:a",
+            "drawCalls": 22,
+            "drawFrames": 2,
+            "manual": false
+          },
+          {
+            "eventId": "pk:pe75a0a44f07:0:1:b",
+            "drawCalls": 658,
+            "drawFrames": 28,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d1492c432eae:pk:1280:3:browser",
+      "mode": "pk",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_02_1",
+      "observedIdentities": [
+        "special:skill_02_1",
+        "native:sword:B111"
+      ],
+      "variant": "pk",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+        "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+        "caseIndex": 3,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 3,
+          "mode": "pk",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/pk-1280-battle.png",
+        "sha256": "319309cf7780c3fbd3b1533544d3c598c0b0a899a4444619c291bdf99b16d15d",
+        "bytes": 182143,
+        "width": 490,
+        "height": 314
+      },
+      "archivePath": "pk/pk-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/pk/pk-1280-battle.png",
+      "archiveSha256": "319309cf7780c3fbd3b1533544d3c598c0b0a899a4444619c291bdf99b16d15d",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[3].first",
+          "cases[3].result"
+        ],
+        "first": [
+          {
+            "mode": "pk",
+            "accepted": 1,
+            "drawCalls": 40,
+            "drawFrames": 2,
+            "lastEvent": {
+              "eventId": "pk:pf34f5d5a1b9:0:0:b",
+              "skillId": "special:skill_02_1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.4000000059604645,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "pk",
+            "accepted": 3,
+            "drawCalls": 437,
+            "drawFrames": 21,
+            "lastEvent": {
+              "eventId": "pk:pf34f5d5a1b9:1:0:b",
+              "skillId": "native:sword:B111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 27,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "pk:pf34f5d5a1b9:0:0:b",
+            "drawCalls": 40,
+            "drawFrames": 2,
+            "manual": false
+          },
+          {
+            "eventId": "pk:pf34f5d5a1b9:1:0:b",
+            "drawCalls": 437,
+            "drawFrames": 21,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d1492c432eae:pk:390:4:browser",
+      "mode": "pk",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_02_3",
+      "observedIdentities": [
+        "special:skill_02_3"
+      ],
+      "variant": "pure-support",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json",
+        "sha256": "d29796ab72591cad00e8d388dec3071621d3c2710183e58eb4878a305e44fade",
+        "caseIndex": 4,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 4,
+          "mode": "pk",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/pk-support-390-battle.png",
+        "sha256": "93d56afb862e2673e8c26e78c4667a9923b6a6207e4ba7d9149d92e2d2c36fad",
+        "bytes": 130722,
+        "width": 360,
+        "height": 265
+      },
+      "archivePath": "pk/pk-support-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/pk/pk-support-390-battle.png",
+      "archiveSha256": "93d56afb862e2673e8c26e78c4667a9923b6a6207e4ba7d9149d92e2d2c36fad",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution. The separate supportEvidence.frame is the atomic self-shield probe. This PNG was captured later. Any later opponent HP reduction can be genuine reflection or subsequent combat, and is not shield-cast direct damage.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[4].first",
+          "cases[4].result"
+        ],
+        "first": [
+          {
+            "mode": "pk",
+            "accepted": 1,
+            "drawCalls": 110,
+            "drawFrames": 6,
+            "lastEvent": {
+              "eventId": "pk:pbdacd3a5b5c:0:0:a",
+              "skillId": "special:skill_02_3",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "a"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 10,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "pk",
+            "accepted": 3,
+            "drawCalls": 823,
+            "drawFrames": 38,
+            "lastEvent": {
+              "eventId": "pk:pbdacd3a5b5c:0:1:b:reflect:pk:pbdacd3a5b5c:0:0:a:0",
+              "skillId": "special:skill_02_3",
+              "source": "committed-combat",
+              "presentationMode": "impact",
+              "targetIds": [
+                "b"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 32,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "pk:pbdacd3a5b5c:0:0:a",
+            "drawCalls": 110,
+            "drawFrames": 6,
+            "manual": false
+          },
+          {
+            "eventId": "pk:pbdacd3a5b5c:0:1:b:reflect:pk:pbdacd3a5b5c:0:0:a:0",
+            "drawCalls": 823,
+            "drawFrames": 38,
+            "manual": false
+          }
+        ]
+      },
+      "atomicSupportEvidence": {
+        "skillId": "special:skill_02_3",
+        "eventId": "pk:pbdacd3a5b5c:0:0:a",
+        "actorId": "a",
+        "enemyId": "b",
+        "source": "committed-combat",
+        "before": {
+          "hp": {
+            "a": 3166,
+            "b": 3090
+          },
+          "mp": {
+            "a": 390,
+            "b": 390
+          }
+        },
+        "after": {
+          "hp": {
+            "a": 3166,
+            "b": 3090
+          },
+          "mp": {
+            "a": 364,
+            "b": 390
+          }
+        },
+        "max": {
+          "a": 3166,
+          "b": 3090
+        },
+        "sqlite": {
+          "id": "pbdacd3a5b5c",
+          "status": "done",
+          "matchingEventId": "pk:pbdacd3a5b5c:0:0:a",
+          "logSha256": "2e95b3cb702f1c814f731487861df65ffc89e61b256a7216ac8770cfe1288680"
+        },
+        "frame": {
+          "event": {
+            "eventId": "pk:pbdacd3a5b5c:0:0:a",
+            "skillId": "special:skill_02_3",
+            "actorId": "a",
+            "source": "committed-combat",
+            "presentationMode": "support",
+            "targetIds": [
+              "a"
+            ],
+            "damageModel": null,
+            "from": {
+              "x": 96.65625,
+              "y": 75.480877585902
+            },
+            "commands": [
+              {
+                "from": {
+                  "x": 78.65625,
+                  "y": 78.99161607826963
+                },
+                "to": {
+                  "x": 78.65625,
+                  "y": 78.99161607826963
+                },
+                "targets": [
+                  {
+                    "x": 78.65625,
+                    "y": 78.99161607826963
+                  }
+                ],
+                "mode": "support",
+                "bodyHeight": 175.53692461837684,
+                "supportKind": "shield"
+              }
+            ]
+          },
+          "drawCalls": 80,
+          "lastRender": {
+            "active": 1,
+            "drawCalls": 20,
+            "frameMs": 0.29999999701976776,
+            "manual": false
+          },
+          "geometry": {
+            "actorId": "a",
+            "from": {
+              "x": 96.65625,
+              "y": 75.480877585902
+            },
+            "foot": {
+              "x": 78.65625,
+              "y": 175.53692461837684
+            },
+            "bodyHeight": 175.53692461837684,
+            "targets": [
+              {
+                "id": "a",
+                "point": {
+                  "x": 78.65625,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              },
+              {
+                "id": "b",
+                "point": {
+                  "x": 281.328125,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              }
+            ]
+          },
+          "sides": {
+            "a": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,166 / 3,166",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            },
+            "b": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,090 / 3,090",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            }
+          },
+          "alphaPixels": 16419,
+          "label": "第 1 回合 · 特效驗收111施展支援技能"
+        }
+      },
+      "atomicSupportEvidenceIsSeparateFromPng": true
+    },
+    {
+      "id": "84219350e113:pk:1280:0:browser",
+      "mode": "pk",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_02_3",
+      "observedIdentities": [
+        "special:skill_02_3",
+        "native:sword:B111"
+      ],
+      "variant": "pure-support",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json",
+        "sha256": "b92ec412dbb565ceff9b83f3297d9fa0998f3d003b2bf6b600a2bde8e90be6b4",
+        "caseIndex": 0,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 0,
+          "mode": "pk",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/pk-support-1280-battle.png",
+        "sha256": "24651b1185564baec9cf839e9d958e85f15fe001772db5b8c3ed5aa4bcb9cfce",
+        "bytes": 154458,
+        "width": 490,
+        "height": 265
+      },
+      "archivePath": "pk/pk-support-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/pk/pk-support-1280-battle.png",
+      "archiveSha256": "24651b1185564baec9cf839e9d958e85f15fe001772db5b8c3ed5aa4bcb9cfce",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution. The separate supportEvidence.frame is the atomic self-shield probe. This PNG was captured later. Any later opponent HP reduction can be genuine reflection or subsequent combat, and is not shield-cast direct damage.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[0].first",
+          "cases[0].result"
+        ],
+        "first": [
+          {
+            "mode": "pk",
+            "accepted": 3,
+            "drawCalls": 72,
+            "drawFrames": 3,
+            "lastEvent": {
+              "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+              "skillId": "special:skill_02_3",
+              "source": "committed-combat",
+              "presentationMode": "impact",
+              "targetIds": [
+                "b"
+              ]
+            },
+            "lastRender": {
+              "active": 2,
+              "drawCalls": 42,
+              "frameMs": 3.2999999970197678,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "pk",
+            "accepted": 8,
+            "drawCalls": 1064,
+            "drawFrames": 40,
+            "lastEvent": {
+              "eventId": "pk:p11122ac4a8c:3:0:a",
+              "skillId": "native:sword:B111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "b"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 27,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "pk:p11122ac4a8c:0:1:b:reflect:pk:p11122ac4a8c:0:0:a:0",
+            "drawCalls": 72,
+            "drawFrames": 3,
+            "manual": false
+          },
+          {
+            "eventId": "pk:p11122ac4a8c:3:0:a",
+            "drawCalls": 1064,
+            "drawFrames": 40,
+            "manual": false
+          }
+        ]
+      },
+      "atomicSupportEvidence": {
+        "skillId": "special:skill_02_3",
+        "eventId": "pk:p11122ac4a8c:0:0:a",
+        "actorId": "a",
+        "enemyId": "b",
+        "source": "committed-combat",
+        "actualSelfHealing": 0,
+        "before": {
+          "hp": {
+            "a": 3090,
+            "b": 3189
+          },
+          "mp": {
+            "a": 390,
+            "b": 390
+          }
+        },
+        "after": {
+          "hp": {
+            "a": 3090,
+            "b": 3189
+          },
+          "mp": {
+            "a": 364,
+            "b": 390
+          }
+        },
+        "max": {
+          "a": 3090,
+          "b": 3189
+        },
+        "sqlite": {
+          "id": "p11122ac4a8c",
+          "status": "done",
+          "matchingEventId": "pk:p11122ac4a8c:0:0:a",
+          "logSha256": "598ef92cddd05e0e55e5df3c1c81d5b4f278c95acfc4ec0a69ec9244ee144e29"
+        },
+        "frame": {
+          "event": {
+            "eventId": "pk:p11122ac4a8c:0:0:a",
+            "skillId": "special:skill_02_3",
+            "actorId": "a",
+            "source": "committed-combat",
+            "presentationMode": "support",
+            "targetIds": [
+              "a"
+            ],
+            "damageModel": null,
+            "from": {
+              "x": 129.15625,
+              "y": 75.480877585902
+            },
+            "commands": [
+              {
+                "from": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "to": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "targets": [
+                  {
+                    "x": 111.15625,
+                    "y": 78.99161607826963
+                  }
+                ],
+                "mode": "support",
+                "bodyHeight": 175.53692461837684,
+                "supportKind": "shield"
+              }
+            ]
+          },
+          "drawCalls": 20,
+          "lastRender": {
+            "active": 1,
+            "drawCalls": 20,
+            "frameMs": 2,
+            "manual": false
+          },
+          "geometry": {
+            "actorId": "a",
+            "from": {
+              "x": 129.15625,
+              "y": 75.480877585902
+            },
+            "foot": {
+              "x": 111.15625,
+              "y": 175.53692461837684
+            },
+            "bodyHeight": 175.53692461837684,
+            "targets": [
+              {
+                "id": "a",
+                "point": {
+                  "x": 111.15625,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              },
+              {
+                "id": "b",
+                "point": {
+                  "x": 378.828125,
+                  "y": 78.99161607826963
+                },
+                "bodyHeight": 175.53692461837684
+              }
+            ]
+          },
+          "sides": {
+            "a": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,090 / 3,090",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            },
+            "b": {
+              "className": "pkf",
+              "attack": false,
+              "hit": false,
+              "hpText": "HP 3,189 / 3,189",
+              "hpWidth": 100,
+              "damageText": "",
+              "damageVisible": false
+            }
+          },
+          "alphaPixels": 22904,
+          "label": "第 1 回合 · 特效驗收111施展支援技能"
+        }
+      },
+      "atomicSupportEvidenceIsSeparateFromPng": true
+    },
+    {
+      "id": "d42edfa2100d:idle-native:390:0:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:A111",
+      "observedIdentities": [
+        "native:sword:A111"
+      ],
+      "variant": "idle-native",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 0,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 0,
+          "mode": "idle-native",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-native-390-battle.png",
+        "sha256": "81fa7455898de693d17e5262eb512c9b4294cfae3a4844ee396b2b070c374433",
+        "bytes": 295175,
+        "width": 316,
+        "height": 570
+      },
+      "archivePath": "idle/idle-native-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-native-390-battle.png",
+      "archiveSha256": "81fa7455898de693d17e5262eb512c9b4294cfae3a4844ee396b2b070c374433",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[0].first",
+          "cases[0].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 80,
+            "drawFrames": 5,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 165,
+            "drawFrames": 10,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 80,
+            "drawFrames": 5,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 165,
+            "drawFrames": 10,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:idle-native:1280:1:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "native:sword:A111",
+      "observedIdentities": [
+        "native:sword:A111"
+      ],
+      "variant": "idle-native",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 1,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 1,
+          "mode": "idle-native",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-native-1280-battle.png",
+        "sha256": "3be3bad79fb9eae319cbb37f4c45798978cd54be1752c9d388ccd85bebc6d065",
+        "bytes": 815636,
+        "width": 920,
+        "height": 460
+      },
+      "archivePath": "idle/idle-native-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-native-1280-battle.png",
+      "archiveSha256": "3be3bad79fb9eae319cbb37f4c45798978cd54be1752c9d388ccd85bebc6d065",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[1].first",
+          "cases[1].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 34,
+            "drawFrames": 4,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 6,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 68,
+            "drawFrames": 8,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "native:sword:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "idle:111:12:1791421200000:0"
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 34,
+            "drawFrames": 4,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 68,
+            "drawFrames": 8,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:idle-summon:390:2:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_18_1",
+      "observedIdentities": [
+        "special:skill_18_1"
+      ],
+      "variant": "idle-summon",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 2,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 2,
+          "mode": "idle-summon",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-summon-390-battle.png",
+        "sha256": "6ec7da7102a1d4677c3a4116aeb9e81a8f131a191902269b6fe7f7defc3e91bb",
+        "bytes": 319492,
+        "width": 316,
+        "height": 570
+      },
+      "archivePath": "idle/idle-summon-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-summon-390-battle.png",
+      "archiveSha256": "6ec7da7102a1d4677c3a4116aeb9e81a8f131a191902269b6fe7f7defc3e91bb",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[2].first",
+          "cases[2].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 15,
+            "drawFrames": 3,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 75,
+            "drawFrames": 15,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 15,
+            "drawFrames": 3,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 75,
+            "drawFrames": 15,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:idle-summon:1280:3:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_18_1",
+      "observedIdentities": [
+        "special:skill_18_1"
+      ],
+      "variant": "idle-summon",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 3,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 3,
+          "mode": "idle-summon",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-summon-1280-battle.png",
+        "sha256": "180502c4d28585797d969eb0dbfba810d7cb9fa1e94d7e67a7eb4b220b0a3d0e",
+        "bytes": 806864,
+        "width": 920,
+        "height": 460
+      },
+      "archivePath": "idle/idle-summon-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-summon-1280-battle.png",
+      "archiveSha256": "180502c4d28585797d969eb0dbfba810d7cb9fa1e94d7e67a7eb4b220b0a3d0e",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[3].first",
+          "cases[3].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 20,
+            "drawFrames": 4,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 75,
+            "drawFrames": 15,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_18_1",
+              "source": "committed-combat",
+              "presentationMode": "summon",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 20,
+            "drawFrames": 4,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 75,
+            "drawFrames": 15,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:idle-support:390:4:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_03_3",
+      "observedIdentities": [
+        "special:skill_03_3"
+      ],
+      "variant": "idle-support",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 4,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 4,
+          "mode": "idle-support",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-support-390-battle.png",
+        "sha256": "38dcc0c6fc9bb4ce682118b7bde0bf554e18c69c4bb619ac25b80272fa598c09",
+        "bytes": 321492,
+        "width": 316,
+        "height": 570
+      },
+      "archivePath": "idle/idle-support-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-support-390-battle.png",
+      "archiveSha256": "38dcc0c6fc9bb4ce682118b7bde0bf554e18c69c4bb619ac25b80272fa598c09",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[4].first",
+          "cases[4].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 60,
+            "drawFrames": 3,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 500,
+            "drawFrames": 42,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 60,
+            "drawFrames": 3,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 500,
+            "drawFrames": 42,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:idle-support:1280:5:browser",
+      "mode": "idle",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_03_3",
+      "observedIdentities": [
+        "special:skill_03_3"
+      ],
+      "variant": "idle-support",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 5,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 5,
+          "mode": "idle-support",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/idle-support-1280-battle.png",
+        "sha256": "d792b19f931742a4ef8d658001c29d9ff12f43524ac5376ec30e397c0f3aeabb",
+        "bytes": 806285,
+        "width": 920,
+        "height": 460
+      },
+      "archivePath": "idle/idle-support-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/idle/idle-support-1280-battle.png",
+      "archiveSha256": "d792b19f931742a4ef8d658001c29d9ff12f43524ac5376ec30e397c0f3aeabb",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[5].first",
+          "cases[5].result"
+        ],
+        "first": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 60,
+            "drawFrames": 3,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 20,
+              "frameMs": 0.5,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "idle",
+            "accepted": 1,
+            "drawCalls": 340,
+            "drawFrames": 25,
+            "lastEvent": {
+              "eventId": "idle-round:111:1791421260000:cast",
+              "skillId": "special:skill_03_3",
+              "source": "committed-combat",
+              "presentationMode": "support",
+              "targetIds": [
+                "111"
+              ]
+            },
+            "lastRender": {
+              "active": 0,
+              "drawCalls": 0,
+              "frameMs": 0,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 60,
+            "drawFrames": 3,
+            "manual": false
+          },
+          {
+            "eventId": "idle-round:111:1791421260000:cast",
+            "drawCalls": 340,
+            "drawFrames": 25,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:boss:390:6:browser",
+      "mode": "boss",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_05_1",
+      "observedIdentities": [
+        "special:skill_05_1",
+        "native:mage:A111"
+      ],
+      "variant": "boss",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 6,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 6,
+          "mode": "boss",
+          "width": 390
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/boss-390-battle.png",
+        "sha256": "be943536f668a9058c0e5f73b86edc144f832fb53fcd811e0aba7a813c247142",
+        "bytes": 191086,
+        "width": 344,
+        "height": 254
+      },
+      "archivePath": "boss/boss-390-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/boss/boss-390-battle.png",
+      "archiveSha256": "be943536f668a9058c0e5f73b86edc144f832fb53fcd811e0aba7a813c247142",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[6].first",
+          "cases[6].result"
+        ],
+        "first": [
+          {
+            "mode": "boss",
+            "accepted": 1,
+            "drawCalls": 36,
+            "drawFrames": 2,
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.3999999910593033,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "boss",
+            "accepted": 2,
+            "drawCalls": 472,
+            "drawFrames": 33,
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:1",
+              "skillId": "native:mage:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.09999999403953552,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "boss:b2026100809:111:0:0",
+            "drawCalls": 36,
+            "drawFrames": 2,
+            "manual": false
+          },
+          {
+            "eventId": "boss:b2026100809:111:0:1",
+            "drawCalls": 472,
+            "drawFrames": 33,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "d42edfa2100d:boss:1280:7:browser",
+      "mode": "boss",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "original gameplay runner viewport rule (390 x 844 or 1280 x 900)"
+      },
+      "identity": "special:skill_05_1",
+      "observedIdentities": [
+        "special:skill_05_1",
+        "native:mage:A111"
+      ],
+      "variant": "boss",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json",
+        "sha256": "f88427ad2a0cc6cf3bf0193b0e2b53082c785dffebc9097fe535b87915da6eaf",
+        "caseIndex": 7,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 7,
+          "mode": "boss",
+          "width": 1280
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/boss-1280-battle.png",
+        "sha256": "5f712eeafa9f52394ddfc9408b69e92558b94a331c01a0e9328a17282dac7d3c",
+        "bytes": 469671,
+        "width": 954,
+        "height": 254
+      },
+      "archivePath": "boss/boss-1280-battle.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/boss/boss-1280-battle.png",
+      "archiveSha256": "5f712eeafa9f52394ddfc9408b69e92558b94a331c01a0e9328a17282dac7d3c",
+      "capturePhase": "battle",
+      "selectionReason": "Selected the original focused battle crop nearest the first recorded draw observation, preserving battle detail.",
+      "timeSemantics": "Original battle screenshot taken after first inspector and before release/effect screenshots. Playback continues between observations; counters and PNG are not an atomic frame attribution.",
+      "drawEvidence": {
+        "recordPaths": [
+          "cases[7].first",
+          "cases[7].result"
+        ],
+        "first": [
+          {
+            "mode": "boss",
+            "accepted": 1,
+            "drawCalls": 36,
+            "drawFrames": 2,
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 18,
+              "frameMs": 0.4000000059604645,
+              "manual": false
+            }
+          }
+        ],
+        "afterEffectCapture": [
+          {
+            "mode": "boss",
+            "accepted": 3,
+            "drawCalls": 522,
+            "drawFrames": 36,
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:2",
+              "skillId": "native:mage:A111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            }
+          }
+        ],
+        "adoptedObservation": [
+          {
+            "eventId": "boss:b2026100809:111:0:0",
+            "drawCalls": 36,
+            "drawFrames": 2,
+            "manual": false
+          },
+          {
+            "eventId": "boss:b2026100809:111:0:2",
+            "drawCalls": 522,
+            "drawFrames": 36,
+            "manual": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "71bd98e749fe:sword_whirlwind:1280:0:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:sword_whirlwind",
+      "observedIdentities": [
+        "atlas:sword_whirlwind"
+      ],
+      "variant": "sword_whirlwind",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 0,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 0,
+          "build": "sword_whirlwind",
+          "width": 1280,
+          "runId": "27a31e5f-0a91-4273-9dd3-f5d1fdeff915"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-sword_whirlwind-release.png",
+        "sha256": "f0f9a302ac58932c4e6669084e888ebd624f4b4e4f5428236b043537ce4e5695",
+        "bytes": 1755568,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-sword_whirlwind-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-sword_whirlwind-release.png",
+      "archiveSha256": "f0f9a302ac58932c4e6669084e888ebd624f4b4e4f5428236b043537ce4e5695",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[0].release",
+        "eventId": "27a31e5f-0a91-4273-9dd3-f5d1fdeff915:combat:25:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 6,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:sword_bleed:1280:1:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:sword_bleed",
+      "observedIdentities": [
+        "atlas:sword_bleed"
+      ],
+      "variant": "sword_bleed",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 1,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 1,
+          "build": "sword_bleed",
+          "width": 1280,
+          "runId": "59a493bb-db19-49a8-82d7-41c070c51407"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-sword_bleed-effect.png",
+        "sha256": "c8fe11d73c2c5e26be5a63616c74a0265b4a4b24cdd0042f4ad39594606d9717",
+        "bytes": 1741966,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-sword_bleed-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-sword_bleed-effect.png",
+      "archiveSha256": "c8fe11d73c2c5e26be5a63616c74a0265b4a4b24cdd0042f4ad39594606d9717",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the recorded effect sample with more actual RAF draw calls than the release sample.",
+      "timeSemantics": "Original post-cast effect screenshot from the real API run. The selected event is a periodic or triggered effect, not another cast. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[1].effect",
+        "eventId": "59a493bb-db19-49a8-82d7-41c070c51407:combat:15:dot:1",
+        "effectKind": "dot",
+        "presentationMode": "impact",
+        "player": {
+          "active": 2,
+          "drawCalls": 30,
+          "frameMs": 0.5,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 12,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:sword_counter:1280:2:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:sword_counter",
+      "observedIdentities": [
+        "atlas:sword_counter"
+      ],
+      "variant": "sword_counter",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 2,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 2,
+          "build": "sword_counter",
+          "width": 1280,
+          "runId": "b33b5c35-7cf7-41dd-8b3c-2e259417e72c"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-sword_counter-release.png",
+        "sha256": "62bff409947130ab60a74b08907025b0fb57713a556421a3679eb22b2ec6b8f8",
+        "bytes": 1747186,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-sword_counter-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-sword_counter-release.png",
+      "archiveSha256": "62bff409947130ab60a74b08907025b0fb57713a556421a3679eb22b2ec6b8f8",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[2].release",
+        "eventId": "b33b5c35-7cf7-41dd-8b3c-2e259417e72c:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 11,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 18,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:archer_pierce:1280:3:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:archer_pierce",
+      "observedIdentities": [
+        "atlas:archer_pierce"
+      ],
+      "variant": "archer_pierce",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 3,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 3,
+          "build": "archer_pierce",
+          "width": 1280,
+          "runId": "71d58764-9afa-4bc6-89df-e38ba455a58d"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-archer_pierce-release.png",
+        "sha256": "cce253167ce700681aff12e336e2150d2d6bdb46d9a484603698507863ea5e1c",
+        "bytes": 1737832,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-archer_pierce-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-archer_pierce-release.png",
+      "archiveSha256": "cce253167ce700681aff12e336e2150d2d6bdb46d9a484603698507863ea5e1c",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[3].release",
+        "eventId": "71d58764-9afa-4bc6-89df-e38ba455a58d:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 18,
+          "frameMs": 0.5,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 2,
+          "pendingLoads": 0,
+          "generation": 34,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:archer_beast:1280:4:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:archer_beast",
+      "observedIdentities": [
+        "atlas:archer_beast"
+      ],
+      "variant": "archer_beast",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 4,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 4,
+          "build": "archer_beast",
+          "width": 1280,
+          "runId": "9e673a2e-05a0-40d7-b25d-df35b0d762e6"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-archer_beast-effect.png",
+        "sha256": "85d32e64f903452651059b09dbb6cabf7d8a3eaa15d80beb921310b5abc4b848",
+        "bytes": 1740158,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-archer_beast-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-archer_beast-effect.png",
+      "archiveSha256": "85d32e64f903452651059b09dbb6cabf7d8a3eaa15d80beb921310b5abc4b848",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the recorded effect sample with more actual RAF draw calls than the release sample.",
+      "timeSemantics": "Original post-cast effect screenshot from the real API run. The selected event is a periodic or triggered effect, not another cast. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[4].effect",
+        "eventId": "9e673a2e-05a0-40d7-b25d-df35b0d762e6:combat:15:pet:1",
+        "effectKind": "pet",
+        "presentationMode": "impact",
+        "player": {
+          "active": 2,
+          "drawCalls": 36,
+          "frameMs": 0.3999999910593033,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 3,
+          "pendingLoads": 0,
+          "generation": 40,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:archer_trap:1280:5:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:archer_trap",
+      "observedIdentities": [
+        "atlas:archer_trap"
+      ],
+      "variant": "archer_trap",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 5,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 5,
+          "build": "archer_trap",
+          "width": 1280,
+          "runId": "60f7cf71-c675-47b1-af5b-316012173739"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-archer_trap-effect.png",
+        "sha256": "3b1cd15f26365ebe05a39edda20f64fadfdc0f969bca2af7d90b2f46e50b1826",
+        "bytes": 1742574,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-archer_trap-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-archer_trap-effect.png",
+      "archiveSha256": "3b1cd15f26365ebe05a39edda20f64fadfdc0f969bca2af7d90b2f46e50b1826",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the recorded effect sample with more actual RAF draw calls than the release sample.",
+      "timeSemantics": "Original post-cast effect screenshot from the real API run. The selected event is a periodic or triggered effect, not another cast. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[5].effect",
+        "eventId": "60f7cf71-c675-47b1-af5b-316012173739:combat:15:trap:1",
+        "effectKind": "trap",
+        "presentationMode": "impact",
+        "player": {
+          "active": 1,
+          "drawCalls": 45,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 3,
+          "pendingLoads": 0,
+          "generation": 46,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:mage_chain:1280:6:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:mage_chain",
+      "observedIdentities": [
+        "atlas:mage_chain"
+      ],
+      "variant": "mage_chain",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 6,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 6,
+          "build": "mage_chain",
+          "width": 1280,
+          "runId": "6555e4e3-fca1-4004-8dcd-e6e20ff0a490"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-mage_chain-release.png",
+        "sha256": "9b127dde4a0e00aea523863c2f89ab307e50a9e0c9158dec435d47dace2ddd5a",
+        "bytes": 1732975,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-mage_chain-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-mage_chain-release.png",
+      "archiveSha256": "9b127dde4a0e00aea523863c2f89ab307e50a9e0c9158dec435d47dace2ddd5a",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[6].release",
+        "eventId": "6555e4e3-fca1-4004-8dcd-e6e20ff0a490:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.3999999910593033,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 4,
+          "pendingLoads": 0,
+          "generation": 62,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:mage_frost:1280:7:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:mage_frost",
+      "observedIdentities": [
+        "atlas:mage_frost"
+      ],
+      "variant": "mage_frost",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 7,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 7,
+          "build": "mage_frost",
+          "width": 1280,
+          "runId": "73993552-f952-4159-8ca4-8e1db8c1d322"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-mage_frost-release.png",
+        "sha256": "38608775ed485bd82124efb3872eed1e5f4bcc06d169dfbc2edf31c5ef60bf4c",
+        "bytes": 1742620,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-mage_frost-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-mage_frost-release.png",
+      "archiveSha256": "38608775ed485bd82124efb3872eed1e5f4bcc06d169dfbc2edf31c5ef60bf4c",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[7].release",
+        "eventId": "73993552-f952-4159-8ca4-8e1db8c1d322:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 14,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 4,
+          "pendingLoads": 0,
+          "generation": 68,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:mage_arcane:1280:8:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:mage_arcane",
+      "observedIdentities": [
+        "atlas:mage_arcane"
+      ],
+      "variant": "mage_arcane",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 8,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 8,
+          "build": "mage_arcane",
+          "width": 1280,
+          "runId": "273d62db-0223-45da-a9ba-dee486de08cd"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-mage_arcane-release.png",
+        "sha256": "9e8106407ceb2151d1ffaff6977426fca1d62e59b60a7c07c857962b08d7e72a",
+        "bytes": 1741696,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-mage_arcane-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-mage_arcane-release.png",
+      "archiveSha256": "9e8106407ceb2151d1ffaff6977426fca1d62e59b60a7c07c857962b08d7e72a",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[8].release",
+        "eventId": "273d62db-0223-45da-a9ba-dee486de08cd:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 22,
+          "frameMs": 0.29999999701976776,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 4,
+          "pendingLoads": 0,
+          "generation": 74,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:thief_poison:1280:9:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:thief_poison",
+      "observedIdentities": [
+        "atlas:thief_poison"
+      ],
+      "variant": "thief_poison",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 9,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 9,
+          "build": "thief_poison",
+          "width": 1280,
+          "runId": "acf97402-0010-44d0-a9a9-28157a3e72e1"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-thief_poison-effect.png",
+        "sha256": "a2f83ac60f90141b0286ec86a761df6e78c7e1f714aefd21803cb5206357a684",
+        "bytes": 1734287,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-thief_poison-effect.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-thief_poison-effect.png",
+      "archiveSha256": "a2f83ac60f90141b0286ec86a761df6e78c7e1f714aefd21803cb5206357a684",
+      "capturePhase": "effect",
+      "selectionReason": "Selected the recorded effect sample with more actual RAF draw calls than the release sample.",
+      "timeSemantics": "Original post-cast effect screenshot from the real API run. The selected event is a periodic or triggered effect, not another cast. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[9].effect",
+        "eventId": "acf97402-0010-44d0-a9a9-28157a3e72e1:combat:15:dot:1",
+        "effectKind": "dot",
+        "presentationMode": "impact",
+        "player": {
+          "active": 2,
+          "drawCalls": 30,
+          "frameMs": 0.29999999701976776,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 5,
+          "pendingLoads": 0,
+          "generation": 90,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:thief_execute:1280:10:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:thief_execute",
+      "observedIdentities": [
+        "atlas:thief_execute"
+      ],
+      "variant": "thief_execute",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 10,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 10,
+          "build": "thief_execute",
+          "width": 1280,
+          "runId": "44aab347-97a7-46aa-9639-a1e14999a7a9"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-thief_execute-release.png",
+        "sha256": "28358d6f27d3a28312a51fc641b7fb9ffa8c9ba6372edf1fd80c463e40ea3d30",
+        "bytes": 1736684,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-thief_execute-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-thief_execute-release.png",
+      "archiveSha256": "28358d6f27d3a28312a51fc641b7fb9ffa8c9ba6372edf1fd80c463e40ea3d30",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[10].release",
+        "eventId": "44aab347-97a7-46aa-9639-a1e14999a7a9:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.29999999701976776,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 5,
+          "pendingLoads": 0,
+          "generation": 96,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:thief_combo:1280:11:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 1280,
+        "height": 900,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:thief_combo",
+      "observedIdentities": [
+        "atlas:thief_combo"
+      ],
+      "variant": "thief_combo",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 11,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 11,
+          "build": "thief_combo",
+          "width": 1280,
+          "runId": "4735b08a-81fa-4b68-9eb4-4012056eba9e"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/1280-thief_combo-release.png",
+        "sha256": "65601662c7f1287c7ef0b7c41b26c3dfefd799dd7b305e8ee32076a32cdd4b3e",
+        "bytes": 1730031,
+        "width": 1280,
+        "height": 900
+      },
+      "archivePath": "atlas/1280-thief_combo-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/1280-thief_combo-release.png",
+      "archiveSha256": "65601662c7f1287c7ef0b7c41b26c3dfefd799dd7b305e8ee32076a32cdd4b3e",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[11].release",
+        "eventId": "4735b08a-81fa-4b68-9eb4-4012056eba9e:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 11,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 1280,
+          "height": 900,
+          "dpr": 1,
+          "loadedAtlases": 5,
+          "pendingLoads": 0,
+          "generation": 102,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:sword_whirlwind:390:12:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:sword_whirlwind",
+      "observedIdentities": [
+        "atlas:sword_whirlwind"
+      ],
+      "variant": "sword_whirlwind",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 12,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 12,
+          "build": "sword_whirlwind",
+          "width": 390,
+          "runId": "6576a66f-2a8a-4a86-ba54-a98d773ed848"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/390-sword_whirlwind-release.png",
+        "sha256": "cdb4f469f9b24cc0bf29ae32714ade2285cb98362ab6fed941d4001e60cd345f",
+        "bytes": 604549,
+        "width": 390,
+        "height": 844
+      },
+      "archivePath": "atlas/390-sword_whirlwind-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/390-sword_whirlwind-release.png",
+      "archiveSha256": "cdb4f469f9b24cc0bf29ae32714ade2285cb98362ab6fed941d4001e60cd345f",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[12].release",
+        "eventId": "6576a66f-2a8a-4a86-ba54-a98d773ed848:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.4000000059604645,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 14,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:archer_beast:390:13:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:archer_beast",
+      "observedIdentities": [
+        "atlas:archer_beast"
+      ],
+      "variant": "archer_beast",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 13,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 13,
+          "build": "archer_beast",
+          "width": 390,
+          "runId": "18646758-f487-49a1-9c4d-eadf238c036b"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/390-archer_beast-release.png",
+        "sha256": "f205192aa8b9773a320d64ab5b8de8ff8afab64ff5cc3950401701533a33b71c",
+        "bytes": 601366,
+        "width": 390,
+        "height": 844
+      },
+      "archivePath": "atlas/390-archer_beast-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/390-archer_beast-release.png",
+      "archiveSha256": "f205192aa8b9773a320d64ab5b8de8ff8afab64ff5cc3950401701533a33b71c",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[13].release",
+        "eventId": "18646758-f487-49a1-9c4d-eadf238c036b:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 3,
+          "pendingLoads": 0,
+          "generation": 30,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:mage_chain:390:14:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:mage_chain",
+      "observedIdentities": [
+        "atlas:mage_chain"
+      ],
+      "variant": "mage_chain",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 14,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 14,
+          "build": "mage_chain",
+          "width": 390,
+          "runId": "3da56ce3-de21-4318-b0c2-be5092e40a9f"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/390-mage_chain-release.png",
+        "sha256": "fd207a3f651ee375ffa4d5fe759f364c9d45045268817eeb889b0830e10de020",
+        "bytes": 598621,
+        "width": 390,
+        "height": 844
+      },
+      "archivePath": "atlas/390-mage_chain-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/390-mage_chain-release.png",
+      "archiveSha256": "fd207a3f651ee375ffa4d5fe759f364c9d45045268817eeb889b0830e10de020",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[14].release",
+        "eventId": "3da56ce3-de21-4318-b0c2-be5092e40a9f:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 4,
+          "pendingLoads": 0,
+          "generation": 46,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    },
+    {
+      "id": "71bd98e749fe:thief_combo:390:15:browser",
+      "mode": "atlas",
+      "viewport": {
+        "width": 390,
+        "height": 844,
+        "source": "raw result case width and height"
+      },
+      "identity": "atlas:thief_combo",
+      "observedIdentities": [
+        "atlas:thief_combo"
+      ],
+      "variant": "thief_combo",
+      "evidenceKind": "browser-gameplay-api",
+      "status": "passed",
+      "eventSources": [
+        "committed-combat"
+      ],
+      "sourceResult": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json",
+        "sha256": "5ec31458d73cf22be9034b2e0629f86ed6566185c5a4230a1ff62cc017752241",
+        "caseIndex": 15,
+        "caseStatus": "passed",
+        "sourceCase": {
+          "index": 15,
+          "build": "thief_combo",
+          "width": 390,
+          "runId": "d693f671-202b-41a1-88b7-60867677c12e"
+        }
+      },
+      "sourceImage": {
+        "path": ".release-sync/skill-vfx-all-20261104/atlas-complete-20261104/390-thief_combo-release.png",
+        "sha256": "9d16d4a54b03455b74465dbd936f39bf748dec78ff7d4cb067d7eba0772f8390",
+        "bytes": 595570,
+        "width": 390,
+        "height": 844
+      },
+      "archivePath": "atlas/390-thief_combo-release.png",
+      "repositoryPath": "docs/skill-vfx-all-20261104/gameplay-screenshots/atlas/390-thief_combo-release.png",
+      "archiveSha256": "9d16d4a54b03455b74465dbd936f39bf748dec78ff7d4cb067d7eba0772f8390",
+      "capturePhase": "release",
+      "selectionReason": "Selected the recorded release sample with actual RAF draw calls; no stronger effect sample was recorded.",
+      "timeSemantics": "Original release screenshot from the real API run after its recorded release observation. Player metadata and PNG are sequential observations, not an atomic frame guarantee.",
+      "drawEvidence": {
+        "recordPath": "cases[15].release",
+        "eventId": "d693f671-202b-41a1-88b7-60867677c12e:combat:13:cast:1",
+        "effectKind": null,
+        "presentationMode": "full",
+        "player": {
+          "active": 1,
+          "drawCalls": 11,
+          "frameMs": 0.29999999701976776,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 5,
+          "pendingLoads": 0,
+          "generation": 62,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        }
+      }
+    }
+  ]
+}
