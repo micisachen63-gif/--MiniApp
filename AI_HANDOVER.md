@@ -28,7 +28,8 @@
 - pure-read逐段比較permanent／season各96表全hash、total_changes與outbox；涵蓋正常／凍結／過期／settling／倒地／擊殺。
 - layout-01產品wire缺漏、attack-01自然回復使初次未倒地、cap-01未開懶載入UI三筆失敗原件保留；按原已成功check採認，後兩者精確tail／readonly bridge，不重做成功消費或五場擊殺。不能宣稱單次完整Chrome run全綠。
 - --resume-run僅限精確attack-tail；cap-view用--bridge-run；六個mutating整段resume在Chrome／HTTP前fail-fast。工具主路徑已修正，6/6拒絕probe與唯讀補測保存。
-- candidate-source-freeze-final.json凍結15產品／測試＋4QA工具。root重算19檔、聚焦來源、preview199來源、21個check原收據及23圖SHA全吻合；QA來源橋接保留實際HTTP JS／CSS。
+- candidate-source-freeze-final.json先凍結15產品／測試＋4QA工具，root重算19檔、聚焦來源、preview199來源、21個check原收據及23圖SHA全吻合；QA來源橋接保留實際HTTP JS／CSS。首次full gate後只改一個既有VM測試引用；最終16產品／測試＋4工具凍結於candidate-source-freeze-after-fixture.json，原19檔不變。
+- 首次精確HEAD c942b3726abeac29feda6efd7521fd719af82f93完整Worker3038中3034過／4失敗，BOT未跑；2330來源與Git前後穩定。四項同因：既有monster-art-compatibility VM抽取handleApp漏注入已匯出的SCOPED_BOSS_ACTIONS。只補真實import與VM引用，原發布防護／零讀寫／mutation斷言不改，原檔5/5通過、20來源前後穩定；產品與素材未變。失敗收據full-final-head-gate-first-failure.json與原TAP保留，修正見monster-art-fixture-focused.json／post-gate-fixture-bridge.json。另作修正提交後重跑完整gate，不以5項focused取代。
 - Node24.7.0。完整gate採官方全部Worker／BOT檔案清單、每服務concurrency2，提交前後HEAD／分支／乾淨worktree及全部source hash為必要條件。實際數目與成功狀態只以最終receipt／FINAL_STATUS為準。
 - 證據根：.release-sync/boss-20261105/。重要收據：backend-focused-final.json、ui-realm-wire-green-01.json、ui-realm-wire-bridge-after.json、qa-summary.json、qa-source-bridge.json、qa-tool-source-hashes.json、root-review-final.json、visual-review.json。已有成功證據不無故重跑／重置。
 

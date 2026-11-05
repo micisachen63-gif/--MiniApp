@@ -59,14 +59,14 @@ pending依realm／帳號／角色隔離；A→B→A的晚成功、晚409或已�
 
 五、來源與聚焦驗證
 
-最終產品／測試15檔，隔離QA工具4檔，19檔凍結於candidate-source-freeze-final.json。報告與AI_HANDOVER另外隨本機提交保存。後端聚焦69/69，含42個新增案例；最後UI／shared-session聚焦71/71，皆0 fail／cancel／skip／todo。聚焦集合不能與完整gate相加作為唯一測試總數。
+原產品／測試15檔與隔離QA工具4檔先凍結於candidate-source-freeze-final.json。第一輪完整gate後，僅補齊既有monster-art-compatibility測試的VM引用；最終產品／測試16檔加4工具共20檔，見candidate-source-freeze-after-fixture.json。原19檔完全不變，報告與AI_HANDOVER另外隨本機提交保存。後端聚焦69/69，含42個新增案例；最後UI／shared-session聚焦71/71，皆0 fail／cancel／skip／todo。聚焦集合不能與完整gate相加作為唯一測試總數。
 
 後端收據：backend-focused-final.json／.tap、backend-source-hashes.json。
 前端收據：ui-realm-wire-red-01、ui-realm-wire-green-01、ui-realm-wire-bridge-after.json。
 QA來源：qa-source-bridge.json、qa-tool-source-hashes.json。
-root審查：root-review-final.json、visual-review.json、candidate-source-freeze-final.json。
+root審查：root-review-final.json、visual-review.json、candidate-source-freeze-final.json、post-gate-fixture-bridge.json與candidate-source-freeze-after-fixture.json。
 
-root重算19個最終檔、後端聚焦來源、UI聚焦來源、preview啟動199來源、21個採認check所屬原收據及23張代表圖SHA，全部吻合。實際HTTP JS／CSS來源亦保存於各Chrome結果與bridge。root實際目視11張代表圖，不以自動布局斷言代替視覺檢查。
+root重算原19個凍結檔、後端聚焦來源、UI聚焦來源、preview啟動199來源、21個採認check所屬原收據及23張代表圖SHA，全部吻合。其後新增的VM測試引用修正已通過原檔5/5，測試前後20個來源穩定；沒有改動任何產品或素材。實際HTTP JS／CSS來源亦保存於各Chrome結果與bridge。root實際目視11張代表圖，不以自動布局斷言代替視覺檢查。
 
 六、Chrome與隔離API分段驗收
 
@@ -96,6 +96,10 @@ cap-01的5場真擊殺／上限已通過，末尾asset檢查因API-only流程未
 工具已修正自然後續攻擊窗口與cap載入UI的主路徑。--resume-run僅允許精確attack-tail，cap-view使用獨立--bridge-run；exchange、exchange-race、attack、kill、cap、races整段resume在建立run目錄／Chrome／HTTP前拒絕。6/6拒絕probe保存在qa-resume-rejection-probes.json。不要用整段重播掩蓋既有成功消費。
 
 backend-focused-01曾有1個測試預期錯誤：攻擊已提交後切角擋住後續結算，原合法守護憑證仍存在。修正測試以符合原交易界線，後端最終69/69；失敗與分析原件保留。
+
+首次精確HEAD完整gate在c942b3726abeac29feda6efd7521fd719af82f93執行，Worker3038項中3034過、4失敗，BOT依fail-fast未執行。2330來源及前後Git狀態完全穩定。四項共同錯誤為monster-art-compatibility.test.js抽取handleApp到VM時，漏注入已由app.js匯出的SCOPED_BOSS_ACTIONS，並非素材或ignored輸入缺失。
+
+修正只改該既有測試兩處：import真實常數並注入vm.createContext，不用空陣列替代，也不改原版本防護、零讀寫與實際mutation斷言。該檔5/5通過，0 fail/cancel/skip/todo；原19個產品／工具SHA完全不變。失敗原件保存在full-final-head-gate-first-failure.json及原timestamp目錄，原因與修正證據見full-gate-failure-analysis.json、monster-art-fixture-fix-analysis.json、monster-art-fixture-focused.json與post-gate-fixture-bridge.json。修正另外本機提交後，對新的精確HEAD重新執行全部Worker／BOT，不用focused結果代替完整gate。
 
 八、最終完整gate
 
