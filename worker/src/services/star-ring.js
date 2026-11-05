@@ -38,12 +38,14 @@ const validRequest=b=>{const id=String(b.requestId||'');if(id.length>100)throw n
 async function load(db,id){const p=await db.prepare('SELECT * FROM rpg_star_ring_runs WHERE id=?').bind(String(id)).first();if(!p)throw new GameError('star_ring','找不到這趟星環遠征',404);p.state=parse(p.state_json);p.members=await rows(db,'SELECT m.*,c.name,c.level,c.base_class,c.class_path,c.gender,c.special_json FROM rpg_star_ring_members m JOIN rpg_live_characters c ON c.tg_id=m.char_id WHERE m.run_id=? ORDER BY m.joined_at,m.char_id',p.id);return p;}
 const member=(p,tg)=>{const m=p.members.find(m=>m.char_id===String(tg));if(!m||m.left_at!=null)throw new GameError('member','你不在這支遠征隊伍中',403);return m;};
 const admit=(c,tier)=>{if(!c)throw new GameError('no_character','請先建立角色',404);if(c.level<tier||Engine.rolesOf(c).length===0)throw new GameError('level',`需要 Lv.${tier}${tier>=90?' 並完成二轉':''}`);};
-async function mutate(env,id,tg,b,now,fn){for(let attempt=0;attempt<5;attempt++){
+async function mutate(env,id,tg,b,now,fn,options={}){for(let attempt=0;attempt<5;attempt++){
  const db=env.DB,request=validRequest(b),p=await load(db,id),op=String(b.action||'system');
  if(request){const old=await db.prepare('SELECT operation FROM rpg_star_ring_operations WHERE run_id=? AND char_id=? AND request_id=?').bind(p.id,String(tg),request).first();if(old){if(old.operation!==op)throw new GameError('request','操作編號已用於其他動作',409);return;}}
  const extra=[];await fn(p,extra);
  const stmts=[db.prepare('UPDATE rpg_star_ring_runs SET status=?,leader_id=?,state_json=?,rev=rev+1,updated_at=?,next_at=? WHERE id=? AND rev=?').bind(p.status,p.leader_id,JSON.stringify(p.state),now,p.next_at,p.id,p.rev),guardStmt(db),...extra,recruitCard(db,p.id,p.rev+1,now)];
  if(request)stmts.push(db.prepare('INSERT INTO rpg_star_ring_operations(run_id,char_id,request_id,operation,created_at) VALUES(?,?,?,?,?)').bind(p.id,String(tg),request,op,now));
+  // Trusted scene hook: the full typed intent is committed with this authority row.
+  if(options.receipt)stmts.push(options.receipt({partyId:p.id,action:op,...(op==='ready'?{ready:b.ready!==false}:{}),...(op==='tactic'?{tactic:b.tactic}:{})},{}));
  try{await db.batch(stmts);return;}catch(e){const f=failure(e);if(f.code==='conflict'&&attempt<4)continue;throw f;}
  }throw new GameError('conflict','遠征狀況正在更新，請重試',409);}
 function release(db,p,at,charId=null){const out=[];if(charId){out.push(db.prepare('UPDATE rpg_characters SET party_id=NULL,last_settle_at=?,rev=rev+1,updated_at=? WHERE tg_id=? AND party_id=?').bind(at,at,charId,p.id),db.prepare('DELETE FROM rpg_party_presence WHERE char_id=? AND party_id=?').bind(charId,p.id));}else out.push(db.prepare('UPDATE rpg_characters SET party_id=NULL,last_settle_at=?,rev=rev+1,updated_at=? WHERE party_id=?').bind(at,at,p.id),db.prepare('DELETE FROM rpg_party_presence WHERE party_id=?').bind(p.id));return out;}
@@ -51,6 +53,7 @@ async function daily(db,tg,now){const day=taipeiDay(now),used=!!await db.prepare
 function addTotal(total,r){total.exp+=r.exp;for(const[k,v]of Object.entries(r.items))total.items[k]=(total.items[k]||0)+v;total.equipment.push(...r.equipment);if(r.bonus){total.bonus??={exp:0,expMinutes:0,eliteKills:0,bossKills:0};for(const k of Object.keys(total.bonus))total.bonus[k]+=r.bonus[k]||0;}return total;}
 async function rewards(db,id,tg){const all=await rows(db,'SELECT reward_json FROM rpg_star_ring_rewards WHERE run_id=? AND char_id=? ORDER BY stage',id,String(tg));return all.reduce((total,row)=>addTotal(total,parse(row.reward_json)),{exp:0,items:{},equipment:[]});}
 const catalog={tiers:Engine.TIERS.map(({gearTier,...tier})=>tier),gearPolicy:STAR_RING_GEAR,gearYield:STAR_RING_GEAR_YIELD,tactics:Engine.TACTICS,shop:Engine.SHOP,scenes:Engine.SCENES,duration:Engine.DURATION,stageMs:Engine.STAGE_MS,hourMs:Engine.HOUR_MS};
+export const STAR_RING_CATALOG=catalog;
 // Bot-only projection: repair an existing recruitment message without ticking a run.
 export async function recruitment(env,id){const p=await load(env.DB,id);return {ok:true,party:{id:p.id,rev:p.rev,status:p.status,expiresAt:p.expires_at,leaderId:p.leader_id,name:p.state.name,tier:p.state.tier,difficulty:p.state.difficulty,members:p.members.map(m=>({id:m.char_id,name:m.name,level:m.level,ready:!!m.ready,left:m.left_at!=null}))}};}
 // Telegram callbacks identify an ACCOUNT. Recover its original operation before
@@ -67,7 +70,7 @@ export async function joinRecruit(env,account,b,now){
 }
 export async function list(env,tg,now){await sweep(env,now,6);const db=env.DB,presence=await db.prepare('SELECT party_id FROM rpg_party_presence WHERE char_id=?').bind(String(tg)).first();const open=await rows(db,"SELECT id FROM rpg_star_ring_runs WHERE status='lobby' AND expires_at>? ORDER BY created_at DESC LIMIT 20",now),history=await rows(db,"SELECT r.id FROM rpg_star_ring_runs r JOIN rpg_star_ring_members m ON m.run_id=r.id WHERE m.char_id=? AND (r.status IN('complete','ended') OR m.left_at IS NOT NULL) ORDER BY r.updated_at DESC LIMIT 8",String(tg));const ringId=await runningRingId(db,tg)||(presence?.party_id?.startsWith('ring:')?presence.party_id:null);const active=ringId?await view(env,ringId,tg,now):null;return {ok:true,...catalog,active,parties:await Promise.all(open.map(x=>view(env,x.id,tg,now))),history:await Promise.all(history.map(x=>view(env,x.id,tg,now))),daily:await daily(db,tg,now),now};}
 export const me=list;
-export async function create(env,tg,b,now){
+export async function create(env,tg,b,now,options={}){
  await sweep(env,now,6);const request=validRequest(b),tier=Number(b.tier??40),difficulty=b.difficulty??'normal',tactic=b.tactic??'balanced',config=JSON.stringify({tier,difficulty,tactic});
  if(!Engine.TIERS.some(t=>t.id===tier)||!['normal','advanced'].includes(difficulty)||!Engine.TACTICS.some(t=>t.id===tactic))throw new GameError('config','遠征設定無效');
  if(request){const old=await env.DB.prepare('SELECT run_id,config_json FROM rpg_star_ring_creations WHERE char_id=? AND request_id=?').bind(String(tg),request).first();if(old){if(old.config_json!==config)throw new GameError('request','操作編號已用於其他遠征設定',409);return {ok:true,party:await view(env,old.run_id,tg,now)};}}
@@ -80,7 +83,8 @@ export async function create(env,tg,b,now){
   db.prepare('INSERT INTO rpg_star_ring_members(run_id,char_id,account_id,joined_at) VALUES(?,?,?,?)').bind(id,String(tg),String(c.account_tg_id||tg),now),
   db.prepare('INSERT INTO rpg_party_presence(account_id,party_id,char_id) VALUES(?,?,?)').bind(presenceKey(tg),id,String(tg)),
   recruitCard(db,id,0,now),
-  ...(request?[db.prepare('INSERT INTO rpg_star_ring_creations(char_id,request_id,run_id,config_json,created_at) VALUES(?,?,?,?,?)').bind(String(tg),request,id,config,now)]:[])
+  ...(request?[db.prepare('INSERT INTO rpg_star_ring_creations(char_id,request_id,run_id,config_json,created_at) VALUES(?,?,?,?,?)').bind(String(tg),request,id,config,now)]:[]),
+   ...(options.receipt?[options.receipt({partyId:id,tier,difficulty,tactic},{})]:[])
  ]);}catch(e){if(request){const old=await env.DB.prepare('SELECT run_id,config_json FROM rpg_star_ring_creations WHERE char_id=? AND request_id=?').bind(String(tg),request).first();if(old&&old.config_json===config)return {ok:true,party:await view(env,old.run_id,tg,now)};}throw failure(e);}return {ok:true,party:await view(env,id,tg,now)};
 }
 async function begin(env,p,extra,now){
@@ -98,7 +102,7 @@ async function begin(env,p,extra,now){
  if(p.state.difficulty==='advanced'&&Engine.coverage(actors,['breach','aid','control']).missing.length)throw new GameError('party_roles','深入遠征需要不同隊員分擔破陣、支援與壓制；守護職責可自由搭配');
  Object.assign(p.state,{optionalGuard:true,actors,startedAt:now,endsAt:now+Engine.DURATION,seed:crypto.randomUUID(),results:[],stageTactics:[p.state.tactic]});p.status='running';p.next_at=now+Engine.STAGE_MS;p.state.log.unshift({at:now,text:'星環遠征啟程；伺服器持續推進，離線仍會累積戰果。'});
 }
-export async function action(env,tg,b,now){const id=String(b.partyId||''),op=String(b.action||b.op||'');await advance(env,id,now);
+export async function action(env,tg,b,now,options={}){const id=String(b.partyId||''),op=String(b.action||b.op||'');await advance(env,id,now);
  if(op==='join'||op==='join-ready')await Player.withPlayer(env,String(tg),now);
  await mutate(env,id,String(tg),{...b,action:op},now,async(p,extra)=>{
   if(['complete','ended'].includes(p.status))throw new GameError('closed','這趟遠征已結束');
@@ -135,7 +139,7 @@ export async function action(env,tg,b,now){const id=String(b.partyId||''),op=Str
    else if(p.leader_id===String(tg))p.leader_id=p.members.find(x=>x.left_at==null&&x.char_id!==String(tg))?.char_id||p.leader_id;
   }else throw new GameError('action','遠征操作無效');
   p.state.log=p.state.log.slice(0,30);
- });return {ok:true,party:await view(env,id,tg,now)};
+ },options);return {ok:true,party:await view(env,id,tg,now)};
 }
 async function advance(env,id,now){
  const initial=await load(env.DB,id);if(initial.status==='running'&&initial.next_at>now||!['lobby','running'].includes(initial.status)||initial.status==='lobby'&&initial.expires_at>now)return;
@@ -179,8 +183,11 @@ async function advance(env,id,now){
   if(due===6){p.status='complete';p.next_at=s.endsAt;}
  });
 }
-export async function view(env,id,tg,now){await advance(env,id,now);const p=await load(env.DB,id),s=p.state,index=Math.min(5,s.results.length),isRunning=p.status==='running',beats=isRunning?Math.floor(Math.max(0,now-s.startedAt-index*Engine.STAGE_MS)/Engine.BEAT_MS):0;
- const b=isRunning?projected(p,index,beats,now):s.results.at(-1)||null;
+export async function view(env,id,tg,now){await advance(env,id,now);return readView(env,id,tg,now,{cache:true});}
+// SELECT-only counterpart. Its simulation is a preview, never a checkpoint or reward.
+// New scoped readers do not share the old isolate-wide cache across realm databases.
+export async function readView(env,id,tg,now,{cache=false}={}){const p=await load(env.DB,id),s=p.state,index=Math.min(5,s.results.length),isRunning=p.status==='running',beats=isRunning?Math.floor(Math.max(0,now-s.startedAt-index*Engine.STAGE_MS)/Engine.BEAT_MS):0;
+ const b=isRunning?(cache?projected(p,index,beats,now):Engine.simulateStage(p.state,index,beats)):s.results.at(-1)||null;
  const hourIndex=b?.hourIndex??0,scene=s.startedAt?Engine.sceneFor(s,hourIndex):{...Engine.SCENES[hourIndex],startsAt:null,endsAt:null};
  const members=p.members.map(m=>{const a=b?.actors.find(a=>a.id===m.char_id)||s.actors.find(a=>a.id===m.char_id);return {id:m.char_id,name:a?.name||m.name,base:a?.base||m.base_class,classPath:a?.path||m.class_path,gender:a?.gender||m.gender,level:a?.level||m.level,roles:a?.roles||Engine.rolesOf(m),ready:!!m.ready,left:m.left_at!=null,hp:a?.hp||0,maxHp:a?.maxHp||0,mp:a?.mp||0,maxMp:a?.maxMp||0,guardian:a?.guardian||null,aura:equippedAura(m),contribution:b?.contribution[m.char_id]||null};});
  // Next species is selected with the same seeded encounter stream as replay.
@@ -194,7 +201,7 @@ export async function view(env,id,tg,now){await advance(env,id,now);const p=awai
   members,battle:b?{stageIndex:index,hourIndex,scene,spawn,enemy:{id:shown.id,name:shown.name,hp:shown.hp,maxHp:shown.maxHp,shield:shown.shield,windup:shown.windup,interrupted:shown.interrupted,spell:shown.spell,behavior:shown.behavior,counterRoles:shown.counterRoles,artIndex:shown.artIndex,artUrl:shown.artUrl,...(shown.rank?{rank:shown.rank}: {})},members,sequence:b.sequence,events:b.events,coverage:b.coverage,waves:b.waves,objective:b.objective,encounters:b.encounters,...(Engine.usesPools(s)?{sightings:b.sightings,encounterSerial:b.poolSerial}: {})}:null,log:s.log,engineVersion:s.engineVersion||1,rankRewards:Engine.hasRankRewards(s)?Engine.RANK_REWARDS:null,pendingRankReward:isRunning&&Engine.hasRankRewards(s)&&mine?.left_at==null&&s.actors.some(a=>a.id===String(tg))?Engine.rankReward(s,s.actors.find(a=>a.id===String(tg)),index,b):null,me:mine?{id:String(tg),leader:p.leader_id===String(tg),ready:!!mine.ready,left:mine.left_at!=null,rewards:myRewards}:null,roleCoverage:Engine.coverageForExpedition({...s,optionalGuard:p.status==='lobby'||s.optionalGuard===true},members.filter(m=>!m.left).map(m=>({...m,path:m.classPath}))),rewardsPreview:{gearPolicy:STAR_RING_GEAR,gearYield:STAR_RING_GEAR_YIELD,rankGearBonus:Engine.hasRankRewards(s),gearTierPolicy:'recipient_after_exp',expHours:[18,24],tokens:s.difficulty==='advanced'?[11,12]:[10,11],extraEquipmentChance:s.difficulty==='advanced'?{S:.6,A:.25,B:0}:{S:.35,A:0,B:0},guardianLootBonus:true}};
 }
 export async function sweep(env,now,limit=15){const due=await rows(env.DB,"SELECT id FROM rpg_star_ring_runs WHERE status IN('lobby','running') AND next_at<=? ORDER BY next_at LIMIT ?",now,Math.max(1,Math.min(30,Number(limit)||15)));const errors=[];for(const r of due)try{await advance(env,r.id,now);}catch(e){errors.push({id:r.id,code:e.code||'internal'});}return {processed:due.length,errors};}
-export async function shop(env,tg,b,now){
+export async function shop(env,tg,b,now,options={}){
  if(!b?.offerId){const cosmetics=await cosmeticState(env,tg),core=(await env.DB.prepare('SELECT quantity FROM rpg_inventory WHERE tg_id=? AND item=?').bind(String(tg),Engine.CORE).first())?.quantity||0;return {ok:true,offers:Engine.SHOP,currency:'star_ring_token',balance:cosmetics.balance,balances:{star_ring_token:cosmetics.balance,[Engine.CORE]:core},cosmetics};}
  const offer=Engine.SHOP.find(x=>x.id===b.offerId),request=validRequest(b);if(!offer||!request)throw new GameError('shop','請選擇商品並提供操作編號');
  for(let n=0;n<4;n++){
@@ -205,7 +212,7 @@ export async function shop(env,tg,b,now){
     if(w.char.level<40)throw new GameError('level','星環外觀需要 Lv.40');
     if(await env.DB.prepare('SELECT 1 FROM rpg_star_ring_cosmetics WHERE char_id=? AND cosmetic_id=?').bind(String(tg),offer.cosmetic).first()){
      const existing={...reward,cosmetic:offer.cosmetic,alreadyOwned:true};
-     return {extra:[env.DB.prepare('INSERT INTO rpg_star_ring_purchases(char_id,request_id,reward_json,created_at) VALUES(?,?,?,?)').bind(String(tg),request,JSON.stringify(existing),now)],result:existing};
+     return {extra:[env.DB.prepare('INSERT INTO rpg_star_ring_purchases(char_id,request_id,reward_json,created_at) VALUES(?,?,?,?)').bind(String(tg),request,JSON.stringify(existing),now),...(options.receipt?[options.receipt(existing,{})]:[])],result:existing};
     }
     reward.cosmetic=offer.cosmetic;extra.push(env.DB.prepare('INSERT INTO rpg_star_ring_cosmetics(char_id,cosmetic_id,unlocked_at) VALUES(?,?,?)').bind(String(tg),offer.cosmetic,now));
    }
@@ -214,7 +221,7 @@ export async function shop(env,tg,b,now){
    // The receipt gives replay stability; a client-selected requestId must never
    // choose a gear roll. Generate the first candidate from private server entropy.
    if(offer.gear){const e=makeStarRingGear({id:`ringshop:${crypto.randomUUID()}`,tgId:String(tg),cls:w.char.base_class,classPath:w.char.class_path,level:w.char.level,rng:rngFor(crypto.randomUUID()),now});reward.equipment.push(e);w.equipment.push(e);}else if(!offer.cosmetic){reward.items[offer.item]=offer.qty;w.inv[offer.item]=(w.inv[offer.item]||0)+offer.qty;}
-   return {extra:[...extra,env.DB.prepare('INSERT INTO rpg_star_ring_purchases(char_id,request_id,reward_json,created_at) VALUES(?,?,?,?)').bind(String(tg),request,JSON.stringify(reward),now)],ledger:[{event_id:`star-ring-shop:${tg}:${request}`,tg_id:String(tg),type:currency===Engine.CORE?'星冕核心兌換':'星征徽記兌換',item:currency,item_delta:-offer.cost,note:offer.name}],result:reward};
+   return {extra:[...extra,env.DB.prepare('INSERT INTO rpg_star_ring_purchases(char_id,request_id,reward_json,created_at) VALUES(?,?,?,?)').bind(String(tg),request,JSON.stringify(reward),now),...(options.receipt?[options.receipt(reward,{[currency]:offer.cost})]:[])],ledger:[{event_id:`star-ring-shop:${tg}:${request}`,tg_id:String(tg),type:currency===Engine.CORE?'星冕核心兌換':'星征徽記兌換',item:currency,item_delta:-offer.cost,note:offer.name}],result:reward};
   });return {ok:true,...out.result,...(offer.cosmetic?{cosmetics:await cosmeticState(env,tg)}:{})};}catch(e){if(n<3&&(/rpg_star_ring_purchases|rpg_star_ring_cosmetics|rpg_ledger.event_id/.test(String(e))||e.code==='conflict'))continue;throw e;}
  }throw new GameError('conflict','兌換正在更新，請重新整理',409);
 }

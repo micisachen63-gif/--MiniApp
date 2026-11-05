@@ -22,6 +22,9 @@ import * as PARTY_SCENE from './services/party-scene.js';
 import * as PARTY from './services/party.js';
 import * as STAR_RING from './services/star-ring.js';
 import * as STAR_RING_COSMETICS from './services/star-ring-cosmetics.js';
+import * as STAR_RING_SCENE from './services/star-ring-scene.js';
+import * as STAR_RING_RECEIPT from './services/star-ring-receipt.js';
+import * as STAR_RING_SCOPED from './services/star-ring-scoped.js';
 import * as JOURNAL from './services/journal.js';
 import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
@@ -46,7 +49,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
@@ -178,6 +181,12 @@ const routes = {
   'POST /rpg/tower/receipt': (env,b,now)=>TOWER_RECEIPT.view(env,tgOf(b),b,now,'service'),
   'POST /rpg/tower/action': (env,b,now)=>TOWER.action(env,tgOf(b),b,now),
   'POST /rpg/party/list': (env,b,now)=>PARTY.list(env,tgOf(b),now),
+  'POST /rpg/star-ring/scene': (env,b,now)=>STAR_RING_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/receipt': (env,b,now,namespace='service')=>STAR_RING_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/star-ring/create-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'create',b,now,namespace),
+  'POST /rpg/star-ring/action-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'action',b,now,namespace),
+  'POST /rpg/star-ring/shop-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'shop',b,now,namespace),
+  'POST /rpg/star-ring/cosmetics/equip-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'cosmetic',b,now,namespace),
   'POST /rpg/star-ring/list': (env,b,now)=>STAR_RING.list(env,tgOf(b),now),
   'POST /rpg/star-ring/me': (env,b,now)=>STAR_RING.me(env,tgOf(b),now),
   'POST /rpg/star-ring/create': (env,b,now)=>STAR_RING.create(env,tgOf(b),b,now),
@@ -427,9 +436,9 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    const bossScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
-    if(bossScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
-    if((bossScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
+    if(sceneScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((sceneScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -439,8 +448,8 @@ export async function handle(request, env) {
       return json(await route(env,routeBody,now));
     }
     env=await prepareRealmEnv(request,env);
-    if(bossScoped||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
-      if(bossScoped&&(typeof routeBody.selectedCharacterId!=='string'||!routeBody.selectedCharacterId))throw new GameError('selected_character_required','請先選擇角色',400);
+    if(sceneScoped||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
+      if(sceneScoped&&(typeof routeBody.selectedCharacterId!=='string'||!routeBody.selectedCharacterId))throw new GameError('selected_character_required','請先選擇角色',400);
       const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
       const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
       if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);

@@ -32,6 +32,7 @@ const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${
 const injected = `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
 const buttonMaterialPrefix = '/ui/button-materials/';
+const starArtFiles=new Set(['dawn','moon','eclipse'].flatMap(tone=>['/art/star-ring-rewards-20261018/icon-'+tone+'.webp','/art/star-ring-surround-20261026/surround-'+tone+'.webp']));
 const virtualSocial = new Set([
   'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js',
   'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
@@ -39,6 +40,7 @@ const virtualSocial = new Set([
   'scene-party-ui.js','scene-party-ui.css',
   'scene-tower-ui.js','scene-tower-ui.css',
   'scene-boss-ui.js','scene-boss-ui.css',
+  'scene-star-ring-ui.js','scene-star-ring-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
@@ -62,17 +64,17 @@ const server = http.createServer(async (req, res) => {
   try {
     if (!['GET','HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
     const url = new URL(req.url, origin);
-    if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html' }); res.end(); return; }
+    if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html'+url.search }); res.end(); return; }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type':'application/json','Cache-Control':'no-store' });
-      res.end(JSON.stringify({ ok:true, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true })); return;
+      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true })); return;
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
-    if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!requestPath.startsWith(buttonMaterialPrefix) && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
+    if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!requestPath.startsWith(buttonMaterialPrefix) && !starArtFiles.has(requestPath) && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
       res.writeHead(404); res.end('Asset not found'); return;
     }
-    const bound = requestPath.startsWith(buttonMaterialPrefix) ? null : await composeResponse(requestPath, grokRoot);
+    const bound = (requestPath.startsWith(buttonMaterialPrefix)||starArtFiles.has(requestPath)) ? null : await composeResponse(requestPath, grokRoot);
     if (bound) {
       let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injected).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
       if(bound.type.startsWith('text/html'))body=body.replace('<script src="'+socialPrefix+'scene-social-preview.js"></script>','<script src="'+socialPrefix+'scene-window-manager.js"></script><script src="'+socialPrefix+'scene-social-preview.js"></script>');
@@ -81,7 +83,7 @@ const server = http.createServer(async (req, res) => {
       res.end(req.method === 'HEAD' ? undefined : body); return;
     }
     let file;
-    if (requestPath.startsWith(buttonMaterialPrefix)) file = await realFile(publicRoot, requestPath.slice(1));
+    if (requestPath.startsWith(buttonMaterialPrefix)||starArtFiles.has(requestPath)) file = await realFile(publicRoot, requestPath.slice(1));
     else if (requestPath.startsWith(socialPrefix)) {
       const name = requestPath.slice(socialPrefix.length);
       if (virtualSocial.has(name)) file = await realFile(publicRoot, name);

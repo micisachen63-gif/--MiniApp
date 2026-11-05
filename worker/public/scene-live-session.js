@@ -1,8 +1,8 @@
 /* One context for the local scene and its real Atlas windows. Reads never settle. */
 (() => {
   'use strict';
-  const READS = new Set(['meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
-  const BOSS_SCOPED_ACTIONS = new Set(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped']);
+  const READS = new Set(['meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','fate/gifts/summary','chat/state']);
+  const SCOPED_REALM_ACTIONS = new Set(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped']);
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
     const endpoint = options.endpoint;
@@ -57,7 +57,7 @@
           response = await send(endpoint + action, {
             method: 'POST', mode: 'cors', credentials: 'omit',
             headers: { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': captured.accountId, 'X-Realm-Id': captured.realmId },
-            body: JSON.stringify({ ...body, ...(BOSS_SCOPED_ACTIONS.has(action) ? { realmId: captured.realmId } : {}), ...(captured.characterId && !['characters','select'].includes(action) ? { selectedCharacterId: captured.characterId } : {}) }), signal: controller.signal,
+            body: JSON.stringify({ ...body, ...(SCOPED_REALM_ACTIONS.has(action) ? { realmId: captured.realmId } : {}), ...(captured.characterId && !['characters','select'].includes(action) ? { selectedCharacterId: captured.characterId } : {}) }), signal: controller.signal,
           });
           data = await response.json();
         } catch (cause) {

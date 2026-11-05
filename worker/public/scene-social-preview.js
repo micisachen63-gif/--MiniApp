@@ -8,7 +8,7 @@
  const endpoint=liveSession?previewConfig.endpoint:'http://127.0.0.1:9642/app/api/';let realm=liveSession?liveSession.getContext().realmId:'permanent',actorContext='';
  const ui=window.UI,byId=id=>document.getElementById(id);
  let actor=null,epoch=0,quests=null,questError='',catalog=null,dialog=null,kind=null,chatView=null,atlasView=null,bootFlight=null,questFlight=null,claimBusy=false,tracked=null,disposed=false,previousFocus=null;
- const savedInert=new Map(),claimRequests=new Map();let windowManager=null,navigation=null;
+ const savedInert=new Map(),claimRequests=new Map();let windowManager=null,navigation=null,starDestinationHandled=false,starDestinationFlight=null;
  const pretty=n=>new Intl.NumberFormat('zh-TW').format(Number(n)||0);
  async function request(action,body={},options={}){
   if(liveSession)return liveSession.request(action,body,options);
@@ -28,7 +28,7 @@
   const context=liveSession.getContext(),next={tgId:String(snapshot.characterId),...snapshot.character,partyId:snapshot.live.partyId};
   const signature=`${snapshot.realmId}:${snapshot.characterId}:${context.epoch}`;
   if(signature!==actorContext){if(actor&&kind!=='characters')close();actorContext=signature;epoch++;claimBusy=false;quests=null;questFlight=null;tracked=null;catalog=null;realm=snapshot.realmId;actor=next;try{tracked=JSON.parse(sessionStorage.getItem(`scene:tracked-quest:${realm}:${actor.tgId}`)||'null');}catch{}chat.setContext({realmId:realm,characterId:actor.tgId,epoch});}else actor=next;
-  questError='';paintTracker();paintStrip();windowManager?.syncContext();navigation?.querySelectorAll('button').forEach(b=>b.disabled=false);windowManager?.update(snapshot);
+  questError='';paintTracker();paintStrip();windowManager?.syncContext();navigation?.querySelectorAll('button').forEach(b=>b.disabled=false);windowManager?.update(snapshot);void openStarRingDestination();
  }
  async function bootstrap(){
   if(bootFlight)return bootFlight;
@@ -159,7 +159,7 @@
   inventory:{title:'背包',group:'inventory'},adventure:{title:'冒險',group:'adventure'},camp:{title:'營地',group:'camp'},
   chat:{title:'聊天與社交',group:'social'},quests:{title:'任務與委託',group:'adventure'},characters:{title:'選擇角色',group:'character'},
   talents:{title:'天賦星盤',group:'character'},progression:{title:'冒險成長路線',group:'adventure'},build:{title:'技能與輔助配置',group:'character'},
-  skills:{title:'職業技能',group:'character'},career:{title:'轉職與進修',group:'character'},party:{title:'組隊副本',group:'adventure'},tower:{title:'三人爬塔',group:'adventure'},'tower-imprint':{title:'塔印工坊',group:'camp'},boss:{title:'世界首領',group:'adventure'},'boss-essence':{title:'首領精華',group:'camp'},
+  skills:{title:'職業技能',group:'character'},career:{title:'轉職與進修',group:'character'},party:{title:'組隊副本',group:'adventure'},tower:{title:'三人爬塔',group:'adventure'},'tower-imprint':{title:'塔印工坊',group:'camp'},boss:{title:'世界首領',group:'adventure'},'boss-essence':{title:'首領精華',group:'camp'},'star-ring':{title:'星環遠征',group:'adventure'},'star-ring-shop':{title:'星征補給與星紋',group:'camp'},
   expedition:{title:'星圖派遣',group:'adventure'},workshop:{title:'強化與洗鍊工坊',group:'camp'},inscription:{title:'定向銘刻工坊',group:'camp'},
   supplies:{title:'補給設定',group:'camp'},shop:{title:'商店',group:'camp'},gearbook:{title:'裝備收藏冊',group:'camp'},recovery:{title:'典藏與精煉',group:'camp'}
  };
@@ -168,11 +168,28 @@
   if(window[name])return window[name];if(moduleFlights.has(file))return moduleFlights.get(file);
   const promise=new Promise((resolve,reject)=>{
    const script=document.createElement('script'),base=document.querySelector('script[src*="scene-social-preview.js"]')?.src||document.baseURI;
-   script.src=new URL(file+'.js?v=boss-20261105',base).href;
+   script.src=new URL(file+'.js?v=star-ring-20261105',base).href;
    script.onload=()=>window[name]?resolve(window[name]):failed();script.onerror=failed;
    function failed(){moduleFlights.delete(file);script.remove();reject(Error('功能介面載入失敗，請重試'));}
    document.head.append(script);
   });moduleFlights.set(file,promise);return promise;
+ }
+ // URL invitations are read intent only. Actor selection and the explicit confirmation
+ // in the Star Ring window are the only paths to a scoped membership write.
+ function starDestinationInputs(){
+  const inputs=[{search:location.search,start:window.Telegram?.WebApp?.initDataUnsafe?.start_param||''}];
+  try{if(window.parent!==window&&window.parent.location.origin===location.origin)inputs.push({search:window.parent.location.search,start:window.parent.Telegram?.WebApp?.initDataUnsafe?.start_param||''});}catch{}
+  return inputs;
+ }
+ function openStarRingDestination(){
+  if(!actor||!liveSession||!windowManager||disposed||starDestinationHandled||starDestinationFlight)return;
+  const inputs=starDestinationInputs();if(!inputs.some(x=>/ringParty=|(?:screen|tgWebAppStartParam)=ring_/.test(x.search)||/^ring_/.test(x.start))){starDestinationHandled=true;return;}
+  const captured=liveSession.getContext(),navigationBefore=JSON.stringify(windowManager.current()),same=()=>{const n=liveSession.getContext();return ['accountId','realmId','characterId','epoch'].every(k=>String(n[k])===String(captured[k]));};
+  starDestinationFlight=loadSceneModule('scene-star-ring-ui','RpgSceneStarRing').then(module=>{
+   if(disposed||!actor||!same())return;
+   const destination=inputs.map(x=>module.parseDestination(x.search,x.start)).find(Boolean);starDestinationHandled=true;
+   if(destination&&JSON.stringify(windowManager.current())===navigationBefore)windowManager.navigate('star-ring',destination);
+  }).catch(()=>{}).finally(()=>{starDestinationFlight=null;if(!disposed&&!starDestinationHandled&&!same())void openStarRingDestination();});
  }
  function unifiedHost(api,entry){
   const context=liveSession.getContext(),sameScope=()=>{const next=liveSession.getContext();return context.accountId===next.accountId&&context.realmId===next.realmId&&context.characterId===next.characterId&&context.epoch===next.epoch;};
@@ -189,9 +206,9 @@
   const entries=route==='character'?[
    ['equipment','穿戴與能力','查看裝備、比較與穿脫'],['inventory','持有裝備','開啟共用詳情與整理'],['skills','職業技能','學習、裝備與自動施法'],['career','轉職與進修','職業分支、條件與進修'],['build','星圖技能','主技能、輔助與自動策略'],['talents','天賦星盤','預覽路線與配置節點'],['progression','成長路線','查看可達成的下一個目標'],['characters','切換角色','沿用目前世界']
   ]:route==='adventure'?[
-   ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['quests','任務與委託','教學、每日、每週與調查鏈'],['party','組隊副本','三人副本、試煉與戰術'],['tower','三人爬塔','三區挑戰、隊友戰術與徽記'],['boss','世界首領','目前戰況、攻擊資格與已提交戰果'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
+   ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['quests','任務與委託','教學、每日、每週與調查鏈'],['party','組隊副本','三人副本、試煉與戰術'],['tower','三人爬塔','三區挑戰、隊友戰術與徽記'],['boss','世界首領','目前戰況、攻擊資格與已提交戰果'],['star-ring','星環遠征','五人招募、十二小時背景遠征與歷史戰報'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
   ]:[
-   ['workshop','強化與洗鍊','單次操作、自動作業與結果'],['tower-imprint','塔印工坊','裝備淬鍊、徽記兌換與稱號'],['boss-essence','首領精華','卷軸、遺物與舊材料回收'],['recovery','典藏與精煉','首件典藏、重複精煉、材料重洗'],['gearbook','裝備收藏冊','完成原有套組與永久能力'],['inscription','星圖銘刻','使用探索材料定向加工'],['shop','商店','藥水、卷軸、裝備與寶箱'],['supplies','補給設定','原版藥水設定與補滿']
+   ['workshop','強化與洗鍊','單次操作、自動作業與結果'],['tower-imprint','塔印工坊','裝備淬鍊、徽記兌換與稱號'],['boss-essence','首領精華','卷軸、遺物與舊材料回收'],['star-ring-shop','星征補給與星紋','徽記兌換、星冕核心與專屬外觀'],['recovery','典藏與精煉','首件典藏、重複精煉、材料重洗'],['gearbook','裝備收藏冊','完成原有套組與永久能力'],['inscription','星圖銘刻','使用探索材料定向加工'],['shop','商店','藥水、卷軸、裝備與寶箱'],['supplies','補給設定','原版藥水設定與補滿']
   ];
   const grid=document.createElement('div');grid.className='scene-hub-grid';
   for(const [target,title,description]of entries){const button=document.createElement('button');button.type='button';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=description;button.append(strong,small);button.onclick=()=>host.navigate(target);grid.append(button);}
@@ -206,6 +223,7 @@
   if(entry.route==='party'||entry.route==='tower'){const module=await loadSceneModule('scene-party-ui','RpgSceneParty');if(api.current())return module.mount(body,host,{...entry.params,kind:entry.route==='tower'?'tower':'dungeon',...(entry.route==='tower'?{tab:entry.params.tab||'areas'}:{})});return;}
   if(entry.route==='tower-imprint'){const module=await loadSceneModule('scene-tower-ui','RpgSceneTower');if(api.current())return module.mount(body,host,entry.params);return;}
   if(['boss','boss-essence'].includes(entry.route)){const module=await loadSceneModule('scene-boss-ui','RpgSceneBoss');if(api.current())return module.mount(body,host,{...entry.params,tab:entry.params.tab||(entry.route==='boss-essence'?'exchange':'battle')});return;}
+  if(['star-ring','star-ring-shop'].includes(entry.route)){const module=await loadSceneModule('scene-star-ring-ui','RpgSceneStarRing');if(api.current())return module.mount(body,host,{...entry.params,tab:entry.params.tab||(entry.route==='star-ring-shop'?'shop':'current')});return;}
   if(entry.route==='workshop'){const module=await loadSceneModule('scene-workshop-ui','RpgSceneWorkshop');if(api.current())return module.mount(body,host,entry.params);return;}
   if(['supplies','shop'].includes(entry.route)){const module=await loadSceneModule('scene-supply-ui','RpgSceneSupply');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
   if(entry.route==='chat'){const shortcuts=document.createElement('div');shortcuts.className='scene-social-shortcuts';const partyButton=document.createElement('button');partyButton.type='button';partyButton.dataset.sceneRoute='party';partyButton.textContent='我的隊伍';partyButton.style.minHeight='44px';partyButton.onclick=()=>host.navigate('party',{tab:'current'});shortcuts.append(partyButton);const chatBody=document.createElement('div');body.replaceChildren(shortcuts,chatBody);chatView=window.RpgSceneChatUI.mountPanel(chatBody,chat);void chat.refresh();return chatView;}

@@ -63,7 +63,10 @@ export function bindLiveScene(source){
  s=once(s,'function update(t,dms){','function update(t,dms){if(LIVE_SCENE){LIVE_VIEW?.update(dms);HERO_READABILITY?.update();perf(dms);return;}');
  // RESIZE uses cached parentSize before refreshing DOM bounds. Read the new
  // parent first so resize does not restore the previous canvas dimensions.
- s=once(s,"window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();sc.scale.resize(b.width,b.height);});","window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();if(LIVE_SCENE)sc.scale.getParentBounds();sc.scale.resize(b.width,b.height);});");
+ const legacyResize="window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();sc.scale.resize(b.width,b.height);});",currentResize="window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();sc.scale.setParentSize(b.width,b.height);});";
+ const legacyCount=s.split(legacyResize).length-1,currentCount=s.split(currentResize).length-1;
+ if(legacyCount===1&&currentCount===0)s=once(s,legacyResize,"window.addEventListener('resize',function(){var b=stage.getBoundingClientRect();if(LIVE_SCENE)sc.scale.getParentBounds();sc.scale.resize(b.width,b.height);});");
+ else if(legacyCount!==0||currentCount!==1)throw Error('Live scene resize hook must be exactly one known form');
  return s;
 }
 export function bindUi(source){

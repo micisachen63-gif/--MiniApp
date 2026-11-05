@@ -778,3 +778,69 @@ test('Boss scoped wire keeps each captured realm across A to B to A and rejects 
     assert.equal(h.net.calls.length, bossScopedWrites.has(action) ? 4 : 3);
   });
 });
+
+const starRingScopedWireCases = [
+ ['star-ring/scene', {partyId:'ring:'+'a'.repeat(32),recipientCharId:'owned-old'}],
+ ['star-ring/receipt', {kind:'action',requestId:'ssr_original_ready',partyId:'ring:'+'a'.repeat(32),action:'ready',ready:false}],
+ ['star-ring/create-scoped', {tier:40,difficulty:'normal',tactic:'balanced',requestId:'ssr_original_create'}],
+ ['star-ring/action-scoped', {partyId:'ring:'+'a'.repeat(32),action:'ready',ready:false,requestId:'ssr_original_ready'}],
+ ['star-ring/shop-scoped', {offerId:'gear',requestId:'ssr_original_gear'}],
+ ['star-ring/cosmetics/equip-scoped', {cosmeticId:null,requestId:'ssr_original_unequip'}],
+];
+const starRingScopedWrites=new Set(starRingScopedWireCases.filter(([action])=>action.endsWith('-scoped')).map(([action])=>action));
+
+test('Star Ring scene/receipt are pure reads; legacy list/get and scoped writes retain mutation semantics',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());const refresh=h.client.refresh();
+ const projection=h.client.request('star-ring/scene'),receipt=h.client.request('star-ring/receipt',{kind:'shop',requestId:'ssr_original_gear',offerId:'gear'});
+ assert.deepEqual(h.net.calls.map(x=>x.action),['atlas/status','star-ring/scene','star-ring/receipt']);
+ h.net.calls[1].reply({ok:true,characterId:'a',party:null});h.net.calls[2].reply({ok:true,characterId:'a',found:false,result:null,receipt:null});
+ assert.equal((await projection).party,null);assert.equal((await receipt).found,false);
+ h.net.calls[0].reply({ok:true,scene:scene()});assert.equal((await refresh).characterId,'a');assert.equal(h.net.calls.length,3);
+ for(const action of ['star-ring/scene','star-ring/receipt','star-ring/list','star-ring/get',...starRingScopedWrites]){
+  const pending=outcome(h.client.request(action));h.net.calls.at(-1).fail();const result=await pending;
+  assert.equal(result.error.uncertain,!['star-ring/scene','star-ring/receipt'].includes(action),action);
+ }
+});
+
+test('all six Star Ring endpoints serialize the same captured realm in body/header and preserve false/null',async t=>{
+ for(const [action,payload]of starRingScopedWireCases)await t.test(action,async t=>{
+  const h=harness({realmId:'season',characterId:'season-a'});t.after(()=>h.client.dispose());
+  for(const override of [{},{realmId:'forged-realm',selectedCharacterId:'foreign-character'}]){
+   const body={...payload,...override},before=plain(body),pending=h.client.request(action,body),call=h.net.calls.at(-1);
+   assert.equal(call.options.headers['X-Realm-Id'],'season');assert.equal(call.options.headers['X-Dev-Tg-Id'],'90101');
+   assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId:'season',selectedCharacterId:'season-a'});
+   assert.deepEqual(body,before,'request serialization cannot mutate persisted pending payload');
+   call.reply({ok:true});await drain();
+   if(starRingScopedWrites.has(action)){
+    const refresh=h.net.calls.at(-1);assert.equal(refresh.action,'atlas/status');assert.deepEqual(refresh.body,{selectedCharacterId:'season-a'});
+    refresh.reply({ok:true,scene:scene({realmId:'season',characterId:'season-a',runId:null})});
+   }
+   assert.equal((await pending).ok,true);
+  }
+  assert.equal(h.net.calls.filter(c=>c.action===action).length,2);
+ });
+});
+
+test('Star Ring wire isolates captured realms through A/B/A; neither old epoch starts a new Atlas refresh',async t=>{
+ for(const [action,payload]of starRingScopedWireCases)await t.test(action,async t=>{
+  const h=harness();t.after(()=>h.client.dispose());
+  const firstA=outcome(h.client.request(action,{...payload,realmId:'forged'})),oldA=h.net.calls.at(-1);
+  h.client.setContext({realmId:'season',characterId:'season-a'});
+  const b=outcome(h.client.request(action,{...payload,realmId:'permanent',selectedCharacterId:'a'})),oldB=h.net.calls.at(-1);
+  h.client.setContext({realmId:'permanent',characterId:'a'});
+  const currentA=h.client.request(action,{...payload,realmId:'season',selectedCharacterId:'season-a'}),current=h.net.calls.at(-1);
+  for(const [call,realmId,characterId]of [[oldA,'permanent','a'],[oldB,'season','season-a'],[current,'permanent','a']]){
+   assert.equal(call.options.headers['X-Realm-Id'],realmId);assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId,selectedCharacterId:characterId});
+  }
+  assert.equal(oldA.options.signal.aborted,true);assert.equal(oldB.options.signal.aborted,true);assert.equal(current.options.signal.aborted,false);
+  oldA.reply({ok:true,marker:'old-a'});oldB.reply({ok:true,marker:'old-b'});
+  for(const result of [await firstA,await b]){assert.equal(result.ok,false);assert.equal(result.error.code,'context_changed');}
+  assert.equal(h.net.calls.length,3);
+  current.reply({ok:true,marker:'current-a'});await drain();
+  if(starRingScopedWrites.has(action)){
+   const refresh=h.net.calls.at(-1);assert.equal(refresh.action,'atlas/status');assert.equal(refresh.options.headers['X-Realm-Id'],'permanent');
+   assert.deepEqual(refresh.body,{selectedCharacterId:'a'});refresh.reply({ok:true,scene:scene({runId:null})});
+  }
+  assert.equal((await currentA).marker,'current-a');assert.equal(h.client.getContext().epoch,2);assert.equal(h.net.calls.length,starRingScopedWrites.has(action)?4:3);
+ });
+});
