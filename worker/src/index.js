@@ -36,6 +36,9 @@ import * as GUARDIAN_SCENE from './services/guardian-scene.js';
 import * as FATE_SCENE from './services/fate-scene.js';
 import * as FATE_RECEIPT from './services/fate-receipt.js';
 import * as FATE_SCOPED from './services/fate-scoped.js';
+import * as FATE_PRIVATE_SCENE from './services/fate-private-scene.js';
+import * as FATE_PRIVATE_RECEIPT from './services/fate-private-receipt.js';
+import * as FATE_PRIVATE_SCOPED from './services/fate-private-scoped.js';
 import * as GUARDIAN_RECEIPT from './services/guardian-receipt.js';
 import * as GUARDIAN_SCOPED from './services/guardian-scoped.js';
 import * as EXCHANGE from './services/market-exchange.js';
@@ -126,6 +129,11 @@ const routes = {
   'POST /rpg/fate/scene':(env,b,now,namespace='service')=>FATE_SCENE.view(env,tgOf(b),b,now,namespace),
   'POST /rpg/fate/receipt':(env,b,now,namespace='service')=>FATE_RECEIPT.view(env,tgOf(b),b,now,namespace),
   'POST /rpg/fate/action-scoped':(env,b,now,namespace='service')=>FATE_SCOPED.run(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/scene':(env,b,now,namespace='service')=>FATE_PRIVATE_SCENE.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/profile':(env,b,now,namespace='service')=>FATE_PRIVATE_SCENE.profile(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/receipt':(env,b,now,namespace='service')=>FATE_PRIVATE_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/action-scoped':(env,b,now,namespace='service')=>FATE_PRIVATE_SCOPED.run(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/cancel':(env,b,now,namespace='service')=>FATE_PRIVATE_SCOPED.cancel(env,tgOf(b),b,now,namespace),
   'POST /rpg/guardian/config': (env)=>GUARDIAN.config(env),
   'POST /rpg/guardian/shop/list': (env,b)=>GUARDIAN_SHOP.list(env,tgOf(b),b),
   'POST /rpg/guardian/shop/sell': (env,b,now)=>GUARDIAN_SHOP.sell(env,tgOf(b),b,now),

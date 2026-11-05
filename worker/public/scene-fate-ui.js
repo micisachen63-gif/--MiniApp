@@ -23,7 +23,7 @@
   const when = value => positive(value) ? new Date(value).toLocaleString('zh-TW',{timeZone:'Asia/Taipei',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hour12:false}) : '—';
   const reason = error => typeof error === 'string' ? error : error?.message || '';
   const scriptUrl = globalThis.document?.currentScript?.src, sheets = new WeakMap();
-  let storyFlight = null;
+  let storyFlight = null, privateFlight = null;
   const milestoneList = value => Array.isArray(value) && value.length <= 25 && value.every((n,i) => positive(n) && n % 4 === 0 && (i === 0 || n > value[i-1]));
   function canonical(kind,input,withId = false) {
     if (!KINDS.includes(kind) || !plain(input)) return null;
@@ -174,6 +174,7 @@
       if (!state.data || state.stale || state.revision < state.minRevision) return '請先更新旅章。';
       const record = pending(); if (state.storageError) return state.storageError;
       if (!recover && record) return '請先核對上次操作結果。';
+      if (!recover) { const external = host.mutationBlock?.(); if (external) return external; }
       const fate = state.data.fate;
       if (state.data.readOnly === true || fate.control.writable !== true || fate.control.realmPhase !== 'ACTIVE') return reason(state.data.readOnlyReason) || '這個世界目前只能查看資料。';
       if (recover) return '';
@@ -325,11 +326,17 @@
     if (!storyFlight) storyFlight = import(new URL('/scene-fate-story.js?v=fate-f1-20261105',doc.location?.href || doc.baseURI).href).catch(() => { storyFlight = null; throw Error('原故事暫時無法載入，請重新載入；已保存的旅章與選擇會保留。'); });
     return storyFlight;
   }
+  function loadPrivate(host,doc) {
+    if (host.privateFate) return Promise.resolve(host.privateFate);
+    if (!privateFlight) privateFlight = import(new URL('/scene-fate-private-ui.js?v=fate-f2-20261105',doc.location?.href || doc.baseURI).href).catch(() => { privateFlight = null; throw Error('出生與旅箋暫時無法載入，請稍後重試。'); });
+    return privateFlight;
+  }
   function mount(root,host,options = {}) {
     ensureStyle(root);
     const scope = key(host.getContext?.(),true), identity = key(host.getContext?.()), doc = root.ownerDocument;
     const draft = host.draft ? (host.draft.fate ||= {}) : {};
     if (draft.scope !== identity) { for (const field of Object.keys(draft)) delete draft[field]; draft.scope = identity; }
+    draft.section = options.section === 'private' ? 'private' : options.tab ? 'life' : draft.section === 'private' ? 'private' : 'life';
     draft.tab = TABS.some(([tab]) => tab === options.tab) ? options.tab : TABS.some(([tab]) => tab === draft.tab) ? draft.tab : 'overview';
     draft.country = COUNTRIES.includes(draft.country) ? draft.country : 'TW';
     draft.showSign = typeof draft.showSign === 'boolean' ? draft.showSign : true;
@@ -337,10 +344,16 @@
     let disposed = false, painting = false, pendingFrame = null, focusedConfirm = null, confirmationOrigin = null, returnFocus = null;
     let storyApi = null, storyKey = '', storyGeneration = 0, storyBusy = false, storyError = '';
     const stories = new Map(), locallyRevealed = new Set();
+    let privateMount = null, privateRoot = null, privateLoading = false, privateError = '', privateGeneration = 0;
     const sameScope = () => !disposed && key(host.getContext?.(),true) === scope && host.current?.() !== false;
-    const client = createClient({...host,onState:() => paint()}), state = client.state;
-    const locked = () => !client.current() || state.busy;
-    const blocked = () => locked() || state.loading || state.checking || state.stale || !!client.pending() || !!state.storageError || state.data?.readOnly === true || state.data?.fate?.control.writable !== true;
+    const privatePendingBlock = () => {
+      try { let storage = host.storage; if (!storage) storage = globalThis.sessionStorage; return storage?.getItem('rpg-sfp-pending:' + identity) != null ? '出生與旅箋有一筆操作待核對，請先開啟該區段。' : ''; }
+      catch { return '無法讀取出生與旅箋的待核對紀錄，請恢復儲存後再操作。'; }
+    };
+    const externalBlock = () => host.mutationBlock?.() || privatePendingBlock();
+    const client = createClient({...host,mutationBlock:externalBlock,onState:() => paint()}), state = client.state;
+    const locked = () => !client.current() || state.busy || privateMount?.client.state.busy === true;
+    const blocked = () => locked() || state.loading || state.checking || state.stale || !!client.pending() || !!state.storageError || state.data?.readOnly === true || state.data?.fate?.control.writable !== true || !!externalBlock();
     const button = (action,label,attrs = '',disabled = false,klass = '') => '<button type="button" class="sf-button ' + klass + '" data-sf-action="' + esc(action) + '" ' + attrs + (disabled ? ' disabled' : '') + '>' + esc(label) + '</button>';
     const note = text => '<p class="sf-muted">' + esc(text) + '</p>';
     const card = (title,body,klass = '',attrs = '') => '<section class="sf-card ' + klass + '" ' + attrs + '><h3>' + esc(title) + '</h3>' + body + '</section>';
@@ -358,7 +371,7 @@
     function selectedStory() { const entry = entryForResult(); return entry ? stories.get(entryStoryKey(entry,draft.result.kind === 'completed')) : null; }
     function storyRequests() {
       const f = fate(), tasks = [];
-      if (!f || ['gifts','history'].includes(draft.tab)) return tasks;
+      if (!f || draft.section === 'private' || ['gifts','history'].includes(draft.tab)) return tasks;
       const active = f.state.active;
       if (active && ['overview','current'].includes(draft.tab)) tasks.push({key:currentStoryKey(),run:api => api.projectCurrent(clone(active))});
       if (draft.tab === 'archive') for (const entry of f.history.entries) tasks.push({key:entryStoryKey(entry,true),run:api => api.projectCompleted(clone(entry))});
@@ -393,6 +406,7 @@
     }
     function notices() {
       let html = '';
+      if (externalBlock()) html += '<div class="sf-notice">' + esc(externalBlock()) + '<div class="sf-actions">' + button('section','前往出生與旅箋核對','data-sf-section="private"',locked()) + '</div></div>';
       if (state.error) html += '<div class="sf-notice sf-error" role="alert">' + esc(state.error) + '</div>';
       if (state.storageError) html += '<div class="sf-notice sf-error" role="alert">' + esc(state.storageError) + '</div>';
       if (state.notice) html += '<p class="sf-notice" role="status" aria-live="polite">' + esc(state.notice) + '</p>';
@@ -528,15 +542,58 @@
       target.textContent = remaining?.night ? '夜間暫停回應 · 06:00 接續' : open && remaining ? '抉擇剩餘 ' + remaining.seconds + ' 秒' : '此頁回應已截止或待同步，請重新整理旅章。';
       for (const choice of root.querySelectorAll('[data-sf-action="choice"]')) choice.disabled = blocked() || !open;
     }
+    function leavePrivate() {
+      privateGeneration++; privateLoading = false; privateMount?.dispose(); privateMount = null; privateRoot = null; privateError = '';
+    }
+    function openSection(section) {
+      if (!['life','private'].includes(section) || locked()) return;
+      if (section === draft.section) return;
+      if (section === 'life') leavePrivate();
+      draft.section = section; client.cancel(); paint();
+    }
+    function ensurePrivate() {
+      if (draft.section !== 'private' || !sameScope()) return;
+      if (!privateRoot) { privateRoot = doc.createElement('div'); privateRoot.setAttribute('data-sf-private-host',''); }
+      if (privateMount || privateLoading || privateError) return;
+      privateLoading = true; const ticket = ++privateGeneration, capturedRoot = privateRoot;
+      void loadPrivate(host,doc).then(api => {
+        if (!sameScope() || ticket !== privateGeneration || draft.section !== 'private' || privateRoot !== capturedRoot) return;
+        privateMount = api.mount(privateRoot,{...host,getFateState:() => fate(),onState:() => paint(),
+          mutationBlock:() => {
+            const external = host.mutationBlock?.(); if (external) return external;
+            const record = client.pending();
+            return state.storageError || (record ? '命運旅章有一筆操作待核對，請先返回核對原結果。' : '');
+          },
+          onNavigateLife:() => openSection('life'),onChanged:(value,operation) => { host.onChanged?.(value,operation); void client.refresh(); },
+        });
+      }).catch(() => { if (sameScope() && ticket === privateGeneration) privateError = '出生與旅箋暫時無法載入，請稍後重試。'; })
+        .finally(() => { if (sameScope() && ticket === privateGeneration) { privateLoading = false; paint(); } });
+    }
     function paint() {
       if (!sameScope() || painting) return; painting = true;
       try {
         ensureStories();
+        const privateSlot = draft.section === 'private' && privateMount && privateRoot && root.contains(privateRoot) ? root.querySelector('[data-sf-private-slot]') : null;
+        if (privateSlot) {
+          // Keep the private subtree connected: detaching/re-focusing cancels IME.
+          for (const node of [...privateSlot.childNodes]) if (node !== privateRoot) node.remove();
+          for (const button of root.querySelectorAll('[data-sf-action="section"]')) button.disabled = locked();
+          return;
+        }
+        const privateFocus = privateRoot?.contains?.(doc?.activeElement) ? {element:doc.activeElement,start:doc.activeElement.selectionStart,end:doc.activeElement.selectionEnd} : null;
         const position = root.scrollTop, focus = returnFocus || focusIdentity(doc?.activeElement); returnFocus = null;
         const f = fate(), actor = host.getActor?.() || host.actor || {}, realm = client.context.realmId === 'permanent' ? '永久世界' : '賽季世界';
-        let html = '<div class="sf-window"><header class="sf-header"><div><p class="sf-eyebrow">A LIFE BEYOND THE STARS</p><h2>命運旅章</h2><p>' + esc(f?.state.heroName || actor.name || client.context.characterId) + ' · ' + esc(realm) + (state.data ? ' · ' + esc(when(state.data.now)) : '') + '</p></div>' + button('refresh',state.loading ? '同步中…' : '重新整理','',locked() || state.checking) + '</header><nav class="sf-tabs" aria-label="命運旅章頁籤">' + TABS.map(([tab,label]) => button('tab',label,'data-sf-tab="' + tab + '" aria-selected="' + String(tab === draft.tab) + '"',locked(),tab === draft.tab ? 'is-active' : '')).join('') + '</nav>' + notices();
-        html += f ? ({overview,current:currentView,archive,gifts,history})[draft.tab]() : note(state.loading ? '正在讀取目前角色的旅章…' : '尚未取得完整旅章資料。');
-        html += '</div>'; root.innerHTML = html; root.scrollTop = position;
+        let html = '<div class="sf-window"><header class="sf-header"><div><p class="sf-eyebrow">A LIFE BEYOND THE STARS</p><h2>命運旅章</h2><p>' + esc(f?.state.heroName || actor.name || client.context.characterId) + ' · ' + esc(realm) + (state.data ? ' · ' + esc(when(state.data.now)) : '') + '</p></div>' + (draft.section === 'life' ? button('refresh',state.loading ? '同步中…' : '重新整理','',locked() || state.checking) : '') + '</header><nav class="sf-sections" aria-label="命運旅章區段">' + [['life','命運旅章'],['private','出生與旅箋']].map(([section,label]) => button('section',label,'data-sf-section="' + section + '" aria-selected="' + String(section === draft.section) + '"',locked(),section === draft.section ? 'is-active' : '')).join('') + '</nav>';
+        if (draft.section === 'private') {
+          ensurePrivate(); html += privateError ? '<div class="sf-notice sf-error" role="alert">' + esc(privateError) + '<div class="sf-actions">' + button('retry-private','重新載入出生與旅箋','',locked()) + '</div></div>' : '<div data-sf-private-slot>' + (privateMount ? '' : note('正在開啟出生與旅箋…')) + '</div>';
+        } else {
+          html += '<nav class="sf-tabs" aria-label="命運旅章頁籤">' + TABS.map(([tab,label]) => button('tab',label,'data-sf-tab="' + tab + '" aria-selected="' + String(tab === draft.tab) + '"',locked(),tab === draft.tab ? 'is-active' : '')).join('') + '</nav>' + notices();
+          html += f ? ({overview,current:currentView,archive,gifts,history})[draft.tab]() : note(state.loading ? '正在讀取目前角色的旅章…' : '尚未取得完整旅章資料。');
+        }
+        html += '</div>'; root.innerHTML = html;
+        if (draft.section === 'private' && privateRoot) root.querySelector('[data-sf-private-slot]')?.append(privateRoot);
+        root.scrollTop = position;
+        if (privateFocus && draft.section === 'private' && privateRoot?.contains(privateFocus.element) && !privateFocus.element.disabled && !doc?.hidden) { privateFocus.element.focus?.({preventScroll:true}); if (typeof privateFocus.start === 'number') { try { privateFocus.element.setSelectionRange?.(privateFocus.start,privateFocus.end); } catch {} } }
         if (state.confirm && focusedConfirm !== state.confirm) { focusedConfirm = state.confirm; if (sameScope() && !doc?.hidden) root.querySelector('[data-sf-action="cancel"]')?.focus?.({preventScroll:true}); root.querySelector('[data-sf-confirm]')?.scrollIntoView?.({block:'nearest',behavior:'auto'}); }
         else { if (!state.confirm) focusedConfirm = null; restoreFocus(focus); }
         tickChoice(); revealPendingOnce();
@@ -553,6 +610,8 @@
       if (action === 'retry') { confirmationOrigin = focusIdentity(target); client.prepareRecovery(target.dataset.sfPendingId); return; }
       if (action === 'history-receipt') { await client.readHistoryReceipt(target.dataset.sfRequestKey); return; }
       if (action === 'refresh') { await client.refresh(); return; }
+      if (action === 'section') { openSection(target.dataset.sfSection); return; }
+      if (action === 'retry-private') { privateError = ''; paint(); return; }
       if (locked()) return;
       if (action === 'tab') { if (!TABS.some(([tab]) => tab === target.dataset.sfTab)) return; draft.tab = target.dataset.sfTab; client.cancel(); paint(); return; }
       if (action === 'retry-story') { storyKey = ''; paint(); return; }
@@ -590,9 +649,9 @@
     root.addEventListener('click',click); root.addEventListener('change',change); root.addEventListener('input',input); doc?.addEventListener?.('visibilitychange',visibility);
     paint(); void client.refresh();
     const timer = globalThis.setInterval?.(visibility,15000), clock = globalThis.setInterval?.(tickChoice,1000);
-    return {client,refresh:() => client.refresh(),update:client.update,
-      handleBack() { if (!sameScope() || !state.confirm || state.busy) return false; returnFocus = confirmationOrigin; client.cancel(); return true; },
-      dispose() { if (disposed) return; disposed = true; storyGeneration++; cancelReveal(); globalThis.clearInterval?.(timer); globalThis.clearInterval?.(clock); client.dispose(); root.removeEventListener('click',click); root.removeEventListener('change',change); root.removeEventListener('input',input); doc?.removeEventListener?.('visibilitychange',visibility); }};
+    return {client,refresh:() => draft.section === 'private' && privateMount ? privateMount.refresh() : client.refresh(),update:scene => { client.update(scene); privateMount?.update(scene); },
+      handleBack() { if (draft.section === 'private' && privateMount?.handleBack()) return true; if (!sameScope() || !state.confirm || state.busy) return false; returnFocus = confirmationOrigin; client.cancel(); return true; },
+      dispose() { if (disposed) return; disposed = true; storyGeneration++; leavePrivate(); cancelReveal(); globalThis.clearInterval?.(timer); globalThis.clearInterval?.(clock); client.dispose(); root.removeEventListener('click',click); root.removeEventListener('change',change); root.removeEventListener('input',input); doc?.removeEventListener?.('visibilitychange',visibility); }};
   }
   globalThis.RpgSceneFate = {createClient,mount,canonical,signature,resultMatches,receiptMatches,validRecord};
 })();

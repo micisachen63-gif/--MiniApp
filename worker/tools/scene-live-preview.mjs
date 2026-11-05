@@ -20,7 +20,7 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..'), publicRoot = path.resolve(here, '../public');
 const args = new Map();
 for (const value of process.argv.slice(2)) {
-  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check)=(.+)$/.exec(value);
+  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only)=(.+)$/.exec(value);
   if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--qa-input-snapshot-dir=.release-sync/owned-run]');
   args.set(match[1], match[2]);
 }
@@ -30,17 +30,21 @@ const port = Number(args.get('port') || 9653), apiPort = Number(args.get('api-po
 for (const number of [port, apiPort]) if (!Number.isInteger(number) || number < 1024 || number > 65535) throw Error('Invalid loopback port');
 if (port === apiPort) throw Error('The scene and API need separate ports');
 
-const guardianQA=process.env.RPG_GUARDIAN_QA==='1',fateQA=process.env.RPG_FATE_QA==='1',snapshotArgument=args.get('qa-input-snapshot-dir');
+const guardianQA=process.env.RPG_GUARDIAN_QA==='1',fateQA=process.env.RPG_FATE_QA==='1',fatePrivateQA=process.env.RPG_FATE_PRIVATE_QA==='1',snapshotArgument=args.get('qa-input-snapshot-dir');
 const attachPidArgument=args.get('attach-api-pid'),reuseArgument=args.get('qa-reuse-input-snapshot-dir'),attachStateArgument=args.get('qa-attach-state'),attachCheck=args.get('qa-attach-check');
-if(guardianQA&&fateQA)throw Error('Only one isolated QA fixture mode may be enabled');
-if(snapshotArgument&&!guardianQA&&!fateQA)throw Error('The QA input snapshot requires RPG_GUARDIAN_QA=1 or RPG_FATE_QA=1 and explicit --qa-input-snapshot-dir');
-if((guardianQA||fateQA)&&!snapshotArgument&&!reuseArgument)throw Error('An isolated QA fixture requires explicit --qa-input-snapshot-dir or validated reuse');
+const captureOnly=args.get('qa-capture-only')==='1';
+if(args.has('qa-capture-only')&&(!captureOnly||!fatePrivateQA||!snapshotArgument||attachPidArgument||reuseArgument||attachStateArgument||attachCheck))throw Error('Private input capture requires its own snapshot and no API attachment');
+if([guardianQA,fateQA,fatePrivateQA].filter(Boolean).length>1)throw Error('Only one isolated QA fixture mode may be enabled');
+if(snapshotArgument&&!guardianQA&&!fateQA&&!fatePrivateQA)throw Error('The QA input snapshot requires RPG_GUARDIAN_QA=1 or RPG_FATE_QA=1 and explicit --qa-input-snapshot-dir');
+if((guardianQA||fateQA||fatePrivateQA)&&!snapshotArgument&&!reuseArgument)throw Error('An isolated QA fixture requires explicit --qa-input-snapshot-dir or validated reuse');
 if(snapshotArgument&&reuseArgument)throw Error('Capture and reuse are mutually exclusive');
 if(attachPidArgument||reuseArgument||attachStateArgument||attachCheck){
- if(!fateQA||guardianQA||!attachPidArgument||!reuseArgument||!attachStateArgument||snapshotArgument||attachCheck&&attachCheck!=='1')throw Error('Existing API attach requires Fate-only mode, expected PID/state and immutable snapshot reuse');
+ if(!(fateQA||fatePrivateQA)||guardianQA||!attachPidArgument||!reuseArgument||!attachStateArgument||snapshotArgument||attachCheck&&attachCheck!=='1')throw Error('Existing API attach requires Fate-only mode, expected PID/state and immutable snapshot reuse');
  if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
  for(const flag of ['RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_SKILL_CAREER_QA'])if(process.env[flag]==='1')throw Error('Existing API attach forbids other QA modes');
 }
+if(fatePrivateQA&&!captureOnly&&!attachPidArgument)throw Error('Private Fate QA UI must attach an independently owned API');
+const qaStatePath=fatePrivateQA?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state';
 const digest=value=>createHash('sha256').update(value).digest('hex');
 async function ownedEvidencePath(argument,directory=false){
  const evidenceRoot=await fs.realpath(path.join(repo,'.release-sync')),target=await fs.realpath(path.resolve(repo,argument)),stat=await fs.stat(target);
@@ -48,22 +52,25 @@ async function ownedEvidencePath(argument,directory=false){
  return target;
 }
 const apiOrigin='http://127.0.0.1:'+apiPort;
-const stateIdentity=value=>JSON.stringify({initialInputSha256:value.initialInputSha256,primary:value.primary,alternate:value.alternate,fixtures:value.fixtures,seasonFixtures:value.seasonFixtures,now:value.qaClock?.now,commandInFlight:value.commandInFlight,commands:value.commands,databases:value.databases,permanent:value.permanent,season:value.season,lifeTiming:value.lifeTiming});
+const stateIdentity=value=>JSON.stringify({initialInputSha256:value.initialInputSha256,primary:value.primary,alternate:value.alternate,fixtures:value.fixtures,seasonFixtures:value.seasonFixtures,now:value.qaClock?.now,commandInFlight:value.commandInFlight,commands:value.commands,databases:value.databases,permanent:value.permanent,season:value.season,lifeTiming:value.lifeTiming,privacy:value.privacy,evidence:value.evidence,foreign:value.foreign,partyRoster:value.partyRoster});
 
 // Bootstrap attach is a separate, explicit campaign intent. A missing life is
 // never interpreted as permission to restart an existing nonempty campaign.
 function requireEmptyFateCampaign(expected,state){
- if(expected.schemaVersion!==1||expected.status!=='preserve-empty-fate-api'||expected.kind!=='empty-fate-campaign'||typeof expected.campaignId!=='string'||!/^[a-z0-9][a-z0-9_-]{2,79}$/.test(expected.campaignId)||Object.hasOwn(expected,'originalLife')||!/^[a-f0-9]{64}$/.test(expected.initialInputSha256||'')||expected.initialInputSha256!==state?.initialInputSha256)throw Error('Incomplete empty Fate campaign intent');
+ const privateCampaign=expected.kind==='empty-fate-private-campaign';
+ if(expected.schemaVersion!==1||expected.status!==(privateCampaign?'preserve-empty-fate-private-api':'preserve-empty-fate-api')||expected.kind!==(privateCampaign?'empty-fate-private-campaign':'empty-fate-campaign')||typeof expected.campaignId!=='string'||!/^[a-z0-9][a-z0-9_-]{2,79}$/.test(expected.campaignId)||Object.hasOwn(expected,'originalLife')||!/^[a-f0-9]{64}$/.test(expected.initialInputSha256||'')||expected.initialInputSha256!==state?.initialInputSha256)throw Error('Incomplete empty Fate campaign intent');
  if(!state||state.syntheticInitialInputOnly!==true||state.noSeededLifeGiftOrReceipt!==true||state.noDispatcher!==true||state.realNotificationsSent!==false||state.initialInputs?.fixtureOnly!==true||state.initialInputs?.notAReceipt!==true||state.commandInFlight!==null||!Array.isArray(state.commands)||state.commands.length||!Array.isArray(state.lifeTiming)||state.lifeTiming.length||!Number.isSafeInteger(state.seededAt)||state.seededAt<=0||state.qaClock?.now!==state.seededAt)throw Error('Empty Fate campaign requires unchanged initial inputs and clock');
  const clock=state.qaClock;
  if(clock.mode!=='manual-development-clock'||clock.debugOnly!==true||clock.lifeMs!==7200000||clock.choiceMs!==90000||clock.automaticFateSweep!==false||clock.deadlinesUnmodified!==true||clock.nightPause!=='00:00-06:00 Asia/Taipei')throw Error('Empty Fate campaign changed original timing');
+ if(privateCampaign&&(!state.noSeededPrivateOrBattleOutcomes||state.privacy?.secretPersisted!==false||state.privacy?.privateRowsExposed!==false||state.privacy?.restorableBackup!==false||!/^[a-f0-9]{32}$/.test(state.privacy?.digestId||'')||!Array.isArray(state.privacy?.forbiddenCopies)||state.privacy.forbiddenCopies.length))throw Error('Private campaign privacy evidence is incomplete');
  if(!state.primary||!state.alternate||!Array.isArray(state.fixtures)||!state.fixtures.length||!Array.isArray(state.seasonFixtures)||!state.seasonFixtures.length)throw Error('Empty Fate campaign needs exact fixture actors');
  const tables=['rpg_fate_lives','rpg_fate_starts','rpg_fate_memorials','rpg_fate_operations','rpg_fate_gifts','rpg_fate_gift_operations','rpg_fate_profiles','rpg_fate_daily','rpg_fate_social_choices','rpg_fate_social_limits','rpg_fate_social_locks','rpg_fate_social_operations','rpg_fate_social_pairs','rpg_fate_social_preferences'];
  for(const realm of ['permanent','season']){
   const raw=state[realm],database=state.databases?.[realm],counts=database?.counts;
   if(!raw||['lives','starts','memorials','operations','gifts','giftOperations','social'].some(key=>!Array.isArray(raw[key])||raw[key].length))throw Error('Empty Fate campaign already has original '+realm+' outcomes');
   if(!counts||!Array.isArray(database.tableNames)||tables.some(name=>!database.tableNames.includes(name)||counts[name]!==0)||Object.entries(counts).some(([name,count])=>name.startsWith('rpg_fate_')&&count!==0))throw Error('Empty Fate campaign has nonempty or missing '+realm+' Fate tables');
-  if(!Array.isArray(raw.ledger)||raw.ledger.some(row=>['命運場景操作收據','輪迴贈禮','開啟輪迴禮','星輝匣獎勵'].includes(row.type)||String(row.event_id||'').startsWith('fate-')))throw Error('Empty Fate campaign already has '+realm+' Fate receipts');
+  if(privateCampaign&&(database.digestAlgorithm!=='HMAC-SHA-256'||database.digestId!==state.privacy.digestId||database.secretPersisted!==false||database.restorableBackup!==false||['rpg_boss_instances','rpg_boss_attacks','rpg_parties','rpg_party_members','rpg_party_operations'].some(name=>counts[name]!==0)))throw Error('Private empty campaign already has battles or changed digest identity');
+  if(!Array.isArray(raw.ledger)||raw.ledger.some(row=>['命運私人操作收據','命運場景操作收據','輪迴贈禮','開啟輪迴禮','星輝匣獎勵'].includes(row.type)||String(row.event_id||'').startsWith('fate-')))throw Error('Empty Fate campaign already has '+realm+' Fate receipts');
   if(!Array.isArray(raw.outbox)||raw.outbox.some(row=>/^fate(?:_|-)/.test(String(row.kind||''))))throw Error('Empty Fate campaign already has '+realm+' Fate delivery rows');
  }
 }
@@ -71,7 +78,8 @@ let attachedApi=null,attachExpected=null;
 if(attachPidArgument){
  const statePath=await ownedEvidencePath(attachStateArgument),stateBytes=await fs.readFile(statePath);
  attachExpected=JSON.parse(stateBytes);
- const emptyCampaign=attachExpected.kind==='empty-fate-campaign';
+ const emptyCampaign=attachExpected.kind==='empty-fate-campaign'||attachExpected.kind==='empty-fate-private-campaign';
+ if(fatePrivateQA!==Boolean(attachExpected.kind==='empty-fate-private-campaign'))throw Error('Private API attach mode differs from its explicit intent');
  if(emptyCampaign){
   if(attachExpected.apiPid!==Number(attachPidArgument)||attachExpected.apiOrigin!==apiOrigin)throw Error('Empty Fate campaign API identity differs');
   requireEmptyFateCampaign(attachExpected,attachExpected.state);
@@ -80,14 +88,14 @@ if(attachPidArgument){
  if(attachExpected.schemaVersion!==1||attachExpected.status!=='preserve-exact-fate-api'||attachExpected.apiPid!==Number(attachPidArgument)||attachExpected.apiOrigin!==apiOrigin||!attachExpected.state||!attachExpected.originalLife)throw Error('Incomplete original Fate API preservation intent');
  }
  const read=async endpoint=>{const response=await fetch(apiOrigin+endpoint,{redirect:'error',signal:AbortSignal.timeout(10000)});if(response.status!==200)throw Error('Existing API refused read-only inspection');return response.json();};
- const [health,state]=await Promise.all([read('/__preview/health'),read('/__preview/fate-qa/state')]);
- if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false||health.fateQa!==true||['guardianQa','starRingQa','bossQa','towerQa','partyQa','skillCareerQa'].some(key=>health[key]!==false))throw Error('Existing API identity or isolation differs');
+ const [health,state]=await Promise.all([read('/__preview/health'),read(qaStatePath)]);
+ if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false||(fatePrivateQA?health.fatePrivateQa!==true||health.fateQa!==false:health.fateQa!==true)||['guardianQa','starRingQa','bossQa','towerQa','partyQa','skillCareerQa'].some(key=>health[key]!==false))throw Error('Existing API identity or isolation differs');
  if(health.qaClock?.mode!=='manual-development-clock'||health.qaClock.lifeMs!==7200000||health.qaClock.choiceMs!==90000||health.qaClock.automaticFateSweep!==false||health.qaClock.deadlinesUnmodified!==true||health.qaClock.nightPause!=='00:00-06:00 Asia/Taipei')throw Error('Existing API changed original Fate timing');
  if(state.isolated!==true||state.ephemeral!==true||state.productionAccess!==false||state.commandInFlight!==null||stateIdentity(state)!==stateIdentity(attachExpected.state))throw Error('Original fixture, actors, both databases, clock or life rows changed');
  if(emptyCampaign){
   requireEmptyFateCampaign(attachExpected,state);
   if(health.qaClock.now!==state.qaClock.now)throw Error('Empty Fate campaign clock changed during inspection');
-  attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.initialInputSha256,clockNow:state.qaClock.now,kind:'empty-fate-campaign',campaignId:attachExpected.campaignId,originalLifeId:null,read};
+  attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.initialInputSha256,clockNow:state.qaClock.now,kind:attachExpected.kind,campaignId:attachExpected.campaignId,originalLifeId:null,read};
  }else{
  const original=attachExpected.originalLife,life=state.permanent.lives.find(row=>row.id===original.id),operation=state.permanent.operations.find(row=>row.request_id==='scene:app:'+original.startRequestId);
  if(original.realmId!=='permanent'||!life||String(life.char_id)!==original.characterId||String(life.account_id)!==original.accountId||JSON.stringify(state.primary)!==JSON.stringify(attachExpected.state.primary)||!operation||String(operation.account_id)!==original.accountId||JSON.parse(operation.result_json).lifeId!==original.id)throw Error('Existing API no longer contains the exact original start authority');
@@ -111,9 +119,9 @@ if(reuseArgument){
   pinnedBoundInputs.set(entry.requestPath,Object.freeze({type:entry.type,body:bound.toString('utf8')}));
  }
  generatedInputSnapshot={mode:'pinned-qa-text',id:manifest.id,sourceCount:manifest.sourceCount,manifestPath,scope:manifest.scope,reused:true};
- const after=await attachedApi.read('/__preview/fate-qa/state');
+ const after=await attachedApi.read(qaStatePath);
  if(stateIdentity(after)!==stateIdentity(attachExpected.state))throw Error('Existing API changed during read-only snapshot validation');
- if(attachedApi.kind==='empty-fate-campaign')requireEmptyFateCampaign(attachExpected,after);
+ if(['empty-fate-campaign','empty-fate-private-campaign'].includes(attachedApi.kind))requireEmptyFateCampaign(attachExpected,after);
  if(attachCheck==='1'){
   console.log(JSON.stringify({ok:true,readOnlyPreflight:true,apiPid:attachedApi.pid,apiOrigin,fixtureInitialInputSha256:attachedApi.fixtureInitialInputSha256,clockNow:attachedApi.clockNow,kind:attachedApi.kind||'preserve-exact-fate-api',campaignId:attachedApi.campaignId||null,originalLifeId:attachedApi.originalLifeId,generatedInputSnapshot,stateSha256:attachedApi.stateSha256,apiSpawned:false,apiKilled:false,snapshotWritten:false}));
   // Complete the module naturally so pending fetch cleanup can drain on Windows.
@@ -153,7 +161,7 @@ const guardianArtFiles=new Set(['melee','ranged','magic','loot'].map(type=>'/art
 const staticArtFiles=new Set([...starArtFiles,...guardianArtFiles]);
 // Only original read-only narrative modules and their published artwork. The
 // old iframe application is deliberately not an entry point in this preview.
-const fateStaticPath=requestPath=>requestPath==='/scene-fate-story.js'||(
+const fateStaticPath=requestPath=>['/scene-fate-story.js','/scene-fate-private-ui.js','/scene-fate-private-ui.css'].includes(requestPath)||(
   /^\/fate\/(?:country-packs-v9\/)?[a-z0-9_-]+\.js$/i.test(requestPath)&&requestPath!=='/fate/app.js'
 )||/^\/art\/(?:fate-taiwan-v8|fate-countries-v9|fate-ending-20261016)\/[a-z0-9_-]+\.webp$/i.test(requestPath)
 ||requestPath==='/art/ui/command-collect-20261012.webp'
@@ -168,7 +176,7 @@ const virtualSocial = new Set([
   'scene-boss-ui.js','scene-boss-ui.css',
   'scene-star-ring-ui.js','scene-star-ring-ui.css',
   'scene-guardian-ui.js','scene-guardian-ui.css',
-  'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js',
+  'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js','scene-fate-private-ui.js','scene-fate-private-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
@@ -189,7 +197,8 @@ async function realFile(root, relative) {
   return actual;
 }
 // Read-only preflight owns no server, child process or signal cleanup handlers.
-if(attachCheck!=='1'){
+if(captureOnly)console.log(JSON.stringify({ok:true,privateInputCaptureOnly:true,apiSpawned:false,uiStarted:false,generatedInputSnapshot}));
+if(attachCheck!=='1'&&!captureOnly){
 const server = http.createServer(async (req, res) => {
   try {
     if (!['GET','HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }

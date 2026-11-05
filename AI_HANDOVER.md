@@ -1,3 +1,79 @@
+# StarJournal F2 整合交接
+
+更新：2026-11-05 21:56:29（台灣時間）。本提交整理 **出生檔案、臨時／已保存生日啟程與每日三則旅箋** 的整合來源與瀏覽器證據。
+
+## 先讀最新版本與 gate
+
+本文件隨整合來源提交，實際最終 HEAD、完整測試數與結案狀態寫於提交之外，避免預寫通過或自我引用尚未存在的 commit。接手時先讀：
+
+- D:/StarJournal/handoff/non-character/STATUS.json、LATEST.md
+- D:/StarJournal/handoff/non-character/fate-f2-integration-20261105/FINAL_STATUS.json、WORKING_HANDOFF.md
+- 本工作樹 .release-sync/fate-f2-20261105/full-final-head-gate-receipt.json（成功原收據的逐位元組副本）
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f2-integration-20261105；分支 codex/fate-f2-integration-20261105；原基線 711d1e083b8514d6f0d2edbb0c18936160514359。完整報告：docs/FATE_F2_PRIVATE_INTEGRATION_20261105.txt。
+
+## F2 已有實際證據
+
+- 五條私人 POST 路由分開純讀與明確 mutation；原權威、scope、SQL CAS／generation、typed receipt、保留 namespace capability 都已接上。
+- 臨時生日不建立保存檔案；保存／更新需明確同意；生日人生沿原 RNG、額度與時序。每日三則旅箋以真 Boss／副本／塔進度驗證，只有明確同步才建立／更新，不加平行獎勵。
+- 私人輸入只留瀏覽器記憶體，scope 切換／清除／刪除即清理；pending、公開收據與QA證據不含私人內容。F1／F2互鎖、未知結果原ID查核與取消、刪除後歷史查核皆有原收據。
+- Backend 136/136、UI 90/90、fixture/assets 36/36，以及 harness06 20/20純helper；聚焦集合有重疊，不相加當完整gate。
+- 12份passed browser結果、17組assertions、73張masked圖；11筆原F2操作（10 committed＋1 cancelled）與72筆原遊戲命令。原failed erase05包含真正成功delete，整段仍保持failed；後續由新06純讀查核完成，不重刪。
+- 最後 final-layout06 原結果與320/390/1280檢查已完成；MCP遺失程序退出碼，originalProcessExitCode=null、browserCloseVerified=false，明確保留此觀測限制，不冒稱原exit0。root獨立核對來源、圖與完整checkpoint。
+- 最終候選 freeze06：b6873dcf83603f3c03b25572c583fe05710a3cb4b20a7ad5147baf4053924eb7；1377檔，產品與成功03相同，僅harness變更。root audit：601d4f05b48c50ea67103de8643cb82e55d8d10746603a7286d87ac5040e6988。
+
+## 保留的現況與接續規則
+
+API9802/PID48240、UI9803/PID21320，沿原 campaign f2-resume-20261105-01。最後完整checkpoint為3c90a70d870ce440e95f5de5369116ba6d7da7b136629afc47d6da2d1b32fd47；profile/daily已刪，原人生、gift、公開操作歷史保留。不得reset、reseed、重啟原API或重播成功／未知操作。F1預覽9792／9793及其他工作樹保留。
+
+Full gate須在本批精確最終HEAD、clean tree執行完整官方309 Worker檔＋23 BOT檔，實際測試數與兩個服務exit依原gate receipt，不能沿用F1的3621。原failed/red與所有authority/freeze/claim均保留。
+
+F3社交／分享仍未實作；待F2 exact gate通過後，在批次NEXT_BATCH_PLAN.json綁定28份來源與實際HEAD/gate。交易、衣櫥／完整帳務、跨季保留、第四階重選、角色／FX與逐次戰鬥事件等舊待辦不變。
+
+既有Windows PT30M進度排程維持。此批維持本機整合，不push／PR／merge／deploy、不碰正式DB／Secrets／migration，不使用共享全域agent_workflow／task_control。
+
+---
+
+## 較早交接快照（保留歷史，現況以上述外部狀態為準）
+
+# StarJournal F2 整合進行中
+
+更新：2026-11-05 19:07（台灣時間）。使用者已要求繼續下一批；目前進行 **F2：出生檔案、生日啟程與每日旅箋**。F1 已完成的基線與證據完整保留。
+
+## 目前接續位置
+
+- 工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f2-integration-20261105
+- 分支：codex/fate-f2-integration-20261105；基線711d1e083b8514d6f0d2edbb0c18936160514359。
+- 主狀態：D:/StarJournal/handoff/non-character/STATUS.json、LATEST.md。
+- 本批狀態與分工：D:/StarJournal/handoff/non-character/fate-f2-integration-20261105/STATUS.json、OWNER.json。
+- 核定契約：工作樹 .release-sync/fate-f2-20261105/backend-contract.json，revision1，SHA256 be961436dbabc65aac7165904306f745afd39c0ab08596eda40daf0f3e741b8d。
+- 開工證據：同目錄baseline-prepare.json、opening-origin-observation.json、dependency-install-receipt-02.json。35原權威＋1相容來源核對：25 raw equal、8僅EOL且全文正規化一致、3外部引用，原/新SHA均保留。
+- fresh origin/main 3c6729aa9167223a3a915c5dc19fcc075cbad0ed為基線祖先。Node24.7.0，46適用cache完整性驗證後原lock離線ci成功100packages，獨立實體node_modules與4manifest不變。首個MCP安裝請求逾時，未觀察到安裝intent/receipt；以原wx intent位置封存使晚到舊請求在npm前失敗，另輪安裝收據保留，沒有盲目重送。
+
+## 本批實作範圍
+
+保存／查看／更新／刪除本人出生檔案、僅本次暫用生日或已保存生日啟程、帳號台北日三則旅箋。沿用原文化推演、國家故事、RNG、每日四世與人生時序；Fate旅箋沒有金幣或道具獎勵，rpg/daily與F3合作社交另批。
+
+- D1：完整私人輸入只留頁面記憶；持久pending僅非私人scope／原ID／nonce／確認快照。未知結果先查原ID；私人輸入已清除時可明確封存同ID，與原提交互斥，不換ID偷重送。
+- D2：原authority mutation、operation與metadata-only typed receipt同批；ledger與公開收據不保存birth、chart、notes或可枚舉私人hash。刪除後可核當時非私人結果，不回放已刪內容。
+- D3：既有帳號rpg_fate_operations COUNT與profile/daily persisted CAS捕捉同毫秒刪除重建；legacy daily也補世代guard，不新增migration。
+- 同一近透明浮窗採兩層導覽，出生檔案／今日旅箋獨立私人client；關窗、切角色／環境、刪除與跨client失效時清私人cache。F1/F2同scope未決操作互相阻擋新mutation。
+- QA用獨立allowlist紀錄器、遮罩私人欄位/旅箋截圖，以及記憶內隨機HMAC key的全表比較；真Boss/Party原服務生成解鎖證據。戰鬥可合法產生獎勵，零資源變動以每筆F2操作區間驗證。
+
+## 目前進度與下一步
+
+後端、UI與QA工具並行實作；本批尚未完成focused、真client/SQLite、瀏覽器或最終HEAD全套驗收，不將F1的3621項通過當成本批驗收。先完成契約與focused測試，再凍結來源、核准唯一QA campaign，最後本機提交與完整Worker/BOT gate。
+
+計畫新API9802／UI9803，尚未啟動；啟動前必須再次確認埠空閒。獨立API由UI attach；先空狀態bounce才開始mutation。已驗收F1 API9792／UI9793與所有其他工作樹、角色/FX素材保持。
+
+既有兩個PT30M交接排程啟用且最近結果0；19:07:14已即時寫入本批checkpoint，重要里程碑另更新。排程只做觀測，不自動測試／提交／部署。禁止共用全域agent_workflow/task_control及全體Node終止。所有失敗與原收據保留。
+
+本批僅本機整合；不push／PR／merge／deploy，不改正式DB、Secrets或migration。F3、交易、衣櫥、完整帳務、跨季收尾與其他全域待辦以主STATUS為準。
+
+---
+
+## 先前交接全文（目前進度以上方及最新STATUS為準）
+
 # 命運 F1 主浮窗整合（2026-11-05）
 
 本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f1-integration-20261105

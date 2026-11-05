@@ -191,6 +191,11 @@ function emptyFateState() {
 // browser result. The actual launcher imports its real, pure nine-path binder.
 function attachFixture(options = {}) {
   const state = emptyFateState();
+  if(options.private){
+    const digestId='d'.repeat(32);state.noSeededPrivateOrBattleOutcomes=true;
+    state.privacy={digestId,secretPersisted:false,restorableBackup:false,privateRowsExposed:false,forbiddenCopies:[]};
+    for(const realm of ['permanent','season']){const db=state.databases[realm];Object.assign(db,{digestAlgorithm:'HMAC-SHA-256',digestId,secretPersisted:false,restorableBackup:false});for(const name of ['rpg_boss_instances','rpg_boss_attacks','rpg_parties','rpg_party_members','rpg_party_operations']){db.tableNames.push(name);db.counts[name]=0;db.tableHashes[name]=sha('unit-empty:'+name);}Object.assign(state[realm],{profiles:[],daily:[],bosses:[],parties:[],members:[]});}
+  }
   if (options.resume) {
     state.permanent.lives.push({ id: 'unit-existing-life', char_id: state.primary.characterId, account_id: state.primary.accountId });
     state.permanent.operations.push({ request_id: 'scene:app:unit-start-request', account_id: state.primary.accountId, result_json: JSON.stringify({ lifeId: 'unit-existing-life' }) });
@@ -223,19 +228,21 @@ function attachFixture(options = {}) {
   if (options.resume) intent.originalLife = { id: 'unit-existing-life', startRequestId: 'unit-start-request',
     accountId: state.primary.accountId, characterId: state.primary.characterId, realmId: 'permanent' };
   else Object.assign(intent, { kind: 'empty-fate-campaign', campaignId: 'f1-fresh-02', initialInputSha256: state.initialInputSha256 });
+  if(options.private)Object.assign(intent,{status:'preserve-empty-fate-private-api',kind:'empty-fate-private-campaign',campaignId:'f2-private-unit'});
   options.intent?.(intent);
   files.set(statePath, Buffer.from(JSON.stringify(intent)));
   options.files?.(files, { rawRoot, boundRoot, snapshotRoot, sources });
   const health = { pid: 12345, isolated: true, ephemeral: true, productionAccess: false,
     fateQa: true, guardianQa: false, starRingQa: false, bossQa: false, towerQa: false, partyQa: false, skillCareerQa: false,
     qaClock: structuredClone(state.qaClock) };
+  if(options.private)Object.assign(health,{fateQa:false,fatePrivateQa:true});
   options.health?.(health);
   const calls = [];
   let reads = 0;
   return {
     state, intent, calls,
     async run() {
-      return harness([...files], [], [evidenceRoot, snapshotRoot, rawRoot, boundRoot], { RPG_FATE_QA: '1' },
+      return harness([...files], [], [evidenceRoot, snapshotRoot, rawRoot, boundRoot], options.private?{RPG_FATE_PRIVATE_QA:'1'}:{ RPG_FATE_QA: '1' },
         ['--attach-api-pid=12345', '--qa-attach-state=' + statePath, '--qa-reuse-input-snapshot-dir=' + snapshotRoot,
           ...(options.check ? ['--qa-attach-check=1'] : [])], {
           listen: !!options.listen,
@@ -247,7 +254,7 @@ function attachFixture(options = {}) {
             let value;
             if (url.endsWith('/__preview/health')) value = structuredClone(health);
             else {
-              assert.ok(url.endsWith('/__preview/fate-qa/state'));
+              assert.ok(url.endsWith(options.private?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state'));
               value = structuredClone(state); value.qaClock.wallTime += ++reads;
               if (reads === 1) options.live?.(value);
               else options.after?.(value);
@@ -391,4 +398,61 @@ test('attach refuses snapshot identity or captured raw/bound byte changes withou
       files.set(path.join(data[side], relative), Buffer.from('changed bytes'));
     } }).run(), /captured source or bound snapshot bytes changed/);
   }
+});
+
+
+test('private Fate preview requires independent attachment and rejects mixed fixture or capture modes', async () => {
+  await assert.rejects(harness([], [], [], { RPG_FATE_PRIVATE_QA: '1' }), /requires explicit --qa-input-snapshot-dir/);
+  await assert.rejects(harness([], [], [], { RPG_FATE_PRIVATE_QA: '1' }, ['--qa-input-snapshot-dir=.release-sync/private']), /independently owned API/);
+  await assert.rejects(harness([], [], [], { RPG_FATE_PRIVATE_QA: '1', RPG_FATE_QA: '1' }), /Only one isolated QA fixture/);
+  await assert.rejects(harness([], [], [], {}, ['--qa-capture-only=1']), /Private input capture requires/);
+  await assert.rejects(harness([], [], [], { RPG_FATE_PRIVATE_QA: '1' }, ['--qa-capture-only=0']), /Private input capture requires/);
+});
+
+test('private Fate empty API reuses its original HMAC identity without owning the API or revealing data', async () => {
+  const fixture = attachFixture({ private: true, listen: true }), h = await fixture.run();
+  const health = JSON.parse((await h.request('/__preview/health')).body);
+  assert.equal(health.apiOwned, false); assert.equal(health.attachedApi, true);
+  assert.equal(health.attachKind, 'empty-fate-private-campaign'); assert.equal(health.campaignId, 'f2-private-unit');
+  assert.equal(fixture.calls.filter(c => c.url.endsWith('/__preview/fate-private-qa/state')).length, 2);
+  assert.equal(h.lifecycle.created, 1); assert.equal(h.lifecycle.listening, true);
+  h.signals.get('SIGTERM')();
+  assert.equal(h.lifecycle.closed, 1);
+});
+
+test('private Fate attach preflight is read-only and completes naturally before any listener', async () => {
+  const h = await attachFixture({ private: true, check: true }).run();
+  assert.equal(h.lifecycle.created, 0); assert.equal(h.lifecycle.exitCalls, 0);
+  assert.equal(h.logs[0].kind, 'empty-fate-private-campaign');
+  assert.equal(h.logs[0].apiSpawned, false); assert.equal(h.logs[0].apiKilled, false);
+  assert.equal(h.logs[0].snapshotWritten, false);
+});
+
+test('private Fate attach refuses missing privacy proof, new digest identity, seeded battle and unsafe metadata', async () => {
+  for (const change of [
+    state => { delete state.privacy; },
+    state => { state.privacy.secretPersisted = true; },
+    state => { state.privacy.privateRowsExposed = true; },
+    state => { state.privacy.restorableBackup = true; },
+    state => { state.privacy.forbiddenCopies = ['permanent']; },
+    state => { state.noSeededPrivateOrBattleOutcomes = false; },
+    state => { state.databases.permanent.digestAlgorithm = 'SHA-256'; },
+    state => { state.databases.season.digestId = 'e'.repeat(32); },
+    state => { state.databases.permanent.counts.rpg_boss_instances = 1; },
+    state => { state.databases.season.counts.rpg_parties = 1; },
+    state => { state.permanent.ledger.push({ type: '命運私人操作收據' }); },
+  ]) await assert.rejects(attachFixture({ private: true, state: change }).run(), /privacy evidence|already has|digest identity/);
+  await assert.rejects(attachFixture({ private: true, live: state => { state.privacy.digestId = 'f'.repeat(32); } }).run(), /fixture, actors, both databases/);
+  await assert.rejects(attachFixture({ private: true, after: state => { state.databases.permanent.tableHashes.rpg_fate_profiles = sha('different-private-input'); } }).run(), /changed during/);
+});
+
+test('private Fate root assets resolve to product modules and keep original places under the published module route', async () => {
+  const entries = [['scene-fate-private-ui.js', 'export const privateUI=true;'], ['scene-fate-private-ui.css', '.private{}'], ['fate/places.js', 'export const places=[];']];
+  const h = await harness(entries);
+  for (const [name, body] of entries) {
+    const result = await h.request('/' + name);
+    assert.equal(result.status, 200); assert.equal(result.body.toString(), body);
+    assert.equal(result.headers['Cache-Control'], 'no-store');
+  }
+  for (const name of ['/scene-fate-private-ui.js/other', '/scene-fate-private-ui.json', '/fate/app.js']) assert.equal((await h.request(name)).status, 404);
 });

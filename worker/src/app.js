@@ -26,11 +26,14 @@ export const SCOPED_BOSS_ACTIONS = Object.freeze(['boss/scene','boss/receipt','b
 export const SCOPED_STAR_RING_ACTIONS = Object.freeze(['star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped']);
 
 export const SCOPED_GUARDIAN_ACTIONS = Object.freeze(['guardian/scene','guardian/receipt','guardian/action-scoped']);
-export const SCOPED_FATE_ACTIONS = Object.freeze(['fate/scene','fate/receipt','fate/action-scoped']);
+export const SCOPED_FATE_ACTIONS = Object.freeze(['fate/scene','fate/receipt','fate/action-scoped',
+  'fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
 
 export const APP_ACTIONS = Object.freeze({
   'guardian/scene':'/rpg/guardian/scene','guardian/receipt':'/rpg/guardian/receipt','guardian/action-scoped':'/rpg/guardian/action-scoped',
   'fate/scene':'/rpg/fate/scene','fate/receipt':'/rpg/fate/receipt','fate/action-scoped':'/rpg/fate/action-scoped',
+  'fate/private/scene':'/rpg/fate/private/scene','fate/private/profile':'/rpg/fate/private/profile','fate/private/receipt':'/rpg/fate/private/receipt',
+  'fate/private/action-scoped':'/rpg/fate/private/action-scoped','fate/private/cancel':'/rpg/fate/private/cancel',
   'boss/scene':'/rpg/boss/scene','boss/receipt':'/rpg/boss/receipt','boss/attack-scoped':'/rpg/boss/attack-scoped','boss/exchange-scoped':'/rpg/boss/exchange-scoped',
   'atlas/catalog':'/rpg/atlas/catalog','atlas/status':'/rpg/atlas/status','atlas/configure':'/rpg/atlas/configure',
   'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',

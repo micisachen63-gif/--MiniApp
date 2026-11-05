@@ -13,14 +13,22 @@ import * as SHARED from './fate-shared.js';
 const parse=(s,fallback=null)=>{try{return JSON.parse(s)}catch{return fallback}};
 const owner=async(db,tg)=>{const c=await db.prepare('SELECT tg_id,account_tg_id,name FROM rpg_live_characters AS rpg_characters WHERE tg_id=?').bind(String(tg)).first();if(!c)throw new GameError('no_character','先建立角色，再開啟命運旅章',404);return {...c,account:String(c.account_tg_id||c.tg_id)};};
 const canonical=o=>o&&typeof o==='object'?(Array.isArray(o)?o.map(canonical):Object.fromEntries(Object.keys(o).sort().filter(k=>!['requestId','selectedCharacterId','tgId'].includes(k)).map(k=>[k,canonical(o[k])]))):o;
-async function fingerprint(kind,b){const a=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify({kind,body:canonical(b)})));return [...new Uint8Array(a)].map(n=>n.toString(16).padStart(2,'0')).join('');}
+export async function operationFingerprint(kind,b){const a=await crypto.subtle.digest('SHA-256',new TextEncoder().encode(JSON.stringify({kind,body:canonical(b)})));return [...new Uint8Array(a)].map(n=>n.toString(16).padStart(2,'0')).join('');}
+// A non-serializable server capability reserves private operation IDs for the F2 adapter.
+// Client body fields, including privateIntent/privateAuthority, cannot grant this authority.
+export const FATE_PRIVATE_AUTHORITY = Symbol('fate-private-authority');
+function requireOperationNamespace(b,options){
+ if(typeof b?.requestId==='string'&&b.requestId.startsWith('private:')&&options?.[FATE_PRIVATE_AUTHORITY]!==true)
+  throw new GameError('fate_private_namespace','私人命運操作請使用專屬入口',400);
+}
 async function mutation(env,tg,b,now,kind,fn,options={}){
+ requireOperationNamespace(b,options);
  if(typeof b.requestId!=='string'||!/^[A-Za-z0-9:_-]{6,90}$/.test(b.requestId))throw new GameError('request','需要有效的操作編號');
- const c=await owner(env.DB,tg),db=env.DB,hash=await fingerprint(kind,{...b,_character:String(tg)});
+ const c=await owner(env.DB,tg),db=env.DB,hash=await operationFingerprint(kind,{...b,_character:String(tg)});
  for(let attempt=0;attempt<4;attempt++){
   const old=await db.prepare('SELECT payload_hash,result_json FROM rpg_fate_operations WHERE account_id=? AND request_id=?').bind(c.account,b.requestId).first();
-  if(old){if(old.payload_hash!==hash)throw new GameError('request_changed','這個操作編號已用於不同的選擇，請更新畫面',409);return {ok:true,result:parse(old.result_json),replayed:true};}
-  const {stmts=[],result={}}=await fn(c,db);stmts.push(db.prepare('INSERT INTO rpg_fate_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,hash,JSON.stringify(result),now));if(options.receipt)stmts.push(options.receipt(result));
+  if(old){if(old.payload_hash!==hash)throw new GameError('request_changed','這個操作編號已用於不同的選擇，請更新畫面',409);const stored=parse(old.result_json);return {ok:true,result:options.readOperationResult?options.readOperationResult(stored):stored,replayed:true};}
+  const {stmts=[],result={}}=await fn(c,db);if(options.guards)stmts.unshift(...await options.guards());const stored=options.operationResult?options.operationResult(result,{payloadHash:hash}):result;stmts.push(db.prepare('INSERT INTO rpg_fate_operations(account_id,request_id,payload_hash,result_json,created_at) VALUES(?,?,?,?,?)').bind(c.account,b.requestId,hash,JSON.stringify(stored),now));if(options.receipt)stmts.push(options.receipt(result));
   try{await db.batch(stmts);return {ok:true,result};}catch(e){const classified=classifyDbError(e);if(attempt<3&&(classified?.code==='conflict'||/UNIQUE constraint failed: rpg_fate_/.test(String(e.message))))continue;throw classified||e;}
  }
  throw new GameError('conflict','旅章正同步中，請稍後重試',409);
@@ -63,6 +71,7 @@ export async function history(env,tg,b,now){
  return {ok:true,entries:rows.slice(0,10).map(r=>({id:r.id,code:r.code,at:r.completed_at,draft:parse(r.state_json)})),next:rows.length>10?rows[9].started_at:null,memorials:memorials.map(r=>({code:r.code,at:r.created_at})),now};
 }
 export async function start(env,tg,b,now,options={}){
+ requireOperationNamespace(b,options);
  const country=b.country??'TW';if(country!=='TW'&&!Object.hasOwn(COUNTRY_METADATA_V9,country))throw new GameError('fate_country','請選擇已開放的出生地。');if(country!=='TW')await ensureCountryPack(country);const version=country==='TW'?8:9;
  await progressRow(env,await activeRow(env.DB,tg),now);
  const castSink=[];
@@ -97,26 +106,52 @@ export async function choose(env,tg,b,now,options={}){
 }
 export async function keep(env,tg,b,now,options={}){await ensureCountryCodes([b.code]);if(!decodeResult(b.code))throw new GameError('fate_code','這張旅人來信無法辨識');return mutation(env,tg,b,now,'keep',async(c,db)=>({stmts:[db.prepare('INSERT OR IGNORE INTO rpg_fate_memorials(char_id,code,created_at) VALUES(?,?,?)').bind(String(tg),b.code,now)],result:{saved:true,countsAsLife:false}}),options);}
 export async function profileView(env,tg,full=true){const c=await owner(env.DB,tg),r=await env.DB.prepare('SELECT * FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();return r?{saved:true,rev:r.rev,coverage:parse(r.chart_json)?.coverage,updatedAt:r.updated_at,...(full?{birth:parse(r.birth_json)}:{})}:{saved:false,rev:0,coverage:'inspiration'};}
-export async function saveProfile(env,tg,b,now){
+export async function saveProfile(env,tg,b,now,options={}){
  if(b.consent!==true)throw new GameError('birth_consent','請先同意將出生資料儲存於自己的帳號，供每日旅箋使用');
  const chart=natal(b.birth,now);
- return mutation(env,tg,b,now,'profile-save',async(c,db)=>({stmts:[db.prepare('INSERT INTO rpg_fate_profiles(account_id,birth_json,chart_json,updated_at) VALUES(?,?,?,?) ON CONFLICT(account_id) DO UPDATE SET birth_json=excluded.birth_json,chart_json=excluded.chart_json,updated_at=excluded.updated_at,rev=rev+1').bind(c.account,JSON.stringify(chart.birth),JSON.stringify(chart),now)],result:{saved:true,coverage:chart.coverage}}));
+ return mutation(env,tg,b,now,'profile-save',async(c,db)=>({stmts:[db.prepare('INSERT INTO rpg_fate_profiles(account_id,birth_json,chart_json,updated_at) VALUES(?,?,?,?) ON CONFLICT(account_id) DO UPDATE SET birth_json=excluded.birth_json,chart_json=excluded.chart_json,updated_at=excluded.updated_at,rev=rev+1').bind(c.account,JSON.stringify(chart.birth),JSON.stringify(chart),now)],result:{saved:true,coverage:chart.coverage}}),options);
 }
-export async function deleteProfile(env,tg,b,now){return mutation(env,tg,b,now,'profile-delete',async(c,db)=>({stmts:[db.prepare('DELETE FROM rpg_fate_profiles WHERE account_id=?').bind(c.account),db.prepare('DELETE FROM rpg_fate_daily WHERE account_id=?').bind(c.account)],result:{deleted:true}}));}
+export async function deleteProfile(env,tg,b,now,options={}){return mutation(env,tg,b,now,'profile-delete',async(c,db)=>({stmts:[db.prepare('DELETE FROM rpg_fate_profiles WHERE account_id=?').bind(c.account),db.prepare('DELETE FROM rpg_fate_daily WHERE account_id=?').bind(c.account)],result:{deleted:true}}),options);}
+// Scoped daily writes materialization, original evidence unlocks, operation and receipt together.
+// Only the trusted F2 caller supplies these transaction hooks; legacy daily below retains its API.
+export async function dailyScoped(env,tg,b,now,options={}){
+ if(typeof options.guards!=='function'||typeof options.receipt!=='function'||typeof options.operationResult!=='function')throw new GameError('fate_private_input','請使用私人旅箋操作入口');
+ return mutation(env,tg,b,now,'daily-sync',async(c,db)=>{
+  const day=taipeiDay(now);if(b.day!==day)throw new GameError('fate_private_day_changed','這次旅箋的日期已結束，請核對原操作',409);
+  const profile=await db.prepare('SELECT chart_json,rev FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),
+    row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();
+  let notes;if(row)notes=parse(row.notes_json,[]);else{
+   const recent=(await db.prepare('SELECT notes_json FROM rpg_fate_daily WHERE account_id=? ORDER BY day DESC LIMIT 7').bind(c.account).all()).results||[];
+   notes=makeReminders(profile?parse(profile.chart_json):null,day,recent.flatMap(r=>parse(r.notes_json,[]).map(n=>n.id)));
+  }
+  const unlocks=parse(row?.unlocks_json,[]),next=[...unlocks],evidence=await fateEvidence(env,c.account,now);
+  for(const e of evidence)if(!next.some(x=>x.id===e.id)&&next.length<3)next.push(e);
+  const added=next.length-unlocks.length,revision=row?row.rev+(added?1:0):(next.length?1:0),stmts=[];
+  if(!row)stmts.push(db.prepare('INSERT INTO rpg_fate_daily(account_id,day,unlocks_json,notes_json,profile_rev,rev,created_at) VALUES(?,?,?,?,?,?,?)')
+   .bind(c.account,day,JSON.stringify(next),JSON.stringify(notes),profile?.rev||0,revision,now));
+  else if(added)stmts.push(db.prepare('UPDATE rpg_fate_daily SET unlocks_json=?,rev=rev+1 WHERE account_id=? AND day=? AND rev=?')
+   .bind(JSON.stringify(next),c.account,day,row.rev),guardStmt(db));
+  return {stmts,result:{day,materialized:true,created:!row,unlocked:next.length,added,revision}};
+ },options);
+}
+export async function cancelPrivateIntent(env,tg,b,now,options={}){
+ if(typeof options.receipt!=='function'||typeof options.operationResult!=='function')throw new GameError('fate_private_input','請使用私人操作核對入口');
+ return mutation(env,tg,b,now,'private-cancel',async()=>({result:{cancelled:true}}),options);
+}
 export async function daily(env,tg,now,retry=0){
  if(retry>=4)throw new GameError('conflict','出生檔案剛有變更，請重新開啟旅箋',409);
- const c=await owner(env.DB,tg),db=env.DB,day=taipeiDay(now),profile=await db.prepare('SELECT chart_json,rev FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();
+ const c=await owner(env.DB,tg),db=env.DB,day=taipeiDay(now),profile=await db.prepare('SELECT chart_json,rev FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first(),generation=(await db.prepare('SELECT COUNT(*) generation FROM rpg_fate_operations WHERE account_id=?').bind(c.account).first()).generation;
  let row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();
  if(!row){const recent=(await db.prepare('SELECT notes_json FROM rpg_fate_daily WHERE account_id=? ORDER BY day DESC LIMIT 7').bind(c.account).all()).results||[],notes=makeReminders(profile?parse(profile.chart_json):null,day,recent.flatMap(r=>parse(r.notes_json,[]).map(n=>n.id)));
   // An older in-flight read must not resurrect derived birth data after erase.
-  await db.prepare("INSERT OR IGNORE INTO rpg_fate_daily(account_id,day,notes_json,profile_rev,created_at) SELECT ?,?,?,?,? WHERE COALESCE((SELECT chart_json FROM rpg_fate_profiles WHERE account_id=?),'')=? AND COALESCE((SELECT rev FROM rpg_fate_profiles WHERE account_id=?),0)=?").bind(c.account,day,JSON.stringify(notes),profile?.rev||0,now,c.account,profile?.chart_json||'',c.account,profile?.rev||0).run();row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();if(!row)return daily(env,tg,now,retry+1);}
+  await db.prepare("INSERT OR IGNORE INTO rpg_fate_daily(account_id,day,notes_json,profile_rev,created_at) SELECT ?,?,?,?,? WHERE COALESCE((SELECT chart_json FROM rpg_fate_profiles WHERE account_id=?),'')=? AND COALESCE((SELECT rev FROM rpg_fate_profiles WHERE account_id=?),0)=? AND (SELECT COUNT(*) FROM rpg_fate_operations WHERE account_id=?)=?").bind(c.account,day,JSON.stringify(notes),profile?.rev||0,now,c.account,profile?.chart_json||'',c.account,profile?.rev||0,c.account,generation).run();row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();if(!row)return daily(env,tg,now,retry+1);}
  const evidence=await fateEvidence(env,c.account,now);
  for(let n=0;n<4;n++){const unlocks=parse(row.unlocks_json,[]),next=[...unlocks];for(const e of evidence)if(!next.some(x=>x.id===e.id)&&next.length<3)next.push(e);
   if(next.length===unlocks.length)break;
-  try{await db.batch([db.prepare('UPDATE rpg_fate_daily SET unlocks_json=?,rev=rev+1 WHERE account_id=? AND day=? AND rev=?').bind(JSON.stringify(next),c.account,day,row.rev),guardStmt(db)]);row={...row,unlocks_json:JSON.stringify(next)};break;}catch(e){if(classifyDbError(e)?.code!=='conflict'||n===3)throw e;row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();if(!row)return daily(env,tg,now,retry+1);}
+  try{await db.batch([db.prepare("UPDATE rpg_fate_daily SET unlocks_json=?,rev=rev+1 WHERE account_id=? AND day=? AND rev=? AND (SELECT COUNT(*) FROM rpg_fate_operations WHERE account_id=?)=? AND COALESCE((SELECT chart_json FROM rpg_fate_profiles WHERE account_id=?),'')=? AND COALESCE((SELECT rev FROM rpg_fate_profiles WHERE account_id=?),0)=?").bind(JSON.stringify(next),c.account,day,row.rev,c.account,generation,c.account,profile?.chart_json||'',c.account,profile?.rev||0),guardStmt(db)]);row={...row,unlocks_json:JSON.stringify(next)};break;}catch(e){if(classifyDbError(e)?.code!=='conflict'||n===3)throw e;row=await db.prepare('SELECT * FROM rpg_fate_daily WHERE account_id=? AND day=?').bind(c.account,day).first();if(!row)return daily(env,tg,now,retry+1);}
  }
  const unlocks=parse(row.unlocks_json,[]),notes=parse(row.notes_json,[]);
- const liveProfile=await db.prepare('SELECT chart_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();if(profile&&!liveProfile)return daily(env,tg,now,retry+1);
+ const liveProfile=await db.prepare('SELECT chart_json FROM rpg_fate_profiles WHERE account_id=?').bind(c.account).first();if(profile&&!liveProfile||(await db.prepare('SELECT COUNT(*) generation FROM rpg_fate_operations WHERE account_id=?').bind(c.account).first()).generation!==generation)return daily(env,tg,now,retry+1);
  return {ok:true,day,unlocked:unlocks.length,unlocks,notes:notes.map((note,index)=>index<unlocks.length?{...note,locked:false}:{topic:note.topic,locked:true}),profile:liveProfile?{saved:true,coverage:parse(liveProfile.chart_json)?.coverage}:{saved:false,coverage:'inspiration'},now};
 }
 

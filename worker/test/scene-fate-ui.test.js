@@ -206,7 +206,7 @@ test('Atlas player revision cannot make stale Fate actions writable before fresh
 class FateRoot {
   constructor() {
     this.isConnected=true;this.scrollTop=0;this.reveals=0;this.focuses=[];this.controls=[];this.panels=[];this.events=new Map();this.html='';this.visibility=new Map();this.countdown={textContent:''};
-    this.ownerDocument={body:{kind:'body'},hidden:false,baseURI:'http://127.0.0.1/scene/',head:{append(){}},createElement(){return {};},addEventListener:(name,fn)=>this.visibility.set(name,fn),removeEventListener:name=>this.visibility.delete(name)};this.ownerDocument.activeElement=this.ownerDocument.body;
+    this.ownerDocument={body:{kind:'body'},hidden:false,baseURI:'http://127.0.0.1/scene/',head:{append(){}},createElement(){return {setAttribute(){}};},addEventListener:(name,fn)=>this.visibility.set(name,fn),removeEventListener:name=>this.visibility.delete(name)};this.ownerDocument.activeElement=this.ownerDocument.body;
   }
   contains(node){return node?.root===this&&this.controls.includes(node);}
   addEventListener(name,fn){this.events.set(name,fn);}removeEventListener(name){this.events.delete(name);}
@@ -328,8 +328,10 @@ test('acknowledgement after newer scene still rejects altered receipt scope and 
   });
 });
 
-test('story dynamic entry stays at current document origin root from nested virtual HUD and ordinary paths',async t=>{
-  assert.equal((source.match(/\bimport\(/g)||[]).length,1,'the import trap observes the actual sole dynamic import site');
+test('story and private dynamic entries stay at current document origin root from nested virtual HUD and ordinary paths',async t=>{
+  const entries=['/scene-fate-story.js?v=fate-f1-20261105','/scene-fate-private-ui.js?v=fate-f2-20261105'];
+  assert.equal((source.match(/\bimport\(/g)||[]).length,entries.length,'the import trap observes exactly the story and private entry sites');
+  assert.deepEqual([...source.matchAll(/\bimport\(new URL\('([^']+)'/g)].map(match=>match[1]),entries,'only the two expected root module entries are imported');
   const originalStory=await import('../public/scene-fate-story.js');
   for(const row of [
     {name:'nested virtual HUD',scriptUrl:'https://game.example/ui-generated-20261030/hud-angels-20261102/scene-fate-ui.js?v=old',documentURL:'https://game.example/ui-generated-20261030/preview.html',baseURI:'https://game.example/ui-generated-20261030/preview.html'},
@@ -342,6 +344,10 @@ test('story dynamic entry stays at current document origin root from nested virt
     for(const name of ['life','cycles','model','formal-events','event-catalog-v1','ending-story','ending-timeline','locality-ui','country-runtime-v9'])assert.equal(new URL('./fate/'+name+'.js',imports[0]).href,'https://game.example/fate/'+name+'.js');
     assert.ok(m.root.button('choice',{sfIndex:0,sfAnswer:0}),'actual original story projects after canonical entry');
     assert.equal(m.h.calls.length,1);assert.equal(m.h.calls[0].action,'fate/scene');m.view.dispose();
+    const privateImports=[],privateApi={mount(){return {client:{state:{busy:false}},dispose(){}};}};
+    const privateView=await mountHarness(fixture(),{...row,importer:url=>{privateImports.push(url);return Promise.resolve(privateApi);}},{section:'private'});
+    assert.deepEqual(privateImports,['https://game.example/scene-fate-private-ui.js?v=fate-f2-20261105']);
+    assert.equal(privateView.h.calls.length,1);assert.equal(privateView.h.calls[0].action,'fate/scene');privateView.view.dispose();
   });
 });
 test('dynamic story import failure uses clear Chinese retry and preserves the same life without exposing internal URL',async()=>{

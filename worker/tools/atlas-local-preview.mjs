@@ -16,6 +16,7 @@ import { seedBossQa, createBossQaController } from './boss-qa-fixture.mjs';
 import { seedStarRingQa, createStarRingQaController } from './star-ring-qa-fixture.mjs';
 import { seedGuardianQa, createGuardianQaController } from './guardian-qa-fixture.mjs';
 import { seedFateQa, createFateQaController, FATE_QA_STARTED_AT } from './fate-qa-fixture.mjs';
+import { seedFatePrivateQa, createFatePrivateQaController, FATE_PRIVATE_QA_STARTED_AT } from './fate-private-qa-fixture.mjs';
 import * as AutoEnhance from '../src/services/auto-enhance.js';
 import * as AutoReroll from '../src/services/auto-reroll.js';
 import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
@@ -38,19 +39,21 @@ const env = {
   ALLOW_DEV_AUTH: 'true', ATLAS_ENABLED: 'true', EQUIPMENT_COLLECTION_ENABLED:'true', EQUIPMENT_RECOVERY_ENABLED:'true',
 };
 const fateQa = process.env.RPG_FATE_QA === '1';
-const now = fateQa ? FATE_QA_STARTED_AT : Date.now();
+const fatePrivateQa = process.env.RPG_FATE_PRIVATE_QA === '1';
+const now = fatePrivateQa ? FATE_PRIVATE_QA_STARTED_AT : fateQa ? FATE_QA_STARTED_AT : Date.now();
 const skillCareerQa = process.env.RPG_SKILL_CAREER_QA === '1';
 const partyQa = process.env.RPG_PARTY_QA === '1';
 const towerQa = process.env.RPG_TOWER_QA === '1';
 const bossQa = process.env.RPG_BOSS_QA === '1';
 const starRingQa = process.env.RPG_STAR_RING_QA === '1';
 const guardianQa = process.env.RPG_GUARDIAN_QA === '1';
+if(fatePrivateQa&&(fateQa||guardianQa||starRingQa||bossQa||towerQa||partyQa||skillCareerQa))throw Error('Private Fate QA uses its own isolated fixture mode');
 if(fateQa&&(guardianQa||starRingQa||bossQa||towerQa||partyQa||skillCareerQa))throw Error('Fate QA uses its own isolated fixture mode');
 if(guardianQa&&(starRingQa||bossQa||towerQa||partyQa||skillCareerQa))throw Error('Guardian QA uses its own isolated fixture mode');
 if(starRingQa&&(bossQa||towerQa||partyQa||skillCareerQa))throw Error('Star Ring QA uses its own isolated fixture mode');
 if(bossQa&&(towerQa||partyQa||skillCareerQa))throw Error('Boss QA uses its own isolated fixture mode');
 if(towerQa&&(partyQa||skillCareerQa))throw Error('Tower QA uses its own isolated fixture mode');
-if(towerQa||bossQa||starRingQa||guardianQa||fateQa)env.ALLOW_DEBUG_TIME='true';
+if(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)env.ALLOW_DEBUG_TIME='true';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
 const permanent = scopeEnvForRealm(env, await resolveRealm(env, 'permanent'));
@@ -84,15 +87,17 @@ const guardianQaSeed=guardianQa?await seedGuardianQa(env,permanent,now):null;
 const guardianQaClock=guardianQa?createGuardianQaController(env,permanent,guardianQaSeed,now):null;
 const fateQaSeed=fateQa?await seedFateQa(env,permanent,now):null;
 const fateQaClock=fateQa?createFateQaController(env,permanent,fateQaSeed,now):null;
-const qaClock=towerQaClock||bossQaClock||starRingQaClock||guardianQaClock||fateQaClock;
+const fatePrivateQaSeed=fatePrivateQa?await seedFatePrivateQa(env,permanent,now):null;
+const fatePrivateQaClock=fatePrivateQa?createFatePrivateQaController(env,permanent,fatePrivateQaSeed,now):null;
+const qaClock=towerQaClock||bossQaClock||starRingQaClock||guardianQaClock||fateQaClock||fatePrivateQaClock;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
 let sweeping=false;
-const sweepTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
+const sweepTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
 sweepTimer?.unref();
 // The same production step functions, with real due times, in disposable local data.
 let workshopRunning=false;
-const workshopTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa)?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
+const workshopTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
 workshopTimer?.unref();
 // Only this opt-in, disposable preview checks due party work. Actual round deadlines stay unchanged.
 let partySweeping=false;
@@ -103,7 +108,7 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','skill-career','fate/scene','fate/receipt','fate/action-scoped','guardian/scene','guardian/receipt','guardian/action-scoped','tower/scene','tower/receipt','tower/action','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','skill-career','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel','guardian/scene','guardian/receipt','guardian/action-scoped','tower/scene','tower/receipt','tower/action','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -111,7 +116,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
+      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,fatePrivateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
       return;
     }
     if (partyQa && url.pathname === '/__preview/party-qa/state') {
@@ -164,6 +169,15 @@ const server = http.createServer(async (req, res) => {
       let input='';for await(const chunk of req){input+=chunk;if(Buffer.byteLength(input)>4096)throw Error('Fate QA command too large');}
       const result=await fateQaClock.advance(JSON.parse(input||'{}'));res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(result));return;
     }
+    if(fatePrivateQa&&url.pathname==='/__preview/fate-private-qa/state'){
+      if(req.method!=='GET'){res.writeHead(405);res.end();return;}
+      res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(await fatePrivateQaClock.snapshot()));return;
+    }
+    if(fatePrivateQa&&url.pathname==='/__preview/fate-private-qa/advance'){
+      if(req.method!=='POST'){res.writeHead(405);res.end();return;}
+      let input='';for await(const chunk of req){input+=chunk;if(Buffer.byteLength(input)>4096)throw Error('QA_COMMAND_SIZE');}
+      const result=await fatePrivateQaClock.advance(JSON.parse(input||'{}'));res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(result));return;
+    }
     if (url.pathname.startsWith('/app/api/')) {
       let body = '';
       for await (const chunk of req) {
@@ -185,13 +199,13 @@ const server = http.createServer(async (req, res) => {
     res.end(bytes);
   } catch (error) {
     res.writeHead(error.code === 'ENOENT' ? 404 : 500, { 'Content-Type': 'text/plain; charset=utf-8' });
-    res.end(error.message);
+    res.end(fatePrivateQa?'Private QA request failed; inspect the redacted command receipt.':error.message);
   }
 });
 server.on('error', error => { console.error(error.message); env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); process.exitCode = 1; });
 server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({
   url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, ephemeral: true,
-  notice: fateQa?'本機命運隔離驗收；只造初始角色，人生與四世禮皆走原服務；明示開發時鐘；關閉後資料清除。':guardianQa?'本機天使隔離驗收；合成初始素材與原服務收據分開；明示開發時鐘；關閉後資料清除。':starRingQa?'本機星環隔離驗收；五帳號合成角色；明示開發時鐘；關閉後資料清除。':'本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
+  notice: fatePrivateQa?'本機私人命運隔離驗收；只合成初始角色與資源；原服務生成命運及戰鬥證據；私人資料只留記憶；不外送。':fateQa?'本機命運隔離驗收；只造初始角色，人生與四世禮皆走原服務；明示開發時鐘；關閉後資料清除。':guardianQa?'本機天使隔離驗收；合成初始素材與原服務收據分開；明示開發時鐘；關閉後資料清除。':starRingQa?'本機星環隔離驗收；五帳號合成角色；明示開發時鐘；關閉後資料清除。':'本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
 })));
 function close() { clearInterval(sweepTimer);clearInterval(workshopTimer);if(partySweepTimer)clearInterval(partySweepTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }
 process.once('SIGINT', close);
