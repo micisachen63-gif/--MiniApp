@@ -1,3 +1,4 @@
+import {actorContext,scopedBossEnv,requireActiveRealm,bossIdentity,bossWindow,attackRecord} from './boss-receipt.js';
 import {bossCorePlan,materialPurposes} from '../game/monsters.js';
 import {guardianEffect,groupGuardianChance,guardianLootWinner} from '../game/guardian-effects.js';
 import {voucherGrantStmt} from './guardian-sigil.js';
@@ -87,12 +88,21 @@ export async function expireDue(env, now) {
   return out;
 }
 
-export async function attackBoss(env, tgId, bossId, now) {
+export async function attackBoss(env, tgId, bossId, now, { expectedWin } = {}) {
   const db = env.DB;
   const boss = await db.prepare('SELECT * FROM rpg_boss_instances WHERE id = ?').bind(bossId).first();
   if (!boss) throw new GameError('no_boss', '首領不存在', 404);
-  if (boss.status !== 'active' || now >= boss.ends_at || boss.hp <= 0) { await expireDue(env, now); throw new GameError('boss_over', '這隻首領已經結束了'); }
-  const win = attackWindow(boss, now); const per = MAPS[boss.map_id].boss.perPlayer;
+  const win = attackWindow(boss, now);
+  // Scoped clients retain the original window. Validate before ANY maintenance,
+  // idle settlement or attack write; the original now stays fixed on retries.
+  if (expectedWin !== undefined && bossWindow(expectedWin) !== win)
+    throw new GameError('boss_window_changed', '原攻擊時間窗已結束，請核對原紀錄後重新選擇攻擊', 409);
+  if (expectedWin !== undefined && now < boss.started_at) throw new GameError('boss_not_started', '首領尚未開放攻擊', 409);
+  if (boss.status !== 'active' || now >= boss.ends_at || boss.hp <= 0) {
+    if (expectedWin === undefined) await expireDue(env, now);
+    throw new GameError('boss_over', '這隻首領已經結束了');
+  }
+  const per = MAPS[boss.map_id].boss.perPlayer;
   const done = await db.prepare('SELECT 1 FROM rpg_boss_attacks WHERE boss_id=? AND tg_id=? AND win=?').bind(bossId, String(tgId), win).first();
   if (done) {
     const nextAt = boss.started_at + (win + 1) * BOSS.attackWindowMs;
@@ -225,4 +235,29 @@ export async function settleKill(env, bossId, now) {
 export async function setBossMessage(env, bossId, chatId, messageId) {
   await env.DB.prepare('UPDATE rpg_boss_instances SET message_chat_id = ?, message_id = ? WHERE id = ?').bind(String(chatId), Number(messageId), bossId).run();
   return { ok: true };
+}
+
+
+/** Explicit scene attack: one original boss/character/window, never requestId. */
+export async function attackScoped(env,tg,body,now){
+  requireActiveRealm(env);
+  const bossId=bossIdentity(body.bossId),win=bossWindow(body.expectedWin);
+  const {actor,context}=await actorContext(env,tg,now);
+  const original=await env.DB.prepare('SELECT started_at FROM rpg_boss_instances WHERE id=?').bind(bossId).first();
+  if(!original)throw new GameError('no_boss','首領不存在',404);
+  if(attackWindow(original,now)!==win)throw new GameError('boss_window_changed','原攻擊時間窗已結束，請核對原紀錄後重新選擇攻擊',409);
+  const recovered=record=>({...context,bossId,win,result:record.result,receipt:record.receipt,replayed:true,resultEvidence:'attack-row'});
+  const previous=await attackRecord(env,tg,bossId,win);
+  if(previous.found)return recovered(previous);
+  const scopedEnv=scopedBossEnv(env,actor);
+  try{
+    const result=await attackBoss(scopedEnv,tg,bossId,now,{expectedWin:win});
+    if(!result.killed)await scopedEnv.DB.batch([outboxStmt(scopedEnv.DB,{dedupe:'boss_upd:'+bossId+':'+tg+':'+win,target:'group',kind:'boss_update',payload:{bossId}},now)]);
+    return {...context,bossId,win,result:{...result,bossId,win},replayed:false,resultEvidence:'response'};
+  }catch(error){
+    await actorContext(env,tg,now);
+    const record=await attackRecord(env,tg,bossId,win);
+    if(record.found)return recovered(record);
+    throw error;
+  }
 }

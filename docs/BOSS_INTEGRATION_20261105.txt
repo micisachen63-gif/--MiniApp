@@ -1,0 +1,129 @@
+StarJournal — Boss／首領精華主浮窗整合
+日期：2026-11-05（台灣時間）
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-boss-integration-20261105
+分支：codex/boss-integration-20261105
+接續基線：2f4f69881128296341f885f64e77f8e6e2ffd091（已完成三人爬塔／塔印工坊）
+證據根：.release-sync/boss-20261105/
+外部交接：D:/StarJournal/handoff/non-character/boss-integration-20261105/
+
+本報告隨本機提交保存。最終提交編號與該精確HEAD完整Worker／BOT結果，於提交後寫入證據根的local-submission-receipt.json、full-final-head-gate-receipt.json及外部STATUS.json／FINAL_STATUS.md。不能以基線測試或本報告的聚焦測試，代替最終HEAD全套成功收據。
+
+一、完成的使用者流程
+
+冒險入口的「世界首領」與營地入口的「首領精華」進入現有主戰鬥單一浮窗，共用世界首領／精華兌換／材料回收三分頁。沿用金屬控件、透明背景、至少44px操作區及原頁尾導覽。320、390與1280寬度驗收可操作，長內容在浮窗內捲動。
+
+世界首領顯示目前首領、HP、場次期限、自己的真實傷害與次數、目前攻擊窗口、角色HP／MP、倒地期限及已保存戰果。active、settling、killed、fled、vanished狀態分別呈現，不把HP0直接當作已完成獎勵。確認頁明列目標、技能、五次施放、補魔選項與倒地10分鐘規則；取消／Back回來源按鈕。
+
+精華頁讀取角色實際精華、遺物碎片及原目錄。原七種兌換不改價：
+- 5精華 → 5洗屬性捲。
+- 5精華 → 4武器卷軸。
+- 5精華 → 4防具卷軸。
+- 80精華 → 1祝福武器卷軸。
+- 80精華 → 1祝福防具卷軸。
+- 5精華 → 1遺物碎片。
+- 30遺物碎片 → 1件依原職業／階級規則產生的隨機遺物。
+
+材料回收列出當前全數持有的mat_3／mat_4及數量，原費率為12／16精華。確認綁定當時精確數量，送出前或提交時數量不同即拒絕舊確認，要求讀取實際餘額後重新確認。
+
+帳號每日精華獎勵顯示台灣日界、已用／上限4／剩餘次數。只有實際有貢獻的擊殺計入；同帳號不同角色在同場只領一次，物品歸原結算選出的貢獻角色。達上限仍可攻擊，不把帳號上限當成禁戰條件。
+
+二、新API與原權威的界線
+
+新增boss/scene及boss/receipt為SELECT-only；新增boss/attack-scoped及boss/exchange-scoped處理主浮窗操作。App與內部Service均驗證body.realmId、X-Realm-Id、帳號身分及selectedCharacterId；呼叫者提供的tgId或namespace不能更換權威身分。
+
+scene與receipt不經withPlayer、analytics或原currentBoss副作用路徑，不清理過期、不推進、不結算、不補發、不寫outbox。凍結世界仍可讀，寫入維持原phase／fence限制。舊boss/current相關行為保持，不把舊副作用查詢加入READS。
+
+scopedBossEnv在原寫入batch內驗證帳號與當前選角，涵蓋withPlayer失敗動作仍可能產生的idle settlement、重試、Boss結算及outbox。純SELECT batch不加入寫入。攻擊與擊殺結算仍沿用原來兩筆交易：若攻擊已提交、隨後切角使結算被擋，合法攻擊與原守護憑證仍保留，首領可以維持HP0／settling，等待原權威路徑處理；新查詢不假裝完成或代為修復。
+
+未新增migration，未改正式DB、Secrets、旗標或部署設定。原3分鐘攻擊窗口、30分鐘場次、10分鐘倒地與精華價格／產量不縮短或重設。
+
+三、攻擊未知結果與兌換收據
+
+攻擊原子鍵為bossId＋characterId＋win，與塔印的requestId模式不同。新scoped攻擊要求非負整數expectedWin，固定本次request時間，跨窗口在expire／withPlayer任何寫入前拒絕。讀取原攻擊結果時保留bossId／win，即使found:false也不丟失原tuple。
+
+原attack資料只存damage與created_at。因此attack-row恢復只能呈現已有證據，不虛構crit、反擊、HP／MP、擊殺或獎勵。未知攻擊在重開／切角／跨窗後保留原窗口，查證不重送。新窗口必須另外明確確認新攻擊；沒有跨窗自動補打。
+
+兌換在原消耗與產出同一persist batch寫入scoped-only的版本化零額ledger收據。收據綁定requestId、完整offer／材料數量signature、實際cost與完整結果，並核對原currency、item及equipment ledgers。同ID／相同內容回原結果；同ID換內容409。遺物找回原裝備ID，不再抽一次；裝備之後已售出也不因此重擲。
+
+舊版、破損或部分ledger不能冒充成功，也不能解除pending後重新花費。只有有效的found:false且recoveryAllowed:true，使用者再次明示確認後，才能原ID／原body恢復未送達兌換。取消、Back、刷新、關窗、回前景及收據查詢均不自動POST。
+
+材料回收除工作狀態比對外，另在SQL batch以實際扣除後兩種材料均為0作提交guard，涵蓋沒有增加character revision的並行材料增量。本次真實競態驗收先增加1件mat_3，舊確認被整筆回滾；重新確認實際3件mat_3＋3件mat_4後，一次換得84精華。
+
+四、共用session與焦點
+
+四個新Boss端點的JSON body.realmId由該次captured context覆寫，與X-Realm-Id同源；selectedCharacterId及epoch同樣由原session管理。其他舊端點payload契約維持。只有兩個新純讀端點加入READS。
+
+pending依realm／帳號／角色隔離；A→B→A的晚成功、晚409或已提交但回覆遺失都不能套用至新的context。revision floor保留，不讓舊快照退回新狀態。B不能看到A的pending，回A仍以原ID／tuple查證。
+
+確認預設取消、取消／Back回原按鈕、關閉回原導覽；每筆未知結果只定位一次，後續輪詢／visibility refresh不搶焦點。舊RAF、dispose、隱藏與context切換守衛保留。
+
+五、來源與聚焦驗證
+
+最終產品／測試15檔，隔離QA工具4檔，19檔凍結於candidate-source-freeze-final.json。報告與AI_HANDOVER另外隨本機提交保存。後端聚焦69/69，含42個新增案例；最後UI／shared-session聚焦71/71，皆0 fail／cancel／skip／todo。聚焦集合不能與完整gate相加作為唯一測試總數。
+
+後端收據：backend-focused-final.json／.tap、backend-source-hashes.json。
+前端收據：ui-realm-wire-red-01、ui-realm-wire-green-01、ui-realm-wire-bridge-after.json。
+QA來源：qa-source-bridge.json、qa-tool-source-hashes.json。
+root審查：root-review-final.json、visual-review.json、candidate-source-freeze-final.json。
+
+root重算19個最終檔、後端聚焦來源、UI聚焦來源、preview啟動199來源、21個採認check所屬原收據及23張代表圖SHA，全部吻合。實際HTTP JS／CSS來源亦保存於各Chrome結果與bridge。root實際目視11張代表圖，不以自動布局斷言代替視覺檢查。
+
+六、Chrome與隔離API分段驗收
+
+共19項主要檢查及2項修正工具後的唯讀／焦點補測，已接受證據的非預期page、HTTP、route與外部請求錯誤均0；預期409另列。這是分段採認，並非單次完整run全綠。
+
+- layout-02：2項。三尺寸三分頁、單浮窗、44px、無橫向溢出、焦點循環／返回；正常與凍結純讀。
+- exchange-01：3項。真5精華換4卷；已提交遺物回覆遺失找回原裝備；未送達兌換原ID／body明確恢復。
+- exchange-race-01：2項。並行增量使舊材料確認原子拒絕；新確認換取實際84精華。
+- attack-01：保留2個已成功check。真傷害／資源／HP／同窗防重；原窗口未知結果不跨窗補打。
+- attack-tail-01：3項。從原win2／HP39精確接續、沿原後續窗口真倒地與原10分鐘封鎖；原到期權威產生正確fled／vanished。
+- kill-01：2項。HP0／settling純讀不結算；mage與archer均有正傷害，同帳只一份7精華，重複settle不重領。
+- cap-01：保留1個已成功check。另一帳號5場原始擊殺精華依次7／7／7／7／0。
+- cap-view-01：1項。只讀既有5場與ledger，畫面4／4、剩餘0、精華228；不重打或重結算。
+- races-01：3項。A／B／A晚200、晚409、committed-but-lost均保持context／焦點隔離。
+- tools-bridge-01：2項補測。工具修正後純讀與確認取消焦點。
+
+兩個realm各96表；pure-read證據比較全部表hash、total_changes與outbox前後。涵蓋正常、凍結、到期未結算、settling、倒地與擊殺狀態。
+
+七、保留失敗與修正範圍
+
+layout-01是真產品wire缺漏：body.realmId未送出，出現3個400；沒有Boss攻擊或兌換成功寫入。最小修正僅session JS與其測試，先記錄red，再71/71 green；layout-02及之後各段驗證實際HTTP來源。
+
+attack-01的第一個倒地假設不成立：已手動前進6分鐘，原withPlayer自然恢復將HP1提高至118，反擊79後仍有39。downed:false符合原規則。已成功2項保留，attack-tail從確切原Boss／角色／win2／HP39續驗，不重送原win2。一次tail啟動MCP逾時先查本次程序、固定收據與DB，確認沒有啟動或重複攻擊後才啟動；見attack-tail-launch-reconciliation.json。
+
+cap-01的5場真擊殺／上限已通過，末尾asset檢查因API-only流程未開懶載入Boss頁而失敗。cap-view僅讀原資料補UI／HTTP來源與零寫證據，沒有重跑5場。
+
+工具已修正自然後續攻擊窗口與cap載入UI的主路徑。--resume-run僅允許精確attack-tail，cap-view使用獨立--bridge-run；exchange、exchange-race、attack、kill、cap、races整段resume在建立run目錄／Chrome／HTTP前拒絕。6/6拒絕probe保存在qa-resume-rejection-probes.json。不要用整段重播掩蓋既有成功消費。
+
+backend-focused-01曾有1個測試預期錯誤：攻擊已提交後切角擋住後續結算，原合法守護憑證仍存在。修正測試以符合原交易界線，後端最終69/69；失敗與分析原件保留。
+
+八、最終完整gate
+
+Node v24.7.0；使用官方scripts/run-tests.mjs相同完整檔案選取：worker/test全部.test.js，以及cloud-bot/src/adapter/test全部.test.js與cloud-bot/test全部.test.mjs。每服務test-concurrency=2，Worker完成後BOT；不縮減清單、不接受skip／cancel／todo。
+
+run-final-head-gate.mjs必須傳入40字元最終HEAD，前後核對同一HEAD、指定分支與乾淨worktree，並重算全部納入來源的SHA。兩服務都須exit0、pass=tests>0、fail/cancel/skip/todo皆0，來源與Git狀態亦須一致。
+
+該gate在本報告提交後執行；實際檔數、測試總數、完成時間與完整來源數以full-final-head-gate-receipt.json及FINAL_STATUS.md為準。沒有成功收據前，不宣稱本批精確HEAD完整驗收完成。不要為補文案修改已驗收的tracked來源；最後結案資訊寫外部交接。
+
+九、預覽與操作限制
+
+UI http://127.0.0.1:9763/；API http://127.0.0.1:9762/。
+本批launcher PID44520、API PID12776；實際程序與listener以preview-own-process-verification.json為準。isolated／ephemeral／productionAccess=false，RPG_BOSS_QA=1，兩個記憶體SQLite、六合成Boss fixture角色。不是正式玩家資料。
+
+QA明示opt-in開發時鐘，移到原3分鐘窗口、10分鐘倒地、30分鐘場次及下一個台灣日界。原期限不改；automatic Boss／Atlas／workshop sweep在本fixture關閉。這是手動時鐘驗收，不是自然等候，也不代表正式Telegram宿主或真機驗收。
+
+保留舊9753／9752及其他工作線預覽。不可kill所有Node，不操作共享全域MCP agent_workflow／task_control。角色模型、FX、catalog、queue與grok-assets由其他工作線處理。
+
+十、發布、交接與下一批
+
+前批party提交cecb015的push曾遭自動核准審查拒絕，理由為需對具體提交與GitHub目的地的明確授權。tower與本批Boss維持本機；未推送、未建立遠端PR、未執行本批GitHub CI。不改用子分支繞過，不合併main，不部署。
+
+外部PR_DRAFT.md與publication-plan.json記錄可審查的具體提交鏈、目的地與草稿內容。若日後取得授權，依party→tower→Boss逐批推送／建立正確base的draft PR並核對各精確HEAD checks，不能用PR51或其他版本的CI代替。
+
+沿用StarJournal-NonCharacter-Checkpoint-30m與StarJournal-AtlasSupply-Checkpoint-30m兩個PT30M Windows排程，不建重複ChatGPT排程。里程碑即時寫STATUS及checkpoint；語意進度看STATUS.updatedAt，排程實際結果以最後直接觀察收據為準。
+
+下一批建議星環遠征。已做唯讀來源盤點，尚未實作；NEXT_BATCH_PLAN.json保存具體入口／服務／測試與風險。要新建SELECT-only star-ring/scene，不擴大party-scene-common既定dungeon／tower白名單。舊list/me會sweep、get/view會advance；五不同帳號、每角色出發、12小時6個2小時節點及v1/v2/v3快照／獎勵規則保留。背景running membership與前景party_id分開核對，owned recipientCharId歷史報告做所有權／membership guard；create／shop／cosmetics及tactic／ready各自的未知結果signature與收據需盤點。既領階段獎勵以run_id＋char_id＋stage防重，離開保留已提交階段，不重擲。
+
+十一、全專案仍未完成
+
+Boss完成只代表本批本機整合；星環、天使、命運、交易、衣櫥與完整帳務舊頁仍待接入。角色／FX逐擊事件接線、第四階重選原生道具、五輪Lv1–600／16覺醒、完整季末drain／manifest／跨DB匯入／領回與永久4＋賽季4角色保留、正式玩家經濟平衡、Telegram身分宿主與真機驗收都未完成。現行MAX_LEVEL仍120。320px主場資訊卡局部覆蓋角色頭部的既有布局問題亦未在本批解決。正式環境繼續凍結。

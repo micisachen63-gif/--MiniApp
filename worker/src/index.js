@@ -13,7 +13,9 @@ import * as FORGE_RECEIPT from './services/forge-receipt.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
-import {bossExchange} from './services/boss-exchange.js';
+import {bossExchange,exchangeScoped} from './services/boss-exchange.js';
+import * as BOSS_SCENE from './services/boss-scene.js';
+import * as BOSS_RECEIPT from './services/boss-receipt.js';
 import * as SP from './services/special.js';
 import * as SKILL_CAREER from './services/skill-career.js';
 import * as PARTY_SCENE from './services/party-scene.js';
@@ -44,7 +46,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView, bossFor } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
@@ -268,6 +270,10 @@ const routes = {
   'POST /rpg/pk/message': async (env, b) => PK.setPkMessage(env, String(b.pkId), b.chatId, b.messageId),
   'POST /rpg/forge/receipt': (env,b,now)=>FORGE_RECEIPT.view(env,{tgId:tgOf(b),kind:b.kind,requestId:b.requestId,namespace:'service'},now),
   'POST /rpg/ledger': async (env, b) => ({ ok: true, ledger: await P.ledgerFor(env.DB, tgOf(b)) }),
+  'POST /rpg/boss/scene':(env,b,now)=>BOSS_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/boss/receipt':(env,b,now,namespace='service')=>BOSS_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/boss/attack-scoped':async(env,b,now)=>{const tg=tgOf(b),result=await B.attackScoped(env,tg,b,now);return {...result,...await BOSS_SCENE.view(env,tg,{bossId:b.bossId},now)};},
+  'POST /rpg/boss/exchange-scoped':async(env,b,now,namespace='service')=>{const tg=tgOf(b),result=await exchangeScoped(env,tg,b,now,namespace);return {...result,...await BOSS_SCENE.view(env,tg,{},now)};},
   'POST /rpg/boss/current': async (env, b, now) => ({ ok: true, boss: await B.currentBoss(env, now) }),
   'POST /rpg/boss/get': async (env, b, now) => ({ ok: true, boss: await B.bossById(env, String(b.bossId), now) }),
   'POST /rpg/boss/attack': async (env, b, now) => { const r = await B.attackBoss(env, tgOf(b), String(b.bossId), now); return { ok: true, result: r, boss: await B.bossById(env, String(b.bossId), now) }; },
@@ -421,7 +427,9 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    if((url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    const bossScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
+    if(bossScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((bossScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
     // Shared class metadata has no player state. Preserve the BOT's authenticated,
     // database-free metadata contract; only asset-bearing routes resolve a D1.
@@ -431,7 +439,8 @@ export async function handle(request, env) {
       return json(await route(env,routeBody,now));
     }
     env=await prepareRealmEnv(request,env);
-    if(url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
+    if(bossScoped||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
+      if(bossScoped&&(typeof routeBody.selectedCharacterId!=='string'||!routeBody.selectedCharacterId))throw new GameError('selected_character_required','請先選擇角色',400);
       const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
       const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
       if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);

@@ -38,6 +38,7 @@ const virtualSocial = new Set([
   'scene-skills-ui.js','scene-skills-ui.css',
   'scene-party-ui.js','scene-party-ui.css',
   'scene-tower-ui.js','scene-tower-ui.css',
+  'scene-boss-ui.js','scene-boss-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
   'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
@@ -106,7 +107,7 @@ server.listen(port, '127.0.0.1', () => {
   apiProcess.stderr.on('data', chunk => process.stderr.write(chunk));
   apiProcess.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });
   apiProcess.on('exit', code => { apiReady = false; if (!stopping) { console.error('Isolated Atlas service exited: ' + code); stop(); process.exitCode = 1; } });
-  console.log(JSON.stringify({ url:origin, api:`http://127.0.0.1:${apiPort}`, localOnly:true, generatedInputsReadOnly:true, pid:process.pid }));
+  console.log(JSON.stringify({ url:origin, api:`http://127.0.0.1:${apiPort}`, localOnly:true, generatedInputsReadOnly:true, pid:process.pid, apiPid:apiProcess.pid }));
 });
 function stop() {
   if (stopping) return; stopping = true;

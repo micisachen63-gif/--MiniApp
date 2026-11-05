@@ -1,3 +1,57 @@
+# Boss／首領精華主浮窗整合（2026-11-05）
+
+本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-boss-integration-20261105
+分支：codex/boss-integration-20261105；接續2f4f69881128296341f885f64e77f8e6e2ffd091。
+完整報告：docs/BOSS_INTEGRATION_20261105.txt。
+最後提交、精確HEAD全套與結案狀態：.release-sync/boss-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json，以及D:/StarJournal/handoff/non-character/boss-integration-20261105/STATUS.json／FINAL_STATUS.md。本文件於提交前保存，最終完整gate在提交後執行並寫外部收據；不能以基線或聚焦成功代替該版本全套。
+
+## 已完成
+
+- 冒險「世界首領」與營地「首領精華」接入現有主戰鬥單一浮窗：Boss／兌換／材料回收三分頁，金屬控件、透明背景、44px操作區，320／390／1280可操作。
+- 真首領HP、個人傷害、原時間窗、角色HP／MP、倒地期限、歷史及精華／遺物碎片；settling、killed、fled、vanished分別呈現，不以HP0冒充領獎。
+- 新boss/scene與boss/receipt為SELECT-only，App／Service驗realm／帳號／選角，不經withPlayer、analytics、不推進／結算／outbox。舊currentBoss保留原副作用，不加入READS。
+- 新attack-scoped／exchange-scoped沿原權威；每個實際寫入batch均驗當前帳號與角色，含失敗動作idle settlement、重試、結算及outbox，原phase／fence保持。
+- 攻擊保留bossId＋characterId＋win，不使用requestId跨窗補打。expectedWin在任何原副作用前驗證；receipt只還原實存damage／created_at，不虛構crit／反擊／HP／MP／獎勵。
+- 兌換版本化完整signature／結果收據與原消耗產出同batch；同ID換body拒絕，隨機遺物找回原裝備ID不重擲。壞／舊／部分ledger不冒充成功；只有有效not_found且明示再次確認才原ID／body恢復。
+- 全持有mat_3／mat_4確認與提交時原子數量guard；沒有revision變動的並行增量也拒絕舊確認。原12／16費率與七種兌換價格／數量不改。
+- 精華前4場有貢獻擊殺按帳號／台灣日界計數，同帳兩角色只一份、歸原選定貢獻角色。達上限仍可攻擊。
+- A/B/A、realm／角色／epoch、revision floor與原pending隔離；確認預設取消、取消／Back回來源、未知提示一次性定位、舊RAF與晚回覆不搶焦點。
+- 實際Chrome抓到body.realmId缺漏後，僅共用session與測試作最小修正；四個新Boss動作的body realm與header同取captured context，其餘端點契約不改。
+
+## 驗證與來源界線
+
+- 最後後端69/69（含42新增），UI／shared-session71/71，0 fail／cancel／skip／todo；不要與完整gate相加。
+- Chrome／隔離API分段19項主要＋2項工具修正後唯讀／焦點補測通過，accepted非預期page／HTTP／route／外部請求錯誤0；23張代表圖，root實際目視11張。
+- 真5精華換4卷、已提交遺物丟回覆找回原裝備且無第二POST；未送達兌換原ID／body明確恢復。材料競態拒絕舊確認後，實際3＋3材料轉84精華。
+- 真攻擊傷害／資源／同窗防重，原窗口未知不跨窗自動補打；真倒地原10分鐘、原到期權威fled／vanished。HP0／settling純讀不結算。
+- mage與archer都實際有正傷害，同帳領一份7精華，重複settle不重領；另一帳號原5場擊殺為7／7／7／7／0，UI4／4、剩餘0、精華228。
+- pure-read逐段比較permanent／season各96表全hash、total_changes與outbox；涵蓋正常／凍結／過期／settling／倒地／擊殺。
+- layout-01產品wire缺漏、attack-01自然回復使初次未倒地、cap-01未開懶載入UI三筆失敗原件保留；按原已成功check採認，後兩者精確tail／readonly bridge，不重做成功消費或五場擊殺。不能宣稱單次完整Chrome run全綠。
+- --resume-run僅限精確attack-tail；cap-view用--bridge-run；六個mutating整段resume在Chrome／HTTP前fail-fast。工具主路徑已修正，6/6拒絕probe與唯讀補測保存。
+- candidate-source-freeze-final.json凍結15產品／測試＋4QA工具。root重算19檔、聚焦來源、preview199來源、21個check原收據及23圖SHA全吻合；QA來源橋接保留實際HTTP JS／CSS。
+- Node24.7.0。完整gate採官方全部Worker／BOT檔案清單、每服務concurrency2，提交前後HEAD／分支／乾淨worktree及全部source hash為必要條件。實際數目與成功狀態只以最終receipt／FINAL_STATUS為準。
+- 證據根：.release-sync/boss-20261105/。重要收據：backend-focused-final.json、ui-realm-wire-green-01.json、ui-realm-wire-bridge-after.json、qa-summary.json、qa-source-bridge.json、qa-tool-source-hashes.json、root-review-final.json、visual-review.json。已有成功證據不無故重跑／重置。
+
+## 交易、預覽與發布
+
+原攻擊提交與擊殺結算是兩筆交易；切角可能在攻擊已提交後擋住後續settlement，此時合法攻擊與守護憑證仍有效，Boss可停在HP0／settling。新scene／receipt不代修或補發。原attack-row沒有完整戰鬥結果，不可推論額外細節。
+
+隔離UI http://127.0.0.1:9763/、記憶體API9762，launcher PID44520、API PID12776；以preview-own-process-verification.json與preview-process.json為準。RPG_BOSS_QA=1，isolated／ephemeral／productionAccess=false，六合成Boss fixture角色。明示開發時鐘推進至原3分鐘／10分鐘／30分鐘／台灣日界，原期限不改，automatic sweeps關閉；不是自然等待、正式玩家／Telegram宿主或真機驗收。舊9753及其他預覽保留。
+
+party cecb015 push曾被自動核准審查拒絕，需對具體提交與GitHub目的地明確授權；tower 2f4f698與Boss維持本機，沒有重試／子分支繞過／新遠端PR／本批CI。PR_DRAFT.md與publication-plan.json保存可審查提交鏈；取得授權後依party→tower→Boss各自正確base建draft PR，核對精確HEAD，不合併／不部署。
+
+## 下一批與全專案待辦
+
+下一批建議星環遠征；已唯讀盤點9個來源，具體NEXT_BATCH_PLAN.json保存於本批外部交接，尚未實作。新star-ring/scene要純讀，不能將舊list/me sweep或get/view advance帶入；party-scene-common固定dungeon／tower不得擴大。五不同帳號、每角色出發、12小時6節點、v1/v2/v3快照／獎勵、背景running membership與前景party_id分開、owned recipientCharId歷史報告、tactic／ready完整signature、各create／shop／cosmetics收據與run_id＋char_id＋stage防重均需保留。
+
+星環、天使、命運、交易、衣櫥、完整帳務，逐擊事件／角色FX、第四階重選原生道具、Lv600／16覺醒、正式平衡、完整季末跨DB移轉與永久4＋賽季4角色保留、Telegram／真機、320px主場資訊卡遮角色仍待接續。現行MAX_LEVEL120；全遊戲尚未整合完成。
+
+維持兩個PT30M Windows checkpoint並於里程碑立即記錄，語意時間看STATUS.updatedAt。禁止共享全域MCP agent_workflow／task_control，不停止其他預覽。正式環境凍結，不部署／合併main／改正式DB、Secrets、migration、旗標；角色／FX／catalog／queue／grok-assets由其他工作線處理。
+
+---
+
+## 前序交接（原文完整保留；歷史狀態以各批最後收據為準）
+
 # 三人爬塔與塔印工坊主浮窗整合（2026-11-05）
 
 本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-tower-integration-20261105

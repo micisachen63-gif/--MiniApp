@@ -685,3 +685,96 @@ test('offline pure tower reads are never uncertain writes; legacy status and act
  }
  assert.deepEqual(h.net.calls.map(c=>c.action),['tower/scene','tower/receipt','tower/status','tower/action']);
 });
+
+test('Boss scene and receipts are pure reads without a mutation barrier or implicit Atlas follow-up',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());const refresh=h.client.refresh();
+ const sceneRead=h.client.request('boss/scene'),receiptRead=h.client.request('boss/receipt',{kind:'attack',bossId:'original-boss',win:2});
+ assert.deepEqual(h.net.calls.map(c=>c.action),['atlas/status','boss/scene','boss/receipt']);
+ h.net.calls[1].reply({ok:true,characterId:'a',boss:null});h.net.calls[2].reply({ok:true,characterId:'a',found:false,result:null,receipt:null});
+ assert.equal((await sceneRead).boss,null);assert.equal((await receiptRead).found,false);
+ h.net.calls[0].reply({ok:true,scene:scene()});assert.equal((await refresh).characterId,'a');assert.equal(h.net.calls.length,3);
+});
+test('offline Boss projection/receipt are reads; legacy current and all attacks/exchanges remain uncertain mutations',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());
+ const reads=['boss/scene','boss/receipt'],writes=['boss/current','boss/attack','boss/attack-scoped','boss/exchange','boss/exchange-scoped'];
+ for(const action of [...reads,...writes]){
+  const pending=outcome(h.client.request(action,{bossId:'original-boss',expectedWin:2}));h.net.calls.at(-1).fail();const result=await pending;
+  assert.equal(result.error.uncertain,writes.includes(action),action);
+ }
+ assert.deepEqual(h.net.calls.map(c=>c.action),[...reads,...writes]);
+});
+
+const bossScopedWireCases = [
+  ['boss/scene', {}],
+  ['boss/receipt', { kind: 'attack', bossId: 'original-boss', win: 2 }],
+  ['boss/attack-scoped', { bossId: 'original-boss', expectedWin: 2 }],
+  ['boss/exchange-scoped', { requestId: 'sb_original_exchange', offer: 'legacy', expectedMaterials: { mat_3: 2, mat_4: 1 } }],
+];
+const bossScopedWrites = new Set(['boss/attack-scoped', 'boss/exchange-scoped']);
+
+test('Boss scoped wire binds body realm and selected character to the captured header context', async t => {
+  for (const [action, payload] of bossScopedWireCases) await t.test(action, async t => {
+    const h = harness({ realmId: 'season', characterId: 'season-a' });
+    t.after(() => h.client.dispose());
+    for (const override of [{}, { realmId: 'forged-realm', selectedCharacterId: 'foreign-character' }]) {
+      const body = { ...payload, ...override }, originalBody = plain(body);
+      const pending = h.client.request(action, body), call = h.net.calls.at(-1);
+      assert.equal(call.options.headers['X-Realm-Id'], 'season');
+      assert.equal(call.options.headers['X-Dev-Tg-Id'], '90101');
+      assert.deepEqual(call.body, { ...payload, realmId: 'season', selectedCharacterId: 'season-a' });
+      assert.deepEqual(body, originalBody, 'serializing a scoped request does not modify the caller payload');
+      call.reply({ ok: true });
+      await drain();
+      if (bossScopedWrites.has(action)) {
+        const followUp = h.net.calls.at(-1);
+        assert.equal(followUp.action, 'atlas/status');
+        assert.equal(followUp.options.headers['X-Realm-Id'], 'season');
+        assert.deepEqual(followUp.body, { selectedCharacterId: 'season-a' }, 'other endpoints retain their wire contract');
+        followUp.reply({ ok: true, scene: scene({ realmId: 'season', characterId: 'season-a', runId: null }) });
+      }
+      assert.equal((await pending).ok, true);
+    }
+    assert.equal(h.net.calls.filter(call => call.action === action).length, 2);
+  });
+});
+
+test('Boss scoped wire keeps each captured realm across A to B to A and rejects both old epochs', async t => {
+  for (const [action, payload] of bossScopedWireCases) await t.test(action, async t => {
+    const h = harness();
+    t.after(() => h.client.dispose());
+    const firstA = outcome(h.client.request(action, { ...payload, realmId: 'forged-realm' }));
+    const oldA = h.net.calls.at(-1);
+    h.client.setContext({ realmId: 'season', characterId: 'season-a' });
+    const b = outcome(h.client.request(action, { ...payload, realmId: 'permanent', selectedCharacterId: 'a' }));
+    const oldB = h.net.calls.at(-1);
+    h.client.setContext({ realmId: 'permanent', characterId: 'a' });
+    const currentA = h.client.request(action, { ...payload, realmId: 'season', selectedCharacterId: 'season-a' });
+    const current = h.net.calls.at(-1);
+    for (const [call, realmId, characterId] of [[oldA, 'permanent', 'a'], [oldB, 'season', 'season-a'], [current, 'permanent', 'a']]) {
+      assert.equal(call.options.headers['X-Realm-Id'], realmId);
+      assert.deepEqual(call.body, { ...payload, realmId, selectedCharacterId: characterId });
+    }
+    assert.equal(oldA.options.signal.aborted, true);
+    assert.equal(oldB.options.signal.aborted, true);
+    assert.equal(current.options.signal.aborted, false);
+    oldA.reply({ ok: true, marker: 'old-a' });
+    oldB.reply({ ok: true, marker: 'old-b' });
+    for (const result of [await firstA, await b]) {
+      assert.equal(result.ok, false);
+      assert.equal(result.error.code, 'context_changed');
+    }
+    assert.equal(h.net.calls.length, 3, 'old realm responses cannot start a follow-up in the new epoch');
+    current.reply({ ok: true, marker: 'current-a' });
+    await drain();
+    if (bossScopedWrites.has(action)) {
+      const followUp = h.net.calls.at(-1);
+      assert.equal(followUp.action, 'atlas/status');
+      assert.equal(followUp.options.headers['X-Realm-Id'], 'permanent');
+      assert.deepEqual(followUp.body, { selectedCharacterId: 'a' });
+      followUp.reply({ ok: true, scene: scene({ runId: null }) });
+    }
+    assert.equal((await currentA).marker, 'current-a');
+    assert.equal(h.client.getContext().epoch, 2);
+    assert.equal(h.net.calls.length, bossScopedWrites.has(action) ? 4 : 3);
+  });
+});

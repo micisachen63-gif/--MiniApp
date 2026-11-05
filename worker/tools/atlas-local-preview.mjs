@@ -12,6 +12,7 @@ import * as AtlasBackground from '../src/services/atlas-background.js';
 import * as Party from '../src/services/party.js';
 import { seedPartyQa, partyQaSnapshot } from './party-qa-fixture.mjs';
 import { seedTowerQa, createTowerQaController } from './tower-qa-fixture.mjs';
+import { seedBossQa, createBossQaController } from './boss-qa-fixture.mjs';
 import * as AutoEnhance from '../src/services/auto-enhance.js';
 import * as AutoReroll from '../src/services/auto-reroll.js';
 import {equipmentCollectionCatalog} from '../src/game/equipment-collection.js';
@@ -37,8 +38,10 @@ const now = Date.now();
 const skillCareerQa = process.env.RPG_SKILL_CAREER_QA === '1';
 const partyQa = process.env.RPG_PARTY_QA === '1';
 const towerQa = process.env.RPG_TOWER_QA === '1';
+const bossQa = process.env.RPG_BOSS_QA === '1';
+if(bossQa&&(towerQa||partyQa||skillCareerQa))throw Error('Boss QA uses its own isolated fixture mode');
 if(towerQa&&(partyQa||skillCareerQa))throw Error('Tower QA uses its own isolated fixture mode');
-if(towerQa)env.ALLOW_DEBUG_TIME='true';
+if(towerQa||bossQa)env.ALLOW_DEBUG_TIME='true';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
 const permanent = scopeEnvForRealm(env, await resolveRealm(env, 'permanent'));
@@ -64,14 +67,16 @@ for (const [index, [baseClass, name]] of classes.entries()) {
 const partyQaFixtures=partyQa?await seedPartyQa(env,permanent,now):[];
 const towerQaFixtures=towerQa?await seedTowerQa(env,permanent,now):[];
 const towerQaClock=towerQa?createTowerQaController(env,permanent,towerQaFixtures,now):null;
+const bossQaSeed=bossQa?await seedBossQa(env,permanent,now):null;
+const bossQaClock=bossQa?createBossQaController(env,permanent,bossQaSeed,now):null;
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
 let sweeping=false;
-const sweepTimer=towerQa?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
+const sweepTimer=(towerQa||bossQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
 sweepTimer?.unref();
 // The same production step functions, with real due times, in disposable local data.
 let workshopRunning=false;
-const workshopTimer=towerQa?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
+const workshopTimer=(towerQa||bossQa)?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
 workshopTimer?.unref();
 // Only this opt-in, disposable preview checks due party work. Actual round deadlines stay unchanged.
 let partySweeping=false;
@@ -82,7 +87,7 @@ const server = http.createServer(async (req, res) => {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','skill-career','tower/scene','tower/receipt','tower/action','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','skill-career','tower/scene','tower/receipt','tower/action','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
@@ -90,7 +95,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,towerQa,qaClock:towerQaClock?.info()||null,partySweepMs:partyQa?1000:null }));
+      res.end(JSON.stringify({ ok: true, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,partyQa,towerQa,bossQa,qaClock:(towerQaClock||bossQaClock)?.info()||null,partySweepMs:partyQa?1000:null }));
       return;
     }
     if (partyQa && url.pathname === '/__preview/party-qa/state') {
@@ -107,6 +112,15 @@ const server = http.createServer(async (req, res) => {
       let input='';for await(const chunk of req){input+=chunk;if(Buffer.byteLength(input)>2048)throw Error('QA clock request too large');}
       const result=await towerQaClock.advance(JSON.parse(input||'{}'));res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(result));return;
     }
+    if(bossQa&&url.pathname==='/__preview/boss-qa/state'){
+      if(req.method!=='GET'){res.writeHead(405);res.end();return;}
+      res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(bossQaClock.snapshot()));return;
+    }
+    if(bossQa&&url.pathname==='/__preview/boss-qa/advance'){
+      if(req.method!=='POST'){res.writeHead(405);res.end();return;}
+      let input='';for await(const chunk of req){input+=chunk;if(Buffer.byteLength(input)>4096)throw Error('Boss QA command too large');}
+      const result=await bossQaClock.advance(JSON.parse(input||'{}'));res.writeHead(200,{'Content-Type':'application/json; charset=utf-8','Cache-Control':'no-store'});res.end(JSON.stringify(result));return;
+    }
     if (url.pathname.startsWith('/app/api/')) {
       let body = '';
       for await (const chunk of req) {
@@ -114,7 +128,7 @@ const server = http.createServer(async (req, res) => {
         if (Buffer.byteLength(body) > 1024 * 1024) throw Error('Request too large');
       }
       const response = await handle(new CurrentClientRequest(`http://127.0.0.1:${port}${req.url}`, {
-        method: req.method, headers: towerQa?{...req.headers,'x-debug-now':String(towerQaClock.now())}:req.headers, body,
+        method: req.method, headers: (towerQaClock||bossQaClock)?{...req.headers,'x-debug-now':String((towerQaClock||bossQaClock).now())}:req.headers, body,
       }), env);
       res.writeHead(response.status, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' });
       res.end(await response.text());
