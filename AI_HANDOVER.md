@@ -36,6 +36,14 @@ auto-resources-start-01 已提交後純讀fetch失敗；原request sg_83ec9469cb
 
 候選01→06僅QA harness逐項修補，產品不變；每run內216來源穩定，各run harness版本分列。完整 source bridge／原failed／最終結果見QA summary，不能把舊案說成最後harness全段重跑。MCP連線中斷先查原intent／PID／receipt，不能直接重送成功操作。
 
+## 完整 gate 首輪與相容修正
+
+首提交29120c3f0aa4f5d5af1135fffebe37d7cda1506c完整gate：Worker3239中3236pass／3fail，BOT未跑；2354來源不變、原HEAD／branch／clean有效。原failed receipt封存full-final-head-gate-attempt-01-receipt.json，原TAP不改。
+
+三敗同為scene-preview-assets VM process stub缺env，在原資產斷言前初始化失敗。只加env:{}表示QA旗標未開，產品雙opt-in與所有素材安全斷言不變；該檔3/3通過、0fail/cancel/skip/todo、5輸入SHA穩定。診斷vm-process-env-fixture-fix-01.json。此為新增第25個候選code/test/tool；含2文件，本批累計27檔。
+
+216個browser來源及產品不變，不重跑35筆成功原操作。此文件在修正commit／第二輪完整gate前保存；新HEAD全套成功必須看最新外部receipt／STATUS，不能以focused或首輪部分成功代替。attempt02使用獨立intent/log並嚴驗原失敗SHA＋29120c3的新直接子提交。
+
 ## 預覽、交接、發布與後續
 
 隔離UI9783/API9782，原owned UI24476/API49228，最後健康與ownership以QA最終證據為準。兩個各96表記憶體DB、合成測試身分；原初始anchors明確fixtureOnly/notAReceipt。手動development clock保留原期限，不宣稱自然等待。只有9共享文字輸入明確snapshot；其他素材各記實際HTTP，不宣稱全grok凍結。

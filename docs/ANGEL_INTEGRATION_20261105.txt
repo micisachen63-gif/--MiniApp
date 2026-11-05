@@ -91,7 +91,17 @@ root 實際目視紀錄保存在 root-visual-review.json；320／390／1280 的�
 
 候選 01→06 只有 guardian-browser.cjs 的逐項修補，產品始終不變；每個 run 的 216 sources 在該 run 內前後核對，不將不同 harness 版本說成一個相同來源的整批執行。最終候選與接續 source bridge 以 manifest／QA summary 為準。MCP 中斷先查原 intent、PID、receipt 與原件，再接未完成段落。
 
-九、交接、發布與下一批
+九、完整 gate 首輪與最小相容修正
+
+首提交29120c3f0aa4f5d5af1135fffebe37d7cda1506c的完整gate於2026-11-05 15:13:45（台灣）結束：Worker299檔、3239測試／3236通過／3失敗，0cancel／skip／todo；BOT尚未執行。2354來源前後相同，原HEAD／branch／clean有效。失敗receipt封存為full-final-head-gate-attempt-01-receipt.json（SHA d2c7e4c03e43714d76eac09a0947d2c975536b48b4acd2235c4ffae920d465f2），原不可變output receipt／TAP保留，沒有把首輪改為passed。
+
+三敗均在scene-preview-assets.test.js的同一VM初始化：process stub缺少真實Node一定存在的env，讀取RPG_GUARDIAN_QA時TypeError，尚未進入原資產安全斷言。唯一修正是在該test fixture補env:{}，表達QA旗標未開；preview產品、雙opt-in與所有GET/HEAD/MIME/headers、traversal/backslash/NUL、public realpath／檔案／禁止fallback與spawn斷言均不變。
+
+只重驗該檔3／3通過，0fail/cancel/skip/todo，5個驗證輸入SHA前後相同；診斷vm-process-env-fixture-fix-01.json，完整TAP另存。新增一個原測試fixture變更後，本批為25個code/test/tool候選＋2文件，共27檔。產品與216個browser來源仍相同，沒有重跑已成功的35筆操作。
+
+此補記在修正提交及第二輪完整gate之前保存；最後成功狀態必須以新的精確HEAD全套收據為準，不能用首輪3236通過或focused3代替。第二輪使用獨立attempt02 intent/log，必須先驗原失敗收據SHA及新的直接子提交，禁止同HEAD盲重試。
+
+十、交接、發布與下一批
 
 D:/StarJournal/START_HERE.md 是入口；主 STATUS.json、LATEST.md、history、本批 STATUS／FINAL_STATUS 保存可恢復狀態。沿用 StarJournal-NonCharacter-Checkpoint-30m 與 StarJournal-AtlasSupply-Checkpoint-30m 的 PT30M 排程，重要里程碑立即 checkpoint，不重建重複排程。
 

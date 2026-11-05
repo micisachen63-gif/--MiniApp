@@ -43,7 +43,7 @@ async function harness(entries = [], aliases = [], directories = []) {
       return { on() {}, destroy() {}, pipe(res) { res.end(files.get(file)); } };
     },
     spawn() { assert.fail('Asset handling must not start an API process'); },
-    process: { argv: ['node', fileURLToPath(sourceUrl), '--grok-root=' + grokRoot, '--port=9703', '--api-port=9702'], once() {} },
+    process: { env: {}, argv: ['node', fileURLToPath(sourceUrl), '--grok-root=' + grokRoot, '--port=9703', '--api-port=9702'], once() {} },
     console: { log() {}, error(value) { assert.fail(String(value)); } },
   });
   return {
