@@ -844,3 +844,62 @@ test('Star Ring wire isolates captured realms through A/B/A; neither old epoch s
   assert.equal((await currentA).marker,'current-a');assert.equal(h.client.getContext().epoch,2);assert.equal(h.net.calls.length,starRingScopedWrites.has(action)?4:3);
  });
 });
+
+const guardianScopedWireCases = [
+  ['guardian/scene',{quality:'white',cursor:null,limit:40}],
+  ['guardian/receipt',{kind:'activate',configVersion:'guardian-v1',itemId:null,requestId:'sg_original_activate'}],
+  ...[
+    {kind:'welcome',configVersion:'guardian-v1'},
+    {kind:'summon',configVersion:'guardian-v1',pool:'featured',count:5,expectedCosts:{gold:0,vouchers:1,credits:5,freeNormalDraws:0}},
+    {kind:'fuse',configVersion:'guardian-v1',itemIds:['a','b','c','d'],primaryId:'c',expectedCosts:{gold:123}},
+    {kind:'activate',configVersion:'guardian-v1',itemId:null},
+    {kind:'lock',configVersion:'guardian-v1',itemId:'a',locked:false},
+    {kind:'unbind',configVersion:'guardian-v1',itemId:'a',expectedCosts:{unbind:2}},
+    {kind:'assist',configVersion:'guardian-v1',mode:'continuation',itemId:'a',quantity:1,autoRenew:false,autoBuy:false,expectedCosts:{gold:0,stones:0}},
+    {kind:'sale',configVersion:'guardian-v1',characterId:'season-a',itemIds:['a','b'],expectedGold:20},
+    {kind:'auto-start',configVersion:'guardian-v1',pool:'normal',count:1,targetType:'magic',targetRank:0,maxGold:0},
+    {kind:'auto-start',configVersion:'guardian-v1',pool:'normal',count:5,targetType:'any',targetRank:1,maxGold:null},
+    {kind:'auto-stop',jobId:'original-source-job'},
+    {kind:'auto-seen',jobId:'original-source-job'},
+  ].map((payload,index) => ['guardian/action-scoped',{...payload,requestId:'sg_original_'+index}]),
+];
+
+test('Guardian scene and typed receipt are the only pure guardian reads and never establish a mutation barrier',async t => {
+  const h = harness(); t.after(() => h.client.dispose());
+  const refresh = h.client.refresh(), projection = h.client.request('guardian/scene'), receipt = h.client.request('guardian/receipt',{kind:'welcome',configVersion:'guardian-v1',requestId:'sg_original_welcome'});
+  assert.deepEqual(h.net.calls.map(call => call.action),['atlas/status','guardian/scene','guardian/receipt']);
+  h.net.calls[1].reply({ok:true,guardian:{state:{welcome:{claimed:false}}}}); h.net.calls[2].reply({ok:true,found:false,result:null,receipt:null});
+  assert.equal((await projection).guardian.state.welcome.claimed,false); assert.equal((await receipt).found,false);
+  h.net.calls[0].reply({ok:true,scene:scene()}); assert.equal((await refresh).characterId,'a'); assert.equal(h.net.calls.length,3);
+  for (const action of ['guardian/scene','guardian/receipt','guardian/inventory','guardian/operation','guardian/auto/status','guardian/action-scoped']) {
+    const task = outcome(h.client.request(action)); h.net.calls.at(-1).fail(); const result = await task;
+    assert.equal(result.error.uncertain,!['guardian/scene','guardian/receipt'].includes(action),action);
+  }
+});
+
+test('Guardian real JSON preserves every canonical false, null, zero and original ID while body/header bind captured scope',async t => {
+  for (const [action,payload] of guardianScopedWireCases) await t.test(action+':'+(payload.kind || 'scene')+':'+String(payload.maxGold),async t => {
+    const h = harness({realmId:'season',characterId:'season-a'}); t.after(() => h.client.dispose());
+    const body = {...payload,realmId:'forged-realm',selectedCharacterId:'foreign-character'}, before = plain(body), task = h.client.request(action,body), call = h.net.calls.at(-1);
+    assert.equal(call.options.headers['X-Realm-Id'],'season'); assert.equal(call.options.headers['X-Dev-Tg-Id'],'90101');
+    assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId:'season',selectedCharacterId:'season-a'}); assert.deepEqual(body,before,'pending body cannot be mutated during serialization');
+    call.reply({ok:true}); await drain();
+    if (action === 'guardian/action-scoped') { const followUp = h.net.calls.at(-1); assert.equal(followUp.action,'atlas/status'); assert.deepEqual(followUp.body,{selectedCharacterId:'season-a'}); followUp.reply({ok:true,scene:scene({realmId:'season',characterId:'season-a',runId:null})}); }
+    assert.equal((await task).ok,true); assert.equal(h.net.calls.length,action === 'guardian/action-scoped' ? 2 : 1);
+  });
+});
+
+test('Guardian A/B/A late 200 and 409 replies retain their captured realm and cannot start a current-epoch Atlas refresh',async t => {
+  for (const action of ['guardian/scene','guardian/receipt','guardian/action-scoped']) await t.test(action,async t => {
+    const h = harness(); t.after(() => h.client.dispose()); const payload = {kind:'activate',configVersion:'guardian-v1',itemId:null,requestId:'sg_original_a_b_a'};
+    const first = outcome(h.client.request(action,{...payload,realmId:'forged'})), firstCall = h.net.calls.at(-1);
+    h.client.setContext({realmId:'season',characterId:'season-a'}); const middle = outcome(h.client.request(action,payload)), middleCall = h.net.calls.at(-1);
+    h.client.setContext({realmId:'permanent',characterId:'a'}); const current = h.client.request(action,payload), currentCall = h.net.calls.at(-1);
+    for (const [call,realmId,characterId] of [[firstCall,'permanent','a'],[middleCall,'season','season-a'],[currentCall,'permanent','a']]) { assert.equal(call.options.headers['X-Realm-Id'],realmId); assert.deepEqual(JSON.parse(call.options.body),{...payload,realmId,selectedCharacterId:characterId}); }
+    firstCall.reply({ok:true,marker:'old-a'}); middleCall.reply({ok:false,error:'late conflict',code:'guardian_request_reused'},409);
+    for (const value of [await first,await middle]) { assert.equal(value.ok,false); assert.equal(value.error.code,'context_changed'); }
+    assert.equal(h.net.calls.length,3); currentCall.reply({ok:true,marker:'current-a'}); await drain();
+    if (action === 'guardian/action-scoped') { const followUp = h.net.calls.at(-1); assert.equal(followUp.action,'atlas/status'); assert.deepEqual(followUp.body,{selectedCharacterId:'a'}); followUp.reply({ok:true,scene:scene({runId:null})}); }
+    assert.equal((await current).marker,'current-a'); assert.equal(h.client.getContext().epoch,2);
+  });
+});

@@ -25,7 +25,10 @@ import {listRealmCatalog,resolveRealm} from './realm/index.js';
 export const SCOPED_BOSS_ACTIONS = Object.freeze(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped']);
 export const SCOPED_STAR_RING_ACTIONS = Object.freeze(['star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped']);
 
+export const SCOPED_GUARDIAN_ACTIONS = Object.freeze(['guardian/scene','guardian/receipt','guardian/action-scoped']);
+
 export const APP_ACTIONS = Object.freeze({
+  'guardian/scene':'/rpg/guardian/scene','guardian/receipt':'/rpg/guardian/receipt','guardian/action-scoped':'/rpg/guardian/action-scoped',
   'boss/scene':'/rpg/boss/scene','boss/receipt':'/rpg/boss/receipt','boss/attack-scoped':'/rpg/boss/attack-scoped','boss/exchange-scoped':'/rpg/boss/exchange-scoped',
   'atlas/catalog':'/rpg/atlas/catalog','atlas/status':'/rpg/atlas/status','atlas/configure':'/rpg/atlas/configure',
   'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',
@@ -154,8 +157,8 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
     return json({ok:true,realms,selectedRealmId:selected});
   }
-  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action))&&(typeof body.realmId!=='string'||!body.realmId))return fail('realm_required','請先選擇遊戲環境');
-  if(((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action))||action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action))&&(typeof body.realmId!=='string'||!body.realmId))return fail('realm_required','請先選擇遊戲環境');
+  if(((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action))||action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
   if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
   const originalJson=json;
   json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
@@ -201,10 +204,10 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
   safe.tgId = await activeCharacterId(env.DB, tg);
   if (body.selectedCharacterId && String(body.selectedCharacterId) !== String(safe.tgId))
     return fail('character_changed', '這個 Telegram 帳號已在另一個視窗切換角色，請重新選角後再操作', 409);
-  // Scoped Boss and Star Ring surfaces keep the client scope and raw receipt ID. Their trusted
+  // Scoped Boss, Star Ring and Guardian surfaces keep the client scope and raw receipt ID. Their trusted
   // namespace is a function argument; body fields cannot select it. No analytics
   // write may escape the scoped operation's transactional character guard.
-  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action))){
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action))){
     if(typeof body.selectedCharacterId!=='string'||!body.selectedCharacterId)return fail('selected_character_required','請先選擇角色',400);
     const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
     if(!owned)return fail('no_character','找不到目前帳號的角色',404);

@@ -1,6 +1,8 @@
 /* Compose local preview responses from the latest visual-source files.
  * The original character scene and ui-proto files are read, never rewritten. */
 import fs from 'node:fs/promises';import path from 'node:path';
+import {createHash} from 'node:crypto';
+import {fileURLToPath} from 'node:url';
 const prefix='/ui-generated-20261030/scene-bound-20261102';
 const social='/ui-generated-20261030/hud-angels-20261102';
 const maps='/ui-generated-20261030/progression-maps-20261102';
@@ -111,14 +113,50 @@ export function bindPreviewJs(source){
 }
 export function bindHudV2(source){return `if(window.__RpgScenePreviewConfig?.live===true){window.RpgSceneLiveView?.mountHUD();}else{\n${source}\n}`;}
 export function bindArtOnly(source){return `if(window.__RpgScenePreviewConfig?.live!==true){\n${source}\n}`;}
+const BOUND_INPUTS=Object.freeze([
+ {requestPath:'/ui-generated-20261030/preview.html',relativePath:'ui-generated-20261030/preview.html',type:'text/html; charset=utf-8',bind:bindPreviewHtml},
+ {requestPath:prefix+'/scene.html',relativePath:'ui-generated-20261030/characters-v1/scene.html',type:'text/html; charset=utf-8',bind:bindSceneHtml},
+ {requestPath:prefix+'/scene.js',relativePath:'ui-generated-20261030/characters-v1/scene.js',type:'text/javascript; charset=utf-8',bind:bindScene},
+ {requestPath:prefix+'/ui.js',relativePath:'ui-proto/ui.js',type:'text/javascript; charset=utf-8',bind:bindUi},
+ {requestPath:'/ui-generated-20261030/preview.js',relativePath:'ui-generated-20261030/preview.js',type:'text/javascript; charset=utf-8',bind:bindPreviewJs},
+ {requestPath:'/ui-generated-20261030/hud-v2.js',relativePath:'ui-generated-20261030/hud-v2.js',type:'text/javascript; charset=utf-8',bind:bindHudV2},
+ {requestPath:'/ui-generated-20261030/dark-ui.js',relativePath:'ui-generated-20261030/dark-ui.js',type:'text/javascript; charset=utf-8',bind:bindArtOnly},
+ {requestPath:'/ui-generated-20261030/characters-v1/preview-controls.js',relativePath:'ui-generated-20261030/characters-v1/preview-controls.js',type:'text/javascript; charset=utf-8',bind:bindArtOnly},
+ {requestPath:maps+'/scene-map-preview-controls.js',relativePath:'ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js',type:'text/javascript; charset=utf-8',bind:bindArtOnly}
+].map(Object.freeze));
+export const boundPreviewInputPaths=()=>BOUND_INPUTS.map(({requestPath,relativePath,type})=>({requestPath,relativePath,type}));
 export async function boundPreviewResponse(requestPath,root){
- if(requestPath==='/ui-generated-20261030/preview.html')return {type:'text/html; charset=utf-8',body:bindPreviewHtml(await fs.readFile(path.join(root,'ui-generated-20261030/preview.html'),'utf8'))};
- if(requestPath===`${prefix}/scene.html`)return {type:'text/html; charset=utf-8',body:bindSceneHtml(await fs.readFile(path.join(root,'ui-generated-20261030/characters-v1/scene.html'),'utf8'))};
- if(requestPath===`${prefix}/scene.js`)return {type:'text/javascript; charset=utf-8',body:bindScene(await fs.readFile(path.join(root,'ui-generated-20261030/characters-v1/scene.js'),'utf8'))};
- if(requestPath===`${prefix}/ui.js`)return {type:'text/javascript; charset=utf-8',body:bindUi(await fs.readFile(path.join(root,'ui-proto/ui.js'),'utf8'))};
- if(requestPath==='/ui-generated-20261030/preview.js')return {type:'text/javascript; charset=utf-8',body:bindPreviewJs(await fs.readFile(path.join(root,'ui-generated-20261030/preview.js'),'utf8'))};
- if(requestPath==='/ui-generated-20261030/hud-v2.js')return {type:'text/javascript; charset=utf-8',body:bindHudV2(await fs.readFile(path.join(root,'ui-generated-20261030/hud-v2.js'),'utf8'))};
- if(requestPath==='/ui-generated-20261030/dark-ui.js'||requestPath==='/ui-generated-20261030/characters-v1/preview-controls.js')return {type:'text/javascript; charset=utf-8',body:bindArtOnly(await fs.readFile(path.join(root,requestPath.slice(1)),'utf8'))};
- if(requestPath===`${maps}/scene-map-preview-controls.js`)return {type:'text/javascript; charset=utf-8',body:bindArtOnly(await fs.readFile(path.join(root,requestPath.slice(1)),'utf8'))};
- return null;
+ const input=BOUND_INPUTS.find(x=>x.requestPath===requestPath);
+ if(!input)return null;
+ return {type:input.type,body:input.bind(await fs.readFile(path.join(root,input.relativePath),'utf8'))};
+}
+// Explicit isolated QA capture only. This helper reads but never rewrites the
+// source root; the caller persists the original bytes in its owned evidence.
+export async function captureBoundPreviewInputs(root){
+ const sha=bytes=>createHash('sha256').update(bytes).digest('hex'),startedAt=new Date().toISOString(),realRoot=await fs.realpath(root);
+ const sourceModule=fileURLToPath(import.meta.url),binderBefore=await fs.readFile(sourceModule),entries=[],changed=[];
+ const within=(base,target)=>{const rel=path.relative(base,target);return rel!=='..'&&!rel.startsWith('..'+path.sep)&&!path.isAbsolute(rel);};
+ const meta=st=>({bytes:st.size,mtime:st.mtime.toISOString(),ctime:st.ctime.toISOString(),mtimeMs:st.mtimeMs,ctimeMs:st.ctimeMs});
+ for(const input of BOUND_INPUTS){
+  const sourcePath=await fs.realpath(path.join(realRoot,input.relativePath));
+  if(!within(realRoot,sourcePath))throw Error('Bound QA input escaped the declared source root');
+  const before=await fs.stat(sourcePath);if(!before.isFile())throw Error('Bound QA input is not a file');
+  const bytes=await fs.readFile(sourcePath),captured=await fs.stat(sourcePath);
+  entries.push({input,sourcePath,bytes,before:meta(before),captured:meta(captured),sha256:sha(bytes)});
+ }
+ for(const entry of entries){
+  const bytes=await fs.readFile(entry.sourcePath),confirmed=meta(await fs.stat(entry.sourcePath));
+  entry.confirmed={...confirmed,sha256:sha(bytes)};
+  if(JSON.stringify(entry.before)!==JSON.stringify(entry.captured)||entry.captured.bytes!==entry.bytes.length||entry.confirmed.sha256!==entry.sha256||JSON.stringify(confirmed)!==JSON.stringify(entry.captured))changed.push(entry.input.relativePath);
+ }
+ const binderAfter=await fs.readFile(sourceModule),binderSha256=sha(binderBefore);
+ if(!binderBefore.equals(binderAfter))changed.push('scene-preview-bindings.mjs');
+ const responses=new Map(),bindingErrors=[];
+ if(!changed.length)for(const entry of entries){
+  try{const body=entry.input.bind(entry.bytes.toString('utf8'));responses.set(entry.input.requestPath,Object.freeze({type:entry.input.type,body}));entry.boundSha256=sha(Buffer.from(body));entry.boundBytes=Buffer.byteLength(body);}
+  catch(error){bindingErrors.push({requestPath:entry.input.requestPath,message:error.message});}
+ }
+ const sources=entries.map(entry=>({requestPath:entry.input.requestPath,relativePath:entry.input.relativePath,type:entry.input.type,sourcePath:entry.sourcePath,before:entry.before,captured:entry.captured,confirmed:entry.confirmed,bytes:entry.bytes.length,sha256:entry.sha256,boundSha256:entry.boundSha256||null,boundBytes:entry.boundBytes??null}));
+ const id=sha(JSON.stringify({binderSha256,sources:sources.map(s=>({requestPath:s.requestPath,relativePath:s.relativePath,sha256:s.sha256,boundSha256:s.boundSha256}))}));
+ return {manifest:{schemaVersion:1,status:changed.length||bindingErrors.length?'failed':'passed',id,startedAt,finishedAt:new Date().toISOString(),sourceRoot:realRoot,binderPath:sourceModule,binderSha256,sourceCount:sources.length,scope:'Only nine composed preview textual inputs; images and other static assets are not globally frozen.',boundBodyStage:'Before scene preview config and window-manager HTML injection; actual HTTP bodies are recorded separately by the browser.',sources,changed,bindingErrors,sourceRootWritten:false},rawSources:entries.map(e=>({relativePath:e.input.relativePath,bytes:e.bytes})),responses};
 }

@@ -32,6 +32,9 @@ import * as FATE_SHARED from './services/fate-shared.js';
 import {isOpenTime as fateIsOpenTime} from '../public/fate/life.js';
 import * as GUARDIAN from './services/guardian-sigil.js';
 import * as GUARDIAN_SHOP from './services/guardian-shop.js';
+import * as GUARDIAN_SCENE from './services/guardian-scene.js';
+import * as GUARDIAN_RECEIPT from './services/guardian-receipt.js';
+import * as GUARDIAN_SCOPED from './services/guardian-scoped.js';
 import * as EXCHANGE from './services/market-exchange.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
@@ -49,7 +52,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS, SCOPED_GUARDIAN_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
@@ -114,6 +117,9 @@ const routes = {
   'POST /rpg/guardian/auto/stop':(env,b,now)=>GUARDIAN_AUTO.stop(env,tgOf(b),b,now),
   'POST /rpg/guardian/auto/seen':(env,b,now)=>GUARDIAN_AUTO.seen(env,tgOf(b),b,now),
   'POST /rpg/guardian/auto/status':async(env,b)=>({ok:true,job:await GUARDIAN_AUTO.view(env,tgOf(b))}),
+  'POST /rpg/guardian/scene':(env,b,now)=>GUARDIAN_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/guardian/receipt':(env,b,now,namespace='service')=>GUARDIAN_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/guardian/action-scoped':(env,b,now,namespace='service')=>GUARDIAN_SCOPED.run(env,tgOf(b),b,now,namespace),
   'POST /rpg/guardian/config': (env)=>GUARDIAN.config(env),
   'POST /rpg/guardian/shop/list': (env,b)=>GUARDIAN_SHOP.list(env,tgOf(b),b),
   'POST /rpg/guardian/shop/sell': (env,b,now)=>GUARDIAN_SHOP.sell(env,tgOf(b),b,now),
@@ -436,7 +442,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
+    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
     if(sceneScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if((sceneScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
