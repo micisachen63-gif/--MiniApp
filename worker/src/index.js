@@ -42,6 +42,7 @@ import * as FATE_PRIVATE_SCOPED from './services/fate-private-scoped.js';
 import * as GUARDIAN_RECEIPT from './services/guardian-receipt.js';
 import * as GUARDIAN_SCOPED from './services/guardian-scoped.js';
 import * as EXCHANGE from './services/market-exchange.js';
+import * as EXCHANGE_SCENE from './services/exchange-scene.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
 import { GameError } from './game/classes.js';
@@ -59,7 +60,7 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS, SCOPED_GUARDIAN_ACTIONS, SCOPED_FATE_ACTIONS } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS, SCOPED_GUARDIAN_ACTIONS, SCOPED_FATE_ACTIONS, SCOPED_EXCHANGE_READ_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
@@ -114,6 +115,7 @@ const routes = {
   'POST /rpg/atlas/talents/preview':(env,b,now)=>ATLAS_TALENTS.preview(env,tgOf(b),b,now),
   'POST /rpg/atlas/talents/action':(env,b,now)=>ATLAS_TALENTS.action(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
+  'POST /rpg/exchange/scene':(env,b,now)=>EXCHANGE_SCENE.view(env,tgOf(b),b,now),
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),
   'POST /rpg/exchange/mine':(env,b)=>EXCHANGE.mine(env,tgOf(b),b),
@@ -458,7 +460,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||(SCOPED_FATE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||url.pathname==='/rpg/ledger/history');
+    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||(SCOPED_FATE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_EXCHANGE_READ_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||url.pathname==='/rpg/ledger/history');
     if(sceneScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if((sceneScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);

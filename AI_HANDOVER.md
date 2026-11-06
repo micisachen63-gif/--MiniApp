@@ -1,3 +1,42 @@
+# StarJournal 旅人交易所純讀整合交接
+
+更新：2026-11-06（Asia/Taipei）。本批在帳務/衣櫥基底3330589上，完成原交易所瀏覽、我的刊登、成交紀錄與原物品快照詳情，接入營地同一近透明主浮窗。
+
+## 最新版本與驗收入口
+
+- 工作樹：D:/StarJournal/worktree-snapshots/star-journal-exchange-read-integration-20261106
+- 分支：codex/exchange-read-integration-20261106
+- 父版本：3330589bc844fb5f59fec921fb8c63f4038c6d54
+- 完整報告：docs/EXCHANGE_READ_INTEGRATION_20261106.md
+- 最終commit／提交後完整gate／可接續狀態：D:/StarJournal/handoff/non-character/exchange-read-integration-20261106/FINAL_STATUS.json、STATUS.json、WORKING_HANDOFF.md
+- 本段提交前保存，不以基底3789或focused數字預稱本批final HEAD gate通過。
+
+## 產品與已完成驗收
+
+exchange/scene純SELECT，沿原list/mine/history權威與30筆keyset。account/realm/character/epoch、前後選角/revision與scope-bound cursor隔離；跳過一般behavior writer。我的刊登沿帳號層，歷史沿選中角色；不補造歷史或計算餘額。
+
+同窗三tab、六欄篩選、前後頁、刷新/明確同cursor重試、原快照詳情/Back焦點與捲動；generation/abort/revision/serverNow/shape/重複ID/loop守衛。上架/買入/撤回與雙人交易仍待後批。既有HUD v2、viewport、Ledger及衣櫥均保留。
+
+focused原件：backend59/59、UI與既有回歸199/199、fixture5/5，集合不可相加。獨立跨層靜態review13來源SHA穩定、無blocker，原件.release-sync/exchange-read-20261106/review/cross-layer-review-01.json。
+
+acceptance01因QA寫results.json的UNKNOWN錯誤failed，原件不改；原6checks/16UI讀取與DB相等保留。只修QA持久化為唯一temp+rename、有界重試與完整系統錯誤資訊；產品未改。
+
+acceptance02於12:29:36～12:30:20完成21/21，原child42476 exit0，observer15300核close/disconnected、1400來源穩定；145實際HTTP body、31UI與34oracle讀取。四段純讀前後雙96表完全相同；兩次新select在區間外，ledger283→284為原選角結算。65筆browse/mine、61筆history、六filter、30/31界線、斷線同cursor、真晚200/dispose、三尺寸、法師空態/妖精3筆及HUD/Ledger/衣櫥回歸完成。
+
+14張圖中root目視6張；帳號/世界只有API oracle，無可見selector UI驗收。results SHA a03d6b38cdf8fcf705c67e7368b9abfc8860e0aa142aec909e4b3ae0d2cb8fc2；observer SHA30f987f5574d00d714ebce3b3cc550651ad6d7d5d7d35648a30ef966837773f5。
+
+## 保存與接續
+
+UI9863/PID24228、API9862/PID15136為原合成記憶體preview，productionAccess=false；最後選角測試妖精。保留原DB，不重啟/reset/reseed或重播成功操作。原F3/HUD/viewport/Ledger與其他預覽不動。
+
+StarJournal-ExchangeRead-Checkpoint-30m保持PT30M，里程碑另更新本批STATUS/WORKING_HANDOFF與快照。原owner/ROOT_WRITER.lock保持，本次接續記於CONTINUATION_WRITER.lock及resume-20261106-1230/。全域START_HERE/主STATUS仍屬原F3，不可只依該舊入口忽略本批。
+
+後續以本批最終已驗收commit接交易寫入。F3仍原線paused、未包含；角色/FX、跨季、第四階重選、正式宿主/真機/平衡依各自交接。只本機提交與測試，未push/PR/merge/deploy，不動production DB/Secrets/migrations與全域MCP任務。
+
+---
+
+## 以下為父版本與更早歷史交接全文
+
 # StarJournal 帳務紀錄與星紋衣櫥入口整合交接
 
 更新：2026-11-06（台灣時間）。本批承接 F2＋HUD v2＋viewport，完成主浮窗帳務分頁與既有星紋衣櫥直接入口。

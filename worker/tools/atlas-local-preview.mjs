@@ -25,6 +25,7 @@ import {insertEquipStmt} from '../src/db.js';
 import { initializeRealmIdentity, resolveRealm, scopeEnvForRealm } from '../src/realm/index.js';
 import { CATALOG } from '../test/realm-test-helpers.js';
 import { seedLedgerQa, ledgerQaState } from './ledger-qa-fixture.mjs';
+import { seedExchangeQa, exchangeQaState } from './exchange-qa-fixture.mjs';
 
 const argv = process.argv.slice(2);
 if (argv.some(value => !/^--(?:port=\d+|preview-origin=http:\/\/127\.0\.0\.1:\d+)$/.test(value)) || argv.length > 2 || new Set(argv.map(v=>v.split('=')[0])).size!==argv.length) throw Error('Use --port=9642 [--preview-origin=http://127.0.0.1:9593]');
@@ -44,6 +45,7 @@ const fatePrivateQa = process.env.RPG_FATE_PRIVATE_QA === '1';
 const now = fatePrivateQa ? FATE_PRIVATE_QA_STARTED_AT : fateQa ? FATE_QA_STARTED_AT : Date.now();
 const skillCareerQa = process.env.RPG_SKILL_CAREER_QA === '1';
 const ledgerQa = process.env.RPG_LEDGER_QA === '1';
+const exchangeQa = process.env.RPG_EXCHANGE_QA === '1';
 const partyQa = process.env.RPG_PARTY_QA === '1';
 const towerQa = process.env.RPG_TOWER_QA === '1';
 const bossQa = process.env.RPG_BOSS_QA === '1';
@@ -56,6 +58,7 @@ if(starRingQa&&(bossQa||towerQa||partyQa||skillCareerQa))throw Error('Star Ring 
 if(bossQa&&(towerQa||partyQa||skillCareerQa))throw Error('Boss QA uses its own isolated fixture mode');
 if(towerQa&&(partyQa||skillCareerQa))throw Error('Tower QA uses its own isolated fixture mode');
 if(ledgerQa&&(!skillCareerQa||partyQa||towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa))throw Error('Ledger QA requires only the isolated SkillCareer fixture');
+if(exchangeQa&&(!ledgerQa||!skillCareerQa))throw Error('Exchange QA requires the isolated Ledger and SkillCareer fixtures');
 if(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)env.ALLOW_DEBUG_TIME='true';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
@@ -80,6 +83,7 @@ for (const [index, [baseClass, name]] of classes.entries()) {
   for (const material of ['atlas_shard', 'atlas_iron', 'atlas_ember', 'atlas_venom']) db.prepare('INSERT INTO rpg_atlas_materials(char_id,material,quantity) VALUES(?,?,100)').run(id, material);
 }
 const ledgerQaSeed=ledgerQa?await seedLedgerQa(env,now):null;
+const exchangeQaSeed=exchangeQa?await seedExchangeQa(env,now):null;
 const partyQaFixtures=partyQa?await seedPartyQa(env,permanent,now):[];
 const towerQaFixtures=towerQa?await seedTowerQa(env,permanent,now):[];
 const towerQaClock=towerQa?createTowerQaController(env,permanent,towerQaFixtures,now):null;
@@ -97,26 +101,36 @@ const qaClock=towerQaClock||bossQaClock||starRingQaClock||guardianQaClock||fateQ
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../public');
 const types = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.mp4': 'video/mp4', '.json': 'application/json' };
 let sweeping=false;
-const sweepTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
+const sweepTimer=(exchangeQa||towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(sweeping)return;sweeping=true;try{await AtlasBackground.sweep(permanent,Date.now());}catch(error){console.error('isolated atlas sweep',error.message);}finally{sweeping=false;}},60000);
 sweepTimer?.unref();
 // The same production step functions, with real due times, in disposable local data.
 let workshopRunning=false;
-const workshopTimer=(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
+const workshopTimer=(exchangeQa||towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)?null:setInterval(async()=>{if(workshopRunning)return;workshopRunning=true;try{await AutoEnhance.sweep(permanent,Date.now());await AutoReroll.sweep(permanent,Date.now());}catch(error){console.error('isolated workshop sweep',error.message);}finally{workshopRunning=false;}},1000);
 workshopTimer?.unref();
 // Only this opt-in, disposable preview checks due party work. Actual round deadlines stay unchanged.
 let partySweeping=false;
 const partySweepTimer=partyQa?setInterval(async()=>{if(partySweeping)return;partySweeping=true;try{await Party.sweep(permanent,Date.now());}catch(error){console.error('isolated party sweep',error.message);}finally{partySweeping=false;}},1000):null;
 partySweepTimer?.unref();
+// Exchange preview exposes only audited reads plus character selection for setup.
+const exchangeQaActions = new Set(['meta','characters','realms','select','skill-career','atlas/status','atlas/catalog','atlas/quests','atlas/talents','atlas/talents/preview','chat/state','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger/history','exchange/scene','star-ring/scene','star-ring/receipt','guardian/scene']);
 const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, `http://127.0.0.1:${port}`);
+    if (exchangeQa && url.pathname.startsWith('/app/api/') && (!exchangeQaActions.has(url.pathname.slice('/app/api/'.length)) || !['POST','OPTIONS'].includes(req.method))) {
+      res.writeHead(403, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+      res.end(JSON.stringify({ ok:false, error:'exchange_preview_read_only' })); return;
+    }
     // Only the user's loopback art preview may read these isolated test APIs.
     // No production authentication or player data is forwarded.
-    const socialPaths=new Set(['meta','characters','select','skill-career','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel','guardian/scene','guardian/receipt','guardian/action-scoped','tower/scene','tower/receipt','tower/action','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","ledger/history","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
+    const socialPaths=new Set(['meta','characters','select','skill-career','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel','guardian/scene','guardian/receipt','guardian/action-scoped','tower/scene','tower/receipt','tower/action','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','party/scene','party/create','party/action','party/reward','expedition/action','advance','reselect','equipment-recovery','equipment-recovery/preview','equipment-recovery/action','equipment-collection','equipment-collection/preview','equipment-collection/submit','me','atlas/catalog','atlas/status','atlas/talents','atlas/talents/preview','atlas/talents/action','atlas/configure','atlas/start','atlas/stop','atlas/settle','atlas/craft','atlas/quests','atlas/quests/claim','chat/state','chat/send',"shop","ledger","ledger/history","exchange/scene","settings","buy","buy-gear","gacha","refill","equip","unequip","sell-gear","sell-gear-batch","gacha/open","fate/gifts/summary","fate/gifts/open","enhance","reroll","auto-enhance/start","auto-enhance/stop","auto-enhance/status","auto-reroll/options","auto-reroll/start","auto-reroll/stop","auto-reroll/status","background/status","forge/receipt"].map(a=>'/app/api/'+a));
     if(req.headers.origin&&req.headers.origin!==`http://127.0.0.1:${port}`){
       if(req.headers.origin!==previewOrigin||!socialPaths.has(url.pathname)){res.writeHead(403);res.end('Preview origin is not allowed');return;}
       res.setHeader('Access-Control-Allow-Origin',previewOrigin);res.setHeader('Vary','Origin');
       if(req.method==='OPTIONS'){res.writeHead(204,{'Access-Control-Allow-Methods':'POST','Access-Control-Allow-Headers':'Content-Type,X-Dev-Tg-Id,X-Realm-Id'});res.end();return;}
+    }
+    if (url.pathname === '/__preview/exchange-state' && exchangeQa && req.method === 'GET') {
+      res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
+      res.end(JSON.stringify(exchangeQaState(env,exchangeQaSeed))); return;
     }
     if (url.pathname === '/__preview/ledger-state' && ledgerQa && req.method === 'GET') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
@@ -124,7 +138,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,ledgerQa,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,fatePrivateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
+      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,skillCareerQa,ledgerQa,exchangeQa,exchangeQaPolicy:exchangeQa?{actions:[...exchangeQaActions],selectionOutsidePureIntervals:true,backgroundTimersDisabled:{atlas:sweepTimer===null,workshop:workshopTimer===null,party:partySweepTimer===null}}:null,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,fatePrivateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
       return;
     }
     if (partyQa && url.pathname === '/__preview/party-qa/state') {
