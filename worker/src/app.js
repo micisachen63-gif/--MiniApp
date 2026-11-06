@@ -30,7 +30,7 @@ export const SCOPED_FATE_ACTIONS = Object.freeze(['fate/scene','fate/receipt','f
   'fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
 export const SCOPED_EXCHANGE_READ_ACTIONS = Object.freeze(['exchange/scene','exchange/sellable-scene','exchange/receipt']);
 export const SCOPED_EXCHANGE_ACTIONS = Object.freeze([...SCOPED_EXCHANGE_READ_ACTIONS,'exchange/action-scoped']);
-export const SCOPED_DIRECT_TRADE_READ_ACTIONS = Object.freeze(['trade/scene-scoped','trade/receipt']);
+export const SCOPED_DIRECT_TRADE_READ_ACTIONS = Object.freeze(['trade/scene-scoped','trade/eligible-scoped','trade/receipt']);
 export const SCOPED_DIRECT_TRADE_ACTIONS = Object.freeze([...SCOPED_DIRECT_TRADE_READ_ACTIONS,'trade/action-scoped']);
 
 export const APP_ACTIONS = Object.freeze({
@@ -91,7 +91,7 @@ export const APP_ACTIONS = Object.freeze({
   gacha: '/rpg/gacha', 'gacha/open': '/rpg/gacha/open', 'buy-gear': '/rpg/buy-gear', 'sell-gear': '/rpg/sell-gear', 'sell-gear-batch': '/rpg/sell-gear-batch', equip: '/rpg/equip', unequip: '/rpg/unequip', settings: '/rpg/settings', advance: '/rpg/advance',
   reselect: '/rpg/reselect', convert: '/rpg/convert', enhance: '/rpg/enhance', reroll: '/rpg/reroll', ledger: '/rpg/ledger', 'ledger/history': '/rpg/ledger/history',
   unbind: '/rpg/unbind', share: '/rpg/share', 'share/get': '/rpg/share/get',
-  'trade/scene-scoped': '/rpg/trade/scene-scoped','trade/receipt':'/rpg/trade/receipt','trade/action-scoped':'/rpg/trade/action-scoped',
+  'trade/scene-scoped': '/rpg/trade/scene-scoped','trade/eligible-scoped': '/rpg/trade/eligible-scoped','trade/receipt':'/rpg/trade/receipt','trade/action-scoped':'/rpg/trade/action-scoped',
   'trade/open': '/rpg/trade/open', 'trade/requests': '/rpg/trade/requests', 'trade/accept': '/rpg/trade/accept', 'trade/reject': '/rpg/trade/reject', 'trade/withdraw': '/rpg/trade/withdraw',
   'trade/get': '/rpg/trade/get', 'trade/list': '/rpg/trade/list', 'trade/log': '/rpg/trade/log', 'trade/gold': '/rpg/trade/gold',
   'trade/add': '/rpg/trade/add', 'trade/remove': '/rpg/trade/remove', 'trade/lock': '/rpg/trade/lock', 'trade/confirm': '/rpg/trade/confirm', 'trade/cancel': '/rpg/trade/cancel',

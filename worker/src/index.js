@@ -45,6 +45,7 @@ import * as EXCHANGE from './services/market-exchange.js';
 import * as EXCHANGE_SCENE from './services/exchange-scene.js';
 import * as EXCHANGE_ACTIONS from './services/exchange-actions.js';
 import * as DIRECT_TRADE_SCENE from './services/direct-trade-scene.js';
+import * as DIRECT_TRADE_ELIGIBLE from './services/direct-trade-eligible.js';
 import * as DIRECT_TRADE_ACTIONS from './services/direct-trade-actions.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
@@ -284,6 +285,7 @@ const routes = {
   'POST /rpg/share/message': async (env, b) => SH.setShareMessage(env, String(b.shareId), b.chatId, b.messageId),
   'POST /rpg/trade/request': async (env, b, now) => { const tg = tgOf(b); await T.touchUsername(env, tg, b.username); return { ok: true, request: await SH.requestTrade(env, { tgId: tg, shareId: String(b.shareId) }, now) }; },
   'POST /rpg/trade/scene-scoped': (env,b,now)=>DIRECT_TRADE_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/trade/eligible-scoped': (env,b,now)=>DIRECT_TRADE_ELIGIBLE.eligible(env,tgOf(b),b,now),
   'POST /rpg/trade/receipt': (env,b,now)=>DIRECT_TRADE_ACTIONS.receipt(env,tgOf(b),b,now),
   'POST /rpg/trade/action-scoped': (env,b,now)=>DIRECT_TRADE_ACTIONS.run(env,tgOf(b),b,now),
   'POST /rpg/trade/open': (env, b, now) => T.openWithEquip(env, { tgId: tgOf(b), target: b.target, equipId: b.equipId, requestId: b.requestId }, now),

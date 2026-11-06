@@ -77,8 +77,10 @@ test('single-window route loads the gated intent client and reserves all writes 
   assert(social.includes("loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade')"));
   assert(server.includes("'scene-direct-trade-ui.js','scene-direct-trade-ui.css','scene-direct-trade-client.js'"));
   assert(social.includes("loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions')"));
-  assert(api.includes('"trade/scene-scoped","trade/receipt","trade/action-scoped"'));
-  assert(session.includes("'trade/scene-scoped','trade/receipt'"));
+  assert(api.includes('"trade/scene-scoped","trade/eligible-scoped","trade/receipt","trade/action-scoped"'));
+  assert(session.includes("'trade/scene-scoped','trade/eligible-scoped','trade/receipt'"));
   assert(!source.includes("host.request('trade/action-scoped'"));
   assert(!source.includes("host.request('trade/receipt'"));
+  assert(source.includes("host.request('trade/eligible-scoped'"));
+  assert(source.includes("ops.prepare('add'"));
 });

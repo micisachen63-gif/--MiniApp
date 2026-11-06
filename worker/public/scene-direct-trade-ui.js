@@ -84,6 +84,8 @@
     root.classList.add('scene-direct-trade');
     const client=createClient({...host,onState:()=>paint()}),state=client.state;
     let actionClient=null,actionTradeId=null,rendering=false,goldDraft=null;
+    let eligibleState=null,eligibleController=null,eligibleGeneration=0;
+    const quantityDrafts=new Map();
     const node=(tag,cls='',text='')=>{const el=doc.createElement(tag);if(cls)el.className=cls;if(text)el.textContent=text;return el;};
     const control=(label,onClick,cls='')=>{const el=node('button',cls,label);el.type='button';el.onclick=onClick;return el;};
     const statusText=(label,cls='sdt-status')=>{const el=node('p',cls,label);el.setAttribute('role','status');return el;};
@@ -91,7 +93,63 @@
     const summary=(kind,fields)=>kind==='gold'?names[kind]+' · '+fmt(fields.gold)
       :['add','remove'].includes(kind)?names[kind]+' · '+(fields.equipId||fields.sigilId||fields.item||'')+
         (fields.qty==null?'':(' × '+fmt(fields.qty))):names[kind]||'未知操作';
-    const destroyActions=()=>{actionClient?.dispose();actionClient=null;actionTradeId=null;goldDraft=null;};
+    function resetEligible(){
+      eligibleGeneration++;eligibleController?.abort();eligibleController=null;eligibleState=null;quantityDrafts.clear();
+    }
+    const destroyActions=()=>{actionClient?.dispose();actionClient=null;actionTradeId=null;goldDraft=null;resetEligible();};
+    const eligibleKey=trade=>{
+      const ctx=host.getContext?.()||{};
+      return JSON.stringify([ctx.accountId,ctx.realmId,ctx.characterId,ctx.epoch,trade.id,trade.offerRev]);
+    };
+    function eligibleRequest(trade,{reset=false}={}){
+      const state=eligibleState,key=eligibleKey(trade);
+      if(!state||state.key!==key||!client.current()||state.loading)return;
+      if(!reset&&(!state.loaded||!state.nextCursor))return;
+      const ticket=++eligibleGeneration,ctx=host.getContext?.()||{};
+      eligibleController?.abort();eligibleController=new AbortController();
+      const cursor=reset?null:state.nextCursor;
+      state.loading=true;state.error='';if(!rendering)paint();
+      void host.request('trade/eligible-scoped',{
+        accountId:ctx.accountId,realmId:ctx.realmId,selectedCharacterId:ctx.characterId,
+        contextEpoch:ctx.epoch,tradeId:trade.id,kind:state.kind,...(cursor?{cursor}:{})
+      },{signal:eligibleController.signal}).then(reply=>{
+        if(!client.current()||ticket!==eligibleGeneration||eligibleState!==state||eligibleKey(trade)!==state.key)return;
+        if(!reply||reply.ok!==true||reply.schemaVersion!==1||reply.pureRead!==true||
+          reply.accountId!==ctx.accountId||reply.realmId!==ctx.realmId||
+          reply.characterId!==ctx.characterId||reply.contextEpoch!==ctx.epoch||
+          reply.tradeId!==trade.id||reply.offerRev!==trade.offerRev||reply.kind!==state.kind||
+          !Array.isArray(reply.items)||reply.items.length>30||
+          reply.items.some(item=>!['equip','item','guardian'].includes(item.kind)||
+            typeof item.ref!=='string'||!item.ref||!Number.isSafeInteger(item.qty)||item.qty<1)||
+          reply.nextCursor!==null&&(typeof reply.nextCursor!=='string'||reply.nextCursor.length>1600))
+          throw Error('可交易物品清單與目前交易版本不符，請重新整理');
+        const records=reset?[]:state.items.slice();
+        for(const item of reply.items)if(!records.some(x=>x.kind===item.kind&&x.ref===item.ref))records.push(item);
+        state.items=records;state.nextCursor=reply.nextCursor;state.loaded=true;state.canAdd=reply.canAdd===true;
+      }).catch(error=>{
+        if(client.current()&&ticket===eligibleGeneration&&eligibleState===state)
+          state.error=error?.message||'可交易物品讀取失敗，請重試';
+      }).finally(()=>{
+        if(client.current()&&ticket===eligibleGeneration&&eligibleState===state){
+          state.loading=false;eligibleController=null;if(!rendering)paint();
+        }
+      });
+    }
+    function ensureEligible(trade){
+      const key=eligibleKey(trade);
+      if(!eligibleState||eligibleState.key!==key){
+        resetEligible();
+        eligibleState={key,kind:'all',items:[],nextCursor:null,loading:false,loaded:false,error:'',canAdd:false};
+        eligibleRequest(trade,{reset:true});
+      }
+      return eligibleState;
+    }
+    function chooseEligibleKind(kind,trade){
+      if(!['all','equip','item','guardian'].includes(kind)||!eligibleState||eligibleState.loading)return;
+      if(eligibleState.kind===kind)return;
+      eligibleState.kind=kind;eligibleState.items=[];eligibleState.nextCursor=null;eligibleState.loaded=false;
+      quantityDrafts.clear();eligibleRequest(trade,{reset:true});
+    }
     function ensureActions(trade){
       if(actionTradeId!==trade.id){
         destroyActions();
@@ -99,7 +157,7 @@
         actionClient=actionFactory.createClient({...host,tradeId,
           current:()=>client.current()&&state.selectedId===tradeId&&host.current?.()!==false,
           onState:()=>{if(!rendering)paint();},
-          onChanged:(receipt,meta)=>{goldDraft=null;if(client.current()&&state.selectedId===tradeId)void client.refresh();host.onChanged?.(receipt,meta);}
+          onChanged:(receipt,meta)=>{goldDraft=null;resetEligible();if(client.current()&&state.selectedId===tradeId)void client.refresh();host.onChanged?.(receipt,meta);}
         });
         actionTradeId=tradeId;
       }
@@ -158,6 +216,63 @@
       }
       section.append(buttons);return section;
     }
+    function eligiblePanel(trade,ops){
+      const eligible=ensureEligible(trade),panel=node('section','sdt-eligible');
+      panel.append(node('h5','','選擇可放入的裝備、道具或守護羽毛'));
+      panel.append(node('p','sdt-muted','可選清單只讀取現有背包；按「檢視放入」不會立即扣除資產，仍需再次確認。'));
+      const tabs=node('div','sdt-eligible-tabs');
+      for(const [kind,title] of [['all','全部'],['equip','裝備'],['item','道具'],['guardian','守護羽毛']]){
+        const button=control(title,()=>chooseEligibleKind(kind,trade),'sdt-secondary');
+        button.dataset.directTradeEligibleKind=kind;button.setAttribute('aria-pressed',String(eligible.kind===kind));
+        button.disabled=eligible.loading;tabs.append(button);
+      }
+      panel.append(tabs);
+      if(eligible.error){
+        const error=node('p','sdt-error',eligible.error);error.setAttribute('role','alert');panel.append(error);
+        const retry=control('重新載入可選資產',()=>eligibleRequest(trade,{reset:true}),'sdt-secondary');
+        retry.dataset.directTradeEligibleRetry='true';panel.append(retry);
+      }
+      if(eligible.loading)panel.append(statusText('正在讀取可交易資產…'));
+      const list=node('div','sdt-eligible-list');
+      for(const item of eligible.items){
+        const row=node('article','sdt-eligible-item'),ref=String(item.ref);
+        row.append(node('p','sdt-eligible-name',String(item.name||ref)));
+        row.append(node('p','sdt-meta',(item.kind==='equip'?'裝備':item.kind==='guardian'?'守護羽毛':'道具')+
+          ' · 可用 '+fmt(item.qty)+(item.kind==='equip'?' · 強化 +'+fmt(item.enhance||0):'')));
+        const button=control('檢視放入',()=>{},'sdt-secondary');
+        button.dataset.directTradeEligibleRef=ref;
+        button.dataset.directTradeEligibleType=item.kind;
+        button.disabled=ops.state.busy||!eligible.canAdd;
+        if(item.kind==='item'){
+          const label=node('label','sdt-eligible-quantity','放入數量');
+          const input=node('input'),draftKey=item.kind+':'+ref;
+          input.type='number';input.min='1';input.step='1';input.inputMode='numeric';
+          input.max=String(Math.min(item.qty,99999));input.value=quantityDrafts.get(draftKey)||'1';
+          input.dataset.directTradeEligibleQty=ref;
+          input.oninput=()=>quantityDrafts.set(draftKey,input.value);
+          label.append(input);row.append(label);
+          button.onclick=()=>{
+            const raw=quantityDrafts.get(draftKey)||input.value;
+            const qty=/^\d+$/.test(raw)?Number(raw):NaN;
+            if(!Number.isSafeInteger(qty)||qty<1||qty>Math.min(99999,item.qty)){
+              const error=node('p','sdt-error','放入數量超出目前可用庫存');error.setAttribute('role','alert');
+              row.append(error);return;
+            }
+            ops.prepare('add',{item:ref,qty},trade);
+          };
+        }else button.onclick=()=>ops.prepare('add',
+          item.kind==='equip'?{equipId:ref}:{sigilId:ref},trade);
+        row.append(button);list.append(row);
+      }
+      if(!eligible.loading&&eligible.loaded&&!eligible.items.length)
+        list.append(node('p','sdt-muted',eligible.nextCursor?'此頁沒有符合條件的資產，可繼續下一頁。':'目前沒有可交易資產。'));
+      panel.append(list);
+      if(eligible.nextCursor){
+        const more=control('載入下一頁可交易資產',()=>eligibleRequest(trade),'sdt-secondary');
+        more.dataset.directTradeEligibleNext='true';more.disabled=eligible.loading;panel.append(more);
+      }
+      return panel;
+    }
     function mutationPanel(trade,ops){
       const rootPanel=node('section','sdt-operation');
       const st=ops.state;
@@ -204,6 +319,7 @@
           else ops.prepare('gold',{gold:NaN},trade);
         };
         rootPanel.append(form);
+        rootPanel.append(eligiblePanel(trade,ops));
         if(Array.isArray(mine.lines)&&mine.lines.length){
           const returned=node('section','sdt-return'),group=node('div','sdt-buttons');
           returned.append(node('h5','','取回自己已託管的物品'));
