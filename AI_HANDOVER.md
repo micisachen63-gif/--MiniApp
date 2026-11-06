@@ -1,3 +1,32 @@
+# StarJournal HUD viewport 整合交接
+
+更新：2026-11-06（台灣時間）。本批承接已驗收 F2＋HUD v2，完成主戰場窄直向／短橫向安全區與完整出征狀態入口。
+
+## 本批入口
+
+- 工作樹：D:/StarJournal/worktree-snapshots/star-journal-hud-viewport-integration-20261106
+- 分支：codex/hud-viewport-integration-20261106
+- 父版本：f38855d30a935b984c9e11c973a28b7e33c58b8c
+- 完整報告：docs/HUD_VIEWPORT_INTEGRATION_20261106.md
+- 最新 commit／提交後完整 gate／接續狀態：D:/StarJournal/handoff/non-character/hud-viewport-integration-20261106/FINAL_STATUS.json、STATUS.json、WORKING_HANDOFF.md。
+- 本段在 commit 前保存，不預先宣稱 final HEAD gate 通過；下方歷史交接與父版本數字保留原時序。
+
+## 完成內容與證據
+
+資訊卡依角色／聊天實際 bounds 決定完整、44px 收合或常設「冒險 → 出征狀態」入口；以原單一浮窗搬入完整 status DOM 並還原。縮小 HUD 裝飾高度保護短畫面角色，維持五格 44px、原 HP／MP／補給／技能資料。收合、resize、跨 route 關窗的焦點依 scope 安全還原，observer 與 rAF 於 dispose 清理。HUD 文字素材固定 LF 保留原 byte hash，grok 原件未改。
+
+focused 44/44（最後限定焦點修正前）＋最終 route 78/78；acceptance03 四職八尺寸 32/32、原 DOM 流程 28/28、resize 焦點 3/3；bridge-n1-02 另驗最後 JS 跨 route 焦點，原 exit0／closed／來源穩定。兩次 browser 間僅限定 JS 焦點差異，其餘 182 非 harness 來源一致，CSS／route／幾何未改；不宣稱對最後 JS 重跑整個矩陣。review03 靜態無 blocker。最終完整官方 Worker／BOT gate 必須在本批 commit 後另讀原 receipt＋observer-result。
+
+## 保存與剩餘
+
+隔離 UI9843/PID36272、API9842/PID32488 為合成記憶體 fixture，保留原程序與資料；原 select 可能做 idle settlement，不重播 setup／成功操作。每30分鐘本批 checkpoint 已啟用，09:10:29 實際排程快照已保存。
+
+本批僅 F2＋HUD v2＋viewport，F3 仍是另一工作線，需其已驗收 commit 後另作組合整合。不改其主交接、鎖、預覽或人物／FX 原檔。僅本機作業，未 push／PR／merge／部署或修改 production。
+
+---
+
+## 以下為已驗收父版本與更早歷史
+
 # StarJournal HUD v2 整合交接
 
 更新：2026-11-06（台灣時間）。本提交將使用者指定的 ui-generated-20261030/hud-v2 接入實際血魔、補給與目前配置的三格技能。

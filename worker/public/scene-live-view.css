@@ -69,3 +69,38 @@ html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.sc
     bottom:calc(max(7px,env(safe-area-inset-bottom)) + 92px + max(var(--hud-orb),calc(var(--hud-slot) + 8px)) + 12px);
   }
 }
+
+/* HUD viewport integration: keep the complete committed status in the existing
+ * single window when the space below the actor cannot hold a useful card. */
+.rpg-live-scene .scene-live-panel { overflow:auto; overscroll-behavior:contain; }
+.rpg-live-scene .scene-live-panel.is-compact:not(.scene-live-status-in-dialog) { display:none; }
+.rpg-live-scene .scene-live-status-toggle {
+  position:absolute;top:108px;left:12px;width:min(270px,calc(100vw - 24px));
+  box-sizing:border-box;z-index:35;min-height:44px;height:44px;padding:8px 12px;
+  color:#ead19b;background:rgba(10,15,22,.86);border:1px solid #96815b80;
+  border-radius:9px;font:600 13px/1.4 "Noto Serif TC",serif;cursor:pointer;
+  pointer-events:auto;touch-action:manipulation;box-shadow:0 4px 20px #0005;
+}
+.rpg-live-scene .scene-live-status-toggle::after { content:' ›'; }
+.rpg-live-scene .scene-live-status-toggle[hidden] { display:none!important; }
+.rpg-live-scene .scene-live-status-toggle:focus-visible { outline:2px solid #f1ead2;outline-offset:3px; }
+.rpg-live-scene #ui.scene-unified-root .scene-live-panel.scene-live-status-in-dialog {
+  position:static!important;inset:auto!important;width:100%!important;max-height:none!important;
+  display:block!important;overflow:visible!important;margin:0;box-shadow:none;
+}
+@media(max-width:600px) {
+  .rpg-live-scene .scene-live-status-toggle { top:91px;left:8px;width:min(224px,calc(100vw - 160px)); }
+}
+@media(max-width:600px) and (min-height:551px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root {
+    --hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),min(188px,max(52px,calc(50dvh - 260px))));
+  }
+}
+@media(max-height:550px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root {
+    --hud-slot:44px;--hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),64px);
+  }
+}
+@media(orientation:landscape) and (max-height:500px) {
+  .rpg-live-scene .scene-live-status-toggle { top:80px;width:230px; }
+}

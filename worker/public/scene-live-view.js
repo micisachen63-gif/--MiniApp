@@ -145,6 +145,96 @@
     panel.innerHTML = '<div class="scene-live-heading"><strong data-live-title></strong><span data-live-sync></span></div><p data-live-progress></p><p data-live-supplies></p><p class="scene-live-warning" data-live-connection role="status" hidden></p><p class="scene-live-warning" data-live-warning role="status"></p><div class="scene-live-buttons"><button type="button" data-live-expedition>星圖派遣</button><button type="button" data-live-characters>選擇角色</button><button type="button" data-live-refresh>同步</button></div><details><summary>已結算紀錄與敵人</summary><p data-live-report></p><ul class="scene-live-enemies" data-live-enemies></ul><ol class="scene-live-events" data-live-events></ol></details>';
     (byId('ui') || doc.body).appendChild(panel);
     const nodes = Object.fromEntries(['title', 'sync', 'progress', 'supplies', 'connection', 'warning', 'report', 'enemies', 'events', 'expedition', 'characters', 'refresh'].map(key => [key, panel.querySelector('[data-live-' + key + ']')]));
+    const statusToggle = doc.createElement('button');
+    statusToggle.type = 'button'; statusToggle.className = 'scene-live-status-toggle';
+    statusToggle.setAttribute('data-live-open-status', ''); statusToggle.setAttribute('aria-haspopup', 'dialog');
+    statusToggle.textContent = '查看出征狀態'; statusToggle.hidden = true;
+    statusToggle.onclick = () => { openedFromStatusToggle = statusFocusScope(); ui.toggle('live-status'); };
+    (byId('ui') || doc.body).appendChild(statusToggle);
+    let statusLayoutFrame = 0, statusLayoutSignature = '', statusInDialog = false, keepStatusToggle = false, openedFromStatusToggle = null, returnStatusFocus = null;
+    // Measure the rendered HUD rather than reusing the old fixed 212px dock.
+    // The existing renderer owns actor scale/camera and the existing window
+    // manager owns the only dialog. This projection never reads or writes API data.
+    function statusFocusScope() {
+      const scope = global.RpgSceneSession?.getContext?.();
+      if (!scope || scope.accountId == null || !scope.realmId || !scope.characterId || !Number.isInteger(scope.epoch)) return null;
+      return JSON.stringify([String(scope.accountId), scope.realmId, String(scope.characterId), scope.epoch]);
+    }
+    function arrangeStatus() {
+      if (disposed || !panel.getBoundingClientRect || !panel.style?.setProperty) return;
+      const root = byId('ui'), chat = byId('chat');
+      if (!root?.getBoundingClientRect || !chat?.getBoundingClientRect) return;
+      const bounds = root.getBoundingClientRect(), chatBounds = chat.getBoundingClientRect();
+      if (!(bounds.width > 0 && bounds.height > 0 && chatBounds.height > 0)) return;
+      if (returnStatusFocus && returnStatusFocus !== statusFocusScope()) returnStatusFocus = null;
+      const actorBounds = geometry().hero?.screenBounds, gap = 8;
+      const toggleStyle = global.getComputedStyle?.(statusToggle);
+      const sideLeft = bounds.left + (Number.parseFloat(toggleStyle?.left) || 8);
+      const sideWidth = Number.parseFloat(toggleStyle?.width) || Math.min(270, bounds.width - 24);
+      const crossesActor = actorBounds && sideLeft < actorBounds.right + gap && sideLeft + sideWidth > actorBounds.x - gap;
+      const docked = (bounds.width <= 600 && bounds.height > 550) || !!crossesActor;
+      if (docked && !actorBounds) return;
+      const top = docked ? actorBounds.bottom + gap : bounds.top + (bounds.height <= 500 ? 80 : bounds.width <= 600 ? 91 : 108);
+      const available = Math.max(0, chatBounds.top - gap - top);
+      // When even a 44px control will not fit, Adventure keeps the permanent
+      // status entry. Never force a floating target back over the actor.
+      const navigationOnly = available < 44;
+      const compact = navigationOnly || available < 168 || (statusInDialog && keepStatusToggle);
+      const bottom = Math.max(0, bounds.bottom - chatBounds.top + gap);
+      const cssTop = docked ? 'auto' : Math.round(top - bounds.top) + 'px';
+      const cssBottom = docked ? Math.ceil(bottom) + 'px' : 'auto';
+      const maxHeight = Math.floor(available) + 'px';
+      const signature = [docked, compact, navigationOnly, cssTop, cssBottom, maxHeight, statusInDialog].join('|');
+      if (signature === statusLayoutSignature && !returnStatusFocus) return;
+      statusLayoutSignature = signature;
+      const focusedInPanel = !statusInDialog && panel.contains?.(doc.activeElement);
+      const focusedToggle = doc.activeElement === statusToggle;
+      panel.style.top = cssTop; panel.style.bottom = cssBottom; panel.style.maxHeight = maxHeight;
+      statusToggle.style.top = cssTop; statusToggle.style.bottom = cssBottom;
+      panel.classList.toggle('is-compact', compact);
+      statusToggle.hidden = !compact || navigationOnly;
+      const returnTarget = navigationOnly ? root.querySelector('[data-scene-primary="adventure"]') : compact ? statusToggle : panel;
+      const restoreAfterDialog = returnStatusFocus && !root.querySelector('[role="dialog"]');
+      if (!statusInDialog && ((focusedInPanel && compact) || (focusedToggle && statusToggle.hidden) || restoreAfterDialog)) {
+        if (returnTarget === panel) panel.tabIndex = -1;
+        returnTarget?.focus?.({ preventScroll: true });
+      }
+      if (restoreAfterDialog) returnStatusFocus = null;
+    }
+    function scheduleStatusLayout() {
+      if (disposed || statusLayoutFrame || typeof global.requestAnimationFrame !== 'function') return;
+      statusLayoutFrame = global.requestAnimationFrame(() => {
+        if (disposed) return;
+        // Let Phaser publish its current camera matrix before projecting bounds.
+        statusLayoutFrame = global.requestAnimationFrame(() => {
+          statusLayoutFrame = 0; if (!disposed) arrangeStatus();
+        });
+      });
+    }
+    const statusObserver = typeof global.ResizeObserver === 'function' ? new global.ResizeObserver(scheduleStatusLayout) : null;
+    for (const target of [byId('ui'), byId('chat'), byId('bottom'), scene.game?.canvas]) {
+      if (target?.getBoundingClientRect) statusObserver?.observe(target);
+    }
+    // Only direct root changes matter: the existing manager moves navigation
+    // back and removes its dialog on close, including after an intermediate page.
+    const statusNavigationObserver = typeof global.MutationObserver === 'function' ? new global.MutationObserver(scheduleStatusLayout) : null;
+    if (byId('ui')) statusNavigationObserver?.observe(byId('ui'), { childList: true });
+    function mountStatus(body) {
+      if (disposed || statusInDialog || !body?.appendChild) return null;
+      const parent = panel.parentNode, next = panel.nextSibling, inert = panel.inert, returnToToggle = openedFromStatusToggle;
+      openedFromStatusToggle = null; keepStatusToggle = !statusToggle.hidden; statusInDialog = true;
+      panel.classList.add('scene-live-status-in-dialog'); panel.inert = false;
+      body.appendChild(panel); scheduleStatusLayout();
+      let closed = false;
+      return { dispose() {
+        if (closed) return; closed = true;
+        statusInDialog = false; keepStatusToggle = false;
+        if (disposed) return;
+        panel.classList.remove('scene-live-status-in-dialog');
+        if (next?.parentNode === parent) parent.insertBefore(panel, next); else parent?.appendChild(panel);
+        panel.inert = inert; returnStatusFocus = returnToToggle || returnStatusFocus; statusLayoutSignature = ''; scheduleStatusLayout();
+      } };
+    }
     nodes.expedition.onclick = () => ui.toggle('expedition');
     nodes.characters.onclick = () => ui.toggle('scene-characters');
     nodes.refresh.onclick = () => void refresh();
@@ -169,6 +259,7 @@
       text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
       syncHudActions(value);
       nodes.refresh.disabled = syncBusy;
+      scheduleStatusLayout();
     }
     function status() {
       if (!current()) return;
@@ -247,7 +338,7 @@
       // demo's lerped follow otherwise leaves actors off-screen after map/size
       // changes even though their world coordinates and visibility are valid.
       camera.stopFollow().centerOn(hero.x, hero.y);
-      hero.setDepth(hero.y); drawBars();
+      hero.setDepth(hero.y); drawBars(); scheduleStatusLayout();
     }
     function setMap(map) {
       ++mapGeneration; currentMap = map ? [map.id, map.themeId, map.kind].join(':') : ''; currentRoom = ''; assetIssues.clear(); releaseAssets(); mapIssue = '';
@@ -398,15 +489,22 @@
       return { canvas, world: { width: world.w, height: world.h }, camera: { viewport: { x: camera.x, y: camera.y, width: camera.width, height: camera.height }, worldView: box(camera.worldView), scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom }, hero: spriteBounds(hero), enemies: [...entities.values()].filter(entity => entity.sprite?.active).map(entity => ({ id: entity.enemy.id, ...spriteBounds(entity.sprite) })), hud: box(byId('bottom')?.getBoundingClientRect?.()) };
     }
     const view = {
-      apply, refreshHUD: refreshHud,
+      apply, mountStatus, refreshHUD: refreshHud,
       showSyncError(message) { syncError = message; status(); },
       update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } hooks.clearDecorations?.(); minimap(); },
       inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry() }; },
-      dispose() { if (disposed) return; disposed = true; ++mapGeneration; clearActor(); releaseAssets(); panel.remove(); viewers.delete(view); },
+      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
     };
     viewers.add(view); scene.events?.once('shutdown', () => view.dispose());
     view.apply(global.RpgSceneSession?.getSnapshot?.() || lastSnapshot);
     return view;
+  }
+  function mountStatus(body) {
+    for (const view of [...viewers].reverse()) {
+      const mounted = view.mountStatus(body); if (mounted) return mounted;
+    }
+    if (body) body.textContent = '角色狀態載入中，請稍後再開啟。';
+    return { dispose() {} };
   }
   async function refresh() {
     if (syncBusy || !liveMode()) return;
@@ -568,5 +666,5 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
 })(window);

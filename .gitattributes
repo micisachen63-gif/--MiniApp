@@ -8,3 +8,6 @@ worker/public/expedition/review.css text eol=lf
 worker/public/fate/** text eol=lf
 worker/public/fate-entry.js text eol=lf
 worker/public/fate-entry.css text eol=lf
+# HUD source receipts bind exact exported bytes on every checkout.
+worker/public/ui/hud-v2/*.json text eol=lf
+worker/public/ui/hud-v2/*.css text eol=lf
