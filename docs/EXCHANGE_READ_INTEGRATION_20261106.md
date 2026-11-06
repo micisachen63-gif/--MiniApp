@@ -72,9 +72,15 @@ acceptance01於12:03:39結束為failed。QA在保存results.json時遇UNKNOWN檔
 原observer：qa/runs/acceptance02/observer-result.json，SHA 30f987f5574d00d714ebce3b3cc550651ad6d7d5d7d35648a30ef966837773f5。
 root目視與核對：review/root-browser-review-02.json，SHA 8d11d7e5a1e073f5377e765f3bbc7f5f02376e59d99c01ea4533dd57a0699a25。
 
-### 提交後完整gate
+### 提交後完整gate與舊VM測試修補
 
-白名單13個產品／測試／工具檔加本報告與AI_HANDOVER。全部產品bytes須與acceptance02來源相同；只允許新增報告和更新交接。
+第一筆本機提交9370de2eaa88335e56ea0ec13fef3fdb0fa4a527已白名單納入13個產品／測試／工具檔與兩文件，共15檔。原完整gate exchange-read-final-20261106-01於12:37:30～12:47:46完成，Worker3660項中3656通過、4失敗，BOT205/205通過；兩服務與runner原close已確認，11,430來源、owner、選集與工作樹穩定。第一輪明確保持failed，原receipt SHA1d6f0ec49ec6e6447642e08e3f5d9ac7c4be40b4250940c96cd786b61394f4d7。
+
+4項失敗同出worker/test/monster-art-compatibility.test.js。該舊測試抽出handleApp本文送VM，import與vm.createContext都漏掉新SCOPED_EXCHANGE_READ_ACTIONS，導致原業務斷言前ReferenceError。真module已定義此常數，走真module的相鄰BOT購買測試通過。
+
+等原gate完整退出後，只在上述測試兩處補入實際匯出的SCOPED_EXCHANGE_READ_ACTIONS；保留UTF-8 BOM、原斷言、怪物資料與全部產品程式。原檔SHA4050908e41619162af696a1df514a78259d0e9320710333f72a8498766ba0802、新檔SHA6031dc7affafa0117307637466b11cbb0182894cdf5c5cb64996d44075a4bfc2。12:49:16該檔聚焦5/5通過、原child51792 exit0，receipt SHA6c5111c535e02336f29c0c875bb69760d646ed68403d7f929b0a7089688e8827，原件fixture-repair-01/。
+
+補充提交只含該測試與兩文件，本批相對3330589累計16檔。產品bytes仍與acceptance02完全一致，因此沿用其真browser證據，明確記錄只有舊測試fixture及交接文件在browser後改變。新的完整gate必須綁修補後新HEAD、全新run-id；不能把5/5當完整通過或排除原4失敗。
 
 提交後從精確clean HEAD執行既有exchange-launch-final-head-gate.cjs，使用新run-id。工具綁原owner、branch、Node24、官方runner hash及動態完整Worker/BOT清單；每服務一次、concurrency1，不跳過或自動重試。完整結果與原service/runner close收據保存在full-final-head-gate/<run-id>/。本文件不預填尚未執行的結果。
 

@@ -1,3 +1,15 @@
+# 本批完整gate第一輪與fixture修補
+
+2026-11-06 12:49（Asia/Taipei）：原9370de2完整gate已結束為failed。Worker3656/3660（4fail）、BOT205/205；11,430來源、Git/owner/選集穩定。4項皆是舊monster-art-compatibility.test.js抽出handleApp到VM時漏注入SCOPED_EXCHANGE_READ_ACTIONS，非4種產品缺陷。原receipt與兩服務/runner真exit完整保留於full-final-head-gate/exchange-read-final-20261106-01/。
+
+只在該測試import與vm context各補一次實際常數，保留BOM與原斷言，所有產品bytes未變。focused5/5、原child51792 exit0；原件fixture-repair-01/，receipt SHA6c5111c535e02336f29c0c875bb69760d646ed68403d7f929b0a7089688e8827。
+
+本補充提交含1測試＋2文件；相對3330589本批累計16檔。沿用未變產品的acceptance02 21/21與六圖目視，舊fixture/交接差異另作來源橋接。必須以修補後新完整HEAD和新run-id跑完整官方gate；最終結果依外部STATUS/FINAL_STATUS，不能把第一輪或focused當成功。
+
+根目錄新增D:/StarJournal/LATEST_VERSION_INTEGRATION_HANDOFF.md供中斷接續，避免舊F3主入口誤導。下一批33來源已唯讀核對，計畫檔需跟隨本批最終已驗收HEAD；尚未開始交易寫入實作。
+
+---
+
 # StarJournal 旅人交易所純讀整合交接
 
 更新：2026-11-06（Asia/Taipei）。本批在帳務/衣櫥基底3330589上，完成原交易所瀏覽、我的刊登、成交紀錄與原物品快照詳情，接入營地同一近透明主浮窗。
