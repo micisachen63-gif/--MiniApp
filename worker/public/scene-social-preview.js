@@ -220,7 +220,7 @@
   const host=unifiedHost(api,entry);
   if(entry.route==='live-status')return window.RpgSceneLiveView.mountStatus(body,host);
    if(entry.route==='ledger'){const module=await loadSceneModule('scene-ledger-ui','RpgSceneLedger');if(api.current())return module.mount(body,host);return;}
-  if(entry.route==='direct-trade'){await loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions');if(!api.current())return;const module=await loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade');if(api.current())return module.mount(body,host);return;}
+  if(entry.route==='direct-trade'){await loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions');if(!api.current())return;await loadSceneModule('scene-direct-trade-invitation-client','RpgSceneDirectTradeInvitations');if(!api.current())return;const module=await loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade');if(api.current())return module.mount(body,host);return;}
    if(entry.route==='exchange'){await loadSceneModule('scene-exchange-client','RpgSceneExchangeActions');if(!api.current())return;const module=await loadSceneModule('scene-exchange-ui','RpgSceneExchange');if(api.current())return module.mount(body,host);return;}
   if(['character','adventure','camp'].includes(entry.route))return paintHub(body,entry.route,host);
   if(['equipment','inventory','item'].includes(entry.route)){const module=await loadSceneModule('scene-inventory-ui','RpgSceneInventory');if(api.current())return module.mount(body,host,{mode:entry.route,itemId:entry.params.itemId});return;}

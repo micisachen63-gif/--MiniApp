@@ -218,7 +218,7 @@ const virtualSocial = new Set([
   'scene-boss-ui.js','scene-boss-ui.css',
   'scene-star-ring-ui.js','scene-star-ring-ui.css',
   'scene-ledger-ui.js','scene-ledger-ui.css',
-  'scene-exchange-ui.js','scene-exchange-ui.css','scene-exchange-client.js','scene-direct-trade-ui.js','scene-direct-trade-ui.css','scene-direct-trade-client.js', 'monster-expansion-catalog.js',
+  'scene-exchange-ui.js','scene-exchange-ui.css','scene-exchange-client.js','scene-direct-trade-ui.js','scene-direct-trade-ui.css','scene-direct-trade-client.js','scene-direct-trade-invitation-client.js', 'monster-expansion-catalog.js',
   'scene-guardian-ui.js','scene-guardian-ui.css',
   'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js','scene-fate-private-ui.js','scene-fate-private-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',

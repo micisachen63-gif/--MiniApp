@@ -72,7 +72,10 @@
     return {state,current,refresh,selectTrade,back,update,dispose};
   }
   function mount(root,host){
-    const doc=root.ownerDocument,actionFactory=globalThis.RpgSceneDirectTradeActions;
+    const doc=root.ownerDocument,actionFactory=globalThis.RpgSceneDirectTradeActions,
+      invitationFactory=globalThis.RpgSceneDirectTradeInvitations;
+    if(!invitationFactory || typeof invitationFactory.createClient!=='function')
+      throw Error('安全交易邀請模組尚未載入；無法開放雙方交易視窗');
     if(!actionFactory || typeof actionFactory.createClient!=='function')
       throw Error('安全交易模組尚未載入；此視窗不開放任何交易操作');
     if(!doc.querySelector('link[data-scene-direct-trade-style]')){
@@ -84,6 +87,12 @@
     root.classList.add('scene-direct-trade');
     const client=createClient({...host,onState:()=>paint()}),state=client.state;
     let actionClient=null,actionTradeId=null,rendering=false,goldDraft=null;
+    const invitationDraft={shareId:String(host.params?.shareId||''),equipId:'',targetCharId:''};
+    const invitations=invitationFactory.createClient({...host,
+      current:()=>client.current()&&host.current?.()!==false,
+      onState:()=>{if(!rendering)paint();},
+      onChanged:(result,meta)=>{if(client.current())void client.refresh();host.onChanged?.(result,meta);}
+    });
     let eligibleState=null,eligibleController=null,eligibleGeneration=0;
     const quantityDrafts=new Map();
     const node=(tag,cls='',text='')=>{const el=doc.createElement(tag);if(cls)el.className=cls;if(text)el.textContent=text;return el;};
@@ -273,6 +282,81 @@
       }
       return panel;
     }
+    const invitationNames={request:'提出分享交易邀請',accept:'接受邀請並建立交易視窗',
+      reject:'拒絕交易邀請',withdraw:'撤回本人邀請',open:'以本人裝備直接開立交易'};
+    function invitationPanel({allowForms=false}={}){
+      const panel=node('section','sdt-invitation'),st=invitations.state,pending=invitations.pending();
+      panel.append(node('h4','','交易邀請與原始收據'));
+      if(st.error){const err=node('p','sdt-error',st.error);err.setAttribute('role','alert');panel.append(err);}
+      if(st.notice)panel.append(statusText(st.notice));
+      if(st.lockError)panel.append(node('p','sdt-error',st.lockError));
+      if(st.storageError)panel.append(node('p','sdt-error',st.storageError));
+      if(st.busy||st.checking)panel.append(statusText(st.checking?'正在查詢原始邀請收據…':'正在核對交易邀請…'));
+      if(st.confirm){
+        const view=st.confirm,review=node('section','sdt-review sdt-invitation-review');
+        review.append(node('h5','','確認 '+(invitationNames[view.kind]||view.kind)));
+        for(const [key,value] of Object.entries(view.payload||{}))
+          review.append(node('p','sdt-meta',key+'：'+String(value)));
+        if(view.recovery)
+          review.append(node('p','sdt-warning','僅允許恢復原始 UUID 與完全相同的參數，不會建立新的邀請。'));
+        else
+          review.append(node('p','sdt-warning','按下確認後才會發送一次原始邀請操作；如果回覆不明，只查詢收據。'));
+        const buttons=node('div','sdt-buttons'),
+          submit=control(view.recovery?'確認恢復同筆邀請':'確認執行邀請',()=>void invitations.submit(),'sdt-primary');
+        submit.dataset.directTradeInvitationSubmit='true';
+        buttons.append(submit,control('返回',()=>invitations.cancelReview(),'sdt-secondary'));
+        review.append(buttons);panel.append(review);return panel;
+      }
+      if(pending){
+        const section=node('section','sdt-pending'),buttons=node('div','sdt-buttons');
+        section.append(node('h5','','原始邀請尚未結案'));
+        section.append(node('p','sdt-meta',invitationNames[pending.kind]||pending.kind));
+        section.append(node('p','sdt-meta','原始 UUID：'+pending.requestId));
+        section.append(node('p','sdt-warning','查明這筆是否已提交前，不會建立另一筆邀請，也不會自動重送。'));
+        const check=control('查詢邀請收據',()=>void invitations.checkPending(),'sdt-primary');
+        check.dataset.directTradeInvitationCheck='true';check.disabled=st.busy||st.checking;buttons.append(check);
+        if(st.receipt?.found===true){
+          section.append(statusText('原始邀請已提交，可確認結案','sdt-success'));
+          const ack=control('已核對，確認結案',()=>void invitations.acknowledge(),'sdt-secondary');
+          ack.dataset.directTradeInvitationAck='true';buttons.append(ack);
+        }else if(st.receipt?.found===false){
+          section.append(statusText(st.receipt.recoveryAllowed?
+            '尚未找到原收據；可重新檢視同一 UUID 的恢復內容。':'目前尚無可核對收據，原始紀錄仍保留。'));
+          if(st.receipt.recoveryAllowed){
+            const recover=control('檢視同筆恢復',()=>invitations.prepareRecovery(),'sdt-secondary');
+            recover.dataset.directTradeInvitationRecover='true';buttons.append(recover);
+          }
+        }
+        section.append(buttons);panel.append(section);return panel;
+      }
+      if(!allowForms)return panel;
+      panel.append(node('p','sdt-muted','請貼上有效的分享卡編號，或輸入自己裝備與目標角色 ID。所有變更都需要再次確認。'));
+      const forms=[
+        ['request',['shareId'],'檢視送出分享邀請'],
+        ['open',['equipId','targetCharId'],'檢視直接交易開窗']
+      ];
+      for(const [kind,keys,title] of forms){
+        const form=node('form','sdt-invitation-form');
+        for(const key of keys){
+          const label=node('label','',({shareId:'分享卡 ID',equipId:'本人裝備 ID',targetCharId:'目標角色 ID'})[key]||key),input=node('input');
+          input.type='text';input.maxLength=128;input.autocomplete='off';
+          input.value=invitationDraft[key]||'';
+          input.dataset.directTradeInvitationInput=key;
+          input.oninput=()=>{invitationDraft[key]=input.value;};
+          label.append(input);form.append(label);
+        }
+        const button=control(title,()=>{},'sdt-secondary');button.type='submit';
+        button.dataset.directTradeInvitationReview=kind;button.disabled=!!st.lockError;
+        form.append(button);
+        form.onsubmit=event=>{
+          event.preventDefault();
+          const payload=Object.fromEntries(keys.map(key=>[key,invitationDraft[key]]));
+          invitations.prepare(kind,payload);
+        };
+        panel.append(form);
+      }
+      return panel;
+    }
     function mutationPanel(trade,ops){
       const rootPanel=node('section','sdt-operation');
       const st=ops.state;
@@ -361,6 +445,8 @@
         const status=statusText(state.loading?'讀取交易中…':state.stale?'角色資料已更新，請重新讀取':'');
         root.append(status);
         if(state.error){const alert=node('p','sdt-error',state.error);alert.setAttribute('role','alert');root.append(alert);}
+        const invitationBusy=invitations.state.confirm!==null||!!invitations.pending();
+        root.append(invitationPanel({allowForms:!state.selectedId&&!!state.data}));
         if(!state.data)return;
         const data=state.data,all=[...data.trades.open,...data.trades.history];
         const selected=state.selectedId?(data.selected?.id===state.selectedId?data.selected:all.find(row=>row.id===state.selectedId)):null;
@@ -370,6 +456,10 @@
           root.append(node('p','sdt-meta','狀態：'+selected.status+' · 報價版本 '+fmt(selected.offerRev)+' · 截止 '+clock(selected.expiresAt)));
           if(selected.expiryPendingMaintenance)root.append(node('p','sdt-warning','交易已過期，等待原系統執行退款清算；此視窗不會自動結算。'));
           const sides=node('div','sdt-sides');sides.append(sidePanel('甲方',selected.a),sidePanel('乙方',selected.b));root.append(sides);
+          if(invitationBusy){
+            root.append(node('p','sdt-warning','原始邀請尚未核對完畢，先完成邀請收據確認後再操作交易資產。'));
+            return;
+          }
           const ops=ensureActions(selected);
           root.append(mutationPanel(selected,ops));
           return;
@@ -389,9 +479,27 @@
         const requests=node('section','sdt-section');
         const allRequests=[...data.requests.incoming.map(row=>({row,direction:'收到'})),...data.requests.outgoing.map(row=>({row,direction:'送出'}))];
         requests.append(node('h4','','交易請求 · '+allRequests.length));
-        for(const {row,direction} of allRequests)
-          requests.append(node('p','sdt-request',direction+' · '+(row.owner?.name||'?')+' ↔ '+(row.requester?.name||'?')+' · '+row.status+
+        for(const {row,direction} of allRequests){
+          const card=node('section','sdt-request');
+          card.append(node('p','',direction+' · '+(row.owner?.name||'?')+' ↔ '+(row.requester?.name||'?')+' · '+row.status+
             (row.expiryPendingMaintenance?' · 逾時待更新':'')));
+          if(row.status==='pending'&&!row.expiryPendingMaintenance&&!invitationBusy){
+            const actions=node('div','sdt-buttons');
+            if(direction==='收到'){
+              const accept=control('檢視接受邀請',()=>invitations.prepare('accept',{reqId:row.id}),'sdt-primary');
+              accept.dataset.directTradeInvitationAccept=row.id;
+              const reject=control('檢視拒絕邀請',()=>invitations.prepare('reject',{reqId:row.id}),'sdt-secondary');
+              reject.dataset.directTradeInvitationReject=row.id;
+              actions.append(accept,reject);
+            }else{
+              const withdraw=control('檢視撤回邀請',()=>invitations.prepare('withdraw',{reqId:row.id}),'sdt-secondary');
+              withdraw.dataset.directTradeInvitationWithdraw=row.id;
+              actions.append(withdraw);
+            }
+            card.append(actions);
+          }
+          requests.append(card);
+        }
         if(!allRequests.length)requests.append(node('p','sdt-muted','沒有近期交易請求。'));
         root.append(requests);
       }finally{rendering=false;}
@@ -399,11 +507,12 @@
     paint();void client.refresh();
     return {client,
       handleBack:()=>{
+        if(invitations.state.confirm)return invitations.cancelReview();
         if(actionClient?.state.confirm)return actionClient.cancelReview();
         return client.back();
       },
       update:snapshot=>client.update(snapshot),
-      dispose:()=>{destroyActions();client.dispose();root.classList.remove('scene-direct-trade');}
+      dispose:()=>{invitations.dispose();destroyActions();client.dispose();root.classList.remove('scene-direct-trade');}
     };
   }
   globalThis.RpgSceneDirectTrade={createClient,mount};
