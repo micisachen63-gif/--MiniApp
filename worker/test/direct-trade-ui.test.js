@@ -68,15 +68,16 @@ test('season read-only client uses season-scoped credentials and does not ask th
   assert.equal(await client.refresh(),true);assert.equal(calls[0].body.realmId,season.realmId);
   assert.equal(calls[0].action,'trade/scene-scoped');client.dispose();
 });
-test('single-window route and local static assets are declared without enabling direct trade writes in the UI',()=>{
+test('single-window route loads the gated intent client and reserves all writes for explicit confirmation',()=>{
   const social=readFileSync(new URL('../public/scene-social-preview.js',import.meta.url),'utf8');
   const server=readFileSync(new URL('../tools/scene-live-preview.mjs',import.meta.url),'utf8');
   const api=readFileSync(new URL('../tools/atlas-local-preview.mjs',import.meta.url),'utf8');
   const session=readFileSync(new URL('../public/scene-live-session.js',import.meta.url),'utf8');
   assert(social.includes("'direct-trade':{title:"));
   assert(social.includes("loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade')"));
-  assert(server.includes("'scene-direct-trade-ui.js','scene-direct-trade-ui.css'"));
-  assert(api.includes('"trade/scene-scoped","trade/receipt"'));
+  assert(server.includes("'scene-direct-trade-ui.js','scene-direct-trade-ui.css','scene-direct-trade-client.js'"));
+  assert(social.includes("loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions')"));
+  assert(api.includes('"trade/scene-scoped","trade/receipt","trade/action-scoped"'));
   assert(session.includes("'trade/scene-scoped','trade/receipt'"));
   assert(!source.includes("host.request('trade/action-scoped'"));
   assert(!source.includes("host.request('trade/receipt'"));

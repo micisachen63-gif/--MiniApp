@@ -461,7 +461,7 @@ test('private Fate root assets resolve to product modules and keep original plac
 test('exchange client and published catalog serve owned GET/HEAD bytes without a path escape', async () => {
   const binder=readFileSync(new URL('../tools/scene-preview-bindings.mjs',import.meta.url),'utf8');
   const prefix='/ui-generated-20261030/hud-angels-20261102/';
-  const modules=[['scene-exchange-client.js','action client bytes'],['monster-expansion-catalog.js','published catalog bytes'],['scene-direct-trade-ui.js','direct trade read client bytes']];
+  const modules=[['scene-exchange-client.js','action client bytes'],['monster-expansion-catalog.js','published catalog bytes'],['scene-direct-trade-ui.js','direct trade read client bytes'],['scene-direct-trade-client.js','direct trade intent client bytes']];
   const h=await harness([...modules,['../tools/scene-preview-bindings.mjs',binder]]);
   for(const [name,bytes]of modules){
     const response=await h.request(prefix+name);
