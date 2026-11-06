@@ -119,6 +119,8 @@ test('both locks and original two OKs settle one trade with signed replay and co
   assert.equal(done.result.done,true);
   assert.equal((await Trade.tradeView(f.env,f.id,'111',T0)).status,'done');
   assert.equal(qty(f,'111'),8);assert.equal(qty(f,'222'),12);
+  const finalNotes=f.db.prepare("SELECT tg_id FROM rpg_outbox WHERE kind='trade_end' AND json_extract(payload_json,'$.tradeId')=? ORDER BY tg_id").all(f.id);
+  assert.deepEqual(finalNotes.map(x=>x.tg_id),['111','222'],'one DM per original party after the only final swap');
   const before=dbState(f),replayed=await Direct.run(f.env,'222',finalBody,T0);
   assert.equal(replayed.replayed,true);assert.deepEqual(replayed.result,done.result);
   assert.deepEqual(dbState(f),before);assert.equal(operations(f).length,5);
@@ -130,6 +132,8 @@ test('signed cancellation returns original escrow once and receipt remains reada
   const request=body(f,'cancel',{},randomUUID(),2),cancelled=await Direct.run(f.env,'222',body(f,'cancel',{},request.requestId,2,'222'),T0);
   assert.equal(cancelled.result.status,'cancelled');assert.equal(gold(f,'111'),10000);
   assert.equal(qty(f,'111'),10);assert.equal((await Trade.tradeView(f.env,f.id,'111',T0)).status,'cancelled');
+  const cancelNotes=f.db.prepare("SELECT tg_id FROM rpg_outbox WHERE kind='trade_end' AND json_extract(payload_json,'$.tradeId')=? ORDER BY tg_id").all(f.id);
+  assert.deepEqual(cancelNotes.map(x=>x.tg_id),['111','222'],'cancellation notifies each party exactly once');
   const before=dbState(f),again=await Direct.receipt(f.env,'222',body(f,'cancel',{},request.requestId,2,'222'),T0);
   assert.equal(again.found,true);assert.equal(again.result.status,'cancelled');assert.deepEqual(dbState(f),before);
 });

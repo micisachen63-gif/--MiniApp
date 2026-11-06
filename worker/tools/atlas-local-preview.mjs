@@ -62,7 +62,9 @@ if(towerQa&&(partyQa||skillCareerQa))throw Error('Tower QA uses its own isolated
 if(ledgerQa&&(!skillCareerQa||partyQa||towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa))throw Error('Ledger QA requires only the isolated SkillCareer fixture');
 if(exchangeQa&&(!ledgerQa||!skillCareerQa))throw Error('Exchange QA requires the isolated Ledger and SkillCareer fixtures');
 if(exchangeActionsQa&&(!ledgerQa||!skillCareerQa||exchangeQa))throw Error('Exchange actions QA requires its own Ledger and SkillCareer fixtures, without the read-only exchange fixture');
-if(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa)env.ALLOW_DEBUG_TIME='true';
+// Disposable loopback preview: explicit two-person QA may fast-forward idle expiry
+// through the existing X-Debug-Now route. Normal preview still uses wall time.
+if(towerQa||bossQa||starRingQa||guardianQa||fateQa||fatePrivateQa||process.env.RPG_DIRECT_TRADE_QA==='1')env.ALLOW_DEBUG_TIME='true';
 await initializeRealmIdentity(env, 'permanent', { now });
 await initializeRealmIdentity(env, 'season_2026_01', { now });
 const permanent = scopeEnvForRealm(env, await resolveRealm(env, 'permanent'));

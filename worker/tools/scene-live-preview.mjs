@@ -20,11 +20,16 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..'), publicRoot = path.resolve(here, '../public');
 const args = new Map();
 for (const value of process.argv.slice(2)) {
-  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only)=(.+)$/.exec(value);
+  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only|qa-direct-trade-peer-account)=(.+)$/.exec(value);
   if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--qa-input-snapshot-dir=.release-sync/owned-run]');
   args.set(match[1], match[2]);
 }
 if (!args.has('grok-root')) throw Error('A local --grok-root is required');
+// Local disposable two-actor QA only: the normal HUD always uses account 90101.
+const directTradePeerAccount = args.get('qa-direct-trade-peer-account') || null;
+if (directTradePeerAccount !== null &&
+    (process.env.RPG_DIRECT_TRADE_QA !== '1' || directTradePeerAccount !== '90201'))
+  throw Error('Isolated direct-trade peer view requires RPG_DIRECT_TRADE_QA=1 and account 90201');
 const grokRoot = await fs.realpath(path.resolve(args.get('grok-root')));
 const port = Number(args.get('port') || 9653), apiPort = Number(args.get('api-port') || 9652);
 for (const number of [port, apiPort]) if (!Number.isInteger(number) || number < 1024 || number > 65535) throw Error('Invalid loopback port');
@@ -194,7 +199,7 @@ if(snapshotArgument){
 
 const origin = `http://127.0.0.1:${port}`;
 const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${apiPort}/app/api/`, accountId: '90101', realmId: 'permanent' };
-const injected = '<script src="/ui-generated-20261030/hud-angels-20261102/monster-expansion-catalog.js"></script>' + `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
+const injectedForAccount = accountId => '<script src="/ui-generated-20261030/hud-angels-20261102/monster-expansion-catalog.js"></script>' + `<script>window.__RpgScenePreviewConfig=${JSON.stringify({...config, accountId})};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
 const buttonMaterialPrefix = '/ui/button-materials/';
 const hudMaterialPaths=new Set(['/ui/hud-v2/hud-v2.css','/ui/hud-v2/orb-bezel.webp','/ui/hud-v2/action-icons.webp','/ui/hud-v2/accepted-layout.json','/ui/hud-v2/source-manifest.json']);
@@ -250,7 +255,7 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html'+url.search }); res.end(); return; }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type':'application/json','Cache-Control':'no-store' });
-      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||attachedApi?.pid||null, apiOwned:!attachedApi, attachedApi:!!attachedApi, attachKind:attachedApi?.kind||null, campaignId:attachedApi?.campaignId||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true, generatedInputSnapshot })); return;
+      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||attachedApi?.pid||null, apiOwned:!attachedApi, attachedApi:!!attachedApi, attachKind:attachedApi?.kind||null, campaignId:attachedApi?.campaignId||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true,qaDirectTradePeerEnabled:directTradePeerAccount!==null,qaDirectTradePeerAccount:directTradePeerAccount, generatedInputSnapshot })); return;
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
@@ -260,10 +265,21 @@ const server = http.createServer(async (req, res) => {
     }
     const bound = directPublic ? null : await composeResponse(requestPath, grokRoot);
     if (bound) {
-      let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injected).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
+      // The peer actor is never selected by the ordinary preview. A dedicated
+      // QA flag plus a separate browser context/cookie opt into test actor 90201.
+      const qaRequestedActor = url.searchParams.get('qaDirectTradeAccount');
+      if (qaRequestedActor &&
+          (!bound.type.startsWith('text/html') || qaRequestedActor !== directTradePeerAccount)) {
+        res.writeHead(404); res.end('QA actor not enabled'); return;
+      }
+      const qaActorCookie = directTradePeerAccount !== null &&
+        String(req.headers.cookie || '').split(';').some(x => x.trim() === 'rpg_qa_dt_actor=90201');
+      const actorAccount = qaRequestedActor || (qaActorCookie ? '90201' : '90101');
+      const qaCookieHeader = qaRequestedActor ? {'Set-Cookie':'rpg_qa_dt_actor=90201; Path=/; SameSite=Lax'} : {};
+      let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injectedForAccount(actorAccount)).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
       if(bound.type.startsWith('text/html'))body=body.replace('<script src="'+socialPrefix+'scene-social-preview.js"></script>','<script src="'+socialPrefix+'scene-window-manager.js"></script><script src="'+socialPrefix+'scene-social-preview.js"></script>');
       if (bound.type.startsWith('text/html') && !body.includes('window.__RpgScenePreviewConfig=')) throw Error('Scene configuration hook changed');
-      res.writeHead(200, { 'Content-Type':bound.type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Scene-Integration':'20261104','X-Scene-Generated-Mode':generatedInputSnapshot.mode,...(generatedInputSnapshot.id?{'X-Scene-Input-Snapshot':generatedInputSnapshot.id}:{}) });
+      res.writeHead(200, { 'Content-Type':bound.type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...qaCookieHeader,'X-Scene-Integration':'20261104','X-Scene-Generated-Mode':generatedInputSnapshot.mode,...(generatedInputSnapshot.id?{'X-Scene-Input-Snapshot':generatedInputSnapshot.id}:{}) });
       res.end(req.method === 'HEAD' ? undefined : body); return;
     }
     let file;

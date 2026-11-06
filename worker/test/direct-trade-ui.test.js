@@ -88,3 +88,13 @@ test('single-window route loads the gated intent client and reserves all writes 
   assert(source.includes("invitations.prepare('withdraw'"));
   assert(source.includes("invitations.pending()"));
 });
+
+// QA-only peer/expiry access belongs to the disposable preview tools, not the production worker.
+test('QA-only peer account and expiry debug clock require explicit isolated flag',()=>{
+  const ui=readFileSync(new URL('../tools/scene-live-preview.mjs',import.meta.url),'utf8');
+  const api=readFileSync(new URL('../tools/atlas-local-preview.mjs',import.meta.url),'utf8');
+  assert(ui.includes("process.env.RPG_DIRECT_TRADE_QA !== '1'"));
+  assert(ui.includes("qaRequestedActor !== directTradePeerAccount"));
+  assert(ui.includes("const actorAccount = qaRequestedActor || (qaActorCookie ? '90201' : '90101')"));
+  assert(api.includes("process.env.RPG_DIRECT_TRADE_QA==='1'"));
+});
