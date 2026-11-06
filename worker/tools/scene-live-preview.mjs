@@ -32,19 +32,25 @@ if (port === apiPort) throw Error('The scene and API need separate ports');
 
 const guardianQA=process.env.RPG_GUARDIAN_QA==='1',fateQA=process.env.RPG_FATE_QA==='1',fatePrivateQA=process.env.RPG_FATE_PRIVATE_QA==='1',snapshotArgument=args.get('qa-input-snapshot-dir');
 const attachPidArgument=args.get('attach-api-pid'),reuseArgument=args.get('qa-reuse-input-snapshot-dir'),attachStateArgument=args.get('qa-attach-state'),attachCheck=args.get('qa-attach-check');
+const exchangeActionsQA=process.env.RPG_EXCHANGE_ACTIONS_QA==='1';
 const captureOnly=args.get('qa-capture-only')==='1';
 if(args.has('qa-capture-only')&&(!captureOnly||!fatePrivateQA||!snapshotArgument||attachPidArgument||reuseArgument||attachStateArgument||attachCheck))throw Error('Private input capture requires its own snapshot and no API attachment');
-if([guardianQA,fateQA,fatePrivateQA].filter(Boolean).length>1)throw Error('Only one isolated QA fixture mode may be enabled');
+if([guardianQA,fateQA,fatePrivateQA,exchangeActionsQA].filter(Boolean).length>1)throw Error('Only one isolated QA fixture mode may be enabled');
 if(snapshotArgument&&!guardianQA&&!fateQA&&!fatePrivateQA)throw Error('The QA input snapshot requires RPG_GUARDIAN_QA=1 or RPG_FATE_QA=1 and explicit --qa-input-snapshot-dir');
 if((guardianQA||fateQA||fatePrivateQA)&&!snapshotArgument&&!reuseArgument)throw Error('An isolated QA fixture requires explicit --qa-input-snapshot-dir or validated reuse');
 if(snapshotArgument&&reuseArgument)throw Error('Capture and reuse are mutually exclusive');
-if(attachPidArgument||reuseArgument||attachStateArgument||attachCheck){
+if(!exchangeActionsQA&&(attachPidArgument||reuseArgument||attachStateArgument||attachCheck)){
  if(!(fateQA||fatePrivateQA)||guardianQA||!attachPidArgument||!reuseArgument||!attachStateArgument||snapshotArgument||attachCheck&&attachCheck!=='1')throw Error('Existing API attach requires Fate-only mode, expected PID/state and immutable snapshot reuse');
  if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
  for(const flag of ['RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_SKILL_CAREER_QA','RPG_LEDGER_QA'])if(process.env[flag]==='1')throw Error('Existing API attach forbids other QA modes');
 }
 if(fatePrivateQA&&!captureOnly&&!attachPidArgument)throw Error('Private Fate QA UI must attach an independently owned API');
-const qaStatePath=fatePrivateQA?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state';
+if(exchangeActionsQA){
+ if(!attachPidArgument||!attachStateArgument||snapshotArgument||reuseArgument||captureOnly||attachCheck&&attachCheck!=='1')throw Error('Exchange actions QA UI must attach its independently owned API with an exact state intent');
+ if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
+ if(process.env.RPG_LEDGER_QA!=='1'||process.env.RPG_SKILL_CAREER_QA!=='1'||['RPG_EXCHANGE_QA','RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_GUARDIAN_QA','RPG_FATE_QA','RPG_FATE_PRIVATE_QA'].some(key=>process.env[key]==='1'))throw Error('Exchange actions attach requires only its isolated fixture mode');
+}
+const qaStatePath=exchangeActionsQA?'/__preview/exchange-actions-state':fatePrivateQA?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state';
 const digest=value=>createHash('sha256').update(value).digest('hex');
 async function ownedEvidencePath(argument,directory=false){
  const evidenceRoot=await fs.realpath(path.join(repo,'.release-sync')),target=await fs.realpath(path.resolve(repo,argument)),stat=await fs.stat(target);
@@ -75,7 +81,7 @@ function requireEmptyFateCampaign(expected,state){
  }
 }
 let attachedApi=null,attachExpected=null;
-if(attachPidArgument){
+if(attachPidArgument&&!exchangeActionsQA){
  const statePath=await ownedEvidencePath(attachStateArgument),stateBytes=await fs.readFile(statePath);
  attachExpected=JSON.parse(stateBytes);
  const emptyCampaign=attachExpected.kind==='empty-fate-campaign'||attachExpected.kind==='empty-fate-private-campaign';
@@ -101,6 +107,41 @@ if(attachPidArgument){
  if(original.realmId!=='permanent'||!life||String(life.char_id)!==original.characterId||String(life.account_id)!==original.accountId||JSON.stringify(state.primary)!==JSON.stringify(attachExpected.state.primary)||!operation||String(operation.account_id)!==original.accountId||JSON.parse(operation.result_json).lifeId!==original.id)throw Error('Existing API no longer contains the exact original start authority');
  attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.initialInputSha256,clockNow:state.qaClock.now,originalLifeId:original.id,read};
  }
+}
+if(exchangeActionsQA){
+ const statePath=await ownedEvidencePath(attachStateArgument),stateBytes=await fs.readFile(statePath);
+ attachExpected=JSON.parse(stateBytes);
+ const expected=attachExpected;
+ if(expected.schemaVersion!==1||expected.status!=='preserve-exact-exchange-actions-api'||expected.kind!=='preserve-exchange-actions-api'
+   ||!/^[a-z0-9][a-z0-9_-]{2,79}$/.test(expected.campaignId||'')||expected.apiPid!==Number(attachPidArgument)||expected.apiOrigin!==apiOrigin
+   ||!expected.state||typeof expected.ownerSession!=='string'||!/^[a-f0-9]{64}$/.test(expected.ownerSha256||''))throw Error('Incomplete exchange actions API preservation intent');
+ const ownerPath=path.resolve(repo,'../../handoff/non-character',path.basename(repo).replace(/^star-journal-/,''),'OWNER.json');
+ const ownerBytes=await fs.readFile(ownerPath),owner=JSON.parse(ownerBytes);
+ if(owner.status!=='active'||owner.session!==expected.ownerSession||path.resolve(owner.worktree||'')!==repo||digest(ownerBytes)!==expected.ownerSha256)throw Error('Exchange actions owner changed');
+ if(!Array.isArray(expected.sourceBindings)||!expected.sourceBindings.length||expected.sourceBindings.length>15000)throw Error('Exchange actions attach requires bound source files');
+ const seen=new Set();
+ for(const entry of expected.sourceBindings){
+  if(!entry||typeof entry.path!=='string'||seen.has(entry.path)||!Number.isSafeInteger(entry.bytes)||entry.bytes<0||!/^[a-f0-9]{64}$/.test(entry.sha256||''))throw Error('Invalid exchange actions source binding');
+  seen.add(entry.path);
+  const bytes=await fs.readFile(await realFile(repo,entry.path));
+  if(bytes.length!==entry.bytes||digest(bytes)!==entry.sha256)throw Error('Exchange actions source changed: '+entry.path);
+ }
+ for(const name of ['worker/tools/atlas-local-preview.mjs','worker/tools/exchange-actions-qa-fixture.mjs','worker/tools/scene-live-preview.mjs','worker/tools/scene-preview-bindings.mjs'])
+  if(!seen.has(name))throw Error('Exchange actions required source binding absent: '+name);
+ const read=async endpoint=>{const response=await fetch(apiOrigin+endpoint,{redirect:'error',signal:AbortSignal.timeout(10000)});if(response.status!==200)throw Error('Existing exchange API refused read-only inspection');return response.json();};
+ const [health,state]=await Promise.all([read('/__preview/health'),read(qaStatePath)]);
+ if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false
+   ||health.exchangeActionsQa!==true||health.exchangeQa!==false||health.ledgerQa!==true||health.skillCareerQa!==true
+   ||['guardianQa','starRingQa','bossQa','towerQa','partyQa','fateQa','fatePrivateQa'].some(key=>health[key]!==false)
+   ||JSON.stringify(health.exchangeActionsQaPolicy?.backgroundTimersDisabled)!==JSON.stringify({atlas:true,workshop:true,party:true}))throw Error('Existing exchange API identity or isolation differs');
+ const matches=value=>value?.ok===true&&value.synthetic===true&&value.isolated===true&&value.ephemeral===true&&value.productionAccess===false
+  &&value.noDispatcher===true&&value.realNotificationsSent===false&&value.seed?.setupNotAcceptance===true
+  &&JSON.stringify(value)===JSON.stringify(expected.state);
+ if(!matches(state)||!matches(await read(qaStatePath)))throw Error('Original exchange actors, setup, operations or complete databases changed');
+ attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.seed.manifestSha256,
+  kind:expected.kind,campaignId:expected.campaignId,sourceCount:seen.size,read};
+ if(attachCheck==='1')console.log(JSON.stringify({ok:true,readOnlyPreflight:true,kind:expected.kind,campaignId:expected.campaignId,
+  apiPid:health.pid,apiOrigin,stateSha256:attachedApi.stateSha256,sourceCount:seen.size,apiSpawned:false,apiKilled:false,snapshotWritten:false}));
 }
 let generatedInputSnapshot={mode:'dynamic',scope:'Composed generated text is read dynamically; no generated inputs are frozen.'};
 if(reuseArgument){
@@ -153,7 +194,7 @@ if(snapshotArgument){
 
 const origin = `http://127.0.0.1:${port}`;
 const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${apiPort}/app/api/`, accountId: '90101', realmId: 'permanent' };
-const injected = `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
+const injected = '<script src="/ui-generated-20261030/hud-angels-20261102/monster-expansion-catalog.js"></script>' + `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
 const buttonMaterialPrefix = '/ui/button-materials/';
 const hudMaterialPaths=new Set(['/ui/hud-v2/hud-v2.css','/ui/hud-v2/orb-bezel.webp','/ui/hud-v2/action-icons.webp','/ui/hud-v2/accepted-layout.json','/ui/hud-v2/source-manifest.json']);
@@ -177,7 +218,7 @@ const virtualSocial = new Set([
   'scene-boss-ui.js','scene-boss-ui.css',
   'scene-star-ring-ui.js','scene-star-ring-ui.css',
   'scene-ledger-ui.js','scene-ledger-ui.css',
-  'scene-exchange-ui.js','scene-exchange-ui.css',
+  'scene-exchange-ui.js','scene-exchange-ui.css','scene-exchange-client.js', 'monster-expansion-catalog.js',
   'scene-guardian-ui.js','scene-guardian-ui.css',
   'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js','scene-fate-private-ui.js','scene-fate-private-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',

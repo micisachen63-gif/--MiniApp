@@ -28,7 +28,8 @@ export const SCOPED_STAR_RING_ACTIONS = Object.freeze(['star-ring/scene','star-r
 export const SCOPED_GUARDIAN_ACTIONS = Object.freeze(['guardian/scene','guardian/receipt','guardian/action-scoped']);
 export const SCOPED_FATE_ACTIONS = Object.freeze(['fate/scene','fate/receipt','fate/action-scoped',
   'fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
-export const SCOPED_EXCHANGE_READ_ACTIONS = Object.freeze(['exchange/scene']);
+export const SCOPED_EXCHANGE_READ_ACTIONS = Object.freeze(['exchange/scene','exchange/sellable-scene','exchange/receipt']);
+export const SCOPED_EXCHANGE_ACTIONS = Object.freeze([...SCOPED_EXCHANGE_READ_ACTIONS,'exchange/action-scoped']);
 
 export const APP_ACTIONS = Object.freeze({
   'guardian/scene':'/rpg/guardian/scene','guardian/receipt':'/rpg/guardian/receipt','guardian/action-scoped':'/rpg/guardian/action-scoped',
@@ -51,6 +52,7 @@ export const APP_ACTIONS = Object.freeze({
   'fate/daily':'/rpg/fate/daily','fate/profile':'/rpg/fate/profile',
   'fate/profile/save':'/rpg/fate/profile/save','fate/profile/delete':'/rpg/fate/profile/delete',
   'exchange/scene':'/rpg/exchange/scene',
+  'exchange/sellable-scene':'/rpg/exchange/sellable-scene','exchange/receipt':'/rpg/exchange/receipt','exchange/action-scoped':'/rpg/exchange/action-scoped',
   'exchange/list':'/rpg/exchange/list','exchange/sellable':'/rpg/exchange/sellable','exchange/mine':'/rpg/exchange/mine',
   'exchange/create':'/rpg/exchange/create','exchange/cancel':'/rpg/exchange/cancel','exchange/buy':'/rpg/exchange/buy',
   'guardian/config':'/rpg/guardian/config','guardian/inventory':'/rpg/guardian/inventory',
@@ -164,8 +166,8 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
     if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
     return json({ok:true,realms,selectedRealmId:selected});
   }
-  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_READ_ACTIONS.includes(action)||action==='ledger/history'))&&(typeof body.realmId!=='string'||!body.realmId))return fail('realm_required','請先選擇遊戲環境');
-  if(((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_READ_ACTIONS.includes(action)||action==='ledger/history'))||action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||action==='ledger/history'))&&(typeof body.realmId!=='string'||!body.realmId))return fail('realm_required','請先選擇遊戲環境');
+  if(((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||action==='ledger/history'))||action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
   if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
   const originalJson=json;
   json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
@@ -214,7 +216,7 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor,
   // Scoped Boss, Star Ring, Guardian and Fate surfaces keep the client scope and raw receipt ID. Their trusted
   // namespace is a function argument; body fields cannot select it. No analytics
   // write may escape the scoped operation's transactional character guard.
-  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_READ_ACTIONS.includes(action)||action==='ledger/history'))){
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||action==='ledger/history'))){
     if(typeof body.selectedCharacterId!=='string'||!body.selectedCharacterId)return fail('selected_character_required','請先選擇角色',400);
     const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
     if(!owned)return fail('no_character','找不到目前帳號的角色',404);

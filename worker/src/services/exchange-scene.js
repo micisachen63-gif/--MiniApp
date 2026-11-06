@@ -16,6 +16,7 @@ function encode(value) {
 }
 function rawCursorValid(value, tab) {
   if (typeof value !== 'string') return false;
+  if (tab === 'sellable') return /^(equip|guardian|item):[^\u0000-\u001f]{1,128}$/.test(value);
   if (tab !== 'history')
     return /^\d{1,16}$/.test(value) && integer(Number(value)) && Number(value) > 0;
   if (!/^\d{1,16}:\d{1,16}$/.test(value)) return false;
@@ -95,5 +96,53 @@ export async function view(env, tg, input = {}, now = Date.now()) {
     revision: before.rev, serverNow: now, pageSize: PAGE_SIZE, tab,
     filters: tab === 'browse' ? result.filters : null, role: tab === 'history' ? result.role : null,
     items: result.items, meta: tab === 'history' ? null : result.meta,
+    nextCursor: result.nextCursor == null ? null : encode([...scope, selector, result.nextCursor]) };
+}
+
+// Candidates have kind:ref keysets, not listing sequence IDs or listing rows.
+export async function sellable(env, tg, input = {}, now = Date.now()) {
+  const allowed = ['accountId', 'realmId', 'selectedCharacterId', 'contextEpoch', 'filters', 'cursor', 'tgId'];
+  if (!plain(input) || Object.keys(input).some(key => !allowed.includes(key)))
+    fail('exchange_filters', '可上架物品讀取格式無效');
+  if (!integer(input.contextEpoch) || input.contextEpoch < 0)
+    fail('exchange_context', '角色狀態已變更，請重新開啟交易所');
+  if (input.filters != null && (!plain(input.filters) || Object.keys(input.filters).some(key => !FILTER_KEYS.includes(key))))
+    fail('exchange_filters', '請選擇有效的交易所篩選條件');
+  if (typeof input.accountId !== 'string' || !input.accountId) fail('account_required', '請先核對目前帳號');
+  if (typeof input.realmId !== 'string' || !input.realmId) fail('realm_required', '請先選擇遊戲環境');
+  const realmId = env.REALM_CONTEXT?.id || 'permanent', id = String(tg);
+  if (input.realmId !== realmId) fail('realm_mismatch', '環境不一致', 409);
+  if (typeof input.selectedCharacterId !== 'string' || !input.selectedCharacterId)
+    fail('selected_character_required', '請先選擇角色');
+  if (input.selectedCharacterId !== id) fail('character_changed', '角色已切換，請重新開啟交易所', 409);
+  const before = await actor(env.DB, id);
+  if (!before) fail('no_character', '找不到目前角色', 404);
+  const accountId = String(before.account_tg_id || id);
+  if (input.accountId !== accountId) fail('account_changed', '帳號已變更，請回到原帳號核對', 409);
+  if (before.active_char_id != null && String(before.active_char_id) !== id)
+    fail('character_changed', '角色已在另一個視窗切換，請重新選角', 409);
+  if (!integer(before.rev) || before.rev < 0 || !integer(now) || now < 0)
+    fail('exchange_data', '交易所資料尚未完整，請稍後重新整理', 500);
+  const scope = [accountId, realmId, id, input.contextEpoch, 'sellable'], cursor = readCursor(input.cursor, scope);
+  const result = await EXCHANGE.sellable(env, id, { filters: input.filters ?? {}, cursor: cursor?.raw ?? null });
+  if (result.ok !== true || !plain(result.filters) || !Array.isArray(result.items) || result.items.length > PAGE_SIZE
+      || result.nextCursor != null && !rawCursorValid(result.nextCursor, 'sellable'))
+    fail('exchange_data', '交易所資料尚未完整，請稍後重新整理', 500);
+  const selector = FILTER_KEYS.map(key => result.filters[key]);
+  if (cursor && JSON.stringify(cursor.selector) !== JSON.stringify(selector))
+    fail('exchange_cursor', '交易所篩選已變更，請重新整理');
+  const items = result.items.map(item => {
+    const ref = item.kind === 'equip' ? item.equipId : item.kind === 'guardian' ? item.guardianId : item.kind === 'item' ? item.item : null;
+    if (typeof ref !== 'string' || !ref || ref.length > 128 || /[\u0000-\u001f]/.test(ref)
+        || !integer(item.qty) || item.qty < 1)
+      fail('exchange_data', '交易所資料尚未完整，請稍後重新整理', 500);
+    return { ...item, ref };
+  });
+  const after = await actor(env.DB, id);
+  if (!after || JSON.stringify(identity(after)) !== JSON.stringify(identity(before)))
+    fail('character_changed', '角色或交易所狀態已更新，請重新整理', 409);
+  return { ok: true, schemaVersion: 1, accountId, realmId, characterId: id, contextEpoch: input.contextEpoch,
+    revision: before.rev, serverNow: now, pageSize: PAGE_SIZE, tab: 'sellable',
+    filters: result.filters, role: null, items, meta: result.meta,
     nextCursor: result.nextCursor == null ? null : encode([...scope, selector, result.nextCursor]) };
 }

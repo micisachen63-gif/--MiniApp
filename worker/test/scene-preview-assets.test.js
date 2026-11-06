@@ -456,3 +456,96 @@ test('private Fate root assets resolve to product modules and keep original plac
   }
   for (const name of ['/scene-fate-private-ui.js/other', '/scene-fate-private-ui.json', '/fate/app.js']) assert.equal((await h.request(name)).status, 404);
 });
+
+
+test('exchange client and published catalog serve owned GET/HEAD bytes without a path escape', async () => {
+  const binder=readFileSync(new URL('../tools/scene-preview-bindings.mjs',import.meta.url),'utf8');
+  const prefix='/ui-generated-20261030/hud-angels-20261102/';
+  const modules=[['scene-exchange-client.js','action client bytes'],['monster-expansion-catalog.js','published catalog bytes']];
+  const h=await harness([...modules,['../tools/scene-preview-bindings.mjs',binder]]);
+  for(const [name,bytes]of modules){
+    const response=await h.request(prefix+name);
+    assert.equal(response.status,200);assert.equal(response.body.toString(),bytes);
+    assert.equal(response.headers['Content-Type'],'text/javascript; charset=utf-8');
+    assert.equal(response.headers['Cache-Control'],'no-store');
+    const head=await h.request(prefix+name,'HEAD');
+    assert.equal(head.status,200);assert.equal(head.body,undefined);
+    assert.equal((await h.request(prefix+name+'/other')).status,404);
+  }
+  for(const url of [prefix+'%2e%2e%2fprivate.js',prefix+'a%5c..%5cprivate.js'])
+    assert.equal((await h.request(url)).status,404);
+});
+
+function exchangeAttachFixture(options={}) {
+  const repo=path.resolve(publicRoot,'../..'),evidence=path.join(repo,'.release-sync');
+  const statePath=path.join(evidence,'unit-exchange-preserve.json');
+  const ownerPath=path.resolve(repo,'../../handoff/non-character',path.basename(repo).replace(/^star-journal-/,''),'OWNER.json');
+  const owner={schemaVersion:1,status:'active',session:'unit-exchange-actions-owner',worktree:repo};
+  const ownerBody=JSON.stringify(owner);
+  const sources=['worker/tools/atlas-local-preview.mjs','worker/tools/exchange-actions-qa-fixture.mjs',
+    'worker/tools/scene-live-preview.mjs','worker/tools/scene-preview-bindings.mjs'].map(name=>({path:name,body:'unit-bound-source:'+name}));
+  const state={ok:true,schemaVersion:1,synthetic:true,isolated:true,ephemeral:true,productionAccess:false,
+    noDispatcher:true,realNotificationsSent:false,
+    seed:{setupNotAcceptance:true,manifestSha256:sha('original-setup')},
+    databases:{permanent:{sha256:sha('original-permanent'),totalChanges:17},season:{sha256:sha('original-season'),totalChanges:8}},
+    permanent:{operations:[{requestId:'original-operation'}]},season:{operations:[]}};
+  const intent={schemaVersion:1,status:'preserve-exact-exchange-actions-api',kind:'preserve-exchange-actions-api',
+    campaignId:'unit-exchange-campaign',apiPid:31000,apiOrigin:'http://127.0.0.1:9702',state:structuredClone(state),
+    ownerSession:owner.session,ownerSha256:sha(ownerBody),
+    sourceBindings:sources.map(row=>({path:row.path,bytes:Buffer.byteLength(row.body),sha256:sha(row.body)}))};
+  options.intent?.(intent);options.owner?.(owner);options.sources?.(sources);
+  const entries=[[path.relative(publicRoot,statePath),JSON.stringify(intent)],
+    [path.relative(publicRoot,ownerPath),JSON.stringify(owner)],
+    ...sources.map(row=>[path.relative(publicRoot,path.join(repo,row.path)),row.body])];
+  const health={pid:31000,isolated:true,ephemeral:true,productionAccess:false,
+    exchangeActionsQa:true,exchangeQa:false,ledgerQa:true,skillCareerQa:true,
+    guardianQa:false,starRingQa:false,bossQa:false,towerQa:false,partyQa:false,fateQa:false,fatePrivateQa:false,
+    exchangeActionsQaPolicy:{backgroundTimersDisabled:{atlas:true,workshop:true,party:true}}};
+  options.health?.(health);
+  const calls=[];let reads=0;
+  const args=['--attach-api-pid=31000','--qa-attach-state=.release-sync/unit-exchange-preserve.json',...(options.check?['--qa-attach-check=1']:[])];
+  return {calls,run:()=>harness(entries,[],[path.relative(publicRoot,evidence)],
+    {RPG_EXCHANGE_ACTIONS_QA:'1',RPG_LEDGER_QA:'1',RPG_SKILL_CAREER_QA:'1'},args,
+    {listen:options.listen,fetch:async(url,init={})=>{
+      calls.push({url,method:init.method||'GET'});
+      if(url.endsWith('/__preview/health'))return {status:200,json:async()=>structuredClone(health)};
+      assert.equal(url,'http://127.0.0.1:9702/__preview/exchange-actions-state');
+      const copy=structuredClone(state);reads++;
+      if(reads===1)options.live?.(copy);else options.after?.(copy);
+      return {status:200,json:async()=>copy};
+    }})};
+}
+
+test('exchange action UI attaches only the source/owner/state-bound API and closes without owning its process',async()=>{
+  const fixture=exchangeAttachFixture({listen:true}),h=await fixture.run();
+  assert.equal(h.lifecycle.created,1);assert.equal(h.lifecycle.listening,true);
+  assert.equal(fixture.calls.length,3);assert(fixture.calls.every(row=>row.method==='GET'));
+  const health=JSON.parse((await h.request('/__preview/health')).body);
+  assert.equal(health.apiPid,31000);assert.equal(health.apiOwned,false);assert.equal(health.attachedApi,true);
+  assert.equal(health.attachKind,'preserve-exchange-actions-api');
+  h.signals.get('SIGTERM')();
+  assert.equal(h.lifecycle.closed,1);assert.equal(h.lifecycle.connectionsClosed,1);
+  assert.equal(fixture.calls.length,3,'closing the UI performs no API request or replacement');
+});
+
+test('exchange action attachment preflight starts no listener, owns no signals, and performs only reads',async()=>{
+  const fixture=exchangeAttachFixture({check:true,listen:true}),h=await fixture.run();
+  assert.equal(h.lifecycle.created,0);assert.equal(h.lifecycle.listening,false);assert.equal(h.signals.size,0);
+  assert.equal(h.lifecycle.exitCalls,0);assert.equal(fixture.calls.length,3);
+  assert.equal(h.logs.at(-1).readOnlyPreflight,true);assert.equal(h.logs.at(-1).apiSpawned,false);assert.equal(h.logs.at(-1).apiKilled,false);
+});
+
+test('exchange action attachment refuses missing intent, mixed modes, owner/source changes and database drift',async()=>{
+  await assert.rejects(harness([],[],[],{RPG_EXCHANGE_ACTIONS_QA:'1',RPG_LEDGER_QA:'1',RPG_SKILL_CAREER_QA:'1'}),/independently owned API/);
+  await assert.rejects(harness([],[],[],{RPG_EXCHANGE_ACTIONS_QA:'1',RPG_FATE_QA:'1'}),/Only one isolated QA fixture/);
+  for(const options of [
+    {intent:value=>{value.ownerSession='another-writer';}},
+    {owner:value=>{value.status='completed';}},
+    {sources:value=>{value[0].body+='changed';}},
+    {intent:value=>{value.sourceBindings.pop();}},
+    {health:value=>{value.pid=31001;}},
+    {health:value=>{value.exchangeActionsQaPolicy.backgroundTimersDisabled.atlas=false;}},
+    {live:value=>{value.databases.permanent.totalChanges++;}},
+    {after:value=>{value.season.operations.push({requestId:'late-write'});}},
+  ])await assert.rejects(exchangeAttachFixture(options).run(),/owner changed|source changed|required source binding|identity or isolation|complete databases changed/);
+});

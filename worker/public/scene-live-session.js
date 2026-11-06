@@ -1,8 +1,8 @@
 /* One context for the local scene and its real Atlas windows. Reads never settle. */
 (() => {
   'use strict';
-  const READS = new Set(['exchange/scene','meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','fate/scene','fate/receipt','fate/private/scene','fate/private/profile','fate/private/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','ledger/history','fate/gifts/summary','chat/state']);
-  const SCOPED_REALM_ACTIONS = new Set(['exchange/scene','ledger/history','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','guardian/scene','guardian/receipt','guardian/action-scoped','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
+  const READS = new Set(['exchange/scene','exchange/sellable-scene','exchange/receipt','meta','characters','skill-career','party/scene','tower/scene','tower/receipt','boss/scene','boss/receipt','star-ring/scene','star-ring/receipt','guardian/scene','guardian/receipt','fate/scene','fate/receipt','fate/private/scene','fate/private/profile','fate/private/receipt','atlas/status','atlas/catalog','atlas/talents','atlas/talents/preview','atlas/quests','equipment-collection','equipment-collection/preview','equipment-recovery','equipment-recovery/preview','forge/receipt','background/status','auto-enhance/status','auto-reroll/status','auto-reroll/options','ledger','ledger/history','fate/gifts/summary','chat/state']);
+  const SCOPED_REALM_ACTIONS = new Set(['exchange/scene','exchange/sellable-scene','exchange/receipt','exchange/action-scoped','ledger/history','boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped','star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped','guardian/scene','guardian/receipt','guardian/action-scoped','fate/scene','fate/receipt','fate/action-scoped','fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
     const endpoint = options.endpoint;
@@ -54,9 +54,12 @@
       let response, data, acceptedScene = false;
       try {
         try {
+          const headers = { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': captured.accountId, 'X-Realm-Id': captured.realmId };
+          const artRevision = globalThis.RpgMonsterExpansion?.revision || globalThis.RpgMonsterExpansionArtRevision;
+          if (typeof artRevision === 'string' && /^[\x21-\x7e]{1,200}$/.test(artRevision)) headers['X-Monster-Art-Revision'] = artRevision;
           response = await send(endpoint + action, {
             method: 'POST', mode: 'cors', credentials: 'omit',
-            headers: { 'Content-Type': 'application/json', 'X-Dev-Tg-Id': captured.accountId, 'X-Realm-Id': captured.realmId },
+            headers,
             body: JSON.stringify({ ...body, ...(SCOPED_REALM_ACTIONS.has(action) ? { realmId: captured.realmId } : {}), ...(captured.characterId && !['characters','select'].includes(action) ? { selectedCharacterId: captured.characterId } : {}) }), signal: controller.signal,
           });
           data = await response.json();
@@ -67,6 +70,7 @@
         if (generation !== epoch || disposed) throw contextError();
         if (!response.ok || data.ok === false) {
           const error = Object.assign(new Error(data.message || '資料暫時無法同步'), { code: data.error, status: response.status, uncertain: !read && response.status >= 500 });
+          if (action === 'exchange/action-scoped' && data.definitiveRejection === true) error.exchangeRejection = data;
           if (data.error === 'character_changed') {
             setContext({ characterId: null });
             queueMicrotask(() => { if (!disposed && !selecting) void refresh().catch(() => {}); });
