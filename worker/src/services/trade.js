@@ -38,17 +38,42 @@ async function load(db, id) {
 }
 async function charOf(db, tg) { return db.prepare('SELECT tg_id, account_tg_id, name, base_class, level, party_id, gold, tg_username FROM rpg_live_characters AS rpg_characters WHERE tg_id = ?').bind(String(tg)).first(); }
 
+// New scene-scoped operations keep a typed record in the ORIGINAL operation row,
+// inserted in the SAME atomic D1 batch as escrow, ledger and trade revisions.
+// Historical result_json rows stay untyped and cannot prove a scoped intent.
+const directTradeCollision = () => { throw new GameError('request_reused', '交易請求編號已使用於另一項操作，請核對原始請求', 409); };
+function resultJson(result, receipt, now) {
+  return JSON.stringify(receipt ? { ...receipt, receiptType: 'scoped-direct-trade-v1', createdAt: now, result } : result);
+}
+function savedResult(raw, receipt) {
+  let saved;
+  try { saved = JSON.parse(raw); } catch { if (receipt) directTradeCollision(); throw new GameError('trade_receipt_corrupt', '交易收據資料異常', 409); }
+  if (saved && saved.receiptType === 'scoped-direct-trade-v1') {
+    if (!receipt || saved.signature !== receipt.signature || saved.kind !== receipt.kind
+        || saved.requestId !== receipt.requestId || saved.tradeId !== receipt.tradeId
+        || saved.accountId !== receipt.accountId || saved.realmId !== receipt.realmId
+        || saved.characterId !== receipt.characterId || saved.offerRev !== receipt.offerRev
+        || JSON.stringify(saved.payload) !== JSON.stringify(receipt.payload)) directTradeCollision();
+    return saved.result;
+  }
+  if (receipt) directTradeCollision(); // legacy rows cannot be trusted as signed receipts
+  return saved;
+}
+
 /** run fn(trade) → { stmts, result } with optimistic-lock retries; lazily expires an overdue trade first */
-async function mutate(env, id, now, tg, fn, requestId = null, attempts = 4) {
+async function mutate(env, id, now, tg, fn, requestId = null, attempts = 4, scopedReceipt = null) {
   const db = env.DB;
   if (requestId != null && !/^(?:app:)?[\w-]{1,100}$/.test(String(requestId))) throw new GameError('request', '交易操作編號無效');
   for (let attempt = 1; ; attempt++) {
     if (requestId != null) {
       const prior = await db.prepare('SELECT result_json FROM rpg_trade_operations WHERE trade_id = ? AND tg_id = ? AND request_id = ?').bind(String(id), String(tg), String(requestId)).first();
-      if (prior) return JSON.parse(prior.result_json);
+      if (prior) return savedResult(prior.result_json, scopedReceipt);
     }
     const t = await load(db, id); if (!t) throw new GameError('not_found', '找不到這筆交易', 404);
     if (tg != null && !sideOf(t, tg)) throw new GameError('not_party', '你不是這筆交易的成員', 403);
+    if (scopedReceipt && t.offer_rev !== scopedReceipt.offerRev) throw new GameError('offer_changed', '交易報價版本已更新，請重新核對', 409);
+    // The scoped write never silently expires a window while verifying intent.
+    if (scopedReceipt && t.status === 'open' && t.expires_at <= now) throw new GameError('closed', '交易已逾時，請重新查看', 409);
     if (t.status === 'open' && t.expires_at <= now) {
       try { await closeTrade(env,t,'expired',null,now); }
       catch(e) { const error=classifyDbError(e);if(error?.code==='conflict'&&attempt<attempts)continue;throw error||e; }
@@ -56,7 +81,7 @@ async function mutate(env, id, now, tg, fn, requestId = null, attempts = 4) {
     }
     if (t.status !== 'open') throw new GameError('closed', { done: '這筆交易已經完成了', cancelled: '這筆交易已取消', expired: '這筆交易已過期（物品與金幣已退回）' }[t.status] || '交易已結束', 409);
     const { stmts, result } = await fn(t);
-    const batch = requestId == null ? stmts : [...stmts, db.prepare('INSERT INTO rpg_trade_operations (trade_id,tg_id,request_id,result_json,created_at) VALUES (?,?,?,?,?)').bind(String(id), String(tg), String(requestId), JSON.stringify(result), now)];
+    const batch = requestId == null ? stmts : [...stmts, db.prepare('INSERT INTO rpg_trade_operations (trade_id,tg_id,request_id,result_json,created_at) VALUES (?,?,?,?,?)').bind(String(id), String(tg), String(requestId), resultJson(result, scopedReceipt, now), now)];
     try { await db.batch(batch); return result; }
     catch (e) { const g = classifyDbError(e); if (g?.code === 'conflict' && attempt < attempts) continue; throw g || e; }
   }
@@ -161,7 +186,7 @@ const changed = (db, t, now) => lockStmt(db, t, 'offer_rev = offer_rev + 1, a_ok
 const updateNote = () => [];
 const notLocked = (t, s) => { if (t[`${s}_lock`]) throw new GameError('locked', '你已經鎖定了，不能再放入或取回（要改就取消交易）', 409); };
 
-export async function setGold(env, { tgId, tradeId, gold, requestId = null }, now) {
+export async function setGold(env, { tgId, tradeId, gold, requestId = null }, now, scopedReceipt = null) {
   gold = Number(gold); checkGold(gold); const db = env.DB; const tg = String(tgId);
   return mutate(env, tradeId, now, tg, async (t) => {
     const s = sideOf(t, tg); notLocked(t, s); const cur = t[`${s}_gold`]; const d = gold - cur; if (!d) return { stmts: [db.prepare('SELECT 1')], result: { unchanged: true } };
@@ -171,7 +196,7 @@ export async function setGold(env, { tgId, tradeId, gold, requestId = null }, no
     return { stmts: [changed(db, t, now), guardStmt(db), db.prepare(`UPDATE rpg_trades SET ${s}_gold = ? WHERE id = ?`).bind(gold, t.id), ...wallet, bumpRevStmt(db, tg, now),
       ledgerStmt(db, { event_id: ev, tg_id: tg, type: d > 0 ? '交易保管金幣' : '交易退回金幣', gold_delta: -d, note: t.id }, now), logStmt(db, t.id, tg, 'gold', { from: cur, to: gold }, now), ...updateNote(db, t, now)],
       result: { gold } };
-  }, requestId);
+  }, requestId, 4, scopedReceipt);
 }
 
 async function checkSigil(db,row,tg,other){
@@ -183,7 +208,7 @@ async function checkSigil(db,row,tg,other){
  return players.map(c=>backpackAccessStmt(db,c.tg_id,15));
 }
 /** add a line: { equipId } or { item, qty } */
-export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = null, item = null, qty = 1, requestId = null }, now) {
+export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = null, item = null, qty = 1, requestId = null }, now, scopedReceipt = null) {
   const db = env.DB; const tg = String(tgId);
   return mutate(env, tradeId, now, tg, async (t) => {
     const s = sideOf(t, tg); notLocked(t, s); if (t.lines.filter((l) => l.side === s).length >= TRADE.maxLines && !(item && t.lines.some((l) => l.side === s && l.ref === item))) throw new GameError('too_many_lines', `每人最多放 ${TRADE.maxLines} 項`);
@@ -206,9 +231,9 @@ export async function addLine(env, { tgId, tradeId, equipId = null, sigilId = nu
       db.prepare("INSERT INTO rpg_trade_items (trade_id,side,kind,ref,qty) VALUES (?,?,'item',?,?) ON CONFLICT(trade_id,side,kind,ref) DO UPDATE SET qty = qty + excluded.qty").bind(t.id, s, item, qty),
       ledgerStmt(db, { event_id: `trade:${t.id}:${t.rev}:${tg}:add:${item}`, tg_id: tg, type: '交易保管道具', item, item_delta: -qty, note: t.id }, now),
       logStmt(db, t.id, tg, 'add', { item, qty }, now), ...updateNote(db, t, now)], result: { added: item, qty } };
-  }, requestId);
+  }, requestId, 4, scopedReceipt);
 }
-export async function removeLine(env, { tgId, tradeId, equipId = null, sigilId = null, item = null, qty = null, requestId = null }, now) {
+export async function removeLine(env, { tgId, tradeId, equipId = null, sigilId = null, item = null, qty = null, requestId = null }, now, scopedReceipt = null) {
   const db = env.DB; const tg = String(tgId);
   return mutate(env, tradeId, now, tg, async (t) => {
     const s = sideOf(t, tg); notLocked(t, s); const l = t.lines.find((x) => x.side === s && (sigilId ? x.kind==='sigil'&&x.ref===String(sigilId) : equipId ? x.kind === 'equip' && x.ref === String(equipId) : x.kind === 'item' && x.ref === item));
@@ -230,12 +255,12 @@ export async function removeLine(env, { tgId, tradeId, equipId = null, sigilId =
       invDeltaStmt(db, tg, l.ref, n),
       ledgerStmt(db, { event_id: `trade:${t.id}:${t.rev}:${tg}:remove:${l.ref}`, tg_id: tg, type: '交易退回道具', item: l.ref, item_delta: n, note: t.id }, now),
       logStmt(db, t.id, tg, 'remove', { item: l.ref, qty: n }, now), ...updateNote(db, t, now)], result: { removed: l.ref, qty: n } };
-  }, requestId);
+  }, requestId, 4, scopedReceipt);
 }
 
 // ---------------------------------------------------------------------------------------------- lock / OK / settle
 /** 鎖定 my side (irreversible). The other side gets a DM; when both are locked both get a 「按 OK」 DM. */
-export async function lock(env, { tgId, tradeId, requestId = null }, now) {
+export async function lock(env, { tgId, tradeId, requestId = null }, now, scopedReceipt = null) {
   const db = env.DB; const tg = String(tgId);
   return mutate(env, tradeId, now, tg, async (t) => {
     const s = sideOf(t, tg); const o = otherSide(s); if (t[`${s}_lock`]) return { stmts: [db.prepare('SELECT 1')], result: { locked: true, unchanged: true } };
@@ -243,10 +268,10 @@ export async function lock(env, { tgId, tradeId, requestId = null }, now) {
     const note = both ? ['a', 'b'].map((x) => outboxStmt(db, { dedupe: `dm:${t[`${x}_tg`]}:tready:${t.id}`, target: 'dm', tgId: t[`${x}_tg`], kind: 'trade_ready', payload: { tradeId: t.id } }, now))
       : [outboxStmt(db, { dedupe: `dm:${t[`${o}_tg`]}:tlock:${t.id}`, target: 'dm', tgId: t[`${o}_tg`], kind: 'trade_locked', payload: { tradeId: t.id } }, now)];
     return { stmts: [lockStmt(db, t, `${s}_lock = 1`, [], now), guardStmt(db), logStmt(db, t.id, tg, 'lock', null, now), ...note], result: { locked: true, bothLocked: both } };
-  }, requestId);
+  }, requestId, 4, scopedReceipt);
 }
 /** OK: only when both sides are locked. The second OK settles atomically in the same batch. */
-export async function confirm(env, { tgId, tradeId, offerRev = null, requestId = null }, now) {
+export async function confirm(env, { tgId, tradeId, offerRev = null, requestId = null }, now, scopedReceipt = null) {
   const db = env.DB; const tg = String(tgId);
   return mutate(env, tradeId, now, tg, async (t) => {
     if (!t.a_lock || !t.b_lock) throw new GameError('not_locked', '雙方都按「鎖定」之後才能按 OK', 409);
@@ -259,7 +284,7 @@ export async function confirm(env, { tgId, tradeId, offerRev = null, requestId =
     return { stmts: [lockStmt(db, t, `${s}_ok = 1, status = 'done', closed_at = ?, closed_by = ?, tax_gold = ?`, [now, tg, tax], now), guardStmt(db),
       ...settleStatements(db, t, now), logStmt(db, t.id, tg, 'confirm', { offerRev: t.offer_rev }, now), logStmt(db, t.id, null, 'done', { taxGold: tax }, now),
       ...endNotes(db, t, 'done', now)], result: { confirmed: true, done: true } };
-  }, requestId);
+  }, requestId, 4, scopedReceipt);
 }
 /** DMs to both sides + (share trades) mark the post 成交 when the shared item changed hands */
 function endNotes(db, t, status, now) {
@@ -312,19 +337,21 @@ async function closeTrade(env, t, status, by, now, extraStmts = []) {
   await db.batch([...stmts, ...extraStmts]);
   return { status };
 }
-export async function cancel(env, { tgId, tradeId, requestId = null }, now) {
+export async function cancel(env, { tgId, tradeId, requestId = null }, now, scopedReceipt = null) {
   const db = env.DB; const tg = String(tgId);
   if (requestId != null && !/^(?:app:)?[\w-]{1,100}$/.test(String(requestId))) throw new GameError('request', '交易操作編號無效');
   for (let attempt = 1; ; attempt++) {
     if (requestId != null) {
       const prior = await db.prepare('SELECT result_json FROM rpg_trade_operations WHERE trade_id = ? AND tg_id = ? AND request_id = ?').bind(String(tradeId), tg, String(requestId)).first();
-      if (prior) return JSON.parse(prior.result_json);
+      if (prior) return savedResult(prior.result_json, scopedReceipt);
     }
     const t = await load(db, tradeId); if (!t) throw new GameError('not_found', '找不到這筆交易', 404);
     if (!sideOf(t, tg)) throw new GameError('not_party', '你不是這筆交易的成員', 403);
+    if (scopedReceipt && t.offer_rev !== scopedReceipt.offerRev) throw new GameError('offer_changed', '交易報價版本已更新，請重新核對', 409);
+    if (scopedReceipt && t.expires_at <= now) throw new GameError('closed', '交易已逾時，請重新查看', 409);
     if (t.status !== 'open') throw new GameError('closed', '這筆交易已經結束了', 409);
     const status = t.expires_at <= now ? 'expired' : 'cancelled'; const result = { status };
-    const extra = requestId == null ? [] : [db.prepare('INSERT INTO rpg_trade_operations (trade_id,tg_id,request_id,result_json,created_at) VALUES (?,?,?,?,?)').bind(String(tradeId), tg, String(requestId), JSON.stringify(result), now)];
+    const extra = requestId == null ? [] : [db.prepare('INSERT INTO rpg_trade_operations (trade_id,tg_id,request_id,result_json,created_at) VALUES (?,?,?,?,?)').bind(String(tradeId), tg, String(requestId), resultJson(result, scopedReceipt, now), now)];
     try { return await closeTrade(env, t, status, tg, now, extra); }
     catch (e) { const g = classifyDbError(e); if (g?.code === 'conflict' && attempt < 4) continue; throw g || e; }
   }
