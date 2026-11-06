@@ -41,7 +41,7 @@ if(snapshotArgument&&reuseArgument)throw Error('Capture and reuse are mutually e
 if(attachPidArgument||reuseArgument||attachStateArgument||attachCheck){
  if(!(fateQA||fatePrivateQA)||guardianQA||!attachPidArgument||!reuseArgument||!attachStateArgument||snapshotArgument||attachCheck&&attachCheck!=='1')throw Error('Existing API attach requires Fate-only mode, expected PID/state and immutable snapshot reuse');
  if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
- for(const flag of ['RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_SKILL_CAREER_QA'])if(process.env[flag]==='1')throw Error('Existing API attach forbids other QA modes');
+ for(const flag of ['RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_SKILL_CAREER_QA','RPG_LEDGER_QA'])if(process.env[flag]==='1')throw Error('Existing API attach forbids other QA modes');
 }
 if(fatePrivateQA&&!captureOnly&&!attachPidArgument)throw Error('Private Fate QA UI must attach an independently owned API');
 const qaStatePath=fatePrivateQA?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state';
@@ -89,7 +89,7 @@ if(attachPidArgument){
  }
  const read=async endpoint=>{const response=await fetch(apiOrigin+endpoint,{redirect:'error',signal:AbortSignal.timeout(10000)});if(response.status!==200)throw Error('Existing API refused read-only inspection');return response.json();};
  const [health,state]=await Promise.all([read('/__preview/health'),read(qaStatePath)]);
- if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false||(fatePrivateQA?health.fatePrivateQa!==true||health.fateQa!==false:health.fateQa!==true)||['guardianQa','starRingQa','bossQa','towerQa','partyQa','skillCareerQa'].some(key=>health[key]!==false))throw Error('Existing API identity or isolation differs');
+ if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false||(fatePrivateQA?health.fatePrivateQa!==true||health.fateQa!==false:health.fateQa!==true)||(health.ledgerQa!==undefined&&health.ledgerQa!==false)||['guardianQa','starRingQa','bossQa','towerQa','partyQa','skillCareerQa'].some(key=>health[key]!==false))throw Error('Existing API identity or isolation differs');
  if(health.qaClock?.mode!=='manual-development-clock'||health.qaClock.lifeMs!==7200000||health.qaClock.choiceMs!==90000||health.qaClock.automaticFateSweep!==false||health.qaClock.deadlinesUnmodified!==true||health.qaClock.nightPause!=='00:00-06:00 Asia/Taipei')throw Error('Existing API changed original Fate timing');
  if(state.isolated!==true||state.ephemeral!==true||state.productionAccess!==false||state.commandInFlight!==null||stateIdentity(state)!==stateIdentity(attachExpected.state))throw Error('Original fixture, actors, both databases, clock or life rows changed');
  if(emptyCampaign){
@@ -176,6 +176,7 @@ const virtualSocial = new Set([
   'scene-tower-ui.js','scene-tower-ui.css',
   'scene-boss-ui.js','scene-boss-ui.css',
   'scene-star-ring-ui.js','scene-star-ring-ui.css',
+  'scene-ledger-ui.js','scene-ledger-ui.css',
   'scene-guardian-ui.js','scene-guardian-ui.css',
   'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js','scene-fate-private-ui.js','scene-fate-private-ui.css',
   'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',

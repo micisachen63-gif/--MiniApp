@@ -72,3 +72,58 @@ test('adventure hub keeps live status reachable through the existing route histo
   assert.equal(state.back().route,'adventure');
  }
 });
+
+function ledgerRoutesFixture({loadSceneModule} = {}) {
+ const social=fs.readFileSync(new URL('../public/scene-social-preview.js',import.meta.url),'utf8');
+ const routeStart=social.indexOf('const unifiedRoutes={'),routeEnd=social.indexOf('const moduleFlights=',routeStart);
+ const hubStart=social.indexOf('function paintHub('),mountStart=social.indexOf('async function mountUnified('),mountEnd=social.indexOf('function installUnifiedShell(',mountStart);
+ assert.ok(routeStart>=0&&routeEnd>routeStart&&hubStart>=0&&mountStart>hubStart&&mountEnd>mountStart);
+ const node=()=>({children:[],dataset:{},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;}});
+ const context={accountId:'a',realmId:'permanent',characterId:'a1',epoch:1},calls=[],mounted={dispose(){}};
+ const box={actor:{tgId:'a1',name:'旅人',level:40},liveSession:{getSnapshot:()=>({run:null})},document:{createElement:node},
+  bootstrap(){throw Error('a shared route must use the current actor');},
+  unifiedHost(api,entry){return {...api,params:entry.params,getContext:()=>context};},
+  loadSceneModule:loadSceneModule||async function(file,name){calls.push({file,name});return {mount(container,host,options){calls.push({container,host,options});return mounted;}};},
+  window:{}};
+ vm.runInNewContext(source+'\n'+social.slice(routeStart,routeEnd)+'\n'+social.slice(hubStart,mountEnd)+'\nglobalThis.ledgerRoutes=unifiedRoutes;globalThis.paintLedgerHub=paintHub;globalThis.mountLedgerRoute=mountUnified;',box);
+ const state=box.RpgSceneWindows.createState({routes:Object.keys(box.ledgerRoutes),getContext:()=>context});
+ return {box,state,context,calls,mounted,node};
+}
+
+test('ledger mounts its real lazy client in the existing character-group window lifecycle',async()=>{
+ const h=ledgerRoutesFixture(),body=h.node();
+ assert.equal(h.box.ledgerRoutes.ledger.title,'帳務紀錄');assert.equal(h.box.ledgerRoutes.ledger.group,'character');
+ h.state.navigate('character');const entry=h.state.navigate('ledger'),current=h.state.ticket();
+ assert.equal(await h.box.mountLedgerRoute(entry,body,{current}),h.mounted);
+ assert.deepEqual(h.calls[0],{file:'scene-ledger-ui',name:'RpgSceneLedger'});
+ assert.equal(h.calls[1].container,body);assert.equal(h.calls[1].host.current,current);
+ assert.equal(h.state.back().route,'character');assert.equal(current(),false);
+ assert.equal(await h.box.mountLedgerRoute(entry,body,{current}),undefined);
+ assert.equal(h.calls.length,2,'stale views cannot reload or mount another ledger client');
+});
+
+test('character hub opens ledger and the existing Star Ring cosmetics tab through real tile handlers',async()=>{
+ const h=ledgerRoutesFixture(),body=h.node();h.state.navigate('character');
+ h.box.paintLedgerHub(body,'character',{navigate:(route,params)=>h.state.navigate(route,params)});
+ const grid=body.children.find(node=>node.className==='scene-hub-grid');
+ const ledger=grid.children.filter(node=>node.dataset.sceneRoute==='ledger');
+ assert.equal(ledger.length,1);assert.equal(ledger[0].children[0].textContent,'帳務紀錄');
+ ledger[0].onclick();assert.equal(h.state.current().route,'ledger');assert.equal(h.state.back().route,'character');
+ const wardrobe=grid.children.filter(node=>node.children[0]?.textContent==='星紋衣櫥');
+ assert.equal(wardrobe.length,1);assert.equal(wardrobe[0].dataset.sceneRoute,'star-ring-shop');
+ wardrobe[0].onclick();const entry=h.state.current();assert.equal(entry.route,'star-ring-shop');assert.equal(entry.params.tab,'cosmetics');
+ assert.equal(await h.box.mountLedgerRoute(entry,h.node(),{current:h.state.ticket()}),h.mounted);
+ assert.deepEqual(h.calls[0],{file:'scene-star-ring-ui',name:'RpgSceneStarRing'});
+ assert.equal(h.calls[1].options.tab,'cosmetics','the shortcut reuses the existing scoped Star Ring client');
+ assert.equal(h.state.back().route,'character');
+});
+
+test('a ledger module arriving after navigation cannot attach to the new shared window body',async()=>{
+ let resolve,mounts=0;
+ const pending=new Promise(yes=>{resolve=yes;});
+ const h=ledgerRoutesFixture({loadSceneModule:()=>pending}),entry=h.state.navigate('ledger'),current=h.state.ticket();
+ const mounting=h.box.mountLedgerRoute(entry,h.node(),{current});
+ h.state.navigate('equipment');
+ resolve({mount(){mounts++;return {dispose(){}};}});
+ assert.equal(await mounting,undefined);assert.equal(mounts,0);
+});

@@ -51,6 +51,7 @@ import { classifyDbError, invDeltaStmt, ledgerStmt } from './db.js';
 import { playerView, shopView, equipmentView } from './views.js';
 import { ITEMS } from './game/constants.js';
 import * as P from './services/player.js';
+import * as LEDGER_HISTORY from './services/ledger-history.js';
 import * as AUTO from './services/auto-enhance.js';
 import * as NOTICES from './services/operation-notices.js';
 export {AutoEnhanceRunner} from './auto-enhance-runner.js';
@@ -299,6 +300,7 @@ const routes = {
   'POST /rpg/pk/message': async (env, b) => PK.setPkMessage(env, String(b.pkId), b.chatId, b.messageId),
   'POST /rpg/forge/receipt': (env,b,now)=>FORGE_RECEIPT.view(env,{tgId:tgOf(b),kind:b.kind,requestId:b.requestId,namespace:'service'},now),
   'POST /rpg/ledger': async (env, b) => ({ ok: true, ledger: await P.ledgerFor(env.DB, tgOf(b)) }),
+  'POST /rpg/ledger/history': (env,b,now)=>LEDGER_HISTORY.history(env,tgOf(b),b,now),
   'POST /rpg/boss/scene':(env,b,now)=>BOSS_SCENE.view(env,tgOf(b),b,now),
   'POST /rpg/boss/receipt':(env,b,now,namespace='service')=>BOSS_RECEIPT.view(env,tgOf(b),b,now,namespace),
   'POST /rpg/boss/attack-scoped':async(env,b,now)=>{const tg=tgOf(b),result=await B.attackScoped(env,tg,b,now);return {...result,...await BOSS_SCENE.view(env,tg,{bossId:b.bossId},now)};},
@@ -456,7 +458,7 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
-    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_FATE_ACTIONS.includes(url.pathname.slice('/rpg/'.length));
+    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||(SCOPED_FATE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||url.pathname==='/rpg/ledger/history');
     if(sceneScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if((sceneScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
     if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);

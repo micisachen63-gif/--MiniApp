@@ -1,3 +1,40 @@
+# StarJournal 帳務紀錄與星紋衣櫥入口整合交接
+
+更新：2026-11-06（台灣時間）。本批承接 F2＋HUD v2＋viewport，完成主浮窗帳務分頁與既有星紋衣櫥直接入口。
+
+## 先讀本批最新版本與 gate
+
+- 工作樹：D:/StarJournal/worktree-snapshots/star-journal-ledger-integration-20261106
+- 分支：codex/ledger-integration-20261106
+- 父版本：9ffc6ace975951da1a2a71f1564d30107eade312
+- 完整報告：docs/LEDGER_INTEGRATION_20261106.md
+- 最終 commit／提交後完整 gate／目前預覽與接續：D:/StarJournal/handoff/non-character/ledger-integration-20261106/FINAL_STATUS.json、STATUS.json、WORKING_HANDOFF.md。
+- 本段在commit前保存，不能用父版本3718項或focused結果預稱本批最終HEAD gate通過。下方歷史全文保留其原時序。
+
+## 已完成及證據
+
+新增ledger/history純SELECT、固定30筆keyset分頁、all/gold/items/experience分類及安全公開投影。App與service沿原認證、realm／selected角色／帳號／contextEpoch隔離；讀前後selection/revision核對，不經settle或泛用behavior writer。原ledger最近15筆與入帳／獎勵writers不變。
+
+新帳務頁沿原單一浮窗，上一頁／更早紀錄、明確同cursor重試、刷新、空／錯誤態、scope/generation/abort與revision防舊回覆已接通。只呈現已存在入帳列，不重建餘額或補造歷史EXP。原英雄武裝與三款星紋服務已存在；本批只補「星紋衣櫥」到原cosmetics頁的捷徑。
+
+focused：後端13/13（212來源穩定、原child13120 exit0）、UI55/55、route/session/starRing138/138、preview工具23/23（CORS一字串後補由browser及最終gate覆蓋）。首輪後端NUL fixture失敗與獨立SQLite診斷保留，只修fixture，未改產品迎合。
+
+acceptance01：12/12主要checks、三尺寸、四分類全頁、原cursor失聯重試、dispose後真200、原衣櫥單窗返回、法師空態、妖精隔離及五槽HUD；原child26912 exit0／browser closed、1392來源穩定，115筆browser靜態HTTP bytes比對。四組純讀區間各核雙95表不變；兩次原select在區間外，合法ledger84→85保留。季世界36列僅純API oracle，沒有UI切世界覆蓋。root目視4張代表圖，跨層靜態review無blocker。
+
+## 預覽、保存與剩餘
+
+新UI9853/PID54508、API9852/PID22712、observer2580，僅synthetic／ephemeral、productionAccess=false。最後目前角色為測試妖精；保留原程序／記憶體DB，不重啟、reseed或重播成功操作。原F3／HUD／viewport等所有其他預覽不動。
+
+每30分鐘checkpoint已接續至StarJournal-Ledger-Checkpoint-30m；10:10:30自動快照原result0，里程碑另記。只停用本對話自己已完成的HUDViewport checkpoint，其他owner排程不動；此排程只觀測。
+
+F3仍原owner active／paused-concurrent-writer-coordination，未提交且未合入；七browser案例／preserved DB鏈與最終gate仍待原線完成。未來組合須納入本批已驗收commit，不能退回不含HUD／viewport／ledger的舊基底。交易、第四階重選、完整季末／跨D1保留、角色／FX／逐擊事件及正式宿主／真機／平衡仍待後續。
+
+本批僅本機；未push／PR／merge／部署，不碰正式DB／Secrets／migration，不修改人物／FX／grok原件，不動共享全域MCP任務狀態。
+
+---
+
+## 以下為父版本與更早歷史交接全文
+
 # StarJournal HUD viewport 整合交接
 
 更新：2026-11-06（台灣時間）。本批承接已驗收 F2＋HUD v2，完成主戰場窄直向／短橫向安全區與完整出征狀態入口。

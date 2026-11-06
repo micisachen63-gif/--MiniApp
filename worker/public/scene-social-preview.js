@@ -155,7 +155,7 @@
  window.addEventListener('pagehide',()=>{disposed=true;clearInterval(poll);clearInterval(questPoll);windowManager?.dispose();chat.dispose();},{once:true});
 
  const unifiedRoutes={
-  character:{title:'角色',group:'character'},equipment:{title:'目前裝備',group:'character'},item:{title:'裝備詳情',group:'inventory'},
+  character:{title:'角色',group:'character'},ledger:{title:'帳務紀錄',group:'character'},equipment:{title:'目前裝備',group:'character'},item:{title:'裝備詳情',group:'inventory'},
   inventory:{title:'背包',group:'inventory'},adventure:{title:'冒險',group:'adventure'},camp:{title:'營地',group:'camp'},
   chat:{title:'聊天與社交',group:'social'},quests:{title:'任務與委託',group:'adventure'},characters:{title:'選擇角色',group:'character'},
   talents:{title:'天賦星盤',group:'character'},progression:{title:'冒險成長路線',group:'adventure'},build:{title:'技能與輔助配置',group:'character'},
@@ -204,20 +204,21 @@
   const run=liveSession.getSnapshot()?.run;detail.textContent=route==='adventure'?(run?.active?'目前正在探索；切換功能仍會繼續推進。':'選擇星圖，準備補給後開始探索。'):route==='camp'?'整理戰利品、調整裝備與補足下趟物資。':'查看穿戴與能力，配置下趟探索的技能和天賦。';
   context.append(name,detail);body.append(context);
   const entries=route==='character'?[
-   ['equipment','穿戴與能力','查看裝備、比較與穿脫'],['inventory','持有裝備','開啟共用詳情與整理'],['skills','職業技能','學習、裝備與自動施法'],['career','轉職與進修','職業分支、條件與進修'],['guardian','守護天使','永久守護、參戰、融合與背景召喚'],['build','星圖技能','主技能、輔助與自動策略'],['talents','天賦星盤','預覽路線與配置節點'],['progression','成長路線','查看可達成的下一個目標'],['characters','切換角色','沿用目前世界']
+   ['equipment','穿戴與能力','查看裝備、比較與穿脫'],['inventory','持有裝備','開啟共用詳情與整理'],['star-ring-shop','星紋衣櫥','查看專屬外觀、購買與穿戴',{tab:'cosmetics'}],['ledger','帳務紀錄','查看已入帳的金幣、道具與經驗變動'],['skills','職業技能','學習、裝備與自動施法'],['career','轉職與進修','職業分支、條件與進修'],['guardian','守護天使','永久守護、參戰、融合與背景召喚'],['build','星圖技能','主技能、輔助與自動策略'],['talents','天賦星盤','預覽路線與配置節點'],['progression','成長路線','查看可達成的下一個目標'],['characters','切換角色','沿用目前世界']
   ]:route==='adventure'?[
    ['expedition',run?.active?'目前探索':'星圖派遣',run?.active?'戰況、補給與返營':'選圖、時間與攜帶補給'],['live-status','出征狀態','已結算進度、敵人與事件紀錄'],['quests','任務與委託','教學、每日、每週與調查鏈'],['party','組隊副本','三人副本、試煉與戰術'],['tower','三人爬塔','三區挑戰、隊友戰術與徽記'],['boss','世界首領','目前戰況、攻擊資格與已提交戰果'],['star-ring','星環遠征','五人招募、十二小時背景遠征與歷史戰報'],['fate','命運旅章','一世的選擇、原故事與靈魂旅誌'],['progression','成長路線','地區解鎖與長期進度'],['supplies','準備補給','背包與本趟預留分開查看']
   ]:[
    ['workshop','強化與洗鍊','單次操作、自動作業與結果'],['tower-imprint','塔印工坊','裝備淬鍊、徽記兌換與稱號'],['boss-essence','首領精華','卷軸、遺物與舊材料回收'],['star-ring-shop','星征補給與星紋','徽記兌換、星冕核心與專屬外觀'],['guardian-summon','天使召喚與補給','普通與精選召喚、天使石與原操作紀錄'],['fate-gifts','四世星輝匣','四世贈禮、指定開匣與原結果'],['recovery','典藏與精煉','首件典藏、重複精煉、材料重洗'],['gearbook','裝備收藏冊','完成原有套組與永久能力'],['inscription','星圖銘刻','使用探索材料定向加工'],['shop','商店','藥水、卷軸、裝備與寶箱'],['supplies','補給設定','原版藥水設定與補滿']
   ];
   const grid=document.createElement('div');grid.className='scene-hub-grid';
-  for(const [target,title,description]of entries){const button=document.createElement('button');button.type='button';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=description;button.append(strong,small);button.onclick=()=>host.navigate(target);grid.append(button);}
+  for(const [target,title,description,params]of entries){const button=document.createElement('button');button.type='button';button.dataset.sceneRoute=target;const strong=document.createElement('strong'),small=document.createElement('small');strong.textContent=title;small.textContent=description;button.append(strong,small);button.onclick=()=>host.navigate(target,params);grid.append(button);}
   body.append(grid);return {dispose(){}};
  }
  async function mountUnified(entry,body,api){
   if(!actor)await bootstrap();if(!api.current()||!actor)return;
   const host=unifiedHost(api,entry);
   if(entry.route==='live-status')return window.RpgSceneLiveView.mountStatus(body,host);
+   if(entry.route==='ledger'){const module=await loadSceneModule('scene-ledger-ui','RpgSceneLedger');if(api.current())return module.mount(body,host);return;}
   if(['character','adventure','camp'].includes(entry.route))return paintHub(body,entry.route,host);
   if(['equipment','inventory','item'].includes(entry.route)){const module=await loadSceneModule('scene-inventory-ui','RpgSceneInventory');if(api.current())return module.mount(body,host,{mode:entry.route,itemId:entry.params.itemId});return;}
   if(['skills','career'].includes(entry.route)){const module=await loadSceneModule('scene-skills-ui','RpgSceneSkills');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
