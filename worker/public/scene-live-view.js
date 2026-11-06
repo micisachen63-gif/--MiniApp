@@ -33,6 +33,7 @@
   const ITEM_NAMES = { scroll_w: '武器強化卷', scroll_a: '防具強化卷' };
   const viewers = new Set(), metadata = new Map();
   let lastSnapshot = null, lastSyncError = '', nextViewId = 0, hudMounted = false, syncBusy = false;
+  const hudSkills = { scope: '', generation: 0, controller: null, status: 'unknown', requestedRevision: -1, revision: -1, slots: [] };
   const number = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
   const pretty = value => number(value) === null ? '—' : new Intl.NumberFormat('zh-TW', { maximumFractionDigits: 0 }).format(value);
   const text = (node, value) => { if (node && node.textContent !== String(value)) node.textContent = String(value); };
@@ -119,13 +120,18 @@
   function publish(snapshot) {
     if (!liveMode()) return;
     lastSnapshot = snapshot || null; lastSyncError = '';
+    if (!normalize(lastSnapshot)) clearHudResources();
+    if (hudMounted) readHudSkills(lastSnapshot);
     viewers.forEach(view => view.apply(lastSnapshot));
+    syncHudActions(normalize(lastSnapshot));
   }
   global.addEventListener('rpg:scene-state', event => publish(event.detail));
   global.addEventListener('rpg:scene-error', event => {
     if (!liveMode()) return;
     lastSyncError = String(event.detail?.message || '遊戲狀態同步失敗');
+    clearHudSkills('offline', true);
     viewers.forEach(view => view.showSyncError(lastSyncError));
+    syncHudActions(normalize(lastSnapshot));
   });
   function mount(scene, hooks) {
     if (!liveMode()) return null;
@@ -151,20 +157,7 @@
       if (!current()) return;
       const value = model, health = value?.hero;
       hero.hp = number(health?.hp) ?? 0; hero.mhp = number(health?.maxHp) ?? 0;
-      for (const kind of ['hp', 'mp']) {
-        const amount = number(health?.[kind]), max = number(health?.[kind === 'hp' ? 'maxHp' : 'maxMp']);
-        const known = amount !== null && max !== null && max >= 0, ratio = known && max > 0 ? clamp(amount / max) : 0;
-        ui[kind === 'hp' ? 'setHP' : 'setMP'](known ? amount : 0, known && max > 0 ? max : 1);
-        text(byId(kind + 'Txt'), known ? pretty(amount) : '—');
-        const orb = doc.querySelector('.candidate-' + kind);
-        if (orb) {
-          const fill = orb.querySelector('.candidate-fill'); if (fill) { fill.style.height = ratio * 100 + '%'; fill.style.visibility = ratio > 0 ? 'visible' : 'hidden'; }
-          orb.classList.toggle('candidate-low', kind === 'hp' && known && amount > 0 && ratio <= .2);
-          orb.dataset.authority = known ? 'committed' : 'unknown';
-          text(orb.querySelector('.candidate-number'), known ? pretty(amount) : '—');
-          orb.setAttribute('aria-label', (kind === 'hp' ? '生命' : '魔力') + (known ? ' ' + pretty(amount) + ' / ' + pretty(max) : '尚未同步'));
-        }
-      }
+      syncHudResources(value, ui, syncError);
       text(doc.querySelector('#topL .who b'), value?.character.name || '角色同步中');
       text(doc.querySelector('#topL .portrait i'), value ? pretty(value.character.level) : '—');
       text(byId('gold'), value ? '◈ ' + pretty(value.live.gold) : '◈ —');
@@ -421,36 +414,159 @@
     try { await global.RpgSceneSession?.refresh(); } catch (_) { /* Session owns connection errors and clears stale contexts. */ }
     finally { syncBusy = false; viewers.forEach(view => view.refreshHUD()); }
   }
+  // This row is a scoped read projection and navigation surface. The existing
+  // supply/skill windows retain every confirmation, pending write and game rule.
+  function hudScope(snapshot) {
+    const model = normalize(snapshot), context = global.RpgSceneSession?.getContext?.();
+    if (!model || !context || String(context.accountId) !== String(snapshot.accountId)
+      || context.realmId !== snapshot.realmId || String(context.characterId) !== String(snapshot.characterId)
+      || !Number.isInteger(context.epoch)) return null;
+    const revision = number(snapshot.live.revision);
+    if (revision === null || revision < 0) return null;
+    return { model, context, revision, key: JSON.stringify([String(context.accountId), context.realmId, String(context.characterId), context.epoch]) };
+  }
+  function clearHudSkills(status = 'unknown', preserveScope = false) {
+    hudSkills.controller?.abort(); hudSkills.controller = null; hudSkills.generation++;
+    hudSkills.status = status; hudSkills.slots = [];
+    if (!preserveScope) { hudSkills.scope = ''; hudSkills.requestedRevision = -1; hudSkills.revision = -1; }
+  }
+  function syncHudResources(model, ui = global.UI, syncError = '') {
+    const health = model?.hero;
+    for (const kind of ['hp', 'mp']) {
+      const amount = number(health?.[kind]), max = number(health?.[kind === 'hp' ? 'maxHp' : 'maxMp']);
+      const known = amount !== null && max !== null && max >= 0, ratio = known && max > 0 ? clamp(amount / max) : 0;
+      ui?.[kind === 'hp' ? 'setHP' : 'setMP']?.(known ? amount : 0, known && max > 0 ? max : 1);
+      text(byId(kind + 'Txt'), known ? pretty(amount) : '—');
+      const orb = global.document?.querySelector('.candidate-' + kind);
+      if (orb) {
+        const fill = orb.querySelector('.candidate-fill'); if (fill) { fill.style.height = ratio * 100 + '%'; fill.style.visibility = ratio > 0 ? 'visible' : 'hidden'; }
+        orb.classList.toggle('candidate-low', kind === 'hp' && known && amount > 0 && ratio <= .2);
+        orb.dataset.authority = known ? (syncError || lastSyncError ? 'stale' : 'committed') : 'unknown';
+        text(orb.querySelector('.candidate-number'), known ? pretty(amount) : '—');
+        const resourceLabel = (kind === 'hp' ? '生命' : '魔力') + (known ? ' ' + pretty(amount) + ' / ' + pretty(max) : '尚未同步') + (known && (syncError || lastSyncError) ? '，上次同步資料' : '');
+        orb.setAttribute('aria-label', resourceLabel); orb.title = resourceLabel;
+      }
+      }
+  }
+  function clearHudResources() { syncHudResources(null); }
+  function projectHudSkills(data, captured, floor) {
+    if (!data || data.ok === false || !data.character || !Array.isArray(data.skills)
+      || !Array.isArray(data.special?.loadout) || data.special.loadout.length > 3
+      || String(data.character.tgId) !== String(captured.characterId)
+      || String(data.characterId) !== String(captured.characterId) || data.realmId !== captured.realmId
+      || (data.accountId != null && String(data.accountId) !== String(captured.accountId))) throw Error('技能資料尚未同步');
+    const revision = number(data.character.revision);
+    if (revision === null || revision < floor) throw Error('技能資料版本較早');
+    const catalog = new Map();
+    for (const skill of data.skills) {
+      if (!skill || typeof skill.id !== 'string' || !skill.id || typeof skill.name !== 'string' || !skill.name.trim() || catalog.has(skill.id)) throw Error('技能目錄尚未完整');
+      catalog.set(skill.id, skill);
+    }
+    const seen = new Set();
+    const slots = Array.from({ length: 3 }, (_, index) => {
+      const id = data.special.loadout[index];
+      if (id == null || id === '') return null;
+      if (typeof id !== 'string' || !catalog.has(id) || seen.has(id)) throw Error('技能配置尚未完整');
+      seen.add(id); const skill = catalog.get(id);
+      return { id, name: skill.name };
+    });
+    return { revision, slots };
+  }
+  function readHudSkills(snapshot) {
+    const scope = hudScope(snapshot);
+    if (!scope) { clearHudSkills(); syncHudActions(null); return; }
+    if (hudSkills.scope !== scope.key) clearHudSkills();
+    if (lastSyncError || global.document?.hidden) {
+      clearHudSkills(lastSyncError ? 'offline' : 'unknown', true); syncHudActions(scope.model); return;
+    }
+    if (hudSkills.scope === scope.key && ['loading', 'ready'].includes(hudSkills.status)
+      && scope.revision <= Math.max(hudSkills.requestedRevision, hudSkills.revision)) return;
+    const priorRevision = hudSkills.scope === scope.key ? hudSkills.revision : -1;
+    hudSkills.controller?.abort();
+    const controller = new global.AbortController(), generation = ++hudSkills.generation;
+    hudSkills.controller = controller; hudSkills.scope = scope.key; hudSkills.status = 'loading';
+    hudSkills.requestedRevision = scope.revision; hudSkills.slots = [];
+    syncHudActions(scope.model);
+    const current = () => generation === hudSkills.generation && hudScope(lastSnapshot)?.key === scope.key;
+    void Promise.resolve().then(() => {
+      if (!current() || controller.signal.aborted) return null;
+      return global.RpgSceneSession.request('skill-career', {}, { signal: controller.signal });
+    }).then(data => {
+      if (!current()) return;
+      const floor = Math.max(scope.revision, priorRevision, hudScope(lastSnapshot)?.revision ?? -1);
+      const projection = projectHudSkills(data, scope.context, floor);
+      hudSkills.revision = projection.revision; hudSkills.slots = projection.slots; hudSkills.status = 'ready';
+      syncHudActions(normalize(lastSnapshot));
+    }).catch(() => {
+      if (!current()) return;
+      hudSkills.status = 'error'; hudSkills.slots = []; syncHudActions(normalize(lastSnapshot));
+    }).finally(() => { if (generation === hudSkills.generation) hudSkills.controller = null; });
+  }
   function syncHudActions(model) {
     const row = byId('hud-v2-actions'); if (!row?.dataset.live) return;
+    const scope = hudScope(model?.snapshot), navigable = !!scope && typeof global.RpgSceneNavigation?.navigate === 'function';
+    row.dataset.authority = scope ? (lastSyncError ? 'stale' : 'committed') : 'unknown';
     for (const [kind, label] of [['hp', '生命'], ['mp', '魔力']]) {
       const button = row.querySelector('[data-live-potion="' + kind + '"]'); if (!button) continue;
-      text(button.querySelector('.hud-v2-count'), pretty(model?.supplies?.[kind]));
-      button.title = label + '藥水由出征自動使用'; button.setAttribute('aria-label', label + '藥水 ' + pretty(model?.supplies?.[kind]) + '，出征自動使用');
+      const amount = scope ? number(model.supplies?.[kind]) : null, origin = scope ? (model.active ? '當趟剩餘' : '庫存合計') : '尚未同步';
+      text(button.querySelector('.hud-v2-count'), pretty(amount));
+      text(button.querySelector('.hud-v2-name'), label + (scope ? (model.active ? '·當趟' : '·庫存') : ''));
+      button.disabled = !navigable;
+      button.dataset.authority = amount === null ? 'unknown' : lastSyncError ? 'stale' : 'committed';
+      const description = label + '藥水，' + (lastSyncError && amount !== null ? '上次同步的' : '') + origin + ' ' + pretty(amount) + '，開啟補給設定；出征依原規則自動使用';
+      button.title = description; button.setAttribute('aria-label', description);
     }
-    const sync = row.querySelector('[data-live-action="refresh"]'); if (sync) sync.disabled = syncBusy;
+    const ready = !!scope && !lastSyncError && hudSkills.scope === scope.key && hudSkills.status === 'ready' && hudSkills.revision >= scope.revision;
+    for (let index = 0; index < 3; index++) {
+      const button = row.querySelector('[data-live-skill="' + index + '"]'); if (!button) continue;
+      const skill = ready ? hudSkills.slots[index] : null;
+      const pending = hudSkills.status === 'loading', label = ready ? (skill?.name || '未配置') : pending ? '同步中' : '待同步';
+      text(button.querySelector('.hud-v2-name'), label);
+      text(button.querySelector('.hud-v2-icon'), ready ? (skill ? Array.from(skill.name)[0] : '+') : '…');
+      button.dataset.skillId = skill?.id || ''; button.dataset.authority = ready ? 'committed' : 'unknown'; button.disabled = !navigable;
+      const description = '第 ' + (index + 1) + ' 格：' + label + '，開啟技能配置；施放與冷卻請在技能視窗確認';
+      button.title = description; button.setAttribute('aria-label', description);
+    }
+  }
+  function navigateHud(route) {
+    if (!liveMode() || !hudScope(lastSnapshot) || typeof global.RpgSceneNavigation?.navigate !== 'function') return;
+    global.RpgSceneNavigation.navigate(route);
   }
   function mountHUD() {
     if (!liveMode() || hudMounted) return;
     const mid = byId('mid'), ui = global.UI; if (!mid || !ui) return;
     hudMounted = true;
-    if (!byId('hud-v2-style')) { const sheet = global.document.createElement('link'); sheet.id = 'hud-v2-style'; sheet.rel = 'stylesheet'; sheet.href = '/ui-generated-20261030/hud-v2.css'; global.document.head.appendChild(sheet); }
+    let sheet = byId('hud-v2-style');
+    if (!sheet) { sheet = global.document.createElement('link'); sheet.id = 'hud-v2-style'; sheet.rel = 'stylesheet'; global.document.head.appendChild(sheet); }
+    sheet.href = '/ui/hud-v2/hud-v2.css';
     global.document.documentElement.classList.add('hud-v2-active');
-    global.document.querySelectorAll('.candidate-frame').forEach(frame => frame.src = '/ui-generated-20261030/hud-v2/orb-bezel.webp');
-    const row = global.document.createElement('div'); row.id = 'hud-v2-actions'; row.className = 'hud-v2-actions'; row.dataset.live = 'true'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', '實際出征補給與操作');
+    global.document.querySelectorAll('.candidate-frame').forEach(frame => frame.src = '/ui/hud-v2/orb-bezel.webp');
+    const row = global.document.createElement('div'); row.id = 'hud-v2-actions'; row.className = 'hud-v2-actions'; row.dataset.live = 'true'; row.setAttribute('role', 'group'); row.setAttribute('aria-label', '實際補給與三格技能配置');
     const actions = [
-      { name: '生命', potion: 'hp', col: 0, row: 0 }, { name: '魔力', potion: 'mp', col: 1, row: 0 },
-      { name: '構築', action: 'talents', col: 2, row: 0 }, { name: '派遣', action: 'expedition', col: 0, row: 1 }, { name: '同步', action: 'refresh', col: 1, row: 1 },
+      { name: '生命', potion: 'hp', col: 0 }, { name: '魔力', potion: 'mp', col: 1 },
+      { name: '待同步', skill: 0 }, { name: '待同步', skill: 1 }, { name: '待同步', skill: 2 },
     ];
     for (const action of actions) {
-      const button = global.document.createElement('button'); button.type = 'button'; button.className = 'hud-v2-slot';
+      const button = global.document.createElement('button'); button.type = 'button'; button.className = 'hud-v2-slot'; button.disabled = true;
       button.innerHTML = '<i class="hud-v2-icon" aria-hidden="true"></i><span class="hud-v2-name" aria-hidden="true"></span><span class="hud-v2-count" aria-hidden="true"></span>';
-      button.querySelector('.hud-v2-icon').style.backgroundPosition = [0, 50, 100][action.col] + '% ' + (action.row ? 100 : 0) + '%'; text(button.querySelector('.hud-v2-name'), action.name);
-      if (action.potion) { button.dataset.livePotion = action.potion; button.disabled = true; text(button.querySelector('.hud-v2-count'), '—'); }
-      else { button.dataset.liveAction = action.action; button.setAttribute('aria-label', action.name); button.onclick = () => action.action === 'refresh' ? void refresh() : ui.toggle(action.action); }
+      text(button.querySelector('.hud-v2-name'), action.name);
+      if (action.potion) {
+        button.dataset.livePotion = action.potion;
+        button.querySelector('.hud-v2-icon').style.backgroundPosition = [0, 50][action.col] + '% 0%';
+        text(button.querySelector('.hud-v2-count'), '—'); button.onclick = () => navigateHud('supplies');
+      } else {
+        button.dataset.liveSkill = String(action.skill); button.dataset.skillId = '';
+        text(button.querySelector('.hud-v2-icon'), '…'); button.onclick = () => navigateHud('skills');
+      }
       row.appendChild(button);
     }
-    mid.appendChild(row); viewers.forEach(view => view.refreshHUD());
+    mid.appendChild(row);
+    lastSnapshot = global.RpgSceneSession?.getSnapshot?.() || lastSnapshot;
+    syncHudResources(hudScope(lastSnapshot)?.model || null);
+    readHudSkills(lastSnapshot); syncHudActions(normalize(lastSnapshot)); viewers.forEach(view => view.refreshHUD());
   }
-  global.RpgSceneLiveView = { mount, mountHUD, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.document?.addEventListener?.('visibilitychange', () => {
+    if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
+  });
+  global.RpgSceneLiveView = { mount, mountHUD, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
 })(window);

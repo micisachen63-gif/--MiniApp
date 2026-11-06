@@ -1,3 +1,35 @@
+# StarJournal HUD v2 整合交接
+
+更新：2026-11-06（台灣時間）。本提交將使用者指定的 ui-generated-20261030/hud-v2 接入實際血魔、補給與目前配置的三格技能。
+
+## 本批入口與版本
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-hud-v2-integration-20261106；分支codex/hud-v2-integration-20261106；已驗收父版本9d33dd047e026311f936afed7ed6b0e0753abe19（F2）。完整報告docs/HUD_V2_INTEGRATION_20261106.md。
+
+最終commit與提交後完整gate結果保存在 D:/StarJournal/handoff/non-character/hud-v2-integration-20261106/FINAL_STATUS.json、STATUS.json、WORKING_HANDOFF.md，以及其引用的本工作樹 .release-sync/hud-v2-20261106/ 原收據。本文提交前保存，不能用focused或F2數字代替最終gate。
+
+F3原工作線出現同時接續，07:48主交接記為paused-concurrent-writer-coordination。本接續已退出F3寫入角色，只寫此獨立HUD分支；原F3鎖、9822/9823與三筆既成操作保留。本分支目前為F2＋HUD，未包含未提交F3；待F3產生已驗收commit後另做組合整合。
+
+## 已完成與原證據
+
+- 原兩張WebP及accepted-layout逐byte納入worker/public/ui/hud-v2；本地CSS／白名單／來源manifest完成，grok原檔未改。
+- 保留左血球／五格／右魔球。兩補給格顯示當趟剩餘或庫存；三技能格沿special.loadout原序與真技能名／空槽。點擊開既有補給或技能浮窗；沒有即飲、即時施法、假CD或展示庫存。
+- 純skill-career讀取綁account/realm/character/epoch/revision、generation與abort；舊版本／切換晚到／A→B→A及離線恢復不污染新scope。
+- 16項新增focused與185項既有＋新回歸通過；五素材真HTTP GET/HEAD同bytes，越界404。最終完整gate另看外部收據。
+- Browser01九項功能checks、六筆原UI learn/equip單次收據、原exit0／closed／38來源穩定。原17筆網路中止／故障完整保留，沒有宣稱零錯誤。
+- 獨立慢切四職probe驗真人物可見、sword3／其餘空槽、零失敗；同時找到320/390聊天重疊。只追加scene-live-view.css定位規則後，三尺寸複驗各12px淨距、槽44px／桌面64px、可點且不重疊，真exit0／closed／40來源穩定，未重播六個技能操作。原診斷與fixed結果分開保存。
+- 320既有資訊卡局部遮角色頭部仍待全局版面處理；此批未宣稱修好人物／FX或正式Telegram宿主。
+
+## 保存環境與接續限制
+
+獨立UI9833/PID32536、API9832/PID17956已用合成資料驗收，productionAccess=false。劍士已學三技並裝備；下一次先讀最新STATUS／原收據／PID，不重播setup、不reset/reseed。原API是記憶體資料，不是持久備份。生成文字動態讀取，驗收只綁所列九份文字來源及受測code／實際HTTP素材。
+
+HUD PT30M本機觀測排程持續記錄本批；原主線排程與其他工作樹保留。本批不push／PR／merge／deploy，不碰正式DB／Secrets／migration。F3後續七案與final gate、交易、衣櫥／帳務、跨季、第四階重選、角色／FX與完整正式驗收仍依各自交接進行。
+
+---
+
+## 前批交接全文（歷史原件保留）
+
 # StarJournal F2 整合交接
 
 更新：2026-11-05 21:56:29（台灣時間）。本提交整理 **出生檔案、臨時／已保存生日啟程與每日三則旅箋** 的整合來源與瀏覽器證據。

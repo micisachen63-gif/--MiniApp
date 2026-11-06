@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "sourceRoot": "D:/StarJournal/grok-assets/ui-generated-20261030",
+  "acceptedLayout": "accepted-layout.json",
+  "approvedOn": "2026-11-01",
+  "integration": "Existing live mountHUD; read-only skill-career projection; existing supply/skill modal navigation",
+  "unchangedAssets": [
+    "orb-bezel.webp",
+    "action-icons.webp",
+    "accepted-layout.json"
+  ],
+  "sources": [
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2/orb-bezel.webp",
+      "sha256": "75139cd056d0dfcf2b3344fa1985bbf7e40c79874d4f86434115df644a6af1e5",
+      "bytes": 807026
+    },
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2/action-icons.webp",
+      "sha256": "d88bc5c69d82e0177aa345aeaf0cf5cc2385a66b844df52ad25bf24797364da2",
+      "bytes": 2515154
+    },
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2/accepted-layout.json",
+      "sha256": "d53afe40e332e5080daaeb8cb4bfe72a2f9e5bed0369399731ee3a3e97713e51",
+      "bytes": 975
+    },
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2.css",
+      "sha256": "8e9ec1e902aac0c223e119fe8524887801197805069aebeeb91b1a562d16cd6d",
+      "bytes": 13551
+    },
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2.js",
+      "sha256": "c5dee3688a6cb89f9e86bf59abde8d9e97ccd05905fa6b1368bbd97d72e25ed5",
+      "bytes": 7183
+    },
+    {
+      "path": "grok-assets/ui-generated-20261030/hud-v2/prompts.txt",
+      "sha256": "90ed5aac36c6a9d52b31afd4c1e8c32981529fa56babd13df1f6551ed83e60b6",
+      "bytes": 2993
+    }
+  ],
+  "stylesheetTransform": {
+    "source": "grok-assets/ui-generated-20261030/hud-v2.css",
+    "target": "worker/public/ui/hud-v2/hud-v2.css",
+    "changes": [
+      "Only the action atlas URL uses the worktree-local /ui/hud-v2/ path; responsive/live overrides remain in scene-live-view.css."
+    ]
+  },
+  "behaviorNotes": [
+    "Prototype counts, warrior actions, simulated casts/cooldowns and hotkeys are not copied.",
+    "The original action atlas supplies potion icons; actual skill names use neutral text marks with no invented artwork mapping."
+  ],
+  "copiedAssets": [
+    {
+      "path": "orb-bezel.webp",
+      "sha256": "75139cd056d0dfcf2b3344fa1985bbf7e40c79874d4f86434115df644a6af1e5",
+      "bytes": 807026
+    },
+    {
+      "path": "action-icons.webp",
+      "sha256": "d88bc5c69d82e0177aa345aeaf0cf5cc2385a66b844df52ad25bf24797364da2",
+      "bytes": 2515154
+    },
+    {
+      "path": "accepted-layout.json",
+      "sha256": "d53afe40e332e5080daaeb8cb4bfe72a2f9e5bed0369399731ee3a3e97713e51",
+      "bytes": 975
+    },
+    {
+      "path": "hud-v2.css",
+      "sha256": "cf2ef497665782f081465d3e370f12962ba065752193736b3fabc7404d951d9e",
+      "bytes": 13532
+    }
+  ]
+}

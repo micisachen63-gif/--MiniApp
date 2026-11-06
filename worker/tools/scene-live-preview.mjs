@@ -156,6 +156,7 @@ const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${
 const injected = `<script>window.__RpgScenePreviewConfig=${JSON.stringify(config)};</script>`;
 const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
 const buttonMaterialPrefix = '/ui/button-materials/';
+const hudMaterialPaths=new Set(['/ui/hud-v2/hud-v2.css','/ui/hud-v2/orb-bezel.webp','/ui/hud-v2/action-icons.webp','/ui/hud-v2/accepted-layout.json','/ui/hud-v2/source-manifest.json']);
 const starArtFiles=new Set(['dawn','moon','eclipse'].flatMap(tone=>['/art/star-ring-rewards-20261018/icon-'+tone+'.webp','/art/star-ring-surround-20261026/surround-'+tone+'.webp']));
 const guardianArtFiles=new Set(['melee','ranged','magic','loot'].map(type=>'/art/guardian-sigil-20261013/'+type+'.webp'));
 const staticArtFiles=new Set([...starArtFiles,...guardianArtFiles]);
@@ -210,7 +211,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
-    const directPublic=requestPath.startsWith(buttonMaterialPrefix)||staticArtFiles.has(requestPath)||fateStaticPath(requestPath);
+    const directPublic=requestPath.startsWith(buttonMaterialPrefix)||hudMaterialPaths.has(requestPath)||staticArtFiles.has(requestPath)||fateStaticPath(requestPath);
     if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!directPublic && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
       res.writeHead(404); res.end('Asset not found'); return;
     }

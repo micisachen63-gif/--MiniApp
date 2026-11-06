@@ -27,3 +27,45 @@
 @media (orientation: landscape) and (max-height: 500px) {
   .rpg-live-scene .scene-live-panel { top: 80px; width: 230px; max-height: calc(100vh - 180px); overflow: auto; }
 }
+
+
+/* Approved HP / five slots / MP baseline, with the current five-entry shell.
+ * Orbs are decorative; action targets remain at least 44px even at 320px. */
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) {
+ --hud-slot:clamp(44px,8.5vw,64px);--hud-gap:clamp(3px,.7vw,7px);
+ --hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),188px);
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #bottom #bar {
+ height:max(var(--hud-orb),calc(var(--hud-slot) + 8px));width:100%;overflow:visible;
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #bottom .orb {
+ flex:0 0 var(--hud-orb);width:var(--hud-orb);height:var(--hud-orb);
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #fn {display:none!important}
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-slot {box-sizing:border-box;min-width:44px;min-height:44px}
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-name {overflow:hidden;text-overflow:ellipsis;font-size:10px;line-height:12px}
+.rpg-live-scene #hud-v2-actions[data-live] [data-live-potion] .hud-v2-name {font-size:9px;letter-spacing:-.15px;left:2px;right:2px}
+.rpg-live-scene #hud-v2-actions[data-live] [data-live-skill] .hud-v2-icon {
+ display:grid;place-items:center;padding-bottom:10px;background-image:none;
+ background:radial-gradient(ellipse at 45% 20%,#455461,#151c24 70%);
+ font:600 clamp(20px,3.8vw,30px)/1 "Noto Serif TC",serif;color:#dfcfaa;
+ text-shadow:0 1px 3px #000;filter:none;
+}
+.rpg-live-scene #hud-v2-actions[data-live] [data-authority="unknown"] .hud-v2-icon {opacity:.58}
+.rpg-live-scene #hud-v2-actions[data-live] [data-authority="stale"] .hud-v2-count {color:#d5bb89}
+.rpg-live-scene .candidate-orb:not([data-authority]) .candidate-fill,
+.rpg-live-scene .candidate-orb:not([data-authority]) .candidate-number {visibility:hidden}
+.rpg-live-scene .candidate-orb[data-authority="stale"] .candidate-number {color:#d5bb89}
+
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) .candidate-number {font-size:clamp(9px,calc(var(--hud-orb) * .15),21px)}
+
+/* Keep the existing chat handle above the actual unified HUD row, including
+ * narrow screens where five 44px actions are taller than the decorative orbs. */
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #chat {
+  bottom:calc(max(9px,env(safe-area-inset-bottom)) + 100px + max(var(--hud-orb),calc(var(--hud-slot) + 8px)) + 12px);
+}
+@media(max-width:600px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #chat {
+    bottom:calc(max(7px,env(safe-area-inset-bottom)) + 92px + max(var(--hud-orb),calc(var(--hud-slot) + 8px)) + 12px);
+  }
+}
