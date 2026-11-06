@@ -1,0 +1,63 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-05T06:45:59.557Z",
+  "reviewer": "vfx_integration_audit",
+  "status": "reviewed-no-required-correction-in-these-pairs",
+  "method": "Actual independent visual inspection of four supplied PNGs; no runtime mutation or extra browser execution.",
+  "scope": "Two static phase pairs only; does not independently establish continuous animation smoothness, all 16 skills, or current frost-return acceptance.",
+  "images": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-34.png",
+      "bytes": 300508,
+      "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-66.png",
+      "bytes": 375273,
+      "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-32.png",
+      "bytes": 308627,
+      "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-65.png",
+      "bytes": 373368,
+      "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d"
+    }
+  ],
+  "observations": [
+    {
+      "skill": "群靈／archer-expert",
+      "phases": [
+        0.34,
+        0.66
+      ],
+      "phaseLabels": [
+        "三靈出獵",
+        "協獵合擊"
+      ],
+      "finding": "Foreground bright small beast spirits move from center-left vertical separation to right-center convergence. White wolf head and green-gold flying creature remain identifiable in separate foreground layers; the change is not only background atlas scaling. Late-phase foreground overlap is visible, with no required correction for this pair."
+    },
+    {
+      "skill": "影身／thief-hell",
+      "phases": [
+        0.32,
+        0.65
+      ],
+      "phaseLabels": [
+        "三影成陣",
+        "有限追擊"
+      ],
+      "finding": "Three bright purple-gold foreground clones change from a vertical group on the left into a diagonal pursuit formation: one lower-center and two converging at right-center. Position and formation changes are clear."
+    }
+  ],
+  "appearance": "Textures remain legible, bloom does not wash out the figures, and no visible edge clipping appears in these four frames.",
+  "requiredCorrections": [],
+  "limitations": [
+    "Only the two saved phases per skill were visually compared.",
+    "No claim that the whole continuous timeline was replayed or checked by this review.",
+    "Frost-return is outside this review and still awaits the separately requested refinement."
+  ]
+}

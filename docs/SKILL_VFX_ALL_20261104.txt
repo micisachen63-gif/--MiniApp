@@ -1,0 +1,290 @@
+星穹之旅 — 全技能特效動畫完成與技術交接
+版本日期：2026-11-04（所有使用者顯示時間採 Asia/Taipei，UTC+8）
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-20261104
+分支：codex/skill-vfx-20261104
+最新人工進度與最後提交：D:\StarJournal\handoff\skill-vfx\STATUS.json
+自動快照入口：D:\StarJournal\handoff\skill-vfx\LATEST.md
+
+一、完成結論與範圍
+目前程式已實裝的 196 個技能身份，均已有配方、素材與動畫解析，並接上各戰鬥模式的真實事件呈現。resolver、committed-event、presentation、browser 四層證據均為 196/196。本批完成的是本機開發工作樹；正式環境維持凍結。
+
+技能盤點：
+- 原生職業路線 124：劍士、弓手、法師、盜賊各 31。
+- 特殊技能 60：劍士 18、弓手 18、法師 18、盜賊 6。
+- Atlas 主技能 12：四職各 3。
+- 按職業合計：劍士 52、弓手 52、法師 52、盜賊 40。
+- 6 個支援修飾、120 個可配置天賦、4 個起源節點另列；12 個關鍵天賦已包含在 120 內，不能再重加。
+- 16 個規劃中覺醒仍為 planned，尚無遊戲實裝，因此不計入 196，也不宣稱已完成其戰鬥動畫。
+- 196 是現有技能身份數，不代表 196 套完全獨立的傷害機制。現有原生路線身份依權威資料區分，原遊戲機制保持。
+
+完整逐技能對應：
+worker/public/skill-vfx-catalog.json
+worker/public/skill-vfx-recipes.json
+worker/public/skill-vfx-coverage.json
+worker/art-production/skill-vfx-20261104/catalog-audit.json
+
+二、美術、動畫與工坊
+196 個身份各有明確配方，組合 28 種視覺家族。家族共享素材，配方控制元素、方向、階段、目標、節奏與呈現方式；不把共享素材數冒稱為技能數。
+
+已交付：
+- 4 張 1254×1254 透明 3×3 圖集。
+- 獵鷹、火精靈各 1 張 840×840 透明素材。
+- 共 6 張 WebP 執行素材，2,829,758 bytes。
+- 6 張 PNG 原稿，8,909,088 bytes；原稿與 runtime 共 12 檔均已保存並核對 SHA、格式、尺寸與解碼。
+- 生成提示、透明背景處理提示、來源雜湊、選用與未採用版本紀錄已保存；本批沿用已驗收素材，沒有重畫或覆蓋角色來源。
+
+主要路徑：
+worker/public/art/skill-vfx-20261104/
+worker/art-production/skill-vfx-20261104/
+worker/public/skill-vfx-engine.mjs
+worker/public/preview-skill-vfx.html
+
+工坊包含全部技能與支援／天賦核對，可切換技能、四方向、播放／暫停、時間拖曳／逐步、淺色與透明格背景，以及手機尺寸。支援 reduced-motion、動畫到期與 destroy 清理。奧術脈衝與持續光束已分開；召喚物各方向保持直立。陷阱法環依真實腳點放置，避免重複向下偏移。
+
+第一批素材／工坊驗收：
+196×4＝784 方向，36 多相位、16 手機案例、14 控件；0 page／HTTP／console errors。28 家族總覽及箭雨入場／命中邊界均已目視檢查。上述是工坊驗收，與後述實戰證據分開保存。
+
+三、實戰接線與事件契約
+後端由真實技能決策與成功提交產生版本化描述；前端依描述定位實際角色和目標。保留原有 skillId、傷害、RNG、獎勵、SQL 與時間規則，不依中文技能名稱猜身份。
+
+legacy 描述的主要欄位：
+schemaVersion: 1
+source: committed-combat 或 deterministic-projection
+eventId、skillId、kind(cast/effect)、actorId、atMs
+targetKind(enemy/self/ally)、targetIds、enemyTargetIds、allyTargetIds
+presentationMode(full/support/summon/impact)
+按需要附 effectKind、recipientEffects、damageModel、encounterId
+
+身份格式：
+native:<class>:<path>
+special:<existing-skill-id>
+Atlas 使用既有 committed combat trace 的明確技能身份。
+
+接線覆蓋：
+- 掛機：round.vfxEvents 與 hit.vfxEventId；分鐘彙總傷害採 aggregate-minute，不能將每個展示 hit 偽造為一次技能施放。
+- 組隊：成功 CAS／交易後的 turn events；維持原回合與獎勵提交。
+- PK：真實 duel ID、steps 描述與 log_json；成功保存後再呈現。
+- 世界王：actions 描述與頂層 result.vfxEvents，包含後續實際反射。
+- 星環：保留運行中唯讀推演 deterministic-projection；完成階段為 committed-combat。推演畫面不能充當已寫入資料庫的證據。兩小時獎勵 checkpoint 等原規則維持。
+- Atlas：成功原子提交的 trace、scene revision 與角色出手 release marker；活動／掉落／卷軸帳務仍與結果原子提交。
+
+前端依真實 DOM／場景座標取得施法者和受益者；包含上下文隔離、去重、到期、導航取消與清理。舊記錄無明確身份時保留相容呈現，不補造未發生技能。
+
+四、非直接傷害、召喚與持續效果
+60 個特殊技能中，36 個為即時攻擊，24 個為非直接施放：3 buff、5 heal、15 shield/defensive、1 純延遲召喚。連同 Atlas 陷阱，196 個身份分成 171 個即時傷害、25 個非直接施放。
+
+關鍵語義已實作並驗證：
+- special:skill_18_1 火精靈初次施放在施法者處出現召喚，沒有敵人命中。後續實際寵物 tick 才呈現 impact。
+- native:mage:B2、atlas:archer_beast 仍保留原來確實存在的即時傷害；不能僅因共用召喚圖就一律去掉命中。
+- special:skill_thief_06 只強化下一擊，不偽造獨立反擊。
+- special:skill_02_3 的盾與後續確實吸收／反射的傷害分開。
+- special:skill_09_1 可同時對敵命中並對真正受益友方治療。
+- special:skill_24_2 只復活真正倒地的組隊隊友，不宣稱單人／PK 有復活效果。
+- buff、盾、治療只在真正受益者呈現；持續傷害／反射採 effect，不重播施法。
+- PK 純支援不播放攻擊前衝；只有實際 HP loss 才加受擊與負數飄字。原本確實有的自我治療飄字仍保留。
+- 星環處理 system／boss 容器裡的實際 descriptor.actorId；同一 beat 先施放後倒地的真實施放可播一次。純裝飾重播去掉事件，避免重複技能與倒地角色假攻擊。
+- 世界王切頁或切上下文取消舊畫面，不重播舊結果。
+
+主要程式：
+worker/src/game/skill-vfx-events.js
+worker/src/game/{special,special-idle,idle,idle-combat,boss,pk,star-ring}.js
+worker/src/services/{party,pk,star-ring}.js
+worker/public/skill-vfx-legacy.mjs
+worker/public/battle.js
+worker/public/expedition/combat-playback.js
+worker/public/expedition/hero-art-playback.js
+worker/public/star-ring-heroes.js
+worker/public/app.js
+worker/public/skill-vfx-engine.mjs
+可用 RpgLegacySkillVFX.inspect() 查看實際診斷。
+
+五、Atlas v4、統一 UI 與場景修正
+本分支已在本機合入穩定 Atlas v4 e4908c02f858c27d992a8efb0199a9c3c9a2cd1e，以及統一戰鬥 UI 0219f9d899547af254cf3ddf63f9ff66c5344959。
+
+v4 合流保留 dealDamage 等呼叫的 activities 與 observation 參數順序；掉落、卷軸、活動 ledger 在原子批次成功後才發出 trace。scene 接受成功結果才通知 observer；preferScene 及 revision/context/epoch 防止晚回覆污染其他角色。
+24 份原 v3、27 份 v4 輸入／輸出與 RNG／活動基線均保持，相關 159 項測試通過。
+
+統一 UI 的五入口、共享透明視窗、裝備／背包／補給等既有整合保持；session 的讀取集擴充與 trace/preferScene 相容性已獨立核對。本線未重寫該工作線。
+
+本批實際瀏覽器找到並修正 Atlas 首次貼圖載入漏播：
+- 先以完整 logical entities 保留位置與 layout key，避免每張貼圖載入都被視為新布局而取消合法 pending trace。
+- 真正解析座標仍等待素材與實際 bounds，沒有改成假座標。
+- ground 第一次 ready 只建立 baseline；地圖／上下文切換或後續真實布局改動仍清除舊效果。
+- 保留原 5 秒 freshness，不放寬時效。
+- lifecycle＋bridge 33/33 通過，最終真 API 16/16 通過。
+
+手機：
+600px 以下狀態面板預設收合，可點標題展開；敵人水平站位依可用寬度縮限，保留身體比例。390×844 已驗收收合／展開，並目視主角與敵方站位。
+
+六、逐技能證據與實戰瀏覽器結果
+四層覆蓋 manifest：
+196 resolver / 196 committed-event / 196 presentation / 196 browser
+SHA-256：7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8
+
+證據分兩類，不能互換：
+A. 184 個 native＋special 身份：由真正 SQLite 成功提交得到的 service receipt，在瀏覽器逐身份進行受控事件重播；真 RAF、畫面像素改變、目標、去重、清理全部通過。覆蓋 26 legacy 家族、8 手機、4 reduced-motion，40 張代表截圖。截圖採相同已接受命令的受控 progress 0.66；動態 RAF 與 draw/hash 證據另存，不能把靜態截圖當動態執行證明。
+B. 完整 API／UI：32 個成功情境，使用真 handle、SQLite、完整 MiniApp／scene 與合成測試角色，沒有替換 API 回應或注入假技能事件。涵蓋 24 個不同身份，其中包括全部 12 個 Atlas 主技能。
+
+32 情境分布：
+掛機 6（原生、召喚、支援各桌面／手機）
+PK 4（一般與純支援各桌面／手機）
+世界王 2
+組隊 2
+星環 2
+Atlas 16（12 流派桌面 1280×900＋四職手機 390×844）
+總計 32，選定成功情境 0 page errors、0 HTTP errors，相關來源無漂移。
+這不是 196 個技能逐一在每個模式都做完整 UI 操作的宣稱。
+
+Atlas 第一個劍士旋風案例為真前景 auto，未手動觸發結算；其餘含真手動結算及寵物／陷阱／DOT 後續效果。最終全 16 案例完成於 2026-11-04 台灣 16:22。
+
+真 API 最終採用原始結果：
+.release-sync/skill-vfx-all-20261104/atlas-complete-20261104/results.json
+.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T07-47-00-482Z/results.json
+.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-09-20-555Z/results.json
+.release-sync/skill-vfx-all-20261104/gameplay-2026-11-04T08-17-57-274Z/results.json
+.release-sync/skill-vfx-all-20261104/gameplay-final-idle-boss-20261104/results.json
+
+取用規則：
+- 07:47 的結果只採當前來源適用的 party 2 例。
+- 08:09 採 ring 2、PK 2、手機純支援 1，共 5。
+- 08:17 補桌面純支援 1。
+- gameplay-final-idle-boss 採 8。
+- atlas-complete 採全部 16。
+- 4 個舊 app.js 來源的 PK／boss 情境與 1 個舊桌面支援 QA 失敗保留於原檔，明確排除，不改寫成成功。
+
+桌面純支援的原子事件快照：施放 shield02_3 時雙方 HP 不變、MP 正確消耗，無 atk／hitme／負數飄字；真 DB 記錄已完成。較晚 PNG 可包含下一次真正反射，不能把稍後 HP loss 誤解為護盾初次施放造成攻擊。
+
+主視覺總覽：
+docs/skill-vfx-all-20261104/combat-contact-sheet.jpg
+docs/skill-vfx-all-20261104/combat-contact-sheet-sources.json
+全部原始畫面／來源圖索引位於同資料夾下 gameplay-screenshots/。
+identity 截圖與總覽位於 evidence/skill-vfx-20261104/identity-browser-2026-11-04T07-52-13-678Z/。
+
+七、測試結論與誠實的組合驗證
+最終機器可讀收據：
+docs/skill-vfx-all-20261104/final-validation.json
+docs/skill-vfx-all-20261104/validation/final-source-audit.json
+
+完整 Worker 首輪：
+Node 24.7.0、官方 scripts/run-tests.mjs 相同選檔邏輯、並行 2；沒有過濾測試。
+284 檔、2861 tests：2854 pass、7 fail、0 cancelled/skipped/todo。
+執行期間 1087 份程式／測試／工具 fingerprint 前後一致。
+原輸出是 Node 預設 spec reporter，歷史檔名 worker.tap 保留；原 receipt 的 TAP parser counts 為 null。failure-summary.json 是由原輸出 footer 正確解析的計數，沒有覆蓋歷史失敗。
+原 log SHA-256：2ef8a6916f7465b76c06f0d25086e50f9678f1eefe29223e81fb41248cd56a34
+
+7 個失敗限 4 個舊測試檔：
+1. boss-maps.test.js 的假 DOM 原本傳空物件，現在新增 querySelector 返回 null；原十二張 map 與素材斷言保留。boss-maps、boss-ui-refresh、skill-vfx-legacy-app 三檔共 11/11 通過。
+2. star-ring-pools、star-ring-rank-rewards、star-ring 三檔因新增 vfx/vfxEvents 與推演／提交 source 區別而失敗。新增測試 helper，只對歷史遊戲雜湊排除新增描述；所有原 golden 值不改。同時明確驗證兩類 source、描述非空、其餘欄位／數量／順序與事件完全一致。三檔 63/63 通過。
+
+修復後未再改 runtime；所有歷史數值、RNG、獎勵與 golden 保持。新 helper 不改 Worker 選檔數。最終 source audit 逐檔核對：
+- 初次 Worker 1087 fingerprints 的 before/after 一致。
+- 與最終來源之間有上述 4 測試、full-gate QA runner 改動，新增 1 個測試 helper；提交檢查另發現 scene-live-lifecycle.test.js 多一個 EOF 空白行，已只刪除該空白、證明 trimEnd 完全相同，並重跑該檔 15/15 通過。
+- runner 只新增 worker/bot/all 選項、明確 TAP reporter 與嚴格計數檢查。
+- 674 份 runtime/public 來源完全不變；其餘測試 279 檔 SHA 原樣，另 1 檔僅上述 EOF 格式差異且重驗通過。沒有遊戲行為變更。
+- coverage.json 是唯一排除於總 gate source fingerprint 的產生式報告，本身另有 SHA 與 --check。
+
+完整 BOT：
+23 檔、205/205，0 fail/cancelled/skipped/todo，2026-11-04 台灣 16:38:49 完成。
+1088 份 before/after fingerprints 穩定。BOT gate 之後只發生上述測試檔的 EOF 格式修正；目前逐檔差異與成功重驗見 final-formatting-validation.json 及更新後 final-source-audit.json。
+TAP SHA-256：cc888715a73d84d236f1eb48f97e550a28e76630801e638ca4bb4804fa0779e7
+
+因此採用「完整 Worker 首輪＋所有失敗檔修正後重驗＋來源一致性證明＋完整 BOT」的組合驗證。不得把它改寫成一次完整 Worker 全綠；也不能把 63＋11 疊加為新的獨立總測試數。完整選擇的測試身份為 Worker 2861＋BOT 205＝3066。
+
+其他重要實證：
+- legacy 後端 137/137，432/432 原遊戲結果等價，27 來源穩定。
+- 184 真 SQLite 提交覆蓋 rollback／CAS retry／lost-response。
+- legacy 前端 87 個 unique focused cases。
+- Atlas v4 合流 159；首次素材載入／bridge 回歸 33。
+- coverage／browser normalizer 9/9。
+上述與完整套件重疊，不重加為總測試數。
+
+八、可攜證據、還原與重現
+docs/skill-vfx-all-20261104/archive-index.json 保存 67 份逐技能與補充證據：
+10 canonical＋57 supplementary，共 22,034,694 bytes。
+每筆記原始相對路徑、歸檔路徑、bytes、SHA-256。
+包含 40 PNG、identity contact sheet、後端與前端收據、Atlas 合流／layout、boss11 與 ring63。
+此數量不含 root 另存的完整 Worker/BOT validation、實戰原圖與9格總覽。
+
+archive-index SHA-256：
+0ee09b61d7a518b47c75c8fff1f7505d7fb28dce2c72ea65b10771b68b4b9c87
+restore-evidence.cjs SHA-256：
+cc2f967c6d3c4ed0696d0ce0bc6f38396581314128e84ebced5c4c5164a1e44e
+
+還原工具只還原 10 個 canonical 到原 .release-sync 路徑。
+先驗所有來源及目的地；已有相同檔案 no-op，內容不同報錯且不覆寫。
+已實跑一次：verified 10、restored 0、unchanged 10。
+原始嵌入的 source path／SHA 不能重寫；僅把 JSON 移到別名路徑再 --evidence 不一定足夠。
+
+精確重現還要求來源 bytes（含換行）一致。builder 對依賴使用原始 bytes 的 SHA；restore 只還原 10 份證據，不會覆寫程式來源。此次另外明列 43 個非 .release-sync 的文字來源換行：16 個 LF、27 個 CRLF，記錄於 source-line-endings.json；根 .gitattributes 對這些路徑設定相應 text/eol，coverage manifest 固定 LF，避免 core.autocrlf 在新 checkout 改變已驗收來源。提交前由 Git index 的實際 bytes 重建指定換行並核對各來源 SHA。既有其他路徑不受此政策影響。
+--check 會比較解析後的完整 JSON；manifest 檔案本身的 byte-identical SHA 仍需另對照 7672...，不能只以 --check 代替原始檔案雜湊。
+
+在本工作樹或包含上述換行規則的相同提交 checkout，先確認來源 SHA 再使用 Node 24：
+node docs/skill-vfx-all-20261104/restore-evidence.cjs
+node worker/tools/build-skill-vfx-catalog.mjs --check
+node worker/tools/build-skill-vfx-recipes.mjs --check
+node worker/tools/build-skill-vfx-coverage.mjs --check --require-legacy-completion
+
+coverage builder 支援重複 --evidence=relative/file.json，沒有 --evidence-dir。
+browser normalizer 支援重複 --gameplay=path、--atlas=path、--out=path。
+重跑 normalizer 會寫新的 generatedAt，造成 receipt SHA 更新；之後需重新生成 coverage。那是新報告，不能宣稱與本次 manifest byte-identical。
+
+需要重新執行完整測試時：
+node worker/tools/skill-vfx-full-gate.mjs worker
+node worker/tools/skill-vfx-full-gate.mjs bot
+或 node worker/tools/skill-vfx-full-gate.mjs all
+輸出於 .release-sync/skill-vfx-all-20261104/full-gate-<UTC timestamp>/。
+先核對來源與現有結果；已完成的本批驗收沒有必要無條件重跑。
+如將來修改 runtime，應針對實際影響執行相應驗證，不沿用舊 SHA 宣稱新版本已驗收。
+
+九、本機預覽與30分鐘交接
+技能工坊：http://127.0.0.1:9664/preview-skill-vfx.html
+真場景：http://127.0.0.1:9667/
+場景隔離 API：http://127.0.0.1:9666/
+最終服務即時狀態以 STATUS.json 及本工作樹 .release-sync/skill-vfx-all-20261104/final-local-state.json 為準。
+
+9667/9666 為 loopback、isolated、ephemeral、productionAccess=false。
+long-targets 驗收 fixture 只把敵方 HP×20，採真 API／真時鐘，方便看完動畫；不改正式或預設遊戲規則。
+最近已知 scene PID 4056，啟動於 2026-11-04 台灣 15:59:47；重啟前須查本線收據、PID 與命令，不能殺掉全部 Node 或其他預覽。
+本線服務收據：
+.release-sync/skill-vfx-20261104/preview-server.json
+.release-sync/skill-vfx-20261104/combat-preview-server.json
+
+Windows 獨立排程：StarJournal-SkillVFX-Checkpoint-30m
+PT30M＋登入觸發、InteractiveToken／LeastPrivilege、IgnoreNew。
+它只保存本線人工 STATUS、Git 與驗收狀態；不等於背景 AI 自動開發、跑測試或部署。
+電腦與相應登入環境可執行時，持續建立 LATEST 與 history。人工更新時間與快照產生時間需分開讀。
+
+位置：
+D:\StarJournal\handoff\skill-vfx\STATUS.json
+D:\StarJournal\handoff\skill-vfx\LATEST.md
+D:\StarJournal\handoff\skill-vfx\history\
+D:\StarJournal\handoff\skill-vfx\SCHEDULE.json
+D:\StarJournal\handoff\skill-vfx\SCHEDULER.md
+
+手動快照命令（於 D:\StarJournal）：
+node handoff/skill-vfx/.tooling/checkpoint-progress.mjs --root=D:/StarJournal "--git=C:/Users/User/Documents/ChatGPT/tools/git/cmd/git.exe"
+
+十、版本與新對話接續
+第一批素材／工坊核心：6c028e1ed355451da892319181fba0dee53dfa02
+第一批證據／交接：13ab05a41a7eb115859159ac761cc2b40d2b6446
+第二批 Atlas 實戰核心：4e95579292f8e417501f8b60d497c0bd945825fc
+第二批證據／交接：3e4170868af2391af8d477a13490ed0d9e1ea6a4
+第三批 v4 本機合流：0f8dfbc2ea1a81e4cfe22d817e06231fb2b1e61a
+第三批 legacy 核心：19578b4c22633ed23ed2399ab09eb1aaf268ad10
+第三批統一 UI 本機合流：c05b888a6ac00494bfefd60162cf2f0aa4aa88be
+本次最終完成提交請讀 STATUS.json 的 finalCommit 與 Git HEAD，避免文件自我引用提交雜湊。
+
+新對話依序：
+1. 讀 D:\StarJournal\handoff\skill-vfx\LATEST.md 及 STATUS.json。
+2. 進入上方 worktree，讀 AGENTS.md、AI_HANDOVER.md 與本文件。
+3. 核對 branch、HEAD、dirty files、最後人工 updatedAt，不把其他工作線狀態當成本線。
+4. 讀 final-validation.json、archive-index 與 coverage.json；需要恢復 evidence 時使用 restore 工具。
+5. 本線原任務「已實裝技能全特效」完成；若使用者要求新技能／16覺醒／正式整合，按新範圍規劃。
+6. 若 MCP session registry 消失，讀已落盤收據，不自行將未知結果當通過，也不要停止全域 task。
+
+十一、明確未涵蓋與後續範圍
+- 16 個規劃覺醒尚未實裝，須隨遊戲機制落地再製作與接線。
+- 原角色美術來源仍依角色工作線自己的 partial-candidate／approved:false 等狀態；本線 profile／release anchor 驗收不代表角色原稿全部正式核准。未改角色 queue/catalog/來源素材。
+- 瀏覽器使用本機 Chrome／手機 viewport 與軟體渲染；沒有宣稱實機 GPU 效能或正式 Telegram 環境已驗收。
+- 本線未 push、未建新 PR、未合 main、未部署、未遠端 migration、未改正式資料／Secrets／旗標，亦未透過 Telegram 發訊。
+- 其他工作樹、角色製作流程與既有預覽／排程保持各自管理；不要以本線完成為由停止或清理它們。

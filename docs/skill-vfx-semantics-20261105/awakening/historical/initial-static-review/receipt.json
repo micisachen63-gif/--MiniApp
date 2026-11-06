@@ -1,0 +1,851 @@
+{
+  "scope": "awakening-vfx-visual-review",
+  "presentationRevision": "ornate-v2",
+  "startedAt": "2026-11-05T06:26:46.690Z",
+  "finishedAt": "2026-11-05T06:26:51.399Z",
+  "base": "http://127.0.0.1:9894",
+  "complete": true,
+  "pass": null,
+  "previewOnly": true,
+  "sourceId": null,
+  "liveCatalogSkills": 196,
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 28985,
+      "sha256": "545bafea9a780aa02f84784c26e43b9be6efc1c55fb4e3b7ad5f08ab15990b12"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 7646,
+      "sha256": "165e147f3e327c9a1680a2394fdd3ca63eeb5bcc6c969eef4baaf82d45326043"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 16504,
+      "sha256": "5f1e23e67fb1979710e662e7b94b3db762ef7a2ee43559d9b98de0bf7946c105"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "counts": {
+    "desktopDirections": 0,
+    "desktopStages": 0,
+    "lowQualityDirections": 0,
+    "reducedDirections": 0,
+    "mobileDirections": 0,
+    "endpointChecks": 0
+  },
+  "checks": [],
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/desktop-divine-verdict.png",
+      "bytes": 755692,
+      "sha256": "90cb01ce97e1ed4cd4a6ce4405cf4eee2e13b3393956f2d0f5ac7afd6e4593c5"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/mobile-frost-return.png",
+      "bytes": 290417,
+      "sha256": "18a7f2bb90bf69ab57da251c7188cd717700b11053556ac24e05b68172f676bc"
+    }
+  ],
+  "browserErrors": [],
+  "networkFailures": [],
+  "notes": [
+    "These are automated canvas, layout, identity and control checks. A screenshot contact sheet is supplied for independent visual review.",
+    "No awakening gameplay event is generated.",
+    "The rejected-v1 geometry-only presentation has no browser approval. This receipt covers dedicated painted ornate-v2 only."
+  ],
+  "cases": [
+    {
+      "id": "preview:awakening:sword:hell",
+      "direction": "right",
+      "t": 0.52,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "諸神斷罪",
+      "phase": "神劍成形",
+      "visible": 34212,
+      "edge": 0,
+      "pixelHash": "68bef1f7",
+      "bounds": [
+        324,
+        44,
+        736,
+        448
+      ],
+      "canvas": [
+        1061,
+        520
+      ],
+      "css": [
+        1060.8125,
+        518
+      ],
+      "pageOverflow": false,
+      "progress": 0.52,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 1061,
+      "height": 520,
+      "dpr": 1,
+      "renderCount": 3,
+      "drawCalls": 67,
+      "frameMs": 0.800000011920929,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "divine-verdict",
+      "metrics": {
+        "layerCount": 60,
+        "geometryCount": 7,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 7,
+        "principalScreenRatio": 0.7916666666666666
+      },
+      "bodyHeight": 113.04347826086958,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "hawk",
+        "awakening-archer",
+        "awakening-mage",
+        "thief",
+        "semantic",
+        "awakening-thief",
+        "mage"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "direction": "right",
+      "t": 0.55,
+      "quality": "high",
+      "reducedMotion": false,
+      "targetCount": 1,
+      "name": "霜鏡回流",
+      "phase": "晶流回返",
+      "visible": 10657,
+      "edge": 0,
+      "pixelHash": "2d778cdc",
+      "bounds": [
+        36,
+        88,
+        306,
+        322
+      ],
+      "canvas": [
+        358,
+        410
+      ],
+      "css": [
+        358,
+        408
+      ],
+      "pageOverflow": false,
+      "progress": 0.55,
+      "playing": false,
+      "loop": false,
+      "ready": true,
+      "width": 358,
+      "height": 410,
+      "dpr": 1,
+      "renderCount": 8,
+      "drawCalls": 68,
+      "frameMs": 0.7999999821186066,
+      "presentationRevision": "ornate-v2",
+      "sourceId": null,
+      "previewOnly": true,
+      "implemented": false,
+      "profileCount": 16,
+      "composition": "frost-return",
+      "metrics": {
+        "layerCount": 61,
+        "geometryCount": 7,
+        "subjectCount": 1,
+        "movingActorCount": 0,
+        "paintPasses": 6,
+        "layerBudget": 150,
+        "geometryBudget": 7,
+        "principalScreenRatio": 0.75
+      },
+      "bodyHeight": 74.58333333333334,
+      "loadedAssets": [
+        "awakening-sword",
+        "sword",
+        "archer",
+        "hawk",
+        "awakening-archer",
+        "awakening-mage",
+        "thief",
+        "semantic",
+        "awakening-thief",
+        "mage"
+      ],
+      "assetDimensions": {
+        "awakening-sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "sword": {
+          "width": 1254,
+          "height": 1254
+        },
+        "archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "hawk": {
+          "width": 840,
+          "height": 840
+        },
+        "awakening-archer": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-mage": {
+          "width": 1254,
+          "height": 1254
+        },
+        "thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "semantic": {
+          "width": 1254,
+          "height": 1254
+        },
+        "awakening-thief": {
+          "width": 1254,
+          "height": 1254
+        },
+        "mage": {
+          "width": 1254,
+          "height": 1254
+        }
+      },
+      "principalBounds": {
+        "awakening-sword": [
+          {
+            "x": 0.21052631578947367,
+            "y": 0.21052631578947367,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2794738123250436,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.14354066985645933,
+            "y": 0.1850079744816587,
+            "width": 0.6491228070175439,
+            "height": 0.6555023923444976,
+            "alphaSampleRatio": 0.3182279199967544,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21371610845295055,
+            "y": 0.1722488038277512,
+            "width": 0.6140350877192983,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.2690575682583472,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.1467304625199362,
+            "y": 0.16267942583732056,
+            "width": 0.645933014354067,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.30679743600146053,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-archer": [
+          {
+            "x": 0.20414673046251994,
+            "y": 0.20733652312599682,
+            "width": 0.6682615629984051,
+            "height": 0.6363636363636364,
+            "alphaSampleRatio": 0.2822731145279727,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11802232854864433,
+            "y": 0.19457735247208932,
+            "width": 0.7001594896331739,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.29933263012698286,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.21690590111642744,
+            "y": 0.14992025518341306,
+            "width": 0.6491228070175439,
+            "height": 0.6299840510366826,
+            "alphaSampleRatio": 0.2777191772485699,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.1467304625199362,
+            "width": 0.7033492822966507,
+            "height": 0.6331738437001595,
+            "alphaSampleRatio": 0.31855247677390564,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-mage": [
+          {
+            "x": 0.23285486443381181,
+            "y": 0.21690590111642744,
+            "width": 0.6363636363636364,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.26113635441600064,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.10207336523125997,
+            "y": 0.22647527910685805,
+            "width": 0.6874003189792663,
+            "height": 0.6076555023923444,
+            "alphaSampleRatio": 0.24433039879913993,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22966507177033493,
+            "y": 0.18181818181818182,
+            "width": 0.6331738437001595,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.31235547081017484,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11164274322169059,
+            "y": 0.18181818181818182,
+            "width": 0.6618819776714514,
+            "height": 0.6108452950558214,
+            "alphaSampleRatio": 0.3070814231814678,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ],
+        "awakening-thief": [
+          {
+            "x": 0.22328548644338117,
+            "y": 0.23604465709728867,
+            "width": 0.7033492822966507,
+            "height": 0.5980861244019139,
+            "alphaSampleRatio": 0.27983893869933874,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.11483253588516747,
+            "y": 0.20733652312599682,
+            "width": 0.6650717703349283,
+            "height": 0.6682615629984051,
+            "alphaSampleRatio": 0.2703253681690941,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.22328548644338117,
+            "y": 0.1339712918660287,
+            "width": 0.6555023923444976,
+            "height": 0.6267942583732058,
+            "alphaSampleRatio": 0.2872936021745304,
+            "cellPixels": [
+              627,
+              627
+            ]
+          },
+          {
+            "x": 0.09888357256778309,
+            "y": 0.11802232854864433,
+            "width": 0.6746411483253588,
+            "height": 0.6618819776714514,
+            "alphaSampleRatio": 0.3205201022353848,
+            "cellPixels": [
+              627,
+              627
+            ]
+          }
+        ]
+      },
+      "errors": [],
+      "pendingAnimationFrame": false
+    }
+  ],
+  "requiresIndependentVisualReview": true,
+  "sourcesAfter": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 28985,
+      "sha256": "545bafea9a780aa02f84784c26e43b9be6efc1c55fb4e3b7ad5f08ab15990b12"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 7646,
+      "sha256": "165e147f3e327c9a1680a2394fdd3ca63eeb5bcc6c969eef4baaf82d45326043"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 16504,
+      "sha256": "5f1e23e67fb1979710e662e7b94b3db762ef7a2ee43559d9b98de0bf7946c105"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ]
+}

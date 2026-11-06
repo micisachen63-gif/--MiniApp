@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 1,
+  "status": "source-frozen",
+  "generatedAt": "2026-11-04T07:57:49.184Z",
+  "owner": "legacy_frontend",
+  "sourceFiles": [
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    }
+  ],
+  "verificationFiles": [
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "sha256": "e1337714c5b27321b8c3947d6c63df35a9891cb0f21eb752c3697c85607721ea"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-harness.js",
+      "sha256": "6a7482536148376a9a4fdce4d81d707ddad8a10ab660ead8277298fb903b1b09"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-app.test.js",
+      "sha256": "b7205bf0833e3073d6ab14440815c417b574ea68023f14c6acffab5d6dd68554"
+    },
+    {
+      "path": "worker/test/skill-vfx-engine.test.js",
+      "sha256": "8256328e692ebd1eb5bf96bd86bf7c5924326ee04da9550a33e8bd10f17a882c"
+    },
+    {
+      "path": "worker/test/combat-playback.test.js",
+      "sha256": "234875556f76e763a7119983daa801fcce17a0686f0bb229e16df9f6cf61383e"
+    },
+    {
+      "path": "worker/test/hero-art-contained.test.js",
+      "sha256": "c5876c4be1ae04615cd9c9bd57235dabe7ccaa3bbc2ec7f2cea2a79d2513c29c"
+    },
+    {
+      "path": "worker/test/star-ring-heroes.test.js",
+      "sha256": "dfc672508145d145f3022df1965d1d139ae02c8b40c7475555f85f667dd1e576"
+    },
+    {
+      "path": "worker/test/pk-event-sync.test.js",
+      "sha256": "515b609cfb722db9068d6475346e7f176922639d7be14ccb3cc87907b29a7558"
+    },
+    {
+      "path": "worker/test/boss-ui-refresh.test.js",
+      "sha256": "200ef060f216a331bc09dbb3367702f76579ba48045122ce02b18a6ab8509011"
+    },
+    {
+      "path": "worker/test/idle-combat-pacing.test.js",
+      "sha256": "e6560ada24570cc705aa28b7859be6cc9791ffb35be38792fc1ade5c2f73981d"
+    },
+    {
+      "path": "worker/tools/skill-vfx-legacy-presentation-check.mjs",
+      "sha256": "6e603d9cf7ae260bb1e09f5535d3c31033ef1aba60d39f96d90c871ba7fb9451"
+    }
+  ],
+  "verification": {
+    "uniqueFocusedTests": 87,
+    "scope": "Initial 77-case focused batch plus necessary consumer reruns, 10 additional cases total; root owns final combined gate.",
+    "initialLog": ".release-sync/skill-vfx-20261104/legacy-frontend-focused-tests.log",
+    "finalRing": {
+      "passed": 14,
+      "session": "ROPytzRcJi0FZ9Pnb3uZEOKB"
+    },
+    "finalAppAndPk": {
+      "passed": 11,
+      "session": "Ymm_l_2yiQPpN9rOnvkk_ySR"
+    },
+    "presentationReceipt": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json"
+  },
+  "pending": [
+    "Root real-API browser verification for final ring and PK edge behavior",
+    "Root source-aware final gate and local commit"
+  ]
+}

@@ -14,6 +14,8 @@
   const rand = (a, b) => a + Math.random() * (b - a);
   const ri = (a, b) => Math.floor(rand(a, b + 1));
   const MAX_PARTS = 90;
+  let legacyVfxModulePromise=null;
+  const loadLegacyVfx=()=>legacyVfxModulePromise||(legacyVfxModulePromise=import('/skill-vfx-legacy.mjs').catch(error=>{legacyVfxModulePromise=null;throw error;}));
   const monsterLayouts = fetch('monster-layout.json').then(r => r.ok ? r.json() : {}).catch(() => ({}));
   const figureBounds = new Map();
   function visibleBounds(image, fallback = [0,0,1,1]) {
@@ -56,11 +58,12 @@
       settlement: q('.settlement-summary'), settlementMain: q('.settlement-main'), settlementItems: q('.settlement-items'),
       tint: (el, c) => el.querySelector(`.tint.${c}`) };
 
-    const S = { me: null, queue: [], seen: new Set(), roundsSeen: new Set(), reportTo: new Map(), visualEpoch: 0, playEpoch: null, actionRun: 0, mon: null, running: false, rm: !!(RMQ && RMQ.matches), cls: 'sword', path: '', monIdx: 0, stalled: null, fig: null, elemI: 0, heroSheet: null, heroSheetKey: null, heroSheetRun: 0, group: [], selected: 0, pendingTarget: null, turnBusy: false };
+    const S = { me: null, queue: [], seen: new Set(), roundsSeen: new Set(), reportTo: new Map(), visualEpoch: 0, playEpoch: null, actionRun: 0, mon: null, running: false, rm: !!(RMQ && RMQ.matches), cls: 'sword', path: '', monIdx: 0, stalled: null, fig: null, elemI: 0, heroSheet: null, heroSheetKey: null, heroSheetRun: 0, group: [], selected: 0, pendingTarget: null, turnBusy: false, legacyVfx: null, legacyVfxSeen: new Set() };
     const cancelled = Object.assign(new Error('battle scene changed'), { cancelled: true });
     function checkScene(epoch = S.playEpoch) { if (epoch !== null && epoch !== S.visualEpoch) throw cancelled; }
     function cancelScene() {
       S.visualEpoch++; S.heroSheetRun++; S.actionRun++; S.queue.length = 0;
+      S.legacyVfx?.destroy();S.legacyVfx=null;
       window.RpgSwordBranchFX?.clearActor(E.hero);
       window.RpgMageHeroFX?.clearActor(E.hero);
       clearGroup(); targetBar.replaceChildren(); E.floats.replaceChildren();
@@ -531,6 +534,8 @@
     }
     async function heroAttack(hit, skill) {
       const epoch=S.playEpoch,c = S.me.character; const b = S.me.battle; const L = pfx();let impactCommitted=false;
+      const hasSkillFx=!!window.RpgSkillFX||typeof hit.releaseVfx==='function';
+      const presentSkill=async(from,to,remaining,casting)=>{if(hit.releaseVfx&&await hit.releaseVfx(from))return;await skillEffect(from,to,remaining,casting);};
       // Cosmetic swings (no committed server hit) must never fire at an empty or dead target.
       const targetGone=()=>{if(!hit.impact&&!(S.mon&&S.mon.hp>0&&E.mon.isConnected))throw cancelled;};
       targetGone();
@@ -560,7 +565,7 @@
         if (skill && L.aura && !S.heroSheet?.authoredEffects) aura(L.aura);
         const action = classAction('sword', duration, () => play(E.hAct, skill && L.bash ? 'bash' : 'slash', { '--lx': `${lx}px` }));
         await wait(S.rm ? 80 : Math.round(duration * (sword16 ? .30 : .55)));
-        if (window.RpgSkillFX) await skillEffect(heroPt(.7,.4), target, duration * (sword16 ? .34 : .45), skill);
+        if (hasSkillFx) await presentSkill(heroPt(.7,.4), target, duration * (sword16 ? .34 : .45), skill);
         else if (skill && L.bash) { ringFlash(target, ['#7fb8ff', '#ffe08a']); flash(E.hAct, 'b', 'glow'); }
         else smear(target, skill, col);
         if(sword16) swordRecovery=action; else await action;
@@ -574,7 +579,7 @@
         await wait(S.rm ? 0 : Math.round(duration * .60)); // full two-second animation, release at 60%
         checkScene(epoch);targetGone();
         const from = heroPt(0.88, 0.4);
-        if (window.RpgSkillFX) await skillEffect(from, target, duration * .40, skill);
+        if (hasSkillFx) await presentSkill(from, target, duration * .40, skill);
         else if (skill && L.falcon) { falcon(target); await wait(160); await projectile(from, target, 200, 'bolt', arrowMagic); }
         else if (skill && L.rain) { projectile({ x: from.x, y: from.y - 4 }, { x: target.x, y: target.y - 60 }, 260, 'arrow', arrowMagic); arrowRain(target, S.path.length > 1 ? 7 : 5, arrowMagic); await wait(460); }
         else { if (skill) { projectile({ x: from.x, y: from.y - 6 }, { x: target.x, y: target.y - 8 }, 260, S.path[0] === 'B' ? 'bolt' : 'arrow', arrowMagic); await wait(90); } await projectile(from, target, S.path[0] === 'B' ? 210 : 300, S.path[0] === 'B' ? 'bolt' : 'arrow', arrowMagic); }
@@ -592,7 +597,7 @@
         // Paint the exact release cell synchronously before the one server 生命值 impact.
         if(!S.rm&&S.heroSheet?.ready&&Number.isInteger(releaseIndex)&&program?.sequence.includes(releaseIndex))setHeroSheetFrame(releaseIndex);
         commitImpact();
-        if(window.RpgSkillFX)await skillEffect(heroCastPt(),target,Math.max(1,duration-releaseMs),skill);
+        if(hasSkillFx)await presentSkill(heroCastPt(),target,Math.max(1,duration-releaseMs),skill);
         else smear(target,skill,col);
         await action;
       } else {
@@ -612,7 +617,7 @@
         play(E.hAct, 'cast');
         // Release after the forward cast begins, so the projectile visibly leaves with the staff thrust.
         await wait(S.rm || S.heroSheet?.durationsMs ? 0 : 70);
-        if (skillLook) { col = [skillLook.color, '#ffffff', skillLook.color]; await skillEffect(heroCastPt(), target, S.heroSheet?.durationsMs?duration-releaseMs:duration*.47-70, skill); }
+        if (skillLook||hit.releaseVfx) { if(skillLook)col = [skillLook.color, '#ffffff', skillLook.color]; await presentSkill(heroCastPt(), target, S.heroSheet?.durationsMs?duration-releaseMs:duration*.47-70, skill); }
         else if (L.missiles && skill) { for (let i = 0; i < 3; i++) { projectile({ x: tip.x, y: tip.y + i * 6 }, { x: target.x + rand(-8, 8), y: target.y + rand(-14, 10) }, 300 + i * 70, orb); } await wait(440); }
         else await projectile(tip, target, 340, orb);
         await casting;
@@ -879,9 +884,41 @@
       return Math.max(PACE_MIN_MS,Math.min(PACE_MAX_MS,Math.round(PACE_BUDGET_MS/hits)));
     }
     async function playServerRound(round,ticks=0,totals=null){
-      const slot=paceSlot(round,ticks);
+      const slot=paceSlot(round,ticks),epoch=S.playEpoch,actorId=String(S.me.character.tgId);
+      const descriptors=Array.isArray(round.vfxEvents)?round.vfxEvents:[],byId=new Map(descriptors.map(value=>[value?.eventId,value]));
+      let legacy=null,legacyApi=null;
+      if(descriptors.length){
+        try{
+          legacyApi=await loadLegacyVfx();checkScene(epoch);
+          legacy=await legacyApi.createLegacyVfxLayer(root,{mode:'idle',contextKey:'idle:'+actorId+':'+round.id,
+            isCurrent:()=>epoch===S.visualEpoch&&String(S.me?.character?.tgId)===actorId});
+          checkScene(epoch);S.legacyVfx=legacy;await legacy?.prepare(descriptors);checkScene(epoch);
+        }catch(error){legacy?.destroy();legacy=null;if(error.cancelled)throw error;}
+      }
+      const playVfx=async(raw,from=null)=>{
+        if(!legacy||!raw||S.legacyVfxSeen.has(raw.eventId))return false;
+        const targetNodes=[{id:actorId,node:E.hImg},...S.group.filter(e=>e.mon?.id).map(e=>({id:e.mon.id,node:e.refs.mImg}))];
+        const top=heroPt(.5,0),bottom=heroPt(.5,1);
+        const geometry=legacyApi.legacyDomGeometry(root,E.hImg,targetNodes,{actorId,from:from||heroCastPt(),
+          foot:bottom,bodyHeight:Math.max(1,bottom.y-top.y)});
+        const result=await legacy.play(raw,geometry,{canStart:()=>epoch===S.visualEpoch});
+        checkScene(epoch);
+        if(result.accepted){
+          S.legacyVfxSeen.add(raw.eventId);if(S.legacyVfxSeen.size>512)S.legacyVfxSeen.delete(S.legacyVfxSeen.values().next().value);
+          if(result.impactDelayMs>0)await wait(result.impactDelayMs);
+          return result;
+        }
+        return false;
+      };
+      try{
       const shares=rewardShares(totals,(round.events||[]).filter(e=>e.type==='hit'&&e.afterHp===0).length);let killNo=0;
       await spawnServerGroup(round.before);root.dataset.playingRound=round.id;
+      const linked=new Set((round.events||[]).map(event=>event.vfxEventId).filter(Boolean));
+      // A true support/summon/pulse without an aggregate-hit link still occurs once.
+      for(const raw of descriptors.filter(value=>!linked.has(value?.eventId))){
+        const result=await playVfx(raw);
+        if(result?.accepted)await wait(Math.max(0,result.remainingMs-result.impactDelayMs));
+      }
       for(const action of round.presentation?.monsterActions || []){
         if(action.cosmetic!==true||action.attackDirection!==-1)continue;
         const index=S.group.findIndex(e=>e.mon?.id===action.sourceId);if(index<0)continue;
@@ -895,11 +932,13 @@
         const hitStart=performance.now();
         // This is a committed server hit; its actual target owns the name highlight during playback.
         S.pendingTarget=null;renderTargets();
-        await heroAttack({skillName:event.skillName,attackSpeedMultiplier:event.attackSpeedMultiplier||round.attackSpeedMultiplier,impact:()=>{
+        const raw=byId.get(event.vfxEventId);
+        await heroAttack({skillName:event.skillName,attackSpeedMultiplier:event.attackSpeedMultiplier||round.attackSpeedMultiplier,
+          releaseVfx:raw&&!S.legacyVfxSeen.has(raw.eventId)?from=>playVfx(raw,from):null,impact:()=>{
           S.mon.hp=event.afterHp;monsterHealth();saveEnemy();
           const point=monPt(.5,.4);float(point.x,point.y,`−${o.fmt(event.damage)}`,'damage');
           root.dataset.lastHit=JSON.stringify({id:event.targetId,hp:event.afterHp,maxHp:S.mon.max,damage:event.damage});
-        }},event.skill);
+        }},descriptors.length?!!raw&&!S.legacyVfxSeen.has(raw.eventId):event.skill);
         if(event.afterHp===0)await killMonster({elite:event.enemy.elite},totals?shares[Math.min(killNo++,shares.length-1)]:null);
         if(slot){
           // Fill the gap with purely visual basic swings (no impact callback: no damage, no settlement change, no API calls).
@@ -910,6 +949,7 @@
       // Summarized/oversized rounds (or totals with no matching kill event) have no per-kill hits to hang popups on: show the real totals once instead of nothing.
       if(totals&&killNo===0&&S.mon)showKillReward(monPt(.5,.4),{exp:totals.exp,gold:totals.gold,drops:totals.drops});
       await spawnServerGroup(round.after);root.dataset.playingRound='';root.dataset.completedRound=round.id;
+      }finally{legacy?.destroy();if(S.legacyVfx===legacy)S.legacyVfx=null;}
     }
     async function loop() {
       if (S.running) return; S.running = true;

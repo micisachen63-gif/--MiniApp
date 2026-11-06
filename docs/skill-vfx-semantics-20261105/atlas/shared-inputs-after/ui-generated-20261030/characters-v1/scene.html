@@ -1,0 +1,41 @@
+<!doctype html>
+<!-- 星穹旅誌 UI prototype (Greek-myth polish): full-screen Phaser scene, all UI floats over it. Display-only, no network/polling. -->
+<html lang="zh-Hant"><head><base href="/ui-proto/"><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover">
+<title>星穹旅誌・沉浸介面原型</title>
+<link rel="preload" href="assets/fonts/xq-serif-tc.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="ui.css">
+</head><body>
+<div id="stage"><div id="game"></div><div id="sky"></div><div id="vig"></div>
+<div id="ui">
+  <div id="topL">
+    <div class="portrait"><canvas id="pc" width="112" height="112"></canvas><i>27</i></div>
+    <div class="who"><b>ミカサ</b><span id="gold">◈ 12,480</span></div>
+  </div>
+  <div id="topR">
+    <div id="zone"><b>泰坦山隘</b><span>Lv 27・階級 Ⅱ</span></div>
+    <div id="mini"><canvas id="minic" width="200" height="140"></canvas></div>
+    <div id="quest" class="col"><div class="qt"><span class="qn">◆ 泰坦的試煉</span><span class="qc"><em id="qk">0</em>/40</span><i class="chev">▾</i></div>
+      <div class="qd">擊敗山隘中的怪物<br>首領：熔岩巨像</div></div>
+  </div>
+  <div id="target" class="hide"><div class="tn" id="tname"></div><div class="tbar"><i id="tfill"></i></div></div>
+  <div id="toasts"></div>
+  <div id="chat"><span class="ch">世界</span><span id="chatLine"></span><i class="chev">▴</i></div>
+  <div id="bottom">
+    <div id="buffs"></div>
+    <div id="bar">
+      <div class="orb red"><canvas width="200" height="200"></canvas><span class="ov" id="hpTxt"></span></div>
+      <div id="mid"><div id="xp"><i id="xpfill"></i></div><div id="skills"></div></div>
+      <div class="orb blue"><canvas width="200" height="200"></canvas><span class="ov" id="mpTxt"></span></div>
+    </div>
+  </div>
+  <div id="fn"></div>
+  <div id="panelHost"></div>
+  <div id="tip"></div>
+</div></div>
+<script src="phaser-3.90.0.min.js"></script>
+<script src="ui-art.js"></script>
+<script src="ui.js"></script>
+<script src="/ui-generated-20261030/characters-v1/layered-walk-renderer.js"></script><script src="/ui-generated-20261030/characters-v1/mage-preview-locomotion.js"></script><script src="/ui-generated-20261030/characters-v1/character-sprites.js"></script><script src="/ui-generated-20261030/characters-v1/scene.js"></script>
+</body></html>

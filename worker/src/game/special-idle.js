@@ -13,7 +13,7 @@ export function consumeIdleLastStand(c,now){
  if(!b)return false;b.uses=0;saveSpecial(c,x);return true;
 }
 // One action per minute. A special skill replaces the normal attack and is off by default.
-export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5}){
+export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5,vfx=null}){
  const x=specialState(c);if(c.base_class!=='thief'&&!x.pending&&!Object.keys(x.auto).length&&!x.idleActor)return null;
  if(c.base_class==='thief'&&x.thiefIdleMap!==mapForLevel(c.level)){delete x.idleEnemy;x.thiefIdleMap=mapForLevel(c.level);}
  // The actual idle damage budget applies the guardian multiplier once in idle.js.
@@ -32,8 +32,8 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
   if(needsBlue(c,a.mp,s.maxMp,skill.mp)&&x.mode==='strong'){const target=blueTarget(c,s.maxMp,skill.mp);let key;do{key=chooseBlue(inv,c.map_id);if(!key)break;const cost=potions[key].price||0;if((x.extraCost||0)+cost>(x.budget||0))break;use(key);x.extraCost=(x.extraCost||0)+cost;a.mp=Math.min(s.maxMp,a.mp+potions[key].heal);}while(a.mp<target);}
   if(a.mp<skill.mp)continue;selected=skill;break;
  }
- let damage=periodicDamage;
- if(selected){const result=castSpecial(a,[a],enemy,selected,a.id,now,rng,{applySustain:false});damage+=result.damage;if(manual)delete x.pending;else if(x.loadout.length>1)x.idleAutoNext=x.loadout[(x.loadout.indexOf(selected.id)+1)%x.loadout.length];}
+ let damage=periodicDamage,visual=null;
+ if(selected){const result=castSpecial(a,[a],enemy,selected,a.id,now,rng,{applySustain:false},vfx);visual=result.vfx||null;damage+=result.damage;if(manual)delete x.pending;else if(x.loadout.length>1)x.idleAutoNext=x.loadout[(x.loadout.indexOf(selected.id)+1)%x.loadout.length];}
  const normalBonus=Math.min(1.5,(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now))+periodicDamage/Math.max(1,s.atk*s.skill.mult));
  const ratio=selected?Math.min(1.5,Math.max(.15,damage/Math.max(1,s.atk*s.skill.mult))):null;
  // The existing idle pressure is already reduced by DEF; apply only active skill protection here.
@@ -42,7 +42,7 @@ export function idleSpecial(c,inv,s,now,{chooseBlue,use,potions,day,rng=()=>.5})
  triggerThiefCounter(a,loss,now);
  for(const buff of a.buffs)if(buff.type==='nextReduce'&&buff.uses>0)buff.uses--;
  c.hp=Math.min(s.maxHp,a.hp);c.mp=a.mp;x.idleActor={buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon};x.idleEnemy={buffs:enemy.buffs.filter(b=>b.until>now),dots:(enemy.dots||[]).filter(d=>d.left>0)};saveSpecial(c,x);
- return {selected,ratio,normalBonus,nativeSteadyBonus:Math.min(1.5,(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))),periodicBonus:periodicDamage/Math.max(1,s.atk*s.skill.mult),hpLoss:loss,eliteProtected:valueOf(a,'lastStand',now)>0,extraCost:x.extraCost};
+ return {...(visual?{vfx:visual}:{}),selected,ratio,normalBonus,nativeSteadyBonus:Math.min(1.5,(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))),periodicBonus:periodicDamage/Math.max(1,s.atk*s.skill.mult),hpLoss:loss,eliteProtected:valueOf(a,'lastStand',now)>0,extraCost:x.extraCost};
 }
 
 // Idle settles an aggregate integer damage budget. Native statuses alter that same budget;

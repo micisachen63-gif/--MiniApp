@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import { legacyDescriptors, legacyDomGeometry } from '../public/skill-vfx-legacy.mjs';
 
 const source=fs.readFileSync(new URL('../public/expedition/combat-playback.js',import.meta.url),'utf8').replace(/^import .*;\r?\n/gm,'').replace(/^export /gm,'');
 const members=(hp=[80,60,0],mp=[40,40,40])=>['111','222','333'].map((id,i)=>({id,name:id,hp:hp[i],maxHp:100,mp:mp[i],maxMp:50}));
@@ -12,7 +13,7 @@ function fixture(sequence=1){
  const p={id:'p1',rev:sequence,kind:'tower',floor:1,round:sequence+1,roundLimit:40,status:'combat',enemy:{name:'敵1',hp:65,maxHp:100},members:after.members,battleTurn:turn,battleTurns:[turn],battleSync:{latestTurnId:turn.id,hasGap:false}};
  return {p,turn};
 }
-function setup(){
+function setup({legacyFactory=async()=>null,reducedMotion=true,startAction=()=>false}={}){
  const log=[];
  const element=key=>{
   const flags=new Set(),el={key,dataset:{},querySelector:()=>null,style:{setProperty(name,value){this[name]=value;}},classList:{add(...names){names.forEach(n=>flags.add(n));},remove(...names){names.forEach(n=>flags.delete(n));},toggle(name,on){if(on)flags.add(name);else flags.delete(name);}},flags,getBoundingClientRect:()=>({x:0,y:0,width:20,height:30}),remove(){}};
@@ -23,7 +24,7 @@ function setup(){
  const rows=['111','222','333'].map(id=>{const el=element('row'+id);el.dataset.memberId=id;el.hp=element('hp'+id);el.mp=element('mp'+id);el.querySelector=s=>s==='[data-member-hp]'?el.hp:el.mp;return el;});
  const nodes={'.scene-boss':element('boss'),'.scene-bg':element('bg'),'.scene-floor':element('floor'),'.boss-meter .meter i':element('bar'),'.boss-meter small':element('bossHp')};
  const scene=element('scene');scene.isConnected=true;scene.querySelector=s=>nodes[s];scene.querySelectorAll=s=>s==='.scene-hero'?heroes:[];scene.closest=()=>({querySelectorAll:s=>s==='.members [data-member-id]'?rows:s==='[data-member-id]'?[...heroes,...rows]:[]});scene.append=el=>{if(el.className?.startsWith('combat-number'))log.push({key:'number',value:el.textContent});};
- const document={hidden:false,createElement:tag=>element(tag)},ctx=vm.createContext({document,preparePartyArt:()=>{},startRegistryAction:()=>false,matchMedia:()=>({matches:true}),setTimeout:fn=>{queueMicrotask(fn);return 1;},dungeonTheme:p=>({name:'敵'+p.floor,rank:p.floor%5===0?'boss':'normal',background:'floor'+p.floor+'.webp',boss:'boss'+p.floor+'.webp',accent:'#ffeedd'})});
+ const document={hidden:false,createElement:tag=>element(tag)},ctx=vm.createContext({document,preparePartyArt:()=>{},startRegistryAction:startAction,createLegacyVfxLayer:legacyFactory,legacyDescriptors,legacyDomGeometry,matchMedia:()=>({matches:reducedMotion}),setTimeout:fn=>{queueMicrotask(fn);return 1;},dungeonTheme:p=>({name:'敵'+p.floor,rank:p.floor%5===0?'boss':'normal',background:'floor'+p.floor+'.webp',boss:'boss'+p.floor+'.webp',accent:'#ffeedd'})});
  vm.runInContext(source+'\nthis.h={playCombat,combatView,combatCursor};',ctx);
  return {...ctx.h,scene,nodes,rows,heroes,log,document};
 }
@@ -57,4 +58,29 @@ test('a lower revision cannot rewind the displayed battle after a newer turn',as
 test('legacy rounds missing mana or enemy identity show the current snapshot safely',async()=>{
  const s=setup(),{p}=fixture();delete p.battleTurn.before.enemyMaxHp;for(const m of p.battleTurn.before.members){delete m.mp;delete m.maxMp;}
  const frame=s.combatView(p);assert.equal(frame.enemy.hp,65);await s.playCombat(s.scene,p);assert.equal(s.log.filter(x=>x.key==='number').length,0);assert.equal(s.combatCursor('p1'),p.battleTurn.id);assert.equal(s.scene.dataset.combatSync,'已同步最新戰況');
+});
+
+test('party explicit cast and periodic receipts reach exact actor/recipient DOM geometry once per turn',async()=>{
+ const calls=[],prepared=[];let destroyed=0;
+ const layer={prepare:async rows=>prepared.push(...rows),timing:()=>({remainingMs:150,impactDelayMs:60}),
+  play:async(raw,geometry)=>{calls.push({raw,geometry});return {accepted:true,remainingMs:150,impactDelayMs:60};},destroy:()=>destroyed++};
+ const s=setup({legacyFactory:async()=>layer}),{p,turn}=fixture();
+ s.heroes.forEach((hero,i)=>hero.getBoundingClientRect=()=>({x:20+i*100,y:150,width:40,height:90}));
+ s.nodes['.scene-boss'].getBoundingClientRect=()=>({x:400,y:60,width:80,height:120});
+ const cast={schemaVersion:1,source:'committed-combat',eventId:'party:cast',skillId:'special:skill_04_2',kind:'cast',actorId:'111',atMs:1000,targetKind:'ally',targetIds:['222'],presentationMode:'support'};
+ const pulse={...cast,eventId:'party:pulse',skillId:'special:skill_18_1',kind:'effect',actorId:'222',targetKind:'enemy',targetIds:['boss'],presentationMode:'impact'};
+ turn.events[0].vfx=cast;turn.events[0].vfxEvents=[pulse];
+ const before=JSON.stringify(p);await s.playCombat(s.scene,p);await s.playCombat(s.scene,p);
+ assert.equal(prepared.length,2);assert.equal(calls.length,2);assert.equal(destroyed,1);
+ assert.equal(calls[0].raw,cast);assert.equal(calls[0].geometry.actorId,'111');
+ assert.equal(calls[0].geometry.targets.find(t=>t.id==='222').point.x,140);
+ assert.equal(calls[1].raw,pulse);assert.equal(calls[1].geometry.actorId,'222');
+ assert.equal(calls[1].geometry.targets.find(t=>t.id==='boss').point.x,440);
+ assert.equal(JSON.stringify(p),before,'receipts and committed snapshots stay immutable');
+});
+test('party hidden during VFX preparation admits no stale receipt and destroys the prepared layer',async()=>{
+ let played=0,destroyed=0,s;
+ const layer={prepare:async()=>{s.document.hidden=true;},play:async()=>{played++;},destroy:()=>destroyed++};
+ s=setup({legacyFactory:async()=>layer});const {p,turn}=fixture();turn.events[0].vfx={eventId:'hidden:cast'};
+ await s.playCombat(s.scene,p);assert.equal(played,0);assert.equal(destroyed,1);assert.equal(s.combatCursor(p.id),turn.id);
 });

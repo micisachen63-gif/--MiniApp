@@ -1,0 +1,24 @@
+{
+  "scope": "current-awakening-audit-build-check",
+  "commands": [
+    {
+      "command": "node worker/tools/build-awakening-vfx-audit.mjs --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+      "exitCode": 0,
+      "stdout": "{\"ok\":true,\"mode\":\"build\",\"profiles\":16,\"assets\":10,\"bytes\":68557,\"sha256\":\"769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f\",\"browserEvidence\":\"attached-and-source-matched\"}\n",
+      "stderr": ""
+    },
+    {
+      "command": "node worker/tools/build-awakening-vfx-audit.mjs --check --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+      "exitCode": 0,
+      "stdout": "{\"ok\":true,\"mode\":\"check\",\"profiles\":16,\"assets\":10,\"sha256\":\"769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f\",\"browserEvidence\":\"attached-and-source-matched\"}\n",
+      "stderr": ""
+    }
+  ],
+  "builder": {
+    "path": "worker/tools/build-awakening-vfx-audit.mjs",
+    "sha256": "d592e573338fc71b906b8b56b2ce8fa2ca2fb7ffc74a9f5738770f74329dacac"
+  },
+  "browserReceiptSha256": "d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a",
+  "auditSha256": "769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f",
+  "pass": true
+}

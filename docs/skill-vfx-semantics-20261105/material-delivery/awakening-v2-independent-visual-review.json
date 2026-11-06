@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-05T06:30:31.277Z",
+  "reviewer": "vfx_integration_audit independent visual inspection",
+  "status": "passed-static-representative-review",
+  "method": "Opened and visually inspected both original screenshots with Coding Tools MCP view_image; no asset, screenshot, source or browser test modification.",
+  "scope": {
+    "screenshots": 2,
+    "staticPhasesOnly": true,
+    "allSixteenSkillsReviewed": false,
+    "motionContinuityReviewed": false,
+    "animationTimingReviewed": false,
+    "additionalTestsRequested": false,
+    "physicalDeviceGpuClaimed": false
+  },
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/desktop-divine-verdict.png",
+      "sha256": "90cb01ce97e1ed4cd4a6ce4405cf4eee2e13b3393956f2d0f5ac7afd6e4593c5",
+      "bytes": 755692,
+      "width": 1440,
+      "height": 1399,
+      "skillName": "諸神斷罪",
+      "viewport": "desktop",
+      "visiblePhase": "神劍成形",
+      "displayedTimeSeconds": 2.24,
+      "displayedDurationSeconds": 4.3,
+      "subject": "神劍、金屬護手、皇冠、羽翼",
+      "observations": [
+        "主體目測約400px高，約佔舞台高度四分之三；是畫面焦點，沒有縮成小圖示。",
+        "劍身、護手、皇冠和羽翼皆可辨識；金紅材質與羽毛層次仍保留。",
+        "劍尖落地光核很亮，但高亮集中在局部，沒有將整個主體洗成白霧。",
+        "主體、冠飾與羽翼皆在舞台內，沒有可見切邊。"
+      ],
+      "estimatesAreVisual": true,
+      "criteria": {
+        "subjectLargeEnough": true,
+        "materialDetailReadable": true,
+        "glowPreservesSubject": true,
+        "clipped": false,
+        "nameSubjectRecognizable": true
+      },
+      "necessaryCorrections": []
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/mobile-frost-return.png",
+      "sha256": "18a7f2bb90bf69ab57da251c7188cd717700b11053556ac24e05b68172f676bc",
+      "bytes": 290417,
+      "width": 390,
+      "height": 1571,
+      "skillName": "霜鏡回流",
+      "viewport": "mobile",
+      "visiblePhase": "晶流回返",
+      "displayedTimeSeconds": 2.09,
+      "displayedDurationSeconds": 3.8,
+      "subject": "橢圓冰鏡、雕花金屬框、藍色鏡面與回返流束",
+      "observations": [
+        "主體含冰晶和尾流目測約佔舞台寬度七成，手機仍能一眼辨識冰鏡。",
+        "橢圓鏡框、冰晶、雕花金屬與回返流束清楚分離，並非只剩亮圈。",
+        "中央能量交點高亮，但沒有大範圍遮掉鏡框與冰晶材質。",
+        "手機左右仍有明顯留白；冰晶、尾流與鏡面沒有可見裁切。"
+      ],
+      "estimatesAreVisual": true,
+      "criteria": {
+        "subjectLargeEnough": true,
+        "materialDetailReadable": true,
+        "glowPreservesSubject": true,
+        "clipped": false,
+        "nameSubjectRecognizable": true
+      },
+      "necessaryCorrections": []
+    }
+  ],
+  "conclusion": "這兩張代表性靜態時相沒有需要先退回修正的外觀問題；只支持主體成形、尺寸、材質、柔光與邊界判斷，不據此宣稱動作幅度、節奏、全部16招或完整互動已驗收。"
+}

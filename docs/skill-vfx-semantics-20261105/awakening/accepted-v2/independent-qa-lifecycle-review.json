@@ -1,0 +1,25 @@
+{
+  "scope": "independent-awakening-qa-lifecycle-review",
+  "reviewer": "vfx_integration_audit",
+  "status": "reviewed-no-remaining-gap-in-reported-hole",
+  "method": "Read current source and existing diagnostic receipts only; no mutation, tests, browser run or STATUS edit",
+  "harnessSha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f",
+  "auditBuilderSha256": "af0e493bc0e714689121643adf62e74f428781831e0a8d536b8363ae34cc60cf",
+  "runtimeEngineSha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557",
+  "findings": [
+    "about:blank true navigation precedes setContent and triggers existing pagehide disposal of ResizeObserver",
+    "All three modes use common finalization: all screenshots, awaited browser close, null browser, event-loop drain, final error/network/request/source assertions, then passing receipt",
+    "No browser or DOM work occurs after final assertions on the success path; finally sees browser null",
+    "catch clears pass and complete flags",
+    "Audit rejects missing or nonempty browserErrors/networkFailures and unequal before/after sources before accepting evidence"
+  ],
+  "existingRegression": {
+    "path": ".release-sync/awakening-vfx-20261105/ornate-v2-diagnostics/audit-rejects-post-check-error.json",
+    "sha256": "4086cee9c0de2aeb9a67e2039c8bc61e5100530e30c04ceef81c9f8e8d33f948",
+    "rejectedReceiptSha256": "565bb6497edef9e1e71bccab2a18098c65a481a54353095f215b8bd72c0ade47",
+    "expectedExitCode": 1,
+    "actualExitCode": 1,
+    "matchedError": "Browser evidence contains browser errors or network failures"
+  },
+  "limitation": "This independent code/receipt review does not substitute for the fresh full matrix. Audit builder was subsequently changed only to resolve tracked source and screenshot evidence; the error guards remain in place."
+}

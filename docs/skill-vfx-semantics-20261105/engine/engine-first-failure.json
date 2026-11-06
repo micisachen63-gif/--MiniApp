@@ -1,0 +1,20 @@
+{
+  "at": "2026-11-05T05:29:29.362Z",
+  "node": "v24.7.0",
+  "status": 1,
+  "before": {
+    "worker/public/skill-vfx-engine.mjs": "cd87a19aa42a09371fc0bf892d4f83feed006ff2c6e3e7a95519b3b3736881eb",
+    "worker/public/skill-vfx-semantics.mjs": "b75b2fbf2a7553980254e3ea815ea64979e9f07c49f0d33c50b430187d9ef983",
+    "worker/test/skill-vfx-engine.test.js": "8256328e692ebd1eb5bf96bd86bf7c5924326ee04da9550a33e8bd10f17a882c",
+    "worker/test/skill-vfx-target-timing.test.js": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+  },
+  "after": {
+    "worker/public/skill-vfx-engine.mjs": "cd87a19aa42a09371fc0bf892d4f83feed006ff2c6e3e7a95519b3b3736881eb",
+    "worker/public/skill-vfx-semantics.mjs": "b75b2fbf2a7553980254e3ea815ea64979e9f07c49f0d33c50b430187d9ef983",
+    "worker/test/skill-vfx-engine.test.js": "8256328e692ebd1eb5bf96bd86bf7c5924326ee04da9550a33e8bd10f17a882c",
+    "worker/test/skill-vfx-target-timing.test.js": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+  },
+  "expectedCompatibilityChange": "Old test hardcodes all beasts to hawk and all summons to fire-spirit; authored semantics now select the named subject.",
+  "stdoutSha": "a59389fa460700d7280f7c00fcb05d825b10f4906550dfd59f594c84a18f0718",
+  "stderrSha": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

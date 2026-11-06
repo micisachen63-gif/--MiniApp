@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-05T05:59:01.078Z",
+  "status": "reviewed-representative-screenshots",
+  "reviewer": "root",
+  "scope": "Representative visual review, separate from automated 196 identity coverage",
+  "images": [
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/semantic-focus-57.png",
+      "sha256": "2d164ce3411d008968dcc08c5438867179c20873cd883efe56556305dbd97fc6"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/semantic-focus-76.png",
+      "sha256": "352d5d4d3add94b498b429c83f059644aedda86f0ea3f66063483e63e9c65474"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/catalog-mage-3.png",
+      "sha256": "2dd404f5c7470d7069bdbfbc89f80713b0cb86e8c99257cfff08056fc289f639"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/catalog-thief-3.png",
+      "sha256": "542912a73a47179bc644bf5c6cad6d611079bb7defc3dad52ade7c909a3807af"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/catalog-sword-1.png",
+      "sha256": "39d3e265654eb7ae21978af7892553cc930f195b285db91e34b466845f8a305a"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/catalog-archer-1.png",
+      "sha256": "287c0e1ae4a6349634ff1f02d45f8f5f929fa9408cf82922915330e0abf8d70c"
+    },
+    {
+      "path": "docs/skill-vfx-semantics-20261105/semantic-browser/workshop-390.png",
+      "sha256": "5410717a618e8b733b66ee5e90c8641800bb658952cb0bf3118d36363030ab2c"
+    }
+  ],
+  "findings": [
+    "Wolf pack, star spirit, abyss shade, nether portal, banner, tree, stag and hydra have distinct named silhouettes in the shown semantic frames.",
+    "Blood, ice, light, shadow and nature hues are applied to visible main textures and geometry.",
+    "Four class sheets show readable skill labels and separate caster/target origins; support forms stay around their intended beneficiary.",
+    "The 390px workshop has visible complete controls, readable name and an uncropped wolf-pack preview."
+  ],
+  "limitations": [
+    "Only these seven saved images were visually reviewed by root; the 784 direction checks are automated Canvas evidence.",
+    "Gallery frames are sampled stills; timing and live RAF are separately verified."
+  ]
+}

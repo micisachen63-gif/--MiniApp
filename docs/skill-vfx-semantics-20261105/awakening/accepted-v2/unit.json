@@ -1,0 +1,226 @@
+{
+  "scope": "awakening-vfx-final-node-test",
+  "command": "node --test --test-reporter=tap worker/test/awakening-vfx-engine.test.js",
+  "node": "v24.7.0",
+  "startedAt": "2026-11-05T06:59:41.360Z",
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 9318,
+      "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 18368,
+      "sha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "finishedAt": "2026-11-05T06:59:41.659Z",
+  "exitCode": 0,
+  "sourcesAfter": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 9318,
+      "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 18368,
+      "sha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "stdout": "TAP version 13\n# Subtest: 16 preview identities match the planned names and remain outside all 196 live skills\nok 1 - 16 preview identities match the planned names and remain outside all 196 live skills\n  ---\n  duration_ms: 1.9077\n  type: 'test'\n  ...\n# Subtest: all 16 compositions produce finite, bounded, transparent-ended four-direction multistage frames\nok 2 - all 16 compositions produce finite, bounded, transparent-ended four-direction multistage frames\n  ---\n  duration_ms: 115.0786\n  type: 'test'\n  ...\n# Subtest: four-direction and phone layouts use equal scale and keep every control point on stage\nok 3 - four-direction and phone layouts use equal scale and keep every control point on stage\n  ---\n  duration_ms: 25.3153\n  type: 'test'\n  ...\n# Subtest: sixteen visual constructions remain distinct after all colors and labels are stripped\nok 4 - sixteen visual constructions remain distinct after all colors and labels are stripped\n  ---\n  duration_ms: 4.7412\n  type: 'test'\n  ...\n# Subtest: dedicated paintings are large, exact-cell, full-color principal subjects\nok 5 - dedicated paintings are large, exact-cell, full-color principal subjects\n  ---\n  duration_ms: 1.3315\n  type: 'test'\n  ...\n# Subtest: sky judgment switches focused shaft and distributed rain without adding gameplay fields\nok 6 - sky judgment switches focused shaft and distributed rain without adding gameplay fields\n  ---\n  duration_ms: 0.5598\n  type: 'test'\n  ...\n# Subtest: reduced motion freezes composition and low quality keeps the defining subjects\nok 7 - reduced motion freezes composition and low quality keeps the defining subjects\n  ---\n  duration_ms: 1.9396\n  type: 'test'\n  ...\n# Subtest: transparent padding is compensated without stretching or shifting the visible principal\nok 8 - transparent padding is compensated without stretching or shifting the visible principal\n  ---\n  duration_ms: 0.5822\n  type: 'test'\n  ...\n# Subtest: spirits and shadow bodies make independent journeys after the painted cut-in\nok 9 - spirits and shadow bodies make independent journeys after the painted cut-in\n  ---\n  duration_ms: 0.4535\n  type: 'test'\n  ...\n# Subtest: sky-judgment upward entry keeps the complete arrow shaft and glow off the stage edge\nok 10 - sky-judgment upward entry keeps the complete arrow shaft and glow off the stage edge\n  ---\n  duration_ms: 0.6909\n  type: 'test'\n  ...\n# Subtest: frost reveal recedes for three distinct return tips beyond the mirror in every direction\nok 11 - frost reveal recedes for three distinct return tips beyond the mirror in every direction\n  ---\n  duration_ms: 0.7045\n  type: 'test'\n  ...\n1..11\n# tests 11\n# suites 0\n# pass 11\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 243.1868\n",
+  "stderr": "",
+  "sourceStable": true,
+  "pass": true
+}

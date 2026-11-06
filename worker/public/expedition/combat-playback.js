@@ -1,5 +1,6 @@
 import {dungeonTheme} from './dungeon-art.js?v=20261012-tower-roster1';
-import {preparePartyArt,startRegistryAction} from './hero-art-playback.js?v=20261028-visible-body1';
+import {preparePartyArt,startRegistryAction} from './hero-art-playback.js?v=20261104-skill-vfx1';
+import {createLegacyVfxLayer,legacyDescriptors,legacyDomGeometry} from '../skill-vfx-legacy.mjs';
 
 const sessions=new Map();
 const sleep=ms=>new Promise(r=>setTimeout(r,ms));
@@ -128,9 +129,14 @@ export async function playCombat(scene,p){
   applySnapshot(scene,p,{floor:p.floor,enemyHp:p.enemy?.hp,enemyMaxHp:p.enemy?.maxHp,enemyName:p.enemy?.name,members:p.members},p.round);
   return true;
  };
- let artAction=null;
+ let artAction=null,legacy=null;
+ const descriptors=turns.flatMap(turn=>(turn.events||[]).flatMap(legacyDescriptors));
+ const targetNodes=()=>[{id:'boss',node:boss},...heroes.map(node=>({id:String(node.dataset.memberId),node}))];
+ const actorFor=id=>id==='boss'?boss:heroes.find(node=>String(node.dataset.memberId)===String(id));
  try{
   if(!fast)await artWarm;
+  if(descriptors.length){try{legacy=await createLegacyVfxLayer(scene,{mode:'party',contextKey:'party:'+p.id+':'+turns[0].id,isCurrent:()=>scene.isConnected&&!document.hidden});await legacy?.prepare(descriptors);}catch{legacy?.destroy();legacy=null;}}
+  if(cancelled())return;
   for(const turn of turns){
    if(cancelled())return;
    scene.dataset.playingTurn=turn.id;applySnapshot(scene,p,turn.before,turn.round);
@@ -141,18 +147,32 @@ export async function playCombat(scene,p){
     const actor=event.actorId==='boss'?boss:heroes.find(el=>el.dataset.memberId===String(event.actorId));
     const member=p.members.find(m=>String(m.id)===String(event.actorId));
     const offensive=event.skillId==='attack'||Number(event.damage)>0||event.after?.enemyHp<previous?.enemyHp;
+    const eventVfx=legacyDescriptors(event),modern=legacy&&eventVfx.some(raw=>legacy.timing(raw));
     const steps=combatStrikeSteps(event,previous),cycleWindup=windup/steps.length,cyclePause=pause/steps.length;
     for(let strikeIndex=0;strikeIndex<steps.length;strikeIndex++){
      if(cancelled())return;
      const after=steps[strikeIndex],strikeEvent={...event,strikeIndex,strikeCount:steps.length};
-     if(actor&&actor!==boss&&!fast&&offensive)artAction=startRegistryAction(scene,actor,boss,member,strikeEvent,{duration:cycleWindup+cyclePause,impactAt:cycleWindup,isCancelled:cancelled});
+     const primary=eventVfx.find(raw=>raw.actorId===event.actorId),artTarget=primary?.targetKind==='ally'||primary?.targetKind==='self'?actorFor(primary.targetIds[0])||actor:boss;
+     const modernTiming=strikeIndex===0&&primary?legacy?.timing(primary):null;
+     const actionDuration=Math.max(cycleWindup+cyclePause,modernTiming?cycleWindup+modernTiming.remainingMs:0);
+     if(actor&&actor!==boss&&!fast&&(offensive||modern))artAction=startRegistryAction(scene,actor,artTarget,member,strikeEvent,{duration:actionDuration,impactAt:cycleWindup,isCancelled:cancelled,effectScale:modern?0:1});
      if(actor&&!artAction)actor.classList.add(event.skillId==='defend'?'combat-guard':'combat-strike');
-     if(actor&&actor!==boss&&after?.enemyHp<previous?.enemyHp&&!fast&&!artAction?.hasFx)effect(scene,actor,boss,event.base==='archer'?'arrow':event.base==='mage'?'magic':'slash');
+     if(actor&&actor!==boss&&after?.enemyHp<previous?.enemyHp&&!fast&&!modern&&!artAction?.hasFx)effect(scene,actor,boss,event.base==='archer'?'arrow':event.base==='mage'?'magic':'slash');
      await sleep(cycleWindup);if(cancelled())return;
      // Each cycle traverses the complete native sequence, including its authored recovery.
-     artAction?.draw(cycleWindup/(cycleWindup+cyclePause));
+     artAction?.draw(cycleWindup/actionDuration);
+     let effectDelay=0,effectRemaining=0;
+     if(legacy&&strikeIndex===0)for(const raw of eventVfx){
+       const owner=actorFor(raw.actorId);if(!owner)continue;
+       const authored=raw.actorId===event.actorId?artAction?.geometry?.():null;
+       const geometry=legacyDomGeometry(scene,owner,targetNodes(),{actorId:raw.actorId,
+         from:authored?.from,foot:authored?.foot,bodyHeight:authored?.bodyHeight});
+       const result=await legacy.play(raw,geometry,{canStart:()=>!cancelled()});
+       if(result.accepted){effectDelay=Math.max(effectDelay,result.impactDelayMs);effectRemaining=Math.max(effectRemaining,result.remainingMs);}
+     }
+     if(effectDelay){await sleep(effectDelay);if(cancelled())return;}
      impact(scene,p,previous,after,turn.round);previous=after||previous;
-     await sleep(cyclePause);if(event.base==='thief')artAction?.draw(1);artAction?.stop();artAction=null;[boss,...heroes].forEach(el=>el.classList.remove('combat-strike','combat-hit','combat-guard'));
+     await sleep(Math.max(cyclePause,effectRemaining-effectDelay));if(event.base==='thief')artAction?.draw(1);artAction?.stop();artAction=null;[boss,...heroes].forEach(el=>el.classList.remove('combat-strike','combat-hit','combat-guard'));
     }
    }
    if(cancelled())return;
@@ -164,7 +184,7 @@ export async function playCombat(scene,p){
   }
   applySnapshot(scene,p,{floor:p.floor,enemyHp:p.enemy?.hp,enemyMaxHp:p.enemy?.maxHp,enemyName:p.enemy?.name,members:p.members},p.round);
  }finally{
-  artAction?.stop();
+  artAction?.stop();legacy?.destroy();
   label.remove();scene.dataset.playingTurn='';
   [boss,...heroes].forEach(el=>el.classList.remove('combat-strike','combat-hit','combat-guard'));
  }

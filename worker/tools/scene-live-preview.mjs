@@ -20,10 +20,12 @@ const here = path.dirname(fileURLToPath(import.meta.url));
 const repo = path.resolve(here, '../..'), publicRoot = path.resolve(here, '../public');
 const args = new Map();
 for (const value of process.argv.slice(2)) {
-  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only|qa-direct-trade-peer-account)=(.+)$/.exec(value);
-  if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--qa-input-snapshot-dir=.release-sync/owned-run]');
+  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only|qa-direct-trade-peer-account|vfx-fixture)=(.+)$/.exec(value);
+  if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--qa-input-snapshot-dir=.release-sync/owned-run] [--vfx-fixture=long-targets]');
   args.set(match[1], match[2]);
 }
+if (args.has('vfx-fixture') && args.get('vfx-fixture') !== 'long-targets') throw Error('Unsupported local VFX fixture');
+const vfxFixture = args.get('vfx-fixture') || null;
 if (!args.has('grok-root')) throw Error('A local --grok-root is required');
 // Local disposable two-actor QA only: the normal HUD always uses account 90101.
 const directTradePeerAccount = args.get('qa-direct-trade-peer-account') || null;
@@ -231,6 +233,8 @@ const virtualSocial = new Set([
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
 ]);
 const angelFiles = new Set(['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png']);
+const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-semantics.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json'].map(name => ['/' + name, name]));
+for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit','semantic-atlas']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
 const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2' };
 let apiProcess = null, stopping = false, apiReady = !!attachedApi;
 
@@ -245,6 +249,13 @@ async function realFile(root, relative) {
   if (!within(root, actual) || !(await fs.stat(actual)).isFile()) throw Object.assign(Error('Asset not found'), { status: 404 });
   return actual;
 }
+async function serveFile(req, res, file) {
+  const stat = await fs.stat(file);
+  res.writeHead(200, { 'Content-Type':types[path.extname(file)] || 'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff' });
+  if (req.method === 'HEAD') { res.end(); return; }
+  const stream = createReadStream(file);
+  stream.on('error', () => res.destroy()); res.on('close', () => stream.destroy()); stream.pipe(res);
+}
 // Read-only preflight owns no server, child process or signal cleanup handlers.
 if(captureOnly)console.log(JSON.stringify({ok:true,privateInputCaptureOnly:true,apiSpawned:false,uiStarted:false,generatedInputSnapshot}));
 if(attachCheck!=='1'&&!captureOnly){
@@ -255,14 +266,16 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html'+url.search }); res.end(); return; }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type':'application/json','Cache-Control':'no-store' });
-      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||attachedApi?.pid||null, apiOwned:!attachedApi, attachedApi:!!attachedApi, attachKind:attachedApi?.kind||null, campaignId:attachedApi?.campaignId||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true,qaDirectTradePeerEnabled:directTradePeerAccount!==null,qaDirectTradePeerAccount:directTradePeerAccount, generatedInputSnapshot })); return;
+      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||attachedApi?.pid||null, apiOwned:!attachedApi, attachedApi:!!attachedApi, attachKind:attachedApi?.kind||null, campaignId:attachedApi?.campaignId||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true,vfxFixture,qaDirectTradePeerEnabled:directTradePeerAccount!==null,qaDirectTradePeerAccount:directTradePeerAccount, generatedInputSnapshot })); return;
     }
     if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
     const requestPath = decodeURIComponent(url.pathname);
-    const directPublic=requestPath.startsWith(buttonMaterialPrefix)||hudMaterialPaths.has(requestPath)||staticArtFiles.has(requestPath)||fateStaticPath(requestPath);
+    const vfxFile = vfxFiles.get(requestPath);
+    const directPublic=!!vfxFile||requestPath.startsWith(buttonMaterialPrefix)||hudMaterialPaths.has(requestPath)||staticArtFiles.has(requestPath)||fateStaticPath(requestPath);
     if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!directPublic && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
       res.writeHead(404); res.end('Asset not found'); return;
     }
+    if (vfxFile) { await serveFile(req, res, await realFile(publicRoot, vfxFile)); return; }
     const bound = directPublic ? null : await composeResponse(requestPath, grokRoot);
     if (bound) {
       // The peer actor is never selected by the ordinary preview. A dedicated
@@ -290,10 +303,7 @@ const server = http.createServer(async (req, res) => {
       else if (angelFiles.has(name)) file = await realFile(publicRoot, `art/hud-angels-20261102/${name}`);
     }
     if (!file) file = await realFile(grokRoot, requestPath.slice(1));
-    const stat = await fs.stat(file);
-    res.writeHead(200, { 'Content-Type':types[path.extname(file)] || 'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff' });
-    if (req.method === 'HEAD') res.end();
-    else { const stream = createReadStream(file); stream.on('error', () => res.destroy()); res.on('close', () => stream.destroy()); stream.pipe(res); }
+    await serveFile(req, res, file);
   } catch (error) {
     if (res.headersSent) { res.destroy(); return; }
     const status = error.status || (error.code === 'ENOENT' ? 404 : 503);
@@ -308,7 +318,7 @@ server.listen(port, '127.0.0.1', () => {
     console.log(JSON.stringify({url:origin,api:apiOrigin,localOnly:true,generatedInputsReadOnly:true,generatedInputSnapshot,pid:process.pid,apiPid:attachedApi.pid,apiOwned:false,attachedApi:true,attachKind:attachedApi.kind||'preserve-exact-fate-api',campaignId:attachedApi.campaignId||null,stateSha256:attachedApi.stateSha256}));
     return;
   }
-  apiProcess = spawn(process.execPath, [path.join(here,'atlas-local-preview.mjs'),`--port=${apiPort}`,`--preview-origin=${origin}`], { cwd:repo, stdio:['ignore','pipe','pipe'], windowsHide:true });
+  apiProcess = spawn(process.execPath, [path.join(here,'atlas-local-preview.mjs'),`--port=${apiPort}`,`--preview-origin=${origin}`, ...(vfxFixture ? ['--vfx-fixture=' + vfxFixture] : [])], { cwd:repo, stdio:['ignore','pipe','pipe'], windowsHide:true });
   apiProcess.stdout.on('data', chunk => { process.stdout.write(chunk); if (chunk.toString().includes('"isolated":true')) apiReady = true; });
   apiProcess.stderr.on('data', chunk => process.stderr.write(chunk));
   apiProcess.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });

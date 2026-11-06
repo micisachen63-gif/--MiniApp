@@ -1,0 +1,1118 @@
+{
+  "schemaVersion": 1,
+  "scope": "awakening-vfx-ornate-v2-evidence-archive",
+  "status": "accepted-preview-only",
+  "runtimeFrozen": true,
+  "previewUrl": "http://127.0.0.1:9894/awakening-vfx-preview.html",
+  "sourceId": null,
+  "mechanicsImplemented": false,
+  "liveSkillsUnmodified": 196,
+  "plannedPreviewSkills": 16,
+  "finalReceipt": {
+    "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+    "sha256": "d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a",
+    "counts": {
+      "desktopDirections": 64,
+      "desktopStages": 256,
+      "lowQualityDirections": 64,
+      "reducedDirections": 64,
+      "mobileDirections": 64,
+      "endpointChecks": 32
+    },
+    "screenshots": 33,
+    "browserErrors": 0,
+    "networkFailures": 0,
+    "sourcesStable": true
+  },
+  "audit": {
+    "path": "worker/public/awakening-vfx-audit.json",
+    "sha256": "769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f"
+  },
+  "unit": {
+    "tests": 11,
+    "passed": 11,
+    "exitCode": 0,
+    "sourceStable": true
+  },
+  "groups": [
+    {
+      "folder": "accepted-v2",
+      "category": "accepted-v2",
+      "originalPassFlag": true,
+      "originalCompleteFlag": true,
+      "browserErrors": [],
+      "networkFailures": [],
+      "screenshots": 33,
+      "currentAccepted": true,
+      "note": "Current complete browser matrix with zero errors after cleanup."
+    },
+    {
+      "folder": "accepted-v2/frost-review",
+      "category": "focused-frost-render-and-boundaries",
+      "originalPassFlag": true,
+      "originalCompleteFlag": true,
+      "browserErrors": [],
+      "networkFailures": [],
+      "screenshots": 7,
+      "currentAccepted": false,
+      "note": "Historical or focused evidence; does not substitute for the current full matrix."
+    },
+    {
+      "folder": "historical/sky-entry-failed",
+      "category": "failed-not-accepted",
+      "originalPassFlag": false,
+      "originalCompleteFlag": false,
+      "browserErrors": [],
+      "networkFailures": [],
+      "screenshots": 7,
+      "currentAccepted": false,
+      "note": "Historical or focused evidence; does not substitute for the current full matrix."
+    },
+    {
+      "folder": "historical/superseded-frost-motion",
+      "category": "superseded-not-current",
+      "originalPassFlag": true,
+      "originalCompleteFlag": true,
+      "browserErrors": [
+        "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')"
+      ],
+      "networkFailures": [],
+      "screenshots": 32,
+      "currentAccepted": false,
+      "note": "Historical or focused evidence; does not substitute for the current full matrix."
+    },
+    {
+      "folder": "historical/post-check-error",
+      "category": "invalidated-post-check-browser-error",
+      "originalPassFlag": true,
+      "originalCompleteFlag": true,
+      "browserErrors": [
+        "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')"
+      ],
+      "networkFailures": [],
+      "screenshots": 33,
+      "currentAccepted": false,
+      "note": "Historical or focused evidence; does not substitute for the current full matrix."
+    },
+    {
+      "folder": "historical/initial-static-review",
+      "category": "historical-static-only",
+      "originalPassFlag": null,
+      "originalCompleteFlag": true,
+      "browserErrors": [],
+      "networkFailures": [],
+      "screenshots": 2,
+      "currentAccepted": false,
+      "note": "Historical or focused evidence; does not substitute for the current full matrix."
+    }
+  ],
+  "historicalPolicy": "Rejected-v1 was not visually accepted. Sky-boundary failure, superseded frost-motion evidence, and post-check-error receipts are retained as history only. An original pass flag does not override a recorded browser error. Focused screenshots and visual reviews cover only their stated views.",
+  "reproduce": {
+    "serve": "node worker/tools/awakening-vfx-preview-server.mjs",
+    "nodeTest": "node --test --test-reporter=tap worker/test/awakening-vfx-engine.test.js",
+    "browser": "node worker/tools/awakening-vfx-browser.mjs",
+    "build": "node worker/tools/build-awakening-vfx-audit.mjs --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+    "check": "node worker/tools/build-awakening-vfx-audit.mjs --check --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json"
+  },
+  "fileCount": 166,
+  "totalBytes": 55377606,
+  "manifestSelfHashExcluded": true,
+  "files": [
+    {
+      "path": "accepted-v2/audit-build-check.json",
+      "bytes": 1285,
+      "sha256": "1af1d66daa976716dda67d064e1fa832f1bb3e9cfc935877a7287e70f0618ca5",
+      "category": "accepted-audit-verification"
+    },
+    {
+      "path": "accepted-v2/audit.json",
+      "bytes": 68557,
+      "sha256": "769a1a151223350335ae1f0811c6f143eca2c7149fa6d24235d8135d119ec97f",
+      "category": "accepted-audit"
+    },
+    {
+      "path": "accepted-v2/browser-execution.json",
+      "bytes": 639,
+      "sha256": "3c84833e0637f526381f51879c168eb33b9c00992a4079de01d7b6ca3c4e25c3",
+      "category": "accepted-process-exit"
+    },
+    {
+      "path": "accepted-v2/desktop-matrix.json",
+      "bytes": 2115191,
+      "sha256": "5ae36484f3c807403e03e9d2c162a90ebe32282c4ec07a1683739db5c78f5c7c",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/frost-review/receipt.json",
+      "bytes": 124907,
+      "sha256": "f96f6cedbd777b57584aae574d58e6d703b727ffaf53b706f8d37fb1567ccfe3",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/desktop-frost-29.png",
+      "bytes": 256966,
+      "sha256": "c9ac7b15729d6aa0c1e23d955ca89df0352f5f04ac57dfd19d7224e88c67d19c",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/desktop-frost-68.png",
+      "bytes": 301866,
+      "sha256": "0f360c095c1037d1773588b602019685686084b0acce2a3b01953f035e0e5c4a",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/desktop-frost-80.png",
+      "bytes": 301300,
+      "sha256": "2ac7ed78c7f4b71d79d02d4bd92f9d31b603d629d41998da7e4eb21ab9e32161",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/mobile-frost-down.png",
+      "bytes": 264629,
+      "sha256": "346b287af23826c32dfe56aaf07c128f8632ed1b4c68061d04e725bce6b30a1f",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/mobile-frost-left.png",
+      "bytes": 263734,
+      "sha256": "f4ab1c9c16d18a04a25cb19922bc4478da2d23adeb8a62e1d16b09c2ff074660",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/mobile-frost-right.png",
+      "bytes": 263904,
+      "sha256": "bc38fcbcdfdc7f2c2aefac335873cbc587145a26b4356d7ff94667eb8e0ad1fe",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/frost-review/screenshots/mobile-frost-up.png",
+      "bytes": 264448,
+      "sha256": "5dce5004bbd2b12c5b9cd53864f07584229334279d733884ff8fcb4a9cfa4a13",
+      "category": "focused-frost-render-and-boundaries"
+    },
+    {
+      "path": "accepted-v2/independent-motion-review.json",
+      "bytes": 2776,
+      "sha256": "2ae745f150da3a4c6f0cd7f924048f7fa2055c48a8eb5f21671920d441e51aeb",
+      "category": "independent-motion-static-pairs"
+    },
+    {
+      "path": "accepted-v2/independent-qa-lifecycle-review.json",
+      "bytes": 1838,
+      "sha256": "ab0282801d63ea37c74372e844692f19573ae97ca5b8f23e198656a53786ce66",
+      "category": "independent-code-review"
+    },
+    {
+      "path": "accepted-v2/mobile-matrix.json",
+      "bytes": 451677,
+      "sha256": "51a934e698fdba7874c36ccda10a15f68e84ff234f789ab71b016d1f8e453e4a",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/receipt.json",
+      "bytes": 22081,
+      "sha256": "d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/root-final-visual-review.json",
+      "bytes": 2702,
+      "sha256": "283da5e3002ca31e2da9ca36d0ee2ab178f69d3e8dcbeec83954c57bae3a3fa4",
+      "category": "root-visual-review"
+    },
+    {
+      "path": "accepted-v2/screenshots/awakening-contact-sheet.png",
+      "bytes": 787806,
+      "sha256": "de8fd461af88c1359484818150fe12484cded6f6d9afb285de869ab2ad951cf3",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/desktop-full.png",
+      "bytes": 801666,
+      "sha256": "6f481e55fc09b9812bb9d97a2f7a82e080416643c2614cd23466bb56ee81c10b",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/mobile-archer.png",
+      "bytes": 287157,
+      "sha256": "c4e66b9b9769cc2b14d25f2fc63bbdc5666e9b64ad06b316d604ed0d11b0585a",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/mobile-mage.png",
+      "bytes": 265656,
+      "sha256": "655e0df593b1a0f3a2338795e1e242afb4d0325940d541e93a1d0b3a193c8616",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/mobile-sword.png",
+      "bytes": 264261,
+      "sha256": "b4fad8b79e447a1c7015e46b3a1714b58a166c927da537419bcba4f4084d0de3",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/mobile-thief.png",
+      "bytes": 259943,
+      "sha256": "6b8fbf3505435d9fb16d54c14df8655a8b5c8ed99dcc5bf91cc29afa8447fa24",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-archer-expert-34.png",
+      "bytes": 300508,
+      "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-archer-expert-66.png",
+      "bytes": 375273,
+      "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-mage-expert-29.png",
+      "bytes": 256278,
+      "sha256": "0c4aa3bd9979300e53c459b584512a3b87fce8e755bb4b8557d13442e8028d3b",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-mage-expert-68.png",
+      "bytes": 302507,
+      "sha256": "666efd77f906efbf6df6c8e08fdc89429892103723f045ca5f8afac93e74dc08",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-mage-expert-80.png",
+      "bytes": 301959,
+      "sha256": "008a4989f3d660c793d1295de504061cbf88743bcff979f4a4a728fcf71f5d5b",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-mage-hell-32.png",
+      "bytes": 254242,
+      "sha256": "6f0ada243ecd15807b3b20bf573bb23b223ad81847edd1f483e88ec7c0e21601",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-mage-hell-72.png",
+      "bytes": 474664,
+      "sha256": "983308db91adedf43e477cc1c26f917aaefd631d7e7182edafc8f8b9926a2f2a",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-sword-hell-32.png",
+      "bytes": 296516,
+      "sha256": "a24f84335a1cb24babb0f2dbbd222ec97dcc66834b824688317e6d9cb3902f21",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-sword-hell-66.png",
+      "bytes": 391299,
+      "sha256": "7bc755e2917f87f5f3ee62901504a59f1951f7a00470fd8110a8408ac66fdfb7",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-thief-hell-32.png",
+      "bytes": 308627,
+      "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/motion-thief-hell-65.png",
+      "bytes": 373368,
+      "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-archer-hell.png",
+      "bytes": 463151,
+      "sha256": "0ed887a6e49b2ff7af343370caa2e1080155ccbc80e90c2474e0bf6e258d3b14",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-mage-elite.png",
+      "bytes": 428731,
+      "sha256": "d489eee5ec3d07f6651f5e4f13ec170d2704c3062f665f8f9526229f238d899f",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-mage-expert.png",
+      "bytes": 339173,
+      "sha256": "3298b25c343fb0cd626b84964aa743c4425963a9bd772d11675089f96f0374ad",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-mage-hell.png",
+      "bytes": 484624,
+      "sha256": "aaabc3ac2ed38399fdc75b0f98207dcd7853094d0f9c1eb139dce7c8ec22e156",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-mage-nightmare.png",
+      "bytes": 489416,
+      "sha256": "9a924abc06c8d0fd274ed588bd8a1a1da86e9c76eff66995979694b75659651a",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-thief-elite.png",
+      "bytes": 359022,
+      "sha256": "73892696dfa228f87cbd6f0dd1e38670a422d457cbfe371a5b2b49c39678dafe",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-thief-expert.png",
+      "bytes": 417455,
+      "sha256": "a60f10355d9356e4b8ee3fff8985ef4109551b706bc068210b1893824a304068",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-thief-hell.png",
+      "bytes": 407744,
+      "sha256": "a5140dfef7ebb5925991be4ca4f6a4698a5264e937eef208729acafdfd8cb1ec",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/screenshots/stage-thief-nightmare.png",
+      "bytes": 444831,
+      "sha256": "d6a98f0b68e4a7607e9499ddd82bb27fec9f23b36fefdbb81340b5f39d0a9911",
+      "category": "accepted-v2"
+    },
+    {
+      "path": "accepted-v2/source-fingerprints.json",
+      "bytes": 12093,
+      "sha256": "41b1d983166299402dcb59e4f91121f2bf74367012b9f43ae5cc812a8ae9700c",
+      "category": "accepted-source-fingerprints"
+    },
+    {
+      "path": "accepted-v2/unit.json",
+      "bytes": 10914,
+      "sha256": "340135b4c08cabaffbdf7a14e0e8715b4fedf83e61edd63cbaba354b8635271f",
+      "category": "accepted-v2-unit"
+    },
+    {
+      "path": "historical/diagnostics/audit-evidence-portability-bridge.json",
+      "bytes": 539,
+      "sha256": "421b0577c7db4e88de83e20507d6dc92a7ab8627c65a1af34e1fa431d873c4be",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/audit-rejects-post-check-error-final.json",
+      "bytes": 3587,
+      "sha256": "b1416d6a34117704bca9b079f31ca0182577cadbcd610519105d87ece8bc520c",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/audit-rejects-post-check-error.json",
+      "bytes": 3120,
+      "sha256": "4086cee9c0de2aeb9a67e2039c8bc61e5100530e30c04ceef81c9f8e8d33f948",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/awakening-engine-before-frost.mjs",
+      "bytes": 29065,
+      "sha256": "34a0e107373086b6679f55f6d82c704fbda50ac0fe43da51ee3f591efa128c85",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/awakening-vfx-browser.mjs.before-lifecycle-fix",
+      "bytes": 18132,
+      "sha256": "2d6e99a6917e3e474482b729586601da85f052ffd4c2fc4a285d0d05d275884e",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/build-awakening-vfx-audit.mjs.before-lifecycle-fix",
+      "bytes": 7334,
+      "sha256": "13cfe57bd6221d5c21b79fdbac4866f3988f288c6034602a58fce963bd364fa5",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/contact-sheet-lifecycle-error.json",
+      "bytes": 882,
+      "sha256": "52546d7ea725a5685a90b027fe744caf26a4013b27fee1a38619e01c0fa4f572",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/qa-lifecycle-source-bridge.json",
+      "bytes": 953,
+      "sha256": "5807be781b3499851567cc927a72c4253c8926d33bda1857dbff808d1fd33647",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/sky-entry-source-bridge.json",
+      "bytes": 668,
+      "sha256": "53c157d6a7d198423b516398b073466a8558322393b6d8bb6ddb2d2ab5261c96",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/sky-up-036-fixed.json",
+      "bytes": 462,
+      "sha256": "8f4e6c8dac307b131383bd269391c7c3aa1fee64df7f24fff4683de85cc59a0b",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/sky-up-036-fixed.png",
+      "bytes": 355759,
+      "sha256": "e5503fa050dabd4ee8fc7bad4bbe875c8a51ce0a15ab33345649889407c95662",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/sky-up-036.json",
+      "bytes": 9714,
+      "sha256": "1f711e1f1fa95eb00e2d0171e1a0ef60157acb7c735ef0f6ea9b105db3ed0b7f",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/diagnostics/sky-up-036.png",
+      "bytes": 357777,
+      "sha256": "31e0d32b6fa62bb0e5139af53cf722e8122322c651d748ecf904d8ef04dfa50a",
+      "category": "diagnostic-or-limited-regression"
+    },
+    {
+      "path": "historical/initial-static-review/receipt.json",
+      "bytes": 24512,
+      "sha256": "af87fcdf3edc532af54e5e95e7c743dc81ffe8f472bc61b12c978a37d764ddd0",
+      "category": "historical-static-only"
+    },
+    {
+      "path": "historical/initial-static-review/screenshots/desktop-divine-verdict.png",
+      "bytes": 755692,
+      "sha256": "90cb01ce97e1ed4cd4a6ce4405cf4eee2e13b3393956f2d0f5ac7afd6e4593c5",
+      "category": "historical-static-only"
+    },
+    {
+      "path": "historical/initial-static-review/screenshots/mobile-frost-return.png",
+      "bytes": 290417,
+      "sha256": "18a7f2bb90bf69ab57da251c7188cd717700b11053556ac24e05b68172f676bc",
+      "category": "historical-static-only"
+    },
+    {
+      "path": "historical/post-check-error/desktop-matrix.json",
+      "bytes": 2115094,
+      "sha256": "43ef13eef9c8a624e8dfa447fc86071582b6f4b283cc136320a73f05db0c177d",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/invalidation.json",
+      "bytes": 488,
+      "sha256": "04759ce980caa716b8c9d5e4894ce7dbceeab8f3f217c66cc8442126d488f278",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/mobile-matrix.json",
+      "bytes": 451729,
+      "sha256": "7c89dda00a12f30f8f2d6183f795e5c0f1aa29864283e4dc7bbe5109239d87d8",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/receipt.json",
+      "bytes": 22047,
+      "sha256": "565bb6497edef9e1e71bccab2a18098c65a481a54353095f215b8bd72c0ade47",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/awakening-contact-sheet.png",
+      "bytes": 787806,
+      "sha256": "de8fd461af88c1359484818150fe12484cded6f6d9afb285de869ab2ad951cf3",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/desktop-full.png",
+      "bytes": 801724,
+      "sha256": "2463221904f616c1ed1d9c7cc7496bc712cb49ef5acbb681de8587ed7da48fdf",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/mobile-archer.png",
+      "bytes": 287209,
+      "sha256": "3df80da40d42a10c972c0c7fa59452c791f88bc4f5e26c92bdce4675c86b6383",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/mobile-mage.png",
+      "bytes": 265627,
+      "sha256": "334a38da1a4c3c41776cd0224fca5f0aed5b0759785f3799d9d6894977b9b32b",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/mobile-sword.png",
+      "bytes": 264445,
+      "sha256": "11e39c47af66f4b53953266367b6b018b27c491ba515e266b152e45da476c56d",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/mobile-thief.png",
+      "bytes": 259901,
+      "sha256": "fb08f983e32b0792b4b1103798c550ed38dac8a57fa0629d500ad3a11d0e2630",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-archer-expert-34.png",
+      "bytes": 300508,
+      "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-archer-expert-66.png",
+      "bytes": 375273,
+      "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-mage-expert-29.png",
+      "bytes": 256278,
+      "sha256": "0c4aa3bd9979300e53c459b584512a3b87fce8e755bb4b8557d13442e8028d3b",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-mage-expert-68.png",
+      "bytes": 302507,
+      "sha256": "666efd77f906efbf6df6c8e08fdc89429892103723f045ca5f8afac93e74dc08",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-mage-expert-80.png",
+      "bytes": 301959,
+      "sha256": "008a4989f3d660c793d1295de504061cbf88743bcff979f4a4a728fcf71f5d5b",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-mage-hell-32.png",
+      "bytes": 254242,
+      "sha256": "6f0ada243ecd15807b3b20bf573bb23b223ad81847edd1f483e88ec7c0e21601",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-mage-hell-72.png",
+      "bytes": 474664,
+      "sha256": "983308db91adedf43e477cc1c26f917aaefd631d7e7182edafc8f8b9926a2f2a",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-sword-hell-32.png",
+      "bytes": 296516,
+      "sha256": "a24f84335a1cb24babb0f2dbbd222ec97dcc66834b824688317e6d9cb3902f21",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-sword-hell-66.png",
+      "bytes": 391301,
+      "sha256": "c6d525d910931daad780b8b5df3c1ade7fb03cf8347742bfa08bd285ad77ddf7",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-thief-hell-32.png",
+      "bytes": 308627,
+      "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/motion-thief-hell-65.png",
+      "bytes": 373368,
+      "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-archer-hell.png",
+      "bytes": 463151,
+      "sha256": "0ed887a6e49b2ff7af343370caa2e1080155ccbc80e90c2474e0bf6e258d3b14",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-mage-elite.png",
+      "bytes": 428731,
+      "sha256": "d489eee5ec3d07f6651f5e4f13ec170d2704c3062f665f8f9526229f238d899f",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-mage-expert.png",
+      "bytes": 339173,
+      "sha256": "3298b25c343fb0cd626b84964aa743c4425963a9bd772d11675089f96f0374ad",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-mage-hell.png",
+      "bytes": 484624,
+      "sha256": "aaabc3ac2ed38399fdc75b0f98207dcd7853094d0f9c1eb139dce7c8ec22e156",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-mage-nightmare.png",
+      "bytes": 489416,
+      "sha256": "9a924abc06c8d0fd274ed588bd8a1a1da86e9c76eff66995979694b75659651a",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-thief-elite.png",
+      "bytes": 359022,
+      "sha256": "73892696dfa228f87cbd6f0dd1e38670a422d457cbfe371a5b2b49c39678dafe",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-thief-expert.png",
+      "bytes": 417455,
+      "sha256": "a60f10355d9356e4b8ee3fff8985ef4109551b706bc068210b1893824a304068",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-thief-hell.png",
+      "bytes": 407744,
+      "sha256": "a5140dfef7ebb5925991be4ca4f6a4698a5264e937eef208729acafdfd8cb1ec",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/screenshots/stage-thief-nightmare.png",
+      "bytes": 444831,
+      "sha256": "d6a98f0b68e4a7607e9499ddd82bb27fec9f23b36fefdbb81340b5f39d0a9911",
+      "category": "invalidated-post-check-browser-error"
+    },
+    {
+      "path": "historical/post-check-error/unit-before-harness-fix.json",
+      "bytes": 10914,
+      "sha256": "e804853ded560611444bd90b7c2d3de4249e305d81d1affb9a96af62124134c1",
+      "category": "superseded-source-fingerprint"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-audit.json",
+      "bytes": 33489,
+      "sha256": "82efe2e90610f0cf90883f1432ea682e3a47b820c1be3e9e261bd24c30695500",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-browser.mjs",
+      "bytes": 13865,
+      "sha256": "1cde85460d912377ec096a565327d9287ae1fc92a67e71b3303c338369c3a06e",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-data.mjs",
+      "bytes": 6790,
+      "sha256": "bb44e3fd062f92790f1c85a4dacd7d3fc355e51c299013194cbbeef820d6d389",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-engine.mjs",
+      "bytes": 16709,
+      "sha256": "3cd8a19a1f19cd477ec0efc25a27ee4c082ae2068d34013917d6ea9cff256a52",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-engine.test.js",
+      "bytes": 5744,
+      "sha256": "740ed7faec57b1d5b24cfdd4e7ad029127e68e4d6fce87ed719581a6bf573494",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-preview-server.mjs",
+      "bytes": 2689,
+      "sha256": "ff27210380b22d91fdd281e3eb78c711bc77e8a818be625fcec374f6c6e10bb4",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-preview.css",
+      "bytes": 14565,
+      "sha256": "e4f45e76785890b334c99fd122f8f0dcfc169072c34fd1da905a7818635b1444",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-preview.html",
+      "bytes": 5998,
+      "sha256": "932e56e1bdcc2c14103816ebf41e768f3261071b369e44f98ab60e3866df72df",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/awakening-vfx-preview.mjs",
+      "bytes": 10641,
+      "sha256": "e90c05de3d7e2d77db814d8380a04f66a3b4bee35f7072bfca1a12df32d191d6",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/build-awakening-vfx-audit.mjs",
+      "bytes": 6767,
+      "sha256": "6a89d03534a795902531e9e25d83b42c00b0364bf2d1a0f1bb798304393e7e7a",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/rejected-v1/independent-render-contract.json",
+      "bytes": 2163,
+      "sha256": "332710541bd64b92ab325ee6e6db2198aac5b0341924a48d6c0d35c8744a1757",
+      "category": "v1-contract-only-not-visual-approval"
+    },
+    {
+      "path": "historical/rejected-v1/rejection.json",
+      "bytes": 2996,
+      "sha256": "1af195253a38b448989b3fd412d04184493ce9de69763da2966bb02d2af418fa",
+      "category": "user-rejected-v1"
+    },
+    {
+      "path": "historical/sky-entry-failed/desktop-matrix.json",
+      "bytes": 925368,
+      "sha256": "3953d2bcde66126f5137496b75b59324a67f8e42bc239d1b9e0e45b51e174bb7",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/receipt.json",
+      "bytes": 7774,
+      "sha256": "ffec41dd230bb716a1eb97ccd1eaee6445c1d6b91eff653d914335fd3f974dff",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/sky-entry-failed/screenshots/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052",
+      "category": "failed-not-accepted"
+    },
+    {
+      "path": "historical/superseded-frost-motion/desktop-matrix.json",
+      "bytes": 2115230,
+      "sha256": "fc43c834f2c79fcd33d3525b221e3b44db2e4210345d287133fdb752b2beb48d",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/mobile-matrix.json",
+      "bytes": 451774,
+      "sha256": "863a7bc8cd814f566a33e3fd3cc3cfef05291d26083f7e359ec67b619459db17",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/receipt.json",
+      "bytes": 21531,
+      "sha256": "f1ff46484905e2e6dee328eff332c22b299c8c161c3c851c71a6efd4093db257",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/awakening-contact-sheet.png",
+      "bytes": 791679,
+      "sha256": "00a6a0378cb23406fddf78febcb512098d7741193a649493fb87a8ae097a1cca",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/desktop-full.png",
+      "bytes": 801699,
+      "sha256": "a1ff2bed368496029751118ec4c71e28b47545a35b54854fc41c4840a1f27b1d",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/mobile-archer.png",
+      "bytes": 287248,
+      "sha256": "6aaba24c18b1533317f7c774a6837ebe5e0361e818e26f4751347f0276f1de5b",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/mobile-mage.png",
+      "bytes": 265606,
+      "sha256": "cd8c66f2b65166acfa6afc0b5278e100c6929814108bb70ce22255e4a6ad7aa4",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/mobile-sword.png",
+      "bytes": 264371,
+      "sha256": "4bc8c64ca982bb498db5c65366b52bfc6995e2bcac863e8c35819194d08e9b9c",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/mobile-thief.png",
+      "bytes": 259901,
+      "sha256": "fb08f983e32b0792b4b1103798c550ed38dac8a57fa0629d500ad3a11d0e2630",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-archer-expert-34.png",
+      "bytes": 300508,
+      "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-archer-expert-66.png",
+      "bytes": 375273,
+      "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-mage-expert-29.png",
+      "bytes": 256133,
+      "sha256": "ad24d369bbdb46fcfc822ac32f5d20dba2ee114c50f32d1c2ceaf8efd4e52bea",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-mage-expert-68.png",
+      "bytes": 381638,
+      "sha256": "e64177e0c20315cdb5c279bd78480bf14c44508031b2fdcc088fd289ff063508",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-mage-hell-32.png",
+      "bytes": 254242,
+      "sha256": "6f0ada243ecd15807b3b20bf573bb23b223ad81847edd1f483e88ec7c0e21601",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-mage-hell-72.png",
+      "bytes": 474664,
+      "sha256": "983308db91adedf43e477cc1c26f917aaefd631d7e7182edafc8f8b9926a2f2a",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-sword-hell-32.png",
+      "bytes": 296516,
+      "sha256": "a24f84335a1cb24babb0f2dbbd222ec97dcc66834b824688317e6d9cb3902f21",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-sword-hell-66.png",
+      "bytes": 391301,
+      "sha256": "c6d525d910931daad780b8b5df3c1ade7fb03cf8347742bfa08bd285ad77ddf7",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-thief-hell-32.png",
+      "bytes": 308627,
+      "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/motion-thief-hell-65.png",
+      "bytes": 373368,
+      "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-archer-hell.png",
+      "bytes": 463151,
+      "sha256": "0ed887a6e49b2ff7af343370caa2e1080155ccbc80e90c2474e0bf6e258d3b14",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-mage-elite.png",
+      "bytes": 428731,
+      "sha256": "d489eee5ec3d07f6651f5e4f13ec170d2704c3062f665f8f9526229f238d899f",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-mage-expert.png",
+      "bytes": 393745,
+      "sha256": "71c81b04cfcbbcb06f23abc46e6a7c3c8cddfc23ee6ba22c0597fefd967c6ef1",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-mage-hell.png",
+      "bytes": 484624,
+      "sha256": "aaabc3ac2ed38399fdc75b0f98207dcd7853094d0f9c1eb139dce7c8ec22e156",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-mage-nightmare.png",
+      "bytes": 489416,
+      "sha256": "9a924abc06c8d0fd274ed588bd8a1a1da86e9c76eff66995979694b75659651a",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-thief-elite.png",
+      "bytes": 359022,
+      "sha256": "73892696dfa228f87cbd6f0dd1e38670a422d457cbfe371a5b2b49c39678dafe",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-thief-expert.png",
+      "bytes": 417455,
+      "sha256": "a60f10355d9356e4b8ee3fff8985ef4109551b706bc068210b1893824a304068",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-thief-hell.png",
+      "bytes": 407744,
+      "sha256": "a5140dfef7ebb5925991be4ca4f6a4698a5264e937eef208729acafdfd8cb1ec",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/screenshots/stage-thief-nightmare.png",
+      "bytes": 444831,
+      "sha256": "d6a98f0b68e4a7607e9499ddd82bb27fec9f23b36fefdbb81340b5f39d0a9911",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "historical/superseded-frost-motion/supersession.json",
+      "bytes": 283,
+      "sha256": "4c9bd3971aea1dd7399f0b7678789393a4ce67b52df5e3ee4581dc38b097d942",
+      "category": "superseded-not-current"
+    },
+    {
+      "path": "relocation-index.json",
+      "bytes": 103848,
+      "sha256": "6c21a1927766fd424c7dcbb06297e6f40342b6dbbd7c4a3b1e42ba1179695917",
+      "category": "archive-relocation-index"
+    },
+    {
+      "path": "source/awakening-plan-20261102.txt",
+      "bytes": 14475,
+      "sha256": "e19434eece2ba5c9ce33daa9258dae0481cf698d875b281c7f668d0398715906",
+      "category": "byte-exact-planning-source"
+    },
+    {
+      "path": "source/provenance.json",
+      "bytes": 579,
+      "sha256": "c377bd8282376fb7f9ce3fbff771804e02ea6a1e93813779c364e253b71a0c7a",
+      "category": "planning-source-provenance"
+    }
+  ]
+}

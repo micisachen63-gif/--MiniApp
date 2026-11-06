@@ -1,0 +1,59 @@
+{
+  "checkedAt": "2026-11-05T06:54:34.353Z",
+  "scope": "local-preview-health",
+  "passed": true,
+  "results": [
+    {
+      "url": "http://127.0.0.1:9894/__awakening/health",
+      "status": 200,
+      "bytes": 276,
+      "contentType": "application/json; charset=utf-8",
+      "body": {
+        "ok": true,
+        "readOnly": true,
+        "previewOnly": true,
+        "productionAccess": false,
+        "liveSkillRegistration": false,
+        "plannedSkills": 16,
+        "sourceId": null,
+        "root": "D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-semantic-integration-20261105\\worker\\public\\",
+        "port": 9894,
+        "pid": 9212
+      }
+    },
+    {
+      "url": "http://127.0.0.1:9894/awakening-vfx-preview.html",
+      "status": 200,
+      "bytes": 6214,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:9864/__vfx/health",
+      "status": 200,
+      "bytes": 170,
+      "contentType": "application/json; charset=utf-8",
+      "body": {
+        "ok": true,
+        "service": "star-journal-skill-vfx",
+        "readOnly": true,
+        "productionAccess": false,
+        "api": false,
+        "bind": "127.0.0.1",
+        "port": 9864,
+        "previewPath": "/preview-skill-vfx.html"
+      }
+    },
+    {
+      "url": "http://127.0.0.1:9864/preview-skill-vfx.html",
+      "status": 200,
+      "bytes": 7831,
+      "contentType": "text/html; charset=utf-8"
+    },
+    {
+      "url": "http://127.0.0.1:9867/",
+      "status": 200,
+      "bytes": 2035,
+      "contentType": "text/html; charset=utf-8"
+    }
+  ]
+}

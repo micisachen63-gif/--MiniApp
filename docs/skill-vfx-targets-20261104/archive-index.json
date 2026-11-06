@@ -1,0 +1,675 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T11:02:15.992Z",
+  "archiveRoot": "docs/skill-vfx-targets-20261104",
+  "sourceCoverage": {
+    "path": "worker/public/skill-vfx-coverage.json",
+    "sha256": "b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e"
+  },
+  "engineSha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+  "policy": "Exact bytes, copied without rewriting original reports or fingerprints. Restore destinations are restricted to the indexed ignored evidence paths.",
+  "requiredCoveragePaths": [
+    ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+    ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+    ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+    ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+    ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+    ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+    ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json"
+  ],
+  "metadataFiles": [
+    {
+      "path": "docs/skill-vfx-targets-20261104/.gitattributes",
+      "bytes": 261,
+      "sha256": "39f5a2cd5be2acfc08dbe8b35dcb55e45dec33f65fc027a6ced1f6760db92e77"
+    },
+    {
+      "path": "docs/skill-vfx-targets-20261104/restore-evidence.cjs",
+      "bytes": 6633,
+      "sha256": "940eae5960255b099dad8a989702e25cbeb4b6729b13071f60bf9011833c8690"
+    },
+    {
+      "path": "docs/skill-vfx-targets-20261104/validation-summary.json",
+      "bytes": 13289,
+      "sha256": "f80f012771a7bd22a41fa1c992f77baadf4d57a525abfaf893011358c0dbee46"
+    }
+  ],
+  "knownPreviousSource": {
+    "index": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/index.json",
+    "bytes": 1836,
+    "sha256": "e4eae6f2712f834ca8cc322d7d53038d782058d5777cc21fbc81b5a282cd9da5",
+    "baseCommit": "ccedf3545cbef4bdc66b949aad077ef6d2ea44fa"
+  },
+  "entries": [
+    {
+      "source": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "bytes": 321106,
+      "sha256": "2b078015478a6f91d6a39938726517b7b59812e639fe8c945ff89eb99da69aa0",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": [
+        "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+      ],
+      "knownPreviousEvidence": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/gameplay-coverage-browser.json"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-20261104/legacy-committed-service-events.json",
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-20261104/legacy-coverage-browser.json",
+      "bytes": 818602,
+      "sha256": "5f1f9b5aff085d86491750280574d9ba2638b728cdeacc400e468cc42148c0ac",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": [
+        "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+      ],
+      "knownPreviousEvidence": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-browser.json"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-20261104/legacy-coverage-events.json",
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "bytes": 273177,
+      "sha256": "f78f6cc41fc20eed29680f26fe6dc13c4bc9511ae514eb801daca8b6967c3ebd",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": [
+        "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+      ],
+      "knownPreviousEvidence": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-presentation.json"
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/atlas-live/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/atlas-live/results.json",
+      "bytes": 958772,
+      "sha256": "74d0ec5b241b78f7a558f147b79159e9e9938c89347a4dab85c0198e660a1580",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/base-state.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/base-state.json",
+      "bytes": 16709,
+      "sha256": "03a924da4bade402d1bb74bd25e1b237cd9101f24392fda7c5d786b00d05b55b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/capture-visual-final.cjs",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/capture-visual-final.cjs",
+      "bytes": 7074,
+      "sha256": "24be5085280be412062d78a7742c188a8208bcdd07c69a1671a52fead7ef503f",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/engine-final-focused-agent.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/engine-final-focused-agent.json",
+      "bytes": 562,
+      "sha256": "5db927f8ce0ae7e2d46f6541898b50298f9fae3465597a05d9e4fc4f8a5af072",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/engine-final-focused-agent.tap",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/engine-final-focused-agent.tap",
+      "bytes": 5801,
+      "sha256": "20a9ac1ffe08041cda0a15324ce1215d8136cb0a5c67e2ad510ade8c62d9768c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/engine-focused-agent.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/engine-focused-agent.json",
+      "bytes": 556,
+      "sha256": "bb76da2678d4843592276c68da10a1da2c8403477da6c6fd406a0eb3d7ef19ed",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/engine-focused-agent.tap",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/engine-focused-agent.tap",
+      "bytes": 5800,
+      "sha256": "c6769c5b572b0daf2787506954eafd0f70d44ef3f615f7bc592b94ef527ecc52",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.execution.json",
+      "bytes": 27244,
+      "sha256": "b61e7b0c00ddb1433ffb768bcedc10802227ca0bf33b0038b503716924b6d3be",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/01-catalog-check.stdout.log",
+      "bytes": 1211,
+      "sha256": "f98080e3fd8facd0b79cab531161b618fa6a7d6f2714771c85c3a845df7b61c4",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.execution.json",
+      "bytes": 27471,
+      "sha256": "643f6e76a4e61694b1320d477eb8f77fc42341ed0a7b9f286739ae9d09dacc3b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/02-recipes-build.stdout.log",
+      "bytes": 161,
+      "sha256": "8b0746cc9cd4ede94e62d924adbee3db6b47a2e6e2334aa5cf115ada0922993f",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.execution.json",
+      "bytes": 27243,
+      "sha256": "e9dccb06aa4636235393f7b637c12320a894a18d00456a63cec491bc22f7bdfc",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stdout.log",
+      "bytes": 161,
+      "sha256": "88b8dced0b270be55bcf10c20cf2c9f77bca9a64a66efe2a07de750a4ed5a78c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.execution.json",
+      "bytes": 27875,
+      "sha256": "99cc76ce719b9c8254e6701a2b03685f907ab4abdd15c6b341c79323c05578aa",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/04-presentation.stdout.log",
+      "bytes": 467,
+      "sha256": "8e9cfd9871eb71722888fa1bd5fa55843402977b7b5b18c3139b2a1093df45ba",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.execution.json",
+      "bytes": 28447,
+      "sha256": "251359c1f156d084d75b923520f806441dfba4ca23b4b7f870a088cee29dc9c2",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/05-identity.stdout.log",
+      "bytes": 755,
+      "sha256": "9b75ac71ec39b78b76a385890bf3642483a8817edcf646deca32a7a21b4eda5b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.execution.json",
+      "bytes": 27844,
+      "sha256": "0dd1ebc928d479f1fb2e4657d494e435d4a93864725a61f4be00538a3b4e1663",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.stderr.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.stderr.log",
+      "bytes": 173,
+      "sha256": "b00f267876506a7d6fbbcd36fefb61d41515d8f22816894f4e0ac9997ea726b1",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.stdout.log",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/06-gameplay.stdout.log",
+      "bytes": 1280,
+      "sha256": "1a4a78243e76b3fb7a4d1401b9f3f44c40ef492b32c62ad80b373e857f7edb3b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/gameplay-coverage-browser.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/gameplay-coverage-browser.json",
+      "bytes": 326090,
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/index.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/index.json",
+      "bytes": 1836,
+      "sha256": "e4eae6f2712f834ca8cc322d7d53038d782058d5777cc21fbc81b5a282cd9da5",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-committed-service-events.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-committed-service-events.json",
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-browser.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-browser.json",
+      "bytes": 818642,
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-events.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-events.json",
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-presentation.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-presentation.json",
+      "bytes": 273175,
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/execution.json",
+      "bytes": 213080,
+      "sha256": "602aedd386810c6f0f50a27d588e887f42521ba21941e23385bcbc8dc41d4d09",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/identity-browser/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/identity-browser/results.json",
+      "bytes": 818602,
+      "sha256": "5f1f9b5aff085d86491750280574d9ba2638b728cdeacc400e468cc42148c0ac",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/legacy-gameplay/results.json",
+      "bytes": 321255,
+      "sha256": "d0586c9c909d22ef581330aa50f064cb469a8f93cd31e04b72a4d587c998d0b3",
+      "restore": true,
+      "requiredByCoverage": true,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/final-validation-execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/final-validation-execution.json",
+      "bytes": 1572,
+      "sha256": "8182c98501af5746fb7e8a305c5d8dbb0bb2006cc96f13e6151fb4e241139c27",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/finalize-validation.cjs",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/finalize-validation.cjs",
+      "bytes": 2605,
+      "sha256": "795349c758ebc9e2987f59e6f55ecf17690e69ab2a306f02d9ad6b853fc4c3f7",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target-replay/desktop-raf-all-five.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target-replay/desktop-raf-all-five.png",
+      "bytes": 74420,
+      "sha256": "db2a8c81a1ed5b79a9354fec9fa62980df5ccba06af5eb41543ea1a4de369417",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target-replay/phone-raf-all-five.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target-replay/phone-raf-all-five.png",
+      "bytes": 37978,
+      "sha256": "b3743a8a59be5ab546fe859b234faa1db4c6fc90deb16c9f7f32e8d8df22d001",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target-replay/receipt-canvas-replay.cjs",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target-replay/receipt-canvas-replay.cjs",
+      "bytes": 13640,
+      "sha256": "4dc4f5199cbd8bb7cdc932bf0c5885963b54bcf3744f39a3547674ebdfd512db",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target-replay/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target-replay/results.json",
+      "bytes": 50156,
+      "sha256": "9fb7fd19ec51f96da2dd91f426aa1a55bcb3acbfc68ec9a10484cb801db53ccc",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target/execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target/execution.json",
+      "bytes": 1409,
+      "sha256": "3550c0ffffc157a99afb560066c6428b2b68fe8e802d1c59f9f015174b624847",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/five-target/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/five-target/results.json",
+      "bytes": 85921,
+      "sha256": "a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/protected-source-check.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/protected-source-check.json",
+      "bytes": 44509,
+      "sha256": "b423760561fcd675a0402dcccca3b2d6260cf37800abf3793edcdab5aa956e04",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/root-browser-execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/root-browser-execution.json",
+      "bytes": 5050,
+      "sha256": "27bd020e34fcc8896f6ae84a16063e583e1aefa615a8362c51b894b65ff0de13",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/run-delta-evidence.cjs",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/run-delta-evidence.cjs",
+      "bytes": 14733,
+      "sha256": "c39fff1d2b998988c45d39c5a6bb8a7346518755bc3cf1475e5c6bd3edb1ee0c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/run-root-browser-final.cjs",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/run-root-browser-final.cjs",
+      "bytes": 4793,
+      "sha256": "157ffd536dd75042adf1e2e43a21b417a3bcd690e6076abb49048fb7152e5bec",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/target-browser-before-capture-fix/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/target-browser-before-capture-fix/results.json",
+      "bytes": 39025,
+      "sha256": "055f8e9a379e3c02377cacc789a78291141c9075461accb44090b1925260c1cc",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/target-browser-initial/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/target-browser-initial/results.json",
+      "bytes": 14043,
+      "sha256": "2a2f420db8903bdfdeb8d2633af53a1feca262cda35e1b71f9336e9cfbf6b9a2",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/target-browser/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/target-browser/results.json",
+      "bytes": 39937,
+      "sha256": "7916473a96bf4f6f9db8639b79566b47e3576b10052af4f5a54c08cd048eeb07",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-baseline.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-baseline.json",
+      "bytes": 985,
+      "sha256": "8b531671dac6fb74b88bb516238863c200a3281f7c10de2f2552be1142a21023",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-baseline.tap",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-baseline.tap",
+      "bytes": 83228,
+      "sha256": "67fe5ad6a2d0338d5f683e82e112d841820552c7cab58f0c2de9569eeeb2569d",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-final.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-final.json",
+      "bytes": 1627,
+      "sha256": "b8ea80c430d9004c32b4fd51df1f156319400daf862a76a611ee2849a1eb4b95",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-final.tap",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-final.tap",
+      "bytes": 5721,
+      "sha256": "f2b1fc3232a02217b1a85ae0a2755fcf42990d265a7fb64a63a2581e72a3e599",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-post-fix.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-post-fix.json",
+      "bytes": 1073,
+      "sha256": "d4487b7f636858992efa5ef10d569ed7cf837ab62900d66440f57cfdc3e73b41",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/targets-timing-post-fix.tap",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/targets-timing-post-fix.tap",
+      "bytes": 6601,
+      "sha256": "c159208e94748d720d30e843b737b878fa478129ec3ad78ddfeee4b512b2ef5b",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/visual-final/1280-chain-67-stage.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/visual-final/1280-chain-67-stage.png",
+      "bytes": 215976,
+      "sha256": "259fd2ca19ec853204feaec76d23b30ae3337971455a6bb4d82432c754e0a47c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/visual-final/1280-volley-74-stage.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/visual-final/1280-volley-74-stage.png",
+      "bytes": 200090,
+      "sha256": "d8b277836740f30f169073710c2c048fe1fe89ee79da238d1f76692db6dfb40f",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/visual-final/390-chain-67-stage.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/visual-final/390-chain-67-stage.png",
+      "bytes": 95892,
+      "sha256": "58d684efb6f325c24d9648f179eaed14bfcd3353a7275304349396a99906758c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/visual-final/390-volley-74-stage.png",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/visual-final/390-volley-74-stage.png",
+      "bytes": 93193,
+      "sha256": "65b2f9156f153cf725eb1c815cfd0ae4d95b8fb9f2366a0709ccabbc34d88de7",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/visual-final/report.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/visual-final/report.json",
+      "bytes": 279271,
+      "sha256": "65194c5e93ad6897d8bef7138ef19d2f0630d7f092bbf8fc21fc104849bee97c",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/workshop-execution-initial.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/workshop-execution-initial.json",
+      "bytes": 2575,
+      "sha256": "fed6c64eadf3be115d4b98ee110f151195ca0f262e065ca44644ab4fffefbf4d",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/workshop-execution.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/workshop-execution.json",
+      "bytes": 2512,
+      "sha256": "376fda8a6ab88080d3079b7bad28cbc6e276d9095a72b0bfbda8a620452760b4",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    },
+    {
+      "source": ".release-sync/skill-vfx-targets-20261104/workshop-final/results.json",
+      "destination": "docs/skill-vfx-targets-20261104/evidence/skill-vfx-targets-20261104/workshop-final/results.json",
+      "bytes": 405354,
+      "sha256": "f89bededafd74e351c7a9cc8743ef4dce9c77ce29530d197008afca6d3bfa3ca",
+      "restore": true,
+      "requiredByCoverage": false,
+      "knownPreviousSha256": []
+    }
+  ],
+  "summary": {
+    "files": 68,
+    "bytes": 22714452,
+    "restoreEligible": 68,
+    "coverageRequired": 7,
+    "knownUpgradeableCanonical": 3,
+    "pngs": 6
+  },
+  "metadataUpdatedAt": "2026-11-04T11:03:45.286Z"
+}

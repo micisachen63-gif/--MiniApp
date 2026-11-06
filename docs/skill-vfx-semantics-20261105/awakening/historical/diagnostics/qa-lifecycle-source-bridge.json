@@ -1,0 +1,18 @@
+{
+  "scope": "awakening-qa-harness-lifecycle-fix",
+  "runtimeUnchanged": true,
+  "engineSha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557",
+  "changes": [
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "beforeSha256": "2d6e99a6917e3e474482b729586601da85f052ffd4c2fc4a285d0d05d275884e",
+      "afterSha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f"
+    },
+    {
+      "path": "worker/tools/build-awakening-vfx-audit.mjs",
+      "beforeSha256": "13cfe57bd6221d5c21b79fdbac4866f3988f288c6034602a58fce963bd364fa5",
+      "afterSha256": "af0e493bc0e714689121643adf62e74f428781831e0a8d536b8363ae34cc60cf"
+    }
+  ],
+  "meaning": "Navigate to about:blank to execute existing pagehide disposal; preserve error stacks; final errors, requests and sources checked only after every screenshot and browser close. Audit rejects recorded browser errors, network failures and unstable sources."
+}

@@ -6,7 +6,7 @@
   function create(options = {}) {
     const send = options.fetch || globalThis.fetch.bind(globalThis);
     const endpoint = options.endpoint;
-    const listeners = new Set(), controllers = new Set(), writes = new Set();
+    const listeners = new Set(), traceListeners = new Set(), controllers = new Set(), writes = new Set();
     const pollMs = Math.max(1000, Number(options.pollMs) || 15000), now = options.now || Date.now;
     let context = { accountId: String(options.accountId || '90101'), realmId: options.realmId || 'permanent', characterId: options.characterId == null ? null : String(options.characterId) };
     let epoch = 0, sequence = 0, applied = 0, floor = 0, snapshot = null, flight = null, advanceFlight = null, nextAdvanceAt = 0, disposed = false, timer = null, selecting = false, lastError = '';
@@ -16,6 +16,21 @@
       snapshot = value;
       for (const listener of listeners) { try { listener(value); } catch (error) { options.onListenerError?.(error); } }
       options.onSnapshot?.(value);
+    }
+    function emitCombatTrace(trace, scene) {
+      const scope = trace?.context, run = scene?.run;
+      if (!trace || trace.schemaVersion !== 1 || trace.source !== 'committed-combat' || !run
+        || !scope || scope.accountId !== String(scene.accountId) || scope.realmId !== scene.realmId
+        || scope.characterId !== String(scene.characterId) || scope.dispatchId !== String(run.id)
+        || !Number.isSafeInteger(trace.revision) || trace.revision < 0 || !Number.isSafeInteger(Number(run.revision)) || trace.revision > Number(run.revision)
+        || !Number.isSafeInteger(trace.committedAtMs) || trace.committedAtMs < 0 || trace.resolutionMs !== 1000
+        || !Array.isArray(trace.events) || trace.events.length > 128
+        || !Number.isSafeInteger(trace.limit) || trace.limit < 1 || trace.limit > 128 || trace.events.length > trace.limit) return false;
+      for (const listener of traceListeners) {
+        try { listener(trace, scene); } catch (error) { options.onListenerError?.(error); }
+      }
+      try { options.onCombatTrace?.(trace, scene); } catch (error) { options.onListenerError?.(error); }
+      return true;
     }
     function setContext(next = {}) {
       epoch++;
@@ -82,8 +97,13 @@
           else {
             // The receipt confirms the write even when its attached projection
             // was superseded. Ignore that projection and read the newest one.
-            try { accept(data.scene, ticket); acceptedScene = true; }
-            catch (error) { lastError = error.message; }
+            try {
+              const scene = accept(data.scene, ticket);
+              acceptedScene = true;
+              // The accepted write projection is applied before publishing its
+              // own committed trace. A preferred scene avoids a redundant read.
+              if (generation === epoch && snapshot === scene && data.combatTrace) emitCombatTrace(data.combatTrace, scene);
+            } catch (error) { lastError = error.message; }
           }
         }
         // A successful write remains successful even when the subsequent read is offline.
@@ -176,11 +196,13 @@
       if (timer) (options.clearInterval || globalThis.clearInterval)(timer);
       timer = null; epoch++;
       for (const controller of controllers) controller.abort();
-      controllers.clear(); writes.clear(); flight = null; advanceFlight = null; emit(null); listeners.clear();
+      controllers.clear(); writes.clear(); flight = null; advanceFlight = null; emit(null); listeners.clear(); traceListeners.clear();
     }
     return { request, refresh, sync, setContext, getContext, selectCharacter, start, dispose,
       getSnapshot: () => snapshot, getError: () => lastError,
       subscribe(listener) { listeners.add(listener); listener(snapshot); return () => listeners.delete(listener); },
+      // No replay on subscribe: a settled receipt is a one-time visual event.
+      subscribeCombatTrace(listener) { traceListeners.add(listener); return () => traceListeners.delete(listener); },
     };
   }
   const api = { create };
@@ -191,6 +213,7 @@
   const session = create({ endpoint: config.endpoint, accountId: config.accountId || '90101', realmId: config.realmId || 'permanent',
     isHidden: () => document.hidden,
     onSnapshot: value => window.dispatchEvent(new CustomEvent('rpg:scene-state', { detail: value })),
+    onCombatTrace: (trace, scene) => window.dispatchEvent(new CustomEvent('rpg:combat-trace', { detail: { trace, scene } })),
     onError: error => window.dispatchEvent(new CustomEvent('rpg:scene-error', { detail: { message: error.message, code: error.code } })),
   });
   Object.assign(api, session);

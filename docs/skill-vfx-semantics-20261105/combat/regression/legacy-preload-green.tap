@@ -1,0 +1,22 @@
+✔ all 184 canonical legacy identities dispatch into the real player using only their explicit descriptor (83.8812ms)
+✔ semantic companions preload one shared sheet and play all 25 identities without late image loads (8.1537ms)
+✔ legacy records and cosmetic loop events never acquire a guessed skill identity (0.9428ms)
+✔ deterministic star ring projections are explicit opt-in and retain their source in diagnostics (1.4586ms)
+✔ missing or malformed actor/target geometry never receives a fallback target (0.2987ms)
+✔ support spells appear on the exact healed or guarded teammate, not on the caster (0.9032ms)
+✔ mixed direct damage and sustain keep the attack on enemies and the healing on actual beneficiaries (0.2802ms)
+✔ only the truly non-damaging contract selects summon mode; native summon-family damage remains full (0.1181ms)
+✔ a real periodic effect is impact-only and never restarts a cast (0.9651ms)
+✔ repeated aggregate hit links are admitted once, including after clearing a visible clip (0.9196ms)
+✔ an actor/context switch during atlas loading cancels the pending event without later drawing (7.4925ms)
+✔ hide, resize and destroy clean up effects and preserve receipt admission (1.3141ms)
+✔ reduced motion remains visible and bounded for attack, support, summon and passive receipt modes (0.9976ms)
+✔ DOM projection respects visible contain geometry and CSS scaling without using placeholder coordinates (1.4089ms)
+ℹ tests 14
+ℹ suites 0
+ℹ pass 14
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 321.3278

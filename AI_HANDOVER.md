@@ -334,66 +334,67 @@ repo報告/本文件保存後才本機commit，然後精確HEAD完整Worker/BOT 
 
 # 星環遠征主浮窗整合（2026-11-05）
 
-本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-star-ring-integration-20261105
-分支：codex/star-ring-integration-20261105；承接Boss最終37352eb3e86938bdf1a96de4b7d8a7fc17f33bfd。
-完整報告：docs/STAR_RING_INTEGRATION_20261105.txt。
-本文件於本機提交前保存。最終HEAD/乾淨狀態、精確HEAD全套及結案：.release-sync/star-ring-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json，以及D:/StarJournal/handoff/non-character/star-ring-integration-20261105/STATUS.json／FINAL_STATUS.md。沒有完整成功收據，不以focused或Boss基線代替。
+# StarJournal — 技能特效與覺醒美術最新交接
 
-## 已完成
+更新：2026-11-05（UTC）
+工作樹：`D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-semantic-integration-20261105`
+分支：`codex/skill-vfx-semantic-integration-20261105`
+本批前 HEAD：`f1826a8838b1e552b46e6dee9f28bf3fafc992ed`
 
-- 冒險星環遠征與營地星征補給/星紋接主戰鬥單浮窗：目前/招募/補給/星紋四分頁，建立、加入並準備、準備、出發、戰術、離隊、歷史報告、原商品/隨機裝備/星紋購買與穿卸。
-- 純讀star-ring/scene與receipt；四個scoped寫端點沿原authority。六端點強制同captured body/header realm與selectedCharacterId，可信App/Service namespace，不經舊讀取的sweep/advance/withPlayer/analytics。
-- 新readView不使用跨DB全域battle cache。保留實存status/results/rewards，另標示simulation preview/settlementPending；現在角色HP/MP與遠征快照分開。
-- 完整kind/body signature與typed V1 receipt，核原authority/成本ledger；ready=false、tactic、party與cosmetic=null保留。壞/部分/舊op-only證據不冒充完成；原隨機gear出售/換職後仍取原ID/result。alreadyOwned星紋costs:{}。
-- 每一筆原寫batch加active actor guard；新receipt只在最後authority batch。原sweep/advance/逐人withPlayer準備可先合法分段提交，缺收據不等於所有前置零寫入。切角不撤回已提交checkpoint；原run+char+stage防重保持。
-- 原五帳、每角色台灣日界每日一次、30m lobby、12h/六2h節點、v1/v2/v3、價格/公式/golden、背景membership/前景party並行保持。party-scene-common仍只有dungeon/tower。
-- 同帳舊recipient戰報不改current actor、唯讀控制；切shop清report query。ringJoin只開意圖，確認才加入；複製link不帶原query帳號參數。不代發真訊息。
-- pending原ID/body、realm/actor/epoch/revision隔離，not_found不清、不自動重送；明確同ID恢復。取消/Back回來源，未知提示一次，舊RAF/晚回覆不搶焦點。
+## 最新完成範圍
 
-## 已驗證與原件界線
+現有 **196 招**（124 原生＋60 特殊＋12 Atlas）已完成名稱對應的專屬設定、素材適配、事件接線與覆蓋證據。所有配方、resolver、committed-event、presentation、browser 層均為 196/196；嚴格 gameplay eventId→draw 觀察為 23 個身分，另有 184 個真 SQLite 收據的受控重播。
 
-- 後端新增28/28；16檔focused198/198。UI/shared-session94/94。18產品/測試SHA測試前後與root重算一致；不能與完整gate相加。
-- 核心Chrome16分段/18 checks、44圖、24組雙realm各96表+total_changes/outbox純讀；原始HTTP1筆為明標的真409競態，非預期HTTP/page/route/外部請求0。Root原驗收目視9圖，當前共享input橋接另列。
-- 5徽記4武卷、40徽記原隨機裝備lost response找回原ID、60核心never-sent原ID明示恢復，無重扣/重抽；星紋60徽記解鎖/失聯穿戴收據/null卸下，stats保持。
-- 真五帳start；第一2h結算5份，真三人前景combat HP/MP/party/member/reward/presence保持；end回ring。第5帳離隊只留第一份，其餘4人六階段完成；總25個reward、4個completion outbox，presence釋放。
-- 使用明示development clock推至原期限再原sweep；不是自然等候12h，不是正式玩家/Telegram宿主/真機。
-- 原start-01已真成功，之後角色列表等待的harness失敗保留failed；沒有原整段passed check。精確start-tail查原HTTP200/receipt/5 starts/snapshot，只補characters/select與daily，無星環/隊伍寫入或時計，沒有重播出發。原run ring:ce2ee949e90a40abb7d86f042d14bfcb，request ssr_688a5bbf3c754dde860877a432a44a53。
-- 精確previous-run成功鏈、authority全hash/clock/PID/actor snapshot及stage>=2四人/已離隊唯一stage0守門；任一部分成功不能整段resume。原前景end可won/lost+disbanded，驗收按原權威及presence。
-- 首次fixture/resize hook/layout焦點/start後列表/gallery漏partyId等失敗原件均保留，修正沒有重播成功操作。layout焦點原斷言未放寬；最小binder同時精確支援舊resize及新setParentSize，未知/混合/重複仍拒絕。
-- 23候選來源=18產品/test+5QA工具；API實載202來源與實HTTP產品/原素材12來源一致。最終hash、16段結果、目視/純讀與工具版本橋接見qa-summary、qa-source-bridge-final、qa-tools-final、candidate-source-freeze-final及root-review-final JSON。
+**16 招覺醒的素材與視覺演出已完成**：4 張透明 2×2 圖集、16 個專用主體、4 原始 PNG＋4 WebP；8 檔已完整回讀核對。原 v1 已因太素、缺少專屬素材遭使用者否決，僅保留作歷史。正式交付採 ornate-v2，含最後的冰鏡回流可讀性修正。
 
-## 共用場景輸入與外觀限制
+原遊戲的覺醒戰鬥機制仍屬規劃；本批交付可播放的專屬美術與動畫，`previewOnly=true`、`sourceId=null`，沒有創造傷害、命中或上線技能身分。
 
-共享D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/scene.js在03:53:32Z有新版本，並非23候選Git來源。原raw/組合HTTP與當前hash不同，舊raw全文未保存，不能推定code等價、不能宣稱整個grok凍結。保存qa-shared-generated-input-drift.json；當前版本另做既有gallery窄只讀橋接，不重做遊戲。首次wrapper中斷後DB/debug clock/input不變的核對見qa-current-shared-input-bridge-interruption.json。最後橋接結果/版本與目視，以qa-summary/FINAL_STATUS為準；不能把觀察wallTime增加誤認遊戲時計變動。
+## 主要入口
 
-目前共享輸入的窄橋接 current-shared-input-readonly-bridge-02 已通過，收據 qa-current-shared-input-readonly-bridge-02.json。整段雙realm各96表、total_changes、outbox與debug clock不變，無select/遊戲寫入/時計指令；raw c4b2b860c09d45e9586a772baad8c75c6ef45d0828238b77c8ad46ec75b032ec、組合HTTP 320063303a34ec30aa6c43ddc7c667f81158c631c3a2f6dff8d69f618a7e669a 及mtime前後穩定。此額外1段/1check/3圖與原16段分列，合計17段/19checks/47圖；root另已實看目前input的戰果圖1張。保留新舊input差異，不推定code等價，沒有重新驗收或重播消費/遠征。
+- 覺醒預覽：<http://127.0.0.1:9894/awakening-vfx-preview.html>
+- 神劍直達：<http://127.0.0.1:9894/awakening-vfx-preview.html#preview%3Aawakening%3Asword%3Ahell>
+- 196 技能工坊：<http://127.0.0.1:9864/preview-skill-vfx.html>
+- 本機隔離戰鬥場景：<http://127.0.0.1:9867/>
 
-星紋本批只整合原素材預覽與真實購買/穿卸狀態；主場Phaser aura及角色環身合成預覽尚未接，由角色/FX工作線續作。未改grok-assets或角色/FX/catalog/queue。原320px主場HUD遮角色與正式宿主接線亦未宣稱解決。
+## 驗收依據
 
-## 預覽、發布與下一批
+- 196 語意 Canvas：784 方向、196 時序、48 手機、8 減少動態；0 頁面/HTTP/來源漂移。
+- legacy 最終 identity r3：184 身分＋8 手機＋4 減少動態，實際 RAF 繪製與清理通過。
+- MiniApp r2：16/16；Atlas r2：16/16。二者和受控重播分別保存，不混算。
+- legacy 預載資產鍵修正：14/14；語意引擎與設定：60/60。
+- 覺醒最終：11/11 Node；64 桌機方向、256 階段、64 精簡、64 減少動態、64 手機方向、32 首尾端點；33 圖，全部來源一致，最後零 browser/network errors。正式 receipt 完成於 07:02:20.709Z，SHA d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a。
+- 八個覺醒原稿/圖集 bytes、SHA、尺寸與透明格式一致；6,290,064 alpha pixels 差異 0。
+- 本機 Chrome 軟體渲染與手機 viewport 驗證，未宣稱實體手機或 Telegram 裝置驗收。
 
-隔離UI9773/API9772，UI28420/API31120/runner20984；以最後health/ownership證據為準。合成五帳資料、雙realm、productionAccess=false；時計已至原12h終點。保留9763及其他舊預覽，不kill全部Node。
+## 檔案
 
-本機commit/完整gate由root在此文件保存後執行。沒有本批push/PR/遠端CI/merge main/部署；正式DB/Secrets/migration/旗標不動。Party既有push自動核准審查拒絕仍有效，需要具體提交與目的地授權，不用子分支繞過。PR_DRAFT與publication-plan只為可審查文字/計畫。
+完整報告：`docs/SKILL_VFX_SEMANTICS_AWAKENING_20261105.txt`
 
-下一批建議天使功能主浮窗，21來源盤點angel-next-source-inventory.json已備、尚未實作。guardian/inventory含welcome INSERT；一般operation、販售ledger與auto job三套權威要分開核，不能把舊inventory或operation當完整新純讀/收據。NEXT_BATCH_PLAN將指向本批最後提交與全套收據。
+總驗收與封存索引：
 
-天使/命運/交易/衣櫥/完整帳務，逐擊事件/角色FX、第四階重選、Lv600/16覺醒、正式平衡、完整季末跨DB資產/永久4+賽季4角色保留、正式Telegram/真機等仍待接續；現MAX_LEVEL120，全遊戲未整合完成。
+- `docs/skill-vfx-semantics-20261105/validation-summary.json`
+- `docs/skill-vfx-semantics-20261105/archive-index.json`
 
-兩個既有PT30M Windows checkpoint持續，里程碑即時寫；看STATUS.updatedAt辨語意時間。禁止共享全域MCP agent_workflow/task_control。
+分區：`foundation-manifest.json`、`combat/manifest.json`、`atlas/manifest.json`、`awakening/manifest.json`。
 
----
+現有技能：`worker/public/skill-vfx-semantics.mjs`、`skill-vfx-engine.mjs`、`skill-vfx-legacy.mjs`、`skill-vfx-coverage.json`、`skill-vfx-semantic-audit.json`。
+覺醒：`worker/public/awakening-vfx-*`、`worker/public/art/awakening-vfx-20261105/`、`worker/art-production/awakening-vfx-20261105/`。
 
-## 前序交接（原文完整保留；歷史狀態以各批最後收據為準）
+## 重新 checkout 的檢查
 
-# Boss／首領精華主浮窗整合（2026-11-05）
+```sh
+node docs/skill-vfx-semantics-20261105/restore-evidence.cjs
+node worker/tools/build-skill-vfx-coverage.mjs --require-legacy-completion --check
+node worker/tools/build-skill-vfx-semantic-audit.mjs --evidence=docs/skill-vfx-semantics-20261105/semantic-browser/results.json --evidence=docs/skill-vfx-semantics-20261105/semantic-browser/visual-review.json --check
+node --test worker/test/awakening-vfx-engine.test.js
+node worker/tools/build-awakening-vfx-audit.mjs --check --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json
+```
 
-本批工作樹：D:/StarJournal/worktree-snapshots/star-journal-boss-integration-20261105
-分支：codex/boss-integration-20261105；接續2f4f69881128296341f885f64e77f8e6e2ffd091。
-完整報告：docs/BOSS_INTEGRATION_20261105.txt。
-最後提交、精確HEAD全套與結案狀態：.release-sync/boss-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json，以及D:/StarJournal/handoff/non-character/boss-integration-20261105/STATUS.json／FINAL_STATUS.md。本文件於提交前保存，最終完整gate在提交後執行並寫外部收據；不能以基線或聚焦成功代替該版本全套。
+保留所有歷史失敗與淘汰版本。QA 總覽切換時的 ResizeObserver 清理錯誤已由 harness 真導航與末端檢查修正；原 pass=true 但仍帶錯誤的收據列為不接受，audit 亦明確拒絕這種矛盾。較早全綠矩陣如被後續修改取代，標示 superseded-not-current。Atlas 原外層監看的一個 semantic-audit metadata 漂移也保留；實際 17 個 Atlas 輸入及 9 個共享原始輸入在該次驗收保持一致。
 
-## 已完成
+## 保存與接手
+
+這是本機分支交付；沒有 push、merge main 或部署。其他平行工作、玩家資料與全域任務控制不屬於本批。最新本機提交與預覽健康檢查在 `D:\StarJournal\handoff\skill-vfx\STATUS.json`；既有 30 分鐘 checkpoint 排程保留。
 
 - 冒險「世界首領」與營地「首領精華」接入現有主戰鬥單一浮窗：Boss／兌換／材料回收三分頁，金屬控件、透明背景、44px操作區，320／390／1280可操作。
 - 真首領HP、個人傷害、原時間窗、角色HP／MP、倒地期限、歷史及精華／遺物碎片；settling、killed、fled、vanished分別呈現，不以HP0冒充領獎。
@@ -821,3 +822,5 @@ Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件�
 
 
 2026-11-06 local exchange-actions integration: baseline 049d3f6 (already containing HUD v2/viewport/Ledger/wardrobe/exchange-read) was extended with scoped sellable/create/buy/cancel and original-receipt recovery. The single economic browser campaign committed exactly 9 intended operations; all 13 pre-tail checks passed. Its only failure was a QA timing race while asynchronously rendering the character picker after operations. No transaction was replayed. A separate read-only tail acceptance completed the main-character restore plus Ledger/wardrobe/HUD regressions with stable sources and unchanged dual-realm DB hashes/counts. Fresh focused exchange-action suites pass 114/114. See docs/EXCHANGE_ACTIONS_INTEGRATION_20261106.md and the external handoff under D:/StarJournal/handoff/non-character/exchange-actions-integration-20261106/. Local-only: no push/PR/merge/deploy, production DB, secrets, migration, character/FX/grok writes.
+
+完整舊交接歷史可讀 Git：`f1826a8838b1e552b46e6dee9f28bf3fafc992ed:AI_HANDOVER.md`。本頁已更新為這一批可接手的完成狀態；不要以舊 v1、舊批次提交或歷史失敗覆蓋最新結果。

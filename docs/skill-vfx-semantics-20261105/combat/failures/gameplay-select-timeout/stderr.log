@@ -1,0 +1,7 @@
+(node:41432) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+locator.click: Timeout 20000ms exceeded.
+Call log:
+[2m  - waiting for locator('[data-select]').first()[22m
+
+    at D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-semantic-integration-20261105\worker\tools\skill-vfx-gameplay-browser.mjs:202:48

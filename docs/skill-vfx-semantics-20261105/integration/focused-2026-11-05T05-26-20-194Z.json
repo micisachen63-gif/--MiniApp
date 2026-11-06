@@ -1,0 +1,3049 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "scope": "47-file targeted integration gate; not full Worker/BOT",
+  "startedAt": "2026-11-05T05:26:20.195Z",
+  "node": "v24.7.0",
+  "runnerPid": 39116,
+  "command": [
+    "node",
+    "--test",
+    "--test-concurrency=1",
+    "--test-reporter=tap",
+    "worker/test/skill-vfx-engine.test.js",
+    "worker/test/skill-vfx-target-timing.test.js",
+    "worker/test/skill-vfx-combat-adapter.test.js",
+    "worker/test/skill-vfx-actor-bridge.test.js",
+    "worker/test/skill-vfx-scene-session.test.js",
+    "worker/test/skill-vfx-legacy.test.js",
+    "worker/test/skill-vfx-legacy-app.test.js",
+    "worker/test/skill-vfx-coverage.test.js",
+    "worker/test/skill-vfx-browser-evidence.test.js",
+    "worker/test/legacy-skill-vfx.test.js",
+    "worker/test/legacy-skill-vfx-service.test.js",
+    "worker/test/atlas-combat-observer.test.js",
+    "worker/test/atlas-combat-trace-service.test.js",
+    "worker/test/atlas-engine.test.js",
+    "worker/test/atlas-effects.test.js",
+    "worker/test/atlas-effects-service.test.js",
+    "worker/test/atlas-effects-legacy-replay.test.js",
+    "worker/test/atlas-supplies.test.js",
+    "worker/test/atlas-supply-service.test.js",
+    "worker/test/atlas-scene.test.js",
+    "worker/test/atlas-scene-api.test.js",
+    "worker/test/scene-live-session.test.js",
+    "worker/test/scene-live-view.test.js",
+    "worker/test/scene-live-lifecycle.test.js",
+    "worker/test/scene-preview-assets.test.js",
+    "worker/test/scene-supply-ui.test.js",
+    "worker/test/scene-skills-ui.test.js",
+    "worker/test/scene-party-ui.test.js",
+    "worker/test/scene-tower-ui.test.js",
+    "worker/test/scene-boss-ui.test.js",
+    "worker/test/scene-star-ring-ui.test.js",
+    "worker/test/party-scene-service.test.js",
+    "worker/test/party-scene-api.test.js",
+    "worker/test/tower-scene-service.test.js",
+    "worker/test/tower-scene-api.test.js",
+    "worker/test/boss-scene-service.test.js",
+    "worker/test/boss-scene-api.test.js",
+    "worker/test/boss-scoped-transaction.test.js",
+    "worker/test/star-ring-scene-service.test.js",
+    "worker/test/star-ring-scene-api.test.js",
+    "worker/test/star-ring-scoped-transaction.test.js",
+    "worker/test/star-ring.test.js",
+    "worker/test/star-ring-skills.test.js",
+    "worker/test/star-ring-volume.test.js",
+    "worker/test/star-ring-integration.test.js",
+    "worker/test/star-ring-parallel-party.test.js",
+    "worker/test/skill-vfx-integration-20261105.test.js"
+  ],
+  "testFiles": 47,
+  "finishedAt": "2026-11-05T05:27:02.145Z",
+  "exitCode": 0,
+  "log": ".release-sync/skill-vfx-semantics-20261105/focused-2026-11-05T05-26-20-194Z.tap",
+  "sha256": "b70afba73f7713b592ea27607ee863f3e3f621114ddd26e0f2a29be9a3d6f4e9",
+  "sourceFiles": [
+    {
+      "path": "worker/public/advanced-specializations.css",
+      "sha256": "e272c9d8af964a0a1208ad5f064ec1395b9cf9498dd8e60929e2fa57b08520b0"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/armory-specializations.js",
+      "sha256": "08b7f9a1eee10723ef411eb55221e9d0d59df80667a0c5136c9c7b24463c649b"
+    },
+    {
+      "path": "worker/public/art.js",
+      "sha256": "dfc3f56b75d2a14a7ae9189cfc1861f0a52a6a5280b98e16797b21e1a538cbe8"
+    },
+    {
+      "path": "worker/public/atlas-progression-ui.js",
+      "sha256": "5251e893ae53be4a9c8050adcf9c8ad99c6d7516dd4f0102d68df55a5917e111"
+    },
+    {
+      "path": "worker/public/atlas-talents-ui.css",
+      "sha256": "1eb165b9e89251886df7f85effbc753d2af3ef5a6f8ca9a9ee28e6a918051cea"
+    },
+    {
+      "path": "worker/public/atlas-talents-ui.js",
+      "sha256": "650ee8ecb379156f3c82a384dfcadc48b35fea83af7d3592053a9e2b25ccee38"
+    },
+    {
+      "path": "worker/public/atlas-ui.css",
+      "sha256": "73b084a3211bf36995dba550b9de666083f6267a3f1535bc78ee8e2baf766e0a"
+    },
+    {
+      "path": "worker/public/atlas-ui.js",
+      "sha256": "ee96ff816f3f5f5f94bef1b871ed5dcdbd06e030c68de0d022dcd5a88be4d023"
+    },
+    {
+      "path": "worker/public/auto-reroll-ui.js",
+      "sha256": "7812648b85b74cd8b12e8247831a821f2b841c2a72a0013e49ae3b6a495d95a2"
+    },
+    {
+      "path": "worker/public/background-workshop.css",
+      "sha256": "60db96f9614a53be8cad242fa490dad166b30b705a3ba8ae802aa400776da2b4"
+    },
+    {
+      "path": "worker/public/background-workshop.js",
+      "sha256": "f81f8a7a1be5ee7c2ff40077e933e3b365779b4fa23b41fe09d83622ae90fe08"
+    },
+    {
+      "path": "worker/public/bag-icons.css",
+      "sha256": "37a5e36511db7c622510d51b06c298503f343e3efa85ba57249c1830fb78d29a"
+    },
+    {
+      "path": "worker/public/battle.css",
+      "sha256": "76112844409f6f3d6a877a78b58e88a7c7e3909ebef20a020126711b6bdd90cc"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/boss-waiting.css",
+      "sha256": "fbb98e39e8cb166724186403ab4c1584d3cfb96c1c705e6e256aa3bb33101423"
+    },
+    {
+      "path": "worker/public/boss-waiting.js",
+      "sha256": "bf85e96c6c56aeb0faa3988eab3f5270bdda99ea9172ccd483b8d66cb279c35e"
+    },
+    {
+      "path": "worker/public/branch-elf4-fx.js",
+      "sha256": "0c052cfacd6124539ff14b5be049ad21c1bcecf1a79744f3033c158f923c6589"
+    },
+    {
+      "path": "worker/public/character-delete.css",
+      "sha256": "9065a5ca19b0d81479b740109067090de1901f67021fa8f00fe52f95a05ce8a8"
+    },
+    {
+      "path": "worker/public/cinematic-fx.js",
+      "sha256": "dde0cfc59bc354670843cef49e9eb8d31b1f615481fed4a47c8679b129c2e9a8"
+    },
+    {
+      "path": "worker/public/coin-ui.js",
+      "sha256": "bd8a2d89b19fdbb82e6b8d8ebb68e685bdd529963f43a00ad094afde91d21972"
+    },
+    {
+      "path": "worker/public/collection-ui.css",
+      "sha256": "994fd5649b721a2b9836f0ead65c52929e3edc2c39cbc365187debd544934c2a"
+    },
+    {
+      "path": "worker/public/collection-ui.js",
+      "sha256": "8b2ee86e023064de0eff8a72e74a69c748d7af41de48cccd88975d5cdca19a44"
+    },
+    {
+      "path": "worker/public/elf-adv2-skill-fx.js",
+      "sha256": "082ba070e9bfaafabb3bca7998d273e9173c9db5831c21f4142202dd6fc572c8"
+    },
+    {
+      "path": "worker/public/elf-low-tier-weapon-fx.js",
+      "sha256": "4d8e1fe9c4d5ebcca3ca4f9c78038ae2f4999e9e0bf6518d365ba6718960f91f"
+    },
+    {
+      "path": "worker/public/equipment-collection-ui.css",
+      "sha256": "fd317933b0d5a0a53fdb9bc702eaacaab25684a47a17221dd6623eeab6bc1595"
+    },
+    {
+      "path": "worker/public/equipment-collection-ui.js",
+      "sha256": "77797d66b62d1f2f3869c7b365019397ee3cecd0019c68b697e30e2d5ab0bf67"
+    },
+    {
+      "path": "worker/public/equipment-live-sync.js",
+      "sha256": "21ed12413b32fdca7d2d43d17721be4e5d48c60fdb381aa70068e3f38c1c7252"
+    },
+    {
+      "path": "worker/public/equipment-recovery-ui.css",
+      "sha256": "372eb401f363bd034fe95f252acbdcf2eb2531ad4bc2c11c9fe6059d62657198"
+    },
+    {
+      "path": "worker/public/equipment-recovery-ui.js",
+      "sha256": "50ec49e53e45aecf4e2108e6199279b3c68aec144a759d7c677760b6bf8acebf"
+    },
+    {
+      "path": "worker/public/expedition-away.css",
+      "sha256": "9e8043c805e7cf97781097c075ceaa98ef8afeecd9d129a9f2443282f1751928"
+    },
+    {
+      "path": "worker/public/expedition-away.js",
+      "sha256": "393dad7af3736f3f52c36c1ff538f78b0cb636d59cc9fe5a171e8dabcfc8254a"
+    },
+    {
+      "path": "worker/public/expedition-entry.css",
+      "sha256": "89e599d9dfcdac5f15c312674929bf9d172e8debaaaf504628b5b5b6bdcb3e66"
+    },
+    {
+      "path": "worker/public/expedition-entry.js",
+      "sha256": "df8d40e735ab2ff5ffbbac36af606f926c1e2a8af3e7c777c20a53c8c920ec72"
+    },
+    {
+      "path": "worker/public/fate-entry.css",
+      "sha256": "550e2e21e59f50f02fc5e785316663e5f106ac85f07264b5f0b88e8e63a010db"
+    },
+    {
+      "path": "worker/public/fate-entry.js",
+      "sha256": "fcd62153197f79041f565169cb97560e3f714972030ce517719392b4900165a2"
+    },
+    {
+      "path": "worker/public/forge-ritual.css",
+      "sha256": "c540a718ad6b60f4bb0b96b0703356153adac510ce85384327011bdb1e7f545d"
+    },
+    {
+      "path": "worker/public/forge-ritual.js",
+      "sha256": "7c7952270e89d3c67228ce0c64073696c47cb456d4118cfb214ad3efe2b3d7e5"
+    },
+    {
+      "path": "worker/public/game-brand.css",
+      "sha256": "88bf3a00f51bc60636edaed8c953d9d0b2c458a955d4fd0e8ea5e9be7d486b59"
+    },
+    {
+      "path": "worker/public/gear-names.js",
+      "sha256": "9fab6971b51234c26254b9a57e2b3535b46d79fd25d0a610b349d1c50dd40e5a"
+    },
+    {
+      "path": "worker/public/gear-names.json",
+      "sha256": "62d1264ef92655bcdd42e232bb929388942bd076c402670c72a8ff2dee9943a2"
+    },
+    {
+      "path": "worker/public/guardian-assist-widget.js",
+      "sha256": "302c1e129991d6a0d8c3e6194cde7dbbff916f60751b0233f7137ad326c0e285"
+    },
+    {
+      "path": "worker/public/guardian-auto-ui.js",
+      "sha256": "f9e7302cf7bdc271b9b2e8d338516614276e2d1d7029beda3e445dbf7e0cb141"
+    },
+    {
+      "path": "worker/public/guardian-fusion-batch.js",
+      "sha256": "186220c3c792b5a2b1faa6ed9b98899485cb4afac18b8b5e598f51d2b197942b"
+    },
+    {
+      "path": "worker/public/guardian-fusion-ui.css",
+      "sha256": "770951523c2bf31c4f1cf239d9625d6abd9b3852d176fe08a7ad4048b308db75"
+    },
+    {
+      "path": "worker/public/guardian-fusion-ui.js",
+      "sha256": "a5ba6e85464d666e552ace7f10c8f8bcdb7728a211032a461e46cd3927e53d0b"
+    },
+    {
+      "path": "worker/public/guardian-haptics.js",
+      "sha256": "bb8934461c5a2e0373312fea08c1bb322f516b644074e6823a2f8c6e26bc24c7"
+    },
+    {
+      "path": "worker/public/guardian-idle-fx.css",
+      "sha256": "f244d8cfe96ce37fb9072e54918373cb590d29b72f205d3a477a60088c4c1bde"
+    },
+    {
+      "path": "worker/public/guardian-idle-fx.js",
+      "sha256": "591afef6ca1f39f712414892ca627f27035a7eb5e076609e565fedb322cc975a"
+    },
+    {
+      "path": "worker/public/guardian-party.js",
+      "sha256": "a12b39bc15ffcc36f08bb6b01f108e759eb0d833a90631f402a2ab167ad60182"
+    },
+    {
+      "path": "worker/public/guardian-presentation.js",
+      "sha256": "a93a1dd32d9e442cf5589600c097019868f883f69551e5c1c461867d41e91be2"
+    },
+    {
+      "path": "worker/public/guardian-pull.js",
+      "sha256": "b05a189c5f7001987c89db387c6ca4ae99030f3c377e9632ed3e380b20e33b36"
+    },
+    {
+      "path": "worker/public/guardian-ritual-ui.css",
+      "sha256": "4a559c841195128723af8895284eb37b3ee67f7b8b70886d84c2b267f53816db"
+    },
+    {
+      "path": "worker/public/guardian-ritual.js",
+      "sha256": "a823438d8acfe10c2cac7e6aa7c540ef177c3af6c0a72c51358e494c7681eed1"
+    },
+    {
+      "path": "worker/public/guardian-scene-media.js",
+      "sha256": "79bfd1a62ece160ff2a44a1b6143174e4a09c1a9373223391a96147326389f77"
+    },
+    {
+      "path": "worker/public/guardian-shop.css",
+      "sha256": "c9d87316b10daf6b934e2f55182b176dec7548df66c88e0f23b114472800c278"
+    },
+    {
+      "path": "worker/public/guardian-shop.js",
+      "sha256": "fccee796acc95591939ad7a9f1473d41e7f45e8334b55047fe6c7812360b9cef"
+    },
+    {
+      "path": "worker/public/guardian-sigil-contract.js",
+      "sha256": "b2902224a9ab717af6ad335b0d2cf6bc8f91e99399c751a95dcdc7000f70a7a3"
+    },
+    {
+      "path": "worker/public/guardian-sigil.css",
+      "sha256": "3e26c4441d54b9c691a2c14060954573096ff507e8f8a8bbb04fde7a857d35c5"
+    },
+    {
+      "path": "worker/public/guardian-sigil.js",
+      "sha256": "9e865e42b37350c2ed306d79c545caf53aef04cd8e5628203b7852f911c29011"
+    },
+    {
+      "path": "worker/public/guardian-summon-gesture.js",
+      "sha256": "707c03d0740c854be02cba61d1b68e9e6b35539ad604e3f2b41baee872e449e5"
+    },
+    {
+      "path": "worker/public/guardian-worldtree.js",
+      "sha256": "1d7b70bed1faf6fa6f9c36aad8928ca8c4a7c456bb4db5ed7895bf1c61ab1660"
+    },
+    {
+      "path": "worker/public/hero-armory.css",
+      "sha256": "c25c72b853765d2801f3a4f2f30160a898640c46727e4275d67156b13323db7e"
+    },
+    {
+      "path": "worker/public/hero-art-actor-adapters.js",
+      "sha256": "aec72e04143098e29b6bc88f084eb43fef79c7ce3549841aafcdd3f718e819ba"
+    },
+    {
+      "path": "worker/public/hero-art-registry-fx.js",
+      "sha256": "bf24f615278842d7ae738cda99cdc98e9acee415068d84d7a60836597f509c26"
+    },
+    {
+      "path": "worker/public/hero-art-registry.js",
+      "sha256": "c3965c97ce0bd93849911b5f88e1fe4ad176a1387b0d219a9b60fbaf4940bd81"
+    },
+    {
+      "path": "worker/public/hero-art-registry.json",
+      "sha256": "a21d828fe6b872b9480018545a183c3bbde04f2b9b4f6ec4523c2201cec298d9"
+    },
+    {
+      "path": "worker/public/hero-display.css",
+      "sha256": "b69f830f541efd789d9ae8d8bb6ae2615ce6cf6c393b7f1f37d3f890a8a8e197"
+    },
+    {
+      "path": "worker/public/hero-fx.css",
+      "sha256": "a81352523e5455ab0cf8c94e45634e4d440d25765de527d607965967a171eac5"
+    },
+    {
+      "path": "worker/public/hero-fx.js",
+      "sha256": "35c2a31eeec34b56ebdd4aa9401e20ecdbe956734860ba5e315075944b434ee9"
+    },
+    {
+      "path": "worker/public/hero-hall-ui.css",
+      "sha256": "5f3591ae499294ac978bc9867acb69ceaa548c1161333e56be438b2d1212b437"
+    },
+    {
+      "path": "worker/public/hero-hall-ui.js",
+      "sha256": "2be3c9d54d6e6e61d329d2312fab1acb706c32fdbd2ef1b7d07b65e725bbfe06"
+    },
+    {
+      "path": "worker/public/hero-lavish-fx.js",
+      "sha256": "61c40446e1a1519ac6334ff67e55c843697f1d4f81d6b048dfc9cce06501cd4c"
+    },
+    {
+      "path": "worker/public/hero-size.css",
+      "sha256": "444db684fa1eb287dedac9057912363027c00a3d0d30d0447aa5683abaac9ac8"
+    },
+    {
+      "path": "worker/public/hero-size.js",
+      "sha256": "77625126a3ffd8fa4e10988b7404f92d046a97d8556dfeacd1a5c1c50af5c64a"
+    },
+    {
+      "path": "worker/public/idle-exp.css",
+      "sha256": "d46a3b580713fce98702a2fe707d28a99b8ea3072a580561f2fef507d9249f9e"
+    },
+    {
+      "path": "worker/public/journal.css",
+      "sha256": "b05f5fdbcf248d5cb26865ac561e32a207a772c0708e983e37aa7efe35880796"
+    },
+    {
+      "path": "worker/public/journal.js",
+      "sha256": "24b70fadfdaf5f4d9bd5fe16da58baa2d26ddd50c3fa74561616a491a5c5685e"
+    },
+    {
+      "path": "worker/public/lineage-ui.css",
+      "sha256": "060f1dff1d6819c717ed3d253fce8b9890b485cb1b5cb7f903a2f7a386929ea8"
+    },
+    {
+      "path": "worker/public/mage-actor-fx.js",
+      "sha256": "b5a9b260e860d3d43cde5b4c38298ac5a658e058496058b52ad3d8bf034c04c1"
+    },
+    {
+      "path": "worker/public/map-motion.js",
+      "sha256": "5949d8982e06edda88ac4e9560f7d6444873080fd951507c1ef018ea9a329dbd"
+    },
+    {
+      "path": "worker/public/map-video.js",
+      "sha256": "3c8eedb0074c9d494fe11b4ef24ca99dffff68380bb484f586dd3418c3800abc"
+    },
+    {
+      "path": "worker/public/maps.js",
+      "sha256": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945"
+    },
+    {
+      "path": "worker/public/market-exchange-history.css",
+      "sha256": "550eedb6f9090fe2c581d60c102a23ab5af99b7fd196662c0f3f32d05269752c"
+    },
+    {
+      "path": "worker/public/market-exchange-history.js",
+      "sha256": "85c7a955b82c8181680819869441ec2ae842ce9974474a40ab4a1f4715ba56af"
+    },
+    {
+      "path": "worker/public/market-exchange.css",
+      "sha256": "ee1259e4a60639d67f71a990f8c7c0b943b71412b9736ebf2e1c76f8a34b1391"
+    },
+    {
+      "path": "worker/public/market-exchange.js",
+      "sha256": "a4a94297f030b032a79c494b4780c284307558392780e5b916b5c52b7913485f"
+    },
+    {
+      "path": "worker/public/market-sell.css",
+      "sha256": "42e7f1970e33ea213f62baf7d9e3ff1faeec843ab9d640433b6bd7b65bebb78b"
+    },
+    {
+      "path": "worker/public/market-sell.js",
+      "sha256": "2a7f2fab25500125cf8fd08f650d8a7f21181a0d4e180328a3d5957115a4321c"
+    },
+    {
+      "path": "worker/public/monster-catalog.js",
+      "sha256": "a4d0534705d2d619d2c587ff0fae0457316b1c79db5ec01fd276b1388558f32e"
+    },
+    {
+      "path": "worker/public/monster-expansion-catalog.js",
+      "sha256": "ef2a7046bb8bb579da5198c8102bb810c180b3c0daabff620e65d2d8f83c93d3"
+    },
+    {
+      "path": "worker/public/monster-expansion-review-data.json",
+      "sha256": "e7476279c18af13f81e4a2456a5b27d02555cfe7290db1f00d9eca497b8a9fd7"
+    },
+    {
+      "path": "worker/public/monster-expansion.js",
+      "sha256": "4ced2ae24d355b47bc565cc7bdc1a300fc91f8bec90a1aec742fdc6887f2196c"
+    },
+    {
+      "path": "worker/public/monster-layout.json",
+      "sha256": "9719fe9dceef28a56836380bba1afca898b28084644990e109442fbd2750d174"
+    },
+    {
+      "path": "worker/public/monster-review-heroes.json",
+      "sha256": "0e276ee122230397ce87222cbf911d0eec9880271ef7b86605a3710db1a06cf8"
+    },
+    {
+      "path": "worker/public/mythic-ui.css",
+      "sha256": "0ced690250e6d7ed161c14f3ac7d08fe53428cd6d5e58629d09697dc3d851580"
+    },
+    {
+      "path": "worker/public/mythic-ui.js",
+      "sha256": "fe538b674bac9e8648d2b872a6d33d27428a60ca25055fbf0247fdfd25a917c7"
+    },
+    {
+      "path": "worker/public/olympus-luxury.css",
+      "sha256": "f6d8c76a1a60c43ee0d51a67e9394d62d41e688ef327518a5d59584308e38067"
+    },
+    {
+      "path": "worker/public/olympus-suite.css",
+      "sha256": "d62a617c32d54f0847911c1513f954e1bce3417b4a95b7d69bae3670e15b685f"
+    },
+    {
+      "path": "worker/public/olympus-unified.css",
+      "sha256": "f52662a862537b88afcc8a920c6c31943c4ee090b3cdb0e54d7dd5f939158e84"
+    },
+    {
+      "path": "worker/public/operation-notices.js",
+      "sha256": "9408c4c77880e1f2224a355f43acef9aa8e7b107eec7204d82f2062df1965bbf"
+    },
+    {
+      "path": "worker/public/potion-choice.css",
+      "sha256": "281d223768a4d5e08fa09e77417c1128aaf04bc49d39f0a055898cdd73d662df"
+    },
+    {
+      "path": "worker/public/request-client.js",
+      "sha256": "a944836bb1baab98b35f25aad41451e466fe947e34bfa865465a1f1b0bfb4dbb"
+    },
+    {
+      "path": "worker/public/scene-atlas-guide.js",
+      "sha256": "e87beb11d71bf02b9ddd5e2f1ec16b0a27860d20359014f230295a3b21f3ba5e"
+    },
+    {
+      "path": "worker/public/scene-boss-ui.css",
+      "sha256": "4b38d36443a4c0765ab2782d43dd754856953bc0d5f4eca8ee91c301c3440a86"
+    },
+    {
+      "path": "worker/public/scene-boss-ui.js",
+      "sha256": "5267fd32639f1a2013a6971581c95418ee3506a6fae890bb356a53dc37bb1f4f"
+    },
+    {
+      "path": "worker/public/scene-chat-ui.css",
+      "sha256": "4d83560723e59dc5a00dcb69929f180d94917a68281a77df0eb1cd983312dc04"
+    },
+    {
+      "path": "worker/public/scene-chat-ui.js",
+      "sha256": "bf092daf7df8d56d8c2b327f54d224934eb4dd88bb78babc1477cd5aa1b0eca2"
+    },
+    {
+      "path": "worker/public/scene-hero-readability.css",
+      "sha256": "0f95a81f8cd756b506ba091a858486f202d958edbfb5e02bb14e85e45c02b87a"
+    },
+    {
+      "path": "worker/public/scene-hero-readability.js",
+      "sha256": "2435508832e62db4f3ae568c3c2be8eaede6d7bc522880d15d221997057ec6f7"
+    },
+    {
+      "path": "worker/public/scene-inventory-ui.css",
+      "sha256": "39d5ba88693d27c3751afeed8aee0bc85fa4b762b6893726269e4ccb5bcfe2ae"
+    },
+    {
+      "path": "worker/public/scene-inventory-ui.js",
+      "sha256": "0a1784d3eb387ce5e6ef16f1952d765ab158af7971223935e10ff291a13376ce"
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "sha256": "9cbafea594578667ff86c014d56bb50b1f7acbd4f212be3d05cbf23d5bbfd944"
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1"
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "8f234d43fddae90cf06f674e33ae311a37caaf3c622cc81c2d9afd80c30b90b8"
+    },
+    {
+      "path": "worker/public/scene-map-preview-controls.js",
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "worker/public/scene-party-ui.css",
+      "sha256": "4fc55a1279eba75f3c0b453e47029af6788189caa93bc602ffd29f1ad4d7c761"
+    },
+    {
+      "path": "worker/public/scene-party-ui.js",
+      "sha256": "c89e1d07f32bf85c3c10fa3cebf159f95027d5f88a913a300dfccd2075a93592"
+    },
+    {
+      "path": "worker/public/scene-skills-ui.css",
+      "sha256": "6546b61b52a9b369ef9df3da539cbf329f18521fc9c3d71dc19dc02eb3505d00"
+    },
+    {
+      "path": "worker/public/scene-skills-ui.js",
+      "sha256": "886309a454e97b4f78c8d4015bea2b53041484a05f5259e811705a0893522bd1"
+    },
+    {
+      "path": "worker/public/scene-social-preview.css",
+      "sha256": "baebc67066f16edb6ebf259323b78d648705d7bd7a7d695156cfb6e6da18da0a"
+    },
+    {
+      "path": "worker/public/scene-social-preview.js",
+      "sha256": "79f81ec764ac9e98b75349324a4cd526c54d94933fd7449f567f22502838b8b8"
+    },
+    {
+      "path": "worker/public/scene-star-ring-ui.css",
+      "sha256": "b2383cc60ab7af929aa42094bfcc32ada99d686068777e21cf98ccaaa0b3b857"
+    },
+    {
+      "path": "worker/public/scene-star-ring-ui.js",
+      "sha256": "b376f5dd8fe07d06e9b525a956ef54a8b5fb0097ca0502a0acdca072b1226af5"
+    },
+    {
+      "path": "worker/public/scene-supply-ui.css",
+      "sha256": "77ed630ef1bb66532e54ba403876ced0e6d93bba3878deac13a5935352c5624a"
+    },
+    {
+      "path": "worker/public/scene-supply-ui.js",
+      "sha256": "a5a3aece3a4c07a32d81595d380622201687844c04572bfa491ee33c789c815b"
+    },
+    {
+      "path": "worker/public/scene-tower-ui.css",
+      "sha256": "fe50b4c8a59b3f6c23e8378140d2fb6b160c1c4f8dd847a049dd2c2a11a3b93b"
+    },
+    {
+      "path": "worker/public/scene-tower-ui.js",
+      "sha256": "c175fb596f1503e2d11e478f3fef86e0ae34d4ddc82dff86e4be87ad83958b4c"
+    },
+    {
+      "path": "worker/public/scene-window-frame.css",
+      "sha256": "8b8d54721c8e7f3c441d65bf384d3030b09f6f6bb5b0161daf14a1cd294233fe"
+    },
+    {
+      "path": "worker/public/scene-window-manager.js",
+      "sha256": "91b413a4382a08e29f70301919b8adcb6ffce0a8bedc188975ad93ceb624e9f4"
+    },
+    {
+      "path": "worker/public/scene-windows.css",
+      "sha256": "f2b613191b29d4a5f92705ace29712db28eeae862fcea50698f8adecb6d0b5c8"
+    },
+    {
+      "path": "worker/public/scene-workshop-ui.css",
+      "sha256": "a6017a72cce4c07bd093514b7934857191ae13cef48fa93b68b783dbf424f538"
+    },
+    {
+      "path": "worker/public/scene-workshop-ui.js",
+      "sha256": "2fb527efb28777273af15ade6d57f27d38b303190fd70a7e7597b054f15ed6cc"
+    },
+    {
+      "path": "worker/public/skill-fx.js",
+      "sha256": "f419f5a8696b9c46862ca280813389c5141b3ff9340b0c777a133488973e16f5"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "sha256": "b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.css",
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.mjs",
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/special-skill-widgets.js",
+      "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049"
+    },
+    {
+      "path": "worker/public/star-ring-cosmetics.css",
+      "sha256": "4acc5777b9e68d79566cd4733a79143c019df2dbe6de0d396d3c254a8cb7bb26"
+    },
+    {
+      "path": "worker/public/star-ring-cosmetics.js",
+      "sha256": "b0cd9412c8f297e0607d67becbf49a2a35f5e0c113d04b0f0b8be601ae7c46f2"
+    },
+    {
+      "path": "worker/public/star-ring-gear-art.js",
+      "sha256": "3314be193e98c7983b54eeef645d79ce2fbb5c7f7e98ee63df57c3788632c29d"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/public/star-ring-monsters.js",
+      "sha256": "e765b941a8e7aed853c49c42c83eceb978f67c8ee1b432d298c21779ea46c479"
+    },
+    {
+      "path": "worker/public/star-ring-rank-rewards.json",
+      "sha256": "c1f9ba1768765aae80be5a7d0ed82128d9cc6b3252aa542e9836c05318256ef1"
+    },
+    {
+      "path": "worker/public/star-ring-scenery.js",
+      "sha256": "2d9307c4c6f9cc12328e33fbd9e2e0b1450d20608f7164d4c83ddd81d42993fd"
+    },
+    {
+      "path": "worker/public/star-ring-ui.js",
+      "sha256": "349183547333c51f50d432706081723f1759607eeb3c1ccb16121fba40bcef8c"
+    },
+    {
+      "path": "worker/public/star-ring.css",
+      "sha256": "7556ccbbef42e33c68312a3214139ca86ec699f1f6d4fdc097c612290e60e4d2"
+    },
+    {
+      "path": "worker/public/status-banner.css",
+      "sha256": "b16b512a7641907c02201796af6e1e4bb88476a5f5a8878cdcd240480f5e8f9a"
+    },
+    {
+      "path": "worker/public/styles.css",
+      "sha256": "43fc09302b3d7a1bedbcb63b9e90e5e52d5e8449a249470324bbda3ddd3060d6"
+    },
+    {
+      "path": "worker/public/sword-adv4-fx.js",
+      "sha256": "a667101bc5ab78f2f90a67a197bd4a7dbabc2c846db983e9beffaaac4136fd9e"
+    },
+    {
+      "path": "worker/public/sword-branch-fx.js",
+      "sha256": "e06f910ae0f5f6af0de42007d9a3c2d335505cff4d23888ef9f41241c5a3291e"
+    },
+    {
+      "path": "worker/public/sword-branch-manifest.json",
+      "sha256": "6b45cb5f17b7d2325612061d64fb1af17235746ad23cc13232499c177dda977e"
+    },
+    {
+      "path": "worker/public/theme-greek.css",
+      "sha256": "6c9d0937075468fd3085f9e5e25f8540a9f07944d6fbe2fc1bd76a837aed831f"
+    },
+    {
+      "path": "worker/public/thief-class.js",
+      "sha256": "44477efa340dbe968703f297784e2fecf50c72e6e70142f0bbae03927407005e"
+    },
+    {
+      "path": "worker/public/thief-fx.js",
+      "sha256": "91bb9d3011cfea0c002b98018ee4adb16768ac2cff537c52337492e352888444"
+    },
+    {
+      "path": "worker/public/thief-gear-art.js",
+      "sha256": "4df3881a274677f570e73d3deb2b6a033bdf95e9c97dd28e79b760dfaa5dbc61"
+    },
+    {
+      "path": "worker/public/ui-refined.css",
+      "sha256": "41cc52a66dd230b1f6e1266d93ac8cca8e804eac81b28d4597b246685946d303"
+    },
+    {
+      "path": "worker/src/accounts.js",
+      "sha256": "784b31069c612e4e3e2574accbdca6e51589ddd4091a04da0a5f106db865c584"
+    },
+    {
+      "path": "worker/src/admin/auth.js",
+      "sha256": "96057ba1b3d4b24d450d14aa671435e3964cbf6abee2da61147793320dcff2b8"
+    },
+    {
+      "path": "worker/src/admin/behavior.js",
+      "sha256": "180c7da40fd1eacd05d4529cf0be5e0c1b855234ff90356e4271184ba79716c0"
+    },
+    {
+      "path": "worker/src/admin/catalog.js",
+      "sha256": "5757f52fa19a098b4b292c82355742098967602b152d2042c4cb88f49a9c20b1"
+    },
+    {
+      "path": "worker/src/admin/data.js",
+      "sha256": "d06124f44225d73faf10406ce3fa13281309b24ea644a073aa638f7347295621"
+    },
+    {
+      "path": "worker/src/admin/grants.js",
+      "sha256": "d702c05b92320ef9aec746ad8687e37aa396081165a2c8a4bb475f9ed83b75cf"
+    },
+    {
+      "path": "worker/src/admin/index.js",
+      "sha256": "36b7b88e6458e8608685518a061cfddbd08824ab13e3c3f1325bad29ceb687d1"
+    },
+    {
+      "path": "worker/src/admin/pairing.js",
+      "sha256": "4bb1e53dc2a3bd2edbc7596550ba62942b96834b3fce77196fcf9ec66e52533c"
+    },
+    {
+      "path": "worker/src/app.js",
+      "sha256": "4f5801796895e28aad67348276961abc27a45c0fdae29c0ecf4e0f317bdb3ffa"
+    },
+    {
+      "path": "worker/src/app.js.20261010-gacha-v1.bak",
+      "sha256": "c6d29d3273d6e83a2369aa1149a649ab76988617f439efaa2ec6babd7b5263f3"
+    },
+    {
+      "path": "worker/src/auth.js",
+      "sha256": "a03f4f3343836bcae248086a6ce181655550d7fff52e665b0d05874e8113fddf"
+    },
+    {
+      "path": "worker/src/auto-enhance-runner.js",
+      "sha256": "2e4d8eac945d5f16e29427859725d002e9699a02fec1f3ac3e063fb248e5ab84"
+    },
+    {
+      "path": "worker/src/db.js",
+      "sha256": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2"
+    },
+    {
+      "path": "worker/src/fate-public.js",
+      "sha256": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6"
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
+    },
+    {
+      "path": "worker/src/game/affixes.js",
+      "sha256": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d"
+    },
+    {
+      "path": "worker/src/game/atlas-balance.js",
+      "sha256": "65ae31f884fe7eb9e5a47e4b5ba9f4c78b14d7870b017151a2cb42bdda1118de"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "sha256": "834e57cfb516fc9af8f3e95750f32292bc99fb07675e4dfa4ace6deed4f09a86"
+    },
+    {
+      "path": "worker/src/game/atlas-content.js",
+      "sha256": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5"
+    },
+    {
+      "path": "worker/src/game/atlas-effects.js",
+      "sha256": "243a9bf84faa3c5a0583a72b0e7fca44b0c20b7e3dc8be266c058b0d83fb2ce1"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "sha256": "afbfa37390a92f3230d691ad8d0a657010728bee294f097e6c9fcbcf776e79e6"
+    },
+    {
+      "path": "worker/src/game/atlas-loot.js",
+      "sha256": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e"
+    },
+    {
+      "path": "worker/src/game/atlas-quests.js",
+      "sha256": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99"
+    },
+    {
+      "path": "worker/src/game/atlas-scene.js",
+      "sha256": "55aaa9362ef48ac968c3a97a5cd733ece82cdc50569c9f8238b19461b0f33723"
+    },
+    {
+      "path": "worker/src/game/atlas-supplies.js",
+      "sha256": "85f0c2c696688e8514540c3783ec6fb683822aa1b9094e987f2a7be277413fe9"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/auto-blue.js",
+      "sha256": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634"
+    },
+    {
+      "path": "worker/src/game/auto-reroll-targets.js",
+      "sha256": "1ff7898da118d73ec3acccce7c257971f9399a9ab32a11c6a5c737fc719f06c8"
+    },
+    {
+      "path": "worker/src/game/boss-economy.js",
+      "sha256": "482ee6c3e05b9a4ac706450a663815eb3cf26f786e3a5bc725ace16dd587cfd5"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "sha256": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60"
+    },
+    {
+      "path": "worker/src/game/collection-blessings.js",
+      "sha256": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896"
+    },
+    {
+      "path": "worker/src/game/combat-passives.js",
+      "sha256": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf"
+    },
+    {
+      "path": "worker/src/game/constants.js",
+      "sha256": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598"
+    },
+    {
+      "path": "worker/src/game/constants.js.backup-elf-redesign-20261010",
+      "sha256": "15dc3e0162e8dcb0549ab3c51b0ee030ce237d06f40fe03ff5986fcfa49b3f9f"
+    },
+    {
+      "path": "worker/src/game/daily.js",
+      "sha256": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc"
+    },
+    {
+      "path": "worker/src/game/dungeon-art.js",
+      "sha256": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d"
+    },
+    {
+      "path": "worker/src/game/elements.js",
+      "sha256": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1"
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+    },
+    {
+      "path": "worker/src/game/enhance-preview.js",
+      "sha256": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07"
+    },
+    {
+      "path": "worker/src/game/enhance.js",
+      "sha256": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c"
+    },
+    {
+      "path": "worker/src/game/equipment-collection.js",
+      "sha256": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd"
+    },
+    {
+      "path": "worker/src/game/equipment-recovery.js",
+      "sha256": "430c873a58482afba3c566ab967e76188803890540f898876e28708f6a1a6e4e"
+    },
+    {
+      "path": "worker/src/game/fate-birth.js",
+      "sha256": "98172d7f7fbe4706df8a1617b2eedea179779c8b76d4fbf138a66e9eedd758c2"
+    },
+    {
+      "path": "worker/src/game/fate-chart.js",
+      "sha256": "5fb53f73aad8d6a5df055104d7dc2f4c1758e47aff7e623a1eecc21419057fc5"
+    },
+    {
+      "path": "worker/src/game/fate-reminders.js",
+      "sha256": "065440370c290dc7346daf054deafc4a9354700d606bd828a5e62a9fa8e01911"
+    },
+    {
+      "path": "worker/src/game/formulas.js",
+      "sha256": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62"
+    },
+    {
+      "path": "worker/src/game/gear-art.js",
+      "sha256": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c"
+    },
+    {
+      "path": "worker/src/game/gear-growth.js",
+      "sha256": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a"
+    },
+    {
+      "path": "worker/src/game/gear-quality.js",
+      "sha256": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a"
+    },
+    {
+      "path": "worker/src/game/gear.js",
+      "sha256": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691"
+    },
+    {
+      "path": "worker/src/game/guardian-assist.js",
+      "sha256": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c"
+    },
+    {
+      "path": "worker/src/game/guardian-effects.js",
+      "sha256": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-config.js",
+      "sha256": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-settings.json",
+      "sha256": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle-skill-rotation.js",
+      "sha256": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/lineage.js",
+      "sha256": "9096b63ffe95478fa4d3b18e759917cf4663a9d7298fdd940aa25c447418f222"
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+    },
+    {
+      "path": "worker/src/game/monster-art-compatibility.js",
+      "sha256": "d98dd61c7d7281bcb5f3f4a55e46d8a45bc4ab1fca905471ebf35357b77a74de"
+    },
+    {
+      "path": "worker/src/game/monster-data.js",
+      "sha256": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be"
+    },
+    {
+      "path": "worker/src/game/monster-readiness.js",
+      "sha256": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef"
+    },
+    {
+      "path": "worker/src/game/monsters.js",
+      "sha256": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb"
+    },
+    {
+      "path": "worker/src/game/party-roles.js",
+      "sha256": "73bdf6a0b4bebdba501c146a8d5e902c577e5e2b1571af5e1fabaf4ccd61597b"
+    },
+    {
+      "path": "worker/src/game/party-stamina.js",
+      "sha256": "d6b6d3028d58327c499b8ae7fdaa24cda6f64d966f766db583f7607bb2e0369c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/potion-choice.js",
+      "sha256": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284"
+    },
+    {
+      "path": "worker/src/game/pve-balance.js",
+      "sha256": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    },
+    {
+      "path": "worker/src/game/share.js",
+      "sha256": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405"
+    },
+    {
+      "path": "worker/src/game/shop.js",
+      "sha256": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b"
+    },
+    {
+      "path": "worker/src/game/shop.js.20261010-gacha-v1.bak",
+      "sha256": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5"
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring-cosmetics.js",
+      "sha256": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471"
+    },
+    {
+      "path": "worker/src/game/star-ring-gear.js",
+      "sha256": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4"
+    },
+    {
+      "path": "worker/src/game/star-ring-pools.js",
+      "sha256": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "sha256": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc"
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "sha256": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562"
+    },
+    {
+      "path": "worker/src/game/time.js",
+      "sha256": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6"
+    },
+    {
+      "path": "worker/src/game/tower-progression.js",
+      "sha256": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3"
+    },
+    {
+      "path": "worker/src/game/trade.js",
+      "sha256": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17"
+    },
+    {
+      "path": "worker/src/index.js",
+      "sha256": "63461994e689015b9b0a3be6f16fd131268604761a8edf91705fb2640a0182a7"
+    },
+    {
+      "path": "worker/src/index.js.20261010-gacha-v1.bak",
+      "sha256": "fe05a8f330fdb60644d8dba204ad33663051657a09e54833c7f629436b6d21f9"
+    },
+    {
+      "path": "worker/src/realm/asset-preservation.js",
+      "sha256": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f"
+    },
+    {
+      "path": "worker/src/realm/background.js",
+      "sha256": "f6fbdacfdfb294471cbc323834254ea1361a7f8821e824b1fd9f22fa7695e822"
+    },
+    {
+      "path": "worker/src/realm/catalog.js",
+      "sha256": "96b576732ec2e3c2eca5a4083502522538c1bd8e575e769637f98eb104bc6b35"
+    },
+    {
+      "path": "worker/src/realm/errors.js",
+      "sha256": "03b99a625cacbb02c4baccba97144ce8bc7f215861bf360207395414a4eda562"
+    },
+    {
+      "path": "worker/src/realm/guarded-db.js",
+      "sha256": "f81d9fba7ebd83f32416845a27470af0c6a1f2f9aa960e6be19eefa5f5decb7a"
+    },
+    {
+      "path": "worker/src/realm/identity.js",
+      "sha256": "f43e56bd62b4d8df96193d177b3a99c0fc36373157ad0fb8a10853d95fff4e7f"
+    },
+    {
+      "path": "worker/src/realm/index.js",
+      "sha256": "ecccd05c28cfa61a39e82450eee3f26fdc34924c5441e1827ae5b2393fa28177"
+    },
+    {
+      "path": "worker/src/services/atlas-background.js",
+      "sha256": "87ba3d0fa825ac17eea0ba4f9bb01c2900abeb52f872f6372e3e42a1877ba005"
+    },
+    {
+      "path": "worker/src/services/atlas-quests.js",
+      "sha256": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc"
+    },
+    {
+      "path": "worker/src/services/atlas-talents.js",
+      "sha256": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "sha256": "eb46d0b2f4a6cc78ed85774f414765463578ef4a10ae842ae66268d9ab462bc3"
+    },
+    {
+      "path": "worker/src/services/auto-enhance.js",
+      "sha256": "45840bb0a03ee9e8e5df1fe704773507cc30775ac2297350e3e0c5be536e67c4"
+    },
+    {
+      "path": "worker/src/services/auto-reroll.js",
+      "sha256": "97b4effe0baeeb7a128ad43ae5908cda33265aa1557623b12cd74c63c4483951"
+    },
+    {
+      "path": "worker/src/services/background-operations.js",
+      "sha256": "aa2d4b458507c5ab9e416f387aacde60092ec8812ead72934d0e9c49087a5ed4"
+    },
+    {
+      "path": "worker/src/services/boss-exchange.js",
+      "sha256": "53814886e54e2946a1576ff1051ec579586048e89cc738614ee91b1645a4dbeb"
+    },
+    {
+      "path": "worker/src/services/boss-receipt.js",
+      "sha256": "f8f31b0546e865189dfd5ffeb9364ed95cd0f76427e696588f3111cf72de5601"
+    },
+    {
+      "path": "worker/src/services/boss-scene.js",
+      "sha256": "c798301a29971d95b046a4bceb652428f39d8de91c37ee01629fc2c05991d67e"
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "sha256": "06f3516aa85f27922244c369b206a91dd77b14248e3326b58af090d7ec050f24"
+    },
+    {
+      "path": "worker/src/services/character-delete.js",
+      "sha256": "51edda5e2afd61fbbf947236efa03a268b09893b5b98810f6f528d024de91f3b"
+    },
+    {
+      "path": "worker/src/services/collection-blessings.js",
+      "sha256": "299bd5cb1bca69328818ad69c1d863d9779641bf4752ac08a8b74fbd28a5d6ac"
+    },
+    {
+      "path": "worker/src/services/equipment-collection.js",
+      "sha256": "8a2f2289b9dd4d945529a9e928429afaf1d3c0751ea81490d051540e71107f8e"
+    },
+    {
+      "path": "worker/src/services/equipment-recovery.js",
+      "sha256": "e27e084e6e1b11dfb0450a154198d74b2dbbc7d8e4379e87d9a6bedde3836928"
+    },
+    {
+      "path": "worker/src/services/fate-gifts.js",
+      "sha256": "0b020e170865b907232e1c37ae6ccbca0c073e70e4b4e828baf8b8e624380f1e"
+    },
+    {
+      "path": "worker/src/services/fate-quests.js",
+      "sha256": "159c3e736fb6c3eb57ffacefc6de658923931eedad33b7c09c8f0d28919c7bb2"
+    },
+    {
+      "path": "worker/src/services/fate-shared.js",
+      "sha256": "2ffe6283fcda1665e9d1674f9ee0ea9b36e31ab1f213aeac2713927ff709bc20"
+    },
+    {
+      "path": "worker/src/services/fate-social.js",
+      "sha256": "b0468aa6f2171e05727f5b1c1a005af334ecb8fef9a505c867aa2acce714fddf"
+    },
+    {
+      "path": "worker/src/services/fate.js",
+      "sha256": "f3cae11ea0efa15e29b22b322b89056e36f7e34b28a427e2c6dbfce5243a843e"
+    },
+    {
+      "path": "worker/src/services/forge-receipt.js",
+      "sha256": "b23fcd4662ea61a41e65e7330b792c8fd2f2de65bbce07f64da8fe9d76965c60"
+    },
+    {
+      "path": "worker/src/services/guardian-auto.js",
+      "sha256": "a59cbca9d62711523e5d037a249fe8ffd1222470697ce30e50ccc5a7b7b6b39d"
+    },
+    {
+      "path": "worker/src/services/guardian-shop.js",
+      "sha256": "2f7b7de46563a216d9e62adcc6a6090b1e55520d867bb527f2cbf37d803103dc"
+    },
+    {
+      "path": "worker/src/services/guardian-sigil.js",
+      "sha256": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205"
+    },
+    {
+      "path": "worker/src/services/hero-hall.js",
+      "sha256": "0786cf9ba6fc92b0d469693aeb9fcad3cb34d5286b38709d1d20cdf3cd5ff49a"
+    },
+    {
+      "path": "worker/src/services/home-activity.js",
+      "sha256": "3d8232080b6f32f59f275af9b60a3b60f5d48fd0320957fb6c71a14c4761dd44"
+    },
+    {
+      "path": "worker/src/services/journal.js",
+      "sha256": "eed6682a993ef61645a81a5a67c37398649274d12cef6406807edaf173f0c981"
+    },
+    {
+      "path": "worker/src/services/market-exchange-history.js",
+      "sha256": "0a4efe90a77c6e646c136b774b548d8a9386ed2cf6d9322651a5c283364f0143"
+    },
+    {
+      "path": "worker/src/services/market-exchange.js",
+      "sha256": "c064121e125887b746cbf7dfb578ae12b01a31634eefcf643c6bf71f82379139"
+    },
+    {
+      "path": "worker/src/services/monster-exchange.js",
+      "sha256": "c31631edebb4032089a059b668401a31a324ee6b534442aa11eab7f581cee9f2"
+    },
+    {
+      "path": "worker/src/services/operation-notices.js",
+      "sha256": "c0a705a7d97f419b1a8e791073413f070c545f6ac9d5babde3376ef2e2b3b8f3"
+    },
+    {
+      "path": "worker/src/services/party-card.js",
+      "sha256": "4b66de537e9acdca64815acf4be67e751ddeb0e68ed4f60b967f858da2324d1c"
+    },
+    {
+      "path": "worker/src/services/party-presence.js",
+      "sha256": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0"
+    },
+    {
+      "path": "worker/src/services/party-repeat.js",
+      "sha256": "bbcf24217fc75f2473c92e8d56abdb67ecac78e4c0d17acc7a54a9f918f49e17"
+    },
+    {
+      "path": "worker/src/services/party-scene-common.js",
+      "sha256": "63b8449216773363fb5dd21afbdb554ccd377e79afd561d2072a5c7ec2b5d269"
+    },
+    {
+      "path": "worker/src/services/party-scene.js",
+      "sha256": "6e97c05d4a56caca1b5c6343376337805bc573419311607c543b494a020c9f5f"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/player.js.20261010-gacha-v1.bak",
+      "sha256": "f26653754e8f0bf35a046a8394c453a705f798e03330ce9ad8c01662ef3f1cd8"
+    },
+    {
+      "path": "worker/src/services/scene-chat.js",
+      "sha256": "be92353804bf92b66239ed03ea7b324fc553b632efc3f51a335b4fb4c0cc438a"
+    },
+    {
+      "path": "worker/src/services/share.js",
+      "sha256": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd"
+    },
+    {
+      "path": "worker/src/services/skill-career.js",
+      "sha256": "22ad5ddf54d82737b25b5803871e86ed0d4141dee900f63dd5d9bb3b39951ed7"
+    },
+    {
+      "path": "worker/src/services/skill-learning.js",
+      "sha256": "c6e620d82f3658fe2b46839f0e9f6a461fda0443c29b348811b66a09d04467fa"
+    },
+    {
+      "path": "worker/src/services/special.js",
+      "sha256": "8b5b28daede8cd4a6a7dd5d0bbb7154147511ab8ea57a4f46092e0c6727d2959"
+    },
+    {
+      "path": "worker/src/services/star-ring-cosmetics.js",
+      "sha256": "d158057be0414029b54ed0c1a42eab7e1ddd17b7eabc7691f924b14f1df7be9a"
+    },
+    {
+      "path": "worker/src/services/star-ring-gear.js",
+      "sha256": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d"
+    },
+    {
+      "path": "worker/src/services/star-ring-receipt.js",
+      "sha256": "48fddfb16f0a596e235c3da34dbc872c360c4e5d8ada4222454a67f0ecce4b46"
+    },
+    {
+      "path": "worker/src/services/star-ring-scene.js",
+      "sha256": "2dcc5b644b1d6ac307c3671fe64d85588ee75c8b84ad6cd55d5769579a18351c"
+    },
+    {
+      "path": "worker/src/services/star-ring-scoped.js",
+      "sha256": "9def683a12fbadac2d27ca86bda4cd5b39aff8eb7c88049590952c201d05b013"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    },
+    {
+      "path": "worker/src/services/tower-daily.js",
+      "sha256": "887a4292b52f6337d90deae5e5640bf7ebcbf4abee2cac30037ef23a0ad11b1c"
+    },
+    {
+      "path": "worker/src/services/tower-receipt.js",
+      "sha256": "cfa55e6957349be59114b810b81cb4863be958437a21738b415df5fc5d2f9c32"
+    },
+    {
+      "path": "worker/src/services/tower-scene.js",
+      "sha256": "c12f75fa9830e8b2dcac834ce1ba0b7755c82554ce7605da0adef55b9a48f36f"
+    },
+    {
+      "path": "worker/src/services/tower.js",
+      "sha256": "0f4b40e74cd0ddf7a0beb3209c067208f53fbab04f3aa79051551ccf844127f3"
+    },
+    {
+      "path": "worker/src/services/trade.js",
+      "sha256": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756"
+    },
+    {
+      "path": "worker/src/views.js",
+      "sha256": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218"
+    },
+    {
+      "path": "worker/src/views.js.20261010-gacha-v1.bak",
+      "sha256": "fd7342b4a98667164a75b63b0c8b73a5434de613c70276fb7abc3448349f87ed"
+    },
+    {
+      "path": "worker/test/skill-vfx-engine.test.js",
+      "sha256": "0af971ea8f23f16ab3e75e42f17fc932a90a33576e7264e861c758a8ce2060d5"
+    },
+    {
+      "path": "worker/test/skill-vfx-target-timing.test.js",
+      "sha256": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+    },
+    {
+      "path": "worker/test/skill-vfx-combat-adapter.test.js",
+      "sha256": "f58693623a95adebd5c9dad71bb4943c4f8e19faf502e98e26240d533bff9540"
+    },
+    {
+      "path": "worker/test/skill-vfx-actor-bridge.test.js",
+      "sha256": "b72d83a1e1bff2ab6bb8ff0040e4a88a422384705da20e28bd28da3a5d193547"
+    },
+    {
+      "path": "worker/test/skill-vfx-scene-session.test.js",
+      "sha256": "e3098a8756cccca4ace30fd20e4f8022f1f8568aeddc7c2db98b5a12e1eb7cab"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "sha256": "e220dbca882aab4fd32ecb46c36352c709d4659d4b51846d0b5f8576b697bc1d"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-app.test.js",
+      "sha256": "9ee39074d4bdf879dbd492d8cc59ff567f541c826853a69b2fbfae1fec89bf39"
+    },
+    {
+      "path": "worker/test/skill-vfx-coverage.test.js",
+      "sha256": "cd6d10f8f03b7f2fdd5ad2ca1cb4ccb544f84879813e38130c6da1e871200ddd"
+    },
+    {
+      "path": "worker/test/skill-vfx-browser-evidence.test.js",
+      "sha256": "2ec26c61459c1153be7c0d86d6e0958a9d294d6becc61d8e0d213878e3c0d9df"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx.test.js",
+      "sha256": "80d4702d4dcd3d67505272b4b167ee2e888ebe30adf1c9c6faf1042c10be0564"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-service.test.js",
+      "sha256": "a37a56fad651d514cd42b9a82abb8cd4cdb99958040d0c475b36144641374e72"
+    },
+    {
+      "path": "worker/test/atlas-combat-observer.test.js",
+      "sha256": "47cf794b909fdfd7c3f8b1842d8ea66a19b67b6a5ab6c5d0fe9ce7d5f32cff31"
+    },
+    {
+      "path": "worker/test/atlas-combat-trace-service.test.js",
+      "sha256": "73e90dcf538f53d1e0f34bedb3e5a1bb0c1ff507b07d1e5ed3b1a1c100c81bf5"
+    },
+    {
+      "path": "worker/test/atlas-engine.test.js",
+      "sha256": "88df8b4a0770424566f284adefd85f1a1543691ba39e5bc1c2e313293f08c5cf"
+    },
+    {
+      "path": "worker/test/atlas-effects.test.js",
+      "sha256": "bafd5fe0fb46760a0ad368da54a6dbe844e7cd1b2f81b869e757479b233f4207"
+    },
+    {
+      "path": "worker/test/atlas-effects-service.test.js",
+      "sha256": "eb744ce825dcae47c251e4eacf00d272b31486a13686b0f78d010e6fb48b475a"
+    },
+    {
+      "path": "worker/test/atlas-effects-legacy-replay.test.js",
+      "sha256": "3ce16773dbe184a8c2cf912ac3a943918e8a39fbe3c7b60290c3157af58a2e22"
+    },
+    {
+      "path": "worker/test/atlas-supplies.test.js",
+      "sha256": "5765ff815fdf0a718793696dbdc8fb6c4b8afa06882d8c85d7c6ca46ce4f6fbe"
+    },
+    {
+      "path": "worker/test/atlas-supply-service.test.js",
+      "sha256": "d91c6393053c149ff1261c2efdce360fc094ceaecb9574ca7011a086a877a9f3"
+    },
+    {
+      "path": "worker/test/atlas-scene.test.js",
+      "sha256": "67460e48af676f4f23a27893fdce699a7b334181abf40869349486d7bec400c6"
+    },
+    {
+      "path": "worker/test/atlas-scene-api.test.js",
+      "sha256": "9634074a586051730265e4787b73f8613ff22b12dabb8c15607f8d8843eb48d9"
+    },
+    {
+      "path": "worker/test/scene-live-session.test.js",
+      "sha256": "329ee6654ce8b62fe7031009a117b7d979a1bcbf0e29530843aea21ca9f4d0fc"
+    },
+    {
+      "path": "worker/test/scene-live-view.test.js",
+      "sha256": "522365fe8804f5201e5567e674efe7bf20c8557b04cde6e626ce36846a7e4dfc"
+    },
+    {
+      "path": "worker/test/scene-live-lifecycle.test.js",
+      "sha256": "4ce53b8d2c9d76062af4d36e166e83a034573a159c1ba2cc07d905145b8ee2fa"
+    },
+    {
+      "path": "worker/test/scene-preview-assets.test.js",
+      "sha256": "453c066c6b4c9f67cef1ffc0d649000efa8d7bc4ca98d219457441e7930b1626"
+    },
+    {
+      "path": "worker/test/scene-supply-ui.test.js",
+      "sha256": "2ca9bfc7f2759a38effc05a7aa7bd80951e7defb30083363f6b6bf675b76bf77"
+    },
+    {
+      "path": "worker/test/scene-skills-ui.test.js",
+      "sha256": "b0f56fc77e81e67df1fa4febbe658374c859db3d1a21555687cf88548dbcac9c"
+    },
+    {
+      "path": "worker/test/scene-party-ui.test.js",
+      "sha256": "12ec42edae7c286f6a9906a85d9138213ae7b3852384562052328cda6caca7ea"
+    },
+    {
+      "path": "worker/test/scene-tower-ui.test.js",
+      "sha256": "34b76a963c0fa361aa060667b97903f2c88a1648ca1a3e3a3dbca441766e0d56"
+    },
+    {
+      "path": "worker/test/scene-boss-ui.test.js",
+      "sha256": "e4da5a79fa3757f4380f59aae368be2c704422360df1b22aac76e418928713a0"
+    },
+    {
+      "path": "worker/test/scene-star-ring-ui.test.js",
+      "sha256": "32494ea6131a6769bf91474c86c828bb49d6e8bd45efb54cbfe35379778f026e"
+    },
+    {
+      "path": "worker/test/party-scene-service.test.js",
+      "sha256": "81aa88888660369e81b92802e736e84035016d70c75937b75d37c90e3063c5b9"
+    },
+    {
+      "path": "worker/test/party-scene-api.test.js",
+      "sha256": "52fc9892ba1b8dca8ee59cc9440a50a1c3bc6cec13f78a9a94b3dddbd07b6d6a"
+    },
+    {
+      "path": "worker/test/tower-scene-service.test.js",
+      "sha256": "5c568468116ff5364899db358e6fbac10f4447192de409593fa5a43c4486ae23"
+    },
+    {
+      "path": "worker/test/tower-scene-api.test.js",
+      "sha256": "e911a1cf9f368594f77fe5f790848a7528b09730533f9a10f7362e60d1ec0d26"
+    },
+    {
+      "path": "worker/test/boss-scene-service.test.js",
+      "sha256": "c75076a4e05cc3d2bf0616937670c285d66a31ce72af0a3a62930fc176bc3527"
+    },
+    {
+      "path": "worker/test/boss-scene-api.test.js",
+      "sha256": "fc45ffa44b7e93a9841632f9ac0c8adf48e26fe3b0a17f98909075292ae10b2a"
+    },
+    {
+      "path": "worker/test/boss-scoped-transaction.test.js",
+      "sha256": "5c79443e0aa20545944e4f3226206e05d9ce19d3dad95120f11389b49f99dc9b"
+    },
+    {
+      "path": "worker/test/star-ring-scene-service.test.js",
+      "sha256": "874cbd7d8c7855b4bdac3ea01817550bbbaf74a8154a4eae4e86adadbbd49635"
+    },
+    {
+      "path": "worker/test/star-ring-scene-api.test.js",
+      "sha256": "c4b4180d1f00cbbd5db57a45e38c84ae50c70aaf573db13f18ab1b40cb157432"
+    },
+    {
+      "path": "worker/test/star-ring-scoped-transaction.test.js",
+      "sha256": "f481aa60670be5ec247afede4b2c547ef5d85f16e22a4b4f7266fdc537bfa52a"
+    },
+    {
+      "path": "worker/test/star-ring.test.js",
+      "sha256": "0142931e97f353d83996ebd24e24a22a98a6050ff483af24ede6d719ec91c410"
+    },
+    {
+      "path": "worker/test/star-ring-skills.test.js",
+      "sha256": "6e22b2d96bb79457374922488d15d7efdc1e244edce67391f44972100baea96d"
+    },
+    {
+      "path": "worker/test/star-ring-volume.test.js",
+      "sha256": "b46952f55411c7faa9f68470a7386be5a0dd20ccaaa6544674012a9cf3a1ce92"
+    },
+    {
+      "path": "worker/test/star-ring-integration.test.js",
+      "sha256": "76b5738ba2460769959470761cfa98824236ab6492bab606c424278edb649ea9"
+    },
+    {
+      "path": "worker/test/star-ring-parallel-party.test.js",
+      "sha256": "c45ebd3eac05d6e632fbef06010015cda967cd4404e4418f9a1f84754f137661"
+    },
+    {
+      "path": "worker/test/skill-vfx-integration-20261105.test.js",
+      "sha256": "3014b40f4c110a68dc82a6ea125880259ceca735b551bfdb2c0f3bc4b37990cf"
+    }
+  ],
+  "sourceFilesAfter": [
+    {
+      "path": "worker/public/advanced-specializations.css",
+      "sha256": "e272c9d8af964a0a1208ad5f064ec1395b9cf9498dd8e60929e2fa57b08520b0"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/armory-specializations.js",
+      "sha256": "08b7f9a1eee10723ef411eb55221e9d0d59df80667a0c5136c9c7b24463c649b"
+    },
+    {
+      "path": "worker/public/art.js",
+      "sha256": "dfc3f56b75d2a14a7ae9189cfc1861f0a52a6a5280b98e16797b21e1a538cbe8"
+    },
+    {
+      "path": "worker/public/atlas-progression-ui.js",
+      "sha256": "5251e893ae53be4a9c8050adcf9c8ad99c6d7516dd4f0102d68df55a5917e111"
+    },
+    {
+      "path": "worker/public/atlas-talents-ui.css",
+      "sha256": "1eb165b9e89251886df7f85effbc753d2af3ef5a6f8ca9a9ee28e6a918051cea"
+    },
+    {
+      "path": "worker/public/atlas-talents-ui.js",
+      "sha256": "650ee8ecb379156f3c82a384dfcadc48b35fea83af7d3592053a9e2b25ccee38"
+    },
+    {
+      "path": "worker/public/atlas-ui.css",
+      "sha256": "73b084a3211bf36995dba550b9de666083f6267a3f1535bc78ee8e2baf766e0a"
+    },
+    {
+      "path": "worker/public/atlas-ui.js",
+      "sha256": "ee96ff816f3f5f5f94bef1b871ed5dcdbd06e030c68de0d022dcd5a88be4d023"
+    },
+    {
+      "path": "worker/public/auto-reroll-ui.js",
+      "sha256": "7812648b85b74cd8b12e8247831a821f2b841c2a72a0013e49ae3b6a495d95a2"
+    },
+    {
+      "path": "worker/public/background-workshop.css",
+      "sha256": "60db96f9614a53be8cad242fa490dad166b30b705a3ba8ae802aa400776da2b4"
+    },
+    {
+      "path": "worker/public/background-workshop.js",
+      "sha256": "f81f8a7a1be5ee7c2ff40077e933e3b365779b4fa23b41fe09d83622ae90fe08"
+    },
+    {
+      "path": "worker/public/bag-icons.css",
+      "sha256": "37a5e36511db7c622510d51b06c298503f343e3efa85ba57249c1830fb78d29a"
+    },
+    {
+      "path": "worker/public/battle.css",
+      "sha256": "76112844409f6f3d6a877a78b58e88a7c7e3909ebef20a020126711b6bdd90cc"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/boss-waiting.css",
+      "sha256": "fbb98e39e8cb166724186403ab4c1584d3cfb96c1c705e6e256aa3bb33101423"
+    },
+    {
+      "path": "worker/public/boss-waiting.js",
+      "sha256": "bf85e96c6c56aeb0faa3988eab3f5270bdda99ea9172ccd483b8d66cb279c35e"
+    },
+    {
+      "path": "worker/public/branch-elf4-fx.js",
+      "sha256": "0c052cfacd6124539ff14b5be049ad21c1bcecf1a79744f3033c158f923c6589"
+    },
+    {
+      "path": "worker/public/character-delete.css",
+      "sha256": "9065a5ca19b0d81479b740109067090de1901f67021fa8f00fe52f95a05ce8a8"
+    },
+    {
+      "path": "worker/public/cinematic-fx.js",
+      "sha256": "dde0cfc59bc354670843cef49e9eb8d31b1f615481fed4a47c8679b129c2e9a8"
+    },
+    {
+      "path": "worker/public/coin-ui.js",
+      "sha256": "bd8a2d89b19fdbb82e6b8d8ebb68e685bdd529963f43a00ad094afde91d21972"
+    },
+    {
+      "path": "worker/public/collection-ui.css",
+      "sha256": "994fd5649b721a2b9836f0ead65c52929e3edc2c39cbc365187debd544934c2a"
+    },
+    {
+      "path": "worker/public/collection-ui.js",
+      "sha256": "8b2ee86e023064de0eff8a72e74a69c748d7af41de48cccd88975d5cdca19a44"
+    },
+    {
+      "path": "worker/public/elf-adv2-skill-fx.js",
+      "sha256": "082ba070e9bfaafabb3bca7998d273e9173c9db5831c21f4142202dd6fc572c8"
+    },
+    {
+      "path": "worker/public/elf-low-tier-weapon-fx.js",
+      "sha256": "4d8e1fe9c4d5ebcca3ca4f9c78038ae2f4999e9e0bf6518d365ba6718960f91f"
+    },
+    {
+      "path": "worker/public/equipment-collection-ui.css",
+      "sha256": "fd317933b0d5a0a53fdb9bc702eaacaab25684a47a17221dd6623eeab6bc1595"
+    },
+    {
+      "path": "worker/public/equipment-collection-ui.js",
+      "sha256": "77797d66b62d1f2f3869c7b365019397ee3cecd0019c68b697e30e2d5ab0bf67"
+    },
+    {
+      "path": "worker/public/equipment-live-sync.js",
+      "sha256": "21ed12413b32fdca7d2d43d17721be4e5d48c60fdb381aa70068e3f38c1c7252"
+    },
+    {
+      "path": "worker/public/equipment-recovery-ui.css",
+      "sha256": "372eb401f363bd034fe95f252acbdcf2eb2531ad4bc2c11c9fe6059d62657198"
+    },
+    {
+      "path": "worker/public/equipment-recovery-ui.js",
+      "sha256": "50ec49e53e45aecf4e2108e6199279b3c68aec144a759d7c677760b6bf8acebf"
+    },
+    {
+      "path": "worker/public/expedition-away.css",
+      "sha256": "9e8043c805e7cf97781097c075ceaa98ef8afeecd9d129a9f2443282f1751928"
+    },
+    {
+      "path": "worker/public/expedition-away.js",
+      "sha256": "393dad7af3736f3f52c36c1ff538f78b0cb636d59cc9fe5a171e8dabcfc8254a"
+    },
+    {
+      "path": "worker/public/expedition-entry.css",
+      "sha256": "89e599d9dfcdac5f15c312674929bf9d172e8debaaaf504628b5b5b6bdcb3e66"
+    },
+    {
+      "path": "worker/public/expedition-entry.js",
+      "sha256": "df8d40e735ab2ff5ffbbac36af606f926c1e2a8af3e7c777c20a53c8c920ec72"
+    },
+    {
+      "path": "worker/public/fate-entry.css",
+      "sha256": "550e2e21e59f50f02fc5e785316663e5f106ac85f07264b5f0b88e8e63a010db"
+    },
+    {
+      "path": "worker/public/fate-entry.js",
+      "sha256": "fcd62153197f79041f565169cb97560e3f714972030ce517719392b4900165a2"
+    },
+    {
+      "path": "worker/public/forge-ritual.css",
+      "sha256": "c540a718ad6b60f4bb0b96b0703356153adac510ce85384327011bdb1e7f545d"
+    },
+    {
+      "path": "worker/public/forge-ritual.js",
+      "sha256": "7c7952270e89d3c67228ce0c64073696c47cb456d4118cfb214ad3efe2b3d7e5"
+    },
+    {
+      "path": "worker/public/game-brand.css",
+      "sha256": "88bf3a00f51bc60636edaed8c953d9d0b2c458a955d4fd0e8ea5e9be7d486b59"
+    },
+    {
+      "path": "worker/public/gear-names.js",
+      "sha256": "9fab6971b51234c26254b9a57e2b3535b46d79fd25d0a610b349d1c50dd40e5a"
+    },
+    {
+      "path": "worker/public/gear-names.json",
+      "sha256": "62d1264ef92655bcdd42e232bb929388942bd076c402670c72a8ff2dee9943a2"
+    },
+    {
+      "path": "worker/public/guardian-assist-widget.js",
+      "sha256": "302c1e129991d6a0d8c3e6194cde7dbbff916f60751b0233f7137ad326c0e285"
+    },
+    {
+      "path": "worker/public/guardian-auto-ui.js",
+      "sha256": "f9e7302cf7bdc271b9b2e8d338516614276e2d1d7029beda3e445dbf7e0cb141"
+    },
+    {
+      "path": "worker/public/guardian-fusion-batch.js",
+      "sha256": "186220c3c792b5a2b1faa6ed9b98899485cb4afac18b8b5e598f51d2b197942b"
+    },
+    {
+      "path": "worker/public/guardian-fusion-ui.css",
+      "sha256": "770951523c2bf31c4f1cf239d9625d6abd9b3852d176fe08a7ad4048b308db75"
+    },
+    {
+      "path": "worker/public/guardian-fusion-ui.js",
+      "sha256": "a5ba6e85464d666e552ace7f10c8f8bcdb7728a211032a461e46cd3927e53d0b"
+    },
+    {
+      "path": "worker/public/guardian-haptics.js",
+      "sha256": "bb8934461c5a2e0373312fea08c1bb322f516b644074e6823a2f8c6e26bc24c7"
+    },
+    {
+      "path": "worker/public/guardian-idle-fx.css",
+      "sha256": "f244d8cfe96ce37fb9072e54918373cb590d29b72f205d3a477a60088c4c1bde"
+    },
+    {
+      "path": "worker/public/guardian-idle-fx.js",
+      "sha256": "591afef6ca1f39f712414892ca627f27035a7eb5e076609e565fedb322cc975a"
+    },
+    {
+      "path": "worker/public/guardian-party.js",
+      "sha256": "a12b39bc15ffcc36f08bb6b01f108e759eb0d833a90631f402a2ab167ad60182"
+    },
+    {
+      "path": "worker/public/guardian-presentation.js",
+      "sha256": "a93a1dd32d9e442cf5589600c097019868f883f69551e5c1c461867d41e91be2"
+    },
+    {
+      "path": "worker/public/guardian-pull.js",
+      "sha256": "b05a189c5f7001987c89db387c6ca4ae99030f3c377e9632ed3e380b20e33b36"
+    },
+    {
+      "path": "worker/public/guardian-ritual-ui.css",
+      "sha256": "4a559c841195128723af8895284eb37b3ee67f7b8b70886d84c2b267f53816db"
+    },
+    {
+      "path": "worker/public/guardian-ritual.js",
+      "sha256": "a823438d8acfe10c2cac7e6aa7c540ef177c3af6c0a72c51358e494c7681eed1"
+    },
+    {
+      "path": "worker/public/guardian-scene-media.js",
+      "sha256": "79bfd1a62ece160ff2a44a1b6143174e4a09c1a9373223391a96147326389f77"
+    },
+    {
+      "path": "worker/public/guardian-shop.css",
+      "sha256": "c9d87316b10daf6b934e2f55182b176dec7548df66c88e0f23b114472800c278"
+    },
+    {
+      "path": "worker/public/guardian-shop.js",
+      "sha256": "fccee796acc95591939ad7a9f1473d41e7f45e8334b55047fe6c7812360b9cef"
+    },
+    {
+      "path": "worker/public/guardian-sigil-contract.js",
+      "sha256": "b2902224a9ab717af6ad335b0d2cf6bc8f91e99399c751a95dcdc7000f70a7a3"
+    },
+    {
+      "path": "worker/public/guardian-sigil.css",
+      "sha256": "3e26c4441d54b9c691a2c14060954573096ff507e8f8a8bbb04fde7a857d35c5"
+    },
+    {
+      "path": "worker/public/guardian-sigil.js",
+      "sha256": "9e865e42b37350c2ed306d79c545caf53aef04cd8e5628203b7852f911c29011"
+    },
+    {
+      "path": "worker/public/guardian-summon-gesture.js",
+      "sha256": "707c03d0740c854be02cba61d1b68e9e6b35539ad604e3f2b41baee872e449e5"
+    },
+    {
+      "path": "worker/public/guardian-worldtree.js",
+      "sha256": "1d7b70bed1faf6fa6f9c36aad8928ca8c4a7c456bb4db5ed7895bf1c61ab1660"
+    },
+    {
+      "path": "worker/public/hero-armory.css",
+      "sha256": "c25c72b853765d2801f3a4f2f30160a898640c46727e4275d67156b13323db7e"
+    },
+    {
+      "path": "worker/public/hero-art-actor-adapters.js",
+      "sha256": "aec72e04143098e29b6bc88f084eb43fef79c7ce3549841aafcdd3f718e819ba"
+    },
+    {
+      "path": "worker/public/hero-art-registry-fx.js",
+      "sha256": "bf24f615278842d7ae738cda99cdc98e9acee415068d84d7a60836597f509c26"
+    },
+    {
+      "path": "worker/public/hero-art-registry.js",
+      "sha256": "c3965c97ce0bd93849911b5f88e1fe4ad176a1387b0d219a9b60fbaf4940bd81"
+    },
+    {
+      "path": "worker/public/hero-art-registry.json",
+      "sha256": "a21d828fe6b872b9480018545a183c3bbde04f2b9b4f6ec4523c2201cec298d9"
+    },
+    {
+      "path": "worker/public/hero-display.css",
+      "sha256": "b69f830f541efd789d9ae8d8bb6ae2615ce6cf6c393b7f1f37d3f890a8a8e197"
+    },
+    {
+      "path": "worker/public/hero-fx.css",
+      "sha256": "a81352523e5455ab0cf8c94e45634e4d440d25765de527d607965967a171eac5"
+    },
+    {
+      "path": "worker/public/hero-fx.js",
+      "sha256": "35c2a31eeec34b56ebdd4aa9401e20ecdbe956734860ba5e315075944b434ee9"
+    },
+    {
+      "path": "worker/public/hero-hall-ui.css",
+      "sha256": "5f3591ae499294ac978bc9867acb69ceaa548c1161333e56be438b2d1212b437"
+    },
+    {
+      "path": "worker/public/hero-hall-ui.js",
+      "sha256": "2be3c9d54d6e6e61d329d2312fab1acb706c32fdbd2ef1b7d07b65e725bbfe06"
+    },
+    {
+      "path": "worker/public/hero-lavish-fx.js",
+      "sha256": "61c40446e1a1519ac6334ff67e55c843697f1d4f81d6b048dfc9cce06501cd4c"
+    },
+    {
+      "path": "worker/public/hero-size.css",
+      "sha256": "444db684fa1eb287dedac9057912363027c00a3d0d30d0447aa5683abaac9ac8"
+    },
+    {
+      "path": "worker/public/hero-size.js",
+      "sha256": "77625126a3ffd8fa4e10988b7404f92d046a97d8556dfeacd1a5c1c50af5c64a"
+    },
+    {
+      "path": "worker/public/idle-exp.css",
+      "sha256": "d46a3b580713fce98702a2fe707d28a99b8ea3072a580561f2fef507d9249f9e"
+    },
+    {
+      "path": "worker/public/journal.css",
+      "sha256": "b05f5fdbcf248d5cb26865ac561e32a207a772c0708e983e37aa7efe35880796"
+    },
+    {
+      "path": "worker/public/journal.js",
+      "sha256": "24b70fadfdaf5f4d9bd5fe16da58baa2d26ddd50c3fa74561616a491a5c5685e"
+    },
+    {
+      "path": "worker/public/lineage-ui.css",
+      "sha256": "060f1dff1d6819c717ed3d253fce8b9890b485cb1b5cb7f903a2f7a386929ea8"
+    },
+    {
+      "path": "worker/public/mage-actor-fx.js",
+      "sha256": "b5a9b260e860d3d43cde5b4c38298ac5a658e058496058b52ad3d8bf034c04c1"
+    },
+    {
+      "path": "worker/public/map-motion.js",
+      "sha256": "5949d8982e06edda88ac4e9560f7d6444873080fd951507c1ef018ea9a329dbd"
+    },
+    {
+      "path": "worker/public/map-video.js",
+      "sha256": "3c8eedb0074c9d494fe11b4ef24ca99dffff68380bb484f586dd3418c3800abc"
+    },
+    {
+      "path": "worker/public/maps.js",
+      "sha256": "8430c280bd0be0afddfbe5d5b0ec2052375d51a41cbed7e2eb00cf77a7da5945"
+    },
+    {
+      "path": "worker/public/market-exchange-history.css",
+      "sha256": "550eedb6f9090fe2c581d60c102a23ab5af99b7fd196662c0f3f32d05269752c"
+    },
+    {
+      "path": "worker/public/market-exchange-history.js",
+      "sha256": "85c7a955b82c8181680819869441ec2ae842ce9974474a40ab4a1f4715ba56af"
+    },
+    {
+      "path": "worker/public/market-exchange.css",
+      "sha256": "ee1259e4a60639d67f71a990f8c7c0b943b71412b9736ebf2e1c76f8a34b1391"
+    },
+    {
+      "path": "worker/public/market-exchange.js",
+      "sha256": "a4a94297f030b032a79c494b4780c284307558392780e5b916b5c52b7913485f"
+    },
+    {
+      "path": "worker/public/market-sell.css",
+      "sha256": "42e7f1970e33ea213f62baf7d9e3ff1faeec843ab9d640433b6bd7b65bebb78b"
+    },
+    {
+      "path": "worker/public/market-sell.js",
+      "sha256": "2a7f2fab25500125cf8fd08f650d8a7f21181a0d4e180328a3d5957115a4321c"
+    },
+    {
+      "path": "worker/public/monster-catalog.js",
+      "sha256": "a4d0534705d2d619d2c587ff0fae0457316b1c79db5ec01fd276b1388558f32e"
+    },
+    {
+      "path": "worker/public/monster-expansion-catalog.js",
+      "sha256": "ef2a7046bb8bb579da5198c8102bb810c180b3c0daabff620e65d2d8f83c93d3"
+    },
+    {
+      "path": "worker/public/monster-expansion-review-data.json",
+      "sha256": "e7476279c18af13f81e4a2456a5b27d02555cfe7290db1f00d9eca497b8a9fd7"
+    },
+    {
+      "path": "worker/public/monster-expansion.js",
+      "sha256": "4ced2ae24d355b47bc565cc7bdc1a300fc91f8bec90a1aec742fdc6887f2196c"
+    },
+    {
+      "path": "worker/public/monster-layout.json",
+      "sha256": "9719fe9dceef28a56836380bba1afca898b28084644990e109442fbd2750d174"
+    },
+    {
+      "path": "worker/public/monster-review-heroes.json",
+      "sha256": "0e276ee122230397ce87222cbf911d0eec9880271ef7b86605a3710db1a06cf8"
+    },
+    {
+      "path": "worker/public/mythic-ui.css",
+      "sha256": "0ced690250e6d7ed161c14f3ac7d08fe53428cd6d5e58629d09697dc3d851580"
+    },
+    {
+      "path": "worker/public/mythic-ui.js",
+      "sha256": "fe538b674bac9e8648d2b872a6d33d27428a60ca25055fbf0247fdfd25a917c7"
+    },
+    {
+      "path": "worker/public/olympus-luxury.css",
+      "sha256": "f6d8c76a1a60c43ee0d51a67e9394d62d41e688ef327518a5d59584308e38067"
+    },
+    {
+      "path": "worker/public/olympus-suite.css",
+      "sha256": "d62a617c32d54f0847911c1513f954e1bce3417b4a95b7d69bae3670e15b685f"
+    },
+    {
+      "path": "worker/public/olympus-unified.css",
+      "sha256": "f52662a862537b88afcc8a920c6c31943c4ee090b3cdb0e54d7dd5f939158e84"
+    },
+    {
+      "path": "worker/public/operation-notices.js",
+      "sha256": "9408c4c77880e1f2224a355f43acef9aa8e7b107eec7204d82f2062df1965bbf"
+    },
+    {
+      "path": "worker/public/potion-choice.css",
+      "sha256": "281d223768a4d5e08fa09e77417c1128aaf04bc49d39f0a055898cdd73d662df"
+    },
+    {
+      "path": "worker/public/request-client.js",
+      "sha256": "a944836bb1baab98b35f25aad41451e466fe947e34bfa865465a1f1b0bfb4dbb"
+    },
+    {
+      "path": "worker/public/scene-atlas-guide.js",
+      "sha256": "e87beb11d71bf02b9ddd5e2f1ec16b0a27860d20359014f230295a3b21f3ba5e"
+    },
+    {
+      "path": "worker/public/scene-boss-ui.css",
+      "sha256": "4b38d36443a4c0765ab2782d43dd754856953bc0d5f4eca8ee91c301c3440a86"
+    },
+    {
+      "path": "worker/public/scene-boss-ui.js",
+      "sha256": "5267fd32639f1a2013a6971581c95418ee3506a6fae890bb356a53dc37bb1f4f"
+    },
+    {
+      "path": "worker/public/scene-chat-ui.css",
+      "sha256": "4d83560723e59dc5a00dcb69929f180d94917a68281a77df0eb1cd983312dc04"
+    },
+    {
+      "path": "worker/public/scene-chat-ui.js",
+      "sha256": "bf092daf7df8d56d8c2b327f54d224934eb4dd88bb78babc1477cd5aa1b0eca2"
+    },
+    {
+      "path": "worker/public/scene-hero-readability.css",
+      "sha256": "0f95a81f8cd756b506ba091a858486f202d958edbfb5e02bb14e85e45c02b87a"
+    },
+    {
+      "path": "worker/public/scene-hero-readability.js",
+      "sha256": "2435508832e62db4f3ae568c3c2be8eaede6d7bc522880d15d221997057ec6f7"
+    },
+    {
+      "path": "worker/public/scene-inventory-ui.css",
+      "sha256": "39d5ba88693d27c3751afeed8aee0bc85fa4b762b6893726269e4ccb5bcfe2ae"
+    },
+    {
+      "path": "worker/public/scene-inventory-ui.js",
+      "sha256": "0a1784d3eb387ce5e6ef16f1952d765ab158af7971223935e10ff291a13376ce"
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "sha256": "9cbafea594578667ff86c014d56bb50b1f7acbd4f212be3d05cbf23d5bbfd944"
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1"
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "8f234d43fddae90cf06f674e33ae311a37caaf3c622cc81c2d9afd80c30b90b8"
+    },
+    {
+      "path": "worker/public/scene-map-preview-controls.js",
+      "sha256": "8b9c60b053a7ec75b10a6a93643276335a82f18bc3b0e82c046a86b57b34f5cd"
+    },
+    {
+      "path": "worker/public/scene-party-ui.css",
+      "sha256": "4fc55a1279eba75f3c0b453e47029af6788189caa93bc602ffd29f1ad4d7c761"
+    },
+    {
+      "path": "worker/public/scene-party-ui.js",
+      "sha256": "c89e1d07f32bf85c3c10fa3cebf159f95027d5f88a913a300dfccd2075a93592"
+    },
+    {
+      "path": "worker/public/scene-skills-ui.css",
+      "sha256": "6546b61b52a9b369ef9df3da539cbf329f18521fc9c3d71dc19dc02eb3505d00"
+    },
+    {
+      "path": "worker/public/scene-skills-ui.js",
+      "sha256": "886309a454e97b4f78c8d4015bea2b53041484a05f5259e811705a0893522bd1"
+    },
+    {
+      "path": "worker/public/scene-social-preview.css",
+      "sha256": "baebc67066f16edb6ebf259323b78d648705d7bd7a7d695156cfb6e6da18da0a"
+    },
+    {
+      "path": "worker/public/scene-social-preview.js",
+      "sha256": "79f81ec764ac9e98b75349324a4cd526c54d94933fd7449f567f22502838b8b8"
+    },
+    {
+      "path": "worker/public/scene-star-ring-ui.css",
+      "sha256": "b2383cc60ab7af929aa42094bfcc32ada99d686068777e21cf98ccaaa0b3b857"
+    },
+    {
+      "path": "worker/public/scene-star-ring-ui.js",
+      "sha256": "b376f5dd8fe07d06e9b525a956ef54a8b5fb0097ca0502a0acdca072b1226af5"
+    },
+    {
+      "path": "worker/public/scene-supply-ui.css",
+      "sha256": "77ed630ef1bb66532e54ba403876ced0e6d93bba3878deac13a5935352c5624a"
+    },
+    {
+      "path": "worker/public/scene-supply-ui.js",
+      "sha256": "a5a3aece3a4c07a32d81595d380622201687844c04572bfa491ee33c789c815b"
+    },
+    {
+      "path": "worker/public/scene-tower-ui.css",
+      "sha256": "fe50b4c8a59b3f6c23e8378140d2fb6b160c1c4f8dd847a049dd2c2a11a3b93b"
+    },
+    {
+      "path": "worker/public/scene-tower-ui.js",
+      "sha256": "c175fb596f1503e2d11e478f3fef86e0ae34d4ddc82dff86e4be87ad83958b4c"
+    },
+    {
+      "path": "worker/public/scene-window-frame.css",
+      "sha256": "8b8d54721c8e7f3c441d65bf384d3030b09f6f6bb5b0161daf14a1cd294233fe"
+    },
+    {
+      "path": "worker/public/scene-window-manager.js",
+      "sha256": "91b413a4382a08e29f70301919b8adcb6ffce0a8bedc188975ad93ceb624e9f4"
+    },
+    {
+      "path": "worker/public/scene-windows.css",
+      "sha256": "f2b613191b29d4a5f92705ace29712db28eeae862fcea50698f8adecb6d0b5c8"
+    },
+    {
+      "path": "worker/public/scene-workshop-ui.css",
+      "sha256": "a6017a72cce4c07bd093514b7934857191ae13cef48fa93b68b783dbf424f538"
+    },
+    {
+      "path": "worker/public/scene-workshop-ui.js",
+      "sha256": "2fb527efb28777273af15ade6d57f27d38b303190fd70a7e7597b054f15ed6cc"
+    },
+    {
+      "path": "worker/public/skill-fx.js",
+      "sha256": "f419f5a8696b9c46862ca280813389c5141b3ff9340b0c777a133488973e16f5"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "sha256": "b8e96c324700c5f14e8d7f5d8ccc4a42e09e146be2de25a59e5d946cf2f0c28e"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.css",
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    {
+      "path": "worker/public/skill-vfx-preview.mjs",
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/special-skill-widgets.js",
+      "sha256": "64e074c4c602d1f7412fee52057c12399aed784387207c01b6e0753b3d63b049"
+    },
+    {
+      "path": "worker/public/star-ring-cosmetics.css",
+      "sha256": "4acc5777b9e68d79566cd4733a79143c019df2dbe6de0d396d3c254a8cb7bb26"
+    },
+    {
+      "path": "worker/public/star-ring-cosmetics.js",
+      "sha256": "b0cd9412c8f297e0607d67becbf49a2a35f5e0c113d04b0f0b8be601ae7c46f2"
+    },
+    {
+      "path": "worker/public/star-ring-gear-art.js",
+      "sha256": "3314be193e98c7983b54eeef645d79ce2fbb5c7f7e98ee63df57c3788632c29d"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/public/star-ring-monsters.js",
+      "sha256": "e765b941a8e7aed853c49c42c83eceb978f67c8ee1b432d298c21779ea46c479"
+    },
+    {
+      "path": "worker/public/star-ring-rank-rewards.json",
+      "sha256": "c1f9ba1768765aae80be5a7d0ed82128d9cc6b3252aa542e9836c05318256ef1"
+    },
+    {
+      "path": "worker/public/star-ring-scenery.js",
+      "sha256": "2d9307c4c6f9cc12328e33fbd9e2e0b1450d20608f7164d4c83ddd81d42993fd"
+    },
+    {
+      "path": "worker/public/star-ring-ui.js",
+      "sha256": "349183547333c51f50d432706081723f1759607eeb3c1ccb16121fba40bcef8c"
+    },
+    {
+      "path": "worker/public/star-ring.css",
+      "sha256": "7556ccbbef42e33c68312a3214139ca86ec699f1f6d4fdc097c612290e60e4d2"
+    },
+    {
+      "path": "worker/public/status-banner.css",
+      "sha256": "b16b512a7641907c02201796af6e1e4bb88476a5f5a8878cdcd240480f5e8f9a"
+    },
+    {
+      "path": "worker/public/styles.css",
+      "sha256": "43fc09302b3d7a1bedbcb63b9e90e5e52d5e8449a249470324bbda3ddd3060d6"
+    },
+    {
+      "path": "worker/public/sword-adv4-fx.js",
+      "sha256": "a667101bc5ab78f2f90a67a197bd4a7dbabc2c846db983e9beffaaac4136fd9e"
+    },
+    {
+      "path": "worker/public/sword-branch-fx.js",
+      "sha256": "e06f910ae0f5f6af0de42007d9a3c2d335505cff4d23888ef9f41241c5a3291e"
+    },
+    {
+      "path": "worker/public/sword-branch-manifest.json",
+      "sha256": "6b45cb5f17b7d2325612061d64fb1af17235746ad23cc13232499c177dda977e"
+    },
+    {
+      "path": "worker/public/theme-greek.css",
+      "sha256": "6c9d0937075468fd3085f9e5e25f8540a9f07944d6fbe2fc1bd76a837aed831f"
+    },
+    {
+      "path": "worker/public/thief-class.js",
+      "sha256": "44477efa340dbe968703f297784e2fecf50c72e6e70142f0bbae03927407005e"
+    },
+    {
+      "path": "worker/public/thief-fx.js",
+      "sha256": "91bb9d3011cfea0c002b98018ee4adb16768ac2cff537c52337492e352888444"
+    },
+    {
+      "path": "worker/public/thief-gear-art.js",
+      "sha256": "4df3881a274677f570e73d3deb2b6a033bdf95e9c97dd28e79b760dfaa5dbc61"
+    },
+    {
+      "path": "worker/public/ui-refined.css",
+      "sha256": "41cc52a66dd230b1f6e1266d93ac8cca8e804eac81b28d4597b246685946d303"
+    },
+    {
+      "path": "worker/src/accounts.js",
+      "sha256": "784b31069c612e4e3e2574accbdca6e51589ddd4091a04da0a5f106db865c584"
+    },
+    {
+      "path": "worker/src/admin/auth.js",
+      "sha256": "96057ba1b3d4b24d450d14aa671435e3964cbf6abee2da61147793320dcff2b8"
+    },
+    {
+      "path": "worker/src/admin/behavior.js",
+      "sha256": "180c7da40fd1eacd05d4529cf0be5e0c1b855234ff90356e4271184ba79716c0"
+    },
+    {
+      "path": "worker/src/admin/catalog.js",
+      "sha256": "5757f52fa19a098b4b292c82355742098967602b152d2042c4cb88f49a9c20b1"
+    },
+    {
+      "path": "worker/src/admin/data.js",
+      "sha256": "d06124f44225d73faf10406ce3fa13281309b24ea644a073aa638f7347295621"
+    },
+    {
+      "path": "worker/src/admin/grants.js",
+      "sha256": "d702c05b92320ef9aec746ad8687e37aa396081165a2c8a4bb475f9ed83b75cf"
+    },
+    {
+      "path": "worker/src/admin/index.js",
+      "sha256": "36b7b88e6458e8608685518a061cfddbd08824ab13e3c3f1325bad29ceb687d1"
+    },
+    {
+      "path": "worker/src/admin/pairing.js",
+      "sha256": "4bb1e53dc2a3bd2edbc7596550ba62942b96834b3fce77196fcf9ec66e52533c"
+    },
+    {
+      "path": "worker/src/app.js",
+      "sha256": "4f5801796895e28aad67348276961abc27a45c0fdae29c0ecf4e0f317bdb3ffa"
+    },
+    {
+      "path": "worker/src/app.js.20261010-gacha-v1.bak",
+      "sha256": "c6d29d3273d6e83a2369aa1149a649ab76988617f439efaa2ec6babd7b5263f3"
+    },
+    {
+      "path": "worker/src/auth.js",
+      "sha256": "a03f4f3343836bcae248086a6ce181655550d7fff52e665b0d05874e8113fddf"
+    },
+    {
+      "path": "worker/src/auto-enhance-runner.js",
+      "sha256": "2e4d8eac945d5f16e29427859725d002e9699a02fec1f3ac3e063fb248e5ab84"
+    },
+    {
+      "path": "worker/src/db.js",
+      "sha256": "adc9dd60ddeb326dd65349b0068c6cd3192a14483476109b3a4851773f2f22b2"
+    },
+    {
+      "path": "worker/src/fate-public.js",
+      "sha256": "01f3560219a988b21a75c7197089a54b49617d17557ce61a2dc2f1f035192cf6"
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
+    },
+    {
+      "path": "worker/src/game/affixes.js",
+      "sha256": "6a3a156952ee63210cc5c78a5693fb4e82d1886e53475faf0b714f49f009587d"
+    },
+    {
+      "path": "worker/src/game/atlas-balance.js",
+      "sha256": "65ae31f884fe7eb9e5a47e4b5ba9f4c78b14d7870b017151a2cb42bdda1118de"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "sha256": "834e57cfb516fc9af8f3e95750f32292bc99fb07675e4dfa4ace6deed4f09a86"
+    },
+    {
+      "path": "worker/src/game/atlas-content.js",
+      "sha256": "dbf50a97d626ae59bee2a63cc58059ce7db19d9aecfde5ba33d17fedcf1d09f5"
+    },
+    {
+      "path": "worker/src/game/atlas-effects.js",
+      "sha256": "243a9bf84faa3c5a0583a72b0e7fca44b0c20b7e3dc8be266c058b0d83fb2ce1"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "sha256": "afbfa37390a92f3230d691ad8d0a657010728bee294f097e6c9fcbcf776e79e6"
+    },
+    {
+      "path": "worker/src/game/atlas-loot.js",
+      "sha256": "7cf671c84a6ade33cca1a96d1ae1dfcc7b8c1763597db1431c462c9b8066c23e"
+    },
+    {
+      "path": "worker/src/game/atlas-quests.js",
+      "sha256": "418353c261bbf3dae773ca6f3e3bde9d39486fb1f9bddc3b584323198dc90f99"
+    },
+    {
+      "path": "worker/src/game/atlas-scene.js",
+      "sha256": "55aaa9362ef48ac968c3a97a5cd733ece82cdc50569c9f8238b19461b0f33723"
+    },
+    {
+      "path": "worker/src/game/atlas-supplies.js",
+      "sha256": "85f0c2c696688e8514540c3783ec6fb683822aa1b9094e987f2a7be277413fe9"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/auto-blue.js",
+      "sha256": "669f348788a365beca280784d39abbcfc21104a4221197d8d03fde1886499634"
+    },
+    {
+      "path": "worker/src/game/auto-reroll-targets.js",
+      "sha256": "1ff7898da118d73ec3acccce7c257971f9399a9ab32a11c6a5c737fc719f06c8"
+    },
+    {
+      "path": "worker/src/game/boss-economy.js",
+      "sha256": "482ee6c3e05b9a4ac706450a663815eb3cf26f786e3a5bc725ace16dd587cfd5"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "sha256": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60"
+    },
+    {
+      "path": "worker/src/game/collection-blessings.js",
+      "sha256": "6a7f93511001dba8672033893a23bce7a9747cf329dcdfea81aa7bb069399896"
+    },
+    {
+      "path": "worker/src/game/combat-passives.js",
+      "sha256": "4ccf9bbabe6cea1a8b58d76d970f78f31e04d8ef18d5f82eadb04e1d11740aaf"
+    },
+    {
+      "path": "worker/src/game/constants.js",
+      "sha256": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598"
+    },
+    {
+      "path": "worker/src/game/constants.js.backup-elf-redesign-20261010",
+      "sha256": "15dc3e0162e8dcb0549ab3c51b0ee030ce237d06f40fe03ff5986fcfa49b3f9f"
+    },
+    {
+      "path": "worker/src/game/daily.js",
+      "sha256": "093d11e9057d3b228fbd95e5374a8675f03afc9e0e8eeeab682e78c191975ccc"
+    },
+    {
+      "path": "worker/src/game/dungeon-art.js",
+      "sha256": "8e148ac112c7f1163146eaf0bd32ed04a074ed87efb55253f10da2790876f74d"
+    },
+    {
+      "path": "worker/src/game/elements.js",
+      "sha256": "4454bb875adb97f2c06ef6d8169355af38bb14d08d360252efadb7d756b5f9c1"
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+    },
+    {
+      "path": "worker/src/game/enhance-preview.js",
+      "sha256": "407ddb7884412b065f7c553105daebb03e2f685069bb80fe4a8930c1be050b07"
+    },
+    {
+      "path": "worker/src/game/enhance.js",
+      "sha256": "58e9db55368787eef8786592e2ff8f79a99bcf3e6519d303351b78971de89c0c"
+    },
+    {
+      "path": "worker/src/game/equipment-collection.js",
+      "sha256": "a87cae9c54d4f8b11dc6d3b6c53dfb08cbfc5732832054b64bae0bd75b14f1cd"
+    },
+    {
+      "path": "worker/src/game/equipment-recovery.js",
+      "sha256": "430c873a58482afba3c566ab967e76188803890540f898876e28708f6a1a6e4e"
+    },
+    {
+      "path": "worker/src/game/fate-birth.js",
+      "sha256": "98172d7f7fbe4706df8a1617b2eedea179779c8b76d4fbf138a66e9eedd758c2"
+    },
+    {
+      "path": "worker/src/game/fate-chart.js",
+      "sha256": "5fb53f73aad8d6a5df055104d7dc2f4c1758e47aff7e623a1eecc21419057fc5"
+    },
+    {
+      "path": "worker/src/game/fate-reminders.js",
+      "sha256": "065440370c290dc7346daf054deafc4a9354700d606bd828a5e62a9fa8e01911"
+    },
+    {
+      "path": "worker/src/game/formulas.js",
+      "sha256": "0a1c1eeafa237c9f30e842c95235e8185b8fe80b0faeff61ccef0c31a8be8c62"
+    },
+    {
+      "path": "worker/src/game/gear-art.js",
+      "sha256": "cdac9df6a4d49deeeb652643295f035e973f9318cb593c7610b3bf2e5e942d2c"
+    },
+    {
+      "path": "worker/src/game/gear-growth.js",
+      "sha256": "f1b05ab1e5f4f97023223fe8689c44653de2df444c23d16c78128634ffe31e4a"
+    },
+    {
+      "path": "worker/src/game/gear-quality.js",
+      "sha256": "994842b0300a6237f537bf248fb44f13bf2cf23bb14e600391b9c2b845cada6a"
+    },
+    {
+      "path": "worker/src/game/gear.js",
+      "sha256": "b0fbfdba10a582b5bcc29a0f559e88a710ce8869044cc8ec56ef80f73fb6c691"
+    },
+    {
+      "path": "worker/src/game/guardian-assist.js",
+      "sha256": "de13403f360854abcbedd473eda473c06df7a6773c02364ae242271a8acbd55c"
+    },
+    {
+      "path": "worker/src/game/guardian-effects.js",
+      "sha256": "81136f56b90b6f08d364f5ca1c4e8b4ba793cdba6e8c1aac6749e02059a2c3d7"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-config.js",
+      "sha256": "3945dd5e7d800fcc18312c58e2b79a479702756bd3db624711f45d588798367b"
+    },
+    {
+      "path": "worker/src/game/guardian-sigil-settings.json",
+      "sha256": "def754e284bbc3cd29ba6193ceef4f436a895188b9d34c06ad6c6a40c3ed4e69"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle-skill-rotation.js",
+      "sha256": "a3eb4d747971b5ed792506c8d4095dd3869d0e2b3b2dec1326c6baf74facd432"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/lineage.js",
+      "sha256": "9096b63ffe95478fa4d3b18e759917cf4663a9d7298fdd940aa25c447418f222"
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+    },
+    {
+      "path": "worker/src/game/monster-art-compatibility.js",
+      "sha256": "d98dd61c7d7281bcb5f3f4a55e46d8a45bc4ab1fca905471ebf35357b77a74de"
+    },
+    {
+      "path": "worker/src/game/monster-data.js",
+      "sha256": "e1569b02baa9a52c3eb4ac974b1375575cbea54cf3acb0ec7277088b685807be"
+    },
+    {
+      "path": "worker/src/game/monster-readiness.js",
+      "sha256": "5548fcf20a97e5e3ae70f8633797c3f37f2da6fbe739bd64d11c0272ffa091ef"
+    },
+    {
+      "path": "worker/src/game/monsters.js",
+      "sha256": "02c7efe2cdc9e9796b163599ebab18a80c62d35e6712166d83ce5707a5eca5bb"
+    },
+    {
+      "path": "worker/src/game/party-roles.js",
+      "sha256": "73bdf6a0b4bebdba501c146a8d5e902c577e5e2b1571af5e1fabaf4ccd61597b"
+    },
+    {
+      "path": "worker/src/game/party-stamina.js",
+      "sha256": "d6b6d3028d58327c499b8ae7fdaa24cda6f64d966f766db583f7607bb2e0369c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/potion-choice.js",
+      "sha256": "d733860818af8a6121a9c5bea3fe84bfaac970d7b60612521a7f08632820a284"
+    },
+    {
+      "path": "worker/src/game/pve-balance.js",
+      "sha256": "a644a5dcf299e080455352f5a78a9842b9c433d911b005f4758bde7ba6f4e683"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    },
+    {
+      "path": "worker/src/game/share.js",
+      "sha256": "f27dc66d2884084fb7af8cc4c78e3d70bb5535c6f79010c4c5074334eb4d4405"
+    },
+    {
+      "path": "worker/src/game/shop.js",
+      "sha256": "d2251f8a7b4e0a187f14566d4f186df927f5387aac4d4d30fb6cd7216ce3638b"
+    },
+    {
+      "path": "worker/src/game/shop.js.20261010-gacha-v1.bak",
+      "sha256": "adea12f8251af08734f2b9d4ab048554da81976a6686f86720a9f7e20e6d66f5"
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring-cosmetics.js",
+      "sha256": "60aaf7227174537dc52cd92a54fba949e9a98ba5c35a45bd140799e96f679471"
+    },
+    {
+      "path": "worker/src/game/star-ring-gear.js",
+      "sha256": "4ce396023d6d72d8aa5a52ba768fa0721c3502e53d8c34b335a726b565e2c4e4"
+    },
+    {
+      "path": "worker/src/game/star-ring-pools.js",
+      "sha256": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "sha256": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc"
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "sha256": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562"
+    },
+    {
+      "path": "worker/src/game/time.js",
+      "sha256": "722a456c4b096cc280aa33deae4118448acdab38bbf8da316abc1d0d3bfdcea6"
+    },
+    {
+      "path": "worker/src/game/tower-progression.js",
+      "sha256": "08f5c5dc22a53b61b76dee8ad03130a153448becba81bc59b516a846dc5157a3"
+    },
+    {
+      "path": "worker/src/game/trade.js",
+      "sha256": "2241463adb062bd3c232f6bd16c6626c7052aaa780b2b3098126da614e16bb17"
+    },
+    {
+      "path": "worker/src/index.js",
+      "sha256": "63461994e689015b9b0a3be6f16fd131268604761a8edf91705fb2640a0182a7"
+    },
+    {
+      "path": "worker/src/index.js.20261010-gacha-v1.bak",
+      "sha256": "fe05a8f330fdb60644d8dba204ad33663051657a09e54833c7f629436b6d21f9"
+    },
+    {
+      "path": "worker/src/realm/asset-preservation.js",
+      "sha256": "c9386804b4cb4e39f0159822930d1cfa7dc7c03add9646319ca52bb7cda18a2f"
+    },
+    {
+      "path": "worker/src/realm/background.js",
+      "sha256": "f6fbdacfdfb294471cbc323834254ea1361a7f8821e824b1fd9f22fa7695e822"
+    },
+    {
+      "path": "worker/src/realm/catalog.js",
+      "sha256": "96b576732ec2e3c2eca5a4083502522538c1bd8e575e769637f98eb104bc6b35"
+    },
+    {
+      "path": "worker/src/realm/errors.js",
+      "sha256": "03b99a625cacbb02c4baccba97144ce8bc7f215861bf360207395414a4eda562"
+    },
+    {
+      "path": "worker/src/realm/guarded-db.js",
+      "sha256": "f81d9fba7ebd83f32416845a27470af0c6a1f2f9aa960e6be19eefa5f5decb7a"
+    },
+    {
+      "path": "worker/src/realm/identity.js",
+      "sha256": "f43e56bd62b4d8df96193d177b3a99c0fc36373157ad0fb8a10853d95fff4e7f"
+    },
+    {
+      "path": "worker/src/realm/index.js",
+      "sha256": "ecccd05c28cfa61a39e82450eee3f26fdc34924c5441e1827ae5b2393fa28177"
+    },
+    {
+      "path": "worker/src/services/atlas-background.js",
+      "sha256": "87ba3d0fa825ac17eea0ba4f9bb01c2900abeb52f872f6372e3e42a1877ba005"
+    },
+    {
+      "path": "worker/src/services/atlas-quests.js",
+      "sha256": "52a4fdf9d07f0aed48857e85d2c1174bc39a02416c11d4a4299414f89f76f0cc"
+    },
+    {
+      "path": "worker/src/services/atlas-talents.js",
+      "sha256": "de55fca3b87a4a7e3a20210fc1ec85e9055f3b0909cf77501cc84aa0903e17de"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "sha256": "eb46d0b2f4a6cc78ed85774f414765463578ef4a10ae842ae66268d9ab462bc3"
+    },
+    {
+      "path": "worker/src/services/auto-enhance.js",
+      "sha256": "45840bb0a03ee9e8e5df1fe704773507cc30775ac2297350e3e0c5be536e67c4"
+    },
+    {
+      "path": "worker/src/services/auto-reroll.js",
+      "sha256": "97b4effe0baeeb7a128ad43ae5908cda33265aa1557623b12cd74c63c4483951"
+    },
+    {
+      "path": "worker/src/services/background-operations.js",
+      "sha256": "aa2d4b458507c5ab9e416f387aacde60092ec8812ead72934d0e9c49087a5ed4"
+    },
+    {
+      "path": "worker/src/services/boss-exchange.js",
+      "sha256": "53814886e54e2946a1576ff1051ec579586048e89cc738614ee91b1645a4dbeb"
+    },
+    {
+      "path": "worker/src/services/boss-receipt.js",
+      "sha256": "f8f31b0546e865189dfd5ffeb9364ed95cd0f76427e696588f3111cf72de5601"
+    },
+    {
+      "path": "worker/src/services/boss-scene.js",
+      "sha256": "c798301a29971d95b046a4bceb652428f39d8de91c37ee01629fc2c05991d67e"
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "sha256": "06f3516aa85f27922244c369b206a91dd77b14248e3326b58af090d7ec050f24"
+    },
+    {
+      "path": "worker/src/services/character-delete.js",
+      "sha256": "51edda5e2afd61fbbf947236efa03a268b09893b5b98810f6f528d024de91f3b"
+    },
+    {
+      "path": "worker/src/services/collection-blessings.js",
+      "sha256": "299bd5cb1bca69328818ad69c1d863d9779641bf4752ac08a8b74fbd28a5d6ac"
+    },
+    {
+      "path": "worker/src/services/equipment-collection.js",
+      "sha256": "8a2f2289b9dd4d945529a9e928429afaf1d3c0751ea81490d051540e71107f8e"
+    },
+    {
+      "path": "worker/src/services/equipment-recovery.js",
+      "sha256": "e27e084e6e1b11dfb0450a154198d74b2dbbc7d8e4379e87d9a6bedde3836928"
+    },
+    {
+      "path": "worker/src/services/fate-gifts.js",
+      "sha256": "0b020e170865b907232e1c37ae6ccbca0c073e70e4b4e828baf8b8e624380f1e"
+    },
+    {
+      "path": "worker/src/services/fate-quests.js",
+      "sha256": "159c3e736fb6c3eb57ffacefc6de658923931eedad33b7c09c8f0d28919c7bb2"
+    },
+    {
+      "path": "worker/src/services/fate-shared.js",
+      "sha256": "2ffe6283fcda1665e9d1674f9ee0ea9b36e31ab1f213aeac2713927ff709bc20"
+    },
+    {
+      "path": "worker/src/services/fate-social.js",
+      "sha256": "b0468aa6f2171e05727f5b1c1a005af334ecb8fef9a505c867aa2acce714fddf"
+    },
+    {
+      "path": "worker/src/services/fate.js",
+      "sha256": "f3cae11ea0efa15e29b22b322b89056e36f7e34b28a427e2c6dbfce5243a843e"
+    },
+    {
+      "path": "worker/src/services/forge-receipt.js",
+      "sha256": "b23fcd4662ea61a41e65e7330b792c8fd2f2de65bbce07f64da8fe9d76965c60"
+    },
+    {
+      "path": "worker/src/services/guardian-auto.js",
+      "sha256": "a59cbca9d62711523e5d037a249fe8ffd1222470697ce30e50ccc5a7b7b6b39d"
+    },
+    {
+      "path": "worker/src/services/guardian-shop.js",
+      "sha256": "2f7b7de46563a216d9e62adcc6a6090b1e55520d867bb527f2cbf37d803103dc"
+    },
+    {
+      "path": "worker/src/services/guardian-sigil.js",
+      "sha256": "98eb5cbf575a9f259d92d68591f19cbbca15e07a3aa8f29915b9fd751fe57205"
+    },
+    {
+      "path": "worker/src/services/hero-hall.js",
+      "sha256": "0786cf9ba6fc92b0d469693aeb9fcad3cb34d5286b38709d1d20cdf3cd5ff49a"
+    },
+    {
+      "path": "worker/src/services/home-activity.js",
+      "sha256": "3d8232080b6f32f59f275af9b60a3b60f5d48fd0320957fb6c71a14c4761dd44"
+    },
+    {
+      "path": "worker/src/services/journal.js",
+      "sha256": "eed6682a993ef61645a81a5a67c37398649274d12cef6406807edaf173f0c981"
+    },
+    {
+      "path": "worker/src/services/market-exchange-history.js",
+      "sha256": "0a4efe90a77c6e646c136b774b548d8a9386ed2cf6d9322651a5c283364f0143"
+    },
+    {
+      "path": "worker/src/services/market-exchange.js",
+      "sha256": "c064121e125887b746cbf7dfb578ae12b01a31634eefcf643c6bf71f82379139"
+    },
+    {
+      "path": "worker/src/services/monster-exchange.js",
+      "sha256": "c31631edebb4032089a059b668401a31a324ee6b534442aa11eab7f581cee9f2"
+    },
+    {
+      "path": "worker/src/services/operation-notices.js",
+      "sha256": "c0a705a7d97f419b1a8e791073413f070c545f6ac9d5babde3376ef2e2b3b8f3"
+    },
+    {
+      "path": "worker/src/services/party-card.js",
+      "sha256": "4b66de537e9acdca64815acf4be67e751ddeb0e68ed4f60b967f858da2324d1c"
+    },
+    {
+      "path": "worker/src/services/party-presence.js",
+      "sha256": "9988fd765da034eef5b09f1a1ced8600a92251f7d1fa8f3490c59ed4e11c60a0"
+    },
+    {
+      "path": "worker/src/services/party-repeat.js",
+      "sha256": "bbcf24217fc75f2473c92e8d56abdb67ecac78e4c0d17acc7a54a9f918f49e17"
+    },
+    {
+      "path": "worker/src/services/party-scene-common.js",
+      "sha256": "63b8449216773363fb5dd21afbdb554ccd377e79afd561d2072a5c7ec2b5d269"
+    },
+    {
+      "path": "worker/src/services/party-scene.js",
+      "sha256": "6e97c05d4a56caca1b5c6343376337805bc573419311607c543b494a020c9f5f"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/player.js.20261010-gacha-v1.bak",
+      "sha256": "f26653754e8f0bf35a046a8394c453a705f798e03330ce9ad8c01662ef3f1cd8"
+    },
+    {
+      "path": "worker/src/services/scene-chat.js",
+      "sha256": "be92353804bf92b66239ed03ea7b324fc553b632efc3f51a335b4fb4c0cc438a"
+    },
+    {
+      "path": "worker/src/services/share.js",
+      "sha256": "a8842de668ec7aa772bd4966267f13fa8d7c5e7e61dc1ac0f06fbc67f74a64fd"
+    },
+    {
+      "path": "worker/src/services/skill-career.js",
+      "sha256": "22ad5ddf54d82737b25b5803871e86ed0d4141dee900f63dd5d9bb3b39951ed7"
+    },
+    {
+      "path": "worker/src/services/skill-learning.js",
+      "sha256": "c6e620d82f3658fe2b46839f0e9f6a461fda0443c29b348811b66a09d04467fa"
+    },
+    {
+      "path": "worker/src/services/special.js",
+      "sha256": "8b5b28daede8cd4a6a7dd5d0bbb7154147511ab8ea57a4f46092e0c6727d2959"
+    },
+    {
+      "path": "worker/src/services/star-ring-cosmetics.js",
+      "sha256": "d158057be0414029b54ed0c1a42eab7e1ddd17b7eabc7691f924b14f1df7be9a"
+    },
+    {
+      "path": "worker/src/services/star-ring-gear.js",
+      "sha256": "f441567afea636261cc0cc621f77cbb4e2260571964b2644cf73729879e2b15d"
+    },
+    {
+      "path": "worker/src/services/star-ring-receipt.js",
+      "sha256": "48fddfb16f0a596e235c3da34dbc872c360c4e5d8ada4222454a67f0ecce4b46"
+    },
+    {
+      "path": "worker/src/services/star-ring-scene.js",
+      "sha256": "2dcc5b644b1d6ac307c3671fe64d85588ee75c8b84ad6cd55d5769579a18351c"
+    },
+    {
+      "path": "worker/src/services/star-ring-scoped.js",
+      "sha256": "9def683a12fbadac2d27ca86bda4cd5b39aff8eb7c88049590952c201d05b013"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    },
+    {
+      "path": "worker/src/services/tower-daily.js",
+      "sha256": "887a4292b52f6337d90deae5e5640bf7ebcbf4abee2cac30037ef23a0ad11b1c"
+    },
+    {
+      "path": "worker/src/services/tower-receipt.js",
+      "sha256": "cfa55e6957349be59114b810b81cb4863be958437a21738b415df5fc5d2f9c32"
+    },
+    {
+      "path": "worker/src/services/tower-scene.js",
+      "sha256": "c12f75fa9830e8b2dcac834ce1ba0b7755c82554ce7605da0adef55b9a48f36f"
+    },
+    {
+      "path": "worker/src/services/tower.js",
+      "sha256": "0f4b40e74cd0ddf7a0beb3209c067208f53fbab04f3aa79051551ccf844127f3"
+    },
+    {
+      "path": "worker/src/services/trade.js",
+      "sha256": "25a6efc00867b98d571551b71998fd5a69f989b29232e9c623be705dd66cd756"
+    },
+    {
+      "path": "worker/src/views.js",
+      "sha256": "4dc2c02ad6cea5c1f09a83687e1a12e076b0e406497252fedd250f0cb4a7f218"
+    },
+    {
+      "path": "worker/src/views.js.20261010-gacha-v1.bak",
+      "sha256": "fd7342b4a98667164a75b63b0c8b73a5434de613c70276fb7abc3448349f87ed"
+    },
+    {
+      "path": "worker/test/skill-vfx-engine.test.js",
+      "sha256": "0af971ea8f23f16ab3e75e42f17fc932a90a33576e7264e861c758a8ce2060d5"
+    },
+    {
+      "path": "worker/test/skill-vfx-target-timing.test.js",
+      "sha256": "c828c2b384a3e51e957a13babb15b37a22bc2feed9bae08a70bf934ecc8151db"
+    },
+    {
+      "path": "worker/test/skill-vfx-combat-adapter.test.js",
+      "sha256": "f58693623a95adebd5c9dad71bb4943c4f8e19faf502e98e26240d533bff9540"
+    },
+    {
+      "path": "worker/test/skill-vfx-actor-bridge.test.js",
+      "sha256": "b72d83a1e1bff2ab6bb8ff0040e4a88a422384705da20e28bd28da3a5d193547"
+    },
+    {
+      "path": "worker/test/skill-vfx-scene-session.test.js",
+      "sha256": "e3098a8756cccca4ace30fd20e4f8022f1f8568aeddc7c2db98b5a12e1eb7cab"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "sha256": "e220dbca882aab4fd32ecb46c36352c709d4659d4b51846d0b5f8576b697bc1d"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-app.test.js",
+      "sha256": "9ee39074d4bdf879dbd492d8cc59ff567f541c826853a69b2fbfae1fec89bf39"
+    },
+    {
+      "path": "worker/test/skill-vfx-coverage.test.js",
+      "sha256": "cd6d10f8f03b7f2fdd5ad2ca1cb4ccb544f84879813e38130c6da1e871200ddd"
+    },
+    {
+      "path": "worker/test/skill-vfx-browser-evidence.test.js",
+      "sha256": "2ec26c61459c1153be7c0d86d6e0958a9d294d6becc61d8e0d213878e3c0d9df"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx.test.js",
+      "sha256": "80d4702d4dcd3d67505272b4b167ee2e888ebe30adf1c9c6faf1042c10be0564"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-service.test.js",
+      "sha256": "a37a56fad651d514cd42b9a82abb8cd4cdb99958040d0c475b36144641374e72"
+    },
+    {
+      "path": "worker/test/atlas-combat-observer.test.js",
+      "sha256": "47cf794b909fdfd7c3f8b1842d8ea66a19b67b6a5ab6c5d0fe9ce7d5f32cff31"
+    },
+    {
+      "path": "worker/test/atlas-combat-trace-service.test.js",
+      "sha256": "73e90dcf538f53d1e0f34bedb3e5a1bb0c1ff507b07d1e5ed3b1a1c100c81bf5"
+    },
+    {
+      "path": "worker/test/atlas-engine.test.js",
+      "sha256": "88df8b4a0770424566f284adefd85f1a1543691ba39e5bc1c2e313293f08c5cf"
+    },
+    {
+      "path": "worker/test/atlas-effects.test.js",
+      "sha256": "bafd5fe0fb46760a0ad368da54a6dbe844e7cd1b2f81b869e757479b233f4207"
+    },
+    {
+      "path": "worker/test/atlas-effects-service.test.js",
+      "sha256": "eb744ce825dcae47c251e4eacf00d272b31486a13686b0f78d010e6fb48b475a"
+    },
+    {
+      "path": "worker/test/atlas-effects-legacy-replay.test.js",
+      "sha256": "3ce16773dbe184a8c2cf912ac3a943918e8a39fbe3c7b60290c3157af58a2e22"
+    },
+    {
+      "path": "worker/test/atlas-supplies.test.js",
+      "sha256": "5765ff815fdf0a718793696dbdc8fb6c4b8afa06882d8c85d7c6ca46ce4f6fbe"
+    },
+    {
+      "path": "worker/test/atlas-supply-service.test.js",
+      "sha256": "d91c6393053c149ff1261c2efdce360fc094ceaecb9574ca7011a086a877a9f3"
+    },
+    {
+      "path": "worker/test/atlas-scene.test.js",
+      "sha256": "67460e48af676f4f23a27893fdce699a7b334181abf40869349486d7bec400c6"
+    },
+    {
+      "path": "worker/test/atlas-scene-api.test.js",
+      "sha256": "9634074a586051730265e4787b73f8613ff22b12dabb8c15607f8d8843eb48d9"
+    },
+    {
+      "path": "worker/test/scene-live-session.test.js",
+      "sha256": "329ee6654ce8b62fe7031009a117b7d979a1bcbf0e29530843aea21ca9f4d0fc"
+    },
+    {
+      "path": "worker/test/scene-live-view.test.js",
+      "sha256": "522365fe8804f5201e5567e674efe7bf20c8557b04cde6e626ce36846a7e4dfc"
+    },
+    {
+      "path": "worker/test/scene-live-lifecycle.test.js",
+      "sha256": "4ce53b8d2c9d76062af4d36e166e83a034573a159c1ba2cc07d905145b8ee2fa"
+    },
+    {
+      "path": "worker/test/scene-preview-assets.test.js",
+      "sha256": "453c066c6b4c9f67cef1ffc0d649000efa8d7bc4ca98d219457441e7930b1626"
+    },
+    {
+      "path": "worker/test/scene-supply-ui.test.js",
+      "sha256": "2ca9bfc7f2759a38effc05a7aa7bd80951e7defb30083363f6b6bf675b76bf77"
+    },
+    {
+      "path": "worker/test/scene-skills-ui.test.js",
+      "sha256": "b0f56fc77e81e67df1fa4febbe658374c859db3d1a21555687cf88548dbcac9c"
+    },
+    {
+      "path": "worker/test/scene-party-ui.test.js",
+      "sha256": "12ec42edae7c286f6a9906a85d9138213ae7b3852384562052328cda6caca7ea"
+    },
+    {
+      "path": "worker/test/scene-tower-ui.test.js",
+      "sha256": "34b76a963c0fa361aa060667b97903f2c88a1648ca1a3e3a3dbca441766e0d56"
+    },
+    {
+      "path": "worker/test/scene-boss-ui.test.js",
+      "sha256": "e4da5a79fa3757f4380f59aae368be2c704422360df1b22aac76e418928713a0"
+    },
+    {
+      "path": "worker/test/scene-star-ring-ui.test.js",
+      "sha256": "32494ea6131a6769bf91474c86c828bb49d6e8bd45efb54cbfe35379778f026e"
+    },
+    {
+      "path": "worker/test/party-scene-service.test.js",
+      "sha256": "81aa88888660369e81b92802e736e84035016d70c75937b75d37c90e3063c5b9"
+    },
+    {
+      "path": "worker/test/party-scene-api.test.js",
+      "sha256": "52fc9892ba1b8dca8ee59cc9440a50a1c3bc6cec13f78a9a94b3dddbd07b6d6a"
+    },
+    {
+      "path": "worker/test/tower-scene-service.test.js",
+      "sha256": "5c568468116ff5364899db358e6fbac10f4447192de409593fa5a43c4486ae23"
+    },
+    {
+      "path": "worker/test/tower-scene-api.test.js",
+      "sha256": "e911a1cf9f368594f77fe5f790848a7528b09730533f9a10f7362e60d1ec0d26"
+    },
+    {
+      "path": "worker/test/boss-scene-service.test.js",
+      "sha256": "c75076a4e05cc3d2bf0616937670c285d66a31ce72af0a3a62930fc176bc3527"
+    },
+    {
+      "path": "worker/test/boss-scene-api.test.js",
+      "sha256": "fc45ffa44b7e93a9841632f9ac0c8adf48e26fe3b0a17f98909075292ae10b2a"
+    },
+    {
+      "path": "worker/test/boss-scoped-transaction.test.js",
+      "sha256": "5c79443e0aa20545944e4f3226206e05d9ce19d3dad95120f11389b49f99dc9b"
+    },
+    {
+      "path": "worker/test/star-ring-scene-service.test.js",
+      "sha256": "874cbd7d8c7855b4bdac3ea01817550bbbaf74a8154a4eae4e86adadbbd49635"
+    },
+    {
+      "path": "worker/test/star-ring-scene-api.test.js",
+      "sha256": "c4b4180d1f00cbbd5db57a45e38c84ae50c70aaf573db13f18ab1b40cb157432"
+    },
+    {
+      "path": "worker/test/star-ring-scoped-transaction.test.js",
+      "sha256": "f481aa60670be5ec247afede4b2c547ef5d85f16e22a4b4f7266fdc537bfa52a"
+    },
+    {
+      "path": "worker/test/star-ring.test.js",
+      "sha256": "0142931e97f353d83996ebd24e24a22a98a6050ff483af24ede6d719ec91c410"
+    },
+    {
+      "path": "worker/test/star-ring-skills.test.js",
+      "sha256": "6e22b2d96bb79457374922488d15d7efdc1e244edce67391f44972100baea96d"
+    },
+    {
+      "path": "worker/test/star-ring-volume.test.js",
+      "sha256": "b46952f55411c7faa9f68470a7386be5a0dd20ccaaa6544674012a9cf3a1ce92"
+    },
+    {
+      "path": "worker/test/star-ring-integration.test.js",
+      "sha256": "76b5738ba2460769959470761cfa98824236ab6492bab606c424278edb649ea9"
+    },
+    {
+      "path": "worker/test/star-ring-parallel-party.test.js",
+      "sha256": "c45ebd3eac05d6e632fbef06010015cda967cd4404e4418f9a1f84754f137661"
+    },
+    {
+      "path": "worker/test/skill-vfx-integration-20261105.test.js",
+      "sha256": "3014b40f4c110a68dc82a6ea125880259ceca735b551bfdb2c0f3bc4b37990cf"
+    }
+  ],
+  "sourceChanges": [],
+  "summary": [
+    "# tests 753",
+    "# pass 753",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 41492.6248"
+  ],
+  "failures": []
+}

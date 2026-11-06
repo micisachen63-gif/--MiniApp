@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-04T08:36:25.895Z",
+  "completedAt": "2026-11-04T08:36:37.068Z",
+  "exitCode": 0,
+  "signal": null,
+  "error": null,
+  "command": "node --test --test-reporter=tap test/star-ring-pools.test.js test/star-ring-rank-rewards.test.js test/star-ring.test.js",
+  "sourceBefore": [
+    {
+      "path": "worker/test/star-ring-pools.test.js",
+      "sha256": "ac70d91d4a21a9149c2dd0bac5194890d6ef394068b4be451538632e2fce4503"
+    },
+    {
+      "path": "worker/test/star-ring-rank-rewards.test.js",
+      "sha256": "866d4303260283b2a9364ded3a3bb32313b7faa172afc81c540212eeb3e240ed"
+    },
+    {
+      "path": "worker/test/star-ring.test.js",
+      "sha256": "0142931e97f353d83996ebd24e24a22a98a6050ff483af24ede6d719ec91c410"
+    },
+    {
+      "path": "worker/test/star-ring-vfx-assertions.js",
+      "sha256": "564eeddf38a4c0861d3497e765a72fb77543319cae96d0c90f8ec822528d2d20"
+    },
+    {
+      "path": "worker/test/star-ring-v1-golden.json",
+      "sha256": "3e1d0455da98124add7a49fc6823250c443ed6f06c809167ed649ca1f35303ac"
+    },
+    {
+      "path": "worker/test/star-ring-v2-reward-golden.json",
+      "sha256": "e485a8252e7232fdb51778fc8fa7c161dfe6d33545e88513622d04d780a11f28"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/src/game/star-ring-pools.js",
+      "sha256": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "path": "worker/test/star-ring-pools.test.js",
+      "sha256": "ac70d91d4a21a9149c2dd0bac5194890d6ef394068b4be451538632e2fce4503"
+    },
+    {
+      "path": "worker/test/star-ring-rank-rewards.test.js",
+      "sha256": "866d4303260283b2a9364ded3a3bb32313b7faa172afc81c540212eeb3e240ed"
+    },
+    {
+      "path": "worker/test/star-ring.test.js",
+      "sha256": "0142931e97f353d83996ebd24e24a22a98a6050ff483af24ede6d719ec91c410"
+    },
+    {
+      "path": "worker/test/star-ring-vfx-assertions.js",
+      "sha256": "564eeddf38a4c0861d3497e765a72fb77543319cae96d0c90f8ec822528d2d20"
+    },
+    {
+      "path": "worker/test/star-ring-v1-golden.json",
+      "sha256": "3e1d0455da98124add7a49fc6823250c443ed6f06c809167ed649ca1f35303ac"
+    },
+    {
+      "path": "worker/test/star-ring-v2-reward-golden.json",
+      "sha256": "e485a8252e7232fdb51778fc8fa7c161dfe6d33545e88513622d04d780a11f28"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/src/game/star-ring-pools.js",
+      "sha256": "bebbc021d9af8403d0c15ab94933cda6ac331c4e8726e346a605bf47e06007a1"
+    },
+    {
+      "path": "worker/src/game/star-ring-rank-rewards.js",
+      "sha256": "5a8a6b920192cda0e0e97691de9e3d770d1f1e5501f1c6f737fe3316a2b9907f"
+    },
+    {
+      "path": "worker/src/game/rng.js",
+      "sha256": "36ab7a57aff52ec15a70f26762f89a105206080f52a30a1289ae8b8c64808e69"
+    }
+  ],
+  "changedDuringGate": [],
+  "tap": {
+    "path": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/worker.tap",
+    "sha256": "d753d7eaa6a6b13d6ad96a1cbc3c0eaa491980b4df023771c3b02278f0779a20",
+    "bytes": 16903
+  },
+  "summary": [
+    "# tests 63",
+    "# pass 63",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 11094.7745"
+  ],
+  "tail": [
+    "  ...",
+    "# Subtest: optional guard never consumes the sole healer when only three simultaneous duties fit",
+    "ok 60 - optional guard never consumes the sole healer when only three simultaneous duties fit",
+    "  ---",
+    "  duration_ms: 96.5926",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot",
+    "ok 61 - optional guard cannot force S-capable combat to B or reduce its grade-based EXP and final loot",
+    "  ---",
+    "  duration_ms: 275.3058",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts",
+    "ok 62 - already running optional-guard advanced expedition gets fair future grades without rewriting earlier receipts",
+    "  ---",
+    "  duration_ms: 216.8102",
+    "  type: 'test'",
+    "  ...",
+    "# Subtest: already running legacy standard expedition gets fair future grades without rewriting earlier receipts",
+    "ok 63 - already running legacy standard expedition gets fair future grades without rewriting earlier receipts",
+    "  ---",
+    "  duration_ms: 237.5017",
+    "  type: 'test'",
+    "  ...",
+    "1..63",
+    "# tests 63",
+    "# suites 0",
+    "# pass 63",
+    "# fail 0",
+    "# cancelled 0",
+    "# skipped 0",
+    "# todo 0",
+    "# duration_ms 11094.7745",
+    ""
+  ]
+}

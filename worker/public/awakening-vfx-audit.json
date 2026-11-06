@@ -1,0 +1,2197 @@
+{
+  "schemaVersion": 2,
+  "purpose": "16 ornate-v2 planned awakening visual previews with dedicated painted assets; separate from 196 implemented skill identities",
+  "presentationRevision": "ornate-v2",
+  "supersededRevision": {
+    "revision": "v1",
+    "status": "user-rejected",
+    "browserMatrixExecuted": false,
+    "evidenceDirectory": "docs/skill-vfx-semantics-20261105/awakening/historical/rejected-v1"
+  },
+  "sourceIdPolicy": "Every awakening preview has sourceId null and a preview:awakening: prefix. No live event, damage, MP, cooldown or progression ID is created.",
+  "counts": {
+    "liveSkillsUnmodified": 196,
+    "plannedAwakeningConcepts": 16,
+    "previewProfiles": 16,
+    "classes": 4,
+    "modes": 4,
+    "stagesPerProfile": 4,
+    "runtimeTextures": 10,
+    "dedicatedAwakeningAtlases": 4,
+    "dedicatedSkillCells": 16
+  },
+  "scope": {
+    "previewOnly": true,
+    "implemented": false,
+    "liveCatalogRegistration": false,
+    "backendChanged": false,
+    "productionDeployment": false,
+    "presentationDurationIsNotCooldown": true
+  },
+  "coverage": {
+    "profileCoverage": "16 / 16 exact planned names and original concepts",
+    "declaredCompositionKeys": 16,
+    "uniqueKeysAloneAreNotVisualEvidence": true,
+    "nodeTestStatus": "Not executed by this builder; use the separate test command and its recorded output.",
+    "browserEvidence": {
+      "status": "attached-and-source-matched",
+      "automatedBrowserPassClaimed": true,
+      "receipt": {
+        "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+        "exists": true,
+        "bytes": 22081,
+        "sha256": "d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a"
+      },
+      "executedAt": "2026-11-05T07:02:20.709Z",
+      "counts": {
+        "desktopDirections": 64,
+        "desktopStages": 256,
+        "lowQualityDirections": 64,
+        "reducedDirections": 64,
+        "mobileDirections": 64,
+        "endpointChecks": 32
+      },
+      "screenshots": [
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-sword-elite.png",
+          "exists": true,
+          "bytes": 420820,
+          "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-elite.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-sword-expert.png",
+          "exists": true,
+          "bytes": 446494,
+          "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-expert.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-sword-nightmare.png",
+          "exists": true,
+          "bytes": 453816,
+          "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-nightmare.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-sword-hell.png",
+          "exists": true,
+          "bytes": 425843,
+          "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-hell.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-archer-elite.png",
+          "exists": true,
+          "bytes": 433302,
+          "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-elite.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-archer-expert.png",
+          "exists": true,
+          "bytes": 407036,
+          "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-expert.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-archer-nightmare.png",
+          "exists": true,
+          "bytes": 457805,
+          "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-nightmare.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-archer-hell.png",
+          "exists": true,
+          "bytes": 463151,
+          "sha256": "0ed887a6e49b2ff7af343370caa2e1080155ccbc80e90c2474e0bf6e258d3b14",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-hell.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-mage-elite.png",
+          "exists": true,
+          "bytes": 428731,
+          "sha256": "d489eee5ec3d07f6651f5e4f13ec170d2704c3062f665f8f9526229f238d899f",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-elite.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-mage-expert.png",
+          "exists": true,
+          "bytes": 339173,
+          "sha256": "3298b25c343fb0cd626b84964aa743c4425963a9bd772d11675089f96f0374ad",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-expert.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-mage-nightmare.png",
+          "exists": true,
+          "bytes": 489416,
+          "sha256": "9a924abc06c8d0fd274ed588bd8a1a1da86e9c76eff66995979694b75659651a",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-nightmare.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-mage-hell.png",
+          "exists": true,
+          "bytes": 484624,
+          "sha256": "aaabc3ac2ed38399fdc75b0f98207dcd7853094d0f9c1eb139dce7c8ec22e156",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-hell.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-thief-elite.png",
+          "exists": true,
+          "bytes": 359022,
+          "sha256": "73892696dfa228f87cbd6f0dd1e38670a422d457cbfe371a5b2b49c39678dafe",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-elite.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-thief-expert.png",
+          "exists": true,
+          "bytes": 417455,
+          "sha256": "a60f10355d9356e4b8ee3fff8985ef4109551b706bc068210b1893824a304068",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-expert.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-thief-nightmare.png",
+          "exists": true,
+          "bytes": 444831,
+          "sha256": "d6a98f0b68e4a7607e9499ddd82bb27fec9f23b36fefdbb81340b5f39d0a9911",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-nightmare.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/stage-thief-hell.png",
+          "exists": true,
+          "bytes": 407744,
+          "sha256": "a5140dfef7ebb5925991be4ca4f6a4698a5264e937eef208729acafdfd8cb1ec",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-hell.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/desktop-full.png",
+          "exists": true,
+          "bytes": 801666,
+          "sha256": "6f481e55fc09b9812bb9d97a2f7a82e080416643c2614cd23466bb56ee81c10b",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/desktop-full.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-sword-hell-32.png",
+          "exists": true,
+          "bytes": 296516,
+          "sha256": "a24f84335a1cb24babb0f2dbbd222ec97dcc66834b824688317e6d9cb3902f21",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-sword-hell-32.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-sword-hell-66.png",
+          "exists": true,
+          "bytes": 391299,
+          "sha256": "7bc755e2917f87f5f3ee62901504a59f1951f7a00470fd8110a8408ac66fdfb7",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-sword-hell-66.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-archer-expert-34.png",
+          "exists": true,
+          "bytes": 300508,
+          "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-34.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-archer-expert-66.png",
+          "exists": true,
+          "bytes": 375273,
+          "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-66.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-mage-expert-29.png",
+          "exists": true,
+          "bytes": 256278,
+          "sha256": "0c4aa3bd9979300e53c459b584512a3b87fce8e755bb4b8557d13442e8028d3b",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-expert-29.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-mage-expert-68.png",
+          "exists": true,
+          "bytes": 302507,
+          "sha256": "666efd77f906efbf6df6c8e08fdc89429892103723f045ca5f8afac93e74dc08",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-expert-68.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-mage-expert-80.png",
+          "exists": true,
+          "bytes": 301959,
+          "sha256": "008a4989f3d660c793d1295de504061cbf88743bcff979f4a4a728fcf71f5d5b",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-expert-80.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-mage-hell-32.png",
+          "exists": true,
+          "bytes": 254242,
+          "sha256": "6f0ada243ecd15807b3b20bf573bb23b223ad81847edd1f483e88ec7c0e21601",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-hell-32.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-mage-hell-72.png",
+          "exists": true,
+          "bytes": 474664,
+          "sha256": "983308db91adedf43e477cc1c26f917aaefd631d7e7182edafc8f8b9926a2f2a",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-hell-72.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-thief-hell-32.png",
+          "exists": true,
+          "bytes": 308627,
+          "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-32.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/motion-thief-hell-65.png",
+          "exists": true,
+          "bytes": 373368,
+          "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-65.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/mobile-sword.png",
+          "exists": true,
+          "bytes": 264261,
+          "sha256": "b4fad8b79e447a1c7015e46b3a1714b58a166c927da537419bcba4f4084d0de3",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-sword.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/mobile-archer.png",
+          "exists": true,
+          "bytes": 287157,
+          "sha256": "c4e66b9b9769cc2b14d25f2fc63bbdc5666e9b64ad06b316d604ed0d11b0585a",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-archer.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/mobile-mage.png",
+          "exists": true,
+          "bytes": 265656,
+          "sha256": "655e0df593b1a0f3a2338795e1e242afb4d0325940d541e93a1d0b3a193c8616",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-mage.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/mobile-thief.png",
+          "exists": true,
+          "bytes": 259943,
+          "sha256": "6b8fbf3505435d9fb16d54c14df8655a8b5c8ed99dcc5bf91cc29afa8447fa24",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-thief.png"
+        },
+        {
+          "path": "docs/skill-vfx-semantics-20261105/awakening/accepted-v2/screenshots/awakening-contact-sheet.png",
+          "exists": true,
+          "bytes": 787806,
+          "sha256": "de8fd461af88c1359484818150fe12484cded6f6d9afb285de869ab2ad951cf3",
+          "originalReceiptPath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/awakening-contact-sheet.png"
+        }
+      ],
+      "sourceMatch": true,
+      "interpretation": "Browser checks prove only the cases recorded in the receipt. They do not implement awakening mechanics or establish an independent human visual review."
+    },
+    "independentVisualReview": "Not claimed by this deterministic audit builder."
+  },
+  "proposalSource": {
+    "path": "docs/skill-vfx-semantics-20261105/awakening/source/awakening-plan-20261102.txt",
+    "exists": true,
+    "bytes": 14475,
+    "sha256": "e19434eece2ba5c9ce33daa9258dae0481cf698d875b281c7f668d0398715906",
+    "originalPath": "D:/StarJournal/progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+    "originalSha256": "e19434eece2ba5c9ce33daa9258dae0481cf698d875b281c7f668d0398715906",
+    "preservation": "byte-exact original planning source",
+    "provenance": {
+      "path": "docs/skill-vfx-semantics-20261105/awakening/source/provenance.json",
+      "exists": true,
+      "bytes": 579,
+      "sha256": "c377bd8282376fb7f9ce3fbff771804e02ea6a1e93813779c364e253b71a0c7a"
+    }
+  },
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "exists": true,
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "exists": true,
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "exists": true,
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 30437,
+      "sha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "exists": true,
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "exists": true,
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "exists": true,
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "exists": true,
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "exists": true,
+      "bytes": 9318,
+      "sha256": "ce3a2007583bcf2faeff1d56a9678edbfcfb70d4df7d141b411d08e571f77ab5"
+    },
+    {
+      "path": "worker/tools/build-awakening-vfx-audit.mjs",
+      "exists": true,
+      "bytes": 8899,
+      "sha256": "d592e573338fc71b906b8b56b2ce8fa2ca2fb7ffc74a9f5738770f74329dacac"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "exists": true,
+      "bytes": 18368,
+      "sha256": "a454dc8be6438a9d4f3c3aff774e1f831c0f19127ece25a4ba9258947b19086f"
+    }
+  ],
+  "assets": [
+    {
+      "key": "sword",
+      "url": "/art/skill-vfx-20261104/sword-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "exists": true,
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "archer",
+      "url": "/art/skill-vfx-20261104/archer-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "exists": true,
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "mage",
+      "url": "/art/skill-vfx-20261104/mage-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "exists": true,
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "thief",
+      "url": "/art/skill-vfx-20261104/thief-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "exists": true,
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "semantic",
+      "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "exists": true,
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "hawk",
+      "url": "/art/skill-vfx-20261104/hawk.webp",
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "exists": true,
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825",
+      "grid": [
+        1,
+        1
+      ]
+    },
+    {
+      "key": "awakening-sword",
+      "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "exists": true,
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f",
+      "grid": [
+        2,
+        2
+      ]
+    },
+    {
+      "key": "awakening-archer",
+      "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "exists": true,
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88",
+      "grid": [
+        2,
+        2
+      ]
+    },
+    {
+      "key": "awakening-mage",
+      "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "exists": true,
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835",
+      "grid": [
+        2,
+        2
+      ]
+    },
+    {
+      "key": "awakening-thief",
+      "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "exists": true,
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45",
+      "grid": [
+        2,
+        2
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "preview:awakening:sword:elite",
+      "sourceCatalogId": "planned:sword:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "戰神破勢",
+      "composition": "armor-break",
+      "durationMs": 3200,
+      "colors": [
+        "#f3c76c",
+        "#fff3c8"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.5,
+        "pose": "impact-stroke",
+        "rays": 12,
+        "trail": "blade"
+      },
+      "modeAccent": "#e9d3a1",
+      "concept": "破甲接連擊。",
+      "description": "金色裂甲紋先張開，三道交錯巨刃逐拍落下，最後以破碎甲片與戰神冠環收束。",
+      "phases": [
+        {
+          "label": "破勢蓄光",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "裂甲開路",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "三刃連斬",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "餘鋒散落",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "戰神破勢專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "combo",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-sword",
+          "cell": 0,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+          "meaning": "戰神破勢專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.5,
+        "pose": "impact-stroke",
+        "rays": 12,
+        "trail": "blade",
+        "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:sword:expert",
+      "sourceCatalogId": "planned:sword:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "壁壘回響",
+      "composition": "bulwark-echo",
+      "durationMs": 3600,
+      "colors": [
+        "#a1dbe9",
+        "#f0fcff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.5,
+        "pose": "shield-wave",
+        "rays": 10,
+        "trail": "reflection"
+      },
+      "modeAccent": "#a8deef",
+      "concept": "防護接反擊。",
+      "description": "層疊六角壁壘迎接入射光，護壁漣漪轉成朝目標推進的反向波環。",
+      "phases": [
+        {
+          "label": "築起壁壘",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "迎光格擋",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "回響反推",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "護紋消退",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "壁壘回響專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "counter",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-sword",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+          "meaning": "壁壘回響專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.5,
+        "pose": "shield-wave",
+        "rays": 10,
+        "trail": "reflection",
+        "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:sword:nightmare",
+      "sourceCatalogId": "planned:sword:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "血誓狂潮",
+      "composition": "blood-tide",
+      "durationMs": 3700,
+      "colors": [
+        "#ed657b",
+        "#ffd0c8"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.75,
+        "pose": "surging",
+        "rays": 14,
+        "trail": "crescent"
+      },
+      "modeAccent": "#c0a2ef",
+      "concept": "以資源代價換取持續壓力；提案尚未定數值。",
+      "description": "血誓菱印與暗紅環帶凝成契約，連續三層赤色弦月向前湧動，留下血色潮痕。",
+      "phases": [
+        {
+          "label": "血誓凝印",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "赤潮初湧",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連環狂潮",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "誓紋餘燼",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "血誓狂潮專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "bleed",
+      "originalProposedVisualElement": "blood",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-sword",
+          "cell": 2,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+          "meaning": "血誓狂潮專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.75,
+        "pose": "surging",
+        "rays": 14,
+        "trail": "crescent",
+        "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:sword:hell",
+      "sourceCatalogId": "planned:sword:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "諸神斷罪",
+      "composition": "divine-verdict",
+      "durationMs": 4300,
+      "colors": [
+        "#f4d682",
+        "#fffdf0"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.8,
+        "pose": "descending",
+        "rays": 16,
+        "trail": "judgment"
+      },
+      "modeAccent": "#f7a978",
+      "concept": "蓄勢換取首領輸出。",
+      "description": "多層聖環長時間向劍脊匯聚，巨大聖劍垂直貫落，審判光冠沿落點向外展開。",
+      "phases": [
+        {
+          "label": "聖環蓄勢",
+          "start": 0,
+          "end": 0.38
+        },
+        {
+          "label": "神劍成形",
+          "start": 0.38,
+          "end": 0.58
+        },
+        {
+          "label": "斷罪落刃",
+          "start": 0.58,
+          "end": 0.82
+        },
+        {
+          "label": "金輝退散",
+          "start": 0.82,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "諸神斷罪專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "execute",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-sword",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+          "meaning": "諸神斷罪專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-sword",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.8,
+        "pose": "descending",
+        "rays": 16,
+        "trail": "judgment",
+        "url": "/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:archer:elite",
+      "sourceCatalogId": "planned:archer:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "逐星連矢",
+      "composition": "star-pursuit",
+      "durationMs": 3300,
+      "colors": [
+        "#92d9ee",
+        "#f0fbff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.6,
+        "pose": "piercing",
+        "rays": 12,
+        "trail": "arrows"
+      },
+      "modeAccent": "#e9d3a1",
+      "concept": "穿透清群。",
+      "description": "星座節點沿射線逐一點亮，多束細長星矢追過節點並穿過預覽目標。",
+      "phases": [
+        {
+          "label": "星座定位",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "逐星起弦",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連矢穿行",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "星塵散去",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "逐星連矢專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "volley",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-archer",
+          "cell": 0,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "逐星連矢專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.6,
+        "pose": "piercing",
+        "rays": 12,
+        "trail": "arrows",
+        "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:archer:expert",
+      "sourceCatalogId": "planned:archer:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "群靈共獵",
+      "composition": "spirit-hunt",
+      "durationMs": 3700,
+      "colors": [
+        "#a7dfa4",
+        "#efffd3"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.9,
+        "pose": "converging",
+        "rays": 10,
+        "trail": "spirits"
+      },
+      "modeAccent": "#a8deef",
+      "concept": "強化召喚協擊。",
+      "description": "狼靈、祖靈鹿與獵鷹以不同弧線包抄，同時匯向同一狩獵印；保留三種生物的外形。",
+      "phases": [
+        {
+          "label": "林靈甦醒",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "三靈出獵",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "協獵合擊",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "靈光歸林",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "狼靈",
+        "祖靈鹿",
+        "獵鷹"
+      ],
+      "motionAssets": [
+        "semantic:0",
+        "semantic:5",
+        "hawk:0"
+      ],
+      "originalPlannedFamily": "beast",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-archer",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "狼靈"
+        },
+        {
+          "asset": "awakening-archer",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "祖靈鹿"
+        },
+        {
+          "asset": "awakening-archer",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "獵鷹"
+        }
+      ],
+      "supportingMotionAssets": [
+        {
+          "asset": "semantic",
+          "cell": 0,
+          "grid": [
+            3,
+            3
+          ],
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp"
+        },
+        {
+          "asset": "semantic",
+          "cell": 5,
+          "grid": [
+            3,
+            3
+          ],
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp"
+        },
+        {
+          "asset": "hawk",
+          "cell": 0,
+          "grid": [
+            1,
+            1
+          ],
+          "url": "/art/skill-vfx-20261104/hawk.webp"
+        }
+      ],
+      "principalArt": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.9,
+        "pose": "converging",
+        "rays": 10,
+        "trail": "spirits",
+        "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:archer:nightmare",
+      "sourceCatalogId": "planned:archer:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "月蝕獵印",
+      "composition": "eclipse-mark",
+      "durationMs": 3700,
+      "colors": [
+        "#bfa3ee",
+        "#f4eaff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.7,
+        "pose": "locking",
+        "rays": 12,
+        "trail": "eclipse"
+      },
+      "modeAccent": "#c0a2ef",
+      "concept": "寵物、陷阱與本體共用目標。",
+      "description": "偏心月蝕環鎖住目標，獸靈綠線、陷阱地紋與紫色主矢三種軌跡共赴同一獵印。",
+      "phases": [
+        {
+          "label": "月蝕標記",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "獵線連結",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "三路共狩",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "暗月殘印",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "月蝕獵印",
+        "三路共狩"
+      ],
+      "motionAssets": [
+        "semantic:0"
+      ],
+      "originalPlannedFamily": "curse",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-archer",
+          "cell": 2,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "月蝕獵印"
+        },
+        {
+          "asset": "awakening-archer",
+          "cell": 2,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "三路共狩"
+        }
+      ],
+      "supportingMotionAssets": [
+        {
+          "asset": "semantic",
+          "cell": 0,
+          "grid": [
+            3,
+            3
+          ],
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp"
+        }
+      ],
+      "principalArt": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.7,
+        "pose": "locking",
+        "rays": 12,
+        "trail": "eclipse",
+        "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:archer:hell",
+      "sourceCatalogId": "planned:archer:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "蒼穹裁決",
+      "composition": "sky-judgment",
+      "durationMs": 4000,
+      "colors": [
+        "#9dddf2",
+        "#fff4c6"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.85,
+        "pose": "rain",
+        "rays": 16,
+        "trail": "skyfall"
+      },
+      "modeAccent": "#f7a978",
+      "concept": "在範圍與單體之間選擇。",
+      "description": "蒼穹弓門在高處展翼；單靶呈現集中光矢，三靶呈現分區箭雨，均由天弧引導落點。",
+      "phases": [
+        {
+          "label": "天弓開門",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "裁決聚矢",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "天穹落箭",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "長空餘光",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "蒼穹裁決專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "rain",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-archer",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+          "meaning": "蒼穹裁決專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-archer",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.85,
+        "pose": "rain",
+        "rays": 16,
+        "trail": "skyfall",
+        "url": "/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:mage:elite",
+      "sourceCatalogId": "planned:mage:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "星雷共鳴",
+      "composition": "stellar-resonance",
+      "durationMs": 3400,
+      "colors": [
+        "#a8beff",
+        "#eef6ff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.6,
+        "pose": "chaining",
+        "rays": 14,
+        "trail": "lightning"
+      },
+      "modeAccent": "#e9d3a1",
+      "concept": "連鎖與耗魔取捨。",
+      "description": "五芒星節點逐段串接成折線電弧，每次抵達節點都展開同心共鳴環。",
+      "phases": [
+        {
+          "label": "星核點亮",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "雷鏈接通",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "節點共鳴",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "電光退散",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "星雷共鳴專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "lightning",
+      "originalProposedVisualElement": "lightning",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-mage",
+          "cell": 0,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "星雷共鳴專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.6,
+        "pose": "chaining",
+        "rays": 14,
+        "trail": "lightning",
+        "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "sourceCatalogId": "planned:mage:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "霜鏡回流",
+      "composition": "frost-return",
+      "durationMs": 3800,
+      "colors": [
+        "#94e3ec",
+        "#efffff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.6,
+        "pose": "returning",
+        "rays": 10,
+        "trail": "frost"
+      },
+      "modeAccent": "#a8deef",
+      "concept": "以實際吸收傷害換取有限回魔。",
+      "description": "立體冰鏡接住外來光束，冰晶邊緣亮起後，三股柔和青藍流線回到施術端；僅展示吸收回流意象。",
+      "phases": [
+        {
+          "label": "霜鏡立起",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "入光吸收",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "晶流回返",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "冰華消融",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "霜鏡",
+        "冰晶回流"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "frost",
+      "originalProposedVisualElement": "ice",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-mage",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "霜鏡"
+        },
+        {
+          "asset": "awakening-mage",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "冰晶回流"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.6,
+        "pose": "returning",
+        "rays": 10,
+        "trail": "frost",
+        "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:mage:nightmare",
+      "sourceCatalogId": "planned:mage:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "元素裂解",
+      "composition": "element-fracture",
+      "durationMs": 3900,
+      "colors": [
+        "#c8a3f2",
+        "#f6e7ff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.75,
+        "pose": "unbinding",
+        "rays": 16,
+        "trail": "elements"
+      },
+      "modeAccent": "#c0a2ef",
+      "concept": "對元素抗性施壓。",
+      "description": "火、冰、雷、自然四束不同顏色與折線形狀的能量交叉入核，中央稜晶沿四向解離。",
+      "phases": [
+        {
+          "label": "四元聚合",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "元素交織",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "稜核裂解",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "碎光游離",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "元素裂解專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "arcane",
+      "originalProposedVisualElement": "arcane",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-mage",
+          "cell": 2,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "元素裂解專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.75,
+        "pose": "unbinding",
+        "rays": 16,
+        "trail": "elements",
+        "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:mage:hell",
+      "sourceCatalogId": "planned:mage:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "太初星爆",
+      "composition": "primordial-burst",
+      "durationMs": 4500,
+      "colors": [
+        "#a8bcff",
+        "#fff1cc"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.95,
+        "pose": "nova",
+        "rays": 20,
+        "trail": "stardust"
+      },
+      "modeAccent": "#f7a978",
+      "concept": "消耗法力或蓄能換取爆發。",
+      "description": "螺旋星塵向極小星核收縮，核心短暫靜止後展開多層星芒與寬廣同心衝環。",
+      "phases": [
+        {
+          "label": "太初聚星",
+          "start": 0,
+          "end": 0.3
+        },
+        {
+          "label": "星核壓縮",
+          "start": 0.3,
+          "end": 0.56
+        },
+        {
+          "label": "原初星爆",
+          "start": 0.56,
+          "end": 0.82
+        },
+        {
+          "label": "宇塵飄散",
+          "start": 0.82,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "太初星核",
+        "多層星爆"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "meteor",
+      "originalProposedVisualElement": "fire",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-mage",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "太初星核"
+        },
+        {
+          "asset": "awakening-mage",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+          "meaning": "多層星爆"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-mage",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.95,
+        "pose": "nova",
+        "rays": 20,
+        "trail": "stardust",
+        "url": "/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:thief:elite",
+      "sourceCatalogId": "planned:thief:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "影襲連鎖",
+      "composition": "shadow-chain",
+      "durationMs": 3300,
+      "colors": [
+        "#ae9cdc",
+        "#f0e5ff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.65,
+        "pose": "staggered",
+        "rays": 12,
+        "trail": "shadow"
+      },
+      "modeAccent": "#e9d3a1",
+      "concept": "形成多段節奏。",
+      "description": "三道煙霧影身依序切入不同側角，逐拍留下短刃線與節點，最後由一記交叉斬銜接。",
+      "phases": [
+        {
+          "label": "暗影分步",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "第一影襲",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連鎖追斬",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "影痕消失",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "三連影魔",
+        "追襲刃光"
+      ],
+      "motionAssets": [
+        "semantic:8"
+      ],
+      "originalPlannedFamily": "combo",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-thief",
+          "cell": 0,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "三連影魔"
+        },
+        {
+          "asset": "awakening-thief",
+          "cell": 0,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "追襲刃光"
+        }
+      ],
+      "supportingMotionAssets": [
+        {
+          "asset": "semantic",
+          "cell": 8,
+          "grid": [
+            3,
+            3
+          ],
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp"
+        }
+      ],
+      "principalArt": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 0,
+        "scale": 3.65,
+        "pose": "staggered",
+        "rays": 12,
+        "trail": "shadow",
+        "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:thief:expert",
+      "sourceCatalogId": "planned:thief:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "淬毒散華",
+      "composition": "venom-bloom",
+      "durationMs": 3500,
+      "colors": [
+        "#9fe78e",
+        "#edffbd"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.65,
+        "pose": "blossoming",
+        "rays": 12,
+        "trail": "petals"
+      },
+      "modeAccent": "#a8deef",
+      "concept": "擴散毒素。",
+      "description": "淬毒刃尖先凝成五瓣毒花，再向外散開帶有綠色液滴的刀瓣與毒霧細環。",
+      "phases": [
+        {
+          "label": "淬毒凝露",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "刃花初綻",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "毒華擴散",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "青霧退散",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "淬毒散華專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "poison",
+      "originalProposedVisualElement": "poison",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-thief",
+          "cell": 1,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "淬毒散華專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 1,
+        "scale": 3.65,
+        "pose": "blossoming",
+        "rays": 12,
+        "trail": "petals",
+        "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:thief:nightmare",
+      "sourceCatalogId": "planned:thief:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "暗月處決",
+      "composition": "dark-moon",
+      "durationMs": 3900,
+      "colors": [
+        "#b49ce6",
+        "#f6eaff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.8,
+        "pose": "closing",
+        "rays": 14,
+        "trail": "execution"
+      },
+      "modeAccent": "#c0a2ef",
+      "concept": "利用低血量窗口。",
+      "description": "巨大偏心暗月逐漸合攏於預覽目標，兩把冷紫斷刃交錯穿過月心，再以細月弧留白收束。",
+      "phases": [
+        {
+          "label": "暗月鎖定",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "月弧合攏",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "交刃處決",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "月痕消退",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "暗月處決專屬主體"
+      ],
+      "motionAssets": [],
+      "originalPlannedFamily": "execute",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-thief",
+          "cell": 2,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "暗月處決專屬主體"
+        }
+      ],
+      "supportingMotionAssets": [],
+      "principalArt": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 2,
+        "scale": 3.8,
+        "pose": "closing",
+        "rays": 14,
+        "trail": "execution",
+        "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    },
+    {
+      "id": "preview:awakening:thief:hell",
+      "sourceCatalogId": "planned:thief:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "永夜分身",
+      "composition": "endless-night",
+      "durationMs": 4200,
+      "colors": [
+        "#a49ad2",
+        "#e6dcff"
+      ],
+      "presentationRevision": "ornate-v2",
+      "art": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.85,
+        "pose": "phantoms",
+        "rays": 14,
+        "trail": "phantoms"
+      },
+      "modeAccent": "#f7a978",
+      "concept": "有限追擊並有續航代價。",
+      "description": "三具獨立煙影分身先錯位成陣，再依次追擊；每具影身都化為煙絲退場，沒有無限循環的分身。",
+      "phases": [
+        {
+          "label": "夜幕展影",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "三影成陣",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "有限追擊",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "歸於夜霧",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "subjectLabels": [
+        "三具永夜影魔",
+        "退場煙霧"
+      ],
+      "motionAssets": [
+        "semantic:8"
+      ],
+      "originalPlannedFamily": "shadow",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "awakening-thief",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "三具永夜影魔"
+        },
+        {
+          "asset": "awakening-thief",
+          "cell": 3,
+          "grid": [
+            2,
+            2
+          ],
+          "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+          "meaning": "退場煙霧"
+        }
+      ],
+      "supportingMotionAssets": [
+        {
+          "asset": "semantic",
+          "cell": 8,
+          "grid": [
+            3,
+            3
+          ],
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp"
+        }
+      ],
+      "principalArt": {
+        "asset": "awakening-thief",
+        "grid": [
+          2,
+          2
+        ],
+        "cell": 3,
+        "scale": 3.85,
+        "pose": "phantoms",
+        "rays": 14,
+        "trail": "phantoms",
+        "url": "/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "fullColor": true,
+        "renderer": "ordered existing-renderer passes; standalone preview wrapper"
+      }
+    }
+  ],
+  "exclusions": {
+    "liveSkillCatalog": "The existing 196 skills continue through their existing event/renderer path.",
+    "modifiers": "Existing support, talent, origin and equipment modifiers are not awakening skill identities.",
+    "mechanics": "Awakening unlocks, resource costs, damage coefficients, cooldowns, absorption/refund triggers, low-HP thresholds, companion hit caps and higher-level progression remain pending implementation."
+  },
+  "reproduce": {
+    "build": "node worker/tools/build-awakening-vfx-audit.mjs --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+    "check": "node worker/tools/build-awakening-vfx-audit.mjs --check --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json",
+    "nodeTest": "node --test worker/test/awakening-vfx-engine.test.js",
+    "browser": "node worker/tools/awakening-vfx-browser.mjs --base=http://127.0.0.1:9894 --playwright-root=<existing node_modules>"
+  }
+}

@@ -48,6 +48,17 @@
   --sb-nav-plate:url("/ui/button-materials/nav-plate.webp");
   --sb-focus:#b9dfff;
 }
+/* The VFX status toggle joins the same touch-sized control system. */
+#ui.scene-unified-root .scene-live-heading [data-live-collapse]{
+  box-sizing:border-box;flex:0 0 44px;min-width:44px;min-height:44px;
+  border-color:#b99e6b99;background:linear-gradient(145deg,#273a51,#101b2c);
+  box-shadow:inset 0 1px 0 #fff2,inset 0 -2px 0 #050a1399;
+  touch-action:manipulation;-webkit-tap-highlight-color:transparent;
+}
+#ui.scene-unified-root .scene-live-heading [data-live-collapse]:active{
+  background:linear-gradient(145deg,#122032,#21334a);
+  box-shadow:inset 0 2px 3px #0008;
+}
 #ui.scene-unified-root :is(.scene-unified-dialog,.scene-primary-nav,.scene-live-buttons) button{
   --sb-height:46px;--sb-cut:9px;--sb-depth:4px;--sb-press:0px;
   --sb-top:#203751;--sb-bottom:#0b172b;

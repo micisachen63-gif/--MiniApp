@@ -1,0 +1,9 @@
+{
+  "changedAt": "2026-11-05T05:54:21.460Z",
+  "file": "worker/tools/skill-vfx-live-browser.cjs",
+  "beforeSha256": "8a4b3ecbc8f40ae4cece1242619be7405a75fc154f1034299ae9c7d8a7168220",
+  "afterSha256": "f3dd310e25eb1622798772afaa32c90a51389ecc69ae759ee87093966256b1ee",
+  "purpose": "Persist every completed case atomically as in-progress; only final exact-count success with stable source hashes is passed.",
+  "runtimeChanged": false,
+  "originalEvidence": ".release-sync/skill-vfx-semantics-20261105/atlas-live-final/interruption-observation.json"
+}

@@ -1,0 +1,824 @@
+{
+  "id": "recipes-check",
+  "status": "passed",
+  "startedAt": "2026-11-04T10:32:32.894Z",
+  "executable": "C:\\Program Files\\nodejs\\node.EXE",
+  "args": [
+    "worker/tools/build-skill-vfx-recipes.mjs",
+    "--check"
+  ],
+  "cwd": "D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104",
+  "environment": {
+    "CODEX_PRIMARY_RUNTIME_NODE_MODULES": "D:/StarJournal/worktree-snapshots/star-journal-button-polish-20261104/.release-sync/browser-tools/node_modules"
+  },
+  "sourceFilesBefore": [
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "exists": true,
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "exists": true,
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "path": ".release-sync/skill-vfx-targets-20261104/run-delta-evidence.cjs",
+      "exists": true,
+      "bytes": 14733,
+      "sha256": "c39fff1d2b998988c45d39c5a6bb8a7346518755bc3cf1475e5c6bd3edb1ee0c"
+    },
+    {
+      "path": "worker/public/app.js",
+      "exists": true,
+      "bytes": 351310,
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "exists": true,
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/fire-spirit.webp",
+      "exists": true,
+      "bytes": 94338,
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "exists": true,
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "exists": true,
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "exists": true,
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "exists": true,
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/thief-20261015/thief_f/character.webp",
+      "exists": true,
+      "bytes": 2959670,
+      "sha256": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+    },
+    {
+      "path": "worker/public/art/v2/hero_archer_f.webp",
+      "exists": true,
+      "bytes": 60352,
+      "sha256": "7c3a9d61cfd354add5e473925988d0d7f63a8f3892061367e17bf672a9754e8e"
+    },
+    {
+      "path": "worker/public/art/v2/hero_mage_f.webp",
+      "exists": true,
+      "bytes": 69036,
+      "sha256": "37260e865900ccfd27d2004885ea3f6a7be004de2b8a4a8e16e3cbee410048ab"
+    },
+    {
+      "path": "worker/public/art/v2/hero_sword_f.webp",
+      "exists": true,
+      "bytes": 90926,
+      "sha256": "04cb15f3945c4bbf7e9f08fd2b9b7a13afa2d2ee3ada65ac10ef1f82be6c09d0"
+    },
+    {
+      "path": "worker/public/art/v2/mon_bronze_guard.webp",
+      "exists": true,
+      "bytes": 47134,
+      "sha256": "97d9aaa2cc04a3967d1519f89067f57968a3e4aea8506864c6e3605cbdb7fd0e"
+    },
+    {
+      "path": "worker/public/art/v2/mon_temple_statue.webp",
+      "exists": true,
+      "bytes": 46132,
+      "sha256": "6000277f02e712fd334e1d2cf3b946f0f0bde263d1d72af39e4e7db4ff4d9e51"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "exists": true,
+      "bytes": 91192,
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "exists": true,
+      "bytes": 12288,
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "exists": true,
+      "bytes": 22455,
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "exists": true,
+      "bytes": 14162,
+      "sha256": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3"
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "exists": true,
+      "bytes": 3317,
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1"
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "exists": true,
+      "bytes": 48256,
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "exists": true,
+      "bytes": 27868,
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "exists": true,
+      "bytes": 20103,
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "exists": true,
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "exists": true,
+      "bytes": 13565,
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "exists": true,
+      "bytes": 1547282,
+      "sha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 30147,
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "exists": true,
+      "bytes": 16761,
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "exists": true,
+      "bytes": 314182,
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "exists": true,
+      "bytes": 9060,
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "exists": true,
+      "bytes": 15546,
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "exists": true,
+      "bytes": 3586,
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "exists": true,
+      "bytes": 29486,
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "exists": true,
+      "bytes": 8153,
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "exists": true,
+      "bytes": 13891,
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "exists": true,
+      "bytes": 5005,
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "exists": true,
+      "bytes": 20525,
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "exists": true,
+      "bytes": 6581,
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "exists": true,
+      "bytes": 4299,
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "exists": true,
+      "bytes": 19116,
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "exists": true,
+      "bytes": 7349,
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "exists": true,
+      "bytes": 19011,
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "exists": true,
+      "bytes": 29464,
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "exists": true,
+      "bytes": 14052,
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "exists": true,
+      "bytes": 25096,
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a"
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "exists": true,
+      "bytes": 20871,
+      "sha256": "432409c923c7730c71cfd6d59752e76c525f796ea271333b4270e555cf0e6ea4"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "exists": true,
+      "bytes": 42744,
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "exists": true,
+      "bytes": 15653,
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "exists": true,
+      "bytes": 40301,
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "exists": true,
+      "bytes": 31113,
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-harness.js",
+      "exists": true,
+      "bytes": 3547,
+      "sha256": "6a7482536148376a9a4fdce4d81d707ddad8a10ab660ead8277298fb903b1b09"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-browser-evidence.mjs",
+      "exists": true,
+      "bytes": 13437,
+      "sha256": "a682a30325b4f767e1d4f4ec5aa5c1eaf92d0f4bcc3b6b126b77c62ef9a8ac26"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-catalog.mjs",
+      "exists": true,
+      "bytes": 21033,
+      "sha256": "a874b0d4563615baa8fc93072b07151ca633dfa518a77db1446681a17634e2e0"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-coverage.mjs",
+      "exists": true,
+      "bytes": 18534,
+      "sha256": "dd0dbde03c34167cd8c30445c607e3d82eab4c7c6acc48a79ec21f0f6b33d204"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-recipes.mjs",
+      "exists": true,
+      "bytes": 1893,
+      "sha256": "3b61ab3c674f8e2746a5fe03b62d58e47923b94235b88d167498fc3ca23acde8"
+    },
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "exists": true,
+      "bytes": 22080,
+      "sha256": "b5ad0077e174b97898b6b157fc031bd6bd9cf30045eaf438f6bda1dd0c1b57c8"
+    },
+    {
+      "path": "worker/tools/skill-vfx-identity-browser.mjs",
+      "exists": true,
+      "bytes": 29359,
+      "sha256": "b94d2738a5205c05d619ac4cd97e5143a9e6c0ea27ad212a061b3799871cc26b"
+    },
+    {
+      "path": "worker/tools/skill-vfx-legacy-presentation-check.mjs",
+      "exists": true,
+      "bytes": 4605,
+      "sha256": "6e603d9cf7ae260bb1e09f5535d3c31033ef1aba60d39f96d90c871ba7fb9451"
+    },
+    {
+      "path": "worker/tools/skill-vfx-live-browser.cjs",
+      "exists": true,
+      "bytes": 15059,
+      "sha256": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820"
+    }
+  ],
+  "canonicalBefore": [
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "exists": true,
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "exists": true,
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "exists": true,
+      "bytes": 273175,
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "exists": true,
+      "bytes": 818642,
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "exists": true,
+      "bytes": 326090,
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+    }
+  ],
+  "declaredSourceOutputs": [],
+  "declaredCanonicalOutputs": [],
+  "stdout": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stdout.log",
+  "stderr": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.stderr.log",
+  "receipt": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/03-recipes-check.execution.json",
+  "finishedAt": "2026-11-04T10:32:33.010Z",
+  "durationMs": 80,
+  "pid": 48572,
+  "exitCode": 0,
+  "signal": null,
+  "processError": null,
+  "sourceFilesAfter": [
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "exists": true,
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "exists": true,
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "path": ".release-sync/skill-vfx-targets-20261104/run-delta-evidence.cjs",
+      "exists": true,
+      "bytes": 14733,
+      "sha256": "c39fff1d2b998988c45d39c5a6bb8a7346518755bc3cf1475e5c6bd3edb1ee0c"
+    },
+    {
+      "path": "worker/public/app.js",
+      "exists": true,
+      "bytes": 351310,
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "exists": true,
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/fire-spirit.webp",
+      "exists": true,
+      "bytes": 94338,
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "exists": true,
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "exists": true,
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "exists": true,
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "exists": true,
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/thief-20261015/thief_f/character.webp",
+      "exists": true,
+      "bytes": 2959670,
+      "sha256": "78c3f23d8dfb94dfd875b9df67490a9c70172fece8aece5afed51f483252db42"
+    },
+    {
+      "path": "worker/public/art/v2/hero_archer_f.webp",
+      "exists": true,
+      "bytes": 60352,
+      "sha256": "7c3a9d61cfd354add5e473925988d0d7f63a8f3892061367e17bf672a9754e8e"
+    },
+    {
+      "path": "worker/public/art/v2/hero_mage_f.webp",
+      "exists": true,
+      "bytes": 69036,
+      "sha256": "37260e865900ccfd27d2004885ea3f6a7be004de2b8a4a8e16e3cbee410048ab"
+    },
+    {
+      "path": "worker/public/art/v2/hero_sword_f.webp",
+      "exists": true,
+      "bytes": 90926,
+      "sha256": "04cb15f3945c4bbf7e9f08fd2b9b7a13afa2d2ee3ada65ac10ef1f82be6c09d0"
+    },
+    {
+      "path": "worker/public/art/v2/mon_bronze_guard.webp",
+      "exists": true,
+      "bytes": 47134,
+      "sha256": "97d9aaa2cc04a3967d1519f89067f57968a3e4aea8506864c6e3605cbdb7fd0e"
+    },
+    {
+      "path": "worker/public/art/v2/mon_temple_statue.webp",
+      "exists": true,
+      "bytes": 46132,
+      "sha256": "6000277f02e712fd334e1d2cf3b946f0f0bde263d1d72af39e4e7db4ff4d9e51"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "exists": true,
+      "bytes": 91192,
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "exists": true,
+      "bytes": 12288,
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "exists": true,
+      "bytes": 22455,
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "exists": true,
+      "bytes": 14162,
+      "sha256": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3"
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "exists": true,
+      "bytes": 3317,
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1"
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "exists": true,
+      "bytes": 48256,
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "exists": true,
+      "bytes": 27868,
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3"
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "exists": true,
+      "bytes": 20103,
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "exists": true,
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "exists": true,
+      "bytes": 13565,
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "exists": true,
+      "bytes": 1547282,
+      "sha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 30147,
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "exists": true,
+      "bytes": 16761,
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "exists": true,
+      "bytes": 314182,
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "exists": true,
+      "bytes": 9060,
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "exists": true,
+      "bytes": 15546,
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "exists": true,
+      "bytes": 3586,
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016"
+    },
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "exists": true,
+      "bytes": 29486,
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "exists": true,
+      "bytes": 8153,
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "exists": true,
+      "bytes": 13891,
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "exists": true,
+      "bytes": 5005,
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "exists": true,
+      "bytes": 20525,
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "exists": true,
+      "bytes": 6581,
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "exists": true,
+      "bytes": 4299,
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "exists": true,
+      "bytes": 19116,
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "exists": true,
+      "bytes": 7349,
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "exists": true,
+      "bytes": 19011,
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "exists": true,
+      "bytes": 29464,
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "exists": true,
+      "bytes": 14052,
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "exists": true,
+      "bytes": 25096,
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a"
+    },
+    {
+      "path": "worker/src/services/boss.js",
+      "exists": true,
+      "bytes": 20871,
+      "sha256": "432409c923c7730c71cfd6d59752e76c525f796ea271333b4270e555cf0e6ea4"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "exists": true,
+      "bytes": 42744,
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "exists": true,
+      "bytes": 15653,
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/player.js",
+      "exists": true,
+      "bytes": 40301,
+      "sha256": "82f679a68eaecf86b46388935d5040d9a72625d7561d66e1f5a2be8e320bd41c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "exists": true,
+      "bytes": 31113,
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy-harness.js",
+      "exists": true,
+      "bytes": 3547,
+      "sha256": "6a7482536148376a9a4fdce4d81d707ddad8a10ab660ead8277298fb903b1b09"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-browser-evidence.mjs",
+      "exists": true,
+      "bytes": 13437,
+      "sha256": "a682a30325b4f767e1d4f4ec5aa5c1eaf92d0f4bcc3b6b126b77c62ef9a8ac26"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-catalog.mjs",
+      "exists": true,
+      "bytes": 21033,
+      "sha256": "a874b0d4563615baa8fc93072b07151ca633dfa518a77db1446681a17634e2e0"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-coverage.mjs",
+      "exists": true,
+      "bytes": 18534,
+      "sha256": "dd0dbde03c34167cd8c30445c607e3d82eab4c7c6acc48a79ec21f0f6b33d204"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-recipes.mjs",
+      "exists": true,
+      "bytes": 1893,
+      "sha256": "3b61ab3c674f8e2746a5fe03b62d58e47923b94235b88d167498fc3ca23acde8"
+    },
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "exists": true,
+      "bytes": 22080,
+      "sha256": "b5ad0077e174b97898b6b157fc031bd6bd9cf30045eaf438f6bda1dd0c1b57c8"
+    },
+    {
+      "path": "worker/tools/skill-vfx-identity-browser.mjs",
+      "exists": true,
+      "bytes": 29359,
+      "sha256": "b94d2738a5205c05d619ac4cd97e5143a9e6c0ea27ad212a061b3799871cc26b"
+    },
+    {
+      "path": "worker/tools/skill-vfx-legacy-presentation-check.mjs",
+      "exists": true,
+      "bytes": 4605,
+      "sha256": "6e603d9cf7ae260bb1e09f5535d3c31033ef1aba60d39f96d90c871ba7fb9451"
+    },
+    {
+      "path": "worker/tools/skill-vfx-live-browser.cjs",
+      "exists": true,
+      "bytes": 15059,
+      "sha256": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820"
+    }
+  ],
+  "canonicalAfter": [
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "exists": true,
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "exists": true,
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "exists": true,
+      "bytes": 273175,
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "exists": true,
+      "bytes": 818642,
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+    },
+    {
+      "path": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "exists": true,
+      "bytes": 326090,
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+    }
+  ],
+  "reports": [],
+  "sourceChanges": [],
+  "unexpectedSourceChanges": [],
+  "canonicalChanges": [],
+  "unexpectedCanonicalChanges": [],
+  "checks": {
+    "processExitedSuccessfully": true,
+    "stableInputs": true,
+    "canonicalWritesRestricted": true,
+    "declaredReportsPresent": true
+  }
+}

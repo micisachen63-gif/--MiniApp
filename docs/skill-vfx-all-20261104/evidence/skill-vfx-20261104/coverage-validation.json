@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "completedAt": "2026-11-04T08:03:34.498Z",
+  "command": "node --test worker/test/skill-vfx-coverage.test.js worker/test/skill-vfx-browser-evidence.test.js",
+  "scope": "coverage-integrity-and-browser-evidence-normalization",
+  "summary": {
+    "tests": 9,
+    "pass": 9,
+    "fail": 0,
+    "durationMs": 118.101
+  },
+  "stdout": "✔ passing independent mode retains matching producer hashes; received-only events never claim browser playback (15.3046ms)\n✔ stale mode sources and mismatched target observations fail closed (2.1271ms)\n✔ a real deterministic projection may prove drawing but cannot prove a committed write (0.7572ms)\n✔ Atlas evidence binds committed revision, run identity and real release draw before adding all four layers (1.042ms)\n✔ all implemented identities have explicit cast semantics; passive and planned entries never become casts (10.2437ms)\n✔ same visual family does not override real damage, summon, trap or counter mechanics (0.2177ms)\n✔ mixed heal attacks, real ally targets and revival conditions remain explicit (0.1298ms)\n✔ evidence stays individual, layer-specific and mode-specific; source labels are never promoted (3.8753ms)\n✔ stale, unfinished, unknown/planned or fingerprint-free evidence cannot make coverage green (2.9922ms)\nℹ tests 9\nℹ suites 0\nℹ pass 9\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 118.101\n",
+  "sourceFiles": [
+    {
+      "path": "worker/tools/build-skill-vfx-coverage.mjs",
+      "sha256": "dd0dbde03c34167cd8c30445c607e3d82eab4c7c6acc48a79ec21f0f6b33d204"
+    },
+    {
+      "path": "worker/tools/build-skill-vfx-browser-evidence.mjs",
+      "sha256": "a682a30325b4f767e1d4f4ec5aa5c1eaf92d0f4bcc3b6b126b77c62ef9a8ac26"
+    },
+    {
+      "path": "worker/test/skill-vfx-coverage.test.js",
+      "sha256": "679670bc969c51d4c3be5d173a377daaa76cd3d0b974d3ac058c2a9b3eea516d"
+    },
+    {
+      "path": "worker/test/skill-vfx-browser-evidence.test.js",
+      "sha256": "4733f7752dbd35f08eb945fc330d18ebd51a432788803ca8a3b0f5d325c037d7"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    }
+  ]
+}

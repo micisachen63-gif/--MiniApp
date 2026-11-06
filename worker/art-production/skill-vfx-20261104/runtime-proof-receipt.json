@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-04T05:11:28.398014+00:00",
+  "kind": "runtime-source-over-bitmap-qa",
+  "background": "#14202B",
+  "inputs": [
+    {
+      "file": "sword-atlas.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/sword-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "mage-atlas.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/mage-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "archer-atlas.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/archer-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "thief-atlas.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/thief-atlas.webp",
+      "size": [
+        1254,
+        1254
+      ],
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "hawk.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/hawk.webp",
+      "size": [
+        840,
+        840
+      ],
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    },
+    {
+      "file": "fire-spirit.webp",
+      "relativePath": "../../public/art/skill-vfx-20261104/fire-spirit.webp",
+      "size": [
+        840,
+        840
+      ],
+      "sha256": "8cb1eb52a74341f28875250ef20398945b14920c1300ec69a6f90758c6984617",
+      "alphaExtrema": [
+        0,
+        255
+      ]
+    }
+  ],
+  "outputs": [
+    {
+      "file": "cropped-source-over-proof-final.jpg",
+      "size": [
+        2298,
+        1316
+      ],
+      "bytes": 736344,
+      "sha256": "754b04425c51b96faee860ca81543048fec04fad3f81a480df40d133b172f912"
+    },
+    {
+      "file": "summons-source-over-proof.jpg",
+      "size": [
+        1480,
+        904
+      ],
+      "bytes": 232992,
+      "sha256": "39cbeec98a4fa305ba471062857357b4b346ad8cf85ab618d7193243bba13a3d"
+    }
+  ],
+  "runtimeBytesUnchanged": true,
+  "atlasCellCount": 36,
+  "summonCount": 2,
+  "separateFromRawAlphaReview": true,
+  "limitations": [
+    "QA composites decode runtime WebP and resample only these preview sheets.",
+    "These sheets do not assess animation recipes, live combat wiring, or mobile GPU performance.",
+    "Unselected atlas v1 originals are generation history only, not files delivered to this checkout."
+  ]
+}

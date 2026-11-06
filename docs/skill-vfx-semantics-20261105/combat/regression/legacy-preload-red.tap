@@ -1,0 +1,28 @@
+✖ all 184 canonical legacy identities dispatch into the real player using only their explicit descriptor (14.5954ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 221.0727
+
+✖ failing tests:
+
+test at worker\test\skill-vfx-legacy.test.js:17:1
+✖ all 184 canonical legacy identities dispatch into the real player using only their explicit descriptor (14.5954ms)
+  AssertionError [ERR_ASSERTION]: all declared textures must finish preloading
+  
+  false !== true
+  
+      at TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-semantic-integration-20261105/worker/test/skill-vfx-legacy.test.js:22:12)
+      at async Test.run (node:internal/test_runner/test:1113:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: false,
+    expected: true,
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

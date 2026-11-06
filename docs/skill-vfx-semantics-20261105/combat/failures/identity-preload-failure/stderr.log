@@ -1,0 +1,6 @@
+page.evaluate: Error: Failed to prepare VFX
+    at fail (http://127.0.0.1:60292/:14:35)
+    at Object.run (http://127.0.0.1:60292/:95:52)
+    at async <anonymous>:396:30
+    at runCase (D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-semantic-integration-20261105\worker\tools\skill-vfx-identity-browser.mjs:280:31)
+    at D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-semantic-integration-20261105\worker\tools\skill-vfx-identity-browser.mjs:299:22

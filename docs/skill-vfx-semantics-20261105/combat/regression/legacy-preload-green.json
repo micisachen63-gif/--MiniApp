@@ -1,0 +1,44 @@
+{
+  "startedAt": "2026-11-05T05:48:53.427Z",
+  "completedAt": "2026-11-05T05:48:53.997Z",
+  "argv": [
+    "--test",
+    "worker/test/skill-vfx-legacy.test.js"
+  ],
+  "status": 0,
+  "signal": null,
+  "error": null,
+  "before": [
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "sha256": "7ad925f0b7dbc0fabbd2191318654a46a905366ee28d5d43422883818695116c"
+    }
+  ],
+  "after": [
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/test/skill-vfx-legacy.test.js",
+      "sha256": "7ad925f0b7dbc0fabbd2191318654a46a905366ee28d5d43422883818695116c"
+    }
+  ],
+  "diffCheck": {
+    "status": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+}

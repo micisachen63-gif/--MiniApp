@@ -14,6 +14,7 @@ import {makeEliteGear} from '../src/game/gear.js';
 import {makeStarRingGear} from '../src/game/star-ring-gear.js';
 import {mapForLevel} from '../src/game/formulas.js';
 import {rngFor} from '../src/game/rng.js';
+import {assertProjectedCombatMatchesCommitted} from './star-ring-vfx-assertions.js';
 const T=Date.parse('2026-10-18T08:00:00Z');
 const specs=['sword:B2','mage:A1','thief:A1','archer:B1','sword:A1'];
 async function fixture(t,{classes=specs,tier=90,difficulty='normal',start=true,at=T,engineVersion=1}={}){
@@ -49,10 +50,12 @@ test('new expeditions use v2 pools; a defeated species projects the exact next a
 test('v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants',async t=>{
  const{env,db,id,ids}=await fixture(t,{engineVersion:2,tier:40,classes:['sword:A','mage:A','thief:A','archer:B','sword:B']});
  const offline=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);
+ let comparedVfx=0;
  for(let stage=0;stage<6;stage++){
-  for(const beat of [0,37,119,120,177,239]){const p=await R.view(env,id,ids[0],T+stage*E.STAGE_MS+beat*E.BEAT_MS),b=E.simulateStage(offline,stage,beat);assert.deepEqual(p.battle.sightings,b.sightings);assert.deepEqual(p.battle.events,b.events);assert.equal(p.battle.enemy.id,b.enemy.hp===0?E.nextWaveEnemy(offline,b).id:b.enemy.id);}
+  for(const beat of [0,37,119,120,177,239]){const p=await R.view(env,id,ids[0],T+stage*E.STAGE_MS+beat*E.BEAT_MS),b=E.simulateStage(offline,stage,beat);assert.deepEqual(p.battle.sightings,b.sightings);comparedVfx+=assertProjectedCombatMatchesCommitted(p.battle.events,b.events);assert.equal(p.battle.enemy.id,b.enemy.hp===0?E.nextWaveEnemy(offline,b).id:b.enemy.id);}
   offline.results.push(E.simulateStage(offline,stage));offline.stageTactics[stage+1]=offline.tactic;
  }
+ assert.ok(comparedVfx>0,'projection and committed sources are checked on real skill descriptors');
  await R.view(env,id,ids[0],T+E.DURATION);const committed=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);assert.deepEqual(committed.results,JSON.parse(JSON.stringify(offline.results)));assert.equal(db.prepare('SELECT count(*) n FROM rpg_star_ring_rewards').get().n,30);
 });
 test('five accounts depart once per character Taipei date; lobby does not consume quota',async t=>{
@@ -86,7 +89,7 @@ test('a defeated active wave presents the next enemy without changing the v1 sim
  assert.ok(beat<40,'fixture defeats a wave');const p=await R.view(env,id,ids[0],T+beat*E.BEAT_MS);
  assert.equal(p.battle.spawn.wave,result.waves+1);assert.equal(p.battle.spawn.previousHp,0);
  assert.equal(p.battle.enemy.hp,result.enemy.maxHp);assert.equal(p.battle.waves,result.waves);
- assert.deepEqual(p.battle.events,result.events);assert.equal(p.me.rewards.exp,0);
+ assertProjectedCombatMatchesCommitted(p.battle.events,result.events);assert.equal(p.me.rewards.exp,0);
  const again=await R.view(env,id,ids[0],T+beat*E.BEAT_MS+100);assert.deepEqual(again.battle.spawn,p.battle.spawn);
  assert.equal(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json,saved);
  assert.equal(db.prepare('SELECT COUNT(*) n FROM rpg_star_ring_rewards').get().n,0);
@@ -187,7 +190,7 @@ test('continuous waves still have real events after hour one and all six enemies
  const{env,db,id,ids}=await fixture(t),s=JSON.parse(db.prepare('SELECT state_json FROM rpg_star_ring_runs WHERE id=?').get(id).state_json);
  const a=E.simulateStage(s,0,180),b=E.simulateStage(s,0,181);assert.ok(a.waves>0);assert.ok(b.events.length>0);assert.notEqual(a.sequence,b.sequence);
  assert.ok(E.STAGES.every(x=>x.enemyId.startsWith('star_ring_')));assert.equal(new Set(E.STAGES.map(x=>x.enemyId)).size,6);
- const view=await R.view(env,id,ids[0],T+90*60000);assert.equal(view.battle.waves,a.waves);assert.deepEqual(view.battle.events,a.events);
+ const view=await R.view(env,id,ids[0],T+90*60000);assert.equal(view.battle.waves,a.waves);assertProjectedCombatMatchesCommitted(view.battle.events,a.events);
 });
 test('queued tactic is not retroactive and persists per-stage when catching up offline',async t=>{
  const{env,db,id,ids}=await fixture(t);const before=await R.view(env,id,ids[0],T+3600000);
@@ -292,7 +295,7 @@ test('all twelve exact hourly boundaries switch scene, species and art while rew
  for(let stage=0;stage<6;stage++){
   for(let half=0;half<2;half++){
    const hour=stage*2+half,projection=E.simulateStage(offline,stage,half*E.HOUR_BEATS+17),actual=snapshots[hour].battle;
-   assert.equal(actual.hourIndex,hour);assert.deepEqual(actual.events,projection.events);assert.equal(actual.waves,projection.waves);
+   assert.equal(actual.hourIndex,hour);assertProjectedCombatMatchesCommitted(actual.events,projection.events);assert.equal(actual.waves,projection.waves);
    if(projection.enemy.hp===0){assert.equal(actual.spawn.previousHp,0);assert.equal(actual.spawn.wave,projection.waves+1);assert.equal(actual.enemy.hp,projection.enemy.maxHp);}else{assert.equal(actual.spawn,null);assert.equal(actual.enemy.hp,projection.enemy.hp);}
    assert.deepEqual(actual.members.map(m=>m.hp),projection.actors.map(a=>a.hp));
   }

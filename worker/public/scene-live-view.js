@@ -125,7 +125,15 @@
     viewers.forEach(view => view.apply(lastSnapshot));
     syncHudActions(normalize(lastSnapshot));
   }
+  function publishCombatTrace(trace, receiptScene = null) {
+    if (!liveMode()) return Promise.resolve([]);
+    return Promise.all([...viewers].map(view => view.ingestCombatTrace(trace, receiptScene)));
+  }
   global.addEventListener('rpg:scene-state', event => publish(event.detail));
+  global.addEventListener('rpg:combat-trace', event => {
+    const detail = event.detail;
+    if (detail?.trace) void publishCombatTrace(detail.trace, detail.scene).catch(() => {});
+  });
   global.addEventListener('rpg:scene-error', event => {
     if (!liveMode()) return;
     lastSyncError = String(event.detail?.message || '遊戲狀態同步失敗');
@@ -140,11 +148,13 @@
     let disposed = false, model = null, context = '', appearance = null, actorGeneration = 0, mapGeneration = 0, currentMap = '', currentRoom = '', currentRun = '', lastRevision = null;
     let groundReady = false, mapLoading = false, groundImage = null, width = 0, height = 0, actorIssue = '', mapIssue = '', syncError = lastSyncError, assetIssues = new Map(), seenEvents = new Set();
     const doc = global.document;
+    let vfxPlayer = null, vfxBridge = null, vfxCanvas = null, vfxInit = null, vfxIssue = '', vfxLayout = '', vfxLayoutChanges = 0, vfxSize = '', vfxLastTrace = null, vfxTraceSequence = 0;
+    const vfxController = new AbortController();
     doc.documentElement.classList.add('rpg-live-scene');
     const panel = doc.createElement('section'); panel.className = 'scene-live-panel'; panel.id = 'scene-live-status'; panel.setAttribute('aria-label', '出征狀態');
-    panel.innerHTML = '<div class="scene-live-heading"><strong data-live-title></strong><span data-live-sync></span></div><p data-live-progress></p><p data-live-supplies></p><p class="scene-live-warning" data-live-connection role="status" hidden></p><p class="scene-live-warning" data-live-warning role="status"></p><div class="scene-live-buttons"><button type="button" data-live-expedition>星圖派遣</button><button type="button" data-live-characters>選擇角色</button><button type="button" data-live-refresh>同步</button></div><details><summary>已結算紀錄與敵人</summary><p data-live-report></p><ul class="scene-live-enemies" data-live-enemies></ul><ol class="scene-live-events" data-live-events></ol></details>';
+    panel.innerHTML = '<div class="scene-live-heading"><strong data-live-title></strong><span data-live-sync></span><button type="button" data-live-collapse aria-label="收合戰況" aria-expanded="true">▴</button></div><p data-live-progress></p><p data-live-supplies></p><p class="scene-live-warning" data-live-connection role="status" hidden></p><p class="scene-live-warning" data-live-warning role="status"></p><div class="scene-live-buttons"><button type="button" data-live-expedition>星圖派遣</button><button type="button" data-live-characters>選擇角色</button><button type="button" data-live-refresh>同步</button></div><details><summary>已結算紀錄與敵人</summary><p data-live-report></p><ul class="scene-live-enemies" data-live-enemies></ul><ol class="scene-live-events" data-live-events></ol></details>';
     (byId('ui') || doc.body).appendChild(panel);
-    const nodes = Object.fromEntries(['title', 'sync', 'progress', 'supplies', 'connection', 'warning', 'report', 'enemies', 'events', 'expedition', 'characters', 'refresh'].map(key => [key, panel.querySelector('[data-live-' + key + ']')]));
+    const nodes = Object.fromEntries(['title', 'sync', 'progress', 'supplies', 'connection', 'warning', 'report', 'enemies', 'events', 'expedition', 'characters', 'refresh', 'collapse'].map(key => [key, panel.querySelector('[data-live-' + key + ']')]));
     const statusToggle = doc.createElement('button');
     statusToggle.type = 'button'; statusToggle.className = 'scene-live-status-toggle';
     statusToggle.setAttribute('data-live-open-status', ''); statusToggle.setAttribute('aria-haspopup', 'dialog');
@@ -238,11 +248,132 @@
     nodes.expedition.onclick = () => ui.toggle('expedition');
     nodes.characters.onclick = () => ui.toggle('scene-characters');
     nodes.refresh.onclick = () => void refresh();
+
+    // Keep the narrow battlefield visible; details remain one tap away.
+    let panelCollapsed = !!global.matchMedia?.('(max-width: 600px)').matches;
+    function collapsePanel(value) {
+      panelCollapsed = !!value;
+      panel.setAttribute('data-collapsed', String(panelCollapsed));
+      nodes.collapse?.setAttribute('aria-expanded', String(!panelCollapsed));
+      nodes.collapse?.setAttribute('aria-label', panelCollapsed ? '展開戰況' : '收合戰況');
+      if (nodes.collapse) nodes.collapse.textContent = panelCollapsed ? '▾' : '▴';
+    }
+    if (nodes.collapse) nodes.collapse.onclick = () => collapsePanel(!panelCollapsed);
+    collapsePanel(panelCollapsed);
+
     ui.skills?.forEach(skill => { skill.left = 0; skill.el.inert = true; skill.el.setAttribute('aria-disabled', 'true'); });
     byId('buffs')?.replaceChildren();
     const pc = byId('pc')?.getContext('2d'); pc?.clearRect(0, 0, 112, 112);
     hero.setVisible(false); ground?.setVisible(false); hooks.clearDecorations?.(); hpGraphics?.clear(); ui.target(null);
     const current = () => !disposed && liveMode();
+
+    function vfxContext() {
+      return model?.active && model.run?.id ? {
+        accountId: String(model.snapshot.accountId), realmId: model.snapshot.realmId,
+        characterId: String(model.snapshot.characterId), dispatchId: String(model.run.id),
+      } : null;
+    }
+    function vfxRoom() {
+      return model?.active ? { mapIndex: model.run.mapIndex, roomIndex: model.run.roomIndex } : null;
+    }
+    function projectVfxPoint(value) {
+      const camera = scene.cameras.main, gameCanvas = scene.game.canvas;
+      if (!vfxCanvas || !gameCanvas || !value || !Number.isFinite(value.x) || !Number.isFinite(value.y)) return null;
+      const source = gameCanvas.getBoundingClientRect(), overlay = vfxCanvas.getBoundingClientRect();
+      if (source.width <= 0 || source.height <= 0 || scene.scale.width <= 0 || scene.scale.height <= 0) return null;
+      const px = value.x - camera.scrollX, py = value.y - camera.scrollY;
+      const point = camera.matrix?.transformPoint(px, py) || { x: camera.x + px * camera.zoom, y: camera.y + py * camera.zoom };
+      return { x: source.left - overlay.left + point.x * source.width / scene.scale.width,
+        y: source.top - overlay.top + point.y * source.height / scene.scale.height };
+    }
+    function resolveVfxGeometry(event, { placement } = {}) {
+      if (!model?.active || event.mapIndex !== model.run.mapIndex || event.roomIndex !== model.run.roomIndex) return null;
+      // Wait only for real snapshot entities with a known art mapping. There is
+      // no synthetic point for a removed target or an unsupported source.
+      const expected = event.targetIds.map(targetId => model.enemies.find(enemy => enemy.id === targetId));
+      if (expected.some(enemy => !enemy || !enemyAsset(model.map, enemy))) return null;
+      if (!mapAsset(model.map)) return null;
+      if (!groundReady || !animator.ready || !hero.visible) {
+        return appearance && (mapLoading || groundReady) ? { pending: true } : null;
+      }
+      const from = projectVfxPoint({ x: hero.x, y: hero.y });
+      if (!from) return null;
+      if (placement) return event.targetIds.length === 0 ? { from, to: { ...from }, targets: [], direction: animator.direction } : null;
+      const targets = [], sprites = [];
+      for (const targetId of event.targetIds) {
+        const entity = entities.get(currentRoom + ':' + targetId), sprite = entity?.sprite;
+        // A current, still-rendered death pose has a real location. Removed or
+        // previous-room enemies have none and must never receive invented hits.
+        if (!sprite?.active || !sprite.visible || !sprite.frame?.data?.sourceSize) return entity?.loading && entity.enemy.hp > 0 ? { pending: true } : null;
+        const bounds = sprite.getBounds();
+        if (!bounds || ![bounds.x, bounds.y, bounds.width, bounds.height].every(Number.isFinite)) return null;
+        const target = projectVfxPoint({ x: bounds.x + bounds.width / 2, y: bounds.y + bounds.height / 2 });
+        if (!target) return null;
+        targets.push(target); sprites.push(sprite);
+      }
+      if (!targets.length) return null;
+      return { from, to: targets[0], targets, facing: { dx: sprites[0].x - hero.x, dy: sprites[0].y - hero.y } };
+    }
+    function syncVfxCanvas() {
+      if (!vfxCanvas || !vfxPlayer) return;
+      const canvas = scene.game.canvas, box = canvas.getBoundingClientRect(), parent = canvas.parentElement.getBoundingClientRect();
+      vfxCanvas.style.left = (box.left - parent.left) + 'px'; vfxCanvas.style.top = (box.top - parent.top) + 'px';
+      vfxCanvas.style.width = box.width + 'px'; vfxCanvas.style.height = box.height + 'px';
+      const size = [box.width, box.height, global.devicePixelRatio || 1].join(':');
+      if (size !== vfxSize) {
+        if (vfxSize) vfxBridge?.clear('viewport-changed');
+        vfxSize = size; vfxPlayer.resize(box.width, box.height);
+      }
+    }
+    function ensureVfx() {
+      if (vfxInit) return vfxInit;
+      vfxInit = (async () => {
+        const [{ createVfxPlayer }, { createActorVfxBridge }, response] = await Promise.all([
+          import('/skill-vfx-engine.mjs'), import('/skill-vfx-actor-bridge.mjs'),
+          global.fetch('/skill-vfx-catalog.json', { signal: vfxController.signal, credentials: 'same-origin' }),
+        ]);
+        if (!response.ok) throw Error('技能目錄尚未載入');
+        const catalog = await response.json();
+        if (!current() || vfxController.signal.aborted) return null;
+        const host = scene.game.canvas?.parentElement;
+        if (!host) throw Error('技能畫布尚未就緒');
+        vfxCanvas = doc.createElement('canvas'); vfxCanvas.className = 'scene-live-skill-vfx'; vfxCanvas.dataset.sceneSkillVfx = 'true';
+        vfxCanvas.setAttribute('aria-hidden', 'true');
+        Object.assign(vfxCanvas.style, { position: 'absolute', pointerEvents: 'none', zIndex: '2' });
+        host.appendChild(vfxCanvas);
+        vfxPlayer = createVfxPlayer(vfxCanvas, { catalog, assetBase: '/art/skill-vfx-20261104/', maxActive: 8, quality: 'high' });
+        syncVfxCanvas();
+        vfxBridge = createActorVfxBridge({
+          player: vfxPlayer, animator, hero, getContext: vfxContext, getRoom: vfxRoom,
+          getActorId: () => appearance || animator.actor?.id,
+          getBodyHeight: () => Math.abs(hero.scaleY) * 300,
+          resolveGeometry: resolveVfxGeometry, projectPoint: projectVfxPoint,
+          profilesUrl: '/skill-vfx-actor-profiles.json', document: doc,
+        });
+        vfxBridge.syncContext(); vfxIssue = '';
+        return vfxBridge;
+      })().catch(error => {
+        if (current()) vfxIssue = error.message || '技能呈現尚未就緒';
+        vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove();
+        vfxBridge = null; vfxPlayer = null; vfxCanvas = null;
+        return null;
+      });
+      return vfxInit;
+    }
+    async function ingestCombatTrace(trace, receiptScene = null) {
+      const sequence = ++vfxTraceSequence;
+      if (!current() || (receiptScene && model?.snapshot !== receiptScene)) return { accepted: false, reason: 'scene-changed', results: [] };
+      const bridge = await ensureVfx();
+      if (!current() || !bridge || (receiptScene && model?.snapshot !== receiptScene)) return { accepted: false, reason: bridge ? 'scene-changed' : 'vfx-not-ready', results: [] };
+      const result = await bridge.ingestTrace(trace);
+      if (sequence === vfxTraceSequence) vfxLastTrace = {
+        revision: trace?.revision, dispatchId: trace?.context?.dispatchId, eventCount: trace?.events?.length || 0,
+        accepted: result.accepted, reason: result.reason || null, results: result.results,
+      };
+      return result;
+    }
+    function pauseVfx() { vfxBridge?.clear('scene-paused'); }
+
     function refreshHud() {
       if (!current()) return;
       const value = model, health = value?.hero;
@@ -328,19 +459,37 @@
         ground.setOrigin(0).setScale(scale); hooks.setWorld(world); camera.setBounds(0, 0, world.w, world.h);
       }
       const world = hooks.getWorld(); hero.setPosition(world.w / 2, world.h * .6);
-      const alive = [...entities.values()].filter(entity => entity.sprite?.active);
-      alive.forEach((entity, index) => {
-        const angle = -Math.PI + (index + 1) / (alive.length + 1) * Math.PI, radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
-        entity.sprite.setPosition(hero.x + Math.cos(angle) * radius, hero.y + Math.sin(angle) * radius * .7);
-        entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(entity.sprite.x > hero.x).setDepth(entity.sprite.y);
+      // Reserve positions for the whole committed encounter, including art
+      // still loading. Materializing one sprite must not move the others or
+      // invalidate a real cast waiting for its target's geometry.
+      const roster = [...entities.values()];
+      const slots = roster.map((entity, index) => {
+        const angle = -Math.PI + (index + 1) / (roster.length + 1) * Math.PI;
+        const radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
+        return { entity, x: hero.x + Math.cos(angle) * Math.min(radius, width * .3),
+          y: hero.y + Math.sin(angle) * radius * .7 };
       });
+      for (const { entity, x, y } of slots) {
+        if (!entity.sprite?.active) continue;
+        entity.sprite.setPosition(x, y);
+        entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(x > hero.x).setDepth(y);
+      }
       // A committed snapshot repositions the whole encounter at once. The art
       // demo's lerped follow otherwise leaves actors off-screen after map/size
       // changes even though their world coordinates and visibility are valid.
       camera.stopFollow().centerOn(hero.x, hero.y);
       hero.setDepth(hero.y); drawBars(); scheduleStatusLayout();
+      const layoutKey = JSON.stringify([width, height, world.w, world.h, hero.x, hero.y, slots.map(slot => [slot.entity.enemy.id, slot.x, slot.y])]);
+      // setMap already invalidates the old scene. The first ready background
+      // establishes this map's real geometry; pending casts may then resolve it.
+      if (groundReady) {
+        if (vfxLayout && vfxLayout !== layoutKey) { vfxLayoutChanges++; vfxBridge?.clear('layout-changed'); }
+        vfxLayout = layoutKey;
+      }
+      syncVfxCanvas();
     }
     function setMap(map) {
+      vfxBridge?.clear('map-changed'); vfxLayout = '';
       ++mapGeneration; currentMap = map ? [map.id, map.themeId, map.kind].join(':') : ''; currentRoom = ''; assetIssues.clear(); releaseAssets(); mapIssue = '';
       if (!map) { layout(); return; }
       const asset = mapAsset(map), generation = mapGeneration;
@@ -394,7 +543,7 @@
     }
     function reconcileEnemies() {
       const room = model?.active ? [model.run.id, model.run.mapIndex, model.run.roomIndex].join(':') : '';
-      if (room !== currentRoom) { for (const entity of entities.values()) entity.sprite?.destroy(); entities.clear(); assetIssues.clear(); currentRoom = room; }
+      if (room !== currentRoom) { vfxBridge?.clear('room-changed'); for (const entity of entities.values()) entity.sprite?.destroy(); entities.clear(); assetIssues.clear(); currentRoom = room; }
       const wanted = new Set();
       for (const enemy of model?.enemies || []) {
         const key = room + ':' + enemy.id, asset = enemyAsset(model.map, enemy); wanted.add(key);
@@ -419,6 +568,7 @@
       if (target) ui.target(target.name, target.rank === 'normal' ? 'minion' : target.rank, clamp(target.hp / Math.max(1, target.maxHp))); else ui.target(null);
     }
     function clearActor() {
+      vfxBridge?.clear('actor-changed');
       ++actorGeneration; appearance = null; hooks.resetReadability?.();
       if (hero.active !== false) { hero.anims?.stop(); hero.setVisible(false); if (scene.textures.exists('hero_idle')) hero.setTexture('hero_idle'); }
       animator.destroy(); pc?.clearRect(0, 0, 112, 112);
@@ -434,7 +584,7 @@
         if (!loaded) { appearance = null; hero.setVisible(false); actorIssue = '此角色素材尚未交付或載入失敗'; status(); return; }
         const directions = Object.keys(animator.clips.idle || {}), direction = directions.includes('down') ? 'down' : directions.includes('right') ? 'right' : directions[0];
         if (!direction || !animator.play('idle', direction, true)) { appearance = null; animator.ready = false; hero.setVisible(false); actorIssue = '此角色待機素材尚未交付'; }
-        else { actorIssue = ''; hero.setVisible(true); animator.update(0); }
+        else { actorIssue = ''; hero.setVisible(true); animator.update(0); vfxBridge?.syncContext(); }
         status();
       }).catch(() => { if (current() && generation === actorGeneration) { appearance = null; hero.setVisible(false); actorIssue = '此角色素材尚未交付或載入失敗'; status(); } });
     }
@@ -442,7 +592,7 @@
       if (!current()) return;
       const next = normalize(snapshot);
       if (!next) {
-        model = null; context = ''; currentRun = ''; currentRoom = ''; lastRevision = null; seenEvents.clear(); clearActor(); setMap(null); actorIssue = ''; status(); return;
+        model = null; context = ''; currentRun = ''; currentRoom = ''; lastRevision = null; seenEvents.clear(); clearActor(); setMap(null); vfxBridge?.syncContext(); actorIssue = ''; status(); return;
       }
       const changedContext = context !== next.context;
       if (changedContext) { clearActor(); context = next.context; currentRun = ''; lastRevision = null; seenEvents.clear(); }
@@ -461,7 +611,7 @@
         seenEvents.add(event.id);
       }
       if (seenEvents.size > 96) seenEvents = new Set(events.map(event => event.id));
-      reconcileEnemies(); status();
+      reconcileEnemies(); vfxBridge?.syncContext(); status();
     }
     function minimap() {
       const canvas = byId('minic'), ctx = canvas?.getContext('2d'); if (!ctx) return;
@@ -489,14 +639,17 @@
       return { canvas, world: { width: world.w, height: world.h }, camera: { viewport: { x: camera.x, y: camera.y, width: camera.width, height: camera.height }, worldView: box(camera.worldView), scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom }, hero: spriteBounds(hero), enemies: [...entities.values()].filter(entity => entity.sprite?.active).map(entity => ({ id: entity.enemy.id, ...spriteBounds(entity.sprite) })), hud: box(byId('bottom')?.getBoundingClientRect?.()) };
     }
     const view = {
-      apply, mountStatus, refreshHUD: refreshHud,
+      apply, mountStatus, refreshHUD: refreshHud, ingestCombatTrace,
       showSyncError(message) { syncError = message; status(); },
-      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } hooks.clearDecorations?.(); minimap(); },
-      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry() }; },
-      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
+      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); },
+      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
+      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
     };
+    const pagehideVfx = () => view.dispose();
     viewers.add(view); scene.events?.once('shutdown', () => view.dispose());
+    scene.events?.on('pause', pauseVfx); scene.events?.on('sleep', pauseVfx); global.addEventListener('pagehide', pagehideVfx, { once: true });
     view.apply(global.RpgSceneSession?.getSnapshot?.() || lastSnapshot);
+    void ensureVfx();
     return view;
   }
   function mountStatus(body) {
@@ -666,5 +819,5 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
 })(window);

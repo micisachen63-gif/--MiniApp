@@ -103,4 +103,14 @@ html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.sc
 }
 @media(orientation:landscape) and (max-height:500px) {
   .rpg-live-scene .scene-live-status-toggle { top:80px;width:230px; }
+
+/* VFX controls kept below the committed HUD viewport rules. */
+.scene-live-heading [data-live-collapse] { flex: 0 0 28px; min-height: 28px; padding: 0; border: 1px solid #9e89614d; border-radius: 6px; background: #18212bd9; color: #ead19b; font: 16px/1 sans-serif; cursor: pointer; }
+.scene-live-heading [data-live-collapse]:focus-visible { outline: 2px solid #c4a36a; outline-offset: 2px; }
+.scene-live-panel[data-collapsed="true"] > :not(.scene-live-heading) { display: none; }
+.rpg-live-scene .scene-live-panel[data-collapsed="true"] { background: rgba(10, 15, 22, .58); padding: 4px 8px; }
+@media (max-width: 600px) {
+  .scene-live-heading [data-live-sync] { display: none; }
+  .scene-live-heading strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .scene-live-heading [data-live-collapse] { flex-basis: 32px; min-height: 32px; }
 }

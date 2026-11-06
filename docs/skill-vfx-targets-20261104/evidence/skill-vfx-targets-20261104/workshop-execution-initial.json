@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-04T10:28:50.014Z",
+  "before": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-preview.mjs": "ef3150c8c6dee228fcd55e6a3218493bbc6daa4b4404b1cfb834ed9ed5b8c421",
+    "worker/public/skill-vfx-preview.css": "55af864d32bddfc0ef4ddf0ddc685ef0fcce5fa2982798db641e92b621aa0ed8",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a",
+    "worker/tools/skill-vfx-target-browser.cjs": "21af05064415dacd1b55c81abd6d89d1e6599351a39c2318fa0b7db797a6c019",
+    "worker/tools/skill-vfx-browser.cjs": "0a319d73f742ae7b36a4017e666059a998400ff9ac1ff91e452b4ead6b9397d1"
+  },
+  "steps": [
+    {
+      "name": "recipes-check",
+      "args": [
+        "worker/tools/build-skill-vfx-recipes.mjs",
+        "--check"
+      ],
+      "startedAt": "2026-11-04T10:28:50.018Z",
+      "finishedAt": "2026-11-04T10:28:50.108Z",
+      "exitCode": 0,
+      "signal": null,
+      "error": null
+    },
+    {
+      "name": "targets-browser",
+      "args": [
+        "worker/tools/skill-vfx-target-browser.cjs"
+      ],
+      "startedAt": "2026-11-04T10:28:50.111Z",
+      "finishedAt": "2026-11-04T10:28:54.814Z",
+      "exitCode": 1,
+      "signal": null,
+      "error": null
+    }
+  ],
+  "after": {
+    "worker/public/skill-vfx-engine.mjs": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+    "worker/public/skill-vfx-catalog.json": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+    "worker/public/skill-vfx-recipes.json": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+    "worker/public/skill-vfx-preview.mjs": "ef3150c8c6dee228fcd55e6a3218493bbc6daa4b4404b1cfb834ed9ed5b8c421",
+    "worker/public/skill-vfx-preview.css": "55af864d32bddfc0ef4ddf0ddc685ef0fcce5fa2982798db641e92b621aa0ed8",
+    "worker/public/preview-skill-vfx.html": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a",
+    "worker/tools/skill-vfx-target-browser.cjs": "21af05064415dacd1b55c81abd6d89d1e6599351a39c2318fa0b7db797a6c019",
+    "worker/tools/skill-vfx-browser.cjs": "0a319d73f742ae7b36a4017e666059a998400ff9ac1ff91e452b4ead6b9397d1"
+  },
+  "sourceStable": true,
+  "finishedAt": "2026-11-04T10:28:54.816Z",
+  "passed": false
+}

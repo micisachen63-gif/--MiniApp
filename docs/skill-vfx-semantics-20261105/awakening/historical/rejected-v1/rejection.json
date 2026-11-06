@@ -1,0 +1,69 @@
+{
+  "status": "rejected-v1",
+  "retainedAt": "2026-11-05T06:03:24.943Z",
+  "reason": "User rejected insufficiently ornate awakening visuals and requested dedicated art assets.",
+  "browserMatrixExecuted": false,
+  "finalApproved": false,
+  "files": [
+    {
+      "source": "worker/public/awakening-vfx-data.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-data.mjs",
+      "bytes": 6790,
+      "sha256": "bb44e3fd062f92790f1c85a4dacd7d3fc355e51c299013194cbbeef820d6d389"
+    },
+    {
+      "source": "worker/public/awakening-vfx-engine.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-engine.mjs",
+      "bytes": 16709,
+      "sha256": "3cd8a19a1f19cd477ec0efc25a27ee4c082ae2068d34013917d6ea9cff256a52"
+    },
+    {
+      "source": "worker/public/awakening-vfx-preview.html",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-preview.html",
+      "bytes": 5998,
+      "sha256": "932e56e1bdcc2c14103816ebf41e768f3261071b369e44f98ab60e3866df72df"
+    },
+    {
+      "source": "worker/public/awakening-vfx-preview.css",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-preview.css",
+      "bytes": 14565,
+      "sha256": "e4f45e76785890b334c99fd122f8f0dcfc169072c34fd1da905a7818635b1444"
+    },
+    {
+      "source": "worker/public/awakening-vfx-preview.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-preview.mjs",
+      "bytes": 10641,
+      "sha256": "e90c05de3d7e2d77db814d8380a04f66a3b4bee35f7072bfca1a12df32d191d6"
+    },
+    {
+      "source": "worker/public/awakening-vfx-audit.json",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-audit.json",
+      "bytes": 33489,
+      "sha256": "82efe2e90610f0cf90883f1432ea682e3a47b820c1be3e9e261bd24c30695500"
+    },
+    {
+      "source": "worker/tools/awakening-vfx-preview-server.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-preview-server.mjs",
+      "bytes": 2689,
+      "sha256": "ff27210380b22d91fdd281e3eb78c711bc77e8a818be625fcec374f6c6e10bb4"
+    },
+    {
+      "source": "worker/tools/build-awakening-vfx-audit.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/build-awakening-vfx-audit.mjs",
+      "bytes": 6767,
+      "sha256": "6a89d03534a795902531e9e25d83b42c00b0364bf2d1a0f1bb798304393e7e7a"
+    },
+    {
+      "source": "worker/tools/awakening-vfx-browser.mjs",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-browser.mjs",
+      "bytes": 13865,
+      "sha256": "1cde85460d912377ec096a565327d9287ae1fc92a67e71b3303c338369c3a06e"
+    },
+    {
+      "source": "worker/test/awakening-vfx-engine.test.js",
+      "snapshot": ".release-sync/awakening-vfx-20261105/rejected-v1/awakening-vfx-engine.test.js",
+      "bytes": 5744,
+      "sha256": "740ed7faec57b1d5b24cfdd4e7ad029127e68e4d6fce87ed719581a6bf573494"
+    }
+  ]
+}

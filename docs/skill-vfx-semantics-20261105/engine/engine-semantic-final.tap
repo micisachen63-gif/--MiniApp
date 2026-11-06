@@ -1,0 +1,370 @@
+TAP version 13
+# Subtest: catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+ok 1 - catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+  ---
+  duration_ms: 4.5184
+  type: 'test'
+  ...
+# Subtest: all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+ok 2 - all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+  ---
+  duration_ms: 386.8356
+  type: 'test'
+  ...
+# Subtest: clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+ok 3 - clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+  ---
+  duration_ms: 25.9629
+  type: 'test'
+  ...
+# Subtest: directional projectiles actually travel toward the selected direction at a common body scale
+ok 4 - directional projectiles actually travel toward the selected direction at a common body scale
+  ---
+  duration_ms: 0.394
+  type: 'test'
+  ...
+# Subtest: pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+ok 5 - pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+  ---
+  duration_ms: 6.8255
+  type: 'test'
+  ...
+# Subtest: damaging shield and time skills retain a visible target impact rather than only a caster ornament
+ok 6 - damaging shield and time skills retain a visible target impact rather than only a caster ornament
+  ---
+  duration_ms: 0.6862
+  type: 'test'
+  ...
+# Subtest: beasts and summons stay upright in every direction and mirror only when traveling left
+ok 7 - beasts and summons stay upright in every direction and mirror only when traveling left
+  ---
+  duration_ms: 5.5895
+  type: 'test'
+  ...
+# Subtest: draw plans use valid atlas rectangles and leave the canvas save stack balanced
+ok 8 - draw plans use valid atlas rectangles and leave the canvas save stack balanced
+  ---
+  duration_ms: 0.4306
+  type: 'test'
+  ...
+# Subtest: clear prevents a cast waiting on an atlas from reappearing after character changes
+ok 9 - clear prevents a cast waiting on an atlas from reappearing after character changes
+  ---
+  duration_ms: 1.1199
+  type: 'test'
+  ...
+# Subtest: a later manual frame supersedes an earlier atlas load without stale redraw
+ok 10 - a later manual frame supersedes an earlier atlas load without stale redraw
+  ---
+  duration_ms: 1.0254
+  type: 'test'
+  ...
+# Subtest: player capacity bounds concurrent casts and reuses only one atlas load per class
+ok 11 - player capacity bounds concurrent casts and reuses only one atlas load per class
+  ---
+  duration_ms: 1.8013
+  type: 'test'
+  ...
+# Subtest: invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+ok 12 - invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+  ---
+  duration_ms: 2.3721
+  type: 'test'
+  ...
+# Subtest: destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+ok 13 - destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+  ---
+  duration_ms: 0.6432
+  type: 'test'
+  ...
+# Subtest: destroy also cancels a manual frame awaiting its atlas without reporting an application error
+ok 14 - destroy also cancels a manual frame awaiting its atlas without reporting an application error
+  ---
+  duration_ms: 0.4892
+  type: 'test'
+  ...
+# Subtest: hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+ok 15 - hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+  ---
+  duration_ms: 1.9181
+  type: 'test'
+  ...
+# Subtest: late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+ok 16 - late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+  ---
+  duration_ms: 0.4697
+  type: 'test'
+  ...
+# Subtest: recorded passive hits render only actual targets without another summon or caster charge
+ok 17 - recorded passive hits render only actual targets without another summon or caster charge
+  ---
+  duration_ms: 0.3178
+  type: 'test'
+  ...
+# Subtest: trap placement has no remote enemy impact and remains independent of unknown target coordinates
+ok 18 - trap placement has no remote enemy impact and remains independent of unknown target coordinates
+  ---
+  duration_ms: 0.3813
+  type: 'test'
+  ...
+# Subtest: release-aligned playback uses effective duration including reduced motion
+ok 19 - release-aligned playback uses effective duration including reduced motion
+  ---
+  duration_ms: 0.792
+  type: 'test'
+  ...
+# Subtest: impact and placement clips are bounded and account for asset loading and presentation delay
+ok 20 - impact and placement clips are bounded and account for asset loading and presentation delay
+  ---
+  duration_ms: 0.7462
+  type: 'test'
+  ...
+# Subtest: trap placement stays centered on the supplied foot point at every body scale and facing
+ok 21 - trap placement stays centered on the supplied foot point at every body scale and facing
+  ---
+  duration_ms: 0.5221
+  type: 'test'
+  ...
+# Subtest: non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+ok 22 - non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+  ---
+  duration_ms: 1.968
+  type: 'test'
+  ...
+# Subtest: ancillary support on a direct attack has support geometry only at the supplied beneficiary
+ok 23 - ancillary support on a direct attack has support geometry only at the supplied beneficiary
+  ---
+  duration_ms: 0.7025
+  type: 'test'
+  ...
+# Subtest: named wolves, star spirits, abyss spirits, trees and the nether gate select visible cropped subjects
+ok 24 - named wolves, star spirits, abyss spirits, trees and the nether gate select visible cropped subjects
+  ---
+  duration_ms: 8.6584
+  type: 'test'
+  ...
+# Subtest: war banner and smoke doubles survive defensive kind routing and stay on their beneficiary
+ok 25 - war banner and smoke doubles survive defensive kind routing and stay on their beneficiary
+  ---
+  duration_ms: 2.063
+  type: 'test'
+  ...
+# Subtest: two-shot sends two visible arrows to one authoritative recipient without inventing another target
+ok 26 - two-shot sends two visible arrows to one authoritative recipient without inventing another target
+  ---
+  duration_ms: 1.3616
+  type: 'test'
+  ...
+# Subtest: spinning blades rotate and return while star-blade rain descends from above the actual target
+ok 27 - spinning blades rotate and return while star-blade rain descends from above the actual target
+  ---
+  duration_ms: 0.8569
+  type: 'test'
+  ...
+# Subtest: custom spinning blades and blade rain reserve contacts for all 32 targets before ornaments
+ok 28 - custom spinning blades and blade rain reserve contacts for all 32 targets before ornaments
+  ---
+  duration_ms: 2.9379
+  type: 'test'
+  ...
+# Subtest: void tears differ from clockwork and damaging fountain or smoke routes keep true impacts
+ok 29 - void tears differ from clockwork and damaging fountain or smoke routes keep true impacts
+  ---
+  duration_ms: 1.4293
+  type: 'test'
+  ...
+# Subtest: reduced motion handles almost-transparent semantic sprites and keeps one static silhouette per recipient
+ok 30 - reduced motion handles almost-transparent semantic sprites and keeps one static silhouette per recipient
+  ---
+  duration_ms: 0.6393
+  type: 'test'
+  ...
+# Subtest: semantic sheet subjects are cropped to the correct 418px cell while original single-image companions remain whole
+ok 31 - semantic sheet subjects are cropped to the correct 418px cell while original single-image companions remain whole
+  ---
+  duration_ms: 1.025
+  type: 'test'
+  ...
+# Subtest: blood, holy and ice colors recolor actual bitmap cells with luminance and original alpha, and reuse the bounded cache
+ok 32 - blood, holy and ice colors recolor actual bitmap cells with luminance and original alpha, and reuse the bounded cache
+  ---
+  duration_ms: 23.9957
+  type: 'test'
+  ...
+# Subtest: a semantic texture pending during clear or destroy cannot resurrect an obsolete cast
+ok 33 - a semantic texture pending during clear or destroy cannot resurrect an obsolete cast
+  ---
+  duration_ms: 4.8885
+  type: 'test'
+  ...
+# Subtest: every implemented skill has an authored, canonically named visual profile
+ok 34 - every implemented skill has an authored, canonically named visual profile
+  ---
+  duration_ms: 4.624
+  type: 'test'
+  ...
+# Subtest: wolves, hawks, star spirits, abyssal summons and forest ancestors keep the named subject
+ok 35 - wolves, hawks, star spirits, abyssal summons and forest ancestors keep the named subject
+  ---
+  duration_ms: 0.2828
+  type: 'test'
+  ...
+# Subtest: named double shots, orbiting knives and blade rain request different movement
+ok 36 - named double shots, orbiting knives and blade rain request different movement
+  ---
+  duration_ms: 0.1923
+  type: 'test'
+  ...
+# Subtest: defensive skills retain ice, banner, smoke, decoy and mirror identities
+ok 37 - defensive skills retain ice, banner, smoke, decoy and mirror identities
+  ---
+  duration_ms: 0.1532
+  type: 'test'
+  ...
+# Subtest: void, time, gates, lunar explosions and ground impacts have their named shape
+ok 38 - void, time, gates, lunar explosions and ground impacts have their named shape
+  ---
+  duration_ms: 0.2046
+  type: 'test'
+  ...
+# Subtest: blood themes and paired fourth-tier sword branches do not collapse to the same presentation
+ok 39 - blood themes and paired fourth-tier sword branches do not collapse to the same presentation
+  ---
+  duration_ms: 0.3336
+  type: 'test'
+  ...
+# Subtest: the renderer contract uses bounded, exercised tokens and rejects uncatalogued identities
+ok 40 - the renderer contract uses bounded, exercised tokens and rejects uncatalogued identities
+  ---
+  duration_ms: 0.9316
+  type: 'test'
+  ...
+# Subtest: pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 41 - pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 11.8396
+  type: 'test'
+  ...
+# Subtest: snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 42 - snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 3.2269
+  type: 'test'
+  ...
+# Subtest: fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 43 - fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 2.7559
+  type: 'test'
+  ...
+# Subtest: piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+ok 44 - piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+  ---
+  duration_ms: 5.4882
+  type: 'test'
+  ...
+# Subtest: volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 45 - volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 33.3809
+  type: 'test'
+  ...
+# Subtest: volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 46 - volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 44.1763
+  type: 'test'
+  ...
+# Subtest: volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 47 - volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 18.1682
+  type: 'test'
+  ...
+# Subtest: volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 48 - volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 31.2076
+  type: 'test'
+  ...
+# Subtest: lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 49 - lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 15.0652
+  type: 'test'
+  ...
+# Subtest: lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 50 - lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 13.1717
+  type: 'test'
+  ...
+# Subtest: lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 51 - lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 15.5943
+  type: 'test'
+  ...
+# Subtest: lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 52 - lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 40.9403
+  type: 'test'
+  ...
+# Subtest: volley primary contact follows its declared .57 impact phase even with a large actual target set
+ok 53 - volley primary contact follows its declared .57 impact phase even with a large actual target set
+  ---
+  duration_ms: 3.519
+  type: 'test'
+  ...
+# Subtest: explicit single, pair and empty target sets never create an extra volley or lightning destination
+ok 54 - explicit single, pair and empty target sets never create an extra volley or lightning destination
+  ---
+  duration_ms: 0.9033
+  type: 'test'
+  ...
+# Subtest: exact duplicate destinations are normalized before volley and lightning distribution
+ok 55 - exact duplicate destinations are normalized before volley and lightning distribution
+  ---
+  duration_ms: 4.0587
+  type: 'test'
+  ...
+# Subtest: impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 56 - impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 3.1392
+  type: 'test'
+  ...
+# Subtest: reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 57 - reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 3.1048
+  type: 'test'
+  ...
+# Subtest: reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 58 - reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 2.6674
+  type: 'test'
+  ...
+# Subtest: impact and reduced-motion rendering honor empty and deduplicated actual target lists
+ok 59 - impact and reduced-motion rendering honor empty and deduplicated actual target lists
+  ---
+  duration_ms: 0.9159
+  type: 'test'
+  ...
+# Subtest: local support, trap placement and non-damaging summon never expand onto remote targets
+ok 60 - local support, trap placement and non-damaging summon never expand onto remote targets
+  ---
+  duration_ms: 2.3676
+  type: 'test'
+  ...
+1..60
+# tests 60
+# suites 0
+# pass 60
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 548.4779
