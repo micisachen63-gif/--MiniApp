@@ -80,6 +80,30 @@
     if (value.maxLevel === true && value.required === null) return value;
     return value.maxLevel === false && number(value.required) !== null && value.required > 0 ? value : null;
   }
+  function experienceLabel(value) {
+    const progress = experienceProgress(value);
+    if (!progress) return 'EXP 待同步';
+    if (progress.maxLevel) return 'EXP 已達滿級';
+    return 'EXP ' + (progress.ratio * 100).toFixed(1) + '% · ' + pretty(progress.current) + ' / ' + pretty(progress.required);
+  }
+  function syncHudExperience(model, ui = global.UI, syncError = '') {
+    const value = model?.live?.experience, progress = experienceProgress(value), xp = byId('xp');
+    const authority = progress ? (syncError ? 'stale' : 'committed') : 'unknown';
+    const label = (authority === 'stale' ? '上次同步 · ' : '') + experienceLabel(value);
+    if (xp) {
+      xp.setAttribute('role', 'progressbar'); xp.setAttribute('aria-label', '角色經驗');
+      xp.setAttribute('aria-valuetext', label); xp.setAttribute('aria-valuemin', '0'); xp.setAttribute('aria-valuemax', '100'); xp.title = label;
+      if (progress) xp.setAttribute('aria-valuenow', String(Math.round(progress.ratio * 100)));
+      else xp.removeAttribute('aria-valuenow');
+    }
+    ui?.setXP?.(progress ? progress.ratio : 0);
+    const fill = byId('xpfill');
+    if (fill) { fill.style.visibility = progress ? 'visible' : 'hidden'; fill.dataset.authority = authority; }
+    const caption = byId('scene-xp-caption');
+    if (caption) {
+      text(caption, label); caption.dataset.authority = authority;
+    }
+  }
   function mapAsset(map) {
     if(/^cycle_(normal|elite|expert|nightmare|hell)_\d{2}$/.test(map?.id||'')){
       const art=endgameArt?.[map.id];if(!art||map.progression?.mode!==art.mode||map.progression?.chapter!==art.chapter)return null;
@@ -427,10 +451,6 @@
       text(doc.querySelector('#topL .who b'), value?.character.name ? value.character.name+' · '+(value.character.progression?.modeName||'普通') : '角色同步中');
       text(doc.querySelector('#topL .portrait i'), value ? pretty(value.character.level) : '—');
       text(byId('gold'), value ? '◈ ' + pretty(value.live.gold) : '◈ —');
-      const xp = byId('xp'), experience = experienceProgress(value?.live.experience), xpText = experience ? experience.maxLevel ? '已達滿級' : pretty(experience.current) + ' / ' + pretty(experience.required) : '等級進度尚未同步';
-      if (xp) { xp.setAttribute('role', 'progressbar'); xp.setAttribute('aria-label', '角色經驗'); xp.setAttribute('aria-valuetext', xpText); xp.setAttribute('aria-valuemin', '0'); xp.setAttribute('aria-valuemax', '100'); xp.title = xpText; if (experience) xp.setAttribute('aria-valuenow', String(Math.round(experience.ratio * 100))); else xp.removeAttribute('aria-valuenow'); }
-      ui.setXP(experience ? experience.ratio : 0);
-      if (byId('xpfill')) { byId('xpfill').style.visibility = experience ? 'visible' : 'hidden'; byId('xpfill').dataset.authority = experience ? 'committed' : 'unknown'; }
       text(doc.querySelector('#zone b'), value?.active ? value.map?.name || '星圖探索' : value ? '營地' : '同步中');
       text(doc.querySelector('#zone span'), value?.active ? '已結算 ' + pretty(value.run.processedSeconds) + ' 秒' : value ? (value.snapshot.realmId === 'permanent' ? '永久世界' : '賽季世界') + ' · Lv.' + pretty(value.character.level) : '等待遊戲狀態');
       syncHudActions(value);
@@ -758,6 +778,7 @@
     if (!preserveScope) { hudSkills.scope = ''; hudSkills.requestedRevision = -1; hudSkills.revision = -1; }
   }
   function syncHudResources(model, ui = global.UI, syncError = '') {
+    syncHudExperience(model, ui, syncError);
     const health = model?.hero;
     for (const kind of ['hp', 'mp']) {
       const amount = number(health?.[kind]), max = number(health?.[kind === 'hp' ? 'maxHp' : 'maxMp']);
@@ -832,6 +853,7 @@
   function syncHudActions(model) {
     const row = byId('hud-v2-actions'); if (!row?.dataset.live) return;
     const scope = hudScope(model?.snapshot), navigable = !!scope && typeof global.RpgSceneNavigation?.navigate === 'function';
+    syncHudExperience(scope?.model || null, global.UI, lastSyncError);
     row.dataset.authority = scope ? (lastSyncError ? 'stale' : 'committed') : 'unknown';
     for (const [kind, label] of [['hp', '生命'], ['mp', '魔力']]) {
       const button = row.querySelector('[data-live-potion="' + kind + '"]'); if (!button) continue;
@@ -888,6 +910,8 @@
       row.appendChild(button);
     }
     mid.appendChild(row);
+    const caption = global.document.createElement('span'); caption.id = 'scene-xp-caption'; caption.className = 'scene-xp-caption';
+    caption.textContent = 'EXP 待同步'; mid.appendChild(caption);
     lastSnapshot = global.RpgSceneSession?.getSnapshot?.() || lastSnapshot;
     syncHudResources(hudScope(lastSnapshot)?.model || null);
     readHudSkills(lastSnapshot); syncHudActions(normalize(lastSnapshot)); viewers.forEach(view => view.refreshHUD());
@@ -895,6 +919,6 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, experienceLabel, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
   loadEndgameArt();
 })(window);

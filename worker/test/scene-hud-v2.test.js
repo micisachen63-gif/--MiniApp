@@ -61,6 +61,8 @@ function harness(initial = null, initialContext = null) {
   const html = new Element('html'), head = new Element('head'), body = new Element('body');
   html.appendChild(head); html.appendChild(body);
   const mid = body.appendChild(new Element()); mid.id = 'mid';
+  const xp = mid.appendChild(new Element()); xp.id = 'xp';
+  const xpFill = xp.appendChild(new Element()); xpFill.id = 'xpfill';
   for (const kind of ['hp', 'mp']) {
     const value = body.appendChild(new Element('span')); value.id = kind + 'Txt'; value.textContent = kind === 'hp' ? '70%' : '45%';
     const orb = body.appendChild(new Element()); orb.className = 'candidate-orb candidate-' + kind;
@@ -114,6 +116,46 @@ test('first load and absent snapshot expose unknown values, never prototype coun
   h.api.mountHUD(); assert.equal(h.document.querySelectorAll('#hud-v2-actions').length, 1);
   assert.equal(h.document.getElementById('hud-v2-style').href, '/ui/hud-v2/hud-v2.css');
   assert.ok(h.document.querySelectorAll('.candidate-frame').every(node => node.src === '/ui/hud-v2/orb-bezel.webp'));
+});
+
+test('visible EXP follows committed snapshots, preserves zero and clears between characters', async () => {
+  const h = harness();
+  const caption = h.document.getElementById('scene-xp-caption');
+  const bar = h.document.getElementById('xp');
+  const fill = h.document.getElementById('xpfill');
+  assert.equal(caption.textContent, 'EXP 待同步');
+  assert.equal(fill.style.visibility, 'hidden');
+  const zero = snapshot();
+  zero.live.experience = { current: 0, required: 400, ratio: 0, maxLevel: false };
+  h.publish(zero); await tick();
+  assert.equal(caption.textContent, 'EXP 0.0% · 0 / 400');
+  assert.equal(bar.getAttribute('aria-valuenow'), '0');
+  assert.equal(fill.style.visibility, 'visible');
+  const partial = snapshot({ revision: 8 });
+  partial.live.experience = { current: 1250, required: 5000, ratio: 0.25, maxLevel: false };
+  h.publish(partial); await tick();
+  assert.equal(caption.textContent, 'EXP 25.0% · 1,250 / 5,000');
+  assert.equal(bar.getAttribute('aria-valuetext'), caption.textContent);
+  h.error();
+  assert.equal(caption.dataset.authority, 'stale');
+  assert.equal(fill.dataset.authority, 'stale');
+  assert.equal(bar.getAttribute('aria-valuetext'), caption.textContent);
+  assert.match(caption.textContent, /^上次同步 · EXP 25.0%/);
+  h.change({ characterId: 'B' });
+  assert.equal(caption.textContent, 'EXP 待同步');
+  assert.equal(bar.getAttribute('aria-valuenow'), undefined);
+  assert.equal(fill.style.visibility, 'hidden');
+  const maximum = snapshot({ characterId: 'B', revision: 9 });
+  maximum.live.experience = { current: 0, required: null, ratio: 1, maxLevel: true };
+  h.publish(maximum); await tick();
+  assert.equal(caption.textContent, 'EXP 已達滿級');
+  assert.equal(bar.getAttribute('aria-valuenow'), '100');
+  const missing = snapshot({ characterId: 'B', revision: 10 });
+  h.publish(missing); await tick();
+  assert.equal(caption.textContent, 'EXP 待同步', 'missing authoritative EXP cannot retain a previous character level');
+  assert.equal(fill.style.visibility, 'hidden');
+  h.api.mountHUD();
+  assert.equal(h.document.querySelectorAll('#scene-xp-caption').length, 1);
 });
 test('three slots preserve actual ordered class skills and empty positions, navigation never casts or drinks', async () => {
   const snap = snapshot(), h = harness(snap); await tick();

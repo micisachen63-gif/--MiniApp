@@ -46,7 +46,7 @@
  * Only decorative pseudo-elements are clipped. Native focus rings and hit targets stay whole.
  */
 #ui.scene-unified-root{
-  --sb-plate:url("/ui/button-materials/button-plate.webp");
+  --sb-plate:linear-gradient(#253b56,#122036);
   --sb-nav-plate:url("/ui/button-materials/nav-plate.webp");
   --sb-focus:#b9dfff;
 }
@@ -283,20 +283,18 @@
   #ui.scene-unified-root :is(.scene-unified-dialog,.scene-primary-nav,.scene-live-buttons) button:focus-visible{outline-color:Highlight}
 }
 
-/* Painted Olympus materials. Labels and controls remain native, selectable DOM. */
+/* Unified light borders. Original illustrated icons and portraits stay intact. */
 #ui.scene-unified-root{
- --ol-tile:url('/ui/button-materials/olympus-20261109/navigation-plate.webp');
- --ol-action:url('/ui/button-materials/olympus-20261109/action-plate.webp');
  --ol-bezel:url('/ui/button-materials/olympus-20261109/laurel-bezel.webp');
  --ol-icons:url('/ui/button-materials/olympus-20261109/navigation-icons.webp');
  --ol-ink:#f6ecd3;--ol-muted:#d2cabc;--ol-gold:#edcf91;
  font-synthesis:none;
 }
 #ui.scene-unified-root :is(.scene-unified-dialog,.scene-primary-nav,.scene-live-buttons) button{
- border:12px solid transparent;border-image:var(--ol-tile) 200 fill / 12px / 0 stretch;
- border-radius:9px;background:#101c2d;clip-path:none;box-shadow:0 3px 8px #0007;
- color:var(--ol-ink);font-family:'XQ Serif','Noto Serif TC',serif;font-weight:700;
- min-height:46px;padding:3px 7px;font-size:13px;line-height:1.5;
+ border:1px solid #ac956255;border-image:none;
+ border-radius:6px;background:linear-gradient(145deg,#21324a,#111f32);clip-path:none;box-shadow:inset 0 1px #e5d5ad12;
+ color:var(--ol-ink);font:inherit;font-weight:600;
+ min-height:44px;padding:8px 12px;font-size:13px;line-height:1.5;
  letter-spacing:.035em;text-shadow:0 1px 2px #000;overflow-wrap:anywhere;
 }
 #ui.scene-unified-root :is(.scene-unified-dialog,.scene-primary-nav,.scene-live-buttons) button::after,
@@ -306,11 +304,11 @@
 #ui.scene-unified-root .scene-unified-dialog button:is(.si-primary,.sw-primary,.is-primary,.atlas-primary,[data-guide-confirm],[data-recovery-confirm],[data-recovery-preview],[data-gearbook-submit]),
 #ui.scene-unified-root .scene-unified-dialog .scene-guide-content form>button,
 #ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button{
- border-image:var(--ol-action) 170 360 fill / 12px 24px / 0 stretch;
- min-height:50px;padding:5px 15px;color:#fff0cc;font-size:14px;
+ border:1px solid #d4b97788;border-image:none;background:linear-gradient(145deg,#354458,#192a3e);
+ min-height:44px;padding:9px 15px;color:#fff0cc;font-size:14px;
 }
-#ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button{background:#101c2d!important;padding:5px 13px!important;border:12px solid transparent!important;border-image:var(--ol-action) 170 360 fill / 12px 22px / 0 stretch!important}
-#ui.scene-unified-root .scene-unified-dialog .scene-chat-tabs button{background:#101c2d!important;border:10px solid transparent!important;border-image:var(--ol-tile) 200 fill / 10px / 0 stretch!important;padding:3px 6px!important}
+#ui.scene-unified-root .scene-unified-dialog .scene-chat-compose button{background:linear-gradient(145deg,#354458,#192a3e)!important;padding:8px 13px!important;border:1px solid #d4b97788!important;border-image:none!important}
+#ui.scene-unified-root .scene-unified-dialog .scene-chat-tabs button{background:#14243a!important;border:1px solid #ac956255!important;border-image:none!important;padding:8px 10px!important}
 #ui.scene-unified-root .scene-unified-dialog button:is([aria-pressed=true],[aria-selected=true],[aria-current],.is-selected){color:#fff5d9;background:#294062;box-shadow:0 0 0 1px #edcf9170,inset 0 0 18px #d6a55227}
 #ui.scene-unified-root .scene-unified-dialog button.si-danger,#ui.scene-unified-root .scene-unified-dialog button.sw-stop{background:#432731;color:#ffe0ce}
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-grid button{padding:10px 12px;gap:6px;min-height:90px;border-image-width:16px}
@@ -318,7 +316,7 @@
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-grid small{font-size:12px;line-height:1.65;color:#ddd5c8;font-weight:400}
 #ui.scene-unified-root .scene-unified-dialog .scene-social-card{
  border:1px solid #d1b77c;border-radius:12px;
- box-shadow:0 12px 40px #0008,inset 0 0 0 3px #080f20,inset 0 0 0 4px #b6965266;
+ box-shadow:0 12px 35px #0007,inset 0 1px #f3dfba0c;
  background:linear-gradient(120deg,#0c1726d9,#101b2bbf);backdrop-filter:blur(5px);-webkit-backdrop-filter:blur(5px);
 }
 #ui.scene-unified-root .scene-unified-dialog .scene-social-card>header{background:linear-gradient(90deg,#17263f,#0c1628e8);border-bottom:1px solid #bfa06277;min-height:58px}
@@ -331,9 +329,9 @@
 #ui.scene-unified-root .scene-unified-dialog input[type=range]{min-height:30px}
 #ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close){padding:0;flex-basis:44px;border-image-width:9px;font-size:24px}
 #ui.scene-unified-root .scene-unified-dialog .scene-social-card>header .scene-window-readability{padding:1px 3px;font-size:11px;border-image-width:8px}
-#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header .scene-window-readability{border:8px solid transparent;border-image:var(--ol-tile) 200 fill / 8px / 0 stretch;background:#101c2d;padding:1px 0}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header .scene-window-readability{border:1px solid #ac956266;border-image:none;background:#15263a;padding:5px}
 #ui.scene-unified-root .scene-primary-nav{width:min(470px,calc(100% - 16px));padding:4px;gap:5px;background:linear-gradient(#14203288,#050b14dc);border-color:#ac8e5155;backdrop-filter:blur(5px)}
-#ui.scene-unified-root .scene-primary-nav button[data-scene-primary]{--sb-nav-height:72px;min-width:0;height:72px;min-height:72px;padding:1px 0 5px;gap:0;border:9px solid transparent;border-image:var(--ol-tile) 200 fill / 9px / 0 stretch;letter-spacing:.06em;font-size:12px;white-space:nowrap;background:#111d30;color:#e9d9b9}
+#ui.scene-unified-root .scene-primary-nav button[data-scene-primary]{--sb-nav-height:72px;min-width:0;height:72px;min-height:72px;padding:1px 0 5px;gap:0;border:0;border-image:none;letter-spacing:.06em;font-size:12px;white-space:nowrap;background:#111d30;color:#e9d9b9}
 #ui.scene-unified-root .scene-primary-nav button[data-scene-primary]::before{display:block!important;position:relative;inset:auto;flex:0 0 40px;width:32px;height:40px;margin:-3px 0 0;z-index:0;clip-path:none;mask:none;-webkit-mask:none;background:var(--ol-icons) var(--ol-icon-position,0%) center / 500% 100% no-repeat!important;filter:drop-shadow(0 2px 2px #0007)}
 #ui.scene-unified-root [data-scene-primary=character]{--ol-icon-position:0%}
 #ui.scene-unified-root [data-scene-primary=inventory]{--ol-icon-position:25%}
@@ -451,7 +449,7 @@ body:has(#ui.scene-unified-root) #vig{background:linear-gradient(#0003,transpare
 #ui.scene-unified-root .scene-unified-dialog .scene-window-readability{min-width:60px;max-width:none;padding:4px;font-size:11px;white-space:nowrap}
 
 /* Functional chapters use the original Olympus artwork, within the same window. */
-#ui.scene-unified-root .scene-unified-dialog .scene-hub-tabs{display:flex;gap:0;position:sticky;top:-14px;z-index:6;background:#101a2bf5;border-bottom:1px solid #d5b46d66;margin:-14px -18px 12px;padding:8px 10px 0;backdrop-filter:blur(8px)}
+#ui.scene-unified-root .scene-unified-dialog .scene-hub-tabs{display:flex;gap:0;position:sticky;top:-14px;z-index:6;background:#101a2bf5;border-bottom:1px solid #d5b46d66;margin:-14px 0 12px;padding:8px 0 0;backdrop-filter:blur(8px)}
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-tabs button{flex:1;min-width:0;min-height:44px;padding:8px 2px;border:0!important;border-image:none!important;border-radius:0;background:transparent!important;box-shadow:none;color:#bdc4cf;font-size:13px;line-height:1.35;white-space:nowrap}
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-tabs button[aria-selected=true]{color:#ffdf96;background:linear-gradient(transparent,#d5ad4722)!important;box-shadow:inset 0 -3px #e5c682;text-shadow:0 0 8px #e6c27444}
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-summary{position:relative;min-height:88px;box-sizing:border-box;display:flex;flex-direction:column;justify-content:center;padding:16px 20px;margin:0 0 12px;border:1px solid #d9bd7455;border-radius:5px;overflow:hidden;background:linear-gradient(90deg,#0b1529e8,#0b152970),url('/art/ui/hero-hall-v1.webp') center 42%/cover;box-shadow:inset 0 0 30px #060e1988}
@@ -468,7 +466,7 @@ body:has(#ui.scene-unified-root) #vig{background:linear-gradient(#0003,transpare
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-tile:hover{border-color:#e4c67c!important;background:linear-gradient(120deg,#2b3d55e8,#122138ed)!important}
 #ui.scene-unified-root .scene-unified-dialog .scene-hub-tile:hover .scene-hub-icon{transform:translateY(-2px)}
 /* Action buttons retain their own events and confirmations; material is visual only. */
-#ui.scene-unified-root .scene-unified-dialog button:not(.scene-hub-tile):not([role=tab]):not([data-scene-primary]):not(.scene-window-back):not(.scene-window-close):not(.scene-window-readability){background-image:linear-gradient(#14243b55,#0a142866),url('/ui/button-materials/button-plate.webp');background-size:100% 100%;background-position:center}
+#ui.scene-unified-root .scene-unified-dialog button:not(.scene-hub-tile):not([role=tab]):not([data-scene-primary]):not(.scene-window-back):not(.scene-window-close):not(.scene-window-readability){background-image:linear-gradient(145deg,#21324ae8,#111f32e8)}
 @media(max-width:600px){#ui.scene-unified-root .scene-unified-dialog button.scene-hub-tile{grid-template-columns:42px minmax(0,1fr);column-gap:8px;min-height:94px;padding:10px 8px}#ui.scene-unified-root .scene-unified-dialog .scene-hub-tile .scene-hub-icon{width:42px;height:54px}#ui.scene-unified-root .scene-unified-dialog .scene-hub-tile strong{font-size:14px}#ui.scene-unified-root .scene-unified-dialog .scene-hub-tile small{font-size:11px}}
 @media(max-width:360px){#ui.scene-unified-root .scene-unified-dialog .scene-hub-grid{grid-template-columns:minmax(0,1fr)}#ui.scene-unified-root .scene-unified-dialog button.scene-hub-tile{min-height:78px;grid-template-columns:54px minmax(0,1fr)}#ui.scene-unified-root .scene-unified-dialog .scene-hub-tile .scene-hub-icon{width:52px;height:54px}#ui.scene-unified-root .scene-unified-dialog .scene-hub-tabs button{font-size:12px}}
 
@@ -478,7 +476,7 @@ body:has(#ui.scene-unified-root) #vig{background:linear-gradient(#0003,transpare
 .scene-original-guardian{min-height:0;flex:1;position:relative}.scene-original-guardian .guardian-worldtree-scene{width:100%;height:100%;min-height:260px}
 #ui .scene-retained-ritual:not(#forge){display:flex;flex-direction:column}
 body #ui #forge.ritual.scene-retained-ritual{position:absolute;inset:56px 0 0;z-index:30;padding:10px;overflow:auto;align-items:flex-start}
-body #ui #forge.ritual .fg-box{min-height:100%;padding-top:36px;box-sizing:border-box}
+body #ui #forge.ritual .fg-box{min-height:100%;padding-top:36px;box-sizing:border-box;border:1px solid #ac956255;box-shadow:inset 0 1px #e5d5ad12}
 body #ui #forge.ritual .fr-stage{height:220px}.scene-retained-ritual .fr-scroll img{height:180px}
 body #ui #forge.ritual .fr-scroll,#ui .scene-retained-ritual :is(.guardian-worldtree-background,.guardian-angel-foreground,.guardian-preview-feather,.guardian-result-feather-button){border:0!important;border-image:none!important;background:none!important;box-shadow:none!important;padding:0}
 .scene-retained-ritual .fr-auto[hidden]{display:none!important}
@@ -594,3 +592,18 @@ body #ui #scene-original-summon .guardian-preview-feather{touch-action:none}
 #ui.scene-unified-root .scene-unified-dialog .si-panel[data-inv-mode=inventory] .si-quick button.si-button::before,#ui.scene-unified-root .scene-unified-dialog .si-panel[data-inv-mode=inventory] .si-quick button.si-button::after{display:none!important;content:none!important}
 
 #ui.scene-unified-root .scene-unified-dialog .si-panel[data-inv-mode=inventory] .si-list-tools{margin-bottom:6px}
+
+/* Every normal action uses one quiet surface; native ritual art is not a button plate. */
+#ui.scene-unified-root .scene-unified-dialog .scene-social-body button{border-image:none!important;border-width:1px!important;filter:none}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-body button:not(.scene-hub-tile):not(.si-row-open):not(.gearbook-slot):not([role=tab]){box-shadow:inset 0 1px #e6d4aa0b;clip-path:none}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-body button:is([aria-pressed=true],[aria-selected=true],[aria-current],.is-selected):not([role=tab]){border-color:#d5b879aa!important;background:linear-gradient(145deg,#344c69,#20354f)!important;box-shadow:inset 0 -2px #d8b97a!important;color:#fff0c7}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-body button:focus-visible{outline:2px solid #e8cf97;outline-offset:2px}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header .scene-window-readability{border:1px solid #ac956266!important;border-image:none!important;background:#15263a!important;box-shadow:none;min-height:40px;font-size:11px;padding:5px}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-body button:is(.si-danger,.sw-stop,.sg-danger,.sdt-danger){background:linear-gradient(#4b2b36,#2c1c2a);border-color:#b57e7366;color:#ffd9cb}
+#ui.scene-unified-root .scene-xp-caption{position:absolute;left:50%;bottom:calc(100% + 6px);transform:translateX(-50%);display:block;width:max-content;max-width:min(300px,calc(100vw - 130px));margin:0;padding:0 4px;pointer-events:none;color:#f4deb0;font-size:11px;line-height:1.35;text-align:center;letter-spacing:.025em;text-shadow:0 1px 3px #000,0 0 4px #000;white-space:normal}
+@media(max-width:360px){#ui.scene-unified-root .scene-xp-caption{font-size:10px;max-width:calc(100vw - 120px)}}
+
+#ui.scene-unified-root .scene-unified-dialog .atlas-talent-guide{border-left-width:2px}
+
+/* The illustrated orbs already render live numbers and accessible resource labels. */
+html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #bottom :is(#hpTxt,#mpTxt){visibility:hidden}
