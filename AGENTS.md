@@ -72,3 +72,5 @@ GitHub 推送或正式部署失敗時，明確回報哪一端尚未同步。不�
 2026-11-04 非角色場景整合：獨立9653場景與9652隔離API，atlas/status新增唯讀已提交scene投影；共用帳號／環境／角色／revision狀態，真實血魔、經驗、補給、地圖敵人與出征／返營。裝備、背包、補給、構築、天賦、收藏冊及委託沿用同一角色；切角晚回覆、貼圖釋放與桌面縮放均納入回歸。原角色美術與9593／9642流程保留，未部署／未遠端migration。五輪600級、16招覺醒、正式平衡與完整賽季收尾仍待後續。分支codex/scene-live-integration-20261104接PR #43，必讀docs/SCENE_LIVE_INTEGRATION_20261104.txt，驗收以該文件與實際測試紀錄為準。
 
 2026-11-09 後續成長本機候選：五輪累積600級與60循環星圖、16招真實覺醒、增補0044（不重建玩家表）及跨D1季末4+4保留已接線；旗標SEASON_TRANSFER_ENABLED預設關閉。只本機，未push／部署／遠端migration，不碰角色／F3原線。必讀docs/ENDGAME_GROWTH_20261109.txt及本批外部STATUS/WORKING_HANDOFF，最終gate以精確HEAD證據為準，不能沿用父提交數字。
+
+2026-11-09 後續強化檢查：同一獨立分支接續正式聚合量核對（SELECT-only）、0045串流封存／續傳／不可變保護、原生配裝後期校準、手機觸控與浮窗鍵盤、希臘素材與透明懸浮底欄。最新規則docs/ENDGAME_HARDENING_20261109.txt，實際狀態與最終gate在D:/StarJournal/handoff/non-character/endgame-hardening-20261109/。使用者明確不部署；不改正式資料／原角色素材，不覆寫其他owner的F3主STATUS。

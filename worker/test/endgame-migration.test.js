@@ -12,4 +12,7 @@ test('0044 preserves every populated historical column, +15 gear, old receipt an
  const sql=readFileSync(new URL('0044_endgame_season_retention.sql',dir),'utf8');assert.doesNotMatch(sql,/DROP\s+TABLE|DELETE\s+FROM|UPDATE\s+rpg_characters|writable_schema|ignore_check_constraints/i);
  DB.sqlite.exec(sql);assert.deepEqual(snapshot(),before);assert.equal(DB.sqlite.prepare('SELECT atlas_run_id FROM rpg_live_characters WHERE tg_id=?').get('97101').atlas_run_id,'frozen-old');assert.deepEqual(DB.sqlite.prepare('PRAGMA foreign_key_check').all(),[]);
  DB.sqlite.prepare("UPDATE rpg_characters SET progression_level=600 WHERE tg_id='97101'").run();assert.equal(DB.sqlite.prepare("SELECT level FROM rpg_live_characters WHERE tg_id='97101'").get().level,600);assert.throws(()=>DB.sqlite.prepare("UPDATE rpg_characters SET level=600 WHERE tg_id='97101'").run());
+ const populated=DB.sqlite.prepare("SELECT name FROM sqlite_master WHERE type='table' AND name LIKE 'rpg_%' ORDER BY name").all().map(({name})=>({name,rows:DB.sqlite.prepare('SELECT * FROM "'+name+'" ORDER BY rowid').all()}));
+ const stream=readFileSync(new URL('0045_season_stream_checkpoints.sql',dir),'utf8');assert.doesNotMatch(stream,/DROP\s+TABLE|DELETE\s+FROM|UPDATE\s+rpg_characters|writable_schema|ignore_check_constraints/i);DB.sqlite.exec(stream);
+ for(const table of populated)assert.deepEqual(DB.sqlite.prepare('SELECT * FROM "'+table.name+'" ORDER BY rowid').all(),table.rows);assert.deepEqual(DB.sqlite.prepare('PRAGMA foreign_key_check').all(),[]);
 });

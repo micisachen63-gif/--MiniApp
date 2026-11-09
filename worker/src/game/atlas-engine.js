@@ -271,7 +271,8 @@ function applyDot(state, enemy, source, duration, damage) {
 function dealDamage(state, enemy, amount, source, critical = false, activities, observation) {
   if (!enemy || enemy.hp <= 0) return 0;
   const defense=enemy.def*(enemy.brokenUntil>state.elapsedSeconds?.65:1);
-  const mitigation = source === 'dot' ? 1 : 100 / (100 + defense * 4);
+  const armorScale=state.map.progression?.balanceVersion>=2?500:100;
+  const mitigation = source === 'dot' ? 1 : armorScale / (armorScale + defense * 4);
   const critChance = clamp(.05 + state.snapshot.pct.critPct + (state.skill.critChance || 0), 0, .8);
   const crit = critical && random(state) < critChance ? 1.7 : 1;
   const hpBefore = enemy.hp;
@@ -307,6 +308,7 @@ function dealDamage(state, enemy, amount, source, critical = false, activities, 
 function skillDamage(state, enemy, index = 0) {
   const { skill, snapshot } = state;
   let amount = snapshot.atk * skill.coefficient * skill.damageMultiplier;
+  if(state.map.progression?.balanceVersion>=2&&skill.mechanic==='arcane')amount*=1.45;
   if (index > 0) amount *= skill.secondaryMultiplier || 1;
   if (skill.mechanic === 'execute' && enemy.hp <= enemy.maxHp * skill.executeThreshold) {
     amount *= skill.executeMultiplier; state.metrics.executeHits++;
@@ -367,6 +369,7 @@ function castAwakening(state,skill,activities,observer,at){
   hero.mp=round(hero.mp-cost);state.metrics.manaSpent+=cost;state.awakening.casts++;
   state.awakening.nextAt[skill.id]=at+skill.cooldown*clamp(1-snapshot.pct.skillHastePct,.75,2);
   if(skill.mechanic==='blood')hero.hp=Math.max(1,hero.hp-Math.floor(snapshot.maxHp*.06));
+  if(skill.mechanic==='shadows'&&state.map.progression?.balanceVersion>=2){hero.umbraUntil=state.elapsedSeconds+6;hero.hp=Math.min(snapshot.maxHp,hero.hp+Math.floor(snapshot.maxHp*.08));}
   if(['guard','mirror'].includes(skill.mechanic))shield(state,skill.mechanic==='guard'?.24:.18);
   if(skill.mechanic==='guard')hero.awakeningGuard={until:state.elapsedSeconds+8,skillId:skill.id};
   if(skill.mechanic==='mirror')hero.mirror={until:state.elapsedSeconds+8,remaining:Math.floor(snapshot.maxMp*.15)};
@@ -459,7 +462,9 @@ function enemyActions(state, activities, observer) {
     if (enemy.hp <= 0 || enemy.nextAttackAt > state.elapsedSeconds) continue;
     const attackAt = enemy.nextAttackAt;
     drinkHp(state);
-    let damage = Math.max(1, Math.round(atlasIncomingDamage(state, enemy.atk) * snapshot.taken * (100 / (100 + snapshot.def * 2))));
+    const armorScale=state.map.progression?.balanceVersion>=2&&state.map.progression.mode!=='normal'?5000*({elite:1.8,expert:3.2,nightmare:5.4,hell:8.5})[state.map.progression.mode]:100;
+    let damage = Math.max(1, Math.round(atlasIncomingDamage(state, enemy.atk) * snapshot.taken * (armorScale / (armorScale + snapshot.def * 2))));
+    if(hero.umbraUntil>=state.elapsedSeconds&&random(state)<.3)damage=0;
     const guarded=hero.awakeningGuard?.until>=state.elapsedSeconds;
     const blocked = (skill.mechanic === 'counter'||guarded) && random(state) < (guarded?.6:skill.blockChance);
     if (blocked) {

@@ -248,6 +248,7 @@
    const button=document.createElement('button');button.type='button';button.dataset.scenePrimary=group;button.textContent=label;button.disabled=!actor;button.onclick=()=>windowManager.navigate(roots[group],{},{reset:true});navigation.append(button);
   }
   byId('ui').classList.add('scene-unified-root');byId('ui').append(navigation);
+  const minimap=byId('mini');if(minimap){minimap.tabIndex=0;minimap.setAttribute('role','button');minimap.setAttribute('aria-label','開啟區域地圖');minimap.onclick=()=>windowManager.navigate('adventure',{},{reset:true});minimap.onkeydown=event=>{if(event.key==='Enter'||event.key===' '){event.preventDefault();minimap.click();}};}
   windowManager=window.RpgSceneWindows.create({root:byId('ui'),navigation,routes:unifiedRoutes,getContext:()=>liveSession.getContext(),
    contextLabel:()=>actor?actor.name+' · '+(realm==='permanent'?'永久世界':'賽季世界')+' · Lv.'+actor.level:'正在同步角色…',
    mount:mountUnified,

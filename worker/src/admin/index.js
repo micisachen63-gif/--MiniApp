@@ -53,7 +53,7 @@ export async function handleAdmin(request,env,now=Date.now(),rootEnv=env){
    await env.DB.prepare('INSERT INTO rpg_admin_audit(admin_tg_id,action,details,created_at) VALUES(?,?,?,?)').bind(admin.id,action,JSON.stringify({realmId:realm.id,expectedPhase:realm.phase,expectedFenceEpoch:realm.fenceEpoch,cutoffAt:realm.cutoffAt,stage:'intent'}),now).run();
    if(action==='season/freeze')return json({phase:(await transitionRealmPhase(rootEnv,b.realmId,{expectedPhase:realm.phase,expectedFenceEpoch:realm.fenceEpoch,nextPhase:'FREEZE',cutoffAt:b.cutoffAt,now})).phase});
    if(action==='season/drain')return json(await drainSeasonStep(rootEnv,b.realmId,{now,limit:b.limit}));
-   if(action==='season/seal'){const sealed=await sealSeason(rootEnv,b.realmId,{now});return json({manifestHash:sealed.manifestHash,tables:sealed.manifest.tables.length,chunks:sealed.manifest.chunks.length});}
+   if(action==='season/seal'){const sealed=await sealSeason(rootEnv,b.realmId,{now,limit:b.limit});return json(sealed.manifest?{status:sealed.status,manifestHash:sealed.manifestHash,tables:sealed.manifest.tables.length,chunks:sealed.manifest.chunkCount}:sealed);}
    if(action==='season/import')return json(await importSeasonStep(rootEnv,b.realmId,{now,limit:b.limit}));
    throw new GameError('not_found','未知的季末維護操作',404);
   }

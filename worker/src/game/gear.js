@@ -59,7 +59,7 @@ export function rollAffix(rng, tier) {
 }
 
 /** generate an equipment row. source: shop | boss | starter | relic_boss | relic_elite */
-export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = 'shop', rarityFloor = null, bonusPct = 0, prefix = '', forceRarity = null, relic = false, mode = 'normal' }) {
+export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = 'shop', rarityFloor = null, bonusPct = 0, prefix = '', forceRarity = null, relic = false, mode = 'normal',modeBalanceVersion=2 }) {
   if (!SLOTS.includes(slot)) throw new Error(`unknown slot ${slot}`);
   const element = pick(rng, ELEMENT_KEYS); const rarity = gearRarity({grade:relic?'relic':'normal',element_tier:forceRarity || rollRarity(rng, relic ? RELIC.rarityFloor : rarityFloor)});
   const mult = (1 + bonusPct) * (relic ? RELIC.statMult : 1);
@@ -82,7 +82,7 @@ export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = '
     base_stat: base, bonus_json: JSON.stringify(bonus), element, element_stat: elemStat, element_tier: rarity, enhance_level: 0, is_equipped: 0,
     convert_token: branchReq ? 1 : 0, created_at: now, grade: relic ? 'relic' : 'normal', affix_json: relic ? JSON.stringify(rollAffix(rng, tier)) : null,
     affixes_json: JSON.stringify(rollAffixes({tier,class_req:classReq},rng)),
-    bound: source === 'starter' ? 1 : 0, trade_id: null },mode);
+    bound: source === 'starter' ? 1 : 0, trade_id: null },mode,modeBalanceVersion);
 }
 
 /**

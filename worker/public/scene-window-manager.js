@@ -88,6 +88,7 @@
    nav.querySelectorAll('[data-scene-primary]').forEach(button=>button.removeAttribute('aria-current'));
    options.onClose?.();try{window.Telegram?.WebApp?.BackButton?.hide();}catch{}
    if(restoreFocus&&previousFocus?.isConnected&&!previousFocus.closest('[inert]'))previousFocus.focus({preventScroll:true});
+   root.classList?.remove('scene-keyboard-open');root.style?.removeProperty?.('--scene-keyboard-inset');root.style?.removeProperty?.('--scene-visible-height');root.style?.removeProperty?.('--scene-visible-top');
   }
   function syncContext(){if(state.syncContext()){close({restoreFocus:false});return true;}return false;}
   function keydown(event){
@@ -100,10 +101,22 @@
    else if(!event.shiftKey&&(doc.activeElement===last||!items.includes(doc.activeElement))){event.preventDefault();first.focus();}
   }
   doc.addEventListener('keydown',keydown,true);
+  // iOS Telegram can resize visualViewport without resizing the layout viewport.
+  // Keep the focused native field reachable in the one inner scroller.
+  const viewport=doc.defaultView?.visualViewport;
+  let hostViewport=null;try{if(doc.defaultView?.parent!==doc.defaultView)hostViewport=doc.defaultView?.parent?.visualViewport;}catch{/* Cross-origin Telegram hosts keep the local viewport fallback. */}
+  let focusTimer;
+  function revealField(){clearTimeout(focusTimer);focusTimer=setTimeout(()=>{
+   const active=doc.activeElement,editing=dialog&&body?.contains(active)&&active?.matches?.('input,textarea,select'),win=doc.defaultView;
+   if(editing&&win){let bottom=viewport?.height??win.innerHeight,top=viewport?.offsetTop??0;try{const frame=win.frameElement?.getBoundingClientRect();if(hostViewport&&frame){bottom=Math.min(bottom,hostViewport.height+hostViewport.offsetTop-frame.top);top=Math.max(0,hostViewport.offsetTop-frame.top);}}catch{}
+    const inset=Math.max(0,win.innerHeight-bottom),visible=Math.max(180,bottom-top);root.style?.setProperty?.('--scene-keyboard-inset',inset+'px');root.style?.setProperty?.('--scene-visible-height',visible+'px');root.style?.setProperty?.('--scene-visible-top',top+'px');root.classList?.toggle('scene-keyboard-open',inset>80);active.scrollIntoView?.({block:'nearest',inline:'nearest'});
+   }else{root.classList?.remove('scene-keyboard-open');root.style?.removeProperty?.('--scene-keyboard-inset');root.style?.removeProperty?.('--scene-visible-height');root.style?.removeProperty?.('--scene-visible-top');}
+  },80);}
+  doc.addEventListener('focusin',revealField);doc.defaultView?.addEventListener('resize',revealField);viewport?.addEventListener('resize',revealField);hostViewport?.addEventListener('resize',revealField);
   const telegramBack=()=>back();try{window.Telegram?.WebApp?.BackButton?.onClick(telegramBack);}catch{}
   return {navigate,back,close,syncContext,current:state.current,getDialog:()=>dialog,getDraft:state.draft,
    update(value){mounted?.update?.(value);if(dialog)dialog.querySelector('.scene-window-context').textContent=options.contextLabel?.()||'';},
-   dispose(){if(disposed)return;close({restoreFocus:false});disposed=true;doc.removeEventListener('keydown',keydown,true);try{window.Telegram?.WebApp?.BackButton?.offClick(telegramBack);}catch{}}
+   dispose(){if(disposed)return;close({restoreFocus:false});disposed=true;clearTimeout(focusTimer);doc.removeEventListener('keydown',keydown,true);doc.removeEventListener('focusin',revealField);doc.defaultView?.removeEventListener('resize',revealField);viewport?.removeEventListener('resize',revealField);hostViewport?.removeEventListener('resize',revealField);try{window.Telegram?.WebApp?.BackButton?.offClick(telegramBack);}catch{}}
   };
  }
  globalThis.RpgSceneWindows={createState,create,contextKey:scopeKey};

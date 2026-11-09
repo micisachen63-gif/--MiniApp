@@ -5,17 +5,20 @@ import {resolveRealm,scopeEnvForRealm,transitionRealmPhase} from '../src/realm/i
 import {createCharacter} from '../src/services/player.js';
 import {loadPlayer} from '../src/db.js';
 import {listAccountCharacters,selectAccountCharacter} from '../src/accounts.js';
-import {drainSeasonStep,sealSeason,importSeasonStep,retainedCharacters} from '../src/realm/season-transfer.js';
+import {drainSeasonStep,sealSeason as sealStep,importSeasonStep,retainedCharacters} from '../src/realm/season-transfer.js';
 import * as Exchange from '../src/services/market-exchange.js';
 import * as Atlas from '../src/services/atlas.js';
+import * as Fate from '../src/services/fate.js';
+import * as FateGifts from '../src/services/fate-gifts.js';
 
 const ID='season_2026_01',account='92101';
 async function setup(t,count=1){const env=await initialized(t),season=scopeEnvForRealm(env,await resolveRealm(env,ID)),permanent=scopeEnvForRealm(env,await resolveRealm(env,'permanent'));for(let i=0;i<count;i++){await createCharacter(permanent,{tgId:account,name:'永久角色'+i,gender:'m',baseClass:'sword'},NOW);await createCharacter(season,{tgId:account,name:'季服角色'+i,gender:'f',baseClass:'mage'},NOW);}env.DB_SEASON.sqlite.prepare('UPDATE rpg_equipment SET enhance_level=12').run();return {env,season,permanent};}
 async function freeze(env,cutoff=NOW){await transitionRealmPhase(env,ID,{expectedPhase:'ACTIVE',expectedFenceEpoch:0,nextPhase:'FREEZE',cutoffAt:cutoff,now:cutoff});}
+async function sealSeason(env,id,options){for(let n=0;n<300;n++){const result=await sealStep(env,id,options);if(result.status==='sealed')return result;}throw Error('seal never finished');}
 async function finish(env){let r;for(let i=0;i<100;i++){r=await importSeasonStep(env,ID,{now:NOW+1000,limit:50});if(r.status==='complete')return r;}throw Error('never finished');}
 test('cross-D1 import preserves permanent four plus seasonal four, class/level/+12/stock and ownership without overwriting active native',async t=>{
  const {env}=await setup(t,4),native=await listAccountCharacters(env.DB,account),season=await listAccountCharacters(env.DB_SEASON,account);
- await freeze(env);assert.equal((await drainSeasonStep(env,ID,{now:NOW+1})).ready,true);const sealed=await sealSeason(env,ID,{now:NOW+2});assert.equal(sealed.manifest.version,'season-transfer-v1');
+ await freeze(env);assert.equal((await drainSeasonStep(env,ID,{now:NOW+1})).ready,true);const sealed=await sealSeason(env,ID,{now:NOW+2});assert.equal(sealed.manifest.version,'season-transfer-v2');
  const sourceBefore=env.DB_SEASON.sqlite.prepare('SELECT * FROM rpg_characters ORDER BY tg_id').all();
  const receipt=await finish(env);assert.equal(receipt.characters,4);assert.equal((await resolveRealm(env,ID)).phase,'COMPLETE');
  const all=await listAccountCharacters(env.DB,account);assert.equal(all.length,8);assert.deepEqual(all.filter(c=>c.retentionGroup==='native'),native);assert.equal(all.filter(c=>c.originRealmId===ID).length,4);
@@ -31,11 +34,11 @@ test('bounded copy resumes after lost responses and repeated completion never du
 });
 test('freeze is immutable to gameplay, sealing before drain is rejected and changed source never imports',async t=>{
  const {env,season}=await setup(t);await freeze(env);await assert.rejects(season.DB.prepare('UPDATE rpg_characters SET gold=0').run(),{code:'realm_fence_changed'});await assert.rejects(sealSeason(env,ID),{code:'season_phase'});
- await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});env.DB_SEASON.sqlite.prepare('UPDATE rpg_characters SET gold=gold+1').run();await assert.rejects(importSeasonStep(env,ID),{code:'season_source_changed'});assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_characters').get().n,1);
+ await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});assert.throws(()=>env.DB_SEASON.sqlite.prepare('UPDATE rpg_characters SET gold=gold+1').run(),/season_source_locked/);assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_characters').get().n,1);
 });
 test('destination chunk corruption and schema mismatch block hydration before any seasonal character appears',async t=>{
- const {env}=await setup(t);await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});await importSeasonStep(env,ID,{now:NOW+3,limit:1});
- env.DB.sqlite.prepare("UPDATE rpg_season_transfer_chunks SET payload_json='broken'").run();await assert.rejects(importSeasonStep(env,ID),{code:'season_chunk_invalid'});assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_characters').get().n,1);
+ const {env}=await setup(t);await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});for(let n=0;n<120&&!env.DB.sqlite.prepare('SELECT 1 FROM rpg_season_transfer_chunks LIMIT 1').get();n++)await importSeasonStep(env,ID,{now:NOW+3,limit:1});
+ assert.throws(()=>env.DB.sqlite.prepare("UPDATE rpg_season_transfer_chunks SET payload_json='broken'").run(),/season_archive_immutable/);assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_characters').get().n,1);
 });
 test('a remaining escrow lock blocks sealing instead of losing equipment',async t=>{
  const {env}=await setup(t);env.DB_SEASON.sqlite.prepare("UPDATE rpg_equipment SET is_equipped=0,trade_id='unknown-escrow'").run();await freeze(env);const d=await drainSeasonStep(env,ID,{now:NOW+1});assert.ok(d.blockers.some(b=>b.kind==='equipped_escrow'));await assert.rejects(sealSeason(env,ID,{now:NOW+2}),{code:'season_not_drained'});
@@ -73,4 +76,33 @@ test('schema mismatch is rejected before target characters hydrate and a lost co
 });
 test('concurrent import attempts are fenced or replayed without duplicating a retained character or its items',async t=>{
  const {env}=await setup(t);await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});await Promise.allSettled([importSeasonStep(env,ID,{now:NOW+3,limit:50}),importSeasonStep(env,ID,{now:NOW+3,limit:50})]);await finish(env);assert.equal((await listAccountCharacters(env.DB,account)).length,2);assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_equipment').get().n,4);
+});
+
+test('unfinished season lives remain fully archived without granting a false completed life or a gift in permanent',async t=>{
+ const {env,season}=await setup(t);const started=await Fate.start(season,account,{mode:'random',requestId:'cutoff-real-life'},NOW);
+ const original=env.DB_SEASON.sqlite.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').get(started.result.lifeId);
+ await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});await finish(env);
+ const imported=(await listAccountCharacters(env.DB,account)).find(c=>c.originRealmId===ID),gifts=await FateGifts.summary({DB:env.DB},imported.charId);
+ assert.equal(gifts.completed,0);assert.equal(gifts.claimable,0);assert.equal(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_fate_lives WHERE char_id=?').get(imported.charId).n,0);
+ const retained=(await retainedCharacters({DB:env.DB},account)).characters[0];assert.deepEqual(retained.cutoffLives,[{sourceLifeId:original.id,cutoffAt:NOW}]);
+ assert.deepEqual(env.DB_SEASON.sqlite.prepare('SELECT * FROM rpg_fate_lives WHERE id=?').get(original.id),original);
+ assert.ok(env.DB.sqlite.prepare('SELECT COUNT(*) n FROM rpg_season_transfer_pages WHERE table_name=?').get('rpg_fate_lives').n>0);
+});
+
+test('a committed seal page survives a lost response, and dropped source locks block further import',async t=>{
+ const {env}=await setup(t);await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});const batch=env.DB_SEASON.batch.bind(env.DB_SEASON);let lost=false;
+ env.DB_SEASON.batch=async statements=>{const result=await batch(statements);if(!lost&&statements.some(s=>s.sql.includes('INSERT INTO rpg_season_transfer_chunks'))){lost=true;throw Error('seal committed reply lost');}return result;};
+ for(let n=0;n<100&&!lost;n++){try{await sealStep(env,ID,{now:NOW+2,limit:1});}catch(e){assert.match(e.message,/seal committed reply lost/);}}
+ assert.equal(lost,true);await sealSeason(env,ID,{now:NOW+3});
+ env.DB_SEASON.sqlite.exec('DROP TRIGGER season_lock_rpg_characters_update');env.DB_SEASON.sqlite.prepare('UPDATE rpg_characters SET gold=gold+1').run();
+ await assert.rejects(importSeasonStep(env,ID),{code:'season_source_changed'});assert.equal((await listAccountCharacters(env.DB,account)).length,1);
+});
+
+test('a large Unicode history row is chunked intact and destination lock tampering is rejected',async t=>{
+ const {env}=await setup(t);const payload='古老星圖🌌'.repeat(15000);env.DB_SEASON.sqlite.prepare('INSERT INTO rpg_idle_reports(tg_id,used_json,created_at) VALUES(?,?,?)').run(account,payload,NOW);
+ await freeze(env);await drainSeasonStep(env,ID,{now:NOW+1});await sealSeason(env,ID,{now:NOW+2});
+ const page=JSON.parse(env.DB_SEASON.sqlite.prepare('SELECT header_json FROM rpg_season_transfer_pages WHERE table_name=?').get('rpg_idle_reports').header_json);assert.ok(page.parts.length>=3);
+ const rebuilt=page.parts.map(p=>env.DB_SEASON.sqlite.prepare('SELECT payload_json FROM rpg_season_transfer_chunks WHERE realm_id=? AND chunk_no=?').get(ID,p.number).payload_json).join('');assert.equal(JSON.parse(rebuilt)[0].used_json,payload);
+ await importSeasonStep(env,ID,{now:NOW+3});env.DB.sqlite.exec('DROP TRIGGER season_immutable_rpg_season_transfer_chunks_update');await assert.rejects(importSeasonStep(env,ID),{code:'season_schema'});
+ assert.equal((await listAccountCharacters(env.DB,account)).length,1);
 });

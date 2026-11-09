@@ -270,7 +270,8 @@
 
     ui.skills?.forEach(skill => { skill.left = 0; skill.el.inert = true; skill.el.setAttribute('aria-disabled', 'true'); });
     byId('buffs')?.replaceChildren();
-    const pc = byId('pc')?.getContext('2d'); pc?.clearRect(0, 0, 112, 112);
+    const portraitCanvas=byId('pc');if(portraitCanvas){portraitCanvas.width=224;portraitCanvas.height=224;}
+    const pc = portraitCanvas?.getContext('2d');pc?.setTransform?.(2,0,0,2,0,0);pc?.clearRect(0, 0, 112, 112);
     hero.setVisible(false); ground?.setVisible(false); hooks.clearDecorations?.(); hpGraphics?.clear(); ui.target(null);
     const current = () => !disposed && liveMode();
 
@@ -626,8 +627,8 @@
     function minimap() {
       const canvas = byId('minic'), ctx = canvas?.getContext('2d'); if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (groundReady && groundImage) ctx.drawImage(groundImage, 0, 0, groundImage.width, groundImage.height, 0, 0, canvas.width, canvas.height);
-      else { ctx.fillStyle = '#0b121c'; ctx.fillRect(0, 0, canvas.width, canvas.height); }
+      if (groundReady && groundImage) {ctx.globalAlpha=.3;ctx.drawImage(groundImage, 0, 0, groundImage.width, groundImage.height, 0, 0, canvas.width, canvas.height);ctx.globalAlpha=1;}
+      ctx.strokeStyle='#c8c0a82b';ctx.lineWidth=.5;ctx.beginPath();for(let step=1;step<4;step++){const x=canvas.width*step/4,y=canvas.height*step/4;ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);}ctx.stroke();
       const world = hooks.getWorld(); ctx.fillStyle = '#f5e8c8'; ctx.fillRect(hero.x / world.w * canvas.width - 2, hero.y / world.h * canvas.height - 2, 4, 4);
       for (const entity of entities.values()) if (entity.sprite?.active && entity.enemy.hp > 0) { ctx.fillStyle = entity.enemy.rank === 'boss' ? '#efb04c' : '#be514b'; ctx.fillRect(entity.sprite.x / world.w * canvas.width - 2, entity.sprite.y / world.h * canvas.height - 2, 4, 4); }
     }
