@@ -8,3 +8,8 @@ test('original map guide resolves every exact monster, elite and boss to an exis
   }
  }assert.equal(count,180);
 });
+
+test('preview static allowlist cannot drift away from the original library image manifest',()=>{
+ const source=fs.readFileSync(new URL('../tools/scene-live-preview.mjs',import.meta.url),'utf8'),match=/const libraryArtPaths=(\[[^\n]+\]);/.exec(source);assert.ok(match,'literal startup allowlist');
+ assert.deepEqual(JSON.parse(match[1]),[...new Set(Object.values(art).map(a=>a.src))].sort());
+});

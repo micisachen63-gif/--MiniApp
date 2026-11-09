@@ -556,3 +556,10 @@ test('endgame painted maps and aura assets use an explicit no-I/O startup allowl
  for(const [file,body]of fixtures){for(const method of ['GET','HEAD']){const r=await h.request('/'+file,method);assert.equal(r.status,200);if(method==='HEAD')assert.equal(r.body,undefined);else assert.deepEqual(r.body,Buffer.from(body));}}
  const before=h.access.length;assert.equal((await h.request('/art/endgame-v1/hell-13-v1.png')).status,404);assert.equal(h.access.length,before);
 });
+
+test('original library and ritual art stay on the exact no-I/O allowlist with correct media types',async()=>{
+ const fixtures=[['scene-library-art.json','{}'],['guardian-worldtree.js','native original'],['art/guardian-scene-20261014/archangel-loop-alpha.webm','alpha-video'],['art/v2/mon_moon_hare.webp','original-monster']];
+ const h=await harness(fixtures);assert.equal(h.access.length,0,'starting a preview cannot read or enumerate original assets');
+ for(const [file,body] of fixtures)for(const method of ['GET','HEAD']){const r=await h.request('/'+file,method);assert.equal(r.status,200,file);assert.deepEqual(r.body,method==='HEAD'?undefined:Buffer.from(body));if(file.endsWith('.webm'))assert.equal(r.headers['Content-Type'],'video/webm');}
+ for(const file of ['/scene-library-art.json.other','/art/monsters-clean-20261011/unpublished.png','/art/monsters-clean-20261011/%2e%2e/secret.png']){const before=h.access.length;assert.equal((await h.request(file)).status,404);assert.equal(h.access.length,before,'unlisted path must fail before I/O');}
+});
