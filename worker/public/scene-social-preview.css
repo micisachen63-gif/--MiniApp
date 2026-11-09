@@ -507,3 +507,5 @@ body #ui #scene-original-summon .guardian-preview-feather{touch-action:none}
 .sl-armory-slot{position:relative;display:grid;text-align:center;min-width:0;padding:4px;background:#0b1628b8;border:1px solid #c3a76c77;border-radius:6px}.sl-armory-slot img{width:100%;height:58px;object-fit:contain}.sl-armory-slot b{position:absolute;right:2px;top:2px;font-size:12px;background:#11213b;color:#ffe7ab;border-radius:3px}.sl-armory-slot small{font-size:11px}.sl-armory-slot span{font-size:9px;overflow-wrap:anywhere}
 
 .sl-duel-arena{display:grid;grid-template-columns:1fr 1fr;gap:18px;text-align:center}.sl-duel-arena article{display:grid;gap:6px;min-width:0}.sl-duel-arena img{width:100%;height:180px;object-fit:contain}.sl-duel-arena meter{width:100%;height:18px}.sl-duel-arena small{font-size:11px;overflow-wrap:anywhere}
+
+.sl-create-preview{display:grid;grid-template-columns:94px 1fr;gap:12px;align-items:center;border:1px solid #c2a26055;background:#0b182ab8;padding:10px;border-radius:6px}.sl-create-preview img{width:94px;height:145px;object-fit:contain}.sl-create-preview h4{margin:0;color:#f4d496}.sl-create-preview p{font-size:12px}
