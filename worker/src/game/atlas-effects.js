@@ -65,7 +65,8 @@ export function createAtlasEffects(version, sourceSnapshot, map, seed) {
   const actor = normalizeActor(sourceSnapshot);
   // Atlas has no authored enemy resistance. Preserve zero resistance, including
   // bosses; importing legacy bossResistance here would silently retune them.
-  const enemy = normalizeActor({ level: 1, element: mapElement(map.themeId) });
+  const cycle=map.progression?({normal:0,elite:1,expert:2,nightmare:3,hell:4})[map.progression.mode]:0;
+  const enemy = normalizeActor({ level:cycle?map.minLevel:1, element: mapElement(map.themeId),...(cycle?{elementResist:Object.fromEntries(ELEMENT_KEYS.map(k=>[k,map.minLevel*cycle*2]))}:{}) });
   return { version, actor, enemy, manaRng: hash('atlas-effects-mana-v1:' + seed) };
 }
 

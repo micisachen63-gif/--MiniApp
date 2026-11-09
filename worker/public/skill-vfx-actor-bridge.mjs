@@ -233,6 +233,17 @@ export function createActorVfxBridge(options = {}) {
     if (!record || !eligible(record) || !state.isCurrent()) return false;
     let initial = geometry(record);
     if (!initial || initial.pending) { note('missing-target-geometry', record); return false; }
+    const skill=player.getSkill?.(event.skillId);
+    // Awakening rituals originate at the measured caster body, independent of
+    // a weapon-release anchor. Do not invent anchors in another owner's clips.
+    if(skill?.system==='awakening'&&skill.origin==='body'){
+      try{await player.prepare?.(skill.baseClass);}catch{note('awakening-art-unavailable',record);return false;}
+      if(!eligible(record)||!state.isCurrent())return false;
+      const current=geometry(record);if(!current||current.pending)return false;
+      const from=options.projectPoint({x:hero.x,y:hero.y-current.size.world*.6});
+      if(!point(from))return false;
+      return {...current,from,presentation:{startProgress:0,elapsedMs:0,mode:'full'}};
+    }
     let spec;
     try {
       spec = await releaseResolver.resolve({ animator, actorId: record.actorId, direction: initial.direction, signal: state.signal, requireOrigin: !record.placement });
@@ -263,7 +274,7 @@ export function createActorVfxBridge(options = {}) {
   }
   const adapter = createCombatVfxAdapter(player, {
     context, now: clock, maxAgeMs, maxFutureMs, maxTargets: 32, maxEvents: options.maxEvents ?? 1024,
-    isKnownSkill: skillId => skillId.startsWith('atlas:') && player.getSkill?.(skillId)?.system === 'atlas',
+    isKnownSkill: skillId => (skillId.startsWith('atlas:') && player.getSkill?.(skillId)?.system === 'atlas')||(skillId.startsWith('awakening:')&&player.getSkill?.(skillId)?.system==='awakening'),
     onCast, onEffect,
   });
   function syncContext() {
@@ -350,7 +361,7 @@ export function createActorVfxBridge(options = {}) {
       || event.hits.some(hit => !object(hit) || !id(hit.targetId))
       || !same([...new Set(event.hits.map(hit => hit.targetId))], event.targetIds)) return 'invalid-targets';
     const skill = player.getSkill?.(event.skillId);
-    if (!event.skillId.startsWith('atlas:') || !skill || skill.system !== 'atlas') return 'unknown-live-skill';
+    if (!skill||!((event.skillId.startsWith('atlas:')&&skill.system==='atlas')||(event.skillId.startsWith('awakening:')&&skill.system==='awakening'))) return 'unknown-live-skill';
     if (event.type === 'skill_effect' && (!EFFECT_KINDS.has(event.effectKind) || !event.targetIds.length)) return 'invalid-effect';
     if (!event.targetIds.length && !(event.type === 'skill_cast' && skill.mechanic === 'trap')) return 'missing-targets';
     return null;

@@ -1,4 +1,5 @@
 import {potionPreference,potionKeyFor,potionTierFor} from '../game/potion-choice.js';
+import {modeForLevel} from '../game/endgame.js';
 import {runningRingId,canEnhanceInParty,requireBackpackAccess,backpackAccessStmt} from './party-presence.js';
 import {gearRarity} from '../game/gear-quality.js';
 import {repairOwnedStarRingGear} from './star-ring-gear.js';
@@ -174,8 +175,8 @@ export async function createCharacter(env, { tgId, tgName = null, name, gender, 
     return p;
   };
   const previous=await recover();if(previous)return previous;
-  const owned = await db.prepare('SELECT tg_id, char_slot FROM rpg_live_characters AS rpg_characters WHERE account_tg_id = ? ORDER BY char_slot').bind(account).all();
-  const characters = owned.results || [];
+  const owned = await db.prepare(`SELECT * FROM rpg_live_characters AS rpg_characters WHERE account_tg_id = ? ORDER BY char_slot`).bind(account).all();
+  const characters = (owned.results || []).filter(c=>!c.retention_group||c.retention_group==='native');
   if (characters.length >= 4) throw new GameError('character_limit', '每個 Telegram 帳號最多建立 4 隻角色');
   const usedSlots = new Set(characters.map((r) => Number(r.char_slot)));
   if (requestedSlot != null && usedSlots.has(requestedSlot)) throw new GameError('slot_taken', '這個角色欄位已被使用，請重新選擇');
@@ -250,7 +251,7 @@ export function refill(work, { now }, { hours = 24, requestId }) {
 export function buyGear(work, { now }, { code, requestId }, rng = rngDefault()) {
   const offer = findOffer(work.char, code); if (!offer) throw new GameError('not_sold', '這件裝備你不能買（職業／路線／等級不符）');
   if (work.char.gold < offer.price) throw new GameError('gold', `金幣不足（需要 ${offer.price.toLocaleString()}）`);
-  const item = makeGear({ id: shortId(), tgId: work.char.tg_id, cls: work.char.base_class, slot: offer.slot, kind: offer.kind, tier: offer.tier, rng, now });
+  const item = makeGear({ id: shortId(), tgId: work.char.tg_id, cls: work.char.base_class, slot: offer.slot, kind: offer.kind, tier: offer.tier, rng, now,mode:modeForLevel(work.char.level).id });
   work.char.gold -= offer.price; work.equipment.push(item);
   return { ledger: [{ event_id: eventId('gear', work.char.tg_id, requestId), tg_id: work.char.tg_id, type: '購買裝備', gold_delta: -offer.price, item: `equip:${item.id}`, item_delta: 1, note: item.name }], result: { item } };
 }
@@ -272,7 +273,7 @@ export function openGacha(work,{now,db},{type,requestId},rng=rngDefault()){
   const key='gacha_'+type;
   if((work.inv[key]||0)<1)throw new GameError('no_gacha','背包沒有這種轉蛋');
   const {offer,rarity}=drawGacha(work.char,type,rng);
-  const item=makeGear({id:shortId(),tgId:work.char.tg_id,cls:work.char.base_class,slot:offer.slot,kind:offer.kind,tier:offer.tier,rng,now,source:'gacha',forceRarity:rarity});
+  const item=makeGear({id:shortId(),tgId:work.char.tg_id,cls:work.char.base_class,slot:offer.slot,kind:offer.kind,tier:offer.tier,rng,now,source:'gacha',forceRarity:rarity,mode:modeForLevel(work.char.level).id});
   if(canEquip(work.char,item))throw new GameError('gacha_equip','轉蛋裝備不符合職業或等級');
   work.inv[key]-=1;work.equipment.push(item);
   const extra=RARITY_KEYS.indexOf(rarity)>=RARITY_KEYS.indexOf('supreme')||item.grade==='relic'?shareStmts(db,{owner:work.char.tg_id,ownerChar:work.char,equip:item,kind:'share',context:{source:'gacha',showcase:true,type},now}).stmts:[];

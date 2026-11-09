@@ -69,6 +69,16 @@ export function scopeEnvForRealm(env, context) {
   return scoped;
 }
 
+/** Internal maintenance capability. Never take a DB or identity from HTTP input.
+ * Only DRAIN gains gameplay writes, fenced to the freshly verified identity. */
+export async function realmMaintenanceContext(env,realmId){
+  const context=await resolveRealm(env,realmId),source=contexts.get(context);
+  if(context.legacy)throw new RealmError('realm_configuration_required','維護需要明確世界設定',400);
+  const scoped=scopeEnvForRealm(env,context);
+  if(context.type==='season'&&context.phase==='DRAIN')scoped.DB=createRealmGuardedDB(source.rawDB,source.identity,{maintenance:true});
+  return {context,env:scoped,rawDB:source.rawDB,identity:source.identity};
+}
+
 function assertNow(now) {
   if (!Number.isSafeInteger(now) || now < 0) throw new RealmError('realm_time_invalid', '世界維護時間無效', 400);
 }

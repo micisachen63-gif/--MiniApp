@@ -39,7 +39,7 @@ const count=(rows,kind)=>rows.filter(row=>row.kind===kind).reduce((n,row)=>n+row
 
 test('v4 adds three fixed-tier survey maps without replacing the original tutorial unlock chain',()=>{
   assert.deepEqual(ATLAS_SUPPORTED_RULESETS,['atlas-v1','atlas-v2','atlas-v3','atlas-v4']);
-  assert.equal(ATLAS_MAPS.length,7);
+  assert.equal(ATLAS_MAPS.length,67);
   assert.deepEqual(getAtlasMap('pillar_intro').prerequisites,['laurel_intro']);
   assert.deepEqual(getAtlasMap('grove_intro').prerequisites,['pillar_intro']);
   assert.deepEqual(getAtlasMap('laurel_warden').prerequisites,['grove_intro']);

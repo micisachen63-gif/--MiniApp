@@ -49,8 +49,8 @@ export function persistStatements(db, before, after, { ledger = [], extra = [], 
   const c = after.char; const tg = String(c.tg_id);
   const goldDelta = (c.gold || 0) - (before.char.gold || 0);
   const stmts = [...pre,
-    db.prepare(`UPDATE rpg_characters SET ${CHAR_FIELDS.map((f) => `${f} = ?`).join(', ')}, gold = gold + ?, rev = rev + 1, updated_at = ? WHERE tg_id = ? AND rev = ?`)
-      .bind(...CHAR_FIELDS.map((f) => c[f] ?? null), goldDelta, now, tg, before.char.rev),
+    db.prepare(`UPDATE rpg_characters SET ${CHAR_FIELDS.map((f) => f==='level'&&Object.hasOwn(before.char,'progression_level')?'level = MIN(?,120), progression_level = CASE WHEN ? > 120 THEN ? ELSE NULL END':`${f} = ?`).join(', ')}, gold = gold + ?, rev = rev + 1, updated_at = ? WHERE tg_id = ? AND rev = ?`)
+      .bind(...CHAR_FIELDS.flatMap((f) => f==='level'&&Object.hasOwn(before.char,'progression_level')?[c.level,c.level,c.level]:[c[f] ?? null]), goldDelta, now, tg, before.char.rev),
     guardStmt(db)];
   const keys = new Set([...Object.keys(before.inv), ...Object.keys(after.inv)]);
   for (const k of keys) { const d = (after.inv[k] || 0) - (before.inv[k] || 0); if (d) stmts.push(...invDeltaStmts(db, tg, k, d)); }

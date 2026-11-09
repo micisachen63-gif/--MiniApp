@@ -17,13 +17,13 @@ export async function activeCharacterId(db, accountTgId) {
 export async function listAccountCharacters(db, accountTgId) {
   const account = String(accountTgId);
   const [rows, active] = await Promise.all([
-    db.prepare(`SELECT tg_id, char_slot, name, gender, base_class, class_path, level, map_id, idle_state, gold
+    db.prepare(`SELECT *
       FROM rpg_live_characters AS rpg_characters WHERE account_tg_id = ? ORDER BY char_slot`).bind(account).all(),
     db.prepare('SELECT active_char_id FROM rpg_accounts WHERE account_tg_id = ?').bind(account).first(),
   ]);
   const activeId = active?.active_char_id || account;
   return (rows.results || []).map((c) => ({
-    charId: c.tg_id, slot: c.char_slot, name: c.name, gender: c.gender, baseClass: c.base_class,
+    charId: c.tg_id, slot: c.char_slot, retentionGroup:c.retention_group, originRealmId:c.origin_realm_id, originCharacterId:c.origin_character_id, name: c.name, gender: c.gender, baseClass: c.base_class,
     classPath: c.class_path, level: c.level, mapId: c.map_id, idleState: c.idle_state,
     gold: c.gold, active: c.tg_id === activeId,
   }));

@@ -582,7 +582,7 @@ test('the visible page timer discovers and advances a run every fifteen seconds'
   const h = harness();
   t.after(() => h.client.dispose());
   h.client.start();
-  assert.equal([...h.time.intervals.values()][0].ms, 15000);
+  assert.equal([...h.time.intervals.values()][0].ms, 1000);
   h.net.calls[0].reply({ ok: true, scene: scene() });
   await drain();
   h.net.calls[1].reply({ ok: true, scene: scene({ revision: 2, runRevision: 2 }) });
@@ -596,6 +596,12 @@ test('the visible page timer discovers and advances a run every fifteen seconds'
   h.client.dispose();
   h.time.tick();
   assert.equal(h.net.calls.length, 4);
+});
+
+test('a five-cycle run receives one-second committed combat updates while legacy runs retain their cadence',async t=>{
+ const h=harness();t.after(()=>h.client.dispose());h.client.start();const value=scene();value.run.map={id:'cycle_elite_01',progression:{mode:'elite'}};
+ h.net.calls[0].reply({ok:true,scene:value});await drain();h.net.calls[1].reply({ok:true,scene:{...value,run:{...value.run,revision:2}}});await drain();
+ h.time.advance(1000);for(const timer of h.time.intervals.values())timer.fn();h.net.calls[2].reply({ok:true,scene:{...value,run:{...value.run,revision:2}}});await drain();h.net.calls[3].reply({ok:true,scene:{...value,run:{...value.run,revision:3}}});await drain();assert.equal(h.net.calls.filter(c=>c.action==='atlas/settle').length,2);
 });
 
 test('an automatic settlement timeout is visible and is not immediately retried', async t => {

@@ -9,10 +9,11 @@
     const listeners = new Set(), traceListeners = new Set(), controllers = new Set(), writes = new Set();
     const pollMs = Math.max(1000, Number(options.pollMs) || 15000), now = options.now || Date.now;
     let context = { accountId: String(options.accountId || '90101'), realmId: options.realmId || 'permanent', characterId: options.characterId == null ? null : String(options.characterId) };
-    let epoch = 0, sequence = 0, applied = 0, floor = 0, snapshot = null, flight = null, advanceFlight = null, nextAdvanceAt = 0, disposed = false, timer = null, selecting = false, lastError = '';
+    let epoch = 0, sequence = 0, applied = 0, floor = 0, snapshot = null, flight = null, advanceFlight = null, nextAdvanceAt = 0, nextPollAt=0, disposed = false, timer = null, selecting = false, lastError = '';
     const contextError = () => Object.assign(new Error('角色或世界已切換，已忽略先前回應'), { code: 'context_changed', uncertain: false });
     const staleError = () => Object.assign(new Error('已收到較新的戰況'), { code: 'stale_response', uncertain: false });
     function emit(value) {
+      if(!!value?.run?.map?.progression!==!!snapshot?.run?.map?.progression){nextPollAt=0;nextAdvanceAt=0;}
       snapshot = value;
       for (const listener of listeners) { try { listener(value); } catch (error) { options.onListenerError?.(error); } }
       options.onSnapshot?.(value);
@@ -152,7 +153,7 @@
         const run = snapshot?.run;
         if (!run?.active || run.status !== 'running' || snapshot.live?.activeRunId !== run.id) return snapshot;
         if (!Number.isFinite(snapshot.serverNow) || !Number.isFinite(run.processedAt) || snapshot.serverNow - run.processedAt < 1000) return snapshot;
-        nextAdvanceAt = now() + pollMs;
+        nextAdvanceAt = now() + (snapshot?.run?.map?.progression?1000:pollMs);
         try {
           // One bounded server chunk (at most 2,000 engine steps) per cadence.
           await request('atlas/settle', { runId: run.id }, { preferScene: true });
@@ -188,8 +189,8 @@
     }
     function start() {
       if (timer || disposed) return;
-      const run = () => { if (!selecting && !options.isHidden?.()) void sync().catch(() => {}); };
-      run(); timer = (options.setInterval || globalThis.setInterval)(run, pollMs);
+      const run = () => { if (!selecting && !options.isHidden?.()&&now()>=nextPollAt){nextPollAt=now()+(snapshot?.run?.map?.progression?1000:pollMs);void sync().catch(() => {});} };
+      run(); timer = (options.setInterval || globalThis.setInterval)(run, Math.min(1000,pollMs));
     }
     function dispose() {
       if (disposed) return; disposed = true;

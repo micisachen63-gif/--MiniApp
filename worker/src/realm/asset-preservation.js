@@ -7,7 +7,7 @@ export const EQUIPMENT_ABILITY_FIELDS = Object.freeze([
 ]);
 const abilityFields = new Set(EQUIPMENT_ABILITY_FIELDS);
 const numericFields = new Set(['base_stat', 'element_stat']);
-const metadataKeys = ['towerImprint', 'starRingGearVersion', 'starRingYieldVersion','atlasLootVersion','atlasLootRunId','atlasLootMapId','atlasLootRewardId'];
+const metadataKeys = ['endgameOrigin','towerImprint', 'starRingGearVersion', 'starRingYieldVersion','atlasLootVersion','atlasLootRunId','atlasLootMapId','atlasLootRewardId'];
 const fail = (message) => { throw new GameError('asset_preservation', message, 409); };
 const canonical = (value) => Array.isArray(value) ? value.map(canonical)
   : value && typeof value === 'object'

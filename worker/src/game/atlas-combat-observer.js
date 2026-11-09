@@ -27,7 +27,7 @@ export function createAtlasCombatObserver(run, options = {}) {
   const events = [];
   let currentTick = null, ordinals = Object.create(null), total = 0, dropped = 0;
 
-  function begin(state, type, scheduledAt, effectKind, mpSpent) {
+  function begin(state, type, scheduledAt, effectKind, mpSpent,overrideSkillId) {
     if (currentTick !== state.elapsedSeconds) {
       currentTick = state.elapsedSeconds;
       ordinals = Object.create(null);
@@ -38,7 +38,7 @@ export function createAtlasCombatObserver(run, options = {}) {
     const resolvedAtMs = milliseconds(startedAt + state.elapsedSeconds);
     const record = {
       eventId: runId + ':combat:' + state.elapsedSeconds + ':' + phase + ':' + ordinal,
-      type, actorId, skillId,
+      type, actorId, skillId:overrideSkillId||skillId,
       atMs: resolvedAtMs, resolvedAtMs,
       scheduledAtMs: milliseconds(startedAt + scheduledAt),
       resolutionMs: ATLAS_COMBAT_RESOLUTION_MS,
@@ -77,12 +77,12 @@ export function createAtlasCombatObserver(run, options = {}) {
   }
 
   return {
-    beginCast(state, scheduledAt, mpSpent = state.skill.cost) {
-      return begin(state, 'skill_cast', scheduledAt, undefined, mpSpent);
+    beginCast(state, scheduledAt, mpSpent = state.skill.cost,skillId) {
+      return begin(state, 'skill_cast', scheduledAt, undefined, mpSpent,skillId);
     },
-    beginEffect(state, effectKind, scheduledAt) {
+    beginEffect(state, effectKind, scheduledAt,skillId) {
       if (!EFFECT_KINDS.has(effectKind)) return null;
-      return begin(state, 'skill_effect', scheduledAt, effectKind);
+      return begin(state, 'skill_effect', scheduledAt, effectKind,undefined,skillId);
     },
     snapshot() {
       return { events: events.slice(), limit, dropped, total };

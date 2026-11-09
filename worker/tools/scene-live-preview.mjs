@@ -233,7 +233,9 @@ const virtualSocial = new Set([
   'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
 ]);
 const angelFiles = new Set(['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png']);
-const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-semantics.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json'].map(name => ['/' + name, name]));
+const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-semantics.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json','awakening-vfx-live.mjs','awakening-vfx-engine.mjs','awakening-vfx-data.mjs','endgame-map-art.json'].map(name => ['/' + name, name]));
+for (const base of ['sword','archer','mage','thief']){const file='art/awakening-vfx-20261105/'+base+'-awakening-atlas.webp';vfxFiles.set('/'+file,file);}
+for (const name of await fs.readdir(path.join(publicRoot,'art/endgame-v1'))){if(/^[a-z]+-(?:[0-9]{2}|aura)-v1\.png$/.test(name)){const file='art/endgame-v1/'+name;vfxFiles.set('/'+file,file);}}
 for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit','semantic-atlas']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
 const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2' };
 let apiProcess = null, stopping = false, apiReady = !!attachedApi;

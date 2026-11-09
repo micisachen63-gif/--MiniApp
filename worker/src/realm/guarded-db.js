@@ -39,11 +39,11 @@ function readOnly(sql) {
   return /^SELECT\b/i.test(normalized);
 }
 
-export function realmCommitGuard(DB, identity, { write = true } = {}) {
+export function realmCommitGuard(DB, identity, { write = true,maintenance=false } = {}) {
   return DB.prepare(`INSERT INTO rpg_realm_commit_guard(ok) SELECT NULL WHERE NOT EXISTS (
     SELECT 1 FROM rpg_realm_identity WHERE singleton = 1 AND realm_id = ? AND realm_type = ?
     AND database_token = ? AND instance_nonce = ? AND rules_version = ? AND phase = ? AND fence_epoch = ?
-    ${write ? "AND phase = 'ACTIVE'" : ''}
+    ${write ? (maintenance?"AND phase = 'DRAIN'":"AND phase = 'ACTIVE'") : ''}
   )`).bind(identity.realm_id, identity.realm_type, identity.database_token, identity.instance_nonce, identity.rules_version, identity.phase, identity.fence_epoch);
 }
 
@@ -58,7 +58,7 @@ function guardError(error) {
  * Neither raw statements nor another realm's prepared statements are accepted.
  * This object deliberately exposes no raw DB / exec escape hatch.
  */
-export function createRealmGuardedDB(rawDB, identity) {
+export function createRealmGuardedDB(rawDB, identity,{maintenance=false}={}) {
   const owner = {};
   async function execute(items) {
     if (!Array.isArray(items)) throw new RealmError('realm_statement_invalid', '資料庫操作無效');
@@ -69,9 +69,9 @@ export function createRealmGuardedDB(rawDB, identity) {
       return statement;
     });
     const write = source.some(statement => !statement.readOnly);
-    if (write && identity.phase !== 'ACTIVE') throw new RealmError('realm_read_only', '這個世界已停止接受新操作', 409);
+    if (write && identity.phase !== (maintenance?'DRAIN':'ACTIVE')) throw new RealmError('realm_read_only', '這個世界已停止接受新操作', 409);
     try {
-      const result = await rawDB.batch([realmCommitGuard(rawDB, identity, { write }), ...source.map(statement => statement.raw)]);
+      const result = await rawDB.batch([realmCommitGuard(rawDB, identity, { write,maintenance }), ...source.map(statement => statement.raw)]);
       return result.slice(1);
     } catch (error) { throw guardError(error); }
   }
@@ -100,7 +100,7 @@ export function createRealmGuardedDB(rawDB, identity) {
     async exec() { throw new RealmError('realm_maintenance_required', '世界資料庫不允許未受保護的批次指令', 403); },
   };
   // A session still uses the same fence and never returns its raw prepared SQL.
-  if (typeof rawDB.withSession === 'function') DB.withSession = constraint => createRealmGuardedDB(rawDB.withSession(constraint), identity);
+  if (typeof rawDB.withSession === 'function') DB.withSession = constraint => createRealmGuardedDB(rawDB.withSession(constraint), identity,{maintenance});
   if (typeof rawDB.getBookmark === 'function') DB.getBookmark = () => rawDB.getBookmark();
   return Object.freeze(DB);
 }

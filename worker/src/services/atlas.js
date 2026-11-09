@@ -161,6 +161,7 @@ export async function start(env,charId,body,now){
   if(presence)throw new GameError('atlas_active','請先離開目前招募或進行中的隊伍',409);
   if(work.char.idle_state==='reviving')throw new GameError('atlas_recovery','請先等角色恢復再出征');
   if(work.char.level<map.minLevel)throw new GameError('atlas_level',`這張星圖需要 ${map.minLevel} 級`);
+  if(map.progression&&!Object.hasOwn(work.char,'progression_level'))throw new GameError('atlas_schema_pending','五輪成長資料尚未準備完成',503);
   const cleared=(await ctx.db.prepare('SELECT map_id FROM rpg_atlas_progress WHERE char_id=? AND completions>0').bind(charId).all()).results.map(r=>r.map_id);
   if(map.prerequisites.some(key=>!cleared.includes(key)))throw new GameError('atlas_locked','請先完成前一張教學星圖');
   if(ATLAS_POTION_KEYS.some(key=>(work.inv[key]||0)<items[key]))throw new GameError('insufficient','攜帶的紅水或藍水超過背包數量');

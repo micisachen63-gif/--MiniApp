@@ -32,6 +32,8 @@
   const ENCOUNTER_NAMES = { elite_hunt: '精英追獵', treasure: '寶藏', spring: '補給泉水', ambush: '伏擊' };
   const ITEM_NAMES = { scroll_w: '武器強化卷', scroll_a: '防具強化卷' };
   const viewers = new Set(), metadata = new Map();
+  let endgameArt=null;
+  function loadEndgameArt(){if(!liveMode()||!global.fetch)return;void global.fetch('/endgame-map-art.json',{credentials:'same-origin'}).then(r=>{if(!r.ok)throw Error('map-art');return r.json();}).then(data=>{endgameArt=data;viewers.forEach(view=>view.apply(lastSnapshot));}).catch(()=>{});}
   let lastSnapshot = null, lastSyncError = '', nextViewId = 0, hudMounted = false, syncBusy = false;
   const hudSkills = { scope: '', generation: 0, controller: null, status: 'unknown', requestedRevision: -1, revision: -1, slots: [] };
   const number = value => typeof value === 'number' && Number.isFinite(value) ? value : null;
@@ -70,12 +72,17 @@
     return value.maxLevel === false && number(value.required) !== null && value.required > 0 ? value : null;
   }
   function mapAsset(map) {
+    if(/^cycle_(normal|elite|expert|nightmare|hell)_\d{2}$/.test(map?.id||'')){
+      const art=endgameArt?.[map.id];if(!art||map.progression?.mode!==art.mode||map.progression?.chapter!==art.chapter)return null;
+      return {...art,sourceMap:art.roster[0].sourceMap};
+    }
     const source = MAPS[map?.id];
     return source && map.themeId === source.themeId && map.kind === source.kind ? source : null;
   }
   function enemyAsset(map, enemy) {
     const source = mapAsset(map);
     if (!source) return null;
+    if(map.progression){const row=source.roster.find(x=>x.id===enemy?.art?.spriteId&&x.sourceMap===enemy.art.sourceMap);return row?{...source,sourceMap:row.sourceMap,spriteId:row.id}:null;}
     const row = ENEMIES.find(row => row[0] === map.id && row[1] === enemy?.rank && row[2] === enemy?.name);
     return row ? { ...source, spriteId: row[3] } : null;
   }
@@ -328,8 +335,8 @@
     function ensureVfx() {
       if (vfxInit) return vfxInit;
       vfxInit = (async () => {
-        const [{ createVfxPlayer }, { createActorVfxBridge }, response] = await Promise.all([
-          import('/skill-vfx-engine.mjs'), import('/skill-vfx-actor-bridge.mjs'),
+        const [{ createLiveVfxPlayer }, { createActorVfxBridge }, response] = await Promise.all([
+          import('/awakening-vfx-live.mjs'), import('/skill-vfx-actor-bridge.mjs'),
           global.fetch('/skill-vfx-catalog.json', { signal: vfxController.signal, credentials: 'same-origin' }),
         ]);
         if (!response.ok) throw Error('技能目錄尚未載入');
@@ -341,7 +348,7 @@
         vfxCanvas.setAttribute('aria-hidden', 'true');
         Object.assign(vfxCanvas.style, { position: 'absolute', pointerEvents: 'none', zIndex: '2' });
         host.appendChild(vfxCanvas);
-        vfxPlayer = createVfxPlayer(vfxCanvas, { catalog, assetBase: '/art/skill-vfx-20261104/', maxActive: 8, quality: 'high' });
+        vfxPlayer = createLiveVfxPlayer(vfxCanvas, { catalog, assetBase: '/art/skill-vfx-20261104/', maxActive: 8, quality: 'high' });
         syncVfxCanvas();
         vfxBridge = createActorVfxBridge({
           player: vfxPlayer, animator, hero, getContext: vfxContext, getRoom: vfxRoom,
@@ -379,7 +386,7 @@
       const value = model, health = value?.hero;
       hero.hp = number(health?.hp) ?? 0; hero.mhp = number(health?.maxHp) ?? 0;
       syncHudResources(value, ui, syncError);
-      text(doc.querySelector('#topL .who b'), value?.character.name || '角色同步中');
+      text(doc.querySelector('#topL .who b'), value?.character.name ? value.character.name+' · '+(value.character.progression?.modeName||'普通') : '角色同步中');
       text(doc.querySelector('#topL .portrait i'), value ? pretty(value.character.level) : '—');
       text(byId('gold'), value ? '◈ ' + pretty(value.live.gold) : '◈ —');
       const xp = byId('xp'), experience = experienceProgress(value?.live.experience), xpText = experience ? experience.maxLevel ? '已達滿級' : pretty(experience.current) + ' / ' + pretty(experience.required) : '等級進度尚未同步';
@@ -419,8 +426,9 @@
       }));
       refreshHud();
     }
+    function destroyEntity(entity){if(entity.aura){scene.tweens.killTweensOf(entity.aura);entity.aura.destroy();}entity.sprite?.destroy();}
     function releaseAssets() {
-      for (const entity of entities.values()) entity.sprite?.destroy(); entities.clear(); hooks.setMonsters([]);
+      for (const entity of entities.values()) destroyEntity(entity); entities.clear(); hooks.setMonsters([]);
       for (const key of animationKeys) scene.anims.remove(key); animationKeys.clear();
       // Keep Phaser images on a persistent frame before releasing owned textures.
       if (ground?.active !== false) { ground?.setVisible(false); if (scene.textures.exists('ground')) ground?.setTexture('ground'); }
@@ -472,6 +480,7 @@
       for (const { entity, x, y } of slots) {
         if (!entity.sprite?.active) continue;
         entity.sprite.setPosition(x, y);
+        if(entity.aura)entity.aura.setPosition(x,y).setDisplaySize(height*.36,height*.36).setDepth(y-.5);
         entity.sprite.setScale(height * entity.sprite.pct / entity.idleBody).setFlipX(x > hero.x).setDepth(y);
       }
       // A committed snapshot repositions the whole encounter at once. The art
@@ -495,7 +504,7 @@
       const asset = mapAsset(map), generation = mapGeneration;
       if (!asset) { mapIssue = '此星圖背景待對應'; layout(); return; }
       const key = 'live-' + viewId + '-' + generation + '-ground'; mapLoading = true;
-      void resource('image', key, '/map' + asset.sourceMap + '/map' + asset.sourceMap + '_ground.webp').then(texture => {
+      void resource('image', key, asset.background||'/map' + asset.sourceMap + '/map' + asset.sourceMap + '_ground.webp').then(texture => {
         if (!texture || !current() || generation !== mapGeneration) return;
         ground.setTexture(texture).setVisible(true); groundImage = scene.textures.get(texture).getSourceImage(); groundReady = true; layout();
       }).catch(() => { if (current() && generation === mapGeneration) { mapIssue = '地圖背景尚未載入'; status(); } })
@@ -516,6 +525,7 @@
         entity.idleBody = idle.body; entity.metadata = data; assetIssues.delete(entity.key);
         sprite.nm = asset.spriteId; sprite.role = entity.enemy.rank === 'normal' ? 'minion' : entity.enemy.rank; sprite.pct = sprite.role === 'boss' ? .38 : sprite.role === 'elite' ? .26 : .18;
         sprite.hp = entity.enemy.hp; sprite.mhp = entity.enemy.maxHp; sprite.play(animation);
+        if(asset.aura){const auraKey=await resource('image','live-'+viewId+'-'+generation+'-mode-aura',asset.aura);if(auraKey&&current()&&generation===mapGeneration&&entities.get(entity.key)===entity){entity.aura=scene.add.image(sprite.x,sprite.y,auraKey).setOrigin(.5,.65).setAlpha(.4).setBlendMode('ADD');scene.tweens.add({targets:entity.aura,alpha:.65,duration:1800,yoyo:true,repeat:-1});}}
         syncMonsters(); layout();
         if (entity.enemy.hp <= 0) beginDeath(entity);
         status();
@@ -537,13 +547,13 @@
           // never be stretched back to the standing display height.
           sprite.setOrigin(death.ox, death.oy).setScale(scene.scale.height * sprite.pct / entity.idleBody);
           sprite.play(animation);
-          scene.time.delayedCall(death.frames * 100 + 300, () => { if (entities.get(entity.key) === entity) { sprite.destroy(); entities.delete(entity.key); syncMonsters(); drawBars(); } });
-        } catch (_) { if (entities.get(entity.key) === entity) { sprite.destroy(); entities.delete(entity.key); syncMonsters(); assetIssues.set(entity.key, entity.enemy.name + '倒地素材待載入'); status(); } }
+          scene.time.delayedCall(death.frames * 100 + 300, () => { if (entities.get(entity.key) === entity) { destroyEntity(entity); entities.delete(entity.key); syncMonsters(); drawBars(); } });
+        } catch (_) { if (entities.get(entity.key) === entity) { destroyEntity(entity); entities.delete(entity.key); syncMonsters(); assetIssues.set(entity.key, entity.enemy.name + '倒地素材待載入'); status(); } }
       })();
     }
     function reconcileEnemies() {
       const room = model?.active ? [model.run.id, model.run.mapIndex, model.run.roomIndex].join(':') : '';
-      if (room !== currentRoom) { vfxBridge?.clear('room-changed'); for (const entity of entities.values()) entity.sprite?.destroy(); entities.clear(); assetIssues.clear(); currentRoom = room; }
+      if (room !== currentRoom) { vfxBridge?.clear('room-changed'); for (const entity of entities.values()) destroyEntity(entity); entities.clear(); assetIssues.clear(); currentRoom = room; }
       const wanted = new Set();
       for (const enemy of model?.enemies || []) {
         const key = room + ':' + enemy.id, asset = enemyAsset(model.map, enemy); wanted.add(key);
@@ -554,7 +564,7 @@
           else if (asset && enemy.hp > 0 && !entity.loading) void loadEnemy(entity);
         } else if (asset && enemy.hp > 0) { entity = { key, enemy, asset, sprite: null, dying: false, loading: false }; entities.set(key, entity); void loadEnemy(entity); }
       }
-      for (const [key, entity] of entities) if (!wanted.has(key) && !entity.dying) { entity.sprite?.destroy(); entities.delete(key); assetIssues.delete(key); }
+      for (const [key, entity] of entities) if (!wanted.has(key) && !entity.dying) { destroyEntity(entity); entities.delete(key); assetIssues.delete(key); }
       syncMonsters(); layout();
     }
     function drawBars() {
@@ -820,4 +830,5 @@
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
   global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  loadEndgameArt();
 })(window);

@@ -9,7 +9,8 @@ test('released EXP curve matches the tracked pre-remediation baseline for every 
   const rows=readFileSync(new URL('./fixtures/exp-table-release-4f49917.csv',import.meta.url),'utf8').trim().split('\n').slice(1).map(line=>line.split(',').map(Number));
   assert.equal(rows.length,119);
   for(const [level,tick,next] of rows){assert.equal(expPerTick(level),tick,`tick ${level}`);assert.equal(EXP_TABLE[level],next,`next ${level}`);}
-  assert.equal(EXP_TABLE[120],null);
+  assert.ok(Number.isFinite(EXP_TABLE[120]));
+  assert.equal(EXP_TABLE[600],null);
 });
 
 test('python-style rounding, daily gold, map tiers', () => {

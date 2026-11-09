@@ -1,3 +1,16 @@
+# 2026-11-09｜五輪成長、16覺醒與季末保留本機候選
+
+本批自6d5be7892f520e035a21df0d75c4437559065d6b建立獨立分支codex/endgame-growth-integration-20261109。
+已接五輪1–600、60張可出征圖、48原圖與4模式光環、來源模式裝備與基礎強化逐輪減半、16招權威自動覺醒及專屬呈現、增補等級schema，以及有fence/manifest/分塊收據的跨D1季末保留。永久native四格與各季四格分組，不覆寫原角色、原裝+N或角色/FX/F3工作線。
+
+完整規則、程式入口與維護邊界：docs/ENDGAME_GROWTH_20261109.txt。
+本批狀態與最終commit、測試、Chrome證據：D:/StarJournal/handoff/non-character/endgame-growth-integration-20261109/STATUS.json、WORKING_HANDOFF.md。
+本段提交時尚在完整gate前，不把舊4266或focused當成本批正式通過；最後結果以本批外部收據與實際HEAD為準。
+未push／PR／中央合併／部署／遠端migration。季末維護旗標預設關閉；原正式玩家與其他owner預覽保持。
+原部分角色普通技能缺少出手錨點／attack方向仍由角色原線處理；本批覺醒採測量後本體施放，不修改或偽造舊武器錨點。
+
+---
+
 # 本批完整gate第一輪與fixture修補
 
 2026-11-06 12:49（Asia/Taipei）：原9370de2完整gate已結束為failed。Worker3656/3660（4fail）、BOT205/205；11,430來源、Git/owner/選集穩定。4項皆是舊monster-art-compatibility.test.js抽出handleApp到VM時漏注入SCOPED_EXCHANGE_READ_ACTIONS，非4種產品缺陷。原receipt與兩服務/runner真exit完整保留於full-final-head-gate/exchange-read-final-20261106-01/。

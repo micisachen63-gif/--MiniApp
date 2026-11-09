@@ -4,6 +4,7 @@ import {
   ATLAS_AUTOMATION, ATLAS_SUPPORTED_RULESETS, ATLAS_QUEUE_MODES, getAtlasBuild, getAtlasMap,
 } from './atlas-catalog.js';
 import {applyAtlasTalentSnapshot} from './atlas-talents.js';
+import {initializeAwakening,dueAwakening} from './awakening.js';
 import { createAtlasCombatObserver } from './atlas-combat-observer.js';
 import {
   AtlasEffectsError, createAtlasEffects, validateAtlasEffects,
@@ -200,6 +201,7 @@ export function createAtlasRun(input) {
   const effects = effectsRules(() => createAtlasEffects(input.effectsRulesVersion, input.snapshot, mapSnapshot, seed));
   if (effects) { state.effects = effects; state.metrics.freeCasts = 0; }
   initializeAtlasContent(state, input.snapshot);
+  initializeAwakening(state);
   return state;
 }
 
@@ -221,7 +223,8 @@ function spawnRoom(state) {
   const attackInterval = encounter ? spec.attackInterval * (encounter.attackIntervalMultiplier || 1) : spec.attackInterval;
   state.enemies = Array.from({ length: count }, (_, index) => {
     const maxHp = Math.max(1, Math.round(spec.hp * (encounter?.hpMultiplier || 1) * (.94 + random(state, 'encounterRng') * .12)));
-    return { id: `${state.mapIndex}:${state.roomIndex}:${index}`, name: elite ? state.map.eliteName : state.map.enemyName,
+    const art=state.map.progression?(elite?state.map.eliteArt:state.map.enemyRoster[(state.roomIndex+index)%state.map.enemyRoster.length]):null;
+    return { id: `${state.mapIndex}:${state.roomIndex}:${index}`, name: art?.name||(elite ? state.map.eliteName : state.map.enemyName),...(art?{art:{spriteId:art.id,sourceMap:art.sourceMap}}:{}),
       rank, maxHp, hp: maxHp, atk: encounter ? Math.max(1, Math.round(spec.atk * (encounter.attackMultiplier || 1))) : spec.atk, def: spec.def,
       attackInterval,
       nextAttackAt: state.elapsedSeconds + (encounter?.firstAttackSeconds || attackInterval) + index * .25,
@@ -267,14 +270,16 @@ function applyDot(state, enemy, source, duration, damage) {
 
 function dealDamage(state, enemy, amount, source, critical = false, activities, observation) {
   if (!enemy || enemy.hp <= 0) return 0;
-  const mitigation = source === 'dot' ? 1 : 100 / (100 + enemy.def * 4);
+  const defense=enemy.def*(enemy.brokenUntil>state.elapsedSeconds?.65:1);
+  const mitigation = source === 'dot' ? 1 : 100 / (100 + defense * 4);
   const critChance = clamp(.05 + state.snapshot.pct.critPct + (state.skill.critChance || 0), 0, .8);
   const crit = critical && random(state) < critChance ? 1.7 : 1;
   const hpBefore = enemy.hp;
   // Keep the exact legacy arithmetic order when no elemental actor is present.
   // Native elemental damage receives critical raw damage, before physical DEF.
+  const effectState=state.effects&&enemy.fracturedUntil>state.elapsedSeconds?{...state,effects:{...state.effects,enemy:{...state.effects.enemy,elementResist:Object.fromEntries(Object.entries(state.effects.enemy.elementResist).map(([k,v])=>[k,v*.4]))}}}:state;
   const resolved = state.effects?.actor.element
-    ? atlasOutgoingDamage(state, amount * crit, source) * mitigation
+    ? atlasOutgoingDamage(effectState, amount * crit, source) * mitigation
     : amount * mitigation * crit;
   const damage = Math.min(enemy.hp, Math.max(1, Math.round(resolved)));
   enemy.hp -= damage;
@@ -352,6 +357,38 @@ function cast(state, activities, observer, actionAt) {
   observation?.finish(state);
 }
 
+function castAwakening(state,skill,activities,observer,at){
+  const {hero,snapshot}=state;
+  const extra=skill.mechanic==='nova'?Math.ceil(snapshot.maxMp*.2):skill.mechanic==='night'?Math.ceil(snapshot.maxMp*.06):0;
+  const cost=Math.ceil(skill.cost*clamp(1+snapshot.pct.mpCostPct,.1,4)*(1-Math.min(.3,snapshot.pct.mpEfficiencyPct)))+extra;
+  if(hero.mp<cost&&cost<=snapshot.maxMp)drinkMp(state,cost);
+  if(hero.mp<cost)return false;
+  const observation=observer?.beginCast(state,at,cost,skill.id),targets=alive(state).slice(0,skill.targets);
+  hero.mp=round(hero.mp-cost);state.metrics.manaSpent+=cost;state.awakening.casts++;
+  state.awakening.nextAt[skill.id]=at+skill.cooldown*clamp(1-snapshot.pct.skillHastePct,.75,2);
+  if(skill.mechanic==='blood')hero.hp=Math.max(1,hero.hp-Math.floor(snapshot.maxHp*.06));
+  if(['guard','mirror'].includes(skill.mechanic))shield(state,skill.mechanic==='guard'?.24:.18);
+  if(skill.mechanic==='guard')hero.awakeningGuard={until:state.elapsedSeconds+8,skillId:skill.id};
+  if(skill.mechanic==='mirror')hero.mirror={until:state.elapsedSeconds+8,remaining:Math.floor(snapshot.maxMp*.15)};
+  for(const enemy of targets){
+    if(['break','fracture'].includes(skill.mechanic))enemy.brokenUntil=state.elapsedSeconds+8;
+    if(skill.mechanic==='fracture')enemy.fracturedUntil=state.elapsedSeconds+8;
+    if(skill.mechanic==='mark')enemy.markedUntil=state.elapsedSeconds+10;
+    const hits=['shadows','break'].includes(skill.mechanic)?3:skill.mechanic==='blood'?2:1;
+    let coeff=skill.coefficient*(1+(snapshot.pct.skillDamagePct||0));
+    if(skill.mechanic==='verdict'&&enemy.rank==='boss')coeff*=1.5;
+    if(skill.mechanic==='execute'&&enemy.hp/enemy.maxHp<=.35)coeff*=2.5;
+    for(let hit=0;hit<hits&&enemy.hp>0;hit++)state.awakening.damage+=dealDamage(state,enemy,snapshot.atk*coeff,'skill',true,activities,observation);
+    if(skill.mechanic==='venom'&&enemy.hp>0)enemy.dots.push({source:'awakening-venom',skillId:skill.id,remaining:8,damage:Math.round(snapshot.atk*.35*(1+snapshot.pct.dotPct)),appliedAt:state.elapsedSeconds});
+  }
+  if(['hunt','night'].includes(skill.mechanic)){
+    // Three finite followers, each exactly three strikes; never grows unbounded.
+    hero.pets=hero.pets.filter(p=>!p.awakening);
+    for(let i=0;i<3;i++)hero.pets.push({awakening:true,skillId:skill.id,strikesLeft:3,remaining:7,nextAttackAt:state.elapsedSeconds+1+i*.25,damage:Math.round(snapshot.atk*(skill.mechanic==='hunt'?.65:.8)*(1+snapshot.pct.summonPct))});
+  }
+  event(state,'awakening_cast',{skillId:skill.id,name:skill.name,mpSpent:cost});observation?.finish(state);return true;
+}
+
 function heroActions(state, activities, observer) {
   const { hero, skill, snapshot } = state;
   const interval = 2 / snapshot.attackSpeedMultiplier;
@@ -359,6 +396,8 @@ function heroActions(state, activities, observer) {
   for (let budget = 0; budget < 4 && hero.nextActionAt <= state.elapsedSeconds && alive(state).length; budget++) {
     const actionAt = hero.nextActionAt;
     hero.nextActionAt += interval;
+    const awakening=dueAwakening(state,actionAt);
+    if(awakening&&castAwakening(state,awakening,activities,observer,actionAt))continue;
     const enemies = alive(state);
     const strong = enemies.some(enemy => enemy.rank !== 'normal');
     const ready = actionAt + 1e-9 >= hero.nextSkillAt;
@@ -382,7 +421,7 @@ function periodic(state, activities, observer) {
     if (enemy.hp <= 0) continue;
     for (const dot of [...enemy.dots]) {
       if (dot.appliedAt >= state.elapsedSeconds) continue;
-      const observation = observer?.beginEffect(state, 'dot', state.elapsedSeconds);
+      const observation = observer?.beginEffect(state, 'dot', state.elapsedSeconds,dot.skillId);
       dealDamage(state, enemy, dot.damage, 'dot', false, activities, observation);
       observation?.finish(state);
       dot.remaining--;
@@ -395,14 +434,15 @@ function periodic(state, activities, observer) {
     if (pet.nextAttackAt <= state.elapsedSeconds) {
       const enemy = alive(state)[0];
       if (enemy) {
-        const observation = observer?.beginEffect(state, 'pet', pet.nextAttackAt);
-        dealDamage(state, enemy, pet.damage, 'pet', false, activities, observation);
+        const observation = observer?.beginEffect(state, 'pet', pet.nextAttackAt,pet.skillId);
+        dealDamage(state, enemy, pet.damage*(enemy.markedUntil>state.elapsedSeconds?1.3:1), 'pet', false, activities, observation);
         observation?.finish(state);
       }
       pet.nextAttackAt += 2;
+      if(pet.awakening&&enemy)pet.strikesLeft--;
     }
   }
-  state.hero.pets = state.hero.pets.filter(pet => pet.remaining > 0);
+  state.hero.pets = state.hero.pets.filter(pet => pet.remaining > 0&&pet.strikesLeft!==0);
   for (const trap of state.hero.traps) {
     if (trap.triggerAt > state.elapsedSeconds) continue;
     state.metrics.trapsTriggered++;
@@ -420,22 +460,27 @@ function enemyActions(state, activities, observer) {
     const attackAt = enemy.nextAttackAt;
     drinkHp(state);
     let damage = Math.max(1, Math.round(atlasIncomingDamage(state, enemy.atk) * snapshot.taken * (100 / (100 + snapshot.def * 2))));
-    const blocked = skill.mechanic === 'counter' && random(state) < skill.blockChance;
+    const guarded=hero.awakeningGuard?.until>=state.elapsedSeconds;
+    const blocked = (skill.mechanic === 'counter'||guarded) && random(state) < (guarded?.6:skill.blockChance);
     if (blocked) {
-      const prevented = Math.round(damage * skill.blockReduction);
+      const prevented = Math.round(damage * (guarded?.7:skill.blockReduction));
       damage -= prevented; state.metrics.blocks++; state.metrics.blockedDamage += prevented;
     }
     const absorbed = Math.min(damage, hero.shield);
     hero.shield -= absorbed; damage -= absorbed; state.metrics.shieldAbsorbed += absorbed;
+    if(absorbed>0&&hero.mirror?.until>=state.elapsedSeconds&&hero.mirror.remaining>0){
+      const restored=Math.min(snapshot.maxMp-hero.mp,hero.mirror.remaining,Math.floor(absorbed*.25));
+      hero.mp=round(hero.mp+restored);hero.mirror.remaining-=restored;state.metrics.mpRestored=round(state.metrics.mpRestored+restored);
+    }
     const actual = Math.min(hero.hp, damage);
     hero.hp -= actual; state.metrics.damageTaken += actual;
     recordAtlasDamage(state, actual);
     enemy.nextAttackAt += enemy.attackInterval * (enemy.chilledUntil > state.elapsedSeconds ? 1.5 : 1);
     if (hero.hp <= 0) { finish(state, 'dead', 'hp_depleted'); return; }
     if (blocked) {
-      const observation = observer?.beginEffect(state, 'counter', attackAt);
+      const observation = observer?.beginEffect(state, 'counter', attackAt,guarded?hero.awakeningGuard.skillId:undefined);
       for (const target of alive(state).slice(0, 3)) {
-        dealDamage(state, target, snapshot.atk * skill.counterCoefficient * skill.damageMultiplier, 'counter', true, activities, observation);
+        dealDamage(state, target, snapshot.atk * (guarded?1.1:skill.counterCoefficient) * skill.damageMultiplier, 'counter', true, activities, observation);
       }
       observation?.finish(state);
     }

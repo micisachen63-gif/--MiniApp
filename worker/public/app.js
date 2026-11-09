@@ -2139,16 +2139,16 @@
   function characterSelectView() {
     if(S.charactersLoading)return '<section class="char-select"><div class="char-select-title" role="status"><h1>正在讀取此環境的角色</h1><p>請稍候，確認伺服器保留的旅人資料。</p></div></section>';
     if(S.charactersError)return `<section class="char-select"><div class="char-select-title"><h1>角色尚未載入</h1><p>${esc(S.charactersError)}</p><button class="btn" id="retryCharacters">重新讀取角色</button></div></section>`;
-    const maximum=Number(S.maxCharacters)||4,used=new Set(S.characters.map(c=>Number(c.slot)));
+    const maximum=Number(S.maxCharacters)||4,used=new Set(S.characters.filter(c=>!c.retentionGroup||c.retentionGroup==='native').map(c=>Number(c.slot)));
     const retained=[...S.characters].sort((a,b)=>Number(a.slot)-Number(b.slot));
     const slots = retained.map((c) => {
       const slot=Number(c.slot);
       const cls = S.meta.classes[c.baseClass] || {}; const pic = artSrc('hero', heroKey(c.baseClass, c.gender, c.classPath));
-      return `<div class="char-choice"><button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${slot>maximum||c.retained?' · 保留角色':''}${c.active ? ' · 上次掛機' : ''}</span>
+      return `<div class="char-choice"><button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${c.retentionGroup&&c.retentionGroup!=='native'?' · 季末保留':slot>maximum||c.retained?' · 保留角色':''}${c.active ? ' · 上次掛機' : ''}</span>
         <span class="char-portrait">${pic ? `<img src="${pic}" alt="">` : `<i>${esc(cls.emoji || '✦')}</i>`}</span><strong>${esc(c.name)}</strong><small>${esc(cls.name || c.baseClass)} · Lv.${c.level}</small>
         <em>${c.active ? '繼續冒險' : '選擇角色'}</em></button><button type="button" class="char-delete-link" data-delete-character="${esc(c.charId)}" aria-label="刪除角色 ${esc(c.name)}">刪除角色</button></div>`;
     }).join('');
-    const emptySlots=Array.from({length:maximum},(_,index)=>index+1).filter(slot=>!used.has(slot)).slice(0,Math.max(0,maximum-retained.length)).map(slot=>`<button class="char-card char-empty" data-new="${slot}" aria-label="建立第 ${slot} 隻角色"><span class="char-question">?</span><b>尚未創角</b><small>第 ${slot} 格 · 建立新冒險者</small><em>＋ 建立角色</em></button>`).join('');
+    const emptySlots=Array.from({length:maximum},(_,index)=>index+1).filter(slot=>!used.has(slot)).slice(0,Math.max(0,maximum-S.characters.filter(c=>!c.retentionGroup||c.retentionGroup==='native').length)).map(slot=>`<button class="char-card char-empty" data-new="${slot}" aria-label="建立第 ${slot} 隻角色"><span class="char-question">?</span><b>尚未創角</b><small>第 ${slot} 格 · 建立新冒險者</small><em>＋ 建立角色</em></button>`).join('');
     const realm=S.realms?.find(item=>item.id===S.realmId);
     return `<section class="char-select"><div class="char-select-title"><span>✥ ${esc(realm?.name||'ADVENTURER SELECT')} ✥</span><h1>${retained.length?'選擇角色':'此環境還沒有角色'}</h1><p>${S.realmId==='permanent'?'既有角色與裝備完整保留於此；選一位旅人繼續冒險。':'賽季角色從新旅程開始；原有角色可在永久環境找到。'}</p></div><div class="char-grid">${slots}${emptySlots}</div>
       <div class="char-select-foot">${S.characters.length} 名冒險者${S.characters.length>maximum?' · 超出一般建立名額的角色仍完整保留':` · 建立名額 ${maximum}`}<br><small>每帳號每天最多刪除 1 隻角色 · 台灣時間 00:00 重置</small></div>${S.me ? '<button class="btn ghost char-back" id="backAdventure">返回目前角色</button>' : ''}</section>`;

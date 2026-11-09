@@ -5,7 +5,7 @@ import { THIEF_CLASS, THIEF_BRANCHES2, THIEF_WEAPONS, THIEF_ARMOR } from './thie
 
 export const TICK_MS = 60_000;
 export const MAX_SETTLE_TICKS = 1440;          // offline cap: 24h
-export const MAX_LEVEL = 120;
+export const MAX_LEVEL = 600;
 export const MAX_OPEN_MAP = 12;                 // 12 Greek-mythology maps (Lv1–120), changing every 10 levels
 export const MAX_OPEN_CLASS_TIER = 4;           // Lv90/Lv120 require bound three-account party trial certificates.
 export const NEWBIE_EXP_LEVEL = 10;             // Lv1–10: EXP ×3 and no death penalty

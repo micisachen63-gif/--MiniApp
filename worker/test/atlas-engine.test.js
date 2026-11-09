@@ -32,7 +32,7 @@ test('catalog retains all twelve legacy themes and twelve distinct class build m
   assert.equal(ATLAS_THEMES.length, 12);
   assert.equal(ATLAS_BUILDS.length, 12);
   for (const baseClass of ['sword', 'archer', 'mage', 'thief']) assert.equal(ATLAS_BUILDS.filter(build => build.baseClass === baseClass).length, 3);
-  assert.equal(ATLAS_MAPS.length, 7);
+  assert.equal(ATLAS_MAPS.length, 67);
   assert.deepEqual(ATLAS_MAPS.find(map => map.id === 'laurel_warden').prerequisites, ['grove_intro']);
   const catalog = getAtlasCatalog();
   catalog.builds[0].coefficient = 999;

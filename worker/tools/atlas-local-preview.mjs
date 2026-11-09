@@ -1,3 +1,4 @@
+import {seedEndgameQa} from './endgame-qa-fixture.mjs';
 // Local, disposable playtest only. No Wrangler, secrets, remote DB or live assets.
 // node worker/tools/atlas-local-preview.mjs --port=9642
 import http from 'node:http';
@@ -104,6 +105,8 @@ const guardianQaSeed=guardianQa?await seedGuardianQa(env,permanent,now):null;
 const guardianQaClock=guardianQa?createGuardianQaController(env,permanent,guardianQaSeed,now):null;
 const fateQaSeed=fateQa?await seedFateQa(env,permanent,now):null;
 const fateQaClock=fateQa?createFateQaController(env,permanent,fateQaSeed,now):null;
+const endgameQa=process.env.RPG_ENDGAME_QA==='1';
+const endgameQaSeed=endgameQa?await seedEndgameQa(env,now):null;
 const fatePrivateQaSeed=fatePrivateQa?await seedFatePrivateQa(env,permanent,now):null;
 const fatePrivateQaClock=fatePrivateQa?createFatePrivateQaController(env,permanent,fatePrivateQaSeed,now):null;
 const qaClock=towerQaClock||bossQaClock||starRingQaClock||guardianQaClock||fateQaClock||fatePrivateQaClock;
@@ -156,7 +159,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname === '/__preview/health') {
       res.writeHead(200, { 'Content-Type': 'application/json', 'Cache-Control': 'no-store' });
-      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,vfxFixture:vfxFixture?'long-targets':null,skillCareerQa,ledgerQa,exchangeQa,exchangeActionsQa,exchangeActionsQaPolicy:exchangeActionsQa?{actions:[...exchangeActionsQaActions],selectionOutsidePureIntervals:true,setupOperationsExplicit:true,backgroundTimersDisabled:{atlas:sweepTimer===null,workshop:workshopTimer===null,party:partySweepTimer===null}}:null,exchangeQaPolicy:exchangeQa?{actions:[...exchangeQaActions],selectionOutsidePureIntervals:true,backgroundTimersDisabled:{atlas:sweepTimer===null,workshop:workshopTimer===null,party:partySweepTimer===null}}:null,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,fatePrivateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
+      res.end(JSON.stringify({ ok: true, pid:process.pid, isolated: true, endgameQa,endgameQaSeed, ephemeral: true, productionAccess: false, realmCount: 2,liveSocialPreview:true,vfxFixture:vfxFixture?'long-targets':null,skillCareerQa,ledgerQa,exchangeQa,exchangeActionsQa,exchangeActionsQaPolicy:exchangeActionsQa?{actions:[...exchangeActionsQaActions],selectionOutsidePureIntervals:true,setupOperationsExplicit:true,backgroundTimersDisabled:{atlas:sweepTimer===null,workshop:workshopTimer===null,party:partySweepTimer===null}}:null,exchangeQaPolicy:exchangeQa?{actions:[...exchangeQaActions],selectionOutsidePureIntervals:true,backgroundTimersDisabled:{atlas:sweepTimer===null,workshop:workshopTimer===null,party:partySweepTimer===null}}:null,partyQa,towerQa,bossQa,starRingQa,guardianQa,fateQa,fatePrivateQa,qaClock:qaClock?.info()||null,partySweepMs:partyQa?1000:null }));
       return;
     }
     if (partyQa && url.pathname === '/__preview/party-qa/state') {
@@ -244,7 +247,7 @@ const server = http.createServer(async (req, res) => {
 });
 server.on('error', error => { console.error(error.message); env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); process.exitCode = 1; });
 server.listen(port, '127.0.0.1', () => console.log(JSON.stringify({
-  url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, ephemeral: true,
+  url: `http://127.0.0.1:${port}/?devTg=90101`, isolated: true, endgameQa,endgameQaSeed, ephemeral: true,
   notice: fatePrivateQa?'本機私人命運隔離驗收；只合成初始角色與資源；原服務生成命運及戰鬥證據；私人資料只留記憶；不外送。':fateQa?'本機命運隔離驗收；只造初始角色，人生與四世禮皆走原服務；明示開發時鐘；關閉後資料清除。':guardianQa?'本機天使隔離驗收；合成初始素材與原服務收據分開；明示開發時鐘；關閉後資料清除。':starRingQa?'本機星環隔離驗收；五帳號合成角色；明示開發時鐘；關閉後資料清除。':'本機 POE 功能測試；四名測試角色；關閉後資料清除；9593 與正式機不受影響。',
 })));
 function close() { clearInterval(sweepTimer);clearInterval(workshopTimer);if(partySweepTimer)clearInterval(partySweepTimer);server.closeAllConnections(); server.close(() => { env.DB.sqlite.close(); env.DB_SEASON.sqlite.close(); }); }

@@ -315,3 +315,13 @@ test('cross-origin profile asset URLs are never fetched', async () => {
   await assert.rejects(f.resolver.resolve({ animator: f.animator, actorId: 'mage', direction: 'right' }), { code: 'profile-source-url' });
   assert.equal(f.fetches, 0);
 });
+
+// Ritual effects use their own measured body origin; legacy weapon anchors stay strict.
+test('committed awakenings render from the real caster body without rewriting incomplete native weapon anchors',async()=>{
+ const f=fixture(),old=f.player.getSkill;
+ f.player.getSkill=id=>id==='awakening:mage:elite'?{id,system:'awakening',baseClass:'mage',origin:'body'}:old(id);
+ f.player.hasSkill=id=>!!f.player.getSkill(id);
+ for(const clip of Object.values(f.animator.clips.attack))delete clip.source.releaseAnchorPx;
+ const result=await f.bridge.ingestTrace(f.trace([f.event({skillId:'awakening:mage:elite'})]));
+ assert.equal(result.results[0].accepted,true);assert.equal(f.calls[0].skillId,'awakening:mage:elite');assert.equal(f.animator.plays.length,0);assert.ok(f.calls[0].from.y<f.hero.y);f.bridge.destroy();
+});

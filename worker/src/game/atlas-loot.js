@@ -19,7 +19,7 @@ export function materializeAtlasEquipment(state,reward,charId){
      !['common','advanced'].includes(b.rarityFloor))invalid();
   const rng=mulberry32(b.seed),slot=pick(rng,SLOTS);
   const kind=slot==='weapon'?pick(rng,Object.entries(WEAPON_KINDS).filter(([,w])=>w.cls===b.baseClass&&w.names[b.tier]&&(!w.branch||w.branch===b.classPath[0])).map(([k])=>k)):isShared(slot)?slot:ARMOR_FAMILIES[b.baseClass].key;
-  const item=makeGear({id:b.id,tgId:String(charId),cls:b.baseClass,slot,kind,tier:b.tier,rng,now,source:'atlas',rarityFloor:b.rarityFloor,prefix:'星圖'});
+  const item=makeGear({id:b.id,tgId:String(charId),cls:b.baseClass,slot,kind,tier:b.tier,rng,now,source:'atlas',rarityFloor:b.rarityFloor,prefix:'星圖',mode:state.map.progression?.mode||'normal'});
   item.bonus_json=JSON.stringify({...JSON.parse(item.bonus_json),atlasLootVersion:b.rulesVersion,atlasLootRunId:state.runId,atlasLootMapId:reward.mapId,atlasLootRewardId:reward.id});
   return item;
  });

@@ -57,6 +57,11 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.deepEqual([...observedActivityRecoveryObjects].sort(),[...activityRecoveryObjects].sort());
     for(const [name,type] of activityRecoveryObjects){assert.equal(realmAtlasObjects.has(name),false,name);realmAtlasObjects.set(name,type);}
     realmAtlasMigrations.push(...activityRecoveryMigrations);
+    const endgameSql=readFileSync(new URL('../migrations/0044_endgame_season_retention.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    const endgameObjects=new Map([['idx_rpg_characters_retention_slot','index'],['rpg_live_characters','view'],['rpg_season_transfer_manifests','table'],['rpg_season_transfer_chunks','table'],['rpg_season_transfer_imports','table'],['rpg_season_retained_characters','table']]);
+    const observedEndgame=new Map([...endgameSql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
+    assert.deepEqual([...observedEndgame].sort(),[...endgameObjects].sort());
+    for(const [name,type]of endgameObjects)realmAtlasObjects.set(name,type);
     const characterSchema=new DatabaseSync(':memory:');
     characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
     characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
@@ -64,13 +69,16 @@ test('fresh initialization preserves historical definitions except reviewed clas
     // catalog applies only the explicitly reviewed migrations, never freshDb's list.
     for(const name of ['rpg_accounts','rpg_party_presence'])characterSchema.exec(before.find(row=>row.type==='table'&&row.name===name).sql);
     for(const sql of realmAtlasMigrations)characterSchema.exec(sql);
+    characterSchema.exec(before.find(row=>row.name==='idx_rpg_characters_account_slot').sql);
+    characterSchema.exec('CREATE VIEW rpg_live_characters AS SELECT * FROM rpg_characters WHERE deleted_at IS NULL');
+    characterSchema.exec(endgameSql);
     const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
     assert.equal(realmAtlasExpected.length,realmAtlasObjects.size);
     const runningSweep=realmAtlasExpected.find(row=>row.name==='rpg_atlas_running_sweep');
     assert.equal(runningSweep.tbl_name,'rpg_atlas_runs');
     assert.equal(runningSweep.sql,"CREATE INDEX rpg_atlas_running_sweep ON rpg_atlas_runs(realm_id,id) WHERE status='running'");
     const currentCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
-    const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
+    const expected = before.filter(row=>row.name!=='idx_rpg_characters_account_slot').map(row => row.type === 'table' && plan.roots[row.name]
       ? { ...row, sql: row.name==='rpg_characters'?currentCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
     // independent Fate tables/indexes; 0029 adds isolated expedition tables.

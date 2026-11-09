@@ -458,7 +458,7 @@ export async function handle(request, env) {
   const url = new URL(request.url);
   if(url.pathname.startsWith('/admin/api/')){
     if(request.headers.get('X-Realm-Id')&&request.headers.get('X-Realm-Id')!=='permanent')return fail('realm_admin','管理介面目前僅操作永久環境',409);
-    try{return await handleAdmin(request,await prepareRealmEnv(request,env));}catch(error){return errorResponse(error,url);}
+    try{return await handleAdmin(request,await prepareRealmEnv(request,env),Date.now(),env);}catch(error){return errorResponse(error,url);}
   }
   const publicCode=/^\/fate\/r\/([^/]+)$/.exec(url.pathname)?.[1],publicCountry=countryFromCode(publicCode);if(publicCountry)await ensureCountryPack(publicCountry);
   const publicStory=fatePublic(request);if(publicStory)return publicStory;

@@ -1,4 +1,6 @@
 import { MAPS } from './constants.js';
+import {cycleMaps,WORLD_MODES,ENDGAME_VERSION} from './endgame.js';
+import {AWAKENINGS} from './awakening.js';
 
 /** Prototype values, not production-approved balance. Never retune a saved run. */
 export const ATLAS_RULESET_VERSION = 'atlas-v4';
@@ -141,6 +143,7 @@ export const ATLAS_MAPS = freeze([
     { count:4,hp:6500,atk:280,def:28,attackInterval:4.5 },
     { count:1,hp:30000,atk:650,def:38,attackInterval:5 },
     { roomGold:240,roomExp:900,completionGold:600,completionExp:2400,material:'atlas_venom' }),
+  ...cycleMaps(MAPS,lootProfile),
 ]);
 
 export const ATLAS_MATERIALS = freeze([
@@ -161,6 +164,7 @@ export function getAtlasCatalog() {
   // Return copies: callers cannot accidentally mutate the rules for another run.
   return structuredClone({
     rulesVersion: ATLAS_RULESET_VERSION, balanceStatus: 'prototype',
+    progression:{version:ENDGAME_VERSION,maxLevel:600,modes:WORLD_MODES},awakenings:AWAKENINGS,
     profile: ATLAS_PROTOTYPE_PROFILE,
     maxDurationSeconds: ATLAS_MAX_DURATION_SECONDS, maxMapCount: ATLAS_MAX_MAP_COUNT,
     queueModes: ATLAS_QUEUE_MODES, defaultQueueMode: 'duration',

@@ -1,9 +1,10 @@
 import { computeStats } from './stats.js';
+import {progressionView} from './endgame.js';
 import { expToNext } from './formulas.js';
 import { ATLAS_SUPPLY_RULES_VERSION, ATLAS_POTION_KEYS, atlasSupplyPolicyForCharacter, isVersionedAtlasSupplies } from './atlas-supplies.js';
 
 const CLASSES = new Set(['sword', 'archer', 'mage', 'thief']);
-const EVENT_TYPES = new Set(['room_entered', 'enemy_defeated', 'map_completed', 'dead', 'completed', 'expired', 'stopped', 'encounter', 'encounter_completed', 'loot_equipment', 'loot_scroll']);
+const EVENT_TYPES = new Set(['awakening_cast','room_entered', 'enemy_defeated', 'map_completed', 'dead', 'completed', 'expired', 'stopped', 'encounter', 'encounter_completed', 'loot_equipment', 'loot_scroll']);
 const EVENT_LIMIT = 24;
 const number = (value, fallback = 0) => Number.isFinite(Number(value)) ? Number(value) : fallback;
 const nullableNumber = value => value == null ? null : Number.isFinite(Number(value)) ? Number(value) : null;
@@ -21,7 +22,7 @@ export function atlasAppearanceKey({ baseClass, gender, classPath = '' }) {
 function eventView(event, state, runId) {
   if (!event || !EVENT_TYPES.has(event.type) || !Number.isFinite(event.at) || event.at < 0 || event.at > state.elapsedSeconds) return null;
   const details = {};
-  for (const key of ['enemyId', 'source', 'rank', 'reason','encounterId','name','rewardId','itemId','item']) if (typeof event[key] === 'string') details[key] = event[key];
+  for (const key of ['enemyId', 'source', 'rank', 'reason','encounterId','name','rewardId','itemId','item','skillId']) if (typeof event[key] === 'string') details[key] = event[key];
   for (const key of ['mapIndex', 'roomIndex', 'enemies','tier','quantity']) if (Number.isInteger(event[key]) && event[key] >= 0) details[key] = event[key];
   for (const key of ['hpRestored','mpRestored']) if(Number.isFinite(event[key])&&event[key]>=0) details[key]=event[key];
   // The persisted window slides. Its array index and the run revision cannot
@@ -65,7 +66,7 @@ function committedRunView(row, character, scope, activeRunId) {
     rulesetVersion: state.ruleset_version, status: row.status,
     startedAt: state.startedAt * 1000, processedAt: state.processedAt * 1000,
     processedSeconds: number(state.elapsedSeconds),
-    map: { id: state.mapId, name: state.map?.name ?? null, themeId: state.map?.themeId ?? null, kind: state.map?.kind ?? null },
+    map: { id: state.mapId, name: state.map?.name ?? null, themeId: state.map?.themeId ?? null, kind: state.map?.kind ?? null,...(state.map.progression?{progression:{...state.map.progression},enemyName:state.map.enemyName,eliteName:state.map.eliteName}:{}) },
     mapIndex: number(state.mapIndex), roomIndex: number(state.roomIndex),
     transitionSeconds: number(state.transitionSeconds),
     hero: {
@@ -76,7 +77,7 @@ function committedRunView(row, character, scope, activeRunId) {
     supplies,
     enemies: (Array.isArray(state.enemies) ? state.enemies : []).map(enemy => ({
       id: String(enemy.id), name: String(enemy.name), rank: enemy.rank,
-      hp: number(enemy.hp), maxHp: number(enemy.maxHp),
+      hp: number(enemy.hp), maxHp: number(enemy.maxHp),...(enemy.art?{art:{...enemy.art}}:{}),
     })),
     events, eventHistory: { limit: EVENT_LIMIT, complete: false },
     report: {
@@ -100,7 +101,7 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
   const character = {
     id: String(char.tg_id), name: char.name, baseClass: char.base_class,
     gender: char.gender, classPath: char.class_path || '',
-    level: number(char.level), revision: number(char.rev),
+    level: number(char.level), revision: number(char.rev),progression:progressionView(char.level),
   };
   character.appearanceKey = atlasAppearanceKey(character);
   const activeRunId = char.atlas_run_id == null ? null : String(char.atlas_run_id);
