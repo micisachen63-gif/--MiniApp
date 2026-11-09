@@ -866,3 +866,5 @@ Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件�
 完整舊交接歷史可讀 Git：`f1826a8838b1e552b46e6dee9f28bf3fafc992ed:AI_HANDOVER.md`。本頁已更新為這一批可接手的完成狀態；不要以舊 v1、舊批次提交或歷史失敗覆蓋最新結果。
 
 2026-11-09 原版功能保全與功能分頁：同一個共用懸浮視窗將角色／冒險／營地拆為10個功能分頁，重用原版場景與道具素材。補回十二地圖與180怪池圖鑑、材料收藏／祝福／兌換／精煉、每日金、旅團日誌、殿堂／決鬥、建角／刪角原編號核對、裝備／技能書服務與完整成長樹。原天使拔羽、強化與洗屬性展示模組保持不變，由 scoped client 提交實際操作，未知結果不造假演出。完整盤點見 docs/LEGACY_FEATURE_PARITY_20261109.txt；本批最終gate只看 D:/StarJournal/handoff/non-character/ui-functional-library-20261109/FINAL_STATUS.json，不沿用父HEAD。未部署／未push／未中央整併，F3與正式bootstrap原待辦不變。
+
+2026-11-09 浮窗頂欄微調：返回／關閉改為細金邊圓形SVG圖示，去除厚重方形材質；保留原生button、aria-label、原點擊事件與44px觸控區。只改scene-window-manager.js與scene-social-preview.css；本批11項窗口測試及四尺寸返回／關閉檢查通過，證據D:/StarJournal/handoff/non-character/header-controls-20261109/。本次未重跑全套4340，不以父提交結果冒充此HEAD完整gate；未部署／未push。

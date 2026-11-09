@@ -509,3 +509,17 @@ body #ui #scene-original-summon .guardian-preview-feather{touch-action:none}
 .sl-duel-arena{display:grid;grid-template-columns:1fr 1fr;gap:18px;text-align:center}.sl-duel-arena article{display:grid;gap:6px;min-width:0}.sl-duel-arena img{width:100%;height:180px;object-fit:contain}.sl-duel-arena meter{width:100%;height:18px}.sl-duel-arena small{font-size:11px;overflow-wrap:anywhere}
 
 .sl-create-preview{display:grid;grid-template-columns:94px 1fr;gap:12px;align-items:center;border:1px solid #c2a26055;background:#0b182ab8;padding:10px;border-radius:6px}.sl-create-preview img{width:94px;height:145px;object-fit:contain}.sl-create-preview h4{margin:0;color:#f4d496}.sl-create-preview p{font-size:12px}
+
+/* Light sculpted header controls: native 44px targets, 34px brass faces. */
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close){
+ display:grid;place-items:center;position:relative;isolation:isolate;flex:0 0 44px;width:44px;min-width:44px;height:44px;min-height:44px;
+ padding:0!important;margin:0;border:0!important;border-image:none!important;border-radius:50%;background:none!important;box-shadow:none!important;
+ clip-path:none;filter:none;text-shadow:none;line-height:1;transition:transform .15s ease,color .15s ease;-webkit-tap-highlight-color:transparent;
+}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close)::before,
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close)::after{content:none!important;display:none!important}
+#ui.scene-unified-root .scene-unified-dialog .scene-chrome-icon{display:block;width:44px;height:44px;pointer-events:none;overflow:visible;filter:drop-shadow(0 2px 2px #0006);transition:filter .15s ease}
+@media(hover:hover){#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close):hover .scene-chrome-icon{filter:drop-shadow(0 0 4px #e8c58070) brightness(1.18)}}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close):active{transform:scale(.92)}
+#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close):focus-visible{outline:2px solid #f1d296;outline-offset:-1px}
+@media(prefers-reduced-motion:reduce){#ui.scene-unified-root .scene-unified-dialog .scene-chrome-icon,#ui.scene-unified-root .scene-unified-dialog .scene-social-card>header button:is(.scene-window-back,.scene-window-close){transition:none}}
