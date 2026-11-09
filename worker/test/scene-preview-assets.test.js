@@ -549,3 +549,10 @@ test('exchange action attachment refuses missing intent, mixed modes, owner/sour
     {after:value=>{value.season.operations.push({requestId:'late-write'});}},
   ])await assert.rejects(exchangeAttachFixture(options).run(),/owner changed|source changed|required source binding|identity or isolation|complete databases changed/);
 });
+
+test('endgame painted maps and aura assets use an explicit no-I/O startup allowlist and reject unknown chapters',async()=>{
+ const fixtures=[['art/endgame-v1/elite-01-v1.png','painted map'],['art/endgame-v1/hell-aura-v1.png','painted aura'],['awakening-vfx-live.mjs','live module']];const h=await harness(fixtures);
+ assert.equal(h.access.length,0,'module evaluation cannot enumerate an asset directory');
+ for(const [file,body]of fixtures){for(const method of ['GET','HEAD']){const r=await h.request('/'+file,method);assert.equal(r.status,200);if(method==='HEAD')assert.equal(r.body,undefined);else assert.deepEqual(r.body,Buffer.from(body));}}
+ const before=h.access.length;assert.equal((await h.request('/art/endgame-v1/hell-13-v1.png')).status,404);assert.equal(h.access.length,before);
+});
