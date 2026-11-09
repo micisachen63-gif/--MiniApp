@@ -868,3 +868,5 @@ Boss、星環、天使／命運／交易／衣櫥／帳務舊頁，逐擊事件�
 2026-11-09 原版功能保全與功能分頁：同一個共用懸浮視窗將角色／冒險／營地拆為10個功能分頁，重用原版場景與道具素材。補回十二地圖與180怪池圖鑑、材料收藏／祝福／兌換／精煉、每日金、旅團日誌、殿堂／決鬥、建角／刪角原編號核對、裝備／技能書服務與完整成長樹。原天使拔羽、強化與洗屬性展示模組保持不變，由 scoped client 提交實際操作，未知結果不造假演出。完整盤點見 docs/LEGACY_FEATURE_PARITY_20261109.txt；本批最終gate只看 D:/StarJournal/handoff/non-character/ui-functional-library-20261109/FINAL_STATUS.json，不沿用父HEAD。未部署／未push／未中央整併，F3與正式bootstrap原待辦不變。
 
 2026-11-09 浮窗頂欄微調：返回／關閉改為細金邊圓形SVG圖示，去除厚重方形材質；保留原生button、aria-label、原點擊事件與44px觸控區。只改scene-window-manager.js與scene-social-preview.css；本批11項窗口測試及四尺寸返回／關閉檢查通過，證據D:/StarJournal/handoff/non-character/header-controls-20261109/。本次未重跑全套4340，不以父提交結果冒充此HEAD完整gate；未部署／未push。
+
+2026-11-09 方格背包與玩家手冊：背包改為手機2欄／桌面3欄正方形格，保留原圖／勾選／搜尋／詳情／出售保護，格內直接顯示+N、攻防與元素；篩選收合且次級捷徑縮短。天使放大並用原divine-mist-atlas八格雲霧及原keyframes恢復「主角—雲—天使」，以角色不透明邊界避開頭臉；四職原模型與HUD矩形已實測無重疊。收藏需求卡片移除藍色大理石材質，改深色展示格。21章完整玩家說明含舊頁籤對照、功能路徑、操作與成本提醒：docs/PLAYER_UPDATE_GUIDE_20261109.txt及public/player-guide-20261109.html。預覽10203／API10202與舊預覽隔離；本批相關92項測試通過，不冒用父HEAD4340完整gate；未部署／未push，證據D:/StarJournal/handoff/non-character/inventory-guide-guardian-20261109/。

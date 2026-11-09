@@ -3,6 +3,15 @@
  * settles an expedition, invents rewards, or substitutes another character. */
 (function (global) {
   'use strict';
+  // Use the real opaque hero bounds; the cloud and full angel stay above the face.
+  function guardianPlacement(bounds,root){
+    if(!bounds||!root)return null;
+    const ceiling=94,gap=10,cloudHeight=24,available=bounds.y-root.top-ceiling-gap-cloudHeight;
+    if(available<64)return null;
+    const size=Math.min(160,Math.max(112,root.width*.32),available),cloudWidth=Math.min(root.width-16,size*1.12);
+    const center=Math.max(cloudWidth/2+8,Math.min(root.width-cloudWidth/2-8,bounds.x+bounds.width/2-root.left));
+    return {size,left:center-size/2,top:bounds.y-root.top-gap-cloudHeight-size,cloudLeft:center-cloudWidth/2,cloudTop:bounds.y-root.top-gap-cloudHeight,cloudWidth,cloudHeight};
+  }
   const liveMode = () => global.__RpgScenePreviewConfig?.live === true;
   const MAPS = Object.freeze({
     laurel_intro: { themeId: 1, kind: 'tutorial', sourceMap: 1 },
@@ -284,21 +293,20 @@
     };
     if(pc&&portraitDraw)pc.drawImage=portraitDraw;
     const guardianNode=doc.createElement('img');guardianNode.className='scene-live-guardian';guardianNode.hidden=true;guardianNode.alt='';guardianNode.setAttribute('aria-hidden','true');
-    (byId('ui')||doc.body).appendChild(guardianNode);
+    const guardianCloud=doc.createElement('span');guardianCloud.className='scene-live-guardian-cloud';guardianCloud.hidden=true;guardianCloud.setAttribute('aria-hidden','true');guardianCloud.innerHTML='<i></i><b></b>';
+    (byId('ui')||doc.body).appendChild(guardianNode);(byId('ui')||doc.body).appendChild(guardianCloud);
     let guardianReady=false,guardianSource='';const visibleBoundsCache=new Map();
     guardianNode.onload=()=>{guardianReady=true;};guardianNode.onerror=()=>{guardianReady=false;guardianNode.hidden=true;};
     function placeGuardian(){
       const guardian=model?.character?.guardian;
       const heroGeometry=guardian?geometry().hero:null,bounds=heroGeometry?.visibleBounds||heroGeometry?.screenBounds,root=guardian?byId('ui')?.getBoundingClientRect():null;
-      if(!guardian||!['melee','ranged','magic','loot'].includes(guardian.type)||!bounds||!root){guardianNode.hidden=true;guardianSource='';guardianReady=false;return;}
+      if(!guardian||!['melee','ranged','magic','loot'].includes(guardian.type)||!bounds||!root){guardianCloud.hidden=true;guardianNode.hidden=true;guardianSource='';guardianReady=false;return;}
       const src='/art/guardian-sigil-20261013/'+guardian.type+'.webp';
       if(guardianSource!==src){guardianSource=src;guardianReady=false;guardianNode.src=src;}
-      if(!guardianReady){guardianNode.hidden=true;return;}
-      const size=Math.min(82,Math.max(54,root.width*.15));
-      // Never push the angel into the hero when vertical space is too small.
-      const top=bounds.y-size-14;if(top<root.top+112){guardianNode.hidden=true;return;}
-      guardianNode.style.width=size+'px';guardianNode.style.height=size+'px';
-      guardianNode.style.left=(bounds.x+bounds.width/2-size/2-root.left)+'px';guardianNode.style.top=(top-root.top)+'px';guardianNode.hidden=false;
+      if(!guardianReady){guardianNode.hidden=true;guardianCloud.hidden=true;return;}
+      const p=guardianPlacement(bounds,root);if(!p){guardianNode.hidden=true;guardianCloud.hidden=true;return;}
+      guardianNode.style.width=p.size+'px';guardianNode.style.height=p.size+'px';guardianNode.style.left=p.left+'px';guardianNode.style.top=p.top+'px';guardianNode.hidden=false;
+      guardianCloud.style.left=p.cloudLeft+'px';guardianCloud.style.top=p.cloudTop+'px';guardianCloud.style.width=p.cloudWidth+'px';guardianCloud.style.height=p.cloudHeight+'px';guardianCloud.hidden=false;
     }
 
     hero.setVisible(false); ground?.setVisible(false); hooks.clearDecorations?.(); hpGraphics?.clear(); ui.target(null);
@@ -711,7 +719,7 @@
       showSyncError(message) { syncError = message; status(); },
       update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); placeGuardian(); },
       inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, campReady, guardianVisible: !guardianNode.hidden, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
-      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); if(pc&&pc.drawImage===portraitDraw)pc.drawImage=originalPortraitDraw;guardianNode.remove();clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
+      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); if(pc&&pc.drawImage===portraitDraw)pc.drawImage=originalPortraitDraw;guardianNode.remove();guardianCloud.remove();clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
     };
     const pagehideVfx = () => view.dispose();
     viewers.add(view); scene.events?.once('shutdown', () => view.dispose());
@@ -887,6 +895,6 @@
   global.document?.addEventListener?.('visibilitychange', () => {
     if (hudMounted && !global.document.hidden) readHudSkills(lastSnapshot);
   });
-  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
+  global.RpgSceneLiveView = { mount, mountHUD, mountStatus, ingestCombatTrace: publishCombatTrace, refreshHUD: () => viewers.forEach(view => view.refreshHUD()), inspect: () => [...viewers].map(view => view.inspect()), inspectHUD: () => ({ mounted: hudMounted, status: hudSkills.status, scope: hudSkills.scope, revision: hudSkills.revision, slots: hudSkills.slots.map(skill => skill ? { ...skill } : null) }), guardianPlacement, normalize, mapAsset, enemyAsset, spriteMetadata, experienceProgress };
   loadEndgameArt();
 })(window);
