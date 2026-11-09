@@ -237,7 +237,7 @@
         button('equip',slotted(s.id) ? '已配置' : '加入三格配置',{skillId:s.id,disabled:busy || !learned(s.id) || !eligible(s.id) || slotted(s.id) || data().special.loadout.length >= 3}) + '</div>' +
         '<p class="sc-muted">' + (m.nextCost == null ? '已達技能最高等級' : (level ? '下一級' : '學習') + '需要 ' + fmt(cost) + ' 本技能書') + '</p>' +
         '<div class="sc-exchange"><label>回收技能書數量<input name="recycleQuantity" type="number" min="1" max="' + Math.min(999,own) + '" step="1" inputmode="numeric" value="' + esc(draft.quantity) + '"' + (busy ? ' disabled' : '') + '></label>' +
-        button('recycle','回收技能書',{skillId:s.id,disabled:busy || own < 1}) +
+        button('recycle','回收技能書',{skillId:s.id,disabled:busy || own < 1}) + button('navigate','分享／交易技能書',{route:'book-tools',disabled:busy || own < 1}) +
         '<p class="sc-muted">每本回收 ' + fmt(m.recycleValue || 0) + ' 研究碎片；已學會的技能會保留。</p>' +
         button('redeem','兌換一本技能書',{skillId:s.id,disabled:busy || !eligible(s.id) || redeemCost == null || research < redeemCost}) +
         '<p class="sc-muted">' + (redeemCost == null ? '兌換費用尚未取得；目前持有 ' : '需要 ' + fmt(redeemCost) + ' 研究碎片，目前持有 ') + fmt(research) + '。</p></div></section>';
@@ -395,7 +395,7 @@
       if (action === 'acknowledge') {
         const p = pending();if (p && !state.busy && !state.loading && !state.stale && state.checkedPending === p.id) {clearPending(p.id);state.notice = '已結束這筆待確認狀態。';state.error = '';paint();}return;
       }
-      if (action === 'navigate') { if (!state.busy && ['skills','career','build','talents','supplies'].includes(target.dataset.route)) host.navigate?.(target.dataset.route,{});return; }
+      if (action === 'navigate') { if (!state.busy && ['skills','career','build','talents','supplies','book-tools'].includes(target.dataset.route)) host.navigate?.(target.dataset.route,{});return; }
       if (action === 'detail') { draft.selected = target.dataset.skillId || '';state.confirm = null;state.error = '';return paint(); }
       if (action === 'list') { draft.selected = '';state.confirm = null;return paint(); }
       if (readiness()) return feedback(readiness(),true);

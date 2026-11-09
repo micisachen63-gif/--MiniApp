@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 const source=fs.readFileSync(new URL('../public/scene-window-manager.js',import.meta.url),'utf8');
+function hubNode(){return {children:[],dataset:{},attributes:{},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;},setAttribute(k,v){this.attributes[k]=v;},focus(){},click(){this.onclick?.();},querySelector(selector){const m=/\[data-hub-tab="([^"]+)"\]/.exec(selector),walk=n=>{if(m&&n.dataset.hubTab===m[1]&&n.attributes.role==='tab')return n;for(const child of n.children){const found=walk(child);if(found)return found;}};return walk(this);}};}
 function fixture(){const box={};vm.runInNewContext(source,box);let context={accountId:'a',realmId:'permanent',characterId:'a1',epoch:1};const state=box.RpgSceneWindows.createState({routes:['inventory','item','camp'],getContext:()=>context});return {state,setContext(value){context={...context,...value};}};}
 test('returning to a list preserves its draft and separates item details',()=>{
  const {state}=fixture();state.navigate('inventory');state.draft().search='月桂';state.draft().selected=['gear-a'];state.navigate('item',{itemId:'gear-a'});state.draft().position='ring1';state.navigate('item',{itemId:'gear-b'});state.draft().position='ring2';assert.equal(state.back().params.itemId,'gear-a');assert.equal(state.draft().position,'ring1');assert.equal(state.back().route,'inventory');assert.equal(state.draft().search,'月桂');assert.equal(state.draft().selected[0],'gear-a');
@@ -54,7 +55,7 @@ test('adventure hub keeps live status reachable through the existing route histo
  const routeStart=social.indexOf('const unifiedRoutes={'),routeEnd=social.indexOf('const moduleFlights=',routeStart);
  const hubStart=social.indexOf('function paintHub('),hubEnd=social.indexOf('async function mountUnified(',hubStart);
  assert.ok(routeStart>=0&&routeEnd>routeStart&&hubStart>=0&&hubEnd>hubStart);
- const node=()=>({children:[],dataset:{},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;}});
+ const node=hubNode;
  let active=false;const context={accountId:'a',realmId:'permanent',characterId:'a1',epoch:1};
  const box={actor:{name:'旅人',level:1},liveSession:{getSnapshot:()=>({run:{active}})},document:{createElement:node}};
  vm.runInNewContext(source+'\n'+social.slice(routeStart,routeEnd)+'\n'+social.slice(hubStart,hubEnd)+'\nglobalThis.statusRoutes=unifiedRoutes;globalThis.paintStatusHub=paintHub;',box);
@@ -78,7 +79,7 @@ function ledgerRoutesFixture({loadSceneModule} = {}) {
  const routeStart=social.indexOf('const unifiedRoutes={'),routeEnd=social.indexOf('const moduleFlights=',routeStart);
  const hubStart=social.indexOf('function paintHub('),mountStart=social.indexOf('async function mountUnified('),mountEnd=social.indexOf('function installUnifiedShell(',mountStart);
  assert.ok(routeStart>=0&&routeEnd>routeStart&&hubStart>=0&&mountStart>hubStart&&mountEnd>mountStart);
- const node=()=>({children:[],dataset:{},append(...items){this.children.push(...items);},replaceChildren(...items){this.children=items;}});
+ const node=hubNode;
  const context={accountId:'a',realmId:'permanent',characterId:'a1',epoch:1},calls=[],mounted={dispose(){}};
  const box={actor:{tgId:'a1',name:'旅人',level:40},liveSession:{getSnapshot:()=>({run:null})},document:{createElement:node},
   bootstrap(){throw Error('a shared route must use the current actor');},
@@ -104,12 +105,14 @@ test('ledger mounts its real lazy client in the existing character-group window 
 
 test('character hub opens ledger and the existing Star Ring cosmetics tab through real tile handlers',async()=>{
  const h=ledgerRoutesFixture(),body=h.node();h.state.navigate('character');
- h.box.paintLedgerHub(body,'character',{navigate:(route,params)=>h.state.navigate(route,params)});
+ h.box.paintLedgerHub(body,'character',{draft:{hubTab:'records'},navigate:(route,params)=>h.state.navigate(route,params)});
  const grid=body.children.find(node=>node.className==='scene-hub-grid');
  const ledger=grid.children.filter(node=>node.dataset.sceneRoute==='ledger');
  assert.equal(ledger.length,1);assert.equal(ledger[0].children[0].textContent,'帳務紀錄');
  ledger[0].onclick();assert.equal(h.state.current().route,'ledger');assert.equal(h.state.back().route,'character');
- const wardrobe=grid.children.filter(node=>node.children[0]?.textContent==='星紋衣櫥');
+ body.querySelector('[data-hub-tab="hero"]').click();
+ const heroGrid=body.children.find(n=>n.className==='scene-hub-grid');
+ const wardrobe=heroGrid.children.filter(node=>node.children[0]?.textContent==='星紋衣櫥');
  assert.equal(wardrobe.length,1);assert.equal(wardrobe[0].dataset.sceneRoute,'star-ring-shop');
  wardrobe[0].onclick();const entry=h.state.current();assert.equal(entry.route,'star-ring-shop');assert.equal(entry.params.tab,'cosmetics');
  assert.equal(await h.box.mountLedgerRoute(entry,h.node(),{current:h.state.ticket()}),h.mounted);
@@ -126,4 +129,23 @@ test('a ledger module arriving after navigation cannot attach to the new shared 
  h.state.navigate('equipment');
  resolve({mount(){mounts++;return {dispose(){}};}});
  assert.equal(await mounting,undefined);assert.equal(mounts,0);
+});
+
+// Every original feature must remain reachable after classification, with no
+// duplicate tile or accidental navigation-history entry on category changes.
+test('functional tabs retain every hub feature and preserve local tab state',()=>{
+ const social=fs.readFileSync(new URL('../public/scene-social-preview.js',import.meta.url),'utf8');
+ const start=social.indexOf('function paintHub('),end=social.indexOf('async function mountUnified(',start);
+ const box={actor:{name:'旅人',level:120},liveSession:{getSnapshot:()=>({run:{active:false}})},document:{createElement:hubNode}};
+ vm.runInNewContext(social.slice(start,end)+'\nglobalThis.paint=paintHub;',box);
+ const expected={character:['equipment','inventory','star-ring-shop','guardian','characters','skills','career','build','talents','book-tools','progression','ledger','lineage'],adventure:['expedition','live-status','progression','supplies','maps','party','tower','boss','star-ring','quests','fate','bestiary','daily','journal'],camp:['workshop','tower-imprint','inscription','recovery','gearbook','shop','exchange','direct-trade','supplies','guardian-summon','fate-gifts','boss-essence','star-ring-shop','collections']};
+ for(const [route,routes] of Object.entries(expected)){
+  const body=hubNode(),calls=[],host={draft:{},navigate:(...v)=>calls.push(v)};box.paint(body,route,host);
+  const tabs=body.children[0].children.map(t=>t.dataset.hubTab),found=[];
+  for(const tab of tabs){body.querySelector('[data-hub-tab="'+tab+'"]').click();assert.equal(host.draft.hubTab,tab);assert.equal(calls.length,0,'classification stays in the same window');const grid=body.children.find(c=>c.className==='scene-hub-grid');for(const tile of grid.children){found.push(tile.dataset.sceneRoute);tile.onclick();}calls.length=0;}
+  assert.deepEqual(found.slice().sort(),routes.slice().sort(),route+' complete original destinations');assert.equal(new Set(found).size,found.length);
+  const saved=host.draft.hubTab;box.paint(body,route,host);assert.equal(host.draft.hubTab,saved,'Back/reopen preserves classification');
+  let prevented=false;body.children[0].children.at(-1).onkeydown({key:'Home',preventDefault(){prevented=true;}});assert.equal(prevented,true);assert.equal(host.draft.hubTab,tabs[0]);
+  host.draft.hubTab='unrelated-category';box.paint(body,route,host);assert.equal(host.draft.hubTab,tabs[0]);
+ }
 });

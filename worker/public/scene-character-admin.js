@@ -1,0 +1,35 @@
+/* Original account-owned character and Realm controls; no player reset. */
+(() => {
+ 'use strict';
+ const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function mount(root,host){
+  let disposed=false,busy=false,message='',data=null,realms=null,meta=null,deletion=null;
+  const context=host.getContext(),scope=JSON.stringify(context),current=()=>!disposed&&host.current()&&JSON.stringify(host.getContext())===scope;
+  const storageKey='rpg:character-delete:'+context.accountId+':'+context.realmId,draft=host.draft||{};
+  try{draft.pendingDelete ||=JSON.parse(sessionStorage.getItem(storageKey)||'null');}catch{}
+  function keep(value){try{if(value)sessionStorage.setItem(storageKey,JSON.stringify(value));else sessionStorage.removeItem(storageKey);if(sessionStorage.getItem(storageKey)!==(value?JSON.stringify(value):null))throw Error('儲存驗證失敗');draft.pendingDelete=value;return true;}catch{message='無法保存原刪除編號，尚未送出新的刪除；請恢復瀏覽器儲存後核對。';return false;}}
+  const btn=(label,attrs='',disabled=false)=>'<button type="button" '+attrs+(busy||disabled?' disabled':'')+'>'+esc(label)+'</button>';
+  async function refresh(){busy=true;paint();try{const values=await Promise.all([host.request('characters'),host.request('realms'),host.request('meta')]);if(!current())return;[data,realms,meta]=[values[0],values[1].realms,values[2].meta];}catch(e){if(current())message=e.message;}finally{if(current()){busy=false;paint();}}}
+  function paint(){if(!current())return;const rows=data?.characters||[],native=rows.filter(c=>!c.retentionGroup||c.retentionGroup==='native'),slots=Number(data?.maxCharacters)||4;
+   root.innerHTML='<section class="scene-library"><h2>角色與世界</h2>'+btn('更新角色','data-ca-refresh')+(message?'<p role="status">'+esc(message)+'</p>':'')+
+    '<div class="sl-card"><h3>世界選擇</h3><div class="sl-worlds">'+(realms||[]).map(r=>btn(r.name||r.id,'data-ca-realm="'+esc(r.id)+'"',r.id===context.realmId||r.available===false)).join('')+'</div></div>'+
+    '<div class="sl-card"><h3>目前世界角色 · 原生 '+native.length+' / '+slots+'</h3>'+rows.map(c=>'<article class="sl-character"><b>'+esc(c.name)+' · Lv.'+c.level+'</b><small>'+esc(({sword:'劍士',archer:'妖精',mage:'法師',thief:'盜賊'})[c.baseClass]||c.baseClass)+(c.retentionGroup&&c.retentionGroup!=='native'?' · 季末保留':'')+'</small>'+btn(c.active?'目前角色':'選擇角色','data-ca-select="'+esc(c.charId)+'"',c.active)+btn('刪除前檢查','data-ca-delete="'+esc(c.charId)+'"')+'</article>').join('')+(!rows.length?'<p>此世界尚未建立角色。</p>':'')+'</div>'+
+    '<form class="sl-card" data-ca-create><h3>建立新角色</h3><label class="sl-field">角色名稱<input name="name" required minlength="2" maxlength="12" autocomplete="off"></label><label class="sl-field">職業<select name="baseClass">'+Object.entries(meta?.classes||{}).filter(([id,c])=>!c.disabled&&['sword','archer','mage','thief'].includes(id)).map(([id,c])=>'<option value="'+id+'">'+esc(c.name)+'</option>').join('')+'</select></label><label class="sl-field">外觀<select name="gender"><option value="f">女</option><option value="m">男</option></select></label><p>原生角色上限 '+slots+' 名；季末保留角色不占用原生名額。職業與群組加入條件沿用伺服器規則。</p><button type="submit" '+(busy||native.length>=slots?'disabled':'')+'>建立角色</button></form>'+
+    (deletion?'<section class="sl-card" aria-label="刪除角色確認"><h3>永久刪除 '+esc(deletion.character.name)+'</h3><p>刪除後無法復原。裝備、庫存與角色進度依原刪除規則處理；請再次確認角色與世界。</p>'+(deletion.allowed?'<label class="sl-field">輸入完整角色名稱<input data-ca-delete-name autocomplete="off" maxlength="12"></label><label><input type="checkbox" data-ca-delete-ack> 我已確認且了解無法復原</label>'+btn('永久刪除此角色','data-ca-delete-submit',true):'<ul>'+(deletion.reasons||[]).map(r=>'<li>'+esc(r.message)+'</li>').join('')+'</ul>')+btn('保留角色','data-ca-delete-cancel')+'</section>':'')+
+    (draft.pendingDelete?'<section class="sl-card"><h3>原刪除操作待核對</h3><p>不會換編號重送刪除。請核對原結果。</p>'+btn('核對原刪除結果','data-ca-delete-status')+'</section>':'')+'</section>';bind();
+  }
+  function bind(){const each=(s,fn)=>root.querySelectorAll(s).forEach(fn);each('[data-ca-refresh]',b=>b.onclick=refresh);
+   each('[data-ca-select]',b=>b.onclick=async()=>{if(busy)return;busy=true;paint();try{await window.RpgSceneSession.selectCharacter(b.dataset.caSelect);}catch(e){message=e.message;}finally{if(current()){busy=false;paint();}}});
+   each('[data-ca-realm]',b=>b.onclick=async()=>{if(busy)return;const realmId=b.dataset.caRealm;window.RpgSceneSession.setContext({realmId,characterId:null});try{await window.RpgSceneSession.refresh();}catch{}window.RpgSceneNavigation.navigate('characters',{});});
+   const form=root.querySelector('[data-ca-create]');if(form)form.onsubmit=async event=>{event.preventDefault();if(busy)return;const payload={name:form.elements.name.value.trim(),baseClass:form.elements.baseClass.value,gender:form.elements.gender.value,requestId:crypto.randomUUID()};busy=true;paint();try{await host.request('create',payload);if(!current())return;message='角色已建立。';await window.RpgSceneSession.refresh();}catch(e){if(current())message=e.message;}finally{if(current()){busy=false;await refresh();}}};
+   each('[data-ca-delete]',b=>b.onclick=async()=>{if(busy||draft.pendingDelete)return;busy=true;paint();try{const r=await host.request('character/delete-preview',{charId:b.dataset.caDelete});if(current())deletion=r;}catch(e){if(current())message=e.message;}finally{if(current()){busy=false;paint();}}});
+   each('[data-ca-delete-cancel]',b=>b.onclick=()=>{deletion=null;paint();});
+   const name=root.querySelector('[data-ca-delete-name]'),ack=root.querySelector('[data-ca-delete-ack]'),submit=root.querySelector('[data-ca-delete-submit]');
+   const validate=()=>{if(submit)submit.disabled=busy||!ack.checked||name.value!==deletion.character.name;};if(name)name.oninput=validate;if(ack)ack.onchange=validate;
+   if(submit)submit.onclick=async()=>{if(submit.disabled||draft.pendingDelete)return;const payload={charId:deletion.character.charId||deletion.character.tgId||deletion.character.id,confirmName:name.value,requestId:crypto.randomUUID()};if(!keep(payload)){paint();return;}busy=true;paint();try{await host.request('character/delete',payload);keep(null);deletion=null;window.RpgSceneSession.setContext({characterId:null});try{await window.RpgSceneSession.refresh();}catch{}window.RpgSceneNavigation.navigate('characters',{});}catch(e){if(current())message=e.message+'。原操作編號已保留，請核對結果。';}finally{if(current()){busy=false;paint();}}};
+   each('[data-ca-delete-status]',b=>b.onclick=async()=>{if(!draft.pendingDelete||busy)return;busy=true;paint();try{const r=await host.request('character/delete-status',draft.pendingDelete);if(current()){if(r.committed){keep(null);deletion=null;message='原刪除操作已完成。';}else message='尚未查到已完成刪除，不會自動重送。';}}catch(e){if(current())message=e.message;}finally{if(current()){busy=false;await refresh();}}});
+  }
+  paint();void refresh();return {handleBack(){if(busy)return true;if(deletion){deletion=null;paint();return true;}return false;},dispose(){disposed=true;}};
+ }
+ window.RpgSceneCharacterAdmin={mount};
+})();

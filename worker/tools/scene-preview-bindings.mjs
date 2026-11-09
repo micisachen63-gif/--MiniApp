@@ -98,7 +98,7 @@ export function bindSceneHtml(source){
  s=s.replace(`<script src="${prefix}/scene.js"></script>`,`<script src="${social}/scene-live-session.js"></script><script src="${social}/scene-live-view.js"></script><script src="${social}/scene-hero-readability.js"></script><script src="${prefix}/scene.js"></script>`);
  s=s.replace('</head>',`<link rel="stylesheet" href="${social}/atlas-talents-ui.css"><link rel="stylesheet" href="${social}/equipment-collection-ui.css"></head>`);
  s=s.replace('</head>',`<link rel="stylesheet" href="${social}/scene-live-view.css"></head>`);
- return s.replace('</body>',`<script src="${social}/atlas-talents-ui.js"></script><script src="${social}/atlas-progression-ui.js"></script><script src="${social}/equipment-collection-ui.js"></script><script src="${social}/scene-atlas-guide.js"></script><script src="${social}/scene-chat-ui.js"></script><script src="${social}/scene-social-preview.js"></script></body>`);
+ return s.replace('</body>',`<script src="${social}/scene-original-rituals.js"></script><script src="${social}/atlas-talents-ui.js"></script><script src="${social}/atlas-progression-ui.js"></script><script src="${social}/equipment-collection-ui.js"></script><script src="${social}/scene-atlas-guide.js"></script><script src="${social}/scene-chat-ui.js"></script><script src="${social}/scene-social-preview.js"></script></body>`);
 }
 export function bindPreviewHtml(source){
  let s=source.replace('src="/ui-generated-20261030/characters-v1/scene.html"',`src="${prefix}/scene.html"`);

@@ -207,7 +207,14 @@ const buttonMaterialPrefix = '/ui/button-materials/';
 const hudMaterialPaths=new Set(['/ui/hud-v2/hud-v2.css','/ui/hud-v2/orb-bezel.webp','/ui/hud-v2/action-icons.webp','/ui/hud-v2/accepted-layout.json','/ui/hud-v2/source-manifest.json']);
 const starArtFiles=new Set(['dawn','moon','eclipse'].flatMap(tone=>['/art/star-ring-rewards-20261018/icon-'+tone+'.webp','/art/star-ring-surround-20261026/surround-'+tone+'.webp']));
 const guardianArtFiles=new Set(['melee','ranged','magic','loot'].map(type=>'/art/guardian-sigil-20261013/'+type+'.webp'));
-const staticArtFiles=new Set([...starArtFiles,...guardianArtFiles]);
+const hubArtFiles=new Set(['nav-bag-20261012','nav-class-20261012','nav-home-20261012','nav-boss-20261012','hud-coin-v2','hud-race-sword-v2','forge-scroll-20261011','journal-cover-20261013','item-guardian_voucher-20261015','item-research_fragment-20261015','command-boss_time-20261012','command-shop-20261012','command-trade-20261012','command-collect-20261012','item-tower_fragment-20261012','item-boss_essence-20261012','hero-hall-v1','hermes-market-v1','fate-oracle-v1','titan-gate-v1'].map(name=>'/art/ui/'+name+'.webp'));
+const ritualFiles=new Set(['forge-ritual.js','forge-ritual.css','guardian-sigil-contract.js','guardian-haptics.js','guardian-scene-media.js','guardian-worldtree.js','guardian-pull.js','guardian-summon-gesture.js','guardian-presentation.js','guardian-sigil.css','guardian-ritual-ui.css','collection-ui.css','hero-hall-ui.css','scene-library-art.json'].map(f=>'/'+f));
+const ritualArt=new Set(['/art/ui/forge-flow-20261011.webp','/art/guardian-scene-20261014/world-tree-poster.webp','/art/guardian-scene-20261014/archangel-poster.png','/art/guardian-scene-20261014/world-tree-loop.mp4','/art/guardian-scene-20261014/archangel-loop-alpha.webm','/art/guardian-result-20261014/feather-transition-alpha.webm','/art/guardian-sigil-20261013/summon-feather.webp']);
+for(const name of ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a'])ritualArt.add('/art/items-scrolls-cutout-20261011/'+name+'.webp');
+for(let m=1;m<=12;m++){ritualArt.add('/art/v2/bg_myth'+String(m).padStart(2,'0')+'.webp');ritualArt.add('/art/collections-20261013/collection_'+m+'.webp');for(const k of ['1','2','3','core','sigil'])ritualArt.add('/art/collection-materials-20261014/hunt_'+m+'_'+k+'.webp');}
+const libraryArt=JSON.parse(await fs.readFile(path.join(publicRoot,'scene-library-art.json'),'utf8'));for(const art of Object.values(libraryArt))ritualArt.add(art.src);
+const monsterCatalog=await fs.readFile(path.join(publicRoot,'monster-catalog.js'),'utf8');for(const match of monsterCatalog.matchAll(/"key":"([a-z0-9_]+)"/g))ritualArt.add('/art/v2/'+match[1]+'.webp');
+const staticArtFiles=new Set([...starArtFiles,...guardianArtFiles,...hubArtFiles,...ritualFiles,...ritualArt]);
 // Only original read-only narrative modules and their published artwork. The
 // old iframe application is deliberately not an entry point in this preview.
 const fateStaticPath=requestPath=>['/scene-fate-story.js','/scene-fate-private-ui.js','/scene-fate-private-ui.css'].includes(requestPath)||(
@@ -217,7 +224,7 @@ const fateStaticPath=requestPath=>['/scene-fate-story.js','/scene-fate-private-u
 ||/^\/art\/items-scrolls-pink-20261018\/guaranteed_scroll_[wa]\.webp$/.test(requestPath)
 ||/^\/art\/items-scrolls-cutout-20261011\/scroll_[wa]\.webp$/.test(requestPath);
 const virtualSocial = new Set([
-  'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js',
+  'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js','scene-original-rituals.js','scene-duel-replay.js','scene-library-ui.js','scene-character-admin.js','collection-ui.js','monster-catalog.js','hero-hall-ui.js',
   'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
   'scene-skills-ui.js','scene-skills-ui.css',
   'scene-party-ui.js','scene-party-ui.css',
@@ -237,7 +244,7 @@ const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter
 for (const base of ['sword','archer','mage','thief']){const file='art/awakening-vfx-20261105/'+base+'-awakening-atlas.webp';vfxFiles.set('/'+file,file);}
 for (const mode of ['elite','expert','nightmare','hell'])for(const chapter of [...Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0')),'aura']){const file='art/endgame-v1/'+mode+'-'+chapter+'-v1.png';vfxFiles.set('/'+file,file);}
 for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit','semantic-atlas']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
-const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2','.ttf':'font/ttf' };
+const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2','.ttf':'font/ttf','.webm':'video/webm' };
 let apiProcess = null, stopping = false, apiReady = !!attachedApi;
 
 function within(root, target) {

@@ -307,6 +307,7 @@ function mount(root,host,options={}) {
   else if(draft.itemId===undefined)draft.itemId='';
   if(['enhance','reroll','jobs'].includes(options.tab))draft.tab=options.tab;
   else if(!['enhance','reroll','jobs'].includes(draft.tab))draft.tab='enhance';
+  let ritual=null;
   let disposed=false,timer=null,optionLoading='',lastPreview=null,acknowledged=false,firstPaint=true,restoreScroll=null;
   if(typeof document!=='undefined'&&!document.querySelector('link[data-scene-workshop-style]')){
     const link=document.createElement('link');link.rel='stylesheet';link.dataset.sceneWorkshopStyle='true';
@@ -443,7 +444,12 @@ function mount(root,host,options={}) {
     const preview=root.querySelector('[data-sw-preview]');if(preview)preview.onclick=()=>{onScroll();draft.formScroll=root.scrollTop;client.preview(selection());};
     const cancel=root.querySelector('[data-sw-cancel]');if(cancel)cancel.onclick=()=>cancelPreview();
     const ack=root.querySelector('[data-sw-ack]');if(ack)ack.onchange=()=>{acknowledged=ack.checked;const button=root.querySelector('[data-sw-confirm]');if(button)button.disabled=!acknowledged||client.state.busy;};
-    const confirm=root.querySelector('[data-sw-confirm]');if(confirm)confirm.onclick=()=>client.confirm(acknowledged);
+    const confirm=root.querySelector('[data-sw-confirm]');if(confirm)confirm.onclick=()=>{
+      if(!acknowledged||ritual)return;const plan=client.state.preview,item=client.state.me?.equipment.find(e=>e.id===plan?.itemId);
+      if(!globalThis.RpgSceneRituals||!item||!['enhance','reroll'].includes(plan?.kind))return client.confirm(acknowledged);
+      const previous=client.state.result;ritual=globalThis.RpgSceneRituals.forge(root,{item,plan,icon:art(item),current:()=>!disposed&&client.current(),commit:async()=>{await client.confirm(true);return client.state.result!==previous?client.state.result:null;}});
+      ritual.done.then(()=>{ritual=null;if(!disposed)paint();});
+    };
     const recover=root.querySelector('[data-sw-recover]');if(recover)recover.onclick=()=>client.recover();
     const clear=root.querySelector('[data-sw-result-clear]');if(clear)clear.onclick=()=>{client.state.result=null;paint();};
     const refreshJobs=root.querySelector('[data-sw-jobs-refresh]');if(refreshJobs)refreshJobs.onclick=()=>client.refreshJobs();
@@ -451,8 +457,8 @@ function mount(root,host,options={}) {
     const stop=root.querySelector('[data-sw-stop]');if(stop)stop.onclick=()=>{draft.formScroll=root.scrollTop;client.previewStop(stop.dataset.swStop);};
   }
   paint();void client.refresh();
-  return {dispose(){onScroll();disposed=true;clearTimeout(timer);root.removeEventListener('scroll',onScroll);client.dispose();},
-    update(){if(client.current())paint();},handleBack(){return cancelPreview();},client};
+  return {dispose(){ritual?.close(true);onScroll();disposed=true;clearTimeout(timer);root.removeEventListener('scroll',onScroll);client.dispose();},
+    update(){if(client.current())paint();},handleBack(){if(ritual){ritual.close();return true;}return cancelPreview();},client};
 }
 window.RpgSceneWorkshop={mount,createClient,enhancePlan,rerollPlan,targetState,targetRule,previewHtml,resultHtml};
 })();

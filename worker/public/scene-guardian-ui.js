@@ -437,6 +437,7 @@
     draft.quality = ['all',...QUALITIES].includes(draft.quality) ? draft.quality : 'all';
     draft.primaryId ||= ''; draft.materialIds ||= []; draft.saleIds ||= []; draft.saleMode = draft.saleMode === true;
     draft.autoPool ||= 'normal'; draft.autoCount ||= '5'; draft.autoTargetType ||= 'any'; draft.autoTargetRank ||= '1'; draft.autoBudgetMode ||= 'limited'; if (!own(draft,'autoBudget')) draft.autoBudget = '0'; draft.stoneQuantity ||= '1';
+    let ritual=null;
     let disposed = false, painting = false, pendingFrame = null, focusedConfirm = null, confirmationOrigin = null, returnFocus = null, locallyRevealed = new Set();
     const doc = root.ownerDocument;
     const sameScope = () => !disposed && key(host.getContext?.(),true) === scope && host.current?.() !== false;
@@ -506,7 +507,7 @@
     }
     function summon() {
       const g = guardian(), s = g.state;
-      let out = card('目前角色召喚資源','<div class="sg-metrics"><span>金幣<strong>' + fmt(s.balances.gold) + '</strong></span><span>免費普通抽次<strong>' + fmt(s.balances.freeNormalDraws) + '</strong></span><span>召喚憑證<strong>' + fmt(s.balances.voucherCount) + '</strong></span><span>精選剩餘抽次<strong>' + fmt(s.balances.remainder) + '</strong></span></div>' + note('憑證與剩餘抽次合計可用 ' + fmt(s.balances.availableDraws) + ' 抽；每日取得憑證 ' + fmt(s.daily?.granted) + ' / ' + fmt(g.config.limits?.dailyVouchers) + '。'));
+      let out = (s.welcome?.claimed ? '' : card('首次召喚額度',note('請先到守護頁，明確領取帳號一次性的 200 次免費普通召喚。')+button('tab','前往領取','data-sg-tab="overview"'))) + card('目前角色召喚資源','<div class="sg-metrics"><span>金幣<strong>' + fmt(s.balances.gold) + '</strong></span><span>免費普通抽次<strong>' + fmt(s.balances.freeNormalDraws) + '</strong></span><span>召喚憑證<strong>' + fmt(s.balances.voucherCount) + '</strong></span><span>精選剩餘抽次<strong>' + fmt(s.balances.remainder) + '</strong></span></div>' + note('憑證與剩餘抽次合計可用 ' + fmt(s.balances.availableDraws) + ' 抽；每日取得憑證 ' + fmt(s.daily?.granted) + ' / ' + fmt(g.config.limits?.dailyVouchers) + '。'));
       for (const pool of ['normal','featured']) {
         const config = g.config.pools?.[pool]; if (!config) continue;
         let body = '<p>' + (pool === 'normal' ? '免費普通抽次優先使用，付費部分依目前伺服器價格計算。' : '每張憑證提供 ' + fmt(config.drawsPerVoucher) + ' 抽；未用完的 0 至 ' + fmt(config.drawsPerVoucher - 1) + ' 抽保留。') + '</p><div class="sg-summon-options">';
@@ -636,7 +637,14 @@
       const {sgAction:action,itemId:id} = target.dataset;
       const record = client.pending(); if (record && action !== 'check-pending') { locallyRevealed.add(record.id); client.markRevealed(record.id); } cancelReveal();
       if (action === 'cancel') { returnFocus = confirmationOrigin; client.cancel(); return; }
-      if (action === 'confirm') { await client.submit(); return; }
+      if (action === 'confirm') {
+        if(ritual)return;
+        if(state.confirm?.kind==='summon'&&!state.confirm.recovery&&globalThis.RpgSceneRituals){
+          ritual=globalThis.RpgSceneRituals.summon(root,{config:guardian().config,current:sameScope,commit:async()=>{const ok=await client.submit();return ok?state.lastResult?.result?.operation:null;}});
+          ritual.done.then(()=>{ritual=null;if(sameScope())paint();});return;
+        }
+        await client.submit(); return;
+      }
       if (action === 'check-pending') { await client.checkPending(target.dataset.pendingId); return; }
       if (action === 'history-receipt') { await client.readHistoryReceipt(target.dataset.requestKey); return; }
       if (action === 'acknowledge') { client.acknowledge(target.dataset.pendingId); return; }
@@ -689,8 +697,8 @@
     paint(); void client.refresh({quality:draft.quality,cursor:null});
     const timer = globalThis.setInterval?.(() => { if (sameScope() && !doc?.hidden && !locked() && !state.loading && !state.checking && !state.confirm) void client.refresh(); },15000);
     return {refresh:() => client.refresh(),update:client.update,
-      handleBack() { if (!sameScope() || !state.confirm || state.busy) return false; returnFocus = confirmationOrigin; client.cancel(); return true; },
-      dispose() { if (disposed) return; disposed = true; cancelReveal(); globalThis.clearInterval?.(timer); client.dispose(); root.removeEventListener('click',click); root.removeEventListener('change',change); root.removeEventListener('input',input); doc?.removeEventListener?.('visibilitychange',visibility); }};
+      handleBack() { if(ritual){ritual.close();return true;} if (!sameScope() || !state.confirm || state.busy) return false; returnFocus = confirmationOrigin; client.cancel(); return true; },
+      dispose() { ritual?.close(true); if (disposed) return; disposed = true; cancelReveal(); globalThis.clearInterval?.(timer); client.dispose(); root.removeEventListener('click',click); root.removeEventListener('change',change); root.removeEventListener('input',input); doc?.removeEventListener?.('visibilitychange',visibility); }};
   }
   globalThis.RpgSceneGuardian = {createClient,mount,canonical,signature};
 })();
