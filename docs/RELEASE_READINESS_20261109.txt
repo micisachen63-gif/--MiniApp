@@ -38,3 +38,5 @@ F. 使用者另行指示部署後，先核線上版本／資料備援與切換�
 正式部署異常保留.release-sync與原receipt，先sync:check核live，不盲目重部署；沿用AGENTS的補收據流程。
 
 本批只本機提交。沒有push／PR／中央merge／部署／正式migration／真群組外送。
+
+補充：公開命運分享與遊戲入口同步粉圓style.css快取標記。完整測試可在同一官方npm test下設定RPG_TEST_CONCURRENCY=1..32控制檔案並行；未設定時CI原預設不變，不更動檔案清單、斷言或效能門檻。
