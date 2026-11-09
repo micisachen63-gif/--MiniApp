@@ -104,6 +104,10 @@ export function projectAtlasScene({ player, run = null, realmId, now }) {
     level: number(char.level), revision: number(char.rev),progression:progressionView(char.level),
   };
   character.appearanceKey = atlasAppearanceKey(character);
+  // The equipped guardian's public appearance only; ownership/stats stay server-side.
+  const guardian=char.guardian;
+  if(guardian?.visual&&['melee','ranged','magic','loot'].includes(guardian.type))character.guardian={id:guardian.id,type:guardian.type,name:guardian.typeName,rank:guardian.rank,artUrl:`/art/guardian-sigil-20261013/${guardian.type}.webp`};
+
   const activeRunId = char.atlas_run_id == null ? null : String(char.atlas_run_id);
   const currentExperience = number(char.exp), requiredExperience = expToNext(char.level);
   const maxLevel = !Number.isFinite(requiredExperience);

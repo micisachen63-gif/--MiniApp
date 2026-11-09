@@ -40,6 +40,8 @@ export function bindScene(source){
   s=s.replace('window.RpgSceneEncounter.previewBoss=function()',"window.RpgSceneEncounter.reviewVisibility=function(value){sc.scene.pause();HERO_READABILITY?.setEnabled(value);HERO_READABILITY?.update();return HERO_READABILITY?.inspect();};window.RpgSceneEncounter.previewBoss=function()");
   s=s.replace('window.RpgSceneEncounter.previewBoss=function()',"window.RpgSceneEncounter.reviewCrowd=function(){var crowd=mons.filter(alive).slice(0,6),boss=mons.find(function(m){return alive(m)&&m.role==='boss';});if(boss&&!crowd.includes(boss))crowd.push(boss);crowd.forEach(function(m,i){m.x=hero.x+(i-3)*HS*.025;m.y=hero.y+HS*(.06+i*.008);m.setDepth(m.y);m.modeAura?.setPosition(m.x,m.y-HS*m.pct*.5).setDepth(m.y-.5);});sc.scene.pause();HERO_READABILITY?.update();};window.RpgSceneEncounter.previewBoss=function()");
  }
+ // Phaser canvas text does not inherit CSS. Keep original art sources intact.
+ s=s.replaceAll('fontFamily:\'"Noto Serif TC","Noto Sans CJK TC",serif\'', 'fontFamily:\'"jfOpenHuninn",sans-serif\'');
  return bindLiveScene(s);
 }
 function once(source,old,replacement){if(source.split(old).length!==2)throw Error('Live scene hook changed: '+old.slice(0,90));return source.replace(old,replacement);}
@@ -83,7 +85,7 @@ export function bindUi(source){
  return s;
 }
 export function bindSceneHtml(source){
- let s=source;
+ let s=source.replace(/<link rel="preload" href="assets\/fonts\/xq-serif-tc\.woff2"[^>]*>/g,'');
  // Remove only our former on-disk hooks if present, retaining all art modules.
  s=s.replace(/<script src="\/ui-generated-20261030\/(?:progression-maps-20261102\/encounter-catalog|hud-angels-20261102\/(?:scene-chat-ui|scene-social-preview))\.js"><\/script>/g,'');
  const actorScene='<script src="/ui-generated-20261030/characters-v1/scene.js"></script>';

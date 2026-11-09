@@ -512,23 +512,13 @@
   }
   if (ART) {
     document.body.classList.add('greek'); if (V2) document.body.classList.add('v2');
-    // font treatments (staging: ?font=A|B|C|D, remembered in localStorage; default = current v0.5 look). Google Fonts CSS2 slices CJK by unicode-range + display=swap.
-    const SERIF = '"Noto Serif TC","Noto Serif CJK TC","Songti TC",serif', SANS = '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', SYS = '-apple-system,"PingFang TC","Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif';
-    // v0.5.1: each CJK weight costs ~0.5–0.9 MB of slices on a busy screen → only 2 CJK weights per option (700 text maps to 900 / synthesises)
-    const FONTS = {
-      cur: { q: 'family=Cinzel:wght@700;900&family=Noto+Serif+TC:wght@500;700;900', body: SERIF, title: `Cinzel,${SERIF}`, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 500, wt: 900 },
-      A: { q: 'family=Noto+Serif+TC:wght@500;900', body: SERIF, title: SERIF, ui: SERIF, num: SERIF, wb: 500, wt: 900 },
-      B: { q: 'family=LXGW+WenKai+TC:wght@400&family=Noto+Serif+TC:wght@900', body: `"LXGW WenKai TC",${SERIF}`, title: SERIF, ui: `"LXGW WenKai TC",${SERIF}`, num: `"LXGW WenKai TC",${SERIF}`, wb: 400, wt: 900 },
-      C: { q: 'family=Iansui&family=Noto+Sans+TC:wght@400;700', body: SANS, title: `Iansui,${SANS}`, ui: SANS, num: SANS, wb: 400, wt: 400 },
-      E: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900', body: SYS, title: SERIF, ui: SYS, num: `Cinzel,${SYS}`, wb: 400, wt: 900 },   // lightest: system UI font for body (PingFang TC / Noto Sans CJK), web font only for titles
-      D: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;700', body: SANS, title: SERIF, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 400, wt: 900 },
-    };
-    let fk = (new URLSearchParams(location.search).get('font') || '').toUpperCase(); if (fk === 'CUR') fk = 'cur';
-    try { if (FONTS[fk]) localStorage.setItem('elfFont', fk); else fk = localStorage.getItem('elfFont') || ''; } catch (_) {}
-    const DEFAULT_FONT = 'D';   // ミカサ 21:07 picked D (Noto Serif TC Black titles + Cinzel numerals + Noto Sans TC body); ?font= / localStorage still override for previews
-    const F0 = FONTS[fk] || FONTS[DEFAULT_FONT]; const R = document.documentElement.style; document.body.dataset.font = FONTS[fk] ? fk : DEFAULT_FONT;
-    R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
-    for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261016-advanced-armory1', 'olympus-unified.css?v=20261016-create-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+    // All game text uses the same bundled font, including canvas numerals.
+    // Old query-string/localStorage font previews cannot override the game style.
+    const R = document.documentElement.style;
+    document.body.dataset.font = 'huninn';
+    for (const key of ['--f-body', '--f-title', '--f-ui', '--f-num']) R.setProperty(key, '"jfOpenHuninn","Microsoft JhengHei",sans-serif');
+    R.setProperty('--w-body', 400); R.setProperty('--w-title', 700);
+    for (const href of ['theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261016-advanced-armory1', 'olympus-unified.css?v=20261016-create-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
   }
   const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${/^(blessed|guaranteed)_scroll_/.test(String(k))?'class="blessed-scroll-icon"':''} alt="${collectionArt||String(k).startsWith('guaranteed_scroll_')?esc(itemName(k)):''}" loading="lazy">${String(k).startsWith('guaranteed_scroll_')?'<small class="guaranteed-scroll-badge">必成 100%</small>':''}` : fallback; };
   const gearIcon = (g, fallback) => { if(g?.slot==='weapon'&&g.classReq==='thief')fallback='🗡️'; const src = window.RpgStarRingCosmetics?.gearArt(g)||artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy" decoding="async">` : fallback; };
@@ -802,7 +792,7 @@
     const gy = h * 0.9, hx = w * 0.3;
     if (st === 'reviving') {
       A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'dead' }));   // tombstone stays procedural
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('復活中…', hx, gy - 60);
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('復活中…', hx, gy - 60);
     } else if (town) {
       if (!drawSprite(ctx, heroSprite(), w * 0.5, gy, 120, { t, action: 'rest' })) A.hero(ctx, w * 0.5, gy, 1.3, heroOpts({ t, action: 'rest' }));
       if (Math.floor(t * 1.2) !== Math.floor((t - 1 / 60) * 1.2)) float(w * 0.5 + 18, gy - 50, 'z', '#fff', t, 14);
@@ -810,7 +800,7 @@
       if (!drawSprite(ctx, heroSprite(), hx, gy, 120, { t })) A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'idle' }));
       const px = w * 0.72, py = gy - 46; const g = ctx.createRadialGradient(px, py, 4, px, py, 46); g.addColorStop(0, 'rgba(230,210,255,.95)'); g.addColorStop(0.5, 'rgba(140,90,255,.6)'); g.addColorStop(1, 'rgba(80,40,200,0)');
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(px, py, 26 + Math.sin(t * 3) * 3, 44, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#ffd34d'; ctx.font = 'bold 26px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', hx, gy - 74 + Math.sin(t * 5) * 3);
+      ctx.fillStyle = '#ffd34d'; ctx.font = 'bold 26px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', hx, gy - 74 + Math.sin(t * 5) * 3);
     } else {
       const slow = st === 'no_mp'; const period = slow ? 1.9 : 1.25;
       if (!F.mon || (F.dieAt && t - F.dieAt > 0.9)) spawnMon(t);
@@ -845,12 +835,12 @@
       const monX = Math.min(w*.7,w-monHeight*monRatio/2-8);
       if (!drawSprite(ctx, monImage, monX, monY, monHeight, { t, action: monAction, p: Math.max(0, monP), attackDirection:-1, flip: [1,3].includes(Number(c.mapId)) && !cleanMonster || mon.name === '哈耳庇厄', alpha: mon.alpha, glow: mon.elite ? '#ff3b3b' : mon.name === '哈耳庇厄' && monAction === 'attack' ? '#8fe8ff' : null, sheet: monSheet }))
         A.monster(ctx, mx, gy, 1.3, { name: mon.name, elite: mon.elite, t, hurt: t < F.monHurt, alpha: mon.alpha });
-      if (!F.dieAt) { ctx.fillStyle = '#fff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(mon.label, mx, gy - 80); }
+      if (!F.dieAt) { ctx.fillStyle = '#fff'; ctx.font = 'bold 11px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText(mon.label, mx, gy - 80); }
     }
-    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(255,235,191,.8)'; ctx.font = '11px sans-serif'; ctx.fillText('戰鬥演出 · 收益依冒險結算', 10, 18);
+    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(255,235,191,.8)'; ctx.font = '11px "jfOpenHuninn",sans-serif'; ctx.fillText('戰鬥演出 · 收益依冒險結算', 10, 18);
     ctx.textAlign = 'center';
     F.floats = F.floats.filter((f) => t - f.t0 < 1.1);
-    for (const f of F.floats) { const k = (t - f.t0) / 1.1; if (k < 0) continue; ctx.globalAlpha = 1 - k; ctx.font = `900 ${f.size}px ${ART ? (getComputedStyle(document.documentElement).getPropertyValue('--f-num') || 'serif') : 'sans-serif'}`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.strokeText(f.text, f.x, f.y - k * 34); ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - k * 34); ctx.globalAlpha = 1; }
+    for (const f of F.floats) { const k = (t - f.t0) / 1.1; if (k < 0) continue; ctx.globalAlpha = 1 - k; ctx.font = `900 ${f.size}px "jfOpenHuninn",sans-serif`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.strokeText(f.text, f.x, f.y - k * 34); ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - k * 34); ctx.globalAlpha = 1; }
   }
 
   // ---------- header + nav ----------
@@ -1609,8 +1599,8 @@
       const bossY = gy-120*(1-heroFigure[3])+bossHeight*(1-(bossLayout ? bossLayout.feet : bossFigure[3]));
       const phase=t%8,casting=phase>=4&&phase<5,attacking=phase>=2&&phase<2.65;
       const bossAction=k>.15&&k<.45?'hurt':casting?'cast':attacking?'attack':'idle';
-      if (b&&b.hp>0&&b.status==='active') { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011') && !expansion?.spec(bossArtKey), sheet: bossSheet })) {if(!V2)A.boss(ctx,bx,gy,1.15,{mapId:b.mapId,t,hurt:k>.15&&k<.45});else{ctx.save();ctx.textAlign='center';ctx.font='13px serif';ctx.fillStyle='#ddc991';const meta=IMG_LOAD[artSrc('boss',bossArtKey)];ctx.fillText(meta?.failed&&meta.attempt>=3?'首領畫像暫未載入，重新開啟可重試':'正在描繪首領…',w*.68,h*.55);ctx.restore();}} }
-      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
+      if (b&&b.hp>0&&b.status==='active') { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011') && !expansion?.spec(bossArtKey), sheet: bossSheet })) {if(!V2)A.boss(ctx,bx,gy,1.15,{mapId:b.mapId,t,hurt:k>.15&&k<.45});else{ctx.save();ctx.textAlign='center';ctx.font='13px "jfOpenHuninn",sans-serif';ctx.fillStyle='#ddc991';const meta=IMG_LOAD[artSrc('boss',bossArtKey)];ctx.fillText(meta?.failed&&meta.attempt>=3?'首領畫像暫未載入，重新開啟可重試':'正在描繪首領…',w*.68,h*.55);ctx.restore();}} }
+      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
       const heroAttacking=b&&b.hp>0&&b.status==='active'&&((actorK>=0&&actorK<.4)||(k>=0&&k<.4)),heroPhase=(actorK>=0&&actorK<.4?actorK:k)/.4;
       if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action:heroAttacking?'attack':'idle', p:heroPhase })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action:heroAttacking?'attack':'idle', p:heroPhase }));
       // These coordinates are the same CSS-space placement used by the sprites above.
@@ -1634,7 +1624,7 @@
         ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(bx,gy,18+p*20,5+p*6,p*2,0,Math.PI*2);ctx.stroke();ctx.restore();
         }
       }
-      if (k >= 0 && k < 1.25 && BF.charId === S.me.character.tgId) { const q = k / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.font = '12px sans-serif'; ctx.fillText('連擊總傷害', w*.66, gy-119-q*40); if(BF.result?.counter){ctx.fillStyle='#ff918c';ctx.font='bold 16px sans-serif';ctx.fillText(`反擊 −${fmt(BF.result.counter)}`,w*.24,gy-135-q*30);} ctx.globalAlpha = 1; }
+      if (k >= 0 && k < 1.25 && BF.charId === S.me.character.tgId) { const q = k / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px "jfOpenHuninn",sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.font = '12px "jfOpenHuninn",sans-serif'; ctx.fillText('連擊總傷害', w*.66, gy-119-q*40); if(BF.result?.counter){ctx.fillStyle='#ff918c';ctx.font='bold 16px "jfOpenHuninn",sans-serif';ctx.fillText(`反擊 −${fmt(BF.result.counter)}`,w*.24,gy-135-q*30);} ctx.globalAlpha = 1; }
     } });
     const atk = $('#atk', view);
     if (atk && !atk.disabled) atk.onclick = async () => {

@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -78,6 +79,14 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.equal(runningSweep.tbl_name,'rpg_atlas_runs');
     assert.equal(runningSweep.sql,"CREATE INDEX rpg_atlas_running_sweep ON rpg_atlas_runs(realm_id,id) WHERE status='running'");
     const currentCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
+    // 0045's reviewed stream catalog is additive. Pin the whole migration and
+    // compare each new definition; do not exempt prefixes or existing objects.
+    const streamSql=readFileSync(new URL('../migrations/0045_season_stream_checkpoints.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    assert.equal(createHash('sha256').update(streamSql).digest('hex'),'78e7babcf239a616a3d73ae18c516d96495c8fe158af3565991b5630b1433cd9');
+    const streamExpected=[...streamSql.matchAll(/CREATE (TABLE|TRIGGER) (\w+)([^;]*?(?:BEGIN[\s\S]*?END)?);/g)].map(m=>({type:m[1].toLowerCase(),name:m[2],tbl_name:m[1]==='TABLE'?m[2]:m[0].match(/ ON (\w+)/)[1],sql:m[0].slice(0,-1)}));
+    assert.equal(streamExpected.length,275);
+    const streamNames=new Set(streamExpected.map(row=>row.name));
+    assert.deepEqual(schemaRows(current).filter(row=>streamNames.has(row.name)),streamExpected.sort((a,b)=>a.type.localeCompare(b.type)||a.name.localeCompare(b.name)));
     const expected = before.filter(row=>row.name!=='idx_rpg_characters_account_slot').map(row => row.type === 'table' && plan.roots[row.name]
       ? { ...row, sql: row.name==='rpg_characters'?currentCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
@@ -89,7 +98,7 @@ test('fresh initialization preserves historical definitions except reviewed clas
     // 0035-0043 add an explicitly enumerated catalog and the nullable TEXT
     // atlas_run_id column. Compare every new definition separately, including
     // unique indexes and triggers, while keeping the historical SQL comparison exact.
-    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)), expected);
+    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)&&!streamNames.has(row.name)), expected);
     assert.deepEqual(schemaRows(current).filter(row=>realmAtlasObjects.has(row.name)),realmAtlasExpected);
     for(const [name,type] of retirementObjects){const found=schemaRows(current).filter(r=>r.name===name);assert.equal(found.length,1,name);assert.equal(found[0].type,type,name);}
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);

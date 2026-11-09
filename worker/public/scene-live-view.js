@@ -153,6 +153,7 @@
     const { hero, animator, ui, ground, hpGraphics } = hooks;
     const viewId = ++nextViewId, entities = new Map(), resources = new Map(), textureKeys = new Set(), animationKeys = new Set();
     let disposed = false, model = null, context = '', appearance = null, actorGeneration = 0, mapGeneration = 0, currentMap = '', currentRoom = '', currentRun = '', lastRevision = null;
+    let campReady = false;
     let groundReady = false, mapLoading = false, groundImage = null, width = 0, height = 0, actorIssue = '', mapIssue = '', syncError = lastSyncError, assetIssues = new Map(), seenEvents = new Set();
     const doc = global.document;
     let vfxPlayer = null, vfxBridge = null, vfxCanvas = null, vfxInit = null, vfxIssue = '', vfxLayout = '', vfxLayoutChanges = 0, vfxSize = '', vfxLastTrace = null, vfxTraceSequence = 0;
@@ -272,6 +273,34 @@
     byId('buffs')?.replaceChildren();
     const portraitCanvas=byId('pc');if(portraitCanvas){portraitCanvas.width=224;portraitCanvas.height=224;}
     const pc = portraitCanvas?.getContext('2d');pc?.setTransform?.(2,0,0,2,0,0);pc?.clearRect(0, 0, 112, 112);
+    const originalPortraitDraw=pc?.drawImage;
+    const portraitDraw=originalPortraitDraw&&function(image,...args){
+      if(args.length===8&&args[6]===112&&args[7]===112&&image?.naturalWidth){
+        const size=Math.min(image.naturalWidth,image.naturalHeight)*.70;
+        // Headroom and a wider crop keep off-centre faces inside the round bezel.
+        return originalPortraitDraw.call(this,image,image.naturalWidth*.53-size/2,-image.naturalHeight*.08,size,size,0,0,112,112);
+      }
+      return originalPortraitDraw.call(this,image,...args);
+    };
+    if(pc&&portraitDraw)pc.drawImage=portraitDraw;
+    const guardianNode=doc.createElement('img');guardianNode.className='scene-live-guardian';guardianNode.hidden=true;guardianNode.alt='';guardianNode.setAttribute('aria-hidden','true');
+    (byId('ui')||doc.body).appendChild(guardianNode);
+    let guardianReady=false,guardianSource='';const visibleBoundsCache=new Map();
+    guardianNode.onload=()=>{guardianReady=true;};guardianNode.onerror=()=>{guardianReady=false;guardianNode.hidden=true;};
+    function placeGuardian(){
+      const guardian=model?.character?.guardian;
+      const heroGeometry=guardian?geometry().hero:null,bounds=heroGeometry?.visibleBounds||heroGeometry?.screenBounds,root=guardian?byId('ui')?.getBoundingClientRect():null;
+      if(!guardian||!['melee','ranged','magic','loot'].includes(guardian.type)||!bounds||!root){guardianNode.hidden=true;guardianSource='';guardianReady=false;return;}
+      const src='/art/guardian-sigil-20261013/'+guardian.type+'.webp';
+      if(guardianSource!==src){guardianSource=src;guardianReady=false;guardianNode.src=src;}
+      if(!guardianReady){guardianNode.hidden=true;return;}
+      const size=Math.min(82,Math.max(54,root.width*.15));
+      // Never push the angel into the hero when vertical space is too small.
+      const top=bounds.y-size-14;if(top<root.top+112){guardianNode.hidden=true;return;}
+      guardianNode.style.width=size+'px';guardianNode.style.height=size+'px';
+      guardianNode.style.left=(bounds.x+bounds.width/2-size/2-root.left)+'px';guardianNode.style.top=(top-root.top)+'px';guardianNode.hidden=false;
+    }
+
     hero.setVisible(false); ground?.setVisible(false); hooks.clearDecorations?.(); hpGraphics?.clear(); ui.target(null);
     const current = () => !disposed && liveMode();
 
@@ -434,7 +463,7 @@
       // Keep Phaser images on a persistent frame before releasing owned textures.
       if (ground?.active !== false) { ground?.setVisible(false); if (scene.textures.exists('ground')) ground?.setTexture('ground'); }
       for (const key of textureKeys) if (scene.textures.exists(key)) scene.textures.remove(key); textureKeys.clear(); resources.clear();
-      groundReady = false; mapLoading = false; groundImage = null; ground?.setVisible(false); hpGraphics?.clear(); ui.target(null);
+      groundReady = false; campReady = false; mapLoading = false; groundImage = null; ground?.setVisible(false); hpGraphics?.clear(); ui.target(null);
     }
     function resource(kind, key, url, frame) {
       if (resources.has(key)) return resources.get(key);
@@ -463,7 +492,7 @@
       width = scene.scale.width; height = scene.scale.height;
       const camera = scene.cameras.main;
       camera.setViewport(0, 0, width, height);
-      if (groundReady && groundImage) {
+      if ((groundReady || campReady) && groundImage) {
         const scale = Math.max(height * 2.6 / groundImage.height, width * 1.8 / groundImage.width), world = { w: groundImage.width * scale, h: groundImage.height * scale };
         ground.setOrigin(0).setScale(scale); hooks.setWorld(world); camera.setBounds(0, 0, world.w, world.h);
       }
@@ -501,7 +530,15 @@
     function setMap(map) {
       vfxBridge?.clear('map-changed'); vfxLayout = '';
       ++mapGeneration; currentMap = map ? [map.id, map.themeId, map.kind].join(':') : ''; currentRoom = ''; assetIssues.clear(); releaseAssets(); mapIssue = '';
-      if (!map) { layout(); return; }
+      if (!map) {
+        if(model){const generation=mapGeneration;
+          void resource('image','live-'+viewId+'-'+generation+'-camp','/ui-proto/assets/ground.webp').then(texture=>{
+            if(!texture||!current()||generation!==mapGeneration)return;
+            ground.setTexture(texture).setVisible(true);groundImage=scene.textures.get(texture).getSourceImage();campReady=true;layout();
+          }).catch(()=>{});
+        }
+        layout();return;
+      }
       const asset = mapAsset(map), generation = mapGeneration;
       if (!asset) { mapIssue = '此星圖背景待對應'; layout(); return; }
       const key = 'live-' + viewId + '-' + generation + '-ground'; mapLoading = true;
@@ -627,7 +664,7 @@
     function minimap() {
       const canvas = byId('minic'), ctx = canvas?.getContext('2d'); if (!ctx) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (groundReady && groundImage) {ctx.globalAlpha=.3;ctx.drawImage(groundImage, 0, 0, groundImage.width, groundImage.height, 0, 0, canvas.width, canvas.height);ctx.globalAlpha=1;}
+      if ((groundReady || campReady) && groundImage) {ctx.globalAlpha=.3;ctx.drawImage(groundImage, 0, 0, groundImage.width, groundImage.height, 0, 0, canvas.width, canvas.height);ctx.globalAlpha=1;}
       ctx.strokeStyle='#c8c0a82b';ctx.lineWidth=.5;ctx.beginPath();for(let step=1;step<4;step++){const x=canvas.width*step/4,y=canvas.height*step/4;ctx.moveTo(x,0);ctx.lineTo(x,canvas.height);ctx.moveTo(0,y);ctx.lineTo(canvas.width,y);}ctx.stroke();
       const world = hooks.getWorld(); ctx.fillStyle = '#f5e8c8'; ctx.fillRect(hero.x / world.w * canvas.width - 2, hero.y / world.h * canvas.height - 2, 4, 4);
       for (const entity of entities.values()) if (entity.sprite?.active && entity.enemy.hp > 0) { ctx.fillStyle = entity.enemy.rank === 'boss' ? '#efb04c' : '#be514b'; ctx.fillRect(entity.sprite.x / world.w * canvas.width - 2, entity.sprite.y / world.h * canvas.height - 2, 4, 4); }
@@ -641,20 +678,40 @@
         const point = camera.matrix?.transformPoint(px, py) || { x: camera.x + px * camera.zoom, y: camera.y + py * camera.zoom };
         return { x: canvas.x + point.x * canvas.width / scene.scale.width, y: canvas.y + point.y * canvas.height / scene.scale.height };
       }
+      function visibleBounds(sprite,bounds){
+        const frame=sprite.frame,source=frame?.source?.image||sprite.texture?.getSourceImage?.(),ctx=source?.getContext?.('2d');
+        if(!ctx||!frame.cutWidth||!frame.cutHeight)return null;
+        const key=sprite.texture.key+':'+frame.name,stamp=Date.now(),cached=visibleBoundsCache.get(key);
+        const dynamic=animator.magePoseActive||animator.thiefPoseActive;
+        let alpha=cached?.bounds;
+        if(!cached||dynamic&&stamp-cached.stamp>200){
+          try{
+            const w=frame.cutWidth,h=frame.cutHeight,pixels=ctx.getImageData(frame.cutX,frame.cutY,w,h).data;
+            let left=w,top=h,right=-1,bottom=-1;
+            for(let y=0;y<h;y++)for(let x=0;x<w;x++)if(pixels[(y*w+x)*4+3]>16){left=Math.min(left,x);right=Math.max(right,x);top=Math.min(top,y);bottom=Math.max(bottom,y);}
+            alpha=right<0?null:{x:left/w,y:top/h,right:(right+1)/w,bottom:(bottom+1)/h};
+            if(visibleBoundsCache.size>=64)visibleBoundsCache.delete(visibleBoundsCache.keys().next().value);
+            visibleBoundsCache.set(key,{bounds:alpha,stamp});
+          }catch(_){return null;}
+        }
+        if(!alpha)return null;
+        const x=bounds.x+alpha.x*bounds.width,y=bounds.y+alpha.y*bounds.height,right=bounds.x+alpha.right*bounds.width,bottom=bounds.y+alpha.bottom*bounds.height;
+        return {x,y,right,bottom,width:right-x,height:bottom-y};
+      }
       function spriteBounds(sprite) {
         if (!sprite?.active || !sprite.visible || !sprite.frame?.data?.sourceSize) return null;
         const bounds = sprite.getBounds(), points = [project(bounds.x, bounds.y), project(bounds.right, bounds.y), project(bounds.right, bounds.bottom), project(bounds.x, bounds.bottom)];
         const left = Math.min(...points.map(point => point.x)), top = Math.min(...points.map(point => point.y)), right = Math.max(...points.map(point => point.x)), bottom = Math.max(...points.map(point => point.y));
-        return { x: sprite.x, y: sprite.y, scaleX: sprite.scaleX, scaleY: sprite.scaleY, worldBounds: box(bounds), screenBounds: { x: left, y: top, width: right - left, height: bottom - top, right, bottom }, screenAnchor: project(sprite.x, sprite.y) };
+        return { x: sprite.x, y: sprite.y, scaleX: sprite.scaleX, scaleY: sprite.scaleY, worldBounds: box(bounds), screenBounds: { x: left, y: top, width: right - left, height: bottom - top, right, bottom }, screenAnchor: project(sprite.x, sprite.y), ...(sprite===hero?{visibleBounds:visibleBounds(sprite,{x:left,y:top,width:right-left,height:bottom-top})}:{}) };
       }
       return { canvas, world: { width: world.w, height: world.h }, camera: { viewport: { x: camera.x, y: camera.y, width: camera.width, height: camera.height }, worldView: box(camera.worldView), scrollX: camera.scrollX, scrollY: camera.scrollY, zoom: camera.zoom }, hero: spriteBounds(hero), enemies: [...entities.values()].filter(entity => entity.sprite?.active).map(entity => ({ id: entity.enemy.id, ...spriteBounds(entity.sprite) })), hud: box(byId('bottom')?.getBoundingClientRect?.()) };
     }
     const view = {
       apply, mountStatus, refreshHUD: refreshHud, ingestCombatTrace,
       showSyncError(message) { syncError = message; status(); },
-      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); },
-      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
-      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
+      update(ms) { if (!current()) return; if (width !== scene.scale.width || height !== scene.scale.height) layout(); if (animator.ready && model) { animator.update(Math.min(100, Math.max(0, ms))); hero.setDepth(hero.y); } syncVfxCanvas(); vfxBridge?.update(); hooks.clearDecorations?.(); minimap(); placeGuardian(); },
+      inspect() { return { live: true, context, characterId: model?.character.id || null, appearance, characterVisible: !!(hero.visible && animator.ready && hero.frame?.data?.sourceSize), actorIssue, syncError: syncError || null, mapId: model?.map?.id || null, mapReady: groundReady, campReady, guardianVisible: !guardianNode.hidden, mapIssue, assetIssues: [...assetIssues.values()], activeRunId: model?.active ? model.run.id : null, revision: lastRevision, hp: model?.hero?.hp ?? null, mp: model?.hero?.mp ?? null, experience: experienceProgress(model?.live.experience), enemies: model?.enemies.map(enemy => ({ id: enemy.id, hp: enemy.hp, maxHp: enemy.maxHp, mapped: !!enemyAsset(model.map, enemy) })) || [], spriteCount: [...entities.values()].filter(entity => entity.sprite?.active).length, geometry: geometry(), actorAnimation: { actorId: animator.actor?.id || null, action: animator.action, direction: animator.activeDirection, desiredDirection: animator.direction, elapsed: animator.elapsed, ready: animator.ready, generation: animator.generation }, vfx: { ready: !!vfxBridge, issue: vfxIssue || null, layoutChanges: vfxLayoutChanges, ...vfxBridge?.stats(), player: vfxPlayer?.stats() || null, lastTrace: vfxLastTrace } }; },
+      dispose() { if (disposed) return; disposed = true; ++mapGeneration; statusObserver?.disconnect(); statusNavigationObserver?.disconnect(); if (statusLayoutFrame) global.cancelAnimationFrame?.(statusLayoutFrame); vfxController.abort(); vfxBridge?.destroy(); vfxPlayer?.destroy(); vfxCanvas?.remove(); scene.events?.off('pause', pauseVfx); scene.events?.off('sleep', pauseVfx); global.removeEventListener('pagehide', pagehideVfx); if(pc&&pc.drawImage===portraitDraw)pc.drawImage=originalPortraitDraw;guardianNode.remove();clearActor(); releaseAssets(); panel.remove(); statusToggle.remove(); viewers.delete(view); },
     };
     const pagehideVfx = () => view.dispose();
     viewers.add(view); scene.events?.once('shutdown', () => view.dispose());

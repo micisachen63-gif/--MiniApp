@@ -176,3 +176,17 @@ test('scene experience preserves the existing max-level presentation without ser
   assert.deepEqual(JSON.parse(JSON.stringify(scene)).live.experience, scene.live.experience);
   assert.equal(totalChanges(db), changes);
 });
+
+test('equipped guardian projection preserves its original art without leaking combat settings', async t => {
+  const {env,id}=await fixture(t),player=await loadPlayer(env.DB,id,env);
+  for(const type of ['melee','ranged','magic','loot']){
+    player.char.guardian={id:'guardian-'+type,type,typeName:'天使',rank:6,visual:true,damageBonus:.16,privateOwner:'hidden'};
+    const scene=projectAtlasScene({player,realmId:'permanent',now:T0});
+    assert.deepEqual(scene.character.guardian,{id:'guardian-'+type,type,name:'天使',rank:6,artUrl:'/art/guardian-sigil-20261013/'+type+'.webp'});
+    assert.equal('damageBonus' in scene.character.guardian,false);
+  }
+  for(const guardian of [null,{type:'magic',visual:false},{type:'invalid',visual:true}]){
+    player.char.guardian=guardian;
+    assert.equal(projectAtlasScene({player,realmId:'permanent',now:T0}).character.guardian,undefined);
+  }
+});

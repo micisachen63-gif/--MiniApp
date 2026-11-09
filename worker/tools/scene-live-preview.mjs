@@ -237,7 +237,7 @@ const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter
 for (const base of ['sword','archer','mage','thief']){const file='art/awakening-vfx-20261105/'+base+'-awakening-atlas.webp';vfxFiles.set('/'+file,file);}
 for (const mode of ['elite','expert','nightmare','hell'])for(const chapter of [...Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0')),'aura']){const file='art/endgame-v1/'+mode+'-'+chapter+'-v1.png';vfxFiles.set('/'+file,file);}
 for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit','semantic-atlas']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
-const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2' };
+const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2','.ttf':'font/ttf' };
 let apiProcess = null, stopping = false, apiReady = !!attachedApi;
 
 function within(root, target) {

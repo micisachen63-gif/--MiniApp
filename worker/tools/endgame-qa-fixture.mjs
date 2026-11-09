@@ -16,6 +16,9 @@ export async function seedEndgameQa(root,now){
   const stats=computeStats(c,[item]);await db.prepare('UPDATE rpg_characters SET hp=?,mp=? WHERE tg_id=?').bind(stats.maxHp,stats.maxMp,c.tg_id).run();
   for(const cycle of ['normal','elite','expert','nightmare'])await db.prepare('INSERT INTO rpg_atlas_progress VALUES(?,?,1,?,?)').bind(c.tg_id,'cycle_'+cycle+'_12',now,now).run();
   for(const key of ['red_1','red_2','red_3','red_4','blue_1','blue_2','blue_3','blue_4'])await db.prepare('INSERT INTO rpg_inventory VALUES(?,?,500) ON CONFLICT(tg_id,item) DO UPDATE SET quantity=500').bind(c.tg_id,key).run();
+  const guardianType=({sword:'melee',archer:'ranged',mage:'magic',thief:'melee'})[base],operationId='endgame-qa-guardian-'+i;
+  await db.prepare("INSERT INTO rpg_guardian_operations(operation_id,account_id,char_id,request_id,action,payload_hash,config_version,cost_json,result_json,created_at) VALUES(?,?,?,?,?,?,?,?,?,?)").bind(operationId,'90101',c.tg_id,operationId,'summon','0'.repeat(64),'isolated-preview','{}','{}',now).run();
+  await db.prepare("INSERT INTO rpg_guardian_sigils(id,char_id,type,quality,bound,active,locked,rev,source_operation_id,created_at,updated_at) VALUES(?,?,?,6,1,1,0,0,?,?,?)").bind('endgame-qa-angel-'+i,c.tg_id,guardianType,operationId,now,now).run();
   out.push({characterId:c.tg_id,baseClass:base,level:481});
  }
  return {isolated:true,productionAccess:false,characters:out};
