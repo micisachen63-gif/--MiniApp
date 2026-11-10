@@ -83,7 +83,7 @@ export function startRegistryAction(scene,actor,target,member,event,{duration=52
  if(actorAtlas)actorAtlas.users++;if(effectAtlas)effectAtlas.users++;
  const companions=(fx?.companions||[]).map(spec=>{const atlas=atlasBitmaps.get(spec.src),im=atlas?.ready?atlas.size:image(spec.src);if(atlas)atlas.users++;return{spec,atlas,im};});
  const restoreHud=protectHud(scene);
- const priorVisibility=actor.style.visibility;actor.style.visibility='hidden';let raf=0,started=performance.now(),done=false,lastPhase=0;const sourceFrames=[];
+ const priorVisibility=actor.style.visibility;actor.style.visibility='hidden';let raf=0,started=performance.now(),done=false,lastPhase=0,lastGeometry=null;const sourceFrames=[];
  const stop=()=>{if(done)return;done=true;activeActions.delete(stop);cancelAnimationFrame(raf);canvas.remove();actor.style.visibility=priorVisibility;restoreHud();if(actorAtlas)actorAtlas.users--;if(effectAtlas)effectAtlas.users--;for(const c of companions)if(c.atlas)c.atlas.users--;evictBitmaps();playbackStats.cleanup++;if((member.baseClass||member.base)==='thief'){playbackStats.cycleReceipts.push({key:entry.key,kind,duration,completed:lastPhase>=.999,sourceFrames:sourceFrames.slice(),strikeIndex:event.strikeIndex??0,strikeCount:event.strikeCount??1});if(playbackStats.cycleReceipts.length>32)playbackStats.cycleReceipts.shift();}};activeActions.add(stop);
  playbackStats.started++;playbackStats[kind]++;playbackStats.keys.push(entry.key);
  const draw=phase=>{
@@ -97,6 +97,7 @@ export function startRegistryAction(scene,actor,target,member,event,{duration=52
   playbackStats.lastGeometry={key:entry.key,kind,character:geometry(placement,c,w,h),fx:null,characterFrame:index,stage:{width:w,height:h},hudProtected:[...scene.querySelectorAll('.scene-floor,.boss-meter')].every(el=>el.style.zIndex==='12')};
   const from=nativeCastPoint(spec,index,c,placement,mirror,{x:a.x+a.width*.65-r.x,y:a.y+a.height*.4-r.y}),to={x:t.x+t.width*.5-r.x,y:t.y+t.height*.45-r.y};
   Object.assign(playbackStats.lastGeometry,{nativeImpactPhase:nativeImpact,nativePhase,from,mirror,placement:{x:placement.x,y:placement.y,scale:placement.s,cellWidth:c.w,cellHeight:c.h}});
+  lastGeometry={from:{x:from.x,y:from.y},foot:{x:a.x+a.width*.5-r.x,y:a.bottom-r.y},bodyHeight:a.height,originAuthored:from.authored,sourceCell:index,nativePhase};
   function effectLayer(spec,image,atlas){if(!image||visualEffectScale<=0||visualEffectOpacity<=0)return null;const impact=effectImpactPhase(spec),effectPhase=phase<impactFraction?phase/impactFraction*impact:impact+(phase-impactFraction)/(1-impactFraction)*(1-impact),sample=frameSample(spec,effectPhase),index=sample.sourceCell,q=cell(image,spec,index),bounds=union(spec.unionFrameBounds||spec.frameBounds),anchor=spec.phaseAnchors?.[sample.phaseFrame]||'to',travel=Math.min(1,Math.max(0,(phase-.15)/Math.max(.05,impactFraction-.15))),at=anchor==='from'?from:anchor==='travel'?{x:from.x+(to.x-from.x)*travel,y:from.y+(to.y-from.y)*travel}:to;
    const maxHeight=Math.min(kind==='skill'?h*.8:h*.5,(spec.renderWidth||(kind==='skill'?235:150))*q.h/q.w)*visualEffectScale,mirror=spec.mirrorToTarget&&to.x<from.x,b=norm(bounds,q.w,q.h),paintedBounds=mirror?[1-b[2],b[1],1-b[0],b[3]]:b,p=fit(paintedBounds,q.w,q.h,w,h,at.x+(spec.offset?.x||0),at.y+maxHeight*.45+(spec.offset?.y||0),maxHeight),dw=q.w*p.s,dh=q.h*p.s;
    g.save();g.globalAlpha*=(spec.intensity??1)*visualEffectOpacity;if(mirror){g.translate(p.x+dw,p.y);g.scale(-1,1);}const dx=mirror?0:p.x,dy=mirror?0:p.y;if(atlas?.ready){const bitmap=atlas.frames[index];g.drawImage(bitmap,0,0,bitmap.width,bitmap.height,dx,dy,dw,dh);}else g.drawImage(image,q.x,q.y,q.w,q.h,dx,dy,dw,dh);g.restore();
@@ -115,7 +116,7 @@ export function startRegistryAction(scene,actor,target,member,event,{duration=52
   playbackStats.frames++;
  };
  const tick=now=>{if(done)return;if(document.hidden||!scene.isConnected||isCancelled()){stop();return;}if(started===null)started=now;const phase=Math.min(1,(now-started)/duration);draw(phase);if(phase<1)raf=requestAnimationFrame(tick);else stop();};if((member.baseClass||member.base)==='thief')draw(0);raf=requestAnimationFrame(tick);
- return{stop,key:entry.key,kind,draw,hasFx:!!effect||typeof fx?.draw==='function'};
+ return{stop,key:entry.key,kind,draw,geometry:()=>lastGeometry?{...lastGeometry,from:{...lastGeometry.from},foot:{...lastGeometry.foot}}:null,hasFx:!!effect||typeof fx?.draw==='function'};
 }
 export function disposeArt(){for(const stop of [...activeActions])stop();for(const entry of atlasBitmaps.values())closeFrames(entry.frames);atlasBitmaps.clear();for(const[src,im]of cache)releaseImage(src,im);cache.clear();warmSources=new Set();}
 window.addEventListener('pagehide',disposeArt);

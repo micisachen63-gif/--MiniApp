@@ -1,4 +1,5 @@
 import {dungeonProfile,DUNGEON_BALANCE} from '../game/pve-balance.js';
+import {nativeCastVfx} from '../game/skill-vfx-events.js';
 import {PARTY_STAMINA,partyStamina,spentStamina,usesStamina} from '../game/party-stamina.js';
 import {cardRecord} from './party-card.js';
 import {TOWER_RULES,TOWER_TITLES,towerTitle,towerRewardable,clearedFloors,towerBadges} from '../game/tower-progression.js';
@@ -122,7 +123,7 @@ function combatRound(p,players,now){const s=p.state;
  const snapshot=(target=enemy,floor=turnFloor)=>({floor,enemyHp:target.hp,enemyMaxHp:target.maxHp,enemyName:target.name,members:s.actors.map(a=>({id:a.id,hp:a.hp,maxHp:a.maxHp,mp:a.mp,maxMp:a.maxMp}))});
  const turn={id:`${p.id}:${s.floor}:${s.round}`,sequence:(s.turnSequence||0)+1,round:s.round,floor:s.floor,at:now,events:[]};
  turn.before=snapshot();
- s.log=[];periodic(s.actors,enemy,now);if(enemy.hp<turn.before.enemyHp)turn.events.push({actorId:null,label:'召喚／持續傷害',damage:turn.before.enemyHp-enemy.hp,effect:'magic',after:snapshot()});
+ s.log=[];const periodicVfx=periodic(s.actors,enemy,now,{vfx:{eventId:turn.id+':periodic',source:'committed-combat',enemyId:'boss',encounterId:p.id+':'+turnFloor}});if(enemy.hp<turn.before.enemyHp)turn.events.push({actorId:null,...(periodicVfx?.length?{vfxEvents:periodicVfx}:{}),label:'召喚／持續傷害',damage:turn.before.enemyHp-enemy.hp,effect:'magic',after:snapshot()});
  for(const a of s.actors){if(a.hp<=0)continue;
   const player=players.get(a.id),c=player.char,used={};
   // Keep live preferences when persisting the encounter's skill cooldowns.
@@ -137,18 +138,22 @@ function combatRound(p,players,now){const s=p.state;
   if(enemy.hp>0&&needsBlue(c,a.mp,a.maxMp,required)){const target=blueTarget(c,a.maxMp,required);let key;do{key=choosePotion(player.inv,'blue',mapForLevel(c.level),c);if(!key)break;player.inv[key]--;used[key]=(used[key]||0)+1;a.mp=Math.min(a.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
   if(Object.keys(used).length){turn.events.push({actorId:a.id,label:'自動喝藍水',used,healedMp:a.mp-turn.before.members.find(m=>m.id===a.id).mp,after:snapshot()});s.log.push(a.name+'：自動喝藍水');}
   const action=s.actions[a.id]||automaticRoleAction(s,a)||autoPartyAction(a,s.actors,enemy,now,s);
+  const observation={eventId:turn.id+':cast:'+a.id,effects:[],source:'committed-combat',atMs:now,enemyId:'boss',encounterId:p.id+':'+turnFloor};
   try{let result;if(action.skillId.startsWith('role_')){result=castRole(a,s,action.skillId,now);}
    else if(action.skillId==='defend'){a.buffs.push({type:'nextReduce',value:.35,until:now+60000,uses:1});result={damage:0};}
    else if(action.skillId==='attack'){const rng=()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32;
     const skill=a.skill||{...nodeFor(a.base,a.path).skill,cost:Math.max(1,Math.round(nodeFor(a.base,a.path).skill.cost*(1+(a.affixPct?.mpCostPct||0))*(1-(a.affixPct?.mpEfficiencyPct||0))))};const cast=a.mp>=skill.cost;
     if(a.base==='thief'){
-     result=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*(cast?skill.mult:1.5),rng,actionId:`${turn.id}:${a.id}`});
+     result=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*(cast?skill.mult:1.5),rng,actionId:`${turn.id}:${a.id}`,observation});
      result.nativeSkill=cast?skill.name:null;result.spentMp=cast?spendMana(a,skill.cost,rng):0;result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;
     }else{
      let raw=a.atk*(cast?skill.mult:1.5)*(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;
-     result={damage:damageEnemy(enemy,raw,{},now,a),crit,nativeSkill:cast?skill.name:null,spentMp:cast?spendMana(a,skill.cost,rng):0};result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
-    }}
-   else{const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,now);result=castSpecial(a,s.actors,enemy,skill,action.targetId,now,()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32,s);}
+     result={damage:damageEnemy(enemy,raw,{},now,a,observation),crit,nativeSkill:cast?skill.name:null,spentMp:cast?spendMana(a,skill.cost,rng):0};result.healed=restoreOnAction(a,result.damage,{cast,enabled:enemy.hp>0}).healed;for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
+    }
+    if(cast&&!result.vfx){const visual=nativeCastVfx(a,observation);if(visual)result.vfx=visual;}
+   }
+   else{const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},a.special,action.skillId,now);result=castSpecial(a,s.actors,enemy,skill,action.targetId,now,()=>crypto.getRandomValues(new Uint32Array(1))[0]/2**32,s,observation);}
+   if(observation.effects.length)result.vfxEvents=observation.effects;
    creditMechanic(s,a,roleEvidence(action.skillId,result,s));
    turn.events.push({actorId:a.id,base:a.base,skillId:action.skillId,targetId:action.targetId,label:action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普通攻擊'):(result.label||SKILL_MAP[action.skillId]?.name||'組隊戰技'),...result,after:snapshot()});
    a.actions++;if(action.manual)a.manualActions=(a.manualActions||0)+1;s.log.push(`${a.name}：${action.skillId==='defend'?'防禦':action.skillId==='attack'?(result.nativeSkill||'普攻'):(result.label||SKILL_MAP[action.skillId]?.name||'組隊戰技')}${result.damage?`，傷害 ${result.damage}`:''}${result.healed?`，治療 ${result.healed}`:''}`);
@@ -158,7 +163,7 @@ function combatRound(p,players,now){const s=p.state;
  if(p.status==='combat'&&enemy.hp>0&&!enemy.interrupted){
   if(s.dungeonBalanceVersion===2){for(const a of s.actors){if(a.hp<=0)continue;const player=players.get(a.id),used={},before=a.hp,threshold=a.maxHp*Number(player.char.auto_red_pct??50)/100;let key;while(a.hp<threshold&&(key=choosePotion(player.inv,'red',mapForLevel(player.char.level),player.char))){player.inv[key]--;used[key]=(used[key]||0)+1;a.hp=Math.min(a.maxHp,a.hp+POTIONS[key].heal);}if(a.hp>before){turn.events.push({actorId:a.id,label:'自動喝紅水',used,healedHp:a.hp-before,after:snapshot()});s.log.push(a.name+'：自動喝紅水');}}}
   const pressure=(s.dungeonBalanceVersion===2?enemy.attack:s.actors.reduce((n,a)=>n+a.maxHp,0)/3*(p.kind==='tower'?(isBoss(p)?.04:.025):.065))*(enemy.windup?(p.kind==='tower'?1.6:2.1):1)*(1-valueOf(enemy,'enemyNextReduce',now));
-  const hits=[];for(const a of s.actors)hits.push({id:a.id,damage:receiveDamage(a,pressure,s.actors,enemy,now)});turn.events.push({actorId:'boss',label:enemy.windup?'蓄力重擊':'首領反擊',windup:enemy.windup,hits,after:snapshot()});for(const b of enemy.buffs)if(b.type==='enemyNextReduce'&&b.uses>0)b.uses--;
+  const hits=[],reactions={eventId:turn.id+':counter',effects:[],source:'committed-combat',enemyId:'boss',encounterId:p.id+':'+turnFloor};for(const a of s.actors)hits.push({id:a.id,damage:receiveDamage(a,pressure,s.actors,enemy,now,{vfx:reactions})});turn.events.push({actorId:'boss',...(reactions.effects.length?{vfxEvents:reactions.effects}:{}),label:enemy.windup?'蓄力重擊':'首領反擊',windup:enemy.windup,hits,after:snapshot()});for(const b of enemy.buffs)if(b.type==='enemyNextReduce'&&b.uses>0)b.uses--;
   s.log.push(enemy.windup?'首領施放蓄力重擊！':'首領攻擊全隊。');
  }else if(enemy.interrupted){s.log.push('蓄力已被隊伍打斷！');turn.events.push({actorId:'boss',label:'蓄力已打斷',interrupted:true,after:snapshot()});}
  for(const a of s.actors){if(a.hp>0)a.mp=Math.min(a.maxMp,a.mp+Math.ceil(a.maxMp*.04));a.buffs=a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0));}
@@ -206,6 +211,17 @@ export async function view(env,id,tg,now,sinceTurnId=null){
  let p=await load(env.DB,id);if(p.status==='lobby'&&p.expires_at<=now){await sweep(env,now);p=await load(env.DB,id);}
  if(p.status==='combat'&&(now>=Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity))) {await advance(env,id,now);p=await load(env.DB,id);}
   if(towerRewardable(p)&&await grantAll(env,p,now))p=await load(env.DB,id);
+ return projectParty(env,p,tg,now,sinceTurnId);
+}
+// Only SELECTs and pure projection; used by party/scene, never by the legacy ticker.
+export async function snapshot(env,id,tg,now,sinceTurnId=null){
+ const p=await load(env.DB,id),result=await projectParty(env,p,tg,now,sinceTurnId);
+ const expired=p.status==='lobby'&&p.expires_at<=now;
+ const due=p.status==='combat'&&now>=Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity);
+ if(result.me)result.me.submission=p.state.actions[tg]?{...p.state.actions[tg],round:p.state.round}:null;
+ return {...result,expired,pendingSettlement:expired||due,nextSettlementAt:p.status==='lobby'?p.expires_at:p.status==='combat'?Math.min(p.state.deadline,p.state.challengeEndsAt||Infinity):null};
+}
+async function projectParty(env,p,tg,now,sinceTurnId){
  const s=p.state,card=await cardRecord(env.DB,p);
  const cooperation=cooperationView(s),plan=briefing(s.roleRules,s.actors.length?s.actors:p.members.map(m=>({...m,id:m.char_id})));
  const recent=s.recentTurns?.length?s.recentTurns:s.lastTurn?[s.lastTurn]:[],cursor=sinceTurnId?recent.findIndex(t=>t.id===String(sinceTurnId)):-1;

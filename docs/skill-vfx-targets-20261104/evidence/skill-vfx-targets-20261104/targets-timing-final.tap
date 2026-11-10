@@ -1,0 +1,130 @@
+TAP version 13
+# Subtest: pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 1 - pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 7.4138
+  type: 'test'
+  ...
+# Subtest: snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 2 - snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 1.6638
+  type: 'test'
+  ...
+# Subtest: fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 3 - fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 1.7988
+  type: 'test'
+  ...
+# Subtest: piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+ok 4 - piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+  ---
+  duration_ms: 0.8485
+  type: 'test'
+  ...
+# Subtest: volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 5 - volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 19.8935
+  type: 'test'
+  ...
+# Subtest: volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 6 - volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 12.6091
+  type: 'test'
+  ...
+# Subtest: volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 7 - volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 11.1562
+  type: 'test'
+  ...
+# Subtest: volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 8 - volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 27.4049
+  type: 'test'
+  ...
+# Subtest: lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 9 - lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 18.1732
+  type: 'test'
+  ...
+# Subtest: lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 10 - lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 16.5941
+  type: 'test'
+  ...
+# Subtest: lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 11 - lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 14.2833
+  type: 'test'
+  ...
+# Subtest: lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 12 - lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 36.0664
+  type: 'test'
+  ...
+# Subtest: volley primary contact follows its declared .57 impact phase even with a large actual target set
+ok 13 - volley primary contact follows its declared .57 impact phase even with a large actual target set
+  ---
+  duration_ms: 2.4577
+  type: 'test'
+  ...
+# Subtest: explicit single, pair and empty target sets never create an extra volley or lightning destination
+ok 14 - explicit single, pair and empty target sets never create an extra volley or lightning destination
+  ---
+  duration_ms: 0.5595
+  type: 'test'
+  ...
+# Subtest: exact duplicate destinations are normalized before volley and lightning distribution
+ok 15 - exact duplicate destinations are normalized before volley and lightning distribution
+  ---
+  duration_ms: 3.0911
+  type: 'test'
+  ...
+# Subtest: impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 16 - impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 3.0116
+  type: 'test'
+  ...
+# Subtest: reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 17 - reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 2.7945
+  type: 'test'
+  ...
+# Subtest: reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 18 - reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 2.0703
+  type: 'test'
+  ...
+# Subtest: impact and reduced-motion rendering honor empty and deduplicated actual target lists
+ok 19 - impact and reduced-motion rendering honor empty and deduplicated actual target lists
+  ---
+  duration_ms: 0.6649
+  type: 'test'
+  ...
+# Subtest: local support, trap placement and non-damaging summon never expand onto remote targets
+ok 20 - local support, trap placement and non-damaging summon never expand onto remote targets
+  ---
+  duration_ms: 1.4119
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 20
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 281.7521

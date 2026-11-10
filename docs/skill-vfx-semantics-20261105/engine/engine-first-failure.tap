@@ -1,0 +1,288 @@
+TAP version 13
+# Subtest: catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+ok 1 - catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+  ---
+  duration_ms: 4.0267
+  type: 'test'
+  ...
+# Subtest: all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+ok 2 - all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+  ---
+  duration_ms: 323.8104
+  type: 'test'
+  ...
+# Subtest: clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+ok 3 - clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+  ---
+  duration_ms: 24.6576
+  type: 'test'
+  ...
+# Subtest: directional projectiles actually travel toward the selected direction at a common body scale
+ok 4 - directional projectiles actually travel toward the selected direction at a common body scale
+  ---
+  duration_ms: 0.612
+  type: 'test'
+  ...
+# Subtest: pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+ok 5 - pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+  ---
+  duration_ms: 5.9776
+  type: 'test'
+  ...
+# Subtest: damaging shield and time skills retain a visible target impact rather than only a caster ornament
+ok 6 - damaging shield and time skills retain a visible target impact rather than only a caster ornament
+  ---
+  duration_ms: 0.6708
+  type: 'test'
+  ...
+# Subtest: beasts and summons stay upright in every direction and mirror only when traveling left
+not ok 7 - beasts and summons stay upright in every direction and mirror only when traveling left
+  ---
+  duration_ms: 2.2528
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-engine.test.js:166:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    Expected values to be strictly equal:
+    
+    'semantic' !== 'hawk'
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 'hawk'
+  actual: 'semantic'
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-engine.test.js:176:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: draw plans use valid atlas rectangles and leave the canvas save stack balanced
+ok 8 - draw plans use valid atlas rectangles and leave the canvas save stack balanced
+  ---
+  duration_ms: 0.4791
+  type: 'test'
+  ...
+# Subtest: clear prevents a cast waiting on an atlas from reappearing after character changes
+ok 9 - clear prevents a cast waiting on an atlas from reappearing after character changes
+  ---
+  duration_ms: 1.073
+  type: 'test'
+  ...
+# Subtest: a later manual frame supersedes an earlier atlas load without stale redraw
+ok 10 - a later manual frame supersedes an earlier atlas load without stale redraw
+  ---
+  duration_ms: 0.8277
+  type: 'test'
+  ...
+# Subtest: player capacity bounds concurrent casts and reuses only one atlas load per class
+ok 11 - player capacity bounds concurrent casts and reuses only one atlas load per class
+  ---
+  duration_ms: 0.8488
+  type: 'test'
+  ...
+# Subtest: invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+ok 12 - invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+  ---
+  duration_ms: 2.3353
+  type: 'test'
+  ...
+# Subtest: destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+ok 13 - destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+  ---
+  duration_ms: 0.9505
+  type: 'test'
+  ...
+# Subtest: destroy also cancels a manual frame awaiting its atlas without reporting an application error
+ok 14 - destroy also cancels a manual frame awaiting its atlas without reporting an application error
+  ---
+  duration_ms: 0.6782
+  type: 'test'
+  ...
+# Subtest: hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+ok 15 - hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+  ---
+  duration_ms: 2.5652
+  type: 'test'
+  ...
+# Subtest: late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+ok 16 - late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+  ---
+  duration_ms: 0.5169
+  type: 'test'
+  ...
+# Subtest: recorded passive hits render only actual targets without another summon or caster charge
+ok 17 - recorded passive hits render only actual targets without another summon or caster charge
+  ---
+  duration_ms: 0.3331
+  type: 'test'
+  ...
+# Subtest: trap placement has no remote enemy impact and remains independent of unknown target coordinates
+ok 18 - trap placement has no remote enemy impact and remains independent of unknown target coordinates
+  ---
+  duration_ms: 0.4728
+  type: 'test'
+  ...
+# Subtest: release-aligned playback uses effective duration including reduced motion
+ok 19 - release-aligned playback uses effective duration including reduced motion
+  ---
+  duration_ms: 0.8366
+  type: 'test'
+  ...
+# Subtest: impact and placement clips are bounded and account for asset loading and presentation delay
+ok 20 - impact and placement clips are bounded and account for asset loading and presentation delay
+  ---
+  duration_ms: 0.4379
+  type: 'test'
+  ...
+# Subtest: trap placement stays centered on the supplied foot point at every body scale and facing
+ok 21 - trap placement stays centered on the supplied foot point at every body scale and facing
+  ---
+  duration_ms: 0.8499
+  type: 'test'
+  ...
+# Subtest: non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+ok 22 - non-damaging fire-spirit summon remains local and cannot imply an enemy impact
+  ---
+  duration_ms: 1.8346
+  type: 'test'
+  ...
+# Subtest: ancillary support on a direct attack has support geometry only at the supplied beneficiary
+ok 23 - ancillary support on a direct attack has support geometry only at the supplied beneficiary
+  ---
+  duration_ms: 0.7585
+  type: 'test'
+  ...
+# Subtest: pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 24 - pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 7.2325
+  type: 'test'
+  ...
+# Subtest: snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 25 - snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 2.3083
+  type: 'test'
+  ...
+# Subtest: fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+ok 26 - fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 1.5806
+  type: 'test'
+  ...
+# Subtest: piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+ok 27 - piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+  ---
+  duration_ms: 0.6713
+  type: 'test'
+  ...
+# Subtest: volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 28 - volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 25.9323
+  type: 'test'
+  ...
+# Subtest: volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 29 - volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 21.2888
+  type: 'test'
+  ...
+# Subtest: volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 30 - volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 20.588
+  type: 'test'
+  ...
+# Subtest: volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 31 - volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 42.4477
+  type: 'test'
+  ...
+# Subtest: lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 32 - lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 19.7197
+  type: 'test'
+  ...
+# Subtest: lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+ok 33 - lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 16.7007
+  type: 'test'
+  ...
+# Subtest: lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+ok 34 - lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 16.4196
+  type: 'test'
+  ...
+# Subtest: lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+ok 35 - lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 32.9911
+  type: 'test'
+  ...
+# Subtest: volley primary contact follows its declared .57 impact phase even with a large actual target set
+ok 36 - volley primary contact follows its declared .57 impact phase even with a large actual target set
+  ---
+  duration_ms: 2.0848
+  type: 'test'
+  ...
+# Subtest: explicit single, pair and empty target sets never create an extra volley or lightning destination
+ok 37 - explicit single, pair and empty target sets never create an extra volley or lightning destination
+  ---
+  duration_ms: 0.5765
+  type: 'test'
+  ...
+# Subtest: exact duplicate destinations are normalized before volley and lightning distribution
+ok 38 - exact duplicate destinations are normalized before volley and lightning distribution
+  ---
+  duration_ms: 4.3321
+  type: 'test'
+  ...
+# Subtest: impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 39 - impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 3.2439
+  type: 'test'
+  ...
+# Subtest: reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 40 - reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 2.5186
+  type: 'test'
+  ...
+# Subtest: reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+ok 41 - reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 1.8445
+  type: 'test'
+  ...
+# Subtest: impact and reduced-motion rendering honor empty and deduplicated actual target lists
+ok 42 - impact and reduced-motion rendering honor empty and deduplicated actual target lists
+  ---
+  duration_ms: 0.5917
+  type: 'test'
+  ...
+# Subtest: local support, trap placement and non-damaging summon never expand onto remote targets
+ok 43 - local support, trap placement and non-damaging summon never expand onto remote targets
+  ---
+  duration_ms: 2.156
+  type: 'test'
+  ...
+1..43
+# tests 43
+# suites 0
+# pass 42
+# fail 1
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 464.8331

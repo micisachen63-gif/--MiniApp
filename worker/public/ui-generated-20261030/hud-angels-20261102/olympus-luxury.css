@@ -1,0 +1,163 @@
+/* Preserve the original lapis/gold palette and bevelled button language.
+   The reconstructed navigation and functional DOM remain intact. */
+body.greek.v2.mythic {
+  --my-ink:#332719;--my-muted:#75624a;--my-teal:#18243c;--my-gold:#c5a15b;
+  --my-stone:#f3efe6;--my-paper:#faf5e8;--my-border:#b39a62;
+  --text:#f1e7cf;--muted:#d0c2a7;--panel:#18243c;--panel2:#22304a;--line:#92764b;
+  --gold:#edd18a;--danger:#d87874;--ok:#aeb77d;
+  background:#0b1223 url('art/ui/olympus-sanctuary-v1.png') center top/cover fixed no-repeat;
+  color:#f1e7cf;
+}
+body.greek.v2.mythic #app {color:#f1e7cf;background:linear-gradient(90deg,#0912244d,transparent 20%,transparent 80%,#0912244d)}
+body.greek.v2.mythic .card,body.greek.v2.mythic .item,
+body.greek.v2.mythic .sheet-card,body.greek.v2.mythic .branch,
+body.greek.v2.mythic .tpanel,body.greek.v2.mythic .pot,
+body.greek.v2.mythic .stats div,body.greek.v2.mythic .inv div {
+  --text:#342819;--muted:#726049;--panel:#f3efe6;--panel2:#ebe0c9;--line:#b69a61;--accent:#957037;
+  --r1:#443525;--r2:#285572;--r3:#764392;--r4:#8f5d1e;--r5:#a43639;
+}
+body.greek.v2.mythic #hud {background:linear-gradient(#2c2118,#18100b);border-color:#c5a15b;box-shadow:0 4px 18px #0006}
+body.greek.v2.mythic #hud .nm {color:#ffe9b4;text-shadow:0 1px 2px #000}
+body.greek.v2.mythic #hud .sub {color:#dac597}
+body.greek.v2.mythic #hud .chip {color:#ffe5a8;text-shadow:0 1px #000}
+body.greek.v2.mythic #hud .char-switch {background:linear-gradient(#35425a,#19263d);border-color:#b59656;color:#f8e3a7;border-radius:4px;box-shadow:inset 0 1px #fff3,0 2px 4px #0007}
+body.greek.v2.mythic .my-hud-crest {background:radial-gradient(ellipse,#8a6a31,#362818);color:#ffe4a3;border-color:#c5a15b;box-shadow:inset 0 0 0 2px #241909}
+body.greek.v2.mythic .my-chapter {color:#ecd5a1;text-shadow:0 1px 3px #000}
+body.greek.v2.mythic .my-chapter h1 {color:#f6dfaa;letter-spacing:1.5px;text-shadow:0 2px 3px #000,0 0 12px #dcbe7140}
+body.greek.v2.mythic .my-chapter p {color:#d0c4aa}
+body.greek.v2.mythic .my-sigil {color:#f3d28c;background:linear-gradient(145deg,#37465f,#111d33);border-color:#c8a562;outline-color:#c8a56255;box-shadow:inset 0 0 0 3px #0e1524,inset 0 0 0 4px #ad8a4a88}
+body.greek.v2.mythic .my-sigil::after {color:#d9b86c;text-shadow:0 1px 2px #000}
+body.greek.v2.mythic #view .card {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;border:1px solid #b6985b;border-radius:6px;color:#342819;box-shadow:inset 0 0 0 2px #fff7,0 6px 16px #0005}
+body.greek.v2.mythic #view .card h3 {color:#6a4022;text-shadow:none}
+body.greek.v2.mythic #view .card h3 small,body.greek.v2.mythic #view .card .muted,
+body.greek.v2.mythic #view .item .d,body.greek.v2.mythic #view .branch .muted,body.greek.v2.mythic #view .lv {color:#715e45}
+body.greek.v2.mythic .my-eyebrow {color:#91713b;border-color:#b69a6166}
+body.greek.v2.mythic .my-tabs {background:linear-gradient(#25324a,#152039);border:1px solid #ab8c4e;border-radius:5px;box-shadow:inset 0 1px #fff1,0 3px 10px #0004;padding:3px;gap:3px}
+body.greek.v2.mythic .my-tabs button {color:#e2cfaa;border:1px solid transparent;border-radius:3px;text-shadow:0 1px #000}
+body.greek.v2.mythic .my-tabs button.on {color:#251b0f;background:linear-gradient(#f4dda0,#c9a45e);border-color:#ffe6aa;box-shadow:inset 0 1px #fff7,0 2px 4px #0004;text-shadow:0 1px #fff4}
+body.greek.v2.mythic .my-tabs button.on::after {display:none}
+body.greek.v2.mythic #view .lc-adventure {background:linear-gradient(135deg,#4b4438,#172033 18%,#0d172b 83%,#56442a);border-color:#ae905a;box-shadow:inset 0 0 0 1px #e5c47833,0 8px 24px #0007}
+body.greek.v2.mythic #view .card.lc-profile {background:linear-gradient(120deg,#28354b,#111c30 80%)!important;border-color:#b6995b!important;color:#efe2bd;box-shadow:inset 0 0 0 1px #d5b36a22!important;border-radius:4px}
+body.greek.v2.mythic #view .card.lc-profile .cls {color:#ffe7aa;text-shadow:0 1px 2px #000}
+body.greek.v2.mythic #view .card.lc-profile .lv {color:#dac697}
+body.greek.v2.mythic .my-vitals .portrait {background:radial-gradient(ellipse,#72715e,#202a3e);border-color:#c9a967;border-radius:4px;box-shadow:0 3px 8px #0006}
+.my-hero-stats {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));margin:10px 0 0;padding-top:9px;border-top:1px solid #bfa15f66;gap:5px}
+.my-hero-stats>div {padding:5px 3px;background:linear-gradient(#35415a66,#0b172666);border:1px solid #b5975833;border-radius:3px;text-align:center}
+.my-hero-stats dt {color:#d3c2a1;font:10px/1.4 var(--f-ui)}
+.my-hero-stats dd {margin:2px 0 0;color:#ffe7ad;font:800 16px/1.3 var(--f-num,var(--f-ui));font-variant-numeric:tabular-nums}
+.my-hero-elements {display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:4px;margin:7px 0 0}
+.my-hero-elements>div {display:flex;align-items:center;justify-content:center;gap:4px;border:1px solid #b5975833;border-radius:3px;background:#0a142966;padding:4px 2px}
+.my-hero-elements dt {color:#cdbb96;font:10px/1.4 var(--f-ui)}
+.my-hero-elements dd {margin:0;color:#eed8a4;font:700 11px/1.4 var(--f-ui)}
+.my-hero-elements [data-element="fire"] dd {color:#f0aa8c}
+.my-hero-elements [data-element="water"] dd {color:#a0c9f3}
+.my-hero-elements [data-element="light"] dd {color:#f5df95}
+.my-hero-elements [data-element="dark"] dd {color:#cbb1ea}
+.my-hero-traits {display:flex;flex-wrap:wrap;justify-content:space-between;gap:3px;margin-top:6px;color:#bdad91;font:9px/1.5 var(--f-ui)}
+body.greek.v2.mythic #view .bar {background:#211c17;border-color:#9d8558;box-shadow:inset 0 1px 3px #0006}
+body.greek.v2.mythic #view .bar.hp i {background:linear-gradient(#b94f56,#752c37)}
+body.greek.v2.mythic #view .bar.mp i {background:linear-gradient(#5d80bc,#283e75)}
+body.greek.v2.mythic #view .bar.exp i {background:linear-gradient(#d8be75,#8d763c)}
+body.greek.v2.mythic .lc-battle-shell {background:linear-gradient(135deg,#5c5944,#1b293f 22%,#101b2c 74%,#64512d);border-color:#c8a668;box-shadow:inset 0 0 0 1px #edd18a33}
+body.greek.v2.mythic .lc-battle-head {background:linear-gradient(100deg,#334159,#1a273d 62%,#302719);border-color:#b49961;color:#f7e3b0}
+body.greek.v2.mythic .lc-battle-head span:last-child {color:#e6ca8d}
+body.greek.v2.mythic .lc-battle-shell .bstage {border-color:#d5b877}
+body.greek.v2.mythic .lc-battle-shell .bstage .status,body.greek.v2.mythic .lc-battle-shell .bstage .mapname {background:linear-gradient(#24354beF,#111d31ef);color:#ffe9b8;border-color:#d2b36e;border-radius:3px;box-shadow:0 2px 6px #0009}
+body.greek.v2.mythic #view .cls {color:#674024}
+body.greek.v2.mythic #view .lc-class-screen .hero .info {color:#493825}
+body.greek.v2.mythic #view .lc-character .doll .slot,body.greek.v2.mythic #view .lc-character .acc .slot {background:linear-gradient(145deg,#33415a,#17243b);border:1px solid #b79a60;border-radius:4px;box-shadow:inset 0 0 0 2px #111c2c,inset 0 0 0 3px #c1a06533}
+body.greek.v2.mythic #view .lc-character .slot small {color:#f1dcaa;text-shadow:0 1px 2px #000}
+body.greek.v2.mythic #view .lc-character .doll .fig {border-color:#b79a60;border-radius:75px 75px 4px 4px;box-shadow:inset 0 0 0 2px #f8e2ad}
+body.greek.v2.mythic #view .figstats b {background:#172339ec;color:#f5dfaa;border-color:#b2945b;border-radius:2px}
+body.greek.v2.mythic #view .item {background:linear-gradient(135deg,#fffbf1,#eee4d0);border-color:#baa069;color:#473721;border-radius:5px;box-shadow:inset 0 1px #fff9}
+body.greek.v2.mythic #view .item .t {color:#6b4223}
+body.greek.v2.mythic #view .item .price {color:#7c571a}
+body.greek.v2.mythic #view .ic,body.greek.v2.mythic #view .pot,body.greek.v2.mythic #view .stats>div,body.greek.v2.mythic #view .inv>div {background:#ebe1cc;border-color:#b79e68;color:#60472b;border-radius:5px}
+body.greek.v2.mythic #view .my-equipment-grid .more {color:#7b633b}
+body.greek.v2.mythic #view .my-equipment-grid .item .ic {background:radial-gradient(ellipse,#33445d,#101b31);border:1px solid #b59657;border-radius:6px;box-shadow:inset 0 0 0 2px #080f1c}
+body.greek.v2.mythic #view .stats b,body.greek.v2.mythic #view .pot .n {color:#765027}
+body.greek.v2.mythic #view .stats span,body.greek.v2.mythic #view .pot .h,body.greek.v2.mythic #view .inv small {color:#78654a}
+body.greek.v2.mythic #view .my-market-grid>.item {background:linear-gradient(145deg,#fffbf0,#ede2cb);border:1px solid #b79a60;border-radius:6px;box-shadow:inset 0 0 0 2px #fff8,0 6px 16px #0005}
+body.greek.v2.mythic #view .my-market-grid .ic {background:radial-gradient(ellipse,#c4ad7855,transparent 70%);border:none;box-shadow:none}
+body.greek.v2.mythic .my-market-balance {background:linear-gradient(100deg,#293850,#17243a);color:#e5d6b7;border:1px solid #b39459;border-left:3px solid #d3b674;box-shadow:inset 0 1px #fff2,0 4px 14px #0004;border-radius:4px}
+body.greek.v2.mythic .my-market-balance strong {color:#f4d994}
+body.greek.v2.mythic #view .tabs button,body.greek.v2.mythic #view .seg button,body.greek.v2.mythic #view .bag-slot-tabs button {background:linear-gradient(#fffaf0,#e9dec3);border-color:#b59860;border-radius:4px;color:#725332;box-shadow:inset 0 1px #fff,0 2px 3px #0002}
+body.greek.v2.mythic #view .tabs button.on,body.greek.v2.mythic #view .seg button.on,body.greek.v2.mythic #view .bag-slot-tabs button.on {background:linear-gradient(#65502a,#3c2c16);border-color:#cda853;color:#ffe6a3;box-shadow:inset 0 1px #eaca7766,0 2px 4px #0004}
+/* Original small corner radii, warm gold gradients, inset highlights and three-pixel plinths. */
+body.greek.v2.mythic .btn {background:linear-gradient(#f6de95,#cfa143 55%,#a57a26);color:#2b1a08;border:1px solid #6b4f16;border-radius:4px;box-shadow:0 3px 0 #6b4f16,inset 0 1px 0 #fff4c4;font-weight:900;text-shadow:0 1px #ffe8ba66}
+body.greek.v2.mythic .btn.gold,body.greek.v2.mythic .sheet-card [data-x="1"]:not(.red) {background:linear-gradient(#fff0b8,#e8c25a 50%,#b8862b);color:#2b1a08;border-color:#80602a;box-shadow:0 3px 0 #6b4f16,inset 0 1px #fff4c4}
+body.greek.v2.mythic .btn.ghost {background:linear-gradient(#fffaf0,#e9dfca);color:#49341e;border-color:#b59a61;box-shadow:0 2px 0 #b09a6b,inset 0 1px #fff;border-radius:4px}
+body.greek.v2.mythic .btn.red {background:linear-gradient(#a6343f,#6a1f2b);color:#f5dfac;border-color:#3a0e14;box-shadow:0 3px 0 #3a0e14,inset 0 1px #d66;text-shadow:0 1px #000}
+body.greek.v2.mythic .btn.green {background:linear-gradient(#b39a62,#7a6238);color:#fff0c4;border-color:#584426;box-shadow:0 3px 0 #584426,inset 0 1px #ead09a;text-shadow:0 1px #3b2a12}
+body.greek.v2.mythic .btn:disabled {background:linear-gradient(#e1d9c3,#c6bea8);color:#77694e;border-color:#9d9174;box-shadow:0 2px #a19376;filter:none;text-shadow:none}
+body.greek.v2.mythic #view .todo-row {background:#ede5d2;border-color:#bca675;border-radius:5px}
+body.greek.v2.mythic #view .todo-row .tm b {color:#72502c}
+body.greek.v2.mythic #view .todo-row .tm small {color:#766249}
+body.greek.v2.mythic #view .banner,body.greek.v2.mythic .warnbox {background:#f3dcd4;border-color:#b87965;color:#79342d;border-radius:5px}
+body.greek.v2.mythic #view .banner.gate {background:#f2e5bf;color:#795a20;border-color:#b3924a}
+body.greek.v2.mythic #view .branch {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;border-color:#b89b61;color:#4c3924;border-radius:6px;box-shadow:inset 0 1px #fff8}
+body.greek.v2.mythic #view .branch.pick {border-color:#ac8541;box-shadow:inset 3px 0 #c4a15b}
+body.greek.v2.mythic #view .branch .sk div {background:#e9dfc8;color:#78644b;border-radius:4px}
+body.greek.v2.mythic #view .branch .sk b {color:#6d4a26}
+body.greek.v2.mythic #view .tpanel {background:linear-gradient(#f7f1e3,#e9dec5);border-color:#b7a06c;color:#584225;border-radius:6px}
+body.greek.v2.mythic #view .tpanel.locked {border-color:#a27c37;box-shadow:inset 0 0 0 1px #c5a25855}
+body.greek.v2.mythic #view .tpanel.ok {border-color:#998d49;box-shadow:inset 0 0 0 1px #b4a86555}
+body.greek.v2.mythic #view .rank div {color:#594326;border-color:#baa884}
+body.greek.v2.mythic #view .rank .me {color:#8b5b22}
+body.greek.v2.mythic #view .log {color:#665137}
+body.greek.v2.mythic .my-trade-steps span {background:linear-gradient(#ede1c6,#d9c49a);border-color:#a88b51;color:#6f512a;border-radius:3px}
+body.greek.v2.mythic .my-guide {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;border-color:#bba06b;border-radius:5px;color:#715b3e}
+body.greek.v2.mythic .my-guide summary {color:#76532c}
+body.greek.v2.mythic .sheet-bg {background:#050c1ab3}
+body.greek.v2.mythic .sheet-card {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;color:#493521;border-top-color:#c2a05a;border-radius:14px 14px 0 0;box-shadow:0 -12px 40px #0009}
+body.greek.v2.mythic .sheet-card h2 {color:#694120}
+body.greek.v2.mythic .sheet-card .showcase {background:radial-gradient(ellipse at 50% 15%,#3b4760,#121e34 75%);border-color:#c3a56a;border-radius:6px;box-shadow:inset 0 0 0 2px #0c1628,inset 0 0 0 3px #c3a56a44}
+body.greek.v2.mythic .sheet-card .showcase-title {color:#ffdf9a;text-shadow:0 1px #000}
+body.greek.v2.mythic .sheet-card .showcase-img-wrap {background:radial-gradient(ellipse,#43536d,#18253c);border-color:#c9ac70;border-radius:6px;box-shadow:inset 0 0 0 2px #102039}
+body.greek.v2.mythic .sheet-card .showcase-sub {color:#d7c9ad}
+body.greek.v2.mythic .sheet-card .showcase-tags {color:#f2dfb6}
+body.greek.v2.mythic .sheet-card .muted,body.greek.v2.mythic .sheet-card .kv span {color:#786248}
+body.greek.v2.mythic .my-artifact-stats {background:#faf5e7;border-color:#b9a16d;color:#584225;border-radius:5px}
+body.greek.v2.mythic .my-forge,body.greek.v2.mythic .my-item-commerce {border-color:#b7a16e}
+body.greek.v2.mythic .my-forge h3,body.greek.v2.mythic .my-item-commerce summary {color:#74522b}
+body.greek.v2.mythic .sheet-card input,body.greek.v2.mythic #view input,body.greek.v2.mythic #view select {background:#fff9ea;color:#4e3a24;border-color:#b49a62;border-radius:4px}
+body.greek.v2.mythic #toast {background:linear-gradient(#25374f,#121e34);border-color:#c6a563;color:#ffe7ad;border-radius:5px;box-shadow:0 6px 20px #0006}
+body.greek.v2.mythic #nav {background:linear-gradient(#24324f,#121a2e);border-color:#c5a15b;box-shadow:0 -5px 20px #0006}
+body.greek.v2.mythic #nav::before {display:block;top:-7px;height:4px;background:var(--g-lapis) var(--meander) repeat-x center/18px 9px;border:0;opacity:.9}
+body.greek.v2.mythic #nav button {color:#d4c39a}
+body.greek.v2.mythic #nav button.on {background:linear-gradient(#d9b96629,transparent);color:#ffe7a3;text-shadow:0 0 8px #e9c57555}
+body.greek.v2.mythic #nav button.on::before {background:#f0d28d}
+body.greek.v2.mythic .char-card {background:linear-gradient(155deg,#2d3e58,#111d32 62%,#252b36);border-color:#b39659;color:#f0dfb4;border-radius:70px 70px 5px 5px;box-shadow:inset 0 0 0 4px #111c2f,inset 0 0 0 5px #bca16466,0 8px 24px #0005}
+body.greek.v2.mythic .char-card::before {border-color:#d2b47255}
+body.greek.v2.mythic .char-card.char-active {border-color:#edcc80;box-shadow:inset 0 0 0 4px #111c2f,inset 0 0 0 5px #e0bf7777,0 0 18px #dbb86425}
+body.greek.v2.mythic .char-card strong {color:#ffe7b1;text-shadow:0 1px #000}
+body.greek.v2.mythic .char-card small,body.greek.v2.mythic .char-slot {color:#d1c0a0}
+body.greek.v2.mythic .char-card em {background:linear-gradient(#ddc183,#b48c4a);color:#332411;border-color:#e9cc87;border-radius:4px;box-shadow:0 2px #785824,inset 0 1px #ffeaaf}
+body.greek.v2.mythic .char-empty {background:linear-gradient(145deg,#26354e,#141e30);border-color:#88774e}
+body.greek.v2.mythic .char-question {background:radial-gradient(ellipse,#424e62,#18223a);border-color:#b69a63;color:#e0c48b;box-shadow:inset 0 0 0 3px #142137}
+body.greek.v2.mythic .char-empty b {color:#e9d19e}
+body.greek.v2.mythic .char-select-foot {color:#ddceb0;text-shadow:0 1px #000}
+body.greek.v2.mythic .create {color:#e4d6ba}
+body.greek.v2.mythic .create h1 {color:#f9e2a9;text-shadow:0 1px #000}
+body.greek.v2.mythic .create>p {color:#dbcba9}
+body.greek.v2.mythic .create .desc {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;border-color:#bca16b;color:#665035;border-radius:5px}
+body.greek.v2.mythic .create .desc b {color:#75491f}
+body.greek.v2.mythic .pickc {background:linear-gradient(#faf3e2,#e9ddc1);border-color:#bea067;color:#674a25;box-shadow:inset 0 0 0 2px #fff6}
+body.greek.v2.mythic .pickc.on {background:linear-gradient(#fcf3d9,#e6d39d);border-color:#d6b25e;box-shadow:inset 0 0 0 2px #a88a47,0 0 15px #e1ba5733}
+body.greek.v2.mythic .pickc small {color:#776042}
+body.greek.v2.mythic .create .pickc b {color:#6b4623}
+body.greek.v2.mythic .elf-ancestry {background:#f3efe6 url('art/v1/ui_marble.webp') center/360px;border-color:#b39a63;color:#49351f;box-shadow:0 6px 18px #0005;border-radius:5px}
+body.greek.v2.mythic .elf-ancestry-title {color:#715029;border-color:#bda46c}
+body.greek.v2.mythic .elf-ancestry-title small {color:#776348}
+body.greek.v2.mythic .elf-tier {border-color:#ad945c}
+body.greek.v2.mythic .elf-tier h4 {color:#72512c}
+body.greek.v2.mythic .elf-tier h4 em {color:#957138}
+body.greek.v2.mythic .elf-node,body.greek.v2.mythic .elf-node.available,body.greek.v2.mythic .elf-node.locked {background:linear-gradient(#fffbf0,#eae0cb);border-color:#bea879;color:#594325;border-radius:4px;box-shadow:inset 0 1px #fff9}
+body.greek.v2.mythic .elf-node strong {color:#714b25}
+body.greek.v2.mythic .elf-node small {color:#776145}
+body.greek.v2.mythic .elf-node.chosen {background:linear-gradient(#f8e9bc,#e1c78d);border-color:#b48d45;box-shadow:inset 3px 0 #b08a41}
+body.greek.v2.mythic .elf-node.locked {background:#e2dccb;border-color:#ada48c}
+body.greek.v2.mythic .elf-node.locked i {background:#d2c7ac;color:#74603b}
+body.greek.v2.mythic .elf-node.locked .elf-rune {background:#d9ccb1;border-color:#aa976a}
+body.greek.v2.mythic button:focus-visible,body.greek.v2.mythic [tabindex]:focus-visible {outline-color:#e5bc61}
+@media(prefers-reduced-motion:no-preference) {body.greek.v2.mythic .btn:not(:disabled):active {box-shadow:0 1px 0 #6b4f16;transform:translateY(1px)}}

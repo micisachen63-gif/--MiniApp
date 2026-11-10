@@ -1,0 +1,54 @@
+{
+  "checkedAt": "2026-11-01T23:58:20.716Z",
+  "sourceCommit": "3c6729aa9167223a3a915c5dc19fcc075cbad0ed",
+  "mode": "read-only",
+  "playerQueries": 0,
+  "deploymentRecord": {
+    "status": "VERIFIED",
+    "sourceCommit": "3c6729aa9167223a3a915c5dc19fcc075cbad0ed",
+    "productionVersion": "d2695468-4c75-4aa7-9e7c-eb9b57303a00",
+    "verifiedAt": "2026-10-29T03:19:42.716Z",
+    "service": "elf-rpg-api",
+    "assetVerifiedCount": 153
+  },
+  "publicEntrypoints": [
+    {
+      "file": "app.js",
+      "bytes": 335550,
+      "sha256": "2592ff8b20fa5272a9547ed24877102d77e311d389c1d49b715b08025cfb497d",
+      "matchesMainBytes": false,
+      "matchesMainNormalized": true
+    },
+    {
+      "file": "index.html",
+      "bytes": 10360,
+      "sha256": "4ba58d7e6f0f82c3f0b8568dd5b49889c5f6ea75b1cd8660969fb1d5a80489c9",
+      "matchesMainBytes": false,
+      "matchesMainNormalized": true
+    },
+    {
+      "file": "request-client.js",
+      "bytes": 3026,
+      "sha256": "bace1c1aaf36b18deecea4dd0289c02ba596a0baa8266789a4258cd9437444f7",
+      "matchesMainBytes": false,
+      "matchesMainNormalized": true
+    },
+    {
+      "file": "styles.css",
+      "bytes": 32764,
+      "sha256": "43fc09302b3d7a1bedbcb63b9e90e5e52d5e8449a249470324bbda3ddd3060d6",
+      "matchesMainBytes": false,
+      "matchesMainNormalized": true
+    }
+  ],
+  "health": {
+    "httpStatus": 200,
+    "ok": true,
+    "service": "elf-rpg-api"
+  },
+  "limitations": [
+    "No authenticated Cloudflare control-plane access in this session.",
+    "No live D1 player or economy aggregates queried.",
+    "Public entrypoint comparisons do not verify backend runtime or all historical binary assets."
+  ]
+}

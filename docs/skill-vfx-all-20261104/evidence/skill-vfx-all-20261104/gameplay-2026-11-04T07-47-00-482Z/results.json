@@ -1,0 +1,2823 @@
+{
+  "schemaVersion": 1,
+  "sourceFiles": [
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "a88e5669be5584e275523f587d0c43b82bba6845a20e1c4b0b0a28caf92a85c5"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "245d3c5f4831437bb39eb71bc81f6b9965889171f0db534689643b7918dec8f0"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "source": "real-isolated-api",
+  "isolated": true,
+  "ephemeral": true,
+  "productionAccess": false,
+  "clockMode": "fixed-test",
+  "startedAt": "2026-11-04T07:47:00.488Z",
+  "cases": [
+    {
+      "mode": "pk",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:pd8d03fe8053:222",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 5,
+            "drawCalls": 144,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:pd8d03fe8053:0:0:b",
+              "skillId": "special:skill_02_1",
+              "actorId": "b",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "a"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 299.328125,
+                "y": 100.35883098171695
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 299.328125,
+                    "y": 100.35883098171695
+                  },
+                  "to": {
+                    "x": 78.65625,
+                    "y": 101.41096979332272
+                  },
+                  "targets": [
+                    {
+                      "x": 78.65625,
+                      "y": 101.41096979332272
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 175.88856319554847,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 25,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 25,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 360,
+              "height": 315,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:pd8d03fe8053:222",
+            "received": 3,
+            "accepted": 3,
+            "rejected": 0,
+            "commands": 3,
+            "drawFrames": 34,
+            "drawCalls": 674,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:pd8d03fe8053:1:0:b",
+              "skillId": "native:sword:B111",
+              "actorId": "b",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "a"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 286.6387869262695,
+                "y": 98.17521233247838
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 286.6387869262695,
+                    "y": 98.17521233247838
+                  },
+                  "to": {
+                    "x": 78.65625,
+                    "y": 101.41096979332272
+                  },
+                  "targets": [
+                    {
+                      "x": 78.65625,
+                      "y": 101.41096979332272
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 182.61102576324024,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.19999998807907104,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 3,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.19999998807907104,
+              "manual": false,
+              "width": 360,
+              "height": 315,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/accept",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_02_1",
+              "eventId": "pk:pd8d03fe8053:0:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pd8d03fe8053:0:1:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pd8d03fe8053:1:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pd8d03fe8053:1:1:periodic:dot:pk:pd8d03fe8053:0:1:a:30000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pd8d03fe8053:1:1:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pd8d03fe8053:2:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_02_1",
+              "eventId": "pk:pd8d03fe8053:0:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pd8d03fe8053:0:1:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pd8d03fe8053:1:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pd8d03fe8053:1:1:periodic:dot:pk:pd8d03fe8053:0:1:a:30000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pd8d03fe8053:1:1:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pd8d03fe8053:2:0:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "pk-390-battle.png",
+        "pk-390-release.png",
+        "pk-390-effect.png"
+      ]
+    },
+    {
+      "mode": "pk",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:pedf36d9d347:222",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 4,
+            "drawCalls": 35,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:pedf36d9d347:0:0:a",
+              "skillId": "special:skill_thief_04",
+              "actorId": "a",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "b"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 129.15625,
+                "y": 96.90381558028616
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 129.15625,
+                    "y": 96.90381558028616
+                  },
+                  "to": {
+                    "x": 378.828125,
+                    "y": 103.87660224562802
+                  },
+                  "targets": [
+                    {
+                      "x": 378.828125,
+                      "y": 103.87660224562802
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 225.35771065182828,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 3,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 3,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 490,
+              "height": 315,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "pk",
+            "contextKey": "pk:permanent:pedf36d9d347:222",
+            "received": 4,
+            "accepted": 4,
+            "rejected": 0,
+            "commands": 4,
+            "drawFrames": 36,
+            "drawCalls": 760,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "pk:pedf36d9d347:1:0:periodic:dot:pk:pedf36d9d347:0:0:a:30000",
+              "skillId": "special:skill_thief_04",
+              "actorId": "a",
+              "source": "committed-combat",
+              "presentationMode": "impact",
+              "targetIds": [
+                "b"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 129.15625,
+                "y": 96.90381558028616
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 129.15625,
+                    "y": 96.90381558028616
+                  },
+                  "to": {
+                    "x": 378.828125,
+                    "y": 103.87660224562802
+                  },
+                  "targets": [
+                    {
+                      "x": 378.828125,
+                      "y": 103.87660224562802
+                    }
+                  ],
+                  "mode": "impact",
+                  "bodyHeight": 225.35771065182828,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 24,
+              "frameMs": 0.19999998807907104,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 4,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 24,
+              "frameMs": 0.19999998807907104,
+              "manual": false,
+              "width": 490,
+              "height": 315,
+              "dpr": 1,
+              "loadedAtlases": 2,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/accept",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pedf36d9d347:0:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_1",
+              "eventId": "pk:pedf36d9d347:0:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pedf36d9d347:1:0:periodic:dot:pk:pedf36d9d347:0:0:a:30000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:1:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pedf36d9d347:1:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:2:0:periodic:dot:pk:pedf36d9d347:1:0:a:60000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:2:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pedf36d9d347:2:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "pk/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pedf36d9d347:0:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_02_1",
+              "eventId": "pk:pedf36d9d347:0:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_thief_04",
+              "eventId": "pk:pedf36d9d347:1:0:periodic:dot:pk:pedf36d9d347:0:0:a:30000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:1:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pedf36d9d347:1:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:2:0:periodic:dot:pk:pedf36d9d347:1:0:a:60000",
+              "source": "committed-combat",
+              "kind": "effect",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "impact"
+            },
+            {
+              "skillId": "native:thief:A211",
+              "eventId": "pk:pedf36d9d347:2:0:a",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "a",
+              "targetIds": [
+                "b"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B111",
+              "eventId": "pk:pedf36d9d347:2:1:b",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "b",
+              "targetIds": [
+                "a"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "pk-1280-battle.png",
+        "pk-1280-release.png",
+        "pk-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 3,
+            "drawCalls": 44,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 92.24115280304838,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 92.24115280304838,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 185.47834101382486,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 185.47834101382486,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.800000011920929,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.800000011920929,
+              "manual": false,
+              "width": 340,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 2,
+            "accepted": 2,
+            "rejected": 0,
+            "commands": 2,
+            "drawFrames": 37,
+            "drawCalls": 471,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:1",
+              "skillId": "native:mage:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 91.69604587579502,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 91.69604587579502,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 185.47834101382486,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 185.47834101382486,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 2,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.10000000894069672,
+              "manual": false,
+              "width": 340,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss/attack",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "boss:b2026100809:111:0:0",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:1",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:2",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:3",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:4",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "boss-390-battle.png",
+        "boss-390-release.png",
+        "boss-390-effect.png"
+      ]
+    },
+    {
+      "mode": "boss",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421200000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 4,
+            "drawCalls": 62,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:0",
+              "skillId": "special:skill_05_1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 238.24970000599166,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 238.24970000599166,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 665,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 665,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 8,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 950,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "boss",
+            "contextKey": "boss:permanent:111:b2026100809",
+            "received": 3,
+            "accepted": 3,
+            "rejected": 0,
+            "commands": 3,
+            "drawFrames": 37,
+            "drawCalls": 588,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "boss:b2026100809:111:0:2",
+              "skillId": "native:mage:A111",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 237.6749702704277,
+                "y": 169.30322580645162
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 237.6749702704277,
+                    "y": 169.30322580645162
+                  },
+                  "to": {
+                    "x": 665,
+                    "y": 157.55096774193547
+                  },
+                  "targets": [
+                    {
+                      "x": 665,
+                      "y": 157.55096774193547
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 106.83870967741936,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 2,
+            "remembered": 3,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 16,
+              "frameMs": 0,
+              "manual": false,
+              "width": 950,
+              "height": 250,
+              "dpr": 1,
+              "loadedAtlases": 1,
+              "pendingLoads": 0,
+              "generation": 2,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "journal",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "boss/attack",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": [
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "boss:b2026100809:111:0:0",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:1",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:2",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:3",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:mage:A111",
+              "eventId": "boss:b2026100809:111:0:4",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "boss-1280-battle.png",
+        "boss-1280-release.png",
+        "boss-1280-effect.png"
+      ]
+    },
+    {
+      "mode": "party",
+      "width": 390,
+      "status": "passed",
+      "testClock": 1791421205000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "party",
+            "contextKey": "party:p61107755830f45c:p61107755830f45c:1:1",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 7,
+            "drawCalls": 158,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "skillId": "native:sword:B1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 66.95,
+                "y": 125.90654602050782
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 66.95,
+                    "y": 125.90654602050782
+                  },
+                  "to": {
+                    "x": 273,
+                    "y": 130.60210266113282
+                  },
+                  "targets": [
+                    {
+                      "x": 273,
+                      "y": 130.60210266113282
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 176,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 338,
+              "height": 260,
+              "dpr": 1,
+              "loadedAtlases": 4,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "party",
+            "contextKey": "party:p61107755830f45c:p61107755830f45c:1:1",
+            "received": 2,
+            "accepted": 2,
+            "rejected": 0,
+            "commands": 2,
+            "drawFrames": 45,
+            "drawCalls": 1006,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "skillId": "native:archer:B1",
+              "actorId": "222",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 132.71875,
+                "y": 144.50675201416016
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 132.71875,
+                    "y": 144.50675201416016
+                  },
+                  "to": {
+                    "x": 273,
+                    "y": 134.3339714050293
+                  },
+                  "targets": [
+                    {
+                      "x": 273,
+                      "y": 134.3339714050293
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 145,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.10000000894069672,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 2,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 5,
+              "frameMs": 0.10000000894069672,
+              "manual": false,
+              "width": 338,
+              "height": 260,
+              "dpr": 1,
+              "loadedAtlases": 4,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/action",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p61107755830f45c:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p61107755830f45c:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p61107755830f45c:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "party-390-battle.png",
+        "party-390-release.png",
+        "party-390-effect.png"
+      ]
+    },
+    {
+      "mode": "party",
+      "width": 1280,
+      "status": "passed",
+      "testClock": 1791421205000,
+      "first": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "party",
+            "contextKey": "party:p58a56a6be6a64e2:p58a56a6be6a64e2:1:1",
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "commands": 1,
+            "drawFrames": 5,
+            "drawCalls": 115,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "skillId": "native:sword:B1",
+              "actorId": "111",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 162.84375,
+                "y": 152.9081802368164
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 162.84375,
+                    "y": 152.9081802368164
+                  },
+                  "to": {
+                    "x": 925,
+                    "y": 154.0455406188965
+                  },
+                  "targets": [
+                    {
+                      "x": 925,
+                      "y": 154.0455406188965
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 210,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false
+            },
+            "destroyed": false,
+            "generation": 0,
+            "remembered": 1,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 17,
+              "frameMs": 0.29999999701976776,
+              "manual": false,
+              "width": 1020,
+              "height": 305,
+              "dpr": 1,
+              "loadedAtlases": 4,
+              "pendingLoads": 0,
+              "generation": 0,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "result": {
+        "active": [
+          {
+            "layerId": 1,
+            "mode": "party",
+            "contextKey": "party:p58a56a6be6a64e2:p58a56a6be6a64e2:1:1",
+            "received": 2,
+            "accepted": 2,
+            "rejected": 0,
+            "commands": 2,
+            "drawFrames": 76,
+            "drawCalls": 1097,
+            "byReason": {},
+            "lastEvent": {
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "skillId": "native:archer:B1",
+              "actorId": "222",
+              "source": "committed-combat",
+              "presentationMode": "full",
+              "targetIds": [
+                "boss"
+              ],
+              "damageModel": null,
+              "from": {
+                "x": 346.4375,
+                "y": 168.18685302734366
+              },
+              "commands": [
+                {
+                  "from": {
+                    "x": 346.4375,
+                    "y": 168.18685302734366
+                  },
+                  "to": {
+                    "x": 925,
+                    "y": 156.46536560058598
+                  },
+                  "targets": [
+                    {
+                      "x": 925,
+                      "y": 156.46536560058598
+                    }
+                  ],
+                  "mode": "full",
+                  "bodyHeight": 180.00006103515625,
+                  "supportKind": null
+                }
+              ]
+            },
+            "lastRender": {
+              "active": 1,
+              "drawCalls": 19,
+              "frameMs": 0.20000000298023224,
+              "manual": false
+            },
+            "lastClear": "layout-changed",
+            "destroyed": false,
+            "generation": 2,
+            "remembered": 2,
+            "pending": 0,
+            "player": {
+              "active": 1,
+              "drawCalls": 19,
+              "frameMs": 0.20000000298023224,
+              "manual": false,
+              "width": 1020,
+              "height": 305,
+              "dpr": 1,
+              "loadedAtlases": 4,
+              "pendingLoads": 0,
+              "generation": 2,
+              "destroyed": false,
+              "reducedMotion": false,
+              "maxActive": 12
+            }
+          }
+        ],
+        "completed": []
+      },
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "select",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/catalog",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "ledger",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/status",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "atlas/quests",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/action",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "expedition/me",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": []
+        },
+        {
+          "action": "party/list",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        },
+        {
+          "action": "chat/state",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": []
+        },
+        {
+          "action": "party/get",
+          "status": 200,
+          "at": 1791421205000,
+          "vfx": [
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:sword:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:111",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "111",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "native:archer:B1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:222",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "222",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            },
+            {
+              "skillId": "special:skill_05_1",
+              "eventId": "p58a56a6be6a64e2:1:1:cast:333",
+              "source": "committed-combat",
+              "kind": "cast",
+              "actorId": "333",
+              "targetIds": [
+                "boss"
+              ],
+              "presentationMode": "full"
+            }
+          ]
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "screenshots": [
+        "party-1280-battle.png",
+        "party-1280-release.png",
+        "party-1280-effect.png"
+      ]
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "instrumentation": "Expose existing app controllers only; no response or combat/event substitution.",
+  "status": "passed",
+  "completedAt": "2026-11-04T07:47:52.204Z",
+  "sourceFilesAfter": [
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "dea1a27095c4c1aa740587d91fe66412b3978cacede33b9ef67dd6b81cae6a14"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "a88e5669be5584e275523f587d0c43b82bba6845a20e1c4b0b0a28caf92a85c5"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "245d3c5f4831437bb39eb71bc81f6b9965889171f0db534689643b7918dec8f0"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    }
+  ],
+  "sourceChangedDuring": []
+}

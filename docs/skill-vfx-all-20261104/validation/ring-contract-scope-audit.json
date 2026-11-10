@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "at": "2026-11-04T08:38:18.108Z",
+  "goldenFiles": [
+    {
+      "path": "worker/test/star-ring-v1-golden.json",
+      "unchangedInGit": true,
+      "lineEndingNormalizedIdentical": true,
+      "currentCrlf": 73,
+      "headCrlf": 0,
+      "sha256": "3e1d0455da98124add7a49fc6823250c443ed6f06c809167ed649ca1f35303ac"
+    },
+    {
+      "path": "worker/test/star-ring-v2-reward-golden.json",
+      "unchangedInGit": true,
+      "lineEndingNormalizedIdentical": true,
+      "currentCrlf": 74,
+      "headCrlf": 0,
+      "sha256": "e485a8252e7232fdb51778fc8fa7c161dfe6d33545e88513622d04d780a11f28"
+    }
+  ],
+  "helperReferences": [
+    "worker/test/star-ring-pools.test.js",
+    "worker/test/star-ring-rank-rewards.test.js",
+    "worker/test/star-ring.test.js"
+  ],
+  "receipt": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/validation.json"
+}

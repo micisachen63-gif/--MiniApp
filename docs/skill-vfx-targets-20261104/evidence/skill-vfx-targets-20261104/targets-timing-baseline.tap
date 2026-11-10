@@ -1,0 +1,3107 @@
+TAP version 13
+# Subtest: pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+not ok 1 - pierce: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 5.6125
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:64:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    pierce/right/240: no projectile before actor release
+    + actual - expected
+    
+    + {
+    +   alpha: 0.34091284250904935,
+    +   blend: 'screen',
+    +   cell: 0,
+    +   flipX: false,
+    +   h: 57.599999999999994,
+    +   rotation: 0,
+    +   w: 80,
+    +   x: 603.5504196,
+    +   y: 600
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    cell: 0
+    x: 603.5504196
+    y: 600
+    w: 80
+    h: 57.599999999999994
+    rotation: 0
+    alpha: 0.34091284250904935
+    blend: 'screen'
+    flipX: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:71:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.start (node:internal/test_runner/test:1003:17)
+    startSubtestAfterBootstrap (node:internal/test_runner/harness:358:17)
+  ...
+# Subtest: snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+not ok 2 - snipe: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 0.8392
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:64:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    snipe/right/240: no projectile before actor release
+    + actual - expected
+    
+    + {
+    +   alpha: 0.34091284250904935,
+    +   blend: 'screen',
+    +   cell: 0,
+    +   flipX: false,
+    +   h: 75.6,
+    +   rotation: 0,
+    +   w: 105,
+    +   x: 602.91018,
+    +   y: 600
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    cell: 0
+    x: 602.91018
+    y: 600
+    w: 105
+    h: 75.6
+    rotation: 0
+    alpha: 0.34091284250904935
+    blend: 'screen'
+    flipX: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:71:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async startSubtestAfterBootstrap (node:internal/test_runner/harness:358:3)
+  ...
+# Subtest: fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+not ok 3 - fireball: live release starts at the actor anchor and contact reaches the authoritative target at the declared impact phase
+  ---
+  duration_ms: 0.5182
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:64:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    fireball/right/240: no projectile before actor release
+    + actual - expected
+    
+    + {
+    +   alpha: 0.31247364350473894,
+    +   blend: 'screen',
+    +   cell: 0,
+    +   flipX: false,
+    +   h: 79.2,
+    +   rotation: -0.21893973692483792,
+    +   w: 110,
+    +   x: 601.9056285260242,
+    +   y: 599.5759854516424
+    + }
+    - undefined
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  actual:
+    cell: 0
+    x: 601.9056285260242
+    y: 599.5759854516424
+    w: 110
+    h: 79.2
+    rotation: -0.21893973692483792
+    alpha: 0.31247364350473894
+    blend: 'screen'
+    flipX: false
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:71:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+not ok 4 - piercing projectiles continue beyond the true contact without relocating the impact to the tail endpoint
+  ---
+  duration_ms: 0.7677
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:84:1'
+  failureType: 'testCodeFailure'
+  error: 'right: true target contact'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:89:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+not ok 5 - volley: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 8.2849
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/4/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+    -   3
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+  actual:
+    0: 0
+    1: 1
+    2: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+not ok 6 - volley: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 2.7163
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/5/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+    -   3,
+    -   4
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+  actual:
+    0: 0
+    1: 1
+    2: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+not ok 7 - volley: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 1.5146
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/8/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+    -   3,
+    -   4,
+    -   5,
+    -   6,
+    -   7
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
+    6: 6
+    7: 7
+  actual:
+    0: 0
+    1: 1
+    2: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+not ok 8 - volley: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 2.3717
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/32/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+    -   3,
+    -   4,
+    -   5,
+    -   6,
+    -   7,
+    -   8,
+    -   9,
+    -   10,
+    -   11,
+    -   12,
+    -   13,
+    -   14,
+    -   15,
+    -   16,
+    -   17,
+    -   18,
+    -   19,
+    -   20,
+    -   21,
+    -   22,
+    -   23,
+    -   24,
+    -   25,
+    -   26,
+    -   27,
+    -   28,
+    -   29,
+    -   30,
+    -   31
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
+    6: 6
+    7: 7
+    8: 8
+    9: 9
+    10: 10
+    11: 11
+    12: 12
+    13: 13
+    14: 14
+    15: 15
+    16: 16
+    17: 17
+    18: 18
+    19: 19
+    20: 20
+    21: 21
+    22: 22
+    23: 23
+    24: 24
+    25: 25
+    26: 26
+    27: 27
+    28: 28
+    29: 29
+    30: 30
+    31: 31
+  actual:
+    0: 0
+    1: 1
+    2: 2
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+ok 9 - lightning: all 4 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 16.1538
+  type: 'test'
+  ...
+# Subtest: lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+not ok 10 - lightning: all 5 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 2.0022
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lightning/5/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+        3,
+    -   4
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+  actual:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+not ok 11 - lightning: all 8 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 2.7382
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lightning/8/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+        3,
+    -   4,
+    -   5,
+    -   6,
+    -   7
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
+    6: 6
+    7: 7
+  actual:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+not ok 12 - lightning: all 32 actual targets receive contact before late fade in both quality settings and all directions
+  ---
+  duration_ms: 3.3167
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:98:3'
+  failureType: 'testCodeFailure'
+  error: |-
+    lightning/32/high/right: target contacts complete by .735
+    + actual - expected
+    
+      [
+        0,
+        1,
+        2,
+        3,
+    -   4,
+    -   5,
+    -   6,
+    -   7,
+    -   8,
+    -   9,
+    -   10,
+    -   11,
+    -   12,
+    -   13,
+    -   14,
+    -   15,
+    -   16,
+    -   17,
+    -   18,
+    -   19,
+    -   20,
+    -   21,
+    -   22,
+    -   23,
+    -   24,
+    -   25,
+    -   26,
+    -   27,
+    -   28,
+    -   29,
+    -   30,
+    -   31
+      ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+    4: 4
+    5: 5
+    6: 6
+    7: 7
+    8: 8
+    9: 9
+    10: 10
+    11: 11
+    12: 12
+    13: 13
+    14: 14
+    15: 15
+    16: 16
+    17: 17
+    18: 18
+    19: 19
+    20: 20
+    21: 21
+    22: 22
+    23: 23
+    24: 24
+    25: 25
+    26: 26
+    27: 27
+    28: 28
+    29: 29
+    30: 30
+    31: 31
+  actual:
+    0: 0
+    1: 1
+    2: 2
+    3: 3
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:108:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: volley primary contact follows its declared .57 impact phase even with a large actual target set
+not ok 13 - volley primary contact follows its declared .57 impact phase even with a large actual target set
+  ---
+  duration_ms: 0.892
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:114:1'
+  failureType: 'testCodeFailure'
+  error: '1/high: no early impact ring'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:119:14)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: explicit single, pair and empty target sets never create an extra volley or lightning destination
+not ok 14 - explicit single, pair and empty target sets never create an extra volley or lightning destination
+  ---
+  duration_ms: 0.6058
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:126:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley: no projectile when targets explicitly empty
+    
+    3 !== 0
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: 0
+  actual: 3
+  operator: 'strictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:135:16)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: exact duplicate destinations are normalized before volley and lightning distribution
+not ok 15 - exact duplicate destinations are normalized before volley and lightning distribution
+  ---
+  duration_ms: 2.0938
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:142:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/0.41/high: duplicate points cannot consume target slots or create repeated contacts
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        geometry: [
+          {
+            alpha: 0.6801737085836915,
+            color: '#73edbc',
+    ...
+              {
+    +           x: 704.8646448198656,
+    -           x: 729.4850396906166,
+                y: 600
+              },
+              {
+    +           x: 699.1146448198656,
+    -           x: 722.3850396906166,
+                y: 600
+              },
+              {
+    +           x: 693.3646448198656,
+    -           x: 715.2850396906167,
+                y: 600
+              },
+              {
+    +           x: 687.6146448198656,
+    -           x: 708.1850396906167,
+                y: 600
+              },
+              {
+    +           x: 681.8646448198656,
+    -           x: 701.0850396906167,
+                y: 600
+              },
+              {
+    +           x: 676.1146448198656,
+    -           x: 693.9850396906166,
+                y: 600
+              },
+              {
+    +           x: 670.3646448198656,
+    -           x: 686.8850396906166,
+                y: 600
+              }
+            ],
+            width: 3
+          },
+    ...
+              {
+    +           x: 649.163851007531,
+    -           x: 658.5119071850193,
+                y: 611.3835155064174
+              },
+              {
+    +           x: 642.063851007531,
+    -           x: 650.0619071850193,
+                y: 609.871358619933
+              },
+              {
+    +           x: 634.963851007531,
+    -           x: 641.6119071850193,
+                y: 608.2983415249967
+              },
+              {
+    +           x: 627.863851007531,
+    -           x: 633.1619071850193,
+                y: 606.6741623950802
+              },
+              {
+    +           x: 620.763851007531,
+    -           x: 624.7119071850193,
+                y: 605.0088348346138
+              },
+              {
+    +           x: 613.663851007531,
+    -           x: 616.2619071850193,
+                y: 603.3126261417855
+              },
+              {
+    +           x: 606.563851007531,
+    -           x: 607.8119071850193,
+                y: 601.5959940072331
+              }
+            ],
+            width: 3
+          }
+    ...
+            w: 65,
+    +       x: 704.8646448198656,
+    -       x: 729.4850396906166,
+            y: 600
+          },
+          {
+            alpha: 0.49742724128185706,
+            blend: 'screen',
+    ...
+            w: 8,
+    +       x: 704.8646448198656,
+    -       x: 729.4850396906166,
+            y: 598.3864275513249
+          },
+          {
+            alpha: 0.42636620681302034,
+            blend: 'screen',
+    ...
+            w: 7,
+    +       x: 694.5146448198656,
+    -       x: 716.7050396906167,
+            y: 597.3433571059196
+          },
+          {
+            alpha: 0.35530517234418363,
+            blend: 'screen',
+    ...
+            w: 6,
+    +       x: 684.1646448198657,
+    -       x: 703.9250396906167,
+            y: 603.824679521089
+          },
+          {
+            alpha: 0.28424413787534686,
+            blend: 'screen',
+    ...
+            w: 5,
+    +       x: 673.8146448198656,
+    -       x: 691.1450396906166,
+            y: 599.4733863270646
+          },
+          {
+            alpha: 0.21318310340651017,
+            blend: 'screen',
+    ...
+            w: 4,
+    +       x: 663.4646448198656,
+    -       x: 678.3650396906166,
+            y: 596.6136177070599
+          },
+          {
+            alpha: 0.14212206893767343,
+            blend: 'screen',
+    ...
+            w: 3,
+    +       x: 653.1146448198656,
+    -       x: 665.5850396906167,
+            y: 603.3450782300279
+          },
+          {
+            alpha: 0.7220527971438718,
+            blend: 'screen',
+    ...
+            h: 46.8,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 65,
+    +       x: 649.163851007531,
+    -       x: 658.5119071850193,
+            y: 611.3835155064174
+          },
+          {
+            alpha: 0.4035268700804506,
+            blend: 'screen',
+    ...
+            h: 8,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 8,
+    +       x: 649.163851007531,
+    -       x: 658.5119071850193,
+            y: 609.7699430577424
+          },
+          {
+            alpha: 0.34588017435467194,
+            blend: 'screen',
+    ...
+            h: 7,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 7,
+    +       x: 636.383851007531,
+    -       x: 643.3019071850193,
+            y: 605.9607102815608
+          },
+          {
+            alpha: 0.28823347862889326,
+            blend: 'screen',
+    ...
+            h: 6,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 6,
+    +       x: 623.603851007531,
+    -       x: 628.0919071850193,
+            y: 609.5039310362388
+          },
+          {
+            alpha: 0.2305867829031146,
+            blend: 'screen',
+    ...
+            h: 5,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 5,
+    +       x: 610.823851007531,
+    -       x: 612.8819071850193,
+            y: 602.1012198676653
+          },
+          {
+            alpha: 0.17294008717733597,
+            blend: 'screen',
+    ...
+            h: 4,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 4,
+            x: 600,
+            y: 596.6136177070599
+          },
+          {
+    ...
+            h: 3,
+    +       rotation: 0.21069857451593504,
+    -       rotation: 0.17780604468836417,
+            w: 3,
+            x: 600,
+            y: 603.3450782300279
+          }
+        ]
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    layers:
+      0:
+        cell: 0
+        x: 773.3543659678404
+        y: 584.626246514238
+        w: 65
+        h: 46.8
+        rotation: 0.20195337127175472
+        alpha: 0.8438834727182817
+        blend: 'screen'
+        flipX: false
+      1:
+        cell: 8
+        x: 773.3543659678404
+        y: 583.0126740655629
+        w: 8
+        h: 8
+        rotation: 0.20195337127175472
+        alpha: 0.4547587758724893
+        blend: 'screen'
+        flipX: false
+      2:
+        cell: 8
+        x: 763.0043659678404
+        y: 579.905639226764
+        w: 7
+        h: 7
+        rotation: 0.20195337127175472
+        alpha: 0.3897932364621337
+        blend: 'screen'
+        flipX: false
+      3:
+        cell: 8
+        x: 752.6543659678404
+        y: 584.670926532949
+        w: 6
+        h: 6
+        rotation: 0.20195337127175472
+        alpha: 0.3248276970517781
+        blend: 'screen'
+        flipX: false
+      4:
+        cell: 8
+        x: 742.3043659678403
+        y: 578.9857670215846
+        w: 5
+        h: 5
+        rotation: 0.20195337127175472
+        alpha: 0.25986215764142245
+        blend: 'screen'
+        flipX: false
+      5:
+        cell: 8
+        x: 731.9543659678404
+        y: 575.2009150897685
+        w: 4
+        h: 4
+        rotation: 0.20195337127175472
+        alpha: 0.19489661823106685
+        blend: 'screen'
+        flipX: false
+      6:
+        cell: 8
+        x: 721.6043659678404
+        y: 581.4345332019724
+        w: 3
+        h: 3
+        rotation: 0.20195337127175472
+        alpha: 0.12993107882071123
+        blend: 'screen'
+        flipX: false
+      7:
+        cell: 0
+        x: 729.4850396906166
+        y: 600
+        w: 65
+        h: 46.8
+        rotation: 0
+        alpha: 0.9123131198698833
+        blend: 'screen'
+        flipX: false
+      8:
+        cell: 8
+        x: 729.4850396906166
+        y: 598.3864275513249
+        w: 8
+        h: 8
+        rotation: 0
+        alpha: 0.49742724128185706
+        blend: 'screen'
+        flipX: false
+      9:
+        cell: 8
+        x: 716.7050396906167
+        y: 597.3433571059196
+        w: 7
+        h: 7
+        rotation: 0
+        alpha: 0.42636620681302034
+        blend: 'screen'
+        flipX: false
+      10:
+        cell: 8
+        x: 703.9250396906167
+        y: 603.824679521089
+        w: 6
+        h: 6
+        rotation: 0
+        alpha: 0.35530517234418363
+        blend: 'screen'
+        flipX: false
+      11:
+        cell: 8
+        x: 691.1450396906166
+        y: 599.4733863270646
+        w: 5
+        h: 5
+        rotation: 0
+        alpha: 0.28424413787534686
+        blend: 'screen'
+        flipX: false
+      12:
+        cell: 8
+        x: 678.3650396906166
+        y: 596.6136177070599
+        w: 4
+        h: 4
+        rotation: 0
+        alpha: 0.21318310340651017
+        blend: 'screen'
+        flipX: false
+      13:
+        cell: 8
+        x: 665.5850396906167
+        y: 603.3450782300279
+        w: 3
+        h: 3
+        rotation: 0
+        alpha: 0.14212206893767343
+        blend: 'screen'
+        flipX: false
+      14:
+        cell: 0
+        x: 658.5119071850193
+        y: 611.3835155064174
+        w: 65
+        h: 46.8
+        rotation: 0.17780604468836417
+        alpha: 0.7220527971438718
+        blend: 'screen'
+        flipX: false
+      15:
+        cell: 8
+        x: 658.5119071850193
+        y: 609.7699430577424
+        w: 8
+        h: 8
+        rotation: 0.17780604468836417
+        alpha: 0.4035268700804506
+        blend: 'screen'
+        flipX: false
+      16:
+        cell: 8
+        x: 643.3019071850193
+        y: 605.9607102815608
+        w: 7
+        h: 7
+        rotation: 0.17780604468836417
+        alpha: 0.34588017435467194
+        blend: 'screen'
+        flipX: false
+      17:
+        cell: 8
+        x: 628.0919071850193
+        y: 609.5039310362388
+        w: 6
+        h: 6
+        rotation: 0.17780604468836417
+        alpha: 0.28823347862889326
+        blend: 'screen'
+        flipX: false
+      18:
+        cell: 8
+        x: 612.8819071850193
+        y: 602.1012198676653
+        w: 5
+        h: 5
+        rotation: 0.17780604468836417
+        alpha: 0.2305867829031146
+        blend: 'screen'
+        flipX: false
+      19:
+        cell: 8
+        x: 600
+        y: 596.6136177070599
+        w: 4
+        h: 4
+        rotation: 0.17780604468836417
+        alpha: 0.17294008717733597
+        blend: 'screen'
+        flipX: false
+      20:
+        cell: 8
+        x: 600
+        y: 603.3450782300279
+        w: 3
+        h: 3
+        rotation: 0.17780604468836417
+        alpha: 0.1152933914515573
+        blend: 'screen'
+        flipX: false
+    geometry:
+      0:
+        kind: 'line'
+        points:
+          0:
+            x: 773.3543659678404
+            y: 584.626246514238
+          1:
+            x: 767.6043659678404
+            y: 583.4389414999856
+          2:
+            x: 761.8543659678404
+            y: 582.3537409184966
+          3:
+            x: 756.1043659678404
+            y: 581.3773353922215
+          4:
+            x: 750.3543659678404
+            y: 580.515744785918
+          5:
+            x: 744.6043659678404
+            y: 579.7742810921815
+          6:
+            x: 738.8543659678404
+            y: 579.1575156812457
+        width: 3
+        alpha: 0.6801737085836915
+        color: '#73edbc'
+        glow: 8
+      1:
+        kind: 'line'
+        points:
+          0:
+            x: 729.4850396906166
+            y: 600
+          1:
+            x: 722.3850396906166
+            y: 600
+          2:
+            x: 715.2850396906167
+            y: 600
+          3:
+            x: 708.1850396906167
+            y: 600
+          4:
+            x: 701.0850396906167
+            y: 600
+          5:
+            x: 693.9850396906166
+            y: 600
+          6:
+            x: 686.8850396906166
+            y: 600
+        width: 3
+        alpha: 0.7965873410360276
+        color: '#73edbc'
+        glow: 8
+      2:
+        kind: 'line'
+        points:
+          0:
+            x: 658.5119071850193
+            y: 611.3835155064174
+          1:
+            x: 650.0619071850193
+            y: 609.871358619933
+          2:
+            x: 641.6119071850193
+            y: 608.2983415249967
+          3:
+            x: 633.1619071850193
+            y: 606.6741623950802
+          4:
+            x: 624.7119071850193
+            y: 605.0088348346138
+          5:
+            x: 616.2619071850193
+            y: 603.3126261417855
+          6:
+            x: 607.8119071850193
+            y: 601.5959940072331
+        width: 3
+        alpha: 0.5912071337765271
+        color: '#73edbc'
+        glow: 8
+  actual:
+    layers:
+      0:
+        cell: 0
+        x: 773.3543659678404
+        y: 584.626246514238
+        w: 65
+        h: 46.8
+        rotation: 0.20195337127175472
+        alpha: 0.8438834727182817
+        blend: 'screen'
+        flipX: false
+      1:
+        cell: 8
+        x: 773.3543659678404
+        y: 583.0126740655629
+        w: 8
+        h: 8
+        rotation: 0.20195337127175472
+        alpha: 0.4547587758724893
+        blend: 'screen'
+        flipX: false
+      2:
+        cell: 8
+        x: 763.0043659678404
+        y: 579.905639226764
+        w: 7
+        h: 7
+        rotation: 0.20195337127175472
+        alpha: 0.3897932364621337
+        blend: 'screen'
+        flipX: false
+      3:
+        cell: 8
+        x: 752.6543659678404
+        y: 584.670926532949
+        w: 6
+        h: 6
+        rotation: 0.20195337127175472
+        alpha: 0.3248276970517781
+        blend: 'screen'
+        flipX: false
+      4:
+        cell: 8
+        x: 742.3043659678403
+        y: 578.9857670215846
+        w: 5
+        h: 5
+        rotation: 0.20195337127175472
+        alpha: 0.25986215764142245
+        blend: 'screen'
+        flipX: false
+      5:
+        cell: 8
+        x: 731.9543659678404
+        y: 575.2009150897685
+        w: 4
+        h: 4
+        rotation: 0.20195337127175472
+        alpha: 0.19489661823106685
+        blend: 'screen'
+        flipX: false
+      6:
+        cell: 8
+        x: 721.6043659678404
+        y: 581.4345332019724
+        w: 3
+        h: 3
+        rotation: 0.20195337127175472
+        alpha: 0.12993107882071123
+        blend: 'screen'
+        flipX: false
+      7:
+        cell: 0
+        x: 704.8646448198656
+        y: 600
+        w: 65
+        h: 46.8
+        rotation: 0
+        alpha: 0.9123131198698833
+        blend: 'screen'
+        flipX: false
+      8:
+        cell: 8
+        x: 704.8646448198656
+        y: 598.3864275513249
+        w: 8
+        h: 8
+        rotation: 0
+        alpha: 0.49742724128185706
+        blend: 'screen'
+        flipX: false
+      9:
+        cell: 8
+        x: 694.5146448198656
+        y: 597.3433571059196
+        w: 7
+        h: 7
+        rotation: 0
+        alpha: 0.42636620681302034
+        blend: 'screen'
+        flipX: false
+      10:
+        cell: 8
+        x: 684.1646448198657
+        y: 603.824679521089
+        w: 6
+        h: 6
+        rotation: 0
+        alpha: 0.35530517234418363
+        blend: 'screen'
+        flipX: false
+      11:
+        cell: 8
+        x: 673.8146448198656
+        y: 599.4733863270646
+        w: 5
+        h: 5
+        rotation: 0
+        alpha: 0.28424413787534686
+        blend: 'screen'
+        flipX: false
+      12:
+        cell: 8
+        x: 663.4646448198656
+        y: 596.6136177070599
+        w: 4
+        h: 4
+        rotation: 0
+        alpha: 0.21318310340651017
+        blend: 'screen'
+        flipX: false
+      13:
+        cell: 8
+        x: 653.1146448198656
+        y: 603.3450782300279
+        w: 3
+        h: 3
+        rotation: 0
+        alpha: 0.14212206893767343
+        blend: 'screen'
+        flipX: false
+      14:
+        cell: 0
+        x: 649.163851007531
+        y: 611.3835155064174
+        w: 65
+        h: 46.8
+        rotation: 0.21069857451593504
+        alpha: 0.7220527971438718
+        blend: 'screen'
+        flipX: false
+      15:
+        cell: 8
+        x: 649.163851007531
+        y: 609.7699430577424
+        w: 8
+        h: 8
+        rotation: 0.21069857451593504
+        alpha: 0.4035268700804506
+        blend: 'screen'
+        flipX: false
+      16:
+        cell: 8
+        x: 636.383851007531
+        y: 605.9607102815608
+        w: 7
+        h: 7
+        rotation: 0.21069857451593504
+        alpha: 0.34588017435467194
+        blend: 'screen'
+        flipX: false
+      17:
+        cell: 8
+        x: 623.603851007531
+        y: 609.5039310362388
+        w: 6
+        h: 6
+        rotation: 0.21069857451593504
+        alpha: 0.28823347862889326
+        blend: 'screen'
+        flipX: false
+      18:
+        cell: 8
+        x: 610.823851007531
+        y: 602.1012198676653
+        w: 5
+        h: 5
+        rotation: 0.21069857451593504
+        alpha: 0.2305867829031146
+        blend: 'screen'
+        flipX: false
+      19:
+        cell: 8
+        x: 600
+        y: 596.6136177070599
+        w: 4
+        h: 4
+        rotation: 0.21069857451593504
+        alpha: 0.17294008717733597
+        blend: 'screen'
+        flipX: false
+      20:
+        cell: 8
+        x: 600
+        y: 603.3450782300279
+        w: 3
+        h: 3
+        rotation: 0.21069857451593504
+        alpha: 0.1152933914515573
+        blend: 'screen'
+        flipX: false
+    geometry:
+      0:
+        kind: 'line'
+        points:
+          0:
+            x: 773.3543659678404
+            y: 584.626246514238
+          1:
+            x: 767.6043659678404
+            y: 583.4389414999856
+          2:
+            x: 761.8543659678404
+            y: 582.3537409184966
+          3:
+            x: 756.1043659678404
+            y: 581.3773353922215
+          4:
+            x: 750.3543659678404
+            y: 580.515744785918
+          5:
+            x: 744.6043659678404
+            y: 579.7742810921815
+          6:
+            x: 738.8543659678404
+            y: 579.1575156812457
+        width: 3
+        alpha: 0.6801737085836915
+        color: '#73edbc'
+        glow: 8
+      1:
+        kind: 'line'
+        points:
+          0:
+            x: 704.8646448198656
+            y: 600
+          1:
+            x: 699.1146448198656
+            y: 600
+          2:
+            x: 693.3646448198656
+            y: 600
+          3:
+            x: 687.6146448198656
+            y: 600
+          4:
+            x: 681.8646448198656
+            y: 600
+          5:
+            x: 676.1146448198656
+            y: 600
+          6:
+            x: 670.3646448198656
+            y: 600
+        width: 3
+        alpha: 0.7965873410360276
+        color: '#73edbc'
+        glow: 8
+      2:
+        kind: 'line'
+        points:
+          0:
+            x: 649.163851007531
+            y: 611.3835155064174
+          1:
+            x: 642.063851007531
+            y: 609.871358619933
+          2:
+            x: 634.963851007531
+            y: 608.2983415249967
+          3:
+            x: 627.863851007531
+            y: 606.6741623950802
+          4:
+            x: 620.763851007531
+            y: 605.0088348346138
+          5:
+            x: 613.663851007531
+            y: 603.3126261417855
+          6:
+            x: 606.563851007531
+            y: 601.5959940072331
+        width: 3
+        alpha: 0.5912071337765271
+        color: '#73edbc'
+        glow: 8
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:148:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+not ok 16 - impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 2.0444
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:154:3'
+  failureType: 'testCodeFailure'
+  error: 'impact/volley/8/high/right: actual target has a center sprite or impact ring'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:162:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+not ok 17 - reduced-full: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 0.1594
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:154:3'
+  failureType: 'testCodeFailure'
+  error: 'reduced-full/volley/4/high/right: actual target has a center sprite or impact ring'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:162:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+not ok 18 - reduced-impact: every actual hit remains visible for 4, 5, 8 and 32 targets without exceeding presentation budgets
+  ---
+  duration_ms: 0.1049
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:154:3'
+  failureType: 'testCodeFailure'
+  error: 'reduced-impact/volley/4/high/right: actual target has a center sprite or impact ring'
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected: true
+  actual: false
+  operator: '=='
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:162:44)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: impact and reduced-motion rendering honor empty and deduplicated actual target lists
+not ok 19 - impact and reduced-motion rendering honor empty and deduplicated actual target lists
+  ---
+  duration_ms: 3.043
+  type: 'test'
+  location: 'D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-20261104\\worker\\test\\skill-vfx-target-timing.test.js:168:1'
+  failureType: 'testCodeFailure'
+  error: |-
+    volley/impact: duplicate normalized
+    + actual - expected
+    ... Skipped lines
+    
+      {
+        geometry: [
+          {
+            alpha: 0.22183796695920247,
+            color: '#73edbc',
+    ...
+          },
+    -     {
+    -       alpha: 0.22183796695920247,
+    -       color: '#73edbc',
+    -       kind: 'ring',
+    -       r: 69.44116608,
+    -       rotation: 0,
+    -       tilt: 0.72,
+    -       width: 1.3,
+    -       x: 1046,
+    -       y: 600
+    -     }
+        ],
+        layers: [
+          {
+            alpha: 0.41261861854411663,
+            blend: 'screen',
+    ...
+          },
+    -     {
+    -       alpha: 0.41261861854411663,
+    -       blend: 'screen',
+    -       cell: 2,
+    -       flipX: false,
+    -       h: 119.94383232000001,
+    -       rotation: 0,
+    -       w: 119.94383232000001,
+    -       x: 1046,
+    -       y: 600
+    -     },
+    -     {
+    -       alpha: 0.2708959101887342,
+    -       blend: 'screen',
+    -       cell: 5,
+    -       flipX: false,
+    -       h: 4.39948524776157,
+    -       rotation: 0.33675700949970633,
+    -       w: 4.39948524776157,
+    -       x: 1111.7349656468873,
+    -       y: 616.1093119276327
+    -     },
+    -     {
+    -       alpha: 0.32452534232229563,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 7.292977280611731,
+    -       rotation: 0.8124712355299502,
+    -       w: 7.292977280611731,
+    -       x: 1100.1704362044918,
+    -       y: 640.0301523758408
+    -     },
+    -     {
+    -       alpha: 0.23398691226123466,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 4.678259507452324,
+    -       rotation: 0.986252505700965,
+    -       w: 4.678259507452324,
+    -       x: 1095.3063017314746,
+    -       y: 652.1616197559194
+    -     },
+    -     {
+    -       alpha: 0.303085339056905,
+    -       blend: 'screen',
+    -       cell: 5,
+    -       flipX: false,
+    -       h: 7.893551083933376,
+    -       rotation: 1.5131143068721395,
+    -       w: 7.893551083933376,
+    -       x: 1049.4570132221854,
+    -       y: 641.9060360599182
+    -     },
+    -     {
+    -       alpha: 0.19881651996065924,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 7.711683819633163,
+    -       rotation: 2.1092647484427776,
+    -       w: 7.711683819633163,
+    -       x: 1017.1398621334455,
+    -       y: 633.8195512516307
+    -     },
+    -     {
+    -       alpha: 0.20595764628686233,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 8.188564702019747,
+    -       rotation: 2.6093651600436414,
+    -       w: 8.188564702019747,
+    -       x: 1006.469847256834,
+    -       y: 616.2958778309679
+    -     },
+    -     {
+    -       alpha: 0.33366469314753094,
+    -       blend: 'screen',
+    -       cell: 5,
+    -       flipX: false,
+    -       h: 8.39377729982799,
+    -       rotation: 3.1855721865433955,
+    -       w: 8.39377729982799,
+    -       x: 1000.8212068638844,
+    -       y: 598.6082430173972
+    -     },
+    -     {
+    -       alpha: 0.32265410219973367,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 5.186646495402418,
+    -       rotation: 3.693260955576073,
+    -       w: 5.186646495402418,
+    -       x: 972.5309503751499,
+    -       y: 568.3508495951361
+    -     },
+    -     {
+    -       alpha: 0.25614537411432353,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 3.6519478110020978,
+    -       rotation: 4.109980592698509,
+    -       w: 3.6519478110020978,
+    -       x: 1005.5490998900896,
+    -       y: 558.8243057576093
+    -     },
+    -     {
+    -       alpha: 0.22706867766380687,
+    -       blend: 'screen',
+    -       cell: 5,
+    -       flipX: false,
+    -       h: 4.408060783444158,
+    -       rotation: 4.800628544501178,
+    -       w: 4.408060783444158,
+    -       x: 1051.9665793509253,
+    -       y: 552.7903388289917
+    -     },
+    -     {
+    -       alpha: 0.2902527446138552,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 3.4492013291727757,
+    -       rotation: 4.913930811434633,
+    -       w: 3.4492013291727757,
+    -       x: 1063.35272963001,
+    -       y: 540.5483317324193
+    -     },
+    -     {
+    -       alpha: 0.20047342935079668,
+    -       blend: 'screen',
+    -       cell: 8,
+    -       flipX: false,
+    -       h: 4.337109750143532,
+    -       rotation: 5.600677311527622,
+    -       w: 4.337109750143532,
+    -       x: 1092.4037430090045,
+    -       y: 573.5975458790642
+    -     },
+    -     {
+    -       alpha: 0.3536029327427235,
+    -       blend: 'screen',
+    -       cell: 5,
+    -       flipX: false,
+    -       h: 5.168339634994324,
+    -       rotation: 6.12691625917847,
+    -       w: 5.168339634994324,
+    -       x: 1091.3031644401765,
+    -       y: 595.0036254546555
+    -     }
+        ]
+      }
+    
+  code: 'ERR_ASSERTION'
+  name: 'AssertionError'
+  expected:
+    layers:
+      0:
+        cell: 2
+        x: 830
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      1:
+        cell: 5
+        x: 895.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      2:
+        cell: 8
+        x: 884.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      3:
+        cell: 8
+        x: 879.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      4:
+        cell: 5
+        x: 833.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      5:
+        cell: 8
+        x: 801.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      6:
+        cell: 8
+        x: 790.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      7:
+        cell: 5
+        x: 784.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      8:
+        cell: 8
+        x: 756.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      9:
+        cell: 8
+        x: 789.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      10:
+        cell: 5
+        x: 835.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      11:
+        cell: 8
+        x: 847.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      12:
+        cell: 8
+        x: 876.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      13:
+        cell: 5
+        x: 875.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      14:
+        cell: 2
+        x: 884
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      15:
+        cell: 5
+        x: 949.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      16:
+        cell: 8
+        x: 938.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      17:
+        cell: 8
+        x: 933.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      18:
+        cell: 5
+        x: 887.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      19:
+        cell: 8
+        x: 855.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      20:
+        cell: 8
+        x: 844.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      21:
+        cell: 5
+        x: 838.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      22:
+        cell: 8
+        x: 810.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      23:
+        cell: 8
+        x: 843.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      24:
+        cell: 5
+        x: 889.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      25:
+        cell: 8
+        x: 901.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      26:
+        cell: 8
+        x: 930.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      27:
+        cell: 5
+        x: 929.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      28:
+        cell: 2
+        x: 938
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      29:
+        cell: 5
+        x: 1003.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      30:
+        cell: 8
+        x: 992.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      31:
+        cell: 8
+        x: 987.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      32:
+        cell: 5
+        x: 941.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      33:
+        cell: 8
+        x: 909.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      34:
+        cell: 8
+        x: 898.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      35:
+        cell: 5
+        x: 892.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      36:
+        cell: 8
+        x: 864.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      37:
+        cell: 8
+        x: 897.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      38:
+        cell: 5
+        x: 943.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      39:
+        cell: 8
+        x: 955.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      40:
+        cell: 8
+        x: 984.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      41:
+        cell: 5
+        x: 983.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      42:
+        cell: 2
+        x: 992
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      43:
+        cell: 5
+        x: 1057.7349656468873
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      44:
+        cell: 8
+        x: 1046.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      45:
+        cell: 8
+        x: 1041.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      46:
+        cell: 5
+        x: 995.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      47:
+        cell: 8
+        x: 963.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      48:
+        cell: 8
+        x: 952.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      49:
+        cell: 5
+        x: 946.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      50:
+        cell: 8
+        x: 918.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      51:
+        cell: 8
+        x: 951.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      52:
+        cell: 5
+        x: 997.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      53:
+        cell: 8
+        x: 1009.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      54:
+        cell: 8
+        x: 1038.4037430090045
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      55:
+        cell: 5
+        x: 1037.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      56:
+        cell: 2
+        x: 1046
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      57:
+        cell: 5
+        x: 1111.7349656468873
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      58:
+        cell: 8
+        x: 1100.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      59:
+        cell: 8
+        x: 1095.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      60:
+        cell: 5
+        x: 1049.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      61:
+        cell: 8
+        x: 1017.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      62:
+        cell: 8
+        x: 1006.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      63:
+        cell: 5
+        x: 1000.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      64:
+        cell: 8
+        x: 972.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      65:
+        cell: 8
+        x: 1005.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      66:
+        cell: 5
+        x: 1051.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      67:
+        cell: 8
+        x: 1063.35272963001
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      68:
+        cell: 8
+        x: 1092.4037430090045
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      69:
+        cell: 5
+        x: 1091.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+    geometry:
+      0:
+        kind: 'ring'
+        x: 830
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      1:
+        kind: 'ring'
+        x: 884
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      2:
+        kind: 'ring'
+        x: 938
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      3:
+        kind: 'ring'
+        x: 992
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      4:
+        kind: 'ring'
+        x: 1046
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+  actual:
+    layers:
+      0:
+        cell: 2
+        x: 830
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      1:
+        cell: 5
+        x: 895.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      2:
+        cell: 8
+        x: 884.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      3:
+        cell: 8
+        x: 879.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      4:
+        cell: 5
+        x: 833.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      5:
+        cell: 8
+        x: 801.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      6:
+        cell: 8
+        x: 790.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      7:
+        cell: 5
+        x: 784.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      8:
+        cell: 8
+        x: 756.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      9:
+        cell: 8
+        x: 789.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      10:
+        cell: 5
+        x: 835.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      11:
+        cell: 8
+        x: 847.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      12:
+        cell: 8
+        x: 876.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      13:
+        cell: 5
+        x: 875.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      14:
+        cell: 2
+        x: 884
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      15:
+        cell: 5
+        x: 949.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      16:
+        cell: 8
+        x: 938.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      17:
+        cell: 8
+        x: 933.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      18:
+        cell: 5
+        x: 887.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      19:
+        cell: 8
+        x: 855.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      20:
+        cell: 8
+        x: 844.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      21:
+        cell: 5
+        x: 838.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      22:
+        cell: 8
+        x: 810.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      23:
+        cell: 8
+        x: 843.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      24:
+        cell: 5
+        x: 889.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      25:
+        cell: 8
+        x: 901.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      26:
+        cell: 8
+        x: 930.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      27:
+        cell: 5
+        x: 929.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      28:
+        cell: 2
+        x: 938
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      29:
+        cell: 5
+        x: 1003.7349656468872
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      30:
+        cell: 8
+        x: 992.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      31:
+        cell: 8
+        x: 987.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      32:
+        cell: 5
+        x: 941.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      33:
+        cell: 8
+        x: 909.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      34:
+        cell: 8
+        x: 898.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      35:
+        cell: 5
+        x: 892.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      36:
+        cell: 8
+        x: 864.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      37:
+        cell: 8
+        x: 897.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      38:
+        cell: 5
+        x: 943.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      39:
+        cell: 8
+        x: 955.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      40:
+        cell: 8
+        x: 984.4037430090046
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      41:
+        cell: 5
+        x: 983.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+      42:
+        cell: 2
+        x: 992
+        y: 600
+        w: 119.94383232000001
+        h: 119.94383232000001
+        rotation: 0
+        alpha: 0.41261861854411663
+        blend: 'screen'
+        flipX: false
+      43:
+        cell: 5
+        x: 1057.7349656468873
+        y: 616.1093119276327
+        w: 4.39948524776157
+        h: 4.39948524776157
+        rotation: 0.33675700949970633
+        alpha: 0.2708959101887342
+        blend: 'screen'
+        flipX: false
+      44:
+        cell: 8
+        x: 1046.1704362044918
+        y: 640.0301523758408
+        w: 7.292977280611731
+        h: 7.292977280611731
+        rotation: 0.8124712355299502
+        alpha: 0.32452534232229563
+        blend: 'screen'
+        flipX: false
+      45:
+        cell: 8
+        x: 1041.3063017314746
+        y: 652.1616197559194
+        w: 4.678259507452324
+        h: 4.678259507452324
+        rotation: 0.986252505700965
+        alpha: 0.23398691226123466
+        blend: 'screen'
+        flipX: false
+      46:
+        cell: 5
+        x: 995.4570132221854
+        y: 641.9060360599182
+        w: 7.893551083933376
+        h: 7.893551083933376
+        rotation: 1.5131143068721395
+        alpha: 0.303085339056905
+        blend: 'screen'
+        flipX: false
+      47:
+        cell: 8
+        x: 963.1398621334455
+        y: 633.8195512516307
+        w: 7.711683819633163
+        h: 7.711683819633163
+        rotation: 2.1092647484427776
+        alpha: 0.19881651996065924
+        blend: 'screen'
+        flipX: false
+      48:
+        cell: 8
+        x: 952.469847256834
+        y: 616.2958778309679
+        w: 8.188564702019747
+        h: 8.188564702019747
+        rotation: 2.6093651600436414
+        alpha: 0.20595764628686233
+        blend: 'screen'
+        flipX: false
+      49:
+        cell: 5
+        x: 946.8212068638844
+        y: 598.6082430173972
+        w: 8.39377729982799
+        h: 8.39377729982799
+        rotation: 3.1855721865433955
+        alpha: 0.33366469314753094
+        blend: 'screen'
+        flipX: false
+      50:
+        cell: 8
+        x: 918.5309503751499
+        y: 568.3508495951361
+        w: 5.186646495402418
+        h: 5.186646495402418
+        rotation: 3.693260955576073
+        alpha: 0.32265410219973367
+        blend: 'screen'
+        flipX: false
+      51:
+        cell: 8
+        x: 951.5490998900896
+        y: 558.8243057576093
+        w: 3.6519478110020978
+        h: 3.6519478110020978
+        rotation: 4.109980592698509
+        alpha: 0.25614537411432353
+        blend: 'screen'
+        flipX: false
+      52:
+        cell: 5
+        x: 997.9665793509253
+        y: 552.7903388289917
+        w: 4.408060783444158
+        h: 4.408060783444158
+        rotation: 4.800628544501178
+        alpha: 0.22706867766380687
+        blend: 'screen'
+        flipX: false
+      53:
+        cell: 8
+        x: 1009.3527296300099
+        y: 540.5483317324193
+        w: 3.4492013291727757
+        h: 3.4492013291727757
+        rotation: 4.913930811434633
+        alpha: 0.2902527446138552
+        blend: 'screen'
+        flipX: false
+      54:
+        cell: 8
+        x: 1038.4037430090045
+        y: 573.5975458790642
+        w: 4.337109750143532
+        h: 4.337109750143532
+        rotation: 5.600677311527622
+        alpha: 0.20047342935079668
+        blend: 'screen'
+        flipX: false
+      55:
+        cell: 5
+        x: 1037.3031644401765
+        y: 595.0036254546555
+        w: 5.168339634994324
+        h: 5.168339634994324
+        rotation: 6.12691625917847
+        alpha: 0.3536029327427235
+        blend: 'screen'
+        flipX: false
+    geometry:
+      0:
+        kind: 'ring'
+        x: 830
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      1:
+        kind: 'ring'
+        x: 884
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      2:
+        kind: 'ring'
+        x: 938
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+      3:
+        kind: 'ring'
+        x: 992
+        y: 600
+        r: 69.44116608
+        tilt: 0.72
+        width: 1.3
+        alpha: 0.22183796695920247
+        color: '#73edbc'
+        rotation: 0
+  operator: 'deepStrictEqual'
+  stack: |-
+    TestContext.<anonymous> (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104/worker/test/skill-vfx-target-timing.test.js:174:12)
+    Test.runInAsyncScope (node:async_hooks:214:14)
+    Test.run (node:internal/test_runner/test:1106:25)
+    Test.processPendingSubtests (node:internal/test_runner/test:788:18)
+    Test.postRun (node:internal/test_runner/test:1235:19)
+    Test.run (node:internal/test_runner/test:1163:12)
+    async Test.processPendingSubtests (node:internal/test_runner/test:788:7)
+  ...
+# Subtest: local support, trap placement and non-damaging summon never expand onto remote targets
+ok 20 - local support, trap placement and non-damaging summon never expand onto remote targets
+  ---
+  duration_ms: 2.9576
+  type: 'test'
+  ...
+1..20
+# tests 20
+# suites 0
+# pass 2
+# fail 18
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 157.3833

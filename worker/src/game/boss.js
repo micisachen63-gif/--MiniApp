@@ -1,4 +1,5 @@
 import {needsBlue,blueTarget} from './auto-blue.js';
+import {nativeCastVfx} from './skill-vfx-events.js';
 import {combatActor,performThiefNativeStrikes,autoPartyAction,validateCast,castSpecial,saveSpecial,periodic,damageEnemy,receiveDamage,valueOf} from './special.js';
 import {spendMana,restoreOnAction} from './combat-passives.js';
 import {monsterPool} from './monsters.js';
@@ -94,42 +95,46 @@ export function performAttack({ c, inv, stats, boss, rng, now }) {
   // The helper modifier applies equally to native, special and periodic attacks.
   const originalAtk=a.atk;if(helper)a.atk*=BOSS.helperDamageMult;
   let crits=0,basics=0;const actions=[],beforeHp=enemy.hp;
-  const beforePeriodic={hp:a.hp,mp:a.mp,enemyHp:beforeHp};periodic([a],enemy,now);
-  if(enemy.hp<beforeHp)actions.push({skillId:'periodic',label:'召喚／持續傷害',damage:beforeHp-enemy.hp,before:beforePeriodic,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
+  const beforePeriodic={hp:a.hp,mp:a.mp,enemyHp:beforeHp};const periodicVfx=periodic([a],enemy,now,{vfx:{eventId:'boss:'+encounterId+':'+a.id+':'+(Number.isFinite(boss.started_at)?attackWindow(boss,now):now)+':periodic',source:'committed-combat',enemyId:'boss',encounterId}});
+  if(enemy.hp<beforeHp)actions.push({skillId:'periodic',...(periodicVfx?.length?{vfxEvents:periodicVfx}:{}),label:'召喚／持續傷害',damage:beforeHp-enemy.hp,before:beforePeriodic,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   for(let i=0;i<BOSS.castsPerAttack&&enemy.hp>0;i++){
     const before={hp:a.hp,mp:a.mp,enemyHp:enemy.hp};
+    const observation={eventId:'boss:'+encounterId+':'+a.id+':'+(Number.isFinite(boss.started_at)?attackWindow(boss,now):now)+':'+i,effects:[],source:'committed-combat',atMs:now,enemyId:'boss',encounterId};
     if(needsBlue(c,a.mp,s.maxMp,s.skill.cost)){const target=blueTarget(c,s.maxMp,s.skill.cost);let key;do{key=choosePotion(inv,'blue',mapTier,c);if(!key)break;drink(key);a.mp=Math.min(s.maxMp,a.mp+POTIONS[key].heal);}while(a.mp<target);}
     const action=autoPartyAction(a,[a],enemy,now,{});let outcome,label;
     if(action.skillId!=='attack'){
       const skill=validateCast({base_class:a.base,class_path:a.path,level:a.level,mp:a.mp,affixPct:a.affixPct},x,action.skillId,now);
-      outcome=castSpecial(a,[a],enemy,skill,a.id,now,rng,{});label=skill.name;
+      outcome=castSpecial(a,[a],enemy,skill,a.id,now,rng,{},observation);label=skill.name;
     }else{
 
       const cast=a.mp>=s.skill.cost,spentMp=cast?spendMana(a,s.skill.cost,rng):0;
       if(a.base==='thief'){
-        outcome=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35),rng,variance:true,actionId:`${now}:${i}`});
+        outcome=performThiefNativeStrikes(a,enemy,now,{cast,baseRaw:a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35),rng,variance:true,actionId:`${now}:${i}`,observation});
         if(!cast)basics+=outcome.strikes.length;outcome.spentMp=spentMp;outcome.healed=restoreOnAction(a,outcome.damage,{cast,enabled:enemy.hp>0}).healed;
       }else{
       if(!cast)basics++;
       let raw=a.atk*s.skill.mult*(cast?1+.1*(s.skill.targets-1):.35);
       raw*=(1+valueOf(a,'atkUp',now))*(1+valueOf(a,'damageUp',now))*(1+valueOf(a,'nextDamage',now));
       const crit=rng()<Math.min(.8,a.crit+valueOf(a,'critUp',now));if(crit)raw*=1.5;raw*=.9+rng()*.2;
-      const damage=damageEnemy(enemy,raw,{},now,a),sustain=restoreOnAction(a,damage,{cast,enabled:enemy.hp>0});
+      const damage=damageEnemy(enemy,raw,{},now,a,observation),sustain=restoreOnAction(a,damage,{cast,enabled:enemy.hp>0});
       outcome={damage,crit,spentMp,healed:sustain.healed};
       for(const b of a.buffs)if(['nextDamage','critUp'].includes(b.type)&&b.uses>0)b.uses--;
       }
       label=cast?s.skill.name:'普通攻擊';
+      if(cast&&!outcome.vfx){const visual=nativeCastVfx(a,observation);if(visual)outcome.vfx=visual;}
     }
+    if(observation.effects.length)outcome.vfxEvents=observation.effects;
     if(outcome.strikes)crits+=outcome.strikes.filter(s=>s.crit).length;else if(outcome.crit)crits++;actions.push({skillId:action.skillId,label,...outcome,before,after:{hp:a.hp,mp:a.mp,enemyHp:enemy.hp}});
   }
   const r=Math.min(2,Math.max(.3,s.r??1));
-  const counter=enemy.hp>0&&!enemy.interrupted?receiveDamage(a,BOSS.counterHpPct*s.maxHp/r*(1-valueOf(enemy,'enemyNextReduce',now)),[a],enemy,now,{defApplied:true}):0;
+  const reactions={eventId:'boss:'+encounterId+':'+a.id+':'+(Number.isFinite(boss.started_at)?attackWindow(boss,now):now)+':counter',effects:[],source:'committed-combat',enemyId:'boss',encounterId};
+  const counter=enemy.hp>0&&!enemy.interrupted?receiveDamage(a,BOSS.counterHpPct*s.maxHp/r*(1-valueOf(enemy,'enemyNextReduce',now)),[a],enemy,now,{defApplied:true,vfx:reactions}):0;
   if(a.base==='thief')for(const b of enemy.buffs)if(b.type==='enemyNextReduce'&&b.uses>0)b.uses--;
   {let key;while(a.hp<(c.auto_red_pct/100)*s.maxHp&&(key=choosePotion(inv,'red',mapTier,c))){drink(key);a.hp=Math.min(s.maxHp,a.hp+POTIONS[key].heal);}}
   const downed=a.hp<=0;if(downed){a.hp=1;c.boss_down_until=now+BOSS.downMs;}
   a.atk=originalAtk;c.hp=a.hp;c.mp=a.mp;
   x.bossCombat={id:encounterId,...(a.base==='thief'?{thiefAttackCarry:a.thiefAttackCarry||0}:{}),buffs:a.buffs.filter(b=>b.until>now&&(b.uses==null||b.uses>0)),summon:a.summon,enemy:{buffs:enemy.buffs,dots:enemy.dots}};saveSpecial(c,x);
-  return {damage:beforeHp-enemy.hp,crits,basics,counter,used,downed,helper,elementMult:elementMultiplier(s.element,boss.element),actions,interrupted:!!enemy.interrupted};
+  return {...(reactions.effects.length?{vfxEvents:reactions.effects}:{}),damage:beforeHp-enemy.hp,crits,basics,counter,used,downed,helper,elementMult:elementMultiplier(s.element,boss.element),actions,interrupted:!!enemy.interrupted};
 }
 
 /** integer allocation that conserves `total` (pet system's largest-remainder method) */

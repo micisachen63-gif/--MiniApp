@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "copiedAt": "2026-11-04T10:32:32.347Z",
+  "entries": [
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-events.json",
+      "destination": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-events.json",
+      "bytes": 5910664,
+      "sha256": "4f0d58d2ebfdc5faad7ed1917f46c5042d553a70c08096988f9da33462133deb"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-committed-service-events.json",
+      "destination": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-committed-service-events.json",
+      "bytes": 1859032,
+      "sha256": "612da1326fb0e9c402b976eb4c4e8a705ed37a7b686995461edac5487796a61d"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+      "destination": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-presentation.json",
+      "bytes": 273175,
+      "sha256": "698cc09e30769bdcf110a77a4fef716066ee38f281d4b61ff1b5ee0740674ded"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/legacy-coverage-browser.json",
+      "destination": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/legacy-coverage-browser.json",
+      "bytes": 818642,
+      "sha256": "33c9cd4baab142529768b6c04e0201f1c70cc4f61245c776278e4a6430fae139"
+    },
+    {
+      "source": ".release-sync/skill-vfx-20261104/gameplay-coverage-browser.json",
+      "destination": ".release-sync/skill-vfx-targets-20261104/execution-2026-11-04T10-32-31-984Z-16516/baseline/gameplay-coverage-browser.json",
+      "bytes": 326090,
+      "sha256": "3722e515b46fa6428d93877ce8350eb6c8d54b4c7addf57ae8846d890293e61b"
+    }
+  ]
+}

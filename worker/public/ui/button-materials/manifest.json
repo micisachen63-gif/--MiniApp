@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "name": "StarJournal navy enamel and champagne metal buttons",
+  "createdAt": "2026-11-04",
+  "generation": "OpenAI built-in image_gen",
+  "assets": [
+    {
+      "name": "button-plate.webp",
+      "bytes": 55356,
+      "sha256": "4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57",
+      "width": 960,
+      "height": 320
+    },
+    {
+      "name": "nav-plate.webp",
+      "bytes": 11798,
+      "sha256": "c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b",
+      "width": 192,
+      "height": 192
+    }
+  ],
+  "sourceImages": [
+    {
+      "name": "button-plate.png",
+      "width": 2172,
+      "height": 724,
+      "sha256": "ed664f6e418760d18bb1b813262f58df3bfa6974ec618f5d2dbdedaa15541f69",
+      "prompt": "Use case: stylized-concept\nAsset type: one production-quality fantasy RPG UI button plate, no text, isolated transparent PNG.\nCreate a premium, beautifully crafted three-dimensional button for the game StarJournal. Single horizontal wide button, front-on orthographic camera, long-to-short ratio 3:1, centered on a landscape transparent canvas. The actual button should occupy about 94% of the canvas width and 80% of its height.\nShape: clean elongated chamfered octagon / clipped-corner rectangle, neither a capsule nor a plain square. Symmetrical silhouette, only slight low bevel perspective visible at the bottom to communicate 3D depth.\nMaterials: deep midnight navy-blue lacquer / polished enamel center; finely machined champagne gold and aged brass double rim, a thin silver-gold upper specular edge and a darker bronze lower bevel. Restrained subtle engraved star motifs only on the corner plates. The center is broad, nearly flat and dark, without pictures, so real HTML Traditional Chinese text can be added later.\nLighting: believable soft top-left studio illumination, tiny reflected cool blue on the lower metal edge, controlled highlights, recessed inset around the enamel, tangible 4px-looking bottom ledge at UI scale. Elegant high-end fantasy PC RPG equipment UI. Detailed material craftsmanship but readable when reduced to a 50px-tall button. No excessive ornaments or curls.\nComposition must be suitable for CSS nine-slice scaling: keep the center 65% of the width visually uniform and unobstructed; put any distinctive accents in the left and right ends. Straight level top and bottom edges over the center stretch region. Preserve transparent space outside the silhouette. Real alpha transparency, not a checkerboard baked into the image.\nAbsolutely no words, numbers, logos, letters, runes, icons, watermark, background scene, multiple buttons, outer frame, contact sheet, arrows, hands, lens flare, large bloom or oversized external glow. This is the reusable final button artwork, not a UI screenshot or a concept presentation."
+    },
+    {
+      "name": "nav-plate.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "aee94f328806cc9b77fa2caeb299e6dfee05e15b95766516db75c04068999b9d",
+      "prompt": "Use case: stylized-concept\nAsset type: one premium fantasy RPG navigation button plate, isolated transparent PNG, no text.\nCreate a single exquisite tangible three-dimensional near-square navigation key for StarJournal, a high-end fantasy RPG. Exactly one empty button plate, front-on orthographic view, centered, square canvas; the opaque button fills 94 percent of the canvas in both directions with very little transparent padding.\nShape: a compact eight-sided clipped-corner shield tile, gently wider at the top than the bottom; usable as a 64px-high game navigation button. Strong clean symmetrical silhouette, not round and not a long rectangle.\nMaterials: restrained finely machined champagne-gold double metal rim, dark bronze 3D bottom ledge, tiny controlled silver-gold glint along the top-left bevel; deep midnight navy blue glazed enamel center with a softly illuminated recessed inset. Rich premium realistic material shading, hand-crafted and elegant, visually matching a navy-and-champagne-gold fantasy action button. No decorative engraving or icon in the center; leave 70 percent of the central surface unobstructed for a real SVG icon and Traditional Chinese text that will be added by the application.\nLighting: top-left studio light, restrained cool reflection on the lower metal edge. Realistic shallow thickness and clean bevels; not gummy, plastic, cartoon or excessively shiny. Crisp silhouette and controlled details that remain readable when reduced to 64px. The shape's bottom edge should form a subtle central shallow point, not a long shield spike.\nTrue alpha transparency outside the silhouette. Zero stray pixels, white fringe, colored speckles, extra debris, external glow or texture outside the metal edge. No checkerboard baked in. No text, glyphs, letters, numerals, icons, symbols, star engravings, logos, watermarks, multiple buttons, sheet, mockup, screenshot, scenery or supporting objects. This is a standalone finished asset, not a presentation."
+    }
+  ],
+  "export": {
+    "tool": "sharp",
+    "format": "webp",
+    "quality": 92,
+    "alphaQuality": 100,
+    "effort": 6,
+    "notes": "Transparent generated artwork exported at practical UI resolutions; original PNG images retained with generation output. No baked text; SVG glyphs and Traditional Chinese labels remain in the application."
+  }
+}

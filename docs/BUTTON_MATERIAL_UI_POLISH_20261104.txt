@@ -1,0 +1,107 @@
+星穹之旅｜立體按鈕素材與主戰鬥 UI 質感整合
+日期：2026-11-04
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-button-polish-20261104
+分支：codex/button-polish-20261104
+基底：0219f9d899547af254cf3ddf63f9ff66c5344959（統一主戰鬥 UI，PR #46）
+
+一、已完成的交付範圍
+
+使用者要求為按鈕製作精美素材、改善立體質感，並調整大小與形狀。本批已把兩款真實生成的透明素材接入既有主戰鬥介面，保留五個主入口與同一透明浮窗的操作架構。功能文案仍保留為可存取的原生 HTML 文字，圖示以 SVG mask 呈現；沒有把文字烘焙進圖片，也沒有改遊戲經濟、角色能力、事件處理或 API 契約。
+
+前批 0219f9d 已於本次使用者明確同意後完成非強制推送及草稿 PR #46：
+https://github.com/micisachen63-gif/--MiniApp/pull/46
+其精確 HEAD 的 CI run 41797591572、required Worker and BOT tests job 126465264122 均 success，PR 保持 draft / open / unmerged：
+https://github.com/micisachen63-gif/--MiniApp/actions/runs/41797591572
+這是前批的 CI；本按鈕批的提交、PR 與 CI 結果另由下列即時交接檔及收據記錄，不把前批結果冒充為本批結果：
+D:/StarJournal/handoff/non-character/STATUS.json
+D:/StarJournal/handoff/non-character/LATEST.md
+.release-sync/button-polish-20261104/
+
+二、美術素材與實際尺寸
+
+設計方向：深午夜藍琺瑯內面、香檳金雙金屬邊、左上高光、底部深色厚度與細緻倒角。主導航使用短盾形／八角切角輪廓，主要操作使用橫向切角金屬牌；次要功能以較安靜的琺瑯斜面和描邊維持層級。沒有把同一張長圖拉伸到所有按鈕。
+
+正式納入程式的兩張圖：
+- worker/public/ui/button-materials/button-plate.webp：960 × 320；55,356 bytes；SHA256 4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57。
+- worker/public/ui/button-materials/nav-plate.webp：192 × 192；11,798 bytes；SHA256 c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b。
+- 合計 67,154 bytes。原始透明 PNG 的尺寸／SHA、完整生成 prompts 與 WebP 匯出參數見 manifest.json；原始生成圖保留於生成輸出，避免把數 MB 原圖放進執行資產。
+- 匯出採 sharp WebP quality 92 / alphaQuality 100 / effort 6。輸送到 Windows 後重新核對 bytes 與 SHA，並以真 HTTP GET 與 HEAD 驗證內容、MIME 與 SHA。
+
+按鈕規格與實測：
+- 五個主導航：手機高 64px、桌面高 72px；實測 320px 視窗約 55.6 × 64、390px 約 68.8 × 64、1280px 約 84.4 × 72。
+- 主要動作高 52px；次要動作與分頁高 46px。
+- 返回與關閉維持至少 44 × 44px；易讀切換 60 × 44px。
+- 原背包 34px 小工具提升至 46px，高密度選取／工坊 radio label 也保留至少 44px 命中區。
+- 按下時有約 2px 下沉、邊緣與陰影縮短；hover 不覆蓋 active。
+- 當前主入口與已選項有清楚高亮；出售等破壞性動作採暖紅；停止工坊有較低調暖色。
+- 鍵盤焦點保留 2px 淺藍輪廓；停用維持原生 disabled；reduced-motion / forced-colors 有對應樣式。
+- 圖片與裝飾的裁切限於 pseudo-element，不裁切真正的按鈕命中區或焦點輪廓。
+
+三、套用位置與排版修正
+
+worker/public/scene-social-preview.css 的新增規則限於 #ui.scene-unified-root，確保晚載入的功能 CSS 不會把質感樣式蓋掉。已套用角色、裝備、背包、道具操作、一般／自動工坊、商店／補給、裝備典藏／回收、收藏冊、星圖派遣、社交，以及主場即時狀態控制。舊美術 HUD 裝飾按鈕不在此批擴張範圍。
+
+手機小螢幕修正：
+- 主導航與 HUD 維持實測 14px 間隔。
+- 原回收選取區的 sticky 行在 390px 會遮住查詢與重新整理；600px 以下改成正常內容流，仍保留原按鈕與事件，選取區接在清單／分頁後。
+- 360px 以下只對「星圖派遣」「選擇角色」與補給摘要使用 text-wrap:balance，四字按鈕變成整齊的 2+2 行；補給再加 keep-all 保留「生命」「魔力」詞語，不留下 499 孤行。
+- 同一窄版主場面板的上下內距改 6px，按鈕上間距 6px，紀錄區上間距 4px，收合高度減少 8px。未降低 11px 字級、隱藏錯誤／進度或修改角色繪製。
+
+四、預覽資產接線
+
+worker/tools/scene-live-preview.mjs 新增精確 /ui/button-materials/ 前綴，由本工作樹 worker/public 供應 WebP。沿用 decode、反斜線／NUL／.. 拒絕與 realpath 邊界保護，錯誤路徑、目錄、越界 symlink 或缺少檔案回 404；不回退到 grok-assets。既有虛擬場景與素材路由保留。
+
+worker/test/scene-preview-assets.test.js 的三項 focused 測試實際執行 launcher HTTP handler，使用惰性的 filesystem/listen/spawn 邊界；涵蓋 GET/HEAD/MIME/headers、錯誤 prefix、編碼穿越、反斜線/NUL、目錄、缺少檔案與 realpath 逸出。3/3 通過。
+真預覽 HTTP 也已驗證兩張 WebP 200 / image-webp / bytes / SHA，HEAD 無 body。正式 Wrangler assets directory 仍為 public，沒有新增部署或正式設定。
+
+五、驗證結果與來源區分
+
+1. 靜態路由 focused：3/3 通過，沒有啟動正式服務或外部帳號操作。
+2. 真 Chrome：320 × 740、390 × 844、1280 × 900，共 30/30 案例、60 張截圖。
+   - 每一尺寸量測 353 次按鈕（並非 353 顆不同按鈕）；含主場、角色／裝備、背包、道具確認、工坊兩模式、商店／購買確認、典藏／回收、收藏冊、派遣確認、社交。
+   - 檢查文字 Range 裁切、可點擊命中區、焦點、停用、選取、按壓、HUD 間隔及回收列遮擋。
+   - pageErrors = 0、httpErrors = 0、failedAssets = 0、blockedWrites = 0；sourceStable = true。
+   - 使用真 Chrome / SwiftShader；等待 RpgSceneView.inspect() 的角色／地圖就緒訊號，未隱藏資產錯誤或用固定長等待假裝完成。
+   - 僅允許本機合成帳號必要讀取與 me；購買、鍛造、回收、開始作業與聊天發送在本批 UI QA 中封鎖。本批是素材與樣式修改，前批已另驗過真功能交易。
+   - 最後完整 30 案為 2026-11-04T08:34:03.097Z 至 08:35:20.179Z，CSS SHA e15e5e3088d4d92d6436f9806e22769b7a83583b3b56877911fb5f955c460155。
+   - 證據：.release-sync/button-polish-20261104/browser-final/results.json。
+3. 最後窄版微調後的獨立驗證：
+   - 320 × 740 單案共 12/12 檢查通過，0 HTTP／頁面錯誤與寫入，sourceStable=true；完成 2026-11-04T08:58:35.247Z。
+   - 真 Range：「星圖／派遣」「選擇／角色」；補給為「可攜帶補給 · 生命」／「495 / 魔力 499」，生命／魔力完整，沒有數字孤行。
+   - 三個主場操作 44.66–44.67 × 46px；面板高 187.5px；控制與頁尾沒有新重疊，文字零裁切，頁面無水平／垂直溢出。
+   - 最後收據與畫面：.release-sync/button-polish-20261104/browser-narrow-final-v2/results.json、320-battle-final.png、320-panel-hero-detail.png。
+   - 既有資訊卡與角色圖層局部交疊仍在；本批沒有宣稱角色頭部遮擋已解除。
+   - 最後 CSS SHA 138422f4daa0cc2e09576550aaa2b28606525914e89baf0871f3aab9ca472887，25,959 bytes。
+   - 最後窄版規則只在 360px 以下主場面板生效。保留完整 30 案的原 hash 與證據，最後新 hash 另做受影響的 320px 單案驗證；不聲稱完整 30 案在新 hash 全部重跑。
+4. 最後窄版第一次曾因 QA 誤等主場不會使用的 button-plate 而超時；該紀錄保留為 material-wait-attempt.json 與 failure.png，修正等待條件後通過。fac0983 階段雖通過幾何檢查，目視發現「生命」拆行，因此加入 keep-all 並針對完整詞語再驗。
+   首輪 QA 23/30 的失敗原紀錄仍保留；其中 390px 回收 sticky 遮擋是已修復實際問題，其餘 HUD 裝飾 scrollWidth／pressed padding 的錯誤 QA 假設已修正量測。沒有刪除失敗歷史。
+5. 本機不重跑前批已通過的 2,910 測試。此批新增 PR 必須核對本批新 commit 的 required Worker and BOT tests；正式結果以 CI 收據為準。
+6. 預提交做限定檔案清單、source SHA、git diff --check 與 cached diff --check。所有 .release-sync 證據、工具依賴、原始 PNG 與其他工作線不加入提交。
+
+六、本機預覽與保留中的服務
+
+主場預覽：http://127.0.0.1:9703/
+記憶體合成 API：http://127.0.0.1:9702/
+launcher PID 43116；啟動 2026-11-04T08:19:29.374Z；metadata：
+.release-sync/button-polish-20261104/preview-process.json
+isolated / ephemeral / productionAccess=false，原始生成輸入唯讀。
+啟動指令：
+node worker/tools/scene-live-preview.mjs --grok-root=D:/StarJournal/grok-assets --port=9703 --api-port=9702
+
+重新啟動或停止前先核對 PID 與命令列。合成 API 重啟會重置資料。保留 9693/9692、9683/9682、9653/9652、9654 與角色 9593/9642 等既有工作線，未停全部 Node，未操作全域 task_control/agent_workflow。
+
+七、界線與尚未完成事項
+
+本批只完成按鈕美術、大小／形狀、狀態回饋、手機排版及預覽路由；不等於全部遊戲整合完成。
+既有後續項目仍包含完整原版頁面遷移（技能／轉職、天使、完整命運、交易、Boss／組隊／塔／星環等）、正式 Telegram 登入與真手機確認、舊效果相容、高階成長、正式數值平衡與完整賽季移轉。這些不因本批 UI 質感調整而標成完成。
+320px 極窄主場的既有資訊面板仍局部覆在角色圖層上；本批驗證的是按鈕命中區、控制間遮擋及文字，不宣稱已解除角色頭部遮擋。此項保留在後續整體主場／角色布局整合，未藉由隱藏進度、錯誤或挪動角色渲染掩蓋。
+角色與技能特效素材、catalog、queue、grok-assets 原始內容交由原工作線持續，這批未改動。
+
+依使用者已定要求，整合完成前不更新正式機：此批不 merge、不 deploy、不跑遠端 migration、不改 Secrets／正式旗標，也不把本機合成資料寫到正式帳號。草稿 PR 疊在 codex/unified-battle-ui-20261104，保持可審查狀態。
+
+八、接手順序
+
+先讀 D:/StarJournal/handoff/non-character/STATUS.json 與 LATEST.md，核對最新 branch / HEAD / PR / CI 與 services，再看本報告及 worker/public/ui/button-materials/manifest.json。
+UI 可先打開 9703；若狀態已變，先核對進程與最新交接，不盲目依舊 PID 停服務。
+本批 Git、PR、CI 以 .release-sync/button-polish-20261104/local-submission-receipt.json、push-receipt.json、pr-receipt.json、ci-final-receipt.json 的實際存在與內容為準。
+重要里程碑更新 STATUS，執行 handoff/non-character/.tooling/checkpoint-progress.mjs；不手寫 LATEST 來替代 canonical checkpoint。

@@ -1,0 +1,2334 @@
+{
+  "sourceCommit": "55b4e7e2060941e3c3160b83f7e65fe7d381cf7c",
+  "synthetic": true,
+  "partial": {
+    "ruleset_version": "atlas-v2",
+    "runId": "legacy-v2-synthetic",
+    "realmId": "permanent",
+    "seed": "v2-compat-fixed",
+    "encounterRng": 3230863802,
+    "combatRng": 3630116503,
+    "lootRng": 532895027,
+    "startedAt": 1800000000,
+    "processedAt": 1800000089,
+    "durationSeconds": 600,
+    "elapsedSeconds": 89,
+    "status": "running",
+    "stopReason": null,
+    "endedAt": null,
+    "snapshot": {
+      "characterId": "synthetic-v2",
+      "baseClass": "sword",
+      "level": 100,
+      "atk": 10000,
+      "def": 10000,
+      "maxHp": 10000,
+      "maxMp": 1000,
+      "taken": 1,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "pct": {
+        "critPct": 0,
+        "dotPct": 0,
+        "summonPct": 0,
+        "shieldPct": 0,
+        "mpEfficiencyPct": 0,
+        "mpCostPct": 0,
+        "skillHastePct": 0,
+        "lifestealPct": 0,
+        "healPerCastPct": 0
+      },
+      "hp": 10000,
+      "mp": 1000,
+      "mpRegenPerSecond": 6
+    },
+    "balanceProfile": {
+      "id": "v2-independent",
+      "status": "prototype",
+      "enemyHpMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyDefenseMultiplier": 1,
+      "rewardMultiplier": 1,
+      "travelMultiplier": 1,
+      "goldMultiplier": 2,
+      "experienceMultiplier": 3
+    },
+    "buildId": "sword_whirlwind",
+    "supports": [],
+    "automation": "balanced",
+    "skill": {
+      "id": "sword_whirlwind",
+      "baseClass": "sword",
+      "name": "旋風掃蕩",
+      "mainSkill": "旋風斬",
+      "description": "一擊掃過多名敵人，清群快；單體與藍水效率較弱。",
+      "strengths": [
+        "清群"
+      ],
+      "weaknesses": [
+        "單體",
+        "耗魔"
+      ],
+      "tags": [
+        "area"
+      ],
+      "mechanic": "strike",
+      "coefficient": 1.35,
+      "targets": 3,
+      "cost": 6,
+      "cooldown": 3,
+      "recommendedSupports": [
+        "wide",
+        "economy"
+      ],
+      "recommendedAutomation": "balanced",
+      "damageMultiplier": 1,
+      "durationMultiplier": 1,
+      "costMultiplier": 1,
+      "cooldownMultiplier": 1,
+      "supportShieldFraction": 0
+    },
+    "mapId": "laurel_intro",
+    "map": {
+      "id": "laurel_intro",
+      "name": "阿耳忒彌斯月桂林・教學星圖",
+      "themeId": 1,
+      "themeName": "阿耳忒彌斯月桂林",
+      "emoji": "🌿",
+      "kind": "tutorial",
+      "minLevel": 1,
+      "prerequisites": [],
+      "available": true,
+      "enemyName": "月光野兔",
+      "eliteName": "阿耳忒彌斯巡林長",
+      "roomCount": 5,
+      "packRooms": 4,
+      "travelSeconds": 6,
+      "entrySeconds": 12,
+      "enemy": {
+        "count": 3,
+        "hp": 65,
+        "atk": 8,
+        "def": 4,
+        "attackInterval": 4
+      },
+      "elite": {
+        "count": 1,
+        "hp": 300,
+        "atk": 16,
+        "def": 5,
+        "attackInterval": 4
+      },
+      "rewards": {
+        "roomGold": 8,
+        "roomExp": 12,
+        "completionGold": 20,
+        "completionExp": 30,
+        "material": "atlas_iron"
+      },
+      "hints": [
+        "群體技能可同時削減敵人數量。",
+        "觀察紅水與藍水消耗，再決定派遣長度。"
+      ]
+    },
+    "queueMode": "duration",
+    "mapCount": null,
+    "mapIndex": 2,
+    "roomIndex": 0,
+    "transitionSeconds": 5,
+    "enemies": [],
+    "hero": {
+      "hp": 10000,
+      "mp": 1000,
+      "shield": 0,
+      "nextActionAt": 83.001,
+      "nextSkillAt": 84.001,
+      "combo": 0,
+      "pets": [],
+      "traps": []
+    },
+    "supplies": {
+      "hp": 20,
+      "mp": 20,
+      "hpInitial": 20,
+      "mpInitial": 20,
+      "hpUsed": 0,
+      "mpUsed": 0,
+      "hpRestore": 50,
+      "mpRestore": 40,
+      "lastHpAt": -1,
+      "lastMpAt": -1
+    },
+    "rewardSequence": 12,
+    "totals": {
+      "gold": 240,
+      "exp": 540,
+      "materials": {
+        "atlas_shard": 18,
+        "atlas_iron": 2
+      }
+    },
+    "metrics": {
+      "combatSeconds": 10,
+      "packCombatSeconds": 8,
+      "eliteCombatSeconds": 2,
+      "bossCombatSeconds": 0,
+      "travelSeconds": 79,
+      "damage": 2194,
+      "dotDamage": 0,
+      "petDamage": 0,
+      "counterDamage": 0,
+      "damageTaken": 0,
+      "shieldAbsorbed": 0,
+      "blockedDamage": 0,
+      "blocks": 0,
+      "casts": 10,
+      "basicAttacks": 0,
+      "manaSpent": 60,
+      "manaDenied": 0,
+      "kills": 26,
+      "roomsCleared": 10,
+      "mapsCompleted": 2,
+      "hpRestored": 0,
+      "mpRestored": 0,
+      "executeHits": 0,
+      "comboBursts": 0,
+      "trapsTriggered": 0
+    },
+    "events": [
+      {
+        "at": 34,
+        "type": "enemy_defeated",
+        "enemyId": "0:3:1",
+        "source": "skill"
+      },
+      {
+        "at": 34,
+        "type": "enemy_defeated",
+        "enemyId": "0:3:2",
+        "source": "skill"
+      },
+      {
+        "at": 40,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 41,
+        "type": "enemy_defeated",
+        "enemyId": "0:4:0",
+        "source": "skill"
+      },
+      {
+        "at": 41,
+        "type": "map_completed",
+        "mapIndex": 0
+      },
+      {
+        "at": 53,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 0,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 54,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:0",
+        "source": "skill"
+      },
+      {
+        "at": 54,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:1",
+        "source": "skill"
+      },
+      {
+        "at": 54,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:2",
+        "source": "skill"
+      },
+      {
+        "at": 60,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 1,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 61,
+        "type": "enemy_defeated",
+        "enemyId": "1:1:0",
+        "source": "skill"
+      },
+      {
+        "at": 61,
+        "type": "enemy_defeated",
+        "enemyId": "1:1:1",
+        "source": "skill"
+      },
+      {
+        "at": 61,
+        "type": "enemy_defeated",
+        "enemyId": "1:1:2",
+        "source": "skill"
+      },
+      {
+        "at": 67,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 2,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 68,
+        "type": "enemy_defeated",
+        "enemyId": "1:2:0",
+        "source": "skill"
+      },
+      {
+        "at": 68,
+        "type": "enemy_defeated",
+        "enemyId": "1:2:1",
+        "source": "skill"
+      },
+      {
+        "at": 68,
+        "type": "enemy_defeated",
+        "enemyId": "1:2:2",
+        "source": "skill"
+      },
+      {
+        "at": 74,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 3,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 75,
+        "type": "enemy_defeated",
+        "enemyId": "1:3:0",
+        "source": "skill"
+      },
+      {
+        "at": 75,
+        "type": "enemy_defeated",
+        "enemyId": "1:3:1",
+        "source": "skill"
+      },
+      {
+        "at": 75,
+        "type": "enemy_defeated",
+        "enemyId": "1:3:2",
+        "source": "skill"
+      },
+      {
+        "at": 81,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 82,
+        "type": "enemy_defeated",
+        "enemyId": "1:4:0",
+        "source": "skill"
+      },
+      {
+        "at": 82,
+        "type": "map_completed",
+        "mapIndex": 1
+      }
+    ]
+  },
+  "alreadyEarned": [
+    {
+      "id": "legacy-v2-synthetic:reward:1",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 1,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 13,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:2",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 2,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 20,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:3",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 3,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 27,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:4",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 4,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 34,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:5",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 5,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 41,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:6",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 6,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 41,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:7",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 7,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 54,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:8",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 8,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 61,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:9",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 9,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 68,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:10",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 10,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 75,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:11",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 11,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 82,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:12",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 12,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 82,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    }
+  ],
+  "expectedFinal": {
+    "ruleset_version": "atlas-v2",
+    "runId": "legacy-v2-synthetic",
+    "realmId": "permanent",
+    "seed": "v2-compat-fixed",
+    "encounterRng": 574679658,
+    "combatRng": 3395464838,
+    "lootRng": 3896246535,
+    "startedAt": 1800000000,
+    "processedAt": 1800000600,
+    "durationSeconds": 600,
+    "elapsedSeconds": 600,
+    "status": "completed",
+    "stopReason": "duration_reached",
+    "endedAt": 1800000600,
+    "snapshot": {
+      "characterId": "synthetic-v2",
+      "baseClass": "sword",
+      "level": 100,
+      "atk": 10000,
+      "def": 10000,
+      "maxHp": 10000,
+      "maxMp": 1000,
+      "taken": 1,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "pct": {
+        "critPct": 0,
+        "dotPct": 0,
+        "summonPct": 0,
+        "shieldPct": 0,
+        "mpEfficiencyPct": 0,
+        "mpCostPct": 0,
+        "skillHastePct": 0,
+        "lifestealPct": 0,
+        "healPerCastPct": 0
+      },
+      "hp": 10000,
+      "mp": 1000,
+      "mpRegenPerSecond": 6
+    },
+    "balanceProfile": {
+      "id": "v2-independent",
+      "status": "prototype",
+      "enemyHpMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyDefenseMultiplier": 1,
+      "rewardMultiplier": 1,
+      "travelMultiplier": 1,
+      "goldMultiplier": 2,
+      "experienceMultiplier": 3
+    },
+    "buildId": "sword_whirlwind",
+    "supports": [],
+    "automation": "balanced",
+    "skill": {
+      "id": "sword_whirlwind",
+      "baseClass": "sword",
+      "name": "旋風掃蕩",
+      "mainSkill": "旋風斬",
+      "description": "一擊掃過多名敵人，清群快；單體與藍水效率較弱。",
+      "strengths": [
+        "清群"
+      ],
+      "weaknesses": [
+        "單體",
+        "耗魔"
+      ],
+      "tags": [
+        "area"
+      ],
+      "mechanic": "strike",
+      "coefficient": 1.35,
+      "targets": 3,
+      "cost": 6,
+      "cooldown": 3,
+      "recommendedSupports": [
+        "wide",
+        "economy"
+      ],
+      "recommendedAutomation": "balanced",
+      "damageMultiplier": 1,
+      "durationMultiplier": 1,
+      "costMultiplier": 1,
+      "cooldownMultiplier": 1,
+      "supportShieldFraction": 0
+    },
+    "mapId": "laurel_intro",
+    "map": {
+      "id": "laurel_intro",
+      "name": "阿耳忒彌斯月桂林・教學星圖",
+      "themeId": 1,
+      "themeName": "阿耳忒彌斯月桂林",
+      "emoji": "🌿",
+      "kind": "tutorial",
+      "minLevel": 1,
+      "prerequisites": [],
+      "available": true,
+      "enemyName": "月光野兔",
+      "eliteName": "阿耳忒彌斯巡林長",
+      "roomCount": 5,
+      "packRooms": 4,
+      "travelSeconds": 6,
+      "entrySeconds": 12,
+      "enemy": {
+        "count": 3,
+        "hp": 65,
+        "atk": 8,
+        "def": 4,
+        "attackInterval": 4
+      },
+      "elite": {
+        "count": 1,
+        "hp": 300,
+        "atk": 16,
+        "def": 5,
+        "attackInterval": 4
+      },
+      "rewards": {
+        "roomGold": 8,
+        "roomExp": 12,
+        "completionGold": 20,
+        "completionExp": 30,
+        "material": "atlas_iron"
+      },
+      "hints": [
+        "群體技能可同時削減敵人數量。",
+        "觀察紅水與藍水消耗，再決定派遣長度。"
+      ]
+    },
+    "queueMode": "duration",
+    "mapCount": null,
+    "mapIndex": 14,
+    "roomIndex": 2,
+    "transitionSeconds": 0,
+    "enemies": [
+      {
+        "id": "14:2:0",
+        "name": "月光野兔",
+        "rank": "normal",
+        "maxHp": 66,
+        "hp": 66,
+        "atk": 8,
+        "def": 4,
+        "attackInterval": 4,
+        "nextAttackAt": 604,
+        "chilledUntil": 0,
+        "dots": []
+      },
+      {
+        "id": "14:2:1",
+        "name": "月光野兔",
+        "rank": "normal",
+        "maxHp": 66,
+        "hp": 66,
+        "atk": 8,
+        "def": 4,
+        "attackInterval": 4,
+        "nextAttackAt": 604.25,
+        "chilledUntil": 0,
+        "dots": []
+      },
+      {
+        "id": "14:2:2",
+        "name": "月光野兔",
+        "rank": "normal",
+        "maxHp": 62,
+        "hp": 62,
+        "atk": 8,
+        "def": 4,
+        "attackInterval": 4,
+        "nextAttackAt": 604.5,
+        "chilledUntil": 0,
+        "dots": []
+      }
+    ],
+    "hero": {
+      "hp": 10000,
+      "mp": 1000,
+      "shield": 0,
+      "nextActionAt": 600.001,
+      "nextSkillAt": 596.001,
+      "combo": 0,
+      "pets": [],
+      "traps": []
+    },
+    "supplies": {
+      "hp": 20,
+      "mp": 20,
+      "hpInitial": 20,
+      "mpInitial": 20,
+      "hpUsed": 0,
+      "mpUsed": 0,
+      "hpRestore": 50,
+      "mpRestore": 40,
+      "lastHpAt": -1,
+      "lastMpAt": -1
+    },
+    "rewardSequence": 86,
+    "totals": {
+      "gold": 1712,
+      "exp": 3852,
+      "materials": {
+        "atlas_shard": 123,
+        "atlas_iron": 14
+      }
+    },
+    "metrics": {
+      "combatSeconds": 72,
+      "packCombatSeconds": 58,
+      "eliteCombatSeconds": 14,
+      "bossCombatSeconds": 0,
+      "travelSeconds": 528,
+      "damage": 15516,
+      "dotDamage": 0,
+      "petDamage": 0,
+      "counterDamage": 0,
+      "damageTaken": 0,
+      "shieldAbsorbed": 0,
+      "blockedDamage": 0,
+      "blocks": 0,
+      "casts": 72,
+      "basicAttacks": 0,
+      "manaSpent": 432,
+      "manaDenied": 0,
+      "kills": 188,
+      "roomsCleared": 72,
+      "mapsCompleted": 14,
+      "hpRestored": 0,
+      "mpRestored": 0,
+      "executeHits": 0,
+      "comboBursts": 0,
+      "trapsTriggered": 0
+    },
+    "events": [
+      {
+        "at": 553,
+        "type": "enemy_defeated",
+        "enemyId": "13:1:0",
+        "source": "skill"
+      },
+      {
+        "at": 553,
+        "type": "enemy_defeated",
+        "enemyId": "13:1:1",
+        "source": "skill"
+      },
+      {
+        "at": 553,
+        "type": "enemy_defeated",
+        "enemyId": "13:1:2",
+        "source": "skill"
+      },
+      {
+        "at": 559,
+        "type": "room_entered",
+        "mapIndex": 13,
+        "roomIndex": 2,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 560,
+        "type": "enemy_defeated",
+        "enemyId": "13:2:0",
+        "source": "skill"
+      },
+      {
+        "at": 560,
+        "type": "enemy_defeated",
+        "enemyId": "13:2:1",
+        "source": "skill"
+      },
+      {
+        "at": 560,
+        "type": "enemy_defeated",
+        "enemyId": "13:2:2",
+        "source": "skill"
+      },
+      {
+        "at": 566,
+        "type": "room_entered",
+        "mapIndex": 13,
+        "roomIndex": 3,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 567,
+        "type": "enemy_defeated",
+        "enemyId": "13:3:0",
+        "source": "skill"
+      },
+      {
+        "at": 567,
+        "type": "enemy_defeated",
+        "enemyId": "13:3:1",
+        "source": "skill"
+      },
+      {
+        "at": 567,
+        "type": "enemy_defeated",
+        "enemyId": "13:3:2",
+        "source": "skill"
+      },
+      {
+        "at": 573,
+        "type": "room_entered",
+        "mapIndex": 13,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 574,
+        "type": "enemy_defeated",
+        "enemyId": "13:4:0",
+        "source": "skill"
+      },
+      {
+        "at": 574,
+        "type": "map_completed",
+        "mapIndex": 13
+      },
+      {
+        "at": 586,
+        "type": "room_entered",
+        "mapIndex": 14,
+        "roomIndex": 0,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 587,
+        "type": "enemy_defeated",
+        "enemyId": "14:0:0",
+        "source": "skill"
+      },
+      {
+        "at": 587,
+        "type": "enemy_defeated",
+        "enemyId": "14:0:1",
+        "source": "skill"
+      },
+      {
+        "at": 587,
+        "type": "enemy_defeated",
+        "enemyId": "14:0:2",
+        "source": "skill"
+      },
+      {
+        "at": 593,
+        "type": "room_entered",
+        "mapIndex": 14,
+        "roomIndex": 1,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 594,
+        "type": "enemy_defeated",
+        "enemyId": "14:1:0",
+        "source": "skill"
+      },
+      {
+        "at": 594,
+        "type": "enemy_defeated",
+        "enemyId": "14:1:1",
+        "source": "skill"
+      },
+      {
+        "at": 594,
+        "type": "enemy_defeated",
+        "enemyId": "14:1:2",
+        "source": "skill"
+      },
+      {
+        "at": 600,
+        "type": "room_entered",
+        "mapIndex": 14,
+        "roomIndex": 2,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 600,
+        "type": "completed",
+        "reason": "duration_reached"
+      }
+    ]
+  },
+  "expectedRewards": [
+    {
+      "id": "legacy-v2-synthetic:reward:1",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 1,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 13,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:2",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 2,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 20,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:3",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 3,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 27,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:4",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 4,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 34,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:5",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 5,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 41,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:6",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 6,
+      "mapId": "laurel_intro",
+      "mapIndex": 0,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 41,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:7",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 7,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 54,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:8",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 8,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 61,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:9",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 9,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 68,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:10",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 10,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 75,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:11",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 11,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 82,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:12",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 12,
+      "mapId": "laurel_intro",
+      "mapIndex": 1,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 82,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:13",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 13,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 95,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:14",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 14,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 102,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:15",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 15,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 109,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:16",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 16,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 116,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:17",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 17,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 123,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:18",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 18,
+      "mapId": "laurel_intro",
+      "mapIndex": 2,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 123,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:19",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 19,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 136,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:20",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 20,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 143,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:21",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 21,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 150,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:22",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 22,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 157,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:23",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 23,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 164,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:24",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 24,
+      "mapId": "laurel_intro",
+      "mapIndex": 3,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 164,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:25",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 25,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 177,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:26",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 26,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 184,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:27",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 27,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 191,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:28",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 28,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 198,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:29",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 29,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 205,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:30",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 30,
+      "mapId": "laurel_intro",
+      "mapIndex": 4,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 205,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:31",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 31,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 218,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:32",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 32,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 225,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:33",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 33,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 232,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:34",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 34,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 239,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:35",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 35,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 246,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:36",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 36,
+      "mapId": "laurel_intro",
+      "mapIndex": 5,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 246,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:37",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 37,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 259,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:38",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 38,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 266,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:39",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 39,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 273,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:40",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 40,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 280,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:41",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 41,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 287,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:42",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 42,
+      "mapId": "laurel_intro",
+      "mapIndex": 6,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 287,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:43",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 43,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 300,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:44",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 44,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 307,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:45",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 45,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 314,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:46",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 46,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 321,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:47",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 47,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 328,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:48",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 48,
+      "mapId": "laurel_intro",
+      "mapIndex": 7,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 328,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:49",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 49,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 341,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:50",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 50,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 348,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:51",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 51,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 355,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:52",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 52,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 362,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:53",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 53,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 369,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:54",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 54,
+      "mapId": "laurel_intro",
+      "mapIndex": 8,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 369,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:55",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 55,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 382,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:56",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 56,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 389,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:57",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 57,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 396,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:58",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 58,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 403,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:59",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 59,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 410,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:60",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 60,
+      "mapId": "laurel_intro",
+      "mapIndex": 9,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 410,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:61",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 61,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 423,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:62",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 62,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 430,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:63",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 63,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 437,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:64",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 64,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 444,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:65",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 65,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 451,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:66",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 66,
+      "mapId": "laurel_intro",
+      "mapIndex": 10,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 451,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:67",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 67,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 464,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:68",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 68,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 471,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:69",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 69,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 478,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:70",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 70,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 485,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:71",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 71,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 492,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:72",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 72,
+      "mapId": "laurel_intro",
+      "mapIndex": 11,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 492,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:73",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 73,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 505,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:74",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 74,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 512,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:75",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 75,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 519,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:76",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 76,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 526,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:77",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 77,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 533,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:78",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 78,
+      "mapId": "laurel_intro",
+      "mapIndex": 12,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 533,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:79",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 79,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 546,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:80",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 80,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 553,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:81",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 81,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 560,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:82",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 82,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 567,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:83",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 83,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 574,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:84",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 84,
+      "mapId": "laurel_intro",
+      "mapIndex": 13,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 574,
+      "gold": 40,
+      "exp": 90,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_iron": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:85",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 85,
+      "mapId": "laurel_intro",
+      "mapIndex": 14,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 587,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v2-synthetic:reward:86",
+      "runId": "legacy-v2-synthetic",
+      "realmId": "permanent",
+      "sequence": 86,
+      "mapId": "laurel_intro",
+      "mapIndex": 14,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 594,
+      "gold": 16,
+      "exp": 36,
+      "materials": {
+        "atlas_shard": 1
+      }
+    }
+  ]
+}

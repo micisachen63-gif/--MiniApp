@@ -92,7 +92,7 @@ export async function requestView(env, r, now = Date.now()) {
     item: s?.item || null, tradeId: r.trade_id, createdAt: r.created_at, expiresAt: r.expires_at, decidedAt: r.decided_at };
 }
 /** group 🤝 我要交易 → pending request + DM to the owner (+ Mini App badge) */
-export async function requestTrade(env, { tgId, shareId }, now) {
+export async function requestTrade(env, { tgId, shareId }, now, options = {}) {
   const db = env.DB; const tg = String(tgId);
   const s = await shareView(env, shareId); if (!s) throw new GameError('not_found', '找不到這則分享', 404);
   const me = await charOf(db, tg); if (!me) throw new GameError('no_character', '你還沒有角色，先私訊星穹旅誌輸入 /rpg 創角', 404);
@@ -101,13 +101,14 @@ export async function requestTrade(env, { tgId, shareId }, now) {
   if(s.objectKind==='sigil'&&s.tradeBlockReason)throw new GameError('untradeable',s.tradeBlockReason,409);
   if (!s.requestable) throw new GameError('untradeable', s.showcase ? s.objectKind==='sigil'?'這張是天使展示卡，不能提出交易；請使用主人另行分享的未綁定天使卡。':'這張是裝備展示卡，不能提出交易；請使用主人另行分享的可交易裝備卡' : s.status === 'traded' ? '這件已經成交了' : '這件裝備已不在原主人手上，無法提出交易意願');
   if(s.objectKind==='sigil'&&me.level<15)throw new GameError('guardian_level','守護神交易於15級開放');
-  await expireRequests(env, now, { tg });
+  if (!options.scoped) await expireRequests(env, now, { tg });
   const [out, inn] = await Promise.all([
     db.prepare("SELECT COUNT(*) AS n FROM rpg_trade_requests WHERE requester_tg = ? AND status = 'pending' AND expires_at>?").bind(tg,now).first(),
     db.prepare("SELECT COUNT(*) AS n FROM rpg_trade_requests WHERE owner_tg = ? AND status = 'pending' AND expires_at>?").bind(String(s.ownerTgId),now).first()]);
   if ((out?.n || 0) >= TRADE.maxPendingOut) throw new GameError('too_many', `你已經有 ${TRADE.maxPendingOut} 個等待回覆的交易請求`);
   if ((inn?.n || 0) >= TRADE.maxPendingIn) throw new GameError('too_many', '對方的交易請求太多了，晚點再試');
-  const id = sid('q');
+  const id = options.id || sid('q');
+  if (options.scoped && (!/^q[0-9a-f]{32}$/.test(id) || typeof options.extraStmts !== 'function')) throw new GameError('request', 'Scoped invitation identity invalid');
   try {
     await db.batch([db.prepare(`INSERT INTO rpg_trade_requests (id,share_id,equip_id,object_kind,owner_tg,requester_tg,status,created_at,expires_at)
       SELECT ?,s.id,s.equip_id,s.object_kind,?,?,'pending',?,? FROM rpg_shares s
@@ -116,7 +117,8 @@ export async function requestTrade(env, { tgId, shareId }, now) {
         AND (SELECT COUNT(*) FROM rpg_trade_requests WHERE requester_tg=? AND status='pending' AND expires_at>?)<?
         AND (SELECT COUNT(*) FROM rpg_trade_requests WHERE owner_tg=? AND status='pending' AND expires_at>?)<?`)
       .bind(id,String(s.ownerTgId),tg,now,now+TRADE.requestTtlMs,s.id,tg,now,TRADE.maxPendingOut,String(s.ownerTgId),now,TRADE.maxPendingIn),guardStmt(db),
-      outboxStmt(db, { dedupe: `dm:${s.ownerTgId}:treq:${id}`, target: 'dm', tgId: s.ownerTgId, kind: 'trade_request', payload: { requestId: id, from: me.name, item: s.item.name } }, now)]);
+      outboxStmt(db, { dedupe: `dm:${s.ownerTgId}:treq:${id}`, target: 'dm', tgId: s.ownerTgId, kind: 'trade_request', payload: { requestId: id, from: me.name, item: s.item.name } }, now),
+       ...(options.extraStmts ? options.extraStmts(db, {id,shareId:s.id,ownerTg:String(s.ownerTgId),requesterTg:tg}) : [])]);
   } catch (e) { if (/UNIQUE constraint failed: rpg_trade_requests/.test(String(e?.message || e))) throw new GameError('duplicate', '你已經對這件送出交易請求了，等對方確認'); const error=classifyDbError(e);if(error?.code==='conflict')throw new GameError('too_many','交易請求或分享狀態剛更新，請重新整理後再試',409);throw error||e; }
   return requestView(env, await requestRow(db, id));
 }
@@ -128,16 +130,17 @@ export async function listRequests(env, tg, now) {
   return { incoming: out.filter((r) => String(r.owner.tgId) === tg), outgoing: out.filter((r) => String(r.requester.tgId) === tg) };
 }
 /** owner 確認 → open the window (owner = initiator a, requester = b), shared item pre-placed if still tradeable */
-export async function acceptRequest(env, { tgId, requestId }, now) {
+export async function acceptRequest(env, { tgId, requestId }, now, options = {}) {
   const db = env.DB; const tg = String(tgId);
   const r = await requestRow(db, requestId); if (!r) throw new GameError('not_found', '找不到這個請求', 404);
   if (String(r.owner_tg) !== tg) throw new GameError('not_party', '只有物品主人可以確認', 403);
   if (r.status !== 'pending') throw new GameError('closed', { accepted: '已經開啟交易了', rejected: '已經拒絕了', expired: '請求已過期', cancelled: '對方已撤回請求' }[r.status] || '請求已結束', 409);
-  if (r.expires_at <= now) { await expireRequests(env, now, { tg }); throw new GameError('closed', '請求已過期', 409); }
+  if (r.expires_at <= now) { if (options.scoped) throw new GameError('closed', '請求已過期，等待原權威清理', 409); await expireRequests(env, now, { tg }); throw new GameError('closed', '請求已過期', 409); }
   const guardian=r.object_kind==='sigil';
   const e = await db.prepare(guardian?'SELECT * FROM rpg_guardian_sigils WHERE id=?':'SELECT * FROM rpg_equipment WHERE id = ?').bind(r.equip_id).first();
   const unavailable = !e ? '這件裝備已不存在' : String(guardian?e.char_id:e.tg_id) !== tg ? '這件裝備已換了主人' : null;
   if (unavailable) {
+    if (options.scoped) throw new GameError('untradeable', '資產已失效，保留原始邀請紀錄', 409);
     await db.prepare("UPDATE rpg_trade_requests SET status = 'expired', decided_at = ? WHERE id = ? AND status = 'pending'").bind(now, r.id).run();
     throw new GameError('untradeable', `${unavailable}；這筆交易請求已結束` , 409);
   }
@@ -150,10 +153,12 @@ export async function acceptRequest(env, { tgId, requestId }, now) {
   const { id: tradeId, stmts } = await openTradeStmts(env, { aTg: tg, bTg: r.requester_tg, origin: 'share', shareId: r.share_id, requestId: r.id, preEquip: guardian?null:pre, preSigil:guardian?pre:null }, now);
   try {
     await db.batch([db.prepare("UPDATE rpg_trade_requests SET status = 'accepted', trade_id = ?, decided_at = ? WHERE id = ? AND status = 'pending'").bind(tradeId, now, r.id), guardStmt(db), ...stmts,
-      outboxStmt(db, { dedupe: `dm:${r.requester_tg}:topen:${tradeId}`, target: 'dm', tgId: r.requester_tg, kind: 'trade_open', payload: { tradeId, requestId: r.id } }, now)]);
+      outboxStmt(db, { dedupe: `dm:${r.requester_tg}:topen:${tradeId}`, target: 'dm', tgId: r.requester_tg, kind: 'trade_open', payload: { tradeId, requestId: r.id } }, now),
+       ...(options.extraStmts ? options.extraStmts(db, {reqId:r.id,tradeId,ownerTg:tg,requesterTg:String(r.requester_tg),shareId:r.share_id}) : [])]);
   } catch (err) {
     const g = classifyDbError(err);
     if (g?.code === 'in_trade') {
+      if (options.scoped) throw g;
       await db.prepare("UPDATE rpg_trade_requests SET status = 'expired', decided_at = ? WHERE id = ? AND status = 'pending'").bind(now, r.id).run();
       throw new GameError('in_trade', '這件裝備已在另一筆交易中，這筆請求已結束；請到「進行中的交易視窗」打開原交易', 409);
     }
@@ -162,15 +167,16 @@ export async function acceptRequest(env, { tgId, requestId }, now) {
   }
   return { request: await requestView(env, await requestRow(db, r.id)), trade: await tradeView(env, tradeId, tg, now), prePlaced: !!pre };
 }
-export async function rejectRequest(env, { tgId, requestId }, now) { return closeRequest(env, tgId, requestId, 'rejected', now); }
-export async function cancelRequest(env, { tgId, requestId }, now) { return closeRequest(env, tgId, requestId, 'cancelled', now); }
-async function closeRequest(env, tgId, requestId, status, now) {
+export async function rejectRequest(env, { tgId, requestId }, now, options = {}) { return closeRequest(env, tgId, requestId, 'rejected', now, options); }
+export async function cancelRequest(env, { tgId, requestId }, now, options = {}) { return closeRequest(env, tgId, requestId, 'cancelled', now, options); }
+async function closeRequest(env, tgId, requestId, status, now, options = {}) {
   const db = env.DB; const tg = String(tgId); const r = await requestRow(db, requestId); if (!r) throw new GameError('not_found', '找不到這個請求', 404);
   const who = status === 'rejected' ? r.owner_tg : r.requester_tg;
   if (String(who) !== tg) throw new GameError('not_party', status === 'rejected' ? '只有物品主人可以拒絕' : '只有送出請求的人可以撤回', 403);
   if (r.status !== 'pending') throw new GameError('closed', '請求已經結束了', 409);
   const notify = status === 'rejected' ? [outboxStmt(db, { dedupe: `dm:${r.requester_tg}:treqno:${r.id}`, target: 'dm', tgId: r.requester_tg, kind: 'trade_rejected', payload: { requestId: r.id } }, now)] : [];
-  await db.batch([db.prepare('UPDATE rpg_trade_requests SET status = ?, decided_at = ? WHERE id = ? AND status = \'pending\'').bind(status, now, r.id), guardStmt(db), ...notify]);
+  await db.batch([db.prepare('UPDATE rpg_trade_requests SET status = ?, decided_at = ? WHERE id = ? AND status = \'pending\'').bind(status, now, r.id), guardStmt(db), ...notify,
+    ...(options.extraStmts ? options.extraStmts(db, {reqId:r.id,shareId:r.share_id,ownerTg:String(r.owner_tg),requesterTg:String(r.requester_tg),status}) : [])]);
   return requestView(env, await requestRow(db, r.id));
 }
 /** 24h unanswered → expired (cron, or lazily for one player) */

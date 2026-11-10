@@ -346,7 +346,7 @@
     '熔爐赤銅戒': 'gear_ring_forge',
   };
   Object.assign(GEAR_NAME_ART, window.RpgGearNames || {});
-  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
+  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').replace(/-(?:普通|菁英|專家|惡夢|地獄)$/, '').trim();
   /** gear row/offer → icon file: specific named item if present, else fallback to weapon kind / armor family / shared slot */
   const GEAR_ART = (g) => {
     if (!g) return null;
@@ -512,23 +512,13 @@
   }
   if (ART) {
     document.body.classList.add('greek'); if (V2) document.body.classList.add('v2');
-    // font treatments (staging: ?font=A|B|C|D, remembered in localStorage; default = current v0.5 look). Google Fonts CSS2 slices CJK by unicode-range + display=swap.
-    const SERIF = '"Noto Serif TC","Noto Serif CJK TC","Songti TC",serif', SANS = '"Noto Sans TC","PingFang TC","Microsoft JhengHei",sans-serif', SYS = '-apple-system,"PingFang TC","Noto Sans CJK TC","Noto Sans TC","Microsoft JhengHei",sans-serif';
-    // v0.5.1: each CJK weight costs ~0.5–0.9 MB of slices on a busy screen → only 2 CJK weights per option (700 text maps to 900 / synthesises)
-    const FONTS = {
-      cur: { q: 'family=Cinzel:wght@700;900&family=Noto+Serif+TC:wght@500;700;900', body: SERIF, title: `Cinzel,${SERIF}`, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 500, wt: 900 },
-      A: { q: 'family=Noto+Serif+TC:wght@500;900', body: SERIF, title: SERIF, ui: SERIF, num: SERIF, wb: 500, wt: 900 },
-      B: { q: 'family=LXGW+WenKai+TC:wght@400&family=Noto+Serif+TC:wght@900', body: `"LXGW WenKai TC",${SERIF}`, title: SERIF, ui: `"LXGW WenKai TC",${SERIF}`, num: `"LXGW WenKai TC",${SERIF}`, wb: 400, wt: 900 },
-      C: { q: 'family=Iansui&family=Noto+Sans+TC:wght@400;700', body: SANS, title: `Iansui,${SANS}`, ui: SANS, num: SANS, wb: 400, wt: 400 },
-      E: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900', body: SYS, title: SERIF, ui: SYS, num: `Cinzel,${SYS}`, wb: 400, wt: 900 },   // lightest: system UI font for body (PingFang TC / Noto Sans CJK), web font only for titles
-      D: { q: 'family=Cinzel:wght@700&family=Noto+Serif+TC:wght@900&family=Noto+Sans+TC:wght@400;700', body: SANS, title: SERIF, ui: SERIF, num: `Cinzel,${SERIF}`, wb: 400, wt: 900 },
-    };
-    let fk = (new URLSearchParams(location.search).get('font') || '').toUpperCase(); if (fk === 'CUR') fk = 'cur';
-    try { if (FONTS[fk]) localStorage.setItem('elfFont', fk); else fk = localStorage.getItem('elfFont') || ''; } catch (_) {}
-    const DEFAULT_FONT = 'D';   // ミカサ 21:07 picked D (Noto Serif TC Black titles + Cinzel numerals + Noto Sans TC body); ?font= / localStorage still override for previews
-    const F0 = FONTS[fk] || FONTS[DEFAULT_FONT]; const R = document.documentElement.style; document.body.dataset.font = FONTS[fk] ? fk : DEFAULT_FONT;
-    R.setProperty('--f-body', F0.body); R.setProperty('--f-title', F0.title); R.setProperty('--f-ui', F0.ui); R.setProperty('--f-num', F0.num); R.setProperty('--w-body', F0.wb); R.setProperty('--w-title', F0.wt);
-    for (const href of [`https://fonts.googleapis.com/css2?${F0.q}&display=swap`, 'theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261016-advanced-armory1', 'olympus-unified.css?v=20261016-create-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
+    // All game text uses the same bundled font, including canvas numerals.
+    // Old query-string/localStorage font previews cannot override the game style.
+    const R = document.documentElement.style;
+    document.body.dataset.font = 'huninn';
+    for (const key of ['--f-body', '--f-title', '--f-ui', '--f-num']) R.setProperty(key, '"jfOpenHuninn","Microsoft JhengHei",sans-serif');
+    R.setProperty('--w-body', 400); R.setProperty('--w-title', 700);
+    for (const href of ['theme-greek.css?v=10', 'ui-refined.css?v=20261011-1', 'mythic-ui.css?v=20261011-2', 'olympus-luxury.css?v=20261011-1', 'olympus-suite.css?v=20261011-home-panels-1', 'hero-display.css?v=20261011-3', 'hero-fx.css?v=20261016-advanced-armory1', 'olympus-unified.css?v=20261016-create-surfaces1']) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = href; document.head.appendChild(l); }
   }
   const iconHtml = (k, fallback) => { if (String(k).startsWith('book_')) return `<img class="skill-book-icon" src="/expedition/assets/skills-painted-20261011/${esc(String(k).slice(5))}.webp" alt="${esc(itemName(k))}" loading="lazy">`; const collectionArt=window.RpgCollectionUI?.icon(k),src=collectionArt||artSrc('item', k); return src ? `<img src="${src}" ${collectionArt?`data-collection-icon="${esc(k)}"`:''} ${/^(blessed|guaranteed)_scroll_/.test(String(k))?'class="blessed-scroll-icon"':''} alt="${collectionArt||String(k).startsWith('guaranteed_scroll_')?esc(itemName(k)):''}" loading="lazy">${String(k).startsWith('guaranteed_scroll_')?'<small class="guaranteed-scroll-badge">必成 100%</small>':''}` : fallback; };
   const gearIcon = (g, fallback) => { if(g?.slot==='weapon'&&g.classReq==='thief')fallback='🗡️'; const src = window.RpgStarRingCosmetics?.gearArt(g)||artSrc('gear', g); return src ? `<img src="${src}" alt="" loading="lazy" decoding="async">` : fallback; };
@@ -551,13 +541,14 @@
   const slotLabel = (slot, pos) => `${(S.meta && S.meta.slots[slot]) || slot}${MULTI[slot] ? pos : ''}`;
   const ELEM = { earth: '🌍地', water: '🌊水', fire: '🔥火', wind: '🌪️風', light: '☀️光', dark: '🌑暗' };
 
-  const S = { meta: null, me: null, characters: [], choosing: true, creating: false, pendingTab: 'home', shop: null, boss: null, ledger: null, tab: 'home', shopTab: 'weapon', skew: 0, lastReport: null,
+  const S = { meta: null, me: null, characters: [], maxCharacters:4, realms:[], realmId:'permanent', contextEpoch:0, choosing: true, creating: false, pendingTab: 'atlas', shop: null, boss: null, ledger: null, tab: 'atlas', shopTab: 'weapon', skew: 0, lastReport: null,
     session: { kills: 0, exp: 0, gold: 0, ticks: 0 }, create: { step: 0, name: '', cls: null, gender: null, slot: null }, busy: false, armorSlot: 'all', trades: null, trade: null, tradeTimer: 0 };
-  const equipmentSync=window.RpgEquipmentLiveSync?.create();
+  let atlasWorkspace=null;
+  let equipmentSync=window.RpgEquipmentLiveSync?.create();
   let equipmentSyncQueued=false;
   function scheduleEquipmentSync(){if(equipmentSyncQueued||!equipmentSync?.pending(S.me?.character?.tgId))return;equipmentSyncQueued=true;Promise.resolve().then(()=>{equipmentSyncQueued=false;if(!document.hidden&&equipmentSync.pending(S.me?.character?.tgId))void refreshMe({silent:true,full:true});});}
   function reconcileEquipmentSheet(){const card=$('.sheet-card'),id=card?.dataset.equipmentId,forge=$('#forge');if(!id||$('#sheet').hidden||(forge&&!forge.hidden))return;const item=S.me?.equipment.find(e=>e.id===id);if(item){if(card.dataset.equipmentVersion!==JSON.stringify(item))itemSheet(id);}else{closeSheet();delete card.dataset.equipmentId;toast('這件裝備已不在神器庫，畫面已同步。');}}
-  const operationNotices=window.RpgOperationNotices?.create({api,owner:()=>String(tg?.initDataUnsafe?.user?.id||devTg||'')});
+  const operationNotices=window.RpgOperationNotices?.create({api,owner:()=>String(tg?.initDataUnsafe?.user?.id||devTg||''),realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch});
   const autoNotice=j=>({kind:'auto_enhance_end',refId:j.id,ownerAccountId:j.ownerAccountId,dismissed:j.dismissed});
   const backgroundWorkshop=window.RpgBackgroundWorkshop?.create({gate:operationNotices,onOpen:n=>{void openBackground(n).catch(e=>toast(e.message,true));},onDismiss:()=>{void syncBackground().catch(()=>{});}});
   function renderBackground(){const actor=String(S.me?.character?.tgId||'');backgroundWorkshop?.render(!S.choosing&&!S.creating&&actor?(S.backgroundJobs||[]).filter(n=>String(n.job?.characterId)===actor):[]);}
@@ -592,16 +583,19 @@
   if (tg) { tg.ready(); tg.expand(); applyTheme(); tg.onEvent && tg.onEvent('themeChanged', applyTheme); try { tg.disableVerticalSwipes && tg.disableVerticalSwipes(); } catch (_) {} }
 
   // ---------- API ----------
-  const readActions=new Set(['character/delete-preview','character/delete-status','fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
+  const readActions=new Set(['realms','atlas/catalog','atlas/status','atlas/quests','atlas/talents','character/delete-preview','character/delete-status','fate/social/preferences','fate/social/inbox','fate/social/event','fate/gifts/summary','fate/me','fate/state','fate/history','fate/daily','fate/profile','guardian/config','guardian/inventory','guardian/operation','guardian/history','journal','meta','me','characters','exchange/list','exchange/sellable','exchange/mine','exchange/history','shop','boss','ledger','players','trade/list','trade/requests','trade/get','trade/log','pk/list','pk/get','expedition/me','party/list','party/get','star-ring/list','star-ring/me','star-ring/get','auto-enhance/status','guardian/auto/status','auto-reroll/status','auto-reroll/options','background/status','background/notice-status','notice/status']);
   async function api(action, body = {}, options = {}) {
+    if(action==='select')resetRealmContext();
     const mutating=!readActions.has(action);if(mutating)S.apiEpoch=(S.apiEpoch||0)+1;
     try {
-    const headers = { 'content-type': 'application/json' };
+    const requestRealm=S.realmId||'permanent',contextEpoch=S.contextEpoch||0;
+    const headers = { 'content-type': 'application/json', 'X-Realm-Id':requestRealm };
     if(expansion?.revision)headers['X-Monster-Art-Revision']=expansion.revision;
     if (initData) headers['X-Telegram-Init-Data'] = initData; else if (devTg) headers['X-Dev-Tg-Id'] = devTg;
     const selected = S.me && S.me.character && S.me.character.tgId, requestEpoch=S.apiEpoch||0;
-    const requestBody = selected && !['characters', 'select', 'meta'].includes(action) ? { ...body, selectedCharacterId: selected } : body;
-    const {res,j}=await window.RpgRequest.request(action,requestBody,headers,options).catch(e=>{if(e.uncertain&&selected)void refreshMe({silent:true});throw e;});
+    const requestBody = selected && !['characters', 'select', 'meta', 'realms'].includes(action) ? { ...body, selectedCharacterId: selected } : body;
+    const {res,j}=await window.RpgRequest.request(action,requestBody,headers,options).catch(e=>{if(e.uncertain&&selected&&contextEpoch===(S.contextEpoch||0)&&requestRealm===(S.realmId||'permanent'))void refreshMe({silent:true});throw e;});
+    if(contextEpoch!==(S.contextEpoch||0)||requestRealm!==(S.realmId||'permanent')){const e=Error('角色或環境已切換，已略過先前回應。');e.code='context_changed';e.uncertain=mutating;throw e;}
     if (!j || !j.ok) { const e = new Error((j && j.message) || `連線失敗（${res.status}）`); e.code = j && j.error; e.status = res.status;
       if (e.code === 'character_changed' && selected===S.me?.character?.tgId && requestEpoch===(S.apiEpoch||0)) { S.me = null; S.choosing = true; setTimeout(openCharacterSelect, 0); }
       throw e; }
@@ -611,13 +605,17 @@
   function mutationKey(action, body) {
     const stable = Object.fromEntries(Object.entries(body || {}).filter(([k]) => k !== 'requestId').sort(([a], [b]) => a.localeCompare(b)));
     const owner=action==='create'?String(tg?.initDataUnsafe?.user?.id||devTg||'account'):S.me?.character?.tgId||'account';
-    return `elfRpgPending:${owner}:${action}:${JSON.stringify(stable)}`;
+    const prefix=S.realmId&&S.realmId!=='permanent'?`elfRpgPending:${S.realmId}`:'elfRpgPending';
+    return `${prefix}:${owner}:${action}:${JSON.stringify(stable)}`;
   }
+  const pendingRequestMemory=new Map();
   function pendingRequestId(key) {
-    try { let value = localStorage.getItem(key); if (!value) { value = rid(); localStorage.setItem(key, value); } return value; }
-    catch (_) { return rid(); }
+    if(pendingRequestMemory.has(key))return pendingRequestMemory.get(key);
+    let value;try{value=localStorage.getItem(key);}catch{}
+    if(!value)value=rid();pendingRequestMemory.set(key,value);
+    try{localStorage.setItem(key,value);}catch{}return value;
   }
-  function clearPendingRequest(key) { try { localStorage.removeItem(key); } catch (_) {} }
+  function clearPendingRequest(key) {pendingRequestMemory.delete(key);try { localStorage.removeItem(key); } catch (_) {} }
   const idleReportWindows = new Map();
   function acceptIdleReport(id, r) {
     if (!r?.ticks || !Number.isFinite(r.from_at) || !Number.isFinite(r.to_at) || r.to_at <= r.from_at) return false;
@@ -678,7 +676,7 @@
     const key = mutationKey(action, body);
     try { const j = absorb(await api(action, { ...body, requestId: pendingRequestId(key) }),action==='create'); if((action==='enhance'||action==='reroll')&&!j.result)throw new Error('回應缺少操作結果，請返回裝備確認最新狀態。');clearPendingRequest(key); if (okMsg) toast(typeof okMsg === 'function' ? okMsg(j) : okMsg); if(action!=='enhance'&&action!=='reroll')haptic('ok'); render(); return j; }
     catch (e) { if(action==='enhance'||action==='reroll')S.forgeError=e.message; if (e.code === 'duplicate') { clearPendingRequest(key); await refreshMe(); toast('剛才的操作已完成，資料已更新'); if(action!=='enhance'&&action!=='reroll')haptic('ok'); } else { if (e.status >= 400 && e.status < 500) clearPendingRequest(key); toast(e.message, true); if(action!=='enhance'&&action!=='reroll')haptic('error'); } return null; }
-    finally { S.busy = false; }
+    finally { S.busy = false; atlasWorkspace?.update(S); }
   }
 
   // ---------- UI helpers ----------
@@ -794,7 +792,7 @@
     const gy = h * 0.9, hx = w * 0.3;
     if (st === 'reviving') {
       A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'dead' }));   // tombstone stays procedural
-      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('復活中…', hx, gy - 60);
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('復活中…', hx, gy - 60);
     } else if (town) {
       if (!drawSprite(ctx, heroSprite(), w * 0.5, gy, 120, { t, action: 'rest' })) A.hero(ctx, w * 0.5, gy, 1.3, heroOpts({ t, action: 'rest' }));
       if (Math.floor(t * 1.2) !== Math.floor((t - 1 / 60) * 1.2)) float(w * 0.5 + 18, gy - 50, 'z', '#fff', t, 14);
@@ -802,7 +800,7 @@
       if (!drawSprite(ctx, heroSprite(), hx, gy, 120, { t })) A.hero(ctx, hx, gy, 1.3, heroOpts({ t, action: 'idle' }));
       const px = w * 0.72, py = gy - 46; const g = ctx.createRadialGradient(px, py, 4, px, py, 46); g.addColorStop(0, 'rgba(230,210,255,.95)'); g.addColorStop(0.5, 'rgba(140,90,255,.6)'); g.addColorStop(1, 'rgba(80,40,200,0)');
       ctx.fillStyle = g; ctx.beginPath(); ctx.ellipse(px, py, 26 + Math.sin(t * 3) * 3, 44, 0, 0, Math.PI * 2); ctx.fill();
-      ctx.fillStyle = '#ffd34d'; ctx.font = 'bold 26px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', hx, gy - 74 + Math.sin(t * 5) * 3);
+      ctx.fillStyle = '#ffd34d'; ctx.font = 'bold 26px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('!', hx, gy - 74 + Math.sin(t * 5) * 3);
     } else {
       const slow = st === 'no_mp'; const period = slow ? 1.9 : 1.25;
       if (!F.mon || (F.dieAt && t - F.dieAt > 0.9)) spawnMon(t);
@@ -837,12 +835,12 @@
       const monX = Math.min(w*.7,w-monHeight*monRatio/2-8);
       if (!drawSprite(ctx, monImage, monX, monY, monHeight, { t, action: monAction, p: Math.max(0, monP), attackDirection:-1, flip: [1,3].includes(Number(c.mapId)) && !cleanMonster || mon.name === '哈耳庇厄', alpha: mon.alpha, glow: mon.elite ? '#ff3b3b' : mon.name === '哈耳庇厄' && monAction === 'attack' ? '#8fe8ff' : null, sheet: monSheet }))
         A.monster(ctx, mx, gy, 1.3, { name: mon.name, elite: mon.elite, t, hurt: t < F.monHurt, alpha: mon.alpha });
-      if (!F.dieAt) { ctx.fillStyle = '#fff'; ctx.font = 'bold 11px sans-serif'; ctx.textAlign = 'center'; ctx.fillText(mon.label, mx, gy - 80); }
+      if (!F.dieAt) { ctx.fillStyle = '#fff'; ctx.font = 'bold 11px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText(mon.label, mx, gy - 80); }
     }
-    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(255,235,191,.8)'; ctx.font = '11px sans-serif'; ctx.fillText('戰鬥演出 · 收益依冒險結算', 10, 18);
+    ctx.textAlign = 'left'; ctx.fillStyle = 'rgba(255,235,191,.8)'; ctx.font = '11px "jfOpenHuninn",sans-serif'; ctx.fillText('戰鬥演出 · 收益依冒險結算', 10, 18);
     ctx.textAlign = 'center';
     F.floats = F.floats.filter((f) => t - f.t0 < 1.1);
-    for (const f of F.floats) { const k = (t - f.t0) / 1.1; if (k < 0) continue; ctx.globalAlpha = 1 - k; ctx.font = `900 ${f.size}px ${ART ? (getComputedStyle(document.documentElement).getPropertyValue('--f-num') || 'serif') : 'sans-serif'}`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.strokeText(f.text, f.x, f.y - k * 34); ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - k * 34); ctx.globalAlpha = 1; }
+    for (const f of F.floats) { const k = (t - f.t0) / 1.1; if (k < 0) continue; ctx.globalAlpha = 1 - k; ctx.font = `900 ${f.size}px "jfOpenHuninn",sans-serif`; ctx.lineWidth = 3; ctx.strokeStyle = 'rgba(0,0,0,.7)'; ctx.strokeText(f.text, f.x, f.y - k * 34); ctx.fillStyle = f.color; ctx.fillText(f.text, f.x, f.y - k * 34); ctx.globalAlpha = 1; }
   }
 
   // ---------- header + nav ----------
@@ -1200,7 +1198,7 @@
     c.classList.add('forge-flow-sheet');const flowContent=document.createElement('div');flowContent.className='forge-flow-content';const flowFooter=c.querySelector('.grid2');flowFooter.classList.add('forge-flow-footer');[...c.children].forEach(child=>{if(child!==flowFooter)flowContent.append(child)});c.prepend(flowContent);
     c.querySelectorAll('[data-affix-lock]').forEach(el=>el.onchange=()=>{const next=[...c.querySelectorAll('[data-affix-lock]:checked')].map(x=>Number(x.dataset.affixLock));if(next.length>=slots&&!window.RpgAutoRerollUI.typeMode(S.me.character.tgId+':'+e.id)){el.checked=false;return toast('至少留一條可重洗詞條',true);}doReroll(e,next);});
     c.querySelector('[data-affix-back]').onclick=()=>itemSheet(e.id);
-    window.RpgAutoRerollUI.mount(c,{key:S.me.character.tgId+':'+e.id,item:e,locks:locked,actor:S.me.character,gold:S.me.character.gold,scrolls:S.me.inventory.scroll_r||0,api,onConfigure:()=>doReroll(e,locked),onError:m=>toast(m,true),onManual:async()=>{closeSheet();await forgeAffixes(e,locked,price,missing,gold);},onStart:async settings=>{const key='auto-reroll:'+e.id+':'+JSON.stringify(settings),r=await api('auto-reroll/start',{itemId:e.id,...settings,requestId:pendingRequestId(key)});clearPendingRequest(key);closeSheet();S.autoReroll=r.job;await syncBackground().catch(()=>{});showRerollJob(r.job);}});
+    window.RpgAutoRerollUI.mount(c,{key:(S.realmId&&S.realmId!=='permanent'?S.realmId+':':'')+S.me.character.tgId+':'+e.id,item:e,locks:locked,actor:S.me.character,gold:S.me.character.gold,scrolls:S.me.inventory.scroll_r||0,api,onConfigure:()=>doReroll(e,locked),onError:m=>toast(m,true),onManual:async()=>{closeSheet();await forgeAffixes(e,locked,price,missing,gold);},onStart:async settings=>{const key=(S.realmId&&S.realmId!=='permanent'?S.realmId+':':'')+'auto-reroll:'+e.id+':'+JSON.stringify(settings),r=await api('auto-reroll/start',{itemId:e.id,...settings,requestId:pendingRequestId(key)});clearPendingRequest(key);closeSheet();S.autoReroll=r.job;await syncBackground().catch(()=>{});showRerollJob(r.job);}});
   }
 
   function eqIcon(e) { return gearIcon(e, SLOT_EMOJI[e.slot] || '⚔️'); }
@@ -1403,7 +1401,7 @@
   }
   function mountMarket(view) {
     marketActor=String(S.me.character.tgId);marketShopRef=S.shop;marketShopTab=S.shopTab;marketShopSaleSignature=S.shopTab==='sell'?marketSaleSignature():null;
-    const key=actor=>`elfRpgExchangePending:${devTg||tg?.initDataUnsafe?.user?.id||'account'}:${actor}`;
+    const realm=S.realmId||'permanent',key=actor=>`elfRpgExchangePending:${realm==='permanent'?'':realm+':'}${devTg||tg?.initDataUnsafe?.user?.id||'account'}:${actor}`;
     marketController=window.RpgMarketExchange.mount(view,{esc,fmt,gearIcon,characterId:()=>S.me?.character?.tgId,api,requestId:window.RpgMarketExchange.requestId,
       itemIcon:item=>item?.startsWith('book_')?`<img src="/expedition/assets/skills-painted-20261011/${esc(item.slice(5))}.webp" alt="" loading="lazy">`:iconHtml(item,itemEmoji(item)),
       confirm:confirmSheet,toast,showDetail:html=>{const c=sheet(html+'<button type="button" class="btn ghost" data-market-close>返回</button>');c.querySelector('[data-market-close]').onclick=closeSheet;},
@@ -1413,8 +1411,8 @@
     });
   }
   function openGuardianShop(itemId=null,quality='all') {
-    const owner=String(S.me?.character?.tgId||'');if(!owner)return;
-    window.RpgGuardianShop.open({actor:()=>String(S.me?.character?.tgId||''),api,sheet,close:closeSheet,onSold:async result=>{await refreshMe({silent:true,full:true});if(String(S.me?.character?.tgId)!==owner)return;renderHud();if(guardianController){const next=await window.RpgGuardianHost.state();if(String(S.me?.character?.tgId)===owner)guardianController.update({state:next});}toast('已出售 '+result.count+' 位天使，獲得 '+fmt(result.gold)+' 金幣');}},{itemId,quality});
+    const owner=String(S.me?.character?.tgId||''),realm=S.realmId,epoch=S.contextEpoch,current=()=>String(S.me?.character?.tgId)===owner&&S.realmId===realm&&S.contextEpoch===epoch;if(!owner)return;
+    window.RpgGuardianShop.open({actor:()=>String(S.me?.character?.tgId||''),realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,api,sheet,close:closeSheet,onSold:async result=>{if(!current())return;await refreshMe({silent:true,full:true});if(!current())return;renderHud();if(guardianController){const next=await window.RpgGuardianHost.state();if(current())guardianController.update({state:next});}if(current())toast('已出售 '+result.count+' 位天使，獲得 '+fmt(result.gold)+' 金幣');}},{itemId,quality});
   }
   function openGachaPurchase(type) {
     const actor=S.me.character.tgId,g=S.shop.gacha.find(x=>x.type===type);if(!g)return;
@@ -1549,16 +1547,44 @@
         <div class="muted mt">我的輸出：${fmt(me.damage)}（${me.hits || 0} 次）${myRank >= 0 ? ` · 第 ${myRank + 1} 名` : ''}</div></div>
       ${bossPlayerVitals()}<div class="card"><h3>🏆 傷害排行 · 前 30 名</h3><div class="rank">${(b.top || []).slice(0, 30).map((t, i) => `<div class="${String(t.tgId) === String(S.me.character.tgId) ? 'me' : ''}"><span>${['🥇', '🥈', '🥉'][i] || i + 1}</span><span>${esc(t.name)}</span><span>${fmt(t.damage)}</span></div>`).join('') || '<div class="muted">還沒有人出手，搶頭香！</div>'}</div></div>`;
   }
+  let legacySkillVfxPromise=null;
+  const loadLegacySkillVfx=()=>legacySkillVfxPromise||(legacySkillVfxPromise=import('/skill-vfx-legacy.mjs').catch(error=>{legacySkillVfxPromise=null;throw error;}));
   const BF = { hitT: -9, dmg: 0, crit: false, result: null, bossId: null, charId: null };
+  let bossVfxCleanup=null;
+  async function playBossSkillReceipt(scene,boss,result,actorId,getGeometry,onCast){
+    const raw=[...(result.actions||[]).flatMap(action=>[action.vfx,...(action.vfxEvents||[])]),...(result.vfxEvents||[])].filter(Boolean);
+    if(!scene||!raw.length)return;
+    const realm=S.realmId||'permanent',receipt=result;let stopped=false,layer=null,timer=0,release=null;
+    const valid=()=>!stopped&&scene.isConnected&&!document.hidden&&S.tab==='boss'&&String(S.me?.character?.tgId)===String(actorId)&&(S.realmId||'permanent')===realm&&BF.result===receipt;
+    const wait=ms=>new Promise(resolve=>{release=resolve;timer=setTimeout(()=>{release=null;resolve();},ms);});
+    const cleanup=()=>{if(stopped)return;stopped=true;clearTimeout(timer);release?.();release=null;layer?.destroy();};
+    bossVfxCleanup?.();bossVfxCleanup=cleanup;
+    try{
+      const api=await loadLegacySkillVfx();if(!valid())return;
+      layer=await api.createLegacyVfxLayer(scene,{mode:'boss',contextKey:'boss:'+realm+':'+actorId+':'+boss.id,isCurrent:valid});
+      await layer?.prepare(raw);if(!valid())return;
+      for(const descriptor of raw){
+        if(!valid())return;
+        if(descriptor.actorId!==String(actorId))continue;
+        if(descriptor.kind==='cast'){onCast?.();await wait(200);if(!valid())return;}
+        const geometry=getGeometry();if(!geometry)continue;
+        const played=await layer?.play(descriptor,geometry,{canStart:valid});
+        if(played?.accepted)await wait(played.remainingMs);
+      }
+    }catch{/* Missing optional artwork never changes the committed boss result. */}
+    finally{cleanup();if(bossVfxCleanup===cleanup)bossVfxCleanup=null;}
+  }
   let bossWaitingCleanup = null;
   function bindBoss(view) {
     const b = S.boss;
     if (!b) { bossWaitingCleanup = window.RpgBossWaiting.mount(view.querySelector('.boss-wait')); return; }
+    let bossGeometry=null,bossCastAt=-Infinity;
+    const bossSurface=view.querySelector('.bossbox');
     drawers.push({ c: $('#bcv', view), fn: (ctx, w, h, t) => {
       const mapId = Math.max(1,Math.min(12,Number(b ? b.mapId : S.me.character.mapId)||1));
       const bi = artImg('map', V2 ? `myth${String(mapId).padStart(2,'0')}` : mapId);
       if (bi) { const s = Math.max(w / bi.width, h / bi.height); ctx.drawImage(bi, (w - bi.width * s) / 2, h - bi.height * s, bi.width * s, bi.height * s); } else if(!V2)A.scene(ctx,w,h,{mapId:Math.min(4,mapId),t});else{const bg=ctx.createLinearGradient(0,0,0,h);bg.addColorStop(0,'#122337');bg.addColorStop(1,'#08131e');ctx.fillStyle=bg;ctx.fillRect(0,0,w,h);}
-      const gy = h * 0.92; const k = t - BF.hitT;
+      const gy = h * 0.92; const k = t - BF.hitT,actorK=t-bossCastAt;
       const heroFigure = BATTLE ? window.RpgBattle.visibleBounds(heroSprite()) : [0,0,1,1];
       const bossArtKey=b&&(BOSS_ANIM[b.spriteKey||b.name]||expansion?.spec(b.spriteKey||b.name)?b.spriteKey||b.name:b.mapId);
       const bossSheet = b ? bossAnimSprite(bossArtKey) : null;
@@ -1573,9 +1599,20 @@
       const bossY = gy-120*(1-heroFigure[3])+bossHeight*(1-(bossLayout ? bossLayout.feet : bossFigure[3]));
       const phase=t%8,casting=phase>=4&&phase<5,attacking=phase>=2&&phase<2.65;
       const bossAction=k>.15&&k<.45?'hurt':casting?'cast':attacking?'attack':'idle';
-      if (b&&b.hp>0&&b.status==='active') { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011') && !expansion?.spec(bossArtKey), sheet: bossSheet })) {if(!V2)A.boss(ctx,bx,gy,1.15,{mapId:b.mapId,t,hurt:k>.15&&k<.45});else{ctx.save();ctx.textAlign='center';ctx.font='13px serif';ctx.fillStyle='#ddc991';const meta=IMG_LOAD[artSrc('boss',bossArtKey)];ctx.fillText(meta?.failed&&meta.attempt>=3?'首領畫像暫未載入，重新開啟可重試':'正在描繪首領…',w*.68,h*.55);ctx.restore();}} }
-      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
-      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action: b&&b.hp>0&&b.status==='active'&&k < 0.4 ? 'attack' : 'idle', p: k / 0.4 })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action: b&&b.hp>0&&b.status==='active'&&k < 0.4 ? 'attack' : 'idle', p: k / 0.4 }));
+      if (b&&b.hp>0&&b.status==='active') { if (!drawSprite(ctx, bossImage, bx, bossY, bossHeight, { t, action:bossAction,p:casting?phase-4:attacking?(phase-2)/.65:0, attackDirection:-1, flip: [1,3].includes(Number(b.mapId)) && !bossFrame?.currentSrc.includes('monsters-clean-20261011') && !expansion?.spec(bossArtKey), sheet: bossSheet })) {if(!V2)A.boss(ctx,bx,gy,1.15,{mapId:b.mapId,t,hurt:k>.15&&k<.45});else{ctx.save();ctx.textAlign='center';ctx.font='13px "jfOpenHuninn",sans-serif';ctx.fillStyle='#ddc991';const meta=IMG_LOAD[artSrc('boss',bossArtKey)];ctx.fillText(meta?.failed&&meta.attempt>=3?'首領畫像暫未載入，重新開啟可重試':'正在描繪首領…',w*.68,h*.55);ctx.restore();}} }
+      else { ctx.fillStyle = 'rgba(0,0,0,.25)'; ctx.font = '900 90px "jfOpenHuninn",sans-serif'; ctx.textAlign = 'center'; ctx.fillText('?', w * 0.66, gy - 30); }
+      const heroAttacking=b&&b.hp>0&&b.status==='active'&&((actorK>=0&&actorK<.4)||(k>=0&&k<.4)),heroPhase=(actorK>=0&&actorK<.4?actorK:k)/.4;
+      if (!drawSprite(ctx, heroSprite(), w * 0.24, gy, 120, { t, action:heroAttacking?'attack':'idle', p:heroPhase })) A.hero(ctx, w * 0.24, gy, 1.2, heroOpts({ t, action:heroAttacking?'attack':'idle', p:heroPhase }));
+      // These coordinates are the same CSS-space placement used by the sprites above.
+      // They are presentation anchors, never independently simulated combat positions.
+      const heroImage=heroSprite(),heroWidth=heroImage?.width&&heroImage?.height?120*heroImage.width/heroImage.height:120;
+      const heroBodyHeight=120*(heroFigure[3]-heroFigure[1]),heroBodyX=w*.24+heroWidth*((heroFigure[0]+heroFigure[2])*.5-.5);
+      const heroFoot={x:heroBodyX,y:gy-120*(1-heroFigure[3])},heroBody={x:heroBodyX,y:heroFoot.y-heroBodyHeight*.55};
+      const enemyFoot=bossY-bossHeight*(1-(bossLayout?bossLayout.feet:bossFigure[3]));
+      const enemyPoint={x:bx,y:enemyFoot-bossHeight*bossBody*.55};
+      bossGeometry={actorId:String(S.me.character.tgId),from:{x:heroBody.x+(heroAttacking?Math.sin(Math.min(1,heroPhase)*Math.PI)*12:0),y:heroBody.y},
+        foot:heroFoot,bodyHeight:heroBodyHeight,direction:'right',
+        targets:[{id:String(S.me.character.tgId),point:heroBody,bodyHeight:heroBodyHeight},{id:'boss',point:enemyPoint,bodyHeight:bossHeight*bossBody}]};
       window.RpgGuardianSigil?.draw(ctx,S.me.guardian,w*.24,gy-120*heroFigure[3],48);
       if(b&&b.hp>0&&b.status==='active'&&casting&&!window.matchMedia('(prefers-reduced-motion: reduce)').matches){
         if(expansion?.spec(bossArtKey)&&window.RpgSkillFX?.drawMonster){const meta=expansion.spec(bossArtKey);window.RpgSkillFX.drawMonster(ctx,phase-4,{x:bx-bossHeight*.12,y:gy-bossHeight*.48},{x:w*.24,y:gy-70},window.RpgSkillFX.monsterProfile(b.spell || meta.spell,true));}
@@ -1587,7 +1624,7 @@
         ctx.strokeStyle=color;ctx.lineWidth=2;ctx.beginPath();ctx.ellipse(bx,gy,18+p*20,5+p*6,p*2,0,Math.PI*2);ctx.stroke();ctx.restore();
         }
       }
-      if (k >= 0 && k < 1.25 && BF.charId === S.me.character.tgId) { const q = k / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.font = '12px sans-serif'; ctx.fillText('連擊總傷害', w*.66, gy-119-q*40); if(BF.result?.counter){ctx.fillStyle='#ff918c';ctx.font='bold 16px sans-serif';ctx.fillText(`反擊 −${fmt(BF.result.counter)}`,w*.24,gy-135-q*30);} ctx.globalAlpha = 1; }
+      if (k >= 0 && k < 1.25 && BF.charId === S.me.character.tgId) { const q = k / 1.25; ctx.globalAlpha = 1 - q; ctx.textAlign = 'center'; ctx.font = `900 ${BF.crit ? 34 : 28}px "jfOpenHuninn",sans-serif`; ctx.lineWidth = 4; ctx.strokeStyle = '#000'; ctx.strokeText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.fillStyle = BF.crit ? '#ff9b4a' : '#ffe066'; ctx.fillText(fmt(BF.dmg), w * 0.66, gy - 140 - q * 40); ctx.font = '12px "jfOpenHuninn",sans-serif'; ctx.fillText('連擊總傷害', w*.66, gy-119-q*40); if(BF.result?.counter){ctx.fillStyle='#ff918c';ctx.font='bold 16px "jfOpenHuninn",sans-serif';ctx.fillText(`反擊 −${fmt(BF.result.counter)}`,w*.24,gy-135-q*30);} ctx.globalAlpha = 1; }
     } });
     const atk = $('#atk', view);
     if (atk && !atk.disabled) atk.onclick = async () => {
@@ -1598,6 +1635,7 @@
         if (S.me.character.tgId !== attacker) return;
         const r = j.result || {};if(r.killed)S.lastBoss={...b,status:'killed',hp:0}; BF.hitT = performance.now() / 1000; BF.dmg = r.damage || 0; BF.crit = (r.crits || 0) > 0; BF.result = r; BF.bossId = b.id; BF.charId = attacker;
         toast(`⚔️ 連擊共造成 ${fmt(r.damage)} 傷害${r.crits ? `（${r.crits} 次爆擊）` : ''}${r.killed ? ' · 🎉 首領倒下！' : ''}${r.downed ? ' · 你被打倒了' : ''}`); haptic('ok');
+        await playBossSkillReceipt(bossSurface,b,r,String(attacker),()=>bossGeometry,()=>{bossCastAt=performance.now()/1000;});
         render(); setTimeout(refreshMe, 1500);
       } catch (e) { toast(e.message, true); haptic('error'); render(); }
       finally { S.busy = false; }
@@ -1845,37 +1883,63 @@
     if(Number.isFinite(step.directDamage)&&Math.abs(step.directDamage-total)>.001)return [];
     return rows;
   }
+  function pkStepPresentation(step) {
+    const receipts=[step.vfx,...(Array.isArray(step.vfxEvents)?step.vfxEvents:[])].filter(value=>value&&typeof value==='object');
+    if(!receipts.length)return {attack:true,label:step.skill?'施展技能':'發動攻擊'};
+    const casts=receipts.filter(raw=>raw.kind==='cast'&&raw.actorId===step.by);
+    if(casts.some(raw=>raw.presentationMode==='full'))return {attack:true,label:step.skill?'施展技能':'發動攻擊'};
+    if(casts.some(raw=>raw.presentationMode==='summon'))return {attack:false,label:'施展召喚'};
+    if(casts.some(raw=>raw.presentationMode==='support'))return {attack:false,label:'施展支援技能'};
+    return {attack:false,label:'持續效果結算'};
+  }
   function pkReplay(p) {
     const lg = p.log || {}; const steps = lg.steps || []; const max = lg.max || { a: 1, b: 1 };
     const maxMp = lg.maxMp;
     let state = { hp: { ...(lg.initial?.hp || max) }, mp: { ...(lg.initial?.mp || maxMp || {}) } };
     const side = (x, k) => `<div class="pkf" id="pk_${k}"><img src="${artSrc('portrait', heroKey(x.baseClass, x.gender, x.classPath))}" alt=""><b>${esc(x.name)}</b><small>Lv.${x.level} ${esc(x.className || '')}</small>${bar('hp', state.hp[k], max[k], `生命值 ${fmt(state.hp[k])} / ${fmt(max[k])}`)}${maxMp ? bar('mp', state.mp[k], maxMp[k], `魔力 ${fmt(state.mp[k])} / ${fmt(maxMp[k])}`) : ''}<div class="pkdmg"></div></div>`;
     const c = sheet(`<h2>⚔️ ${esc(p.a.name)} vs ${esc(p.b.name)}</h2><div class="muted">決鬥重播 · 傷害與血量依本場紀錄</div><div class="pkarena">${side(p.a, 'a')}<div class="pkvs">VS</div>${side(p.b, 'b')}</div><div class="pkres muted" id="pkres">${p.rounds} 回合…</div><div class="row mt"><button class="btn ghost" data-skip>跳過</button><button class="btn" data-x>關閉</button></div>`);
-    const resultNode = c.querySelector('#pkres'); let i = 0, tm = 0, ended = false;
-    const active = () => !ended && c.isConnected && !$('#sheet').hidden && c.querySelector('#pkres') === resultNode;
-    const cancel = () => { clearTimeout(tm); ended = true; }; sheetPlaybackCancel = cancel;
+    const resultNode = c.querySelector('#pkres'); let i = 0, tm = 0, ended = false,legacy=null,legacyApi=null;
+    const replayActor=String(S.me?.character?.tgId||''),replayRealm=S.realmId||'permanent',arena=c.querySelector('.pkarena');
+    const active = () => !ended && c.isConnected && !$('#sheet').hidden && c.querySelector('#pkres') === resultNode&&String(S.me?.character?.tgId||'')===replayActor&&(S.realmId||'permanent')===replayRealm;
+    const cancel = () => { clearTimeout(tm); ended = true;legacy?.destroy(); }; sheetPlaybackCancel = cancel;
     const set = (k) => { for (const kind of ['hp', 'mp']) { const el = c.querySelector(`#pk_${k} .bar.${kind}`); const limit = kind === 'hp' ? max[k] : maxMp?.[k]; if (el && Number.isFinite(state[kind][k])) { el.querySelector('i').style.width = `${pct(state[kind][k], limit)}%`; el.querySelector('b').textContent = `${kind.toUpperCase()} ${fmt(state[kind][k])} / ${fmt(limit)}`; } } };
     const finish = () => { if (!active()) return cancel(); clearTimeout(tm); if (lg.hp) state.hp = { ...lg.hp }; if (lg.mp) state.mp = { ...lg.mp }; set('a'); set('b'); const w = p.winner === 'a' ? p.a : p.b, l = p.winner === 'a' ? p.b : p.a;
       c.querySelectorAll('.pkf').forEach(el => el.classList.remove('atk','hitme'));
       c.querySelector(`#pk_${p.winner}`).classList.add('win'); c.querySelector(`#pk_${p.winner === 'a' ? 'b' : 'a'}`).classList.add('lose');
       resultNode.className = 'pkres'; resultNode.innerHTML = `🏆 <b>${esc(w.name)}</b> 勝！${lg.ko ? `${p.rounds} 回合擊倒` : `${p.rounds} 回合判定`}<br>${p.drop ? `💥 ${esc(l.name)} 掉落【${esc(p.drop.name)}】→ ${esc(w.name)}（已解除綁定，可交易買回）` : p.wardUsed ? `🧿 ${esc(l.name)} 的守護符擋下了掉裝` : `${esc(l.name)} 沒有掉裝備`}`;
-      ended = true; if (sheetPlaybackCancel === cancel) sheetPlaybackCancel = null;
+      ended = true;legacy?.destroy(); if (sheetPlaybackCancel === cancel) sheetPlaybackCancel = null;
+    };
+    const playStepVfx=entry=>{
+      if(!legacy||!active())return 0;
+      let remaining=0;
+      const targets=['a','b'].map(id=>({id,node:c.querySelector('#pk_'+id+' img')}));
+      for(const descriptor of legacyApi.legacyDescriptors(entry)){
+        if(!['a','b'].includes(descriptor.actorId))continue;
+        const actor=c.querySelector('#pk_'+descriptor.actorId+' img');
+        const geometry=legacyApi.legacyDomGeometry(arena,actor,targets,{actorId:descriptor.actorId});
+        remaining=Math.max(remaining,legacy.timing(descriptor)?.remainingMs||0);
+        void legacy.play(descriptor,geometry,{canStart:active});
+      }
+      return remaining;
     };
     const step = () => {
       if (!active()) return cancel(); if (i >= steps.length || document.hidden) return finish();
       const s = steps[i++], tgt = s.by === 'a' ? 'b' : 'a', f = c.querySelector(`#pk_${tgt}`), atk = c.querySelector(`#pk_${s.by}`);
-      c.querySelectorAll('.pkf').forEach(el => { el.classList.remove('atk','hitme'); const d = el.querySelector('.pkdmg'); d.className = 'pkdmg'; d.style.color = ''; }); void atk.offsetWidth; atk.classList.add('atk');
+      const presentation=pkStepPresentation(s);
+      c.querySelectorAll('.pkf').forEach(el => { el.classList.remove('atk','hitme'); const d = el.querySelector('.pkdmg'); d.className = 'pkdmg'; d.style.color = ''; });
+      if(presentation.attack){void atk.offsetWidth;atk.classList.add('atk');}
       const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
-      const strikes=pkNativeStrikes(s,p[s.by]);
+      const strikes=presentation.attack?pkNativeStrikes(s,p[s.by]):[];let vfxRemaining=0,vfxReleased=false;
+      const releaseVfx=()=>{if(!vfxReleased){vfxReleased=true;vfxRemaining=playStepVfx(s);}};
       if(strikes.length){
         const done=()=>{
           if(!active())return cancel();
           state=pkFrame(state,s);set('a');set('b');
           if(state.healed>0){const heal=atk.querySelector('.pkdmg');heal.textContent=`+${fmt(state.healed)}`;heal.className='pkdmg on';heal.style.color='#8dffad';}
-          resultNode.textContent=`第 ${Math.ceil(i/2)} 回合 · ${p[s.by].name}${s.skill?'施展技能':'發動攻擊'} · ${strikes.length} 擊（${strikes.map(row=>fmt(row.damage)).join('＋')}）${s.periodicDamage>0?` · 持續傷害 ${fmt(s.periodicDamage)}`:''}${state.healed>0?` · 回復 ${fmt(state.healed)} 生命值`:''}`;
-          tm=setTimeout(step,reduced?80:300);
+          resultNode.textContent=`第 ${Math.ceil(i/2)} 回合 · ${p[s.by].name}${presentation.label} · ${strikes.length} 擊（${strikes.map(row=>fmt(row.damage)).join('＋')}）${s.periodicDamage>0?` · 持續傷害 ${fmt(s.periodicDamage)}`:''}${state.healed>0?` · 回復 ${fmt(state.healed)} 生命值`:''}`;
+          tm=setTimeout(step,Math.max(reduced?80:300,vfxRemaining));
         };
-        if(reduced){tm=setTimeout(()=>{if(!active())return cancel();const d=f.querySelector('.pkdmg');d.textContent=`${strikes.length}擊`;d.className='pkdmg on';done();},40);return;}
+        if(reduced){tm=setTimeout(()=>{if(!active())return cancel();releaseVfx();if(strikes.some(row=>row.damage>0)){const d=f.querySelector('.pkdmg');d.textContent=`${strikes.length}擊`;d.className='pkdmg on';}done();},40);return;}
         let strikeIndex=0;
         const poke=()=>{
           if(!active())return cancel();
@@ -1883,22 +1947,32 @@
           const row=strikes[strikeIndex++];
           tm=setTimeout(()=>{
             if(!active())return cancel();
-            f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${row.crit?'💥':''}−${fmt(row.damage)}`;d.className=`pkdmg on${row.crit?' crit':''}${s.skill?' skill':''}`;
+            releaseVfx();if(row.damage>0){f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${row.crit?'💥':''}−${fmt(row.damage)}`;d.className=`pkdmg on${row.crit?' crit':''}${s.skill?' skill':''}`;}
             if(strikeIndex<strikes.length)tm=setTimeout(poke,180);else done();
           },180);
         };
         poke();return;
       }
       tm = setTimeout(() => {
-        if (!active()) return cancel(); state = pkFrame(state, s); set('a'); set('b'); f.classList.add('hitme');
-        const d = f.querySelector('.pkdmg'); d.textContent = `${s.crit ? '💥' : ''}−${fmt(state.damage)}`; d.className = `pkdmg on${s.crit ? ' crit' : ''}${s.skill ? ' skill' : ''}`;
+        if (!active()) return cancel();releaseVfx(); state = pkFrame(state, s); set('a'); set('b');
+        if(state.damage>0){f.classList.add('hitme');const d=f.querySelector('.pkdmg');d.textContent=`${s.crit?'💥':''}−${fmt(state.damage)}`;d.className=`pkdmg on${s.crit?' crit':''}${s.skill?' skill':''}`;}
         if (state.healed > 0) { const heal = atk.querySelector('.pkdmg'); heal.textContent = `+${fmt(state.healed)}`; heal.className = 'pkdmg on'; heal.style.color = '#8dffad'; }
-        resultNode.textContent = `第 ${Math.ceil(i / 2)} 回合 · ${s.by === 'a' ? p.a.name : p.b.name}${s.skill ? '施展技能' : '發動攻擊'}${state.healed > 0 ? ` · 回復 ${fmt(state.healed)} 生命值` : ''}`;
-        tm = setTimeout(step, reduced ? 80 : s.crit ? 520 : 300);
+        resultNode.textContent = `第 ${Math.ceil(i / 2)} 回合 · ${s.by === 'a' ? p.a.name : p.b.name}${presentation.label}${state.healed > 0 ? ` · 回復 ${fmt(state.healed)} 生命值` : ''}`;
+        tm = setTimeout(step, Math.max(reduced ? 80 : s.crit ? 520 : 300,vfxRemaining));
       }, reduced ? 40 : 180);
     };
     c.querySelector('[data-x]').onclick = closeSheet; c.querySelector('[data-skip]').onclick = finish;
-    tm = setTimeout(step, 500);
+    const startReplay=async()=>{
+      if(steps.some(entry=>entry.vfx||entry.vfxEvents?.length)){
+        try{
+          legacyApi=await loadLegacySkillVfx();if(!active())return;
+          legacy=await legacyApi.createLegacyVfxLayer(arena,{mode:'pk',contextKey:'pk:'+replayRealm+':'+p.id+':'+replayActor,isCurrent:active});
+          await legacy?.prepare(steps.flatMap(legacyApi.legacyDescriptors));
+        }catch{legacy?.destroy();legacy=null;}
+      }
+      if(active())tm=setTimeout(step,500);
+    };
+    void startReplay();
   }
   async function playerPicker() {
     const r = S.meta.pk || {}; const me = S.me.character;
@@ -1923,7 +1997,7 @@
   function invItemMenu(k) {
     if(k==='tower_fragment'&&window.RpgExpeditionOpen){closeSheet();window.RpgExpeditionOpen('tower');return;}
     if(k==='star_ring_token'||k==='star_ring_core'){window.RpgExpeditionOpen?.('star-ring');return;}
-    if(k==='fate_cycle_gift'){import('/fate/fate-gift-ui.js?v=20261020-scroll-name1').then(m=>m.openFateGift(window.RpgFateHost)).catch(()=>toast('星輝匣暫未連上，請稍後重試',true));return;}
+    if(k==='fate_cycle_gift'){const epoch=S.contextEpoch;import('/fate/fate-gift-ui.js?v=20261101-realms1').then(m=>{if(epoch===S.contextEpoch&&S.me&&!S.choosing&&!S.creating)m.openFateGift(window.RpgFateHost);}).catch(()=>{if(epoch===S.contextEpoch)toast('星輝匣暫未連上，請稍後重試',true);});return;}
     const have = S.me.inventory[k] || 0, isBook = k.startsWith('book_'), skillId = isBook ? k.slice(5) : null;
     const tradeable = (S.meta.trade?.tradeableItems || []).includes(k), bossRes = k === 'boss_essence' || k === 'relic_fragment';
     const meta = S.meta.items[k] || {};
@@ -2022,7 +2096,7 @@
     const cls = window.RpgThiefClass.selectableClasses(S.meta.classes);
     if(C.cls&&!cls[C.cls]){C.cls=null;C.gender=null;if(C.step>1)C.step=1;}
     const cancel = S.characters.length ? '<button class="btn ghost mt" id="cancelCreate">返回選角</button>' : '';
-    if (C.step === 0) return `<div class="create">${steps}<h1>⚔️ 建立新角色</h1><p>每個 Telegram 帳號最多 4 隻角色</p>
+    if (C.step === 0) return `<div class="create">${steps}<h1>⚔️ 建立新角色</h1><p>目前環境可建立至 ${S.maxCharacters} 隻角色；已保留的角色不會因超過名額被移除。</p>
       <div class="card"><h3>1. 角色名稱</h3><input class="name-in" id="nm" maxlength="12" placeholder="2–12 個字" value="${esc(C.name)}"><div class="muted mt">中文、英文、數字或底線</div></div><button class="btn" id="next">下一步</button>${cancel}</div>`;
     if (C.step === 1) { const sel = C.cls && cls[C.cls];
       return `<div class="create">${steps}<h1>2. 選擇職業</h1><p>轉職後還會分成兩條路線</p><div class="pick3 ${Object.keys(cls).length > 3 ? 'pick4' : ''}">${Object.values(cls).map((c) => `<div class="pickc ${C.cls === c.key ? 'on' : ''}" data-cls="${c.key}"><canvas data-pc="${c.key}"></canvas><b>${esc(c.emoji)} ${esc(c.name)}</b><small>${esc(c.blurb)}</small></div>`).join('')}</div>
@@ -2044,26 +2118,60 @@
       if (C.step === 0 && !/^[\p{Script=Han}A-Za-z0-9_]{2,12}$/u.test(C.name.trim())) return toast('角色名要 2–12 個字，只能用中文、英文、數字或底線', true);
       C.name = C.name.trim(); C.step++; render(); };
     const go = $('#go', view); if (go) go.onclick = async () => {
-      if(S.creationFlight)return;S.creationFlight=true;go.disabled = true;
+      if(S.creationFlight)return;S.creationFlight=true;S.busy=true;go.disabled = true;
       const payload={name:C.name,baseClass:C.cls,gender:C.gender,charSlot:C.slot},key=mutationKey('create',payload);
       try { if(!window.RpgThiefClass.selectableClasses(S.meta.classes)[C.cls])throw new Error('此職業尚未開放建立'); const created=await api('create', { ...payload, requestId:pendingRequestId(key) }); S.characters = created.characters; clearPendingRequest(key); S.create = { step: 0, name: '', cls: null, gender: null, slot: null }; S.creating = false; S.choosing = true; render(); haptic('ok'); toast('🎉 角色建立完成，請選擇角色進入冒險'); }
       catch (e) { toast(e.uncertain?'創角結果待確認，請再按一次確認；會核對同一次創角，不會重複建立。':e.message, true); go.disabled = false; }
-      finally{S.creationFlight=false;}
+      finally{S.creationFlight=false;S.busy=false;render();}
     };
   }
 
   function characterSelectView() {
-    const bySlot = new Map(S.characters.map((c) => [Number(c.slot), c]));
-    const slots = [1, 2, 3, 4].map((slot) => {
-      const c = bySlot.get(slot);
-      if (!c) return `<button class="char-card char-empty" data-new="${slot}" aria-label="建立第 ${slot} 隻角色"><span class="char-question">?</span><b>尚未創角</b><small>第 ${slot} 格 · 建立新冒險者</small><em>＋ 建立角色</em></button>`;
+    if(S.charactersLoading)return '<section class="char-select"><div class="char-select-title" role="status"><h1>正在讀取此環境的角色</h1><p>請稍候，確認伺服器保留的旅人資料。</p></div></section>';
+    if(S.charactersError)return `<section class="char-select"><div class="char-select-title"><h1>角色尚未載入</h1><p>${esc(S.charactersError)}</p><button class="btn" id="retryCharacters">重新讀取角色</button></div></section>`;
+    const maximum=Number(S.maxCharacters)||4,used=new Set(S.characters.filter(c=>!c.retentionGroup||c.retentionGroup==='native').map(c=>Number(c.slot)));
+    const retained=[...S.characters].sort((a,b)=>Number(a.slot)-Number(b.slot));
+    const slots = retained.map((c) => {
+      const slot=Number(c.slot);
       const cls = S.meta.classes[c.baseClass] || {}; const pic = artSrc('hero', heroKey(c.baseClass, c.gender, c.classPath));
-      return `<div class="char-choice"><button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${c.active ? ' · 上次掛機' : ''}</span>
+      return `<div class="char-choice"><button class="char-card ${c.active ? 'char-active' : ''}" data-select="${esc(c.charId)}"><span class="char-slot">角色 ${slot}${c.retentionGroup&&c.retentionGroup!=='native'?' · 季末保留':slot>maximum||c.retained?' · 保留角色':''}${c.active ? ' · 上次掛機' : ''}</span>
         <span class="char-portrait">${pic ? `<img src="${pic}" alt="">` : `<i>${esc(cls.emoji || '✦')}</i>`}</span><strong>${esc(c.name)}</strong><small>${esc(cls.name || c.baseClass)} · Lv.${c.level}</small>
         <em>${c.active ? '繼續冒險' : '選擇角色'}</em></button><button type="button" class="char-delete-link" data-delete-character="${esc(c.charId)}" aria-label="刪除角色 ${esc(c.name)}">刪除角色</button></div>`;
     }).join('');
-    return `<section class="char-select"><div class="char-select-title"><span>✥ ADVENTURER SELECT ✥</span><h1>選擇角色</h1><p>選定的角色會繼續離線掛機，並代表你挑戰世界王</p></div><div class="char-grid">${slots}</div>
-      <div class="char-select-foot">${S.characters.length}/4 名冒險者 · 只有目前選定的角色獲得掛機收益<br><small>每帳號每天最多刪除 1 隻角色 · 台灣時間 00:00 重置</small></div>${S.me ? '<button class="btn ghost char-back" id="backAdventure">返回目前角色</button>' : ''}</section>`;
+    const emptySlots=Array.from({length:maximum},(_,index)=>index+1).filter(slot=>!used.has(slot)).slice(0,Math.max(0,maximum-S.characters.filter(c=>!c.retentionGroup||c.retentionGroup==='native').length)).map(slot=>`<button class="char-card char-empty" data-new="${slot}" aria-label="建立第 ${slot} 隻角色"><span class="char-question">?</span><b>尚未創角</b><small>第 ${slot} 格 · 建立新冒險者</small><em>＋ 建立角色</em></button>`).join('');
+    const realm=S.realms?.find(item=>item.id===S.realmId);
+    return `<section class="char-select"><div class="char-select-title"><span>✥ ${esc(realm?.name||'ADVENTURER SELECT')} ✥</span><h1>${retained.length?'選擇角色':'此環境還沒有角色'}</h1><p>${S.realmId==='permanent'?'既有角色與裝備完整保留於此；選一位旅人繼續冒險。':'賽季角色從新旅程開始；原有角色可在永久環境找到。'}</p></div><div class="char-grid">${slots}${emptySlots}</div>
+      <div class="char-select-foot">${S.characters.length} 名冒險者${S.characters.length>maximum?' · 超出一般建立名額的角色仍完整保留':` · 建立名額 ${maximum}`}<br><small>每帳號每天最多刪除 1 隻角色 · 台灣時間 00:00 重置</small></div>${S.me ? '<button class="btn ghost char-back" id="backAdventure">返回目前角色</button>' : ''}</section>`;
+  }
+  function resetRealmContext() {
+    S.contextEpoch=(S.contextEpoch||0)+1;S.apiEpoch=(S.apiEpoch||0)+1;
+    S.me=null;S.shop=null;S.boss=null;S.lastBoss=null;S.ledger=null;S.trade=null;S.trades=null;S.hall=null;S.pks=null;
+    S.lastReport=null;S.expSettlement=null;S.pending=null;S.session={kills:0,exp:0,gold:0,ticks:0};S.designState={};
+    S.autoEnhance=null;S.autoReroll=null;S.guardianAuto=null;S.backgroundJobs=[];S.bossPersonalActor=null;S._lastTab=null;
+    S.choosing=true;S.creating=false;S.create={step:0,name:'',cls:null,gender:null,slot:null};
+    tradeSelection++;shopForActor=null;idleReportWindows.clear();resetFight();
+    equipmentSync=window.RpgEquipmentLiveSync?.create();equipmentSyncQueued=false;
+    forgeSession++;window.RpgForgeRitual?.dispose?.();const forge=$('#forge');if(forge)forge.hidden=true;$('#app').inert=false;
+    if(!$('#sheet').hidden)closeSheet();
+    window.dispatchEvent(new CustomEvent('rpg-context-changed',{detail:{realmId:S.realmId,epoch:S.contextEpoch}}));
+    render();
+  }
+  const realmStorageKey=()=>`elfRpgRealm:${tg?.initDataUnsafe?.user?.id||devTg||'account'}`;
+  const atlasOperationStorageKey=context=>`elfRpgAtlasOperation:${context.realmId}:${context.characterId}`;
+  const atlasOperationMemory=new Map();
+  function loadAtlasOperation(context){const key=atlasOperationStorageKey(context);if(atlasOperationMemory.has(key))return atlasOperationMemory.get(key);try{return JSON.parse(localStorage.getItem(key)||'null');}catch{return null;}}
+  function saveAtlasOperation(context,value){const key=atlasOperationStorageKey(context);if(value)atlasOperationMemory.set(key,value);else atlasOperationMemory.delete(key);try{if(value)localStorage.setItem(key,JSON.stringify(value));else localStorage.removeItem(key);}catch{}}
+  async function loadRealms() {
+    try{const result=await api('realms');S.realms=Array.isArray(result.realms)?result.realms:[];S.realmError='';return result;}
+    catch(error){S.realmError=error.message;return null;}
+  }
+  async function switchRealm(realmId) {
+    if(S.busy||S.switchingRealm||atlasWorkspace?.client.state.busy||realmId===S.realmId)return;
+    const realm=S.realms.find(item=>item.id===realmId&&item.available!==false);if(!realm)return;
+    S.realmId=realmId;S.characters=[];S.charactersError='';S.charactersLoading=true;S.switchingRealm=true;S.pendingTab='atlas';S.tab='atlas';resetRealmContext();
+    try{const result=await api('characters');S.characters=result.characters||[];S.maxCharacters=result.maxCharacters||4;try{localStorage.setItem(realmStorageKey(),realmId);}catch{} }
+    catch(error){if(error.code!=='context_changed'){S.charactersError=error.message;toast(error.message,true);}}
+    finally{S.charactersLoading=false;S.switchingRealm=false;render();}
   }
   const characterDeleteKey=(id,name)=>`elfRpgPendingDelete:${String(tg?.initDataUnsafe?.user?.id||devTg||'account')}:${id}:${name}`;
   function finishCharacterDelete(result,charId,name,panel=null){
@@ -2092,33 +2200,36 @@
   }
   async function openCharacterSelect() {
     window.RpgElf4AttackFX?.dispose();
-    try { S.pendingTab = S.tab; S.characters = (await api('characters')).characters; S.creating = false; S.choosing = true; render(); }
+    if(S.busy||S.switchingRealm||atlasWorkspace?.client.state.busy)return;
+    try { S.pendingTab = S.tab; const result=await api('characters');S.characters=result.characters||[];S.charactersError='';S.maxCharacters=result.maxCharacters||4; S.creating = false; S.choosing = true; render(); }
     catch (e) { toast(e.message, true); }
   }
   async function enterCharacter(charId){
-    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.choosing=false;S.tab=S.pendingTab||'home';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
+    const j=absorb(await api('select',{charId}),true);S.characters=j.characters||S.characters;S.maxCharacters=j.maxCharacters||S.maxCharacters;S.choosing=false;S.tab=S.pendingTab||'atlas';render();load(S.tab);if(S.tab!=='home')loadLedger();haptic('ok');
   }
   function bindCharacterSelect(view) {
+    const retry=$('#retryCharacters',view);if(retry)retry.onclick=openCharacterSelect;
     view.querySelectorAll('[data-delete-character]').forEach(button=>{button.onclick=()=>{void openCharacterDelete(button.dataset.deleteCharacter);};});
     view.querySelectorAll('[data-new]').forEach((card) => { card.onclick = () => { S.create = { step: 0, name: S.create.name || '', cls: null, gender: null, slot: Number(card.dataset.new) }; S.creating = true; S.choosing = false; render(); }; });
     view.querySelectorAll('[data-select]').forEach((card) => { card.onclick = async () => {
       if (S.busy) return; S.busy = true; card.disabled = true;
       try { await enterCharacter(card.dataset.select); }
       catch (e) { toast(e.message, true); card.disabled = false; }
-      finally { S.busy = false; }
+      finally { S.busy = false; atlasWorkspace?.update(S); }
     }; });
     const back = $('#backAdventure', view); if (back) back.onclick = () => { S.choosing = false; refreshMe(); };
   }
 
   // ---------- render / load ----------
-  function guardianFrameSize(){const root=document.getElementById('guardian-root');if(!root)return;const viewport=window.visualViewport?.height||innerHeight,nav=document.getElementById('nav'),bottom=nav&&!nav.hidden?nav.getBoundingClientRect().top:viewport;root.style.setProperty('--guardian-frame-height',Math.max(320,bottom-22)+'px');}
+  function guardianFrameSize(){const root=document.getElementById('guardian-root');if(!root)return;const panel=document.getElementById('atlas-legacy');if(panel&&!panel.hidden){root.style.setProperty('--guardian-frame-height',Math.max(320,panel.clientHeight-(panel.querySelector('.atlas-panel-header')?.offsetHeight||0)-28)+'px');return;}const viewport=window.visualViewport?.height||innerHeight,nav=document.getElementById('nav'),bottom=nav&&!nav.hidden?nav.getBoundingClientRect().top:viewport;root.style.setProperty('--guardian-frame-height',Math.max(320,bottom-22)+'px');}
   window.addEventListener('resize',guardianFrameSize);window.visualViewport?.addEventListener('resize',guardianFrameSize);
-  function guardianStorage(kind){return `elfRpgGuardian:${kind}:${S.me?.character?.tgId||''}`;}
+  function guardianStorage(kind){const realm=S.realmId||'permanent';return `elfRpgGuardian:${realm==='permanent'?'':realm+':'}${kind}:${S.me?.character?.tgId||''}`;}
   function guardianRead(kind,session=false){try{return JSON.parse((session?sessionStorage:localStorage).getItem(guardianStorage(kind))||'null');}catch{return null;}}
   function guardianWrite(kind,value,session=false){try{const store=session?sessionStorage:localStorage;if(value)store.setItem(guardianStorage(kind),JSON.stringify(value));else store.removeItem(guardianStorage(kind));return true;}catch{return false;}}
   function setGuardianAuto(job){S.guardianAuto=job;guardianAutoBanner();guardianController?.update({autoJob:job});}
   const guardianOperation=operation=>operation?{...operation,requestId:String(operation.requestId||'').replace(/^app:/,'')}:operation;
   window.RpgGuardianHost={
+    realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,
     autoCurrent:()=>S.guardianAuto||null,autoStart:async body=>{const r=await api('guardian/auto/start',body);setGuardianAuto(r.job);await syncBackground().catch(()=>{});return r;},autoStop:async jobId=>{const r=await api('guardian/auto/stop',{jobId});setGuardianAuto(r.job);return r;},
     openShop:(itemId,quality)=>openGuardianShop(itemId,quality),
     characterId:()=>String(S.me?.character?.tgId||''),requestId:()=>`guardian_${crypto.randomUUID().replace(/-/g,'')}`,confirm:confirmSheet,
@@ -2134,6 +2245,7 @@
     openTrade:async item=>{if(S.trade?.status==='open'){const [mine,other]=tradeSide(S.trade);if(mine.locked){toast('交易已鎖定，不能新增羽毛。',true);return;}if(!await confirmSheet('放入守護羽毛',`將這根羽毛放入與 ${esc(other.name)} 的交易視窗？`,'放入'))return;await tradeCall('add',{tradeId:S.trade.id,sigilId:item.id});}else{S.tab='trade';S.social='trade';render();loadTrades();toast('可由「分享至群組」開始交易；已有視窗時可放入守護羽毛。');}}
   };
   function render() {
+    atlasWorkspace?.update(S);
     renderBackground();
     const guardianVisible=S.tab==='guardian'&&!S.choosing&&!S.creating&&!!S.me;
     document.body.classList.toggle('guardian-mode',guardianVisible);
@@ -2145,15 +2257,17 @@
     guardianController?.cleanup();guardianController=null;guardianActor=null;
     if(S.tab!=='shop'||S.shopTab!=='sell'||S.choosing||S.creating)window.RpgMarketSell?.reset();
     bossWaitingCleanup?.(); bossWaitingCleanup = null;
+    bossVfxCleanup?.();bossVfxCleanup=null;
     const oldAway=document.querySelector('.expedition-away');
     awayCleanup?.();awayCleanup=null;
     drawers = []; const view = $('#view');
     if (!S.meta) return;
     const designState = S.designState || (S.designState = {});
-    if (S.choosing) { renderHud(); view.innerHTML = characterSelectView(); bindCharacterSelect(view); window.RpgInterface?.compose(view, { tab: 'select', state: designState }); return; }
+    if (S.choosing) { renderHud(); view.innerHTML = characterSelectView(); bindCharacterSelect(view);const heading=view.querySelector('.char-select-title');window.RpgInterface?.compose(view, { tab: 'select', state: designState });if(atlasWorkspace){view.querySelector(':scope > .my-chapter')?.remove();if(heading)view.querySelector('.char-select')?.prepend(heading);}return; }
     if (S.creating || !S.me) { renderHud(); view.innerHTML = createView(); bindCreate(view); window.RpgInterface?.compose(view, { tab: 'create', state: designState }); return; }
     renderHud();
-    if(guardianVisible){view.innerHTML='<div id="guardian-root"></div>';guardianActor=String(S.me.character.tgId);guardianController=window.RpgGuardianSigil.mount(view.querySelector('#guardian-root'),{host:window.RpgGuardianHost,interactive:true,initialView:S.guardianInitialView||'overview',onBack:()=>{S.tab='home';render();}});guardianFrameSize();return;}
+    if(S.tab==='atlas'){view.innerHTML='';return;}
+    if(guardianVisible){view.innerHTML='<div id="guardian-root"></div>';guardianActor=String(S.me.character.tgId);guardianController=window.RpgGuardianSigil.mount(view.querySelector('#guardian-root'),{host:window.RpgGuardianHost,interactive:true,initialView:S.guardianInitialView||'overview',onBack:()=>{S.tab='atlas';render();}});guardianFrameSize();return;}
     const revealInventory = S._lastTab === 'shop' && S.tab === 'bag';
     const scrollKeep = S._lastTab === S.tab ? window.scrollY : 0; S._lastTab = S.tab;
     if (S.tab === 'home') { view.innerHTML = homeView();const nextAway=view.querySelector('.expedition-away');if(oldAway&&nextAway&&oldAway.dataset.awayKey===nextAway.dataset.awayKey)nextAway.replaceWith(oldAway); bindHome(view); }
@@ -2172,15 +2286,15 @@
     full=full||!!equipmentSync?.pending(S.me?.character?.tgId);
     if(refreshFlight)return refreshEpoch===(S.apiEpoch||0)&&(!full||refreshFull)?refreshFlight:refreshFlight.then(()=>refreshMe({silent,full}));
     const selected=S.me?.character?.tgId,epoch=S.apiEpoch||0,equipmentTicket=equipmentSync?.begin(selected);refreshEpoch=epoch;refreshFull=full;
-    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();return j;}catch(e){if(!silent&&e.code!=='no_character')toast(e.message,true);return null;}finally{refreshFlight=null;}})();
+    refreshFlight=(async()=>{try{const j=await api('me',{summary:!full});if(epoch!==(S.apiEpoch||0)||selected&&S.me?.character?.tgId!==selected)return null;absorb(j,false,equipmentTicket);render();reconcileEquipmentSheet();return j;}catch(e){if(!silent&&!['no_character','context_changed','request_cancelled'].includes(e.code))toast(e.message,true);return null;}finally{refreshFlight=null;}})();
     return refreshFlight;
   }
-  async function loadShop(force) {const actor=String(S.me?.character?.tgId||''),epoch=S.apiEpoch||0;if(S.shop&&!force&&shopForActor===actor)return;try{const result=await api('shop');if(String(S.me?.character?.tgId||'')!==actor||epoch!==(S.apiEpoch||0))return;absorb(result);shopForActor=actor;if(S.tab==='shop')render();}catch(e){if(String(S.me?.character?.tgId||'')===actor)toast(e.message,true);}}
+  async function loadShop(force) {const actor=String(S.me?.character?.tgId||''),epoch=S.apiEpoch||0;if(S.shop&&!force&&shopForActor===actor)return;try{const result=await api('shop');if(String(S.me?.character?.tgId||'')!==actor||epoch!==(S.apiEpoch||0))return;absorb(result);shopForActor=actor;if(S.tab==='shop')render();}catch(e){if(String(S.me?.character?.tgId||'')===actor&&e.code!=='context_changed')toast(e.message,true);}}
   let bossFlight=null;
   function loadBoss({silent=false}={}) {
     if(bossFlight)return bossFlight;
     const selected=S.me?.character?.tgId;
-    bossFlight=(async()=>{try{const previous=S.boss,revision=S.bossRevision||0,j=await api('boss');if((S.bossRevision||0)!==revision)return null;if(selected&&S.me?.character?.tgId!==selected)return null;absorb(j);if(S.tab==='boss')render();if(previous&&!j.boss)await refreshMe({silent:true});return j;}catch(e){if(!silent)toast(e.message,true);return null;}finally{bossFlight=null;}})();
+    bossFlight=(async()=>{try{const previous=S.boss,revision=S.bossRevision||0,j=await api('boss');if((S.bossRevision||0)!==revision)return null;if(selected&&S.me?.character?.tgId!==selected)return null;absorb(j);if(S.tab==='boss')render();if(previous&&!j.boss)await refreshMe({silent:true});return j;}catch(e){if(!silent&&e.code!=='context_changed')toast(e.message,true);return null;}finally{bossFlight=null;}})();
     return bossFlight;
   }
   async function loadLedger() { try { S.ledger = (await api('ledger')).ledger; const el = $('#ledger'); if (el) el.innerHTML = ledgerHtml(); } catch (_) {} }
@@ -2198,8 +2312,8 @@
   }, 1000);
   setInterval(()=>{if(!document.hidden&&S.me&&S.tab==='boss'&&!S.busy&&$('#sheet').hidden)loadBoss({silent:true});},8000);
   // live idle status: the server settles idle progress on every read; poll gently
-  setInterval(() => { if (document.hidden || !S.me || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
-  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me) {refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
+  setInterval(() => { if (document.hidden || !S.me || S.choosing || S.creating || S.busy || !$('#sheet').hidden) return; refreshMe(); if (S.tab === 'boss') loadBoss(); if (S.tab === 'home') loadLedger(); }, 30000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && S.me && !S.choosing && !S.creating) {refreshMe();if(S.tab==='boss')loadBoss({silent:true});} });
 
   function fatal(msg) { $('#view').innerHTML = `<div class="boot"><div class="boot-logo">🧚</div><div style="text-align:center;padding:0 20px">${msg}</div></div>`; }
   async function boot() {
@@ -2213,31 +2327,52 @@
     }
     const tradeId = /^trade_?(t[0-9a-f]{11})$/.exec(spx); const reqId = /^req_?(q[0-9a-f]{11})$/.exec(spx); const pkId = /^pk_?(p[0-9a-f]{11})$/.exec(spx);
     const ringLink=/^ring_([0-9a-f]{32})$/.exec(spx);
-    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'home';
+    const want = ringLink?'boss':tradeId || reqId || pkId ? 'trade' : { 'star-ring':'boss', fate:'home', gacha:'shop', guardian: 'guardian', boss: 'boss', shop: 'shop', bag: 'bag', class: 'class', home: 'home', trade: 'trade', pk: 'trade' }[spx] || 'atlas';
     if(spx==='gacha')S.shopTab='gacha';
     if (pkId || spx === 'pk') S.social = 'pk';
     if (tradeId) S.trade = { id: tradeId[1], a: { lines: [], ok: false }, b: { lines: [], ok: false }, status: 'open', expiresAt: 0, offerRev: -1, me: 'a' };
     fetch('art/v2/heroes.json?v=20261011-elf-adv4-2').then((r) => r.json()).then((h) => { HEROES.nodes = new Set(h.nodes || []); HEROES.meta = h.meta || {}; if (S.me) render(); }).catch(() => {});
     fetch('art/hero-display-hd-20261011/manifest.json?v=20261011-hero-display-2').then(r => r.json()).then(h => { Object.assign(HERO_DISPLAY, h.heroes || {});for(const key of [...Object.keys(ELF_ADV4_HD),...Object.keys(ELF_ADV3_HD),...Object.keys(SWORD_ADV2_HD),...Object.keys(SWORD_ADV3_HD),...Object.keys(SWORD_ADV4_HD),...Object.keys(MAGE_ADV2_HD)])HERO_DISPLAY[key]=artSrc('portrait',key); if (S.me && ['bag', 'class'].includes(S.tab)) render(); }).catch(() => {});
     try {
-      const [m] = await Promise.all([api('meta')]); S.meta = m.meta; Object.assign(ITEMS_REF, m.meta.items);
+      const [m] = await Promise.all([api('meta'),loadRealms()]); S.meta = m.meta; Object.assign(ITEMS_REF, m.meta.items);
+      try{const saved=localStorage.getItem(realmStorageKey());if(S.realms.some(item=>item.id===saved&&item.available!==false))S.realmId=saved;}catch{}
       const u = tg && tg.initDataUnsafe && tg.initDataUnsafe.user; S.create.name = u ? String(u.first_name || '').replace(/[^\p{Script=Han}A-Za-z0-9_]/gu, '').slice(0, 12) : '';
       S.pendingTab = want;
-      S.characters = (await api('characters')).characters || []; S.choosing = true;
+      const roster=await api('characters');S.characters=roster.characters||[];S.maxCharacters=roster.maxCharacters||4;S.choosing=true;
       api('behavior/visit').catch(()=>{});
       const inviteCharacter=ringLink&&S.characters.find(c=>c.active);
-      if(inviteCharacter){S.busy=true;try{await enterCharacter(inviteCharacter.charId);return;}catch(e){S.choosing=true;render();toast(e.message,true);return;}finally{S.busy=false;}}
+      if(inviteCharacter){S.busy=true;try{await enterCharacter(inviteCharacter.charId);return;}catch(e){S.choosing=true;render();toast(e.message,true);return;}finally{S.busy=false;atlasWorkspace?.update(S);}}
       render();
     } catch (e) { fatal(e.status === 401 ? '登入驗證失敗，請關閉後從 @StarJournalRpgBot 重新打開' : esc(e.message)); }
   }
   function openCosmeticWardrobe(){
     if(document.querySelector('.sr-cosmetic-modal')||!S.me)return;
     const dialog=document.createElement('dialog');dialog.className='sr-cosmetic-modal';dialog.setAttribute('aria-label','星環專屬外觀');dialog.innerHTML='<button class="sr-cosmetic-close" type="button" aria-label="關閉衣櫥">×</button><div data-cosmetic-root></div>';document.body.append(dialog);
-    const owner=S.me.character.tgId,stop=window.RpgStarRingCosmetics.mount(dialog.querySelector('[data-cosmetic-root]'),{me:()=>S.me,api:(action,body)=>{if(owner!==S.me?.character?.tgId)throw Error('角色已切換，請重新開啟衣櫥');return api(action,body);},actorArt:characterPortrait,refresh:()=>refreshMe(),toast});
-    const close=()=>{stop();dialog.close();dialog.remove();};dialog.querySelector('.sr-cosmetic-close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});dialog.showModal();
+    const owner=S.me.character.tgId,realm=S.realmId,epoch=S.contextEpoch,current=()=>owner===S.me?.character?.tgId&&realm===S.realmId&&epoch===S.contextEpoch,stop=window.RpgStarRingCosmetics.mount(dialog.querySelector('[data-cosmetic-root]'),{me:()=>S.me,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,api:(action,body)=>{if(!current())throw Error('角色或環境已切換，請重新開啟衣櫥');return api(action,body);},actorArt:characterPortrait,refresh:()=>current()?refreshMe():null,toast});
+    const close=()=>{stop();window.removeEventListener('rpg-context-changed',close);dialog.close();dialog.remove();};dialog.querySelector('.sr-cosmetic-close').onclick=close;dialog.addEventListener('cancel',e=>{e.preventDefault();close();});window.addEventListener('rpg-context-changed',close);dialog.showModal();
   }
-  window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,request:(action,body)=>api(action,body),refresh:()=>refreshMe()};
-  window.RpgExpeditionHost={invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:options=>refreshMe(options),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
+  function atlasHome(){if(!S.me)return void openCharacterSelect();S.choosing=false;S.creating=false;S.tab='atlas';render();}
+  async function openAtlasRoute(route){
+    if(!S.me||S.choosing||S.creating)return void openCharacterSelect();
+    if(route.startsWith('guardian:'))return openGuardian(route.split(':')[1]);
+    if(route==='fate'||route.startsWith('fate:')){atlasHome();const action=route==='fate:archive'?'archive':route==='fate:gift'?'gift':'open';if(!window.RpgFateEntry?.[action])throw Error('旅章入口尚未載入，請重新開啟遊戲。');return window.RpgFateEntry[action]();}
+    if(['skills','party','star-ring'].includes(route)){atlasHome();return window.RpgExpeditionOpen(route==='party'?'lobby':route);}
+    if(route==='background'){await syncBackground();const job=(S.backgroundJobs||[]).find(n=>n.job?.status==='running')||(S.backgroundJobs||[]).at(-1);if(job)return openBackground(job);sheet('<h2>背景工坊</h2><p>目前沒有背景作業。可從裝備詳情啟動自動強化或重鑄，從天使管理啟動自動召喚。</p><button class="btn ghost" data-background-close>返回營地</button>');document.querySelector('[data-background-close]').onclick=closeSheet;return;}
+    const tab=({collection:'bag',journal:'boss',exchange:'shop',hall:'trade'})[route]||route;
+    if(!['home','bag','class','boss','shop','trade'].includes(tab))return;
+    if(route==='hall')S.social='hall';else if(tab==='trade')S.social='trade';
+    S.tab=tab;render();load(tab);
+    if(route==='exchange'){const hall=document.querySelector('[data-market-hall="exchange"]');if(hall){hall.open=true;hall.scrollIntoView({block:'start'});}}
+    if(route==='collection')document.querySelector('.monster-collection')?.scrollIntoView({block:'start'});
+    if(route==='journal')document.querySelector('.journal-panel')?.scrollIntoView({block:'start'});
+  }
+  window.RpgFateHost={characterId:()=>S.me?.character?.tgId,characterName:()=>S.me?.character?.name,realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,request:(action,body)=>api(action,body),refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe():null};
+  window.RpgExpeditionHost={realmId:()=>S.realmId,contextEpoch:()=>S.contextEpoch,invite:p=>{if(!/^ring:[0-9a-f]{32}$/.test(String(p?.id||'')))return;const link='https://t.me/StarJournalRpgBot?startapp=ring_'+p.id.slice(5),count=(p.members||[]).filter(m=>!m.left).length,text='✦ 星環遠征 · Lv.'+p.tier+'\n'+p.name+'，尚缺 '+Math.max(0,5-count)+' 名夥伴。五人同行、十二小時，離線也能一起成長。',url='https://t.me/share/url?url='+encodeURIComponent(link)+'&text='+encodeURIComponent(text);if(tg?.openTelegramLink)tg.openTelegramLink(url);else window.open(url,'_blank','noopener');},request:(action,b)=>{if(b?.selectedCharacterId&&String(b.selectedCharacterId)!==String(S.me?.character?.tgId)){const e=Error('角色已切換，請重新開啟組隊畫面');e.code='character_changed';throw e;}return api(action,b);},me:()=>S.me,toast,characterId:()=>S.me?.character?.tgId,now:sNow,journal:()=>api('journal'),journalEnroll:()=>api('journal/enroll'),journalClaim:b=>api('journal/claim',b),openTab:tab=>{S.tab=tab;render();load(tab);},guardianAssist:async b=>{const r=await api('guardian/assist',b);await refreshMe();return r;},skillState:()=>api('expedition/me'),skillAction:b=>api('expedition/action',b),partyList:()=>api('party/list'),refresh:options=>S.me&&!S.choosing&&!S.creating?refreshMe(options):Promise.resolve(null),openTrade:async id=>{S.tab='trade';S.social='trade';await selectTrade(id);render();}};
+  atlasWorkspace=window.RpgAtlasUI?.mount({request:api,mutationKey,pendingRequestId,clearPendingRequest,loadPendingOperation:loadAtlasOperation,savePendingOperation:saveAtlasOperation,confirm:confirmSheet,toast,portrait:characterPortrait,
+    scene:c=>{const map=c&&(S.meta?.maps?.[c.mapId]||window.RpgMaps?.get(c.level));return {name:map?.name||'星圖營地',image:`/art/star-ring-20261018/map-${String(map?.id||1).padStart(2,'0')}.webp`};},
+    chooseCharacter:()=>void openCharacterSelect(),home:atlasHome,switchRealm,openRoute:route=>{void openAtlasRoute(route).catch(error=>toast(error.message,true));},
+    refresh:()=>S.me&&!S.choosing&&!S.creating?refreshMe({silent:true,full:true}):null});
+  atlasWorkspace?.update(S);
   boot();
 })();
 

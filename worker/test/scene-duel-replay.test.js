@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
+const box={window:{}};vm.runInNewContext(fs.readFileSync(new URL('../public/scene-duel-replay.js',import.meta.url),'utf8'),box);const frame=box.window.RpgSceneDuelReplay.frame;
+test('duel playback follows server after-state without recalculating skills or MP',()=>{const result=frame({hp:{a:100,b:120},mp:{a:40,b:50}},{by:'a',after:{hp:{a:110,b:67},mp:{a:23,b:49}},damage:99999});assert.equal(result.hp.a,110);assert.equal(result.hp.b,67);assert.equal(result.damage,53);assert.equal(result.mp.a,23);assert.equal(result.mp.b,49);});
+test('original legacy duel log fallback retains healing and the other player MP',()=>{const original={hp:{a:60,b:100},mp:{a:20,b:30}},r=frame(original,{by:'b',hp:38,self:107});assert.equal(r.hp.a,38);assert.equal(r.hp.b,107);assert.equal(r.damage,22);assert.equal(r.mp.a,20);assert.equal(original.hp.a,60);});

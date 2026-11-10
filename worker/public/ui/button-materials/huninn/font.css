@@ -1,0 +1,21 @@
+/* Official, unmodified jf open 粉圓 2.1. See OFL.txt for the bundled license. */
+@font-face {
+  font-family: "jfOpenHuninn";
+  src: url("./jf-openhuninn-2.1.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+:root {
+  --f-body: "jfOpenHuninn", "Microsoft JhengHei", sans-serif !important;
+  --f-title: "jfOpenHuninn", "Microsoft JhengHei", sans-serif !important;
+  --f-ui: "jfOpenHuninn", "Microsoft JhengHei", sans-serif !important;
+  --f-num: "jfOpenHuninn", "Microsoft JhengHei", sans-serif !important;
+}
+/* Include forms, SVG labels and pseudo-elements; retain existing sizes/spacing. */
+html:root body,
+html:root body *,
+html:root body *::before,
+html:root body *::after {
+  font-family: "jfOpenHuninn", "Microsoft JhengHei", "Apple Color Emoji", "Segoe UI Emoji", sans-serif !important;
+}

@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T07:46:10.316Z",
+  "sourceCommit": "0f8dfbc2ea1a81e4cfe22d817e06231fb2b1e61a",
+  "catalogPath": "worker/public/skill-vfx-catalog.json",
+  "summary": {
+    "implementedSkillIdentities": 196,
+    "nativeRouteIdentities": 124,
+    "nativeDistinctNames": 124,
+    "nativeDistinctBaseClassAndNames": 124,
+    "specialSkills": 60,
+    "legacySpecialSkills": 54,
+    "releasedThiefSpecialSkills": 6,
+    "atlasMainSkills": 12,
+    "supports": 6,
+    "talentNodesIncludingOrigins": 124,
+    "allocatableTalentNodes": 120,
+    "keystones": 12,
+    "maxTalentPointsPerClass": 24,
+    "plannedAwakeningSkills": 16,
+    "bySystem": {
+      "atlas": 12,
+      "native": 124,
+      "special": 60
+    },
+    "byClass": {
+      "archer": 52,
+      "mage": 52,
+      "sword": 52,
+      "thief": 40
+    },
+    "byKind": {
+      "attack": 171,
+      "buff": 3,
+      "heal": 5,
+      "shield": 15,
+      "summon": 2
+    },
+    "byVisualFamily": {
+      "arcane": 4,
+      "beam": 1,
+      "beast": 12,
+      "bleed": 1,
+      "buff": 4,
+      "combo": 3,
+      "counter": 3,
+      "curse": 1,
+      "dash": 15,
+      "execute": 4,
+      "fireball": 5,
+      "frost": 10,
+      "heal": 5,
+      "holy": 8,
+      "lightning": 3,
+      "meteor": 6,
+      "pierce": 18,
+      "poison": 9,
+      "rain": 3,
+      "shadow": 9,
+      "shield": 18,
+      "slash": 5,
+      "snipe": 1,
+      "summon": 8,
+      "time": 10,
+      "trap": 10,
+      "volley": 10,
+      "whirlwind": 10
+    },
+    "note": "Skill identities and distinct names are not counts of independently painted assets. Gender appearances share the same skill identity. Planned awakenings, passive nodes, and support modifiers are excluded from implemented skill count."
+  },
+  "sourceHashes": [
+    {
+      "path": "worker/src/game/constants.js",
+      "bytes": 37894,
+      "sha256": "c9dce00c74076df8fae89b0ef9c10dc4a442cdc72a14d8754852e7dacc393598"
+    },
+    {
+      "path": "worker/src/game/stats.js",
+      "bytes": 14052,
+      "sha256": "0f57d0c6b7963c464d19307959c9872aca2c06bf1f46d021b0dfa3a8ab6c6910"
+    },
+    {
+      "path": "worker/src/game/classes.js",
+      "bytes": 4817,
+      "sha256": "6d68ead3a610d35efa25dcb2a54d9872f3209cc9d2de6709136f042bcb100c60"
+    },
+    {
+      "path": "worker/src/game/advanced-specializations.js",
+      "bytes": 4713,
+      "sha256": "a7ab69ad4cfd1bb5982eaa12abdbf5fac8064bc03693dd7d79d8864898faa01d"
+    },
+    {
+      "path": "worker/src/game/elf-future.js",
+      "bytes": 10938,
+      "sha256": "971c2e812707b6a9c2b434c9a2511ca00ed124c225bde7b0a48b480267b8abcd"
+    },
+    {
+      "path": "worker/src/game/mage-future.js",
+      "bytes": 11463,
+      "sha256": "28cb0280745537d342f7d93e4376770d14a0f6ad1413f997e7f9e35941aa50ef"
+    },
+    {
+      "path": "worker/src/game/mage-fourth.js",
+      "bytes": 1263,
+      "sha256": "1beb696187da904f75c7c51aef1403930143ff3f5daa698e2406299ac62009f0"
+    },
+    {
+      "path": "worker/src/game/thief-data.js",
+      "bytes": 5730,
+      "sha256": "e90c57b3b9a312f76fe5a7576790fe224f6b97d1e64d960e78ef166f650615dc"
+    },
+    {
+      "path": "worker/src/game/thief-advancement.js",
+      "bytes": 4555,
+      "sha256": "963b661a3460e952d07923d9078e82e0170b5cbbcb8d283b8e287d4bc41e6cf6"
+    },
+    {
+      "path": "worker/src/game/thief-skills.js",
+      "bytes": 6632,
+      "sha256": "d4ccc667fc43ff1a9ba517b6056f40bde2f8da58dc963464fb5115e860c04562"
+    },
+    {
+      "path": "worker/src/game/thief-skill-catalog.js",
+      "bytes": 1447,
+      "sha256": "761d30b7023d873e785c13a9fda4fa14712908e0f5f4add4329cbaf71e8c64d9"
+    },
+    {
+      "path": "worker/src/game/special-data.js",
+      "bytes": 19116,
+      "sha256": "3444f857362dcc7bd7a7b658fa0e64509d812ac8b300ce98241c11c861485b2d"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "bytes": 19011,
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/skill-mastery.js",
+      "bytes": 1546,
+      "sha256": "09c6b9017269801d63d60c543534176649bfef0285a6615f2e34b99b65a42728"
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "bytes": 15546,
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e"
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "bytes": 8153,
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394"
+    }
+  ],
+  "plannedSource": {
+    "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+    "availableLocally": true,
+    "sha256": "e19434eece2ba5c9ce33daa9258dae0481cf698d875b281c7f668d0398715906",
+    "capturedSection": "六 第二輪起的技能路線提案",
+    "runtimeImplemented": false
+  },
+  "checks": {
+    "authoritativeImports": "passed",
+    "uniqueGlobalIds": "passed",
+    "allNativeClassPaths": "passed",
+    "releasedSpecialMechanicsPresent": "passed",
+    "specialEligiblePathsPresent": "passed",
+    "atlasSupportReferences": "passed",
+    "talentRootsAndKeystones": "passed",
+    "plannedExcludedFromImplemented": "passed"
+  },
+  "nativeByClass": {
+    "sword": {
+      "routes": 31,
+      "distinctNames": 31
+    },
+    "archer": {
+      "routes": 31,
+      "distinctNames": 31
+    },
+    "mage": {
+      "routes": 31,
+      "distinctNames": 31
+    },
+    "thief": {
+      "routes": 31,
+      "distinctNames": 31
+    }
+  },
+  "classificationNote": "Visual family is manually curated from names and source effects. Numeric mechanics are copied from live exports. This audit does not approve animation artwork or claim battle-event integration."
+}

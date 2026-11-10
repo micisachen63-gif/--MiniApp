@@ -1,0 +1,53 @@
+星穹之旅：技能 VFX 證據歸檔
+================================
+
+本歸檔的 archive-index.json 分成：
+- canonicalEvidence：10 份重建 coverage manifest 所需的主要證據。
+- supplementaryEvidence：57 份交接、驗證紀錄與身份瀏覽器素材。
+合計 67 個證據檔案、22,034,694 bytes，包含 40 張身份驗收 PNG 與 1 張 contact sheet。
+index、還原工具、本說明及 root 另存的完整總驗收文件不計入上述證據檔案數。
+
+每筆 index 記錄 originalPath、archivePath、sha256、bytes。來源路徑的 .release-sync/
+前綴移除後，其餘目錄結構完整保留在 evidence/。所有歸檔檔案均已逐檔與原件比對
+SHA-256 與 bytes；沒有改寫來源內容。missingOptional 為空，指定附加證據全部存在。
+補充證據包含 boss-maps 11 項與 star-ring contract 63 項定點驗證的 TAP／JSON。
+
+從新 checkout 還原主要證據
+--------------------------
+
+在 repository 根目錄執行：
+
+node docs/skill-vfx-all-20261104/restore-evidence.cjs
+
+工具依自己的所在位置定位 repository 根目錄，不依賴目前工作目錄。它只處理
+canonicalEvidence 列出的 10 份證據，先驗證全部 archive bytes 與 SHA，再檢查所有
+目的檔案。有內容衝突時報錯，絕不覆寫；相同內容視為 no-op；只建立缺少的指定檔案。
+supplementaryEvidence 不會被還原到 .release-sync。
+
+本次已在原始證據全部存在的情況下執行一次：
+status=passed，verifiedArchiveFiles=10，restored=0，unchanged=10，supplementaryRestored=0。
+驗證時沒有刪除、暫移或覆寫任何原證據。後續補入 ring 定點紀錄時，10 個 canonical
+index 項目與還原工具均維持原樣。
+
+還原後驗證
+----------
+
+node worker/tools/build-skill-vfx-coverage.mjs --check --require-legacy-completion
+
+此命令會核對實際程式、素材、收據與 manifest 的來源 SHA。若程式內容已變更，
+請重新取得相應驗證證據；不要修改既有證據的 SHA 來繞過核對。
+
+完整的重建與正規化命令保存在：
+evidence/skill-vfx-20261104/coverage-handover.json
+
+直接還原 canonical receipts 可保留原始 bytes 與目前 manifest 雜湊。重新執行 browser
+normalizer 會產生新的 generatedAt／receipt SHA，之後需重建 manifest。
+
+視覺證據範圍
+------------
+
+身份瀏覽器目錄含 184 個 legacy 身份的真 RAF 動畫、實際 draw、目標、非傷害語義與
+清理檢查。40 張代表截圖明列 controlled progress 0.66；真 RAF 檢查另記在 results.json。
+完整 API 瀏覽器證據與逐身份受控重播的範圍在 coverage-handover.json 中分開記錄。
+
+本歸檔工作沒有 stage、commit、push 或部署操作。

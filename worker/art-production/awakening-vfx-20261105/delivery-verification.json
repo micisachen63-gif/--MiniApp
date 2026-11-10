@@ -1,0 +1,816 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "verifiedAt": "2026-11-05T06:35:42.742Z",
+  "scope": "Selected source PNG and runtime WebP asset delivery, conversion and transparency verification. This receipt does not claim complete animation or all-skills browser acceptance.",
+  "provenance": "worker/art-production/awakening-vfx-20261105/provenance.json",
+  "selectedAtlases": 4,
+  "plannedSkillSubjects": 16,
+  "grid": {
+    "columns": 2,
+    "rows": 2,
+    "atlasWidth": 1254,
+    "atlasHeight": 1254,
+    "cellWidth": 627,
+    "cellHeight": 627
+  },
+  "filesVerified": 8,
+  "sourcePngCount": 4,
+  "runtimeWebpCount": 4,
+  "sourceBytes": 6611077,
+  "runtimeBytes": 1993042,
+  "totalBytes": 8604119,
+  "pendingTransferFiles": [],
+  "allReadbackSha256Matched": true,
+  "allReadbackBytesMatched": true,
+  "allDimensionsMatched": true,
+  "allAlphaPixelsIdentical": true,
+  "alphaPixelsCompared": 6290064,
+  "alphaMismatchCount": 0,
+  "originalPngModified": false,
+  "resizeApplied": false,
+  "cropApplied": false,
+  "alphaEdited": false,
+  "conversionOptions": {
+    "quality": 92,
+    "alphaQuality": 100,
+    "effort": 6
+  },
+  "conversionLibrary": {
+    "sharp": "0.35.5",
+    "webp": "1.6.0"
+  },
+  "assets": [
+    {
+      "name": "sword",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/sword-awakening-atlas.png",
+        "bytes": 1641225,
+        "sha256": "8171fe7842c5658fcb89dc5d7dc87e1762984ea5456424ccce73206076e3ce19",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+        "bytes": 481434,
+        "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 5
+      },
+      "conversion": {
+        "library": "sharp",
+        "version": "0.35.5",
+        "webpVersion": "1.6.0",
+        "options": {
+          "quality": 92,
+          "alphaQuality": 100,
+          "effort": 6
+        },
+        "operations": [
+          "format-conversion-only"
+        ],
+        "resize": false,
+        "crop": false,
+        "alphaModification": false,
+        "originalPngModified": false
+      },
+      "alphaQA": {
+        "name": "sword",
+        "file": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-986d614c-6306-402e-ac72-ced7173f15f5.png",
+        "mode": "RGBA",
+        "size": [
+          1254,
+          1254
+        ],
+        "bytes": 1641225,
+        "sha256": "8171fe7842c5658fcb89dc5d7dc87e1762984ea5456424ccce73206076e3ce19",
+        "even_dimensions": true,
+        "alpha0_pixels": 933854,
+        "alpha0_fraction": 0.5938597763075225,
+        "center_vertical": {
+          "x": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "center_horizontal": {
+          "y": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "cells": [
+          {
+            "cell": "TL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 91677,
+            "bbox_inclusive_local": [
+              144,
+              135,
+              520,
+              508
+            ],
+            "margins_LTRB": [
+              144,
+              135,
+              106,
+              118
+            ]
+          },
+          {
+            "cell": "TR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 112326,
+            "bbox_inclusive_local": [
+              98,
+              120,
+              486,
+              511
+            ],
+            "margins_LTRB": [
+              98,
+              120,
+              140,
+              115
+            ]
+          },
+          {
+            "cell": "BL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 89597,
+            "bbox_inclusive_local": [
+              137,
+              112,
+              512,
+              484
+            ],
+            "margins_LTRB": [
+              137,
+              112,
+              114,
+              142
+            ]
+          },
+          {
+            "cell": "BR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 105266,
+            "bbox_inclusive_local": [
+              96,
+              106,
+              492,
+              492
+            ],
+            "margins_LTRB": [
+              96,
+              106,
+              134,
+              134
+            ]
+          }
+        ],
+        "alphaPixelsCompared": 1572516,
+        "alphaMismatchCount": 0,
+        "maxAlphaDifference": 0,
+        "sourceAlphaSha256": "377704201c68baf53d3a33f44b30b48e51a8db49aed737327e8316b49d57d0ef",
+        "runtimeAlphaSha256": "377704201c68baf53d3a33f44b30b48e51a8db49aed737327e8316b49d57d0ef",
+        "allAlphaPixelsIdentical": true
+      },
+      "manualReview": {
+        "fourIndependentSubjects": true,
+        "noSubjectCrossesCellBoundary": true
+      },
+      "transfer": {
+        "chunkBytes": 98304,
+        "method": "MCP stdin base64 chunks; uncertain writes require readback before retry; final complete bytes and SHA compared",
+        "sourceOwner": "semantic_engine",
+        "runtimeOwner": "vfx_integration_audit",
+        "receipts": [
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-assets-v2/sword/runtime-readback.json",
+            "bytes": 350,
+            "sha256": "b614ca410d9e16b4542a5d9340245d22e849bf26964824a2b9ba49c133086bec"
+          },
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-original-png-parts/sword-readback.json",
+            "bytes": 4564,
+            "sha256": "d22cdcc63a90d010233bdfd591dd0db239aa2e040434f4918516ca13523c141f"
+          }
+        ]
+      },
+      "status": "verified"
+    },
+    {
+      "name": "archer",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/archer-awakening-atlas.png",
+        "bytes": 1719292,
+        "sha256": "a7a6d76c12400e5ba8d3f3bd398d0f05131065667f3a532518ed2ea7292767fd",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 18
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+        "bytes": 524642,
+        "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 6
+      },
+      "conversion": {
+        "library": "sharp",
+        "version": "0.35.5",
+        "webpVersion": "1.6.0",
+        "options": {
+          "quality": 92,
+          "alphaQuality": 100,
+          "effort": 6
+        },
+        "operations": [
+          "format-conversion-only"
+        ],
+        "resize": false,
+        "crop": false,
+        "alphaModification": false,
+        "originalPngModified": false
+      },
+      "alphaQA": {
+        "name": "archer",
+        "file": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-71d5932c-f962-45d8-b0bd-2f00be44a717.png",
+        "mode": "RGBA",
+        "size": [
+          1254,
+          1254
+        ],
+        "bytes": 1719292,
+        "sha256": "a7a6d76c12400e5ba8d3f3bd398d0f05131065667f3a532518ed2ea7292767fd",
+        "even_dimensions": true,
+        "alpha0_pixels": 881714,
+        "alpha0_fraction": 0.5607027209898023,
+        "center_vertical": {
+          "x": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "center_horizontal": {
+          "y": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "cells": [
+          {
+            "cell": "TL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 92253,
+            "bbox_inclusive_local": [
+              131,
+              138,
+              540,
+              523
+            ],
+            "margins_LTRB": [
+              131,
+              138,
+              86,
+              103
+            ]
+          },
+          {
+            "cell": "TR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 99894,
+            "bbox_inclusive_local": [
+              77,
+              127,
+              509,
+              498
+            ],
+            "margins_LTRB": [
+              77,
+              127,
+              117,
+              128
+            ]
+          },
+          {
+            "cell": "BL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 96546,
+            "bbox_inclusive_local": [
+              141,
+              99,
+              537,
+              480
+            ],
+            "margins_LTRB": [
+              141,
+              99,
+              89,
+              146
+            ]
+          },
+          {
+            "cell": "BR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 114622,
+            "bbox_inclusive_local": [
+              70,
+              98,
+              501,
+              480
+            ],
+            "margins_LTRB": [
+              70,
+              98,
+              125,
+              146
+            ]
+          }
+        ],
+        "alphaPixelsCompared": 1572516,
+        "alphaMismatchCount": 0,
+        "maxAlphaDifference": 0,
+        "sourceAlphaSha256": "3d02cd125dcd1ce1bcbba6a8a7f0bd5e8f747ae38f1b24037358d95edd1cbd46",
+        "runtimeAlphaSha256": "3d02cd125dcd1ce1bcbba6a8a7f0bd5e8f747ae38f1b24037358d95edd1cbd46",
+        "allAlphaPixelsIdentical": true
+      },
+      "manualReview": {
+        "fourIndependentSubjects": true,
+        "noSubjectCrossesCellBoundary": true
+      },
+      "transfer": {
+        "chunkBytes": 98304,
+        "method": "MCP stdin base64 chunks; uncertain writes require readback before retry; final complete bytes and SHA compared",
+        "sourceOwner": "semantic_engine",
+        "runtimeOwner": "vfx_integration_audit",
+        "receipts": [
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-assets-v2/archer/runtime-readback.json",
+            "bytes": 352,
+            "sha256": "b483c23fc3ab22d484c83fe538371f8bffef3c79c7b75bc311d09c32a6e682aa"
+          },
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-original-png-parts/archer-readback.json",
+            "bytes": 4824,
+            "sha256": "bba36e501bacd2c9c0cfda3838655f3d82fbf864ef59a83312ae51b164d20c6a"
+          }
+        ]
+      },
+      "status": "verified"
+    },
+    {
+      "name": "mage",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/mage-awakening-atlas.png",
+        "bytes": 1604062,
+        "sha256": "add78e7680dd3fee1eb6f9510f98c6e651f82ea775e8283ee531c55155927689",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+        "bytes": 487604,
+        "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 5
+      },
+      "conversion": {
+        "library": "sharp",
+        "version": "0.35.5",
+        "webpVersion": "1.6.0",
+        "options": {
+          "quality": 92,
+          "alphaQuality": 100,
+          "effort": 6
+        },
+        "operations": [
+          "format-conversion-only"
+        ],
+        "resize": false,
+        "crop": false,
+        "alphaModification": false,
+        "originalPngModified": false
+      },
+      "alphaQA": {
+        "name": "mage",
+        "file": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-7ef2fb40-004d-402d-849f-77c532903fc3.png",
+        "mode": "RGBA",
+        "size": [
+          1254,
+          1254
+        ],
+        "bytes": 1604062,
+        "sha256": "add78e7680dd3fee1eb6f9510f98c6e651f82ea775e8283ee531c55155927689",
+        "even_dimensions": true,
+        "alpha0_pixels": 980564,
+        "alpha0_fraction": 0.6235637666007849,
+        "center_vertical": {
+          "x": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "center_horizontal": {
+          "y": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "cells": [
+          {
+            "cell": "TL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 77697,
+            "bbox_inclusive_local": [
+              148,
+              142,
+              542,
+              514
+            ],
+            "margins_LTRB": [
+              148,
+              142,
+              84,
+              112
+            ]
+          },
+          {
+            "cell": "TR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 80833,
+            "bbox_inclusive_local": [
+              81,
+              145,
+              491,
+              519
+            ],
+            "margins_LTRB": [
+              81,
+              145,
+              135,
+              107
+            ]
+          },
+          {
+            "cell": "BL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 100351,
+            "bbox_inclusive_local": [
+              147,
+              118,
+              537,
+              490
+            ],
+            "margins_LTRB": [
+              147,
+              118,
+              89,
+              136
+            ]
+          },
+          {
+            "cell": "BR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 113346,
+            "bbox_inclusive_local": [
+              74,
+              120,
+              481,
+              488
+            ],
+            "margins_LTRB": [
+              74,
+              120,
+              145,
+              138
+            ]
+          }
+        ],
+        "alphaPixelsCompared": 1572516,
+        "alphaMismatchCount": 0,
+        "maxAlphaDifference": 0,
+        "sourceAlphaSha256": "50db0de05c6e45d828eeb2e6a231956ba1588f6c65775ba8cd35aceace1119c4",
+        "runtimeAlphaSha256": "50db0de05c6e45d828eeb2e6a231956ba1588f6c65775ba8cd35aceace1119c4",
+        "allAlphaPixelsIdentical": true
+      },
+      "manualReview": {
+        "fourIndependentSubjects": true,
+        "noSubjectCrossesCellBoundary": true
+      },
+      "transfer": {
+        "chunkBytes": 98304,
+        "method": "MCP stdin base64 chunks; uncertain writes require readback before retry; final complete bytes and SHA compared",
+        "sourceOwner": "semantic_engine",
+        "runtimeOwner": "vfx_integration_audit",
+        "receipts": [
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-assets-v2/mage/runtime-readback.json",
+            "bytes": 348,
+            "sha256": "dcf1ed3b70baec738e1cca38582fe4848ceff59a63fef17b4ee410d3b8c4bbff"
+          },
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-original-png-parts/mage-readback.json",
+            "bytes": 4546,
+            "sha256": "dfce5c4aba53512b55af69f6d77c11ac45b7e07952e8e71968878e59bc55823a"
+          }
+        ]
+      },
+      "status": "verified"
+    },
+    {
+      "name": "thief",
+      "source": {
+        "path": "worker/art-production/awakening-vfx-20261105/source/thief-awakening-atlas.png",
+        "bytes": 1646498,
+        "sha256": "c61dca58d58034d4ab85aafabd2b3645e870cad3ca10ff991e29284e0a5ea6b4",
+        "format": "png",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "bitDepth": 8,
+          "colorType": 6,
+          "format": "png"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 17
+      },
+      "runtime": {
+        "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+        "bytes": 499362,
+        "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45",
+        "format": "webp",
+        "width": 1254,
+        "height": 1254,
+        "headerVerification": {
+          "width": 1254,
+          "height": 1254,
+          "hasAlpha": true,
+          "format": "webp",
+          "header": "VP8X"
+        },
+        "readbackPassed": true,
+        "expectedChunks": 6
+      },
+      "conversion": {
+        "library": "sharp",
+        "version": "0.35.5",
+        "webpVersion": "1.6.0",
+        "options": {
+          "quality": 92,
+          "alphaQuality": 100,
+          "effort": 6
+        },
+        "operations": [
+          "format-conversion-only"
+        ],
+        "resize": false,
+        "crop": false,
+        "alphaModification": false,
+        "originalPngModified": false
+      },
+      "alphaQA": {
+        "file": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-62aa414d-8ef2-45df-93c5-069942b5d407.png",
+        "mode": "RGBA",
+        "size": [
+          1254,
+          1254
+        ],
+        "bytes": 1646498,
+        "sha256": "c61dca58d58034d4ab85aafabd2b3645e870cad3ca10ff991e29284e0a5ea6b4",
+        "even_dimensions": true,
+        "alpha0_pixels": 890687,
+        "alpha0_fraction": 0.5664088632484503,
+        "center_vertical": {
+          "x": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "center_horizontal": {
+          "y": 627,
+          "gt16": 0,
+          "gt128": 0
+        },
+        "cells": [
+          {
+            "cell": "TL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 93257,
+            "bbox_inclusive_local": [
+              146,
+              152,
+              575,
+              517
+            ],
+            "margins_LTRB": [
+              146,
+              152,
+              51,
+              109
+            ]
+          },
+          {
+            "cell": "TR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 90070,
+            "bbox_inclusive_local": [
+              74,
+              133,
+              481,
+              546
+            ],
+            "margins_LTRB": [
+              74,
+              133,
+              145,
+              80
+            ]
+          },
+          {
+            "cell": "BL",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 89340,
+            "bbox_inclusive_local": [
+              143,
+              88,
+              547,
+              473
+            ],
+            "margins_LTRB": [
+              143,
+              88,
+              79,
+              153
+            ]
+          },
+          {
+            "cell": "BR",
+            "size": [
+              627,
+              627
+            ],
+            "alpha_gt128_pixels": 111111,
+            "bbox_inclusive_local": [
+              68,
+              78,
+              479,
+              485
+            ],
+            "margins_LTRB": [
+              68,
+              78,
+              147,
+              141
+            ]
+          }
+        ],
+        "name": "thief",
+        "alphaPixelsCompared": 1572516,
+        "alphaMismatchCount": 0,
+        "maxAlphaDifference": 0,
+        "sourceAlphaSha256": "05f14f3965bd137af0245a94f17673e9d600085fd7b21326fad2658934f2e18b",
+        "runtimeAlphaSha256": "05f14f3965bd137af0245a94f17673e9d600085fd7b21326fad2658934f2e18b",
+        "allAlphaPixelsIdentical": true
+      },
+      "manualReview": {
+        "fourIndependentSubjects": true,
+        "noSubjectCrossesCellBoundary": true
+      },
+      "transfer": {
+        "chunkBytes": 98304,
+        "method": "MCP stdin base64 chunks; uncertain writes require readback before retry; final complete bytes and SHA compared",
+        "sourceOwner": "vfx_integration_audit",
+        "runtimeOwner": "vfx_integration_audit",
+        "receipts": [
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-assets-v2/thief/runtime-readback.json",
+            "bytes": 350,
+            "sha256": "8acf60416c268643ff696b68102558229db110e0b9680a4f027aaa3584cbe38d"
+          },
+          {
+            "path": ".release-sync/skill-vfx-semantics-20261105/awakening-assets-v2/thief/source-readback.json",
+            "bytes": 360,
+            "sha256": "dbe1c4771b5af47a505dfad5f7f320d823e3a06b743b0267cf5ef28ae6e70c4c"
+          }
+        ]
+      },
+      "status": "verified"
+    }
+  ],
+  "representativeVisualReview": {
+    "path": ".release-sync/skill-vfx-semantics-20261105/awakening-v2-independent-visual-review.json",
+    "sha256": "d1b354aed36f135af391a1ee4fadf71dc4afa33a4045b118e924db251d36bf2e",
+    "scope": "Two named static screenshot phases only; motion and all sixteen are not claimed here."
+  },
+  "rejectedCandidatePolicy": {
+    "paddingFog": {
+      "path": "/workspace/scratch/9bbfa6c731eb/generated_images/exec-2a28ccc8-eeb7-4f9f-9e2c-287efda4e687.png",
+      "status": "rejected-padding-fog",
+      "converted": false,
+      "transferred": false
+    },
+    "previousAwakeningPreviewV1": "Rejected by user; not counted as completed delivery"
+  },
+  "productionChanged": false
+}

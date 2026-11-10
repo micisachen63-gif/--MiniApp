@@ -1,0 +1,22 @@
+{
+  "startedAt": "2026-11-04T07:19:07.497Z",
+  "completedAt": "2026-11-04T07:19:11.807Z",
+  "exitCode": 0,
+  "files": [
+    "worker/test/atlas-engine.test.js",
+    "worker/test/atlas-service.test.js",
+    "worker/test/atlas-combat-observer.test.js",
+    "worker/test/atlas-combat-trace-service.test.js",
+    "worker/test/atlas-content.test.js",
+    "worker/test/atlas-activity-quests.test.js",
+    "worker/test/atlas-loot-service.test.js",
+    "worker/test/atlas-background.test.js",
+    "worker/test/scene-live-session.test.js",
+    "worker/test/skill-vfx-scene-session.test.js",
+    "worker/test/scene-live-view.test.js",
+    "worker/test/scene-live-lifecycle.test.js"
+  ],
+  "sha256": "c71cdcde472882952d3c7c28022793f8a6b17f019cd224b21d591262edee1fc7",
+  "tail": "re not published\nok 156 - mismatched dispatch and impossible future trace revisions are not published\n  ---\n  duration_ms: 1.7556\n  type: 'test'\n  ...\n# Subtest: stop may publish a committed trace and subscriber errors cannot undo the write receipt\nok 157 - stop may publish a committed trace and subscriber errors cannot undo the write receipt\n  ---\n  duration_ms: 0.9554\n  type: 'test'\n  ...\n# Subtest: a context switch inside snapshot listeners prevents trace delivery from that request\nok 158 - a context switch inside snapshot listeners prevents trace delivery from that request\n  ---\n  duration_ms: 1.389\n  type: 'test'\n  ...\n# Subtest: v4 foreground sync publishes the accepted committed trace once without a redundant forced read\nok 159 - v4 foreground sync publishes the accepted committed trace once without a redundant forced read\n  ---\n  duration_ms: 1.0419\n  type: 'test'\n  ...\n1..159\n# tests 159\n# suites 0\n# pass 159\n# fail 0\n# cancelled 0\n# skipped 0\n# todo 0\n# duration_ms 4250.4923\n",
+  "failures": []
+}

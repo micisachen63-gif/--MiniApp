@@ -1,0 +1,42 @@
+TAP version 13
+# (node:54860) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+ok 1 - all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+  ---
+  duration_ms: 520.9588
+  type: 'test'
+  ...
+# Subtest: all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+ok 2 - all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+  ---
+  duration_ms: 404.5591
+  type: 'test'
+  ...
+# Subtest: a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+ok 3 - a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+  ---
+  duration_ms: 47.2315
+  type: 'test'
+  ...
+# Subtest: party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+ok 4 - party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+  ---
+  duration_ms: 77.5745
+  type: 'test'
+  ...
+# Subtest: PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+ok 5 - PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+  ---
+  duration_ms: 54.1629
+  type: 'test'
+  ...
+1..5
+# tests 5
+# suites 0
+# pass 5
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 1275.1302

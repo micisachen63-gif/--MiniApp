@@ -1,0 +1,601 @@
+{
+  "scope": "awakening-vfx-browser",
+  "presentationRevision": "ornate-v2",
+  "startedAt": "2026-11-05T06:34:06.911Z",
+  "finishedAt": "2026-11-05T06:35:55.717Z",
+  "base": "http://127.0.0.1:9894",
+  "complete": true,
+  "pass": true,
+  "previewOnly": true,
+  "sourceId": null,
+  "liveCatalogSkills": 196,
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 29065,
+      "sha256": "34a0e107373086b6679f55f6d82c704fbda50ac0fe43da51ee3f591efa128c85"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 8136,
+      "sha256": "67bd525d5198725877bb30b22c7a9b270dcb0c0392509dff453834f3f25f1373"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 16504,
+      "sha256": "5f1e23e67fb1979710e662e7b94b3db762ef7a2ee43559d9b98de0bf7946c105"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "counts": {
+    "desktopDirections": 64,
+    "desktopStages": 256,
+    "lowQualityDirections": 64,
+    "reducedDirections": 64,
+    "mobileDirections": 64,
+    "endpointChecks": 32
+  },
+  "checks": [
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:nightmare",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:hell",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:nightmare",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:hell",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:mage:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:mage:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:mage:nightmare",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:mage:hell",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:thief:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:thief:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:thief:nightmare",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:thief:hell",
+      "pass": true
+    },
+    {
+      "name": "play/pause, single step, phase seek, direction, quality, reduced motion and targets controls",
+      "pass": true
+    },
+    {
+      "name": "390px mobile all16×4, mobile picker and OS reduced-motion preference",
+      "pass": true
+    },
+    {
+      "name": "no browser errors, no failed assets, local GET-only requests, no API route",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-hell.png",
+      "bytes": 463151,
+      "sha256": "0ed887a6e49b2ff7af343370caa2e1080155ccbc80e90c2474e0bf6e258d3b14"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-elite.png",
+      "bytes": 428731,
+      "sha256": "d489eee5ec3d07f6651f5e4f13ec170d2704c3062f665f8f9526229f238d899f"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-expert.png",
+      "bytes": 393745,
+      "sha256": "71c81b04cfcbbcb06f23abc46e6a7c3c8cddfc23ee6ba22c0597fefd967c6ef1"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-nightmare.png",
+      "bytes": 489416,
+      "sha256": "9a924abc06c8d0fd274ed588bd8a1a1da86e9c76eff66995979694b75659651a"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-mage-hell.png",
+      "bytes": 484624,
+      "sha256": "aaabc3ac2ed38399fdc75b0f98207dcd7853094d0f9c1eb139dce7c8ec22e156"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-elite.png",
+      "bytes": 359022,
+      "sha256": "73892696dfa228f87cbd6f0dd1e38670a422d457cbfe371a5b2b49c39678dafe"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-expert.png",
+      "bytes": 417455,
+      "sha256": "a60f10355d9356e4b8ee3fff8985ef4109551b706bc068210b1893824a304068"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-nightmare.png",
+      "bytes": 444831,
+      "sha256": "d6a98f0b68e4a7607e9499ddd82bb27fec9f23b36fefdbb81340b5f39d0a9911"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-thief-hell.png",
+      "bytes": 407744,
+      "sha256": "a5140dfef7ebb5925991be4ca4f6a4698a5264e937eef208729acafdfd8cb1ec"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/desktop-full.png",
+      "bytes": 801699,
+      "sha256": "a1ff2bed368496029751118ec4c71e28b47545a35b54854fc41c4840a1f27b1d"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-sword-hell-32.png",
+      "bytes": 296516,
+      "sha256": "a24f84335a1cb24babb0f2dbbd222ec97dcc66834b824688317e6d9cb3902f21"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-sword-hell-66.png",
+      "bytes": 391301,
+      "sha256": "c6d525d910931daad780b8b5df3c1ade7fb03cf8347742bfa08bd285ad77ddf7"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-34.png",
+      "bytes": 300508,
+      "sha256": "622293510b2a43ce1e024f293117a8bedef916d0d2eed93b84e90e22bc3c8b81"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-archer-expert-66.png",
+      "bytes": 375273,
+      "sha256": "f8186e3df6b9278c4b3be49ee4a5801aec40ae32771fda41ba07d41779b99950"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-expert-29.png",
+      "bytes": 256133,
+      "sha256": "ad24d369bbdb46fcfc822ac32f5d20dba2ee114c50f32d1c2ceaf8efd4e52bea"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-expert-68.png",
+      "bytes": 381638,
+      "sha256": "e64177e0c20315cdb5c279bd78480bf14c44508031b2fdcc088fd289ff063508"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-hell-32.png",
+      "bytes": 254242,
+      "sha256": "6f0ada243ecd15807b3b20bf573bb23b223ad81847edd1f483e88ec7c0e21601"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-mage-hell-72.png",
+      "bytes": 474664,
+      "sha256": "983308db91adedf43e477cc1c26f917aaefd631d7e7182edafc8f8b9926a2f2a"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-32.png",
+      "bytes": 308627,
+      "sha256": "07657e590fea1f0b24b9b3baaf537404114e4665a4af2612de9fe9403f63d392"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/motion-thief-hell-65.png",
+      "bytes": 373368,
+      "sha256": "534d430030947ba17b9e1e34245c3301cbbbb7951833b5cece6193e9b156020d"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-sword.png",
+      "bytes": 264371,
+      "sha256": "4bc8c64ca982bb498db5c65366b52bfc6995e2bcac863e8c35819194d08e9b9c"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-archer.png",
+      "bytes": 287248,
+      "sha256": "6aaba24c18b1533317f7c774a6837ebe5e0361e818e26f4751347f0276f1de5b"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-mage.png",
+      "bytes": 265606,
+      "sha256": "cd8c66f2b65166acfa6afc0b5278e100c6929814108bb70ce22255e4a6ad7aa4"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/mobile-thief.png",
+      "bytes": 259901,
+      "sha256": "fb08f983e32b0792b4b1103798c550ed38dac8a57fa0629d500ad3a11d0e2630"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/awakening-contact-sheet.png",
+      "bytes": 791679,
+      "sha256": "00a6a0378cb23406fddf78febcb512098d7741193a649493fb87a8ae097a1cca"
+    }
+  ],
+  "browserErrors": [
+    "TypeError: Cannot read properties of null (reading 'getBoundingClientRect')"
+  ],
+  "networkFailures": [],
+  "notes": [
+    "These are automated canvas, layout, identity and control checks. A screenshot contact sheet is supplied for independent visual review.",
+    "No awakening gameplay event is generated.",
+    "The rejected-v1 geometry-only presentation has no browser approval. This receipt covers dedicated painted ornate-v2 only."
+  ],
+  "motionExamples": [
+    {
+      "id": "preview:awakening:sword:hell",
+      "name": "諸神斷罪",
+      "time": 0.32,
+      "phase": "聖環蓄勢",
+      "pixelHash": "f673330d",
+      "movingActors": 0,
+      "screenshot": "motion-sword-hell-32.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:sword:hell",
+      "name": "諸神斷罪",
+      "time": 0.66,
+      "phase": "斷罪落刃",
+      "pixelHash": "92d4d42a",
+      "movingActors": 0,
+      "screenshot": "motion-sword-hell-66.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:archer:expert",
+      "name": "群靈共獵",
+      "time": 0.34,
+      "phase": "三靈出獵",
+      "pixelHash": "e4640b0d",
+      "movingActors": 3,
+      "screenshot": "motion-archer-expert-34.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:archer:expert",
+      "name": "群靈共獵",
+      "time": 0.66,
+      "phase": "協獵合擊",
+      "pixelHash": "17d00f4a",
+      "movingActors": 3,
+      "screenshot": "motion-archer-expert-66.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "name": "霜鏡回流",
+      "time": 0.29,
+      "phase": "入光吸收",
+      "pixelHash": "8e20635d",
+      "movingActors": 0,
+      "screenshot": "motion-mage-expert-29.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "name": "霜鏡回流",
+      "time": 0.68,
+      "phase": "晶流回返",
+      "pixelHash": "5aa310d5",
+      "movingActors": 0,
+      "screenshot": "motion-mage-expert-68.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:mage:hell",
+      "name": "太初星爆",
+      "time": 0.32,
+      "phase": "星核壓縮",
+      "pixelHash": "baa3c29e",
+      "movingActors": 0,
+      "screenshot": "motion-mage-hell-32.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:mage:hell",
+      "name": "太初星爆",
+      "time": 0.72,
+      "phase": "原初星爆",
+      "pixelHash": "80bdc030",
+      "movingActors": 0,
+      "screenshot": "motion-mage-hell-72.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:thief:hell",
+      "name": "永夜分身",
+      "time": 0.32,
+      "phase": "三影成陣",
+      "pixelHash": "31443497",
+      "movingActors": 3,
+      "screenshot": "motion-thief-hell-32.png",
+      "visualReview": "requires independent inspection"
+    },
+    {
+      "id": "preview:awakening:thief:hell",
+      "name": "永夜分身",
+      "time": 0.65,
+      "phase": "有限追擊",
+      "pixelHash": "37f5b0a9",
+      "movingActors": 3,
+      "screenshot": "motion-thief-hell-65.png",
+      "visualReview": "requires independent inspection"
+    }
+  ],
+  "sourcesAfter": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 29065,
+      "sha256": "34a0e107373086b6679f55f6d82c704fbda50ac0fe43da51ee3f591efa128c85"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 8136,
+      "sha256": "67bd525d5198725877bb30b22c7a9b270dcb0c0392509dff453834f3f25f1373"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 16504,
+      "sha256": "5f1e23e67fb1979710e662e7b94b3db762ef7a2ee43559d9b98de0bf7946c105"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ]
+}

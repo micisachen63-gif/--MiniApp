@@ -1,0 +1,15 @@
+{
+  "scope": "exact-preview-source-bridge",
+  "file": "worker/public/awakening-vfx-engine.mjs",
+  "beforeSha256": "545bafea9a780aa02f84784c26e43b9be6efc1c55fb4e3b7ad5f08ab15990b12",
+  "afterSha256": "34a0e107373086b6679f55f6d82c704fbda50ac0fe43da51ee3f591efa128c85",
+  "reversePatchMatches": true,
+  "change": {
+    "before": "      const gate=world(to,0,-.9),a=windowAlpha(t,.05,.85);",
+    "after": "      // Keep the full 0.72-body arrow shaft inside the upward stage at entry.\n      const gate=world(to,0,-.72),a=windowAlpha(t,.05,.85);"
+  },
+  "case": "sky-judgment up .36",
+  "verifiedCase": "sky-up-036-fixed.json",
+  "alphaThreshold": 10,
+  "edgePixels": 3
+}

@@ -1,0 +1,78 @@
+/* Reuses the main battle's glass window; content surfaces carry text contrast. */
+.scene-supply{color:#f1e9d7;font-size:14px;line-height:1.6;min-width:0}
+.scene-supply *{box-sizing:border-box}
+.scene-supply h3,.scene-supply h4,.scene-supply p{margin:0}
+.scene-supply h3{font-size:19px;line-height:1.4}
+.scene-supply h4{font-size:15px;color:#f4dab0}
+.scene-supply small{color:#c4c6cb;font-size:12px;line-height:1.65;display:block}
+.scene-supply button,.scene-supply input,.scene-supply select{font:inherit;min-height:44px;max-width:100%}
+.scene-supply button{padding:9px 14px;border:1px solid #c3a76b80;border-radius:6px;background:#1b293bb8;color:#f3e0b8;cursor:pointer;line-height:1.4}
+.scene-supply button:hover:not(:disabled){background:#35445bd9;border-color:#e0c487}
+.scene-supply button:disabled{opacity:.55;cursor:default}
+.scene-supply button.is-primary,.scene-supply button[aria-current]{background:#58472cdd;border-color:#e5c180;color:#fff2d4}
+.scene-supply :focus-visible{outline:2px solid #efd195;outline-offset:3px}
+.scene-supply input,.scene-supply select{width:100%;min-width:0;padding:8px 10px;border:1px solid #a890645c;border-radius:5px;background:#101d2bea;color:#f6ecd7}
+.scene-supply input[type=checkbox]{width:21px;height:21px;min-height:0;accent-color:#d8b775;flex:none}
+.scene-supply label{display:grid;gap:6px;min-width:0;font-size:13px;color:#e7dbc7}
+.supply-header{display:flex;align-items:center;justify-content:space-between;gap:15px;margin-bottom:14px}
+.supply-header strong{font-size:21px;color:#ffe0a0;font-variant-numeric:tabular-nums}
+.supply-header>p{padding:8px 13px;border-radius:7px;background:#1522369c;white-space:nowrap}
+.supply-toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.supply-toolbar>[data-supply-refresh]{margin-left:auto}
+.supply-note{color:#d0d2d7;font-size:12px;padding:10px 0}
+.supply-error{padding:12px;border:1px solid #dc9b8480;border-radius:6px;background:#45282ac9;color:#ffe0d5;margin-bottom:12px!important}
+.supply-result{padding:13px;background:#203b32d6;border:1px solid #93c5a866;border-radius:7px;display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px}
+.supply-result>p{flex:1}
+.supply-reserved{padding:13px 15px;margin:0 0 16px;border-left:2px solid #b3bad07a;border-radius:5px;background:#16233382}
+.supply-reserved p{margin:4px 0}
+.supply-reserved b{color:#f3d7a4}
+.supply-potion-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:6px 0 14px}
+.supply-potion{display:grid;align-content:start;gap:14px;padding:16px;border:1px solid #d0b17b42;border-radius:8px;background:#1422369c}
+.supply-potion h4 small{margin-top:4px}
+.supply-potion>p{font-size:13px;color:#d7d6d0}
+.scene-supply .supply-check{display:flex;align-items:center;gap:10px;min-height:22px}
+.supply-percent{display:flex;align-items:center;gap:8px}
+.supply-percent input{max-width:105px}
+.supply-refill{margin:16px 0;padding:15px;border:1px solid #d0b17b38;border-radius:7px;background:#1a293d8f}
+.supply-refill p{margin:6px 0 12px;font-size:13px;color:#d7d7d5}
+.supply-actions{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin-top:12px}
+.supply-filters{display:grid;grid-template-columns:minmax(120px,.7fr) minmax(0,1.3fr);gap:12px;margin-bottom:6px}
+.supply-offers{display:grid;gap:10px}
+.supply-offer{display:grid;grid-template-columns:minmax(0,1fr) 140px;gap:12px;padding:14px;border:1px solid #c2a66b40;border-radius:7px;background:#1422379c;min-width:0}
+.supply-offer:has(.supply-icon){grid-template-columns:48px minmax(0,1fr) 140px}
+.supply-icon{width:48px;height:64px;display:flex;align-items:center;justify-content:center}
+.supply-icon img{max-width:100%;max-height:100%;object-fit:contain}
+.supply-offer-info{min-width:0;overflow-wrap:anywhere}
+.supply-offer-info p{font-size:12px;color:#cbd0d6;margin-top:5px}
+.supply-offer-info .supply-unit-price{color:#f1d7a6;font-size:13px;margin-top:8px}
+.supply-order{display:flex;flex-direction:column;align-items:stretch;gap:7px;min-width:0}
+.supply-order>span{font-size:12px;line-height:1.6;color:#dfd5c1}
+.supply-order label{grid-template-columns:auto minmax(0,1fr);align-items:center;gap:8px}
+.supply-order input{width:100%;font-variant-numeric:tabular-nums}
+.supply-pages{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:16px}
+.supply-pages span{font-size:13px;font-variant-numeric:tabular-nums}
+.supply-empty{padding:24px 12px;color:#ccc8bc;text-align:center}
+.supply-confirm,.supply-pending{padding:17px;margin-bottom:18px;border:1px solid #e1bf7b99;border-radius:8px;background:#162638ed;scroll-margin-top:12px}
+.supply-confirm h3,.supply-pending h3{color:#ffe4af;font-size:17px}
+.supply-confirm p,.supply-pending p{font-size:13px;margin-top:10px}
+.supply-confirm ul,.supply-pending ul{padding-left:22px;margin:10px 0}
+.supply-confirm dl{margin:12px 0}
+.supply-confirm dl>div{display:flex;justify-content:space-between;gap:14px;padding:5px 0;border-bottom:1px solid #c9b07825}
+.supply-confirm dd{margin:0;text-align:right}
+.supply-cost{display:block;font-size:19px;color:#ffe0a0;margin-top:10px}
+.supply-pending small{overflow-wrap:anywhere}
+.supply-check-result{padding-top:10px;margin-top:12px;border-top:1px solid #c9b07844}
+.supply-ledger{max-height:200px;overflow:auto;margin:10px 0 14px;padding:10px;background:#0a1521a3;border-radius:5px}
+.supply-ledger p{margin:2px 0;font-size:12px;overflow-wrap:anywhere}
+.supply-workspace[inert]{opacity:.62}
+@media(max-width:600px){
+ .supply-header{gap:8px;align-items:flex-start}.supply-header strong{font-size:18px}.supply-header>p{font-size:12px;padding:6px 9px}
+ .supply-toolbar{gap:6px}.supply-toolbar button{padding-inline:10px}.supply-toolbar>[data-supply-refresh]{margin-left:0}
+ .supply-potion-grid{grid-template-columns:1fr}.supply-potion{gap:11px;padding:13px}
+ .supply-offer,.supply-offer:has(.supply-icon){grid-template-columns:minmax(0,1fr);gap:10px;padding:13px}
+ .supply-icon{display:none}.supply-order{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:8px}
+ .supply-order label{grid-column:1;max-width:160px}.supply-order>span{grid-column:1}.supply-order>button{grid-column:2;grid-row:1 / span 2}
+ .supply-result{align-items:flex-start;flex-direction:column}.supply-filters{grid-template-columns:minmax(100px,.75fr) minmax(0,1.25fr)}
+ .supply-confirm,.supply-pending{padding:13px}.supply-confirm .supply-actions button{flex:1}
+}
+@media(prefers-reduced-motion:reduce){.scene-supply *{scroll-behavior:auto}}

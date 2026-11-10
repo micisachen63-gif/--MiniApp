@@ -1,0 +1,328 @@
+{
+  "schemaVersion": 1,
+  "status": "passed-composed",
+  "generatedAt": "2026-11-04T09:11:41.085Z",
+  "branch": "codex/skill-vfx-20261104",
+  "baseHead": "c05b888a6ac00494bfefd60162cf2f0aa4aa88be",
+  "verificationKind": "Complete initial Worker run plus successful reruns of every failed file, exact source-delta proof, and full BOT run; not a single all-green Worker run.",
+  "uniqueSelectedTests": {
+    "worker": 2861,
+    "bot": 205,
+    "total": 3066,
+    "focusedRerunsOverlap": true
+  },
+  "workerInitial": {
+    "files": 284,
+    "tests": 2861,
+    "suites": 0,
+    "pass": 2854,
+    "fail": 7,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 478050.0505,
+    "sourceFormat": "Node default spec reporter; original .tap filename retained unchanged",
+    "artifact": {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-19-09-986Z/worker.tap",
+      "path": "docs/skill-vfx-all-20261104/validation/worker-initial.log",
+      "bytes": 355930,
+      "sha256": "2ef8a6916f7465b76c06f0d25086e50f9678f1eefe29223e81fb41248cd56a34"
+    },
+    "rawReceiptCountsNull": true
+  },
+  "repairs": {
+    "changedTestFiles": [
+      "worker/test/boss-maps.test.js",
+      "worker/test/star-ring-pools.test.js",
+      "worker/test/star-ring-rank-rewards.test.js",
+      "worker/test/star-ring.test.js"
+    ],
+    "ring": {
+      "receipt": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/validation.json",
+      "tests": 63,
+      "pass": 63,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "tap": {
+        "path": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/worker.tap",
+        "bytes": 16903,
+        "sha256": "d753d7eaa6a6b13d6ad96a1cbc3c0eaa491980b4df023771c3b02278f0779a20"
+      }
+    },
+    "boss": {
+      "receipt": ".release-sync/skill-vfx-20261104/boss-maps-fixture-fix.json",
+      "tests": 11,
+      "pass": 11,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0,
+      "tap": {
+        "path": ".release-sync/skill-vfx-20261104/boss-maps-fixture-fix.tap",
+        "bytes": 2633,
+        "sha256": "872e465edee1509f963dddc114ba5c4f13cdea2a1d3971783b886c88abd630b2"
+      }
+    },
+    "failedTestsResolved": [
+      {
+        "name": "all twelve boss tiers render their own Greek map independent of player map",
+        "passed": true
+      },
+      {
+        "name": "published v1 full twelve-hour snapshots remain byte-for-byte identical at low, high and final tiers",
+        "passed": true
+      },
+      {
+        "name": "v2 published battles AND every actor reward retain 36 independent historical hashes",
+        "passed": true
+      },
+      {
+        "name": "v2 offline and hourly online projections preserve exact combat histories and six checkpoint grants",
+        "passed": true
+      },
+      {
+        "name": "a defeated active wave presents the next enemy without changing the v1 simulation, RNG or rewards",
+        "passed": true
+      },
+      {
+        "name": "continuous waves still have real events after hour one and all six enemies are new",
+        "passed": true
+      },
+      {
+        "name": "all twelve exact hourly boundaries switch scene, species and art while rewards stay at six two-hour checkpoints",
+        "passed": true
+      }
+    ],
+    "runtimeChangedForRepairs": false,
+    "goldenFixturesChanged": false,
+    "postGateFormatting": {
+      "source": "worker/test/scene-live-lifecycle.test.js",
+      "trimEndEqual": true,
+      "receipt": ".release-sync/skill-vfx-all-20261104/final-formatting-validation.json",
+      "counts": {
+        "tests": 15,
+        "pass": 15,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  },
+  "bot": {
+    "files": 23,
+    "tests": 205,
+    "suites": 0,
+    "pass": 205,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0,
+    "duration_ms": 38206.6564,
+    "artifact": {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-38-10-351Z/bot.tap",
+      "path": "docs/skill-vfx-all-20261104/validation/bot.tap",
+      "bytes": 48843,
+      "sha256": "cc888715a73d84d236f1eb48f97e550a28e76630801e638ca4bb4804fa0779e7"
+    }
+  },
+  "sourceAudit": {
+    "artifact": {
+      "source": ".release-sync/skill-vfx-all-20261104/final-source-audit.json",
+      "path": "docs/skill-vfx-all-20261104/validation/final-source-audit.json",
+      "bytes": 217336,
+      "sha256": "2301be8191a208e92369418b86a148500d8f1f3a556a82982b0d9cadcec00f7d"
+    },
+    "initialFingerprintCount": 1087,
+    "finalFingerprintCount": 1088,
+    "changedSinceInitial": [
+      "worker/test/boss-maps.test.js",
+      "worker/test/scene-live-lifecycle.test.js",
+      "worker/test/star-ring-pools.test.js",
+      "worker/test/star-ring-rank-rewards.test.js",
+      "worker/test/star-ring.test.js",
+      "worker/tools/skill-vfx-full-gate.mjs"
+    ],
+    "addedSinceInitial": [
+      "worker/test/star-ring-vfx-assertions.js"
+    ],
+    "allFinalFingerprintsMatchBot": false,
+    "changedSinceBot": [
+      "worker/test/scene-live-lifecycle.test.js"
+    ],
+    "formattingOnlyTest": "worker/test/scene-live-lifecycle.test.js",
+    "formattingReceipt": ".release-sync/skill-vfx-all-20261104/final-formatting-validation.json",
+    "formattingTests": {
+      "tests": 15,
+      "pass": 15,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0,
+      "todo": 0
+    },
+    "unchangedRuntimePublicFiles": 674,
+    "unchangedUnaffectedWorkerTestFiles": 279,
+    "generatedReportExclusion": [
+      "worker/public/skill-vfx-coverage.json"
+    ]
+  },
+  "coverage": {
+    "artifact": {
+      "path": "worker/public/skill-vfx-coverage.json",
+      "bytes": 1547282,
+      "sha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8"
+    },
+    "summary": {
+      "implementedIdentities": 196,
+      "visualFamilies": 28,
+      "bySystem": {
+        "native": 124,
+        "special": 60,
+        "atlas": 12
+      },
+      "immediateDamageIdentities": 171,
+      "nonDirectCastIdentities": 25,
+      "recipePresent": 196,
+      "resolverObserved": 196,
+      "committedEventObserved": 196,
+      "presentationObserved": 196,
+      "browserObserved": 196,
+      "controlledBrowserReplayObserved": 184,
+      "gameplayBrowserObserved": 24,
+      "resolverAndPresentationObserved": 196,
+      "plannedExcluded": 16,
+      "supports": 6,
+      "allocatableTalents": 120,
+      "origins": 4
+    }
+  },
+  "browser": {
+    "selectedApiCases": 32,
+    "casesByMode": {
+      "idle": 6,
+      "pk": 4,
+      "boss": 2,
+      "party": 2,
+      "star-ring": 2,
+      "atlas": 16
+    },
+    "distinctApiIdentities": 24,
+    "controlledCommittedReceiptReplayIdentities": 184,
+    "allFourEvidenceLayers": 196,
+    "errors": 0,
+    "httpErrors": 0,
+    "claimBoundary": "Not every identity in every mode; ring projection remains distinct from committed state."
+  },
+  "archive": {
+    "index": {
+      "path": "docs/skill-vfx-all-20261104/archive-index.json",
+      "bytes": 26225,
+      "sha256": "0ee09b61d7a518b47c75c8fff1f7505d7fb28dce2c72ea65b10771b68b4b9c87"
+    },
+    "canonical": 10,
+    "supplementary": 57,
+    "evidenceFiles": 67,
+    "evidenceBytes": 22034694,
+    "restoreVerified": 10,
+    "restoreWritten": 0
+  },
+  "checkoutPolicy": {
+    "artifact": {
+      "path": "docs/skill-vfx-all-20261104/source-line-endings.json",
+      "bytes": 15737,
+      "sha256": "9c2cb77e7bfddc9f0f22468d30c8e413dce82484038d19838e88fd097106a5b4"
+    },
+    "sourceTextFiles": 43,
+    "lf": 16,
+    "crlf": 27,
+    "manifestEol": "lf",
+    "attributes": {
+      "path": ".gitattributes",
+      "bytes": 2725,
+      "sha256": "6c87db907853384ec26383c072da13771d08969cc04ca30a3b57edcf1316ea0c"
+    },
+    "requiresStagedCheckoutShaVerification": true
+  },
+  "validationArtifacts": [
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-19-09-986Z/validation.json",
+      "path": "docs/skill-vfx-all-20261104/validation/worker-initial-validation.json",
+      "bytes": 404235,
+      "sha256": "88daa0094c4f17a414be13403cb4b2d1a35c6db856a1631c2b4d30b032d47a98"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-19-09-986Z/failure-summary.json",
+      "path": "docs/skill-vfx-all-20261104/validation/worker-initial-failure-summary.json",
+      "bytes": 29369,
+      "sha256": "86e15c49505e44ebf430660722c4de0c235900b94e3903383741ff2ebfd51336"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-19-09-986Z/worker.tap",
+      "path": "docs/skill-vfx-all-20261104/validation/worker-initial.log",
+      "bytes": 355930,
+      "sha256": "2ef8a6916f7465b76c06f0d25086e50f9678f1eefe29223e81fb41248cd56a34"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-19-09-986Z/worker-stderr.log",
+      "path": "docs/skill-vfx-all-20261104/validation/worker-initial-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-38-10-351Z/validation.json",
+      "path": "docs/skill-vfx-all-20261104/validation/bot-validation.json",
+      "bytes": 382799,
+      "sha256": "0101bb7064e629bb1b776e8dd72d26e8772477f788810609e45bca887e72064d"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-38-10-351Z/bot.tap",
+      "path": "docs/skill-vfx-all-20261104/validation/bot.tap",
+      "bytes": 48843,
+      "sha256": "cc888715a73d84d236f1eb48f97e550a28e76630801e638ca4bb4804fa0779e7"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/full-gate-2026-11-04T08-38-10-351Z/bot-stderr.log",
+      "path": "docs/skill-vfx-all-20261104/validation/bot-stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/final-source-audit.json",
+      "path": "docs/skill-vfx-all-20261104/validation/final-source-audit.json",
+      "bytes": 217336,
+      "sha256": "2301be8191a208e92369418b86a148500d8f1f3a556a82982b0d9cadcec00f7d"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/star-ring-contract-focused-2026-11-04T08-36-25-895Z/scope-audit.json",
+      "path": "docs/skill-vfx-all-20261104/validation/ring-contract-scope-audit.json",
+      "bytes": 934,
+      "sha256": "2371c6d015b039301f8ffb2b5955214d5c64f546b584484e7869f552f96e8782"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/final-source-audit-before-formatting.json",
+      "path": "docs/skill-vfx-all-20261104/validation/final-source-audit-before-formatting.json",
+      "bytes": 212651,
+      "sha256": "7147018b9de1e984c41ded03c4b277603bada481a040a6ea7e8bf59682fa9906"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/final-formatting-validation.json",
+      "path": "docs/skill-vfx-all-20261104/validation/final-formatting-validation.json",
+      "bytes": 2023,
+      "sha256": "09a4b5a04a1dffdd118f119489007233aa63ddde5fe35b889110cc07e3690b2f"
+    },
+    {
+      "source": ".release-sync/skill-vfx-all-20261104/final-formatting.tap",
+      "path": "docs/skill-vfx-all-20261104/validation/final-formatting.tap",
+      "bytes": 3650,
+      "sha256": "bd9baa8b2a40c56563d5e05cc4ffdd700a15be0b402b3a6a8ed1d56aebffedd2"
+    }
+  ],
+  "production": {
+    "pushed": false,
+    "deployed": false,
+    "mergedMain": false,
+    "remoteMigration": false
+  }
+}

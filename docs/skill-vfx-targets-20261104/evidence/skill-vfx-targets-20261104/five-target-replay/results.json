@@ -1,0 +1,2037 @@
+{
+  "schemaVersion": 1,
+  "startedAt": "2026-11-04T10:49:57.699Z",
+  "classification": "true-SQLite-receipt-to-controlled-adapter-to-real-Canvas-RAF-replay",
+  "limitation": "The original receipt and hits are unchanged, but replay admission time and target coordinates are controlled. This is not a full five-enemy MiniApp UI run or physical-device GPU test.",
+  "inputReceipt": ".release-sync/skill-vfx-targets-20261104/five-target/results.json",
+  "receiptSha256": "a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9",
+  "originalCombatTrace": {
+    "schemaVersion": 1,
+    "source": "committed-combat",
+    "context": {
+      "accountId": "81995",
+      "realmId": "permanent",
+      "characterId": "81995",
+      "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+    },
+    "revision": 1,
+    "committedAtMs": 1791421217000,
+    "resolutionMs": 1000,
+    "events": [
+      {
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "type": "skill_cast",
+        "actorId": "81995",
+        "skillId": "atlas:mage_chain",
+        "atMs": 1791421216000,
+        "resolvedAtMs": 1791421216000,
+        "scheduledAtMs": 1791421215001,
+        "resolutionMs": 1000,
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "targetIds": [
+          "0:0:0",
+          "0:0:1",
+          "0:0:2",
+          "0:0:3",
+          "0:0:4"
+        ],
+        "hits": [
+          {
+            "targetId": "0:0:0",
+            "damage": 135,
+            "critical": false,
+            "hpBefore": 1742,
+            "hpAfter": 1607,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:1",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1877,
+            "hpAfter": 1762,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:2",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1702,
+            "hpAfter": 1587,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:3",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1735,
+            "hpAfter": 1620,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:4",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1836,
+            "hpAfter": 1721,
+            "source": "skill"
+          }
+        ],
+        "mpBefore": 343,
+        "mpSpent": 17,
+        "mpAfter": 326
+      }
+    ],
+    "limit": 128,
+    "dropped": 0,
+    "total": 1
+  },
+  "selectedEvent": {
+    "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+    "type": "skill_cast",
+    "actorId": "81995",
+    "skillId": "atlas:mage_chain",
+    "atMs": 1791421216000,
+    "resolvedAtMs": 1791421216000,
+    "scheduledAtMs": 1791421215001,
+    "resolutionMs": 1000,
+    "mapIndex": 0,
+    "roomIndex": 0,
+    "targetIds": [
+      "0:0:0",
+      "0:0:1",
+      "0:0:2",
+      "0:0:3",
+      "0:0:4"
+    ],
+    "hits": [
+      {
+        "targetId": "0:0:0",
+        "damage": 135,
+        "critical": false,
+        "hpBefore": 1742,
+        "hpAfter": 1607,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:1",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1877,
+        "hpAfter": 1762,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:2",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1702,
+        "hpAfter": 1587,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:3",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1735,
+        "hpAfter": 1620,
+        "source": "skill"
+      },
+      {
+        "targetId": "0:0:4",
+        "damage": 115,
+        "critical": false,
+        "hpBefore": 1836,
+        "hpAfter": 1721,
+        "source": "skill"
+      }
+    ],
+    "mpBefore": 343,
+    "mpSpent": 17,
+    "mpAfter": 326
+  },
+  "sourceFiles": {
+    "worker/public/skill-vfx-engine.mjs": {
+      "bytes": 30147,
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    "worker/public/skill-vfx-combat-adapter.mjs": {
+      "bytes": 13565,
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    "worker/public/skill-vfx-catalog.json": {
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    "worker/public/skill-vfx-preview.mjs": {
+      "bytes": 15257,
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    "worker/public/skill-vfx-preview.css": {
+      "bytes": 18493,
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    "worker/public/preview-skill-vfx.html": {
+      "bytes": 7831,
+      "sha256": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+    },
+    "worker/public/art/skill-vfx-20261104/mage-atlas.webp": {
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    }
+  },
+  "cases": [
+    {
+      "name": "desktop",
+      "viewport": {
+        "width": 1280,
+        "height": 900
+      },
+      "mapping": [
+        {
+          "targetId": "0:0:0",
+          "point": {
+            "x": 536.85,
+            "y": 191.1
+          }
+        },
+        {
+          "targetId": "0:0:1",
+          "point": {
+            "x": 536.85,
+            "y": 129.6
+          }
+        },
+        {
+          "targetId": "0:0:2",
+          "point": {
+            "x": 536.85,
+            "y": 252.6
+          }
+        },
+        {
+          "targetId": "0:0:3",
+          "point": {
+            "x": 536.85,
+            "y": 68.1
+          }
+        },
+        {
+          "targetId": "0:0:4",
+          "point": {
+            "x": 536.85,
+            "y": 314.1
+          }
+        }
+      ],
+      "geometry": {
+        "from": {
+          "x": 369.15,
+          "y": 191.1
+        },
+        "to": {
+          "x": 536.85,
+          "y": 191.1
+        },
+        "targets": [
+          {
+            "x": 536.85,
+            "y": 191.1
+          },
+          {
+            "x": 536.85,
+            "y": 129.6
+          },
+          {
+            "x": 536.85,
+            "y": 252.6
+          },
+          {
+            "x": 536.85,
+            "y": 68.1
+          },
+          {
+            "x": 536.85,
+            "y": 314.1
+          }
+        ],
+        "bodyHeight": 132,
+        "direction": "right"
+      },
+      "priorPlayer": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 906,
+        "height": 390,
+        "dpr": 1,
+        "loadedAtlases": 0,
+        "pendingLoads": 0,
+        "generation": 11,
+        "destroyed": true,
+        "reducedMotion": false,
+        "maxActive": 8
+      },
+      "servedHashes": {
+        "engine": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+        "adapter": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+      },
+      "clock": {
+        "admissionNow": 1791421216000,
+        "originalEventAtMs": 1791421216000,
+        "source": "explicit replay-only adapter now() override",
+        "animation": "unmodified real requestAnimationFrame/performance.now"
+      },
+      "frames": [
+        {
+          "atMs": 14.800000011920929,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.7999999970197678
+        },
+        {
+          "atMs": 76.80000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 80.80000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 97.30000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 114,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 130.70000000298023,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 147.6000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 164,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 180.80000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 197.30000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 214,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 230.6000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 247.30000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 263.80000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 280.6000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 297.30000001192093,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 313.90000000596046,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 330.70000000298023,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 347.40000000596046,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 364.1000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 380.6000000089407,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 397.30000001192093,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 413.90000000596046,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 430.80000001192093,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 447.30000001192093,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 464.1000000089407,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 480.70000000298023,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 497.30000001192093,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 513.9000000059605,
+          "active": 1,
+          "drawCalls": 3,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 530.7000000029802,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 563.9000000059605,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 580.6000000089407,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 597.2000000029802,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 614.1000000089407,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 630.9000000059605,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 697.6000000089407,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 714.1000000089407,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 732.2000000029802,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 753.7000000029802,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 776.7000000029802,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 795.8000000119209,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 819.5,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 842.1000000089407,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 865.6000000089407,
+          "active": 1,
+          "drawCalls": 85,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 894.5,
+          "active": 1,
+          "drawCalls": 85,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 921.3000000119209,
+          "active": 1,
+          "drawCalls": 70,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 945.6000000089407,
+          "active": 1,
+          "drawCalls": 68,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 964.3000000119209,
+          "active": 1,
+          "drawCalls": 68,
+          "frameMs": 0.6000000089406967
+        },
+        {
+          "atMs": 995.3000000119209,
+          "active": 1,
+          "drawCalls": 67,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1012.5,
+          "active": 1,
+          "drawCalls": 53,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 1031.6000000089407,
+          "active": 1,
+          "drawCalls": 51,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1049.2000000029802,
+          "active": 1,
+          "drawCalls": 51,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 1064.1000000089407,
+          "active": 1,
+          "drawCalls": 46,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1080.800000011921,
+          "active": 1,
+          "drawCalls": 36,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1097.4000000059605,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1114.2000000029802,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1130.7000000029802,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1147.300000011921,
+          "active": 1,
+          "drawCalls": 19,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 1164.2000000029802,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1180.7000000029802,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1197.300000011921,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 1213.9000000059605,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 1230.800000011921,
+          "active": 1,
+          "drawCalls": 2,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1247.1000000089407,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 1263.800000011921,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 1280.800000011921,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1297.1000000089407,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 1313.800000011921,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 1330.300000011921,
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0
+        }
+      ],
+      "contacts": {
+        "0:0:0": {
+          "targetId": "0:0:0",
+          "point": {
+            "x": 536.85,
+            "y": 191.1
+          },
+          "firstAtMs": 530.5,
+          "lastAtMs": 894.3000000119209,
+          "strokeCount": 16,
+          "firstFrame": 29
+        },
+        "0:0:1": {
+          "targetId": "0:0:1",
+          "point": {
+            "x": 536.85,
+            "y": 129.6
+          },
+          "firstAtMs": 613.9000000059605,
+          "lastAtMs": 995.1000000089407,
+          "strokeCount": 16,
+          "firstFrame": 33
+        },
+        "0:0:2": {
+          "targetId": "0:0:2",
+          "point": {
+            "x": 536.85,
+            "y": 252.6
+          },
+          "firstAtMs": 714,
+          "lastAtMs": 1049.1000000089407,
+          "strokeCount": 16,
+          "firstFrame": 36
+        },
+        "0:0:3": {
+          "targetId": "0:0:3",
+          "point": {
+            "x": 536.85,
+            "y": 68.1
+          },
+          "firstAtMs": 795.6000000089407,
+          "lastAtMs": 1130.5,
+          "strokeCount": 17,
+          "firstFrame": 40
+        },
+        "0:0:4": {
+          "targetId": "0:0:4",
+          "point": {
+            "x": 536.85,
+            "y": 314.1
+          },
+          "firstAtMs": 865.4000000059605,
+          "lastAtMs": 1197.300000011921,
+          "strokeCount": 18,
+          "firstFrame": 43
+        }
+      },
+      "pixels": {
+        "0:0:0": {
+          "targetId": "0:0:0",
+          "atMs": 555.1000000089407,
+          "frame": 30,
+          "nontransparentPixels": 488,
+          "maxAlpha": 253,
+          "sampleRect": {
+            "x": 524,
+            "y": 179,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:1": {
+          "targetId": "0:0:1",
+          "atMs": 625.7000000029802,
+          "frame": 34,
+          "nontransparentPixels": 519,
+          "maxAlpha": 249,
+          "sampleRect": {
+            "x": 524,
+            "y": 117,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:2": {
+          "targetId": "0:0:2",
+          "atMs": 731,
+          "frame": 37,
+          "nontransparentPixels": 463,
+          "maxAlpha": 249,
+          "sampleRect": {
+            "x": 524,
+            "y": 240,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:3": {
+          "targetId": "0:0:3",
+          "atMs": 818.2000000029802,
+          "frame": 41,
+          "nontransparentPixels": 464,
+          "maxAlpha": 248,
+          "sampleRect": {
+            "x": 524,
+            "y": 56,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:4": {
+          "targetId": "0:0:4",
+          "atMs": 889.2000000029802,
+          "frame": 44,
+          "nontransparentPixels": 386,
+          "maxAlpha": 247,
+          "sampleRect": {
+            "x": 524,
+            "y": 302,
+            "w": 24,
+            "h": 24
+          }
+        }
+      },
+      "playerErrors": [],
+      "snapshots": [
+        {
+          "label": "all-five-confirmed-contacts-real-RAF",
+          "atMs": 889.2000000029802,
+          "frame": 44,
+          "file": "desktop-raf-all-five.png",
+          "bytes": 74420,
+          "sha256": "db2a8c81a1ed5b79a9354fec9fa62980df5ccba06af5eb41543ea1a4de369417",
+          "capture": "Actual canvas pixels captured in the real player onRender callback; no seek or manual frame override."
+        }
+      ],
+      "adapterInput": {
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "type": "skill_cast",
+        "actorId": "81995",
+        "skillId": "atlas:mage_chain",
+        "atMs": 1791421216000,
+        "resolvedAtMs": 1791421216000,
+        "scheduledAtMs": 1791421215001,
+        "resolutionMs": 1000,
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "targetIds": [
+          "0:0:0",
+          "0:0:1",
+          "0:0:2",
+          "0:0:3",
+          "0:0:4"
+        ],
+        "hits": [
+          {
+            "targetId": "0:0:0",
+            "damage": 135,
+            "critical": false,
+            "hpBefore": 1742,
+            "hpAfter": 1607,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:1",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1877,
+            "hpAfter": 1762,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:2",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1702,
+            "hpAfter": 1587,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:3",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1735,
+            "hpAfter": 1620,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:4",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1836,
+            "hpAfter": 1721,
+            "source": "skill"
+          }
+        ],
+        "mpBefore": 343,
+        "mpSpent": 17,
+        "mpAfter": 326,
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "from": {
+          "x": 369.15,
+          "y": 191.1
+        },
+        "to": {
+          "x": 536.85,
+          "y": 191.1
+        },
+        "targets": [
+          {
+            "x": 536.85,
+            "y": 191.1
+          },
+          {
+            "x": 536.85,
+            "y": 129.6
+          },
+          {
+            "x": 536.85,
+            "y": 252.6
+          },
+          {
+            "x": 536.85,
+            "y": 68.1
+          },
+          {
+            "x": 536.85,
+            "y": 314.1
+          }
+        ],
+        "bodyHeight": 132,
+        "direction": "right"
+      },
+      "admission": {
+        "accepted": true,
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "instanceId": 1
+      },
+      "strokeCalls": 338,
+      "ellipseCalls": 112,
+      "playerAfterPlayback": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "manual": false,
+        "width": 906,
+        "height": 390,
+        "dpr": 1,
+        "loadedAtlases": 1,
+        "pendingLoads": 0,
+        "generation": 0,
+        "destroyed": false,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "duplicate": {
+        "accepted": false,
+        "reason": "duplicate"
+      },
+      "duplicateCausedNoDraw": true,
+      "adapterAfterDuplicate": {
+        "received": 2,
+        "accepted": 1,
+        "rejected": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "generation": 0,
+        "destroyed": false,
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "remembered": 1,
+        "pending": 0
+      },
+      "adapterAfterClear": {
+        "received": 2,
+        "accepted": 1,
+        "rejected": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "generation": 1,
+        "destroyed": false,
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "remembered": 1,
+        "pending": 0
+      },
+      "playerAfterClear": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 906,
+        "height": 390,
+        "dpr": 1,
+        "loadedAtlases": 1,
+        "pendingLoads": 0,
+        "generation": 1,
+        "destroyed": false,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "duplicateAfterClear": {
+        "accepted": false,
+        "reason": "duplicate"
+      },
+      "seenTargetIds": [
+        "0:0:0",
+        "0:0:1",
+        "0:0:2",
+        "0:0:3",
+        "0:0:4"
+      ],
+      "pass": true,
+      "adapterAfterDestroy": {
+        "received": 3,
+        "accepted": 1,
+        "rejected": 2,
+        "byReason": {
+          "duplicate": 2
+        },
+        "generation": 2,
+        "destroyed": true,
+        "context": null,
+        "revision": -1,
+        "remembered": 0,
+        "pending": 0
+      },
+      "playerAfterDestroy": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 906,
+        "height": 390,
+        "dpr": 1,
+        "loadedAtlases": 0,
+        "pendingLoads": 0,
+        "generation": 3,
+        "destroyed": true,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "canvasAfterDestroy": {
+        "width": 1,
+        "height": 1
+      }
+    },
+    {
+      "name": "phone",
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "mapping": [
+        {
+          "targetId": "0:0:0",
+          "point": {
+            "x": 246.37,
+            "y": 155.82
+          }
+        },
+        {
+          "targetId": "0:0:1",
+          "point": {
+            "x": 246.37,
+            "y": 112.32
+          }
+        },
+        {
+          "targetId": "0:0:2",
+          "point": {
+            "x": 246.37,
+            "y": 199.32
+          }
+        },
+        {
+          "targetId": "0:0:3",
+          "point": {
+            "x": 246.37,
+            "y": 68.82
+          }
+        },
+        {
+          "targetId": "0:0:4",
+          "point": {
+            "x": 246.37,
+            "y": 242.82
+          }
+        }
+      ],
+      "geometry": {
+        "from": {
+          "x": 109.63,
+          "y": 155.82
+        },
+        "to": {
+          "x": 246.37,
+          "y": 155.82
+        },
+        "targets": [
+          {
+            "x": 246.37,
+            "y": 155.82
+          },
+          {
+            "x": 246.37,
+            "y": 112.32
+          },
+          {
+            "x": 246.37,
+            "y": 199.32
+          },
+          {
+            "x": 246.37,
+            "y": 68.82
+          },
+          {
+            "x": 246.37,
+            "y": 242.82
+          }
+        ],
+        "bodyHeight": 88,
+        "direction": "right"
+      },
+      "priorPlayer": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 356,
+        "height": 318,
+        "dpr": 1,
+        "loadedAtlases": 0,
+        "pendingLoads": 0,
+        "generation": 11,
+        "destroyed": true,
+        "reducedMotion": false,
+        "maxActive": 8
+      },
+      "servedHashes": {
+        "engine": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0",
+        "adapter": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+      },
+      "clock": {
+        "admissionNow": 1791421216000,
+        "originalEventAtMs": 1791421216000,
+        "source": "explicit replay-only adapter now() override",
+        "animation": "unmodified real requestAnimationFrame/performance.now"
+      },
+      "frames": [
+        {
+          "atMs": 2.5,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 19.100000008940697,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.800000011920929
+        },
+        {
+          "atMs": 63.400000005960464,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 69.1000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.6000000089406967
+        },
+        {
+          "atMs": 85.29999999701977,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 102,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 120.70000000298023,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 2.2999999970197678
+        },
+        {
+          "atMs": 172.40000000596046,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 189.90000000596046,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 201.90000000596046,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 218.5,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 235.20000000298023,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 251.79999999701977,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.19999998807907104
+        },
+        {
+          "atMs": 268.6000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 285.29999999701977,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 301.79999999701977,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.19999998807907104
+        },
+        {
+          "atMs": 318.70000000298023,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 335.1000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 351.79999999701977,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.19999998807907104
+        },
+        {
+          "atMs": 368.6000000089407,
+          "active": 1,
+          "drawCalls": 10,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 385.29999999701977,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 401.90000000596046,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 418.6000000089407,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 435.20000000298023,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 451.79999999701977,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.09999999403953552
+        },
+        {
+          "atMs": 468.6000000089407,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 485.29999999701977,
+          "active": 1,
+          "drawCalls": 13,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 501.79999999701977,
+          "active": 1,
+          "drawCalls": 3,
+          "frameMs": 0.19999998807907104
+        },
+        {
+          "atMs": 518.4000000059605,
+          "active": 1,
+          "drawCalls": 3,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 535.2999999970198,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 551.9000000059605,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 568.7000000029802,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 585.2999999970198,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 601.9000000059605,
+          "active": 1,
+          "drawCalls": 20,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 618.6000000089407,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 635.5,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 682.6000000089407,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 693.1000000089407,
+          "active": 1,
+          "drawCalls": 37,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 702.2000000029802,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 718.7999999970198,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 735.4000000059605,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 752.2999999970198,
+          "active": 1,
+          "drawCalls": 54,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 768.7999999970198,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 785.4000000059605,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 802.2000000029802,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 819,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 835.4000000059605,
+          "active": 1,
+          "drawCalls": 71,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 852.2000000029802,
+          "active": 1,
+          "drawCalls": 85,
+          "frameMs": 0.5999999940395355
+        },
+        {
+          "atMs": 869,
+          "active": 1,
+          "drawCalls": 85,
+          "frameMs": 0.7000000029802322
+        },
+        {
+          "atMs": 885.6000000089407,
+          "active": 1,
+          "drawCalls": 85,
+          "frameMs": 0.6000000089406967
+        },
+        {
+          "atMs": 902.5,
+          "active": 1,
+          "drawCalls": 83,
+          "frameMs": 0.7999999970197678
+        },
+        {
+          "atMs": 919,
+          "active": 1,
+          "drawCalls": 70,
+          "frameMs": 0.7000000029802322
+        },
+        {
+          "atMs": 935.2999999970198,
+          "active": 1,
+          "drawCalls": 68,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 952.1000000089407,
+          "active": 1,
+          "drawCalls": 68,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 969.2000000029802,
+          "active": 1,
+          "drawCalls": 68,
+          "frameMs": 0.9000000059604645
+        },
+        {
+          "atMs": 985.5,
+          "active": 1,
+          "drawCalls": 61,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1002.1000000089407,
+          "active": 1,
+          "drawCalls": 53,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1018.7000000029802,
+          "active": 1,
+          "drawCalls": 51,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1035.4000000059605,
+          "active": 1,
+          "drawCalls": 51,
+          "frameMs": 0.5
+        },
+        {
+          "atMs": 1052.6000000089407,
+          "active": 1,
+          "drawCalls": 51,
+          "frameMs": 1
+        },
+        {
+          "atMs": 1068.6000000089407,
+          "active": 1,
+          "drawCalls": 36,
+          "frameMs": 0.30000001192092896
+        },
+        {
+          "atMs": 1085.4000000059605,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1102,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1118.7000000029802,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1135.2999999970198,
+          "active": 1,
+          "drawCalls": 34,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1152,
+          "active": 1,
+          "drawCalls": 19,
+          "frameMs": 0.3999999910593033
+        },
+        {
+          "atMs": 1168.7000000029802,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.4000000059604645
+        },
+        {
+          "atMs": 1185.2999999970198,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 1202,
+          "active": 1,
+          "drawCalls": 17,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 1218.7000000029802,
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.29999999701976776
+        },
+        {
+          "atMs": 1235.2000000029802,
+          "active": 1,
+          "drawCalls": 2,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 1251.7999999970198,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.19999998807907104
+        },
+        {
+          "atMs": 1268.4000000059605,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 1285.1000000089407,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.10000000894069672
+        },
+        {
+          "atMs": 1301.7000000029802,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.09999999403953552
+        },
+        {
+          "atMs": 1318.5,
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0.20000000298023224
+        },
+        {
+          "atMs": 1335,
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0
+        }
+      ],
+      "contacts": {
+        "0:0:0": {
+          "targetId": "0:0:0",
+          "point": {
+            "x": 246.37,
+            "y": 155.82
+          },
+          "firstAtMs": 535.2000000029802,
+          "lastAtMs": 885.2999999970198,
+          "strokeCount": 21,
+          "firstFrame": 29
+        },
+        "0:0:1": {
+          "targetId": "0:0:1",
+          "point": {
+            "x": 246.37,
+            "y": 112.32
+          },
+          "firstAtMs": 618.5,
+          "lastAtMs": 968.5,
+          "strokeCount": 21,
+          "firstFrame": 34
+        },
+        "0:0:2": {
+          "targetId": "0:0:2",
+          "point": {
+            "x": 246.37,
+            "y": 199.32
+          },
+          "firstAtMs": 701.9000000059605,
+          "lastAtMs": 1052,
+          "strokeCount": 22,
+          "firstFrame": 38
+        },
+        "0:0:3": {
+          "targetId": "0:0:3",
+          "point": {
+            "x": 246.37,
+            "y": 68.82
+          },
+          "firstAtMs": 768.6000000089407,
+          "lastAtMs": 1135.2000000029802,
+          "strokeCount": 23,
+          "firstFrame": 42
+        },
+        "0:0:4": {
+          "targetId": "0:0:4",
+          "point": {
+            "x": 246.37,
+            "y": 242.82
+          },
+          "firstAtMs": 852,
+          "lastAtMs": 1201.9000000059605,
+          "strokeCount": 22,
+          "firstFrame": 47
+        }
+      },
+      "pixels": {
+        "0:0:0": {
+          "targetId": "0:0:0",
+          "atMs": 541.5,
+          "frame": 30,
+          "nontransparentPixels": 364,
+          "maxAlpha": 252,
+          "sampleRect": {
+            "x": 234,
+            "y": 143,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:1": {
+          "targetId": "0:0:1",
+          "atMs": 626.9000000059605,
+          "frame": 35,
+          "nontransparentPixels": 381,
+          "maxAlpha": 247,
+          "sampleRect": {
+            "x": 234,
+            "y": 100,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:2": {
+          "targetId": "0:0:2",
+          "atMs": 706.6000000089407,
+          "frame": 39,
+          "nontransparentPixels": 382,
+          "maxAlpha": 247,
+          "sampleRect": {
+            "x": 234,
+            "y": 187,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:3": {
+          "targetId": "0:0:3",
+          "atMs": 773.2000000029802,
+          "frame": 43,
+          "nontransparentPixels": 294,
+          "maxAlpha": 245,
+          "sampleRect": {
+            "x": 234,
+            "y": 56,
+            "w": 24,
+            "h": 24
+          }
+        },
+        "0:0:4": {
+          "targetId": "0:0:4",
+          "atMs": 856.5,
+          "frame": 48,
+          "nontransparentPixels": 322,
+          "maxAlpha": 247,
+          "sampleRect": {
+            "x": 234,
+            "y": 230,
+            "w": 24,
+            "h": 24
+          }
+        }
+      },
+      "playerErrors": [],
+      "snapshots": [
+        {
+          "label": "all-five-confirmed-contacts-real-RAF",
+          "atMs": 856.5,
+          "frame": 48,
+          "file": "phone-raf-all-five.png",
+          "bytes": 37978,
+          "sha256": "b3743a8a59be5ab546fe859b234faa1db4c6fc90deb16c9f7f32e8d8df22d001",
+          "capture": "Actual canvas pixels captured in the real player onRender callback; no seek or manual frame override."
+        }
+      ],
+      "adapterInput": {
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "type": "skill_cast",
+        "actorId": "81995",
+        "skillId": "atlas:mage_chain",
+        "atMs": 1791421216000,
+        "resolvedAtMs": 1791421216000,
+        "scheduledAtMs": 1791421215001,
+        "resolutionMs": 1000,
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "targetIds": [
+          "0:0:0",
+          "0:0:1",
+          "0:0:2",
+          "0:0:3",
+          "0:0:4"
+        ],
+        "hits": [
+          {
+            "targetId": "0:0:0",
+            "damage": 135,
+            "critical": false,
+            "hpBefore": 1742,
+            "hpAfter": 1607,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:1",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1877,
+            "hpAfter": 1762,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:2",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1702,
+            "hpAfter": 1587,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:3",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1735,
+            "hpAfter": 1620,
+            "source": "skill"
+          },
+          {
+            "targetId": "0:0:4",
+            "damage": 115,
+            "critical": false,
+            "hpBefore": 1836,
+            "hpAfter": 1721,
+            "source": "skill"
+          }
+        ],
+        "mpBefore": 343,
+        "mpSpent": 17,
+        "mpAfter": 326,
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "from": {
+          "x": 109.63,
+          "y": 155.82
+        },
+        "to": {
+          "x": 246.37,
+          "y": 155.82
+        },
+        "targets": [
+          {
+            "x": 246.37,
+            "y": 155.82
+          },
+          {
+            "x": 246.37,
+            "y": 112.32
+          },
+          {
+            "x": 246.37,
+            "y": 199.32
+          },
+          {
+            "x": 246.37,
+            "y": 68.82
+          },
+          {
+            "x": 246.37,
+            "y": 242.82
+          }
+        ],
+        "bodyHeight": 88,
+        "direction": "right"
+      },
+      "admission": {
+        "accepted": true,
+        "eventId": "f13e0000-0000-4000-8000-000000000005:combat:16:cast:1",
+        "instanceId": 1
+      },
+      "strokeCalls": 424,
+      "ellipseCalls": 136,
+      "playerAfterPlayback": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "manual": false,
+        "width": 356,
+        "height": 318,
+        "dpr": 1,
+        "loadedAtlases": 1,
+        "pendingLoads": 0,
+        "generation": 0,
+        "destroyed": false,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "duplicate": {
+        "accepted": false,
+        "reason": "duplicate"
+      },
+      "duplicateCausedNoDraw": true,
+      "adapterAfterDuplicate": {
+        "received": 2,
+        "accepted": 1,
+        "rejected": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "generation": 0,
+        "destroyed": false,
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "remembered": 1,
+        "pending": 0
+      },
+      "adapterAfterClear": {
+        "received": 2,
+        "accepted": 1,
+        "rejected": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "generation": 1,
+        "destroyed": false,
+        "context": {
+          "accountId": "81995",
+          "realmId": "permanent",
+          "characterId": "81995",
+          "dispatchId": "f13e0000-0000-4000-8000-000000000005"
+        },
+        "revision": 1,
+        "remembered": 1,
+        "pending": 0
+      },
+      "playerAfterClear": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 356,
+        "height": 318,
+        "dpr": 1,
+        "loadedAtlases": 1,
+        "pendingLoads": 0,
+        "generation": 1,
+        "destroyed": false,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "duplicateAfterClear": {
+        "accepted": false,
+        "reason": "duplicate"
+      },
+      "seenTargetIds": [
+        "0:0:0",
+        "0:0:1",
+        "0:0:2",
+        "0:0:3",
+        "0:0:4"
+      ],
+      "pass": true,
+      "adapterAfterDestroy": {
+        "received": 3,
+        "accepted": 1,
+        "rejected": 2,
+        "byReason": {
+          "duplicate": 2
+        },
+        "generation": 2,
+        "destroyed": true,
+        "context": null,
+        "revision": -1,
+        "remembered": 0,
+        "pending": 0
+      },
+      "playerAfterDestroy": {
+        "active": 0,
+        "drawCalls": 0,
+        "frameMs": 0,
+        "width": 356,
+        "height": 318,
+        "dpr": 1,
+        "loadedAtlases": 0,
+        "pendingLoads": 0,
+        "generation": 3,
+        "destroyed": true,
+        "reducedMotion": false,
+        "maxActive": 1
+      },
+      "canvasAfterDestroy": {
+        "width": 1,
+        "height": 1
+      }
+    }
+  ],
+  "pageErrors": [],
+  "httpErrors": [],
+  "requestFailures": [],
+  "blockedRequests": [],
+  "networkPolicy": "GET/HEAD only, exact origin http://127.0.0.1:9664; no API calls or writes.",
+  "browserVersion": "156.0.8078.80",
+  "sourceFilesAfter": {
+    "worker/public/skill-vfx-engine.mjs": {
+      "bytes": 30147,
+      "sha256": "669ee45ee62f0dc624864b7e8c29fa6ddf53e4a9940b9ce6b89310e0fbb93fa0"
+    },
+    "worker/public/skill-vfx-combat-adapter.mjs": {
+      "bytes": 13565,
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337"
+    },
+    "worker/public/skill-vfx-catalog.json": {
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    "worker/public/skill-vfx-preview.mjs": {
+      "bytes": 15257,
+      "sha256": "3be56df10c3220acf0936e9d77e0aed68a9f4d3a1359ddcbbf586a6c06e07dac"
+    },
+    "worker/public/skill-vfx-preview.css": {
+      "bytes": 18493,
+      "sha256": "826277a96fa607f13f5bc55f8b3e0b7b400b8f3cc11138c9874c3c017f8f0677"
+    },
+    "worker/public/preview-skill-vfx.html": {
+      "bytes": 7831,
+      "sha256": "9b301325599b2281ab254e4560becaca5aced970c6b58de8c33d201d1855d39a"
+    },
+    "worker/public/art/skill-vfx-20261104/mage-atlas.webp": {
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    }
+  },
+  "receiptSha256After": "a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9",
+  "status": "passed",
+  "finishedAt": "2026-11-04T10:50:03.120Z"
+}

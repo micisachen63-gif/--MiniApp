@@ -8,3 +8,293 @@ worker/public/expedition/review.css text eol=lf
 worker/public/fate/** text eol=lf
 worker/public/fate-entry.js text eol=lf
 worker/public/fate-entry.css text eol=lf
+# HUD source receipts bind exact exported bytes on every checkout.
+worker/public/ui/hud-v2/*.json text eol=lf
+worker/public/ui/hud-v2/*.css text eol=lf
+# Pin captured VFX source line endings for byte-level evidence checks.
+worker/public/app.js text eol=crlf
+worker/public/battle.js text eol=crlf
+worker/public/expedition/combat-playback.js text eol=crlf
+worker/public/expedition/hero-art-playback.js text eol=crlf
+worker/public/scene-live-session.js text eol=crlf
+worker/public/scene-live-view.css text eol=crlf
+worker/public/scene-live-view.js text eol=crlf
+worker/public/skill-vfx-actor-bridge.mjs text eol=lf
+worker/public/skill-vfx-actor-profiles.json text eol=crlf
+worker/public/skill-vfx-catalog.json text eol=lf
+worker/public/skill-vfx-combat-adapter.mjs text eol=lf
+worker/public/skill-vfx-engine.mjs text eol=lf
+worker/public/skill-vfx-legacy.mjs text eol=lf
+worker/public/skill-vfx-recipes.json text eol=lf
+worker/public/star-ring-heroes.js text eol=crlf
+worker/src/game/atlas-catalog.js text eol=crlf
+worker/src/game/atlas-combat-observer.js text eol=lf
+worker/src/game/atlas-engine.js text eol=crlf
+worker/src/game/atlas-talents.js text eol=crlf
+worker/src/game/boss.js text eol=crlf
+worker/src/game/idle-combat.js text eol=crlf
+worker/src/game/idle.js text eol=crlf
+worker/src/game/pk.js text eol=crlf
+worker/src/game/skill-vfx-events.js text eol=lf
+worker/src/game/special-data.js text eol=crlf
+worker/src/game/special-idle.js text eol=crlf
+worker/src/game/special.js text eol=crlf
+worker/src/game/star-ring.js text eol=crlf
+worker/src/game/stats.js text eol=crlf
+worker/src/services/atlas.js text eol=crlf
+worker/src/services/boss.js text eol=crlf
+worker/src/services/party.js text eol=crlf
+worker/src/services/pk.js text eol=crlf
+worker/src/services/player.js text eol=crlf
+worker/src/services/star-ring.js text eol=crlf
+worker/test/skill-vfx-legacy-harness.js text eol=lf
+worker/tools/build-skill-vfx-browser-evidence.mjs text eol=lf
+worker/tools/build-skill-vfx-catalog.mjs text eol=lf
+worker/tools/build-skill-vfx-coverage.mjs text eol=lf
+worker/tools/build-skill-vfx-recipes.mjs text eol=lf
+worker/tools/skill-vfx-identity-browser.mjs text eol=lf
+worker/tools/skill-vfx-legacy-presentation-check.mjs text eol=lf
+worker/tools/skill-vfx-live-browser.cjs text eol=lf
+worker/public/skill-vfx-coverage.json text eol=lf
+
+# Reconstruct verified button source CRLF bytes on every checkout.
+worker/public/scene-social-preview.css text eol=crlf
+worker/tools/scene-live-preview.mjs text eol=crlf
+worker/tools/button-polish-browser.cjs text eol=crlf
+worker/test/scene-preview-assets.test.js text eol=crlf
+
+# Preserve the exact LF sources used by the target/contact VFX evidence.
+worker/public/skill-vfx-preview.mjs text eol=lf
+worker/public/skill-vfx-preview.css text eol=lf
+worker/public/preview-skill-vfx.html text eol=lf
+worker/test/skill-vfx-target-timing.test.js text eol=lf
+worker/tools/skill-vfx-target-browser.cjs text eol=lf
+worker/tools/skill-vfx-five-target-receipt.mjs text eol=lf
+
+worker/public/skill-vfx-semantics.mjs text eol=lf
+worker/public/skill-vfx-semantic-audit.json text eol=lf
+worker/tools/build-skill-vfx-semantic-audit.mjs text eol=lf
+worker/tools/skill-vfx-semantic-browser.mjs text eol=lf
+worker/test/skill-vfx-semantic-engine.test.js text eol=lf
+worker/test/skill-vfx-semantics.test.js text eol=lf
+worker/public/awakening-vfx-* text eol=lf
+worker/tools/awakening-vfx-* text eol=lf
+worker/tools/build-awakening-vfx-* text eol=lf
+worker/test/awakening-vfx-* text eol=lf
+worker/tools/skill-vfx-resolver-evidence.mjs text eol=lf
+docs/skill-vfx-semantics-20261105/** -text
+worker/art-production/awakening-vfx-20261105/*.json text eol=lf
+worker/art-production/skill-vfx-semantics-20261105/*.json text eol=lf
+worker/test/skill-vfx-legacy.test.js text eol=crlf
+
+# Immutable historical source snapshots and raw failure output keep exact bytes.
+# Only those archived blobs are opaque; runtime and audit manifests remain diffable.
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-after-interruption/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/interrupted-attempt/shared-inputs-before/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/preview-start/shared-inputs/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-after/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/characters-v1/scene.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/characters-v1/scene.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/dark-ui.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/preview.html -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-generated-20261030/progression-maps-20261102/scene-map-preview-controls.js -diff
+docs/skill-vfx-semantics-20261105/atlas/shared-inputs-before/ui-proto/ui.js -diff
+docs/skill-vfx-semantics-20261105/awakening/source/awakening-plan-20261102.txt -diff
+docs/skill-vfx-semantics-20261105/combat/regression/legacy-preload-red.tap -diff
+docs/skill-vfx-semantics-20261105/engine/engine-first-failure.tap -diff
+
+
+# Release manifest binds byte-identical original assets and aliases on every OS.
+worker/public/ui-generated-20261030/** -text
+worker/public/ui-proto/** -text
+worker/public/map*/** -text
+worker/public/classic.html -text
+worker/public/index.html -text
+worker/public/scene-production-manifest.json text eol=lf
+worker/public/advanced-specializations.css text eol=crlf
+worker/public/armory-specializations.js text eol=crlf
+worker/public/art.js text eol=crlf
+worker/public/art/hud-angels-20261102/hud-angels.css text eol=crlf
+worker/public/art/hud-angels-20261102/hud-angels.js text eol=crlf
+worker/public/atlas-progression-ui.js text eol=crlf
+worker/public/atlas-talents-ui.css text eol=crlf
+worker/public/atlas-talents-ui.js text eol=crlf
+worker/public/atlas-ui.css text eol=crlf
+worker/public/atlas-ui.js text eol=crlf
+worker/public/auto-reroll-ui.js text eol=crlf
+worker/public/background-workshop.css text eol=crlf
+worker/public/background-workshop.js text eol=crlf
+worker/public/bag-icons.css text eol=crlf
+worker/public/battle.css text eol=crlf
+worker/public/boss-waiting.css text eol=crlf
+worker/public/boss-waiting.js text eol=crlf
+worker/public/branch-elf4-fx.js text eol=crlf
+worker/public/character-delete.css text eol=crlf
+worker/public/cinematic-fx.js text eol=crlf
+worker/public/coin-ui.js text eol=lf
+worker/public/collection-ui.css text eol=crlf
+worker/public/collection-ui.js text eol=crlf
+worker/public/elf-adv2-skill-fx.js text eol=crlf
+worker/public/elf-low-tier-weapon-fx.js text eol=crlf
+worker/public/equipment-collection-ui.css text eol=crlf
+worker/public/equipment-collection-ui.js text eol=crlf
+worker/public/equipment-live-sync.js text eol=crlf
+worker/public/equipment-recovery-ui.css text eol=crlf
+worker/public/equipment-recovery-ui.js text eol=crlf
+worker/public/expedition-away.css text eol=crlf
+worker/public/expedition-away.js text eol=crlf
+worker/public/expedition-entry.css text eol=crlf
+worker/public/expedition-entry.js text eol=crlf
+worker/public/forge-ritual.css text eol=crlf
+worker/public/forge-ritual.js text eol=crlf
+worker/public/game-brand.css text eol=crlf
+worker/public/gear-names.js text eol=crlf
+worker/public/guardian-assist-widget.js text eol=crlf
+worker/public/guardian-auto-ui.js text eol=crlf
+worker/public/guardian-fusion-batch.js text eol=crlf
+worker/public/guardian-fusion-ui.css text eol=crlf
+worker/public/guardian-fusion-ui.js text eol=crlf
+worker/public/guardian-haptics.js text eol=crlf
+worker/public/guardian-idle-fx.css text eol=crlf
+worker/public/guardian-idle-fx.js text eol=crlf
+worker/public/guardian-party.js text eol=crlf
+worker/public/guardian-presentation.js text eol=crlf
+worker/public/guardian-pull.js text eol=crlf
+worker/public/guardian-ritual-ui.css text eol=crlf
+worker/public/guardian-ritual.js text eol=crlf
+worker/public/guardian-scene-media.js text eol=crlf
+worker/public/guardian-shop.css text eol=crlf
+worker/public/guardian-shop.js text eol=crlf
+worker/public/guardian-sigil-contract.js text eol=crlf
+worker/public/guardian-sigil.css text eol=crlf
+worker/public/guardian-sigil.js text eol=crlf
+worker/public/guardian-summon-gesture.js text eol=crlf
+worker/public/guardian-worldtree.js text eol=crlf
+worker/public/hero-armory.css text eol=crlf
+worker/public/hero-art-actor-adapters.js text eol=crlf
+worker/public/hero-art-registry-fx.js text eol=crlf
+worker/public/hero-art-registry.js text eol=crlf
+worker/public/hero-display.css text eol=crlf
+worker/public/hero-fx.css text eol=crlf
+worker/public/hero-fx.js text eol=crlf
+worker/public/hero-hall-ui.css text eol=crlf
+worker/public/hero-hall-ui.js text eol=crlf
+worker/public/hero-lavish-fx.js text eol=crlf
+worker/public/hero-size.css text eol=crlf
+worker/public/hero-size.js text eol=crlf
+worker/public/idle-exp.css text eol=crlf
+worker/public/journal.css text eol=crlf
+worker/public/journal.js text eol=crlf
+worker/public/lineage-ui.css text eol=crlf
+worker/public/mage-actor-fx.js text eol=crlf
+worker/public/map-motion.js text eol=crlf
+worker/public/map-video.js text eol=crlf
+worker/public/maps.js text eol=crlf
+worker/public/market-exchange-history.css text eol=crlf
+worker/public/market-exchange-history.js text eol=crlf
+worker/public/market-exchange.css text eol=crlf
+worker/public/market-exchange.js text eol=crlf
+worker/public/market-sell.css text eol=crlf
+worker/public/market-sell.js text eol=crlf
+worker/public/monster-catalog.js text eol=crlf
+worker/public/monster-expansion-catalog.js text eol=crlf
+worker/public/monster-expansion.js text eol=crlf
+worker/public/mythic-ui.css text eol=crlf
+worker/public/mythic-ui.js text eol=crlf
+worker/public/olympus-luxury.css text eol=crlf
+worker/public/olympus-suite.css text eol=crlf
+worker/public/olympus-unified.css text eol=crlf
+worker/public/operation-notices.js text eol=crlf
+worker/public/potion-choice.css text eol=crlf
+worker/public/request-client.js text eol=crlf
+worker/public/scene-atlas-guide.js text eol=crlf
+worker/public/scene-boss-ui.css text eol=crlf
+worker/public/scene-boss-ui.js text eol=crlf
+worker/public/scene-character-admin.js text eol=crlf
+worker/public/scene-chat-ui.css text eol=crlf
+worker/public/scene-chat-ui.js text eol=crlf
+worker/public/scene-direct-trade-client.js text eol=crlf
+worker/public/scene-direct-trade-invitation-client.js text eol=crlf
+worker/public/scene-direct-trade-ui.css text eol=crlf
+worker/public/scene-direct-trade-ui.js text eol=crlf
+worker/public/scene-duel-replay.js text eol=crlf
+worker/public/scene-exchange-client.js text eol=crlf
+worker/public/scene-exchange-ui.css text eol=crlf
+worker/public/scene-exchange-ui.js text eol=crlf
+worker/public/scene-fate-private-ui.css text eol=crlf
+worker/public/scene-fate-private-ui.js text eol=crlf
+worker/public/scene-fate-story.js text eol=crlf
+worker/public/scene-fate-ui.css text eol=crlf
+worker/public/scene-fate-ui.js text eol=crlf
+worker/public/scene-guardian-ui.css text eol=crlf
+worker/public/scene-guardian-ui.js text eol=crlf
+worker/public/scene-hero-readability.css text eol=crlf
+worker/public/scene-hero-readability.js text eol=crlf
+worker/public/scene-inventory-ui.css text eol=crlf
+worker/public/scene-inventory-ui.js text eol=crlf
+worker/public/scene-ledger-ui.css text eol=crlf
+worker/public/scene-ledger-ui.js text eol=crlf
+worker/public/scene-library-ui.js text eol=crlf
+worker/public/scene-live-auth.js text eol=lf
+worker/public/scene-map-preview-controls.js text eol=crlf
+worker/public/scene-original-rituals.js text eol=crlf
+worker/public/scene-party-ui.css text eol=crlf
+worker/public/scene-party-ui.js text eol=crlf
+worker/public/scene-skills-ui.css text eol=crlf
+worker/public/scene-skills-ui.js text eol=crlf
+worker/public/scene-social-preview.js text eol=crlf
+worker/public/scene-star-ring-ui.css text eol=crlf
+worker/public/scene-star-ring-ui.js text eol=crlf
+worker/public/scene-supply-ui.css text eol=crlf
+worker/public/scene-supply-ui.js text eol=crlf
+worker/public/scene-tower-ui.css text eol=crlf
+worker/public/scene-tower-ui.js text eol=crlf
+worker/public/scene-window-frame.css text eol=crlf
+worker/public/scene-window-manager.js text eol=crlf
+worker/public/scene-windows.css text eol=crlf
+worker/public/scene-workshop-ui.css text eol=crlf
+worker/public/scene-workshop-ui.js text eol=crlf
+worker/public/skill-fx.js text eol=crlf
+worker/public/special-skill-widgets.js text eol=crlf
+worker/public/star-ring-cosmetics.css text eol=crlf
+worker/public/star-ring-cosmetics.js text eol=crlf
+worker/public/star-ring-gear-art.js text eol=crlf
+worker/public/star-ring-monsters.js text eol=crlf
+worker/public/star-ring-scenery.js text eol=crlf
+worker/public/star-ring-ui.js text eol=crlf
+worker/public/star-ring.css text eol=crlf
+worker/public/status-banner.css text eol=crlf
+worker/public/styles.css text eol=crlf
+worker/public/sword-adv4-fx.js text eol=crlf
+worker/public/sword-branch-fx.js text eol=crlf
+worker/public/theme-greek.css text eol=crlf
+worker/public/thief-class.js text eol=crlf
+worker/public/thief-fx.js text eol=crlf
+worker/public/thief-gear-art.js text eol=crlf
+worker/public/ui-refined.css text eol=crlf
+
+worker/public/scene-native-cast-profiles.json text eol=lf
+worker/public/scene-native-cast.mjs text eol=lf
+
+worker/public/ui-generated-20261030/hud-angels-20261102/app.js -text whitespace=cr-at-eol
+worker/public/ui-generated-20261030/hud-angels-20261102/scene-live-view.js -text whitespace=cr-at-eol

@@ -1,0 +1,22 @@
+{
+  "path": ".release-sync/skill-vfx-20261104/legacy-coverage-presentation.json",
+  "status": "passed",
+  "summary": {
+    "expectedIdentities": 184,
+    "acceptedIdentities": 184,
+    "drawCalls": 3506,
+    "byPresentationMode": {
+      "full": 160,
+      "support": 23,
+      "summon": 1
+    },
+    "bySourceMode": {
+      "resolver": 60,
+      "idle": 124
+    },
+    "destroyed": true,
+    "activeAfterDestroy": 0,
+    "rafAfterDestroy": 0
+  },
+  "failures": []
+}

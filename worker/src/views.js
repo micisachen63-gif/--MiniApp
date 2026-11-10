@@ -14,7 +14,7 @@ import {idleCombatState} from './game/idle-combat.js';
 import { supplyHours, refillPlan, atGate, gateLevel, canAdvanceNow, choosePotion } from './game/idle.js';
 import { dailyGoldFor } from './game/daily.js';
 import { canEquip, gearOffers, tradeBlock, gearSellPrice, gearSellBlock, starRingVolumeGear } from './game/gear.js';
-import { unbindCost, unbindBlock, gearArt, shareBlock } from './game/share.js';
+import { unbindCost, unbindBlock, gearArt, gearIconSrc, shareBlock } from './game/share.js';
 import { itemOffers, gachaOffers, GACHA_RATES } from './game/shop.js';
 import { branchChoices } from './game/classes.js';
 import { nextSlot } from './game/boss.js';
@@ -39,7 +39,7 @@ export function equipmentView(char, e) {
     extras: x.flat, pct: x.pct, kind: e.kind, classReq: e.class_req, className: CLASSES[e.class_req]?.name || '全職業',
     enhance: e.enhance_level, equipped: !!e.is_equipped, branchReq: e.branch_req, levelReq: e.level_req, source: e.source,
     type: e.slot === 'weapon' ? WEAPON_KINDS[e.kind]?.type : SHARED_SLOTS.includes(e.slot) ? SLOT_NAMES[e.slot] : ARMOR_FAMILIES[e.class_req]?.name,
-    enhanceNext: enhanceOdds(e), blessedEnhanceNext: enhanceOdds(e, true), blessedScroll: blessedScrollFor(e), scroll: scrollFor(e), scrollCost: scrollCost(e), bound: !!e.bound, inTrade: e.trade_id || null, tradeBlock: tradeBlock(e), shareBlock: shareBlock(e,char.tg_id), sellPrice: gearSellPrice(e), sellBlock: gearSellBlock(e), unbindBlock: unbindBlock(e), unbindCost: unbindCost(e), art: gearArt(e),
+    enhanceNext: enhanceOdds(e), blessedEnhanceNext: enhanceOdds(e, true), blessedScroll: blessedScrollFor(e), scroll: scrollFor(e), scrollCost: scrollCost(e), bound: !!e.bound, inTrade: e.trade_id || null, tradeBlock: tradeBlock(e), shareBlock: shareBlock(e,char.tg_id), sellPrice: gearSellPrice(e), sellBlock: gearSellBlock(e), unbindBlock: unbindBlock(e), unbindCost: unbindCost(e), art: gearArt(e), iconSrc: gearIconSrc(e),
     convertible: !!(e.branch_req && e.convert_token && e.branch_req !== String(char.class_path || '')[0] && classTier(char.class_path) >= 1),
     cannotEquip: canEquip(char, e) };
 }

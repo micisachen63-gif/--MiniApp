@@ -47,10 +47,10 @@ test('every job has distinct geometry after colors and text are removed; all 192
 });
 
 test('every prescribed motion has real keyframes and safe pause/reduced-motion CSS, and catalogue loads before mounting',()=>{
- const css=read('hero-fx.css'),html=read('index.html');
+ const css=read('hero-fx.css'),entry=read('index.html'),html=entry.includes('telegram:true')?read('classic.html'):entry;
  for(const row of rows)assert.ok(css.includes('@keyframes armory-'+row.motion),row.motion);
  assert.match(css,/\[data-advanced-armory-fx\]\[data-fx-running="false"\]/);
  assert.match(css,/@media\(prefers-reduced-motion:reduce\).*\[data-advanced-armory-fx\]/);
- assert.ok(html.indexOf('src="armory-specializations.js')<html.indexOf('src="hero-fx.js'));
+ assert.ok(html.indexOf('src="armory-specializations.js')>=0&&html.indexOf('src="armory-specializations.js')<html.indexOf('src="hero-fx.js'));
  assert.ok(Object.isFrozen(catalogue.entries)&&rows.every(Object.isFrozen));
 });

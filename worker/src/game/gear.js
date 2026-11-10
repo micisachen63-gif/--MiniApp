@@ -1,4 +1,5 @@
 import {rollAffixes} from './affixes.js';
+import {stampMode,modeForLevel} from './endgame.js';
 import {gearRarity} from './gear-quality.js';
 // Shop / boss / relic gear (pure). Returns rows in the D1 rpg_equipment shape (v0.4: + grade, affix_json, bound, trade_id).
 import { WEAPON_KINDS, ARMOR_FAMILIES, WEAPON_ATK, ARMOR_DEF, WEAPON_PRICE, BRANCH_WEAPON_PRICE_MULT, ARMOR_PRICE, TIER_PREFIX, TIER_LEVEL_REQ,
@@ -43,7 +44,8 @@ export function gearOffers(char) {
         type: typeName(char.base_class, slot), branch: null, price: armorPrice(slot, tier), levelReq: TIER_LEVEL_REQ[tier], desc: descOf(char.base_class, slot) });
     }
   }
-  return out;
+  const mode=modeForLevel(char.level);
+  return mode.index===0?out:out.map(o=>({...o,mode:mode.id,name:o.name+'-'+mode.name,levelReq:o.levelReq+mode.index*120,price:Math.round(o.price*(1+mode.index*.5))}));
 }
 export function findOffer(char, code) { return gearOffers(char).find((o) => o.code === code) || null; }
 
@@ -57,7 +59,7 @@ export function rollAffix(rng, tier) {
 }
 
 /** generate an equipment row. source: shop | boss | starter | relic_boss | relic_elite */
-export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = 'shop', rarityFloor = null, bonusPct = 0, prefix = '', forceRarity = null, relic = false }) {
+export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = 'shop', rarityFloor = null, bonusPct = 0, prefix = '', forceRarity = null, relic = false, mode = 'normal',modeBalanceVersion=2 }) {
   if (!SLOTS.includes(slot)) throw new Error(`unknown slot ${slot}`);
   const element = pick(rng, ELEMENT_KEYS); const rarity = gearRarity({grade:relic?'relic':'normal',element_tier:forceRarity || rollRarity(rng, relic ? RELIC.rarityFloor : rarityFloor)});
   const mult = (1 + bonusPct) * (relic ? RELIC.statMult : 1);
@@ -76,31 +78,31 @@ export function makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source = '
   }
   let elemStat = randInt(rng, Math.max(1, Math.round(base * 0.2)), Math.max(1, Math.round(base * 0.4)));
   if (bonus.elemStatMult) elemStat = Math.round(elemStat * bonus.elemStatMult);
-  return { id, tg_id: tgId, slot, kind, class_req: classReq, branch_req: branchReq, tier, level_req: TIER_LEVEL_REQ[tier], name: (relic ? RELIC.prefix : '') + prefix + name, source,
+  return stampMode({ id, tg_id: tgId, slot, kind, class_req: classReq, branch_req: branchReq, tier, level_req: TIER_LEVEL_REQ[tier], name: (relic ? RELIC.prefix : '') + prefix + name, source,
     base_stat: base, bonus_json: JSON.stringify(bonus), element, element_stat: elemStat, element_tier: rarity, enhance_level: 0, is_equipped: 0,
     convert_token: branchReq ? 1 : 0, created_at: now, grade: relic ? 'relic' : 'normal', affix_json: relic ? JSON.stringify(rollAffix(rng, tier)) : null,
     affixes_json: JSON.stringify(rollAffixes({tier,class_req:classReq},rng)),
-    bound: source === 'starter' ? 1 : 0, trade_id: null };
+    bound: source === 'starter' ? 1 : 0, trade_id: null },mode,modeBalanceVersion);
 }
 
 /**
  * 遺物 drop: random slot type; class-specific pieces (weapon + 4 class armor) get a RANDOM class (any of the 3, not the
  * winner's); weapons of a random kind available at that tier (general or either branch).
  */
-export function makeRelic({ id, tgId, tier, rng, now, source }) {
+export function makeRelic({ id, tgId, tier, rng, now, source,mode='normal' }) {
   const slot = pick(rng, SLOTS); const cls = pick(rng, CLASS_KEYS);
   let kind = null;
   if (slot === 'weapon') kind = pick(rng, Object.entries(WEAPON_KINDS).filter(([, w]) => w.cls === cls && w.names[tier]).map(([k]) => k));
-  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source, relic: true });
+  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source, relic: true,mode });
 }
 
 /** Class-usable, tradeable equipment dropped by a surviving elite. */
-export function makeEliteGear({ id, tgId, cls, classPath = '', tier, rng, now, rarityFloor='advanced' }) {
+export function makeEliteGear({ id, tgId, cls, classPath = '', tier, rng, now, rarityFloor='advanced',mode='normal' }) {
   const slot = pick(rng, SLOTS);
   const kind = slot === 'weapon'
     ? pick(rng, Object.entries(WEAPON_KINDS).filter(([, w]) => w.cls === cls && w.names[tier] && (!w.branch || w.branch === String(classPath || '')[0])).map(([k]) => k))
     : isShared(slot) ? slot : ARMOR_FAMILIES[cls].key;
-  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source: 'elite', rarityFloor, prefix: '菁英' });
+  return makeGear({ id, tgId, cls, slot, kind, tier, rng, now, source: 'elite', rarityFloor, prefix: '菁英',mode });
 }
 
 export function canEquip(char, item) {
@@ -148,6 +150,6 @@ export function convertWeapon(item) {
   const to = COUNTERPART_WEAPON[item.kind]; if (!to || !item.convert_token) return null;
   const w = WEAPON_KINDS[to];
   const previous=JSON.parse(item.bonus_json||'{}');
-  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.towerImprint?{towerImprint:previous.towerImprint}:{}),...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{}),...(previous.starRingYieldVersion?{starRingYieldVersion:previous.starRingYieldVersion}:{})}), convert_token: 0, is_equipped: 0 };
+  return { ...item, kind: to, branch_req: w.branch, name: item.name.replace(WEAPON_KINDS[item.kind].names[item.tier], w.names[item.tier]), bonus_json: JSON.stringify({...w.bonus,...(previous.towerImprint?{towerImprint:previous.towerImprint}:{}),...(previous.starRingGearVersion?{starRingGearVersion:previous.starRingGearVersion}:{}),...(previous.starRingYieldVersion?{starRingYieldVersion:previous.starRingYieldVersion}:{}),...Object.fromEntries(['endgameOrigin','atlasLootVersion','atlasLootRunId','atlasLootMapId','atlasLootRewardId'].filter(key=>Object.hasOwn(previous,key)).map(key=>[key,previous[key]]))}), convert_token: 0, is_equipped: 0 };
 }
 export { CLASS_ARMOR_SLOTS };

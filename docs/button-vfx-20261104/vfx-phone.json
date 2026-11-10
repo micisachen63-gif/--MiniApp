@@ -1,0 +1,4110 @@
+{
+  "generatedAt": "2026-11-04T09:38:48.634Z",
+  "sourceFiles": [
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+      "bytes": 29486
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+      "bytes": 3586
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+      "bytes": 15546
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+      "bytes": 8153
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+      "bytes": 25096
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "sha256": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3",
+      "bytes": 14162
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02",
+      "bytes": 48256
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1",
+      "bytes": 3317
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1",
+      "bytes": 27338
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337",
+      "bytes": 13565
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3",
+      "bytes": 27868
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+      "bytes": 450626
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+      "bytes": 314182
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+      "bytes": 20103
+    },
+    {
+      "path": "worker/tools/skill-vfx-live-browser.cjs",
+      "sha256": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820",
+      "bytes": 15059
+    }
+  ],
+  "sourceFilesAfter": [
+    {
+      "path": "worker/src/game/atlas-engine.js",
+      "sha256": "52e3c45c07de7767ac2cbc742cc91332a0da97aaa8d8399d25c8a5599dcfcc01",
+      "bytes": 29486
+    },
+    {
+      "path": "worker/src/game/atlas-combat-observer.js",
+      "sha256": "d25bc454caa6108dd2332ee24709f209ba11994bfed9e96f6d5bb831ed252016",
+      "bytes": 3586
+    },
+    {
+      "path": "worker/src/game/atlas-catalog.js",
+      "sha256": "fefae82a2b5b50bbfd9b83034f05f208a71e0bc95104cd7a06d032ac1dd6239e",
+      "bytes": 15546
+    },
+    {
+      "path": "worker/src/game/atlas-talents.js",
+      "sha256": "eef386f0b73b22140dcdf9e3d90ef6798b5b9a1a870f394ec5bdb9a17c81d394",
+      "bytes": 8153
+    },
+    {
+      "path": "worker/src/services/atlas.js",
+      "sha256": "6856f1d8e4379c73bf230ea1db8ac8cb84f36f8c005bacc8aae486326662af3a",
+      "bytes": 25096
+    },
+    {
+      "path": "worker/public/scene-live-session.js",
+      "sha256": "4ebb1da0f6c0de7c5841c600d7ef43e2d5395f7354459243b7a5b7b84f2463c3",
+      "bytes": 14162
+    },
+    {
+      "path": "worker/public/scene-live-view.js",
+      "sha256": "b037209f63604b5166060dd29415d20d76680af1cc796364457bce5abbff0c02",
+      "bytes": 48256
+    },
+    {
+      "path": "worker/public/scene-live-view.css",
+      "sha256": "eb04d1cb2c42dc762ea44b7febf0168d3b95b126978237e65523d43cc9e078c1",
+      "bytes": 3317
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "602df18ca4ad955940f5d2b0043faca14ed3666c88fa00dd0ac958eb16c32ac1",
+      "bytes": 27338
+    },
+    {
+      "path": "worker/public/skill-vfx-combat-adapter.mjs",
+      "sha256": "8fff3f931121bd62587d032c5e0bad374f5dbccc331e1a77a048262373f7a337",
+      "bytes": 13565
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-bridge.mjs",
+      "sha256": "07528555e13f56d2b27942f5e8e0a3e24edda1c76c1e408e5f6b09298b1b57e3",
+      "bytes": 27868
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9",
+      "bytes": 450626
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "e49c608135c46fbc70be0a9015ff6b6a18f6efd79b0f0ded2101e2bedc08d65a",
+      "bytes": 314182
+    },
+    {
+      "path": "worker/public/skill-vfx-actor-profiles.json",
+      "sha256": "64bc48472f9938ded58c58eb7c70843538aa23932b4487909f0f330ea361aac7",
+      "bytes": 20103
+    },
+    {
+      "path": "worker/tools/skill-vfx-live-browser.cjs",
+      "sha256": "826a9b85d6d447b4c587ca84baba1af8ad9f7b8daf4a10e217b85d66ac505820",
+      "bytes": 15059
+    }
+  ],
+  "sourceChangedDuring": [],
+  "mode": "selected",
+  "health": {
+    "ok": true,
+    "liveScene": true,
+    "isolated": true,
+    "ephemeral": true,
+    "productionAccess": false,
+    "apiReady": true,
+    "sceneOrigin": "http://127.0.0.1:9667",
+    "apiOrigin": "http://127.0.0.1:9666",
+    "generatedInputsReadOnly": true,
+    "vfxFixture": "long-targets"
+  },
+  "apiHealth": {
+    "ok": true,
+    "isolated": true,
+    "ephemeral": true,
+    "productionAccess": false,
+    "realmCount": 2,
+    "liveSocialPreview": true,
+    "vfxFixture": "long-targets"
+  },
+  "cases": [
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "height": 844,
+      "trigger": "explicit-settle",
+      "characterId": "90101",
+      "runId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+      "startedAt": "2026-11-04T09:38:34.278Z",
+      "casts": [
+        {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "type": "skill_cast",
+          "actorId": "90101",
+          "skillId": "atlas:sword_whirlwind",
+          "atMs": 1793785127000,
+          "resolvedAtMs": 1793785127000,
+          "scheduledAtMs": 1793785126001,
+          "resolutionMs": 1000,
+          "mapIndex": 0,
+          "roomIndex": 0,
+          "targetIds": [
+            "0:0:0",
+            "0:0:1",
+            "0:0:2"
+          ],
+          "hits": [
+            {
+              "targetId": "0:0:0",
+              "damage": 78,
+              "critical": false,
+              "hpBefore": 1313,
+              "hpAfter": 1235,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:1",
+              "damage": 78,
+              "critical": false,
+              "hpBefore": 1235,
+              "hpAfter": 1157,
+              "source": "skill"
+            },
+            {
+              "targetId": "0:0:2",
+              "damage": 78,
+              "critical": false,
+              "hpBefore": 1249,
+              "hpAfter": 1171,
+              "source": "skill"
+            }
+          ],
+          "mpBefore": 65.85,
+          "mpSpent": 4,
+          "mpAfter": 61.85
+        }
+      ],
+      "effects": [],
+      "traceCount": 13,
+      "panel": {
+        "collapsed": "true",
+        "expanded": "false",
+        "rect": {
+          "x": 8,
+          "y": 91,
+          "width": 224,
+          "height": 54,
+          "top": 91,
+          "right": 232,
+          "bottom": 145,
+          "left": 8
+        }
+      },
+      "release": {
+        "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+        "actorId": "sword",
+        "direction": "up",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "markerMs": 210,
+        "actorElapsedMs": 211.66000000000003,
+        "startProgress": 0.22,
+        "elapsedMs": 1.660000000000025,
+        "authority": "source-marker-reviewed-origin",
+        "from": {
+          "x": 287.33369079535305,
+          "y": 381.0056836461126
+        },
+        "bodyHeight": 168.79999999999993,
+        "mode": "full",
+        "actor": {
+          "actorId": "sword",
+          "action": "attack",
+          "direction": "up",
+          "desiredDirection": "up",
+          "elapsed": 321.66,
+          "ready": true,
+          "generation": 3
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.19999998807907104,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "geometry": {
+          "canvas": {
+            "x": 0,
+            "y": 0,
+            "width": 390,
+            "height": 844,
+            "right": 390,
+            "bottom": 844
+          },
+          "world": {
+            "width": 1462.9333333333334,
+            "height": 2194.4
+          },
+          "camera": {
+            "viewport": {
+              "x": 0,
+              "y": 0,
+              "width": 390,
+              "height": 844
+            },
+            "worldView": {
+              "x": 536,
+              "y": 894,
+              "width": 390,
+              "height": 844,
+              "right": 926,
+              "bottom": 1738
+            },
+            "scrollX": 536,
+            "scrollY": 894,
+            "zoom": 1
+          },
+          "hero": {
+            "x": 731.4666666666667,
+            "y": 1316.64,
+            "scaleX": 0.5626666666666668,
+            "scaleY": 0.5626666666666668,
+            "worldBounds": {
+              "x": 596.4266666666667,
+              "y": 1052.1866666666667,
+              "width": 270.08000000000004,
+              "height": 288.08533333333344,
+              "right": 866.5066666666668,
+              "bottom": 1340.2720000000002
+            },
+            "screenBounds": {
+              "x": 60.42666666666673,
+              "y": 158.18666666666672,
+              "width": 270.08000000000004,
+              "height": 288.08533333333344,
+              "right": 330.5066666666668,
+              "bottom": 446.27200000000016
+            },
+            "screenAnchor": {
+              "x": 195.4666666666667,
+              "y": 422.6400000000001
+            }
+          },
+          "enemies": [
+            {
+              "id": "0:0:0",
+              "x": 648.7351732678407,
+              "y": 1195.4899809657466,
+              "scaleX": 0.37219329944264096,
+              "scaleY": 0.37219329944264096,
+              "worldBounds": {
+                "x": 553.4536886105245,
+                "y": 1020.1720491962849,
+                "width": 190.56296931463214,
+                "height": 190.56296931463226,
+                "right": 744.0166579251567,
+                "bottom": 1210.7350185109171
+              },
+              "screenBounds": {
+                "x": 17.453688610524523,
+                "y": 126.1720491962849,
+                "width": 190.56296931463214,
+                "height": 190.5629693146322,
+                "right": 208.01665792515666,
+                "bottom": 316.7350185109171
+              },
+              "screenAnchor": {
+                "x": 112.73517326784065,
+                "y": 301.48998096574655
+              }
+            },
+            {
+              "id": "0:0:1",
+              "x": 731.4666666666667,
+              "y": 1145.308,
+              "scaleX": 0.37219329944264096,
+              "scaleY": 0.37219329944264096,
+              "worldBounds": {
+                "x": 636.1851820093506,
+                "y": 969.9900682305383,
+                "width": 190.56296931463214,
+                "height": 190.56296931463226,
+                "right": 826.7481513239827,
+                "bottom": 1160.5530375451706
+              },
+              "screenBounds": {
+                "x": 100.18518200935057,
+                "y": 75.99006823053833,
+                "width": 190.56296931463214,
+                "height": 190.56296931463226,
+                "right": 290.7481513239827,
+                "bottom": 266.5530375451706
+              },
+              "screenAnchor": {
+                "x": 195.4666666666667,
+                "y": 251.308
+              }
+            },
+            {
+              "id": "0:0:2",
+              "x": 814.1981600654927,
+              "y": 1195.4899809657466,
+              "scaleX": 0.37219329944264096,
+              "scaleY": 0.37219329944264096,
+              "worldBounds": {
+                "x": 718.9166754081766,
+                "y": 1020.1720491962849,
+                "width": 190.56296931463214,
+                "height": 190.56296931463226,
+                "right": 909.4796447228088,
+                "bottom": 1210.7350185109171
+              },
+              "screenBounds": {
+                "x": 182.91667540817662,
+                "y": 126.1720491962849,
+                "width": 190.56296931463214,
+                "height": 190.5629693146322,
+                "right": 373.47964472280876,
+                "bottom": 316.7350185109171
+              },
+              "screenAnchor": {
+                "x": 278.19816006549274,
+                "y": 301.48998096574655
+              }
+            }
+          ],
+          "hud": {
+            "x": 6,
+            "y": 678,
+            "width": 378,
+            "height": 67,
+            "right": 384,
+            "bottom": 745
+          }
+        }
+      },
+      "effect": null,
+      "phoneGeometry": {
+        "canvas": {
+          "x": 0,
+          "y": 0,
+          "width": 390,
+          "height": 844,
+          "right": 390,
+          "bottom": 844
+        },
+        "enemies": [
+          {
+            "id": "0:0:0",
+            "x": 648.7351732678407,
+            "y": 1195.4899809657466,
+            "scaleX": 0.37219329944264096,
+            "scaleY": 0.37219329944264096,
+            "worldBounds": {
+              "x": 553.4536886105245,
+              "y": 1020.1720491962849,
+              "width": 190.56296931463214,
+              "height": 190.56296931463226,
+              "right": 744.0166579251567,
+              "bottom": 1210.7350185109171
+            },
+            "screenBounds": {
+              "x": 17.453688610524523,
+              "y": 126.1720491962849,
+              "width": 190.56296931463214,
+              "height": 190.5629693146322,
+              "right": 208.01665792515666,
+              "bottom": 316.7350185109171
+            },
+            "screenAnchor": {
+              "x": 112.73517326784065,
+              "y": 301.48998096574655
+            }
+          },
+          {
+            "id": "0:0:1",
+            "x": 731.4666666666667,
+            "y": 1145.308,
+            "scaleX": 0.37219329944264096,
+            "scaleY": 0.37219329944264096,
+            "worldBounds": {
+              "x": 636.1851820093506,
+              "y": 969.9900682305383,
+              "width": 190.56296931463214,
+              "height": 190.56296931463226,
+              "right": 826.7481513239827,
+              "bottom": 1160.5530375451706
+            },
+            "screenBounds": {
+              "x": 100.18518200935057,
+              "y": 75.99006823053833,
+              "width": 190.56296931463214,
+              "height": 190.56296931463226,
+              "right": 290.7481513239827,
+              "bottom": 266.5530375451706
+            },
+            "screenAnchor": {
+              "x": 195.4666666666667,
+              "y": 251.308
+            }
+          },
+          {
+            "id": "0:0:2",
+            "x": 814.1981600654927,
+            "y": 1195.4899809657466,
+            "scaleX": 0.37219329944264096,
+            "scaleY": 0.37219329944264096,
+            "worldBounds": {
+              "x": 718.9166754081766,
+              "y": 1020.1720491962849,
+              "width": 190.56296931463214,
+              "height": 190.56296931463226,
+              "right": 909.4796447228088,
+              "bottom": 1210.7350185109171
+            },
+            "screenBounds": {
+              "x": 182.91667540817662,
+              "y": 126.1720491962849,
+              "width": 190.56296931463214,
+              "height": 190.5629693146322,
+              "right": 373.47964472280876,
+              "bottom": 316.7350185109171
+            },
+            "screenAnchor": {
+              "x": 278.19816006549274,
+              "y": 301.48998096574655
+            }
+          }
+        ]
+      },
+      "duplicate": {
+        "before": {
+          "ready": true,
+          "issue": null,
+          "layoutChanges": 1,
+          "traces": 13,
+          "received": 1,
+          "accepted": 1,
+          "acceptedCasts": 1,
+          "acceptedEffects": 0,
+          "skipped": 0,
+          "byReason": {},
+          "epoch": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "actorId": "sword",
+          "pendingGeometry": 0,
+          "pendingCasts": 0,
+          "activeCast": null,
+          "lastReason": null,
+          "lastRelease": {
+            "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+            "actorId": "sword",
+            "direction": "up",
+            "context": {
+              "accountId": "90101",
+              "realmId": "permanent",
+              "characterId": "90101",
+              "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+            },
+            "room": {
+              "mapIndex": 0,
+              "roomIndex": 0
+            },
+            "markerMs": 210,
+            "actorElapsedMs": 211.66000000000003,
+            "startProgress": 0.22,
+            "elapsedMs": 1.660000000000025,
+            "authority": "source-marker-reviewed-origin",
+            "from": {
+              "x": 287.33369079535305,
+              "y": 381.0056836461126
+            },
+            "bodyHeight": 168.79999999999993,
+            "mode": "full"
+          },
+          "lastEffect": null,
+          "adapter": {
+            "received": 1,
+            "accepted": 1,
+            "rejected": 0,
+            "byReason": {},
+            "generation": 4,
+            "destroyed": false,
+            "context": {
+              "accountId": "90101",
+              "realmId": "permanent",
+              "characterId": "90101",
+              "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+            },
+            "revision": 13,
+            "remembered": 1,
+            "pending": 0
+          },
+          "player": {
+            "active": 1,
+            "drawCalls": 21,
+            "frameMs": 0.20000000298023224,
+            "manual": false,
+            "width": 390,
+            "height": 844,
+            "dpr": 1,
+            "loadedAtlases": 1,
+            "pendingLoads": 0,
+            "generation": 4,
+            "destroyed": false,
+            "reducedMotion": false,
+            "maxActive": 8
+          },
+          "lastTrace": {
+            "revision": 13,
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+            "eventCount": 1,
+            "accepted": true,
+            "reason": null,
+            "results": [
+              {
+                "accepted": true,
+                "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+                "instanceId": 1,
+                "type": "skill_cast"
+              }
+            ]
+          }
+        },
+        "result": [
+          {
+            "accepted": false,
+            "results": [
+              {
+                "accepted": false,
+                "reason": "duplicate",
+                "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1"
+              }
+            ]
+          }
+        ],
+        "after": {
+          "ready": true,
+          "issue": null,
+          "layoutChanges": 1,
+          "traces": 14,
+          "received": 2,
+          "accepted": 1,
+          "acceptedCasts": 1,
+          "acceptedEffects": 0,
+          "skipped": 1,
+          "byReason": {
+            "duplicate": 1
+          },
+          "epoch": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "actorId": "sword",
+          "pendingGeometry": 0,
+          "pendingCasts": 0,
+          "activeCast": null,
+          "lastReason": "duplicate",
+          "lastRelease": {
+            "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+            "actorId": "sword",
+            "direction": "up",
+            "context": {
+              "accountId": "90101",
+              "realmId": "permanent",
+              "characterId": "90101",
+              "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+            },
+            "room": {
+              "mapIndex": 0,
+              "roomIndex": 0
+            },
+            "markerMs": 210,
+            "actorElapsedMs": 211.66000000000003,
+            "startProgress": 0.22,
+            "elapsedMs": 1.660000000000025,
+            "authority": "source-marker-reviewed-origin",
+            "from": {
+              "x": 287.33369079535305,
+              "y": 381.0056836461126
+            },
+            "bodyHeight": 168.79999999999993,
+            "mode": "full"
+          },
+          "lastEffect": null,
+          "adapter": {
+            "received": 2,
+            "accepted": 1,
+            "rejected": 1,
+            "byReason": {
+              "duplicate": 1
+            },
+            "generation": 4,
+            "destroyed": false,
+            "context": {
+              "accountId": "90101",
+              "realmId": "permanent",
+              "characterId": "90101",
+              "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+            },
+            "revision": 13,
+            "remembered": 1,
+            "pending": 0
+          },
+          "player": {
+            "active": 1,
+            "drawCalls": 21,
+            "frameMs": 0.20000000298023224,
+            "manual": false,
+            "width": 390,
+            "height": 844,
+            "dpr": 1,
+            "loadedAtlases": 1,
+            "pendingLoads": 0,
+            "generation": 4,
+            "destroyed": false,
+            "reducedMotion": false,
+            "maxActive": 8
+          },
+          "lastTrace": {
+            "revision": 13,
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+            "eventCount": 1,
+            "accepted": false,
+            "reason": null,
+            "results": [
+              {
+                "accepted": false,
+                "reason": "duplicate",
+                "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1"
+              }
+            ]
+          }
+        }
+      },
+      "clear": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 15,
+        "received": 2,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "epoch": 6,
+        "destroyed": false,
+        "context": null,
+        "room": null,
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": "duplicate",
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 2,
+          "accepted": 1,
+          "rejected": 1,
+          "byReason": {
+            "duplicate": 1
+          },
+          "generation": 6,
+          "destroyed": false,
+          "context": null,
+          "revision": -1,
+          "remembered": 0,
+          "pending": 0
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 6,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 15,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": "no-context",
+          "results": []
+        }
+      },
+      "passed": true
+    }
+  ],
+  "receipts": [
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 1,
+        "committedAtMs": 1793785115338,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 1,
+      "receivedAt": 1793785115352
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 2,
+        "committedAtMs": 1793785116283,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 2,
+      "receivedAt": 1793785116293
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 3,
+        "committedAtMs": 1793785117288,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 3,
+      "receivedAt": 1793785117297
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 4,
+        "committedAtMs": 1793785118288,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 4,
+      "receivedAt": 1793785118300
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 5,
+        "committedAtMs": 1793785119300,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 5,
+      "receivedAt": 1793785119311
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 6,
+        "committedAtMs": 1793785120314,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 6,
+      "receivedAt": 1793785120323
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 7,
+        "committedAtMs": 1793785121289,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 7,
+      "receivedAt": 1793785121299
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 8,
+        "committedAtMs": 1793785122258,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 8,
+      "receivedAt": 1793785122267
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 9,
+        "committedAtMs": 1793785123247,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 9,
+      "receivedAt": 1793785123261
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 10,
+        "committedAtMs": 1793785124245,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 10,
+      "receivedAt": 1793785124254
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 11,
+        "committedAtMs": 1793785125229,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 11,
+      "receivedAt": 1793785125244
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 12,
+        "committedAtMs": 1793785126207,
+        "resolutionMs": 1000,
+        "events": [],
+        "limit": 128,
+        "dropped": 0,
+        "total": 0
+      },
+      "sceneRevision": 12,
+      "receivedAt": 1793785126221
+    },
+    {
+      "build": "sword_whirlwind",
+      "width": 390,
+      "trigger": "explicit-settle",
+      "trace": {
+        "schemaVersion": 1,
+        "source": "committed-combat",
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "revision": 13,
+        "committedAtMs": 1793785127203,
+        "resolutionMs": 1000,
+        "events": [
+          {
+            "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+            "type": "skill_cast",
+            "actorId": "90101",
+            "skillId": "atlas:sword_whirlwind",
+            "atMs": 1793785127000,
+            "resolvedAtMs": 1793785127000,
+            "scheduledAtMs": 1793785126001,
+            "resolutionMs": 1000,
+            "mapIndex": 0,
+            "roomIndex": 0,
+            "targetIds": [
+              "0:0:0",
+              "0:0:1",
+              "0:0:2"
+            ],
+            "hits": [
+              {
+                "targetId": "0:0:0",
+                "damage": 78,
+                "critical": false,
+                "hpBefore": 1313,
+                "hpAfter": 1235,
+                "source": "skill"
+              },
+              {
+                "targetId": "0:0:1",
+                "damage": 78,
+                "critical": false,
+                "hpBefore": 1235,
+                "hpAfter": 1157,
+                "source": "skill"
+              },
+              {
+                "targetId": "0:0:2",
+                "damage": 78,
+                "critical": false,
+                "hpBefore": 1249,
+                "hpAfter": 1171,
+                "source": "skill"
+              }
+            ],
+            "mpBefore": 65.85,
+            "mpSpent": 4,
+            "mpAfter": 61.85
+          }
+        ],
+        "limit": 128,
+        "dropped": 0,
+        "total": 1
+      },
+      "sceneRevision": 13,
+      "receivedAt": 1793785127215
+    }
+  ],
+  "samples": [
+    {
+      "at": 1793785127335,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 0,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 0,
+        "acceptedCasts": 0,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 1,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": false,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": null,
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 0,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": -1,
+          "remembered": 1,
+          "pending": 1
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 12,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": null,
+          "results": []
+        }
+      }
+    },
+    {
+      "at": 1793785127367,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 29.989999999999963,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 0,
+        "acceptedCasts": 0,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 1,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": false,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": null,
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 0,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": -1,
+          "remembered": 1,
+          "pending": 1
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 12,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": null,
+          "results": []
+        }
+      }
+    },
+    {
+      "at": 1793785127406,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 59.98999999999997,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 0,
+        "acceptedCasts": 0,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 1,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": false,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": null,
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 0,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": -1,
+          "remembered": 1,
+          "pending": 1
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 12,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": null,
+          "results": []
+        }
+      }
+    },
+    {
+      "at": 1793785127456,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 119.98999999999997,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 0,
+        "acceptedCasts": 0,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 1,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": false,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": null,
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 0,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": -1,
+          "remembered": 1,
+          "pending": 1
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 12,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": null,
+          "results": []
+        }
+      }
+    },
+    {
+      "at": 1793785127486,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 149.98999999999995,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 0,
+        "acceptedCasts": 0,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 1,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": false,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": null,
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 0,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": -1,
+          "remembered": 1,
+          "pending": 1
+        },
+        "player": {
+          "active": 0,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 12,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 0,
+          "accepted": false,
+          "reason": null,
+          "results": []
+        }
+      }
+    },
+    {
+      "at": 1793785127540,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 211.66000000000003,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127566,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 211.66000000000003,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 0,
+          "frameMs": 0,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127687,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 283.3300000000001,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127741,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 321.66,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.19999998807907104,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127766,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 321.66,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 16,
+          "frameMs": 0.19999998807907104,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127820,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 406.6700000000001,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.30000001192092896,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127852,
+      "actor": {
+        "actorId": "sword",
+        "action": "attack",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 406.6700000000001,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "direction": "up",
+          "released": true,
+          "token": 1
+        },
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.30000001192092896,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127891,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 0,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127933,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 0,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785127976,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 0,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128006,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 0,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128055,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 110.01000000000003,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.09999999403953552,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128100,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 110.01000000000003,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.09999999403953552,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128126,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 221.67999999999995,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.09999999403953552,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128172,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 313.35,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128208,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 355.0099999999999,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 6,
+          "frameMs": 0.10000000894069672,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128246,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 398.34,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.3999999910593033,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128294,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 476.67999999999995,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128330,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 508.35,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128369,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 540.0100000000001,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 13,
+        "received": 1,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 0,
+        "byReason": {},
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": null,
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 1,
+          "accepted": 1,
+          "rejected": 0,
+          "byReason": {},
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.20000000298023224,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": true,
+          "reason": null,
+          "results": [
+            {
+              "accepted": true,
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+              "instanceId": 1,
+              "type": "skill_cast"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "at": 1793785128426,
+      "actor": {
+        "actorId": "sword",
+        "action": "idle",
+        "direction": "up",
+        "desiredDirection": "up",
+        "elapsed": 573.3500000000003,
+        "ready": true,
+        "generation": 3
+      },
+      "vfx": {
+        "ready": true,
+        "issue": null,
+        "layoutChanges": 1,
+        "traces": 14,
+        "received": 2,
+        "accepted": 1,
+        "acceptedCasts": 1,
+        "acceptedEffects": 0,
+        "skipped": 1,
+        "byReason": {
+          "duplicate": 1
+        },
+        "epoch": 4,
+        "destroyed": false,
+        "context": {
+          "accountId": "90101",
+          "realmId": "permanent",
+          "characterId": "90101",
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+        },
+        "room": {
+          "mapIndex": 0,
+          "roomIndex": 0
+        },
+        "actorId": "sword",
+        "pendingGeometry": 0,
+        "pendingCasts": 0,
+        "activeCast": null,
+        "lastReason": "duplicate",
+        "lastRelease": {
+          "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1",
+          "actorId": "sword",
+          "direction": "up",
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "room": {
+            "mapIndex": 0,
+            "roomIndex": 0
+          },
+          "markerMs": 210,
+          "actorElapsedMs": 211.66000000000003,
+          "startProgress": 0.22,
+          "elapsedMs": 1.660000000000025,
+          "authority": "source-marker-reviewed-origin",
+          "from": {
+            "x": 287.33369079535305,
+            "y": 381.0056836461126
+          },
+          "bodyHeight": 168.79999999999993,
+          "mode": "full"
+        },
+        "lastEffect": null,
+        "adapter": {
+          "received": 2,
+          "accepted": 1,
+          "rejected": 1,
+          "byReason": {
+            "duplicate": 1
+          },
+          "generation": 4,
+          "destroyed": false,
+          "context": {
+            "accountId": "90101",
+            "realmId": "permanent",
+            "characterId": "90101",
+            "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd"
+          },
+          "revision": 13,
+          "remembered": 1,
+          "pending": 0
+        },
+        "player": {
+          "active": 1,
+          "drawCalls": 21,
+          "frameMs": 0.29999999701976776,
+          "manual": false,
+          "width": 390,
+          "height": 844,
+          "dpr": 1,
+          "loadedAtlases": 1,
+          "pendingLoads": 0,
+          "generation": 4,
+          "destroyed": false,
+          "reducedMotion": false,
+          "maxActive": 8
+        },
+        "lastTrace": {
+          "revision": 13,
+          "dispatchId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd",
+          "eventCount": 1,
+          "accepted": false,
+          "reason": null,
+          "results": [
+            {
+              "accepted": false,
+              "reason": "duplicate",
+              "eventId": "fa3073c7-9b3e-4566-8c04-6dfda6be71cd:combat:13:cast:1"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "errors": [],
+  "badResponses": []
+}

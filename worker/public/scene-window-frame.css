@@ -1,0 +1,35 @@
+/* Injected only by the main scene's host; standalone pages keep their layouts. */
+html.atlas-scene-frame, html.atlas-scene-frame body {
+  background: transparent !important;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+}
+.atlas-scene-frame { --bg: transparent; --panel: rgba(20, 33, 51, .63); --panel2: rgba(28, 43, 62, .65); }
+.atlas-scene-frame .rail {
+  position: sticky; inset: auto; top: 0; width: auto; padding: 7px 12px;
+  background: rgba(12, 23, 40, .76); border-right: 0; border-bottom: 1px solid var(--line);
+}
+.atlas-scene-frame .rail .brand, .atlas-scene-frame .rail-caption, .atlas-scene-frame .rail-foot { display: none; }
+.atlas-scene-frame .rail nav { display: flex; gap: 6px; overflow-x: auto; }
+.atlas-scene-frame .rail nav button { flex: 0 0 auto; padding: 8px 12px; gap: 7px; }
+.atlas-scene-frame .workspace { margin-left: 0; background: transparent; }
+.atlas-scene-frame .topbar { padding: 12px 18px; background: transparent; }
+.atlas-scene-frame main { padding: 18px; }
+.atlas-scene-frame .hero { min-height: 0; padding: 12px 16px; background: rgba(20, 33, 51, .35); }
+.atlas-scene-frame .hero .hero-bg { display: none; }
+.atlas-scene-frame .hero .hero-copy { width: 100%; max-width: none; padding-right: 70px; }
+.atlas-scene-frame .hero .expedition-hero-portrait { width: 64px; height: 92px; right: 12px; bottom: 0; }
+.atlas-scene-frame .hero .hero-character { max-height: 92px; object-fit: contain; }
+.atlas-scene-frame .hero h1 { font-size: 17px; line-height: 1.5; }
+.atlas-scene-frame .hero .hero-copy>p { font-size: 10px; line-height: 1.6; margin-block: 5px; }
+.atlas-scene-frame .hero .hero-chips { margin-top: 8px; }
+.atlas-scene-frame .fate-shell { min-height: 0; padding: 18px; background: transparent; }
+.atlas-scene-frame .fate-media, .atlas-scene-frame .fate-shell:before { display: none; }
+.atlas-scene-frame .fate-sky { height: 90px; }
+.atlas-scene-frame .fate-masthead { padding-top: 12px; }
+.atlas-scene-frame .fate-masthead h1 { font-size: 28px; }
+@media (max-width: 700px) {
+  .atlas-scene-frame .rail nav button { font-size: 11px; padding: 7px 9px; }
+  .atlas-scene-frame .topbar { padding: 10px 12px; }
+  .atlas-scene-frame main, .atlas-scene-frame .fate-shell { padding: 12px; }
+}

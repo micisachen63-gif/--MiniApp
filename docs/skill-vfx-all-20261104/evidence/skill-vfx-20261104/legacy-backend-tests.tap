@@ -1,0 +1,855 @@
+TAP version 13
+# Subtest: hourly spawn slots except sleeping hours, 30 minutes each
+ok 1 - hourly spawn slots except sleeping hours, 30 minutes each
+  ---
+  duration_ms: 2.9369
+  type: 'test'
+  ...
+# Subtest: chooseTier: random boss per slot, never the previous slot's boss when there is a choice
+ok 2 - chooseTier: random boss per slot, never the previous slot's boss when there is a choice
+  ---
+  duration_ms: 10.9219
+  type: 'test'
+  ...
+# Subtest: chooseTier: every map with a stuck player (cap level, no material) gets ≥1 spawn per day, in a random slot
+ok 3 - chooseTier: every map with a stuck player (cap level, no material) gets ≥1 spawn per day, in a random slot
+  ---
+  duration_ms: 92.0886
+  type: 'test'
+  ...
+# Subtest: boss HP scales by participants
+ok 4 - boss HP scales by participants
+  ---
+  duration_ms: 0.4966
+  type: 'test'
+  ...
+# Subtest: a solo Lv30 player can kill the tier-1 boss within the 10 attack windows
+ok 5 - a solo Lv30 player can kill the tier-1 boss within the 10 attack windows
+  ---
+  duration_ms: 9.0951
+  type: 'test'
+  ...
+# Subtest: loot: gold pool conserved, material to needy only, capped players get 20% and no gear
+ok 6 - loot: gold pool conserved, material to needy only, capped players get 20% and no gear
+  ---
+  duration_ms: 14.8971
+  type: 'test'
+  ...
+# (node:11468) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: every route uses its derived class mitigation exactly once, including actors from an older party snapshot
+ok 7 - every route uses its derived class mitigation exactly once, including actors from an older party snapshot
+  ---
+  duration_ms: 9.8426
+  type: 'test'
+  ...
+# Subtest: guard transfer conserves already-mitigated damage instead of applying another defense and class multiplier
+ok 8 - guard transfer conserves already-mitigated damage instead of applying another defense and class multiplier
+  ---
+  duration_ms: 0.3584
+  type: 'test'
+  ...
+# Subtest: specials honor branch mana discounts, affix efficiency and haste in validation and UI
+ok 9 - specials honor branch mana discounts, affix efficiency and haste in validation and UI
+  ---
+  duration_ms: 2.0203
+  type: 'test'
+  ...
+# Subtest: special free casts keep mana, start cooldowns and trigger actual native cast healing
+ok 10 - special free casts keep mana, start cooldowns and trigger actual native cast healing
+  ---
+  duration_ms: 2.2075
+  type: 'test'
+  ...
+# Subtest: all 54 existing skills execute with finite actual results, legal costs and bounded HP
+ok 11 - all 54 existing skills execute with finite actual results, legal costs and bounded HP
+  ---
+  duration_ms: 22.8173
+  type: 'test'
+  ...
+# Subtest: lifesteal uses clipped real damage and never heals above maximum health
+ok 12 - lifesteal uses clipped real damage and never heals above maximum health
+  ---
+  duration_ms: 0.4088
+  type: 'test'
+  ...
+# Subtest: PK applies guaranteed free native casts while preserving immutable authoritative replay snapshots
+ok 13 - PK applies guaranteed free native casts while preserving immutable authoritative replay snapshots
+  ---
+  duration_ms: 2.8062
+  type: 'test'
+  ...
+# Subtest: PK executes learned equipped skills, shields and DOTs, and ignores unavailable/unlearned skills
+ok 14 - PK executes learned equipped skills, shields and DOTs, and ignores unavailable/unlearned skills
+  ---
+  duration_ms: 3.7344
+  type: 'test'
+  ...
+# Subtest: PK shields absorb attacks, penetration changes defense, and shield-breaking is effective
+ok 15 - PK shields absorb attacks, penetration changes defense, and shield-breaking is effective
+  ---
+  duration_ms: 0.6319
+  type: 'test'
+  ...
+# Subtest: group boss uses equipped interrupt, persists cooldown and reports damage within cap
+ok 16 - group boss uses equipped interrupt, persists cooldown and reports damage within cap
+  ---
+  duration_ms: 2.614
+  type: 'test'
+  ...
+# Subtest: group boss summon pulses persist across requests and never migrate to another boss
+ok 17 - group boss summon pulses persist across requests and never migrate to another boss
+  ---
+  duration_ms: 1.6397
+  type: 'test'
+  ...
+# Subtest: idle native and special sustain is based on committed integer damage without a duplicate reduction approximation
+ok 18 - idle native and special sustain is based on committed integer damage without a duplicate reduction approximation
+  ---
+  duration_ms: 7.7377
+  type: 'test'
+  ...
+# Subtest: idle auto specials use free cast and keep the same learned/equipped and budget requirements
+ok 19 - idle auto specials use free cast and keep the same learned/equipped and budget requirements
+  ---
+  duration_ms: 1.9463
+  type: 'test'
+  ...
+# Subtest: real party snapshot and turn persist native skills, class mitigation, special mana and cooldowns atomically
+ok 20 - real party snapshot and turn persist native skills, class mitigation, special mana and cooldowns atomically
+  ---
+  duration_ms: 112.0486
+  type: 'test'
+  ...
+# Subtest: PK service snapshots actual character skill loadouts, not only derived stats
+ok 21 - PK service snapshots actual character skill loadouts, not only derived stats
+  ---
+  duration_ms: 65.0051
+  type: 'test'
+  ...
+# Subtest: a sub-minute first skill cannot starve the second and third slots; each keeps its own cooldown
+ok 22 - a sub-minute first skill cannot starve the second and third slots; each keeps its own cooldown
+  ---
+  duration_ms: 8.9696
+  type: 'test'
+  ...
+# Subtest: cursor survives real idle settlements and read-only supply measurement cannot advance the live queue
+ok 23 - cursor survives real idle settlements and read-only supply measurement cannot advance the live queue
+  ---
+  duration_ms: 28.0276
+  type: 'test'
+  ...
+# Subtest: cooldown, disabled and unmet conditions are skipped, while no available special falls back without consuming its queue
+ok 24 - cooldown, disabled and unmet conditions are skipped, while no available special falls back without consuming its queue
+  ---
+  duration_ms: 0.9308
+  type: 'test'
+  ...
+# Subtest: manual pending skill takes precedence for one action without changing automatic rotation order
+ok 25 - manual pending skill takes precedence for one action without changing automatic rotation order
+  ---
+  duration_ms: 0.8022
+  type: 'test'
+  ...
+# Subtest: reordered loadout and a missing previous pointer remain valid without resurrecting removed abilities
+ok 26 - reordered loadout and a missing previous pointer remain valid without resurrecting removed abilities
+  ---
+  duration_ms: 0.6428
+  type: 'test'
+  ...
+# Subtest: actual low mana uses only the chosen owned potion and respects the extra-skill budget
+ok 27 - actual low mana uses only the chosen owned potion and respects the extra-skill budget
+  ---
+  duration_ms: 0.708
+  type: 'test'
+  ...
+# Subtest: high recovery may legitimately consume zero blue potions even while all three automatic skills cast
+ok 28 - high recovery may legitimately consume zero blue potions even while all three automatic skills cast
+  ---
+  duration_ms: 21.9806
+  type: 'test'
+  ...
+# Subtest: first observed boundary keeps accrued offline hours on their original skill schedule and future minutes rotate
+ok 29 - first observed boundary keeps accrued offline hours on their original skill schedule and future minutes rotate
+  ---
+  duration_ms: 14.8828
+  type: 'test'
+  ...
+# Subtest: a settlement's committed hits are spread across the minute, not burst
+ok 30 - a settlement's committed hits are spread across the minute, not burst
+  ---
+  duration_ms: 38.6032
+  type: 'test'
+  ...
+# Subtest: offline (multi-tick) reports and reduced motion replay without pacing
+ok 31 - offline (multi-tick) reports and reduced motion replay without pacing
+  ---
+  duration_ms: 15.8164
+  type: 'test'
+  ...
+# Subtest: between settlements the monsters take no decorative damage or swings
+ok 32 - between settlements the monsters take no decorative damage or swings
+  ---
+  duration_ms: 35.9763
+  type: 'test'
+  ...
+# Subtest: each kill shows real 經驗值/gold/drop popups that add up to the report totals
+ok 33 - each kill shows real 經驗值/gold/drop popups that add up to the report totals
+  ---
+  duration_ms: 12.1658
+  type: 'test'
+  ...
+# Subtest: gaps are filled with cosmetic swings that never change monster 生命值
+ok 34 - gaps are filled with cosmetic swings that never change monster 生命值
+  ---
+  duration_ms: 5.9985
+  type: 'test'
+  ...
+# Subtest: round delivered by the idle feed first, report arriving later, still shows the real kill popups
+ok 35 - round delivered by the idle feed first, report arriving later, still shows the real kill popups
+  ---
+  duration_ms: 90.9875
+  type: 'test'
+  ...
+# Subtest: summarized round (no per-hit events) still shows the real totals once
+ok 36 - summarized round (no per-hit events) still shows the real totals once
+  ---
+  duration_ms: 113.6738
+  type: 'test'
+  ...
+# Subtest: a real fatal elite consumes the mastered idle last stand before the next minute in its longer protection window
+ok 37 - a real fatal elite consumes the mastered idle last stand before the next minute in its longer protection window
+  ---
+  duration_ms: 15.5947
+  type: 'test'
+  ...
+# Subtest: a nonfatal elite does not spend the one-shot protection prematurely
+ok 38 - a nonfatal elite does not spend the one-shot protection prematurely
+  ---
+  duration_ms: 1.575
+  type: 'test'
+  ...
+# Subtest: no time passed → nothing changes
+ok 39 - no time passed → nothing changes
+  ---
+  duration_ms: 4.4497
+  type: 'test'
+  ...
+# Subtest: fresh character levels with starter potions and is deterministic
+ok 40 - fresh character levels with starter potions and is deterministic
+  ---
+  duration_ms: 30.6909
+  type: 'test'
+  ...
+# Subtest: no MP potions → basic attacks at 35% (state no_mp), EXP lower
+ok 41 - no MP potions → basic attacks at 35% (state no_mp), EXP lower
+  ---
+  duration_ms: 7.1775
+  type: 'test'
+  ...
+# Subtest: no HP potions → returns to town, EXP stops; restock → auto-resume
+ok 42 - no HP potions → returns to town, EXP stops; restock → auto-resume
+  ---
+  duration_ms: 9.2273
+  type: 'test'
+  ...
+# Subtest: offline cap: at most 24h (1440 ticks) is settled
+ok 43 - offline cap: at most 24h (1440 ticks) is settled
+  ---
+  duration_ms: 27.1039
+  type: 'test'
+  ...
+# Subtest: default 50% auto-red threshold survives a full day at Lv25
+ok 44 - default 50% auto-red threshold survives a full day at Lv25
+  ---
+  duration_ms: 26.0188
+  type: 'test'
+  ...
+# Subtest: death: −5% of level EXP, never de-levels, capped at 3 penalties/day
+ok 45 - death: −5% of level EXP, never de-levels, capped at 3 penalties/day
+  ---
+  duration_ms: 20.6365
+  type: 'test'
+  ...
+# Subtest: death: 守護符 absorbs the penalty (and is consumed), newbies have no penalty
+ok 46 - death: 守護符 absorbs the penalty (and is consumed), newbies have no penalty
+  ---
+  duration_ms: 45.1806
+  type: 'test'
+  ...
+# Subtest: death → reviving 10 minutes (no EXP during revive)
+ok 47 - death → reviving 10 minutes (no EXP during revive)
+  ---
+  duration_ms: 14.7973
+  type: 'test'
+  ...
+# Subtest: Lv30 gate: EXP fills then waits (state gate) until advancement
+ok 48 - Lv30 gate: EXP fills then waits (state gate) until advancement
+  ---
+  duration_ms: 1.7437
+  type: 'test'
+  ...
+# Subtest: Lv60 gate holds in P1 even after first advancement (map 3 not open)
+ok 49 - Lv60 gate holds in P1 even after first advancement (map 3 not open)
+  ---
+  duration_ms: 0.5849
+  type: 'test'
+  ...
+# Subtest: supply hours and 24h refill plan are positive and consistent
+ok 50 - supply hours and 24h refill plan are positive and consistent
+  ---
+  duration_ms: 8.2143
+  type: 'test'
+  ...
+# Subtest: performance: 24h settle < 50ms
+ok 51 - performance: 24h settle < 50ms
+  ---
+  duration_ms: 193.2969
+  type: 'test'
+  ...
+# Subtest: drops: deterministic, near expected rate, scaled by map tier, on a separate RNG stream
+ok 52 - drops: deterministic, near expected rate, scaled by map tier, on a separate RNG stream
+  ---
+  duration_ms: 1891.3865
+  type: 'test'
+  ...
+# Subtest: drops: none in town; daily cap per Taipei day; counter resets next day
+ok 53 - drops: none in town; daily cap per Taipei day; counter resets next day
+  ---
+  duration_ms: 45.2042
+  type: 'test'
+  ...
+# (node:43164) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+ok 54 - all 124 native identities are published only with the successful SQLite idle settlement and remain stable on a repeated read
+  ---
+  duration_ms: 688.3813
+  type: 'test'
+  ...
+# Subtest: all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+ok 55 - all 60 special identities survive real party atomic commits with correct enemy, ally, heal, revive and summon targets
+  ---
+  duration_ms: 453.2449
+  type: 'test'
+  ...
+# Subtest: a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+ok 56 - a late SQLite batch failure rolls back idle combat metadata, HP/MP and rewards; retry publishes only the committed round
+  ---
+  duration_ms: 71.6048
+  type: 'test'
+  ...
+# Subtest: party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+ok 57 - party CAS retry and lost success response preserve one stable receipt, and a late SQL failure publishes no new turn
+  ---
+  duration_ms: 95.3735
+  type: 'test'
+  ...
+# Subtest: PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+ok 58 - PK service commits canonical replay identities under the real duel id and preserves replay on repeated read
+  ---
+  duration_ms: 61.3961
+  type: 'test'
+  ...
+# Subtest: 432 pre-change complete legacy outcomes stay equal after excluding presentation-only fields
+ok 59 - 432 pre-change complete legacy outcomes stay equal after excluding presentation-only fields
+  ---
+  duration_ms: 93.2881
+  type: 'test'
+  ...
+# Subtest: all 124 native identities resolve in idle and boss, and every one emits in a balanced duel
+ok 60 - all 124 native identities resolve in idle and boss, and every one emits in a balanced duel
+  ---
+  duration_ms: 48.0809
+  type: 'test'
+  ...
+# Subtest: all 60 special identities describe real resolved target roles, including 24 zero-direct-damage actions
+ok 61 - all 60 special identities describe real resolved target roles, including 24 zero-direct-damage actions
+  ---
+  duration_ms: 1.0051
+  type: 'test'
+  ...
+# Subtest: hybrid attacks retain the enemy as primary and only list their true healing recipients separately
+ok 62 - hybrid attacks retain the enemy as primary and only list their true healing recipients separately
+  ---
+  duration_ms: 0.7622
+  type: 'test'
+  ...
+# Subtest: summon placement does no immediate hit; scheduled pulses preserve exact source identity and deduplicate naturally
+ok 63 - summon placement does no immediate hit; scheduled pulses preserve exact source identity and deduplicate naturally
+  ---
+  duration_ms: 1.0325
+  type: 'test'
+  ...
+# Subtest: DOT refresh and native poison origin remain separate from the summon and from new casts
+ok 64 - DOT refresh and native poison origin remain separate from the summon and from new casts
+  ---
+  duration_ms: 0.9161
+  type: 'test'
+  ...
+# Subtest: shield reflection is emitted only for actual damage, while thief counter remains a next-action buff
+ok 65 - shield reflection is emitted only for actual damage, while thief counter remains a next-action buff
+  ---
+  duration_ms: 1.2917
+  type: 'test'
+  ...
+# Subtest: idle exposes one aggregate-minute cast, links it once, and never labels ordinary or elite hits as another skill cast
+ok 66 - idle exposes one aggregate-minute cast, links it once, and never labels ordinary or elite hits as another skill cast
+  ---
+  duration_ms: 2.342
+  type: 'test'
+  ...
+# Subtest: star-ring projection and committed checkpoint remain distinct sources with identical combat and stable events
+ok 67 - star-ring projection and committed checkpoint remain distinct sources with identical combat and stable events
+  ---
+  duration_ms: 14.2359
+  type: 'test'
+  ...
+# Subtest: equipped eligible skill selected; cooldown and low MP fall back to attack
+ok 68 - equipped eligible skill selected; cooldown and low MP fall back to attack
+  ---
+  duration_ms: 1.8158
+  type: 'test'
+  ...
+# Subtest: heal only an injured living target; revive only dead teammate and once per run
+ok 69 - heal only an injured living target; revive only dead teammate and once per run
+  ---
+  duration_ms: 0.5762
+  type: 'test'
+  ...
+# (node:3780) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: party replay retains only five turns and a completed cursor returns only new turns
+ok 70 - party replay retains only five turns and a completed cursor returns only new turns
+  ---
+  duration_ms: 153.5746
+  type: 'test'
+  ...
+# Subtest: snapshots include exact HP and MP before skill cost and after recovery
+ok 71 - snapshots include exact HP and MP before skill cost and after recovery
+  ---
+  duration_ms: 88.1221
+  type: 'test'
+  ...
+# Subtest: floor-clear replay keeps defeated enemy identity separate from next floor
+ok 72 - floor-clear replay keeps defeated enemy identity separate from next floor
+  ---
+  duration_ms: 85.8973
+  type: 'test'
+  ...
+# Subtest: dungeon: live MP threshold refills before skill selection and repeated views never double spend
+ok 73 - dungeon: live MP threshold refills before skill selection and repeated views never double spend
+  ---
+  duration_ms: 91.0633
+  type: 'test'
+  ...
+# Subtest: tower: live MP threshold refills before skill selection and repeated views never double spend
+ok 74 - tower: live MP threshold refills before skill selection and repeated views never double spend
+  ---
+  duration_ms: 83.8132
+  type: 'test'
+  ...
+# Subtest: dungeon: live potion choice overrides the encounter snapshot without losing settings or double spending
+ok 75 - dungeon: live potion choice overrides the encounter snapshot without losing settings or double spending
+  ---
+  duration_ms: 86.1999
+  type: 'test'
+  ...
+# Subtest: tower: live potion choice overrides the encounter snapshot without losing settings or double spending
+ok 76 - tower: live potion choice overrides the encounter snapshot without losing settings or double spending
+  ---
+  duration_ms: 86.4154
+  type: 'test'
+  ...
+# (node:28852) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: dungeon 5s ordinary: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+ok 77 - dungeon 5s ordinary: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+  ---
+  duration_ms: 319.6449
+  type: 'test'
+  ...
+# {"kind":"dungeon","roles":false,"skills":["skill_03_1","skill_03_2","skill_12_1"],"rounds":8,"endedAt":40000,"receipts":3}
+# Subtest: dungeon 15s roles: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+ok 78 - dungeon 15s roles: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+  ---
+  duration_ms: 351.0842
+  type: 'test'
+  ...
+# {"kind":"dungeon","roles":true,"skills":["skill_03_1","skill_03_2","skill_12_1"],"rounds":17,"endedAt":255000,"receipts":3}
+# Subtest: tower 5s ordinary: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+ok 79 - tower 5s ordinary: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+  ---
+  duration_ms: 418.1242
+  type: 'test'
+  ...
+# {"kind":"tower","roles":false,"skills":["skill_03_1","skill_03_2","skill_12_1"],"rounds":21,"endedAt":105000,"receipts":3}
+# Subtest: tower 15s roles: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+ok 80 - tower 15s roles: all three actual equipped skills cast; no browser for two hours equals online turns, mana, potions and one award
+  ---
+  duration_ms: 504.6046
+  type: 'test'
+  ...
+# {"kind":"tower","roles":true,"skills":["skill_03_1","skill_03_2","skill_12_1"],"rounds":34,"endedAt":310000,"receipts":3}
+# Subtest: expedition v1: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+ok 81 - expedition v1: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+  ---
+  duration_ms: 1922.0412
+  type: 'test'
+  ...
+# {"version":1,"skills":["skill_03_1","skill_03_2","skill_12_1"],"stages":6,"receipts":30,"offlineCron":true}
+# Subtest: expedition v2: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+ok 82 - expedition v2: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+  ---
+  duration_ms: 1991.3983
+  type: 'test'
+  ...
+# {"version":2,"skills":["skill_03_1","skill_03_2","skill_12_1"],"stages":6,"receipts":30,"offlineCron":true}
+# Subtest: expedition v3: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+ok 83 - expedition v3: slots two and three actually cast and a full offline 12h has identical six-stage combat and thirty receipts
+  ---
+  duration_ms: 1893.2591
+  type: 'test'
+  ...
+# {"version":3,"skills":["skill_03_1","skill_03_2","skill_12_1"],"stages":6,"receipts":30,"offlineCron":true}
+# Subtest: all specials cooling down use native attack; unavailable skills do not consume mana or advance cooldowns
+ok 84 - all specials cooling down use native attack; unavailable skills do not consume mana or advance cooldowns
+  ---
+  duration_ms: 1.2604
+  type: 'test'
+  ...
+# Subtest: Wind Binding can auto-cast its 1.8A damage against a boss without applying the adds-only damage debuff
+ok 85 - Wind Binding can auto-cast its 1.8A damage against a boss without applying the adds-only damage debuff
+  ---
+  duration_ms: 0.4429
+  type: 'test'
+  ...
+# (node:47356) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: v1 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 86 - v1 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1799.3664
+  type: 'test'
+  ...
+# Subtest: v1 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 87 - v1 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1692.0383
+  type: 'test'
+  ...
+# Subtest: v1 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 88 - v1 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1875.6022
+  type: 'test'
+  ...
+# Subtest: v1 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 89 - v1 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1855.0842
+  type: 'test'
+  ...
+# Subtest: v2 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 90 - v2 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1768.715
+  type: 'test'
+  ...
+# Subtest: v2 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 91 - v2 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1991.4715
+  type: 'test'
+  ...
+# Subtest: v2 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 92 - v2 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1858.926
+  type: 'test'
+  ...
+# Subtest: v2 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 93 - v2 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1775.1931
+  type: 'test'
+  ...
+# Subtest: v3 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 94 - v3 dungeon: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1709.389
+  type: 'test'
+  ...
+# Subtest: v3 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 95 - v3 dungeon: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1746.4696
+  type: 'test'
+  ...
+# Subtest: v3 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+ok 96 - v3 tower: new configuration survives a real win, expedition completes after the win, and stale result reads
+  ---
+  duration_ms: 1613.9094
+  type: 'test'
+  ...
+# Subtest: v3 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+ok 97 - v3 tower: new configuration survives a real win, expedition completes during combat, and stale result reads
+  ---
+  duration_ms: 1596.6508
+  type: 'test'
+  ...
+# (node:41024) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: v1 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 98 - v1 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 149.9344
+  type: 'test'
+  ...
+# Subtest: v2 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 99 - v2 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 108.0381
+  type: 'test'
+  ...
+# Subtest: v3 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+ok 100 - v3 existing expedition allows skill replacement and all automatic conditions while preserving departure actors and live resources
+  ---
+  duration_ms: 122.7184
+  type: 'test'
+  ...
+# Subtest: normal loadout and automatic validations still reject invalid configurations during expedition
+ok 101 - normal loadout and automatic validations still reject invalid configurations during expedition
+  ---
+  duration_ms: 96.9011
+  type: 'test'
+  ...
+# Subtest: new dungeon uses the changed skills, blocks edits in combat and restores expedition editing after ending
+ok 102 - new dungeon uses the changed skills, blocks edits in combat and restores expedition editing after ending
+  ---
+  duration_ms: 130.1469
+  type: 'test'
+  ...
+# Subtest: new tower uses the changed skills, blocks edits in combat and restores expedition editing after ending
+ok 103 - new tower uses the changed skills, blocks edits in combat and restores expedition editing after ending
+  ---
+  duration_ms: 114.3774
+  type: 'test'
+  ...
+# Subtest: fake membership cannot grant expedition skill edit permissions
+ok 104 - fake membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 77.3439
+  type: 'test'
+  ...
+# Subtest: left membership cannot grant expedition skill edit permissions
+ok 105 - left membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 84.1285
+  type: 'test'
+  ...
+# Subtest: finished membership cannot grant expedition skill edit permissions
+ok 106 - finished membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 93.8828
+  type: 'test'
+  ...
+# Subtest: foreground membership cannot grant expedition skill edit permissions
+ok 107 - foreground membership cannot grant expedition skill edit permissions
+  ---
+  duration_ms: 79.1392
+  type: 'test'
+  ...
+# Subtest: skill edit rechecks finished race inside the atomic commit
+ok 108 - skill edit rechecks finished race inside the atomic commit
+  ---
+  duration_ms: 92.1652
+  type: 'test'
+  ...
+# Subtest: skill edit rechecks foreground race inside the atomic commit
+ok 109 - skill edit rechecks foreground race inside the atomic commit
+  ---
+  duration_ms: 103.1387
+  type: 'test'
+  ...
+# Subtest: manual casting and cancellation retain their original party locks
+ok 110 - manual casting and cancellation retain their original party locks
+  ---
+  duration_ms: 94.8746
+  type: 'test'
+  ...
+# Subtest: v1 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 111 - v1 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1710.9508
+  type: 'test'
+  ...
+# Subtest: v2 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 112 - v2 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1950.7738
+  type: 'test'
+  ...
+# Subtest: v3 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+ok 113 - v3 changing live skills between all six checkpoints preserves every twelve-hour battle, 30 awards and the saved new configuration
+  ---
+  duration_ms: 1714.3853
+  type: 'test'
+  ...
+# (node:52640) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: fixed-point 1.8x cadence delivers nine genuine native strikes per five actions with independent criticals and one status application
+ok 114 - fixed-point 1.8x cadence delivers nine genuine native strikes per five actions with independent criticals and one status application
+  ---
+  duration_ms: 7.2906
+  type: 'test'
+  ...
+# Subtest: release-gated books require explicit catalogue; all branch descendants inherit only their legal books
+ok 115 - release-gated books require explicit catalogue; all branch descendants inherit only their legal books
+  ---
+  duration_ms: 2.6931
+  type: 'test'
+  ...
+# Subtest: all six books execute real bounded mechanics with actual mana and cooldowns
+ok 116 - all six books execute real bounded mechanics with actual mana and cooldowns
+  ---
+  duration_ms: 2.5492
+  type: 'test'
+  ...
+# Subtest: poison is attack-derived, three layers per owner, bounded lifetime, refresh-safe and replay-safe
+ok 117 - poison is attack-derived, three layers per owner, bounded lifetime, refresh-safe and replay-safe
+  ---
+  duration_ms: 0.7868
+  type: 'test'
+  ...
+# Subtest: four primary routes have real mark burst, poison, penetration and one-hit weakening; basics add none
+ok 118 - four primary routes have real mark burst, poison, penetration and one-hit weakening; basics add none
+  ---
+  duration_ms: 0.7082
+  type: 'test'
+  ...
+# Subtest: mirror counter waits for actual incoming damage and grants one enhanced attack without dealing extra damage
+ok 119 - mirror counter waits for actual incoming damage and grants one enhanced attack without dealing extra damage
+  ---
+  duration_ms: 0.4255
+  type: 'test'
+  ...
+# Subtest: every thief route and periodic source uses melee guardian once; ranged/magic cannot override it
+ok 120 - every thief route and periodic source uses melee guardian once; ranged/magic cannot override it
+  ---
+  duration_ms: 3.8857
+  type: 'test'
+  ...
+# Subtest: group boss native poison persists only within its encounter and respects actual damage caps
+ok 121 - group boss native poison persists only within its encounter and respects actual damage caps
+  ---
+  duration_ms: 5.2825
+  type: 'test'
+  ...
+# Subtest: real idle and group-boss budgets apply melee guardians once to all four thief routes; summoned idle uses existing double bonus
+ok 122 - real idle and group-boss budgets apply melee guardians once to all four thief routes; summoned idle uses existing double bonus
+  ---
+  duration_ms: 18.5822
+  type: 'test'
+  ...
+# Subtest: idle uses the committed integer damage budget, finite poison, map cleanup and idempotent settlement
+ok 123 - idle uses the committed integer damage budget, finite poison, map cleanup and idempotent settlement
+  ---
+  duration_ms: 5.1116
+  type: 'test'
+  ...
+# Subtest: PK native poison/status replay is authoritative and melee guardians remain PvE-only
+ok 124 - PK native poison/status replay is authoritative and melee guardians remain PvE-only
+  ---
+  duration_ms: 4.8019
+  type: 'test'
+  ...
+# Subtest: real party advance applies native poison once per authoritative turn and repeated view does not mutate it
+ok 125 - real party advance applies native poison once per authoritative turn and repeated view does not mutate it
+  ---
+  duration_ms: 84.5172
+  type: 'test'
+  ...
+# Subtest: idle records 27 real strikes over five minutes, one mana payment per native action, exact integer damage conservation and replay stability
+ok 126 - idle records 27 real strikes over five minutes, one mana payment per native action, exact integer damage conservation and replay stability
+  ---
+  duration_ms: 6.2563
+  type: 'test'
+  ...
+# Subtest: Canvas weapon FX draw all routes and six book shapes, contain no combat mutation, and restore drawing state
+ok 127 - Canvas weapon FX draw all routes and six book shapes, contain no combat mutation, and restore drawing state
+  ---
+  duration_ms: 3.4904
+  type: 'test'
+  ...
+# Subtest: the production FX wrapper chain dispatches thief geometry without downloading mage or cinematic atlases
+ok 128 - the production FX wrapper chain dispatches thief geometry without downloading mage or cinematic atlases
+  ---
+  duration_ms: 8.644
+  type: 'test'
+  ...
+# (node:54424) ExperimentalWarning: SQLite is an experimental feature and might change at any time
+# (Use `node.EXE --trace-warnings ...` to show where the warning was created)
+# Subtest: share: photo snapshot, equipped/bound showcase, rate limits and 超讚 toggle
+ok 129 - share: photo snapshot, equipped/bound showcase, rate limits and 超讚 toggle
+  ---
+  duration_ms: 212.5786
+  type: 'test'
+  ...
+# Subtest: 我要交易: owner DM + badge, duplicate/self blocked, reject, 24h expiry, accept pre-places the item
+ok 130 - 我要交易: owner DM + badge, duplicate/self blocked, reject, 24h expiry, accept pre-places the item
+  ---
+  duration_ms: 131.1325
+  type: 'test'
+  ...
+# Subtest: window: place → 鎖定 (locked side frozen) → OK only when both locked → atomic swap, 5% tax, post marked 成交
+ok 131 - window: place → 鎖定 (locked side frozen) → OK only when both locked → atomic swap, 5% tax, post marked 成交
+  ---
+  duration_ms: 122.2537
+  type: 'test'
+  ...
+# Subtest: window: concurrent final OK settles once; cancel / 30-min idle expiry return everything; rules and limits
+ok 132 - window: concurrent final OK settles once; cancel / 30-min idle expiry return everything; rules and limits
+  ---
+  duration_ms: 211.6756
+  type: 'test'
+  ...
+# Subtest: 赫密士解契卷: cost by tier/rarity/relic/enhance, only bound + unequipped + non-starter, then tradeable again
+ok 133 - 赫密士解契卷: cost by tier/rarity/relic/enhance, only bound + unequipped + non-starter, then tradeable again
+  ---
+  duration_ms: 126.1963
+  type: 'test'
+  ...
+# Subtest: PK rules: level gate, level gap, duel sim deterministic per seed, drop roll with ward
+ok 134 - PK rules: level gate, level gap, duel sim deterministic per seed, drop roll with ward
+  ---
+  duration_ms: 55.2437
+  type: 'test'
+  ...
+# Subtest: PK flow: challenge (group card + DM) → accept → duel; 20% drop → winner bag unbound + photo post; ward absorbs; caps & cooldown
+ok 135 - PK flow: challenge (group card + DM) → accept → duel; 20% drop → winner bag unbound + photo post; ward absorbs; caps & cooldown
+  ---
+  duration_ms: 183.1636
+  type: 'test'
+  ...
+# Subtest: item-card photos exist for every gear art × rarity frame (Telegram sendPhoto JPG)
+ok 136 - item-card photos exist for every gear art × rarity frame (Telegram sendPhoto JPG)
+  ---
+  duration_ms: 5.0714
+  type: 'test'
+  ...
+# Subtest: migration 0004 on v0.4 prod-like data: additive (trades get lock columns, new tables), 白色毛衣 untouched
+ok 137 - migration 0004 on v0.4 prod-like data: additive (trades get lock columns, new tables), 白色毛衣 untouched
+  ---
+  duration_ms: 6.0619
+  type: 'test'
+  ...
+1..137
+# tests 137
+# suites 0
+# pass 137
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 25727.7645

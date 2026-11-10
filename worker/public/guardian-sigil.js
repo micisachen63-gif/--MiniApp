@@ -237,7 +237,7 @@
       }catch(error){if(current(captured,revision)&&seq===qualityReadSeq&&!controller.signal.aborted)notice=error.message;return null;}
       finally{controllers.delete(controller);if(seq===qualityReadSeq){qualityReadController=null;fusionLoading=false;if(flight===task)flight=null;}if(!disposed&&seq===qualityReadSeq)paint();}})();return task.promise;
     }
-    function ownedItem(id){return state?.inventory.items.find(item=>item.id===id)||(state?.activeGuardian?.id===id?state.activeGuardian:null);}
+    function ownedItem(id){if(!state||!id)return null;return state.inventory.items.find(item=>item.id===id)||(state.activeGuardian?.id===id?state.activeGuardian:null);}
     function current(captured, revision) { return !disposed && currentActor() === captured && charId === captured && epoch === revision; }
     function accept(next) {
       if (state && state.revision !== null && (next.revision === null || next.revision < state.revision)) return false;

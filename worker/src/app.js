@@ -1,4 +1,6 @@
 import * as CHARACTER_DELETE from './services/character-delete.js';
+import * as FORGE_RECEIPT from './services/forge-receipt.js';
+import * as TOWER_RECEIPT from './services/tower-receipt.js';
 import {monsterMeta,monsterPool} from './game/monsters.js';
 import {MONSTER_ART_REVISION,monsterArtCompatibility} from './game/monster-art-compatibility.js';
 // Telegram Mini App API (/app/api/*). Auth = Telegram WebApp initData (HMAC with 小精靈's BOT_TOKEN, auth_date ≤ 24h).
@@ -18,8 +20,31 @@ import { activeCharacterId, listAccountCharacters, selectAccountCharacter } from
 import {nodeFor} from './game/stats.js';
 import {recordBehavior} from './admin/behavior.js';
 import {lineageNodes} from './game/lineage.js';
+import {listRealmCatalog,resolveRealm} from './realm/index.js';
+
+export const SCOPED_BOSS_ACTIONS = Object.freeze(['boss/scene','boss/receipt','boss/attack-scoped','boss/exchange-scoped']);
+export const SCOPED_STAR_RING_ACTIONS = Object.freeze(['star-ring/scene','star-ring/receipt','star-ring/create-scoped','star-ring/action-scoped','star-ring/shop-scoped','star-ring/cosmetics/equip-scoped']);
+
+export const SCOPED_GUARDIAN_ACTIONS = Object.freeze(['guardian/scene','guardian/receipt','guardian/action-scoped']);
+export const SCOPED_FATE_ACTIONS = Object.freeze(['fate/scene','fate/receipt','fate/action-scoped',
+  'fate/private/scene','fate/private/profile','fate/private/receipt','fate/private/action-scoped','fate/private/cancel']);
+export const SCOPED_EXCHANGE_READ_ACTIONS = Object.freeze(['exchange/scene','exchange/sellable-scene','exchange/receipt']);
+export const SCOPED_EXCHANGE_ACTIONS = Object.freeze([...SCOPED_EXCHANGE_READ_ACTIONS,'exchange/action-scoped']);
+export const SCOPED_DIRECT_TRADE_READ_ACTIONS = Object.freeze(['trade/scene-scoped','trade/eligible-scoped','trade/receipt','trade/invitation-receipt']);
+export const SCOPED_DIRECT_TRADE_ACTIONS = Object.freeze([...SCOPED_DIRECT_TRADE_READ_ACTIONS,'trade/action-scoped','trade/invitation-scoped']);
 
 export const APP_ACTIONS = Object.freeze({
+  'guardian/scene':'/rpg/guardian/scene','guardian/receipt':'/rpg/guardian/receipt','guardian/action-scoped':'/rpg/guardian/action-scoped',
+  'fate/scene':'/rpg/fate/scene','fate/receipt':'/rpg/fate/receipt','fate/action-scoped':'/rpg/fate/action-scoped',
+  'fate/private/scene':'/rpg/fate/private/scene','fate/private/profile':'/rpg/fate/private/profile','fate/private/receipt':'/rpg/fate/private/receipt',
+  'fate/private/action-scoped':'/rpg/fate/private/action-scoped','fate/private/cancel':'/rpg/fate/private/cancel',
+  'boss/scene':'/rpg/boss/scene','boss/receipt':'/rpg/boss/receipt','boss/attack-scoped':'/rpg/boss/attack-scoped','boss/exchange-scoped':'/rpg/boss/exchange-scoped',
+  'atlas/catalog':'/rpg/atlas/catalog','atlas/status':'/rpg/atlas/status','atlas/configure':'/rpg/atlas/configure',
+  'atlas/start':'/rpg/atlas/start','atlas/settle':'/rpg/atlas/settle','atlas/stop':'/rpg/atlas/stop','atlas/craft':'/rpg/atlas/craft',
+  'atlas/quests':'/rpg/atlas/quests','atlas/quests/claim':'/rpg/atlas/quests/claim',
+  'atlas/talents':'/rpg/atlas/talents','atlas/talents/action':'/rpg/atlas/talents/action',
+  'atlas/talents/preview':'/rpg/atlas/talents/preview',
+  'chat/state':'/rpg/chat/state','chat/send':'/rpg/chat/send',
   'fate/social/preferences':'/rpg/fate/social/preferences','fate/social/preferences/save':'/rpg/fate/social/preferences/save',
   'fate/social/inbox':'/rpg/fate/social/inbox','fate/social/event':'/rpg/fate/social/event',
   'fate/social/reply':'/rpg/fate/social/reply','fate/social/decline':'/rpg/fate/social/decline','fate/social/withdraw':'/rpg/fate/social/withdraw',
@@ -28,6 +53,8 @@ export const APP_ACTIONS = Object.freeze({
   'fate/start':'/rpg/fate/start','fate/choice':'/rpg/fate/choice','fate/keep':'/rpg/fate/keep',
   'fate/daily':'/rpg/fate/daily','fate/profile':'/rpg/fate/profile',
   'fate/profile/save':'/rpg/fate/profile/save','fate/profile/delete':'/rpg/fate/profile/delete',
+  'exchange/scene':'/rpg/exchange/scene',
+  'exchange/sellable-scene':'/rpg/exchange/sellable-scene','exchange/receipt':'/rpg/exchange/receipt','exchange/action-scoped':'/rpg/exchange/action-scoped',
   'exchange/list':'/rpg/exchange/list','exchange/sellable':'/rpg/exchange/sellable','exchange/mine':'/rpg/exchange/mine',
   'exchange/create':'/rpg/exchange/create','exchange/cancel':'/rpg/exchange/cancel','exchange/buy':'/rpg/exchange/buy',
   'guardian/config':'/rpg/guardian/config','guardian/inventory':'/rpg/guardian/inventory',
@@ -45,19 +72,26 @@ export const APP_ACTIONS = Object.freeze({
   'auto-enhance/start':'/rpg/auto-enhance/start','auto-enhance/stop':'/rpg/auto-enhance/stop','auto-enhance/status':'/rpg/auto-enhance/status',
   'expedition/me':'/rpg/expedition/me','expedition/action':'/rpg/expedition/action','expedition/share':'/rpg/expedition/share','expedition/trade':'/rpg/expedition/trade',
   'party/hall':'/rpg/party/hall','party/hall/get':'/rpg/party/hall/get',
-  'tower/status':'/rpg/tower/status','tower/action':'/rpg/tower/action',
+  'tower/status':'/rpg/tower/status','tower/action':'/rpg/tower/action','tower/scene':'/rpg/tower/scene','tower/receipt':'/rpg/tower/receipt',
   'party/list':'/rpg/party/list','party/create':'/rpg/party/create','party/action':'/rpg/party/action','party/reward':'/rpg/party/reward','party/get':'/rpg/party/get',
+  'star-ring/scene':'/rpg/star-ring/scene','star-ring/receipt':'/rpg/star-ring/receipt',
+  'star-ring/create-scoped':'/rpg/star-ring/create-scoped','star-ring/action-scoped':'/rpg/star-ring/action-scoped',
+  'star-ring/shop-scoped':'/rpg/star-ring/shop-scoped','star-ring/cosmetics/equip-scoped':'/rpg/star-ring/cosmetics/equip-scoped',
   'star-ring/list':'/rpg/star-ring/list','star-ring/me':'/rpg/star-ring/me','star-ring/get':'/rpg/star-ring/get',
   'star-ring/create':'/rpg/star-ring/create','star-ring/action':'/rpg/star-ring/action','star-ring/shop':'/rpg/star-ring/shop',
   'star-ring/cosmetics':'/rpg/star-ring/cosmetics','star-ring/cosmetics/equip':'/rpg/star-ring/cosmetics/equip',
 
+  'forge/receipt':'/rpg/forge/receipt','skill-career':'/rpg/skill-career','party/scene':'/rpg/party/scene',
   'monster-exchange':'/rpg/monster-exchange',
+  'equipment-recovery':'/rpg/equipment-recovery','equipment-recovery/preview':'/rpg/equipment-recovery/preview','equipment-recovery/action':'/rpg/equipment-recovery/action',
+  'equipment-collection':'/rpg/equipment-collection','equipment-collection/preview':'/rpg/equipment-collection/preview','equipment-collection/submit':'/rpg/equipment-collection/submit',
   'collection/activate':'/rpg/collection/activate',
   'boss-exchange':'/rpg/boss-exchange',
   me: '/rpg/me', create: '/rpg/create', daily: '/rpg/daily', shop: '/rpg/shop', buy: '/rpg/buy', refill: '/rpg/refill',
   gacha: '/rpg/gacha', 'gacha/open': '/rpg/gacha/open', 'buy-gear': '/rpg/buy-gear', 'sell-gear': '/rpg/sell-gear', 'sell-gear-batch': '/rpg/sell-gear-batch', equip: '/rpg/equip', unequip: '/rpg/unequip', settings: '/rpg/settings', advance: '/rpg/advance',
-  reselect: '/rpg/reselect', convert: '/rpg/convert', enhance: '/rpg/enhance', reroll: '/rpg/reroll', ledger: '/rpg/ledger',
+  reselect: '/rpg/reselect', convert: '/rpg/convert', enhance: '/rpg/enhance', reroll: '/rpg/reroll', ledger: '/rpg/ledger', 'ledger/history': '/rpg/ledger/history',
   unbind: '/rpg/unbind', share: '/rpg/share', 'share/get': '/rpg/share/get',
+  'trade/scene-scoped': '/rpg/trade/scene-scoped','trade/eligible-scoped': '/rpg/trade/eligible-scoped','trade/invitation-receipt':'/rpg/trade/invitation-receipt','trade/invitation-scoped':'/rpg/trade/invitation-scoped','trade/receipt':'/rpg/trade/receipt','trade/action-scoped':'/rpg/trade/action-scoped',
   'trade/open': '/rpg/trade/open', 'trade/requests': '/rpg/trade/requests', 'trade/accept': '/rpg/trade/accept', 'trade/reject': '/rpg/trade/reject', 'trade/withdraw': '/rpg/trade/withdraw',
   'trade/get': '/rpg/trade/get', 'trade/list': '/rpg/trade/list', 'trade/log': '/rpg/trade/log', 'trade/gold': '/rpg/trade/gold',
   'trade/add': '/rpg/trade/add', 'trade/remove': '/rpg/trade/remove', 'trade/lock': '/rpg/trade/lock', 'trade/confirm': '/rpg/trade/confirm', 'trade/cancel': '/rpg/trade/cancel',
@@ -117,14 +151,31 @@ export async function bossFor(env, tg, now) {
 }
 
 /** handles /app/api/<action>; `routes` = the service routes from index.js (same game logic, same D1 rows) */
-export async function handleApp(request, env, url, { routes, json, fail, nowFor }) {
+export async function handleApp(request, env, url, { routes, json, fail, nowFor, prepareRealmEnv }) {
   if (request.method !== 'POST') return fail('method', 'POST only', 405);
   const auth = await appAuth(request, env);
   if (auth.error) return fail(auth.error, auth.error === 'not_configured' ? 'Mini App 尚未設定' : '請從 Telegram 星穹旅誌開啟遊戲', auth.status);
   let body = {};
   try { body = (await request.json()) || {}; } catch { return fail('bad_json', 'invalid JSON'); }
   const action = url.pathname.slice('/app/api/'.length); const now = nowFor(request, env); const tg = auth.tgId;
+  const rootEnv=env;
+  if(body.realmId&&String(body.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))return fail('realm_mismatch','遊戲環境已改變，請重新整理',409);
+  if(action==='realms'){
+    const realms=await Promise.all(listRealmCatalog(rootEnv).map(async item=>{
+      try{const context=await resolveRealm(rootEnv,item.id);return {...item,phase:context.phase,available:context.phase==='ACTIVE',endsAt:context.cutoffAt??null,maxCharacters:4,current:item.isCurrent===true};}
+      catch(error){return {...item,phase:'UNAVAILABLE',available:false,maxCharacters:4,error:error.code||'realm_unavailable'};}
+    }));
+    const selected=request.headers.get('X-Realm-Id')||'permanent';
+    if(!realms.some(r=>r.id===selected))return fail('realm_unknown','找不到這個遊戲環境',404);
+    return json({ok:true,realms,selectedRealmId:selected});
+  }
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||SCOPED_DIRECT_TRADE_ACTIONS.includes(action)||action==='ledger/history'))&&(typeof body.realmId!=='string'||!body.realmId))return fail('realm_required','請先選擇遊戲環境');
+  if(((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||SCOPED_DIRECT_TRADE_ACTIONS.includes(action)||action==='ledger/history'))||action.startsWith('atlas/')||action.startsWith('chat/')||action.startsWith('equipment-collection')||action.startsWith('equipment-recovery')||action==='forge/receipt'||action==='skill-career'||action==='party/scene'||action==='tower/scene'||action==='tower/receipt')&&!request.headers.get('X-Realm-Id'))return fail('realm_required','請先選擇遊戲環境');
+  if(prepareRealmEnv)env=await prepareRealmEnv(request,rootEnv);
+  const originalJson=json;
+  json=(result,status)=>originalJson({...result,realmId:env.REALM_CONTEXT?.id||'permanent'},status);
   const finish=async result=>{if(result?.ok!==false)await recordBehavior(env,tg,action,body,now);return json(result);};
+  if(['equipment-recovery/action','equipment-collection/submit','chat/send','atlas/configure','atlas/start','atlas/stop','atlas/craft','atlas/quests/claim','atlas/talents/action'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/gifts/claim','fate/gifts/open'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['fate/start','fate/choice','fate/keep','fate/profile/save','fate/profile/delete'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
   if(['guardian/summon','guardian/fuse','guardian/activate','guardian/lock','guardian/unbind','guardian/share','guardian/assist','guardian/shop/sell'].includes(action)&&!(typeof body.requestId==='string'&&/^[A-Za-z0-9_-]{6,64}$/.test(body.requestId)))return fail('request','需要有效的操作編號');
@@ -147,7 +198,9 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
     const g = await env.DB.prepare('SELECT expires_at FROM rpg_app_access WHERE tg_id = ?').bind(tg).first();
     // The short-lived admission pass gates the first character only. Existing
     // membership comes from owned server rows, never a client-selected character ID.
-    const established = await env.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    let established = await env.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
+    // Membership is shared; permanent gold, gear, angels and rewards are not.
+    if(!established&&env.REALM_CONTEXT?.type==='season')established=await rootEnv.DB.prepare('SELECT 1 FROM rpg_accounts WHERE account_tg_id=? LIMIT 1').bind(tg).first();
     if (!established && (!g || g.expires_at <= now)) return fail('no_pass', '首次建立角色，請先私訊 @StarJournalRpgBot 輸入 /rpg，再按「開啟旅誌」進入', 403);
   }
   if (action === 'create') safe.tgName = [auth.user?.first_name, auth.user?.last_name].filter(Boolean).join(' ') || auth.user?.username || null;
@@ -163,6 +216,24 @@ export async function handleApp(request, env, url, { routes, json, fail, nowFor 
   safe.tgId = await activeCharacterId(env.DB, tg);
   if (body.selectedCharacterId && String(body.selectedCharacterId) !== String(safe.tgId))
     return fail('character_changed', '這個 Telegram 帳號已在另一個視窗切換角色，請重新選角後再操作', 409);
+  // Scoped Boss, Star Ring, Guardian and Fate surfaces keep the client scope and raw receipt ID. Their trusted
+  // namespace is a function argument; body fields cannot select it. No analytics
+  // write may escape the scoped operation's transactional character guard.
+  if((SCOPED_BOSS_ACTIONS.includes(action)||SCOPED_STAR_RING_ACTIONS.includes(action)||SCOPED_GUARDIAN_ACTIONS.includes(action)||(SCOPED_FATE_ACTIONS.includes(action)||SCOPED_EXCHANGE_ACTIONS.includes(action)||SCOPED_DIRECT_TRADE_ACTIONS.includes(action)||action==='ledger/history'))){
+    if(typeof body.selectedCharacterId!=='string'||!body.selectedCharacterId)return fail('selected_character_required','請先選擇角色',400);
+    const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
+    if(!owned)return fail('no_character','找不到目前帳號的角色',404);
+    return json(await routes['POST /rpg/'+action](env,{...body,tgId:safe.tgId},now,'app'));
+  }
+  // Pure projections must not settle idle time or create an admin behavior write.
+  if(action==='skill-career')return json(await routes['POST /rpg/skill-career'](env,{tgId:safe.tgId},now));
+  if(action==='party/scene'||action==='tower/scene'||action==='tower/receipt'){
+    const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(safe.tgId,tg).first();
+    if(!owned)return fail('no_character','找不到目前帳號的角色',404);
+    if(action==='tower/receipt')return json(await TOWER_RECEIPT.view(env,safe.tgId,body,now,'app'));
+    return json(await routes['POST /rpg/'+action](env,{tgId:safe.tgId,partyId:body.partyId,tab:body.tab,page:body.page,sinceTurnId:body.sinceTurnId},now));
+  }
+  if(action==='forge/receipt')return json(await FORGE_RECEIPT.view(env,{tgId:safe.tgId,kind:body.kind,requestId:body.requestId,namespace:'app'},now));
   if (action === 'exchange/history') return json(await exchangeHistory(env, safe.tgId, safe));
   if (auth.user?.username && action === 'me') await T.touchUsername(env, safe.tgId, auth.user.username).catch(() => null);
   if (action === 'pk/challenge') { safe.origin = 'app'; delete safe.chatId; safe.username = auth.user?.username || null; }

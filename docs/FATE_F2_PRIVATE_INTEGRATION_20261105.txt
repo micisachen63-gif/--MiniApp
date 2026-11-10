@@ -1,0 +1,102 @@
+星穹之旅 F2 私人資料與旅箋整合報告
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f2-integration-20261105
+分支：codex/fate-f2-integration-20261105
+原基線：711d1e083b8514d6f0d2edbb0c18936160514359（F1 已結案來源）
+範圍：出生檔案、臨時／已保存生日啟程、帳號每日三則旅箋與安全歷史查核，接入同一主浮窗。
+
+一、整合內容與原遊戲規則
+
+私人頁面保留出生檔案與今日旅箋兩個頁籤。生日可只用於當次啟程，也可經明確同意與確認保存；已保存檔案可明確查閱、更新或刪除。每日旅箋的建立／更新需要明確操作，背景 refresh 只讀取目前投影。
+
+生日啟程沿原 Fate.start 權威與原 life／gift RNG，保留每日四世限制、每次成功啟程的一次額度、原兩小時人生、90 秒選擇及台北 00:00–06:00 暫停規則。F2 沒有新增平行的金幣、經驗、道具或贈禮獎勵。驗收中原 Boss／副本／塔的合法戰鬥資源變動，與每筆 F2 私人操作的資源零變動分開核對。此次沒有 migration。
+
+二、權威、交易與失聯處理
+
+新增五個 POST 路由：
+- fate/private/scene：私人摘要與 domain 投影，SELECT-only。
+- fate/private/profile：owner 明確查閱檔案，SELECT-only。
+- fate/private/receipt：以原 intent／ID 查原結果，SELECT-only。
+- fate/private/action-scoped：保存／刪除、生日啟程與每日同步。
+- fate/private/cancel：符合契約的未成立原操作，以原 ID 明確封存。
+
+讀取雖使用 POST，沒有生成 profile／daily、補結果或重送的副作用。寫入捕捉帳號／realm／角色與 expected domain，在原主 batch 核對 guard、執行原 operation 並寫 typed receipt。profile／daily SQL CAS 加上 append-only operations 的 generation，能辨識同毫秒 erase／recreate，避免舊畫面的確認作用於新一代資料。原 Fate.start 的 preflight 與主 batch 仍保留原有分段邊界，不宣稱整個 HTTP request 只有一個交易。
+
+private:* namespace 使用僅伺服器持有的 Symbol capability，JSON 無法偽造。start 的保留 namespace 檢查在原 preflight 前執行。原本可經 legacy 入口碰到私人 envelope 的五個 regression 先保留 red，再修至全部通過。
+
+收據須符合原 operation、typed ledger、proof、scope、結果與成本。單獨 operation、單獨 ledger 或矛盾資料不授權重做／取消，也不以新 ID「修復」未知結果。失聯保留原 ID；沒有私人記憶體時不能重送 save，只能依原 lookup 契約明確結束未決請求。取消形成原 ID 的 cancelled receipt。
+
+三、隱私與前端行為
+
+瀏覽器私人輸入保存在記憶體；可持久的 pending 僅保留公開 scope、ID、nonce 與 expected metadata。生日／星盤／旅箋內容及內部 payloadHash 不進一般 pending、公開 receipt、公開 ledger 投影或持久 QA 明文。測試證據以嚴格欄位白名單及程序內祕密 HMAC 比對整個 DB，不保留可還原資料庫。畫面以動態私人區塊與表單遮罩保存，未啟用含私人內容的 trace。
+
+F1 與 F2 互鎖 pending，包括毀損 pending。角色、帳號或 realm 改變時立即清除私人輸入；舊 scope 的晚回應不能污染目前角色。編輯／composition 期間延後 private repaint，父層 F1 更新保留已連接的私人 subtree，失去焦點後恢復讀取。實際 browser 發現自訂出生地切換會收合原生 details，已用最小修正保留該節點 open 狀態並加入 regression；明確清除、scope 改變與 erase 仍立即清理。
+
+四、聚焦驗證的計數邊界
+
+- Backend：136/136，包含最初五個 reserved namespace red；不可再加五次。
+- UI：最終 90/90（3 個測試檔），包含輪詢／IME、互鎖及 custom-place details regression；先前 88／89 與 red 全保留。
+- QA fixture 與 preview assets：36/36（14+22），修正 history metadata 被錯當完整 receipt 的驗證。
+- 真實 HTTP：六個永久／凍結私人 scene、profile、receipt 純讀，以及五個 JS／CSS 的 GET／HEAD MIME、bytes、SHA 與 foreign actor 409，均有獨立證據。
+以上套件可能重疊，不能直接加總成完整 gate 通過數。最終 gate 必須在本檔所在的精確本機提交上另行執行。
+
+五、實際瀏覽器驗證與證據邊界
+
+本機 Chrome、獨立 API9802／UI9803，原 API PID48240 與原資料庫整段保留；F1 9792／9793 不重啟。開發時鐘只透過明確原服務命令推進，沒有 seeded Boss／Party／Tower 成功，也沒有自然等待二小時的虛假宣稱。九份 composed preview 文字輸入固定，外部圖片僅記錄實際 HTTP，不宣稱整體素材凍結。
+
+兩段 16.5 秒的輸入驗證涵蓋 composition 事件與一般日期編輯，期間真 F1／Atlas 輪詢發生，DOM／focus／value 保留。這是 Chrome 中的 composition 事件驗證，不是實體手機鍵盤或正式 Telegram 身份驗收。遮罩會遮住私人區塊內的控制，隱藏部分的幾何／命中與狀態依 DOM assertions；不以遮罩截圖聲稱可見文字已目視通過。
+
+
+實際證據彙整（2026-11-05 21:56:29，台灣時間）
+
+共有 12 份 status=passed 原結果、17 個已通過 assertion groups，並核對其中 73 張 masked 圖片 SHA。11 份有原程序 exit0；最後 final-layout06 的 MCP session 及原 output_ref 在回收時均回 SESSION_NOT_FOUND，故 originalProcessExitCode=null、browserCloseVerified=false。原結果檔 finished/passed、3 個尺寸檢查、30 張圖、來源與完整 checkpoint 均已獨立只讀核對；原 shell54504／node19908 已不存在。這是程序退出回報的可觀測性缺口，不能寫成已觀測 exit0，也不因此重播任何案例。
+
+驗證段 | 原 run | 結果重點
+初始布局 | f2-layout-pure-03 | 320/390/1280、分區控制與純讀
+編輯與輪詢 | f2-ime-refresh-03 | composition/一般輸入各16.5秒、DOM/focus/value保留
+臨時生日 | f2-temporary-birthday-03 | 不建立保存檔案、沿原兩小時人生
+檔案保存/查閱/更新 | f2-profile-save-view-update-03 | 明確同意與兩筆原保存
+每日首次同步 | f2-daily-initial-03 | 明確建立、初始0/3
+真實戰鬥解鎖 | f2-battle-unlocks-03 | 原Boss/三人副本/五層塔、明確同步0→1→2→3
+已保存生日 | f2-saved-birthday-03 | request不攜帶生日原文、沿原人生
+已提交但回應遺失 | f2-lost-committed-03 | 原ID查核/確認，不重送
+未送出的原ID取消 | f2-continue-unsent-cancel-assets-05 | 一次cancel、F1互鎖、自動清pending
+scope與延遲回應 | f2-scope-late-05 | 切角/帳號/凍結realm、舊回覆forwarded後仍隔離
+刪除後歷史純讀 | f2-erased-history-readonly-06 | 七原ID、唯一新結果卡、無私人資料復原
+最終布局 | f2-final-layout-06 | 三尺寸、30圖、24可見且未遮擋目標；原OS退出碼未知
+
+另外，保留 status=failed 的 f2-erase-history-05 含一筆已確認 committed 的 profile-delete，原 operation／typed ledger／deleted=true／資源零變動均成立。11 筆原 F2 操作的實際總數為10 committed＋1 cancelled，含此 delete；72 筆原遊戲命令另外計數。新兩個06段沒有新增操作、命令或私人列。
+
+最終來源 freeze06：1377檔，SHA b6873dcf83603f3c03b25572c583fe05710a3cb4b20a7ad5147baf4053924eb7，manifest c99e51c055aed8033851c61508ee532006d965774c59300b24a0f55e24db8e67。與產品驗證03相比只有QA harness變動。harness06 syntax與20/20純helper通過，涵蓋實際封存鏈與observer反例；原09 reporter解析錯誤也保留，10使用明確TAP。
+
+完整 post-erasure checkpoint：3c90a70d870ce440e95f5de5369116ba6d7da7b136629afc47d6da2d1b32fd47。兩realm的profile/daily均0，原life/gift/資源仍保留。
+
+主要彙整原件（工作樹下 .release-sync/fate-f2-20261105/）：
+- root-browser-completion-audit-06.json，SHA 601d4f05b48c50ea67103de8643cb82e55d8d10746603a7286d87ac5040e6988。
+- qa-history-review-20261105-eb2b609aee71/campaign-aggregate-06.json，SHA 3f250ee4603fd637248d742efd5940416425b938b0819253a633c8d9f3b8373b。
+- qa-history-review-20261105-eb2b609aee71/final-layout-session-evidence-06.json，SHA 3204c53a4513236b4126586e761228aec551d9807d7532c9897408350df46528。
+
+六、失敗保留與續辦原則
+
+原 layout01、IME02、lost-unsent03、continuation04、erase-history05 失敗結果與各自 claims 保留，不覆寫或改判成功。成功案例不重播，API／資料庫不重設。
+- 原 layout01 為 finalize 階段失敗；後續加入安全診斷與分區截圖。
+- IME02 未完成 setup；實際定位 custom-place details 收合，修正產品後以新來源驗證。
+- lost-unsent03 的 save 未送出，原 lookup 允許結束；全域導航 selector 重複造成驗收失敗。
+- continuation04 在送出前被必要靜態圖 GET 白名單攔住，0 submission／operation／command。05 僅增加精確素材 GET／HEAD，綁前兩 failed 原證據，以原 body、原 ID、完整 fresh checkpoint 與無 outcome 守門送出唯一取消。
+- erase-history05 的 delete 已 committed、typed ledger 已驗，profile／daily 已清除。失敗發生於後續 history observer；發現 URL waiter 未限定 POST／目標 ID，以及單一結果 selector 可同時匹配 lastResult／historyReceipt。保留資料不足以唯一判定原回應的實際觸發順序，因此只記兩個確定的靜態缺陷。06 只修 harness，從已刪現況執行純讀歷史與最終版面，不重刪。
+
+七、最終提交與完整 gate 的權威位置
+
+完整 gate 的結果寫於提交之外的不可覆寫收據，以綁定本檔所在提交的實際 HEAD，避免在提交前預寫成功或使用上一批 F1 數字。
+工作樹下 .release-sync/fate-f2-20261105/full-final-head-gate/<唯一 run-id>/receipt.json 是原始結果；full-final-head-gate-receipt.json 是成功後原收據的逐位元組副本。批次外部 FINAL_STATUS.json 記錄實際 HEAD、檔案、gate SHA、測試數及 clean／source 檢查。
+
+官方選檔由 scripts/run-tests.mjs 的原規則導出：Worker 309 個 first-level .test.js；BOT 23 檔（16 adapter .test.js + 7 .test.mjs）。Node 24.7.0，逐服務 node --test --test-reporter=tap --test-concurrency=1。兩服務均須 exit0、tests>0、pass=tests、fail/cancel/skip/todo=0，且 HEAD／branch／工作樹／sources／freeze／wrapper 前後一致才通過。309／23 是檔案數，實際測試數以該原收據為準。F1 的 3621 不是本批 gate。
+
+八、接續與未完成部分
+
+F3 合作社交／分享只完成來源與風險盤點，尚未實作。既有部分社交讀取會進行 presence、progress、expiry 或 outbox 寫入；需先拆 SELECT-only 投影並確定 invite／隱私／captured scope／原 ID 收據契約。F1／F2 socialInvite=false 在正式 F3 契約前保持。分享須沿 cloud-bot/src/fate-share.js 及真正 Telegram composer，prepared inline message 不等於已發送分享。
+
+交易、衣櫥／完整帳務、第四階重選、季末跨 D1 資產保留與取出倉庫、逐次攻擊／施法／傷害事件及角色／FX 接線仍在後續範圍。Atlas 本線真實七圖、MAX_LEVEL120；48 背景圖與 Lv600／五輪／16 覺醒不能算已實裝。正式 Telegram、實體手機及正式經濟分布尚未驗收，320px 全局 HUD／角色頭部局部遮擋亦不由 F2 浮窗驗收涵蓋。
+
+九、交接與記錄
+
+主狀態 D:/StarJournal/handoff/non-character/STATUS.json；自動摘要 LATEST.md；批次 handoff/non-character/fate-f2-integration-20261105/STATUS.json、WORKING_HANDOFF.md、FINAL_STATUS.json。既有 Windows PT30M 進度排程持續，每次只觀察人工語意狀態與 Git／驗收索引，不執行測試或提交。下一批來源計畫須在 F2 exact final HEAD gate 通過後，將草稿逐檔重核並綁定實際 HEAD／gate 才存為 NEXT_BATCH_PLAN.json。

@@ -65,3 +65,12 @@ GitHub 推送或正式部署失敗時，明確回報哪一端尚未同步。不�
 - **部署雲端 Bot**：`npm run deploy:bot`
 
 詳細上下文與版本演進請參閱：[`AI_HANDOVER.md`](./AI_HANDOVER.md) 與 [`docs/HOME_DEVELOPMENT_GUIDE.md`](./docs/HOME_DEVELOPMENT_GUIDE.md)。
+
+2026-11-02 新版接線續作：本機世界／隊伍聊天、真委託追蹤領獎、雙天使HUD、48張模式背景與166隻精確ID怪群配置、密集戰場主角輪廓保護；9593改為讀最新生成檔的獨立接線層，原角色檔不覆寫。未部署／未遠端migration，600級及16招進階技能仍為規劃。必讀docs/SCENE_CHAT_QUESTS_HUD_MAPS_20261102.txt。
+2026-11-02 天賦與玩法續作：四職最短合法路線預覽、現役裝備與技能前後比較、整路原子配置與rev防舊視窗、真實進度成長路線；9642及9593技能／地圖內懸浮視窗可操作，原+N及模型不變。完整2671測試＋四職兩尺寸8組操作通過，未部署／未遠端migration；五輪600級與覺醒仍為規劃。讀docs/ATLAS_TALENT_PROGRESSION_20261102.txt。
+2026-11-02 裝備收藏冊：使用者確認逐件消耗；四職各36列、指定裝備T／品質／+N以上、集滿永久能力；現役／交易／背景作業保護、指紋與SQL競爭再驗、原子扣件及完成收據。9642工坊與9593裝備／背包內懸浮入口；0040僅本機，旗標預設關閉，未部署／未遠端migration。讀docs/EQUIPMENT_COLLECTION_20261102.txt。
+2026-11-04 非角色場景整合：獨立9653場景與9652隔離API，atlas/status新增唯讀已提交scene投影；共用帳號／環境／角色／revision狀態，真實血魔、經驗、補給、地圖敵人與出征／返營。裝備、背包、補給、構築、天賦、收藏冊及委託沿用同一角色；切角晚回覆、貼圖釋放與桌面縮放均納入回歸。原角色美術與9593／9642流程保留，未部署／未遠端migration。五輪600級、16招覺醒、正式平衡與完整賽季收尾仍待後續。分支codex/scene-live-integration-20261104接PR #43，必讀docs/SCENE_LIVE_INTEGRATION_20261104.txt，驗收以該文件與實際測試紀錄為準。
+
+2026-11-09 後續成長本機候選：五輪累積600級與60循環星圖、16招真實覺醒、增補0044（不重建玩家表）及跨D1季末4+4保留已接線；旗標SEASON_TRANSFER_ENABLED預設關閉。只本機，未push／部署／遠端migration，不碰角色／F3原線。必讀docs/ENDGAME_GROWTH_20261109.txt及本批外部STATUS/WORKING_HANDOFF，最終gate以精確HEAD證據為準，不能沿用父提交數字。
+
+2026-11-09 後續強化檢查：同一獨立分支接續正式聚合量核對（SELECT-only）、0045串流封存／續傳／不可變保護、原生配裝後期校準、手機觸控與浮窗鍵盤、希臘素材與透明懸浮底欄。最新規則docs/ENDGAME_HARDENING_20261109.txt，實際狀態與最終gate在D:/StarJournal/handoff/non-character/endgame-hardening-20261109/。使用者明確不部署；不改正式資料／原角色素材，不覆寫其他owner的F3主STATUS。

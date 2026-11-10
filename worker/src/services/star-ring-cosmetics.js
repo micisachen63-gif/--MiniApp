@@ -12,7 +12,7 @@ export async function state(env,tg){
  return {catalog:COSMETICS,owned,equipped,balance,currency:'star_ring_token'};
 }
 export async function list(env,tg){return {ok:true,...await state(env,tg)};}
-export async function equip(env,tg,b,now){
+export async function equip(env,tg,b,now,options={}){
  const request=requestOf(b),id=b.cosmeticId==null?null:String(b.cosmeticId);
  if(id&&!cosmeticById(id))throw new GameError('cosmetic','找不到此外觀');
  for(let n=0;n<4;n++)try{
@@ -23,7 +23,7 @@ export async function equip(env,tg,b,now){
    if(id&&!await env.DB.prepare('SELECT 1 FROM rpg_star_ring_cosmetics WHERE char_id=? AND cosmetic_id=?').bind(String(tg),id).first())throw new GameError('not_owned','尚未解鎖此外觀',403);
    const special=JSON.parse(w.char.special_json||'{}');if(id)special.starRingAura=id;else delete special.starRingAura;
    w.char.special_json=JSON.stringify(special);
-   return {extra:[env.DB.prepare('INSERT INTO rpg_star_ring_cosmetic_operations(char_id,request_id,cosmetic_id,created_at) VALUES(?,?,?,?)').bind(String(tg),request,id,now)]};
+   return {extra:[env.DB.prepare('INSERT INTO rpg_star_ring_cosmetic_operations(char_id,request_id,cosmetic_id,created_at) VALUES(?,?,?,?)').bind(String(tg),request,id,now),...(options.receipt?[options.receipt({cosmeticId:id},{})]:[])]};
   });return {ok:true,...await state(env,tg)};
  }catch(e){if(n<3&&(/rpg_star_ring_cosmetic_operations/.test(String(e))||e.code==='conflict'))continue;throw e;}
  throw new GameError('conflict','外觀正在更新，請重新整理',409);

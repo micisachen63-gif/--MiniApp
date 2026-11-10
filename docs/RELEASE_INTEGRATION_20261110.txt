@@ -1,0 +1,42 @@
+星穹旅誌｜正式改版整合候選（2026-11-10）
+
+目前狀態：本機正式入口與人物接線完成，尚未發布。最終gate／GitHub必要CI／main合併／正式增補升級及正常發布收據仍是必要條件。使用者已授權確認通過後改版，並明確要求由本線補齊人物出手整合。
+
+入口與原功能
+正式入口採同源Telegram WebApp簽章；身分由伺服器驗HMAC，沒有開發帳號登入。無initData時阻擋請求，首次玩家仍用原創角表單，憑證不寫入DOM或儲存。原版入口完整保留為classic.html。
+248外觀／3968動作格、原角色渲染器、48模式背景、原12區怪物與HUD封裝到public。角色來源、PNG/WebP原bytes與approved/finalArtApproved旗標均未改動。原動畫／強化／洗鍊／天使召喚元件繼續沿用。
+46功能路由統一為主畫面浮窗、按功能分頁，深色細框／粉圓字型／懸浮底欄與經驗值。新版營地保留Game Producer·ミカサ署名。原地圖／怪物圖鑑、交易與其他功能仍在各分類內。
+背包與工坊用原gearIconSrc契約補回刺客／星征裝備原圖，舊art欄位不改；所有模式名稱尾綴仍對應同一件原圖，不退回通用武器圖。原強化與洗鍊數值／鎖定／缺卷補購規則保留；洗鍊結果動畫標題顯示本次提交前後品質。
+
+人物戰鬥整合
+原嚴格武器出手檢查的367缺項留存於character-combat-gaps.json，這是歷史原始檢查，不是目前功能缺失清單。
+目前248外觀×四攻擊方向共992均有可執行呈現：625沿原武器出手／原審核profile；367由scene-native-cast-profiles.json逐角色與方向綁原metadata／幾何／影格時長／圖片SHA，播放原人物動作並對真實目標播放命中特效。
+有原hit/release marker則沿用；缺marker的原動作使用既有技能recipe命中階段同步。此為本線新定義的遊戲演出節奏，不宣稱人物作者已提供出手點；不捏造刀尖、弓口或提升美術驗收旗標。命中特效從自身新時間軸起播，保持清晰。
+原625條路徑不改。新策略只允許原缺marker/origin、且有精確來源policy時使用；stale／跨來源／錯角色或已移除目標照樣拒絕。場景／房間／角色generation、晚回應、取消與重播防護保留。伺服器提交仍是傷害／掉落唯一來源。
+完整整合計數：docs/release-integration-20261110/character-combat-integration.json。
+
+可重建流程
+1. build-scene-release.mjs以明確source-root、原index SHA及renderer SHA複製經核對的原檔。
+2. node worker/tools/build-native-cast-profiles.mjs，僅產生public的接線sidecar，不寫原素材。
+3. 再跑同一build-scene-release，將sidecar綁入包裝manifest。
+4. sceneReleaseRequirements逐一核SHA、來源別名／換行、992方向呈現與新schema。缺policy或來源不符不可發布。Windows/Linux Git checkout固定原bytes與必要換行。
+
+驗證範圍
+- 46路由／四尺寸470檢查，無舊大理石／厚素材框、溢出、字型或JS/HTTP錯誤；最後修補後另作最終手機巡檢。
+- 真Worker HMAC＋合成Telegram資料驗首次創角、開發標頭／篡改簽章／跨帳隔離。不是實體Telegram手機驗收。
+- 原Animator與實際Canvas VFX、合成已提交事件：全部248外觀／992攻擊均渲染，空白圖與特效、JS／HTTP錯誤皆0。不是美術解剖或完整動畫品質認證。
+- 四職真場景操作，劍士原缺起點已正常命中，覺醒保留。原手動拖曳強化、自動作業結束再手動與洗鍊演出已走實際本機API，卷軸／裝備圖保留。
+- 原正式schema形狀的本機演練80匿名角色／960裝備，0035..0045後原欄位與+0..+11不變，外鍵／integrity通過。獨立Cloudflare D1亦已套完11份升級，80角色／960裝備／20帳號原欄位逐值一致，45份ledger與345必要schema物件相符，外鍵無缺項；遠端D1禁止integrity_check，該項只於本機SQLite驗證，不宣稱遠端完整性掃描。不寫正式玩家資料。
+
+正式升級與發布
+正式庫現有72表，原登記至0034；0035..0045共33新增表與必要欄位／索引／view變更。全為增補，不重建或重置玩家表。0026..0028舊Fate物件實已存在但ledger未登記：先核22物件的canonical定義，補登既有migration，再用正常Wrangler流程套新11份，不能盲套全部pending。
+正式升級前記錄TimeTravel還原點、正式版本／保護bindings／crons及schema；獨立D1演練成功、最終PR/CI/main通過才處理正式增補。遠端Secrets、原DB/DOnamespace與其他旗標維持。
+僅啟用ATLAS_ENABLED／EQUIPMENT_COLLECTION_ENABLED／EQUIPMENT_RECOVERY_ENABLED三個plain_text旗標；賽季維護旗標仍關。永久世界維持legacy相容目錄，這次不初始化新賽季或改綁DB。
+使用者完成Cloudflare補授權後，Workers API已可讀，最新100%版本d2695468-4c75-4aa7-9e7c-eb9b57303a00與origin/deployment-records的3c6729a相符。這不是本次已部署。
+依AGENTS經PR與必要Worker and BOT tests合入main，再從乾淨且等於origin/main的checkout執行根npm run deploy:worker。cloud-bot產品無差異，不重發BOT。只有線上驗證與deployment-records收據push成功才能回報同步。未知發布結果先sync:check，不盲重送。
+
+Gate與證據
+基底131be4的4343全過不可當本候選gate。首輪ce6ded5 Worker4150中兩項舊index檢查失敗，source前後一致；已保留原件並修正legacy檢查目標與新版真署名，沒有跳過或放寬測試。
+最終以精確新HEAD的完整gate／source前後hash為準。
+D:/StarJournal/handoff/non-character/release-final-check-20261110/
+原9593／9642、其他owner工作樹、原人物來源與所有已操作QA資料均保留。

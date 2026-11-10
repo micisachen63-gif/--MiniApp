@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "command": "node worker/tools/skill-vfx-five-target-receipt.mjs",
+  "cwd": "D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-20261104",
+  "resultSource": "Coding Tools MCP agent_workflow execution.check_results; stdout read from the same command session",
+  "sessionId": "xIeq0DQB4OGelzKKVlcUBBvN",
+  "status": "passed",
+  "exitCode": 0,
+  "durationMs": 440,
+  "stdout": "{\"status\":\"passed\",\"output\":\".release-sync/skill-vfx-targets-20261104/five-target/results.json\",\"sha256\":\"a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9\",\"seed\":2,\"targetCount\":5,\"targetIds\":[\"0:0:0\",\"0:0:1\",\"0:0:2\",\"0:0:3\",\"0:0:4\"],\"hitCount\":5,\"commitRevision\":1,\"eventIndex\":0,\"sourceInputCount\":121,\"observerOffIdentical\":true,\"unpublishedBeforeCommit\":true,\"sourceInputsUnchanged\":true}\n",
+  "artifact": {
+    "status": "passed",
+    "output": ".release-sync/skill-vfx-targets-20261104/five-target/results.json",
+    "sha256": "a1f54e465f158beaab9593ecd0c07183ec0912142fe39ca0f1c6c5ee171ff5b9",
+    "seed": 2,
+    "targetCount": 5,
+    "targetIds": [
+      "0:0:0",
+      "0:0:1",
+      "0:0:2",
+      "0:0:3",
+      "0:0:4"
+    ],
+    "hitCount": 5,
+    "commitRevision": 1,
+    "eventIndex": 0,
+    "sourceInputCount": 121,
+    "observerOffIdentical": true,
+    "unpublishedBeforeCommit": true,
+    "sourceInputsUnchanged": true
+  }
+}

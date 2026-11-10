@@ -1,6 +1,8 @@
 import {imprintMultiplier} from './tower-progression.js';
+import {itemMode} from './endgame.js';
 import {idleBalanceVersion,idleEncounter} from './pve-balance.js';
 import {collectionBlessing} from './collection-blessings.js';
+import {equipmentCollectionBonuses} from './equipment-collection.js';
 import {gearRarity} from './gear-quality.js';
 import {GEAR_GROWTH,tierBaseBonus} from './gear-growth.js';
 import {resistanceRate} from './elements.js';
@@ -48,8 +50,9 @@ export function enhanceBonus(slot, level, tier = 1) {
 export function itemStat(item, wearerClass = null, growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1;
   const relic=item.grade==='relic',expedition=item.source==='star_ring'&&!relic?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1;
-  const base=item.base_stat+tierBaseBonus(item,growthVersion,wearerClass)*(relic?RELIC.statMult:1);
-  const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1);
+  const power=itemMode(item).power;
+  const base=item.base_stat+tierBaseBonus(item,growthVersion,wearerClass)*(relic?RELIC.statMult:1)*power;
+  const enh = enhanceBonus(item.slot, item.enhance_level, item.tier)*(relic?RELIC.enhanceMult:1)*power;
   const fam = SHARED_SLOTS.includes(item.slot) && SLOT_SPEC[item.slot]?.main === 'def' ? (ARMOR_FAMILIES[wearerClass]?.defMult ?? 0.75) : 1;
   return { main: Math.round(Math.round((base + enh) * mult * fam * expedition) * imprintMultiplier(item)), elem: Math.round((item.element_stat || 0) * mult * expedition) };
 }
@@ -61,7 +64,7 @@ export function itemExtras(item,growthVersion=GEAR_GROWTH.version) {
   const mult = RARITIES[gearRarity(item)]?.mult ?? 1; const out = { flat: { atk: 0, def: 0, hp: 0, mp: 0 }, pct: {} };
   // relic affix values are absolute (not scaled by rarity) so the number shown is the number applied
   for (const [src, m] of [[parseBonus(item.bonus_json), mult*(item.source==='star_ring'&&item.grade!=='relic'?(growthVersion<2?GEAR_GROWTH.legacyExpeditionMult:STAR_RING_GEAR.statMult):1)], [parseBonus(item.affix_json), 1]]) for (const [k, v] of Object.entries(src)) {
-    if(k==='starRingGearVersion'||k==='starRingYieldVersion'||k==='towerImprint')continue;
+    if(k==='endgameOrigin'||k==='starRingGearVersion'||k==='starRingYieldVersion'||k==='towerImprint')continue;
     if (FLAT_KEYS.includes(k)) out.flat[k] += Math.round(v * m); else out.pct[k] = (out.pct[k] || 0) + v;
   }
   return out;
@@ -72,6 +75,7 @@ export function computeStats(char, equipped = [], level = char.level, growthVers
   const pct = {defPct:0,meleePct:0,rangedPct:0,magicPct:0,mitigationPct:0,mpEfficiencyPct:0,skillHastePct:0,healingPct:0,shieldPct:0,dotPct:0,summonPct:0, atkPct: 0, takenPct: 0, maxHpPct: 0, maxMpPct: 0, mpCostPct: 0, expPct: 0, critPct: 0, freeCastPct: 0, elemPct: 0, extraTargets: 0, lifestealPct: 0, healPerCastPct: 0 };
   for (const [k, v] of Object.entries(node.passive || {})) if (k in pct) pct[k] += v;
   for(const [k,v] of Object.entries(blessing?.bonuses||{}))if(k in pct)pct[k]+=v;
+  for(const [k,v] of Object.entries(equipmentCollectionBonuses(char)))if(k in pct)pct[k]+=v;
   const elementResist={earth:0,water:0,fire:0,wind:0,light:0,dark:0};
   let weaponAtk = 0, weaponElem = 0, element = null, armorDef = 0, defFromWeapon = 0; const flat = { atk: 0, def: 0, hp: 0, mp: 0 };
   for (const item of equipped) {

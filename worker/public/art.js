@@ -55,7 +55,7 @@
     if (cls === 'sword') { ctx.fillStyle = light; rr(ctx, -15, -66, 30, 8, 4); ctx.fill(); if (br === 'B') { ctx.fillStyle = accent; ctx.fillRect(-2, -72, 4, 8); } if (br === 'A') { ctx.fillStyle = accent; ctx.beginPath(); ctx.moveTo(-14, -64); ctx.lineTo(-20, -74); ctx.lineTo(-10, -66); ctx.moveTo(14, -64); ctx.lineTo(20, -74); ctx.lineTo(10, -66); ctx.fill(); } }
     if (cls === 'archer') { ctx.fillStyle = accent; ctx.beginPath(); ctx.moveTo(-16, -58); ctx.quadraticCurveTo(0, -72, 16, -58); ctx.lineTo(18, -55); ctx.lineTo(-18, -55); ctx.fill(); ctx.strokeStyle = '#e74c3c'; ctx.lineWidth = 2; ctx.beginPath(); ctx.moveTo(10, -64); ctx.quadraticCurveTo(20, -74, 26, -70); ctx.stroke(); }
     if (br === 'B' && cls === 'archer') falcon(ctx, -22, -70, t);
-    if (act === 'rest') { ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.font = 'bold 12px sans-serif'; ctx.fillText('z', 16, -66 - (t * 8) % 10); ctx.fillText('Z', 22, -78 - (t * 6) % 10); }
+    if (act === 'rest') { ctx.fillStyle = 'rgba(255,255,255,.9)'; ctx.font = 'bold 12px "jfOpenHuninn",sans-serif'; ctx.fillText('z', 16, -66 - (t * 8) % 10); ctx.fillText('Z', 22, -78 - (t * 6) % 10); }
     ctx.restore();
   }
   function weapon(ctx, cls, br, act, p, accent, light) {

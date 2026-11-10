@@ -1,0 +1,5686 @@
+{
+  "catalogSha256": "cdbe7d777923c3e8c7ad0f4603e6f50783d66e6206f00a98ef14dd18c555b139",
+  "rendererSha256": "d004b7b68ef9a05593b7afb7f19faf0cf0c09c93c88366ace89b50e86f5ac801",
+  "scope": "Actual createActorReleaseResolver over canonical248 attack clips. Frames are populated; release metadata may be incomplete. No source artwork or approval flags changed.",
+  "counts": {
+    "sword": {
+      "slots": 248,
+      "placementReady": 126,
+      "projectileReady": 10
+    },
+    "archer": {
+      "slots": 248,
+      "placementReady": 158,
+      "projectileReady": 152
+    },
+    "mage": {
+      "slots": 248,
+      "placementReady": 248,
+      "projectileReady": 248
+    },
+    "thief": {
+      "slots": 248,
+      "placementReady": 248,
+      "projectileReady": 215
+    }
+  },
+  "failures": [
+    {
+      "actorId": "sword_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 316,
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "sword_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 345,
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "sword_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 405,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "sword_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 405,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "archer_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 432,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "archer_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 432,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "thief_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 398,
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "thief_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 423,
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 424,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 424,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1100,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1160,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 407,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_A_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 407,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 995,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 995,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 423,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 423,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 424,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_sword_B_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 424,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_A_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 442,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_A_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 442,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_A_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 431,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_A_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 431,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_B_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 431,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_B_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 431,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_B_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 445,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_archer_B_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 445,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv1_thief_A_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_A_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1290,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_A_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1365,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_A_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1440,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_B_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_B_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_B_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv1_thief_B_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1230,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 443.00000000000006,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 443.00000000000006,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 491,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A1_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 491,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1190,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1340,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 474,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 474,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1420,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 500,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_A2_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 500,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1400,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 585,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 585,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 477.99999999999994,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B1_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 477.99999999999994,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 545,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 545,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 591,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_sword_B2_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 591,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 533,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 533,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 538,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A11_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 538,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1340,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 540,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 540,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 541,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A12_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 541,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1230,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 538,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 538,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 556,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A21_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 556,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 531,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 531,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 542,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_A22_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 542,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1360,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 456,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 456,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 599,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B11_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 599,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 486.99999999999994,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 486.99999999999994,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 535,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B12_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 535,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 560,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 560,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 606,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B21_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 606,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1340,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1245,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 580,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 580,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 993.267,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1210,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 530,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_sword_B22_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 530,
+      "frames": 16,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1145,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1126,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 217,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 217,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B222_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A1_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 799,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A1_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 799,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A1_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 849,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A1_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 849,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A2_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 853,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A2_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 853,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A2_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 898.9999999999999,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_A2_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 898.9999999999999,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B1_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 874,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B1_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 874,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B1_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 845,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B1_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 845,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_f",
+      "family": "archer",
+      "direction": "up",
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_f",
+      "family": "archer",
+      "direction": "down",
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 864,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 864,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 865.9999999999999,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_archer_B2_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 865.9999999999999,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A11_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 973.173637,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A11_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 973.173637,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A11_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 977.426438,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A11_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 977.426438,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A12_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 982.27419,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A12_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 982.27419,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A12_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 1000.577488,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A12_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 1000.577488,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A21_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 951.855557,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A21_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 951.855557,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A21_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 954.207107,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A21_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 954.207107,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A22_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 975.214972,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A22_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 975.214972,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A22_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 962.622501,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_A22_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 962.622501,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B11_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 766.008287,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B11_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 766.008287,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B11_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 935.787629,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B11_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 935.787629,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B12_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 958.931248,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B12_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 958.931248,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B12_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 966.533153,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B12_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 966.533153,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B21_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 995,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B21_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 995,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B21_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 975,
+      "frames": 8,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": null
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B21_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 975,
+      "frames": 8,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": null
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B22_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 965,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B22_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 965,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A1_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A1_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A1_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A1_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1210,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A2_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A2_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A2_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1210,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_A2_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B1_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B1_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B1_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1260,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B1_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1340,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B2_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B2_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B2_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv2_thief_B2_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A11_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A11_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1290,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A11_m",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1240,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A11_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1240,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A12_f",
+      "family": "thief",
+      "direction": "up",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv3_thief_A12_f",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1270,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1172,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 229,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 229,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1000,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 254,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B221_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 254,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1100,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 304.00000000000006,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 304.00000000000006,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1050,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 322,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B212_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 322,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1040,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 272,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 272,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1100,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 333,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 333,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B122_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1110,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1280,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 275,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B211_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 275,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 900,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 327,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 327,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1120,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1160,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 348,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B121_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 348,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 960,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1300,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 315,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 315,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1120,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1350,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 320,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 320,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1230,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1360,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 340,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B112_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 340,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1040,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1160,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 358,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_B111_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 358,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 820,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1000,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 960,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1200,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 326,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 326,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1050,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1120,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 351,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A112_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 351,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 890,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1080,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 339,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 339,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 945,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1320,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 325,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A111_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 325,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 980,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1080,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 285,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 285,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_thief_A111_m",
+      "family": "thief",
+      "direction": "down",
+      "bodyHeight": 648,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 920,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1250,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 320,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A121_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 320,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1000,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1220,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 334,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 334,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1080,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1050,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 340,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 340,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1040,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1000,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 352,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A122_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 352,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 900,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1120,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 322,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A211_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 322,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 850,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1160,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 337,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 800,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1120,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 351,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A221_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 351,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 1000,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1160,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 325,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A212_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 325,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_f",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 940,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_f",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1100,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_f",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 357,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_f",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 357,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_m",
+      "family": "sword",
+      "direction": "up",
+      "bodyHeight": 940,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_m",
+      "family": "sword",
+      "direction": "down",
+      "bodyHeight": 1440,
+      "frames": 3,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 1
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_m",
+      "family": "sword",
+      "direction": "right",
+      "bodyHeight": 350,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_sword_A222_m",
+      "family": "sword",
+      "direction": "left",
+      "bodyHeight": 350,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A111_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 395,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A111_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 391,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A112_f",
+      "family": "archer",
+      "direction": "up",
+      "frames": 4,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": 2
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A112_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 402,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A112_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 406,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv3_archer_B22_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 773,
+      "frames": 8,
+      "placement": {
+        "ok": true,
+        "authority": "source",
+        "index": null
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-origin"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A121_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 383,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A121_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 394,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A122_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 378,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A122_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 394,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A122_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 394,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A211_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 378,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A211_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 385,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A212_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 392,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A212_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 399,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A221_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 413,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A221_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 413,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A221_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 401,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A222_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 402,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_A222_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 408,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B111_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 390,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B111_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 385,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B112_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 387,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B112_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 381,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B121_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 401,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B121_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 404,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B122_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 392,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B122_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 403,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B211_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 394,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B211_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 403,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B212_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 388,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B212_f",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 388,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B212_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 406,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B212_m",
+      "family": "archer",
+      "direction": "left",
+      "bodyHeight": 406,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B221_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 410,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B221_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 399,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B222_f",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 403,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    },
+    {
+      "actorId": "adv4_archer_B222_m",
+      "family": "archer",
+      "direction": "right",
+      "bodyHeight": 405,
+      "frames": 8,
+      "placement": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      },
+      "projectile": {
+        "ok": false,
+        "reason": "missing-release-marker"
+      }
+    }
+  ]
+}

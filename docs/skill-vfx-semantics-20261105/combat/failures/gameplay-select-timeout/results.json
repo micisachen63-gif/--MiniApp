@@ -1,0 +1,250 @@
+{
+  "schemaVersion": 1,
+  "sourceFiles": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "d5b920aaf6d5a590f990815d93e4850ce22c0aeb867075f38dc96616ac2a60e6"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    }
+  ],
+  "source": "real-isolated-api",
+  "isolated": true,
+  "ephemeral": true,
+  "productionAccess": false,
+  "clockMode": "fixed-test",
+  "startedAt": "2026-11-05T05:49:39.909Z",
+  "cases": [
+    {
+      "mode": "idle-native",
+      "width": 390,
+      "status": "failed",
+      "error": "TimeoutError: locator.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-select]').first()\u001b[22m\n",
+      "stack": "locator.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-select]').first()\u001b[22m\n\n    at D:\\StarJournal\\worktree-snapshots\\star-journal-skill-vfx-semantic-integration-20261105\\worker\\tools\\skill-vfx-gameplay-browser.mjs:202:48",
+      "inspect": null,
+      "receipts": [
+        {
+          "action": "meta",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "realms",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "characters",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        },
+        {
+          "action": "behavior/visit",
+          "status": 200,
+          "at": 1791421200000,
+          "vfx": []
+        }
+      ],
+      "errors": [],
+      "badResponses": [],
+      "body": "✦\nSTAR JOURNAL\n星穹旅誌\n旅程環境\n永久世界\n永久旅程 · 賽季尚未開放\n選擇角色\nATLAS OF THE STARS\n你的下一段旅程\n\n選擇角色，展開星圖\n\n✦\n旅程追蹤\n營地等你歸來\n\n先選擇一位冒險者。\n\n既有角色與裝備保留於永久環境。選擇角色即可繼續旅程。\n\n✧ 天賦星盤\n✦ 冒險進程\n✦ 召喚天使\n◇ 命運旅章\n進度由伺服器記錄\n聊天\n世界與隊伍頻道 · 點此聊天\n出征\n星圖與冒險\n構築\n技能與裝備\n工坊\n鍛造與補給\n天使與旅章\n守護與輪迴\n社交交易\n組隊與市集\n圖鑑紀錄\n收藏與戰報\nGame Producer · ミカサ\nSTAR JOURNAL\n選擇冒險者\n✥ 永久世界 ✥\n選擇角色\n\n既有角色與裝備完整保留於此；選一位旅人繼續冒險。\n\n角色 1 · 上次掛機\n特效驗收111\n劍士 · Lv.120\n繼續冒險\n刪除角色\n?\n尚未創角\n第 2 格 · 建立新冒險者\n＋ 建立角色\n?\n尚未創角\n第 3 格 · 建立新冒險者\n＋ 建立角色\n?\n尚未創角\n第 4 格 · 建立新冒險者\n＋ 建立角色\n1 名冒險者 · 建立名額 4\n每帳號每天最多刪除 1 隻角色 · 台灣時間 00:00 重置"
+    }
+  ],
+  "errors": [],
+  "badResponses": [],
+  "instrumentation": "Expose existing app controllers and read-only renderer geometry for QA; no response or combat/event substitution.",
+  "status": "failed",
+  "error": "TimeoutError: locator.click: Timeout 20000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-select]').first()\u001b[22m\n",
+  "sourceFilesAfter": [
+    {
+      "path": "worker/tools/skill-vfx-gameplay-browser.mjs",
+      "sha256": "d5b920aaf6d5a590f990815d93e4850ce22c0aeb867075f38dc96616ac2a60e6"
+    },
+    {
+      "path": "worker/public/index.html",
+      "sha256": "8de042d40b5d686390aff52733a2dafee20c743ef390641af0e29eb2e6eeae11"
+    },
+    {
+      "path": "worker/public/skill-vfx-legacy.mjs",
+      "sha256": "905b133b2bd6d269d001171abd5a33baaa5912140c69f467ad89f092eb0db01a"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-recipes.json",
+      "sha256": "0a6907b481a7c6f60a0dbb82abb60633adcfd2d339b6bbdc28e6479eb7ea26ed"
+    },
+    {
+      "path": "worker/public/app.js",
+      "sha256": "05ca4df2827ed752a10eb75c045de2000a538d28c10ffbe4cf93a3ee351d95f0"
+    },
+    {
+      "path": "worker/public/battle.js",
+      "sha256": "02ef0e28e86ce80156d50e75a12b18d6db6b3cb0ea9b7dd3cc8287daf8a46fc7"
+    },
+    {
+      "path": "worker/public/expedition/combat-playback.js",
+      "sha256": "15e1a0aa666fe59079cad192583b92dd64a6cbd0d517f4349c5827cd1c494a89"
+    },
+    {
+      "path": "worker/public/expedition/hero-art-playback.js",
+      "sha256": "54b9996c0302e19f39720d06237b4302a77446187e293bbb02cc6bfa2517f574"
+    },
+    {
+      "path": "worker/public/star-ring-heroes.js",
+      "sha256": "4ef1d48e9634b22e9e5d6c436addea698b8b00f66c29cbe8e08323a62247550a"
+    },
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "cb819c82883ecea3a9bc0d0a2007aa321ddd12f870e2c486a262b1f6080287a9"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "8602f556411dfae616898e8f0388239b52edbe03ff72cf8fb8ce22da6843b7bf"
+    }
+  ],
+  "sourceChangedDuring": []
+}

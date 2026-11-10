@@ -1,0 +1,701 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T05:57:07.057681+00:00",
+  "authority": "vfx-visual-review",
+  "description": "本線 VFX 視覺審查選定的角色出手時間與發射點補項；並非來源原有 marker 或角色美術核准。",
+  "priority": "Valid native releaseFrame/hitFrame and releaseAnchorPx always win; fill only absent fields after metadata and release-image SHA256 plus frame-structure verification.",
+  "coordinateSpace": "release frame rect-local source pixels before clipMirrorX XOR frame.mirrorX",
+  "sourceReadOnly": true,
+  "sourceArtworkApprovalChanged": false,
+  "reviewStage": "complete",
+  "profiles": [
+    {
+      "actorId": "sword",
+      "actorKey": "sword_f",
+      "direction": "up",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+      "sourceMetadataSha256": "75d6a228dad082dae3c45b13f6303fc930a114f0ca2f427b69a5f5d6ae2f3cf4",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+        "sha256": "280ea68ad196fee5a4d09de781d140b35fd2d342eedc34ee132b91f4777b6f19",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        130,
+        80,
+        90,
+        160
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 210,
+      "releaseAnchorPx": [
+        386,
+        236
+      ],
+      "frame": {
+        "rect": [
+          752,
+          182,
+          394,
+          330
+        ],
+        "anchor": [
+          183,
+          328
+        ],
+        "bodyHeight": 373,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:hitFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Visible blade close to its tip at the source contact marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "sword",
+      "actorKey": "sword_f",
+      "direction": "down",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+      "sourceMetadataSha256": "75d6a228dad082dae3c45b13f6303fc930a114f0ca2f427b69a5f5d6ae2f3cf4",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/sword-sword_f-attack-up-down-v2-280ea68ad196.png",
+        "sha256": "280ea68ad196fee5a4d09de781d140b35fd2d342eedc34ee132b91f4777b6f19",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        130,
+        80,
+        90,
+        160
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 210,
+      "releaseAnchorPx": [
+        8,
+        260
+      ],
+      "frame": {
+        "rect": [
+          724,
+          653,
+          368,
+          381
+        ],
+        "anchor": [
+          217,
+          379
+        ],
+        "bodyHeight": 409,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:hitFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Visible forward blade close to its tip at the source contact marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "sword",
+      "actorKey": "sword_f",
+      "direction": "right",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+      "sourceMetadataSha256": "75d6a228dad082dae3c45b13f6303fc930a114f0ca2f427b69a5f5d6ae2f3cf4",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+        "sha256": "3737c669bafd5b41645fe895534ea2cf78094cb1fbaa383c4b10dc9f03c2e960",
+        "width": 2176,
+        "height": 1088
+      },
+      "frameCount": 8,
+      "frameDurationsMs": [
+        125,
+        125,
+        125,
+        125,
+        125,
+        125,
+        125,
+        125
+      ],
+      "uniformFps": 8.0,
+      "clipMirrorX": false,
+      "releaseFrame": 3,
+      "releaseAtMs": 375,
+      "releaseAnchorPx": [
+        434,
+        406
+      ],
+      "frame": {
+        "rect": [
+          1632,
+          0,
+          544,
+          544
+        ],
+        "anchor": [
+          272,
+          490
+        ],
+        "bodyHeight": 430.08,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": true,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "vfx-visual-review",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "First forward blade extension after the raised-sword windup; point is just inside the blade tip.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "sword",
+      "actorKey": "sword_f",
+      "direction": "left",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/sword.json",
+      "sourceMetadataSha256": "75d6a228dad082dae3c45b13f6303fc930a114f0ca2f427b69a5f5d6ae2f3cf4",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/sword-hero_sword_f_attack-3737c669bafd.webp",
+        "sha256": "3737c669bafd5b41645fe895534ea2cf78094cb1fbaa383c4b10dc9f03c2e960",
+        "width": 2176,
+        "height": 1088
+      },
+      "frameCount": 8,
+      "frameDurationsMs": [
+        125,
+        125,
+        125,
+        125,
+        125,
+        125,
+        125,
+        125
+      ],
+      "uniformFps": 8.0,
+      "clipMirrorX": true,
+      "releaseFrame": 3,
+      "releaseAtMs": 375,
+      "releaseAnchorPx": [
+        434,
+        406
+      ],
+      "frame": {
+        "rect": [
+          1632,
+          0,
+          544,
+          544
+        ],
+        "anchor": [
+          272,
+          490
+        ],
+        "bodyHeight": 430.08,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": true,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "vfx-visual-review",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Mirrored source of right; first forward blade extension after the raised-sword windup.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "archer",
+      "actorKey": "archer_f",
+      "direction": "up",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+      "sourceMetadataSha256": "abbfd95fb30486f5de0ce558d1dae628c3a988057cb42def58da4c69b4dfe0d3",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+        "sha256": "22cdfb7772b53af712cfee8eca1601917d6c4d88883fc13b35fb2fafdbd604c4",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        180,
+        220,
+        120,
+        180
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 400,
+      "releaseAnchorPx": [
+        123,
+        115
+      ],
+      "frame": {
+        "rect": [
+          762,
+          9,
+          320,
+          541
+        ],
+        "anchor": [
+          115.5,
+          539
+        ],
+        "bodyHeight": 443,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:releaseFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Bow grip / arrow departure line at the existing release marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "archer",
+      "actorKey": "archer_f",
+      "direction": "down",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+      "sourceMetadataSha256": "abbfd95fb30486f5de0ce558d1dae628c3a988057cb42def58da4c69b4dfe0d3",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/archer-archer-f-attack-up-down-v2-22cdfb7772b5.png",
+        "sha256": "22cdfb7772b53af712cfee8eca1601917d6c4d88883fc13b35fb2fafdbd604c4",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        180,
+        220,
+        120,
+        180
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 400,
+      "releaseAnchorPx": [
+        154,
+        190
+      ],
+      "frame": {
+        "rect": [
+          769,
+          570,
+          312,
+          488
+        ],
+        "anchor": [
+          150.75,
+          486
+        ],
+        "bodyHeight": 465,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:releaseFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Front-facing bow grip / arrow departure line at the existing release marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "archer",
+      "actorKey": "archer_f",
+      "direction": "right",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+      "sourceMetadataSha256": "abbfd95fb30486f5de0ce558d1dae628c3a988057cb42def58da4c69b4dfe0d3",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_6-68cefa210092.webp",
+        "sha256": "68cefa210092d3bf4839ff4be32741efb4dab610df5e65cfdc7cd143dbb03ac4",
+        "width": 768,
+        "height": 896
+      },
+      "frameCount": 8,
+      "frameDurationsMs": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "uniformFps": 10.0,
+      "clipMirrorX": false,
+      "releaseFrame": 5,
+      "releaseAtMs": 500,
+      "releaseAnchorPx": [
+        464,
+        380
+      ],
+      "frame": {
+        "rect": [
+          0,
+          0,
+          768,
+          896
+        ],
+        "anchor": [
+          384,
+          840
+        ],
+        "bodyHeight": 630.5,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": true,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "vfx-visual-review",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "First clearly separated arrow in flight; origin remains at the bow grip rather than on the travelling arrow.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "archer",
+      "actorKey": "archer_f",
+      "direction": "left",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/archer.json",
+      "sourceMetadataSha256": "abbfd95fb30486f5de0ce558d1dae628c3a988057cb42def58da4c69b4dfe0d3",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/archer-hero_archer_base_f_attack_6-68cefa210092.webp",
+        "sha256": "68cefa210092d3bf4839ff4be32741efb4dab610df5e65cfdc7cd143dbb03ac4",
+        "width": 768,
+        "height": 896
+      },
+      "frameCount": 8,
+      "frameDurationsMs": [
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100,
+        100
+      ],
+      "uniformFps": 10.0,
+      "clipMirrorX": true,
+      "releaseFrame": 5,
+      "releaseAtMs": 500,
+      "releaseAnchorPx": [
+        464,
+        380
+      ],
+      "frame": {
+        "rect": [
+          0,
+          0,
+          768,
+          896
+        ],
+        "anchor": [
+          384,
+          840
+        ],
+        "bodyHeight": 630.5,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": true,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "vfx-visual-review",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Mirrored source of right; first clearly separated arrow in flight with origin at the bow grip.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "mage",
+      "actorKey": "mage_f",
+      "direction": "up",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/mage.json",
+      "sourceMetadataSha256": "b781aede9567d154fcd72bf95f27a3d53a82fcc713bbdd9f716201ee84317d33",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+        "sha256": "7989217eee8bde679b5809fd5fa50fd36c3e5e7ee1690cc25a2cbc308962deaa",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        200,
+        280,
+        280,
+        240
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 480,
+      "releaseAnchorPx": [
+        89,
+        93
+      ],
+      "frame": {
+        "rect": [
+          724,
+          0,
+          362,
+          543
+        ],
+        "anchor": [
+          181,
+          517
+        ],
+        "bodyHeight": 446,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:releaseFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Center of the visible raised casting palm, matching the palm-origin semantics of the native side clips.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "mage",
+      "actorKey": "mage_f",
+      "direction": "down",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/mage.json",
+      "sourceMetadataSha256": "b781aede9567d154fcd72bf95f27a3d53a82fcc713bbdd9f716201ee84317d33",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/mage-mage-f-cast-up-down-v2-7989217eee8b.png",
+        "sha256": "7989217eee8bde679b5809fd5fa50fd36c3e5e7ee1690cc25a2cbc308962deaa",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        200,
+        280,
+        280,
+        240
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 480,
+      "releaseAnchorPx": [
+        250,
+        131
+      ],
+      "frame": {
+        "rect": [
+          724,
+          543,
+          362,
+          543
+        ],
+        "anchor": [
+          198,
+          498
+        ],
+        "bodyHeight": 447,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:releaseFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Center of the visible forward casting palm, matching the palm-origin semantics of the native side clips.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "thief",
+      "actorKey": "thief_f",
+      "direction": "up",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/thief.json",
+      "sourceMetadataSha256": "b838111de877787ce5944bb7bd1fc69c5c3ce6a23b3561d90dac6b72271bc77e",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+        "sha256": "3cd0b5ad674798520895557572a32079495a867251b749af03a8509cc9a9856b",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        100,
+        80,
+        90,
+        150
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 180,
+      "releaseAnchorPx": [
+        268,
+        24
+      ],
+      "frame": {
+        "rect": [
+          736,
+          66,
+          332,
+          475
+        ],
+        "anchor": [
+          150,
+          471
+        ],
+        "bodyHeight": 435,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:hitFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Inside the leading raised dagger tip at the existing contact marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    },
+    {
+      "actorId": "thief",
+      "actorKey": "thief_f",
+      "direction": "down",
+      "action": "attack",
+      "status": "visually-reviewed",
+      "sourceMetadataUrl": "/ui-generated-20261030/characters-v1/character-preview-actors/thief.json",
+      "sourceMetadataSha256": "b838111de877787ce5944bb7bd1fc69c5c3ce6a23b3561d90dac6b72271bc77e",
+      "source": {
+        "url": "/ui-generated-20261030/characters-v1/assets/thief-thief-f-attack-up-down-v2-3cd0b5ad6747.png",
+        "sha256": "3cd0b5ad674798520895557572a32079495a867251b749af03a8509cc9a9856b",
+        "width": 1448,
+        "height": 1086
+      },
+      "frameCount": 4,
+      "frameDurationsMs": [
+        100,
+        80,
+        90,
+        150
+      ],
+      "uniformFps": null,
+      "clipMirrorX": false,
+      "releaseFrame": 2,
+      "releaseAtMs": 180,
+      "releaseAnchorPx": [
+        132,
+        215
+      ],
+      "frame": {
+        "rect": [
+          776,
+          594,
+          271,
+          448
+        ],
+        "anchor": [
+          155,
+          444
+        ],
+        "bodyHeight": 459,
+        "mirrorX": false
+      },
+      "fills": {
+        "marker": false,
+        "anchor": true
+      },
+      "authority": "vfx-visual-review",
+      "markerAuthority": "source:hitFrame",
+      "anchorAuthority": "vfx-visual-review",
+      "reviewNote": "Midpoint between the two forward dagger tips at the existing contact marker.",
+      "sourceApproval": {
+        "approved": false,
+        "readiness": "partial-candidate"
+      }
+    }
+  ]
+}

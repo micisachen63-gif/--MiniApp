@@ -15,3 +15,67 @@ test('the five-person action cycle continues between server beats without changi
 test('first pending beat displays poses only, and a hidden battle resumes when visible',async()=>{const s=setup();s.party.status='running';s.party.battle.events=[];const events=s.ui.eligibleEvents(s.party);assert.equal(events.length,5);assert.ok(events.every(x=>x.event.presentationOnly&&x.event.damage==null));let starts=0;const stop=s.ui.mount(s.scene,s.party,{playback:{preparePartyArt:async()=>[],startRegistryAction:()=>{starts++;return {stop(){}};}}});await flush();s.doc.hidden=true;s.listeners.get('visibilitychange')();await flush();const before=starts;s.doc.hidden=false;s.listeners.get('visibilitychange')();await flush();assert.equal(starts,before+1);stop();});
 
 test('hourly system-only arrival keeps living party poses moving without damage and respects death and terminal status',()=>{const s=setup();s.party.status='running';s.party.battle.events=[{actorId:'system',label:'隊伍抵達銀針幽庭'}];s.party.members[0].hp=0;s.party.members[1].left=true;const saved=JSON.stringify(s.party),q=s.ui.eligibleEvents(s.party);assert.equal(q.map(x=>x.member.id).join(','),'2,3,4');assert.ok(q.every(x=>x.event.presentationOnly&&x.event.damage==null));assert.equal(JSON.stringify(s.party),saved);s.party.status='complete';assert.equal(s.ui.eligibleEvents(s.party).length,0);s.party.status='running';s.party.battle.enemy.hp=0;assert.equal(s.ui.eligibleEvents(s.party).length,0);});
+
+test('star ring sends an explicit projection once at release, while repeated cosmetic cycles contain no VFX',async()=>{
+ const s=setup(),plays=[],starts=[];let destroyed=0,clears=0;
+ s.party.battle.enemy.id='actual-enemy';s.party.battle.events=[{actorId:'0',skillId:'attack',damage:10,vfx:{schemaVersion:1,source:'deterministic-projection',eventId:'ring:beat:0',skillId:'native:sword:base',kind:'cast',actorId:'0',atMs:1000,targetKind:'enemy',targetIds:['actual-enemy'],presentationMode:'full'}}];
+ const layer={prepare:async()=>{},timing:()=>({remainingMs:560,impactDelayMs:180}),play:async(raw,geometry)=>{plays.push({raw,geometry});return {accepted:true};},clear:()=>clears++,destroy:()=>destroyed++};
+ const legacyModule={createLegacyVfxLayer:async(_scene,opts)=>{assert.equal(opts.allowProjection,true);assert.equal(opts.mode,'star-ring');return layer;},legacyDescriptors:event=>event.cosmetic||event.presentationOnly?[]:[event.vfx,...(event.vfxEvents||[])].filter(Boolean),legacyDomGeometry:(_scene,actor,targets,options)=>({actorId:options.actorId,targets:targets.map(t=>t.id),from:options.from})};
+ const api={preparePartyArt:async()=>[],startRegistryAction:(_scene,_actor,_target,_member,event,opts)=>{starts.push({event,opts});return {draw(){},geometry:()=>({from:{x:31,y:42},foot:{x:31,y:80},bodyHeight:70}),stop(){}};}};
+ const stop=s.ui.mount(s.scene,s.party,{playback:api,legacyModule});await flush();
+ assert.equal(plays.length,0,'wait for the real native release');assert.equal(starts[0].opts.effectScale,0);
+ const tick=async()=>{const [id,fn]=s.timers.entries().next().value;s.timers.delete(id);fn();await flush();};
+ await tick();assert.equal(plays.length,1);assert.equal(plays[0].raw.source,'deterministic-projection');
+ assert.ok(plays[0].geometry.targets.includes('actual-enemy'));assert.equal(plays[0].geometry.from.x,31);
+ assert.equal(s.scene.dataset.visualMode,'projection');
+ await tick();await tick();assert.equal(starts.length,2);assert.equal(starts[1].event.presentationOnly,true);
+ assert.equal(starts[1].event.vfx,undefined);assert.equal(starts[1].event.vfxEvents.length,0);assert.equal(plays.length,1);
+ stop();assert.equal(destroyed,1);assert.ok(clears>0);assert.equal(s.timers.size,0);
+});
+
+test('periodic system receipts and boss reflection use the exact effect owner once without native cast animation',async()=>{
+ const s=setup(),plays=[],prepared=[];let starts=0;
+ const pulse={schemaVersion:1,source:'deterministic-projection',eventId:'ring:periodic:0',skillId:'special:skill_18_1',kind:'effect',actorId:'0',atMs:1000,targetKind:'enemy',targetIds:['actual-enemy'],presentationMode:'impact'};
+ const reflected={...pulse,eventId:'ring:reflection:1',actorId:'1',skillId:'special:skill_02_3'};
+ s.party.battle.enemy.id='actual-enemy';s.party.battle.events=[{actorId:null,label:'召喚／持續傷害',damage:10,vfxEvents:[pulse]},{actorId:'boss',label:'首領攻擊',vfxEvents:[reflected]}];
+ s.party.members[0].hp=0; // A true residual hit still belongs to its now-downed owner.
+ const layer={prepare:async rows=>prepared.push(...rows),play:async(raw,geometry)=>{plays.push({raw,geometry});return {accepted:true,remainingMs:650};},clear(){},destroy(){}};
+ const legacyModule={createLegacyVfxLayer:async()=>layer,legacyDescriptors:event=>[event.vfx,...(event.vfxEvents||[])].filter(Boolean),legacyDomGeometry:(_scene,actor,targets,options)=>({actorId:options.actorId,targets:targets.map(t=>t.id)})};
+ const playback={preparePartyArt:async()=>[],startRegistryAction:()=>{starts++;return {stop(){}};}};
+ const queue=s.ui.eligibleEvents(s.party);assert.equal(queue.length,2);assert.ok(queue.every(row=>row.effectOnly));
+ const saved=JSON.stringify(s.party),stop=s.ui.mount(s.scene,s.party,{playback,legacyModule});await flush();
+ assert.equal(plays.length,1);assert.equal(plays[0].geometry.actorId,'0');assert.equal(starts,0);
+ const tick=async()=>{const pair=s.timers.entries().next().value;if(!pair)return;const [id,fn]=pair;s.timers.delete(id);fn();await flush();};
+ await tick();assert.equal(plays.length,2);assert.equal(plays[1].geometry.actorId,'1');
+ await tick();await tick();assert.equal(plays.length,2);assert.equal(starts,0);assert.equal(s.timers.size,0);
+ assert.equal(prepared.length,2);assert.equal(s.scene.dataset.effectReceipts,'2');assert.equal(JSON.stringify(s.party),saved);
+ stop();
+});
+test('system damage labels without explicit effect descriptors never create a periodic identity',()=>{
+ const s=setup();s.party.battle.events=[{actorId:null,label:'召喚／持續傷害',damage:100},{actorId:'boss',damage:20}];
+ assert.equal(s.ui.eligibleEvents(s.party).length,0);
+});
+
+test('a true cast before same-beat death replays once but never animates its downed actor cosmetically',async()=>{
+ const s=setup(),plays=[];let starts=0;
+ s.party.members[0].hp=0;s.party.battle.enemy.id='actual-enemy';
+ const raw={schemaVersion:1,source:'deterministic-projection',eventId:'ring:cast-before-death',skillId:'native:sword:base',kind:'cast',actorId:'0',atMs:1000,targetKind:'enemy',targetIds:['actual-enemy'],presentationMode:'full'};
+ s.party.battle.events=[{actorId:'0',skillId:'attack',damage:10,vfx:raw}];
+ const layer={prepare:async()=>{},timing:()=>({remainingMs:100,impactDelayMs:40}),play:async descriptor=>{plays.push(descriptor);return {accepted:true,remainingMs:100};},clear(){},destroy(){}};
+ const legacyModule={createLegacyVfxLayer:async()=>layer,legacyDescriptors:event=>event.presentationOnly?[]:[event.vfx].filter(Boolean),legacyDomGeometry:(_s,_a,_t,opts)=>({actorId:opts.actorId})};
+ const playback={preparePartyArt:async()=>[],startRegistryAction:()=>{starts++;return {stop(){},draw(){}};}};
+ assert.equal(s.ui.eligibleEvents(s.party).length,1);
+ const stop=s.ui.mount(s.scene,s.party,{playback,legacyModule});await flush();assert.equal(starts,1);assert.equal(plays.length,0);
+ const tick=async()=>{const pair=s.timers.entries().next().value;if(!pair)return;const [id,fn]=pair;s.timers.delete(id);fn();await flush();};
+ await tick();assert.equal(plays.length,1);assert.equal(plays[0],raw);
+ await tick();await tick();assert.equal(starts,1);assert.equal(plays.length,1);assert.equal(s.timers.size,0);
+ assert.equal(s.party.members[0].hp,0);stop();
+});
+test('an invalid descriptor cannot revive a downed actor presentation',async()=>{
+ const s=setup();s.party.members[0].hp=0;s.party.battle.events=[{actorId:'0',skillId:'attack',vfx:{actorId:'0',kind:'cast'}}];
+ let starts=0,plays=0;
+ const layer={prepare:async()=>{},timing:()=>null,play:async()=>{plays++;},clear(){},destroy(){}};
+ const legacyModule={createLegacyVfxLayer:async()=>layer,legacyDescriptors:event=>[event.vfx],legacyDomGeometry:()=>null};
+ const stop=s.ui.mount(s.scene,s.party,{playback:{preparePartyArt:async()=>[],startRegistryAction:()=>{starts++;}},legacyModule});
+ await flush();assert.equal(starts,0);assert.equal(plays,0);assert.equal(s.timers.size,0);stop();
+});

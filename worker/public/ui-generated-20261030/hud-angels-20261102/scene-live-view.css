@@ -1,0 +1,116 @@
+/* Independent live-scene status; existing HUD dimensions remain unchanged. */
+.rpg-live-scene #skills .sk { pointer-events: none; opacity: .35; }
+.rpg-live-scene #buffs:empty { display: none; }
+.rpg-live-scene .dark-potions { display: none !important; }
+.rpg-live-scene .scene-live-panel { position: absolute; top: 108px; left: 12px; width: min(270px, calc(100vw - 24px)); box-sizing: border-box; z-index: 35; padding: 10px 12px; color: #ede2c8; background: rgba(10, 15, 22, .86); border: 1px solid #7b69504d; border-radius: 9px; font: 12px/1.5 "Noto Serif TC", serif; pointer-events: auto; box-shadow: 0 4px 20px #0005; }
+.scene-live-heading { display: flex; justify-content: space-between; align-items: center; gap: 8px; }
+.scene-live-heading strong { font-size: 14px; color: #ead19b; }
+.scene-live-heading span { font: 10px/1.5 sans-serif; color: #a8b4ba; font-variant-numeric: tabular-nums; }
+.scene-live-panel p { margin: 4px 0; }
+.scene-live-warning { color: #e1b77b; font-size: 11px; }
+.scene-live-buttons { display: flex; gap: 5px; margin: 8px 0 3px; }
+.scene-live-buttons button { flex: 1; min-height: 36px; padding: 4px 5px; border: 1px solid #96815b80; border-radius: 5px; background: #1b2531; color: #efdfb7; font: inherit; cursor: pointer; }
+.scene-live-buttons button:disabled { opacity: .5; cursor: default; }
+.scene-live-buttons button:focus-visible, .scene-live-panel summary:focus-visible { outline: 2px solid #c4a36a; outline-offset: 2px; }
+.scene-live-panel details { margin-top: 6px; }
+.scene-live-panel summary { color: #bdc4c6; cursor: pointer; min-height: 24px; }
+.scene-live-enemies, .scene-live-events { margin: 4px 0; padding-left: 18px; max-height: 100px; overflow: auto; }
+.scene-live-events { color: #abb6bf; }
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-slot:disabled { opacity: .78; cursor: default; }
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-name { white-space: nowrap; }
+@media (max-width: 600px) {
+  .rpg-live-scene .scene-live-panel { top: 91px; left: 8px; width: min(224px, calc(100vw - 190px)); padding: 8px; font-size: 11px; }
+  .scene-live-heading strong { font-size: 13px; }
+  .scene-live-buttons { gap: 4px; }
+  .scene-live-buttons button { min-height: 36px; min-width: 0; padding: 4px 2px; font-size: 11px; line-height: 1.2; }
+}
+@media (orientation: landscape) and (max-height: 500px) {
+  .rpg-live-scene .scene-live-panel { top: 80px; width: 230px; max-height: calc(100vh - 180px); overflow: auto; }
+}
+
+
+/* Approved HP / five slots / MP baseline, with the current five-entry shell.
+ * Orbs are decorative; action targets remain at least 44px even at 320px. */
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) {
+ --hud-slot:clamp(44px,8.5vw,64px);--hud-gap:clamp(3px,.7vw,7px);
+ --hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),188px);
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #bottom #bar {
+ height:max(var(--hud-orb),calc(var(--hud-slot) + 8px));width:100%;overflow:visible;
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #bottom .orb {
+ flex:0 0 var(--hud-orb);width:var(--hud-orb);height:var(--hud-orb);
+}
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #fn {display:none!important}
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-slot {box-sizing:border-box;min-width:44px;min-height:44px}
+.rpg-live-scene #hud-v2-actions[data-live] .hud-v2-name {overflow:hidden;text-overflow:ellipsis;font-size:10px;line-height:12px}
+.rpg-live-scene #hud-v2-actions[data-live] [data-live-potion] .hud-v2-name {font-size:9px;letter-spacing:-.15px;left:2px;right:2px}
+.rpg-live-scene #hud-v2-actions[data-live] [data-live-skill] .hud-v2-icon {
+ display:grid;place-items:center;padding-bottom:10px;background-image:none;
+ background:radial-gradient(ellipse at 45% 20%,#455461,#151c24 70%);
+ font:600 clamp(20px,3.8vw,30px)/1 "Noto Serif TC",serif;color:#dfcfaa;
+ text-shadow:0 1px 3px #000;filter:none;
+}
+.rpg-live-scene #hud-v2-actions[data-live] [data-authority="unknown"] .hud-v2-icon {opacity:.58}
+.rpg-live-scene #hud-v2-actions[data-live] [data-authority="stale"] .hud-v2-count {color:#d5bb89}
+.rpg-live-scene .candidate-orb:not([data-authority]) .candidate-fill,
+.rpg-live-scene .candidate-orb:not([data-authority]) .candidate-number {visibility:hidden}
+.rpg-live-scene .candidate-orb[data-authority="stale"] .candidate-number {color:#d5bb89}
+
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) .candidate-number {font-size:clamp(9px,calc(var(--hud-orb) * .15),21px)}
+
+/* Keep the existing chat handle above the actual unified HUD row, including
+ * narrow screens where five 44px actions are taller than the decorative orbs. */
+html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #chat {
+  bottom:calc(max(9px,env(safe-area-inset-bottom)) + 100px + max(var(--hud-orb),calc(var(--hud-slot) + 8px)) + 12px);
+}
+@media(max-width:600px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root #chat {
+    bottom:calc(max(7px,env(safe-area-inset-bottom)) + 92px + max(var(--hud-orb),calc(var(--hud-slot) + 8px)) + 12px);
+  }
+}
+
+/* HUD viewport integration: keep the complete committed status in the existing
+ * single window when the space below the actor cannot hold a useful card. */
+.rpg-live-scene .scene-live-panel { overflow:auto; overscroll-behavior:contain; }
+.rpg-live-scene .scene-live-panel.is-compact:not(.scene-live-status-in-dialog) { display:none; }
+.rpg-live-scene .scene-live-status-toggle {
+  position:absolute;top:108px;left:12px;width:min(270px,calc(100vw - 24px));
+  box-sizing:border-box;z-index:35;min-height:44px;height:44px;padding:8px 12px;
+  color:#ead19b;background:rgba(10,15,22,.86);border:1px solid #96815b80;
+  border-radius:9px;font:600 13px/1.4 "Noto Serif TC",serif;cursor:pointer;
+  pointer-events:auto;touch-action:manipulation;box-shadow:0 4px 20px #0005;
+}
+.rpg-live-scene .scene-live-status-toggle::after { content:' ›'; }
+.rpg-live-scene .scene-live-status-toggle[hidden] { display:none!important; }
+.rpg-live-scene .scene-live-status-toggle:focus-visible { outline:2px solid #f1ead2;outline-offset:3px; }
+.rpg-live-scene #ui.scene-unified-root .scene-live-panel.scene-live-status-in-dialog {
+  position:static!important;inset:auto!important;width:100%!important;max-height:none!important;
+  display:block!important;overflow:visible!important;margin:0;box-shadow:none;
+}
+@media(max-width:600px) {
+  .rpg-live-scene .scene-live-status-toggle { top:91px;left:8px;width:min(224px,calc(100vw - 160px)); }
+}
+@media(max-width:600px) and (min-height:551px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root {
+    --hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),min(188px,max(52px,calc(50dvh - 260px))));
+  }
+}
+@media(max-height:550px) {
+  html.rpg-live-scene.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-root {
+    --hud-slot:44px;--hud-orb:clamp(28px,calc((100vw - 5 * var(--hud-slot) - 4 * var(--hud-gap) - 20px) / 2),64px);
+  }
+}
+@media(orientation:landscape) and (max-height:500px) {
+  .rpg-live-scene .scene-live-status-toggle { top:80px;width:230px; }
+
+/* VFX controls kept below the committed HUD viewport rules. */
+.scene-live-heading [data-live-collapse] { flex: 0 0 28px; min-height: 28px; padding: 0; border: 1px solid #9e89614d; border-radius: 6px; background: #18212bd9; color: #ead19b; font: 16px/1 sans-serif; cursor: pointer; }
+.scene-live-heading [data-live-collapse]:focus-visible { outline: 2px solid #c4a36a; outline-offset: 2px; }
+.scene-live-panel[data-collapsed="true"] > :not(.scene-live-heading) { display: none; }
+.rpg-live-scene .scene-live-panel[data-collapsed="true"] { background: rgba(10, 15, 22, .58); padding: 4px 8px; }
+@media (max-width: 600px) {
+  .scene-live-heading [data-live-sync] { display: none; }
+  .scene-live-heading strong { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .scene-live-heading [data-live-collapse] { flex-basis: 32px; min-height: 32px; }
+}

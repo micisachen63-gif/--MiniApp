@@ -1,0 +1,16 @@
+{
+  "scope": "MCP-execution-receipt",
+  "executionId": "xGCbJybsvjX0bUK1QpyDiU67",
+  "sessionId": "BOryH7WSnvzC6w286yl3NY8H",
+  "command": "node worker/tools/awakening-vfx-browser.mjs",
+  "startedAt": "2026-11-05T06:59:50.670Z",
+  "finishedAt": "2026-11-05T07:02:20.813Z",
+  "elapsedMs": 150143,
+  "exitCode": 0,
+  "pid": 51580,
+  "stdoutDigest": "fcbb5c6831bb60a0f1f7496d1747d2beb56642901c2bf4deee0a768c73ba7315",
+  "stderrDigest": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "browserErrors": 0,
+  "networkFailures": 0,
+  "source": "Observed completed MCP command_control result; no inferred process success."
+}

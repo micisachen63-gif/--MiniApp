@@ -1,0 +1,80 @@
+星穹之旅：按鈕素材與技能特效整合
+日期：2026-11-04（本機開發線）
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-20261104
+分支：codex/skill-vfx-20261104
+最新提交與目前服務狀態：D:\StarJournal\handoff\skill-vfx\STATUS.json
+
+一、交付結果
+使用者提供的角色／背包／冒險／營地／社交五個入口仍顯示舊版平面按鈕。本次將已完成的素材按鈕工作線合入目前的技能特效預覽，並完成實際合流版本的瀏覽器驗收。
+保留196個已實裝技能的28家族特效與現有遊戲行為；素材、圖集、配方、事件鏈和覆蓋來源未修改。
+正式環境未更新；沒有push、合入main、遠端migration或正式玩家資料操作。
+
+二、素材與互動
+採深海軍藍琺瑯面、香檳金雙層金屬框、立體斜面與盾形輪廓。五入口保留各自圖示與繁體中文文字。
+文字與圖示由HTML/SVG呈現，沒有烘焙進點陣素材。已有選取、按壓、焦點、停用與減少動態狀態。
+導航桌機高度72px、手機64px；主要動作52px、次要46px，觸控目標最少44px。
+本次額外將VFX狀態收合控制補為44×44px，修正在scene-social-preview.css的既有UI作用域內，未修改VFX來源檔。
+實際驗收導航尺寸：320寬為55.6×64、390寬為68.8×64、1280寬為84.4×72；與上方HUD均保留14px間距。
+
+本次沿用既有image_gen產出的已落地素材，並非本輪重新生成圖片。來源提示與製程記錄保留在worker/public/ui/button-materials/manifest.json。
+button-plate.webp：960×320，55,356 bytes，SHA256 4c124ce0afc3cbd8adccb4e08fe1b9a0928bc34ea3aca9f90a34cffb3d38eb57
+nav-plate.webp：192×192，11,798 bytes，SHA256 c4dcaab23d865cb376759319c80dd1a9518fb2427b81db899ca771110ba7fd2b
+合計67,154 bytes。GET/HEAD與實際回傳位元組已核對。
+
+三、版本整合
+原VFX基線：8a2e445fcb4735d2dda4b4ed57d44550dad01f69
+素材按鈕來源：b8197b3ddb20fab044df508daccbae86c57c819b
+共同基線：0219f9d899547af254cf3ddf63f9ff66c5344959
+合併衝突僅AI_HANDOVER.md與worker/tools/scene-live-preview.mjs，已逐項整合：
+- 交接保留兩條工作線的歷史及原驗收版本歸屬。
+- preview保留VFX fixture、精確素材白名單與既有health資訊，同時接入button-materials靜態路由與路徑邊界檢查。
+- 按鈕瀏覽器工具支援指定本機scene/API origin，並限制為明確127.0.0.1 HTTP來源。
+- 原獨立按鈕預覽9703/9702、角色工作線與9664工坊未改動。
+本次Git合併提交由STATUS.json與本機commit receipt記錄，避免在本文件寫入尚未產生的提交雜湊。
+
+四、驗收結果與範圍
+1. 素材路由測試：3/3通過，原生TAP保存於docs/button-vfx-20261104/asset-route-tests.tap。
+2. 完整按鈕瀏覽器首輪：320、390、1280三種寬度，共30場景，24通過、6失敗。六次失敗均為VFX收合控制小於44px；沒有頁面、HTTP或素材錯誤。
+3. 修正收合尺寸後針對受影響的主場／返回主場重驗：6場景、3種寬度，765項幾何與狀態斷言全部通過。765為檢查數，不是765個獨立測試。實際點擊收合兩次，核對data-collapsed、aria-expanded與內容顯示狀態並恢復初始狀態。文字、命中範圍、溢位與素材完整性通過。
+4. 最終專項：0頁面錯誤、0HTTP錯誤、0素材失敗；驗收前後8個相關來源指紋一致。
+5. 真實技能手機冒煙驗證：390×844、sword_whirlwind、隔離SQLite API提交後實際RAF播放；1案例通過，13個trace觀測，0頁面／HTTP錯誤，exit0。這不是重跑196技能全套。
+6. 既有65個VFX覆蓋來源SHA完全不變，coverage JSON SHA256仍為7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8。
+7. 最終UI來源：
+scene-social-preview.css SHA256 6b93e25f8aef4dc45da33a08f0b422f9288957852855b6fae16fc9fcf22ea488
+scene-live-preview.mjs SHA256 e140b2922308cbad45bab8745af3fd3c10c54b6a9e6c42a8759757f5902af63d
+
+驗收結論為首輪完整矩陣加修正後受影響案例的組合驗證，沒有宣稱最終CSS單次重跑30/30。
+原196技能完整驗收仍歸屬8a2e445，詳見docs/SKILL_VFX_ALL_20261104.txt與docs/skill-vfx-all-20261104/final-validation.json，不當作本次重新執行。
+手機驗收使用Chrome viewport，未進行實機Telegram/GPU測試。
+
+五、可攜證據
+docs/button-vfx-20261104/archive-index.json：十份原始證據位元組與SHA索引。
+ui-initial.json：保留首輪30案例及六個真實尺寸失敗。
+ui-targeted-final.json：修正後六場景與765項檢查。
+source-and-assets.json：65來源與兩素材GET/HEAD/SHA。
+vfx-phone.json、vfx-phone-execution.json：實際手機技能播放與程序退出收據。
+navigation-desktop.png、navigation-phone.png：新版五入口近照。
+desktop-final.png、phone-final.png：完整場景截圖。
+asset-route-tests.tap：三項路由測試原始輸出。
+validation-summary.json：本輪組合驗證摘要。
+證據目錄以局部.gitattributes固定JSON/TAP/PNG為原始bytes，避免Git換行轉換破壞雜湊。
+未歸檔的中間失敗、完整原始工具輸出與腳本保留在.release-sync/button-vfx-20261104及.release-sync/button-polish-20261104。
+
+六、預覽與交接
+更新後場景：http://127.0.0.1:9667/
+隔離API：http://127.0.0.1:9666/
+工坊：http://127.0.0.1:9664/preview-skill-vfx.html
+scene PID：24136（啟動收據.release-sync/button-vfx-20261104/preview-process.json）。
+場景與API health路徑：/__preview/health。isolated=true、ephemeral=true、productionAccess=false。
+long-targets為既有驗收fixture，敵人HP×20以觀察動畫，未變更正式規則。
+重新啟動前必須核對PID、命令與建立時間，不可使用陳舊PID或停止其他工作線。
+
+進度檔：D:\StarJournal\handoff\skill-vfx\STATUS.json
+可讀交接：D:\StarJournal\handoff\skill-vfx\LATEST.md
+歷史交接：D:\StarJournal\handoff\skill-vfx\history
+既有Windows排程：StarJournal-SkillVFX-Checkpoint-30m，每30分鐘記錄。
+本輪完成會立即checkpoint。排程只記錄當前狀態與Git／證據，不會自行開發或部署。
+
+接續先讀STATUS/LATEST、本文件、AI_HANDOVER與AGENTS，再核對Git工作樹。
+本次五入口按鈕替換已完成；196個已實裝技能特效沒有遺留項目。
+規劃中的16覺醒需機制實裝後另接，正式環境發佈及角色線工作依另外指示處理。

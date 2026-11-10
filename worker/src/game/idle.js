@@ -1,3 +1,5 @@
+import {nativeCastVfx} from './skill-vfx-events.js';
+import {modeForLevel} from './endgame.js';
 import {potionPreference,potionKeyFor,potionStock,potionHealing,potionTierFor} from './potion-choice.js';
 import {idleBalanceFrom} from './pve-balance.js';
 export {potionTierFor} from './potion-choice.js';
@@ -34,6 +36,7 @@ export function choosePotion(inv, kind, mapTier, char=null) {
 /** level at which EXP stops until the next advancement (30/60/90), or the cap */
 export function gateLevel(char) {
   const t = classTier(char.class_path);
+  if(t>=MAX_OPEN_CLASS_TIER)return MAX_LEVEL;
   const gate = Math.min((t + 1) * 30, MAX_OPEN_MAP * 30);
   return Math.min(gate, MAX_LEVEL);
 }
@@ -45,6 +48,9 @@ export function applyExp(c, statsFor) {
   let gained = 0;
   for (;;) {
     const need = expToNext(c.level);
+    // Old databases remain playable during additive rollout; only the new
+    // persisted column authorizes levels beyond their original CHECK boundary.
+    if(c.level>=120&&!Object.hasOwn(c,'progression_level')){c.exp=0;break;}
     if (c.level >= MAX_LEVEL) { c.exp = 0; break; }
     if (c.exp < need) break;
     if (c.level >= gateLevel(c)) { c.exp = need; break; }   // EXP full, waiting at the gate
@@ -117,7 +123,8 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     beginAssistBattle(c,inv,use,price=>{report.guardianStonesBought=(report.guardianStonesBought||0)+1;report.guardianStoneGoldSpent=(report.guardianStoneGoldSpent||0)+price;});
     const guardianActor=idleGuardianActor(c);
     // MP: cast the skill if possible (auto blue), otherwise basic attacks
-    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map,c),use,potions:POTIONS,day,rng});
+    const vfxObservation={eventId:'idle-round:'+c.tg_id+':'+t+':cast',source:'committed-combat',atMs:t,damageModel:'aggregate-minute',enemyId:combat.enemies[combat.target===1?1:0]?.id};
+    const special=idleSpecial(c,inv,s,t,{chooseBlue:(inv,map)=>choosePotion(inv,'blue',map,c),use,potions:POTIONS,day,rng,vfx:i===ticks?vfxObservation:null});
     let cast = !!special?.selected;
     if (!special?.selected && needsBlue(c,c.mp,s.maxMp,s.skill.cost)) { const target=blueTarget(c,s.maxMp,s.skill.cost); let k; do { k=choosePotion(inv,'blue',mapTier,c); if(!k)break; use(k); c.mp=Math.min(s.maxMp,c.mp+POTIONS[k].heal); } while(c.mp<target); }
     if (!special?.selected && c.mp >= s.skill.cost) { cast = true; const mana={mp:c.mp,affixPct:s.pct};spendMana(mana,s.skill.cost,rng);c.mp=mana.mp; }
@@ -155,7 +162,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
         // At the current 3% encounter rate this averages 2.52 items/hour during active combat.
         const extraGear = eliteGearRng() < guardianChance(0.4,guardianActor) ? 1 : 0;
         for (let drop = 0; drop <= extraGear; drop++) {
-          const item = makeEliteGear({ id: `eg${c.tg_id}${t.toString(36)}${drop}`, tgId: c.tg_id, cls: c.base_class, classPath: c.class_path, tier: Math.min(mapTier, MAX_OPEN_MAP), rng: mulberry32(Math.floor(eliteGearRng() * 2 ** 32)), now: t });
+          const item = makeEliteGear({ id: `eg${c.tg_id}${t.toString(36)}${drop}`, tgId: c.tg_id, cls: c.base_class, classPath: c.class_path, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:modeForLevel(c.level).id, rng: mulberry32(Math.floor(eliteGearRng() * 2 ** 32)), now: t });
           report.eliteGear.push(item);
           events.push({ type: 'elite_gear', at: t, item: { id: item.id, name: item.name, slot: item.slot, classReq: item.class_req, tier: item.tier }, source: 'elite', elite: eliteMonster.name, map: s.map.name });
         }
@@ -169,7 +176,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
         if (relicRng() < guardianChance(RELIC.eliteChance,guardianActor)) {
           if ((dropsToday.relic || 0) >= RELIC.eliteDailyCap) report.drops_capped += 1;
           else {
-            const item = makeRelic({ id: `rl${c.tg_id}${t.toString(36)}`, tgId: c.tg_id, tier: Math.min(mapTier, MAX_OPEN_MAP), rng: mulberry32(Math.floor(relicRng() * 2 ** 32)), now: t, source: 'relic_elite' });
+            const item = makeRelic({ id: `rl${c.tg_id}${t.toString(36)}`, tgId: c.tg_id, tier: Math.min(mapTier, MAX_OPEN_MAP), mode:modeForLevel(c.level).id, rng: mulberry32(Math.floor(relicRng() * 2 ** 32)), now: t, source: 'relic_elite' });
             dropsToday.relic = (dropsToday.relic || 0) + 1; report.relics.push(item);
             events.push({ type: 'relic', at: t, item: { id: item.id, name: item.name, slot: item.slot, classReq: item.class_req, tier: item.tier }, source: 'elite', elite: eliteMonster.name, map: s.map.name });
           }
@@ -196,7 +203,7 @@ export function settleIdle(char, inventory, equipped, now, {balanceVersion}={}) 
     c.exp += gain; report.exp_gained += gain;
     goldAcc += dailyGold(c.level) * IDLE.goldPerDayPct / MAX_SETTLE_TICKS * eff;
     killAcc += kills;
-    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,strikePlan,attackSpeedMultiplier:s.attackSpeedMultiplier,record:i===ticks});
+    const round=resolveIdleCombat(combat,c,{at:t,killsBudget:kills,cast,vfx:i===ticks?(special?.vfx||(cast?nativeCastVfx(c,vfxObservation):null)):null,skillName:special?.selected?.name||s.skill.name,crit,elite:eliteDefeated,eliteMonster,strikePlan,attackSpeedMultiplier:s.attackSpeedMultiplier,record:i===ticks});
     if(thiefTarget&&!combat.enemies.some(e=>e.id===thiefTarget))clearThiefIdleNative(c);
     if(i===ticks){round.sustain={damage,healed:sustain.healed,cast};round.crit=crit;if(thiefNative.statuses.length)round.statuses=thiefNative.statuses;}
     for(const [key,qty]of Object.entries(monsterMaterialPlan(round,materialRng,dropsToday,inv))){inv[key]=(inv[key]||0)+qty;report.drops[key]=(report.drops[key]||0)+qty;}

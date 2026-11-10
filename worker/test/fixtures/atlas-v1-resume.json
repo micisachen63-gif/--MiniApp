@@ -1,0 +1,1201 @@
+{
+  "sourceCommit": "cf85f4823f18796680fcd9d90d57248a6e78d9a6",
+  "synthetic": true,
+  "partial": {
+    "ruleset_version": "atlas-v1",
+    "runId": "legacy-v1-golden-run",
+    "realmId": "permanent",
+    "seed": "golden-v1-resume",
+    "encounterRng": 556507995,
+    "combatRng": 1195188358,
+    "lootRng": 3364537209,
+    "startedAt": 1800000000,
+    "processedAt": 1800000089,
+    "durationSeconds": 3600,
+    "elapsedSeconds": 89,
+    "status": "running",
+    "stopReason": null,
+    "endedAt": null,
+    "snapshot": {
+      "characterId": "synthetic-thief",
+      "baseClass": "thief",
+      "level": 30,
+      "atk": 240,
+      "def": 75,
+      "maxHp": 1200,
+      "maxMp": 180,
+      "taken": 1,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "pct": {
+        "critPct": 0,
+        "dotPct": 0,
+        "summonPct": 0,
+        "shieldPct": 0,
+        "mpEfficiencyPct": 0,
+        "mpCostPct": 0,
+        "skillHastePct": 0,
+        "lifestealPct": 0,
+        "healPerCastPct": 0
+      },
+      "hp": 1200,
+      "mp": 180,
+      "mpRegenPerSecond": 1.08
+    },
+    "balanceProfile": {
+      "id": "v1-golden-profile",
+      "status": "prototype",
+      "enemyHpMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyDefenseMultiplier": 1,
+      "rewardMultiplier": 1.75,
+      "travelMultiplier": 1
+    },
+    "buildId": "thief_poison",
+    "supports": [
+      "lasting",
+      "wide"
+    ],
+    "automation": "balanced",
+    "skill": {
+      "id": "thief_poison",
+      "baseClass": "thief",
+      "name": "層毒蔓延",
+      "mainSkill": "淬毒刃",
+      "description": "堆疊毒素，擊殺後部分毒素蔓延；長血條目標較有利。",
+      "strengths": [
+        "持續傷害",
+        "單體"
+      ],
+      "weaknesses": [
+        "暖機",
+        "承傷"
+      ],
+      "tags": [
+        "dot"
+      ],
+      "mechanic": "poison",
+      "coefficient": 0.6,
+      "targets": 3,
+      "cost": 6,
+      "cooldown": 3,
+      "dotCoefficient": 0.24,
+      "dotDuration": 8,
+      "maxStacks": 5,
+      "recommendedSupports": [
+        "lasting",
+        "wide"
+      ],
+      "recommendedAutomation": "balanced",
+      "damageMultiplier": 0.6232,
+      "durationMultiplier": 1.75,
+      "costMultiplier": 1.3650000000000002,
+      "cooldownMultiplier": 1,
+      "supportShieldFraction": 0
+    },
+    "mapId": "grove_intro",
+    "map": {
+      "id": "grove_intro",
+      "name": "阿卡迪亞聖林・教學星圖",
+      "themeId": 3,
+      "themeName": "阿卡迪亞聖林",
+      "emoji": "🌲",
+      "kind": "tutorial",
+      "minLevel": 10,
+      "prerequisites": [
+        "pillar_intro"
+      ],
+      "available": true,
+      "enemyName": "潘神幼獸",
+      "eliteName": "狂暴潘神衛士",
+      "roomCount": 5,
+      "packRooms": 4,
+      "travelSeconds": 6,
+      "entrySeconds": 12,
+      "enemy": {
+        "count": 3,
+        "hp": 200,
+        "atk": 20,
+        "def": 9,
+        "attackInterval": 4
+      },
+      "elite": {
+        "count": 1,
+        "hp": 1100,
+        "atk": 40,
+        "def": 11,
+        "attackInterval": 5
+      },
+      "rewards": {
+        "roomGold": 28,
+        "roomExp": 60,
+        "completionGold": 60,
+        "completionExp": 120,
+        "material": "atlas_venom"
+      },
+      "hints": [
+        "較長戰鬥讓毒、流血與召喚逐步發力。",
+        "護盾與補給能提升完整派遣的存活率。"
+      ]
+    },
+    "mapCount": 3,
+    "mapIndex": 1,
+    "roomIndex": 1,
+    "transitionSeconds": 0,
+    "enemies": [
+      {
+        "id": "1:1:0",
+        "name": "潘神幼獸",
+        "rank": "normal",
+        "maxHp": 199,
+        "hp": 199,
+        "atk": 20,
+        "def": 9,
+        "attackInterval": 4,
+        "nextAttackAt": 93,
+        "chilledUntil": 0,
+        "dots": []
+      },
+      {
+        "id": "1:1:1",
+        "name": "潘神幼獸",
+        "rank": "normal",
+        "maxHp": 204,
+        "hp": 204,
+        "atk": 20,
+        "def": 9,
+        "attackInterval": 4,
+        "nextAttackAt": 93.25,
+        "chilledUntil": 0,
+        "dots": []
+      },
+      {
+        "id": "1:1:2",
+        "name": "潘神幼獸",
+        "rank": "normal",
+        "maxHp": 191,
+        "hp": 191,
+        "atk": 20,
+        "def": 9,
+        "attackInterval": 4,
+        "nextAttackAt": 93.5,
+        "chilledUntil": 0,
+        "dots": []
+      }
+    ],
+    "hero": {
+      "hp": 1168,
+      "mp": 180,
+      "shield": 0,
+      "nextActionAt": 89.001,
+      "nextSkillAt": 81.001,
+      "combo": 0,
+      "pets": [],
+      "traps": []
+    },
+    "supplies": {
+      "hp": 20,
+      "mp": 20,
+      "hpInitial": 20,
+      "mpInitial": 20,
+      "hpUsed": 0,
+      "mpUsed": 0,
+      "hpRestore": 50,
+      "mpRestore": 40,
+      "lastHpAt": -1,
+      "lastMpAt": -1
+    },
+    "rewardSequence": 7,
+    "totals": {
+      "gold": 399,
+      "exp": 840,
+      "materials": {
+        "atlas_shard": 10,
+        "atlas_venom": 1
+      }
+    },
+    "metrics": {
+      "combatSeconds": 35,
+      "packCombatSeconds": 24,
+      "eliteCombatSeconds": 11,
+      "bossCombatSeconds": 0,
+      "travelSeconds": 54,
+      "damage": 4118,
+      "dotDamage": 2252,
+      "petDamage": 0,
+      "counterDamage": 0,
+      "damageTaken": 32,
+      "shieldAbsorbed": 0,
+      "blockedDamage": 0,
+      "blocks": 0,
+      "casts": 8,
+      "basicAttacks": 8,
+      "manaSpent": 48,
+      "manaDenied": 0,
+      "kills": 16,
+      "roomsCleared": 6,
+      "mapsCompleted": 1,
+      "hpRestored": 0,
+      "mpRestored": 0,
+      "executeHits": 0,
+      "comboBursts": 0,
+      "trapsTriggered": 0
+    },
+    "events": [
+      {
+        "at": 12,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 0,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 15,
+        "type": "enemy_defeated",
+        "enemyId": "0:0:0",
+        "source": "basic"
+      },
+      {
+        "at": 16,
+        "type": "enemy_defeated",
+        "enemyId": "0:0:1",
+        "source": "dot"
+      },
+      {
+        "at": 17,
+        "type": "enemy_defeated",
+        "enemyId": "0:0:2",
+        "source": "dot"
+      },
+      {
+        "at": 23,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 1,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 26,
+        "type": "enemy_defeated",
+        "enemyId": "0:1:0",
+        "source": "basic"
+      },
+      {
+        "at": 27,
+        "type": "enemy_defeated",
+        "enemyId": "0:1:1",
+        "source": "dot"
+      },
+      {
+        "at": 28,
+        "type": "enemy_defeated",
+        "enemyId": "0:1:2",
+        "source": "dot"
+      },
+      {
+        "at": 34,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 2,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 37,
+        "type": "enemy_defeated",
+        "enemyId": "0:2:0",
+        "source": "basic"
+      },
+      {
+        "at": 38,
+        "type": "enemy_defeated",
+        "enemyId": "0:2:1",
+        "source": "dot"
+      },
+      {
+        "at": 38,
+        "type": "enemy_defeated",
+        "enemyId": "0:2:2",
+        "source": "dot"
+      },
+      {
+        "at": 44,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 3,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 47,
+        "type": "enemy_defeated",
+        "enemyId": "0:3:0",
+        "source": "basic"
+      },
+      {
+        "at": 48,
+        "type": "enemy_defeated",
+        "enemyId": "0:3:1",
+        "source": "dot"
+      },
+      {
+        "at": 49,
+        "type": "enemy_defeated",
+        "enemyId": "0:3:2",
+        "source": "dot"
+      },
+      {
+        "at": 55,
+        "type": "room_entered",
+        "mapIndex": 0,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 66,
+        "type": "enemy_defeated",
+        "enemyId": "0:4:0",
+        "source": "basic"
+      },
+      {
+        "at": 66,
+        "type": "map_completed",
+        "mapIndex": 0
+      },
+      {
+        "at": 78,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 0,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 81,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:0",
+        "source": "basic"
+      },
+      {
+        "at": 82,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:1",
+        "source": "dot"
+      },
+      {
+        "at": 83,
+        "type": "enemy_defeated",
+        "enemyId": "1:0:2",
+        "source": "dot"
+      },
+      {
+        "at": 89,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 1,
+        "rank": "normal",
+        "enemies": 3
+      }
+    ]
+  },
+  "alreadyEarned": [
+    {
+      "id": "legacy-v1-golden-run:reward:1",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 1,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 17,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:2",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 2,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 28,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:3",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 3,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 38,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:4",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 4,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 49,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:5",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 5,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 66,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:6",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 6,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 66,
+      "gold": 105,
+      "exp": 210,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_venom": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:7",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 7,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 83,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    }
+  ],
+  "expectedFinal": {
+    "ruleset_version": "atlas-v1",
+    "runId": "legacy-v1-golden-run",
+    "realmId": "permanent",
+    "seed": "golden-v1-resume",
+    "encounterRng": 2162416766,
+    "combatRng": 968893448,
+    "lootRng": 295113646,
+    "startedAt": 1800000000,
+    "processedAt": 1800000200,
+    "durationSeconds": 3600,
+    "elapsedSeconds": 200,
+    "status": "completed",
+    "stopReason": "queue_completed",
+    "endedAt": 1800000200,
+    "snapshot": {
+      "characterId": "synthetic-thief",
+      "baseClass": "thief",
+      "level": 30,
+      "atk": 240,
+      "def": 75,
+      "maxHp": 1200,
+      "maxMp": 180,
+      "taken": 1,
+      "attackSpeedMultiplier": 1,
+      "hitAttackMultiplier": 1,
+      "pct": {
+        "critPct": 0,
+        "dotPct": 0,
+        "summonPct": 0,
+        "shieldPct": 0,
+        "mpEfficiencyPct": 0,
+        "mpCostPct": 0,
+        "skillHastePct": 0,
+        "lifestealPct": 0,
+        "healPerCastPct": 0
+      },
+      "hp": 1200,
+      "mp": 180,
+      "mpRegenPerSecond": 1.08
+    },
+    "balanceProfile": {
+      "id": "v1-golden-profile",
+      "status": "prototype",
+      "enemyHpMultiplier": 1,
+      "enemyDamageMultiplier": 1,
+      "enemyDefenseMultiplier": 1,
+      "rewardMultiplier": 1.75,
+      "travelMultiplier": 1
+    },
+    "buildId": "thief_poison",
+    "supports": [
+      "lasting",
+      "wide"
+    ],
+    "automation": "balanced",
+    "skill": {
+      "id": "thief_poison",
+      "baseClass": "thief",
+      "name": "層毒蔓延",
+      "mainSkill": "淬毒刃",
+      "description": "堆疊毒素，擊殺後部分毒素蔓延；長血條目標較有利。",
+      "strengths": [
+        "持續傷害",
+        "單體"
+      ],
+      "weaknesses": [
+        "暖機",
+        "承傷"
+      ],
+      "tags": [
+        "dot"
+      ],
+      "mechanic": "poison",
+      "coefficient": 0.6,
+      "targets": 3,
+      "cost": 6,
+      "cooldown": 3,
+      "dotCoefficient": 0.24,
+      "dotDuration": 8,
+      "maxStacks": 5,
+      "recommendedSupports": [
+        "lasting",
+        "wide"
+      ],
+      "recommendedAutomation": "balanced",
+      "damageMultiplier": 0.6232,
+      "durationMultiplier": 1.75,
+      "costMultiplier": 1.3650000000000002,
+      "cooldownMultiplier": 1,
+      "supportShieldFraction": 0
+    },
+    "mapId": "grove_intro",
+    "map": {
+      "id": "grove_intro",
+      "name": "阿卡迪亞聖林・教學星圖",
+      "themeId": 3,
+      "themeName": "阿卡迪亞聖林",
+      "emoji": "🌲",
+      "kind": "tutorial",
+      "minLevel": 10,
+      "prerequisites": [
+        "pillar_intro"
+      ],
+      "available": true,
+      "enemyName": "潘神幼獸",
+      "eliteName": "狂暴潘神衛士",
+      "roomCount": 5,
+      "packRooms": 4,
+      "travelSeconds": 6,
+      "entrySeconds": 12,
+      "enemy": {
+        "count": 3,
+        "hp": 200,
+        "atk": 20,
+        "def": 9,
+        "attackInterval": 4
+      },
+      "elite": {
+        "count": 1,
+        "hp": 1100,
+        "atk": 40,
+        "def": 11,
+        "attackInterval": 5
+      },
+      "rewards": {
+        "roomGold": 28,
+        "roomExp": 60,
+        "completionGold": 60,
+        "completionExp": 120,
+        "material": "atlas_venom"
+      },
+      "hints": [
+        "較長戰鬥讓毒、流血與召喚逐步發力。",
+        "護盾與補給能提升完整派遣的存活率。"
+      ]
+    },
+    "mapCount": 3,
+    "mapIndex": 2,
+    "roomIndex": 5,
+    "transitionSeconds": 0,
+    "enemies": [
+      {
+        "id": "2:4:0",
+        "name": "狂暴潘神衛士",
+        "rank": "elite",
+        "maxHp": 1100,
+        "hp": 0,
+        "atk": 40,
+        "def": 11,
+        "attackInterval": 5,
+        "nextAttackAt": 204,
+        "chilledUntil": 0,
+        "dots": [
+          {
+            "source": "poison",
+            "remaining": 4,
+            "damage": 36,
+            "appliedAt": 190
+          },
+          {
+            "source": "poison",
+            "remaining": 8,
+            "damage": 36,
+            "appliedAt": 194
+          },
+          {
+            "source": "poison",
+            "remaining": 12,
+            "damage": 36,
+            "appliedAt": 198
+          }
+        ]
+      }
+    ],
+    "hero": {
+      "hp": 1104,
+      "mp": 172.8,
+      "shield": 0,
+      "nextActionAt": 201.001,
+      "nextSkillAt": 200.001,
+      "combo": 0,
+      "pets": [],
+      "traps": []
+    },
+    "supplies": {
+      "hp": 20,
+      "mp": 20,
+      "hpInitial": 20,
+      "mpInitial": 20,
+      "hpUsed": 0,
+      "mpUsed": 0,
+      "hpRestore": 50,
+      "mpRestore": 40,
+      "lastHpAt": -1,
+      "lastMpAt": -1
+    },
+    "rewardSequence": 18,
+    "totals": {
+      "gold": 1050,
+      "exp": 2205,
+      "materials": {
+        "atlas_shard": 27,
+        "atlas_venom": 3
+      }
+    },
+    "metrics": {
+      "combatSeconds": 92,
+      "packCombatSeconds": 59,
+      "eliteCombatSeconds": 33,
+      "bossCombatSeconds": 0,
+      "travelSeconds": 108,
+      "damage": 10553,
+      "dotDamage": 5881,
+      "petDamage": 0,
+      "counterDamage": 0,
+      "damageTaken": 96,
+      "shieldAbsorbed": 0,
+      "blockedDamage": 0,
+      "blocks": 0,
+      "casts": 21,
+      "basicAttacks": 21,
+      "manaSpent": 126,
+      "manaDenied": 0,
+      "kills": 39,
+      "roomsCleared": 15,
+      "mapsCompleted": 3,
+      "hpRestored": 0,
+      "mpRestored": 0,
+      "executeHits": 0,
+      "comboBursts": 0,
+      "trapsTriggered": 0
+    },
+    "events": [
+      {
+        "at": 116,
+        "type": "enemy_defeated",
+        "enemyId": "1:3:2",
+        "source": "dot"
+      },
+      {
+        "at": 122,
+        "type": "room_entered",
+        "mapIndex": 1,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 133,
+        "type": "enemy_defeated",
+        "enemyId": "1:4:0",
+        "source": "basic"
+      },
+      {
+        "at": 133,
+        "type": "map_completed",
+        "mapIndex": 1
+      },
+      {
+        "at": 145,
+        "type": "room_entered",
+        "mapIndex": 2,
+        "roomIndex": 0,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 148,
+        "type": "enemy_defeated",
+        "enemyId": "2:0:0",
+        "source": "basic"
+      },
+      {
+        "at": 149,
+        "type": "enemy_defeated",
+        "enemyId": "2:0:1",
+        "source": "dot"
+      },
+      {
+        "at": 150,
+        "type": "enemy_defeated",
+        "enemyId": "2:0:2",
+        "source": "dot"
+      },
+      {
+        "at": 156,
+        "type": "room_entered",
+        "mapIndex": 2,
+        "roomIndex": 1,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 159,
+        "type": "enemy_defeated",
+        "enemyId": "2:1:0",
+        "source": "basic"
+      },
+      {
+        "at": 160,
+        "type": "enemy_defeated",
+        "enemyId": "2:1:1",
+        "source": "dot"
+      },
+      {
+        "at": 161,
+        "type": "enemy_defeated",
+        "enemyId": "2:1:2",
+        "source": "dot"
+      },
+      {
+        "at": 167,
+        "type": "room_entered",
+        "mapIndex": 2,
+        "roomIndex": 2,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 170,
+        "type": "enemy_defeated",
+        "enemyId": "2:2:0",
+        "source": "basic"
+      },
+      {
+        "at": 172,
+        "type": "enemy_defeated",
+        "enemyId": "2:2:1",
+        "source": "dot"
+      },
+      {
+        "at": 172,
+        "type": "enemy_defeated",
+        "enemyId": "2:2:2",
+        "source": "dot"
+      },
+      {
+        "at": 178,
+        "type": "room_entered",
+        "mapIndex": 2,
+        "roomIndex": 3,
+        "rank": "normal",
+        "enemies": 3
+      },
+      {
+        "at": 181,
+        "type": "enemy_defeated",
+        "enemyId": "2:3:0",
+        "source": "basic"
+      },
+      {
+        "at": 182,
+        "type": "enemy_defeated",
+        "enemyId": "2:3:1",
+        "source": "dot"
+      },
+      {
+        "at": 183,
+        "type": "enemy_defeated",
+        "enemyId": "2:3:2",
+        "source": "dot"
+      },
+      {
+        "at": 189,
+        "type": "room_entered",
+        "mapIndex": 2,
+        "roomIndex": 4,
+        "rank": "elite",
+        "enemies": 1
+      },
+      {
+        "at": 200,
+        "type": "enemy_defeated",
+        "enemyId": "2:4:0",
+        "source": "basic"
+      },
+      {
+        "at": 200,
+        "type": "map_completed",
+        "mapIndex": 2
+      },
+      {
+        "at": 200,
+        "type": "completed",
+        "reason": "queue_completed"
+      }
+    ]
+  },
+  "expectedRewards": [
+    {
+      "id": "legacy-v1-golden-run:reward:1",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 1,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 17,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:2",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 2,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 28,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:3",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 3,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 38,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:4",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 4,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 49,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:5",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 5,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 66,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:6",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 6,
+      "mapId": "grove_intro",
+      "mapIndex": 0,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 66,
+      "gold": 105,
+      "exp": 210,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_venom": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:7",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 7,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 83,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:8",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 8,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 94,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:9",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 9,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 105,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:10",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 10,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 116,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:11",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 11,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 133,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:12",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 12,
+      "mapId": "grove_intro",
+      "mapIndex": 1,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 133,
+      "gold": 105,
+      "exp": 210,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_venom": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:13",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 13,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 0,
+      "kind": "room",
+      "elapsedSeconds": 150,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:14",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 14,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 1,
+      "kind": "room",
+      "elapsedSeconds": 161,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:15",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 15,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 2,
+      "kind": "room",
+      "elapsedSeconds": 172,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 1
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:16",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 16,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 3,
+      "kind": "room",
+      "elapsedSeconds": 183,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:17",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 17,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 4,
+      "kind": "room",
+      "elapsedSeconds": 200,
+      "gold": 49,
+      "exp": 105,
+      "materials": {
+        "atlas_shard": 2
+      }
+    },
+    {
+      "id": "legacy-v1-golden-run:reward:18",
+      "runId": "legacy-v1-golden-run",
+      "realmId": "permanent",
+      "sequence": 18,
+      "mapId": "grove_intro",
+      "mapIndex": 2,
+      "roomIndex": 5,
+      "kind": "completion",
+      "elapsedSeconds": 200,
+      "gold": 105,
+      "exp": 210,
+      "materials": {
+        "atlas_shard": 2,
+        "atlas_venom": 1
+      }
+    }
+  ]
+}

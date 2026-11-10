@@ -1,0 +1,1099 @@
+{
+  "schemaVersion": 1,
+  "purpose": "16 planned awakening visual previews; separate from 196 implemented skill identities",
+  "sourceIdPolicy": "Every awakening preview has sourceId null and a preview:awakening: prefix. No live event, damage, MP, cooldown or progression ID is created.",
+  "counts": {
+    "liveSkillsUnmodified": 196,
+    "plannedAwakeningConcepts": 16,
+    "previewProfiles": 16,
+    "classes": 4,
+    "modes": 4,
+    "stagesPerProfile": 4,
+    "runtimeTextures": 6
+  },
+  "scope": {
+    "previewOnly": true,
+    "implemented": false,
+    "liveCatalogRegistration": false,
+    "backendChanged": false,
+    "productionDeployment": false,
+    "presentationDurationIsNotCooldown": true
+  },
+  "coverage": {
+    "profileCoverage": "16 / 16 exact planned names and original concepts",
+    "declaredCompositionKeys": 16,
+    "uniqueKeysAloneAreNotVisualEvidence": true,
+    "nodeTestStatus": "Not executed by this builder; use the separate test command and its recorded output.",
+    "browserEvidence": {
+      "status": "not-attached",
+      "automatedBrowserPassClaimed": false,
+      "reason": "Profile coverage and distinct composition declarations are not a browser or visual pass."
+    },
+    "independentVisualReview": "Not claimed by this deterministic audit builder."
+  },
+  "proposalSource": {
+    "path": "../../progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+    "exists": true,
+    "bytes": 14475,
+    "sha256": "e19434eece2ba5c9ce33daa9258dae0481cf698d875b281c7f668d0398715906"
+  },
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "exists": true,
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "exists": true,
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "exists": true,
+      "bytes": 6790,
+      "sha256": "bb44e3fd062f92790f1c85a4dacd7d3fc355e51c299013194cbbeef820d6d389"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "exists": true,
+      "bytes": 16709,
+      "sha256": "3cd8a19a1f19cd477ec0efc25a27ee4c082ae2068d34013917d6ea9cff256a52"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "exists": true,
+      "bytes": 5998,
+      "sha256": "932e56e1bdcc2c14103816ebf41e768f3261071b369e44f98ab60e3866df72df"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "exists": true,
+      "bytes": 14565,
+      "sha256": "6c4839099c2b34e4880e9dc8af7cf5ce405cf3cf6ab4c22a53b5fa7606c0bf5b"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "exists": true,
+      "bytes": 10640,
+      "sha256": "44b62b5ce387f531fd772dda8093d58c13e955d787f45af690318130760a7320"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "exists": true,
+      "bytes": 2689,
+      "sha256": "ff27210380b22d91fdd281e3eb78c711bc77e8a818be625fcec374f6c6e10bb4"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "exists": true,
+      "bytes": 5744,
+      "sha256": "740ed7faec57b1d5b24cfdd4e7ad029127e68e4d6fce87ed719581a6bf573494"
+    },
+    {
+      "path": "worker/tools/build-awakening-vfx-audit.mjs",
+      "exists": true,
+      "bytes": 6767,
+      "sha256": "6a89d03534a795902531e9e25d83b42c00b0364bf2d1a0f1bb798304393e7e7a"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "exists": true,
+      "bytes": 13715,
+      "sha256": "28fa107c5ba903f48b05a4ef2f3283a2a1cd14eb6015290508514c2f63435f0b"
+    }
+  ],
+  "assets": [
+    {
+      "key": "sword",
+      "url": "/art/skill-vfx-20261104/sword-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "exists": true,
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "archer",
+      "url": "/art/skill-vfx-20261104/archer-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "exists": true,
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "mage",
+      "url": "/art/skill-vfx-20261104/mage-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "exists": true,
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "thief",
+      "url": "/art/skill-vfx-20261104/thief-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "exists": true,
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "semantic",
+      "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "exists": true,
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee",
+      "grid": [
+        3,
+        3
+      ]
+    },
+    {
+      "key": "hawk",
+      "url": "/art/skill-vfx-20261104/hawk.webp",
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "exists": true,
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825",
+      "grid": [
+        1,
+        1
+      ]
+    }
+  ],
+  "profiles": [
+    {
+      "id": "preview:awakening:sword:elite",
+      "sourceCatalogId": "planned:sword:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "戰神破勢",
+      "composition": "armor-break",
+      "durationMs": 3200,
+      "colors": [
+        "#f3c76c",
+        "#fff3c8"
+      ],
+      "modeAccent": "#e9d3a1",
+      "concept": "破甲接連擊。",
+      "description": "金色裂甲紋先張開，三道交錯巨刃逐拍落下，最後以破碎甲片與戰神冠環收束。",
+      "phases": [
+        {
+          "label": "破勢蓄光",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "裂甲開路",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "三刃連斬",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "餘鋒散落",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "combo",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:sword:expert",
+      "sourceCatalogId": "planned:sword:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "壁壘回響",
+      "composition": "bulwark-echo",
+      "durationMs": 3600,
+      "colors": [
+        "#a1dbe9",
+        "#f0fcff"
+      ],
+      "modeAccent": "#a8deef",
+      "concept": "防護接反擊。",
+      "description": "層疊六角壁壘迎接入射光，護壁漣漪轉成朝目標推進的反向波環。",
+      "phases": [
+        {
+          "label": "築起壁壘",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "迎光格擋",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "回響反推",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "護紋消退",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "counter",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:sword:nightmare",
+      "sourceCatalogId": "planned:sword:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "血誓狂潮",
+      "composition": "blood-tide",
+      "durationMs": 3700,
+      "colors": [
+        "#ed657b",
+        "#ffd0c8"
+      ],
+      "modeAccent": "#c0a2ef",
+      "concept": "以資源代價換取持續壓力；提案尚未定數值。",
+      "description": "血誓菱印與暗紅環帶凝成契約，連續三層赤色弦月向前湧動，留下血色潮痕。",
+      "phases": [
+        {
+          "label": "血誓凝印",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "赤潮初湧",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連環狂潮",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "誓紋餘燼",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "bleed",
+      "originalProposedVisualElement": "blood",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:sword:hell",
+      "sourceCatalogId": "planned:sword:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "sword",
+      "classLabel": "劍士",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "諸神斷罪",
+      "composition": "divine-verdict",
+      "durationMs": 4300,
+      "colors": [
+        "#f4d682",
+        "#fffdf0"
+      ],
+      "modeAccent": "#f7a978",
+      "concept": "蓄勢換取首領輸出。",
+      "description": "多層聖環長時間向劍脊匯聚，巨大聖劍垂直貫落，審判光冠沿落點向外展開。",
+      "phases": [
+        {
+          "label": "聖環蓄勢",
+          "start": 0,
+          "end": 0.38
+        },
+        {
+          "label": "神劍成形",
+          "start": 0.38,
+          "end": 0.58
+        },
+        {
+          "label": "斷罪落刃",
+          "start": 0.58,
+          "end": 0.82
+        },
+        {
+          "label": "金輝退散",
+          "start": 0.82,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "execute",
+      "originalProposedVisualElement": "steel",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:archer:elite",
+      "sourceCatalogId": "planned:archer:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "逐星連矢",
+      "composition": "star-pursuit",
+      "durationMs": 3300,
+      "colors": [
+        "#92d9ee",
+        "#f0fbff"
+      ],
+      "modeAccent": "#e9d3a1",
+      "concept": "穿透清群。",
+      "description": "星座節點沿射線逐一點亮，多束細長星矢追過節點並穿過預覽目標。",
+      "phases": [
+        {
+          "label": "星座定位",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "逐星起弦",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連矢穿行",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "星塵散去",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "volley",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:archer:expert",
+      "sourceCatalogId": "planned:archer:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "群靈共獵",
+      "composition": "spirit-hunt",
+      "durationMs": 3700,
+      "colors": [
+        "#a7dfa4",
+        "#efffd3"
+      ],
+      "modeAccent": "#a8deef",
+      "concept": "強化召喚協擊。",
+      "description": "狼靈、祖靈鹿與獵鷹以不同弧線包抄，同時匯向同一狩獵印；保留三種生物的外形。",
+      "phases": [
+        {
+          "label": "林靈甦醒",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "三靈出獵",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "協獵合擊",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "靈光歸林",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [
+        "semantic:0",
+        "semantic:5",
+        "hawk"
+      ],
+      "originalPlannedFamily": "beast",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "semantic",
+          "cell": 0,
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+          "meaning": "狼靈"
+        },
+        {
+          "asset": "semantic",
+          "cell": 5,
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+          "meaning": "祖靈鹿"
+        },
+        {
+          "asset": "hawk",
+          "cell": 0,
+          "url": "/art/skill-vfx-20261104/hawk.webp",
+          "meaning": "獵鷹"
+        }
+      ]
+    },
+    {
+      "id": "preview:awakening:archer:nightmare",
+      "sourceCatalogId": "planned:archer:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "月蝕獵印",
+      "composition": "eclipse-mark",
+      "durationMs": 3700,
+      "colors": [
+        "#bfa3ee",
+        "#f4eaff"
+      ],
+      "modeAccent": "#c0a2ef",
+      "concept": "寵物、陷阱與本體共用目標。",
+      "description": "偏心月蝕環鎖住目標，獸靈綠線、陷阱地紋與紫色主矢三種軌跡共赴同一獵印。",
+      "phases": [
+        {
+          "label": "月蝕標記",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "獵線連結",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "三路共狩",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "暗月殘印",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [
+        "semantic:0"
+      ],
+      "originalPlannedFamily": "curse",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "semantic",
+          "cell": 0,
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+          "meaning": "狼靈"
+        }
+      ]
+    },
+    {
+      "id": "preview:awakening:archer:hell",
+      "sourceCatalogId": "planned:archer:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "archer",
+      "classLabel": "妖精",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "蒼穹裁決",
+      "composition": "sky-judgment",
+      "durationMs": 4000,
+      "colors": [
+        "#9dddf2",
+        "#fff4c6"
+      ],
+      "modeAccent": "#f7a978",
+      "concept": "在範圍與單體之間選擇。",
+      "description": "蒼穹弓門在高處展翼；單靶呈現集中光矢，三靶呈現分區箭雨，均由天弧引導落點。",
+      "phases": [
+        {
+          "label": "天弓開門",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "裁決聚矢",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "天穹落箭",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "長空餘光",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "rain",
+      "originalProposedVisualElement": "nature",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:mage:elite",
+      "sourceCatalogId": "planned:mage:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "星雷共鳴",
+      "composition": "stellar-resonance",
+      "durationMs": 3400,
+      "colors": [
+        "#a8beff",
+        "#eef6ff"
+      ],
+      "modeAccent": "#e9d3a1",
+      "concept": "連鎖與耗魔取捨。",
+      "description": "五芒星節點逐段串接成折線電弧，每次抵達節點都展開同心共鳴環。",
+      "phases": [
+        {
+          "label": "星核點亮",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "雷鏈接通",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "節點共鳴",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "電光退散",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "lightning",
+      "originalProposedVisualElement": "lightning",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:mage:expert",
+      "sourceCatalogId": "planned:mage:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "霜鏡回流",
+      "composition": "frost-return",
+      "durationMs": 3800,
+      "colors": [
+        "#94e3ec",
+        "#efffff"
+      ],
+      "modeAccent": "#a8deef",
+      "concept": "以實際吸收傷害換取有限回魔。",
+      "description": "立體冰鏡接住外來光束，冰晶邊緣亮起後，三股柔和青藍流線回到施術端；僅展示吸收回流意象。",
+      "phases": [
+        {
+          "label": "霜鏡立起",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "入光吸收",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "晶流回返",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "冰華消融",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "frost",
+      "originalProposedVisualElement": "ice",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:mage:nightmare",
+      "sourceCatalogId": "planned:mage:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "元素裂解",
+      "composition": "element-fracture",
+      "durationMs": 3900,
+      "colors": [
+        "#c8a3f2",
+        "#f6e7ff"
+      ],
+      "modeAccent": "#c0a2ef",
+      "concept": "對元素抗性施壓。",
+      "description": "火、冰、雷、自然四束不同顏色與折線形狀的能量交叉入核，中央稜晶沿四向解離。",
+      "phases": [
+        {
+          "label": "四元聚合",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "元素交織",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "稜核裂解",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "碎光游離",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "arcane",
+      "originalProposedVisualElement": "arcane",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:mage:hell",
+      "sourceCatalogId": "planned:mage:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "mage",
+      "classLabel": "法師",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "太初星爆",
+      "composition": "primordial-burst",
+      "durationMs": 4500,
+      "colors": [
+        "#a8bcff",
+        "#fff1cc"
+      ],
+      "modeAccent": "#f7a978",
+      "concept": "消耗法力或蓄能換取爆發。",
+      "description": "螺旋星塵向極小星核收縮，核心短暫靜止後展開多層星芒與寬廣同心衝環。",
+      "phases": [
+        {
+          "label": "太初聚星",
+          "start": 0,
+          "end": 0.3
+        },
+        {
+          "label": "星核壓縮",
+          "start": 0.3,
+          "end": 0.56
+        },
+        {
+          "label": "原初星爆",
+          "start": 0.56,
+          "end": 0.82
+        },
+        {
+          "label": "宇塵飄散",
+          "start": 0.82,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "meteor",
+      "originalProposedVisualElement": "fire",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:thief:elite",
+      "sourceCatalogId": "planned:thief:elite",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "elite",
+      "modeLabel": "菁英",
+      "name": "影襲連鎖",
+      "composition": "shadow-chain",
+      "durationMs": 3300,
+      "colors": [
+        "#ae9cdc",
+        "#f0e5ff"
+      ],
+      "modeAccent": "#e9d3a1",
+      "concept": "形成多段節奏。",
+      "description": "三道煙霧影身依序切入不同側角，逐拍留下短刃線與節點，最後由一記交叉斬銜接。",
+      "phases": [
+        {
+          "label": "暗影分步",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "第一影襲",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "連鎖追斬",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "影痕消失",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [
+        "semantic:8"
+      ],
+      "originalPlannedFamily": "combo",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "semantic",
+          "cell": 8,
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+          "meaning": "煙霧影身"
+        }
+      ]
+    },
+    {
+      "id": "preview:awakening:thief:expert",
+      "sourceCatalogId": "planned:thief:expert",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "expert",
+      "modeLabel": "專家",
+      "name": "淬毒散華",
+      "composition": "venom-bloom",
+      "durationMs": 3500,
+      "colors": [
+        "#9fe78e",
+        "#edffbd"
+      ],
+      "modeAccent": "#a8deef",
+      "concept": "擴散毒素。",
+      "description": "淬毒刃尖先凝成五瓣毒花，再向外散開帶有綠色液滴的刀瓣與毒霧細環。",
+      "phases": [
+        {
+          "label": "淬毒凝露",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "刃花初綻",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "毒華擴散",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "青霧退散",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "poison",
+      "originalProposedVisualElement": "poison",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:thief:nightmare",
+      "sourceCatalogId": "planned:thief:nightmare",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "nightmare",
+      "modeLabel": "惡夢",
+      "name": "暗月處決",
+      "composition": "dark-moon",
+      "durationMs": 3900,
+      "colors": [
+        "#b49ce6",
+        "#f6eaff"
+      ],
+      "modeAccent": "#c0a2ef",
+      "concept": "利用低血量窗口。",
+      "description": "巨大偏心暗月逐漸合攏於預覽目標，兩把冷紫斷刃交錯穿過月心，再以細月弧留白收束。",
+      "phases": [
+        {
+          "label": "暗月鎖定",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "月弧合攏",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "交刃處決",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "月痕消退",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [],
+      "originalPlannedFamily": "execute",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": []
+    },
+    {
+      "id": "preview:awakening:thief:hell",
+      "sourceCatalogId": "planned:thief:hell",
+      "sourceId": null,
+      "implemented": false,
+      "previewOnly": true,
+      "status": "planned-visual-preview",
+      "baseClass": "thief",
+      "classLabel": "盜賊",
+      "mode": "hell",
+      "modeLabel": "地獄",
+      "name": "永夜分身",
+      "composition": "endless-night",
+      "durationMs": 4200,
+      "colors": [
+        "#a49ad2",
+        "#e6dcff"
+      ],
+      "modeAccent": "#f7a978",
+      "concept": "有限追擊並有續航代價。",
+      "description": "三具獨立煙影分身先錯位成陣，再依次追擊；每具影身都化為煙絲退場，沒有無限循環的分身。",
+      "phases": [
+        {
+          "label": "夜幕展影",
+          "start": 0,
+          "end": 0.24
+        },
+        {
+          "label": "三影成陣",
+          "start": 0.24,
+          "end": 0.48
+        },
+        {
+          "label": "有限追擊",
+          "start": 0.48,
+          "end": 0.78
+        },
+        {
+          "label": "歸於夜霧",
+          "start": 0.78,
+          "end": 1
+        }
+      ],
+      "assetSubjects": [
+        "semantic:8"
+      ],
+      "originalPlannedFamily": "shadow",
+      "originalProposedVisualElement": "shadow",
+      "originalConceptSource": {
+        "path": "progression-design-20261102/星穹旅誌 五輪模式與覺醒技能規劃 20261102.txt",
+        "section": "六 第二輪起的技能路線提案"
+      },
+      "artClassification": "presentation-only; neither mode aura nor visual color assigns a combat element",
+      "subjects": [
+        {
+          "asset": "semantic",
+          "cell": 8,
+          "url": "/art/skill-vfx-20261104/semantic-atlas.webp",
+          "meaning": "煙霧影身"
+        }
+      ]
+    }
+  ],
+  "exclusions": {
+    "liveSkillCatalog": "The existing 196 skills continue through their existing event/renderer path.",
+    "modifiers": "Existing support, talent, origin and equipment modifiers are not awakening skill identities.",
+    "mechanics": "Awakening unlocks, resource costs, damage coefficients, cooldowns, absorption/refund triggers, low-HP thresholds, companion hit caps and higher-level progression remain pending implementation."
+  },
+  "reproduce": {
+    "build": "node worker/tools/build-awakening-vfx-audit.mjs",
+    "check": "node worker/tools/build-awakening-vfx-audit.mjs --check",
+    "nodeTest": "node --test worker/test/awakening-vfx-engine.test.js",
+    "browser": "node worker/tools/awakening-vfx-browser.mjs --base=http://127.0.0.1:9894 --playwright-root=<existing node_modules>"
+  }
+}

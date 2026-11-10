@@ -12,6 +12,16 @@ test('role switching prevents both stale writes and accepting an in-flight old-r
 test('a partial result retains retry receipt while a definite rejected request does not',async()=>{const h=harness(async()=>({ok:true}));await assert.rejects(h.controller.run('open'),/完整結果/);assert.equal(h.controller.pending('open'),true);const rejected=harness(async()=>{throw Object.assign(Error('沒有可開啟的匣'),{status:409,code:'fate_no_gift'});});await assert.rejects(rejected.controller.run('open'));assert.equal(rejected.controller.pending('open'),false);});
 test('UI never sends a count, prize, probability or forged identity and cannot mutate by calling an unknown method',async()=>{const h=harness(async()=>({ok:true,result:{claimed:1}}));await h.controller.run('claim');assert.equal(h.calls[0].action,'fate/gifts/claim');assert.deepEqual(Object.keys(h.calls[0].body),['requestId']);await assert.rejects(h.controller.run('grant-all'));assert.equal(h.calls.length,1);});
 test('blocked local storage still preserves UUID in memory for uncertain response retries',async()=>{let n=0;const h=harness(async()=>{if(!n++)throw Error('offline');return {ok:true,result:{claimed:1}};}),blocked={getItem(){throw Error('blocked')},setItem(){throw Error('blocked')},removeItem(){throw Error('blocked')}};const c=createFateGiftController(h.host,{storage:blocked,uuid:()=>crypto.randomUUID()});await assert.rejects(c.run('claim'));await c.run('claim');assert.equal(h.calls[0].body.requestId,h.calls[1].body.requestId);});
+test('same-ID realms retain independent pending gifts and an A-B-A context cannot revive an old controller',async()=>{
+ let realm='permanent',epoch=1,offline=true;const h=harness(async()=>{if(offline)throw Object.assign(Error('offline'),{uncertain:true});return {ok:true,result:{claimed:1}};});
+ h.host.realmId=()=>realm;h.host.contextEpoch=()=>epoch;
+ const permanent=createFateGiftController(h.host,{storage:h.saved,uuid:()=> 'permanent-gift'});await assert.rejects(permanent.run('claim'));
+ assert.equal(h.saved.getItem(`star-fate-gift:${h.state.character}:claim`),'permanent-gift');
+ realm='season-a';epoch++;const season=createFateGiftController(h.host,{storage:h.saved,uuid:()=> 'season-gift'});assert.equal(season.pending('claim'),false);await assert.rejects(season.run('claim'));
+ assert.equal(h.saved.m.size,2);assert.notEqual(h.calls[0].body.requestId,h.calls[1].body.requestId);
+ realm='permanent';epoch++;const before=h.calls.length;await assert.rejects(permanent.run('claim'),e=>e.code==='character_changed');await assert.rejects(season.summary(),e=>e.code==='character_changed');assert.equal(h.calls.length,before);
+ offline=false;const restored=createFateGiftController(h.host,{storage:h.saved,uuid:()=> 'should-not-use'});await restored.run('claim');assert.equal(h.calls.at(-1).body.requestId,'permanent-gift');assert.equal(h.saved.m.size,1);
+});
 
 class Node{
  constructor(tag='div'){this.tagName=tag;this.children=[];this.className='';this.attributes={};this.style={};this.parentElement=null;this.isConnected=true;this.disabled=false;this._text='';this.inert=false;this.classList={toggle:(key,on)=>{const names=new Set(this.className.split(' ').filter(Boolean));on?names.add(key):names.delete(key);this.className=[...names].join(' ');}};}

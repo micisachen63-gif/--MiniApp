@@ -1,0 +1,258 @@
+{
+  "schemaVersion": 1,
+  "status": "passed",
+  "startedAt": "2026-11-04T07:39:34.158Z",
+  "completedAt": "2026-11-04T07:39:59.955Z",
+  "exitCode": 0,
+  "tests": [
+    "worker/test/legacy-skill-vfx.test.js",
+    "worker/test/legacy-skill-vfx-service.test.js",
+    "worker/test/class-combat-parity.test.js",
+    "worker/test/idle.test.js",
+    "worker/test/idle-combat-pacing.test.js",
+    "worker/test/idle-auto-rotation.test.js",
+    "worker/test/idle-last-stand-single-use.test.js",
+    "worker/test/thief-combat.test.js",
+    "worker/test/boss.test.js",
+    "worker/test/v05.test.js",
+    "worker/test/party-event-sync.test.js",
+    "worker/test/party-auto-skills.test.js",
+    "worker/test/party-three-skills-offline.test.js",
+    "worker/test/star-ring-skills.test.js",
+    "worker/test/star-ring-skill-persistence.test.js"
+  ],
+  "sourceBefore": [
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-fixture.js",
+      "sha256": "be1569936b1dd3cfc0c84fe13aaf46b13e3f29d99a3253eca37639f123ce4e32"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx.test.js",
+      "sha256": "12c3580efeb228d19878dcee73e2b5a4fc780fe6075504c9ea8800fa04d065ed"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-service.test.js",
+      "sha256": "9f9914708c452d178b25be4100f89f9b7360d062d51bc8c59ab14c4480701b6e"
+    },
+    {
+      "path": "worker/test/class-combat-parity.test.js",
+      "sha256": "610a918f9598e501b9c3e259c527396236788c30c053e2faa6a2f6d79c568072"
+    },
+    {
+      "path": "worker/test/idle.test.js",
+      "sha256": "502f0d016437ec11c63b34f8d410529702b51c615842608f6fd5bd2938eedce8"
+    },
+    {
+      "path": "worker/test/idle-combat-pacing.test.js",
+      "sha256": "e6560ada24570cc705aa28b7859be6cc9791ffb35be38792fc1ade5c2f73981d"
+    },
+    {
+      "path": "worker/test/idle-auto-rotation.test.js",
+      "sha256": "b443ef6adbc642035497ce71ce4735361140f4b3893f5f9d5abd0da30c748c76"
+    },
+    {
+      "path": "worker/test/idle-last-stand-single-use.test.js",
+      "sha256": "10a17752698b54d2924d6322a96c42e4b933734b0f947fff6e0db5296d25b774"
+    },
+    {
+      "path": "worker/test/thief-combat.test.js",
+      "sha256": "57a85d66da66cbfc97063ab3aee241a9bf70e785aba3e3901c7ecf7da9567de1"
+    },
+    {
+      "path": "worker/test/boss.test.js",
+      "sha256": "aafa59f41d43efbd61fef022977078c39de2dea21078769025b62a72474e0a01"
+    },
+    {
+      "path": "worker/test/v05.test.js",
+      "sha256": "e7477029376f763dda3420b66ed4157ea7ff5865b167096d8e5e92a2384c37d4"
+    },
+    {
+      "path": "worker/test/party-event-sync.test.js",
+      "sha256": "04d8e096e9a2af26b2c8bdc3ee1fa22c9f0aee404339f173349520896dad05f7"
+    },
+    {
+      "path": "worker/test/party-auto-skills.test.js",
+      "sha256": "48345da6c03ad2a2942cdd42b083a68c5d51c98d033ef46bef6c8a2f73d86a93"
+    },
+    {
+      "path": "worker/test/party-three-skills-offline.test.js",
+      "sha256": "4bee907b33eb585706d9b35d91496f3b45922d81eb28942c9a3cc5adb8509401"
+    },
+    {
+      "path": "worker/test/star-ring-skills.test.js",
+      "sha256": "6e22b2d96bb79457374922488d15d7efdc1e244edce67391f44972100baea96d"
+    },
+    {
+      "path": "worker/test/star-ring-skill-persistence.test.js",
+      "sha256": "e37bd60eb0e823074fd69636feba980e524edf988f08c414f9faa36a9f8881d7"
+    }
+  ],
+  "sourceAfter": [
+    {
+      "path": "worker/src/game/skill-vfx-events.js",
+      "sha256": "72857a63372e9f7404af25c933b0dea88ebce08012991ac557b443bf9c704eaa"
+    },
+    {
+      "path": "worker/src/game/special.js",
+      "sha256": "4b33749e705153aa61762b51061b963812c6b0e3dfbc83b70decf7c8fd970d36"
+    },
+    {
+      "path": "worker/src/game/special-idle.js",
+      "sha256": "1e0e1cf0b6f30743c5462a26c9466b40906d5323acc66dd79dd7bff7640547b1"
+    },
+    {
+      "path": "worker/src/game/idle.js",
+      "sha256": "19edc420d732674fcd2bd8b2de6b9b804b555ec88d21bb8d30b4865f6c4e1c15"
+    },
+    {
+      "path": "worker/src/game/idle-combat.js",
+      "sha256": "b0f150583dc962b695db9d3463285781eeca0f9f407b56fb80ffeba60d533f20"
+    },
+    {
+      "path": "worker/src/game/boss.js",
+      "sha256": "f110a6181483df1ab37a0c20944731d57d5b27e7d2e339d1cc6b5544fdd7fb0c"
+    },
+    {
+      "path": "worker/src/game/pk.js",
+      "sha256": "eb71c90b41facdf931c504b548e1f7c52021cc4603e3968b182ac45344297621"
+    },
+    {
+      "path": "worker/src/game/star-ring.js",
+      "sha256": "8573e493865dd18e0fb54cef6651c9d54ddec1cd2c2df19f44ab823bb2c90261"
+    },
+    {
+      "path": "worker/src/services/party.js",
+      "sha256": "873e1adf969065c9a67639b6fa1f381eaf0950d7e45321ec964b9ca619d6582d"
+    },
+    {
+      "path": "worker/src/services/pk.js",
+      "sha256": "9902df1f4cdaedbb65fe28779c12917f8998cd82a025fe262f137ff9c943f36c"
+    },
+    {
+      "path": "worker/src/services/star-ring.js",
+      "sha256": "bae11a694c4d3f621604950b32f232814b52eeb567995ad987932fd922a62cae"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-fixture.js",
+      "sha256": "be1569936b1dd3cfc0c84fe13aaf46b13e3f29d99a3253eca37639f123ce4e32"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx.test.js",
+      "sha256": "12c3580efeb228d19878dcee73e2b5a4fc780fe6075504c9ea8800fa04d065ed"
+    },
+    {
+      "path": "worker/test/legacy-skill-vfx-service.test.js",
+      "sha256": "9f9914708c452d178b25be4100f89f9b7360d062d51bc8c59ab14c4480701b6e"
+    },
+    {
+      "path": "worker/test/class-combat-parity.test.js",
+      "sha256": "610a918f9598e501b9c3e259c527396236788c30c053e2faa6a2f6d79c568072"
+    },
+    {
+      "path": "worker/test/idle.test.js",
+      "sha256": "502f0d016437ec11c63b34f8d410529702b51c615842608f6fd5bd2938eedce8"
+    },
+    {
+      "path": "worker/test/idle-combat-pacing.test.js",
+      "sha256": "e6560ada24570cc705aa28b7859be6cc9791ffb35be38792fc1ade5c2f73981d"
+    },
+    {
+      "path": "worker/test/idle-auto-rotation.test.js",
+      "sha256": "b443ef6adbc642035497ce71ce4735361140f4b3893f5f9d5abd0da30c748c76"
+    },
+    {
+      "path": "worker/test/idle-last-stand-single-use.test.js",
+      "sha256": "10a17752698b54d2924d6322a96c42e4b933734b0f947fff6e0db5296d25b774"
+    },
+    {
+      "path": "worker/test/thief-combat.test.js",
+      "sha256": "57a85d66da66cbfc97063ab3aee241a9bf70e785aba3e3901c7ecf7da9567de1"
+    },
+    {
+      "path": "worker/test/boss.test.js",
+      "sha256": "aafa59f41d43efbd61fef022977078c39de2dea21078769025b62a72474e0a01"
+    },
+    {
+      "path": "worker/test/v05.test.js",
+      "sha256": "e7477029376f763dda3420b66ed4157ea7ff5865b167096d8e5e92a2384c37d4"
+    },
+    {
+      "path": "worker/test/party-event-sync.test.js",
+      "sha256": "04d8e096e9a2af26b2c8bdc3ee1fa22c9f0aee404339f173349520896dad05f7"
+    },
+    {
+      "path": "worker/test/party-auto-skills.test.js",
+      "sha256": "48345da6c03ad2a2942cdd42b083a68c5d51c98d033ef46bef6c8a2f73d86a93"
+    },
+    {
+      "path": "worker/test/party-three-skills-offline.test.js",
+      "sha256": "4bee907b33eb585706d9b35d91496f3b45922d81eb28942c9a3cc5adb8509401"
+    },
+    {
+      "path": "worker/test/star-ring-skills.test.js",
+      "sha256": "6e22b2d96bb79457374922488d15d7efdc1e244edce67391f44972100baea96d"
+    },
+    {
+      "path": "worker/test/star-ring-skill-persistence.test.js",
+      "sha256": "e37bd60eb0e823074fd69636feba980e524edf988f08c414f9faa36a9f8881d7"
+    }
+  ],
+  "changedDuringGate": [],
+  "tap": {
+    "path": ".release-sync/skill-vfx-20261104/legacy-backend-tests.tap",
+    "sha256": "f9f96f52dd3c59012837315e9e80a3217296eb91fbcc94630926ad46712a7129",
+    "bytes": 37849
+  },
+  "summary": {
+    "tests": 137,
+    "pass": 137,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  }
+}

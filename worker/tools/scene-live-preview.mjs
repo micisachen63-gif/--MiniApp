@@ -1,0 +1,344 @@
+// Read-only composition of the current art source, paired with disposable Atlas data.
+// node worker/tools/scene-live-preview.mjs --grok-root=D:/StarJournal/grok-assets
+import http from 'node:http';
+import fs from 'node:fs/promises';
+import { createReadStream } from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath, pathToFileURL } from 'node:url';
+import { spawn } from 'node:child_process';
+import { createHash } from 'node:crypto';
+let bindingVersion='',currentBindings=null,pinnedBoundInputs=null;
+async function composeResponse(requestPath,grokRoot){
+ if(pinnedBoundInputs)return pinnedBoundInputs.get(requestPath)||null;
+ const source=fileURLToPath(new URL('./scene-preview-bindings.mjs',import.meta.url));
+ const stat=await fs.stat(source),version=stat.mtimeMs+':'+stat.size;
+ if(version!==bindingVersion){currentBindings=await import(pathToFileURL(source).href+'?v='+encodeURIComponent(version));bindingVersion=version;}
+ return currentBindings.boundPreviewResponse(requestPath,grokRoot);
+}
+
+const here = path.dirname(fileURLToPath(import.meta.url));
+const repo = path.resolve(here, '../..'), publicRoot = path.resolve(here, '../public');
+const args = new Map();
+for (const value of process.argv.slice(2)) {
+  const match = /^--(grok-root|port|api-port|qa-input-snapshot-dir|attach-api-pid|qa-attach-state|qa-reuse-input-snapshot-dir|qa-attach-check|qa-capture-only|qa-direct-trade-peer-account|vfx-fixture)=(.+)$/.exec(value);
+  if (!match || args.has(match[1])) throw Error('Use --grok-root=... [--port=9653] [--api-port=9652] [--qa-input-snapshot-dir=.release-sync/owned-run] [--vfx-fixture=long-targets]');
+  args.set(match[1], match[2]);
+}
+if (args.has('vfx-fixture') && args.get('vfx-fixture') !== 'long-targets') throw Error('Unsupported local VFX fixture');
+const vfxFixture = args.get('vfx-fixture') || null;
+if (!args.has('grok-root')) throw Error('A local --grok-root is required');
+// Local disposable two-actor QA only: the normal HUD always uses account 90101.
+const directTradePeerAccount = args.get('qa-direct-trade-peer-account') || null;
+if (directTradePeerAccount !== null &&
+    (process.env.RPG_DIRECT_TRADE_QA !== '1' || directTradePeerAccount !== '90201'))
+  throw Error('Isolated direct-trade peer view requires RPG_DIRECT_TRADE_QA=1 and account 90201');
+const grokRoot = await fs.realpath(path.resolve(args.get('grok-root')));
+const port = Number(args.get('port') || 9653), apiPort = Number(args.get('api-port') || 9652);
+for (const number of [port, apiPort]) if (!Number.isInteger(number) || number < 1024 || number > 65535) throw Error('Invalid loopback port');
+if (port === apiPort) throw Error('The scene and API need separate ports');
+
+const guardianQA=process.env.RPG_GUARDIAN_QA==='1',fateQA=process.env.RPG_FATE_QA==='1',fatePrivateQA=process.env.RPG_FATE_PRIVATE_QA==='1',snapshotArgument=args.get('qa-input-snapshot-dir');
+const attachPidArgument=args.get('attach-api-pid'),reuseArgument=args.get('qa-reuse-input-snapshot-dir'),attachStateArgument=args.get('qa-attach-state'),attachCheck=args.get('qa-attach-check');
+const exchangeActionsQA=process.env.RPG_EXCHANGE_ACTIONS_QA==='1';
+const captureOnly=args.get('qa-capture-only')==='1';
+if(args.has('qa-capture-only')&&(!captureOnly||!fatePrivateQA||!snapshotArgument||attachPidArgument||reuseArgument||attachStateArgument||attachCheck))throw Error('Private input capture requires its own snapshot and no API attachment');
+if([guardianQA,fateQA,fatePrivateQA,exchangeActionsQA].filter(Boolean).length>1)throw Error('Only one isolated QA fixture mode may be enabled');
+if(snapshotArgument&&!guardianQA&&!fateQA&&!fatePrivateQA)throw Error('The QA input snapshot requires RPG_GUARDIAN_QA=1 or RPG_FATE_QA=1 and explicit --qa-input-snapshot-dir');
+if((guardianQA||fateQA||fatePrivateQA)&&!snapshotArgument&&!reuseArgument)throw Error('An isolated QA fixture requires explicit --qa-input-snapshot-dir or validated reuse');
+if(snapshotArgument&&reuseArgument)throw Error('Capture and reuse are mutually exclusive');
+if(!exchangeActionsQA&&(attachPidArgument||reuseArgument||attachStateArgument||attachCheck)){
+ if(!(fateQA||fatePrivateQA)||guardianQA||!attachPidArgument||!reuseArgument||!attachStateArgument||snapshotArgument||attachCheck&&attachCheck!=='1')throw Error('Existing API attach requires Fate-only mode, expected PID/state and immutable snapshot reuse');
+ if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
+ for(const flag of ['RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_SKILL_CAREER_QA','RPG_LEDGER_QA'])if(process.env[flag]==='1')throw Error('Existing API attach forbids other QA modes');
+}
+if(fatePrivateQA&&!captureOnly&&!attachPidArgument)throw Error('Private Fate QA UI must attach an independently owned API');
+if(exchangeActionsQA){
+ if(!attachPidArgument||!attachStateArgument||snapshotArgument||reuseArgument||captureOnly||attachCheck&&attachCheck!=='1')throw Error('Exchange actions QA UI must attach its independently owned API with an exact state intent');
+ if(!/^[1-9][0-9]*$/.test(attachPidArgument)||!Number.isSafeInteger(Number(attachPidArgument)))throw Error('Invalid expected isolated API PID');
+ if(process.env.RPG_LEDGER_QA!=='1'||process.env.RPG_SKILL_CAREER_QA!=='1'||['RPG_EXCHANGE_QA','RPG_STAR_RING_QA','RPG_BOSS_QA','RPG_TOWER_QA','RPG_PARTY_QA','RPG_GUARDIAN_QA','RPG_FATE_QA','RPG_FATE_PRIVATE_QA'].some(key=>process.env[key]==='1'))throw Error('Exchange actions attach requires only its isolated fixture mode');
+}
+const qaStatePath=exchangeActionsQA?'/__preview/exchange-actions-state':fatePrivateQA?'/__preview/fate-private-qa/state':'/__preview/fate-qa/state';
+const digest=value=>createHash('sha256').update(value).digest('hex');
+async function ownedEvidencePath(argument,directory=false){
+ const evidenceRoot=await fs.realpath(path.join(repo,'.release-sync')),target=await fs.realpath(path.resolve(repo,argument)),stat=await fs.stat(target);
+ if(!within(repo,evidenceRoot)||target===evidenceRoot||!within(evidenceRoot,target)||(directory?!stat.isDirectory():!stat.isFile()))throw Error('Existing QA evidence escaped this worktree');
+ return target;
+}
+const apiOrigin='http://127.0.0.1:'+apiPort;
+const stateIdentity=value=>JSON.stringify({initialInputSha256:value.initialInputSha256,primary:value.primary,alternate:value.alternate,fixtures:value.fixtures,seasonFixtures:value.seasonFixtures,now:value.qaClock?.now,commandInFlight:value.commandInFlight,commands:value.commands,databases:value.databases,permanent:value.permanent,season:value.season,lifeTiming:value.lifeTiming,privacy:value.privacy,evidence:value.evidence,foreign:value.foreign,partyRoster:value.partyRoster});
+
+// Bootstrap attach is a separate, explicit campaign intent. A missing life is
+// never interpreted as permission to restart an existing nonempty campaign.
+function requireEmptyFateCampaign(expected,state){
+ const privateCampaign=expected.kind==='empty-fate-private-campaign';
+ if(expected.schemaVersion!==1||expected.status!==(privateCampaign?'preserve-empty-fate-private-api':'preserve-empty-fate-api')||expected.kind!==(privateCampaign?'empty-fate-private-campaign':'empty-fate-campaign')||typeof expected.campaignId!=='string'||!/^[a-z0-9][a-z0-9_-]{2,79}$/.test(expected.campaignId)||Object.hasOwn(expected,'originalLife')||!/^[a-f0-9]{64}$/.test(expected.initialInputSha256||'')||expected.initialInputSha256!==state?.initialInputSha256)throw Error('Incomplete empty Fate campaign intent');
+ if(!state||state.syntheticInitialInputOnly!==true||state.noSeededLifeGiftOrReceipt!==true||state.noDispatcher!==true||state.realNotificationsSent!==false||state.initialInputs?.fixtureOnly!==true||state.initialInputs?.notAReceipt!==true||state.commandInFlight!==null||!Array.isArray(state.commands)||state.commands.length||!Array.isArray(state.lifeTiming)||state.lifeTiming.length||!Number.isSafeInteger(state.seededAt)||state.seededAt<=0||state.qaClock?.now!==state.seededAt)throw Error('Empty Fate campaign requires unchanged initial inputs and clock');
+ const clock=state.qaClock;
+ if(clock.mode!=='manual-development-clock'||clock.debugOnly!==true||clock.lifeMs!==7200000||clock.choiceMs!==90000||clock.automaticFateSweep!==false||clock.deadlinesUnmodified!==true||clock.nightPause!=='00:00-06:00 Asia/Taipei')throw Error('Empty Fate campaign changed original timing');
+ if(privateCampaign&&(!state.noSeededPrivateOrBattleOutcomes||state.privacy?.secretPersisted!==false||state.privacy?.privateRowsExposed!==false||state.privacy?.restorableBackup!==false||!/^[a-f0-9]{32}$/.test(state.privacy?.digestId||'')||!Array.isArray(state.privacy?.forbiddenCopies)||state.privacy.forbiddenCopies.length))throw Error('Private campaign privacy evidence is incomplete');
+ if(!state.primary||!state.alternate||!Array.isArray(state.fixtures)||!state.fixtures.length||!Array.isArray(state.seasonFixtures)||!state.seasonFixtures.length)throw Error('Empty Fate campaign needs exact fixture actors');
+ const tables=['rpg_fate_lives','rpg_fate_starts','rpg_fate_memorials','rpg_fate_operations','rpg_fate_gifts','rpg_fate_gift_operations','rpg_fate_profiles','rpg_fate_daily','rpg_fate_social_choices','rpg_fate_social_limits','rpg_fate_social_locks','rpg_fate_social_operations','rpg_fate_social_pairs','rpg_fate_social_preferences'];
+ for(const realm of ['permanent','season']){
+  const raw=state[realm],database=state.databases?.[realm],counts=database?.counts;
+  if(!raw||['lives','starts','memorials','operations','gifts','giftOperations','social'].some(key=>!Array.isArray(raw[key])||raw[key].length))throw Error('Empty Fate campaign already has original '+realm+' outcomes');
+  if(!counts||!Array.isArray(database.tableNames)||tables.some(name=>!database.tableNames.includes(name)||counts[name]!==0)||Object.entries(counts).some(([name,count])=>name.startsWith('rpg_fate_')&&count!==0))throw Error('Empty Fate campaign has nonempty or missing '+realm+' Fate tables');
+  if(privateCampaign&&(database.digestAlgorithm!=='HMAC-SHA-256'||database.digestId!==state.privacy.digestId||database.secretPersisted!==false||database.restorableBackup!==false||['rpg_boss_instances','rpg_boss_attacks','rpg_parties','rpg_party_members','rpg_party_operations'].some(name=>counts[name]!==0)))throw Error('Private empty campaign already has battles or changed digest identity');
+  if(!Array.isArray(raw.ledger)||raw.ledger.some(row=>['命運私人操作收據','命運場景操作收據','輪迴贈禮','開啟輪迴禮','星輝匣獎勵'].includes(row.type)||String(row.event_id||'').startsWith('fate-')))throw Error('Empty Fate campaign already has '+realm+' Fate receipts');
+  if(!Array.isArray(raw.outbox)||raw.outbox.some(row=>/^fate(?:_|-)/.test(String(row.kind||''))))throw Error('Empty Fate campaign already has '+realm+' Fate delivery rows');
+ }
+}
+let attachedApi=null,attachExpected=null;
+if(attachPidArgument&&!exchangeActionsQA){
+ const statePath=await ownedEvidencePath(attachStateArgument),stateBytes=await fs.readFile(statePath);
+ attachExpected=JSON.parse(stateBytes);
+ const emptyCampaign=attachExpected.kind==='empty-fate-campaign'||attachExpected.kind==='empty-fate-private-campaign';
+ if(fatePrivateQA!==Boolean(attachExpected.kind==='empty-fate-private-campaign'))throw Error('Private API attach mode differs from its explicit intent');
+ if(emptyCampaign){
+  if(attachExpected.apiPid!==Number(attachPidArgument)||attachExpected.apiOrigin!==apiOrigin)throw Error('Empty Fate campaign API identity differs');
+  requireEmptyFateCampaign(attachExpected,attachExpected.state);
+ }else{
+  if(Object.hasOwn(attachExpected,'kind'))throw Error('Unknown Fate API preservation kind');
+ if(attachExpected.schemaVersion!==1||attachExpected.status!=='preserve-exact-fate-api'||attachExpected.apiPid!==Number(attachPidArgument)||attachExpected.apiOrigin!==apiOrigin||!attachExpected.state||!attachExpected.originalLife)throw Error('Incomplete original Fate API preservation intent');
+ }
+ const read=async endpoint=>{const response=await fetch(apiOrigin+endpoint,{redirect:'error',signal:AbortSignal.timeout(10000)});if(response.status!==200)throw Error('Existing API refused read-only inspection');return response.json();};
+ const [health,state]=await Promise.all([read('/__preview/health'),read(qaStatePath)]);
+ if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false||(fatePrivateQA?health.fatePrivateQa!==true||health.fateQa!==false:health.fateQa!==true)||(health.ledgerQa!==undefined&&health.ledgerQa!==false)||['guardianQa','starRingQa','bossQa','towerQa','partyQa','skillCareerQa'].some(key=>health[key]!==false))throw Error('Existing API identity or isolation differs');
+ if(health.qaClock?.mode!=='manual-development-clock'||health.qaClock.lifeMs!==7200000||health.qaClock.choiceMs!==90000||health.qaClock.automaticFateSweep!==false||health.qaClock.deadlinesUnmodified!==true||health.qaClock.nightPause!=='00:00-06:00 Asia/Taipei')throw Error('Existing API changed original Fate timing');
+ if(state.isolated!==true||state.ephemeral!==true||state.productionAccess!==false||state.commandInFlight!==null||stateIdentity(state)!==stateIdentity(attachExpected.state))throw Error('Original fixture, actors, both databases, clock or life rows changed');
+ if(emptyCampaign){
+  requireEmptyFateCampaign(attachExpected,state);
+  if(health.qaClock.now!==state.qaClock.now)throw Error('Empty Fate campaign clock changed during inspection');
+  attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.initialInputSha256,clockNow:state.qaClock.now,kind:attachExpected.kind,campaignId:attachExpected.campaignId,originalLifeId:null,read};
+ }else{
+ const original=attachExpected.originalLife,life=state.permanent.lives.find(row=>row.id===original.id),operation=state.permanent.operations.find(row=>row.request_id==='scene:app:'+original.startRequestId);
+ if(original.realmId!=='permanent'||!life||String(life.char_id)!==original.characterId||String(life.account_id)!==original.accountId||JSON.stringify(state.primary)!==JSON.stringify(attachExpected.state.primary)||!operation||String(operation.account_id)!==original.accountId||JSON.parse(operation.result_json).lifeId!==original.id)throw Error('Existing API no longer contains the exact original start authority');
+ attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.initialInputSha256,clockNow:state.qaClock.now,originalLifeId:original.id,read};
+ }
+}
+if(exchangeActionsQA){
+ const statePath=await ownedEvidencePath(attachStateArgument),stateBytes=await fs.readFile(statePath);
+ attachExpected=JSON.parse(stateBytes);
+ const expected=attachExpected;
+ if(expected.schemaVersion!==1||expected.status!=='preserve-exact-exchange-actions-api'||expected.kind!=='preserve-exchange-actions-api'
+   ||!/^[a-z0-9][a-z0-9_-]{2,79}$/.test(expected.campaignId||'')||expected.apiPid!==Number(attachPidArgument)||expected.apiOrigin!==apiOrigin
+   ||!expected.state||typeof expected.ownerSession!=='string'||!/^[a-f0-9]{64}$/.test(expected.ownerSha256||''))throw Error('Incomplete exchange actions API preservation intent');
+ const ownerPath=path.resolve(repo,'../../handoff/non-character',path.basename(repo).replace(/^star-journal-/,''),'OWNER.json');
+ const ownerBytes=await fs.readFile(ownerPath),owner=JSON.parse(ownerBytes);
+ if(owner.status!=='active'||owner.session!==expected.ownerSession||path.resolve(owner.worktree||'')!==repo||digest(ownerBytes)!==expected.ownerSha256)throw Error('Exchange actions owner changed');
+ if(!Array.isArray(expected.sourceBindings)||!expected.sourceBindings.length||expected.sourceBindings.length>15000)throw Error('Exchange actions attach requires bound source files');
+ const seen=new Set();
+ for(const entry of expected.sourceBindings){
+  if(!entry||typeof entry.path!=='string'||seen.has(entry.path)||!Number.isSafeInteger(entry.bytes)||entry.bytes<0||!/^[a-f0-9]{64}$/.test(entry.sha256||''))throw Error('Invalid exchange actions source binding');
+  seen.add(entry.path);
+  const bytes=await fs.readFile(await realFile(repo,entry.path));
+  if(bytes.length!==entry.bytes||digest(bytes)!==entry.sha256)throw Error('Exchange actions source changed: '+entry.path);
+ }
+ for(const name of ['worker/tools/atlas-local-preview.mjs','worker/tools/exchange-actions-qa-fixture.mjs','worker/tools/scene-live-preview.mjs','worker/tools/scene-preview-bindings.mjs'])
+  if(!seen.has(name))throw Error('Exchange actions required source binding absent: '+name);
+ const read=async endpoint=>{const response=await fetch(apiOrigin+endpoint,{redirect:'error',signal:AbortSignal.timeout(10000)});if(response.status!==200)throw Error('Existing exchange API refused read-only inspection');return response.json();};
+ const [health,state]=await Promise.all([read('/__preview/health'),read(qaStatePath)]);
+ if(health.pid!==Number(attachPidArgument)||health.isolated!==true||health.ephemeral!==true||health.productionAccess!==false
+   ||health.exchangeActionsQa!==true||health.exchangeQa!==false||health.ledgerQa!==true||health.skillCareerQa!==true
+   ||['guardianQa','starRingQa','bossQa','towerQa','partyQa','fateQa','fatePrivateQa'].some(key=>health[key]!==false)
+   ||JSON.stringify(health.exchangeActionsQaPolicy?.backgroundTimersDisabled)!==JSON.stringify({atlas:true,workshop:true,party:true}))throw Error('Existing exchange API identity or isolation differs');
+ const matches=value=>value?.ok===true&&value.synthetic===true&&value.isolated===true&&value.ephemeral===true&&value.productionAccess===false
+  &&value.noDispatcher===true&&value.realNotificationsSent===false&&value.seed?.setupNotAcceptance===true
+  &&JSON.stringify(value)===JSON.stringify(expected.state);
+ if(!matches(state)||!matches(await read(qaStatePath)))throw Error('Original exchange actors, setup, operations or complete databases changed');
+ attachedApi={pid:health.pid,statePath,stateSha256:digest(stateBytes),fixtureInitialInputSha256:state.seed.manifestSha256,
+  kind:expected.kind,campaignId:expected.campaignId,sourceCount:seen.size,read};
+ if(attachCheck==='1')console.log(JSON.stringify({ok:true,readOnlyPreflight:true,kind:expected.kind,campaignId:expected.campaignId,
+  apiPid:health.pid,apiOrigin,stateSha256:attachedApi.stateSha256,sourceCount:seen.size,apiSpawned:false,apiKilled:false,snapshotWritten:false}));
+}
+let generatedInputSnapshot={mode:'dynamic',scope:'Composed generated text is read dynamically; no generated inputs are frozen.'};
+if(reuseArgument){
+ const destination=await ownedEvidencePath(reuseArgument,true),manifestPath=await realFile(destination,'manifest.json'),manifestBytes=await fs.readFile(manifestPath),manifest=JSON.parse(manifestBytes);
+ const source=fileURLToPath(new URL('./scene-preview-bindings.mjs',import.meta.url)),binderSha256=digest(await fs.readFile(source)),bindings=await import(pathToFileURL(source).href),expected=bindings.boundPreviewInputPaths();
+ if(manifest.schemaVersion!==1||manifest.status!=='passed'||manifest.sourceCount!==9||manifest.sources?.length!==9||manifest.binderSha256!==binderSha256||manifest.sourceRootWritten!==false||manifest.changed?.length!==0||manifest.bindingErrors?.length!==0||JSON.stringify(manifest.sources.map(({requestPath,relativePath,type})=>({requestPath,relativePath,type})))!==JSON.stringify(expected))throw Error('Original nine-input snapshot manifest is invalid');
+ if(attachExpected.inputSnapshotId!==manifest.id||attachExpected.inputSnapshotManifestSha256!==digest(manifestBytes))throw Error('Snapshot differs from the original running fixture');
+ const id=digest(JSON.stringify({binderSha256,sources:manifest.sources.map(({requestPath,relativePath,sha256,boundSha256})=>({requestPath,relativePath,sha256,boundSha256}))}));
+ if(manifest.id!==id)throw Error('Snapshot identity hash differs');
+ const rawRoot=await fs.realpath(path.join(destination,'raw')),boundRoot=await fs.realpath(path.join(destination,'bound'));
+ if(!within(destination,rawRoot)||!within(destination,boundRoot))throw Error('Snapshot directory escaped owned evidence');
+ pinnedBoundInputs=new Map();
+ for(const entry of manifest.sources){
+  const raw=await fs.readFile(await realFile(rawRoot,entry.relativePath)),bound=await fs.readFile(await realFile(boundRoot,entry.requestPath.slice(1)));
+  if(digest(raw)!==entry.sha256||raw.length!==entry.bytes||digest(bound)!==entry.boundSha256||bound.length!==entry.boundBytes)throw Error('Original captured source or bound snapshot bytes changed');
+  pinnedBoundInputs.set(entry.requestPath,Object.freeze({type:entry.type,body:bound.toString('utf8')}));
+ }
+ generatedInputSnapshot={mode:'pinned-qa-text',id:manifest.id,sourceCount:manifest.sourceCount,manifestPath,scope:manifest.scope,reused:true};
+ const after=await attachedApi.read(qaStatePath);
+ if(stateIdentity(after)!==stateIdentity(attachExpected.state))throw Error('Existing API changed during read-only snapshot validation');
+ if(['empty-fate-campaign','empty-fate-private-campaign'].includes(attachedApi.kind))requireEmptyFateCampaign(attachExpected,after);
+ if(attachCheck==='1'){
+  console.log(JSON.stringify({ok:true,readOnlyPreflight:true,apiPid:attachedApi.pid,apiOrigin,fixtureInitialInputSha256:attachedApi.fixtureInitialInputSha256,clockNow:attachedApi.clockNow,kind:attachedApi.kind||'preserve-exact-fate-api',campaignId:attachedApi.campaignId||null,originalLifeId:attachedApi.originalLifeId,generatedInputSnapshot,stateSha256:attachedApi.stateSha256,apiSpawned:false,apiKilled:false,snapshotWritten:false}));
+  // Complete the module naturally so pending fetch cleanup can drain on Windows.
+ }
+}
+if(snapshotArgument){
+ const realRepo=await fs.realpath(repo),evidenceRoot=await fs.realpath(path.join(repo,'.release-sync')),requested=path.resolve(repo,snapshotArgument);
+ if(!within(realRepo,evidenceRoot)||!within(evidenceRoot,requested)||requested===evidenceRoot)throw Error('QA snapshot destination must be inside this worktree owned .release-sync');
+ const realParent=await fs.realpath(path.dirname(requested));
+ if(!within(evidenceRoot,realParent))throw Error('QA snapshot parent escaped this worktree owned .release-sync');
+ const destination=path.join(realParent,path.basename(requested));
+ await fs.mkdir(destination);
+ const manifestPath=path.join(destination,'manifest.json');
+ try{
+  const source=fileURLToPath(new URL('./scene-preview-bindings.mjs',import.meta.url)),stat=await fs.stat(source);
+  const bindings=await import(pathToFileURL(source).href+'?qa='+encodeURIComponent(stat.mtimeMs+':'+stat.size));
+  const captured=await bindings.captureBoundPreviewInputs(grokRoot);
+  for(const input of captured.rawSources){const target=path.join(destination,'raw',input.relativePath);await fs.mkdir(path.dirname(target),{recursive:true});await fs.writeFile(target,input.bytes,{flag:'wx'});}
+  for(const [requestPath,response] of captured.responses){const target=path.join(destination,'bound',requestPath.slice(1));await fs.mkdir(path.dirname(target),{recursive:true});await fs.writeFile(target,response.body,{flag:'wx'});}
+  await fs.writeFile(manifestPath,JSON.stringify({...captured.manifest,destination,manifestPath},null,2)+'\n',{flag:'wx'});
+  if(captured.manifest.status!=='passed')throw Error('QA generated input capture was unstable or could not bind; failed manifest preserved at '+manifestPath);
+  pinnedBoundInputs=captured.responses;
+  generatedInputSnapshot={mode:'pinned-qa-text',id:captured.manifest.id,sourceCount:captured.manifest.sourceCount,manifestPath,scope:captured.manifest.scope};
+ }catch(error){
+  await fs.writeFile(manifestPath,JSON.stringify({schemaVersion:1,status:'failed',capturedAt:new Date().toISOString(),sourceRoot:grokRoot,destination,error:error.message,sourceRootWritten:false},null,2)+'\n',{flag:'wx'}).catch(writeError=>{if(writeError.code!=='EEXIST')throw writeError;});
+  throw error;
+ }
+}
+
+const origin = `http://127.0.0.1:${port}`;
+const config = { live: true, sceneOrigin: origin, endpoint: `http://127.0.0.1:${apiPort}/app/api/`, accountId: '90101', realmId: 'permanent' };
+const injectedForAccount = accountId => '<script src="/ui-generated-20261030/hud-angels-20261102/monster-expansion-catalog.js"></script>' + `<script>window.__RpgScenePreviewConfig=${JSON.stringify({...config, accountId})};</script>`;
+const socialPrefix = '/ui-generated-20261030/hud-angels-20261102/';
+const buttonMaterialPrefix = '/ui/button-materials/';
+const hudMaterialPaths=new Set(['/ui/hud-v2/hud-v2.css','/ui/hud-v2/orb-bezel.webp','/ui/hud-v2/action-icons.webp','/ui/hud-v2/accepted-layout.json','/ui/hud-v2/source-manifest.json']);
+const starArtFiles=new Set(['dawn','moon','eclipse'].flatMap(tone=>['/art/star-ring-rewards-20261018/icon-'+tone+'.webp','/art/star-ring-surround-20261026/surround-'+tone+'.webp']));
+const guardianArtFiles=new Set(['melee','ranged','magic','loot'].map(type=>'/art/guardian-sigil-20261013/'+type+'.webp'));
+const hubArtFiles=new Set(['nav-bag-20261012','nav-class-20261012','nav-home-20261012','nav-boss-20261012','hud-coin-v2','hud-race-sword-v2','forge-scroll-20261011','journal-cover-20261013','item-guardian_voucher-20261015','item-research_fragment-20261015','command-boss_time-20261012','command-shop-20261012','command-trade-20261012','command-collect-20261012','item-tower_fragment-20261012','item-boss_essence-20261012','hero-hall-v1','hermes-market-v1','fate-oracle-v1','titan-gate-v1'].map(name=>'/art/ui/'+name+'.webp'));
+const ritualFiles=new Set(['player-guide-20261109.html','guardian-idle-fx.css','forge-ritual.js','forge-ritual.css','guardian-sigil-contract.js','guardian-haptics.js','guardian-scene-media.js','guardian-worldtree.js','guardian-pull.js','guardian-summon-gesture.js','guardian-presentation.js','guardian-sigil.css','guardian-ritual-ui.css','collection-ui.css','hero-hall-ui.css','scene-library-art.json'].map(f=>'/'+f));
+const ritualArt=new Set(['/art/guardian-controls-20261014/divine-mist-atlas.png','/art/ui/forge-flow-20261011.webp','/art/guardian-scene-20261014/world-tree-poster.webp','/art/guardian-scene-20261014/archangel-poster.png','/art/guardian-scene-20261014/world-tree-loop.mp4','/art/guardian-scene-20261014/archangel-loop-alpha.webm','/art/guardian-result-20261014/feather-transition-alpha.webm','/art/guardian-sigil-20261013/summon-feather.webp']);
+for(const name of ['scroll_w','scroll_a','scroll_r','blessed_scroll_w','blessed_scroll_a'])ritualArt.add('/art/items-scrolls-cutout-20261011/'+name+'.webp');
+for(let m=1;m<=12;m++){ritualArt.add('/art/v2/bg_myth'+String(m).padStart(2,'0')+'.webp');ritualArt.add('/art/collections-20261013/collection_'+m+'.webp');for(const k of ['1','2','3','core','sigil'])ritualArt.add('/art/collection-materials-20261014/hunt_'+m+'_'+k+'.webp');}
+// Generated from scene-library-art.json; exact strings only, no asset I/O at startup.
+const libraryArtPaths=["/art/monster-expansion-20261013/boss_x13_m01_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m02_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m03_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m04_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m05_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m06_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m07_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m08_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m09_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m10_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m11_boss_secondary.webp","/art/monster-expansion-20261013/boss_x13_m12_boss_secondary.webp","/art/monster-expansion-20261013/elite_x13_m01_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m01_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m02_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m02_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m03_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m03_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m04_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m04_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m05_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m05_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m06_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m06_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m07_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m07_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m08_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m08_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m09_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m09_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m10_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m10_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m11_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m11_elite_2.webp","/art/monster-expansion-20261013/elite_x13_m12_elite_1.webp","/art/monster-expansion-20261013/elite_x13_m12_elite_2.webp","/art/monster-expansion-20261013/mon_x13_m01_dewglo_moth.webp","/art/monster-expansion-20261013/mon_x13_m01_fallen_moon_acolyte.webp","/art/monster-expansion-20261013/mon_x13_m01_laurel_fawn.webp","/art/monster-expansion-20261013/mon_x13_m01_moonshadow_wolf.webp","/art/monster-expansion-20261013/mon_x13_m01_spring_spirit.webp","/art/monster-expansion-20261013/mon_x13_m01_thorn_spider.webp","/art/monster-expansion-20261013/mon_x13_m02_broken_idol.webp","/art/monster-expansion-20261013/mon_x13_m02_bronze_griffin.webp","/art/monster-expansion-20261013/mon_x13_m02_oracle_acolyte.webp","/art/monster-expansion-20261013/mon_x13_m02_rune_beetle.webp","/art/monster-expansion-20261013/mon_x13_m02_shield_stoneguard.webp","/art/monster-expansion-20261013/mon_x13_m02_star_serpent.webp","/art/monster-expansion-20261013/mon_x13_m03_ancient_wood_swarm.webp","/art/monster-expansion-20261013/mon_x13_m03_goat_priest.webp","/art/monster-expansion-20261013/mon_x13_m03_mist_fox.webp","/art/monster-expansion-20261013/mon_x13_m03_spectral_spring.webp","/art/monster-expansion-20261013/mon_x13_m03_thorn_boar.webp","/art/monster-expansion-20261013/mon_x13_m03_vine_hunter.webp","/art/monster-expansion-20261013/mon_x13_m04_coral_mage.webp","/art/monster-expansion-20261013/mon_x13_m04_reef_hermit.webp","/art/monster-expansion-20261013/mon_x13_m04_sea_mist_ghost.webp","/art/monster-expansion-20261013/mon_x13_m04_stormfin_jellyfish.webp","/art/monster-expansion-20261013/mon_x13_m04_tideblade_serpent.webp","/art/monster-expansion-20261013/mon_x13_m04_wreck_guard.webp","/art/monster-expansion-20261013/mon_x13_m05_bronze_spider.webp","/art/monster-expansion-20261013/mon_x13_m05_dualblade_minotaur.webp","/art/monster-expansion-20261013/mon_x13_m05_labyrinth_hound.webp","/art/monster-expansion-20261013/mon_x13_m05_lost_priest.webp","/art/monster-expansion-20261013/mon_x13_m05_rune_stone_eye.webp","/art/monster-expansion-20261013/mon_x13_m05_venom_serpent_guard.webp","/art/monster-expansion-20261013/mon_x13_m06_ash_ghost.webp","/art/monster-expansion-20261013/mon_x13_m06_firechain_smith.webp","/art/monster-expansion-20261013/mon_x13_m06_furnace_spirit.webp","/art/monster-expansion-20261013/mon_x13_m06_iron_beetle.webp","/art/monster-expansion-20261013/mon_x13_m06_molten_drake.webp","/art/monster-expansion-20261013/mon_x13_m06_obsidian_guard.webp","/art/monster-expansion-20261013/mon_x13_m07_abyss_wraith.webp","/art/monster-expansion-20261013/mon_x13_m07_bone_archer.webp","/art/monster-expansion-20261013/mon_x13_m07_chain_soul.webp","/art/monster-expansion-20261013/mon_x13_m07_soul_lamp_keeper.webp","/art/monster-expansion-20261013/mon_x13_m07_styx_naiad.webp","/art/monster-expansion-20261013/mon_x13_m07_underworld_moths.webp","/art/monster-expansion-20261013/mon_x13_m08_blind_seer.webp","/art/monster-expansion-20261013/mon_x13_m08_lightfeather_griffin.webp","/art/monster-expansion-20261013/mon_x13_m08_mirror_spirit.webp","/art/monster-expansion-20261013/mon_x13_m08_oracle_eye.webp","/art/monster-expansion-20261013/mon_x13_m08_prophecy_guard.webp","/art/monster-expansion-20261013/mon_x13_m08_sun_disc_acolyte.webp","/art/monster-expansion-20261013/mon_x13_m09_magnet_stone_bug.webp","/art/monster-expansion-20261013/mon_x13_m09_mountain_golem.webp","/art/monster-expansion-20261013/mon_x13_m09_stone_bear.webp","/art/monster-expansion-20261013/mon_x13_m09_storm_acolyte.webp","/art/monster-expansion-20261013/mon_x13_m09_thunder_goat.webp","/art/monster-expansion-20261013/mon_x13_m09_titan_soldier.webp","/art/monster-expansion-20261013/mon_x13_m10_cloud_dragon.webp","/art/monster-expansion-20261013/mon_x13_m10_cloudshield_guard.webp","/art/monster-expansion-20261013/mon_x13_m10_holy_bell_keeper.webp","/art/monster-expansion-20261013/mon_x13_m10_rainbow_spirit.webp","/art/monster-expansion-20261013/mon_x13_m10_storm_patrol.webp","/art/monster-expansion-20261013/mon_x13_m10_thunder_eagle.webp","/art/monster-expansion-20261013/mon_x13_m11_dawn_priest.webp","/art/monster-expansion-20261013/mon_x13_m11_dream_griffin.webp","/art/monster-expansion-20261013/mon_x13_m11_goldwing_bee.webp","/art/monster-expansion-20261013/mon_x13_m11_heroic_shieldguard.webp","/art/monster-expansion-20261013/mon_x13_m11_memory_flower.webp","/art/monster-expansion-20261013/mon_x13_m11_moonwell_deer.webp","/art/monster-expansion-20261013/mon_x13_m12_eclipse_priest.webp","/art/monster-expansion-20261013/mon_x13_m12_meteor_beetle.webp","/art/monster-expansion-20261013/mon_x13_m12_star_chain_guard.webp","/art/monster-expansion-20261013/mon_x13_m12_star_ring_eye.webp","/art/monster-expansion-20261013/mon_x13_m12_stardust_spirit.webp","/art/monster-expansion-20261013/mon_x13_m12_void_wyvern.webp","/art/monsters-clean-20261011/boss_ancient_laurel.png","/art/monsters-clean-20261011/boss_arcadia_goblin_chief.png","/art/monsters-clean-20261011/boss_cloud_gate_deity.png","/art/monsters-clean-20261011/boss_elysium_guardian_king.png","/art/monsters-clean-20261011/boss_frost_dragon_queen.png","/art/monsters-clean-20261011/boss_lava_colossus.png","/art/monsters-clean-20261011/boss_minos_bull.png","/art/monsters-clean-20261011/boss_python_serpent.png","/art/monsters-clean-20261011/boss_rotten_tree_king.png","/art/monsters-clean-20261011/boss_styx_ferryman.png","/art/monsters-clean-20261011/elite_achilles_spirit.png","/art/monsters-clean-20261011/elite_astral_high_priest.png","/art/monsters-clean-20261011/elite_cloud_gate_guard.png","/art/monsters-clean-20261011/elite_labyrinth_general.png","/art/monsters-clean-20261011/elite_molten_forgemaster.png","/art/monsters-clean-20261011/elite_oracle_high_priest.png","/art/monsters-clean-20261011/elite_pan_warden.png","/art/monsters-clean-20261011/elite_styx_ferry_general.png","/art/monsters-clean-20261011/elite_titan_vanguard.png","/art/monsters-clean-20261011/mon_aegean_siren.png","/art/monsters-clean-20261011/mon_apollo_sun_hawk.png","/art/monsters-clean-20261011/mon_arcadia_nymph.png","/art/monsters-clean-20261011/mon_astral_attendant.png","/art/monsters-clean-20261011/mon_bronze_bull.png","/art/monsters-clean-20261011/mon_celestial_patrol_bird.png","/art/monsters-clean-20261011/mon_cerberus_pup.png","/art/monsters-clean-20261011/mon_cloud_nymph.png","/art/monsters-clean-20261011/mon_cloud_pegasus.png","/art/monsters-clean-20261011/mon_corona_spirit.png","/art/monsters-clean-20261011/mon_earthsplit_stone_demon.png","/art/monsters-clean-20261011/mon_elysium_fairy.png","/art/monsters-clean-20261011/mon_fire_crystal_demon.png","/art/monsters-clean-20261011/mon_forge_fire_bat.png","/art/monsters-clean-20261011/mon_forge_golem.png","/art/monsters-clean-20261011/mon_gorgon_phantom.png","/art/monsters-clean-20261011/mon_heroic_spirit.png","/art/monsters-clean-20261011/mon_holy_light_statue.png","/art/monsters-clean-20261011/mon_immortal_bird.png","/art/monsters-clean-20261011/mon_labyrinth_patrol.png","/art/monsters-clean-20261011/mon_laurel_treant.png","/art/monsters-clean-20261011/mon_lava_salamander.png","/art/monsters-clean-20261011/mon_lost_soul.png","/art/monsters-clean-20261011/mon_mountain_gale_bird.png","/art/monsters-clean-20261011/mon_olive_guardian.png","/art/monsters-clean-20261011/mon_oracle_python.png","/art/monsters-clean-20261011/mon_pan_cub.png","/art/monsters-clean-20261011/mon_petrifying_bat.png","/art/monsters-clean-20261011/mon_prophet_priest_ghost.png","/art/monsters-clean-20261011/mon_pure_gold_lion.png","/art/monsters-clean-20261011/mon_styx_bone_soldier.png","/art/monsters-clean-20261011/mon_sunlight_stone_spirit.png","/art/monsters-clean-20261011/mon_thunder_lizard.png","/art/monsters-clean-20261011/mon_titan_hoof_beast.png","/art/monsters-clean-20261011/mon_underworld_raven.png","/art/monsters-clean-20261011/mon_void_devourer.png","/art/monsters-clean-20261011/mon_zodiac_beast.png","/art/v2/boss_aegean_leviathan.webp","/art/v2/boss_hundred_pillar_colossus.webp","/art/v2/elite_artemis_ranger.webp","/art/v2/elite_deepsea_crab.webp","/art/v2/elite_temple_centurion.webp","/art/v2/mon_bronze_guard.webp","/art/v2/mon_forest_scout.webp","/art/v2/mon_moon_hare.webp","/art/v2/mon_sacred_antelope.webp","/art/v2/mon_sea_crab.webp","/art/v2/mon_temple_ghost.webp","/art/v2/mon_temple_owl.webp","/art/v2/mon_temple_statue.webp","/art/v2/mon_tidal_beetle.webp","/art/v2/mon_wave_fish.webp","/art/v2/mon_wood_nymph.webp"];
+for(const src of libraryArtPaths)ritualArt.add(src);
+const staticArtFiles=new Set([...starArtFiles,...guardianArtFiles,...hubArtFiles,...ritualFiles,...ritualArt]);
+// Only original read-only narrative modules and their published artwork. The
+// old iframe application is deliberately not an entry point in this preview.
+const fateStaticPath=requestPath=>['/scene-fate-story.js','/scene-fate-private-ui.js','/scene-fate-private-ui.css'].includes(requestPath)||(
+  /^\/fate\/(?:country-packs-v9\/)?[a-z0-9_-]+\.js$/i.test(requestPath)&&requestPath!=='/fate/app.js'
+)||/^\/art\/(?:fate-taiwan-v8|fate-countries-v9|fate-ending-20261016)\/[a-z0-9_-]+\.webp$/i.test(requestPath)
+||requestPath==='/art/ui/command-collect-20261012.webp'
+||/^\/art\/items-scrolls-pink-20261018\/guaranteed_scroll_[wa]\.webp$/.test(requestPath)
+||/^\/art\/items-scrolls-cutout-20261011\/scroll_[wa]\.webp$/.test(requestPath);
+const virtualSocial = new Set([
+  'scene-live-session.js','scene-live-view.js','scene-live-view.css','scene-window-manager.js','scene-original-rituals.js','scene-duel-replay.js','scene-library-ui.js','scene-character-admin.js','collection-ui.js','monster-catalog.js','hero-hall-ui.js',
+  'scene-inventory-ui.js','scene-inventory-ui.css','scene-workshop-ui.js','scene-workshop-ui.css','scene-supply-ui.js','scene-supply-ui.css',
+  'scene-skills-ui.js','scene-skills-ui.css',
+  'scene-party-ui.js','scene-party-ui.css',
+  'scene-tower-ui.js','scene-tower-ui.css',
+  'scene-boss-ui.js','scene-boss-ui.css',
+  'scene-star-ring-ui.js','scene-star-ring-ui.css',
+  'scene-ledger-ui.js','scene-ledger-ui.css',
+  'scene-exchange-ui.js','scene-exchange-ui.css','scene-exchange-client.js','scene-direct-trade-ui.js','scene-direct-trade-ui.css','scene-direct-trade-client.js','scene-direct-trade-invitation-client.js', 'monster-expansion-catalog.js',
+  'scene-guardian-ui.js','scene-guardian-ui.css',
+  'scene-fate-ui.js','scene-fate-ui.css','scene-fate-story.js','scene-fate-private-ui.js','scene-fate-private-ui.css',
+  'scene-social-preview.js','scene-social-preview.css','scene-chat-ui.js','scene-chat-ui.css',
+  'scene-atlas-guide.js','atlas-talents-ui.js','atlas-talents-ui.css','atlas-progression-ui.js',
+  'equipment-recovery-ui.js','equipment-recovery-ui.css','equipment-collection-ui.js','equipment-collection-ui.css','scene-hero-readability.js','scene-hero-readability.css',
+]);
+const angelFiles = new Set(['hud-angels.js','hud-angels.css','angel-good-left-v1.png','angel-fallen-right-v1.png','unified-rail-v1.png']);
+const vfxFiles = new Map(['skill-vfx-actor-bridge.mjs','skill-vfx-combat-adapter.mjs','skill-vfx-engine.mjs','skill-vfx-semantics.mjs','skill-vfx-catalog.json','skill-vfx-actor-profiles.json','awakening-vfx-live.mjs','awakening-vfx-engine.mjs','awakening-vfx-data.mjs','endgame-map-art.json'].map(name => ['/' + name, name]));
+for (const base of ['sword','archer','mage','thief']){const file='art/awakening-vfx-20261105/'+base+'-awakening-atlas.webp';vfxFiles.set('/'+file,file);}
+for (const mode of ['elite','expert','nightmare','hell'])for(const chapter of [...Array.from({length:12},(_,i)=>String(i+1).padStart(2,'0')),'aura']){const file='art/endgame-v1/'+mode+'-'+chapter+'-v1.png';vfxFiles.set('/'+file,file);}
+for (const name of ['sword-atlas','mage-atlas','archer-atlas','thief-atlas','hawk','fire-spirit','semantic-atlas']) { const file = 'art/skill-vfx-20261104/' + name + '.webp'; vfxFiles.set('/' + file, file); }
+const types = { '.html':'text/html; charset=utf-8','.js':'text/javascript; charset=utf-8','.mjs':'text/javascript; charset=utf-8','.css':'text/css; charset=utf-8','.json':'application/json; charset=utf-8','.png':'image/png','.webp':'image/webp','.jpg':'image/jpeg','.svg':'image/svg+xml','.mp4':'video/mp4','.woff2':'font/woff2','.ttf':'font/ttf','.webm':'video/webm' };
+let apiProcess = null, stopping = false, apiReady = !!attachedApi;
+
+function within(root, target) {
+  const relative = path.relative(root, target);
+  return relative !== '..' && !relative.startsWith('..' + path.sep) && !path.isAbsolute(relative);
+}
+async function realFile(root, relative) {
+  const candidate = path.resolve(root, relative);
+  if (!within(root, candidate)) throw Object.assign(Error('Invalid asset path'), { status: 404 });
+  const actual = await fs.realpath(candidate);
+  if (!within(root, actual) || !(await fs.stat(actual)).isFile()) throw Object.assign(Error('Asset not found'), { status: 404 });
+  return actual;
+}
+async function serveFile(req, res, file) {
+  const stat = await fs.stat(file);
+  res.writeHead(200, { 'Content-Type':types[path.extname(file)] || 'application/octet-stream','Content-Length':stat.size,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff' });
+  if (req.method === 'HEAD') { res.end(); return; }
+  const stream = createReadStream(file);
+  stream.on('error', () => res.destroy()); res.on('close', () => stream.destroy()); stream.pipe(res);
+}
+// Read-only preflight owns no server, child process or signal cleanup handlers.
+if(captureOnly)console.log(JSON.stringify({ok:true,privateInputCaptureOnly:true,apiSpawned:false,uiStarted:false,generatedInputSnapshot}));
+if(attachCheck!=='1'&&!captureOnly){
+const server = http.createServer(async (req, res) => {
+  try {
+    if (!['GET','HEAD'].includes(req.method)) { res.writeHead(405); res.end(); return; }
+    const url = new URL(req.url, origin);
+    if (url.pathname === '/') { res.writeHead(302, { Location: '/ui-generated-20261030/preview.html'+url.search }); res.end(); return; }
+    if (url.pathname === '/__preview/health') {
+      res.writeHead(200, { 'Content-Type':'application/json','Cache-Control':'no-store' });
+      res.end(JSON.stringify({ ok:true, pid:process.pid, apiPid:apiProcess?.pid||attachedApi?.pid||null, apiOwned:!attachedApi, attachedApi:!!attachedApi, attachKind:attachedApi?.kind||null, campaignId:attachedApi?.campaignId||null, liveScene:true, isolated:true, ephemeral:true, productionAccess:false, apiReady, sceneOrigin:origin, apiOrigin:`http://127.0.0.1:${apiPort}`, generatedInputsReadOnly:true,vfxFixture,qaDirectTradePeerEnabled:directTradePeerAccount!==null,qaDirectTradePeerAccount:directTradePeerAccount, generatedInputSnapshot })); return;
+    }
+    if (url.pathname === '/favicon.ico') { res.writeHead(204); res.end(); return; }
+    const requestPath = decodeURIComponent(url.pathname);
+    const vfxFile = vfxFiles.get(requestPath);
+    const directPublic=!!vfxFile||requestPath.startsWith(buttonMaterialPrefix)||hudMaterialPaths.has(requestPath)||staticArtFiles.has(requestPath)||fateStaticPath(requestPath);
+    if (requestPath.includes('\\') || requestPath.includes('\0') || requestPath.split('/').includes('..') || (!directPublic && !/^\/(?:ui-proto|ui-generated-20261030|map(?:[1-9]|1[0-2]))\//.test(requestPath))) {
+      res.writeHead(404); res.end('Asset not found'); return;
+    }
+    if (vfxFile) { await serveFile(req, res, await realFile(publicRoot, vfxFile)); return; }
+    const bound = directPublic ? null : await composeResponse(requestPath, grokRoot);
+    if (bound) {
+      // The peer actor is never selected by the ordinary preview. A dedicated
+      // QA flag plus a separate browser context/cookie opt into test actor 90201.
+      const qaRequestedActor = url.searchParams.get('qaDirectTradeAccount');
+      if (qaRequestedActor &&
+          (!bound.type.startsWith('text/html') || qaRequestedActor !== directTradePeerAccount)) {
+        res.writeHead(404); res.end('QA actor not enabled'); return;
+      }
+      const qaActorCookie = directTradePeerAccount !== null &&
+        String(req.headers.cookie || '').split(';').some(x => x.trim() === 'rpg_qa_dt_actor=90201');
+      const actorAccount = qaRequestedActor || (qaActorCookie ? '90201' : '90101');
+      const qaCookieHeader = qaRequestedActor ? {'Set-Cookie':'rpg_qa_dt_actor=90201; Path=/; SameSite=Lax'} : {};
+      let body = bound.type.startsWith('text/html') ? bound.body.replace('<head>', '<head>' + injectedForAccount(actorAccount)).replace(/<title>[^<]*<\/title>/, '<title>星穹旅誌・真實出征整合</title>') : bound.body;
+      if(bound.type.startsWith('text/html'))body=body.replace('<script src="'+socialPrefix+'scene-social-preview.js"></script>','<script src="'+socialPrefix+'scene-window-manager.js"></script><script src="'+socialPrefix+'scene-social-preview.js"></script>');
+      if (bound.type.startsWith('text/html') && !body.includes('window.__RpgScenePreviewConfig=')) throw Error('Scene configuration hook changed');
+      res.writeHead(200, { 'Content-Type':bound.type,'Cache-Control':'no-store','X-Content-Type-Options':'nosniff',...qaCookieHeader,'X-Scene-Integration':'20261104','X-Scene-Generated-Mode':generatedInputSnapshot.mode,...(generatedInputSnapshot.id?{'X-Scene-Input-Snapshot':generatedInputSnapshot.id}:{}) });
+      res.end(req.method === 'HEAD' ? undefined : body); return;
+    }
+    let file;
+    if (directPublic) file = await realFile(publicRoot, requestPath.slice(1));
+    else if (requestPath.startsWith(socialPrefix)) {
+      const name = requestPath.slice(socialPrefix.length);
+      if (virtualSocial.has(name)) file = await realFile(publicRoot, name);
+      else if (angelFiles.has(name)) file = await realFile(publicRoot, `art/hud-angels-20261102/${name}`);
+    }
+    if (!file) file = await realFile(grokRoot, requestPath.slice(1));
+    await serveFile(req, res, file);
+  } catch (error) {
+    if (res.headersSent) { res.destroy(); return; }
+    const status = error.status || (error.code === 'ENOENT' ? 404 : 503);
+    if (status !== 404) console.error(error.stack || error.message);
+    res.writeHead(status, { 'Content-Type':'text/plain; charset=utf-8','Cache-Control':'no-store' });
+    res.end(status === 404 ? 'Asset not found' : '整合預覽正在更新，請稍後重新整理。');
+  }
+});
+server.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });
+server.listen(port, '127.0.0.1', () => {
+  if(attachedApi){
+    console.log(JSON.stringify({url:origin,api:apiOrigin,localOnly:true,generatedInputsReadOnly:true,generatedInputSnapshot,pid:process.pid,apiPid:attachedApi.pid,apiOwned:false,attachedApi:true,attachKind:attachedApi.kind||'preserve-exact-fate-api',campaignId:attachedApi.campaignId||null,stateSha256:attachedApi.stateSha256}));
+    return;
+  }
+  apiProcess = spawn(process.execPath, [path.join(here,'atlas-local-preview.mjs'),`--port=${apiPort}`,`--preview-origin=${origin}`, ...(vfxFixture ? ['--vfx-fixture=' + vfxFixture] : [])], { cwd:repo, stdio:['ignore','pipe','pipe'], windowsHide:true });
+  apiProcess.stdout.on('data', chunk => { process.stdout.write(chunk); if (chunk.toString().includes('"isolated":true')) apiReady = true; });
+  apiProcess.stderr.on('data', chunk => process.stderr.write(chunk));
+  apiProcess.on('error', error => { console.error(error.message); stop(); process.exitCode = 1; });
+  apiProcess.on('exit', code => { apiReady = false; if (!stopping) { console.error('Isolated Atlas service exited: ' + code); stop(); process.exitCode = 1; } });
+  console.log(JSON.stringify({ url:origin, api:`http://127.0.0.1:${apiPort}`, localOnly:true, generatedInputsReadOnly:true, generatedInputSnapshot, pid:process.pid, apiPid:apiProcess.pid }));
+});
+function stop() {
+  if (stopping) return; stopping = true;
+  server.closeAllConnections(); server.close();
+  if (!attachedApi && apiProcess && apiProcess.exitCode === null) apiProcess.kill();
+}
+process.once('SIGINT', stop); process.once('SIGTERM', stop);
+}

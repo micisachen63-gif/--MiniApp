@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-04T09:49:30.621Z",
+  "status": "passed-composed",
+  "base": "8a2e445fcb4735d2dda4b4ed57d44550dad01f69",
+  "buttonSource": "b8197b3ddb20fab044df508daccbae86c57c819b",
+  "scope": "Local integration of generated button materials with completed skill VFX preview; production unchanged.",
+  "initialMatrix": {
+    "cases": 30,
+    "passed": 24,
+    "failed": 6,
+    "blockedWrites": 0,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "failedAssets": 0,
+    "materials": 2,
+    "sourceStable": true,
+    "evidence": "ui-initial.json",
+    "finding": "All six failures were the VFX collapse control below 44px."
+  },
+  "fix": "Scoped 44x44 collapse control in scene-social-preview.css.",
+  "affectedSceneRecheck": {
+    "targetedSceneCases": 6,
+    "viewports": 3,
+    "passed": 3,
+    "checks": 765,
+    "failedChecks": 0,
+    "pageErrors": 0,
+    "httpErrors": 0,
+    "blockedRequests": 0,
+    "failedAssets": 0,
+    "sourceStable": true,
+    "materialsValid": true,
+    "pass": true,
+    "sceneCases": 6,
+    "meaning": "765 geometry/state checks across six scenes in three viewports; not 765 independent tests.",
+    "evidence": "ui-targeted-final.json"
+  },
+  "routeTests": {
+    "tests": 3,
+    "passed": 3,
+    "failed": 0,
+    "evidence": "asset-route-tests.tap"
+  },
+  "liveVfx": {
+    "cases": [
+      {
+        "build": "sword_whirlwind",
+        "width": 390,
+        "passed": true,
+        "traceCount": 13
+      }
+    ],
+    "errors": [],
+    "badResponses": [],
+    "sourceChangedDuring": [],
+    "evidence": "vfx-phone.json",
+    "execution": "vfx-phone-execution.json"
+  },
+  "sourceAndMaterials": {
+    "coverageSha256": "7672c8f05e2b22215451f05aa68048cd9848ace5f2ec30c6babd732e0eefb0c8",
+    "vfxSourcesUnchanged": 65,
+    "materialCount": 2,
+    "evidence": "source-and-assets.json"
+  },
+  "limits": [
+    "The final CSS was verified with affected-case reruns, not a fresh complete 30-case run.",
+    "Only one live VFX phone case reran; the full 196-skill evidence remains attributed to the original VFX base.",
+    "Chrome viewports are not physical-device GPU/Telegram verification."
+  ],
+  "screenshots": [
+    "navigation-desktop.png",
+    "navigation-phone.png",
+    "desktop-final.png",
+    "phone-final.png"
+  ],
+  "archive": "archive-index.json"
+}

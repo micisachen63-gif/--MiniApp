@@ -1,0 +1,112 @@
+天使／守護天使主浮窗整合（2026-11-05）
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-angel-integration-20261105
+分支：codex/angel-integration-20261105
+承接星環本機提交：4d21478b7287e305aa7d0cab9740207042bc05df
+
+本報告在本機提交前寫入。最終提交與精確 HEAD 全套驗證，請查 .release-sync/angel-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json，以及 D:/StarJournal/handoff/non-character/angel-integration-20261105/STATUS.json／FINAL_STATUS.md。不得把提交前 focused／browser 結果冒充完整 gate。
+
+一、完成範圍與入口
+
+角色選單「守護天使」與營地召喚入口接入既有共用主浮窗，使用守護、召喚、背包、融合、背景、紀錄六頁。背包包含原販售模式，所有流程沿用同一近透明視窗。頁面包含伺服器報價、原成本、原結果與收據查詢。
+
+11 種 mutation：welcome、summon、fuse、activate、lock、unbind、assist、sale、auto-start、auto-stop、auto-seen。支援帳號首次贈禮、普通／精選單抽／五連／十連、羽毛啟用／卸下、鎖定／解除、解綁、融合、參戰／暫停／恢復／續召／金幣補給／購石、販售、帳號背景召喚及原紀錄。
+
+二、保留原玩法、成本與權威
+
+首次普通額度仍為帳號一次、原 Lv15 門檻及 200 次，明確確認後才由原 welcome trigger 發放。只查看視窗、重新整理、歷史、收據或凍結世界不會領取。額度仍歸原 recipient，不改成每角色／每日／切角重領。
+
+普通召喚優先使用原免費額度；部分免費與十連費用由 live config 報價。精選保留憑證及 credits 餘額守恆。原每日首領憑證限制、伺服器設定覆寫、隨機品質、融合成功機率、主羽毛與綁定繼承不改動。
+
+融合保存完整材料與 primaryId。跨 cursor 選取只在同一角色 revision 保留；完整背包 eligible counts 與單頁結果分開顯示。啟用、鎖定、交易／交易所保管與保留參戰次數等保護由原權威推導。販售沿原價格及 expectedGold 核對。
+
+參戰沿原服務保留剩餘戰數；暫停與恢復同一羽毛沿用次數，切羽毛、續召與補給旗標明確確認。背景召喚為帳號擁有、指定來源角色的原 job；目前控制角色與來源角色分開，0 元預算與 null 無上限不混淆。原 3000 ms cadence、目標／資源／預算／停止原因與 runner 保留。
+
+三、API、純讀與交易收據
+
+新增 guardian/scene、guardian/receipt、guardian/action-scoped。App／Service 路由驗證 captured realm、account、目前 character，X-Realm-Id 與 body realm 一致，selectedCharacterId 明確。可信 scene:app／scene:service namespace 由路由固定，不採信 body 自稱 namespace。
+
+scene／receipt 僅 SELECT，不呼叫 inventory、ensureWelcome、withPlayer、step、sweep 或 behavior 寫入。scene 回傳實際設定、資源、背包分頁、報價、保護原因、帳號背景作業與原來源、原 operations 與 typed receipt summaries。
+
+每筆操作保存完整 canonical signature、scope 與原 request ID，typed receipt 在原最後交易 batch 一起提交：
+- Sigil 對原 result_json、cost_json、payload_hash、主 ledger 與逐件取得／消耗 ledger。assist 原 SQL action=activate、結果 action=assist 的映射不改。
+- Sale 對原 ledger、完整物品與售價；Welcome 對原帳號 grant、recipient 與 trigger ledger。
+- Auto 在原 batch 擷取指定 job 當時快照、原 jobRequestId；後續 runner、seen 或新 job 不替換舊收據結果。
+
+新入口對原 write batches 加 captured actor guard，舊 API／原 request 格式與 runner 保持相容。原 withPlayer 在 GameError 前可能已提交合法 idle settlement；最後 typed receipt 不存在，不等於前面完全沒有寫入。
+
+四、前端恢復與審查修正
+
+新操作先完整持久保存並讀回 pending body／wireBody／ID／scope／signature，再送出。未知結果或查無收據都保留原 pending；只有明確確認，才重試同 ID 與完整原內容。重新整理、重開、查詢、切角色不自動重送或 seen。
+
+epoch、身分與 revision 隔離角色／世界切換；A→B→A 舊回覆不更新新視窗。歷史頁從原 App typed signature 重建完整 body，純讀原收據，不建立或清除 pending；Service namespace 紀錄不冒充 App 查詢。
+
+獨立審查發現並完成兩個產品修正：
+1. A 的 welcome 尚未送達，B 先領取；A 之後同 ID 恢復可合法取得 actor=A、recipient=B 的 no-op 收據。現在分別核對並顯示實際 recipient，維持 A=0、B=200、一次 grant。
+2. cached pending 存在時，持久資料若變為壞 JSON／schema，cache 只供顯示或純讀。save／mark／ack／clear 必須重新讀到同一完整 canonical 操作，不會覆寫或刪除壞原文；同 ID 不同 body 的晚到回應也不能清除當前紀錄。
+
+五、focused 與實際契約橋
+
+後端最終 43／43：23 domain／transaction、4 App／Service API、11 原 mechanism、5 原 VM 相容測試；0 fail/cancel/skip。既有 VM 測試只補真正新增的 import/context binding，未改斷言。
+
+修正後 UI／shared session／root 真 SQLite 契約橋 153／153：UI 71、shared session 78、root 4；0 fail/cancel/skip，7 個驗證輸入前後 SHA 一致。契約橋使用真正 UI client、Session JSON/header 序列化與原 SQLite 服務，不在假 transport 補缺欄位。涵蓋 11 種操作、0／null／false、原隨機結果斷線恢復、指定舊 job、真實費用／販售與跨 recipient welcome 恢復。
+
+以上 focused 數量不能加總到完整 Worker／BOT gate，也不能取代最終提交的全套驗證。
+
+六、隔離實際瀏覽器驗證
+
+保存48份原始run：43 passed，5份原failed完整保留。共35筆唯一原UI操作、11種kind、45 checks、126張圖、21組雙96表純讀檢查、8個明示clock／原runner commands。35筆為welcome1、summon8、fuse3、activate2、lock2、unbind1、assist11、sale1、auto-start4、auto-stop1、auto-seen1。
+
+販售真提交後丟回應、A→B→A查回原收據；查無收據保留原pending，只有明確同ID／完整body恢復後才召喚一次。auto啟動0批、due scene不step／seen；關窗後原step，nextAt前1ms不變、原3000ms到期才下一批。同帳他角stop／seen保留目前actor與原source角色差異，原job快照不被新作業替代。四個job分別手動停止、預算0、資源不足、達成目標；預算／資源均0批，目標首次原抽取g4003a84cf2ec-0、1憑證／0金。A→B→A晚到200及預期409隔離通過，最後三尺寸六頁與實際history receipt純讀完成。
+
+48案各自216來源前後穩定，跨案215相同，唯一變動為harness的6個版本；qa-final-source-bridge.json核對最終候選06。43個passed run的page／非預期HTTP／route／external errors皆0，預期409為1；正式assetCaptureGaps為0。原failed另保留1筆非預期409及5筆CDP body讀取錯誤，不能刪除或併稱全數零錯誤。5筆涉及4個不同角色PNG，舊status／headers／body未保存，均為unknown，未補抓SHA。
+
+最終原UI24476／API49228仍存活，QA clock1793857407334。permanent outbox3、season0，分別1筆featured與2筆fuse原公告，均未claim／deliver、實際外送0。最終資料與逐案原件索引見qa-summary.json（SHA90779c15c8e4ffdd9ec5ade052141f704040ecd3b0c0520b029bc7b2fa527d63）。
+
+QA UI：http://127.0.0.1:9783；API：http://127.0.0.1:9782。只有本批 owned PIDs，既有其他工作樹與預覽保留。兩個 realm 使用各 96 表的隔離記憶體 DB，測試身分與初始素材明確標記；FK 初始 operation anchor 為 fixtureOnly／notAReceipt／synthetic-initial-input，並非先前成功召喚。
+
+原 welcome／交易所保管初始化另存 setup receipt。每筆新操作都由實際 UI／原服務產生；送出前保存 body、actor、sources、雙 DB，成功回覆先保存原結果再做畫面斷言。工具逾時、查詢失敗或 assertion 失敗不能重播成功消費。
+
+RPG_GUARDIAN_QA 與 owned snapshot 雙重 opt-in，固定九個共享文字輸入的原 bytes／composed response，不修改 shared grok 原檔。不宣稱其他素材全域凍結。其他資源記錄實際 HTTP 與 SHA；body 取回缺口另列。背景驗證用明示 development clock 與原 step／sweep，不把推鐘說成自然等待。
+
+原精選召喚／融合可能建立尚未派送的公告 outbox；這是原玩法資料，不代表已對外通知。隔離 API 禁止 outbound fetch，所有實際外送觀測另核對。
+
+七、獨立對帳與人工畫面
+
+後端獨立初審核對 welcome／normal1 共 57 項；增量審查 21 份原件／19 筆原操作，沿用 367 項共通比對並完成 292 項玩法對帳，均無剩餘產品或資源差異。這是保存原件的離線對帳，不是額外測試執行數。原審查腳本對零成本取負產生的 -0 差異已單獨保留診斷，只正規化衍生算術值，不轉換原 body／receipt／DB 的 null、false、string 或 0。
+
+原費用與物品核對：付費十連8,500金；白／紅／金融合4／4／6材料、250／3,400／6,800金，三次皆第一次原自然成功且沒有重抽；解綁2卷；首次參戰1石給1,440場、同羽毛恢復0石；購石2顆6,000金；sale exact actor/event_id/result 的唯一原ledger 0→1、2件售出、+130金。完整逐件 ID、fingerprint、綁定、材料移除、其他角色不變與季節 DB 對帳見 backend-browser-evidence-review-initial.json／backend-browser-evidence-review-followup.json。
+
+root 實際目視紀錄保存在 root-visual-review.json；320／390／1280 的版面與 >=44px 主控制幾何由 layout 原件保存。畫面審閱涵蓋共用視窗、資源、首次贈禮確認與原結果、4／6 材料融合、販售確認／原收據恢復、未知／查無收據保留，以及同帳其他角色停止來源角色 job。此審閱範圍為守護視窗，不宣稱角色／FX 全局驗收。
+
+八、保留失敗與精確接續
+
+原診斷、失敗與成功接續分開保存，不把失敗覆寫成通過：
+- Backend 初始重複 export 語法錯誤及 snapshot binder 多餘 EOF 空行已修，原件保留。
+- pure-01：五組純讀已通過，之後 harness 跨 realm 使用錯 actor 收到真 409；沒有 Guardian 消費，另保留4筆舊角色PNG CDP body錯誤。choose 改為先純讀實際 active actor，再走原選角。
+- pure-tail-01：功能純讀完成，因 CDP 無法取回舊角色 PNG body 整段保留 failed。舊觀察器未保存 status/headers，pure-01與pure-tail合計5筆（4張不同PNG）的body／status／headers均仍unknown。新 harness 僅對指定同源角色 PNG/WebP、實際 2xx/image MIME 與明確 CDP retired-body 錯誤記 metadata/error/sha:null；產品 JS/CSS、四個羽毛、九個文字與真 HTTP/page/route 錯誤仍嚴格。
+- activate-01：指定物品移到下一頁，harness 未送出即失敗。改經實際下一頁按鈕找 exact ID，雙 DB 前後不變；activate-cursor 才是第一次成功啟用。
+- activate-null-01：卸下原已成功，舊 assertion 錯把其他角色 active 納入。限定 captured actor 並確認其他角色物品逐筆不變；原 sg_2c117578a84c4e779fb14ecc266db298／g4c380730f1b7 只做 receipt-only 橋接，未再卸下。
+- auto-resources-start-01：原 sg_83ec9469cbff4644be53e1151f19fa69／job 230648a6-d559-4848-8b44-bbcbf2c4f21b 已成功啟動，後續純讀 state fetch failed，原 failed 留存。恢復時原 API PID、fixture、clock 與雙96表均等於已保存 op.after；angel-auto-resources-receipt-01 純讀橋接通過、0寫入／runner。候選06新增明示 --job-bridge-run，只接受指定原failed SHA、完整body／actor／result／typed receipt／job ID、同PID／fixture／clock與前後／當前全DB一致的passed純讀橋接，再續同一原job；缺項立即停止，不能重start或把原failed改passed。
+
+候選 01→06 只有 guardian-browser.cjs 的逐項修補，產品始終不變；每個 run 的 216 sources 在該 run 內前後核對，不將不同 harness 版本說成一個相同來源的整批執行。最終候選與接續 source bridge 以 manifest／QA summary 為準。MCP 中斷先查原 intent、PID、receipt 與原件，再接未完成段落。
+
+九、完整 gate 首輪與最小相容修正
+
+首提交29120c3f0aa4f5d5af1135fffebe37d7cda1506c的完整gate於2026-11-05 15:13:45（台灣）結束：Worker299檔、3239測試／3236通過／3失敗，0cancel／skip／todo；BOT尚未執行。2354來源前後相同，原HEAD／branch／clean有效。失敗receipt封存為full-final-head-gate-attempt-01-receipt.json（SHA d2c7e4c03e43714d76eac09a0947d2c975536b48b4acd2235c4ffae920d465f2），原不可變output receipt／TAP保留，沒有把首輪改為passed。
+
+三敗均在scene-preview-assets.test.js的同一VM初始化：process stub缺少真實Node一定存在的env，讀取RPG_GUARDIAN_QA時TypeError，尚未進入原資產安全斷言。唯一修正是在該test fixture補env:{}，表達QA旗標未開；preview產品、雙opt-in與所有GET/HEAD/MIME/headers、traversal/backslash/NUL、public realpath／檔案／禁止fallback與spawn斷言均不變。
+
+只重驗該檔3／3通過，0fail/cancel/skip/todo，5個驗證輸入SHA前後相同；診斷vm-process-env-fixture-fix-01.json，完整TAP另存。新增一個原測試fixture變更後，本批為25個code/test/tool候選＋2文件，共27檔。產品與216個browser來源仍相同，沒有重跑已成功的35筆操作。
+
+此補記在修正提交及第二輪完整gate之前保存；最後成功狀態必須以新的精確HEAD全套收據為準，不能用首輪3236通過或focused3代替。第二輪使用獨立attempt02 intent/log，必須先驗原失敗收據SHA及新的直接子提交，禁止同HEAD盲重試。
+
+十、交接、發布與下一批
+
+D:/StarJournal/START_HERE.md 是入口；主 STATUS.json、LATEST.md、history、本批 STATUS／FINAL_STATUS 保存可恢復狀態。沿用 StarJournal-NonCharacter-Checkpoint-30m 與 StarJournal-AtlasSupply-Checkpoint-30m 的 PT30M 排程，重要里程碑立即 checkpoint，不重建重複排程。
+
+僅本機隔離整合；未 push、PR、merge、部署、修改正式 DB／Secrets／migration／flags，未外送訊息。先前遠端發布的自動核准限制繼續保留，不能以後代分支繞過。
+
+命運下一批 F1 計畫已盤點 200 來源、22 routes、14 domain tables、45 既有測試檔，未執行命運測試／mutation。F1 規劃原 RANDOM mode 的個人命運生命→選擇→完成→保存→四世贈禮，5 mutation kinds；純讀不能重用原有會推生命／social/outbox 的 me/state。帳號每日4次、角色 active life、原 clock/90秒選擇、domain revision、精確 giftId 與原 RNG 參數須保存。生日／個人檔案 F2，合作／分享 F3；未同意保存的生日不能照抄 canonical receipt 而持久保存。計畫只有在本批精確 HEAD gate 通過後，才改為可開始。
+
+交易、衣櫥、完整帳務、角色／FX／星紋 aura、正式 Telegram 宿主／真手機與正式經濟驗收等既有待辦保留，詳主 STATUS 未完成清單。

@@ -1,0 +1,12 @@
+{
+  "scope": "non-render-audit-evidence-path-portability",
+  "beforeSha256": "af0e493bc0e714689121643adf62e74f428781831e0a8d536b8363ae34cc60cf",
+  "afterSha256": "d592e573338fc71b906b8b56b2ce8fa2ca2fb7ffc74a9f5738770f74329dacac",
+  "changes": [
+    "Resolve and hash tracked screenshots beside archived byte-exact receipt",
+    "Prefer tracked original planning source and verify its byte-exact provenance",
+    "Link rejected-v1 history to tracked archive"
+  ],
+  "renderSourcesModified": false,
+  "errorAndSourceGuardsUnchanged": true
+}

@@ -1,0 +1,262 @@
+TAP version 13
+# Subtest: accepts a committed cast and forwards presentation only
+ok 1 - accepts a committed cast and forwards presentation only
+  ---
+  duration_ms: 15.7203
+  type: 'test'
+  ...
+# Subtest: rejects summaries, synthetic sources, and unsupported versions
+ok 2 - rejects summaries, synthetic sources, and unsupported versions
+  ---
+  duration_ms: 0.3555
+  type: 'test'
+  ...
+# Subtest: requires an exact account, realm, character, and dispatch context
+ok 3 - requires an exact account, realm, character, and dispatch context
+  ---
+  duration_ms: 0.2709
+  type: 'test'
+  ...
+# Subtest: rejects missing metadata, invalid revisions, and invalid timestamps
+ok 4 - rejects missing metadata, invalid revisions, and invalid timestamps
+  ---
+  duration_ms: 0.2334
+  type: 'test'
+  ...
+# Subtest: rejects invalid coordinates, directions, body sizes, targets, and seed
+ok 5 - rejects invalid coordinates, directions, body sizes, targets, and seed
+  ---
+  duration_ms: 0.5106
+  type: 'test'
+  ...
+# Subtest: rejects expired and implausibly future events
+ok 6 - rejects expired and implausibly future events
+  ---
+  duration_ms: 0.3691
+  type: 'test'
+  ...
+# Subtest: rejects unknown skill IDs before onCast or player.play
+ok 7 - rejects unknown skill IDs before onCast or player.play
+  ---
+  duration_ms: 1.3049
+  type: 'test'
+  ...
+# Subtest: explicit skill allowlist can narrow the player catalog
+ok 8 - explicit skill allowlist can narrow the player catalog
+  ---
+  duration_ms: 0.3311
+  type: 'test'
+  ...
+# Subtest: prevents duplicate events while asset loading and after acceptance
+ok 9 - prevents duplicate events while asset loading and after acceptance
+  ---
+  duration_ms: 5.1938
+  type: 'test'
+  ...
+# Subtest: permits distinct events in one revision and rejects lower revisions
+ok 10 - permits distinct events in one revision and rejects lower revisions
+  ---
+  duration_ms: 0.5188
+  type: 'test'
+  ...
+# Subtest: simultaneously admitted immediate casts retain their accepted outcomes
+ok 11 - simultaneously admitted immediate casts retain their accepted outcomes
+  ---
+  duration_ms: 0.4395
+  type: 'test'
+  ...
+# Subtest: context change aborts an authored release hook without starting the old cast
+ok 12 - context change aborts an authored release hook without starting the old cast
+  ---
+  duration_ms: 0.3836
+  type: 'test'
+  ...
+# Subtest: late asset completion cannot render after switching characters
+ok 13 - late asset completion cannot render after switching characters
+  ---
+  duration_ms: 0.1778
+  type: 'test'
+  ...
+# Subtest: reapplying the same context preserves replay protection and animations
+ok 14 - reapplying the same context preserves replay protection and animations
+  ---
+  duration_ms: 0.1086
+  type: 'test'
+  ...
+# Subtest: context changes reset dispatch revision and seen IDs
+ok 15 - context changes reset dispatch revision and seen IDs
+  ---
+  duration_ms: 0.1072
+  type: 'test'
+  ...
+# Subtest: event expiry during a release hook prevents playback
+ok 16 - event expiry during a release hook prevents playback
+  ---
+  duration_ms: 0.1076
+  type: 'test'
+  ...
+# Subtest: canStart rejects an event that ages out while textures load
+ok 17 - canStart rejects an event that ages out while textures load
+  ---
+  duration_ms: 0.1276
+  type: 'test'
+  ...
+# Subtest: a newer pending revision prevents stale cast admission
+ok 18 - a newer pending revision prevents stale cast admission
+  ---
+  duration_ms: 0.1504
+  type: 'test'
+  ...
+# Subtest: onCast may supply authored geometry but cannot change the skill ID
+ok 19 - onCast may supply authored geometry but cannot change the skill ID
+  ---
+  duration_ms: 1.3918
+  type: 'test'
+  ...
+# Subtest: invalid hook geometry and hook failures do not reach the player
+ok 20 - invalid hook geometry and hook failures do not reach the player
+  ---
+  duration_ms: 1.2446
+  type: 'test'
+  ...
+# Subtest: a rejected player result does not advance the accepted revision or consume an ID
+ok 21 - a rejected player result does not advance the accepted revision or consume an ID
+  ---
+  duration_ms: 0.2665
+  type: 'test'
+  ...
+# Subtest: bounded replay memory rejects overload instead of evicting recent IDs
+ok 22 - bounded replay memory rejects overload instead of evicting recent IDs
+  ---
+  duration_ms: 0.5542
+  type: 'test'
+  ...
+# Subtest: clear cancels playback while retaining accepted event replay protection
+ok 23 - clear cancels playback while retaining accepted event replay protection
+  ---
+  duration_ms: 0.1565
+  type: 'test'
+  ...
+# Subtest: destroy is idempotent and rejects all further events
+ok 24 - destroy is idempotent and rejects all further events
+  ---
+  duration_ms: 0.107
+  type: 'test'
+  ...
+# Subtest: without an active dispatch context, no event can play
+ok 25 - without an active dispatch context, no event can play
+  ---
+  duration_ms: 0.9861
+  type: 'test'
+  ...
+# Subtest: preview server is read-only and rejects traversal and out-of-root links
+ok 26 - preview server is read-only and rejects traversal and out-of-root links
+  ---
+  duration_ms: 181.9368
+  type: 'test'
+  ...
+# Subtest: catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+ok 27 - catalogue has complete implemented identities and keeps proposals and passive modifiers separate
+  ---
+  duration_ms: 7.4211
+  type: 'test'
+  ...
+# Subtest: all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+ok 28 - all 196 identities stay finite and bounded in four directions, all phases and both quality settings
+  ---
+  duration_ms: 382.9527
+  type: 'test'
+  ...
+# Subtest: clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+ok 29 - clips reproduce a seed, advance through visibly different frames, and normalize nonfinite progress safely
+  ---
+  duration_ms: 31.1849
+  type: 'test'
+  ...
+# Subtest: directional projectiles actually travel toward the selected direction at a common body scale
+ok 30 - directional projectiles actually travel toward the selected direction at a common body scale
+  ---
+  duration_ms: 0.5108
+  type: 'test'
+  ...
+# Subtest: pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+ok 31 - pure heals, buffs and defensive casts cannot produce effects on an unrelated enemy target
+  ---
+  duration_ms: 4.889
+  type: 'test'
+  ...
+# Subtest: damaging shield and time skills retain a visible target impact rather than only a caster ornament
+ok 32 - damaging shield and time skills retain a visible target impact rather than only a caster ornament
+  ---
+  duration_ms: 0.9448
+  type: 'test'
+  ...
+# Subtest: beasts and summons stay upright in every direction and mirror only when traveling left
+ok 33 - beasts and summons stay upright in every direction and mirror only when traveling left
+  ---
+  duration_ms: 8.4432
+  type: 'test'
+  ...
+# Subtest: draw plans use valid atlas rectangles and leave the canvas save stack balanced
+ok 34 - draw plans use valid atlas rectangles and leave the canvas save stack balanced
+  ---
+  duration_ms: 1.5329
+  type: 'test'
+  ...
+# Subtest: clear prevents a cast waiting on an atlas from reappearing after character changes
+ok 35 - clear prevents a cast waiting on an atlas from reappearing after character changes
+  ---
+  duration_ms: 2.1499
+  type: 'test'
+  ...
+# Subtest: a later manual frame supersedes an earlier atlas load without stale redraw
+ok 36 - a later manual frame supersedes an earlier atlas load without stale redraw
+  ---
+  duration_ms: 1.5789
+  type: 'test'
+  ...
+# Subtest: player capacity bounds concurrent casts and reuses only one atlas load per class
+ok 37 - player capacity bounds concurrent casts and reuses only one atlas load per class
+  ---
+  duration_ms: 1.8575
+  type: 'test'
+  ...
+# Subtest: invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+ok 38 - invalid capacity options retain a finite hard cap instead of silently allowing unlimited casts
+  ---
+  duration_ms: 3.173
+  type: 'test'
+  ...
+# Subtest: destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+ok 39 - destroy cancels pending atlas work promptly and causes no late callbacks or retained handlers
+  ---
+  duration_ms: 1.3064
+  type: 'test'
+  ...
+# Subtest: destroy also cancels a manual frame awaiting its atlas without reporting an application error
+ok 40 - destroy also cancels a manual frame awaiting its atlas without reporting an application error
+  ---
+  duration_ms: 0.9023
+  type: 'test'
+  ...
+# Subtest: hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+ok 41 - hidden pages and reduced motion clear live effects and preserve a low-motion bounded plan
+  ---
+  duration_ms: 2.476
+  type: 'test'
+  ...
+# Subtest: late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+ok 42 - late loads, expired events, and a changed actor admission gate cannot start obsolete effects
+  ---
+  duration_ms: 0.7296
+  type: 'test'
+  ...
+1..42
+# tests 42
+# suites 0
+# pass 42
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 638.6273

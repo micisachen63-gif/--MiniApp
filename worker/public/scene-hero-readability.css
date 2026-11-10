@@ -1,0 +1,10 @@
+/* Notifications remain in the HUD margin rather than covering the hero. */
+html.hero-readable #toasts{top:max(112px,14dvh);left:calc(10px + var(--sal));width:min(300px,calc(45% - 16px));pointer-events:none}
+html.hero-readable #toasts .toast:not(:last-child){display:none}
+html.hero-readable #toasts .toast{height:40px;min-height:40px;max-height:40px}
+html.hero-readable #toasts .toast .em{width:28px;height:28px;min-width:28px;margin-left:0}
+html.hero-readable #toasts .toast .tx{min-width:0;padding:5px 9px 5px 12px}
+html.hero-readable #toasts .toast .tx b,html.hero-readable #toasts .toast .tx span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:15px}
+html.hero-readable #toasts .toast .tx b{font-size:12px}
+html.hero-readable #toasts .toast .tx span{font-size:10px}
+@media(max-height:500px){html.hero-readable #toasts{top:70px;width:min(260px,30%)}html.hero-readable #toasts .toast .tx span{display:none}html.hero-readable #toasts .toast{height:30px;min-height:30px;max-height:30px}}

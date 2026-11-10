@@ -1,0 +1,209 @@
+{
+  "scope": "awakening-vfx-browser",
+  "presentationRevision": "ornate-v2",
+  "startedAt": "2026-11-05T06:28:35.035Z",
+  "finishedAt": "2026-11-05T06:29:29.287Z",
+  "base": "http://127.0.0.1:9894",
+  "complete": false,
+  "pass": false,
+  "previewOnly": true,
+  "sourceId": null,
+  "liveCatalogSkills": 196,
+  "sources": [
+    {
+      "path": "worker/public/skill-vfx-engine.mjs",
+      "bytes": 46706,
+      "sha256": "20c8e9d56542d07b9d1034de61b181e050d897b3e49e6c087e2f94dcb9bcb69f"
+    },
+    {
+      "path": "worker/public/skill-vfx-semantics.mjs",
+      "bytes": 22636,
+      "sha256": "28fa6b13f28d8f12883e944a65bd702e7aba352e9fb347a6c3024debe0461101"
+    },
+    {
+      "path": "worker/public/skill-vfx-catalog.json",
+      "bytes": 450626,
+      "sha256": "2c34637c1b6d75bf842cd573cfaa6032061d9b02760a8d9215f25d4409e06bd9"
+    },
+    {
+      "path": "worker/public/awakening-vfx-data.mjs",
+      "bytes": 8727,
+      "sha256": "060531a9b4cbbff02e28936bd0b16f5cf0b2a4fc18fae6c3edf7563effda8a1e"
+    },
+    {
+      "path": "worker/public/awakening-vfx-engine.mjs",
+      "bytes": 28985,
+      "sha256": "545bafea9a780aa02f84784c26e43b9be6efc1c55fb4e3b7ad5f08ab15990b12"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.html",
+      "bytes": 6214,
+      "sha256": "7eb59042331757354789f2a72a681d9f1917fda00d4cdcb5cc5861f8bb53a5e5"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.css",
+      "bytes": 16294,
+      "sha256": "3396c7d4e0dfaf663ba86da6e246af68371f5ec06337b5190c684be828f3b7e6"
+    },
+    {
+      "path": "worker/public/awakening-vfx-preview.mjs",
+      "bytes": 12999,
+      "sha256": "35aff3d368ea1917017f212d65bb26ac660ab5f8cec5bb48bf1a73cbfaa7f5e1"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-preview-server.mjs",
+      "bytes": 2790,
+      "sha256": "4a9f0cbac32970015c3872bacea0119ab9d372d8adbbcaae57f50387d142b1e8"
+    },
+    {
+      "path": "worker/test/awakening-vfx-engine.test.js",
+      "bytes": 7646,
+      "sha256": "165e147f3e327c9a1680a2394fdd3ca63eeb5bcc6c969eef4baaf82d45326043"
+    },
+    {
+      "path": "worker/tools/awakening-vfx-browser.mjs",
+      "bytes": 16504,
+      "sha256": "5f1e23e67fb1979710e662e7b94b3db762ef7a2ee43559d9b98de0bf7946c105"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/sword-atlas.webp",
+      "bytes": 668976,
+      "sha256": "ad42b7a94774f54cce881f8f371bf5dd72fa79d59842449c948cbcad2ef17558"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/archer-atlas.webp",
+      "bytes": 669942,
+      "sha256": "ceb948f37e1a8b2237d487288b91d1150654880d66cf5081c06a4b84394de80d"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/mage-atlas.webp",
+      "bytes": 697614,
+      "sha256": "9b6335b16eabd502a419b60654c7165a0ab06a98913fcd3a5920fe64635aaccb"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/thief-atlas.webp",
+      "bytes": 586874,
+      "sha256": "cf803b2a081c8f10e2cd6778c41f9cfe5f229ab1c15526cca645e2af6c19ba05"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+      "bytes": 591828,
+      "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+    },
+    {
+      "path": "worker/public/art/skill-vfx-20261104/hawk.webp",
+      "bytes": 112014,
+      "sha256": "00432ed0652c0903bfdf9ce9e76a3db5a91dc0383e6a33923f3b447dfc204825"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/sword-awakening-atlas.webp",
+      "bytes": 481434,
+      "sha256": "89f58858e2b5983ec156641890c57f14600e7ac0fc5f67f593777ea7efca7d5f"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/archer-awakening-atlas.webp",
+      "bytes": 524642,
+      "sha256": "6c2a2bc09057381af560ca09a62c6e79e87b282a628e965bb1048b31812b9b88"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/mage-awakening-atlas.webp",
+      "bytes": 487604,
+      "sha256": "28b2939fdf056847e9e92b1fcd8977295e0d9c40a4dfa8e7959646e6574ff835"
+    },
+    {
+      "path": "worker/public/art/awakening-vfx-20261105/thief-awakening-atlas.webp",
+      "bytes": 499362,
+      "sha256": "36aeedb013c938ebb5cb0bae369a15661336d5cb87fa150a6b2b21c24d782b45"
+    }
+  ],
+  "counts": {
+    "desktopDirections": 30,
+    "desktopStages": 121,
+    "lowQualityDirections": 30,
+    "reducedDirections": 30,
+    "mobileDirections": 0,
+    "endpointChecks": 14
+  },
+  "checks": [
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:nightmare",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:sword:hell",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:elite",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:expert",
+      "pass": true
+    },
+    {
+      "name": "desktop four-direction multistage + low/reduced + boundaries",
+      "id": "preview:awakening:archer:nightmare",
+      "pass": true
+    }
+  ],
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-elite.png",
+      "bytes": 420820,
+      "sha256": "35cb5bdc908c2910990496267f0b25b4652df0fd060fa80b4c11af76fa7400ea"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-expert.png",
+      "bytes": 446494,
+      "sha256": "061c51ce688cd6cfb4c062fd077e0d012b46579e966312cf4b114f30d31f02a8"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-nightmare.png",
+      "bytes": 453816,
+      "sha256": "7acadcaa1b7f483e8c08bc2a27b49a1065c5f6f5ffb52cb31abf9367a38de052"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-sword-hell.png",
+      "bytes": 425843,
+      "sha256": "4fd22b97cff44838c147a895a65070e832d5ddd64899d9f1e4c89766e9d6da0d"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-elite.png",
+      "bytes": 433302,
+      "sha256": "f1cffdbec3a1c7972c57e09df8c19a28bc9f3861a31d5ba11dd8d59769b96cfe"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-expert.png",
+      "bytes": 407036,
+      "sha256": "9a179f14f89aca8c7b88716db0ac62afd649d41508c3f1e523e612c2374e79c8"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/stage-archer-nightmare.png",
+      "bytes": 457805,
+      "sha256": "8ede4d854202df29eed3b2d2979ab8e27a503fcb5d8e41d841c65fe72865ec05"
+    }
+  ],
+  "browserErrors": [],
+  "networkFailures": [],
+  "notes": [
+    "These are automated canvas, layout, identity and control checks. A screenshot contact sheet is supplied for independent visual review.",
+    "No awakening gameplay event is generated.",
+    "The rejected-v1 geometry-only presentation has no browser approval. This receipt covers dedicated painted ornate-v2 only."
+  ],
+  "failure": "Error: Canvas clipping 蒼穹裁決 up 0.36\n    at assert (file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-semantic-integration-20261105/worker/tools/awakening-vfx-browser.mjs:19:56)\n    at file:///D:/StarJournal/worktree-snapshots/star-journal-skill-vfx-semantic-integration-20261105/worker/tools/awakening-vfx-browser.mjs:48:255"
+}

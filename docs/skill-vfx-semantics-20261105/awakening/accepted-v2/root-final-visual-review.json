@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "reviewedAt": "2026-11-05T06:53:26.094Z",
+  "reviewer": "root",
+  "status": "accepted-representative-visuals",
+  "scope": "Material quality and visible phase-to-phase motion inspection; complete animation, direction and lifecycle acceptance belongs to the separate final browser matrix.",
+  "presentationRevision": "ornate-v2-frost-readable",
+  "engineSha256": "3939cb22a09576ed04a337dcf48684523087320df1b9718c32283dc0858c2557",
+  "screenshots": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/desktop-frost-68.png",
+      "bytes": 301866,
+      "sha256": "0f360c095c1037d1773588b602019685686084b0acce2a3b01953f035e0e5c4a"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/desktop-frost-80.png",
+      "bytes": 301300,
+      "sha256": "2ac7ed78c7f4b71d79d02d4bd92f9d31b603d629d41998da7e4eb21ab9e32161"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-frost-review/mobile-frost-up.png",
+      "bytes": 264448,
+      "sha256": "5dce5004bbd2b12c5b9cd53864f07584229334279d733884ff8fcb4a9cfa4a13"
+    }
+  ],
+  "observations": [
+    "At phase .68, three separate bright cyan-white return cores are visibly in front of the dimmed ornate mirror.",
+    "At phase .80, beam tips and trails have traveled leftward beyond their earlier positions, so the result is not merely a scaled copy of the illustration.",
+    "For upward casting in the phone viewport, return flow correctly travels downward toward the caster side; mirror and beams remain within the stage.",
+    "Detailed ice frame, crystals and blue mirror remain identifiable during the dimmed release phase; earlier full-color reveal is preserved."
+  ],
+  "staticOverviewPreviouslyInspected": {
+    "originalCapturePath": ".release-sync/awakening-vfx-20261105/ornate-v2-browser/awakening-contact-sheet.png",
+    "sha256": "00a6a0378cb23406fddf78febcb512098d7741193a649493fb87a8ae097a1cca",
+    "subjectsInspected": 16,
+    "accepted": "All sixteen subjects have distinguishable name-matched composition and palette. This older capture remains applicable to the fifteen unchanged skills; final frost acceptance is based on the three new screenshots above.",
+    "supersededForCurrentFrost": true
+  },
+  "priorReviews": [
+    ".release-sync/skill-vfx-semantics-20261105/root-awakening-v2-visual-review.json",
+    ".release-sync/skill-vfx-semantics-20261105/awakening-v2-independent-visual-review.json",
+    ".release-sync/skill-vfx-semantics-20261105/awakening-v2-motion-independent-visual-review.json"
+  ],
+  "completeBrowserAcceptanceClaimedHere": false,
+  "allFramesIndividuallyReviewed": false,
+  "productionChanged": false
+}

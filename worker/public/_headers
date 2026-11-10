@@ -4,3 +4,6 @@
   X-Content-Type-Options: nosniff
   X-Robots-Tag: noindex, nofollow, noarchive
   Content-Security-Policy: default-src 'self'; script-src 'self' https://telegram.org; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; object-src 'none'; base-uri 'none'; form-action 'self'; frame-ancestors 'self' https://web.telegram.org https://webk.telegram.org https://webz.telegram.org
+
+/ui-generated-20261030/characters-v1/assets/*
+  Cache-Control: public, max-age=31536000, immutable

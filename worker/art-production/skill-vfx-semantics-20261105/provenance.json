@@ -1,0 +1,206 @@
+{
+  "schemaVersion": 1,
+  "batch": "skill-vfx-semantics-20261105",
+  "purpose": "Additional name-matched subjects for the existing 196 implemented skill identities.",
+  "tool": "image_gen.imagegen",
+  "selectedSource": "worker/art-production/skill-vfx-semantics-20261105/source/semantic-atlas-v2.png",
+  "runtime": "worker/public/art/skill-vfx-20261104/semantic-atlas.webp",
+  "grid": [
+    3,
+    3
+  ],
+  "size": [
+    1254,
+    1254
+  ],
+  "cellSize": [
+    418,
+    418
+  ],
+  "cells": [
+    {
+      "cell": 0,
+      "subject": "spectral-wolf"
+    },
+    {
+      "cell": 1,
+      "subject": "star-spirit"
+    },
+    {
+      "cell": 2,
+      "subject": "abyss-wraith"
+    },
+    {
+      "cell": 3,
+      "subject": "world-tree"
+    },
+    {
+      "cell": 4,
+      "subject": "war-banner"
+    },
+    {
+      "cell": 5,
+      "subject": "ancestral-stag"
+    },
+    {
+      "cell": 6,
+      "subject": "nether-portal"
+    },
+    {
+      "cell": 7,
+      "subject": "nine-headed-hydra"
+    },
+    {
+      "cell": 8,
+      "subject": "shadow-double"
+    }
+  ],
+  "generation": [
+    {
+      "kind": "generate",
+      "image": "exec-35d10586-a27f-4106-b6fb-51abffcf89ae.png",
+      "selected": false,
+      "reason": "Initial atlas had diffuse background haze: alpha-zero fraction 0.000653, unsuitable as the final isolated composite.",
+      "prompt": "Use case: stylized-concept. Asset type: one production-ready transparent fantasy RPG VFX texture atlas, square, strict 3 by 3 grid of NINE equal square cells. Premium detailed hand-painted luminous game sprites, coherent with ornate jewel-toned fantasy spell effects; crisp readable silhouettes at small size, elegant metallic highlights and restrained glow. This is a texture atlas, no UI, no writing. Each sprite is centered inside its own cell, occupies at most 72% of the cell width/height, with a generous fully transparent gutter on every side. No pixels or glow may touch a cell boundary. True transparent alpha background, no black/white/checkerboard background. Nine exact subjects in reading order, left to right:\nTOP ROW: (1) full-body spectral silver and emerald WOLF leaping toward the right, clearly canine with ears, muzzle, four legs and flowing tail; (2) luminous blue and lavender STAR SPIRIT, floating robed celestial familiar with tiny star core and flowing wisps, full silhouette; (3) violet and obsidian ABYSS WRAITH, imposing horned ethereal familiar, full upper and lower spectral body.\nMIDDLE ROW: (4) miniature radiant WORLD TREE, emerald foliage, visible gold trunk and curling roots, upright; (5) regal crimson and gold WAR BANNER, flag visibly flowing to the right on a gold spear pole, upright, no text or coat of arms; (6) noble ANCESTRAL STAG SPIRIT, pale jade and gold, branching antlers and full standing body, facing right.\nBOTTOM ROW: (7) upright oval NETHER PORTAL, broken purple stone arch with dark transparent hollow and violet wisps contained within the cell; (8) emerald poisonous NINE-HEADED HYDRA apparition, nine readable serpentine necks in a compact fan, no gore, symmetrical upright silhouette; (9) translucent lavender SHADOW DOUBLE, one masked hooded rogue apparition with two daggers and curling smoke below, upright full figure, elegant nonviolent pose.\nConsistent visual scale and finish. Sprites float isolated with no scenery, no ground plane, no cast shadows beyond their cells. Do not add frames, labels, numbers, letters, logos, watermark, decorative borders, grid lines or any extra objects. High quality source atlas suitable for animation compositing."
+    },
+    {
+      "kind": "edit",
+      "image": "exec-f38d3773-1da9-4e77-bb71-e24f3565cadd.png",
+      "selected": true,
+      "transparent_background": true,
+      "prompt": "Edit this exact nine-sprite 3x3 texture atlas for production compositing. Preserve the exact nine beautiful sprite designs, order, colors and painterly details. Change ONLY alpha isolation and spacing: remove absolutely ALL background mist, haze, colored paper, gray veil and inter-cell noise. The entire background MUST be fully transparent RGBA alpha zero, including every grid gutter. Reduce and recenter each of the nine sprites within its own equal-sized grid cell so that its complete silhouette and glow fit within the central 68% of the cell. Keep generous perfectly transparent 16% margins on EVERY side of EVERY cell, including the outer image edge. Remove all atmosphere that connects separate sprites. Hard clean alpha cutouts with a small soft antialiasing fringe immediately around each subject only. No globally colored mist. The portal's central opening should be transparent with a few local purple wisps, not a solid luminous panel. Keep all subjects whole and upright, wolf and stag facing right, war banner on its pole; preserve nine distinct hydra heads. No new subjects, no text, no grid lines, no borders, no checkerboard, no colored background. Output one square transparent 3x3 atlas."
+    }
+  ],
+  "runtimeConversion": {
+    "library": "sharp",
+    "version": "0.35.5",
+    "options": {
+      "quality": 88,
+      "alphaQuality": 100,
+      "effort": 6
+    },
+    "alphaPixelsCompared": 1572516,
+    "changedAlphaPixels": 0,
+    "maximumAlphaDifference": 0
+  },
+  "sourceVerification": {
+    "bytes": 1878179,
+    "sha256": "81d5cbe16b75c9bc971de3fb242bd5103e47ebe977dd97e8579158ee1171f088"
+  },
+  "runtimeVerification": {
+    "bytes": 591828,
+    "sha256": "0a5d9f6e748dab1ec4196fa43ff0aec05c94f5b8eaa7c46853012ae6f06ebeee"
+  },
+  "alphaQa": {
+    "transparentFraction": 0.5292206883745539,
+    "threshold": 16,
+    "cells": [
+      {
+        "cell": 0,
+        "visiblePixels": 43147,
+        "bounds": [
+          54,
+          101,
+          396,
+          348
+        ],
+        "edgePixels": 0
+      },
+      {
+        "cell": 1,
+        "visiblePixels": 43448,
+        "bounds": [
+          65,
+          38,
+          332,
+          394
+        ],
+        "edgePixels": 0
+      },
+      {
+        "cell": 2,
+        "visiblePixels": 47569,
+        "bounds": [
+          32,
+          53,
+          352,
+          395
+        ],
+        "edgePixels": 0
+      },
+      {
+        "cell": 3,
+        "visiblePixels": 50978,
+        "bounds": [
+          62,
+          32,
+          376,
+          417
+        ],
+        "edgePixels": 3
+      },
+      {
+        "cell": 4,
+        "visiblePixels": 33971,
+        "bounds": [
+          67,
+          21,
+          365,
+          362
+        ],
+        "edgePixels": 0
+      },
+      {
+        "cell": 5,
+        "visiblePixels": 42045,
+        "bounds": [
+          48,
+          21,
+          338,
+          417
+        ],
+        "edgePixels": 8
+      },
+      {
+        "cell": 6,
+        "visiblePixels": 42210,
+        "bounds": [
+          81,
+          0,
+          346,
+          343
+        ],
+        "edgePixels": 5
+      },
+      {
+        "cell": 7,
+        "visiblePixels": 60376,
+        "bounds": [
+          26,
+          6,
+          390,
+          336
+        ],
+        "edgePixels": 0
+      },
+      {
+        "cell": 8,
+        "visiblePixels": 39665,
+        "bounds": [
+          52,
+          0,
+          357,
+          341
+        ],
+        "edgePixels": 13
+      }
+    ],
+    "note": "Faint boundary particles are recorded, not claimed to satisfy a perfect empty-gutter test. Final renderer acceptance checks the real cropped cells."
+  },
+  "policies": {
+    "presentationOnly": true,
+    "extraCombatTargets": false,
+    "extraDamageEvents": false,
+    "plannedAwakeningsIncluded": false
+  }
+}

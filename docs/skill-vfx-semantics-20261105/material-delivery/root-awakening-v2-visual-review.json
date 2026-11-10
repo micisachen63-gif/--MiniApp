@@ -1,0 +1,23 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "root",
+  "reviewedAt": "2026-11-05T06:29:15.518Z",
+  "status": "passed-representative-visual-review",
+  "scope": "ornate-v2 2-image quality check before full browser matrix",
+  "images": [
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/desktop-divine-verdict.png",
+      "sha256": "90cb01ce97e1ed4cd4a6ce4405cf4eee2e13b3393956f2d0f5ac7afd6e4593c5"
+    },
+    {
+      "path": ".release-sync/awakening-vfx-20261105/ornate-v2-visual-review/mobile-frost-return.png",
+      "sha256": "18a7f2bb90bf69ab57da251c7188cd717700b11053556ac24e05b68172f676bc"
+    }
+  ],
+  "observations": [
+    "Desktop divine verdict has a prominent full sword, crown and six celestial wings with preserved red/gold material detail and controlled halo.",
+    "Phone frost return retains the complete cyan crystal mirror frame, clear reflective center and blue return ribbons.",
+    "Main artworks are significantly larger and more detailed than the rejected procedural v1; no subject clipping or opaque atlas panel is visible.",
+    "Controls and skill labels remain readable; full animation behavior and all sixteen skills require the separate final matrix."
+  ]
+}

@@ -1,0 +1,16 @@
+/* Art-only skin: no width, height, flex, gap, order or positioning changes to controls. */
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .candidate-frame{visibility:hidden}
+.angel-hud-statue{display:none;position:absolute;pointer-events:none;user-select:none;width:94%;height:94%;object-fit:contain;z-index:3;filter:drop-shadow(0 3px 3px #000a)}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .angel-hud-statue{display:block}
+.orb.red .angel-hud-statue{left:-6.4%;top:12.4%}
+.orb.blue .angel-hud-statue{left:12.4%;top:12.4%}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .candidate-inner{left:19.5%;top:19.5%;width:61%;height:61%}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .candidate-number{z-index:6;text-shadow:0 2px 3px #000,0 0 7px #000}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .candidate-orb::after{z-index:5;color:#fff1d2;letter-spacing:.14em;text-shadow:0 2px 2px #000,0 0 6px #000}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) #bar::before{content:'';position:absolute;left:var(--angel-base-left,0);width:var(--angel-base-width,100%);bottom:2%;height:12%;pointer-events:none;z-index:1;background:linear-gradient(180deg,#c2995744,#0c0a08e6 18%,#24201a 62%,#887047 66%,#17120e 74%,#060505);box-shadow:inset 0 1px #dfbd7255,0 3px 8px #0008;border-radius:3px}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) #mid::after{content:'';position:absolute;inset:-20px -20px -22px;z-index:-1;pointer-events:none;background:url('./unified-rail-v1.png') center/100% 100% no-repeat;filter:drop-shadow(0 3px 4px #000)}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) #fn{background:linear-gradient(180deg,#63503999 0,#191713ee 8%,#08090be8 80%,#28231be6);box-shadow:inset 0 1px #d2b78366,inset 0 -1px #9b7d4b77,0 -3px 12px #0008}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .hud-v2-slot{border-color:#b49761;background-color:#0e0e10;box-shadow:inset 0 0 0 1px #16110a,0 2px 4px #000}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) .hud-v2-key{color:#efd6a2}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) #xp{box-shadow:0 0 0 1px #9c825355,0 1px 3px #000}
+html.angel-hud-active.candidate-active:not(.candidate-hidden) #xp i{background:linear-gradient(90deg,#6d532a,#d5b671,#fff0b9)}

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="color-scheme" content="dark light"><title>技能特效工坊 · 星穹旅誌</title><link rel="stylesheet" href="/skill-vfx-preview.css"></head>
+<body>
+<div class="ambient" aria-hidden="true"></div>
+<header class="masthead"><a class="brand" href="/preview-skill-vfx.html"><span class="brand-mark" aria-hidden="true">✧</span><span>星穹旅誌<small>STAR JOURNAL · ART ATELIER</small></span></a><span class="build-badge"><i></i>本機素材預覽</span></header>
+<main>
+ <section class="introduction"><div><p class="eyebrow">MOTION & MAGIC / 01</p><h1>讓每一擊，<em>都有形。</em></h1><p class="intro-copy">逐招探索光、軌跡與命中的節奏。四職技能特效，在此成形。</p></div><div class="inventory-stats"><div><strong data-total>196</strong><span>技能身份</span></div><div><strong>04</strong><span>職業體系</span></div><button class="audit-shortcut" data-audit="talents"><strong>120</strong><span>天賦核對 ↗</span></button></div></section>
+ <nav class="class-tabs" aria-label="職業"><button data-class="sword" aria-pressed="true"><span class="class-symbol">⚔</span><b>劍士</b><small>鋼與戰意</small><span class="class-count">52</span></button><button data-class="archer" aria-pressed="false"><span class="class-symbol">⌁</span><b>妖精</b><small>風與靈獸</small><span class="class-count">52</span></button><button data-class="mage" aria-pressed="false"><span class="class-symbol">✦</span><b>法師</b><small>元素與秘法</small><span class="class-count">52</span></button><button data-class="thief" aria-pressed="false"><span class="class-symbol">⟡</span><b>盜賊</b><small>影與毒刃</small><span class="class-count">40</span></button></nav>
+ <section class="workbench">
+  <aside class="catalog-panel" aria-label="技能目錄"><div class="panel-title"><h2>技能目錄</h2><span data-visible-count>52 招</span></div><label class="search"><span aria-hidden="true">⌕</span><input type="search" placeholder="搜尋技能名稱或 ID" aria-label="搜尋技能" data-search></label><div class="system-tabs" aria-label="技能來源"><button data-system="all" aria-pressed="true">全部</button><button data-system="atlas" aria-pressed="false">Atlas</button><button data-system="native" aria-pressed="false">職業</button><button data-system="special" aria-pressed="false">技能書</button></div><label class="mobile-select">選擇技能<select data-skill-select aria-label="選擇技能"></select></label><div class="skill-list" data-skill-list></div><div class="catalog-footer"><button data-audit="supports">支援技能 <span>6 ↗</span></button><button data-audit="planned">覺醒規劃 <span>16 ↗</span></button></div></aside>
+  <div class="stage-panel">
+   <div class="stage-heading"><div><p class="eyebrow" data-source-label>ATLAS / 劍士</p><h2 data-skill-name>旋風斬</h2></div><div class="skill-badges"><span data-kind>攻擊</span><span data-duration>1.5 秒</span></div></div>
+   <div class="stage" data-stage data-background="scene">
+    <div class="floor" aria-hidden="true"></div><div class="stage-vignette" aria-hidden="true"></div>
+    <span class="stage-caption">ARCANE TESTING GROUND</span><span class="stage-phase" data-phase>就緒</span>
+    <div class="caster-mark" data-caster-marker><span class="caster-sigil">✧</span><img data-caster-image hidden alt="既有角色比例參照"><small>施法點</small></div><div class="target-mark" data-target-marker><i></i><small>試煉晶核</small></div>
+    <canvas data-vfx-canvas aria-label="技能特效動畫"></canvas>
+    <div class="stage-loading" data-loading role="status">正在準備特效素材…</div>
+    <div class="stage-bottom"><span><i class="tiny-dot"></i><span data-stage-status>透明特效 · 可逐幀檢視</span></span><span data-scale-label>角色比例 1.0×</span></div>
+   </div>
+   <div class="playback"><div class="transport"><button class="play-button" data-play aria-label="播放技能特效"><span aria-hidden="true">▶</span> 播放技能</button><button class="icon-button" data-pause aria-label="暫停">Ⅱ</button><button class="icon-button" data-step aria-label="前進一幀">▹│</button><label class="loop-control"><input type="checkbox" data-loop>循環</label><span class="clock"><span data-time>0.00</span> / <span data-total-time>1.50</span>s</span></div><label class="timeline"><span class="sr-only">動畫時間軸</span><input data-progress type="range" min="0" max="1000" step="1" value="0" aria-label="動畫時間軸"><span class="phase-ticks"><span>蓄力</span><span>釋放</span><span>命中</span><span>消散</span></span></label></div>
+   <div class="inspector"><div class="setting"><span class="setting-label">施放方向</span><div class="segmented" aria-label="施放方向"><button data-direction="up" aria-pressed="false" aria-label="向上">↑</button><button data-direction="left" aria-pressed="false" aria-label="向左">←</button><button data-direction="down" aria-pressed="false" aria-label="向下">↓</button><button data-direction="right" aria-pressed="true" aria-label="向右">→</button></div></div><div class="setting"><label class="setting-label" for="target-count">展示靶標</label><select id="target-count" data-target-count aria-label="展示靶標數量"><option value="1">單一目標</option><option value="3">三個目標</option><option value="5">五個目標</option></select></div><div class="setting"><label class="setting-label" for="background">檢視背景</label><select id="background" data-bg><option value="scene">夜色場景</option><option value="dark">純黑</option><option value="light">淺色</option><option value="checker">透明格線</option></select></div><div class="setting"><label class="setting-label" for="quality">粒子品質</label><select id="quality" data-quality><option value="high">完整</option><option value="low">精簡</option></select></div><div class="render-indicator"><i></i><span data-render-state>就緒</span></div></div>
+   <div class="skill-description"><span class="description-rule"></span><p data-description></p><code data-selected-skill-id></code></div>
+  </div>
+ </section>
+ <nav class="mobile-audit-links" aria-label="核對清單"><button data-audit="talents">天賦 <span>120 ↗</span></button><button data-audit="supports">支援 <span>6 ↗</span></button><button data-audit="planned">覺醒規劃 <span>16 ↗</span></button></nav>
+ <section class="production-notes"><div><span class="note-number">01</span><h3>技能與天賦，逐項對照</h3><p>196 筆技能身份已對照原始資料。支援與被動天賦保留其實際用途，覺醒規劃另列。</p></div><div><span class="note-number">02</span><h3>素材與節奏，分層製作</h3><p>四職透明圖集組成不同的斬擊、彈道、法陣、護盾與命中。路線變體共用對應的視覺家族。</p></div><div><span class="note-number">03</span><h3>逐幀檢視，實戰連動</h3><p>切換靶標觀察連射與雷鏈。實戰特效由實際施放與命中觸發；此處試播不產生傷害或獎勵。</p></div></section>
+</main>
+<footer><span>星穹旅誌 · 技能特效製作</span><span>LOCAL ART PREVIEW / 2026.11.04</span></footer>
+<dialog data-audit-dialog><div class="dialog-heading"><div><p class="eyebrow">CATALOGUE REVIEW</p><h2 data-audit-title>天賦核對</h2></div><button class="icon-button" data-close-dialog aria-label="關閉">×</button></div><p class="dialog-description" data-audit-description></p><div data-audit-content></div></dialog>
+<div data-error class="error-banner" role="alert" hidden></div>
+<script type="module" src="/skill-vfx-preview.mjs"></script>
+</body></html>

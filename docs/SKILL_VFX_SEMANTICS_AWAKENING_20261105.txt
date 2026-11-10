@@ -1,0 +1,134 @@
+StarJournal 技能名稱特效與覺醒美術交付報告
+日期：2026-11-05（UTC）
+
+一、完成範圍
+本批位於 D:\StarJournal\worktree-snapshots\star-journal-skill-vfx-semantic-integration-20261105。
+分支：codex/skill-vfx-semantic-integration-20261105。
+本批開始的整合基準：f1826a8838b1e552b46e6dee9f28bf3fafc992ed。
+最後本機提交雜湊由 Git 與 handoff/skill-vfx/STATUS.json 記錄，避免在提交內容中製造自我引用。
+
+既有實作技能共 196 個身分：原生 124、特殊 60、Atlas 12。196 個均有明確名稱對應的視覺設定、效果配方、解析事件、提交事件、presentation 與瀏覽器證據。支援修飾 6、可分配天賦 120、起源 4 另外記錄；它們不是獨立施放動畫，不加入施放技能分母。
+
+另外完成 16 招規劃中覺醒的專屬素材、動畫與獨立預覽。覺醒在原專案仍未實作戰鬥機制，所以不把它們算成 212 招已上線戰鬥技能。預覽使用 preview-only 身分、sourceId=null，不替伺服器創造命中、傷害或狀態事件。
+
+二、本次美術重做
+原覺醒 v1 以程序線條和共用素材為主，已因使用者明確認為不夠華麗而淘汰。新版 ornate-v2 製作了 16 個專屬主題圖像，以四張透明 2×2 圖集保存。每張圖集 1254×1254，每格 627×627；每招有自己的主要武器、幻獸、鏡面、星核或分身構圖。
+
+劍士：
+戰神破勢 — 金色戰刃破開甲胄，爆裂光線與斬擊衝擊。
+壁壘回響 — 冰藍城塞盾，盾面展開與反向回震。
+血誓狂潮 — 血紅誓刃徽記，血色浪潮與連續月牙斬。
+諸神斷罪 — 皇冠、六翼與巨大金白神劍，展開後銜接獨立落擊與衝擊面。
+
+妖精：
+逐星連矢 — 華麗星弓與彗星箭，分時箭流沿施放方向前進。
+群靈共獵 — 狼、鹿、鷹三靈，前景獸靈移動並向目標聚攏。
+月蝕獵印 — 月蝕環、荊棘獵印與翠綠箭，獵印鎖定與穿刺。
+蒼穹裁決 — 翼弓與金藍天穹箭陣，箭雨由上方降下。
+
+法師：
+星雷共鳴 — 星核、星盤與雷電，能量聚合並串連閃擊。
+霜鏡回流 — 冰晶鏡面及回返光流，先展開主鏡，再讓獨立三股流束清楚回返。
+元素裂解 — 火、冰、雷、自然四色元素棱核，匯聚後裂散。
+太初星爆 — 新生星核及宇宙光環，由小核蓄能進入大範圍星爆。
+
+盜賊：
+影襲連鎖 — 三次影襲突進，前景暗影依序接近目標。
+淬毒散華 — 毒刃蓮華，綠色毒光與刀瓣向外散開。
+暗月處決 — 暗月與交叉處刑刃，兩次收束斬擊。
+永夜分身 — 三名巨大暗影幻身，展開後由前景分身改變隊形追擊。
+
+演出分為環境背光、聚能、主體輝光、完整彩色主素材、前景攻擊、殘光消散。主素材按有效透明邊界置中並保持比例；光暈位於素材後方，避免金屬、羽毛、冰晶與暗影細節被整片洗白。不同技能使用不同的入場、追擊、落擊、反射、爆裂或散華節奏。
+「霜鏡回流」額外經目視修正：回流段主鏡適度退淡，獨立光流離開鏡框輪廓，讓動作不只表現為整張圖放大。
+
+三、素材保存與轉換
+原稿：
+worker/art-production/awakening-vfx-20261105/source/{sword,archer,mage,thief}-awakening-atlas.png
+
+遊戲圖集：
+worker/public/art/awakening-vfx-20261105/{sword,archer,mage,thief}-awakening-atlas.webp
+
+四份 PNG 合計 6,611,077 bytes；四份 WebP 合計 1,993,042 bytes。
+WebP 以 Sharp 0.35.5 / libwebp 1.6.0，quality=92、alphaQuality=100、effort=6 純格式轉換；沒有裁切、縮放或改寫 alpha。6,290,064 個 alpha pixels 逐一比較，差異為 0。
+八個檔案均在 D 槽重新讀取並確認完整 SHA-256、大小、尺寸與透明格式。所有圖集中線均保有透明間隔。帶灰白霧底的妖精中間候選已淘汰，沒有進入 runtime。
+
+素材履歷與交付：
+worker/art-production/awakening-vfx-20261105/provenance.json
+worker/art-production/awakening-vfx-20261105/delivery-verification.json
+
+既有 196 招的新增語意素材原稿：
+worker/art-production/skill-vfx-semantics-20261105/source/semantic-atlas-v2.png
+對應 runtime：
+worker/public/art/skill-vfx-20261104/semantic-atlas.webp
+
+四、既有技能的名稱對應與實戰接線
+196 個明確 authored profiles 會依實際 ID 與名稱選擇主題、構圖、色彩、形態及軌跡。狼群使用狼，星靈使用星靈，虛空／深淵使用相符門扉與空間效果；冰、血、毒等色系套用到實際 bitmap。雙箭及多箭沿同一個真實目標前進，不創造額外命中目標。增益、治療、護盾、召喚保留其非直接傷害語意。
+
+實際 legacy preload 曾暴露 semantic-atlas 檔名與 semantic 資產鍵不一致。已在 legacy adapter 修正鍵值映射，並確認 25 個使用該圖集的技能只共用載入一次，播放時不再補載。Canvas harness 計算實際 drawImage/fill/stroke 等繪製，不以 clearRect 冒充有畫出特效。
+
+五、驗收
+既有技能：
+• 名稱/配方/解析/提交/presentation/browser 全部 196/196；缺漏為 0。
+• 真實 Canvas 語意瀏覽器：196×4=784 個方向案例、196 個時序案例、48 個手機案例、8 個減少動態案例，0 頁面與 HTTP 錯誤、0 來源漂移。
+• 最終 legacy identity r3：184 個不同身分、8 個手機案例、4 個減少動態案例；實際動畫繪製且全部清理完成，183 個來源檔保持一致。
+• 新鮮 MiniApp r2：16/16（8 種模式×2 尺寸）；24 個來源一致。
+• Atlas r2：16/16（12 桌機＋4 手機）；12 身分，201 個 API 提交收據，17 個實際擷取輸入及 9 個共享原始輸入一致。
+• 嚴格以 gameplay API 的 eventId 對到實際 draw 的身分交集為 23，不將所有受控播放案例誤稱為自然實戰覆蓋。
+• legacy preload focused tests 14/14；語意引擎/設定 60/60。
+• 早期整合邊界 753/753 是當時的整合 gate，不冒充最後所有 Worker/Bot 測試。
+
+覺醒最終驗收：
+• 同一最終來源的 Node 回歸 11/11 通過。
+• 16 招×4 桌機方向=64，四個階段共 256；精簡細節 64、減少動態 64、手機方向 64、透明首尾端點 32，全部通過。
+• 播放、暫停、逐格、進度、方向、目標數、OS 減少動態偏好與畫面邊界通過，沒有 API 戰鬥呼叫。
+• 最後矩陣於 2026-11-05T07:02:20.709Z 完成；所有截圖與 browser.close 後才進行最後檢查。browserErrors=[]、networkFailures=[]，33 張 PNG，全部來源前後一致。
+• 最終 receipt SHA-256：d2dacb829ef1374de59d7df7542dfb080038a1ffea459b4ff8021aece1f5fb1a。
+• 原始 receipt byte-exact 保存於 docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json；舊的錯誤或被後續修改取代的結果另外保存，不計入最新通過。
+
+目視審查：
+已看 16 招實際 Canvas 接觸表、桌機神劍與手機冰鏡，並檢查神劍、三靈、冰鏡、星爆、影身的代表時相。代表圖片的觀察不替代全矩陣資料，也不單靠兩張截圖聲稱所有動畫全程流暢。完整證據與來源指紋均封存。
+測試環境為本機 Chrome 軟體渲染及手機 viewport，不宣稱已在實體手機 GPU 或 Telegram 裝置完成測試。
+
+六、預覽入口
+覺醒：
+http://127.0.0.1:9894/awakening-vfx-preview.html
+直接看諸神斷罪：
+http://127.0.0.1:9894/awakening-vfx-preview.html#preview%3Aawakening%3Asword%3Ahell
+
+既有技能：
+http://127.0.0.1:9864/preview-skill-vfx.html
+
+本機隔離戰鬥場景：
+http://127.0.0.1:9867/
+
+覺醒預覽提供職業/技能切換、播放/暫停/重播/逐格、進度拖曳、四方向、一至三目標、深淺/棋盤底、完整/精簡細節、減少動態。這些網址由本機服務提供。
+
+七、檔案與重現
+總驗收：
+docs/skill-vfx-semantics-20261105/validation-summary.json
+docs/skill-vfx-semantics-20261105/archive-index.json
+
+分區證據：
+docs/skill-vfx-semantics-20261105/foundation-manifest.json
+docs/skill-vfx-semantics-20261105/combat/manifest.json
+docs/skill-vfx-semantics-20261105/atlas/manifest.json
+docs/skill-vfx-semantics-20261105/awakening/manifest.json
+
+重新 checkout 後，需要 coverage canonical receipts 時：
+node docs/skill-vfx-semantics-20261105/restore-evidence.cjs
+node worker/tools/build-skill-vfx-coverage.mjs --require-legacy-completion --check
+
+語意 audit 的證據參數須一致：
+node worker/tools/build-skill-vfx-semantic-audit.mjs --evidence=docs/skill-vfx-semantics-20261105/semantic-browser/results.json --evidence=docs/skill-vfx-semantics-20261105/semantic-browser/visual-review.json --check
+
+node --test worker/test/awakening-vfx-engine.test.js
+node worker/tools/build-awakening-vfx-audit.mjs --check --evidence=docs/skill-vfx-semantics-20261105/awakening/accepted-v2/receipt.json
+
+封存前曾發現一份 complete/pass=true 的報告仍含瀏覽器錯誤。根因是 QA 使用 setContent 替換頁面後，舊 ResizeObserver 仍讀取已移除的 stage。harness 改為先以 about:blank 真導航觸發既有 pagehide/dispose；全部擷取及 browser.close 完成後才做最後錯誤、網路與來源檢查。audit 也拒絕錯誤陣列非空或缺少 sourcesAfter 的收據；舊矛盾報告保留為不接受歷史。此修正沒有改動已接受的動畫 runtime。
+
+證據保存淘汰的 v1、舊斷線/失敗結果、preload red/green、蒼穹箭尾邊界失敗與最小修正、冰鏡可讀性修正前後。舊結果不刪除，也不當作最新版本通過。
+Atlas 原外層 186 檔監看曾捕捉到 semantic-audit 證據參照更新；該 audit 不在實際 Atlas 的 17 個輸入中。原 failed-or-drifted 執行狀態保留，不改寫為全 186 檔無變動。
+
+八、交付邊界
+本批完成本機分支中的素材、動畫、適配修正、驗證與存檔。沒有推送、合併主線或部署，沒有修改玩家資料與覺醒戰鬥數值。D:\StarJournal 的其他平行工作與全域任務控制不屬於本批。
+完整舊版 AI_HANDOVER.md 歷史保留在 Git（本批前 f1826a8838b1e552b46e6dee9f28bf3fafc992ed:AI_HANDOVER.md），目前交接只列最新可接手狀態。

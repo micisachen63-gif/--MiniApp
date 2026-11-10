@@ -1,0 +1,96 @@
+StarJournal｜Atlas 舊裝備效果相容整合
+日期：2026-11-04（台灣時間）
+工作樹：D:\StarJournal\worktree-snapshots\star-journal-atlas-legacy-effects-20261104
+分支：codex/atlas-legacy-effects-20261104
+共同基線：8370ce7c11f09f44146c3bade06df6b5b7d33ff0（按鈕＋八階補給合流，PR49）
+本批提交、草稿 PR 及精確 HEAD CI：以本批 STATUS.json 與 .release-sync/atlas-legacy-effects-20261104 收據為準，本文不預填尚未取得的提交識別。
+
+一、結果與接線
+
+原服務已用 computeStats 算出完整原生裝備能力，但 Atlas 的一般戰力正規化會捨棄元素、武器元素、抗性、經驗加成與免費施法。本批新增獨立版本 atlas-legacy-effects-v1，於服務端新出征交易內建立 effects 快照，接回實際傷害、承傷、扣魔與獎勵。
+
+來源只採用同一交易內角色與已裝備物品的 computeStats 結果；不重算或改寫原裝備、不重新乘 +N／原生每擊倍率。客戶端傳入 effects、版本或戰力均不能覆蓋來源。實作檔：
+worker/src/game/atlas-effects.js
+worker/src/game/atlas-engine.js
+worker/src/services/atlas.js
+
+effects.actor 保留等級、武器元素、weaponElem、六種 elementResist 點數、對應 elementResistance 比率，以及 elemPct／expPct／freeCastPct。effects.enemy 保存出發時的有效地圖元素；effects.manaRng 是專供免費施法的持久亂數。
+runView 新增唯讀 equipmentEffects（版本、角色效果及敵方元素），不暴露 manaRng。累計 metrics 增加 freeCasts；沒有製造逐擊事件或假動畫。
+
+二、規則邊界
+
+1. 元素與抗性
+沿用原 game/elements.js 的相剋、武器額外值上限、僅有利相剋的 elemPct，以及 resistanceRate。
+抗性點數為權威。兩種表示同時存在時由點數推導比率；只提供合法比率的純規則輸入會先反推點數，再統一成同一份快照，不能疊算兩次。
+保存後的點數與比率必須一致；不完整或不一致的保存狀態會拒絕結算。
+weaponElem 已含原生每擊倍率，Atlas 不再乘一次。
+
+2. 傷害來源
+basic／skill／一次延後觸發的 trap 吃武器固定元素值。
+dot／pet 仍受元素相剋與抗性影響，但不在每跳加武器固定值。
+Atlas 的格擋觸發 counter 也採不加固定值政策；這是本版明確規則，不代表原版所有名為反擊的技能皆相同。
+有元素的直接傷害依暴擊後 raw → 元素 → 既有物防 → 最後取整；無元素保留原本的算式順序。DOT 原本不吃物防的規則保留。
+敵方傷害先套角色元素抗性，再依既有減傷、物防、格擋、護盾與實際 HP 截斷；傷害紀錄只計真正扣除的 HP。
+
+3. 敵方資料
+新出征只對已存在的有效 themeId 凍結 mapElement；未知地圖不使用預設 earth 靜默降級。
+普通、精英及首領的新增元素抗性維持零。本批沒有把舊 bossResistance 直接套入 Atlas，避免額外改動首領基礎平衡。
+後續結算只讀保存值，不重新查現時地圖／角色／裝備目錄。
+
+4. 免費施法
+只有原有策略允許、冷卻就緒且補給處理後 MP 足額時才可施法；100% 免費也不能繞過足額門檻。
+沿用原 spendMana 的嚴格 roll < chance 與 0～1 封頂。0% 不取亂數；100% 仍取一次；群攻／連擊一次施法只抽一次。
+獨立 manaRng 不挪動原 combatRng／遭遇／掉落序列。免費仍產生技能、冷卻及施法回血，manaSpent 只記真正支付值。
+
+5. 經驗
+expPct 沿用 50% 上限，只在房間及通關 reward.exp 建立時乘一次，與 experienceMultiplier 相乘後最後 floor；服務只加總收據，不再加成。
+驗證例：room 12 × 1.15 × 1.25 → 17；completion 30 × 1.15 × 1.25 → 43。五房與通關共 128，角色、帳本、收據、累計完全一致。
+不把 expPct 套入金幣、材料、裝備或卷軸配方；本批沒有完成正式收益平衡校準。
+
+三、舊出征與交易相容
+
+內容仍為 atlas-v4，既有 v1／v2／v3／v4 與補給版本保持。
+只有服務端新 start 明確開啟效果版號；已保存舊 run 沒有效果及新版專屬計數時沿用原路徑，不追補角色現時裝備。
+新版 effects 缺件、版本未知、非有限值、比率矛盾或 RNG 不合法會拒絕結算。若整包 effects 遺失但 freeCasts 新版標記仍在，也拒絕靜默降級。
+
+start 的原 request signature 未改，效果、現時裝備及版號不加入簽章。途中真實卸裝只影響下一趟；舊 requestId 重送不重快照、不重扣補給。
+status 維持純讀。settle 保留原 revision/CAS 與同一 SQLite/D1 batch：run、人物、獎勵、活動、補給、操作收據原子入帳。注入最後退款帳本失敗時全部回滾；成功提交但回覆遺失後重送也不重抽免費施法或重發獎勵。
+
+四、驗收
+
+新增 48 項測試：16 純規則／引擎、25 固定舊 v4 基線回歸（含來源檢查）、7 真 SQLite 服務。
+24 組舊 v4 固定資料涵蓋兩種補給 × 12 流派，由保留的 8370ce7 原樹產生，31 份遞迴程式相依已核對該提交。預期值沒有從新版引擎重生。
+每組含 137 秒仍在戰鬥的中途狀態及 900 秒預期，檢查完整序列化結果、收據／活動順序、任意分段、JSON 恢復、終態重試與 RNG。
+v1–v3 的既有固定結果亦納入完整 gate。
+
+針對原版請求重送 fixture 修正後，62／62 相關測試通過（0 fail／cancel／skip／todo）。
+完整 gate：2026-11-04 19:19:57～19:25:22（台灣時間），依 scripts/run-tests.mjs 的官方完整檔案清單執行，為避免共用機器過度競爭採 node --test --test-concurrency=2。Worker 278 份測試檔／2,797 項、BOT 23 份測試檔／205 項，合計 3,002 項全數通過；fail、cancelled、skipped、todo 皆為 0，兩服務 exitCode 均為 0。1,343 份程式、測試、設定與 fixture 的 SHA256 在測試前後完全一致（changedSources=[]）。這是本批來源的完整本機驗收；遠端 CI 另按本批提交驗證。
+
+證據目錄：.release-sync/atlas-legacy-effects-20261104
+- full-gate-receipt.json：完整清單、時間、服務結果與來源一致性。
+- full-gate.log：完整 Worker／BOT 輸出。
+- full-gate-source-before.json、full-gate-source-after.json：逐檔 SHA256。
+- fixture-fix-focused-receipt.json、fixture-fix-focused.log：62 項相關驗證。
+- service-tests-first.log：最初 7 項真 SQLite 案例。
+- legacy-replay-test-20261104.json：固定基線生成與回歸。
+- initial-gate-stop-receipt.json、full-gate-initial-aborted.log：首次完整 gate 中止原因。
+
+保留的中間發現：
+A. 審查抓到新版遺失整包 effects 的靜默降級，已用 freeCasts 標記補保護並加入損壞快照測試。
+B. 首次完整 gate 的舊 count 重送測試，用當前 start 結果人工降成 v1 時遺留新版效果欄位。已只補清除當時不可能存在的 effects／freeCasts；原簽章與防重斷言維持，生產驗證限制沒有放寬。確認只停止本批測試程序，其他工作線未動；首次 log 不是完整成功證據。
+
+本批沒有修改畫面布局或材質，因此沒有聲稱新的 Chrome 視覺或真機驗收。既有 9723／9722 仍顯示上一批已驗收共同版本，未重啟或切換。
+
+五、交接與後續
+
+主入口：D:\StarJournal\START_HERE.md
+主狀態：D:\StarJournal\handoff\non-character\STATUS.json
+主最新快照：D:\StarJournal\handoff\non-character\LATEST.md
+本批狀態：D:\StarJournal\handoff\non-character\atlas-legacy-effects-20261104\STATUS.json
+
+沿用 StarJournal-NonCharacter-Checkpoint-30m，腳本優先使用主 STATUS.worktree 觀測本批；StarJournal-AtlasSupply-Checkpoint-30m 保留上一批交接。不新增重複排程。
+排程每 30 分鐘觀測人工語意狀態、Git 與指定驗收紀錄，不會自行開發、測試、提交或部署。重要變更及收尾另即刻更新。
+
+本批接續已合流共同版本，不合併 main、不部署、不跑遠端 migration、不改 Secrets／正式資料／正式旗標；角色／FX 素材、queue/catalog/grok-assets 與所有舊工作樹及預覽保持。
+
+仍待：完整舊技能／轉職、天使、命運、交易、Boss／組隊／塔／星環、衣櫥與帳務等頁面遷移；逐擊／施法事件契約與角色/FX串接；320px資訊卡局部蓋住角色；五輪600級／16覺醒、正式數值校準、完整季末跨庫移轉與永久／賽季角色保留；正式 Telegram 登入入口、真實手機與正式經濟驗收。

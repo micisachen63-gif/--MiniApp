@@ -29,4 +29,4 @@ export const EXP_TABLE = Object.freeze(Array.from({ length: MAX_LEVEL + 1 }, (_,
 
 export const dailyGold = (L) => 600 + 70 * L;
 export const monsterPressure = (L) => 1.2 + 0.30 * L ** 1.12;
-export const mapForLevel = (L) => Math.min(12, Math.max(1, Math.ceil(L / 10)));
+export const mapForLevel = (L) => Math.ceil(((Math.max(1,Math.min(MAX_LEVEL,L))-1)%120+1)/10);

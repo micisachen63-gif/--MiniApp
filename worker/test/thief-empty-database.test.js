@@ -1,4 +1,5 @@
 import test from 'node:test';
+import { createHash } from 'node:crypto';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { spawnSync } from 'node:child_process';
@@ -16,7 +17,7 @@ const snapshot = db => ({
   sequence: db.prepare('SELECT name,seq FROM sqlite_sequence ORDER BY name').all(),
 });
 
-test('fresh initialization preserves historical definitions except reviewed class, guardian and retirement additions', () => {
+test('fresh initialization preserves historical definitions except reviewed class, guardian, retirement and Realm/Atlas additions', () => {
   const historical = repositorySchemaDatabase(), current = freshDb().sqlite;
   try {
     // 0033 adds independent console/analytics objects and indexes; the populated
@@ -31,19 +32,74 @@ test('fresh initialization preserves historical definitions except reviewed clas
     assert.equal(guardianTriggers.size,2);
     const retirement=readFileSync(new URL('../migrations/0034_character_deletion.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
     const retirementObjects=new Map([...retirement.matchAll(/CREATE (TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
+    const realmAtlasMigrations=['0035_realm_identity.sql','0036_atlas_foundation.sql','0037_atlas_quests.sql','0038_atlas_talents.sql','0039_scene_chat.sql','0040_equipment_collection.sql']
+      .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
+    const realmAtlasObjects=new Map(realmAtlasMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
+    // 0041-0043 are additive, reviewed objects only. Pin their exact names and
+    // types so neither a new prefix match nor migration discovery can exempt
+    // an unrelated historical definition from the strict comparison below.
+    const activityRecoveryObjects=new Map([
+      ['rpg_atlas_activity_events','table'],
+      ['rpg_atlas_activity_time','index'],
+      ['rpg_atlas_activity_region','index'],
+      ['rpg_atlas_activity_world','trigger'],
+      ['rpg_atlas_activity_owner','trigger'],
+      ['rpg_atlas_activity_no_update','trigger'],
+      ['rpg_atlas_activity_no_delete','trigger'],
+      ['rpg_equipment_archive','table'],
+      ['rpg_equipment_recovery_balances','table'],
+      ['rpg_equipment_recovery_operations','table'],
+      ['rpg_atlas_sweep_cursor','table'],
+      ['rpg_atlas_running_sweep','index'],
+    ]);
+    const activityRecoveryMigrations=['0041_atlas_activity_quests.sql','0042_equipment_recovery.sql','0043_atlas_background.sql']
+      .map(file=>readFileSync(new URL('../migrations/'+file,import.meta.url),'utf8').replace(/\r\n/g,'\n'));
+    const observedActivityRecoveryObjects=new Map(activityRecoveryMigrations.flatMap(sql=>[...sql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()])));
+    assert.deepEqual([...observedActivityRecoveryObjects].sort(),[...activityRecoveryObjects].sort());
+    for(const [name,type] of activityRecoveryObjects){assert.equal(realmAtlasObjects.has(name),false,name);realmAtlasObjects.set(name,type);}
+    realmAtlasMigrations.push(...activityRecoveryMigrations);
+    const endgameSql=readFileSync(new URL('../migrations/0044_endgame_season_retention.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    const endgameObjects=new Map([['idx_rpg_characters_retention_slot','index'],['rpg_live_characters','view'],['rpg_season_transfer_manifests','table'],['rpg_season_transfer_chunks','table'],['rpg_season_transfer_imports','table'],['rpg_season_retained_characters','table']]);
+    const observedEndgame=new Map([...endgameSql.matchAll(/CREATE (?:UNIQUE )?(TABLE|INDEX|VIEW|TRIGGER) (\w+)/g)].map(m=>[m[2],m[1].toLowerCase()]));
+    assert.deepEqual([...observedEndgame].sort(),[...endgameObjects].sort());
+    for(const [name,type]of endgameObjects)realmAtlasObjects.set(name,type);
     const characterSchema=new DatabaseSync(':memory:');
     characterSchema.exec(plan.tablePlans.find(t=>t.table==='rpg_characters').afterSQL);
     characterSchema.exec('ALTER TABLE rpg_characters ADD COLUMN deleted_at INTEGER');
-    const retiredCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
-    const expected = before.map(row => row.type === 'table' && plan.roots[row.name]
-      ? { ...row, sql: row.name==='rpg_characters'?retiredCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
+    // Use exact historical target tables for the new triggers. This independent
+    // catalog applies only the explicitly reviewed migrations, never freshDb's list.
+    for(const name of ['rpg_accounts','rpg_party_presence'])characterSchema.exec(before.find(row=>row.type==='table'&&row.name===name).sql);
+    for(const sql of realmAtlasMigrations)characterSchema.exec(sql);
+    characterSchema.exec(before.find(row=>row.name==='idx_rpg_characters_account_slot').sql);
+    characterSchema.exec('CREATE VIEW rpg_live_characters AS SELECT * FROM rpg_characters WHERE deleted_at IS NULL');
+    characterSchema.exec(endgameSql);
+    const realmAtlasExpected=schemaRows(characterSchema).filter(row=>realmAtlasObjects.has(row.name));
+    assert.equal(realmAtlasExpected.length,realmAtlasObjects.size);
+    const runningSweep=realmAtlasExpected.find(row=>row.name==='rpg_atlas_running_sweep');
+    assert.equal(runningSweep.tbl_name,'rpg_atlas_runs');
+    assert.equal(runningSweep.sql,"CREATE INDEX rpg_atlas_running_sweep ON rpg_atlas_runs(realm_id,id) WHERE status='running'");
+    const currentCharacterSql=characterSchema.prepare("SELECT sql FROM sqlite_master WHERE name='rpg_characters'").get().sql;characterSchema.close();
+    // 0045's reviewed stream catalog is additive. Pin the whole migration and
+    // compare each new definition; do not exempt prefixes or existing objects.
+    const streamSql=readFileSync(new URL('../migrations/0045_season_stream_checkpoints.sql',import.meta.url),'utf8').replace(/\r\n/g,'\n');
+    assert.equal(createHash('sha256').update(streamSql).digest('hex'),'78e7babcf239a616a3d73ae18c516d96495c8fe158af3565991b5630b1433cd9');
+    const streamExpected=[...streamSql.matchAll(/CREATE (TABLE|TRIGGER) (\w+)([^;]*?(?:BEGIN[\s\S]*?END)?);/g)].map(m=>({type:m[1].toLowerCase(),name:m[2],tbl_name:m[1]==='TABLE'?m[2]:m[0].match(/ ON (\w+)/)[1],sql:m[0].slice(0,-1)}));
+    assert.equal(streamExpected.length,275);
+    const streamNames=new Set(streamExpected.map(row=>row.name));
+    assert.deepEqual(schemaRows(current).filter(row=>streamNames.has(row.name)),streamExpected.sort((a,b)=>a.type.localeCompare(b.type)||a.name.localeCompare(b.name)));
+    const expected = before.filter(row=>row.name!=='idx_rpg_characters_account_slot').map(row => row.type === 'table' && plan.roots[row.name]
+      ? { ...row, sql: row.name==='rpg_characters'?currentCharacterSql:plan.tablePlans.find(table => table.table === row.name).afterSQL } : guardianTriggers.has(row.name)?{...row,sql:guardianTriggers.get(row.name)}:row);
     // 0025's frozen contract covers the pre-existing schema. 0026 only adds
     // independent Fate tables/indexes; 0029 adds isolated expedition tables.
     // 0031 replaces two blanket guardian party locks; 0032 allows self-owned
     // activation on real expeditions. Each populated migration test separately
     // verifies every row and all other schema objects. 0034's populated migration
     // proof additionally checks the one nullable retirement column and isolated lifecycle objects.
-    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)), expected);
+    // 0035-0043 add an explicitly enumerated catalog and the nullable TEXT
+    // atlas_run_id column. Compare every new definition separately, including
+    // unique indexes and triggers, while keeping the historical SQL comparison exact.
+    assert.deepEqual(schemaRows(current).filter(row=>!row.name.startsWith('rpg_fate_')&&!row.tbl_name.startsWith('rpg_star_ring_')&&!retirementObjects.has(row.name)&&!realmAtlasObjects.has(row.name)&&!streamNames.has(row.name)), expected);
+    assert.deepEqual(schemaRows(current).filter(row=>realmAtlasObjects.has(row.name)),realmAtlasExpected);
     for(const [name,type] of retirementObjects){const found=schemaRows(current).filter(r=>r.name===name);assert.equal(found.length,1,name);assert.equal(found[0].type,type,name);}
     assert.equal(current.prepare('PRAGMA foreign_keys').get().foreign_keys, 1);
     assert.equal(current.prepare('PRAGMA ignore_check_constraints').get().ignore_check_constraints, 0);

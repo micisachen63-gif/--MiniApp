@@ -1,18 +1,30 @@
 import {homeActivity} from './services/home-activity.js';
 import * as TOWER from './services/tower.js';
+import * as TOWER_SCENE from './services/tower-scene.js';
+import * as TOWER_RECEIPT from './services/tower-receipt.js';
 import {countryFromCode,ensureCountryPack} from '../public/fate/country-runtime-v9.js';
 import * as GUARDIAN_AUTO from './services/guardian-auto.js';
 import {fatePublic} from './fate-public.js';
 import * as REROLL_AUTO from './services/auto-reroll.js';
 import * as BACKGROUND from './services/background-operations.js';
+import * as EQUIPMENT_COLLECTION from './services/equipment-collection.js';
+import * as EQUIPMENT_RECOVERY from './services/equipment-recovery.js';
+import * as FORGE_RECEIPT from './services/forge-receipt.js';
 import {activateCollection} from './services/collection-blessings.js';
 import {monsterExchange} from './services/monster-exchange.js';
 import * as HALL from './services/hero-hall.js';
-import {bossExchange} from './services/boss-exchange.js';
+import {bossExchange,exchangeScoped} from './services/boss-exchange.js';
+import * as BOSS_SCENE from './services/boss-scene.js';
+import * as BOSS_RECEIPT from './services/boss-receipt.js';
 import * as SP from './services/special.js';
+import * as SKILL_CAREER from './services/skill-career.js';
+import * as PARTY_SCENE from './services/party-scene.js';
 import * as PARTY from './services/party.js';
 import * as STAR_RING from './services/star-ring.js';
 import * as STAR_RING_COSMETICS from './services/star-ring-cosmetics.js';
+import * as STAR_RING_SCENE from './services/star-ring-scene.js';
+import * as STAR_RING_RECEIPT from './services/star-ring-receipt.js';
+import * as STAR_RING_SCOPED from './services/star-ring-scoped.js';
 import * as JOURNAL from './services/journal.js';
 import * as FATE_GIFTS from './services/fate-gifts.js';
 import * as FATE from './services/fate.js';
@@ -20,15 +32,32 @@ import * as FATE_SHARED from './services/fate-shared.js';
 import {isOpenTime as fateIsOpenTime} from '../public/fate/life.js';
 import * as GUARDIAN from './services/guardian-sigil.js';
 import * as GUARDIAN_SHOP from './services/guardian-shop.js';
+import * as GUARDIAN_SCENE from './services/guardian-scene.js';
+import * as FATE_SCENE from './services/fate-scene.js';
+import * as FATE_RECEIPT from './services/fate-receipt.js';
+import * as FATE_SCOPED from './services/fate-scoped.js';
+import * as FATE_PRIVATE_SCENE from './services/fate-private-scene.js';
+import * as FATE_PRIVATE_RECEIPT from './services/fate-private-receipt.js';
+import * as FATE_PRIVATE_SCOPED from './services/fate-private-scoped.js';
+import * as GUARDIAN_RECEIPT from './services/guardian-receipt.js';
+import * as GUARDIAN_SCOPED from './services/guardian-scoped.js';
 import * as EXCHANGE from './services/market-exchange.js';
+import * as EXCHANGE_SCENE from './services/exchange-scene.js';
+import * as EXCHANGE_ACTIONS from './services/exchange-actions.js';
+import * as DIRECT_TRADE_SCENE from './services/direct-trade-scene.js';
+import * as DIRECT_TRADE_ELIGIBLE from './services/direct-trade-eligible.js';
+import * as DIRECT_TRADE_INVITATIONS from './services/direct-trade-invitations.js';
+import * as DIRECT_TRADE_ACTIONS from './services/direct-trade-actions.js';
 // elf-rpg-api — 小精靈 RPG 掛機冒險 Worker. /rpg/* = 小精靈 (X-Service-Secret); /app/api/* = Telegram Mini App (initData);
 // static Mini App files come from public/ (Workers static assets). The Worker never calls Telegram itself.
 import { GameError } from './game/classes.js';
+import * as ATLAS_TALENTS from './services/atlas-talents.js';
 import { checkServiceSecret } from './auth.js';
 import { classifyDbError, invDeltaStmt, ledgerStmt } from './db.js';
 import { playerView, shopView, equipmentView } from './views.js';
 import { ITEMS } from './game/constants.js';
 import * as P from './services/player.js';
+import * as LEDGER_HISTORY from './services/ledger-history.js';
 import * as AUTO from './services/auto-enhance.js';
 import * as NOTICES from './services/operation-notices.js';
 export {AutoEnhanceRunner} from './auto-enhance-runner.js';
@@ -36,10 +65,15 @@ import * as B from './services/boss.js';
 import * as T from './services/trade.js';
 import * as SH from './services/share.js';
 import * as PK from './services/pk.js';
-import { handleApp, APP_GRANT_MS, metaView, bossFor } from './app.js';
+import { handleApp, APP_GRANT_MS, metaView, bossFor, SCOPED_BOSS_ACTIONS, SCOPED_STAR_RING_ACTIONS, SCOPED_GUARDIAN_ACTIONS, SCOPED_FATE_ACTIONS, SCOPED_EXCHANGE_READ_ACTIONS, SCOPED_EXCHANGE_ACTIONS, SCOPED_DIRECT_TRADE_READ_ACTIONS, SCOPED_DIRECT_TRADE_ACTIONS } from './app.js';
 import { resolveActiveCharacterId } from './accounts.js';
 import {handleAdmin} from './admin/index.js';
 import {approveFromBot} from './admin/pairing.js';
+import * as ATLAS from './services/atlas.js';
+import * as ATLAS_BACKGROUND from './services/atlas-background.js';
+import * as ATLAS_QUESTS from './services/atlas-quests.js';
+import * as SCENE_CHAT from './services/scene-chat.js';
+import {listRealmCatalog,resolveRealm,scopeEnvForRealm} from './realm/index.js';
 
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store' } });
 const fail = (code, message, status = 400) => json({ ok: false, error: code, message }, status);
@@ -71,7 +105,25 @@ function tradeAct(fn) {
 }
 
 const routes = {
+  'POST /rpg/chat/state':(env,b,now)=>SCENE_CHAT.view(env,tgOf(b),b,now),
+  'POST /rpg/chat/send':(env,b,now)=>SCENE_CHAT.send(env,tgOf(b),b,now),
+  'POST /rpg/atlas/catalog':(env,b,now)=>ATLAS.catalog(env,b?.tgId?tgOf(b):null,now),
+  'POST /rpg/atlas/status':(env,b,now)=>ATLAS.status(env,tgOf(b),now),
+  'POST /rpg/atlas/configure':(env,b,now)=>ATLAS.configure(env,tgOf(b),b,now),
+  'POST /rpg/atlas/start':(env,b,now)=>ATLAS.start(env,tgOf(b),b,now),
+  'POST /rpg/atlas/settle':(env,b,now)=>ATLAS.settle(env,tgOf(b),b,now),
+  'POST /rpg/atlas/stop':(env,b,now)=>ATLAS.stop(env,tgOf(b),b,now),
+  'POST /rpg/atlas/craft':(env,b,now)=>ATLAS.craft(env,tgOf(b),b,now),
+  'POST /rpg/atlas/quests':(env,b,now)=>ATLAS_QUESTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/quests/claim':(env,b,now)=>ATLAS_QUESTS.claim(env,tgOf(b),b,now),
+  'POST /rpg/atlas/talents':(env,b,now)=>ATLAS_TALENTS.view(env,tgOf(b),now),
+  'POST /rpg/atlas/talents/preview':(env,b,now)=>ATLAS_TALENTS.preview(env,tgOf(b),b,now),
+  'POST /rpg/atlas/talents/action':(env,b,now)=>ATLAS_TALENTS.action(env,tgOf(b),b,now),
   'POST /rpg/admin/login/approve': approveFromBot,
+  'POST /rpg/exchange/scene':(env,b,now)=>EXCHANGE_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/exchange/sellable-scene':(env,b,now)=>EXCHANGE_SCENE.sellable(env,tgOf(b),b,now),
+  'POST /rpg/exchange/receipt':(env,b,now)=>EXCHANGE_ACTIONS.receipt(env,tgOf(b),b,now),
+  'POST /rpg/exchange/action-scoped':(env,b,now)=>EXCHANGE_ACTIONS.run(env,tgOf(b),b,now),
   'POST /rpg/exchange/list':(env,b)=>EXCHANGE.list(env,tgOf(b),b),
   'POST /rpg/exchange/sellable':(env,b)=>EXCHANGE.sellable(env,tgOf(b),b),
   'POST /rpg/exchange/mine':(env,b)=>EXCHANGE.mine(env,tgOf(b),b),
@@ -82,6 +134,17 @@ const routes = {
   'POST /rpg/guardian/auto/stop':(env,b,now)=>GUARDIAN_AUTO.stop(env,tgOf(b),b,now),
   'POST /rpg/guardian/auto/seen':(env,b,now)=>GUARDIAN_AUTO.seen(env,tgOf(b),b,now),
   'POST /rpg/guardian/auto/status':async(env,b)=>({ok:true,job:await GUARDIAN_AUTO.view(env,tgOf(b))}),
+  'POST /rpg/guardian/scene':(env,b,now)=>GUARDIAN_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/guardian/receipt':(env,b,now,namespace='service')=>GUARDIAN_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/guardian/action-scoped':(env,b,now,namespace='service')=>GUARDIAN_SCOPED.run(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/scene':(env,b,now,namespace='service')=>FATE_SCENE.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/receipt':(env,b,now,namespace='service')=>FATE_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/action-scoped':(env,b,now,namespace='service')=>FATE_SCOPED.run(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/scene':(env,b,now,namespace='service')=>FATE_PRIVATE_SCENE.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/profile':(env,b,now,namespace='service')=>FATE_PRIVATE_SCENE.profile(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/receipt':(env,b,now,namespace='service')=>FATE_PRIVATE_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/action-scoped':(env,b,now,namespace='service')=>FATE_PRIVATE_SCOPED.run(env,tgOf(b),b,now,namespace),
+  'POST /rpg/fate/private/cancel':(env,b,now,namespace='service')=>FATE_PRIVATE_SCOPED.cancel(env,tgOf(b),b,now,namespace),
   'POST /rpg/guardian/config': (env)=>GUARDIAN.config(env),
   'POST /rpg/guardian/shop/list': (env,b)=>GUARDIAN_SHOP.list(env,tgOf(b),b),
   'POST /rpg/guardian/shop/sell': (env,b,now)=>GUARDIAN_SHOP.sell(env,tgOf(b),b,now),
@@ -136,6 +199,8 @@ const routes = {
   'POST /rpg/background/dismiss': (env,b,now)=>BACKGROUND.dismiss(env,tgOf(b),b,now),
   'POST /rpg/background/notice-status': (env,b)=>BACKGROUND.status(env,tgOf(b),b),
   'POST /rpg/auto-enhance/status': async(env,b)=>({ok:true,job:await AUTO.view(env,tgOf(b))}),
+  'POST /rpg/skill-career': (env,b,now)=>SKILL_CAREER.view(env,tgOf(b),now),
+  'POST /rpg/party/scene': (env,b,now)=>PARTY_SCENE.view(env,tgOf(b),b,now),
   'POST /rpg/expedition/me': (env,b,now)=>SP.view(env,tgOf(b),now),
   'POST /rpg/expedition/action': (env,b,now)=>SP.action(env,tgOf(b),b,now),
   'POST /rpg/expedition/share': (env,b,now)=>SP.share(env,tgOf(b),b,now),
@@ -143,8 +208,16 @@ const routes = {
   'POST /rpg/party/hall': (env,b,now)=>PARTY.hall(env,tgOf(b),b,now),
   'POST /rpg/party/hall/get': (env,b,now)=>PARTY.hallGet(env,tgOf(b),b,now),
   'POST /rpg/tower/status': (env,b,now)=>TOWER.view(env,tgOf(b),now),
+  'POST /rpg/tower/scene': (env,b,now)=>TOWER_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/tower/receipt': (env,b,now)=>TOWER_RECEIPT.view(env,tgOf(b),b,now,'service'),
   'POST /rpg/tower/action': (env,b,now)=>TOWER.action(env,tgOf(b),b,now),
   'POST /rpg/party/list': (env,b,now)=>PARTY.list(env,tgOf(b),now),
+  'POST /rpg/star-ring/scene': (env,b,now)=>STAR_RING_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/star-ring/receipt': (env,b,now,namespace='service')=>STAR_RING_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/star-ring/create-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'create',b,now,namespace),
+  'POST /rpg/star-ring/action-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'action',b,now,namespace),
+  'POST /rpg/star-ring/shop-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'shop',b,now,namespace),
+  'POST /rpg/star-ring/cosmetics/equip-scoped': (env,b,now,namespace='service')=>STAR_RING_SCOPED.run(env,tgOf(b),'cosmetic',b,now,namespace),
   'POST /rpg/star-ring/list': (env,b,now)=>STAR_RING.list(env,tgOf(b),now),
   'POST /rpg/star-ring/me': (env,b,now)=>STAR_RING.me(env,tgOf(b),now),
   'POST /rpg/star-ring/create': (env,b,now)=>STAR_RING.create(env,tgOf(b),b,now),
@@ -176,6 +249,12 @@ const routes = {
   'POST /rpg/me': (env, b, now) => me(env, tgOf(b), now, {summary:b.summary===true}),
   'POST /rpg/create': async (env, b, now) => { const tg = tgOf(b); await P.createCharacter(env, { ...b, tgId: tg }, now); return me(env, tg, now); },
   'POST /rpg/monster-exchange': act((w,c,b)=>monsterExchange(w,c,b)),
+  'POST /rpg/equipment-recovery':(env,b,now)=>EQUIPMENT_RECOVERY.view(env,tgOf(b),now),
+  'POST /rpg/equipment-recovery/preview':(env,b,now)=>EQUIPMENT_RECOVERY.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-recovery/action':(env,b,now)=>EQUIPMENT_RECOVERY.action(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection':(env,b,now)=>EQUIPMENT_COLLECTION.view(env,tgOf(b),now),
+  'POST /rpg/equipment-collection/preview':(env,b,now)=>EQUIPMENT_COLLECTION.preview(env,tgOf(b),b,now),
+  'POST /rpg/equipment-collection/submit':(env,b,now)=>EQUIPMENT_COLLECTION.submit(env,tgOf(b),b,now),
   'POST /rpg/collection/activate': act((w,c,b)=>activateCollection(w,c,b)),
   'POST /rpg/boss-exchange': act((w,c,b)=>bossExchange(w,c,b)),
   'POST /rpg/daily': act((w, c, b) => P.claimDaily(w, c, b.requestId)),
@@ -206,6 +285,12 @@ const routes = {
   'POST /rpg/share/like': async (env, b, now) => ({ ok: true, ...(await SH.toggleLike(env, { tgId: tgOf(b), shareId: String(b.shareId) }, now)), share: await SH.shareView(env, String(b.shareId)) }),
   'POST /rpg/share/message': async (env, b) => SH.setShareMessage(env, String(b.shareId), b.chatId, b.messageId),
   'POST /rpg/trade/request': async (env, b, now) => { const tg = tgOf(b); await T.touchUsername(env, tg, b.username); return { ok: true, request: await SH.requestTrade(env, { tgId: tg, shareId: String(b.shareId) }, now) }; },
+  'POST /rpg/trade/scene-scoped': (env,b,now)=>DIRECT_TRADE_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/trade/eligible-scoped': (env,b,now)=>DIRECT_TRADE_ELIGIBLE.eligible(env,tgOf(b),b,now),
+  'POST /rpg/trade/invitation-receipt': (env,b,now)=>DIRECT_TRADE_INVITATIONS.receipt(env,tgOf(b),b,now),
+  'POST /rpg/trade/invitation-scoped': (env,b,now)=>DIRECT_TRADE_INVITATIONS.run(env,tgOf(b),b,now),
+  'POST /rpg/trade/receipt': (env,b,now)=>DIRECT_TRADE_ACTIONS.receipt(env,tgOf(b),b,now),
+  'POST /rpg/trade/action-scoped': (env,b,now)=>DIRECT_TRADE_ACTIONS.run(env,tgOf(b),b,now),
   'POST /rpg/trade/open': (env, b, now) => T.openWithEquip(env, { tgId: tgOf(b), target: b.target, equipId: b.equipId, requestId: b.requestId }, now),
   'POST /rpg/trade/requests': async (env, b, now) => ({ ok: true, ...(await SH.listRequests(env, tgOf(b), now)) }),
   'POST /rpg/trade/accept': async (env, b, now) => ({ ok: true, ...(await SH.acceptRequest(env, { tgId: tgOf(b), requestId: String(b.reqId || '') }, now)) }),
@@ -229,7 +314,13 @@ const routes = {
   'POST /rpg/pk/get': async (env, b, now) => { const p = await PK.pkView(env, String(b.pkId), b.tgId ? tgOf(b) : null, now); if (!p) throw new GameError('not_found', '找不到這場決鬥', 404); return { ok: true, pk: p }; },
   'POST /rpg/pk/list': async (env, b, now) => ({ ok: true, ...(await PK.listPk(env, tgOf(b), now)) }),
   'POST /rpg/pk/message': async (env, b) => PK.setPkMessage(env, String(b.pkId), b.chatId, b.messageId),
+  'POST /rpg/forge/receipt': (env,b,now)=>FORGE_RECEIPT.view(env,{tgId:tgOf(b),kind:b.kind,requestId:b.requestId,namespace:'service'},now),
   'POST /rpg/ledger': async (env, b) => ({ ok: true, ledger: await P.ledgerFor(env.DB, tgOf(b)) }),
+  'POST /rpg/ledger/history': (env,b,now)=>LEDGER_HISTORY.history(env,tgOf(b),b,now),
+  'POST /rpg/boss/scene':(env,b,now)=>BOSS_SCENE.view(env,tgOf(b),b,now),
+  'POST /rpg/boss/receipt':(env,b,now,namespace='service')=>BOSS_RECEIPT.view(env,tgOf(b),b,now,namespace),
+  'POST /rpg/boss/attack-scoped':async(env,b,now)=>{const tg=tgOf(b),result=await B.attackScoped(env,tg,b,now);return {...result,...await BOSS_SCENE.view(env,tg,{bossId:b.bossId},now)};},
+  'POST /rpg/boss/exchange-scoped':async(env,b,now,namespace='service')=>{const tg=tgOf(b),result=await exchangeScoped(env,tg,b,now,namespace);return {...result,...await BOSS_SCENE.view(env,tg,{},now)};},
   'POST /rpg/boss/current': async (env, b, now) => ({ ok: true, boss: await B.currentBoss(env, now) }),
   'POST /rpg/boss/get': async (env, b, now) => ({ ok: true, boss: await B.bossById(env, String(b.bossId), now) }),
   'POST /rpg/boss/attack': async (env, b, now) => { const r = await B.attackBoss(env, tgOf(b), String(b.bossId), now); return { ok: true, result: r, boss: await B.bossById(env, String(b.bossId), now) }; },
@@ -365,12 +456,15 @@ export async function runCron(env, now) {
 
 export async function handle(request, env) {
   const url = new URL(request.url);
-  if(url.pathname.startsWith('/admin/api/'))return handleAdmin(request,env);
+  if(url.pathname.startsWith('/admin/api/')){
+    if(request.headers.get('X-Realm-Id')&&request.headers.get('X-Realm-Id')!=='permanent')return fail('realm_admin','管理介面目前僅操作永久環境',409);
+    try{return await handleAdmin(request,await prepareRealmEnv(request,env),Date.now(),env);}catch(error){return errorResponse(error,url);}
+  }
   const publicCode=/^\/fate\/r\/([^/]+)$/.exec(url.pathname)?.[1],publicCountry=countryFromCode(publicCode);if(publicCountry)await ensureCountryPack(publicCountry);
   const publicStory=fatePublic(request);if(publicStory)return publicStory;
   if (request.method === 'GET' && url.pathname === '/health') return json({ ok: true, service: 'elf-rpg-api' });
   if (url.pathname.startsWith('/app/api/')) {
-    try { return await handleApp(request, env, url, { routes, json, fail, nowFor }); }
+    try { return await handleApp(request, env, url, { routes, json, fail, nowFor, prepareRealmEnv }); }
     catch (e) { return errorResponse(e, url); }
   }
   const auth = checkServiceSecret(request, env); if (!auth.ok) return fail(auth.error, auth.error, auth.status);
@@ -380,13 +474,56 @@ export async function handle(request, env) {
   const now = nowFor(request, env);
   try {
     const routeBody = body || {};
+    const sceneScoped=SCOPED_BOSS_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_STAR_RING_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_GUARDIAN_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||(SCOPED_FATE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_EXCHANGE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||SCOPED_DIRECT_TRADE_ACTIONS.includes(url.pathname.slice('/rpg/'.length))||url.pathname==='/rpg/ledger/history');
+    if(sceneScoped&&(typeof routeBody.realmId!=='string'||!routeBody.realmId))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if((sceneScoped||url.pathname.startsWith('/rpg/atlas/')||url.pathname.startsWith('/rpg/equipment-recovery')||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt')&&!request.headers.get('X-Realm-Id'))throw new GameError('realm_required','請先選擇遊戲環境',400);
+    if(routeBody.realmId&&String(routeBody.realmId)!==String(request.headers.get('X-Realm-Id')||'permanent'))throw new GameError('realm_mismatch','環境不一致',409);
+    // Shared class metadata has no player state. Preserve the BOT's authenticated,
+    // database-free metadata contract; only asset-bearing routes resolve a D1.
+    if(url.pathname==='/rpg/meta'){
+      const selected=request.headers.get('X-Realm-Id')||'permanent';
+      if(!listRealmCatalog(env).some(realm=>realm.id===selected))throw new GameError('realm_unknown','找不到指定的世界',404);
+      return json(await route(env,routeBody,now));
+    }
+    env=await prepareRealmEnv(request,env);
+    if(sceneScoped||url.pathname==='/rpg/forge/receipt'||url.pathname==='/rpg/skill-career'||url.pathname==='/rpg/party/scene'||url.pathname==='/rpg/tower/scene'||url.pathname==='/rpg/tower/receipt'){
+      if(sceneScoped&&(typeof routeBody.selectedCharacterId!=='string'||!routeBody.selectedCharacterId))throw new GameError('selected_character_required','請先選擇角色',400);
+      const accountId=tgOf(routeBody),characterId=await resolveActiveCharacterId(env.DB,accountId);
+      const owned=await env.DB.prepare('SELECT 1 FROM rpg_live_characters WHERE tg_id=? AND account_tg_id=?').bind(characterId,accountId).first();
+      if(!owned)throw new GameError('no_character','找不到目前帳號的角色',404);
+      if(routeBody.selectedCharacterId&&String(routeBody.selectedCharacterId)!==String(characterId))throw new GameError('character_changed','角色已切換，請重新核對',409);
+      return json(await route(env,{...routeBody,tgId:characterId},now));
+    }
     if (routeBody.tgId && !['/rpg/create', '/rpg/app/grant','/rpg/star-ring/recruit/join'].includes(url.pathname))
       routeBody.tgId = await resolveActiveCharacterId(env.DB, tgOf(routeBody));
     return json(await route(env, routeBody, now));
   }
   catch (e) { return errorResponse(e, url); }
 }
+async function prepareRealmEnv(request,env){
+  const context=await resolveRealm(env,request.headers.get('X-Realm-Id')||'permanent');
+  return attachWakeups(scopeEnvForRealm(env,context));
+}
+function attachWakeups(env){
+  if(!env.realmWaitUntil)return env;
+  return {...env,
+    autoEnhanceWake:id=>env.realmWaitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message))),
+    guardianAutoWake:id=>env.realmWaitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),
+    autoRerollWake:id=>env.realmWaitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),
+  };
+}
+async function scheduledRealms(event,env){
+  for(const realm of listRealmCatalog(env)){
+    const context=await resolveRealm(env,realm.id);
+    if(context.phase!=='ACTIVE')continue;
+    const scoped=scopeEnvForRealm(env,context);
+    if(event.cron==='* * * * *')await Promise.all([PARTY.sweep(scoped,event.scheduledTime),AUTO.sweep(scoped,event.scheduledTime),GUARDIAN_AUTO.sweep(scoped,event.scheduledTime),REROLL_AUTO.sweep(scoped,event.scheduledTime),STAR_RING.sweep(scoped,event.scheduledTime),FATE_SHARED.sweep(scoped,event.scheduledTime).then(()=>FATE.sweep(scoped,event.scheduledTime)),ATLAS_BACKGROUND.sweep(scoped,event.scheduledTime).then(result=>{if(result.errors.length)console.warn('atlas sweep',context.id,JSON.stringify(result));}).catch(error=>console.warn('atlas sweep',context.id,error.code||'internal'))]);
+    else console.log('cron',context.id,JSON.stringify(await runCron(scoped,event.scheduledTime)));
+  }
+}
 function errorResponse(e, url) {
+  const exchangeRejection = EXCHANGE_ACTIONS.rejectionOf(e);
+  if (exchangeRejection) return json(exchangeRejection, e.status || 400);
   {
     const g = e instanceof GameError ? e : classifyDbError(e);
     if (g) {
@@ -399,7 +536,7 @@ function errorResponse(e, url) {
 }
 
 export default {
-  fetch: (request, env, ctx) => handle(request, {...env,autoRerollWake:id=>ctx?.waitUntil(REROLL_AUTO.wake(env,id).catch(e=>console.error('auto reroll start',e.message))),guardianAutoWake:id=>ctx?.waitUntil(GUARDIAN_AUTO.wake(env,id).catch(e=>console.error('guardian auto start',e.message))),autoEnhanceWake:id=>ctx?.waitUntil(AUTO.wake(env,id).catch(e=>console.error('auto start',e.message)))}),
-  scheduled: (event, env, ctx) => ctx.waitUntil(event.cron==='* * * * *' ? Promise.all([PARTY.sweep(env,event.scheduledTime),AUTO.sweep(env,event.scheduledTime),GUARDIAN_AUTO.sweep(env,event.scheduledTime),REROLL_AUTO.sweep(env,event.scheduledTime),STAR_RING.sweep(env,event.scheduledTime),FATE_SHARED.sweep(env,event.scheduledTime).then(()=>FATE.sweep(env,event.scheduledTime))]) : runCron(env, event.scheduledTime).then((r) => console.log('cron', JSON.stringify(r)))),
+  fetch: (request, env, ctx) => handle(request, {...env,realmWaitUntil:promise=>ctx?.waitUntil(promise)}),
+  scheduled: (event, env, ctx) => ctx.waitUntil(scheduledRealms(event,env)),
 };
 void equipmentView;

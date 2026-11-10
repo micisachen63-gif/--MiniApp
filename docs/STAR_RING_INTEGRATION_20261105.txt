@@ -1,0 +1,102 @@
+星環遠征主戰鬥浮窗整合 — 2026-11-05
+
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-star-ring-integration-20261105
+分支：codex/star-ring-integration-20261105
+承接：37352eb3e86938bdf1a96de4b7d8a7fc17f33bfd（Boss 最後本機完成版）
+本報告於本機提交前保存；精確提交及其後完整 Worker/BOT gate，以 .release-sync/star-ring-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json 及外部 FINAL_STATUS.md 為準。未有完整成功收據，不以 focused 或前批結果代替本批全套。
+
+一、功能與主介面
+
+冒險的「星環遠征」與營地的「星征補給與星紋」接入現有單一浮窗。四分頁為目前遠征、招募大廳、星征補給、專屬星紋；包含建立、查看招募、加入並準備、取消/完成準備、出發、戰術、離隊、歷史報告、徽記/核心商品、原隨機裝備、三款原星紋解鎖/穿戴/null卸下。
+
+目前角色的 HP/MP、背景遠征快照、遠征戰鬥推演與已提交獎勵分開。時間到達階段或終點不代表已結算；畫面保留原實存 status、completedStages、stage results、me.rewards，另標示 settlementPending、battle.preview、pendingRankReward.preview 與 projection.rewards=committed-rows-only。
+
+沿用既有金屬控制與單浮窗導航。確認預設取消，取消與 Back 回原控制；未知操作提示每筆只定位一次，舊 RAF、隱藏、dispose 與切角不搶焦點。320/390/1280 與最少44px命中區以 Chrome 收據為準。
+
+二、身份、純讀與原權威
+
+新增六個端點：
+star-ring/scene
+star-ring/receipt
+star-ring/create-scoped
+star-ring/action-scoped
+star-ring/shop-scoped
+star-ring/cosmetics/equip-scoped
+
+App/Service 必須提供一致的 X-Realm-Id 與 captured body.realmId，以及明確 selectedCharacterId。真正帳號由登入/服務驗證權威取得，namespace 只由可信函式參數指定，body 無法改成另一個來源。共用 session 的六端點均注入同一 captured realm/character，只有 scene/receipt 加入 READS；舊 list/me/get 保持原本有副作用的行為。
+
+新 scene/receipt 只讀，不呼叫 sweep、advance、withPlayer、analytics、outbox。原 list/me 會 sweep，原 view/get 會 advance，不能拿來作定時讀取。新 readView 使用純讀投影且不使用原 isolate 全域 battle cache，防止相同 run ID/rev 跨 realm 共用快照。
+
+同帳舊角色 recipientCharId 必須為自有且確實參與該 run；報告 top-level identity 始終是目前角色。報告控制唯讀，切回補給頁會清 report query、重新讀取目前角色，再允許操作。ringParty/ringChar 與 ringJoin 意圖分開；開啟連結、重開、visibility 不自動加入。複製邀請清除原 query/fragment，只帶 ringParty/ringJoin，不攜帶預覽帳號參數；沒有工具代發訊息。
+
+三、收據、防重與交易界線
+
+四類操作保存原 request ID、完整 canonical signature、typed result 與實際 costs，並核對原 creation/operation/purchase/cosmetic authority。ready=false、tactic、party、offer、nullable cosmetic 及操作種類均屬原操作內容；同ID換內容或跨kind不能重用。App/Service namespace 各自隔離。
+
+Version 1 receipt 與最後原 authority 寫入同一 batch；每個實際寫入 batch 都重新檢查目前帳號/角色。收據查詢不補發、不重建破損資料。缺版本、空結果、原 authority 不吻合或 debit ledger 缺漏，都不冒充成功。原隨機裝備直接恢復 purchase.reward_json 和原裝備ID，出售或換職也不重新抽取。已擁有星紋的新重複購買依原規則 alreadyOwned:true、costs:{}，沒有虛構第二筆扣款。
+
+整個原操作並非一筆全域交易。原 sweep/advance、begin逐隊員的withPlayer準備/閒置結算可能先各自合法提交；新收據只證明最後 authority batch。切角之後 guard 擋住後續寫入，但不回滾之前合法完成的 checkpoint。缺最後收據不能推出所有前置工作零寫入。原階段(run_id,char_id,stage)防重仍是結算權威。
+
+前端 pending 保留原 ID/body，依 account/realm/character 隔離，並用 epoch、角色revision floor及party rev擋舊回覆。not_found 保留待核對狀態；查詢、取消、重整、重開均不重送。只有有效 recoveryAllowed 與明確確認，才用同一ID/body重試；成功匹配或明確核對完整收據才解除。
+
+四、保持的遊戲規則
+
+原商品價格、機率/裝備來源、獎勵公式、v1/v2/v3引擎及golden不變。仍為5個不同帳號、30分鐘招募、12小時遠征、6個各2小時節點；每日啟程為每角色、台灣日界，出發才使用次數。出發檢查各隊員仍為帳號active character、全員ready、HP/復活、等級/職責、原presence、無前景隊伍、每日資格與守護天使交易。進階職責要求保持。
+
+原背景 running membership 和前景 dungeon/tower 的 party_id 分開。出發後可照原規則進行前景組隊；星環結算不能覆寫前景HP/MP、party_id或隊伍權威。離隊保留先前已提交階段收益，未結算收益不提早發放，原今日次數不退。招募隊長離開結束lobby；執行中隊長離開依原規則移交，所有人離開才結束。party-scene-common 白名單保持 dungeon/tower。
+
+五、測試、工具修正與證據原貌
+
+後端新增28項通過；包含新增項目的16檔 focused 合計198/198。UI/shared-session focused94/94。這些集合不是全套，也不與完整gate相加。後端12來源與UI6來源測試前後及root重算SHA一致。
+
+新增測試覆蓋 v1/v2/v3跨原2h/12h期限純讀全表、雙realm、同ID完整signature、原結果恢復、角色切換、最後batch回滾與先checkpoint後切角的分段提交。原相關服務、market/cosmetics/join-ready/recruit/Telegram/parallel-party/pools/rank/skill-persistence及monster-art真VM常數fixture已回歸。原golden沒有改動。
+
+首次focused fixture失敗原件保留：私有advance未export改用原sweep；同NOW不產生withPlayer寫入的案例改為實際前進60秒；前端helper原本把故意壞的not_found result正規化，修正為保留原回覆。產品沒有為迎合上述fixture失敗而改玩法。
+
+QA 使用明示 RPG_STAR_RING_QA=1、Node24.7.0、雙realm記憶體合成資料與原時計。手動時計只推至原期限，由原權威結算；不是自然等待12小時、正式玩家、Telegram正式宿主或真機驗收。每段原run、request、preview PID、clock、actor snapshot、authority table hashes與前段成功check都綁定；成功消費/出發/結算不能重播。
+
+首次preview fixture讀錯guarded DB adapter而在ready前退出；保存原PID/log後修為raw in-memory DB。layout-01發現唯讀生成scene已由scale.resize改用setParentSize；只在預覽binder接受精確唯一的新hook，保留舊hook修正，未知/混合/重複仍拒絕，6個probe與生成source前後SHA不變。layout-02的關窗焦點失敗來自harness程式pre-open，改成真Adventure第一點擊後保留原斷言通過。上述原件均保存，不能宣稱第一次全流程就全綠。
+
+獨立review另外補齊精確前段成功鏈、部分提交後整段重跑拒絕、stage>=2必須4位原隊員及離隊者唯一stage0收益；原前景end可能自然won/lost+disbanded，驗收依真權威並檢查presence釋放。這些屬QA工具修正，產品18來源維持原freeze。
+
+六、範圍與接續
+
+星紋本批為三款原素材預覽及真實購買/穿戴狀態/卸下。主場Phaser原本沒有aura投影與渲染；主場環身動畫與角色合成預覽仍待角色/FX工作線，不能把「星紋素材預覽」當成主場FX完成。未改角色、FX、catalog、queue或grok-assets。
+
+下一批建議天使功能主浮窗；21個來源唯讀盤點保存於angel-next-source-inventory.json。guardian/inventory包含首次welcome INSERT，不能直接當純讀scene；一般operation、販售ledger、自動召喚job三種收據需各自核對。設定應以伺服器回傳核定配置為準，不硬編碼盤點費率。下一批未實作。
+
+天使、命運、交易、衣櫥、完整帳務；逐擊事件/角色FX、第四階重選、Lv600/16覺醒、正式經濟平衡、完整季末跨DB移轉及永久4+賽季4角色保留、正式Telegram/真機、320px主場資訊卡遮角色等仍待全專案接續。現行MAX_LEVEL仍120。
+
+本批保持本機：無push/PR/merge main/部署，無正式DB、Secrets、migration或旗標變更。Party既有push自動核准審查拒絕仍有效；遠端發布需對具體提交與GitHub目的地另有明確授權，不以新子分支繞過。保留舊預覽與其他工作樹，禁用共享全域agent_workflow/task_control。
+
+交接位於D:/StarJournal/handoff/non-character/star-ring-integration-20261105/及主STATUS/START_HERE。兩個既有PT30M Windows checkpoint持續，里程碑額外記錄；最新語意進度看STATUS.updatedAt，實際排程執行以最後觀察收據為準。
+
+七、Chrome 實證結案資料與最後版本界線
+
+核心接受16個獨立分段、18個checks、44張截圖；24組結構化純讀證據，每組比較permanent/season各96表hash、total_changes與outbox。raw HTTP錯誤1筆，為races-01刻意造成且明標expected:true的真409 star-ring/scene；非預期HTTP、page、route及外部請求錯誤均0。Root逐份核對原結果與前後source manifest；目視原驗收9張代表圖，包含320/390/1280、未知結果、真穿卸、已解鎖/未解鎖成本卡、六個原階段及已提交收益。後續共享input橋接獨立列出。
+
+接受核心run：
+layout-03、shop-01、cosmetics-01、lobby-01、invite-01、start-tail-01、stage-1-01、leave-01、stage-2-01至stage-6-01、report-01、races-01、gallery-02。
+每份原件位於 .release-sync/star-ring-20261105/browser/<run>/results.json。
+彙整以qa-summary.json、qa-source-bridge-final.json、qa-tools-final.json及root-qa-case-review.json為準；root目視以visual-review.json為準。
+
+真實流程結果：
+5徽記兌換4張武卷；40徽記原隨機裝備已提交但失聯，查回原ID且不重擲；60核心未送達操作保留pending，not_found/取消不寫，明確同ID/body恢復只扣一次。60徽記解鎖曙星、穿戴失聯找回原收據、null卸下，戰鬥stats前後一致。
+
+五不同帳號原create/join-ready/ready/start，原30分鐘招募及12小時期限。stage1原sweep產生5筆獎勵；在原deadline前讀scene/receipt不結算。真正三人前景combat並行時，星環sweep前後HP/MP、party_id、party/member/reward rows及presence相同；原end後presence回ring。第5帳離隊保留stage0一筆，stage2-6其餘4人各新增一筆，總25筆階段reward，4份原completion outbox，背景presence釋放；原actors、已保存結果與隨機裝備ID不變。
+
+原run：ring:ce2ee949e90a40abb7d86f042d14bfcb。
+原出發request：ssr_688a5bbf3c754dde860877a432a44a53。
+原startedAt：1793848430018；endsAt：1793891630018。差為43,200,000ms。
+start-01真出發已成功，後續角色列表尚未載入而失敗；其failed原件保留，沒有虛構整段通過check。精確start-tail只核原HTTP200、V1 receipt、5 starts/actor snapshot，補角色切換每日次數後回原角色；含characters/select，不能稱整段零寫入，但無Star Ring/party寫入及時計推進。stage1僅接受此具體tail與原start來源鏈，出發沒有重播。
+
+舊recipient mage報告與current archer身份分開；真ringChar+ringJoin連結不加入，切shop清report query。A/B/A真late200、真409與commit-lost均不覆蓋新scope、不搶焦點，pending完整保留且成本只扣一次。gallery-01漏傳已完成partyId而正確得到active=null，保留失敗原件，只補查詢參數後gallery-02通過；這兩段無角色/遊戲寫入或時計變動。
+
+候選freeze為18個產品/測試來源與5個QA工具，共23檔；running API PID31120的202個loaded來源及實HTTP產品JS/CSS/原素材12個來源核對一致。第五個工具為最小resize相容的scene-preview-bindings.mjs。實際23檔最後SHA以candidate-source-freeze-final.json與root-review-final.json為準。
+
+重要外部輸入界線：
+D:/StarJournal/grok-assets/ui-generated-20261030/characters-v1/scene.js 不屬本批候選Git來源。原03:18只讀probe raw SHA為8d297e48c90b2a5a485ef2270466c5fb9b5f5a978f5c43924a67fdc1c7f21daf；03:53:32Z後共享檔與組合HTTP有新hash，無法從現有證據推定新舊code等價，也未確認寫入者。原接受核心證據不被改寫。新raw/HTTP完整內容與前後版本保存於qa-shared-generated-input-drift.json；目前版本另以既有gallery作窄的只讀顯示橋接，不能當成原消費/出發/結算重新驗收。橋接首次wrapper中斷保留原running收據，雙realm/DB計數/debug時計/input核對無改動後，僅新開只讀run；詳見qa-current-shared-input-bridge-interruption.json及最後橋接收據。結果、當前raw/HTTP版本與最後目視，以外部qa-summary/FINAL_STATUS為準。不能宣稱整個共享grok一直凍結，亦不能把觀察用wallTime正常增加當遊戲時計改動。
+
+目前共享輸入的窄橋接 current-shared-input-readonly-bridge-02 已通過，收據 qa-current-shared-input-readonly-bridge-02.json。整段雙realm各96表、total_changes、outbox與debug clock不變，無select/遊戲寫入/時計指令；raw c4b2b860c09d45e9586a772baad8c75c6ef45d0828238b77c8ad46ec75b032ec、組合HTTP 320063303a34ec30aa6c43ddc7c667f81158c631c3a2f6dff8d69f618a7e669a 及mtime前後穩定。此額外1段/1check/3圖與原16段分列，合計17段/19checks/47圖；root另已實看目前input的戰果圖1張。保留新舊input差異，不推定code等價，沒有重新驗收或重播消費/遠征。
+
+預覽為 http://127.0.0.1:9773/、隔離記憶體API9772；目前UI PID28420、API PID31120、runner20984，實際存活與source以最後preview/process證據為準。遊戲開發時計已推至原12h終點，沒有改短原規則。

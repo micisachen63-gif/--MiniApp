@@ -1,0 +1,84 @@
+命運 F1：命運旅章、完成旅誌與四世星輝匣主浮窗整合
+日期：2026-11-05
+工作樹：D:/StarJournal/worktree-snapshots/star-journal-fate-f1-integration-20261105
+分支：codex/fate-f1-integration-20261105
+承接基線：4dc91d920a49d0e1c93687bf3b3c872356c324b3（天使／守護批次）
+
+一、交付與判讀
+本批已完成命運 F1 產品實作、聚焦測試、原四世完整瀏覽器驗收及最後顯示修正。主戰鬥視窗中的「冒險 → 命運旅章」與「營地 → 四世星輝匣」共用同一近透明浮窗，提供旅章、此世、旅誌、星輝匣與紀錄五頁。
+本文件保存於本機提交之前。精確提交、提交後工作樹乾淨狀態，以及該 HEAD 完整 Worker／BOT 測試，以 .release-sync/fate-f1-20261105/local-submission-receipt.json、full-final-head-gate-receipt.json 及外部 handoff/non-character/fate-f1-integration-20261105/FINAL_STATUS.md 為準。沒有最終 passed 收據，不能把 focused 或前批基線當成本批完整通過。
+
+二、玩家流程與原玩法
+1. 原 random 個人人生可選原國家與星座顯示，沿用原版本／國家敘事引擎與原 RNG。完成故事沿原 helper 渲染，沒有導入舊 app controller 的副作用。
+2. 此世顯示已提交故事與目前可用選項，手動答案 0／1 均完整保留；到期預覽與背景正式提交分開。純讀不能提前計入故事、正式完成、世數或獎勵。
+3. 旅誌呈現角色正式完成的人生，可翻閱原故事、保存紀念或匯入原代碼。紀念收藏不增加正式世數。
+4. 星輝匣按角色真正完成世數領取原里程碑獎勵，開匣精確綁定一個 giftId，展示原一次結果。沒有任取最舊禮盒或重新抽獎的替代行為。
+5. 原規則保持：每世兩個活躍小時、抉擇 90 秒、台北 00:00–06:00 暫停、同帳號每日最多四次啟程、每四個正式完成世數一匣；原獎池、費用、物品、隨機參數位置與交易仍由既有權威服務決定。
+6. F1 不接生日／個人檔案／每日筆記（F2），不接合作／配對／社交分享控制（F3）。舊 API／舊頁與 runner 相容保留。
+
+三、權威邊界與防重
+App 與 Service 均新增 fate/scene、fate/receipt、fate/action-scoped。前二者只 SELECT，不經有副作用的舊 me／state／daily／social、withPlayer、step、sweep 或行為統計路徑。後者從可信路由固定 namespace，驗證 header／body realm、驗證帳號及 captured selectedCharacterId。
+每個原 batch／run 均重新檢查角色與 realm fence，涵蓋前置、主交易與後置；不是只在入口做一次檢查。原服務只加可選可信 hooks，不新增 migration，不更改原公開故事引擎。
+scene 以 fate 欄位返回，避免和 shared session 的 Atlas scene 混淆；server readSequence、前後 domain／actor 再核對、最多一次重取及明確 snapshot_changed，配合 client epoch、最新請求序、同 life revision floor 拒絕晚回覆。domain hash 用於等值比對，不拿 hash 作時間順序。
+五種操作：start、choice、keep、gift-claim、gift-open。start 只准 random／country／showSign／socialInvite=false；choice 使用精確 lifeId、index、answer；claim 使用排序唯一 expectedMilestones；open 精確 giftId。F1 拒生日與 profile 欄位。
+typed ledger「命運場景操作收據」delta=0，與原操作的最後權威 batch 同批提交，保留原 intent、原 immutable result、scope、成本與核對證據。claim 的 completed count／既有 milestone／預期里程碑以 SQL CAS 再驗。開匣後歷史 claim 仍可驗，人生往後推進後原 start／choice 仍可查。
+原服務可能先有合法前置提交；找不到 typed receipt 不代表前面全部沒有寫入。若存在部分權威操作，recoveryAllowed=false，不能以「查無」自動重送。
+UI 在寫入前保存並讀回完整 canonical pending，保留 false／0／null 的語義；不確定結果、切角、重掛或刷新不換 ID、不自動再送。明確核對原收據；僅在服務確認可恢復且使用者明示時，才用原 ID 與完整原 body 重試。壞 storage 原文保留，不以 cache 覆寫。
+已驗證不可變收據的確認與新網路回覆的新鮮度分開：後續純刷新推進 now／revision，不會讓原收據無法確認；確認原結果也不把目前 scene 倒退。gift-open 原第五 RNG 參數不動，可信 options 使用第六參數。
+
+四、實際驗收與證據
+A. 聚焦與接口
+後端 222 項通過（40＋181＋1，原 receipt 各自保存）；UI／story／session 在最後 c80bd475 顯示修正來源上 194/194 通過。label 的既有 UI suite 79/79 亦有獨立收據，與 194 重疊，不相加。preview／empty attach 18/18 通過。
+root 真 client＋shared session JSON/header＋真 SQLite bridge 四項通過，涵蓋 false／0／1、原不可變結果、失聯與重掛、四世／禮盒及明確同 ID 恢復。其原首次 driver 錯誤與修正另存；最終完整 gate 會納入最新來源的全部官方測試。所有 focused 與完整 gate 集合重疊，不相加成總測試數。
+
+B. fresh campaign f1-fresh-02
+campaigns/f1-fresh-02/acceptance-summary-01.json
+SHA-256 d3cbacecb3b5d7a01143c9c12804ceb7e205f6cbe1b90c3c77f3a48f2ece9282
+完整 11 段全過、19 checks、31 張原圖；每段 343 個 browser 相關來源與 root freeze05 的 2368 來源對應，段內前後及相鄰分段一致。root 離線再核對原 results、execution、圖片 SHA、previous-run 鏈及操作資料；不是新增測試執行數。
+11 段為 layout、pure、life1、life2、life3、life4-night、archive-keep、gift-claim、gift-open-lost、scope、final-layout。
+成功原 Fate 操作共 9 次：start4、choice2、keep1、gift-claim1、gift-open1。未送到 API 的 keep 意圖不計成功操作，拒絕的啟程另保留。
+四世均由原 Fate.sweep 正式完成，沒有 seed completed rows、修改原截止時間或重抽結果：
+- ecbe7061e0cc462fa0cd0d69d480e899：TW v8、手動 answer0。
+- 922705fac8704693bce34f971ba2d497：JP v9、showSign=false、手動 answer1。
+- 024c9803859a4d95b7671f733043a3ed：原 90 秒期限，deadline−1 可選，deadline 純讀不提交，原 sweep 提交 auto。
+- 46ebc57ee7ed4304b033d0fb0fa47cda：23:35 啟程，午夜至清晨 activeElapsedMs 維持 1500000，原結束為次日 07:35；同帳不同角色第5次 fate_limit、午夜 fate_night，拒絕本身沒有 DB 寫入。
+
+紀念 keep 的第一次請求在到 API 前被攔截，unknown 經 A→B→A／重掛保留；原 receipt notfound 且服務允許後，明確同 ID／body 恢復一次，世數仍四。
+原 giftId：fb005b7f26d94671821f8a4f4d7c5b37。
+claim request：sf_59e3b1ab1ba146e59b4406c15769acb6，精確 [4]。
+open request：sf_37b8a0191904438caf059d16bffd73f1。
+原一次結果 scrolls：scroll_w×2、scroll_a×2。先保存原成功回覆再模擬遺失；重掛／切角沒有再送 open，原 receipt 找回結果，之後只前進開發時計及純刷新，原結果仍可確認。open POST、原 consume 各一次。
+27 組 Fate 純讀分別核對永久／賽季各 96 張表的 hash、筆數、total_changes 及 outbox 都不變。scope 整段正常 UI select 會沿原流程產生合法選角／idle settlement／行為資料變動；不能把「每組 Fate 純讀不寫」誤說為整段選角零寫。
+瀏覽器 page／非預期 HTTP／route／外部 request／asset capture gaps 均零；fixture 未開 dispatcher，最後實際 outbox 永久0、賽季0。不是對所有未來人生 outbox 的保證。
+
+C. 最後顯示修正與來源橋接
+目視發現凍結賽季內層標題露出 season_2026_01；只把 label 改成與共用主場相同的「永久世界／賽季世界」，captured realm ID／wire／收據與 gameplay 完全不動。
+freeze05 SHA f1edcc082f26e099d04a635f67dd18446900a63db674c85b1d4a5210e0ffe205。
+freeze06 SHA c873f32b91868282ae0bb3ba1f08047116d2f231f8f0dabf35a9638b862fe960。
+2368 來源比對僅 scene-fate-ui.js 一行展示差異，最終 UI SHA c80bd475bd763b0732891d3165ca4e60d4d5b37efae8c9ff622acb830f929262。
+最終純展示橋接 fresh02-final-source-bridge-02：25 checks／5圖通過，2368來源前後一致；只查scene與一次原open歷史收據，整段雙DB／total_changes／commands／clock完全不變，Fate action／select／clock／sweep零。結果SHA 94510466aaa498c7f9525aa8ac7637bb952dce6a660d978053b806387bd93d9f。root另目視賽季標題與原卷軸收據兩圖，原root目視總共6張。
+最初bridge01的Node端九筆原收據核對成功，但獨立browser host的跨port fetch失敗；空錯誤殼的幾何檢查不算內容通過，原failed SHA ee2222ef25a7e1a748435e2b7973c2924072e8696eec9565b374f9f669362544保留。02用嚴格唯讀Node binding提供真API回應，要求實際state.data且無error，補齊真內容／焦點／賽季標籤／原卷軸圖；不是修改產品CORS，也沒有重做原九筆批次收據查詢。
+原 11 段永遠保留為 freeze05 證據，不重標成新版，也不重跑四世或禮盒消費。完整主戰鬥視窗／選角行為以原 11 段為證；最終展示橋接的獨立 host 不冒充完整場景重測。
+root 原目視4張與 UI reviewer21張有重疊；逐圖觀察／SHA存 root-closure-review/。原 390-original-gift-recovered.png 是確認後星輝匣摘要，沒有顯示原獎勵卡，不以該圖單獨證明卷軸結果。
+320／390／1280 的主控制尺寸、垂直捲動、鍵盤取消初焦、Enter 與返回原控制焦點均有瀏覽器檢查。此範圍不等於全局主場角色遮擋／角色FX已完成。
+
+五、保留的失敗、修正與執行環境
+1. 收據 ack 最初錯用新 scene now/revision 新鮮度，後續刷新會令已驗原結果無法確認；保留 red，分離不可變核對後 green。
+2. 故事模組在虛擬 HUD 子路徑下相對 import 導致九個原 helper404。改為同 origin 根 /scene-fate-story.js；只加精確預覽白名單，不放寬任意根路由。失敗提示改中文，原 red 與首輪失敗保留。
+3. root bridge 的第一個 driver 假設未展開的 lifeSchedule 未來槽位存在，3/4；改為沿原 advanceLife.nextAt 有界前進後4/4，不改 seed／玩法。
+4. 舊 campaign f1-life1-01 的原 start 曾成功，life29c1e8c7729c418092fbdf2f74b941c8、request sf_c9434bb92a3a4eb4a52b66ce1027fc1e；手動 choice 尚未送，未完成、未領／開禮盒。
+   舊 UI17812 的精確 UI-only taskkill /F（無 /T）之後，其非detached子 API44296 也退出；沒有足夠全量 raw DB 可忠實復原。保留程序拓撲、96表指紋／局部raw與原結果；Windows Node/libuv子程序生命期為可能機制，沒有證據宣稱確切 EPIPE 根因。life1-tail 計畫在執行前撤銷。舊人生沒有復原、重播或計入新四世。
+5. 新 campaign API18496 用獨立 detached OS 程序與檔案stdio，UI19272只attach。遊戲開始前空白 UI-only 停止／重掛已實測 API PID／creation time、雙DB、clock與零Fate成果不變。原九個文字輸入快照重用，沒有重寫共享來源。
+6. 空白 attach 首次只在preflight遇 Windows process.exit／libuv handle 關閉異常，當時無UI／API停止或遊戲操作。改自然 module exit；原失敗保留，第二輪生命期實測成功。不得以此宣稱所有OS生命期故障不可能再發生。
+7. 本機合成帳號／隔離 SQLite、手動開發時計依原 nextAt／deadline／endAt 走原 sweep，並非真的等滿四世時長，也不是正式 Telegram／真機驗收。API內存資料不是完整持久備份；程序消失時不得假稱已恢復。
+8. 原九份共享文字輸入被固定，其他圖像僅有實際 HTTP bytes／SHA；不宣稱整個 grok／角色素材目錄全域凍結。
+
+六、來源、提交與正式環境
+fresh main 3c6729aa9167223a3a915c5dc19fcc075cbad0ed 是承接基線祖先。初始200來源：198 raw相同，session/social兩檔僅CRLF/LF而正規化全文相同。Node24.7.0，依相同lock重用既有node_modules junction，無依賴變更。
+本批精確27檔（含本報告與AI_HANDOVER），不包含角色／FX／grok美術、原worker/public/fate引擎、migration、package lock或正式設定。後端唯讀審查無阻擋，保存禁止範圍零變更與F2來源漂移清單。
+只建立本機 codex 分支提交。未push、未建立新PR、未執行遠端CI、未merge、未deploy，未改正式DB／Secrets／migrations。先前Party發布自動審查拒絕的目的地／精確提交授權界線持續適用，不以後代分支規避。
+
+七、交接、下一批與全線待辦
+主入口 D:/StarJournal/START_HERE.md；主 STATUS／LATEST 與本批 STATUS／FINAL_STATUS 為最新進度。每30分鐘沿用 StarJournal-NonCharacter-Checkpoint-30m 與 StarJournal-AtlasSupply-Checkpoint-30m，重要里程碑另外即時checkpoint；generatedAt 與 STATUS.updatedAt 必須分開判讀。禁止共享全域 MCP agent_workflow／task_control、kill全部Node或動其他工作樹。
+下一批 F2：生日／個人檔案保存與刪除、保存／臨時生日啟程、帳號每日三則旅箋與原戰鬥證據解鎖。原Fate daily沒有金幣／背包獎勵；rpg/daily 的角色補給不在此批。先定私人intent恢復、刪除後收據不保留私人內容、profile/daily generation抗刪除重建ABA等契約；原daily多段提交不能包一個事後receipt就稱原子。正式 NEXT_BATCH_PLAN.json 要綁本批最終HEAD／完整gate及35個重新核對來源；草稿保留。F2尚未實作。
+F3合作／社交，交易、衣櫥、完整帳務、第四階重選、五輪Lv600／16覺醒及後續專精、逐擊／逐施法事件契約、完整季末drain／manifest／跨D1與永久4＋賽季4角色保留、正式Telegram／真機與經濟校準、極窄全局主場布局及角色FX／星紋aura仍待整合。角色與FX由其他工作線處理；不把本線尚未接入說成全專案沒有成果。

@@ -46,3 +46,27 @@ test('a one-off preview redraw error releases busy state, exposes the error and 
  const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:'1',level:75}}),actorArt:()=>{if(fail){fail=false;throw Error('預覽暫時無法更新');}return '/art/cached-hero.webp';},api:async(path)=>{if(path==='star-ring/shop')calls++;return path==='star-ring/shop'?{ok:true,cosmetics:state({owned:[ids[0]],balance:23})}:state({balance:83});}});
  await flush();fail=true;click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(calls,0);assert.match(s.root.innerHTML,/預覽暫時無法更新/);click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(calls,1);assert.match(s.root.innerHTML,/已永久解鎖/);stop();
 });
+
+test('wardrobe keeps permanent receipt keys and isolates the same offer for the same ID in a season',async()=>{
+ const s=setup(),calls=[];let realm='permanent',epoch=0;
+ const permanent='starRingCosmetic:1:buy:'+ids[0],season='starRingCosmetic:season_one:1:buy:'+ids[0];s.storage.set(permanent,'original-permanent-receipt');
+ const host={me:()=>({character:{tgId:'1',level:75}}),realmId:()=>realm,contextEpoch:()=>epoch,api:async(path,body)=>{if(path==='star-ring/cosmetics')return state();calls.push({realm,...body});throw Error('網路中斷');}};
+ let stop=s.ui.mount(s.root,host);await flush();click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(calls[0].requestId,'original-permanent-receipt');stop();
+ realm='season_one';epoch++;stop=s.ui.mount(s.root,host);await flush();click(s,{cosmeticBuy:ids[0]});await flush();assert.notEqual(calls[1].requestId,calls[0].requestId);assert.equal(s.storage.get(season),calls[1].requestId);assert.equal(s.storage.get(permanent),'original-permanent-receipt');stop();
+ epoch++;stop=s.ui.mount(s.root,host);await flush();click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(calls[2].requestId,calls[1].requestId);stop();
+});
+
+test('late wardrobe purchase cannot clear a receipt, request follow-up state or refresh across realm or epoch',async()=>{
+ for(const mode of ['realm','epoch']){
+  const s=setup(),calls=[];let realm='permanent',epoch=0,release,refreshes=0;
+  const host={me:()=>({character:{tgId:'1',level:75}}),realmId:()=>realm,contextEpoch:()=>epoch,refresh:()=>refreshes++,api:async(path,body)=>{calls.push([path,body]);if(path==='star-ring/cosmetics')return state();return new Promise(done=>release=done);}};
+  const stop=s.ui.mount(s.root,host);await flush();click(s,{cosmeticBuy:ids[0]});const key='starRingCosmetic:1:buy:'+ids[0],id=s.storage.get(key),html=s.root.innerHTML;assert.ok(id);
+  if(mode==='realm')realm='season_one';else epoch++;release({ok:true});await flush();assert.equal(s.storage.get(key),id);assert.equal(calls.length,2);assert.equal(refreshes,0);assert.equal(s.root.innerHTML,html);stop();
+ }
+});
+
+test('committed wardrobe purchase with interrupted follow-up retains the same receipt until synchronization succeeds',async()=>{
+ const s=setup(),writes=[];let initial=true,readsFail=true;
+ const stop=s.ui.mount(s.root,{me:()=>({character:{tgId:'1',level:75}}),realmId:()=> 'season_one',api:async(path,body)=>{if(path==='star-ring/shop'){writes.push(body.requestId);return {ok:true};}if(initial){initial=false;return state();}if(readsFail)throw Error('同步暫時中斷');return state({owned:[ids[0]]});}});
+ await flush();click(s,{cosmeticBuy:ids[0]});await flush();const key='starRingCosmetic:season_one:1:buy:'+ids[0];assert.equal(s.storage.get(key),writes[0]);readsFail=false;click(s,{cosmeticBuy:ids[0]});await flush();assert.equal(writes[1],writes[0]);assert.equal(s.storage.has(key),false);stop();
+});
