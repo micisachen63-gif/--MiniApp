@@ -167,6 +167,8 @@
   supplies:{title:'補給設定',group:'camp'},shop:{title:'商店',group:'camp'},gearbook:{title:'裝備收藏冊',group:'camp'},recovery:{title:'典藏與精煉',group:'camp'}
  };
  const moduleFlights=new Map();
+ // Classic item-stat helpers live in the inventory module (globalThis.RpgSceneItemStats); optional for other windows.
+ const loadItemStats=()=>loadSceneModule('scene-inventory-ui','RpgSceneInventory').catch(()=>null);
  async function loadSceneModule(file,name){
   if(window[name])return window[name];if(moduleFlights.has(file))return moduleFlights.get(file);
   const promise=new Promise((resolve,reject)=>{
@@ -250,8 +252,8 @@
   }
   if(entry.route==='live-status')return window.RpgSceneLiveView.mountStatus(body,host);
    if(entry.route==='ledger'){const module=await loadSceneModule('scene-ledger-ui','RpgSceneLedger');if(api.current())return module.mount(body,host);return;}
-  if(entry.route==='direct-trade'){await loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions');if(!api.current())return;await loadSceneModule('scene-direct-trade-invitation-client','RpgSceneDirectTradeInvitations');if(!api.current())return;const module=await loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade');if(api.current())return module.mount(body,host);return;}
-   if(entry.route==='exchange'){await loadSceneModule('scene-exchange-client','RpgSceneExchangeActions');if(!api.current())return;const module=await loadSceneModule('scene-exchange-ui','RpgSceneExchange');if(api.current())return module.mount(body,host);return;}
+  if(entry.route==='direct-trade'){await loadItemStats();if(!api.current())return;await loadSceneModule('scene-direct-trade-client','RpgSceneDirectTradeActions');if(!api.current())return;await loadSceneModule('scene-direct-trade-invitation-client','RpgSceneDirectTradeInvitations');if(!api.current())return;const module=await loadSceneModule('scene-direct-trade-ui','RpgSceneDirectTrade');if(api.current())return module.mount(body,host);return;}
+   if(entry.route==='exchange'){await loadItemStats();if(!api.current())return;await loadSceneModule('scene-exchange-client','RpgSceneExchangeActions');if(!api.current())return;const module=await loadSceneModule('scene-exchange-ui','RpgSceneExchange');if(api.current())return module.mount(body,host);return;}
   if(['character','adventure','camp'].includes(entry.route))return paintHub(body,entry.route,host);
   if(['equipment','inventory','item'].includes(entry.route)){const module=await loadSceneModule('scene-inventory-ui','RpgSceneInventory');if(api.current())return module.mount(body,host,{mode:entry.route,itemId:entry.params.itemId});return;}
   if(['skills','career'].includes(entry.route)){const module=await loadSceneModule('scene-skills-ui','RpgSceneSkills');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
@@ -261,7 +263,7 @@
   if(['star-ring','star-ring-shop'].includes(entry.route)){const module=await loadSceneModule('scene-star-ring-ui','RpgSceneStarRing');if(api.current())return module.mount(body,host,{...entry.params,tab:entry.params.tab||(entry.route==='star-ring-shop'?'shop':'current')});return;}
   if(['guardian','guardian-summon'].includes(entry.route)){const module=await loadSceneModule('scene-guardian-ui','RpgSceneGuardian');if(api.current())return module.mount(body,host,{...entry.params,tab:entry.params.tab||(entry.route==='guardian-summon'?'summon':'overview')});return;}
   if(['fate','fate-gifts'].includes(entry.route)){const module=await loadSceneModule('scene-fate-ui','RpgSceneFate');if(api.current())return module.mount(body,host,{...entry.params,tab:entry.params.tab||(entry.route==='fate-gifts'?'gifts':'overview')});return;}
-  if(entry.route==='workshop'){const module=await loadSceneModule('scene-workshop-ui','RpgSceneWorkshop');if(api.current())return module.mount(body,host,entry.params);return;}
+  if(entry.route==='workshop'){await loadItemStats();if(!api.current())return;const module=await loadSceneModule('scene-workshop-ui','RpgSceneWorkshop');if(api.current())return module.mount(body,host,entry.params);return;}
   if(['supplies','shop'].includes(entry.route)){const module=await loadSceneModule('scene-supply-ui','RpgSceneSupply');if(api.current())return module.mount(body,host,{tab:entry.route});return;}
   if(entry.route==='chat'){const shortcuts=document.createElement('nav');shortcuts.className='scene-social-shortcuts';shortcuts.setAttribute('aria-label','社交');const partyButton=document.createElement('button');partyButton.type='button';partyButton.dataset.sceneRoute='party';partyButton.textContent='我的隊伍';partyButton.onclick=()=>host.navigate('party',{tab:'current'});shortcuts.append(partyButton);for(const [route,label]of [['hall','英雄殿堂'],['duel','競技決鬥']]){const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.sceneRoute=route;b.onclick=()=>host.navigate(route);shortcuts.append(b);}const chatBody=document.createElement('div');body.replaceChildren(shortcuts,chatBody);chatView=window.RpgSceneChatUI.mountPanel(chatBody,chat);void chat.refresh();return chatView;}
   if(entry.route==='quests'){paintQuests();void refreshQuests();return {dispose(){}};}

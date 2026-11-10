@@ -696,3 +696,43 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
   width:auto;flex:0 0 max(calc((100% - 4 * var(--b3-gap)) / 5),min(calc((100% - 2 * var(--b3-gap)) / 3 - .5px),max(0px,calc((420px - 100%) * 999))));
   padding:0 calc(var(--b3-cap) * .5) 2px!important;letter-spacing:.02em;
 }
+/* Item stats (classic parity, 2026-11-10): quality colours follow the server rarity tiers
+   (白一般 / 綠高級 / 藍極品 / 紫傳說 / 紅霸主, 遺物 gold) and stay readable on the navy windows. */
+#ui.scene-unified-root .scene-unified-dialog .sis-q-common{color:#efe6d2!important}
+#ui.scene-unified-root .scene-unified-dialog .sis-q-advanced{color:#9be08a!important}
+#ui.scene-unified-root .scene-unified-dialog .sis-q-epic{color:#8fc2ff!important}
+#ui.scene-unified-root .scene-unified-dialog .sis-q-legendary{color:#d3a6ff!important}
+#ui.scene-unified-root .scene-unified-dialog .sis-q-supreme{color:#ff7a7a!important}
+#ui.scene-unified-root .scene-unified-dialog .sis-q-relic{color:#f1ce7e!important}
+#ui.scene-unified-root .scene-unified-dialog :is(.si-card-stat,.si-slot-stat,.sw-option-stat,.sdt-stat,.se-stat){display:block;color:#d9e6f2;font-size:12px;line-height:1.35;white-space:normal;overflow-wrap:anywhere;opacity:1}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-stat{font-size:11px;color:#c9d6e2}
+#ui.scene-unified-root .scene-unified-dialog .sis-kv{display:grid;grid-template-columns:auto 1fr;gap:4px 12px;margin:8px 0}
+#ui.scene-unified-root .scene-unified-dialog .sis-kv>div{display:contents}
+#ui.scene-unified-root .scene-unified-dialog .sis-kv dt{color:#b9c4cf;font-size:12px}
+#ui.scene-unified-root .scene-unified-dialog .sis-kv dd{margin:0;text-align:right;color:#f3ead6;font-size:13px;overflow-wrap:anywhere}
+#ui.scene-unified-root .scene-unified-dialog .sis-affixes{list-style:none;margin:4px 0;padding:0}
+#ui.scene-unified-root .scene-unified-dialog .sis-affixes li{display:flex;justify-content:space-between;gap:8px;padding:3px 0;border-bottom:1px solid #9e835c33;font-size:13px}
+#ui.scene-unified-root .scene-unified-dialog .sis-affix-block h4{margin:10px 0 2px;font-size:13px;color:#e8cf95}
+#ui.scene-unified-root .scene-unified-dialog .sis-gain{margin:8px 0;padding:6px 10px;border-left:3px solid #d9b26a;background:#d9b26a14;font-size:13px}
+/* 部位分頁: the 3D pill art in one horizontally scrollable row; every pill keeps >=76px so the
+   laurel caps are never squeezed. */
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding:4px 2px 8px;margin:6px 0 10px;scrollbar-width:thin;-webkit-overflow-scrolling:touch;scroll-snap-type:x proximity}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs[class][class] button{
+  --b3-h:46px;--b3-cap:calc(var(--b3-h) * 54 / 96);--b3-slice:54;--b3-art:url('/ui/button-materials/buttons-3d-20261110/pill-normal.webp');
+  position:relative;isolation:isolate;flex:0 0 auto;min-width:76px;height:var(--b3-h);min-height:44px;margin:0;scroll-snap-align:start;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:0 calc(var(--b3-cap) * .5) 2px;box-sizing:border-box;
+  background:none!important;border:0!important;border-radius:0!important;box-shadow:none!important;
+  color:#f3e2b8!important;font-size:13px;font-weight:700;letter-spacing:.04em;line-height:1.1;white-space:nowrap;
+  text-shadow:0 1px 0 #000,0 0 3px #000d;filter:drop-shadow(0 3px 2px #0007);
+}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs[class][class] button small{display:block;font-size:10px;font-weight:600;opacity:.85;letter-spacing:0}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs[class][class] button::after{
+  content:""!important;position:absolute;inset:0;z-index:-2;pointer-events:none;display:block!important;
+  border:1px solid transparent;border-image-source:var(--b3-art);border-image-slice:0 var(--b3-slice) fill;border-image-width:0 var(--b3-cap);border-image-repeat:stretch;box-sizing:border-box;
+}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs[class][class] button::before{display:none;content:none}
+#ui.scene-unified-root .scene-unified-dialog .si-slot-tabs[class][class] button[aria-pressed=true]{
+  --b3-art:url('/ui/button-materials/buttons-3d-20261110/pill-selected.webp');--b3-slice:55;transform:translateY(1px);filter:drop-shadow(0 1px 1px #0008) brightness(1.04);color:#fff4d6!important;
+}
+#ui.scene-unified-root .scene-unified-dialog .sw-item-stats{clear:both;margin-top:12px;padding-top:8px;border-top:1px solid #9e835c33}
+#ui.scene-unified-root .scene-unified-dialog .sw-item-stats>summary{cursor:pointer;color:#e8cf95;font-weight:700;font-size:13px}

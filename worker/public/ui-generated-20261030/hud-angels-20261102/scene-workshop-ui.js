@@ -342,11 +342,14 @@ function mount(root,host,options={}) {
     client.loadOptions(id).catch(error=>{if(client.current()){client.state.error=error.message;paint();}}).finally(()=>{if(optionLoading===id)optionLoading='';});
   }
   function itemSelector(me,frozen) {
+    const stats=globalThis.RpgSceneItemStats||null;
     const chosen=me.equipment.find(item=>item.id===draft.itemId);
     const choices='<option value="">請選擇裝備</option>'+(!chosen&&draft.itemId?'<option value="'+esc(draft.itemId)+'" selected>原裝備目前不在背包</option>':'')+
-      me.equipment.map(item=>'<option value="'+esc(item.id)+'" '+(item.id===draft.itemId?'selected':'')+'>+'+fmt(item.enhance)+' '+esc(item.name)+' · T'+fmt(item.tier)+(item.equipped?' · 穿戴中':'')+(item.inTrade?' · 交易中':'')+'</option>').join('');
+      me.equipment.map(item=>'<option value="'+esc(item.id)+'" '+(item.id===draft.itemId?'selected':'')+'>+'+fmt(item.enhance)+' '+esc(item.name)+' · T'+fmt(item.tier)+(item.statName?' · '+esc(item.statName)+' '+fmt(item.stat):'')+(item.affixes?.quality?' · 詞條 '+esc(item.affixes.quality):'')+(item.equipped?' · 穿戴中':'')+(item.inTrade?' · 交易中':'')+'</option>').join('');
     return '<section class="sw-card sw-picker"><label>選擇裝備<select name="workshopItem" data-sw-item '+(frozen?'disabled':'')+'>'+choices+'</select></label>'+
-      (chosen?'<div class="sw-selected">'+art(chosen)+'<div><strong>'+esc(chosen.name)+' <span>+'+fmt(chosen.enhance)+'</span></strong><p>'+esc(chosen.slotName||'裝備')+' · T'+fmt(chosen.tier)+' · '+esc(chosen.rarityName||'')+'</p><small>'+esc(chosen.statName||'能力')+' '+fmt(chosen.stat)+' · '+esc(chosen.className||'全職業')+'</small></div></div>':'<p class="sw-muted">從目前角色的真實背包選擇，或由裝備明細進入。</p>')+'</section>';
+      (chosen?'<div class="sw-selected">'+art(chosen)+'<div><strong class="'+esc(stats?stats.qualityClass(chosen):'')+'">'+esc(chosen.name)+' <span>+'+fmt(chosen.enhance)+'</span></strong><p>'+esc(stats?stats.tagLine(chosen):(chosen.slotName||'裝備')+' · T'+fmt(chosen.tier)+' · '+(chosen.rarityName||''))+'</p><small class="sw-option-stat">'+esc(stats?stats.compactLine(chosen):(chosen.statName||'能力')+' '+fmt(chosen.stat))+' · '+esc(chosen.className||'全職業')+'</small></div></div>'+
+        // Classic itemSheet: the full current stats stay visible while choosing an operation.
+        (stats?'<details class="sw-item-stats" open><summary>目前能力</summary>'+stats.kvHtml(chosen)+(draft.tab==='reroll'?'':stats.affixLines(chosen))+'</details>':''):'<p class="sw-muted">從目前角色的真實背包選擇，或由裝備明細進入。</p>')+'</section>';
   }
   function enhanceForm(item,form,plan,frozen) {
     const modes=[['normal','普通卷',item.scroll],['blessed','祝福卷',item.blessedScroll],['guaranteed','必成卷',item.slot==='weapon'?'guaranteed_scroll_w':'guaranteed_scroll_a']];

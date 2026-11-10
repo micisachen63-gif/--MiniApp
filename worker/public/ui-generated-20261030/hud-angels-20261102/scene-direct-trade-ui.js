@@ -173,13 +173,24 @@
       if(actionClient.state.offerRev!==trade.offerRev)actionClient.update(trade);
       return actionClient;
     }
+    // Classic tradeGearDetailsHtml parity: tags, main/element/extra stats and affix lines (display only).
+    function gearStats(parent,item,full){
+      const stats=globalThis.RpgSceneItemStats;if(!stats)return;
+      const view={...item,statName:({ATK:'攻擊力',DEF:'防禦力',HP:'生命值',MP:'魔力'})[item.statName]||item.statName};
+      const tags=stats.tagLine(view),line=stats.compactLine(view);
+      if(tags)parent.append(node('small','sdt-stat '+stats.qualityClass(view),tags));
+      if(line)parent.append(node('small','sdt-stat',line));
+      if(full)for(const affix of view.affixes?.lines||[])parent.append(node('small','sdt-stat',String(affix.name||'詞條')+' +'+(Number(affix.value)*100).toFixed(2)+'% · '+String(affix.quality||'')));
+    }
     function sidePanel(label,side){
       const card=node('section','sdt-side'),h=node('h4','',label+' · '+(side?.name||'未知角色'));
       card.append(h,node('p','sdt-meta','已保管金幣 '+fmt(side?.gold)+' · '+(side?.locked?'已鎖定':'未鎖定')+' · '+(side?.ok?'已確認':'待確認')));
       const list=node('ul','sdt-assets');
       for(const item of side?.lines||[]){
         const name=String(item?.name||item?.ref||item?.kind||'道具');
-        list.append(node('li','',name+' ×'+fmt(item?.qty||1)+(integer(item?.enhance)&&item.enhance?' · +'+item.enhance:'')));
+        const li=node('li','',name+' ×'+fmt(item?.qty||1)+(integer(item?.enhance)&&item.enhance?' · +'+item.enhance:''));
+        if(item?.kind==='equip')gearStats(li,item,true);
+        list.append(li);
       }
       if(!list.children.length)list.append(node('li','sdt-muted','沒有放入物品'));
       card.append(list);return card;
@@ -248,6 +259,7 @@
         row.append(node('p','sdt-eligible-name',String(item.name||ref)));
         row.append(node('p','sdt-meta',(item.kind==='equip'?'裝備':item.kind==='guardian'?'守護羽毛':'道具')+
           ' · 可用 '+fmt(item.qty)+(item.kind==='equip'?' · 強化 +'+fmt(item.enhance||0):'')));
+        if(item.kind==='equip')gearStats(row,item,false);
         const button=control('檢視放入',()=>{},'sdt-secondary');
         button.dataset.directTradeEligibleRef=ref;
         button.dataset.directTradeEligibleType=item.kind;

@@ -320,7 +320,7 @@
           const icon=entry.iconSrc?createArt(host,entry.iconSrc):/^(red|blue)_[1-4]$/.test(entry.item || '')?createArt(host,'/art/potions-20261019/'+entry.item+'.webp'):'';
           return '<article class="supply-offer" data-supply-offer="'+esc(entry.key)+'">'+(icon?'<div class="supply-icon">'+icon+'</div>':'')+
             '<div class="supply-offer-info"><h4>'+esc(entry.name)+'</h4><p>'+esc(entry.description)+'</p>'+
-            (entry.action==='buy-gear'?'<small>T'+fmt(entry.tier)+' · Lv.'+fmt(entry.levelReq)+(entry.branch?' · '+esc(entry.branch)+' 路線':'')+'</small>':'<small>目前持有 '+fmt(me.inventory?.[entry.item] || 0)+(entry.maxHold?' · 上限 '+fmt(entry.maxHold):'')+(entry.dailyBuy?' · 每日限購 '+fmt(entry.dailyBuy):'')+'</small>')+
+            (entry.action==='buy-gear'?'<small>'+(entry.type?esc(entry.type)+' · ':'')+'T'+fmt(entry.tier)+' · Lv.'+fmt(entry.levelReq)+(entry.branch?' · '+esc(entry.branch)+' 路線':'')+'</small>':'<small>目前持有 '+fmt(me.inventory?.[entry.item] || 0)+(entry.maxHold?' · 上限 '+fmt(entry.maxHold):'')+(entry.dailyBuy?' · 每日限購 '+fmt(entry.dailyBuy):'')+'</small>')+
             (entry.rates?.length?'<small>'+entry.rates.map(rate=>esc(({legendary:'傳說',supreme:'霸主'})[rate.rarity] || rate.rarity)+' '+fmt(rate.pct)+'%').join(' · ')+'</small>':'')+
             '<p class="supply-unit-price">單價 '+fmt(entry.price)+' 金幣</p></div><div class="supply-order">'+
             (entry.action==='buy-gear'?'<span>每次購買 1 件</span>':'<label>數量<input type="number" name="quantity:'+esc(entry.key)+'" data-supply-quantity="'+esc(entry.key)+'" min="1" max="9999" step="1" inputmode="numeric" value="'+esc(value)+'"></label>')+
