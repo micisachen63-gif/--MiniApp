@@ -22,7 +22,7 @@
     }catch(e){if(g===generation&&r===readVersion&&!abort.signal.aborted)state.error=e.message||'聊天暫時無法同步';return null;}
     finally{if(g===generation&&r===readVersion){state.loading=false;flight=null;controller=null;notify();}}})();flight=request;return request;
   }
-  function filter(value){if(!['all','world','guild','party'].includes(value)||value===state.filter)return;readVersion++;controller?.abort();flight=null;controller=null;Object.assign(state,{filter:value,messages:[],loading:false,hasOlder:false,error:''});if(!state.pending){if(value==='world')state.sendRoom='world';else if(value==='party')state.sendRoom=state.channels.find(c=>c.channel==='party'&&c.enabled)?.id||'party';}notify();void refresh();}
+  function filter(value){if(!['all','world','party'].includes(value)||value===state.filter)return;readVersion++;controller?.abort();flight=null;controller=null;Object.assign(state,{filter:value,messages:[],loading:false,hasOlder:false,error:''});if(!state.pending){if(value==='world')state.sendRoom='world';else if(value==='party')state.sendRoom=state.channels.find(c=>c.channel==='party'&&c.enabled)?.id||'party';}notify();void refresh();}
   async function send(){
    if(state.busy||!state.context?.characterId)return null;
    const room=state.channels.find(c=>c.id===state.sendRoom&&c.enabled);
@@ -38,7 +38,7 @@
  function mountPanel(root,client){
   root.innerHTML='<div class="scene-chat-panel" data-scene-chat-panel><div class="scene-chat-tabs" role="tablist" aria-label="聊天頻道"></div><p class="scene-chat-status" role="status"></p><button type="button" class="scene-chat-older">載入較早訊息</button><div class="scene-chat-log" role="log" aria-label="聊天訊息" aria-live="polite" tabindex="0"></div><form class="scene-chat-compose"><label>傳送頻道<select aria-label="傳送頻道"></select></label><label class="scene-chat-input">訊息<textarea name="sceneChatMessage" aria-label="聊天訊息" placeholder="輸入訊息…" rows="2" maxlength="400"></textarea></label><button type="submit">傳送</button></form><p class="scene-chat-help">訊息限200字；每3秒可傳送一次。Enter傳送，Shift＋Enter換行。</p></div>';
   const get=s=>root.querySelector(s),tabs=get('.scene-chat-tabs'),status=get('.scene-chat-status'),log=get('.scene-chat-log'),form=get('form'),select=get('select'),input=get('textarea'),submit=get('[type=submit]'),older=get('.scene-chat-older');
-  for(const [id,label] of [['all','全部'],['world','世界'],['guild','公會'],['party','隊伍']]){const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.channel=id;b.setAttribute('role','tab');b.onclick=()=>client.filter(id);tabs.append(b);}
+  for(const [id,label] of [['all','全部'],['world','世界'],['party','隊伍']]){const b=document.createElement('button');b.type='button';b.textContent=label;b.dataset.channel=id;b.setAttribute('role','tab');b.onclick=()=>client.filter(id);tabs.append(b);}
   let composing=false,rowsKey='',optionsKey='';
   input.oncompositionstart=()=>{composing=true;};input.oncompositionend=()=>{composing=false;client.state.draft=input.value;};input.oninput=()=>{client.state.draft=input.value;};
   input.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing&&!composing&&e.keyCode!==229){e.preventDefault();form.requestSubmit();}};
@@ -52,7 +52,7 @@
    status.textContent=s.error||(s.pending?'上次訊息尚待確認；再次傳送會核對同一筆，不重複發送。':unavailable?.reason||(s.loading&&!s.syncedAt?'正在同步聊天…':''));status.classList.toggle('is-error',!!s.error);
    const options=JSON.stringify([allowed.map(c=>[c.id,c.name]),s.sendRoom]);if(options!==optionsKey){optionsKey=options;select.replaceChildren();if(!room){const o=document.createElement('option');o.value=s.sendRoom;o.textContent='原頻道已變更，請重新選擇';select.append(o);}for(const c of allowed){const o=document.createElement('option');o.value=c.id;o.textContent=c.name;select.append(o);}select.value=s.sendRoom;}
    if(!composing&&input.value!==s.draft)input.value=s.draft;
-   input.disabled=s.busy||!!s.pending||s.filter==='guild';select.disabled=s.busy||!!s.pending||s.filter==='guild';submit.disabled=s.busy||s.filter==='guild'||(!room&&!s.pending);submit.textContent=s.busy?'傳送中…':s.pending?'確認上次訊息':'傳送';older.hidden=!s.hasOlder;older.disabled=s.loading;
+   input.disabled=s.busy||!!s.pending;select.disabled=s.busy||!!s.pending;submit.disabled=s.busy||(!room&&!s.pending);submit.textContent=s.busy?'傳送中…':s.pending?'確認上次訊息':'傳送';older.hidden=!s.hasOlder;older.disabled=s.loading;
    const messages=JSON.stringify(s.messages);if(messages!==rowsKey){rowsKey=messages;log.replaceChildren();if(!s.messages.length){const p=document.createElement('p');p.className='scene-chat-empty';p.textContent=unavailable?.reason||'目前沒有訊息，成為第一位打招呼的旅人。';log.append(p);}for(const m of s.messages){const row=document.createElement('div');row.className='scene-chat-message'+(m.own?' is-own':'');row.dataset.seq=m.seq;const ch=document.createElement('span');ch.className='scene-chat-channel';ch.textContent=m.channel==='party'?'隊伍':'世界';const name=document.createElement('b');name.textContent=`${m.name} · Lv.${m.level}`;const at=document.createElement('time');at.textContent=new Intl.DateTimeFormat('zh-TW',{timeZone:'Asia/Taipei',hour:'2-digit',minute:'2-digit'}).format(new Date(m.createdAt));const text=document.createElement('p');text.textContent=m.text;row.append(ch,name,at,text);log.append(row);}if(pinned)log.scrollTop=log.scrollHeight;}
   }
   update();return {update};
