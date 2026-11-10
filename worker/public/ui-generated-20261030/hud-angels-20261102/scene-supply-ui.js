@@ -24,10 +24,10 @@
         const category=/^(red|blue)_/.test(offer.item)||['red','blue','potion'].includes(kind)?'potion':
           kind==='scroll'||/scroll|^unbind$/.test(offer.item)?'scroll':'special';
         return {...offer,key:'item:'+offer.item,action:'buy',category,item:offer.item,
-          description:offer.desc || def.desc || '',maxHold:def.maxHold || null,dailyBuy:def.dailyBuy || null};
+          iconSrc:def.iconSrc || null,description:offer.desc || def.desc || '',maxHold:def.maxHold || null,dailyBuy:def.dailyBuy || null};
       }),
       ...(shop.gacha || []).map(offer=>({...offer,key:'gacha:'+offer.type,action:'gacha',category:'gacha',
-        item:'gacha_'+offer.type,description:offer.description || '',rates:shop.gachaRates || []})),
+        item:'gacha_'+offer.type,iconSrc:defs['gacha_'+offer.type]?.iconSrc || null,description:offer.description || '',rates:shop.gachaRates || []})),
       ...(shop.gear || []).map(offer=>({...offer,key:'gear:'+offer.code,action:'buy-gear',
         category:offer.group || (offer.slot==='weapon'?'weapon':'armor'),description:offer.desc || '',item:null})),
     ].filter(offer=>typeof offer.key==='string' && Number.isSafeInteger(offer.price) && offer.price>0);
@@ -317,7 +317,7 @@
         '<div class="supply-offers">'+filtered.slice(draft.page*16,(draft.page+1)*16).map(entry=>{
           const value=draft.quantities[entry.key] ?? '1',quantity=entry.action==='buy-gear'?1:Number(value);
           let problem='';try{purchasePlan(entry,value,me);}catch(e){problem=e.message;}
-          const icon=/^(red|blue)_[1-4]$/.test(entry.item || '')?createArt(host,'/art/potions-20261019/'+entry.item+'.webp'):'';
+          const icon=entry.iconSrc?createArt(host,entry.iconSrc):/^(red|blue)_[1-4]$/.test(entry.item || '')?createArt(host,'/art/potions-20261019/'+entry.item+'.webp'):'';
           return '<article class="supply-offer" data-supply-offer="'+esc(entry.key)+'">'+(icon?'<div class="supply-icon">'+icon+'</div>':'')+
             '<div class="supply-offer-info"><h4>'+esc(entry.name)+'</h4><p>'+esc(entry.description)+'</p>'+
             (entry.action==='buy-gear'?'<small>T'+fmt(entry.tier)+' · Lv.'+fmt(entry.levelReq)+(entry.branch?' · '+esc(entry.branch)+' 路線':'')+'</small>':'<small>目前持有 '+fmt(me.inventory?.[entry.item] || 0)+(entry.maxHold?' · 上限 '+fmt(entry.maxHold):'')+(entry.dailyBuy?' · 每日限購 '+fmt(entry.dailyBuy):'')+'</small>')+

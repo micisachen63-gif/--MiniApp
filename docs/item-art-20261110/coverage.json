@@ -1,0 +1,1064 @@
+{
+  "itemDefinitions": 170,
+  "atlasMaterials": 5,
+  "recoveryMaterials": 1,
+  "allResolved": true,
+  "rows": [
+    {
+      "id": "star_ring_token",
+      "name": "星征徽記",
+      "src": "/art/star-ring-20261018/star_ring_token.webp",
+      "sha256": "b6d70dcbb2db549bf0f07f728c3022aea72e73df89dcd0abd2c1fcf4b06a4ef2"
+    },
+    {
+      "id": "star_ring_core",
+      "name": "星冕核心",
+      "src": "/art/star-ring-rank-rewards-20261019/star-ring-core.webp",
+      "sha256": "88d528b1b3a2726697529bf4a3ebef525e9cc65e473bdbb32908c08ba248d7a4"
+    },
+    {
+      "id": "guardian_summon_stone",
+      "name": "天使召喚石",
+      "src": "/art/guardian-sigil-20261013/guardian-summon-stone.webp",
+      "sha256": "5b857ff1f14e41ef86d0652eee6a9483c9060ac85572d0b14a49cf8080a0058f"
+    },
+    {
+      "id": "guardian_voucher",
+      "name": "守護天使招喚憑證",
+      "src": "/art/ui/item-guardian_voucher-20261015.webp",
+      "sha256": "9156f610fd470c3de3828354ac480f4b630d57a8da83494fee7359c7a064e001"
+    },
+    {
+      "id": "guardian_free_normal",
+      "name": "初見免費召喚次數",
+      "src": "/art/guardian-sigil-20261013/summon-feather.webp",
+      "sha256": "e126aaf169104497182a88d70a367bee6b1054253e349cf5b396defaf322c081"
+    },
+    {
+      "id": "hunt_1_1",
+      "name": "月桂纖維",
+      "src": "/art/collection-materials-20261014/hunt_1_1.webp",
+      "sha256": "7f735918a97b84f20a74854a7bdc28af39d1ec603cb5a07ad4a47f9641a49574"
+    },
+    {
+      "id": "hunt_1_2",
+      "name": "月露",
+      "src": "/art/collection-materials-20261014/hunt_1_2.webp",
+      "sha256": "9ebcacdd49228e16c86f8776df50393d640d518cce05a98adbd45b5b89de6774"
+    },
+    {
+      "id": "hunt_1_3",
+      "name": "荊棘毒囊",
+      "src": "/art/collection-materials-20261014/hunt_1_3.webp",
+      "sha256": "1f871acf9837aa91f234593a1f63142361f5ede7550f4b03113e351019035518"
+    },
+    {
+      "id": "hunt_1_sigil",
+      "name": "阿耳忒彌斯月桂林菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_1_sigil.webp",
+      "sha256": "fbd3e7bb26920b8a81b6a87e1bd552619c0a6e03194f71b3b115305598f93499"
+    },
+    {
+      "id": "hunt_1_core",
+      "name": "阿耳忒彌斯月桂林首領核心",
+      "src": "/art/collection-materials-20261014/hunt_1_core.webp",
+      "sha256": "fa5af882e484e004a395e8a8fa5ed3811799203ef02b895b1fa87c7600d23027"
+    },
+    {
+      "id": "collection_1",
+      "name": "阿耳忒彌斯月桂林魔法徽記",
+      "src": "/art/collections-20261013/collection_1.webp",
+      "sha256": "d373e4a35eb020e1f2e1132cfd0403063874cc8b1df5fda19cea6ceb2544b2c4"
+    },
+    {
+      "id": "hunt_2_1",
+      "name": "青銅碎片",
+      "src": "/art/collection-materials-20261014/hunt_2_1.webp",
+      "sha256": "395ce703d7bc41ba77b0ead9455134317729d7bec6349de1d1a1d22782a19955"
+    },
+    {
+      "id": "hunt_2_2",
+      "name": "智慧符文",
+      "src": "/art/collection-materials-20261014/hunt_2_2.webp",
+      "sha256": "855c38600546c8ec211068d2884f45ddbae59660b8c94fa9b3a31bcc2dd6b3b4"
+    },
+    {
+      "id": "hunt_2_3",
+      "name": "神殿石芯",
+      "src": "/art/collection-materials-20261014/hunt_2_3.webp",
+      "sha256": "66b45e171d877aef355e97f4a88a37d13eebc888ab9dde5ba2ed0316cce467e6"
+    },
+    {
+      "id": "hunt_2_sigil",
+      "name": "雅典娜百柱神殿菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_2_sigil.webp",
+      "sha256": "c3bd4696bdff6985340a2274238f9bd3df5c1e2e9aa05feda8c4ce437f37a012"
+    },
+    {
+      "id": "hunt_2_core",
+      "name": "雅典娜百柱神殿首領核心",
+      "src": "/art/collection-materials-20261014/hunt_2_core.webp",
+      "sha256": "f123ddc88f039fbc17aaa8ab98fed9ac4537e6f9b1b6e0c0d3e8dd11e7c3a3bb"
+    },
+    {
+      "id": "collection_2",
+      "name": "雅典娜百柱神殿魔法徽記",
+      "src": "/art/collections-20261013/collection_2.webp",
+      "sha256": "30e9a527731d46f4addc3a9a4dfca85ebfe34eb1455b8849bca91c032e541321"
+    },
+    {
+      "id": "hunt_3_1",
+      "name": "靈木",
+      "src": "/art/collection-materials-20261014/hunt_3_1.webp",
+      "sha256": "f3eb10bc73416d00de6975f695b099d6322b30c777fbaf5593382ca2c5ea7250"
+    },
+    {
+      "id": "hunt_3_2",
+      "name": "獸角",
+      "src": "/art/collection-materials-20261014/hunt_3_2.webp",
+      "sha256": "6a8e43b267ac3d5ae5b13039650f931eb58dec103f3801a7271beb834ca71f44"
+    },
+    {
+      "id": "hunt_3_3",
+      "name": "幽泉結晶",
+      "src": "/art/collection-materials-20261014/hunt_3_3.webp",
+      "sha256": "6522df417604b7a9584c1c16717a21c421e24e05ec614655ba0d6f82e4e8e252"
+    },
+    {
+      "id": "hunt_3_sigil",
+      "name": "阿卡迪亞聖林菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_3_sigil.webp",
+      "sha256": "f8ea89fa398c09d16a9d136ea9e7425725077172152edb6534a9d1dea65a0c25"
+    },
+    {
+      "id": "hunt_3_core",
+      "name": "阿卡迪亞聖林首領核心",
+      "src": "/art/collection-materials-20261014/hunt_3_core.webp",
+      "sha256": "1db75d71073b2f781c2431daa986759acddfe0ceafbd997c693e13dd8ed1659e"
+    },
+    {
+      "id": "collection_3",
+      "name": "阿卡迪亞聖林魔法徽記",
+      "src": "/art/collections-20261013/collection_3.webp",
+      "sha256": "fa91f7d3356af100f89e9a9d47b7af6f13369c5128bbb92adc26e667f908346d"
+    },
+    {
+      "id": "hunt_4_1",
+      "name": "珊瑚",
+      "src": "/art/collection-materials-20261014/hunt_4_1.webp",
+      "sha256": "98da2a0868251994789670f114077c869018ecd3c8267255e1ca555eb8d3b6e2"
+    },
+    {
+      "id": "hunt_4_2",
+      "name": "潮汐珍珠",
+      "src": "/art/collection-materials-20261014/hunt_4_2.webp",
+      "sha256": "d93820f6153b18587a4a8b37e633b4d4f2a88efca4be908434a24fe411e77469"
+    },
+    {
+      "id": "hunt_4_3",
+      "name": "沉船鐵片",
+      "src": "/art/collection-materials-20261014/hunt_4_3.webp",
+      "sha256": "ffe774fe53db44fd1f85d03ea23bb49c7444e47687117bc38d0079e1553c13f2"
+    },
+    {
+      "id": "hunt_4_sigil",
+      "name": "波賽頓愛琴海崖菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_4_sigil.webp",
+      "sha256": "81580fc05f1d449de5a0b730e30512dcea8bc89f3b9549fef4a2d63fe183b90e"
+    },
+    {
+      "id": "hunt_4_core",
+      "name": "波賽頓愛琴海崖首領核心",
+      "src": "/art/collection-materials-20261014/hunt_4_core.webp",
+      "sha256": "a1220cca7ef9cca040cf13872b25b6911b748422ae0d8ffc1b7d272204015212"
+    },
+    {
+      "id": "collection_4",
+      "name": "波賽頓愛琴海崖魔法徽記",
+      "src": "/art/collections-20261013/collection_4.webp",
+      "sha256": "94e947ec68742fb630d8c953ea00436caab1003758fa53fc9f3736606ffbdae9"
+    },
+    {
+      "id": "hunt_5_1",
+      "name": "迷宮符石",
+      "src": "/art/collection-materials-20261014/hunt_5_1.webp",
+      "sha256": "574f8946d630dd0f6b76fb841fc0738da3c1f258b9906c99b17311a490adf385"
+    },
+    {
+      "id": "hunt_5_2",
+      "name": "牛角",
+      "src": "/art/collection-materials-20261014/hunt_5_2.webp",
+      "sha256": "d458c764cbb5761908e613232e3471f75dce6b90f8bce2aaa714debd75f39ef3"
+    },
+    {
+      "id": "hunt_5_3",
+      "name": "機關齒輪",
+      "src": "/art/collection-materials-20261014/hunt_5_3.webp",
+      "sha256": "cd693dbc6950b72509039fc71fafca28f384983f9f88b0438f60158d274c0f6a"
+    },
+    {
+      "id": "hunt_5_sigil",
+      "name": "克里特迷宮門庭菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_5_sigil.webp",
+      "sha256": "c2187f2cfd1b14977a5c4d2b244cbcfd6526fdd697e2e29b8150c380193917e4"
+    },
+    {
+      "id": "hunt_5_core",
+      "name": "克里特迷宮門庭首領核心",
+      "src": "/art/collection-materials-20261014/hunt_5_core.webp",
+      "sha256": "482c62db5f74e7b22fb99df7111d9a3b1c3cfa7ae4fee34e29bdc7a6232cb191"
+    },
+    {
+      "id": "collection_5",
+      "name": "克里特迷宮門庭魔法徽記",
+      "src": "/art/collections-20261013/collection_5.webp",
+      "sha256": "b43f1a9e7db88045aa43c7c2af66725c816264b2a8b40d8551eed0e29fc5275f"
+    },
+    {
+      "id": "hunt_6_1",
+      "name": "火晶",
+      "src": "/art/collection-materials-20261014/hunt_6_1.webp",
+      "sha256": "c41fa26443f421ef872caa4060f97ca6071382083e3a2b4711a6cc79f12576f2"
+    },
+    {
+      "id": "hunt_6_2",
+      "name": "黑曜石",
+      "src": "/art/collection-materials-20261014/hunt_6_2.webp",
+      "sha256": "d195568c3d09b9e845bc605339a90836d2efe4e05ee3c22af5680e7b29e8f9e9"
+    },
+    {
+      "id": "hunt_6_3",
+      "name": "鍛造爐心",
+      "src": "/art/collection-materials-20261014/hunt_6_3.webp",
+      "sha256": "47f4d6970322a71de47c0fd47c7bb8681d703eae3502327b7b5de8f42edecda4"
+    },
+    {
+      "id": "hunt_6_sigil",
+      "name": "赫淮斯托斯熔爐菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_6_sigil.webp",
+      "sha256": "6f574c0342221d3c794e303a425bd01901be28d4608bf2940d6198bafacbf785"
+    },
+    {
+      "id": "hunt_6_core",
+      "name": "赫淮斯托斯熔爐首領核心",
+      "src": "/art/collection-materials-20261014/hunt_6_core.webp",
+      "sha256": "7d4e8d36c9d92bd286d691b418724b42e31a887bac3122b6cd46814f17ad2f5b"
+    },
+    {
+      "id": "collection_6",
+      "name": "赫淮斯托斯熔爐魔法徽記",
+      "src": "/art/collections-20261013/collection_6.webp",
+      "sha256": "833221d059a0f3a44c06898a0425515fa2e5504dce9b3efdb3fd3307f6885518"
+    },
+    {
+      "id": "hunt_7_1",
+      "name": "魂砂",
+      "src": "/art/collection-materials-20261014/hunt_7_1.webp",
+      "sha256": "d8e4cb83c2b08ca27c3ca0890d139e419f0a79c3dacbcd95cd5321ae427e7681"
+    },
+    {
+      "id": "hunt_7_2",
+      "name": "冥河骨片",
+      "src": "/art/collection-materials-20261014/hunt_7_2.webp",
+      "sha256": "ad0a99b8b98ac4997b5228d106498a7bbe8508870bb7b9903dc2c685cc65e672"
+    },
+    {
+      "id": "hunt_7_3",
+      "name": "靈燈碎芯",
+      "src": "/art/collection-materials-20261014/hunt_7_3.webp",
+      "sha256": "3f75ab4dd3b5c720c1c035a71bc4bb7ece3cb49e1001868823bfa372a62172dc"
+    },
+    {
+      "id": "hunt_7_sigil",
+      "name": "冥河斯堤克斯渡口菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_7_sigil.webp",
+      "sha256": "287ff37b10c9873e54a2e88bfdc83a171e380438253d43d87b57fa3bdf140a09"
+    },
+    {
+      "id": "hunt_7_core",
+      "name": "冥河斯堤克斯渡口首領核心",
+      "src": "/art/collection-materials-20261014/hunt_7_core.webp",
+      "sha256": "f7ac7a87777dfced5c2a703ab380cdf9c59fa9702ca3d9328e21a0519512fe6e"
+    },
+    {
+      "id": "collection_7",
+      "name": "冥河斯堤克斯渡口魔法徽記",
+      "src": "/art/collections-20261013/collection_7.webp",
+      "sha256": "d7901ae9d0d463273ae5a709436313751eabd453f1fe44422938dea8b68d79ea"
+    },
+    {
+      "id": "hunt_8_1",
+      "name": "日光結晶",
+      "src": "/art/collection-materials-20261014/hunt_8_1.webp",
+      "sha256": "aab8325bf51814c92bc5e010a70badeb8e9fb0be4242a5a15717a664ef4602cd"
+    },
+    {
+      "id": "hunt_8_2",
+      "name": "預言碎頁",
+      "src": "/art/collection-materials-20261014/hunt_8_2.webp",
+      "sha256": "99a92f89056498703a220d80e9872d5dce55ebed8b03b490e45a16da1322d736"
+    },
+    {
+      "id": "hunt_8_3",
+      "name": "鏡光石",
+      "src": "/art/collection-materials-20261014/hunt_8_3.webp",
+      "sha256": "8e4dbb5def8cdd23c87507afc86a3a718aa9f08298b4c33555bcbb85de063a8d"
+    },
+    {
+      "id": "hunt_8_sigil",
+      "name": "德爾菲阿波羅神諭谷菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_8_sigil.webp",
+      "sha256": "337153df58ce26c58091d79654e0afe7f2430e96d7d51bf56849524c04884c9f"
+    },
+    {
+      "id": "hunt_8_core",
+      "name": "德爾菲阿波羅神諭谷首領核心",
+      "src": "/art/collection-materials-20261014/hunt_8_core.webp",
+      "sha256": "295ef5146d9dc980a14120de775f0190b4b38c00b8474cb9972839aea90aec72"
+    },
+    {
+      "id": "collection_8",
+      "name": "德爾菲阿波羅神諭谷魔法徽記",
+      "src": "/art/collections-20261013/collection_8.webp",
+      "sha256": "ec13cdbc20cab0f178cfc217e49448b428cc0be9abed0f7fced33f4cbd91961f"
+    },
+    {
+      "id": "hunt_9_1",
+      "name": "泰坦礦",
+      "src": "/art/collection-materials-20261014/hunt_9_1.webp",
+      "sha256": "6e2c45e8e1ca6f148301e60dbf255b1834a9f5c44a84f24aef1adad32ad91143"
+    },
+    {
+      "id": "hunt_9_2",
+      "name": "雷晶",
+      "src": "/art/collection-materials-20261014/hunt_9_2.webp",
+      "sha256": "55f7f216849ac668cc42671ac48f1b2f31b3d2fa7cd6bb94f8e2e291ecfb7fb2"
+    },
+    {
+      "id": "hunt_9_3",
+      "name": "風暴獸角",
+      "src": "/art/collection-materials-20261014/hunt_9_3.webp",
+      "sha256": "7b1947ab7f0a775752dfd726c253a0b535dc9e64ddc4e03bdddbce9deab8c137"
+    },
+    {
+      "id": "hunt_9_sigil",
+      "name": "泰坦諸神山隘菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_9_sigil.webp",
+      "sha256": "72379b26e46a99856803b1da05da05948e4e387c00f6835631d6ec51f5cee37d"
+    },
+    {
+      "id": "hunt_9_core",
+      "name": "泰坦諸神山隘首領核心",
+      "src": "/art/collection-materials-20261014/hunt_9_core.webp",
+      "sha256": "4ebe4108b2248249403b7ae9f8ac9d83432ecf5f4b45ce947ec28e3fd9f9b1e9"
+    },
+    {
+      "id": "collection_9",
+      "name": "泰坦諸神山隘魔法徽記",
+      "src": "/art/collections-20261013/collection_9.webp",
+      "sha256": "3ee716abd102e4605da162f159e903198a360f0e2c5fb97bada77af99c4e0903"
+    },
+    {
+      "id": "hunt_10_1",
+      "name": "雲絲",
+      "src": "/art/collection-materials-20261014/hunt_10_1.webp",
+      "sha256": "403be3cbbbe75859a20c5897d2595e8d0bda3e659066519f9c425551fc2be199"
+    },
+    {
+      "id": "hunt_10_2",
+      "name": "雷羽",
+      "src": "/art/collection-materials-20261014/hunt_10_2.webp",
+      "sha256": "5a7aae7076b9d783e5be29bbf60d0bd1825941ac58cf266a9599728498cbc14b"
+    },
+    {
+      "id": "hunt_10_3",
+      "name": "聖鐘碎片",
+      "src": "/art/collection-materials-20261014/hunt_10_3.webp",
+      "sha256": "ae19e73725e566129d1c2368e92fe0177102e95b3516ace23394d64539fb1f48"
+    },
+    {
+      "id": "hunt_10_sigil",
+      "name": "奧林帕斯雲門菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_10_sigil.webp",
+      "sha256": "adaf443aff40818664ccfdd9734514280865d9a1bd78b22431fa961c4216a630"
+    },
+    {
+      "id": "hunt_10_core",
+      "name": "奧林帕斯雲門首領核心",
+      "src": "/art/collection-materials-20261014/hunt_10_core.webp",
+      "sha256": "ae18bf5425397355caa51ed5a9597ba4241321f82e48ac1d2964b32654dffcf3"
+    },
+    {
+      "id": "collection_10",
+      "name": "奧林帕斯雲門魔法徽記",
+      "src": "/art/collections-20261013/collection_10.webp",
+      "sha256": "5afea51159d7def6ffd20f29ae1e50120ad5d8bb136106e1978c11d2d0057f44"
+    },
+    {
+      "id": "hunt_11_1",
+      "name": "記憶花瓣",
+      "src": "/art/collection-materials-20261014/hunt_11_1.webp",
+      "sha256": "862cfcaf680a5a7515d3a3cfdf7580da14e221b52f781e537f14ad789a988d0e"
+    },
+    {
+      "id": "hunt_11_2",
+      "name": "晨曦露",
+      "src": "/art/collection-materials-20261014/hunt_11_2.webp",
+      "sha256": "f674020689daf6f512bff58e0982fc77fd6cbe3e0a945e3e77f5e96ac29b3e23"
+    },
+    {
+      "id": "hunt_11_3",
+      "name": "英靈印記",
+      "src": "/art/collection-materials-20261014/hunt_11_3.webp",
+      "sha256": "14d17155f1487a2b8bb3ed7611d489fd2a672d4f6c5f2c4f8795a8ef3d6e916e"
+    },
+    {
+      "id": "hunt_11_sigil",
+      "name": "至福樂土菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_11_sigil.webp",
+      "sha256": "438b4f5100c5dc114fa282b61a240c8d90d12e22d3a10f1339f822cca1f68226"
+    },
+    {
+      "id": "hunt_11_core",
+      "name": "至福樂土首領核心",
+      "src": "/art/collection-materials-20261014/hunt_11_core.webp",
+      "sha256": "2005fa722d10e4a9331cf1b296cfbf7ad3d91573c438837e390fcedcf00cb7a2"
+    },
+    {
+      "id": "collection_11",
+      "name": "至福樂土魔法徽記",
+      "src": "/art/collections-20261013/collection_11.webp",
+      "sha256": "d468f1066e49e2aeb61c4aecfd5f41a435780b2884521e97298ece8c6da464c0"
+    },
+    {
+      "id": "hunt_12_1",
+      "name": "星塵",
+      "src": "/art/collection-materials-20261014/hunt_12_1.webp",
+      "sha256": "22e2208453dd82c0b3e3067e6db4638ed692c2716afff2773ba5c27341cd2f71"
+    },
+    {
+      "id": "hunt_12_2",
+      "name": "隕鐵",
+      "src": "/art/collection-materials-20261014/hunt_12_2.webp",
+      "sha256": "d64366db55aedd93027378453aafc7d4370c3133348f9aed6ddaa1aa039973be"
+    },
+    {
+      "id": "hunt_12_3",
+      "name": "虛空晶核",
+      "src": "/art/collection-materials-20261014/hunt_12_3.webp",
+      "sha256": "abf50efe429ad5706d2a99f1c10dc9b1ad774cd562128630e7e1bf873791f466"
+    },
+    {
+      "id": "hunt_12_sigil",
+      "name": "奧林帕斯星穹聖殿菁英印記",
+      "src": "/art/collection-materials-20261014/hunt_12_sigil.webp",
+      "sha256": "25d45cc1a0754d79f9c855534c93322222a2910b63eeb7bfe21808e3b1c57c3f"
+    },
+    {
+      "id": "hunt_12_core",
+      "name": "奧林帕斯星穹聖殿首領核心",
+      "src": "/art/collection-materials-20261014/hunt_12_core.webp",
+      "sha256": "bbb769cbf386fd2b8d7b3293bea9ec4d13138a84da1fcd84ef2ae93902f872c1"
+    },
+    {
+      "id": "collection_12",
+      "name": "奧林帕斯星穹聖殿魔法徽記",
+      "src": "/art/collections-20261013/collection_12.webp",
+      "sha256": "58655468ab9abaee2e494a0bd2727e375505856d85307d53d4d32a96ff912e6b"
+    },
+    {
+      "id": "book_skill_01_1",
+      "name": "技術書 · 裂甲重斬",
+      "src": "/expedition/assets/skills-painted-20261011/skill_01_1.webp",
+      "sha256": "6e67979d053a53cc5923aad785b3a5f8846eda4b4efe4a1bae2cca70fe3397db"
+    },
+    {
+      "id": "book_skill_01_2",
+      "name": "技術書 · 血性戰吼",
+      "src": "/expedition/assets/skills-painted-20261011/skill_01_2.webp",
+      "sha256": "f6240bb977402a087cabe4c4d5bf40cf51cb68e6b59399c0218b2245016616df"
+    },
+    {
+      "id": "book_skill_01_3",
+      "name": "技術書 · 斬殺追擊",
+      "src": "/expedition/assets/skills-painted-20261011/skill_01_3.webp",
+      "sha256": "bf58b5bc4e8e6beaf8dbf0498980db66ada6e22fad9053982a11368501484fb4"
+    },
+    {
+      "id": "book_skill_02_1",
+      "name": "技術書 · 破勢盾擊",
+      "src": "/expedition/assets/skills-painted-20261011/skill_02_1.webp",
+      "sha256": "bf64b652d7b775523f9495799f1f6f32008399dce2bd2a865e859a3d8bd26b79"
+    },
+    {
+      "id": "book_skill_02_2",
+      "name": "技術書 · 守護誓約",
+      "src": "/expedition/assets/skills-painted-20261011/skill_02_2.webp",
+      "sha256": "75151b3f188d2cda741276de807c7f8524ebb15ab71be096805a18a3bf6e41d4"
+    },
+    {
+      "id": "book_skill_02_3",
+      "name": "技術書 · 聖盾反震",
+      "src": "/expedition/assets/skills-painted-20261011/skill_02_3.webp",
+      "sha256": "c35cefd9ca46c0c30bda77b963f799a110c50b85516ca9af07240a470695c7a9"
+    },
+    {
+      "id": "book_skill_03_1",
+      "name": "精靈水晶 · 穿風箭",
+      "src": "/expedition/assets/skills-painted-20261011/skill_03_1.webp",
+      "sha256": "8fbd21a5cbb858a6cff58aa39262e24919efe0fb68e4ba53a701a83136b77f51"
+    },
+    {
+      "id": "book_skill_03_2",
+      "name": "精靈水晶 · 風縛箭陣",
+      "src": "/expedition/assets/skills-painted-20261011/skill_03_2.webp",
+      "sha256": "6292503ca5c0047157956eaf49d0027ffd308b1770cee252865675c5c49329e3"
+    },
+    {
+      "id": "book_skill_03_3",
+      "name": "精靈水晶 · 疾風祝福",
+      "src": "/expedition/assets/skills-painted-20261011/skill_03_3.webp",
+      "sha256": "63e2185475004e072e6e015500172cb720a7fd3e2571bf6c76b4d50cf18910ad"
+    },
+    {
+      "id": "book_skill_04_1",
+      "name": "精靈水晶 · 獵鷹標記",
+      "src": "/expedition/assets/skills-painted-20261011/skill_04_1.webp",
+      "sha256": "4ccade017ffe5494b54cfc2571773cc8ad3b0d2b6b077339769348d2dde4baf5"
+    },
+    {
+      "id": "book_skill_04_2",
+      "name": "精靈水晶 · 生命之泉",
+      "src": "/expedition/assets/skills-painted-20261011/skill_04_2.webp",
+      "sha256": "27756ee80da58901370f707fafccdcd720fee35cd5eb6d4dd64507bd71fb11a0"
+    },
+    {
+      "id": "book_skill_04_3",
+      "name": "精靈水晶 · 靈獸撲擊",
+      "src": "/expedition/assets/skills-painted-20261011/skill_04_3.webp",
+      "sha256": "ee7a0614b60780346a0fe3ce7a79c300be9b326aad488878b01fe8112d077949"
+    },
+    {
+      "id": "book_skill_05_1",
+      "name": "魔法書 · 灼炎爆破",
+      "src": "/expedition/assets/skills-painted-20261011/skill_05_1.webp",
+      "sha256": "331884258945e93641fd7ea118b7c4ecad58054d591f17d7a72cc486d49b642b"
+    },
+    {
+      "id": "book_skill_05_2",
+      "name": "魔法書 · 寒冰封鎖",
+      "src": "/expedition/assets/skills-painted-20261011/skill_05_2.webp",
+      "sha256": "822025a517665a09c4cfe8c8396074d379f084525d938daca884f1e36172f180"
+    },
+    {
+      "id": "book_skill_05_3",
+      "name": "魔法書 · 雷霆穿刺",
+      "src": "/expedition/assets/skills-painted-20261011/skill_05_3.webp",
+      "sha256": "3c460f92cbdcba96b673c494d12884444a97e0c3078d29a82659fbd0ad98a733"
+    },
+    {
+      "id": "book_skill_06_1",
+      "name": "魔法書 · 奧術脈衝",
+      "src": "/expedition/assets/skills-painted-20261011/skill_06_1.webp",
+      "sha256": "2fe1e35667017bb97d8a682c32d1f341fcce922e2113cee3e697919a6bd13b17"
+    },
+    {
+      "id": "book_skill_06_2",
+      "name": "魔法書 · 法力護幕",
+      "src": "/expedition/assets/skills-painted-20261011/skill_06_2.webp",
+      "sha256": "5577459ae47166875eb64502de0fc85f1232e166e29a82651b4aa26cf2526677"
+    },
+    {
+      "id": "book_skill_06_3",
+      "name": "魔法書 · 時序回響",
+      "src": "/expedition/assets/skills-painted-20261011/skill_06_3.webp",
+      "sha256": "50ba6899aabc136219c65bf5a632b2f38cde2611bd8313676eae7a5b9b125b65"
+    },
+    {
+      "id": "book_skill_07_1",
+      "name": "技術書 · 血刃風暴",
+      "src": "/expedition/assets/skills-painted-20261011/skill_07_1.webp",
+      "sha256": "83f9fe80ba0de8ba32c13d662765b384fc89b6a68c1efe87cfab2933798c94d7"
+    },
+    {
+      "id": "book_skill_07_2",
+      "name": "技術書 · 不屈血誓",
+      "src": "/expedition/assets/skills-painted-20261011/skill_07_2.webp",
+      "sha256": "32576a063bb281e2d67b1389b471e830a280953f73ce0b42fd6933c5f0bfcb87"
+    },
+    {
+      "id": "book_skill_08_1",
+      "name": "技術書 · 瞬影三連",
+      "src": "/expedition/assets/skills-painted-20261011/skill_08_1.webp",
+      "sha256": "1019be55b7a9ebc12a8ea863c38892cec03bf5aab5e406d4171bd449bd7ba36b"
+    },
+    {
+      "id": "book_skill_08_2",
+      "name": "技術書 · 劍心破界",
+      "src": "/expedition/assets/skills-painted-20261011/skill_08_2.webp",
+      "sha256": "2bfabd9264868f3801b42cd413825cb982cc48bc86e533c4fbe4763570efaa1f"
+    },
+    {
+      "id": "book_skill_09_1",
+      "name": "技術書 · 聖光裁決",
+      "src": "/expedition/assets/skills-painted-20261011/skill_09_1.webp",
+      "sha256": "28a6eeb0da9a1b4e890b846c30d1e6214a0c9afaefe452d21f3834995be90fc7"
+    },
+    {
+      "id": "book_skill_09_2",
+      "name": "技術書 · 庇護之環",
+      "src": "/expedition/assets/skills-painted-20261011/skill_09_2.webp",
+      "sha256": "2826555a9fa61c0bca97ac33b2015c8ac974c6ac78944bda4ee7de00212aa90a"
+    },
+    {
+      "id": "book_skill_10_1",
+      "name": "技術書 · 堡壘援護",
+      "src": "/expedition/assets/skills-painted-20261011/skill_10_1.webp",
+      "sha256": "1ac0e85e502cc71bb7bef4979352c6a54aedbaa0ccea1e487e6a225a65d118f6"
+    },
+    {
+      "id": "book_skill_10_2",
+      "name": "技術書 · 震地破陣",
+      "src": "/expedition/assets/skills-painted-20261011/skill_10_2.webp",
+      "sha256": "a5cabcc67d522bb3f7f7473710a1e18f5d7b2ddb19a63a21bd8b0c874bec0a22"
+    },
+    {
+      "id": "book_skill_11_1",
+      "name": "精靈水晶 · 貫星狙擊",
+      "src": "/expedition/assets/skills-painted-20261011/skill_11_1.webp",
+      "sha256": "aa38075376a4e67267af4432fbcc7c6f5103b6a532b9c5528a1970f19114b966"
+    },
+    {
+      "id": "book_skill_11_2",
+      "name": "精靈水晶 · 鷹眼獵殺",
+      "src": "/expedition/assets/skills-painted-20261011/skill_11_2.webp",
+      "sha256": "c0ea6e44bb1544c8ad2d499b2aace41df1398d6358d9e902bc71d472954b7525"
+    },
+    {
+      "id": "book_skill_12_1",
+      "name": "精靈水晶 · 風舞連射",
+      "src": "/expedition/assets/skills-painted-20261011/skill_12_1.webp",
+      "sha256": "3755037807b7d3182c77903bc69996756a05a8b14cf421635d9b6bfec963a176"
+    },
+    {
+      "id": "book_skill_12_2",
+      "name": "精靈水晶 · 風之壁障",
+      "src": "/expedition/assets/skills-painted-20261011/skill_12_2.webp",
+      "sha256": "eb5b9da94fc7140a08e8256f3c60062c15939cd856f3ba03de19b6eb4087695e"
+    },
+    {
+      "id": "book_skill_13_1",
+      "name": "精靈水晶 · 群狼突襲",
+      "src": "/expedition/assets/skills-painted-20261011/skill_13_1.webp",
+      "sha256": "81a6717d1cd8737af7047e5c0a38580805d2b17b4a4ab23852dbd3f7402773f7"
+    },
+    {
+      "id": "book_skill_13_2",
+      "name": "精靈水晶 · 森靈回春",
+      "src": "/expedition/assets/skills-painted-20261011/skill_13_2.webp",
+      "sha256": "aee33256b87d7252c5f245cc6b6ea8f2b0b74d3ff999699fb8ae83bcbf2080f8"
+    },
+    {
+      "id": "book_skill_14_1",
+      "name": "精靈水晶 · 月影爆雷",
+      "src": "/expedition/assets/skills-painted-20261011/skill_14_1.webp",
+      "sha256": "6562de933c8ebd1c19867ca0613490ed7e07f618a30de8d5ac95f681599da24a"
+    },
+    {
+      "id": "book_skill_14_2",
+      "name": "精靈水晶 · 封魔陷阱",
+      "src": "/expedition/assets/skills-painted-20261011/skill_14_2.webp",
+      "sha256": "fec3c2ea73e5c63f1021d2158b1569deb53c9649138cc4702ecf3a9ca2e3859e"
+    },
+    {
+      "id": "book_skill_15_1",
+      "name": "魔法書 · 天火流星",
+      "src": "/expedition/assets/skills-painted-20261011/skill_15_1.webp",
+      "sha256": "98e35242bb3b74ca53f9b8737a08e35baf63aeabcd9fd4b604b125cd2a151a16"
+    },
+    {
+      "id": "book_skill_15_2",
+      "name": "魔法書 · 元素崩解",
+      "src": "/expedition/assets/skills-painted-20261011/skill_15_2.webp",
+      "sha256": "4187be3ff8a7b407341f6688d936291458375dec1906f5c84a9e1eac05146108"
+    },
+    {
+      "id": "book_skill_16_1",
+      "name": "魔法書 · 冰晶風暴",
+      "src": "/expedition/assets/skills-painted-20261011/skill_16_1.webp",
+      "sha256": "9da2cdc87196bfa6cd43855a68a860df3fac73db283039a6abf096c33866e944"
+    },
+    {
+      "id": "book_skill_16_2",
+      "name": "魔法書 · 極寒護甲",
+      "src": "/expedition/assets/skills-painted-20261011/skill_16_2.webp",
+      "sha256": "3a310a16c14e28068a20f7888d369132908f688fd8093a18e69aa95cdc273336"
+    },
+    {
+      "id": "book_skill_17_1",
+      "name": "魔法書 · 時裂衝擊",
+      "src": "/expedition/assets/skills-painted-20261011/skill_17_1.webp",
+      "sha256": "0f5e77eb3b30bbedeb227901ec7a088731a0d7721c738cede56d19178be8dda0"
+    },
+    {
+      "id": "book_skill_17_2",
+      "name": "魔法書 · 時間加速",
+      "src": "/expedition/assets/skills-painted-20261011/skill_17_2.webp",
+      "sha256": "c5eaff19c79231d3b0f24894bf5ae944bf0af163da669ac15c85cd0555f77829"
+    },
+    {
+      "id": "book_skill_18_1",
+      "name": "魔法書 · 火靈契約",
+      "src": "/expedition/assets/skills-painted-20261011/skill_18_1.webp",
+      "sha256": "41405841276dd108dab774fb011f35d7d2a2ba6b6989adbd67a0a8047026583e"
+    },
+    {
+      "id": "book_skill_18_2",
+      "name": "魔法書 · 使魔替身",
+      "src": "/expedition/assets/skills-painted-20261011/skill_18_2.webp",
+      "sha256": "e37b3d79a31c9aa30eb77b830de8bcea2e81008aacce085dcf8c2d792730f842"
+    },
+    {
+      "id": "book_skill_19_1",
+      "name": "技術書 · 泰坦破軍",
+      "src": "/expedition/assets/skills-painted-20261011/skill_19_1.webp",
+      "sha256": "0ac833b2cce2d957104eb966e02181b408122209809e192a9842f2206721c232"
+    },
+    {
+      "id": "book_skill_19_2",
+      "name": "技術書 · 英雄戰旗",
+      "src": "/expedition/assets/skills-painted-20261011/skill_19_2.webp",
+      "sha256": "afdbe08fdccec0a97dee81ea4431691f77baa696834fc3eea6d0dcae142f39ce"
+    },
+    {
+      "id": "book_skill_20_1",
+      "name": "精靈水晶 · 世界樹審判",
+      "src": "/expedition/assets/skills-painted-20261011/skill_20_1.webp",
+      "sha256": "518f51b706f4e55ffdb1dc8ba41b7c7675e0b9e884c54e639c9dd0d8394941b1"
+    },
+    {
+      "id": "book_skill_20_2",
+      "name": "精靈水晶 · 森羅復甦",
+      "src": "/expedition/assets/skills-painted-20261011/skill_20_2.webp",
+      "sha256": "fef76093474e629fec293f8de219792c58a5875228bd6896248a3c05b959d4c5"
+    },
+    {
+      "id": "book_skill_21_1",
+      "name": "魔法書 · 星界崩裂",
+      "src": "/expedition/assets/skills-painted-20261011/skill_21_1.webp",
+      "sha256": "2975f60501f60974862bc26c386365c0a976584178dcc3969b1a93b2327486f6"
+    },
+    {
+      "id": "book_skill_21_2",
+      "name": "魔法書 · 時空庇護",
+      "src": "/expedition/assets/skills-painted-20261011/skill_21_2.webp",
+      "sha256": "086e60c469dd428f1570bc8c54b31ff7340946a0f3047b718cc8e2b1d085a6ef"
+    },
+    {
+      "id": "book_skill_22_1",
+      "name": "技術書 · 神域斬決",
+      "src": "/expedition/assets/skills-painted-20261011/skill_22_1.webp",
+      "sha256": "4a70ffe467af6e5a853c1f980a76d41ee12b5d45ce80000c557bafed8baface2"
+    },
+    {
+      "id": "book_skill_22_2",
+      "name": "技術書 · 不滅軍勢",
+      "src": "/expedition/assets/skills-painted-20261011/skill_22_2.webp",
+      "sha256": "220732b42d4f19804c4fd2d67d3755d5670a216ab5abf292235b6ed061516f82"
+    },
+    {
+      "id": "book_skill_23_1",
+      "name": "精靈水晶 · 星穹獵殺",
+      "src": "/expedition/assets/skills-painted-20261011/skill_23_1.webp",
+      "sha256": "e4f3cefb7eea0d513d740cd45ddd2a7d52a3f960e67d60b239c094a1eb93a956"
+    },
+    {
+      "id": "book_skill_23_2",
+      "name": "精靈水晶 · 世界樹恩典",
+      "src": "/expedition/assets/skills-painted-20261011/skill_23_2.webp",
+      "sha256": "ced427d22d2ba81b4c1669aa2d7aba163dc52b3f10365b8c573752daf24e2e72"
+    },
+    {
+      "id": "book_skill_24_1",
+      "name": "魔法書 · 諸神隕滅",
+      "src": "/expedition/assets/skills-painted-20261011/skill_24_1.webp",
+      "sha256": "53fc3dbaf00f7433857cda011253cc3d7b17c16c7930e91fab0239fe357f52b6"
+    },
+    {
+      "id": "book_skill_24_2",
+      "name": "魔法書 · 命運逆轉",
+      "src": "/expedition/assets/skills-painted-20261011/skill_24_2.webp",
+      "sha256": "4104a4ad6a60db321ee97c02f591f7666910f1c0cb0d23577b9e108382c60899"
+    },
+    {
+      "id": "book_skill_thief_01",
+      "name": "技術書 · 破綻標記",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_01.webp",
+      "sha256": "4b425393c5d0eb6ec731840cc5f7265e0f9ebeaf8bdd203cfce14b0391a612cb"
+    },
+    {
+      "id": "book_skill_thief_02",
+      "name": "技術書 · 煙幕幻步",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_02.webp",
+      "sha256": "03162d4b460c8f95dfcf31abf1e88d9a339a943a19fb16041b3d748d3745bb26"
+    },
+    {
+      "id": "book_skill_thief_03",
+      "name": "技術書 · 無聲處刑",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_03.webp",
+      "sha256": "7fe480a58d74008b3d26f7e82473ac13b37a46ec2f311e4728e0cbe17a279df2"
+    },
+    {
+      "id": "book_skill_thief_04",
+      "name": "技術書 · 淬毒祕術",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_04.webp",
+      "sha256": "3a9659fe3598e43a4fad15d01fda34a289189072f30812b93fa2361ff24c3ea7"
+    },
+    {
+      "id": "book_skill_thief_05",
+      "name": "技術書 · 穿心飛刃",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_05.webp",
+      "sha256": "9d535b3bccd35a174ed5f1c2bc5e2a0b9de5df28116ecce0588a611db158cf19"
+    },
+    {
+      "id": "book_skill_thief_06",
+      "name": "技術書 · 鏡影反制",
+      "src": "/expedition/assets/skills-painted-20261011/skill_thief_06.webp",
+      "sha256": "10ac0907d3f8a79311156b91727eb698bcb8095edb588f1a6d2906bea3f89234"
+    },
+    {
+      "id": "boss_essence",
+      "name": "首領精華",
+      "src": "/art/ui/item-boss_essence-20261012.webp",
+      "sha256": "283580dd4048609819bfedc0d6adec9163ff9b751b86fe7a144998a329d5b531"
+    },
+    {
+      "id": "relic_fragment",
+      "name": "遺物碎片",
+      "src": "/art/materials-20261110/relic_fragment.png",
+      "sha256": "12d8ae43ef7a9d4a0d91e66c5132a280883bfe60e4e3012c8321d5562b89583f"
+    },
+    {
+      "id": "research_fragment",
+      "name": "技能研究碎片",
+      "src": "/art/ui/item-research_fragment-20261015.webp",
+      "sha256": "66be831d79f80005f8ad3cf89dfb78cac972efd7d49dab6c9fef7fd219c13b37"
+    },
+    {
+      "id": "tower_fragment",
+      "name": "星穹徽記",
+      "src": "/art/ui/item-tower_fragment-20261012.webp",
+      "sha256": "b70813b2f91cd80031870ef072039d2c49d0c67ea0c399a00232a957f234a7ae"
+    },
+    {
+      "id": "trial_3",
+      "name": "三人試煉之證",
+      "src": "/art/materials-20261110/trial_3.png",
+      "sha256": "d8a612627f6a5e6e96d899beed42803e43d9223d6cbfc2efac0551c47e36a816"
+    },
+    {
+      "id": "trial_4",
+      "name": "星穹覺醒之證",
+      "src": "/art/materials-20261110/trial_4.png",
+      "sha256": "1ef9873d3b06b4343903daef63cc7397f22b7c1a51892f1dfc423aed1cceb30d"
+    },
+    {
+      "id": "red_1",
+      "name": "紅色藥水",
+      "src": "/art/potions-20261019/red_1.webp",
+      "sha256": "8dd820b1e5699f8a92107273dccc97c07fc69a45a58fe4f827c9afcd207331cb"
+    },
+    {
+      "id": "red_2",
+      "name": "橙色藥水",
+      "src": "/art/potions-20261019/red_2.webp",
+      "sha256": "7c1271d4da0e44c8b9b51d75f1b4166d2beb63558ce75b952ede51c1e87369fd"
+    },
+    {
+      "id": "red_3",
+      "name": "白色藥水",
+      "src": "/art/potions-20261019/red_3.webp",
+      "sha256": "fa240cf8fc5e0a92995e69a5e85d5c36da1f43ec2205a398ca1355756726c169"
+    },
+    {
+      "id": "red_4",
+      "name": "濃縮體力藥水",
+      "src": "/art/potions-20261019/red_4.webp",
+      "sha256": "301781cf43951cf3e6394a22f3bd7ae05f89ec2b794f8b343718d4a86741d88c"
+    },
+    {
+      "id": "blue_1",
+      "name": "藍色藥水",
+      "src": "/art/potions-20261019/blue_1.webp",
+      "sha256": "b2c0f31e8db96c88c61820ba04690245eec7a8662858afdd3707cc5795e4a42c"
+    },
+    {
+      "id": "blue_2",
+      "name": "精神藥水",
+      "src": "/art/potions-20261019/blue_2.webp",
+      "sha256": "a0ac988686078d31c3113598f90946cf7240144687f12346b5160a644c9cdf40"
+    },
+    {
+      "id": "blue_3",
+      "name": "高級精神藥水",
+      "src": "/art/potions-20261019/blue_3.webp",
+      "sha256": "31354a74481e5c6e2f5dfd28171ee1a0be9f21e979277a67d88a4962ebd41d92"
+    },
+    {
+      "id": "blue_4",
+      "name": "賢者藥水",
+      "src": "/art/potions-20261019/blue_4.webp",
+      "sha256": "c2b28d2e0394af99a9d2b3fe3ea52e68254c5da6bf79577048fc3e1fcad20b20"
+    },
+    {
+      "id": "gacha_weapon",
+      "name": "武器轉蛋",
+      "src": "/art/ui/gacha-weapon-20261015.webp",
+      "sha256": "045e0d78ef6182cf53da99d0fafb1535ecef8add2b5281588c2ce9b4a8a12736"
+    },
+    {
+      "id": "gacha_armor",
+      "name": "防具轉蛋",
+      "src": "/art/ui/gacha-armor-blue-20261015.webp",
+      "sha256": "0ebb772b2484f2ca42551972edec29a5a0fa68b49e25da397675591007fe41e4"
+    },
+    {
+      "id": "scroll_w",
+      "name": "武器強化捲",
+      "src": "/art/items-scrolls-cutout-20261011/scroll_w.webp",
+      "sha256": "039d3825bd12e00456f6c079458e4f94dd293d911c88cff7b708486a576345f4"
+    },
+    {
+      "id": "scroll_a",
+      "name": "防具強化捲",
+      "src": "/art/items-scrolls-cutout-20261011/scroll_a.webp",
+      "sha256": "be2865ba44d6174981373aa81bdbb46946cafbdfe2db188b9c613bf564a5f64b"
+    },
+    {
+      "id": "blessed_scroll_w",
+      "name": "受祝福的武器強化卷軸",
+      "src": "/art/items-scrolls-cutout-20261011/blessed_scroll_w.webp",
+      "sha256": "ecc475c69d211be1ea9b2180cd97a0a5fe655bd1dcdcd8a6fee465fd6411dc4b"
+    },
+    {
+      "id": "blessed_scroll_a",
+      "name": "受祝福的防具強化卷軸",
+      "src": "/art/items-scrolls-cutout-20261011/blessed_scroll_a.webp",
+      "sha256": "276870658a85d993df9e4bdaf1b63fcecf2d0dbbd90e06fae24b34e84a2adb16"
+    },
+    {
+      "id": "guaranteed_scroll_w",
+      "name": "必過的武器強化卷",
+      "src": "/art/items-scrolls-pink-20261018/guaranteed_scroll_w.webp",
+      "sha256": "4ad6e3deeaeb48095a22d0e3b107e5db3a426c168228e83acadd47105fcdfc76"
+    },
+    {
+      "id": "guaranteed_scroll_a",
+      "name": "必過的防具強化卷",
+      "src": "/art/items-scrolls-pink-20261018/guaranteed_scroll_a.webp",
+      "sha256": "b7ebb2b3c2bcff2585b35d742766323acf5dc99a431d43b5db830f4a7d3e0e92"
+    },
+    {
+      "id": "fate_cycle_gift",
+      "name": "四世星輝匣",
+      "src": "/art/ui/command-collect-20261012.webp",
+      "sha256": "a0ce53a2a6988c674275729dd3e814620d5b6ca6346152bee1dc63911a070cc3"
+    },
+    {
+      "id": "scroll_r",
+      "name": "洗屬性捲",
+      "src": "/art/items-scrolls-cutout-20261011/scroll_r.webp",
+      "sha256": "2b31e4406128af60ae217df9cd39e80be5d14fc95afac2abeb315450c8eb88af"
+    },
+    {
+      "id": "unbind",
+      "name": "赫密士解契卷",
+      "src": "/art/items-scrolls-cutout-20261011/unbind.webp",
+      "sha256": "e63424d7c6fb1cfed1fa220806dbc138d2c61970eaa0a35deb5e6bc7158e68b2"
+    },
+    {
+      "id": "ward",
+      "name": "守護符",
+      "src": "/art/v2/item_guardian.webp",
+      "sha256": "ff8c4088a53e03082f1b8f222113850496ac5a59acd6864127e3887f78fb5bb2"
+    },
+    {
+      "id": "reselect_1",
+      "name": "命運轉職書 I",
+      "src": "/art/v2/item_fate_book.webp",
+      "sha256": "96e2b8c248b6e513e29aa9c85b8021dbe8a34349e67da9c981aba9163a5efe7e"
+    },
+    {
+      "id": "reselect_2",
+      "name": "命運轉職書 II",
+      "src": "/art/v2/item_fate_book.webp",
+      "sha256": "96e2b8c248b6e513e29aa9c85b8021dbe8a34349e67da9c981aba9163a5efe7e"
+    },
+    {
+      "id": "reselect_3",
+      "name": "命運轉職書 III",
+      "src": "/art/v2/item_fate_book.webp",
+      "sha256": "96e2b8c248b6e513e29aa9c85b8021dbe8a34349e67da9c981aba9163a5efe7e"
+    },
+    {
+      "id": "mat_1",
+      "name": "酋長之證",
+      "src": "/art/v2/item_mat1.webp",
+      "sha256": "8f707b61b73caacdc3c6a43366b79107b1cf9b7d2a95eed8cbb39abadcf89155"
+    },
+    {
+      "id": "mat_2",
+      "name": "樹王之心",
+      "src": "/art/v2/item_mat2.webp",
+      "sha256": "3bf22375cb57c2bebcb1f1c63c8490bf1b81cd8e1c92d38b66aab21df94b538a"
+    },
+    {
+      "id": "mat_3",
+      "name": "巨像之核",
+      "src": "/art/v2/item_mat3.webp",
+      "sha256": "7638ae1421e007942f4939d9b9ce48b307c178b9c1d226a18c390b2117537276"
+    },
+    {
+      "id": "mat_4",
+      "name": "女皇之鱗",
+      "src": "/art/v2/item_mat4.webp",
+      "sha256": "316f51bc40303de9325cc1542a08fb5ff01d70c57fe34b29810491e2a737907a"
+    },
+    {
+      "id": "atlas_shard",
+      "name": "星圖碎屑",
+      "src": "/art/materials-20261110/atlas_shard.png",
+      "sha256": "729877275fd5dd1d7ef43563692c53f6b5c5b3f4c219f9e6db320bac2065fff7"
+    },
+    {
+      "id": "atlas_iron",
+      "name": "月桂精鐵",
+      "src": "/art/materials-20261110/atlas_iron.png",
+      "sha256": "799f23f49f8478ad49dd40fafbe54e9ebc834920b384e572a1cb437e6a41bc1e"
+    },
+    {
+      "id": "atlas_ember",
+      "name": "神殿餘燼",
+      "src": "/art/materials-20261110/atlas_ember.png",
+      "sha256": "4b77c94883dff13ac153979339b6e769fb1a7940928e4a97c6770d517df2cac7"
+    },
+    {
+      "id": "atlas_venom",
+      "name": "聖林毒晶",
+      "src": "/art/materials-20261110/atlas_venom.png",
+      "sha256": "5d75d53d749fe6f2bb3bfba675ce3f9d0f8777d0bcf06633c3e684af0a346e79"
+    },
+    {
+      "id": "atlas_core",
+      "name": "守望者核心",
+      "src": "/art/materials-20261110/atlas_core.png",
+      "sha256": "9d95782e6f1d05253ed0f1e857973bc69207e6d6f39313656463bf66b71ab9ec"
+    },
+    {
+      "id": "recovery_dust",
+      "name": "裝備精煉材料",
+      "src": "/art/materials-20261110/recovery_dust.png",
+      "sha256": "7324b86cd500eddfc4a55b43dc1d51e72d7da092c2cceb324fc6bc8f085a435a"
+    }
+  ]
+}

@@ -18,7 +18,8 @@ const ACCOUNT='48259a9f84c8307f8de8ceaf704b9f8f';
 const SERVICES={worker:{dir:'worker',name:'elf-rpg-api',test:'test:worker',crons:['* * * * *','*/30 * * * *']},bot:{dir:'cloud-bot',name:'star-journal-rpg-bot',test:'test:bot',crons:['* * * * *']}};
 const sha=b=>createHash('sha256').update(b).digest('hex');
 const WORK=path.join(ROOT,'.release-sync');
-const agent=new https.Agent({keepAlive:true,maxSockets:4});
+const stableTransport=process.env.RPG_CF_STABLE_TRANSPORT==='1';
+const agent=new https.Agent({keepAlive:!stableTransport,maxSockets:stableTransport?1:4});
 const cli=process.env.RPG_WRANGLER_CLI||path.join(ROOT,'node_modules/wrangler/bin/wrangler.js');
 let deploymentRecords;
 function run(command,args,cwd=ROOT){const r=spawnSync(command,args,{cwd,windowsHide:true,encoding:'utf8',maxBuffer:32e6});assert.equal(r.status,0,`${command} ${args.join(' ')} failed\n${r.stderr||r.stdout||r.error?.message}`);return r.stdout.trim()}

@@ -348,3 +348,13 @@ test('old reserve replies never invent a per-tier policy and tier labels remain 
   const h=harness({data});await h.client.refresh();const html=h.api.reservedHtml(h.client.state);
   assert.ok(html.includes('&lt;img src=x onerror=alert(1)&gt;'));assert.equal(html.includes('<img'),false);
 });
+
+
+test('shop forwards published item and gacha images instead of limiting artwork to potions',()=>{
+ const api=module(),data=fixture();
+ data.meta.meta.items.scroll_w.iconSrc='/art/items-scrolls-cutout-20261011/scroll_w.webp';
+ data.meta.meta.items.gacha_weapon={kind:'gacha',iconSrc:'/art/ui/gacha-weapon-20261015.webp'};
+ const rows=api.catalogEntries(data.shop,data.meta);
+ assert.equal(rows.find(x=>x.item==='scroll_w').iconSrc,data.meta.meta.items.scroll_w.iconSrc);
+ assert.equal(rows.find(x=>x.item==='gacha_weapon').iconSrc,data.meta.meta.items.gacha_weapon.iconSrc);
+});

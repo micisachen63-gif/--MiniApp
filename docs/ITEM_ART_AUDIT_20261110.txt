@@ -1,0 +1,26 @@
+星穹旅誌｜道具圖片盤點與補接（2026-11-10）
+
+依使用者「改版上線後確認舊圖保留、新機制都有精美素材」補做完整道具檢查。
+正式狀態以origin/deployment-records收據與外部STATUS為準，本文件不預稱已發布。
+
+舊圖保留
+相對原正式3c6729a，改版063dd0e的8,177張既有PNG/WebP/JPEG/SVG/GIF原Git blob全相同；刪除0、覆寫0。原角色、道具、裝備、地圖與其他素材均保留。原碼報告：item-art-20261110/original-preservation.json。
+
+實際找到並修補
+新背包只處理已提供art/iconSrc的物品，但meta原本沒有提供道具圖；商店也只顯示藥水圖。星圖五材料與精煉粉末只有符號。新增純顯示itemIconSrc對應，全部170種合法道具均可找到現存圖片；舊圖沿原發布URL，未改ID、名稱、數量、機率、價格、交易／鎖定／扣除規則。
+背包方格與明細、商店道具／轉蛋／裝備、交易所當前與成交道具圖、刺客及星環裝備專圖補齊。星圖銘刻用量與精煉頁顯示材料圖。
+
+新增九張獨立透明素材
+星圖碎屑：藍色星圖晶片；月桂精鐵：銀藍月桂金屬錠；神殿餘燼：橙金熔火石；聖林毒晶：綠紫毒晶；守望者核心：象牙金翼藍色核心；精煉材料：紫袋銀金粉末。
+另外三種舊道具原來沒有專圖，新增遺物碎片的紫金古陶碎片、三人試煉的青銅三刃章、四轉覺醒的紅金翼日輪章，避免把不同道具畫成同一圖。
+來源：內建image_gen，每種獨立生成，1280px透明RGBA PNG；原生成圖直接複製，未改像素或覆寫原素材。完整提示詞與用途：item-art-20261110/prompts.json。
+圖檔與SHA：worker/public/art/materials-20261110/manifest.json。前六張屬新機制，後三張為補足舊道具。
+
+驗收
+道具圖對應與檔案真實存在、八種藥水／兩轉蛋／普通祝福卷差異、九新圖RGBA與不同SHA、四職各等級商店原裝備圖、背包清單／明細及交易所精確專圖納入回歸。所有來源別名重新封裝，新增圖納入發布SHA清單。
+實際完整gate、手機畫面及正式線上核對依D:/StarJournal/handoff/non-character/release-final-check-20261110/item-art-final-gate/與最終收據，不把focused當完整驗收。
+
+發布傳送修補
+首輪063dd0e的素材上傳於2,084/4,171後ECONNRESET退出；只讀即時狀態已確認仍為舊版d269、綁定／cron與原收據一致，沒有盲重送或回滾玩家。保留首次pending／log，待本批新來源通過後走正常發布。
+新增可選RPG_CF_STABLE_TRANSPORT=1：正常release-sync唯讀HTTP與鎖版Wrangler使用單一IPv4、不重用連線；不改URL、body、憑證、TLS驗證、檢查、備份／收據或Wrangler重試上限。preload由NODE_OPTIONS載入scripts/cf-stable-transport.cjs，undici固定7.29.1（原鎖檔已有同版，改列直接dev依賴）。此為針對實際連線重置的傳送緩解，不宣稱已證實供應商根因。
+官方Undici Client pipelining=0停用keep-alive，與Agent connections上限文件：https://github.com/nodejs/undici/blob/v7.29.1/docs/docs/api/Client.md 。新測試確認三個POST body不變、峰值並行1、各自新連線；仍須實際發布完成才回報同步。

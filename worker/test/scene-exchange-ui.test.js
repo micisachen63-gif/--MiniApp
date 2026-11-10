@@ -364,3 +364,11 @@ test('snapshot icons use existing scene paths and reject external or unresolved 
     const image=root.querySelector('img');if(url)assert.equal(image?.src,url);else assert.equal(image,null);
   });
 });
+
+
+test('exact thief and star-ring equipment artwork survives exchange list projection',async t=>{
+ for(const [id,src] of [['thief','/art/thief-gear-20261015/gear_wpn_laurel_dagger.webp'],['star','/art/star-ring-20261018/gear_wpn_star_sword.webp']]){
+  const item=listing('exact-'+id,{kind:'equip',equipment:{slot:'weapon',art:id==='thief'?'wpn_dagger':'star_ring_example',iconSrc:src,source:id==='thief'?'shop':'star_ring',classReq:id==='thief'?'thief':'sword'}});
+  const {root,view}=await mounted(page({items:[item]}));t.after(()=>view.dispose());assert.equal(root.querySelector('img')?.src,'http://127.0.0.1:9862'+src);
+ }
+});

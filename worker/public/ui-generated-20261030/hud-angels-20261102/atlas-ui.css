@@ -128,3 +128,5 @@ body.atlas-enabled{--atlas-ink:#f1e9d8;--atlas-muted:#b4b9b3;--atlas-gold:#d6ba7
 @media(max-width:350px){.atlas-nav>button{padding:9px 6px;gap:5px}.atlas-nav svg{width:18px}.atlas-nav strong{font-size:10px}.atlas-nav small{font-size:8px}.atlas-scene{grid-template-columns:1fr 135px}.atlas-location h1{font-size:22px}.atlas-shortcuts>span{flex-basis:100%;text-align:right}.atlas-tracker{padding:10px}}
 @media(max-width:700px){.atlas-quest-preview{padding-top:11px;margin-top:12px}.atlas-quest-preview>small{font-size:8px}.atlas-quest-preview>strong{font-size:10px}.atlas-quest-preview>p,.atlas-quest-preview>button{font-size:9px!important}.atlas-quest-card{grid-template-columns:1fr;gap:9px;padding:14px}.atlas-quest-actions{justify-self:end}.atlas-quest-card h5{font-size:13px}.atlas-quest-group>h4{font-size:13px}.atlas-quest-card p{font-size:10px}}
 @media(prefers-reduced-motion:reduce){#atlas-world *,#atlas-panel *{transition:none!important;animation:none!important}}
+
+.scene-material-cost{display:inline-flex;align-items:center;gap:5px;vertical-align:middle}.scene-material-cost img{width:30px;height:30px;object-fit:contain;flex:none}
