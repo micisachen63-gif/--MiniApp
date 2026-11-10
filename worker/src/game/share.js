@@ -19,7 +19,7 @@ export function gearArt(e) {
   if(e.source==='star_ring'){const id=starRingArtId(e);return id?'star_ring_'+id:null;}
   // Missing or invalid thief art must never masquerade as a sword/plate fallback.
   if (isThiefClassGear(e)) return thiefGearArt(e)?.artId || null;
-  const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
+  const name = String(e.name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').replace(/-(?:普通|菁英|專家|惡夢|地獄)$/, '').trim();
   if (gearNames[name]) return gearNames[name];
   const classReq = e.class_req ?? e.classReq;
   if (e.slot === 'weapon') return WPN[e.kind] || 'wpn_sword';

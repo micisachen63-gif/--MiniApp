@@ -1,3 +1,15 @@
+# 2026-11-10｜人物戰鬥出手接線完成，等待最終發布關卡
+
+使用者要求本線負責原缺367方向的整合；目前248外觀／992攻擊方向均可執行：625原武器出手，367原native動作＋真目標命中特效。逐來源SHA／幾何／時長policy，不更動原像素或美術旗標；原marker沿用，缺marker採既有技能recipe演出時序。嚴格武器resolver保持，未知來源／錯目標／晚回應仍拒絕。
+
+真原Animator＋Canvas VFX的全部992方向渲染通過，JS/HTTP0；四職實戰劍士原missing-release-origin已消失。增補舊模式尾綴裝備的精確原圖映射、原刺客/星征圖、洗鍊動畫真品質與營地署名。所有原功能／原classic入口保留。
+
+完整重建與發布規則docs/RELEASE_INTEGRATION_20261110.txt、整合計數docs/release-integration-20261110/character-combat-integration.json。歷史character-combat-gaps.json不是目前剩餘缺項。
+最終完整gate與GitHub／正式狀態讀D:/StarJournal/handoff/non-character/release-final-check-20261110/STATUS.json及candidate-final-gate/，不可用舊4343或首輪4150替代。
+本段提交時尚未正式增補／發布。Cloudflare授權已恢復，當前正式版本與原收據一致；依正常PR/requiredCI/main與部署鎖／收據流程續作。原稿、其他預覽與QA庫保留，不重置玩家。
+
+---
+
 # 2026-11-10｜正式改版整合候選：戰鬥出手資料待補，尚未發布
 
 使用者已授權最終確認無問題後改版；本線承接131be4。已接正式Telegram簽章登入／原創角、完整自足原素材public封裝、跨OS SHA一致、發布前素材與345 schema物件／保護bindings守衛。原classic入口、原圖和其他owner預覽保留。

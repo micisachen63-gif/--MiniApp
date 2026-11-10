@@ -346,7 +346,7 @@
     '熔爐赤銅戒': 'gear_ring_forge',
   };
   Object.assign(GEAR_NAME_ART, window.RpgGearNames || {});
-  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').trim();
+  const cleanGearName = (name) => String(name || '').replace(/^(?:(?:遺物・|菁英|星征))*/, '').replace(/-(?:普通|菁英|專家|惡夢|地獄)$/, '').trim();
   /** gear row/offer → icon file: specific named item if present, else fallback to weapon kind / armor family / shared slot */
   const GEAR_ART = (g) => {
     if (!g) return null;

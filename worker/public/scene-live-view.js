@@ -417,7 +417,7 @@
           getActorId: () => appearance || animator.actor?.id,
           getBodyHeight: () => Math.abs(hero.scaleY) * 300,
           resolveGeometry: resolveVfxGeometry, projectPoint: projectVfxPoint,
-          profilesUrl: '/skill-vfx-actor-profiles.json', document: doc,
+          profilesUrl: '/skill-vfx-actor-profiles.json', nativePresentationsUrl: '/scene-native-cast-profiles.json', document: doc,
         });
         vfxBridge.syncContext(); vfxIssue = '';
         return vfxBridge;

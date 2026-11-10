@@ -1,3 +1,4 @@
+import {nativeClipShape} from '../public/scene-native-cast.mjs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { webcrypto, createHash } from 'node:crypto';
@@ -324,4 +325,25 @@ test('committed awakenings render from the real caster body without rewriting in
  for(const clip of Object.values(f.animator.clips.attack))delete clip.source.releaseAnchorPx;
  const result=await f.bridge.ingestTrace(f.trace([f.event({skillId:'awakening:mage:elite'})]));
  assert.equal(result.results[0].accepted,true);assert.equal(f.calls[0].skillId,'awakening:mage:elite');assert.equal(f.animator.plays.length,0);assert.ok(f.calls[0].from.y<f.hero.y);f.bridge.destroy();
+});
+
+function nativeFixture(marker=false){
+ const policies={schemaVersion:1,profiles:[]},files=new Map();
+ const f=fixture({profiles:{schemaVersion:1,profiles:[]},nativePresentationsUrl:'/scene-native-cast-profiles.json',nativePresentations:policies,fetch:async input=>{const data=files.get(new URL(input).pathname);return data?new Response(data):new Response('',{status:404});}});
+ const source=f.animator.clips.attack.right.source;delete source.releaseAnchorPx;if(!marker)delete source.releaseFrame;
+ const metadata=Buffer.from(JSON.stringify({id:'mage',clips:{attack:{right:source}}})),image=Buffer.from('original native source');files.set(META,metadata);files.set(ASSET,image);
+ policies.profiles.push({actorId:'mage',direction:'right',status:'integration-choreography',strategy:'native-cast-and-target',sourcePixelsModified:false,metadataUrl:META,metadataSha256:sha(metadata),clip:nativeClipShape(source),sources:[{url:ASSET,sha256:sha(image)}]});
+ f.player.getRecipe=()=>({durationMs:1400,phases:[{id:'release',from:.22,to:.57},{id:'impact',from:.57,to:.8}]});
+ return f;
+}
+async function nativeStart(f){for(let i=0;i<100&&f.animator.action!=='attack';i++){await new Promise(resolve=>setImmediate(resolve));f.bridge.update();}assert.equal(f.animator.action,'attack');}
+test('a source-bound native cast plays its actor and the real target impact with no invented projectile',async()=>{
+ const f=nativeFixture(),pending=f.bridge.ingestTrace(f.trace());await nativeStart(f);await f.tick(227);assert.equal(f.calls.length,0);await f.tick(2);
+ assert.equal((await pending).results[0].accepted,true);assert.equal(f.calls[0].presentationMode,'impact');assert.equal(f.calls[0].startProgress,0);assert.deepEqual(f.calls[0].from,f.targets.get('0:0:0'));assert.deepEqual(f.calls[0].to,f.calls[0].from);assert.equal(f.bridge.stats().lastRelease.timingAuthority,'skill-recipe-impact');f.bridge.destroy();
+});
+test('native target choreography retains the original hit marker when no weapon point exists',async()=>{
+ const f=nativeFixture(true),pending=f.bridge.ingestTrace(f.trace());await nativeStart(f);await f.tick(200);assert.equal((await pending).results[0].accepted,true);assert.equal(f.calls[0].presentationMode,'impact');assert.equal(f.bridge.stats().lastRelease.markerMs,200);f.bridge.destroy();
+});
+test('native casts remain cancelled when the target or room disappears before impact',async()=>{
+ for(const change of ['target','room']){const f=nativeFixture(),pending=f.bridge.ingestTrace(f.trace());await nativeStart(f);if(change==='target')f.targets.clear();else f.setRoom({mapIndex:0,roomIndex:1});await f.tick(250);assert.equal((await pending).results[0].accepted,false);assert.equal(f.calls.length,0);f.bridge.destroy();}
 });

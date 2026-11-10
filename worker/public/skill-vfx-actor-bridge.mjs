@@ -2,6 +2,7 @@
  * It owns no damage, equipment, rewards, source artwork, or Animator update clock.
  */
 import { createCombatVfxAdapter } from './skill-vfx-combat-adapter.mjs';
+import { createNativeCastResolver } from './scene-native-cast.mjs';
 
 const CONTEXT_KEYS = ['accountId', 'realmId', 'characterId', 'dispatchId'];
 const EFFECT_KINDS = new Set(['dot', 'pet', 'trap', 'counter']);
@@ -168,6 +169,7 @@ export function createActorVfxBridge(options = {}) {
   const getActorId = options.getActorId || (() => animator.actor?.id);
   const getBodyHeight = options.getBodyHeight || (() => Math.abs(hero.scaleY) * 300);
   const releaseResolver = options.releaseResolver || createActorReleaseResolver(options);
+  const nativeResolver = options.nativePresentationsUrl ? createNativeCastResolver(options) : null;
   const document = options.document || globalThis.document;
   let destroyed = false, epoch = 0, token = 0, active = null, queue = [];
   let context = contextOf(getContext()), room = roomOf(getRoom()), actorGeneration = animator.generation, actorId = getActorId();
@@ -226,7 +228,7 @@ export function createActorVfxBridge(options = {}) {
     const items = [...queue, ...(active ? [active] : [])]; queue = [];
     for (const item of new Set(items)) finish(item, reason);
     for (const wait of geometryWaits.values()) wait.resolve({ reason });
-    geometryWaits.clear(); records.clear(); releaseResolver.clear?.();
+    geometryWaits.clear(); records.clear(); releaseResolver.clear?.(); nativeResolver?.clear();
   }
   async function onCast(event, state) {
     const record = records.get(event.eventId);
@@ -246,9 +248,14 @@ export function createActorVfxBridge(options = {}) {
     }
     let spec;
     try {
-      spec = await releaseResolver.resolve({ animator, actorId: record.actorId, direction: initial.direction, signal: state.signal, requireOrigin: !record.placement });
-      const skill = player.getSkill?.(event.skillId);
       if (typeof player.prepare === 'function') await player.prepare(skill.baseClass);
+      try {
+        spec = await releaseResolver.resolve({ animator, actorId: record.actorId, direction: initial.direction, signal: state.signal, requireOrigin: !record.placement });
+      } catch (error) {
+        if (!nativeResolver || !['missing-release-origin','missing-release-marker'].includes(error.code)) throw error;
+        spec = await nativeResolver.resolve({ animator, actorId: record.actorId, direction: initial.direction, signal: state.signal,
+          recipe: player.getRecipe?.(event.skillId), placement: record.placement });
+      }
     } catch (error) { note(error.code || (state.signal.aborted ? 'cast-cancelled' : 'release-profile-unavailable'), record); return false; }
     if (!eligible(record) || !state.isCurrent()) return false;
     const current = geometry(record);
@@ -308,13 +315,16 @@ export function createActorVfxBridge(options = {}) {
         if (!item.released && animator.elapsed >= item.delayMs) {
           const current = geometry(item.record);
           const origin = item.spec.nativeOrigin ? animator.releaseOrigin?.() : item.spec.origin;
-          if (!current || current.pending || (!item.record.placement && !point(origin))) finish(item, 'missing-release-geometry');
+          const targetPresentation = item.spec.presentation === 'native-target';
+          if (!current || current.pending || (!item.record.placement && !targetPresentation && !point(origin))) finish(item, 'missing-release-geometry');
           else {
-            const from = item.record.placement ? current.size.foot : options.projectPoint({
+            const from = item.record.placement ? current.size.foot : targetPresentation ? current.to : options.projectPoint({
               x: hero.x + origin.x * current.size.world, y: hero.y + origin.y * current.size.world,
             });
             const recipe = player.getRecipe?.(item.record.event.skillId);
-            const startProgress = recipe?.phases?.find(phase => phase.id === 'release')?.from;
+            // Impact-only art has its own fresh timeline, just like committed periodic hits.
+            const startProgress = targetPresentation && !item.record.placement ? 0 : recipe?.phases?.find(phase => phase.id === 'release')?.from;
+            const presentationMode = item.record.placement ? 'placement' : targetPresentation ? 'impact' : 'full';
             if (!point(from) || !finite(startProgress) || startProgress < 0 || startProgress > 1) finish(item, 'missing-release-phase');
             else {
               item.released = true;
@@ -322,11 +332,11 @@ export function createActorVfxBridge(options = {}) {
               lastRelease = { eventId: item.record.event.eventId, actorId: item.record.actorId, direction: item.direction,
                 context: { ...item.record.context }, room: { ...item.record.room },
                 markerMs: item.delayMs, actorElapsedMs: animator.elapsed, startProgress, elapsedMs,
-                authority: item.spec.authority, from: { ...from }, bodyHeight: current.bodyHeight,
-                mode: item.record.placement ? 'placement' : 'full' };
+                authority: item.spec.authority, timingAuthority: item.spec.timingAuthority || 'source-marker', from: { ...from }, bodyHeight: current.bodyHeight,
+                mode: presentationMode };
               item.resolve({ from, to: item.record.placement ? { ...from } : current.to,
                 targets: item.record.placement ? [] : current.targets, direction: item.direction, bodyHeight: current.bodyHeight,
-                presentation: { startProgress, elapsedMs, mode: item.record.placement ? 'placement' : 'full' } });
+                presentation: { startProgress, elapsedMs, mode: presentationMode } });
             }
           }
         }
@@ -416,7 +426,7 @@ export function createActorVfxBridge(options = {}) {
   document?.addEventListener?.('visibilitychange', visibility);
   function destroy() {
     if (destroyed) return;
-    cancelWork('destroyed'); adapter.destroy(); destroyed = true;
+    cancelWork('destroyed'); adapter.destroy(); nativeResolver?.destroy(); destroyed = true;
     document?.removeEventListener?.('visibilitychange', visibility);
   }
   return Object.freeze({

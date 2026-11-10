@@ -64,9 +64,12 @@ export async function sceneReleaseRequirements(root){
   const body=await fs.readFile(path.join(publicRoot,name),'utf8');assert(/telegram:true/.test(body),'Release entry is not signed Telegram mode');assert(!body.includes('127.0.0.1:'),'Release entry contains loopback endpoint');
  }
  assert.equal(entries.get('/ui-generated-20261030/characters-v1/character-sprites.js')?.sha256,manifest.reviewedRendererSha256);
+ assert(entries.has('/scene-native-cast-profiles.json'),'Native cast choreography is not packaged; generate profiles and rebuild the scene');
+ const nativePolicies=JSON.parse(await fs.readFile(path.join(publicRoot,'scene-native-cast-profiles.json'),'utf8'));
+ assert.equal(nativePolicies.catalogSha256,manifest.reviewedCatalogSha256,'Native presentation policies belong to another character catalog');
  const combat=await packagedCombatReadiness(publicRoot,index);
- assert.equal(combat.failures.length,0,'Character combat release metadata is incomplete: '+JSON.stringify({slots:combat.slots,ready:combat.ready,examples:combat.failures.slice(0,6)}));
- return {enabled:true,assetFiles:entries.size,appearances:ids.size,combatSlots:combat.slots,...await sceneSchemaRequirements(root)};
+ assert.equal(combat.failures.length,0,'Character combat presentation is incomplete: '+JSON.stringify({slots:combat.slots,ready:combat.ready,examples:combat.failures.slice(0,6)}));
+ return {enabled:true,assetFiles:entries.size,appearances:ids.size,combatSlots:combat.slots,fullWeaponCasts:combat.fullReady,nativeTargetCasts:combat.nativeTargetReady,...await sceneSchemaRequirements(root)};
 }
 export async function sceneSchemaRequirements(root){
  const db=new DatabaseSync(':memory:'),names=new Set(['rpg_characters','rpg_live_characters']),forbidden=[];

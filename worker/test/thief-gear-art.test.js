@@ -42,7 +42,7 @@ test('legacy 294 designs and all 48 shared thief designs keep their existing nam
  for(const base of ['sword','archer','mage']){
   const unique=new Map();
   for(const route of ['A','B'])for(const item of gearOffers({base_class:base,class_path:route,level:120}))unique.set(item.name,{...item,classReq:base});
-  for(const item of unique.values()){assert.equal(thiefGearArt(item),null);const src=browser.src('gear',item);assert.match(src,new RegExp('^art/v2/'+gearArt(item)+'\\.webp'));assert.ok(fs.existsSync(new URL(cardPhoto(item).slice(1),publicRoot)));}
+  for(const item of unique.values()){assert.equal(thiefGearArt(item),null);const src=browser.src('gear',item);assert.match(src,new RegExp('^art/v2/'+gearArt(item)+'\\.webp'));assert.ok(fs.existsSync(new URL(cardPhoto(item).slice(1),publicRoot)));for(const mode of ['普通','菁英','專家','惡夢','地獄']){const renamed={...item,name:item.name+'-'+mode};assert.equal(gearArt(renamed),gearArt(item),'Mode labels must reuse the exact original item image');assert.equal(browser.src('gear',renamed),src);assert.equal(cardPhoto(renamed),cardPhoto(item));}}
   legacy+=unique.size;
  }
  const names=new Set();for(const route of ['A','B'])for(const item of gearOffers({base_class:'thief',class_path:route,level:120})){if(!isThiefClassGear({...item,classReq:'thief'})){assert.equal(thiefGearArt({...item,classReq:'thief'}),null);assert.ok(browser.src('gear',{...item,classReq:'thief'}).startsWith('art/v2/'));names.add(item.name);}}

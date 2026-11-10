@@ -1,0 +1,36 @@
+{
+  "scope": "Presentation only, original character pixels and approvals unchanged.",
+  "catalogSha256": "cdbe7d777923c3e8c7ad0f4603e6f50783d66e6206f00a98ef14dd18c555b139",
+  "rendererSha256": "d004b7b68ef9a05593b7afb7f19faf0cf0c09c93c88366ace89b50e86f5ac801",
+  "actors": 248,
+  "directions": 992,
+  "fullWeaponCastDirections": 625,
+  "nativeActorAndTargetImpactDirections": 367,
+  "missingDirections": 0,
+  "byFamily": {
+    "sword": {
+      "full": 10,
+      "native-target": 238
+    },
+    "archer": {
+      "full": 152,
+      "native-target": 96
+    },
+    "mage": {
+      "full": 248
+    },
+    "thief": {
+      "full": 215,
+      "native-target": 33
+    }
+  },
+  "renderAcceptance": {
+    "actors": 248,
+    "casts": 992,
+    "blankActors": 0,
+    "blankEffects": 0,
+    "javascriptErrors": 0,
+    "httpErrors": 0,
+    "fixture": "Original Animator, actual Canvas VFX renderer, synthetic committed traces. No gameplay writes or final art promotion."
+  }
+}

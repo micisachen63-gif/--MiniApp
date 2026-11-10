@@ -85,6 +85,12 @@ const main=entries.get('/ui-generated-20261030/preview.html');
 // are retained as classic.html; any later rebuild is guarded by the manifest.
 if(!old.has('/index.html'))old.set('/index.html',{sha256:sha(await fs.readFile(path.join(publicRoot,'index.html')))});
 await write('/index.html',await fs.readFile(path.join(publicRoot,'.'+main.url)),'entrypoint');
+// Bind the generated choreography sidecar when it belongs to this exact catalog.
+// First build copies reviewed sources; generate policies, then build once more.
+try{
+ const policyBytes=await fs.readFile(path.join(publicRoot,'scene-native-cast-profiles.json')),policy=JSON.parse(policyBytes);
+ if(policy.catalogSha256===args['index-sha'])entries.set('/scene-native-cast-profiles.json',{url:'/scene-native-cast-profiles.json',bytes:policyBytes.length,sha256:sha(policyBytes),kind:'choreography',source:'packaged-character-clips'});
+}catch(error){if(error.code!=='ENOENT')throw error;}
 const inventory=[];async function scan(folder){for(const e of await fs.readdir(folder,{withFileTypes:true})){const p=path.join(folder,e.name);if(e.isSymbolicLink())throw Error('Public symlink: '+p);if(e.isDirectory())await scan(p);else{const size=(await fs.stat(p)).size;if(size>25*1024*1024)throw Error('Public asset exceeds 25 MiB: '+p);inventory.push(p);}}}await scan(publicRoot);
 if(inventory.length+1>20000)throw Error('Public inventory exceeds conservative 20,000 file ceiling');
 const manifest={schemaVersion:1,reviewedCatalogSha256:args['index-sha'],reviewedRendererSha256:args['renderer-sha'],appearances:248,populatedSlots:3968,sourceWritten:false,sourcePixelsModified:false,finalArtApprovalPromoted:false,publicFileCount:inventory.length+Number(!inventory.includes(previousFile)),entries:[...entries.values()].sort((a,b)=>a.url.localeCompare(b.url))};
