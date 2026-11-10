@@ -323,3 +323,12 @@ test('idle camp shows the character current cycle map, matching server map names
   assert.doesNotMatch(idleCode, /setInterval|setTimeout|fetch\(|request\(|refresh\(/, 'idle combat is purely cosmetic: frame clock only');
   assert.match(viewSource, /'掛機中 · ' \+ idle\.map\.place/);
 });
+test('idle monsters stand in a stable side band at Atlas scale, clear of the overhead guardian', () => {
+  const start = viewSource.indexOf('function idleSlot('), code = viewSource.slice(start, viewSource.indexOf('function startIdle(', start));
+  assert.ok(start > 0);
+  assert.match(code, /hero\.x \+ side \* dx/, 'monsters flank the hero left/right');
+  assert.match(code, /y: hero\.y \+ height \* \(far \? \.1 : narrow \? \.06 : \.03\)/, 'never above the hero (guardian space)');
+  assert.match(viewSource, /return \{ entity, \.\.\.idleSlot\(entity, entity\.enemy\.slot\) \}/, 'slot is stable through death/respawn');
+  assert.match(viewSource, /let slot = 0; while \(used\.has\(slot\)\) slot\+\+;/);
+  assert.doesNotMatch(code, /setScale/, 'scale stays the shared Atlas minion scale');
+});

@@ -53,3 +53,8 @@ test('social tabs, chat filter pills and 英雄殿堂 class pills use the 3D art
   assert.match(library, /aria-current="page"/);
   assert.match(library, /each\('\[data-sl-social\]'/);
 });
+test('英雄殿堂 class pills wrap 3+2 instead of squeezing below the 76px cap width', () => {
+  const css = fs.readFileSync(new URL('../public/scene-social-preview.css', import.meta.url), 'utf8');
+  assert.match(css, /\.hall-tabs\[class\]\[class\]\{\s*display:flex!important;flex-wrap:wrap!important;justify-content:center/);
+  assert.match(css, /flex:0 0 max\(calc\(\(100% - 4 \* var\(--b3-gap\)\) \/ 5\),min\(calc\(\(100% - 2 \* var\(--b3-gap\)\) \/ 3 - \.5px\),max\(0px,calc\(\(420px - 100%\) \* 999\)\)\)\)/);
+});

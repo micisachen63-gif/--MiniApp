@@ -687,3 +687,12 @@ html.hud-v2-active.candidate-active:not(.candidate-hidden) #ui.scene-unified-roo
   #ui.scene-unified-root .scene-unified-dialog .scene-social-shortcuts[class][class][class] button{--b3-h:48px;letter-spacing:.02em}
   #ui.scene-unified-root .scene-unified-dialog .hall-tabs[class][class][class] button{letter-spacing:0;padding:0 4px 2px!important}
 }
+/* 英雄殿堂 class pills (5): one row when every pill can be >=76px wide, otherwise a centred 3+2
+   wrap, so the laurel caps never get squeezed (no 4+1 orphan). Pure CSS width switch. */
+#ui.scene-unified-root .scene-unified-dialog .hall-tabs[class][class]{
+  display:flex!important;flex-wrap:wrap!important;justify-content:center;row-gap:8px!important;
+}
+#ui.scene-unified-root .scene-unified-dialog .hall-tabs[class][class][class] button{
+  width:auto;flex:0 0 max(calc((100% - 4 * var(--b3-gap)) / 5),min(calc((100% - 2 * var(--b3-gap)) / 3 - .5px),max(0px,calc((420px - 100%) * 999))));
+  padding:0 calc(var(--b3-cap) * .5) 2px!important;letter-spacing:.02em;
+}

@@ -621,6 +621,7 @@
       // invalidate a real cast waiting for its target's geometry.
       const roster = [...entities.values()];
       const slots = roster.map((entity, index) => {
+        if (entity.key.startsWith('idle:') && Number.isInteger(entity.enemy.slot)) return { entity, ...idleSlot(entity, entity.enemy.slot) };
         const angle = -Math.PI + (index + 1) / (roster.length + 1) * Math.PI;
         const radius = height * (entity.enemy.rank === 'boss' ? .34 : .29);
         return { entity, x: hero.x + Math.cos(angle) * Math.min(radius, width * .3),
@@ -762,7 +763,19 @@
     // Cosmetic idle combat on the idle map: the hero swings at a nearby monster, it
     // takes hits, dies with its own death clip and a new one respawns. Driven only by
     // the Phaser frame clock in update(); committed numbers come from the server.
-    const IDLE_ENEMIES = 3, IDLE_SWING_MS = 1150, IDLE_RESPAWN_MS = 1600;
+    const IDLE_SWING_MS = 1150, IDLE_RESPAWN_MS = 1600;
+    // Idle camp: a band beside/in front of the hero at the hero's own depth, so the
+    // guardian angel above and the HUD below stay clear. Same sprite scale as Atlas.
+    function idleCount() { return width >= 700 ? 4 : 2; }
+    function idleSlot(entity, slot) {
+      const half = height * .07; // visible body half-width at the Atlas minion scale (frames carry padding)
+      // Never closer than hero + monster half-widths (narrow phones may clip the outer edge instead).
+      const clear = height * .065 + half * .85, narrow = width < 360;
+      const near = Math.max(clear, Math.min(width / 2 - half, Math.max(height * .16, Math.min(width * .3, height * .3))));
+      const side = slot % 2 ? 1 : -1, far = slot >= 2;
+      const dx = far ? Math.max(near * 1.35, Math.min(width / 2 - half, near * 1.5)) : near;
+      return { x: hero.x + side * dx, y: hero.y + height * (far ? .1 : narrow ? .06 : .03) };
+    }
     function startIdle(map) {
       const state = { map, enemies: [], rows: [], next: 0, seq: 0, clock: 0, swingAt: 600, respawnAt: 0, hitAt: 0, target: null, attacking: 0 };
       const roster = (endgameArt?.[map.id]?.roster || []).filter(row => row.role === 'normal');
@@ -772,14 +785,15 @@
       }).catch(() => null))).then(rows => {
         if (idle !== state || !current()) return;
         state.rows = rows.filter(Boolean);
-        for (let i = 0; i < IDLE_ENEMIES && state.rows.length; i++) spawnIdle(state);
+        while (state.rows.length && state.enemies.length < idleCount()) spawnIdle(state);
         reconcileEnemies(); drawBars();
       });
       return state;
     }
     function spawnIdle(state) {
-      const row = state.rows[state.next++ % state.rows.length];
-      state.enemies.push({ id: 'idle-' + (++state.seq), name: row.name + '-' + (IDLE_MODES.find(([id]) => id === state.map.progression.mode)?.[1] || ''), rank: 'normal', hp: 100, maxHp: 100, art: { spriteId: row.id, sourceMap: row.sourceMap } });
+      const row = state.rows[state.next++ % state.rows.length], used = new Set(state.enemies.map(enemy => enemy.slot));
+      let slot = 0; while (used.has(slot)) slot++;
+      state.enemies.push({ id: 'idle-' + (++state.seq), slot, name: row.name + '-' + (IDLE_MODES.find(([id]) => id === state.map.progression.mode)?.[1] || ''), rank: 'normal', hp: 100, maxHp: 100, art: { spriteId: row.id, sourceMap: row.sourceMap } });
     }
     function idleTick(ms) {
       const state = idle; if (!state || !model || model.active || !state.rows.length) return;
@@ -799,7 +813,7 @@
       if (state.attacking && state.clock >= state.attacking) { state.attacking = 0; if (animator.action === 'attack') animator.play('idle', animator.activeDirection || 'down', true); }
       if (state.respawnAt && state.clock >= state.respawnAt) {
         state.respawnAt = 0; state.enemies = state.enemies.filter(enemy => enemy.hp > 0);
-        while (state.enemies.length < IDLE_ENEMIES) spawnIdle(state);
+        while (state.enemies.length < idleCount()) spawnIdle(state);
         reconcileEnemies();
       }
       if (state.clock < state.swingAt || state.hitAt) return;
